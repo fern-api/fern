@@ -1,5 +1,5 @@
 import path from "path";
-import { Project } from "ts-morph";
+import { Project, SyntaxKind } from "ts-morph";
 
 import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 
@@ -42,6 +42,7 @@ export async function fixImportsForEsm(pathToProject: AbsoluteFilePath): Promise
     }
 
     for (const sourceFile of project.getSourceFiles()) {
+        // Handle static imports and exports
         const allDeclarations = [...sourceFile.getImportDeclarations(), ...sourceFile.getExportDeclarations()];
 
         for (const importDecl of allDeclarations) {
@@ -65,6 +66,54 @@ export async function fixImportsForEsm(pathToProject: AbsoluteFilePath): Promise
             if (modification !== ImportModification.NONE) {
                 const newSpecifier = getModifiedSpecifier(moduleSpecifier, modification);
                 importDecl.setModuleSpecifier(newSpecifier);
+            }
+        }
+
+        // Handle dynamic imports - highly optimized for large projects
+        // First check if file even contains 'import(' to skip files without dynamic imports
+        const sourceText = sourceFile.getFullText();
+        if (!sourceText.includes("import(")) {
+            continue;
+        }
+
+        // Only get call expressions, then filter for import calls
+        const importCalls = sourceFile
+            .getDescendantsOfKind(SyntaxKind.CallExpression)
+            .filter((callExpression) => callExpression.getExpression().getKind() === SyntaxKind.ImportKeyword);
+
+        for (const callExpression of importCalls) {
+            const args = callExpression.getArguments();
+            if (args.length === 0) {
+                continue;
+            }
+            const firstArg = args[0];
+            if (!firstArg) {
+                continue;
+            }
+            if (firstArg.getKind() !== SyntaxKind.StringLiteral) {
+                continue;
+            }
+            const stringLiteral = firstArg.asKindOrThrow(SyntaxKind.StringLiteral);
+            const moduleSpecifier = stringLiteral.getLiteralValue();
+
+            // Skip if not a relative import or already has .js extension
+            if (!moduleSpecifier || !moduleSpecifier.startsWith(".") || moduleSpecifier.endsWith(".js")) {
+                continue;
+            }
+
+            // Check cache or determine modification type
+            const normalizedPath = getNormalizedPath(moduleSpecifier, sourceFile.getFilePath());
+            let modification = importModificationCache.get(normalizedPath);
+
+            if (!modification) {
+                modification = determineModification(moduleSpecifier, sourceFile.getFilePath(), fileExistenceCache);
+                importModificationCache.set(normalizedPath, modification);
+            }
+
+            // Apply modification if needed
+            if (modification !== ImportModification.NONE) {
+                const newSpecifier = getModifiedSpecifier(moduleSpecifier, modification);
+                stringLiteral.replaceWithText(`"${newSpecifier}"`);
             }
         }
     }

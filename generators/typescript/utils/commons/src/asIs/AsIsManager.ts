@@ -19,6 +19,11 @@ const asIsFiles = {
             "tests/mock-server/*": "tests/mock-server/"
         },
         bigintSetup: { "tests/bigint.setup.ts": "tests/bigint.setup.ts" }
+    },
+    scripts: {
+        renameToEsmFiles: {
+            "scripts/rename-to-esm-files.js": "scripts/rename-to-esm-files.js"
+        }
     }
 } as const;
 
@@ -41,6 +46,7 @@ export class AsIsManager {
         const filesToCopy: Record<string, string>[] = [];
 
         filesToCopy.push(this.useBigInt ? asIsFiles.json.bigint : asIsFiles.json.vanilla);
+        filesToCopy.push(asIsFiles.scripts.renameToEsmFiles);
         if (this.useBigInt) {
             filesToCopy.push(asIsFiles.tests.bigintSetup);
             filesToCopy.push(asIsFiles.json.bigint);

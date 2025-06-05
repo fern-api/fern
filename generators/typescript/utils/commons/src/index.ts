@@ -30,5 +30,4 @@ export * from "./typescript-project";
 export { FernWriters, ObjectWriter } from "./writers";
 export { getWriterForMultiLineUnionType } from "./writers/getWriterForMultiLineUnionType";
 export * from "@fern-api/typescript-base";
-export { ScriptsManager } from "./scripts";
 export { fixImportsForEsm } from "./typescript-project/fixImportsForEsm";
