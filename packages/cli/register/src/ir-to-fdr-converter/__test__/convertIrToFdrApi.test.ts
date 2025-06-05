@@ -132,7 +132,7 @@ describe("oas-ir-fdr", async () => {
                         context,
                         audiences: { type: "all" },
                         enableUniqueErrorsPerEndpoint: true,
-                        skipV1ExampleGeneration: true
+                        generateV1Examples: false
                     });
 
                     const fdr = convertIrToFdrApi({

@@ -28,7 +28,7 @@ describe("OpenAPIConverterContext3_1", async () => {
                 logger: undefined as any
             }),
             enableUniqueErrorsPerEndpoint: false,
-            skipV1ExampleGeneration: false
+            generateV1Examples: false
         });
 
         const result = await context.resolveMaybeExternalReference<OpenAPIV3_1.SchemaObject>({

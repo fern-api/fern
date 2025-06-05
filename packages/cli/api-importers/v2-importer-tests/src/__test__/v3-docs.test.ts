@@ -37,7 +37,7 @@ describe("openapi-v2-docs", async () => {
                         context,
                         audiences: { type: "all" },
                         enableUniqueErrorsPerEndpoint: true,
-                        skipV1ExampleGeneration: true
+                        generateV1Examples: false
                     });
                     // eslint-disable-next-line jest/no-standalone-expect
                     await expect(JSON.stringify(intermediateRepresentation, undefined, 2)).toMatchFileSnapshot(

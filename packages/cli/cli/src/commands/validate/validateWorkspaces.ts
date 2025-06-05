@@ -51,7 +51,7 @@ export async function validateWorkspaces({
                         context,
                         audiences: { type: "all" },
                         enableUniqueErrorsPerEndpoint: false,
-                        skipV1ExampleGeneration: true
+                        generateV1Examples: false
                     });
                     return;
                 }
