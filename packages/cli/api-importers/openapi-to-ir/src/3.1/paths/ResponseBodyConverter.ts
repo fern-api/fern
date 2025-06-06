@@ -360,7 +360,7 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
     }
 
     private shouldReturnBytesResponse(): boolean {
-        return (this.context.settings?.useBytesForBinaryResponse ?? false) && this.streamingExtension == null;
+        return this.context.settings.useBytesForBinaryResponse && this.streamingExtension == null;
     }
 
     private shouldReturnTextResponse(contentType: string): boolean {
