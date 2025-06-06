@@ -143,7 +143,7 @@ export function convertUndiscriminatedOneOf({
             const enumValue = enumOptionSchema.const;
             return [
                 SchemaWithExample.literal({
-                    nameOverride: enumValueTitle,
+                    nameOverride: undefined,
                     generatedName: getGeneratedTypeName(
                         [generatedName, enumValue.toString()],
                         context.options.preserveSchemaIds

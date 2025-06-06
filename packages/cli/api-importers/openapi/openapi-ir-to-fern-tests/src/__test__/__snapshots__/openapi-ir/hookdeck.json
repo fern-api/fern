@@ -56582,21 +56582,25 @@
         "generatedName": "OrderByDirection",
         "values": [
           {
+            "nameOverride": "asc",
             "generatedName": "asc",
             "value": "asc",
             "casing": {}
           },
           {
+            "nameOverride": "desc",
             "generatedName": "desc",
             "value": "desc",
             "casing": {}
           },
           {
+            "nameOverride": "ASC",
             "generatedName": "ASC",
             "value": "ASC",
             "casing": {}
           },
           {
+            "nameOverride": "DESC",
             "generatedName": "DESC",
             "value": "DESC",
             "casing": {}
