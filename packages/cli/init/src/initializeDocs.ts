@@ -74,7 +74,7 @@ function getDocsConfig(organization: string): docsYml.RawSchemas.DocsConfigurati
 
 function kebabCaseParserConfig(config: docsYml.RawSchemas.DocsConfiguration): docsYml.RawSchemas.DocsConfiguration & {
     experimental: docsYml.RawSchemas.ExperimentalConfig & {
-        "openapi-parser-v3"?: boolean;
+        "openapi-parser-v3": boolean;
     };
 } {
     const enableOpenapiParserV3 = config.experimental?.openapiParserV3 ?? true;
