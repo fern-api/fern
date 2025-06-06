@@ -1,0 +1,165 @@
+openapi: 3.0.0
+info:
+  title: API with Deeply Recursive Objects
+  version: 1.0.0
+paths:
+  /test:
+    get:
+      parameters:
+        - name: someParam
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/JsonschemaSchema"
+
+components:
+  schemas:
+    JsonschemaSchema:
+      type: object
+      properties:
+        $anchor:
+          type: string
+        $comment:
+          type: string
+        $defs:
+          $ref: "#/components/schemas/JsonschemaDefinitions"
+        $dynamicRef:
+          type: string
+        $id:
+          type: string
+        $ref:
+          type: string
+        $schema:
+          type: string
+        additionalProperties:
+          $ref: "#/components/schemas/JsonschemaSchema"
+        allOf:
+          type: array
+          items:
+            $ref: "#/components/schemas/JsonschemaSchema"
+        anyOf:
+          type: array
+          items:
+            $ref: "#/components/schemas/JsonschemaSchema"
+        const: {}
+        contains:
+          $ref: "#/components/schemas/JsonschemaSchema"
+        contentEncoding:
+          type: string
+        contentMediaType:
+          type: string
+        contentSchema:
+          $ref: "#/components/schemas/JsonschemaSchema"
+        default: {}
+        dependentRequired:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        dependentSchemas:
+          type: object
+          additionalProperties:
+            $ref: "#/components/schemas/JsonschemaSchema"
+        deprecated:
+          type: boolean
+        description:
+          type: string
+        else:
+          $ref: "#/components/schemas/JsonschemaSchema"
+        enum:
+          type: array
+          items: {}
+        examples:
+          type: array
+          items: {}
+        exclusiveMaximum:
+          type: string
+        exclusiveMinimum:
+          type: string
+        format:
+          type: string
+        if:
+          $ref: "#/components/schemas/JsonschemaSchema"
+        items:
+          $ref: "#/components/schemas/JsonschemaSchema"
+        maxContains:
+          minimum: 0
+          type: integer
+          nullable: true
+        maxItems:
+          minimum: 0
+          type: integer
+          nullable: true
+        maxLength:
+          minimum: 0
+          type: integer
+          nullable: true
+        maxProperties:
+          minimum: 0
+          type: integer
+          nullable: true
+        maximum:
+          type: string
+        minContains:
+          minimum: 0
+          type: integer
+          nullable: true
+        minItems:
+          minimum: 0
+          type: integer
+          nullable: true
+        minLength:
+          minimum: 0
+          type: integer
+          nullable: true
+        minProperties:
+          minimum: 0
+          type: integer
+          nullable: true
+        minimum:
+          type: string
+        multipleOf:
+          type: string
+        not:
+          $ref: "#/components/schemas/JsonschemaSchema"
+        oneOf:
+          type: array
+          items:
+            $ref: "#/components/schemas/JsonschemaSchema"
+        pattern:
+          type: string
+        patternProperties:
+          type: object
+          additionalProperties:
+            $ref: "#/components/schemas/JsonschemaSchema"
+        prefixItems:
+          type: array
+          items:
+            $ref: "#/components/schemas/JsonschemaSchema"
+        properties:
+          $ref: "#/components/schemas/V2OrderedMapStringGithubComInvopopJsonschemaSchema"
+        propertyNames:
+          $ref: "#/components/schemas/JsonschemaSchema"
+        readOnly:
+          type: boolean
+        required:
+          type: array
+          items:
+            type: string
+        then:
+          $ref: "#/components/schemas/JsonschemaSchema"
+        title:
+          type: string
+        type:
+          type: string
+        uniqueItems:
+          type: boolean
+        writeOnly:
+          type: boolean

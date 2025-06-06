@@ -59,7 +59,7 @@ export declare namespace ExampleConverter {
 }
 
 export class ExampleConverter extends AbstractConverter<AbstractConverterContext<object>, ExampleConverter.Output> {
-    protected readonly MAX_DEPTH = 5;
+    protected readonly MAX_DEPTH = 12;
     protected readonly EXAMPLE_STRING = "foo";
     protected readonly EXAMPLE_NUMBER = 42.0;
     protected readonly EXAMPLE_BOOLEAN = true;
@@ -70,6 +70,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
     private readonly depth: number;
     private readonly exampleGenerationStrategy: "request" | "response" | undefined;
     private readonly generateOptionalProperties: boolean;
+    private readonly seenRefs: Set<string>;
 
     constructor({
         breadcrumbs,
@@ -78,20 +79,40 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         example,
         depth = 0,
         exampleGenerationStrategy,
-        generateOptionalProperties = false
-    }: ExampleConverter.Args) {
+        generateOptionalProperties = false,
+        seenRefs = new Set<string>()
+    }: ExampleConverter.Args & { seenRefs?: Set<string> }) {
         super({ breadcrumbs, context });
         this.example = example;
         this.schema = schema;
         this.depth = depth;
         this.exampleGenerationStrategy = exampleGenerationStrategy;
         this.generateOptionalProperties = generateOptionalProperties;
+        this.seenRefs = seenRefs;
     }
 
     public convert(): ExampleConverter.Output {
         if (this.depth > this.MAX_DEPTH) {
-            return { isValid: true, coerced: false, validExample: this.example, errors: [] };
+            return {
+                isValid: true,
+                coerced: false,
+                validExample: typeof this.example !== "undefined" ? this.example : {},
+                errors: []
+            };
         }
+
+        if (this.context.isReferenceObject(this.schema)) {
+            const ref = this.schema.$ref;
+            if (this.seenRefs.has(ref)) {
+                return {
+                    isValid: true,
+                    coerced: false,
+                    validExample: this.example,
+                    errors: []
+                };
+            }
+        }
+
         const resolvedSchema = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
             schemaOrReference: this.schema,
             breadcrumbs: this.breadcrumbs,
@@ -180,12 +201,13 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             });
         }
 
-        if (resolvedSchema.type == "object") {
-            if (resolvedSchema.properties != null || resolvedSchema.allOf != null) {
-                return this.convertObject({
-                    resolvedSchema
-                });
-            }
+        if (resolvedSchema.type == "object" || resolvedSchema.properties != null || resolvedSchema.allOf != null) {
+            return this.convertObject({
+                resolvedSchema
+            });
+        }
+
+        if (typeof resolvedSchema === "object" && Object.keys(resolvedSchema).length === 0) {
             return {
                 isValid: true,
                 coerced: false,
@@ -483,9 +505,10 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                 context: this.context,
                 schema: resolvedSchema.items,
                 example: item,
-                depth: this.depth + 1,
+                depth: this.depth,
                 generateOptionalProperties: this.generateOptionalProperties,
-                exampleGenerationStrategy: this.exampleGenerationStrategy
+                exampleGenerationStrategy: this.exampleGenerationStrategy,
+                seenRefs: this.getMaybeUpdatedSeenRefs()
             });
             return exampleConverter.convert();
         });
@@ -557,7 +580,8 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                         example: undefined,
                         depth: this.depth + 1,
                         generateOptionalProperties: this.generateOptionalProperties,
-                        exampleGenerationStrategy: this.exampleGenerationStrategy
+                        exampleGenerationStrategy: this.exampleGenerationStrategy,
+                        seenRefs: this.getMaybeUpdatedSeenRefs()
                     });
                     return { key, result: exampleConverter.convert() };
                 }
@@ -570,7 +594,8 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                     example: exampleObj[key],
                     depth: this.depth + 1,
                     generateOptionalProperties: this.generateOptionalProperties,
-                    exampleGenerationStrategy: this.exampleGenerationStrategy
+                    exampleGenerationStrategy: this.exampleGenerationStrategy,
+                    seenRefs: this.getMaybeUpdatedSeenRefs()
                 });
                 const result = exampleConverter.convert();
                 return { key, result };
@@ -585,7 +610,8 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                 example: this.example,
                 depth: this.depth + 1,
                 generateOptionalProperties: this.generateOptionalProperties,
-                exampleGenerationStrategy: this.exampleGenerationStrategy
+                exampleGenerationStrategy: this.exampleGenerationStrategy,
+                seenRefs: this.getMaybeUpdatedSeenRefs()
             });
             return exampleConverter.convert();
         });
@@ -647,7 +673,8 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                 example: this.example,
                 depth: this.depth,
                 generateOptionalProperties: this.generateOptionalProperties,
-                exampleGenerationStrategy: this.exampleGenerationStrategy
+                exampleGenerationStrategy: this.exampleGenerationStrategy,
+                seenRefs: this.getMaybeUpdatedSeenRefs()
             });
             return exampleConverter.convert();
         }
@@ -657,9 +684,10 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                 context: this.context,
                 schema: { ...resolvedSchema, type: subSchema } as OpenAPIV3_1.SchemaObject,
                 example: this.example,
-                depth: this.depth + 1,
+                depth: this.depth,
                 generateOptionalProperties: this.generateOptionalProperties,
-                exampleGenerationStrategy: this.exampleGenerationStrategy
+                exampleGenerationStrategy: this.exampleGenerationStrategy,
+                seenRefs: this.getMaybeUpdatedSeenRefs()
             });
             return exampleConverter.convert();
         });
@@ -689,7 +717,8 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                 example: this.example,
                 depth: this.depth + 1,
                 generateOptionalProperties: this.generateOptionalProperties,
-                exampleGenerationStrategy: this.exampleGenerationStrategy
+                exampleGenerationStrategy: this.exampleGenerationStrategy,
+                seenRefs: this.getMaybeUpdatedSeenRefs()
             });
             return exampleConverter.convert();
         });
@@ -725,7 +754,8 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                 example: this.example,
                 depth: this.depth + 1,
                 generateOptionalProperties: this.generateOptionalProperties,
-                exampleGenerationStrategy: this.exampleGenerationStrategy
+                exampleGenerationStrategy: this.exampleGenerationStrategy,
+                seenRefs: this.getMaybeUpdatedSeenRefs()
             });
             return exampleConverter.convert();
         });
@@ -747,6 +777,13 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             validExample,
             errors: isValid ? [] : results.flatMap((result) => result.errors)
         };
+    }
+    private getMaybeUpdatedSeenRefs() {
+        const newSeenRefs = new Set(this.seenRefs);
+        if (this.context.isReferenceObject(this.schema)) {
+            newSeenRefs.add(this.schema.$ref);
+        }
+        return newSeenRefs;
     }
 
     private maybeResolveSchemaExample<Type>(
