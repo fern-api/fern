@@ -6,43 +6,6 @@ info:
 
 components:
   schemas:
-    ActivityLevelEnum:
-      $schema: https://json-schema.org/draft/2020-12/schema
-      $id: https://raw.githubusercontent.com/tryterra/openapi/refs/heads/v5-update/schemas/ActivityLevel.yaml
-      examples:
-        - 4
-      description: Intensity of the user's activity at an instant in time
-      enum:
-        - 0
-        - 1
-        - 2
-        - 3
-        - 4
-        - 5
-      x-fern-enum:
-        0:
-          name: UNKNOWN
-          description: Activity level is unknown or could not be determined.
-        1:
-          name: REST
-          description: User is at rest, with minimal to no physical activity.
-        2:
-          name: INACTIVE
-          description: User is awake but inactive or sedentary.
-        3:
-          name: LOW_INTENSITY
-          description: User is engaged in light physical activity such as casual walking.
-        4:
-          name: MEDIUM_INTENSITY
-          description:
-            User is engaged in moderate physical activity such as brisk
-            walking or light exercise.
-        5:
-          name: HIGH_INTENSITY
-          description:
-            User is engaged in vigorous physical activity such as running
-            or intense exercise.
-
     ActivityLevelOneOf:
       $schema: https://json-schema.org/draft/2020-12/schema
       $id: https://raw.githubusercontent.com/tryterra/openapi/refs/heads/v5-update/schemas/ActivityLevel.yaml
