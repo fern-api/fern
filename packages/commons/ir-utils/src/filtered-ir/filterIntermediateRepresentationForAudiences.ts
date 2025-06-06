@@ -69,6 +69,23 @@ export function filterIntermediateRepresentationForAudiences(
             return [webhookGroupId, filteredWebhooks];
         })
     );
+    const filteredChannels =
+        intermediateRepresentation.websocketChannels != null
+            ? Object.fromEntries(
+                  Object.entries(intermediateRepresentation.websocketChannels)
+                      .filter(([channelId]) => {
+                          return filteredIr.hasChannel(channelId);
+                      })
+                      .map(([channelId, channel]) => {
+                          return [
+                              channelId,
+                              {
+                                  ...channel
+                              }
+                          ];
+                      })
+              )
+            : {};
 
     const filteredEnvironmentsConfig = intermediateRepresentation.environments;
     if (filteredEnvironmentsConfig) {
@@ -144,6 +161,7 @@ export function filterIntermediateRepresentationForAudiences(
                     })
             })
         ),
+        websocketChannels: filteredChannels,
         webhookGroups: filteredWebhookGroups,
         serviceTypeReferenceInfo: filterServiceTypeReferenceInfoForAudiences(
             intermediateRepresentation.serviceTypeReferenceInfo,
