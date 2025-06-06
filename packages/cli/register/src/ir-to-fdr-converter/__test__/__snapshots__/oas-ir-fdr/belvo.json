@@ -64897,7 +64897,13 @@
                                   "placeholder": "Username",
                                   "validation_message": "Invalid client number",
                                   "values": [
-                                    null
+                                    {
+                                      "code": "001",
+                                      "label": "Cédula de Ciudadanía",
+                                      "validation": "^.{1,}$",
+                                      "validation_message": "Invalid document number",
+                                      "placeholder": "DEF4444908M22"
+                                    }
                                   ],
                                   "length": 6,
                                   "optional": false
@@ -64940,7 +64946,13 @@
                                 "placeholder": "Username",
                                 "validation_message": "Invalid client number",
                                 "values": [
-                                  {}
+                                  {
+                                    "code": "001",
+                                    "label": "Cédula de Ciudadanía",
+                                    "validation": "^.{1,}$",
+                                    "validation_message": "Invalid document number",
+                                    "placeholder": "DEF4444908M22"
+                                  }
                                 ],
                                 "length": 6,
                                 "optional": false
@@ -65079,7 +65091,13 @@
                                     "placeholder": "Username",
                                     "validation_message": "Invalid client number",
                                     "values": [
-                                      null
+                                      {
+                                        "code": "001",
+                                        "label": "Cédula de Ciudadanía",
+                                        "validation": "^.{1,}$",
+                                        "validation_message": "Invalid document number",
+                                        "placeholder": "DEF4444908M22"
+                                      }
                                     ],
                                     "length": 6,
                                     "optional": false
@@ -65122,7 +65140,13 @@
                                   "placeholder": "Username",
                                   "validation_message": "Invalid client number",
                                   "values": [
-                                    {}
+                                    {
+                                      "code": "001",
+                                      "label": "Cédula de Ciudadanía",
+                                      "validation": "^.{1,}$",
+                                      "validation_message": "Invalid document number",
+                                      "placeholder": "DEF4444908M22"
+                                    }
                                   ],
                                   "length": 6,
                                   "optional": false

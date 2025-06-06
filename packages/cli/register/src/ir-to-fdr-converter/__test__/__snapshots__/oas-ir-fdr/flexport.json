@@ -28198,6 +28198,7 @@
                                 "hs_codes": [
                                   {
                                     "_object": "/hs_code",
+                                    "description": "N-Butyl-2,2,6,6-tetramethylpiperidin-4-amine (CAS No. 36177-92-1) (provided for in subheading 2933.39.91)",
                                     "code": "9101.00",
                                     "country_code": "US"
                                   }
@@ -28206,7 +28207,7 @@
                                   {
                                     "_object": "/product/classification",
                                     "codes": [
-                                      null
+                                      "0301.00"
                                     ],
                                     "region": "US"
                                   }
@@ -28679,6 +28680,7 @@
                                   "hs_codes": [
                                     {
                                       "_object": "/hs_code",
+                                      "description": "N-Butyl-2,2,6,6-tetramethylpiperidin-4-amine (CAS No. 36177-92-1) (provided for in subheading 2933.39.91)",
                                       "code": "9101.00",
                                       "country_code": "US"
                                     }
@@ -28687,7 +28689,7 @@
                                     {
                                       "_object": "/product/classification",
                                       "codes": [
-                                        null
+                                        "0301.00"
                                       ],
                                       "region": "US"
                                     }
@@ -29005,6 +29007,7 @@
                                   "hs_codes": [
                                     {
                                       "_object": "/hs_code",
+                                      "description": "N-Butyl-2,2,6,6-tetramethylpiperidin-4-amine (CAS No. 36177-92-1) (provided for in subheading 2933.39.91)",
                                       "code": "9101.00",
                                       "country_code": "US"
                                     }
@@ -29013,7 +29016,7 @@
                                     {
                                       "_object": "/product/classification",
                                       "codes": [
-                                        null
+                                        "0301.00"
                                       ],
                                       "region": "US"
                                     }
@@ -29486,6 +29489,7 @@
                                     "hs_codes": [
                                       {
                                         "_object": "/hs_code",
+                                        "description": "N-Butyl-2,2,6,6-tetramethylpiperidin-4-amine (CAS No. 36177-92-1) (provided for in subheading 2933.39.91)",
                                         "code": "9101.00",
                                         "country_code": "US"
                                       }
@@ -29494,7 +29498,7 @@
                                       {
                                         "_object": "/product/classification",
                                         "codes": [
-                                          null
+                                          "0301.00"
                                         ],
                                         "region": "US"
                                       }

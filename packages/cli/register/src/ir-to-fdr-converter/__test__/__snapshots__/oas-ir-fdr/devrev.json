@@ -12100,7 +12100,10 @@
                         "display_id": "foo",
                         "id": "foo",
                         "display_name": "foo",
-                        "display_picture": {},
+                        "display_picture": {
+                          "display_id": "foo",
+                          "id": "foo"
+                        },
                         "email": "foo",
                         "full_name": "foo",
                         "state": "active"
@@ -12167,7 +12170,10 @@
                           "display_id": "foo",
                           "id": "foo",
                           "display_name": "foo",
-                          "display_picture": {},
+                          "display_picture": {
+                            "display_id": "foo",
+                            "id": "foo"
+                          },
                           "email": "foo",
                           "full_name": "foo",
                           "state": "active"
@@ -17921,7 +17927,10 @@
                         "display_id": "foo",
                         "id": "foo",
                         "display_name": "foo",
-                        "display_picture": {},
+                        "display_picture": {
+                          "display_id": "foo",
+                          "id": "foo"
+                        },
                         "email": "foo",
                         "full_name": "foo",
                         "state": "active"
@@ -17932,7 +17941,10 @@
                         "display_id": "foo",
                         "id": "foo",
                         "display_name": "foo",
-                        "display_picture": {},
+                        "display_picture": {
+                          "display_id": "foo",
+                          "id": "foo"
+                        },
                         "email": "foo",
                         "full_name": "foo",
                         "state": "active"
@@ -18007,7 +18019,10 @@
                           "display_id": "foo",
                           "id": "foo",
                           "display_name": "foo",
-                          "display_picture": {},
+                          "display_picture": {
+                            "display_id": "foo",
+                            "id": "foo"
+                          },
                           "email": "foo",
                           "full_name": "foo",
                           "state": "active"
@@ -18018,7 +18033,10 @@
                           "display_id": "foo",
                           "id": "foo",
                           "display_name": "foo",
-                          "display_picture": {},
+                          "display_picture": {
+                            "display_id": "foo",
+                            "id": "foo"
+                          },
                           "email": "foo",
                           "full_name": "foo",
                           "state": "active"
@@ -18745,7 +18763,10 @@
                         "display_id": "foo",
                         "id": "foo",
                         "display_name": "foo",
-                        "display_picture": {},
+                        "display_picture": {
+                          "display_id": "foo",
+                          "id": "foo"
+                        },
                         "email": "foo",
                         "full_name": "foo",
                         "state": "active"
@@ -18756,7 +18777,10 @@
                         "display_id": "foo",
                         "id": "foo",
                         "display_name": "foo",
-                        "display_picture": {},
+                        "display_picture": {
+                          "display_id": "foo",
+                          "id": "foo"
+                        },
                         "email": "foo",
                         "full_name": "foo",
                         "state": "active"
@@ -18833,7 +18857,10 @@
                           "display_id": "foo",
                           "id": "foo",
                           "display_name": "foo",
-                          "display_picture": {},
+                          "display_picture": {
+                            "display_id": "foo",
+                            "id": "foo"
+                          },
                           "email": "foo",
                           "full_name": "foo",
                           "state": "active"
@@ -18844,7 +18871,10 @@
                           "display_id": "foo",
                           "id": "foo",
                           "display_name": "foo",
-                          "display_picture": {},
+                          "display_picture": {
+                            "display_id": "foo",
+                            "id": "foo"
+                          },
                           "email": "foo",
                           "full_name": "foo",
                           "state": "active"
