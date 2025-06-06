@@ -4,5 +4,17 @@
 
 from . import commons, folder_a, folder_b, folder_c, folder_d, foo
 from .commons import Imported
-from .foo import ImportingType, OptionalString
-__all__ = ["Imported", "ImportingType", "OptionalString", "commons", "folder_a", "folder_b", "folder_c", "folder_d", "foo"]
+from .foo import FindRequest, ImportingType, OptionalString
+
+__all__ = [
+    "FindRequest",
+    "Imported",
+    "ImportingType",
+    "OptionalString",
+    "commons",
+    "folder_a",
+    "folder_b",
+    "folder_c",
+    "folder_d",
+    "foo",
+]

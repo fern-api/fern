@@ -120,16 +120,9 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
         ): ts.Expression => {
             const properties: ts.PropertyAssignment[] = [
                 ts.factory.createPropertyAssignment(this.Fetcher.Args.properties.url, args.url),
-                ts.factory.createPropertyAssignment(this.Fetcher.Args.properties.method, args.method)
+                ts.factory.createPropertyAssignment(this.Fetcher.Args.properties.method, args.method),
+                ts.factory.createPropertyAssignment(this.Fetcher.Args.properties.headers, args.headers)
             ];
-            if (args.headers.length > 0) {
-                properties.push(
-                    ts.factory.createPropertyAssignment(
-                        this.Fetcher.Args.properties.headers,
-                        ts.factory.createObjectLiteralExpression(args.headers, true)
-                    )
-                );
-            }
             if (args.contentType != null) {
                 properties.push(
                     ts.factory.createPropertyAssignment(

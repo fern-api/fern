@@ -1,4 +1,21 @@
+# yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.21.4
+  changelogEntry:
+    - summary: |
+        Add support for HEAD HTTP method in the generated client.
+      type: feat
+  createdAt: '2025-06-05'
+  irVersion: 58
+
+- version: 4.21.3
+  changelogEntry:
+    - summary: |
+        Fix an issue where the websocket connect method did not correctly yield the websocket client.
+      type: fix
+  createdAt: '2025-06-04'
+  irVersion: 58
+
 - version: 4.21.2
   changelogEntry:
     - summary: |

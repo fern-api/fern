@@ -133,9 +133,12 @@ export class ServersConverter extends AbstractConverter<
         server,
         context
     }: {
-        server: OpenAPIV3_1.ServerObject;
+        server: OpenAPIV3_1.ServerObject & { name?: string };
         context: AbstractConverterContext<object>;
     }): string {
+        if (server.name != null) {
+            return server.name;
+        }
         const serverExtensionName = ServersConverter.getServerExtensionName({ server, context });
         return serverExtensionName ?? server.description ?? server.url;
     }

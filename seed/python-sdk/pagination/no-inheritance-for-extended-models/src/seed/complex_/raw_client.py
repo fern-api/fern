@@ -5,6 +5,7 @@ from json.decoder import JSONDecodeError
 
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from ..core.jsonable_encoder import jsonable_encoder
 from ..core.pagination import AsyncPager, BaseHttpResponse, SyncPager
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
@@ -24,6 +25,7 @@ class RawComplexClient:
 
     def search(
         self,
+        index: str,
         *,
         query: SearchRequestQuery,
         pagination: typing.Optional[StartingAfterPaging] = OMIT,
@@ -32,6 +34,8 @@ class RawComplexClient:
         """
         Parameters
         ----------
+        index : str
+
         query : SearchRequestQuery
 
         pagination : typing.Optional[StartingAfterPaging]
@@ -44,7 +48,7 @@ class RawComplexClient:
         SyncPager[Conversation]
         """
         _response = self._client_wrapper.httpx_client.request(
-            "conversations/search",
+            f"{jsonable_encoder(index)}/conversations/search",
             method="POST",
             json={
                 "pagination": convert_and_respect_annotation_metadata(
@@ -76,6 +80,7 @@ class RawComplexClient:
                     _parsed_next = _parsed_response.pages.next.starting_after
                     _has_next = _parsed_next is not None and _parsed_next != ""
                     _get_next = lambda: self.search(
+                        index,
                         query=query,
                         pagination=pagination,
                         request_options=request_options,
@@ -95,6 +100,7 @@ class AsyncRawComplexClient:
 
     async def search(
         self,
+        index: str,
         *,
         query: SearchRequestQuery,
         pagination: typing.Optional[StartingAfterPaging] = OMIT,
@@ -103,6 +109,8 @@ class AsyncRawComplexClient:
         """
         Parameters
         ----------
+        index : str
+
         query : SearchRequestQuery
 
         pagination : typing.Optional[StartingAfterPaging]
@@ -115,7 +123,7 @@ class AsyncRawComplexClient:
         AsyncPager[Conversation]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "conversations/search",
+            f"{jsonable_encoder(index)}/conversations/search",
             method="POST",
             json={
                 "pagination": convert_and_respect_annotation_metadata(
@@ -149,6 +157,7 @@ class AsyncRawComplexClient:
 
                     async def _get_next():
                         return await self.search(
+                            index,
                             query=query,
                             pagination=pagination,
                             request_options=request_options,

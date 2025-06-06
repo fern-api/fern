@@ -31,7 +31,7 @@
     "@fern-api/logger": "workspace:*",
     "@fern-api/logging-execa": "workspace:*",
     "@fern-api/typescript-base": "workspace:*",
-    "@fern-fern/ir-sdk": "57.0.0",
+    "@fern-fern/ir-sdk": "58.2.0",
     "@fern-typescript/fetcher": "workspace:*",
     "@fern-typescript/zurg": "workspace:*",
     "decompress": "^4.2.1",

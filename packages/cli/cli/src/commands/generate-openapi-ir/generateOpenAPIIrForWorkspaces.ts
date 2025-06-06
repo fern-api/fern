@@ -37,7 +37,7 @@ export async function generateOpenAPIIrForWorkspaces({
                 });
 
                 const irOutputFilePath = AbsoluteFilePath.of(path.resolve(irFilepath));
-                const openApiIrJson = await serialization.OpenApiIntermediateRepresentation.jsonOrThrow(openAPIIr, {
+                const openApiIrJson = serialization.OpenApiIntermediateRepresentation.jsonOrThrow(openAPIIr, {
                     skipValidation: true
                 });
                 await streamObjectToFile(irOutputFilePath, openApiIrJson, { pretty: true });

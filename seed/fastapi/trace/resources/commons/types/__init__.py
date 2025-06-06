@@ -28,4 +28,32 @@ from .test_case_with_expected_result import TestCaseWithExpectedResult
 from .user_id import UserId
 from .variable_type import VariableType
 from .variable_value import VariableValue
-__all__ = ["BinaryTreeNodeAndTreeValue", "BinaryTreeNodeValue", "BinaryTreeValue", "DebugKeyValuePairs", "DebugMapValue", "DebugVariableValue", "DoublyLinkedListNodeAndListValue", "DoublyLinkedListNodeValue", "DoublyLinkedListValue", "FileInfo", "GenericValue", "KeyValuePair", "Language", "ListType", "MapType", "MapValue", "NodeId", "ProblemId", "SinglyLinkedListNodeAndListValue", "SinglyLinkedListNodeValue", "SinglyLinkedListValue", "TestCase", "TestCaseWithExpectedResult", "UserId", "VariableType", "VariableValue"]
+
+__all__ = [
+    "BinaryTreeNodeAndTreeValue",
+    "BinaryTreeNodeValue",
+    "BinaryTreeValue",
+    "DebugKeyValuePairs",
+    "DebugMapValue",
+    "DebugVariableValue",
+    "DoublyLinkedListNodeAndListValue",
+    "DoublyLinkedListNodeValue",
+    "DoublyLinkedListValue",
+    "FileInfo",
+    "GenericValue",
+    "KeyValuePair",
+    "Language",
+    "ListType",
+    "MapType",
+    "MapValue",
+    "NodeId",
+    "ProblemId",
+    "SinglyLinkedListNodeAndListValue",
+    "SinglyLinkedListNodeValue",
+    "SinglyLinkedListValue",
+    "TestCase",
+    "TestCaseWithExpectedResult",
+    "UserId",
+    "VariableType",
+    "VariableValue",
+]

@@ -3,6 +3,7 @@
  */
 
 import * as core from "./core/index.js";
+import { mergeHeaders } from "./core/headers.js";
 import * as SeedPackageYml from "./api/index.js";
 import urlJoin from "url-join";
 import * as errors from "./errors/index.js";
@@ -14,6 +15,8 @@ export declare namespace SeedPackageYmlClient {
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
         id: string;
+        /** Additional headers to include in requests. */
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 
     export interface RequestOptions {
@@ -24,14 +27,30 @@ export declare namespace SeedPackageYmlClient {
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
         /** Additional headers to include in the request. */
-        headers?: Record<string, string>;
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 }
 
 export class SeedPackageYmlClient {
+    protected readonly _options: SeedPackageYmlClient.Options;
     protected _service: Service | undefined;
 
-    constructor(protected readonly _options: SeedPackageYmlClient.Options) {}
+    constructor(_options: SeedPackageYmlClient.Options) {
+        this._options = {
+            ..._options,
+            headers: mergeHeaders(
+                {
+                    "X-Fern-Language": "JavaScript",
+                    "X-Fern-SDK-Name": "@fern/package-yml",
+                    "X-Fern-SDK-Version": "0.0.1",
+                    "User-Agent": "@fern/package-yml/0.0.1",
+                    "X-Fern-Runtime": core.RUNTIME.type,
+                    "X-Fern-Runtime-Version": core.RUNTIME.version,
+                },
+                _options?.headers,
+            ),
+        };
+    }
 
     public get service(): Service {
         return (this._service ??= new Service(this._options));
@@ -65,15 +84,7 @@ export class SeedPackageYmlClient {
                 `/${encodeURIComponent(this._options.id)}/`,
             ),
             method: "POST",
-            headers: {
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/package-yml",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/package-yml/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ...requestOptions?.headers,
-            },
+            headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
             contentType: "application/json",
             requestType: "json",
             body: request,

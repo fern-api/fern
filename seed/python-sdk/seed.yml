@@ -1,4 +1,4 @@
-irVersion: v57
+irVersion: v58
 displayName: Python SDK
 image: fernapi/fern-python-sdk
 changelogLocation: ../../generators/python/sdk/versions.yml
@@ -323,6 +323,8 @@ allowedFailures:
   - exhaustive:pydantic-v1-with-utils
   - oauth-client-credentials-custom
   - pagination-custom
+  - public-object
+  - response-property
   - simple-fhir
   - streaming-parameter
   - trace

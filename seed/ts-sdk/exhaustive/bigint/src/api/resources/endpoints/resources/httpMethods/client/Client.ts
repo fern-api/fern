@@ -3,6 +3,7 @@
  */
 
 import * as core from "../../../../../../core/index.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/headers.js";
 import urlJoin from "url-join";
 import * as errors from "../../../../../../errors/index.js";
 import * as SeedExhaustive from "../../../../../index.js";
@@ -13,6 +14,8 @@ export declare namespace HttpMethods {
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
+        /** Additional headers to include in requests. */
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 
     export interface RequestOptions {
@@ -23,12 +26,16 @@ export declare namespace HttpMethods {
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
         /** Additional headers to include in the request. */
-        headers?: Record<string, string>;
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 }
 
 export class HttpMethods {
-    constructor(protected readonly _options: HttpMethods.Options) {}
+    protected readonly _options: HttpMethods.Options;
+
+    constructor(_options: HttpMethods.Options) {
+        this._options = _options;
+    }
 
     /**
      * @param {string} id
@@ -52,18 +59,11 @@ export class HttpMethods {
                 `/http-methods/${encodeURIComponent(id)}`,
             ),
             method: "GET",
-            headers: {
-                Authorization: await this._getAuthorizationHeader(),
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/exhaustive",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/exhaustive/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ...requestOptions?.headers,
-            },
-            contentType: "application/json",
-            requestType: "json",
+            headers: mergeHeaders(
+                this._options?.headers,
+                mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+                requestOptions?.headers,
+            ),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -124,16 +124,11 @@ export class HttpMethods {
                 "/http-methods",
             ),
             method: "POST",
-            headers: {
-                Authorization: await this._getAuthorizationHeader(),
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/exhaustive",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/exhaustive/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ...requestOptions?.headers,
-            },
+            headers: mergeHeaders(
+                this._options?.headers,
+                mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+                requestOptions?.headers,
+            ),
             contentType: "application/json",
             requestType: "json",
             body: request,
@@ -203,16 +198,11 @@ export class HttpMethods {
                 `/http-methods/${encodeURIComponent(id)}`,
             ),
             method: "PUT",
-            headers: {
-                Authorization: await this._getAuthorizationHeader(),
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/exhaustive",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/exhaustive/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ...requestOptions?.headers,
-            },
+            headers: mergeHeaders(
+                this._options?.headers,
+                mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+                requestOptions?.headers,
+            ),
             contentType: "application/json",
             requestType: "json",
             body: request,
@@ -269,7 +259,7 @@ export class HttpMethods {
      *         uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
      *         base64: "SGVsbG8gd29ybGQh",
      *         list: ["list", "list"],
-     *         set: new Set(["set"]),
+     *         set: ["set"],
      *         map: {
      *             1: "map"
      *         },
@@ -296,16 +286,11 @@ export class HttpMethods {
                 `/http-methods/${encodeURIComponent(id)}`,
             ),
             method: "PATCH",
-            headers: {
-                Authorization: await this._getAuthorizationHeader(),
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/exhaustive",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/exhaustive/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ...requestOptions?.headers,
-            },
+            headers: mergeHeaders(
+                this._options?.headers,
+                mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+                requestOptions?.headers,
+            ),
             contentType: "application/json",
             requestType: "json",
             body: request,
@@ -367,18 +352,11 @@ export class HttpMethods {
                 `/http-methods/${encodeURIComponent(id)}`,
             ),
             method: "DELETE",
-            headers: {
-                Authorization: await this._getAuthorizationHeader(),
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/exhaustive",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/exhaustive/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ...requestOptions?.headers,
-            },
-            contentType: "application/json",
-            requestType: "json",
+            headers: mergeHeaders(
+                this._options?.headers,
+                mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+                requestOptions?.headers,
+            ),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

@@ -2,5 +2,32 @@
 
 # isort: skip_file
 
-from .types import CreateProblemError, CreateProblemRequest, CreateProblemResponse, GenericCreateProblemError, GetDefaultStarterFilesResponse, ProblemDescription, ProblemDescriptionBoard, ProblemFiles, ProblemInfo, UpdateProblemResponse, VariableTypeAndName
-__all__ = ["CreateProblemError", "CreateProblemRequest", "CreateProblemResponse", "GenericCreateProblemError", "GetDefaultStarterFilesResponse", "ProblemDescription", "ProblemDescriptionBoard", "ProblemFiles", "ProblemInfo", "UpdateProblemResponse", "VariableTypeAndName"]
+from .service import GetDefaultStarterFilesRequest
+from .types import (
+    CreateProblemError,
+    CreateProblemRequest,
+    CreateProblemResponse,
+    GenericCreateProblemError,
+    GetDefaultStarterFilesResponse,
+    ProblemDescription,
+    ProblemDescriptionBoard,
+    ProblemFiles,
+    ProblemInfo,
+    UpdateProblemResponse,
+    VariableTypeAndName,
+)
+
+__all__ = [
+    "CreateProblemError",
+    "CreateProblemRequest",
+    "CreateProblemResponse",
+    "GenericCreateProblemError",
+    "GetDefaultStarterFilesRequest",
+    "GetDefaultStarterFilesResponse",
+    "ProblemDescription",
+    "ProblemDescriptionBoard",
+    "ProblemFiles",
+    "ProblemInfo",
+    "UpdateProblemResponse",
+    "VariableTypeAndName",
+]

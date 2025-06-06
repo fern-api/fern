@@ -21,6 +21,7 @@ public class Example {
             .build();
 
         client.echo(
+            "id",
             EchoRequest
                 .builder()
                 .name("name")

@@ -11,4 +11,15 @@ from .named_metadata import NamedMetadata
 from .optional_metadata import OptionalMetadata
 from .request import Request
 from .type_with_optional_union import TypeWithOptionalUnion
-__all__ = ["Key", "KeyType", "Metadata", "MetadataUnion", "MyUnion", "NamedMetadata", "OptionalMetadata", "Request", "TypeWithOptionalUnion"]
+
+__all__ = [
+    "Key",
+    "KeyType",
+    "Metadata",
+    "MetadataUnion",
+    "MyUnion",
+    "NamedMetadata",
+    "OptionalMetadata",
+    "Request",
+    "TypeWithOptionalUnion",
+]

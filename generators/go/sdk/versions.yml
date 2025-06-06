@@ -1,3 +1,12 @@
+# yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.2.0
+  changelogEntry:
+    - summary: |
+        Add support for generating `README.md` when filesystem publishing is enabled.
+      type: feat
+  createdAt: '2025-06-03'
+  irVersion: 58
+
 - version: 1.1.0
   changelogEntry:
     - summary: |

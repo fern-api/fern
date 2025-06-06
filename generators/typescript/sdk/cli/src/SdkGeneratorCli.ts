@@ -1,11 +1,5 @@
 import { AbstractGeneratorCli } from "@fern-typescript/abstract-generator-cli";
-import {
-    JavaScriptRuntime,
-    NpmPackage,
-    PersistedTypescriptProject,
-    ScriptsManager,
-    fixImportsForEsm
-} from "@fern-typescript/commons";
+import { JavaScriptRuntime, NpmPackage, PersistedTypescriptProject, fixImportsForEsm } from "@fern-typescript/commons";
 import { GeneratorContext } from "@fern-typescript/contexts";
 import { SdkGenerator } from "@fern-typescript/sdk-generator";
 
@@ -72,7 +66,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             packageJson: parsed?.packageJson,
             publishToJsr: parsed?.publishToJsr ?? false,
             omitUndefined: parsed?.omitUndefined ?? true,
-            generateWireTests: parsed?.generateWireTests ?? false,
+            generateWireTests: parsed?.generateWireTests ?? true,
             noScripts: parsed?.noScripts ?? false,
             useBigInt: parsed?.useBigInt ?? false,
             useLegacyExports: parsed?.useLegacyExports ?? false
@@ -104,7 +98,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             intermediateRepresentation,
             context: generatorContext,
             npmPackage,
-            generateJestTests: config.output.mode.type === "github",
+            generateJestTests: this.shouldGenerateJestTests({ ir: intermediateRepresentation, config }),
             rawConfig: config,
             config: {
                 runScripts: !customConfig.noScripts,
@@ -158,7 +152,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 omitUndefined: customConfig.omitUndefined ?? true,
                 useBigInt: customConfig.useBigInt ?? false,
                 enableInlineTypes: customConfig.enableInlineTypes ?? true,
-                useLegacyExports
+                useLegacyExports,
+                generateWireTests: customConfig.generateWireTests ?? false
             }
         });
         const typescriptProject = await sdkGenerator.generate();
@@ -169,11 +164,6 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
         });
 
         await this.postProcess(persistedTypescriptProject, customConfig);
-
-        const scriptsManager = new ScriptsManager();
-        await scriptsManager.copyScripts({
-            pathToRoot: persistedTypescriptProject.getRootDirectory()
-        });
 
         return persistedTypescriptProject;
     }
@@ -215,7 +205,27 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
               ? "dev"
               : "prod";
     }
+
     private customConfigWithOverrides(customConfig: SdkCustomConfig): SdkCustomConfig {
         return { ...customConfig, ...this.configOverrides };
+    }
+
+    private shouldGenerateJestTests({
+        ir,
+        config
+    }: {
+        ir: IntermediateRepresentation;
+        config: FernGeneratorExec.GeneratorConfig;
+    }): boolean {
+        const hasGitHubOutputMode = config.output.mode.type === "github";
+        const publishConfig = ir.publishConfig;
+        switch (publishConfig?.type) {
+            case "filesystem":
+                return publishConfig.generateFullProject || hasGitHubOutputMode;
+            case "github":
+            case "direct":
+            default:
+                return hasGitHubOutputMode;
+        }
     }
 }

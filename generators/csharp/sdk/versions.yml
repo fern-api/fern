@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # - version: 2.0.0
 #   createdAt: '2024-10-09'
 #   changelogEntry:
@@ -6,6 +7,24 @@
 #         The C# SDK now uses forward-compatible enums which are not compatible with the previously generated enums.
 #         Set `enable-forward-compatible-enums` to `false` in the configuration to generate the old enums.
 #   irVersion: 53
+- version: 1.18.0
+  changelogEntry:
+    - summary: Add support for HTTP HEAD method
+      type: feat
+  createdAt: '2025-06-05'
+  irVersion: 58
+- version: 1.17.6
+  changelogEntry:
+    - summary: Fix generated pagination endpoints that include path parameters.
+      type: fix
+  createdAt: '2025-06-05'
+  irVersion: 58
+- version: 1.17.5
+  changelogEntry:
+    - summary: Update the IR to v58.
+      type: internal
+  createdAt: '2025-06-03'
+  irVersion: 58
 - version: 1.17.4
   changelogEntry:
     - summary: Mock the OAuth endpoint for the wire tests.

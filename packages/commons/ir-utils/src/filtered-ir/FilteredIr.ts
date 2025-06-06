@@ -26,7 +26,7 @@ export interface FilteredIr {
     hasRequestProperty(endpoint: string, property: string): boolean;
     hasQueryParameter(endpoint: string, parameter: string): boolean;
     hasSubpackageId(subpackageId: string): boolean;
-    hasChannel(channel: WebSocketChannel): boolean;
+    hasChannel(channelId: WebSocketChannelId): boolean;
 }
 
 export class FilteredIrImpl implements FilteredIr {
@@ -161,9 +161,9 @@ export class FilteredIrImpl implements FilteredIr {
         return true;
     }
 
-    public hasChannel(channel: WebSocketChannel): boolean {
-        if (channel.name.originalName) {
-            return this.channels.has(channel.name.originalName);
+    public hasChannel(channelId: WebSocketChannelId): boolean {
+        if (channelId) {
+            return this.channels.has(channelId);
         }
         return true;
     }

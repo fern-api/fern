@@ -408,6 +408,10 @@ export class IrGraph {
             });
         }
 
+        for (const parameter of channel.queryParameters) {
+            populateReferencesFromTypeReference(parameter.valueType, referencedTypes, referencedSubpackages);
+        }
+
         referencedSubpackages.add(filepath);
         this.channels[channelId] = {
             channelId,

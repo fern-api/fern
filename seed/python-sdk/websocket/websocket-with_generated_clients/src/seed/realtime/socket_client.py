@@ -14,19 +14,21 @@ from .types.send_event import SendEvent
 from .types.send_event_2 import SendEvent2
 
 RealtimeSocketClientResponse = typing.Union[ReceiveEvent, ReceiveEvent2, ReceiveEvent3]
+
+
 class AsyncRealtimeSocketClient(EventEmitterMixin):
     def __init__(self, *, websocket: websockets.WebSocketClientProtocol):
         super().__init__()
         self._websocket = websocket
-    
+
     async def __aiter__(self):
         async for message in self._websocket:
             yield parse_obj_as(RealtimeSocketClientResponse, message)  # type: ignore
-    
+
     async def start_listening(self):
         """
         Start listening for messages on the websocket connection.
-        
+
         Emits events in the following order:
         - EventType.OPEN when connection is established
         - EventType.MESSAGE for each message received
@@ -42,28 +44,28 @@ class AsyncRealtimeSocketClient(EventEmitterMixin):
             self._emit(EventType.ERROR, exc)
         finally:
             self._emit(EventType.CLOSE, None)
-    
+
     async def send_send(self, message: SendEvent) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a SendEvent.
         """
         await self._send_model(message)
-    
+
     async def send_send_2(self, message: SendEvent2) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a SendEvent2.
         """
         await self._send_model(message)
-    
+
     async def recv(self) -> RealtimeSocketClientResponse:
         """
         Receive a message from the websocket connection.
         """
         data = await self._websocket.recv()
         return parse_obj_as(RealtimeSocketClientResponse, data)  # type: ignore
-    
+
     async def _send(self, data: typing.Any) -> None:
         """
         Send a message to the websocket connection.
@@ -71,25 +73,27 @@ class AsyncRealtimeSocketClient(EventEmitterMixin):
         if isinstance(data, dict):
             data = json.dumps(data)
         await self._websocket.send(data)
-    
+
     async def _send_model(self, data: typing.Any) -> None:
         """
         Send a Pydantic model to the websocket connection.
         """
         await self._send(data.dict())
+
+
 class RealtimeSocketClient(EventEmitterMixin):
     def __init__(self, *, websocket: websockets_sync_connection.Connection):
         super().__init__()
         self._websocket = websocket
-    
+
     def __iter__(self):
         for message in self._websocket:
             yield parse_obj_as(RealtimeSocketClientResponse, message)  # type: ignore
-    
+
     def start_listening(self):
         """
         Start listening for messages on the websocket connection.
-        
+
         Emits events in the following order:
         - EventType.OPEN when connection is established
         - EventType.MESSAGE for each message received
@@ -105,28 +109,28 @@ class RealtimeSocketClient(EventEmitterMixin):
             self._emit(EventType.ERROR, exc)
         finally:
             self._emit(EventType.CLOSE, None)
-    
+
     def send_send(self, message: SendEvent) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a SendEvent.
         """
         self._send_model(message)
-    
+
     def send_send_2(self, message: SendEvent2) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a SendEvent2.
         """
         self._send_model(message)
-    
+
     def recv(self) -> RealtimeSocketClientResponse:
         """
         Receive a message from the websocket connection.
         """
         data = self._websocket.recv()
         return parse_obj_as(RealtimeSocketClientResponse, data)  # type: ignore
-    
+
     def _send(self, data: typing.Any) -> None:
         """
         Send a message to the websocket connection.
@@ -134,7 +138,7 @@ class RealtimeSocketClient(EventEmitterMixin):
         if isinstance(data, dict):
             data = json.dumps(data)
         self._websocket.send(data)
-    
+
     def _send_model(self, data: typing.Any) -> None:
         """
         Send a Pydantic model to the websocket connection.

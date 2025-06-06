@@ -11,6 +11,8 @@ export declare namespace Realtime {
         environment: core.Supplier<string>;
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
+        /** Additional headers to include in requests. */
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 
     export interface ConnectArgs {
@@ -26,27 +28,31 @@ export declare namespace Realtime {
 }
 
 export class Realtime {
-    constructor(protected readonly _options: Realtime.Options) {}
+    protected readonly _options: Realtime.Options;
+
+    constructor(_options: Realtime.Options) {
+        this._options = _options;
+    }
 
     public async connect(args: Realtime.ConnectArgs = {}): Promise<RealtimeSocket> {
         const queryParams: Record<string, unknown> = {};
-        if (args.model != null) {
-            queryParams["model"] = args.model;
+        if (args["model"] != null) {
+            queryParams["model"] = args["model"];
         }
 
-        if (args.temperature != null) {
-            queryParams["temperature"] = args.temperature;
+        if (args["temperature"] != null) {
+            queryParams["temperature"] = args["temperature"];
         }
 
         let websocketHeaders: Record<string, unknown> = {};
         websocketHeaders = {
             ...websocketHeaders,
-            ...args.headers,
+            ...args["headers"],
         };
         const socket = new core.ReconnectingWebSocket(
-            `${(await core.Supplier.get(this._options.baseUrl)) ?? (await core.Supplier.get(this._options.environment))}/realtime/?${qs.stringify(queryParams, { arrayFormat: "repeat" })}`,
+            `${(await core.Supplier.get(this._options["baseUrl"])) ?? (await core.Supplier.get(this._options["environment"]))}/realtime/?${qs.stringify(queryParams, { arrayFormat: "repeat" })}`,
             [],
-            { debug: args.debug ?? false, maxRetries: args.reconnectAttempts ?? 30 },
+            { debug: args["debug"] ?? false, maxRetries: args["reconnectAttempts"] ?? 30 },
             websocketHeaders,
         );
         return new RealtimeSocket({ socket });

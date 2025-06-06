@@ -4,19 +4,27 @@ subtitle: Allow users to seamlessly navigate between different products you offe
 ---
 
 <Frame>
-![A dropdown of the available products](product-switcher.avif)
+  <video 
+    style={{ aspectRatio: '16 / 9', width: '100%' }}
+    autoPlay
+    muted
+    loop
+  >
+    <source src="product-switcher.mp4" type="video/mp4" />
+  </video>
 </Frame>
 
 <Card href="https://developers.webflow.com/data/docs/getting-started-apps">
   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', height: '1.5em' }}>
-    <img src="logos/Webflow.svg" alt="Webflow" width="24px" height="24px" class="logo-icon" style={{ marginRight: '10px', marginLeft: '0' }} />
-    <div className="text-body text-base font-semibold" style={{ color: 'var(--color-black)'}}>View Webflow's Product Switcher</div>
+    <img src="logos/webflow-light.svg" alt="Webflow" width="24px" height="24px" class="logo-icon dark:hidden" style={{ marginRight: '10px', marginLeft: '0' }} />
+    <img src="logos/webflow-dark.svg" alt="Webflow" width="24px" height="24px" class="logo-icon hidden dark:block" style={{ marginRight: '10px', marginLeft: '0' }} />
+    <div className="text-body text-base font-semibold" style={{ color: 'var(--grayscale-a12)'}}>View Webflow's Product Switcher</div>
   </div>
 </Card>
 
 Each product can contain its own distinct versions, tabs, sections, pages, and API references. Products can share content as well. 
 
-**To add products to your docs:**
+## Add Products to Your Docs
 
 <Steps>
 ### Define your products
@@ -140,3 +148,67 @@ products:
 ### Remove extra `navigation` from `docs.yml`
 If your `docs.yml` file includes a `navigation` field or a `tabs` field, be sure to remove. Those fields should now belong in the product-specific `.yml` files. 
 </Steps>
+
+## Customizing Selector Styling
+
+You can directly customize the appearance of the product and version selectors by targeting their CSS classes:
+
+- `fern-product-selector` - Controls the styling of the product selector
+- `fern-version-selector` - Controls the styling of the version selector
+
+<Frame>
+  <img src="webflow-dropdown-selector.avif" alt="Example of a styled product selector" />
+</Frame>
+
+### Common Styling Adjustments
+
+**Adjusting positioning:**
+Use `transform: translateY(Npx)` to adjust the vertical positioning of the selectors. This ensures that the product and version selectors match the line height of your logo for better visual alignment.
+
+**Enhancing visual prominence:**
+You can modify the border radius and add borders to make the selectors more prominent and better integrated with your site's design aesthetic.
+
+```css
+.fern-product-selector {
+  transform: translateY(2px);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+.fern-version-selector {
+  transform: translateY(1px);
+  border-radius: 1000px;
+  border: 1px solid var(--border);
+}
+```
+
+## Customizing Dropdown Styling
+
+The dropdown menus for product and version selectors can be customized using these specific CSS classes:
+
+- `fern-product-selector-radio-group` - Controls the styling of the product dropdown
+- `fern-version-selector-radio-group` - Controls the styling of the version dropdown
+
+<Tabs>
+  <Tab title="Product Selector">
+    <Frame>
+      <img src="webflow-product-selector.avif" alt="Example of a styled product selector" />
+    </Frame>
+
+    ### Common Styling Adjustments
+
+    **Enable a grid layout for the dropdown:**
+    ```css
+    .fern-product-selector-radio-group {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }  
+    ```
+  </Tab>
+  <Tab title="Version Selector">
+    <Frame>
+      <img src="webflow-version-selector.avif" alt="Example of a styled version selector" />
+    </Frame>
+  </Tab>
+</Tabs>

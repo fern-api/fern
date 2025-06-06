@@ -16,7 +16,6 @@ COPY generators/typescript/utils/core-utilities/auth/src/ /assets/auth
 COPY generators/typescript/utils/core-utilities/zurg/src/ /assets/zurg
 COPY generators/typescript/utils/core-utilities/base/src/ /assets/base-core-utilities
 COPY generators/typescript/utils/core-utilities/utils/src/ /assets/utils
-COPY generators/typescript/utils/scripts/ /assets/scripts
 
 COPY generators/typescript/sdk/cli/browser-docker/dist/browserCli.cjs /browserCli.cjs
 

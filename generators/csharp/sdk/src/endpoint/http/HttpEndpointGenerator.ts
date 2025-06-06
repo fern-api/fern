@@ -1,6 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 import { csharp } from "@fern-api/csharp-codegen";
 
+import { FernIr } from "@fern-fern/ir-sdk";
 import {
     CursorPagination,
     ExampleEndpointCall,
@@ -282,7 +283,11 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             return csharp.codeblock((writer) => {
                 writer.writeLine(`if (${RESPONSE_VARIABLE_NAME}.StatusCode is >= 200 and < 400) {`);
                 writer.indent();
-                writer.writeLine("return;");
+                if (endpoint.method === FernIr.HttpMethod.Head) {
+                    writer.writeLine("return response.Raw.Headers;");
+                } else {
+                    writer.writeLine("return;");
+                }
                 writer.dedent();
                 writer.writeLine("}");
             });
@@ -375,7 +380,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         const return_ = this.getPagerReturnType(endpoint);
         const snippet = this.getHttpPagerMethodSnippet({ endpoint });
         const body = csharp.codeblock((writer) => {
-            const requestParam = endpointSignatureInfo.requestParameter;
+            const requestParameter = endpointSignatureInfo.requestParameter;
             const unpagedEndpointResponseType = getEndpointReturnType({ context: this.context, endpoint });
             if (!unpagedEndpointResponseType) {
                 throw new Error("Internal error; a response type is required for pagination endpoints");
@@ -384,8 +389,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             switch (endpoint.pagination.type) {
                 case "offset":
                     this.generateOffsetMethodBody({
+                        endpointSignatureInfo,
                         pagination: endpoint.pagination,
-                        requestParam,
+                        requestParameter,
                         requestOptionsType,
                         unpagedEndpointResponseType,
                         itemType,
@@ -396,8 +402,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     break;
                 case "cursor":
                     this.generateCursorMethodBody({
+                        endpointSignatureInfo,
                         pagination: endpoint.pagination,
-                        requestParam,
+                        requestParameter,
                         requestOptionsType,
                         unpagedEndpointResponseType,
                         itemType,
@@ -432,8 +439,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     }
 
     private generateOffsetMethodBody({
+        endpointSignatureInfo,
         pagination,
-        requestParam,
+        requestParameter,
         requestOptionsType,
         unpagedEndpointResponseType,
         itemType,
@@ -441,8 +449,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         optionsParamName,
         endpoint
     }: {
+        endpointSignatureInfo: EndpointSignatureInfo;
         pagination: OffsetPagination;
-        requestParam?: csharp.Parameter;
+        requestParameter?: csharp.Parameter;
         requestOptionsType: csharp.Type | csharp.TypeParameter;
         unpagedEndpointResponseType: csharp.Type;
         itemType: csharp.Type;
@@ -450,7 +459,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         optionsParamName: string;
         endpoint: HttpEndpoint;
     }) {
-        if (!requestParam) {
+        if (!requestParameter) {
             throw new Error("Request parameter is required for pagination");
         }
 
@@ -471,7 +480,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
               })
             : csharp.Type.object();
         const offsetPagerClassReference = this.context.getOffsetPagerClassReference({
-            requestType: requestParam.type,
+            requestType: requestParameter.type,
             requestOptionsType,
             responseType: unpagedEndpointResponseType,
             offsetType,
@@ -485,9 +494,12 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 method: "CreateInstanceAsync",
                 async: true,
                 arguments_: [
-                    csharp.codeblock(requestParam.name),
+                    csharp.codeblock(requestParameter.name),
                     csharp.codeblock(optionsParamName),
-                    csharp.codeblock(this.getUnpagedEndpointMethodName(endpoint)),
+                    this.generateUnpagedEndpointCallback({
+                        requestParameter,
+                        endpoint
+                    }),
                     csharp.codeblock(`request => ${this.nullableDotGet("request", pagination.page)} ?? 0`),
                     csharp.codeblock((writer) => {
                         writer.writeLine("(request, offset) => {");
@@ -513,9 +525,40 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         writer.writeTextStatement("return pager");
     }
 
+    private generateUnpagedEndpointCallback({
+        requestParameter,
+        endpoint
+    }: {
+        requestParameter: csharp.Parameter | undefined;
+        endpoint: HttpEndpoint;
+    }): csharp.CodeBlock {
+        const { pathParameters } = this.getAllPathParameters({
+            endpoint,
+            requestParameter
+        });
+        if (pathParameters.length === 0) {
+            return csharp.codeblock(this.getUnpagedEndpointMethodName(endpoint));
+        }
+        return csharp.codeblock((writer) => {
+            writer.write("(request, options, cancellationToken) => ");
+            writer.writeNode(
+                csharp.invokeMethod({
+                    method: this.getUnpagedEndpointMethodName(endpoint),
+                    arguments_: [
+                        ...pathParameters.map((parameter) => csharp.codeblock(parameter.name)),
+                        csharp.codeblock("request"),
+                        csharp.codeblock("options"),
+                        csharp.codeblock("cancellationToken")
+                    ]
+                })
+            );
+        });
+    }
+
     private generateCursorMethodBody({
+        endpointSignatureInfo,
         pagination,
-        requestParam,
+        requestParameter,
         requestOptionsType,
         unpagedEndpointResponseType,
         itemType,
@@ -523,8 +566,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         optionsParamName,
         endpoint
     }: {
+        endpointSignatureInfo: EndpointSignatureInfo;
         pagination: CursorPagination;
-        requestParam?: csharp.Parameter;
+        requestParameter?: csharp.Parameter;
         requestOptionsType: csharp.Type | csharp.TypeParameter;
         unpagedEndpointResponseType: csharp.Type | csharp.TypeParameter;
         itemType: csharp.Type | csharp.TypeParameter;
@@ -532,7 +576,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         optionsParamName: string;
         endpoint: HttpEndpoint;
     }) {
-        if (!requestParam) {
+        if (!requestParameter) {
             throw new Error("Request parameter is required for pagination");
         }
 
@@ -547,7 +591,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             reference: pagination.next.property.valueType
         });
         const cursorPagerClassReference = this.context.getCursorPagerClassReference({
-            requestType: requestParam.type,
+            requestType: requestParameter.type,
             requestOptionsType,
             responseType: unpagedEndpointResponseType,
             cursorType,
@@ -560,9 +604,12 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 method: "CreateInstanceAsync",
                 async: true,
                 arguments_: [
-                    csharp.codeblock(requestParam.name),
+                    csharp.codeblock(requestParameter.name),
                     csharp.codeblock(optionsParamName),
-                    csharp.codeblock(this.getUnpagedEndpointMethodName(endpoint)),
+                    this.generateUnpagedEndpointCallback({
+                        requestParameter,
+                        endpoint
+                    }),
                     csharp.codeblock((writer) => {
                         writer.writeLine("(request, cursor) => {");
                         writer.indent();

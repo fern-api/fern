@@ -3,6 +3,7 @@
  */
 
 import * as core from "./core/index.js";
+import { mergeHeaders } from "./core/headers.js";
 import * as errors from "./errors/index.js";
 import { A } from "./api/resources/a/client/Client.js";
 import { Folder } from "./api/resources/folder/client/Client.js";
@@ -12,6 +13,8 @@ export declare namespace SeedApiClient {
         environment: core.Supplier<string>;
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
+        /** Additional headers to include in requests. */
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 
     export interface RequestOptions {
@@ -22,15 +25,31 @@ export declare namespace SeedApiClient {
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
         /** Additional headers to include in the request. */
-        headers?: Record<string, string>;
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 }
 
 export class SeedApiClient {
+    protected readonly _options: SeedApiClient.Options;
     protected _a: A | undefined;
     protected _folder: Folder | undefined;
 
-    constructor(protected readonly _options: SeedApiClient.Options) {}
+    constructor(_options: SeedApiClient.Options) {
+        this._options = {
+            ..._options,
+            headers: mergeHeaders(
+                {
+                    "X-Fern-Language": "JavaScript",
+                    "X-Fern-SDK-Name": "@fern/folders",
+                    "X-Fern-SDK-Version": "0.0.1",
+                    "User-Agent": "@fern/folders/0.0.1",
+                    "X-Fern-Runtime": core.RUNTIME.type,
+                    "X-Fern-Runtime-Version": core.RUNTIME.version,
+                },
+                _options?.headers,
+            ),
+        };
+    }
 
     public get a(): A {
         return (this._a ??= new A(this._options));
@@ -56,17 +75,7 @@ export class SeedApiClient {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                 (await core.Supplier.get(this._options.environment)),
             method: "POST",
-            headers: {
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/folders",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/folders/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ...requestOptions?.headers,
-            },
-            contentType: "application/json",
-            requestType: "json",
+            headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

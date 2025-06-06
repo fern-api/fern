@@ -1,0 +1,393 @@
+# yaml-language-server: $schema=https://meta.open-rpc.org/
+
+$schema: https://meta.open-rpc.org/
+openrpc: 1.2.4
+info:
+  title: Alchemy Gas Manager Coverage API JSON-RPC Specification
+  description: A specification of the standard JSON-RPC methods for Gas Manager Coverage API.
+  version: 0.0.0
+servers:
+  - url: https://eth-mainnet.g.alchemy.com/v2
+    name: Mainnet
+  - url: https://eth-sepolia.g.alchemy.com/v2
+    name: Sepolia
+methods:
+  - name: "alchemy_requestGasAndPaymasterAndData"
+    description: |
+      Requests gas and coverage for a `UserOperation`. Returns `paymasterAndData` and gas parameters if approved, errors if not. Optionally accepts fee parameter overrides to be used in the `UserOperation`.
+    params:
+      - name: "policyId"
+        required: true
+        description: "The Gas Policy ID or list of Gas Policy IDs."
+        schema:
+          oneOf:
+            - type: "string"
+              title: "policyId"
+              format: "uuid"
+            - type: "array"
+              title: "policyId Array"
+              items:
+                type: "string"
+                format: "uuid"
+      - name: "entryPoint"
+        required: true
+        description: The entrypoint address the request should be sent through. This MUST be one of the entry points returned by the `supportedEntryPoints` RPC call and match the version of the user operation in the `userOperation` field.
+        schema:
+          type: "string"
+          pattern: "^0[xX][0-9a-fA-F]*$"
+      - name: "dummySignature"
+        required: true
+        description: |
+          Dummy signature for the operation. This is useful for estimating gas costs.
+            <Warning>
+              This endpoint requires a dummy signature in the `userOp`. Check our [FAQs](/docs/reference/account-abstraction-faq#signatures) to learn what a dummy signature is and which dummy signature you should use.
+            </Warning>
+        schema:
+          type: "string"
+      - name: "userOperation"
+        required: true
+        description: An object containing optional gas parameters, `paymasterAndData`, and signature fields. It can be either a v0.6 or v0.7 user operation but must match the version of the entry point at the specified `entryPoint`.
+        schema:
+          title: "User Operation, either v0.6 or v0.7 (missing signature, paymasterData, and gas fields)"
+          oneOf:
+            - type: "object"
+              title: "User Operation v0.6"
+              properties:
+                sender:
+                  title: "hex encoded address"
+                  type: "string"
+                  pattern: "^0x[0-9a-fA-F]{40}$"
+                  description: "The account making the operation"
+                nonce:
+                  title: "hex encoded unsigned integer"
+                  type: "string"
+                  pattern: "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                  description: "Anti-replay parameter; used as salt for first-time account creation"
+                initCode:
+                  title: "hex encoded bytes"
+                  type: "string"
+                  pattern: "^0x[0-9a-f]*$"
+                  description: "The initCode of the account (needed if the account is not yet on-chain and needs creation)"
+                callData:
+                  title: "hex encoded bytes"
+                  type: "string"
+                  pattern: "^0x[0-9a-f]*$"
+                  description: "Encoded data for the primary function call or operation"
+                callGasLimit:
+                  type: "string"
+                  description: "Gas allocated for the main execution call"
+                verificationGasLimit:
+                  type: "string"
+                  description: "Gas allocated for verification"
+                preVerificationGas:
+                  type: "string"
+                  description: "Gas for pre-verification execution and calldata"
+                maxFeePerGas:
+                  type: "string"
+                  description: "Maximum fee per gas (EIP-1559)"
+                maxPriorityFeePerGas:
+                  type: "string"
+                  description: "Max priority fee per gas (EIP-1559)"
+            - type: "object"
+              title: "User Operation v0.7"
+              properties:
+                sender:
+                  title: "hex encoded address"
+                  type: "string"
+                  pattern: "^0x[0-9a-fA-F]{40}$"
+                  description: "Account initiating operation"
+                nonce:
+                  title: "hex encoded unsigned integer"
+                  type: "string"
+                  pattern: "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                  description: "Account nonce or creation salt"
+                callData:
+                  title: "hex encoded bytes"
+                  type: "string"
+                  pattern: "^0x[0-9a-f]*$"
+                  description: "Data for operation call"
+                callGasLimit:
+                  type: "string"
+                  description: "Gas allocated for call"
+                verificationGasLimit:
+                  type: "string"
+                  description: "Gas allocated for verification"
+                maxFeePerGas:
+                  type: "string"
+                  description: "Max fee per gas (EIP-1559)"
+                maxPriorityFeePerGas:
+                  type: "string"
+                  description: "Priority fee per gas (EIP-1559)"
+                paymasterVerificationGasLimit:
+                  type: "string"
+                  description: "Paymaster verification gas limit"
+                factory:
+                  title: "hex encoded address"
+                  type: "string"
+                  pattern: "^0x[0-9a-fA-F]{40}$"
+                  description: "The account factory address (needed if and only if the account is not yet on-chain and needs to be created)"
+                factoryData:
+                  title: "hex encoded bytes"
+                  type: "string"
+                  pattern: "^0x[0-9a-f]*$"
+                  description: "Data for the account factory (only if the account factory exists)"
+                preVerificationGas:
+                  type: "string"
+                  description: "The amount of gas to pay for to compensate the bundler for pre-verification execution and calldata"
+                paymasterPostOpGasLimit:
+                  type: "string"
+                  description: "The amount of gas to allocate for the paymaster post-op code (only if a paymaster exists)"
+      - name: "overrides"
+        description: |
+          Optional fields that override our gas and fee estimates. Use this parameter to optionally override available fields: `maxFeePerGas`, `maxPriorityFeePerGas`, `callGasLimit`, `verificationGasLimit`, or `preVerificationGas`. 
+
+          This will apply either:
+          - absolutes overrides (using a hex string) simply overriding estimated values entirely OR
+          - multiplier overrides relative to our estimates (in the format of { "multiplier": number } with max precision of 4 decimal places). For example, if the override value is { multiplier: 1.1 } for the `maxPriorityFeePerGas` field, then a 1.1 multiplier, or a 10% increase, is applied to the estimated `maxPriorityFeePerGas` of the userOp.
+
+          These overrides will be applied for every userOp sent with this provider. A higher buffer may give userOps a better chance to mine if the L1/L2 gas and fees change.
+
+          ```json
+          "overrides": {
+            "maxFeePerGas": "hex string" | { "multiplier": number },
+            "maxPriorityFeePerGas": "hex string" | { "multiplier": number },
+            "callGasLimit": "hex string" | { "multiplier": number },
+            "verificationGasLimit": "hex string" | { "multiplier": number },
+            "preVerificationGas": "hex string" | { "multiplier": number },
+          }
+          ```
+
+          <Warning>
+            Previous override using "percentage" has been deprecated in favor of "multiplier" values
+          </Warning>
+        schema:
+          type: "object"
+          properties:
+            maxFeePerGas:
+              oneOf:
+                - type: "string"
+                  description: "Hex string."
+                - type: "object"
+                  properties:
+                    multiplier:
+                      type: "number"
+                  description: "Multiplier value."
+            maxPriorityFeePerGas:
+              oneOf:
+                - type: "string"
+                  description: "Hex string."
+                - type: "object"
+                  properties:
+                    multiplier:
+                      type: "number"
+                  description: "Multiplier value."
+            callGasLimit:
+              oneOf:
+                - type: "string"
+                  description: "Hex string."
+                - type: "object"
+                  properties:
+                    multiplier:
+                      type: "number"
+                  description: "Multiplier value."
+            verificationGasLimit:
+              oneOf:
+                - type: "string"
+                  description: "Hex string."
+                - type: "object"
+                  properties:
+                    multiplier:
+                      type: "number"
+                  description: "Multiplier value."
+            preVerificationGas:
+              oneOf:
+                - type: "string"
+                  description: "Hex string."
+                - type: "object"
+                  properties:
+                    multiplier:
+                      type: "number"
+                  description: "Multiplier value."
+      - name: "stateOverrideSet"
+        description: |
+          Optional.Allows changes to the state of a contract before executing the call. For example, you can modify variable values (like balances or approvals) for that call without changing the contract itself on the blockchain. 
+
+          In more technical terms, the state override set is an optional parameter that allows executing the call against a modified chain state. It is an address-to-state mapping, where each entry specifies some state to be overridden prior to executing the call.
+        schema:
+          type: "object"
+          properties:
+            balance:
+              type: "string"
+              description: "Fake balance to set for the account before executing the call (<= 32 bytes)"
+            nonce:
+              type: "string"
+              description: Fake nonce to set for the account before executing the call (<= 8 bytes).
+            code:
+              type: "string"
+              description: "Fake EVM bytecode to inject into the account before executing the call."
+            state:
+              type: "object"
+              description: "Fake key-value mapping to override all slots in the account storage before executing the call."
+            stateDiff:
+              type: "object"
+              description: "Fake key-value mapping to override individual slots in the account storage before executing the call."
+      - name: "webhookData"
+        description: "Additional data you wish to include in the request, such as proof of humanity."
+        schema:
+          type: "string"
+    result:
+      name: "Asset changes"
+      description: "The transformed response object that wraps the original gas and paymaster response. It includes an array of asset change objects, a gasUsed field, and an error field."
+      schema:
+        type: "object"
+        required: ["entrypointV06Response", "entrypointV07Response"]
+        properties:
+          entrypointV06Response:
+            title: "Entrypoint v0.6 Response"
+            type: "object"
+            properties:
+              paymasterAndData:
+                type: "string"
+                description: "The 0x‑prefixed hex string for the user to put into the UO's paymasterAndData field. Contains gas manager address, sigTimeRange, and secp256k1 signature."
+              callGasLimit:
+                type: "string"
+                description: "The amount of gas to allocate for the main execution call."
+              verificationGasLimit:
+                type: "string"
+                description: "The amount of gas to allocate for the verification step."
+              preVerificationGas:
+                type: "string"
+                description: "The amount of gas to compensate the bundler for pre-verification execution and calldata."
+              maxFeePerGas:
+                type: "string"
+                description: "The maximum fee per gas to pay for the execution of this operation (similar to EIP-1559 max_fee_per_gas)."
+              maxPriorityFeePerGas:
+                type: "string"
+                description: "Maximum priority fee per gas (similar to EIP-1559 max_priority_fee_per_gas)."
+          entrypointV07Response:
+            title: "Entrypoint v0.7 Response"
+            type: "object"
+            properties:
+              paymaster:
+                type: "string"
+                description: "The paymaster address used in the operation."
+              paymasterData:
+                type: "string"
+                description: "The data for the paymaster in the operation."
+              callGasLimit:
+                type: "string"
+                description: "The amount of gas to allocate for the main execution call."
+              verificationGasLimit:
+                type: "string"
+                description: "The amount of gas to allocate for the verification step."
+              preVerificationGas:
+                type: "string"
+                description: "The amount of gas to compensate the bundler for pre-verification execution and calldata."
+              maxFeePerGas:
+                type: "string"
+                description: "The maximum fee per gas to pay for the execution of this operation (similar to EIP-1559 max_fee_per_gas)."
+              maxPriorityFeePerGas:
+                type: "string"
+                description: "Maximum priority fee per gas (similar to EIP-1559 max_priority_fee_per_gas)."
+              paymasterVerificationGasLimit:
+                type: "string"
+                description: "The gas limit for paymaster verification."
+              paymasterPostOpGasLimit:
+                type: "string"
+                description: "The gas limit for paymaster post-operation."
+    examples:
+      - name: "alchemy_requestGasAndPaymasterAndData example"
+        params:
+          - name: "params"
+            value:
+              webhookData: "example webhook data"
+              policyId: "69d524a7-e932-4214-8673-dcdcba31bb42"
+              entryPoint: "0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789"
+              dummySignature: "0xfffffffffffffffffffffffffffffff0000000000000000000000000000000007aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa1c"
+              userOperation:
+                sender: "0x1234567890123456789012345678901234567890"
+                nonce: "0x1"
+                callData: "0xabcdef"
+                callGasLimit: "0x5208"
+                verificationGasLimit: "0x5208"
+                preVerificationGas: "0x5208"
+                maxFeePerGas: "0x1"
+                maxPriorityFeePerGas: "0x1"
+        result:
+          name: "alchemy_requestGasAndPaymasterAndData response"
+          value:
+            entrypointV06Response:
+              paymasterAndData: "0xabcde"
+            entrypointV07Response:
+              paymasterData: "0x67890"
+              paymasterVerificationGasLimit: "0x5208"
+              paymasterPostOpGasLimit: "0x5208"
+
+  - name: "alchemy_requestFeePayer"
+    description: |
+      Requests gas sponsorship for a Solana transaction and returns the **fully-signed** `serializedTransaction` (now containing the fee-payer signature).
+
+      <Note>
+        Request access by reaching out to account-abstraction@alchemy.com
+      </Note>
+    params:
+      - name: policyId
+        required: true
+        description: "The policy ID (_or list of IDs_) that governs sponsorship."
+        schema:
+          oneOf:
+            - title: policyId
+              type: "string"
+              format: "uuid"
+            - title: policyIdArray
+              type: "array"
+              items:
+                type: "string"
+                format: "uuid"
+      - name: serializedTransaction
+        required: true
+        description: |
+          The unsigned transaction produced by `tx.serialize()`.
+          It may already contain a `feePayer`; the service will overwrite it
+          with the sponsoring account and add the fee-payer signature.
+        schema:
+          type: "string"
+          pattern: "^[A-Za-z0-9+/]+={0,2}$"
+      - name: webhookData
+        description: >
+          Optional metadata (e.g. proof-of-humanity) that is forwarded to any
+          policy-level webhooks.
+        schema:
+          type: "string"
+    result:
+      name: "Sponsored transaction wrapper"
+      description: >
+        Object containing the **fully-signed** transaction ready for
+        `sendRawTransaction`.
+      schema:
+        type: "object"
+        required: ["serializedTransaction"]
+        properties:
+          serializedTransaction:
+            title: "base-64-encoded Solana transaction"
+            type: "string"
+            description: >
+              The transaction after the service sets the `feePayer` field and
+              adds the fee-payer signature.
+    servers:
+      [
+        { "url": "https://solana-mainnet.g.alchemy.com/v2", "name": "Mainnet" },
+        { "url": "https://solana-devnet.g.alchemy.com/v2", "name": "Solana Devnet" },
+      ]
+    examples:
+      - name: "alchemy_requestFeePayer example"
+        params:
+          - name: "sponsorshipRequest"
+            value:
+              policyId: "69d524a7-e932-4214-8673-dcdcba31bb42"
+              serializedTransaction: "AgICAQMEBQYHCAkKCwwNDg8BCg==" # unsigned tx
+              webhookData: "user-liveness-proof"
+        result:
+          name: "Sponsored transaction wrapper"
+          value:
+            serializedTransaction: "AQIDBAUGBwgJCgsMDQ4PEA==" # signed tx

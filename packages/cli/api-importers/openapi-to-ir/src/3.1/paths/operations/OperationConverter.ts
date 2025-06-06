@@ -555,7 +555,7 @@ export class OperationConverter extends AbstractOperationConverter {
             httpPath.head +
             httpPath.parts
                 .map((part) => {
-                    const pathParamValue = pathParameters[part.pathParameter] ?? part.pathParameter;
+                    const pathParamValue = pathParameters[part.pathParameter]?.toString() ?? part.pathParameter;
                     return `${pathParamValue}${part.tail}`;
                 })
                 .join("")

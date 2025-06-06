@@ -50,8 +50,16 @@ async function updateFileContents(file) {
     let newContent = content;
     // Update each extension type defined in the map
     for (const [oldExt, newExt] of Object.entries(extensionMap)) {
-        const regex = new RegExp(`(import|export)(.+from\\s+['"])(\\.\\.?\\/[^'"]+)(\\${oldExt})(['"])`, "g");
-        newContent = newContent.replace(regex, `$1$2$3${newExt}$5`);
+        // Handle static imports/exports
+        const staticRegex = new RegExp(`(import|export)(.+from\\s+['"])(\\.\\.?\\/[^'"]+)(\\${oldExt})(['"])`, "g");
+        newContent = newContent.replace(staticRegex, `$1$2$3${newExt}$5`);
+
+        // Handle dynamic imports (yield import, await import, regular import())
+        const dynamicRegex = new RegExp(
+            `(yield\\s+import|await\\s+import|import)\\s*\\(\\s*['"](\\.\\.\?\\/[^'"]+)(\\${oldExt})['"]\\s*\\)`,
+            "g",
+        );
+        newContent = newContent.replace(dynamicRegex, `$1("$2${newExt}")`);
     }
 
     if (content !== newContent) {

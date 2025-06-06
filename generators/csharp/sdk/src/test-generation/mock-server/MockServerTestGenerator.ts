@@ -3,6 +3,7 @@ import { CSharpFile, FileGenerator, convertExampleTypeReferenceToTypeReference }
 import { csharp } from "@fern-api/csharp-codegen";
 import { RelativeFilePath, join } from "@fern-api/fs-utils";
 
+import { FernIr } from "@fern-fern/ir-sdk";
 import {
     ExampleEndpointCall,
     ExampleResponse,
@@ -58,7 +59,6 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
             parentClassReference: this.context.getBaseMockServerTestClassReference()
         });
         this.exampleEndpointCalls.forEach((example, index) => {
-            let responseSupported = false;
             let jsonExampleResponse: unknown | undefined = undefined;
             if (example.response != null) {
                 if (example.response.type !== "ok" || example.response.value.type !== "body") {
@@ -67,10 +67,22 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
                 jsonExampleResponse = example.response.value.value?.jsonExample;
             }
             const responseBodyType = this.endpoint.response?.body?.type;
-            // whether or not we support this response type in this generator; the example json may
-            // have a response that we can return, but our generated method actually returns void
-            responseSupported =
+
+            let isAsyncTest = false;
+            const isPaginationEndpoint = !!this.endpoint.pagination;
+            if (isPaginationEndpoint) {
+                isAsyncTest = true;
+            }
+            const isHeadEndpoint =
+                this.endpoint.method === FernIr.HttpMethod.Head && this.endpoint.response?.body == null;
+            if (isHeadEndpoint) {
+                isAsyncTest = true;
+            }
+            const isSupportedResponse =
                 jsonExampleResponse != null && (responseBodyType === "json" || responseBodyType === "text");
+            if (isSupportedResponse) {
+                isAsyncTest = true;
+            }
             const methodBody = csharp.codeblock((writer) => {
                 writer.writeNode(this.mockEndpointGenerator.generateForExample(this.endpoint, example));
 
@@ -104,12 +116,19 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
                     writer.dedent();
                     writer.newLine();
                     writer.write("}");
+                } else if (isHeadEndpoint) {
+                    isAsyncTest = true;
+                    writer.write("var headers = ");
+                    writer.writeNodeStatement(endpointSnippet);
+                    writer.writeTextStatement("Assert.That(headers, Is.Not.Null)");
+                    writer.write("Assert.That(headers, Is.InstanceOf<");
+                    writer.writeNode(this.context.getHttpResponseHeadersReference());
+                    writer.writeTextStatement(">())");
                 } else {
-                    if (responseSupported) {
+                    if (isSupportedResponse) {
+                        isAsyncTest = true;
                         writer.write("var response = ");
-                        writer.writeNode(endpointSnippet);
-                        writer.write(";");
-                        writer.newLine();
+                        writer.writeNodeStatement(endpointSnippet);
                         if (responseBodyType === "json") {
                             const responseType = this.getCsharpTypeFromResponse(example.response);
                             const deserializeResponseNode = csharp.invokeMethod({
@@ -163,7 +182,7 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
             testClass.addTestMethod({
                 name: `MockServerTest${testNumber}`,
                 body: methodBody,
-                isAsync: responseSupported
+                isAsync: isAsyncTest
             });
         });
         return new CSharpFile({

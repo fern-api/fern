@@ -4,6 +4,7 @@
 
 import * as core from "../../../../core/index.js";
 import * as SeedBasicAuth from "../../../index.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import urlJoin from "url-join";
 import * as errors from "../../../../errors/index.js";
 
@@ -14,6 +15,8 @@ export declare namespace BasicAuth {
         baseUrl?: core.Supplier<string>;
         username: core.Supplier<string>;
         password: core.Supplier<string>;
+        /** Additional headers to include in requests. */
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 
     export interface RequestOptions {
@@ -24,12 +27,16 @@ export declare namespace BasicAuth {
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
         /** Additional headers to include in the request. */
-        headers?: Record<string, string>;
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 }
 
 export class BasicAuth {
-    constructor(protected readonly _options: BasicAuth.Options) {}
+    protected readonly _options: BasicAuth.Options;
+
+    constructor(_options: BasicAuth.Options) {
+        this._options = _options;
+    }
 
     /**
      * GET request with basic auth scheme
@@ -55,18 +62,11 @@ export class BasicAuth {
                 "basic-auth",
             ),
             method: "GET",
-            headers: {
-                Authorization: await this._getAuthorizationHeader(),
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/basic-auth",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/basic-auth/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ...requestOptions?.headers,
-            },
-            contentType: "application/json",
-            requestType: "json",
+            headers: mergeHeaders(
+                this._options?.headers,
+                mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+                requestOptions?.headers,
+            ),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -140,16 +140,11 @@ export class BasicAuth {
                 "basic-auth",
             ),
             method: "POST",
-            headers: {
-                Authorization: await this._getAuthorizationHeader(),
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/basic-auth",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/basic-auth/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ...requestOptions?.headers,
-            },
+            headers: mergeHeaders(
+                this._options?.headers,
+                mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+                requestOptions?.headers,
+            ),
             contentType: "application/json",
             requestType: "json",
             body: request,

@@ -3,4 +3,5 @@
 # isort: skip_file
 
 from .resources import User, UserId, user
+
 __all__ = ["User", "UserId", "user"]

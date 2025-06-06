@@ -4,6 +4,7 @@
 
 import * as environments from "./environments.js";
 import * as core from "./core/index.js";
+import { mergeHeaders } from "./core/headers.js";
 import { Ec2 } from "./api/resources/ec2/client/Client.js";
 import { S3 } from "./api/resources/s3/client/Client.js";
 
@@ -15,6 +16,8 @@ export declare namespace SeedMultiUrlEnvironmentClient {
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
         token: core.Supplier<core.BearerToken>;
+        /** Additional headers to include in requests. */
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 
     export interface RequestOptions {
@@ -25,15 +28,31 @@ export declare namespace SeedMultiUrlEnvironmentClient {
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
         /** Additional headers to include in the request. */
-        headers?: Record<string, string>;
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 }
 
 export class SeedMultiUrlEnvironmentClient {
+    protected readonly _options: SeedMultiUrlEnvironmentClient.Options;
     protected _ec2: Ec2 | undefined;
     protected _s3: S3 | undefined;
 
-    constructor(protected readonly _options: SeedMultiUrlEnvironmentClient.Options) {}
+    constructor(_options: SeedMultiUrlEnvironmentClient.Options) {
+        this._options = {
+            ..._options,
+            headers: mergeHeaders(
+                {
+                    "X-Fern-Language": "JavaScript",
+                    "X-Fern-SDK-Name": "@fern/multi-url-environment",
+                    "X-Fern-SDK-Version": "0.0.1",
+                    "User-Agent": "@fern/multi-url-environment/0.0.1",
+                    "X-Fern-Runtime": core.RUNTIME.type,
+                    "X-Fern-Runtime-Version": core.RUNTIME.version,
+                },
+                _options?.headers,
+            ),
+        };
+    }
 
     public get ec2(): Ec2 {
         return (this._ec2 ??= new Ec2(this._options));

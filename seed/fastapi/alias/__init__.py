@@ -3,4 +3,5 @@
 # isort: skip_file
 
 from .types import Object, Type, TypeId
+
 __all__ = ["Object", "Type", "TypeId"]

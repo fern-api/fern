@@ -592,7 +592,7 @@ export class TemplateGenerator {
                           isOptional: true,
                           containerTemplateString: this.getAsNamedParameterTemplate(
                               name,
-                              `new Set([\n${childTabs}${TEMPLATE_SENTINEL}\n${selfTabs}])`
+                              `[\n${childTabs}${TEMPLATE_SENTINEL}\n${selfTabs}]`
                           ),
                           delimiter: `,\n${childTabs}`,
                           innerTemplate,

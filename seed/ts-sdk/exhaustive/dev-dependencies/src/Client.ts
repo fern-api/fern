@@ -3,6 +3,7 @@
  */
 
 import * as core from "./core/index.js";
+import { mergeHeaders } from "./core/headers.js";
 import { Endpoints } from "./api/resources/endpoints/client/Client.js";
 import { InlinedRequests } from "./api/resources/inlinedRequests/client/Client.js";
 import { NoAuth } from "./api/resources/noAuth/client/Client.js";
@@ -15,6 +16,8 @@ export declare namespace FiddleClient {
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
+        /** Additional headers to include in requests. */
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 
     export interface RequestOptions {
@@ -25,18 +28,34 @@ export declare namespace FiddleClient {
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
         /** Additional headers to include in the request. */
-        headers?: Record<string, string>;
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 }
 
 export class FiddleClient {
+    protected readonly _options: FiddleClient.Options;
     protected _endpoints: Endpoints | undefined;
     protected _inlinedRequests: InlinedRequests | undefined;
     protected _noAuth: NoAuth | undefined;
     protected _noReqBody: NoReqBody | undefined;
     protected _reqWithHeaders: ReqWithHeaders | undefined;
 
-    constructor(protected readonly _options: FiddleClient.Options) {}
+    constructor(_options: FiddleClient.Options) {
+        this._options = {
+            ..._options,
+            headers: mergeHeaders(
+                {
+                    "X-Fern-Language": "JavaScript",
+                    "X-Fern-SDK-Name": "@fern/exhaustive",
+                    "X-Fern-SDK-Version": "0.0.1",
+                    "User-Agent": "@fern/exhaustive/0.0.1",
+                    "X-Fern-Runtime": core.RUNTIME.type,
+                    "X-Fern-Runtime-Version": core.RUNTIME.version,
+                },
+                _options?.headers,
+            ),
+        };
+    }
 
     public get endpoints(): Endpoints {
         return (this._endpoints ??= new Endpoints(this._options));

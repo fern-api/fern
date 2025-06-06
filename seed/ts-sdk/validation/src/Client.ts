@@ -3,6 +3,7 @@
  */
 
 import * as core from "./core/index.js";
+import { mergeHeaders } from "./core/headers.js";
 import * as SeedValidation from "./api/index.js";
 import urlJoin from "url-join";
 import * as errors from "./errors/index.js";
@@ -12,6 +13,8 @@ export declare namespace SeedValidationClient {
         environment: core.Supplier<string>;
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
+        /** Additional headers to include in requests. */
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 
     export interface RequestOptions {
@@ -22,12 +25,29 @@ export declare namespace SeedValidationClient {
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
         /** Additional headers to include in the request. */
-        headers?: Record<string, string>;
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 }
 
 export class SeedValidationClient {
-    constructor(protected readonly _options: SeedValidationClient.Options) {}
+    protected readonly _options: SeedValidationClient.Options;
+
+    constructor(_options: SeedValidationClient.Options) {
+        this._options = {
+            ..._options,
+            headers: mergeHeaders(
+                {
+                    "X-Fern-Language": "JavaScript",
+                    "X-Fern-SDK-Name": "@fern/validation",
+                    "X-Fern-SDK-Version": "0.0.1",
+                    "User-Agent": "@fern/validation/0.0.1",
+                    "X-Fern-Runtime": core.RUNTIME.type,
+                    "X-Fern-Runtime-Version": core.RUNTIME.version,
+                },
+                _options?.headers,
+            ),
+        };
+    }
 
     /**
      * @param {SeedValidation.CreateRequest} request
@@ -59,15 +79,7 @@ export class SeedValidationClient {
                 "/create",
             ),
             method: "POST",
-            headers: {
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/validation",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/validation/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ...requestOptions?.headers,
-            },
+            headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
             contentType: "application/json",
             requestType: "json",
             body: request,
@@ -136,18 +148,8 @@ export class SeedValidationClient {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                 (await core.Supplier.get(this._options.environment)),
             method: "GET",
-            headers: {
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/validation",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/validation/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ...requestOptions?.headers,
-            },
-            contentType: "application/json",
+            headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
             queryParameters: _queryParams,
-            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

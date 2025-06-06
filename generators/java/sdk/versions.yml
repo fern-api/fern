@@ -1,3 +1,17 @@
+# yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.37.0
+  changelogEntry:
+    - summary: |
+        Add support for generating a full project in filesystem mode.
+      type: feat
+  createdAt: '2025-06-04'
+  irVersion: 58
+- version: 2.36.5
+  changelogEntry:
+    - summary: Update the IR to v58.
+      type: internal
+  createdAt: '2025-06-03'
+  irVersion: 58
 - changelogEntry:
     - summary: |
         Generates docs for method types.

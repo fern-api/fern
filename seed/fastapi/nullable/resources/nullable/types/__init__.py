@@ -8,4 +8,5 @@ from .status import Status
 from .user import User
 from .user_id import UserId
 from .weird_number import WeirdNumber
+
 __all__ = ["Email", "Metadata", "Status", "User", "UserId", "WeirdNumber"]

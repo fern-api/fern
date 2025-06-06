@@ -3,4 +3,5 @@
 # isort: skip_file
 
 from .resources import MyAlias, MyObject, unknown
+
 __all__ = ["MyAlias", "MyObject", "unknown"]

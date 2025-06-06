@@ -2,23 +2,23 @@
     "endpoints": [
         {
             "id": {
-                "path": "/conversations/search",
+                "path": "/{index}/conversations/search",
                 "method": "POST",
                 "identifierOverride": "endpoint_complex.search"
             },
             "snippet": {
-                "client": "require \"fern_pagination\"\n\npagination = SeedPaginationClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\npagination.complex.search(request: { pagination: { per_page: 1, starting_after: \"starting_after\" }, query: { field: \"field\", operator: EQUALS, value: \"value\" } })",
+                "client": "require \"fern_pagination\"\n\npagination = SeedPaginationClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\npagination.complex.search(index: \"index\", request: { pagination: { per_page: 1, starting_after: \"starting_after\" }, query: { field: \"field\", operator: EQUALS, value: \"value\" } })",
                 "type": "ruby"
             }
         },
         {
             "id": {
-                "path": "/conversations/search",
+                "path": "/{index}/conversations/search",
                 "method": "POST",
                 "identifierOverride": "endpoint_complex.search"
             },
             "snippet": {
-                "client": "require \"fern_pagination\"\n\npagination = SeedPaginationClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\npagination.complex.search(request: { pagination: { per_page: 1, starting_after: \"starting_after\" }, query: { field: \"field\", operator: EQUALS, value: \"value\" } })",
+                "client": "require \"fern_pagination\"\n\npagination = SeedPaginationClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\npagination.complex.search(index: \"index\", request: { pagination: { per_page: 1, starting_after: \"starting_after\" }, query: { field: \"field\", operator: EQUALS, value: \"value\" } })",
                 "type": "ruby"
             }
         },

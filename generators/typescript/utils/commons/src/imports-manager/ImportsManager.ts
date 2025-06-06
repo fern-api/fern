@@ -22,6 +22,10 @@ interface CombinedImportDeclarations {
 export class ImportsManager {
     private imports: Record<ModuleSpecifier, CombinedImportDeclarations> = {};
 
+    public addImportFromRoot(modulePath: string, importDeclaration: ImportDeclaration): void {
+        this.addImport(`@root/${modulePath}`, importDeclaration);
+    }
+
     public addImport(moduleSpecifier: ModuleSpecifier, importDeclaration: ImportDeclaration): void {
         const importsForModuleSpecifier = (this.imports[moduleSpecifier] ??= {
             namespaceImports: new Set(),
@@ -54,7 +58,40 @@ export class ImportsManager {
     }
 
     public writeImportsToSourceFile(sourceFile: SourceFile): void {
-        for (const [moduleSpecifier, combinedImportDeclarations] of Object.entries(this.imports)) {
+        const sourceFileDirPath = sourceFile.getDirectoryPath();
+        const sourcePathSegments = sourceFileDirPath.split("/").filter((segment) => segment.length > 0);
+        for (const [originalModuleSpecifier, combinedImportDeclarations] of Object.entries(this.imports)) {
+            let moduleSpecifier = originalModuleSpecifier;
+            if (moduleSpecifier.startsWith("@root/")) {
+                const targetPath = moduleSpecifier.replace("@root/", "");
+                const targetPathSegments = targetPath.split("/").filter((segment) => segment.length > 0);
+                // Find common prefix
+                let commonPrefixLength = 0;
+                const minLength = Math.min(sourcePathSegments.length, targetPathSegments.length);
+                while (
+                    commonPrefixLength < minLength &&
+                    sourcePathSegments[commonPrefixLength] === targetPathSegments[commonPrefixLength]
+                ) {
+                    commonPrefixLength++;
+                }
+                const upSteps = sourcePathSegments.length - commonPrefixLength;
+                let relativePath;
+                if (upSteps === 0 && targetPathSegments.slice(commonPrefixLength).length === 0) {
+                    // Same directory
+                    relativePath = ".";
+                } else {
+                    relativePath = [...Array(upSteps).fill(".."), ...targetPathSegments.slice(commonPrefixLength)].join(
+                        "/"
+                    );
+
+                    // If there are no ".." segments, add a "./" prefix
+                    if (!relativePath.startsWith("..") && upSteps === 0) {
+                        relativePath = "./" + relativePath;
+                    }
+                }
+                moduleSpecifier = relativePath;
+            }
+
             const namespaceImports = [...combinedImportDeclarations.namespaceImports];
             if (namespaceImports.length > 1) {
                 throw new Error(

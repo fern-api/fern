@@ -6,6 +6,7 @@ import * as core from "../../../../core/index.js";
 import * as SeedQueryParameters from "../../../index.js";
 import * as serializers from "../../../../serialization/index.js";
 import { toJson } from "../../../../core/json.js";
+import { mergeHeaders } from "../../../../core/headers.js";
 import urlJoin from "url-join";
 import * as errors from "../../../../errors/index.js";
 
@@ -14,6 +15,8 @@ export declare namespace User {
         environment: core.Supplier<string>;
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
+        /** Additional headers to include in requests. */
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 
     export interface RequestOptions {
@@ -24,12 +27,16 @@ export declare namespace User {
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
         /** Additional headers to include in the request. */
-        headers?: Record<string, string>;
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 }
 
 export class User {
-    constructor(protected readonly _options: User.Options) {}
+    protected readonly _options: User.Options;
+
+    constructor(_options: User.Options) {
+        this._options = _options;
+    }
 
     /**
      * @param {SeedQueryParameters.GetUsersRequest} request
@@ -40,7 +47,7 @@ export class User {
      *         limit: 1,
      *         id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
      *         date: "2023-01-15",
-     *         deadline: "2024-01-15T09:30:00Z",
+     *         deadline: new Date("2024-01-15T09:30:00.000Z"),
      *         bytes: "SGVsbG8gd29ybGQh",
      *         user: {
      *             name: "name",
@@ -53,7 +60,7 @@ export class User {
      *                 name: "name",
      *                 tags: ["tags", "tags"]
      *             }],
-     *         optionalDeadline: "2024-01-15T09:30:00Z",
+     *         optionalDeadline: new Date("2024-01-15T09:30:00.000Z"),
      *         keyValue: {
      *             "keyValue": "keyValue"
      *         },
@@ -178,18 +185,8 @@ export class User {
                 "/user",
             ),
             method: "GET",
-            headers: {
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/query-parameters",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/query-parameters/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ...requestOptions?.headers,
-            },
-            contentType: "application/json",
+            headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
             queryParameters: _queryParams,
-            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

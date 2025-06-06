@@ -35,14 +35,15 @@ public class RawComplexClient {
         this.clientOptions = clientOptions;
     }
 
-    public SeedPaginationHttpResponse<SyncPagingIterable<Conversation>> search(SearchRequest request) {
-        return search(request, null);
+    public SeedPaginationHttpResponse<SyncPagingIterable<Conversation>> search(String index, SearchRequest request) {
+        return search(index, request, null);
     }
 
     public SeedPaginationHttpResponse<SyncPagingIterable<Conversation>> search(
-            SearchRequest request, RequestOptions requestOptions) {
+            String index, SearchRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegment(index)
                 .addPathSegments("conversations/search")
                 .build();
         RequestBody body;
@@ -84,7 +85,7 @@ public class RawComplexClient {
                 List<Conversation> result = parsedResponse.getConversations();
                 return new SeedPaginationHttpResponse<>(
                         new SyncPagingIterable<Conversation>(
-                                startingAfter.isPresent(), result, () -> search(nextRequest, requestOptions)
+                                startingAfter.isPresent(), result, () -> search(index, nextRequest, requestOptions)
                                         .body()),
                         response);
             }

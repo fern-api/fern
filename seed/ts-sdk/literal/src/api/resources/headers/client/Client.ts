@@ -4,6 +4,7 @@
 
 import * as core from "../../../../core/index.js";
 import * as SeedLiteral from "../../../index.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import urlJoin from "url-join";
 import * as errors from "../../../../errors/index.js";
 
@@ -16,6 +17,8 @@ export declare namespace Headers {
         version?: "02-02-2024";
         /** Override the X-API-Enable-Audit-Logging header */
         auditLogging?: true;
+        /** Additional headers to include in requests. */
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 
     export interface RequestOptions {
@@ -30,12 +33,16 @@ export declare namespace Headers {
         /** Override the X-API-Enable-Audit-Logging header */
         auditLogging?: true;
         /** Additional headers to include in the request. */
-        headers?: Record<string, string>;
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 }
 
 export class Headers {
-    constructor(protected readonly _options: Headers.Options) {}
+    protected readonly _options: Headers.Options;
+
+    constructor(_options: Headers.Options) {
+        this._options = _options;
+    }
 
     /**
      * @param {SeedLiteral.SendLiteralsInHeadersRequest} request
@@ -64,23 +71,16 @@ export class Headers {
                 "headers",
             ),
             method: "POST",
-            headers: {
-                "X-API-Version": requestOptions?.version ?? this._options?.version ?? "02-02-2024",
-                "X-API-Enable-Audit-Logging": (
-                    requestOptions?.auditLogging ??
-                    this._options?.auditLogging ??
-                    true
-                ).toString(),
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/literal",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/literal/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-                "X-Endpoint-Version": "02-12-2024",
-                "X-Async": "true",
-                ...requestOptions?.headers,
-            },
+            headers: mergeHeaders(
+                this._options?.headers,
+                mergeOnlyDefinedHeaders({
+                    "X-Endpoint-Version": "02-12-2024",
+                    "X-Async": "true",
+                    "X-API-Version": requestOptions?.version ?? "02-02-2024",
+                    "X-API-Enable-Audit-Logging": (requestOptions?.auditLogging ?? true).toString(),
+                }),
+                requestOptions?.headers,
+            ),
             contentType: "application/json",
             requestType: "json",
             body: request,
