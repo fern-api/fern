@@ -46606,15 +46606,29 @@
                                           "frame": 42,
                                           "time": 42,
                                           "prob": 42,
-                                          "box": {},
+                                          "box": {
+                                            "x": 42,
+                                            "y": 42,
+                                            "w": 42,
+                                            "h": 42
+                                          },
                                           "emotions": [
-                                            null
+                                            {
+                                              "name": "foo",
+                                              "score": "foo"
+                                            }
                                           ],
                                           "facs": [
-                                            null
+                                            {
+                                              "name": "foo",
+                                              "score": "foo"
+                                            }
                                           ],
                                           "descriptions": [
-                                            null
+                                            {
+                                              "name": "foo",
+                                              "score": "foo"
+                                            }
                                           ]
                                         }
                                       ]
@@ -46628,12 +46642,21 @@
                                       "id": "foo",
                                       "predictions": [
                                         {
-                                          "time": {},
+                                          "time": {
+                                            "begin": 42,
+                                            "end": 42
+                                          },
                                           "emotions": [
-                                            null
+                                            {
+                                              "name": "foo",
+                                              "score": "foo"
+                                            }
                                           ],
                                           "descriptions": [
-                                            null
+                                            {
+                                              "name": "foo",
+                                              "score": "foo"
+                                            }
                                           ]
                                         }
                                       ]
@@ -46651,11 +46674,17 @@
                                       "predictions": [
                                         {
                                           "text": "foo",
-                                          "time": {},
+                                          "time": {
+                                            "begin": 42,
+                                            "end": 42
+                                          },
                                           "confidence": 42,
                                           "speaker_confidence": 42,
                                           "emotions": [
-                                            null
+                                            {
+                                              "name": "foo",
+                                              "score": "foo"
+                                            }
                                           ]
                                         }
                                       ]
@@ -46673,18 +46702,33 @@
                                       "predictions": [
                                         {
                                           "text": "foo",
-                                          "position": {},
-                                          "time": {},
+                                          "position": {
+                                            "begin": 42,
+                                            "end": 42
+                                          },
+                                          "time": {
+                                            "begin": 42,
+                                            "end": 42
+                                          },
                                           "confidence": 42,
                                           "speaker_confidence": 42,
                                           "emotions": [
-                                            null
+                                            {
+                                              "name": "foo",
+                                              "score": "foo"
+                                            }
                                           ],
                                           "sentiment": [
-                                            null
+                                            {
+                                              "name": "foo",
+                                              "score": "foo"
+                                            }
                                           ],
                                           "toxicity": [
-                                            null
+                                            {
+                                              "name": "foo",
+                                              "score": "foo"
+                                            }
                                           ]
                                         }
                                       ]
@@ -46702,16 +46746,25 @@
                                       "predictions": [
                                         {
                                           "entity": "foo",
-                                          "position": {},
+                                          "position": {
+                                            "begin": 42,
+                                            "end": 42
+                                          },
                                           "entity_confidence": 42,
                                           "support": 42,
                                           "uri": "foo",
                                           "link_word": "foo",
-                                          "time": {},
+                                          "time": {
+                                            "begin": 42,
+                                            "end": 42
+                                          },
                                           "confidence": 42,
                                           "speaker_confidence": 42,
                                           "emotions": [
-                                            null
+                                            {
+                                              "name": "foo",
+                                              "score": "foo"
+                                            }
                                           ]
                                         }
                                       ]
@@ -46726,7 +46779,10 @@
                                       "predictions": [
                                         {
                                           "emotions": [
-                                            null
+                                            {
+                                              "name": "foo",
+                                              "score": "foo"
+                                            }
                                           ]
                                         }
                                       ]
@@ -46793,15 +46849,29 @@
                                           "frame": 42,
                                           "time": 42,
                                           "prob": 42,
-                                          "box": {},
+                                          "box": {
+                                            "x": 42,
+                                            "y": 42,
+                                            "w": 42,
+                                            "h": 42
+                                          },
                                           "emotions": [
-                                            null
+                                            {
+                                              "name": "foo",
+                                              "score": "foo"
+                                            }
                                           ],
                                           "facs": [
-                                            null
+                                            {
+                                              "name": "foo",
+                                              "score": "foo"
+                                            }
                                           ],
                                           "descriptions": [
-                                            null
+                                            {
+                                              "name": "foo",
+                                              "score": "foo"
+                                            }
                                           ]
                                         }
                                       ]
@@ -46815,12 +46885,21 @@
                                       "id": "foo",
                                       "predictions": [
                                         {
-                                          "time": {},
+                                          "time": {
+                                            "begin": 42,
+                                            "end": 42
+                                          },
                                           "emotions": [
-                                            null
+                                            {
+                                              "name": "foo",
+                                              "score": "foo"
+                                            }
                                           ],
                                           "descriptions": [
-                                            null
+                                            {
+                                              "name": "foo",
+                                              "score": "foo"
+                                            }
                                           ]
                                         }
                                       ]
@@ -46838,11 +46917,17 @@
                                       "predictions": [
                                         {
                                           "text": "foo",
-                                          "time": {},
+                                          "time": {
+                                            "begin": 42,
+                                            "end": 42
+                                          },
                                           "confidence": 42,
                                           "speaker_confidence": 42,
                                           "emotions": [
-                                            null
+                                            {
+                                              "name": "foo",
+                                              "score": "foo"
+                                            }
                                           ]
                                         }
                                       ]
@@ -46860,18 +46945,33 @@
                                       "predictions": [
                                         {
                                           "text": "foo",
-                                          "position": {},
-                                          "time": {},
+                                          "position": {
+                                            "begin": 42,
+                                            "end": 42
+                                          },
+                                          "time": {
+                                            "begin": 42,
+                                            "end": 42
+                                          },
                                           "confidence": 42,
                                           "speaker_confidence": 42,
                                           "emotions": [
-                                            null
+                                            {
+                                              "name": "foo",
+                                              "score": "foo"
+                                            }
                                           ],
                                           "sentiment": [
-                                            null
+                                            {
+                                              "name": "foo",
+                                              "score": "foo"
+                                            }
                                           ],
                                           "toxicity": [
-                                            null
+                                            {
+                                              "name": "foo",
+                                              "score": "foo"
+                                            }
                                           ]
                                         }
                                       ]
@@ -46889,16 +46989,25 @@
                                       "predictions": [
                                         {
                                           "entity": "foo",
-                                          "position": {},
+                                          "position": {
+                                            "begin": 42,
+                                            "end": 42
+                                          },
                                           "entity_confidence": 42,
                                           "support": 42,
                                           "uri": "foo",
                                           "link_word": "foo",
-                                          "time": {},
+                                          "time": {
+                                            "begin": 42,
+                                            "end": 42
+                                          },
                                           "confidence": 42,
                                           "speaker_confidence": 42,
                                           "emotions": [
-                                            null
+                                            {
+                                              "name": "foo",
+                                              "score": "foo"
+                                            }
                                           ]
                                         }
                                       ]
@@ -46913,7 +47022,10 @@
                                       "predictions": [
                                         {
                                           "emotions": [
-                                            null
+                                            {
+                                              "name": "foo",
+                                              "score": "foo"
+                                            }
                                           ]
                                         }
                                       ]

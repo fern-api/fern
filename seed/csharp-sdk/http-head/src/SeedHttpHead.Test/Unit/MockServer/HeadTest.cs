@@ -1,3 +1,5 @@
+using System.Net.Http.Headers;
+using global::System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace SeedHttpHead.Test.Unit.MockServer;
@@ -6,12 +8,14 @@ namespace SeedHttpHead.Test.Unit.MockServer;
 public class HeadTest : BaseMockServerTest
 {
     [Test]
-    public void MockServerTest()
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         Server
             .Given(WireMock.RequestBuilders.Request.Create().WithPath("/users").UsingHead())
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        Assert.DoesNotThrowAsync(async () => await Client.User.HeadAsync());
+        var headers = await Client.User.HeadAsync();
+        Assert.That(headers, Is.Not.Null);
+        Assert.That(headers, Is.InstanceOf<HttpResponseHeaders>());
     }
 }

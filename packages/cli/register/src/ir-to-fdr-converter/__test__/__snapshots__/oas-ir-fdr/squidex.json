@@ -22847,7 +22847,7 @@
                               "isHalfWidth": true,
                               "editorUrl": "foo",
                               "tags": [
-                                null
+                                "foo"
                               ],
                               "fieldType": "foo"
                             }
@@ -22948,7 +22948,7 @@
                                 "isHalfWidth": true,
                                 "editorUrl": "foo",
                                 "tags": [
-                                  null
+                                  "foo"
                                 ],
                                 "fieldType": "foo"
                               }
@@ -31337,7 +31337,7 @@
                               "isHalfWidth": true,
                               "editorUrl": "foo",
                               "tags": [
-                                null
+                                "foo"
                               ],
                               "fieldType": "foo"
                             }
@@ -31425,7 +31425,7 @@
                                 "isHalfWidth": true,
                                 "editorUrl": "foo",
                                 "tags": [
-                                  null
+                                  "foo"
                                 ],
                                 "fieldType": "foo"
                               }
@@ -31707,7 +31707,7 @@
                               "isHalfWidth": true,
                               "editorUrl": "foo",
                               "tags": [
-                                null
+                                "foo"
                               ],
                               "fieldType": "foo"
                             }
@@ -31795,7 +31795,7 @@
                                 "isHalfWidth": true,
                                 "editorUrl": "foo",
                                 "tags": [
-                                  null
+                                  "foo"
                                 ],
                                 "fieldType": "foo"
                               }
@@ -32037,7 +32037,7 @@
                               "isHalfWidth": true,
                               "editorUrl": "foo",
                               "tags": [
-                                null
+                                "foo"
                               ],
                               "fieldType": "foo"
                             }
@@ -32125,7 +32125,7 @@
                                 "isHalfWidth": true,
                                 "editorUrl": "foo",
                                 "tags": [
-                                  null
+                                  "foo"
                                 ],
                                 "fieldType": "foo"
                               }
@@ -32733,7 +32733,7 @@
                               "isHalfWidth": true,
                               "editorUrl": "foo",
                               "tags": [
-                                null
+                                "foo"
                               ],
                               "fieldType": "foo"
                             }
@@ -32821,7 +32821,7 @@
                                 "isHalfWidth": true,
                                 "editorUrl": "foo",
                                 "tags": [
-                                  null
+                                  "foo"
                                 ],
                                 "fieldType": "foo"
                               }
@@ -33082,7 +33082,7 @@
                               "isHalfWidth": true,
                               "editorUrl": "foo",
                               "tags": [
-                                null
+                                "foo"
                               ],
                               "fieldType": "foo"
                             }
@@ -33170,7 +33170,7 @@
                                 "isHalfWidth": true,
                                 "editorUrl": "foo",
                                 "tags": [
-                                  null
+                                  "foo"
                                 ],
                                 "fieldType": "foo"
                               }
@@ -33601,7 +33601,7 @@
                               "isHalfWidth": true,
                               "editorUrl": "foo",
                               "tags": [
-                                null
+                                "foo"
                               ],
                               "fieldType": "foo"
                             }
@@ -33689,7 +33689,7 @@
                                 "isHalfWidth": true,
                                 "editorUrl": "foo",
                                 "tags": [
-                                  null
+                                  "foo"
                                 ],
                                 "fieldType": "foo"
                               }
@@ -34074,7 +34074,7 @@
                               "isHalfWidth": true,
                               "editorUrl": "foo",
                               "tags": [
-                                null
+                                "foo"
                               ],
                               "fieldType": "foo"
                             }
@@ -34162,7 +34162,7 @@
                                 "isHalfWidth": true,
                                 "editorUrl": "foo",
                                 "tags": [
-                                  null
+                                  "foo"
                                 ],
                                 "fieldType": "foo"
                               }
@@ -34404,7 +34404,7 @@
                               "isHalfWidth": true,
                               "editorUrl": "foo",
                               "tags": [
-                                null
+                                "foo"
                               ],
                               "fieldType": "foo"
                             }
@@ -34492,7 +34492,7 @@
                                 "isHalfWidth": true,
                                 "editorUrl": "foo",
                                 "tags": [
-                                  null
+                                  "foo"
                                 ],
                                 "fieldType": "foo"
                               }
@@ -35321,7 +35321,7 @@
                               "isHalfWidth": true,
                               "editorUrl": "foo",
                               "tags": [
-                                null
+                                "foo"
                               ],
                               "fieldType": "foo"
                             }
@@ -35409,7 +35409,7 @@
                                 "isHalfWidth": true,
                                 "editorUrl": "foo",
                                 "tags": [
-                                  null
+                                  "foo"
                                 ],
                                 "fieldType": "foo"
                               }
@@ -35650,7 +35650,7 @@
                               "isHalfWidth": true,
                               "editorUrl": "foo",
                               "tags": [
-                                null
+                                "foo"
                               ],
                               "fieldType": "foo"
                             }
@@ -35738,7 +35738,7 @@
                                 "isHalfWidth": true,
                                 "editorUrl": "foo",
                                 "tags": [
-                                  null
+                                  "foo"
                                 ],
                                 "fieldType": "foo"
                               }
@@ -35979,7 +35979,7 @@
                               "isHalfWidth": true,
                               "editorUrl": "foo",
                               "tags": [
-                                null
+                                "foo"
                               ],
                               "fieldType": "foo"
                             }
@@ -36067,7 +36067,7 @@
                                 "isHalfWidth": true,
                                 "editorUrl": "foo",
                                 "tags": [
-                                  null
+                                  "foo"
                                 ],
                                 "fieldType": "foo"
                               }
@@ -36308,7 +36308,7 @@
                               "isHalfWidth": true,
                               "editorUrl": "foo",
                               "tags": [
-                                null
+                                "foo"
                               ],
                               "fieldType": "foo"
                             }
@@ -36396,7 +36396,7 @@
                                 "isHalfWidth": true,
                                 "editorUrl": "foo",
                                 "tags": [
-                                  null
+                                  "foo"
                                 ],
                                 "fieldType": "foo"
                               }

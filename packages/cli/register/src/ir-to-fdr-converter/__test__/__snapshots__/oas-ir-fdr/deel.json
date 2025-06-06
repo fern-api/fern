@@ -30278,15 +30278,15 @@
                                 "requester": {
                                   "id": 409222,
                                   "name": "Mr. Rogers",
-                                  "pic_url": {},
-                                  "profile_type": {},
+                                  "pic_url": "foo",
+                                  "profile_type": "client",
                                   "is_employee": true
                                 },
                                 "reviewer": {
                                   "id": 409222,
                                   "name": "Mr. Rogers",
-                                  "pic_url": {},
-                                  "profile_type": {},
+                                  "pic_url": "foo",
+                                  "profile_type": "client",
                                   "is_employee": true
                                 },
                                 "days_used_start_year": "2.00",
@@ -30297,7 +30297,11 @@
                                 "single_date": "2022-05-24T09:38:46.235Z",
                                 "date_is_half_day": true,
                                 "attachments": {
-                                  "0": {}
+                                  "0": {
+                                    "id": 42,
+                                    "label": "foo",
+                                    "file_extension": "foo"
+                                  }
                                 }
                               },
                               "applied_changes": [
@@ -30313,15 +30317,15 @@
                                   "requester": {
                                     "id": 409222,
                                     "name": "Mr. Rogers",
-                                    "pic_url": {},
-                                    "profile_type": {},
+                                    "pic_url": "foo",
+                                    "profile_type": "client",
                                     "is_employee": true
                                   },
                                   "reviewer": {
                                     "id": 409222,
                                     "name": "Mr. Rogers",
-                                    "pic_url": {},
-                                    "profile_type": {},
+                                    "pic_url": "foo",
+                                    "profile_type": "client",
                                     "is_employee": true
                                   },
                                   "days_used_start_year": "2.00",
@@ -30332,7 +30336,11 @@
                                   "single_date": "2022-05-24T09:38:46.235Z",
                                   "date_is_half_day": true,
                                   "attachments": {
-                                    "0": {}
+                                    "0": {
+                                      "id": 42,
+                                      "label": "foo",
+                                      "file_extension": "foo"
+                                    }
                                   }
                                 }
                               ],
@@ -30406,15 +30414,15 @@
                                 "requester": {
                                   "id": 409222,
                                   "name": "Mr. Rogers",
-                                  "pic_url": {},
-                                  "profile_type": {},
+                                  "pic_url": "foo",
+                                  "profile_type": "client",
                                   "is_employee": true
                                 },
                                 "reviewer": {
                                   "id": 409222,
                                   "name": "Mr. Rogers",
-                                  "pic_url": {},
-                                  "profile_type": {},
+                                  "pic_url": "foo",
+                                  "profile_type": "client",
                                   "is_employee": true
                                 },
                                 "days_used_start_year": "2.00",
@@ -30425,7 +30433,11 @@
                                 "single_date": "2022-05-24T09:38:46.235Z",
                                 "date_is_half_day": true,
                                 "attachments": {
-                                  "0": {}
+                                  "0": {
+                                    "id": 42,
+                                    "label": "foo",
+                                    "file_extension": "foo"
+                                  }
                                 }
                               },
                               "applied_changes": [
@@ -30441,15 +30453,15 @@
                                   "requester": {
                                     "id": 409222,
                                     "name": "Mr. Rogers",
-                                    "pic_url": {},
-                                    "profile_type": {},
+                                    "pic_url": "foo",
+                                    "profile_type": "client",
                                     "is_employee": true
                                   },
                                   "reviewer": {
                                     "id": 409222,
                                     "name": "Mr. Rogers",
-                                    "pic_url": {},
-                                    "profile_type": {},
+                                    "pic_url": "foo",
+                                    "profile_type": "client",
                                     "is_employee": true
                                   },
                                   "days_used_start_year": "2.00",
@@ -30460,7 +30472,11 @@
                                   "single_date": "2022-05-24T09:38:46.235Z",
                                   "date_is_half_day": true,
                                   "attachments": {
-                                    "0": {}
+                                    "0": {
+                                      "id": 42,
+                                      "label": "foo",
+                                      "file_extension": "foo"
+                                    }
                                   }
                                 }
                               ],
@@ -30534,15 +30550,15 @@
                                 "requester": {
                                   "id": 409222,
                                   "name": "Mr. Rogers",
-                                  "pic_url": {},
-                                  "profile_type": {},
+                                  "pic_url": "foo",
+                                  "profile_type": "client",
                                   "is_employee": true
                                 },
                                 "reviewer": {
                                   "id": 409222,
                                   "name": "Mr. Rogers",
-                                  "pic_url": {},
-                                  "profile_type": {},
+                                  "pic_url": "foo",
+                                  "profile_type": "client",
                                   "is_employee": true
                                 },
                                 "days_used_start_year": "2.00",
@@ -30553,7 +30569,11 @@
                                 "single_date": "2022-05-24T09:38:46.235Z",
                                 "date_is_half_day": true,
                                 "attachments": {
-                                  "0": {}
+                                  "0": {
+                                    "id": 42,
+                                    "label": "foo",
+                                    "file_extension": "foo"
+                                  }
                                 }
                               },
                               "applied_changes": [
@@ -30569,15 +30589,15 @@
                                   "requester": {
                                     "id": 409222,
                                     "name": "Mr. Rogers",
-                                    "pic_url": {},
-                                    "profile_type": {},
+                                    "pic_url": "foo",
+                                    "profile_type": "client",
                                     "is_employee": true
                                   },
                                   "reviewer": {
                                     "id": 409222,
                                     "name": "Mr. Rogers",
-                                    "pic_url": {},
-                                    "profile_type": {},
+                                    "pic_url": "foo",
+                                    "profile_type": "client",
                                     "is_employee": true
                                   },
                                   "days_used_start_year": "2.00",
@@ -30588,7 +30608,11 @@
                                   "single_date": "2022-05-24T09:38:46.235Z",
                                   "date_is_half_day": true,
                                   "attachments": {
-                                    "0": {}
+                                    "0": {
+                                      "id": 42,
+                                      "label": "foo",
+                                      "file_extension": "foo"
+                                    }
                                   }
                                 }
                               ],
@@ -30678,15 +30702,15 @@
                                   "requester": {
                                     "id": 409222,
                                     "name": "Mr. Rogers",
-                                    "pic_url": {},
-                                    "profile_type": {},
+                                    "pic_url": "foo",
+                                    "profile_type": "client",
                                     "is_employee": true
                                   },
                                   "reviewer": {
                                     "id": 409222,
                                     "name": "Mr. Rogers",
-                                    "pic_url": {},
-                                    "profile_type": {},
+                                    "pic_url": "foo",
+                                    "profile_type": "client",
                                     "is_employee": true
                                   },
                                   "days_used_start_year": "2.00",
@@ -30697,7 +30721,11 @@
                                   "single_date": "2022-05-24T09:38:46.235Z",
                                   "date_is_half_day": true,
                                   "attachments": {
-                                    "0": {}
+                                    "0": {
+                                      "id": 42,
+                                      "label": "foo",
+                                      "file_extension": "foo"
+                                    }
                                   }
                                 },
                                 "applied_changes": [
@@ -30713,15 +30741,15 @@
                                     "requester": {
                                       "id": 409222,
                                       "name": "Mr. Rogers",
-                                      "pic_url": {},
-                                      "profile_type": {},
+                                      "pic_url": "foo",
+                                      "profile_type": "client",
                                       "is_employee": true
                                     },
                                     "reviewer": {
                                       "id": 409222,
                                       "name": "Mr. Rogers",
-                                      "pic_url": {},
-                                      "profile_type": {},
+                                      "pic_url": "foo",
+                                      "profile_type": "client",
                                       "is_employee": true
                                     },
                                     "days_used_start_year": "2.00",
@@ -30732,7 +30760,11 @@
                                     "single_date": "2022-05-24T09:38:46.235Z",
                                     "date_is_half_day": true,
                                     "attachments": {
-                                      "0": {}
+                                      "0": {
+                                        "id": 42,
+                                        "label": "foo",
+                                        "file_extension": "foo"
+                                      }
                                     }
                                   }
                                 ],
@@ -30806,15 +30838,15 @@
                                   "requester": {
                                     "id": 409222,
                                     "name": "Mr. Rogers",
-                                    "pic_url": {},
-                                    "profile_type": {},
+                                    "pic_url": "foo",
+                                    "profile_type": "client",
                                     "is_employee": true
                                   },
                                   "reviewer": {
                                     "id": 409222,
                                     "name": "Mr. Rogers",
-                                    "pic_url": {},
-                                    "profile_type": {},
+                                    "pic_url": "foo",
+                                    "profile_type": "client",
                                     "is_employee": true
                                   },
                                   "days_used_start_year": "2.00",
@@ -30825,7 +30857,11 @@
                                   "single_date": "2022-05-24T09:38:46.235Z",
                                   "date_is_half_day": true,
                                   "attachments": {
-                                    "0": {}
+                                    "0": {
+                                      "id": 42,
+                                      "label": "foo",
+                                      "file_extension": "foo"
+                                    }
                                   }
                                 },
                                 "applied_changes": [
@@ -30841,15 +30877,15 @@
                                     "requester": {
                                       "id": 409222,
                                       "name": "Mr. Rogers",
-                                      "pic_url": {},
-                                      "profile_type": {},
+                                      "pic_url": "foo",
+                                      "profile_type": "client",
                                       "is_employee": true
                                     },
                                     "reviewer": {
                                       "id": 409222,
                                       "name": "Mr. Rogers",
-                                      "pic_url": {},
-                                      "profile_type": {},
+                                      "pic_url": "foo",
+                                      "profile_type": "client",
                                       "is_employee": true
                                     },
                                     "days_used_start_year": "2.00",
@@ -30860,7 +30896,11 @@
                                     "single_date": "2022-05-24T09:38:46.235Z",
                                     "date_is_half_day": true,
                                     "attachments": {
-                                      "0": {}
+                                      "0": {
+                                        "id": 42,
+                                        "label": "foo",
+                                        "file_extension": "foo"
+                                      }
                                     }
                                   }
                                 ],
@@ -30934,15 +30974,15 @@
                                   "requester": {
                                     "id": 409222,
                                     "name": "Mr. Rogers",
-                                    "pic_url": {},
-                                    "profile_type": {},
+                                    "pic_url": "foo",
+                                    "profile_type": "client",
                                     "is_employee": true
                                   },
                                   "reviewer": {
                                     "id": 409222,
                                     "name": "Mr. Rogers",
-                                    "pic_url": {},
-                                    "profile_type": {},
+                                    "pic_url": "foo",
+                                    "profile_type": "client",
                                     "is_employee": true
                                   },
                                   "days_used_start_year": "2.00",
@@ -30953,7 +30993,11 @@
                                   "single_date": "2022-05-24T09:38:46.235Z",
                                   "date_is_half_day": true,
                                   "attachments": {
-                                    "0": {}
+                                    "0": {
+                                      "id": 42,
+                                      "label": "foo",
+                                      "file_extension": "foo"
+                                    }
                                   }
                                 },
                                 "applied_changes": [
@@ -30969,15 +31013,15 @@
                                     "requester": {
                                       "id": 409222,
                                       "name": "Mr. Rogers",
-                                      "pic_url": {},
-                                      "profile_type": {},
+                                      "pic_url": "foo",
+                                      "profile_type": "client",
                                       "is_employee": true
                                     },
                                     "reviewer": {
                                       "id": 409222,
                                       "name": "Mr. Rogers",
-                                      "pic_url": {},
-                                      "profile_type": {},
+                                      "pic_url": "foo",
+                                      "profile_type": "client",
                                       "is_employee": true
                                     },
                                     "days_used_start_year": "2.00",
@@ -30988,7 +31032,11 @@
                                     "single_date": "2022-05-24T09:38:46.235Z",
                                     "date_is_half_day": true,
                                     "attachments": {
-                                      "0": {}
+                                      "0": {
+                                        "id": 42,
+                                        "label": "foo",
+                                        "file_extension": "foo"
+                                      }
                                     }
                                   }
                                 ],

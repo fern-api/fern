@@ -9,7 +9,14 @@ import * as errors from "../../../../errors/index";
 
 export interface ComplexServiceMethods {
     search(
-        req: express.Request<never, SeedPagination.PaginatedConversationResponse, SeedPagination.SearchRequest, never>,
+        req: express.Request<
+            {
+                index: string;
+            },
+            SeedPagination.PaginatedConversationResponse,
+            SeedPagination.SearchRequest,
+            never
+        >,
         res: {
             send: (responseBody: SeedPagination.PaginatedConversationResponse) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
@@ -40,7 +47,7 @@ export class ComplexService {
     }
 
     public toRouter(): express.Router {
-        this.router.post("/conversations/search", async (req, res, next) => {
+        this.router.post("/:index/conversations/search", async (req, res, next) => {
             const request = serializers.SearchRequest.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
@@ -60,7 +67,7 @@ export class ComplexService {
                         },
                         next,
                     );
-                    if (res.writableEnded) {
+                    if (!res.writableEnded) {
                         next();
                     }
                 } catch (error) {

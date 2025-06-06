@@ -285,7 +285,12 @@ export abstract class AbstractConverterContext<Spec extends object> {
             }
         }
 
-        const keys = (referencePath ?? reference.$ref)
+        const maybeReferenceString = referencePath ?? reference.$ref;
+        if (maybeReferenceString == null || typeof maybeReferenceString !== "string") {
+            return { resolved: false };
+        }
+
+        const keys = maybeReferenceString
             .replace(/^(?:(?:https?:\/\/)?|#?\/?)?/, "")
             .split("/")
             .map((key) => key.replace(/~1/g, "/"));
@@ -658,7 +663,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
     }
 
     public isExternalReference($ref: string): boolean {
-        return $ref.startsWith("http://") || $ref.startsWith("https://");
+        return typeof $ref === "string" && ($ref.startsWith("http://") || $ref.startsWith("https://"));
     }
 
     public isReferenceObjectWithIdentifier(
