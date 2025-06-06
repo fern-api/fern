@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Also add referenced parameter types to the audience-filtered IR.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-06-05"
+  version: 0.63.35
+
+- changelogEntry:
+    - summary: |
         Bump CLI version.
       type: internal
   irVersion: 58
