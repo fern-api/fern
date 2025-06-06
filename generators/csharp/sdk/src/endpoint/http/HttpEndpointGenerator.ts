@@ -1,6 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 import { csharp } from "@fern-api/csharp-codegen";
 
+import { FernIr } from "@fern-fern/ir-sdk";
 import {
     CursorPagination,
     ExampleEndpointCall,
@@ -282,7 +283,11 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             return csharp.codeblock((writer) => {
                 writer.writeLine(`if (${RESPONSE_VARIABLE_NAME}.StatusCode is >= 200 and < 400) {`);
                 writer.indent();
-                writer.writeLine("return;");
+                if (endpoint.method === FernIr.HttpMethod.Head) {
+                    writer.writeLine("return response.Raw.Headers;");
+                } else {
+                    writer.writeLine("return;");
+                }
                 writer.dedent();
                 writer.writeLine("}");
             });

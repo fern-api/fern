@@ -1,8 +1,7 @@
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Threading;
-using global::System.Threading.Tasks;
-using global::System.Threading.Tasks;
 using SeedHttpHead.Core;
 
 namespace SeedHttpHead;
@@ -19,7 +18,7 @@ public partial class UserClient
     /// <example><code>
     /// await client.User.HeadAsync();
     /// </code></example>
-    public async global::System.Threading.Tasks.Task HeadAsync(
+    public async Task<HttpResponseHeaders> HeadAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -38,7 +37,7 @@ public partial class UserClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            return;
+            return response.Raw.Headers;
         }
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();

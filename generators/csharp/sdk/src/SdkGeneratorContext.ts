@@ -325,6 +325,13 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         });
     }
 
+    public getHttpResponseHeadersReference(): csharp.ClassReference {
+        return csharp.classReference({
+            namespace: "System.Net.Http.Headers",
+            name: "HttpResponseHeaders"
+        });
+    }
+
     public getExceptionHandlerClassReference(): csharp.ClassReference {
         return csharp.classReference({
             name: "ExceptionHandler",
