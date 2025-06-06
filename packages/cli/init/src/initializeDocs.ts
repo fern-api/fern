@@ -72,7 +72,7 @@ function getDocsConfig(organization: string): docsYml.RawSchemas.DocsConfigurati
     };
 }
 
-type KebabCaseExperimentalConfig = Omit<docsYml.RawSchemas.DocsConfiguration, "experimental"> & {
+type KebabCaseExperimentalConfig = {
     experimental: {
         "mdx-components"?: string[];
         "disable-stream-toggle"?: boolean;
@@ -81,7 +81,9 @@ type KebabCaseExperimentalConfig = Omit<docsYml.RawSchemas.DocsConfiguration, "e
     };
 };
 
-function convertExperimentalToKebabCase(config: docsYml.RawSchemas.DocsConfiguration): KebabCaseExperimentalConfig {
+function convertExperimentalToKebabCase(
+    config: docsYml.RawSchemas.DocsConfiguration
+): Omit<docsYml.RawSchemas.DocsConfiguration, "experimental"> & KebabCaseExperimentalConfig {
     const { experimental, ...restConfig } = config;
     const { openapiParserV3 = true, ...restExperimental } = experimental ?? {};
 
