@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 
 import { ErrorCollector } from "@fern-api/v2-importer-commons";
 
+import { getOpenAPISettings } from "../../../../../workspace/commons/src";
 import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
 
 describe("OpenAPIConverterContext3_1", async () => {
@@ -28,7 +29,8 @@ describe("OpenAPIConverterContext3_1", async () => {
                 logger: undefined as any
             }),
             enableUniqueErrorsPerEndpoint: false,
-            generateV1Examples: false
+            generateV1Examples: false,
+            settings: getOpenAPISettings()
         });
 
         const result = await context.resolveMaybeExternalReference<OpenAPIV3_1.SchemaObject>({

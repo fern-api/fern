@@ -18,7 +18,7 @@ export interface OpenAPIDocument {
     value: OpenAPIV3.Document;
     source?: OpenApiIrSource;
     namespace?: string;
-    settings?: ParseOpenAPIOptions;
+    settings: ParseOpenAPIOptions;
 }
 
 export interface AsyncAPIDocument {
@@ -26,7 +26,7 @@ export interface AsyncAPIDocument {
     value: AsyncAPIV2.DocumentV2 | AsyncAPIV3.DocumentV3;
     source?: OpenApiIrSource;
     namespace?: string;
-    settings?: ParseOpenAPIOptions;
+    settings: ParseOpenAPIOptions;
 }
 
 export function parse({

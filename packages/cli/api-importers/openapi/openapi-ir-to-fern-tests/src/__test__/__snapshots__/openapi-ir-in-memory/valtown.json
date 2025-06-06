@@ -3239,5 +3239,25 @@
       "url": "https://api.val.town/documentation",
       "description": "Find more info here"
     }
+  },
+  "settings": {
+    "disableExamples": false,
+    "discriminatedUnionV2": false,
+    "useTitlesAsName": true,
+    "optionalAdditionalProperties": true,
+    "coerceEnumsToLiterals": true,
+    "respectReadonlySchemas": false,
+    "respectNullableSchemas": false,
+    "onlyIncludeReferencedSchemas": false,
+    "inlinePathParameters": false,
+    "preserveSchemaIds": false,
+    "shouldUseUndiscriminatedUnionsWithLiterals": false,
+    "shouldUseIdiomaticRequestNames": false,
+    "objectQueryParameters": false,
+    "asyncApiNaming": "v1",
+    "useBytesForBinaryResponse": false,
+    "respectForwardCompatibleEnums": false,
+    "additionalPropertiesDefaultsTo": false,
+    "typeDatesAsStrings": true
   }
 }

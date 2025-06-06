@@ -5761,5 +5761,25 @@
     "x-resolved-from": "../../banking/tagged-openapi.yaml",
     "x-resolved-at": "2023-03-27T20:06:28.508Z",
     "x-apiture-annotated-at": "2023-03-27T20:06:28.785Z"
+  },
+  "settings": {
+    "disableExamples": false,
+    "discriminatedUnionV2": false,
+    "useTitlesAsName": true,
+    "optionalAdditionalProperties": true,
+    "coerceEnumsToLiterals": true,
+    "respectReadonlySchemas": false,
+    "respectNullableSchemas": false,
+    "onlyIncludeReferencedSchemas": false,
+    "inlinePathParameters": false,
+    "preserveSchemaIds": false,
+    "shouldUseUndiscriminatedUnionsWithLiterals": false,
+    "shouldUseIdiomaticRequestNames": false,
+    "objectQueryParameters": false,
+    "asyncApiNaming": "v1",
+    "useBytesForBinaryResponse": false,
+    "respectForwardCompatibleEnums": false,
+    "additionalPropertiesDefaultsTo": false,
+    "typeDatesAsStrings": true
   }
 }

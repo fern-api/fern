@@ -14,7 +14,7 @@ export class InMemoryOpenAPILoader {
                 openapi: spec.parsed,
                 overrides: spec.overrides
             }),
-            settings: spec.settings != null ? getParseOptions({ overrides: spec.settings }) : undefined
+            settings: getParseOptions({ options: spec.settings })
         };
     }
 

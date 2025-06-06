@@ -89,7 +89,7 @@ export function getParseOptions({
     options,
     overrides
 }: {
-    options?: ParseOpenAPIOptions;
+    options?: Partial<ParseOpenAPIOptions>;
     overrides?: Partial<ParseOpenAPIOptions>;
 }): ParseOpenAPIOptions {
     return {

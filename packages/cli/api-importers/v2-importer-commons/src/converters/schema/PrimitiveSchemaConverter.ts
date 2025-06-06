@@ -4,6 +4,7 @@ import {
     ContainerType,
     IntegerValidationRules,
     Literal,
+    PrimitiveTypeV1,
     PrimitiveTypeV2,
     StringValidationRules,
     TypeReference
@@ -32,6 +33,21 @@ export class PrimitiveSchemaConverter extends AbstractConverter<AbstractConverte
                 if (stringConst != null) {
                     return TypeReference.container(ContainerType.literal(Literal.string(stringConst)));
                 }
+
+                if (this.context.settings.typeDatesAsStrings === false) {
+                    if (this.schema.format === "date") {
+                        return TypeReference.primitive({
+                            v1: PrimitiveTypeV1.Date,
+                            v2: PrimitiveTypeV2.date({})
+                        });
+                    } else if (this.schema.format === "date-time") {
+                        return TypeReference.primitive({
+                            v1: PrimitiveTypeV1.DateTime,
+                            v2: PrimitiveTypeV2.dateTime({})
+                        });
+                    }
+                }
+
                 return TypeReference.primitive({
                     v1: "STRING",
                     v2: PrimitiveTypeV2.string({
