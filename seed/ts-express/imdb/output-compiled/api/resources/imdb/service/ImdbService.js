@@ -76,7 +76,7 @@ class ImdbService {
                         cookie: res.cookie.bind(res),
                         locals: res.locals,
                     }, next);
-                    if (res.writableEnded) {
+                    if (!res.writableEnded) {
                         next();
                     }
                 }
@@ -109,7 +109,7 @@ class ImdbService {
                     cookie: res.cookie.bind(res),
                     locals: res.locals,
                 }, next);
-                if (res.writableEnded) {
+                if (!res.writableEnded) {
                     next();
                 }
             }

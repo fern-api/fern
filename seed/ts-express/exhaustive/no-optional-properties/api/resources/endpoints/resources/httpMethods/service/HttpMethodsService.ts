@@ -126,7 +126,7 @@ export class HttpMethodsService {
                     },
                     next,
                 );
-                if (res.writableEnded) {
+                if (!res.writableEnded) {
                     next();
                 }
             } catch (error) {
@@ -163,7 +163,7 @@ export class HttpMethodsService {
                         },
                         next,
                     );
-                    if (res.writableEnded) {
+                    if (!res.writableEnded) {
                         next();
                     }
                 } catch (error) {
@@ -208,7 +208,7 @@ export class HttpMethodsService {
                         },
                         next,
                     );
-                    if (res.writableEnded) {
+                    if (!res.writableEnded) {
                         next();
                     }
                 } catch (error) {
@@ -253,7 +253,7 @@ export class HttpMethodsService {
                         },
                         next,
                     );
-                    if (res.writableEnded) {
+                    if (!res.writableEnded) {
                         next();
                     }
                 } catch (error) {
@@ -295,7 +295,7 @@ export class HttpMethodsService {
                     },
                     next,
                 );
-                if (res.writableEnded) {
+                if (!res.writableEnded) {
                     next();
                 }
             } catch (error) {
