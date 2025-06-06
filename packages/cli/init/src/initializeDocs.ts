@@ -39,7 +39,7 @@ export async function initializeDocs({
             try {
                 await writeFile(
                     docsYmlPath,
-                    yaml.dump(kebabCaseParserConfig(getDocsConfig(createDirectoryResponse.organization)))
+                    yaml.dump(convertExperimentalToKebabCase(getDocsConfig(createDirectoryResponse.organization)))
                 );
                 taskContext.logger.info(chalk.green("Created docs configuration"));
                 return;
@@ -72,19 +72,24 @@ function getDocsConfig(organization: string): docsYml.RawSchemas.DocsConfigurati
     };
 }
 
-function kebabCaseParserConfig(config: docsYml.RawSchemas.DocsConfiguration): docsYml.RawSchemas.DocsConfiguration & {
-    experimental: docsYml.RawSchemas.ExperimentalConfig & {
+type KebabCaseExperimentalConfig = Omit<docsYml.RawSchemas.DocsConfiguration, "experimental"> & {
+    experimental: {
+        "mdx-components"?: string[];
+        "disable-stream-toggle"?: boolean;
+        "openapi-parser-v2"?: boolean;
         "openapi-parser-v3": boolean;
     };
-} {
-    const enableOpenapiParserV3 = config.experimental?.openapiParserV3 ?? true;
-    const { openapiParserV3: _, ...restExperimental } = config.experimental ?? {};
+};
+
+function convertExperimentalToKebabCase(config: docsYml.RawSchemas.DocsConfiguration): KebabCaseExperimentalConfig {
+    const { experimental, ...restConfig } = config;
+    const { openapiParserV3 = true, ...restExperimental } = experimental ?? {};
 
     return {
-        ...config,
+        ...restConfig,
         experimental: {
             ...restExperimental,
-            "openapi-parser-v3": enableOpenapiParserV3
+            "openapi-parser-v3": openapiParserV3
         }
     };
 }
