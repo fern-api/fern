@@ -26,6 +26,7 @@ func do() () {
     )
     client.Complex.Search(
         context.TODO(),
+        "index",
         &fern.SearchRequest{
             Pagination: &fern.StartingAfterPaging{
                 PerPage: 1,

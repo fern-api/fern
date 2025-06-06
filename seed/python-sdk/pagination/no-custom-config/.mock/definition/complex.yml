@@ -102,7 +102,9 @@ service:
         cursor: $request.pagination.starting_after
         next_cursor: $response.pages.next.starting_after
         results: $response.conversations
-      path: /conversations/search
+      path: /{index}/conversations/search
+      path-parameters: 
+        index: string
       request:
         body:
           type: SearchRequest
