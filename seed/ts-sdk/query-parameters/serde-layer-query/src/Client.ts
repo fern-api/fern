@@ -3,6 +3,7 @@
  */
 
 import * as core from "./core/index.js";
+import { mergeHeaders } from "./core/headers.js";
 import { User } from "./api/resources/user/client/Client.js";
 
 export declare namespace SeedQueryParametersClient {
@@ -10,6 +11,8 @@ export declare namespace SeedQueryParametersClient {
         environment: core.Supplier<string>;
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
+        /** Additional headers to include in requests. */
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 
     export interface RequestOptions {
@@ -20,14 +23,30 @@ export declare namespace SeedQueryParametersClient {
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
         /** Additional headers to include in the request. */
-        headers?: Record<string, string>;
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 }
 
 export class SeedQueryParametersClient {
+    protected readonly _options: SeedQueryParametersClient.Options;
     protected _user: User | undefined;
 
-    constructor(protected readonly _options: SeedQueryParametersClient.Options) {}
+    constructor(_options: SeedQueryParametersClient.Options) {
+        this._options = {
+            ..._options,
+            headers: mergeHeaders(
+                {
+                    "X-Fern-Language": "JavaScript",
+                    "X-Fern-SDK-Name": "@fern/query-parameters",
+                    "X-Fern-SDK-Version": "0.0.1",
+                    "User-Agent": "@fern/query-parameters/0.0.1",
+                    "X-Fern-Runtime": core.RUNTIME.type,
+                    "X-Fern-Runtime-Version": core.RUNTIME.version,
+                },
+                _options?.headers,
+            ),
+        };
+    }
 
     public get user(): User {
         return (this._user ??= new User(this._options));

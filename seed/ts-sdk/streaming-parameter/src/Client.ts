@@ -3,6 +3,7 @@
  */
 
 import * as core from "./core/index.js";
+import { mergeHeaders } from "./core/headers.js";
 import { Dummy } from "./api/resources/dummy/client/Client.js";
 
 export declare namespace SeedStreamingClient {
@@ -10,6 +11,8 @@ export declare namespace SeedStreamingClient {
         environment: core.Supplier<string>;
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
+        /** Additional headers to include in requests. */
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 
     export interface RequestOptions {
@@ -20,14 +23,30 @@ export declare namespace SeedStreamingClient {
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
         /** Additional headers to include in the request. */
-        headers?: Record<string, string>;
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 }
 
 export class SeedStreamingClient {
+    protected readonly _options: SeedStreamingClient.Options;
     protected _dummy: Dummy | undefined;
 
-    constructor(protected readonly _options: SeedStreamingClient.Options) {}
+    constructor(_options: SeedStreamingClient.Options) {
+        this._options = {
+            ..._options,
+            headers: mergeHeaders(
+                {
+                    "X-Fern-Language": "JavaScript",
+                    "X-Fern-SDK-Name": "@fern/streaming-parameter",
+                    "X-Fern-SDK-Version": "0.0.1",
+                    "User-Agent": "@fern/streaming-parameter/0.0.1",
+                    "X-Fern-Runtime": core.RUNTIME.type,
+                    "X-Fern-Runtime-Version": core.RUNTIME.version,
+                },
+                _options?.headers,
+            ),
+        };
+    }
 
     public get dummy(): Dummy {
         return (this._dummy ??= new Dummy(this._options));

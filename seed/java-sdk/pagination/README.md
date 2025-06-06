@@ -26,6 +26,7 @@ public class Example {
             .build();
 
         client.complex().search(
+            "index",
             SearchRequest
                 .builder()
                 .query(

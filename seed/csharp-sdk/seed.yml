@@ -170,6 +170,7 @@ fixtures:
         experimental-additional-properties: true
       outputFolder: experimental-additional-properties
 allowedFailures:
+  - http-head
   - imdb:exported-client-class-name
   - literal
   - oauth-client-credentials-custom

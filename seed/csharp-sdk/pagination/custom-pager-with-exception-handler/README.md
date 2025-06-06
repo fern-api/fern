@@ -20,6 +20,7 @@ using SeedPagination;
 
 var client = new SeedPaginationClient("TOKEN");
 var pager = await client.Complex.SearchAsync(
+    "index",
     new SearchRequest
     {
         Pagination = new StartingAfterPaging { PerPage = 1, StartingAfter = "starting_after" },
@@ -63,6 +64,7 @@ using SeedPagination;
 
 var client = new SeedPaginationClient("TOKEN");
 var pager = await client.Complex.SearchAsync(
+    "index",
     new SearchRequest
     {
         Pagination = new StartingAfterPaging { PerPage = 1, StartingAfter = "starting_after" },

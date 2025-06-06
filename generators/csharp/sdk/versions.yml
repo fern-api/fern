@@ -7,6 +7,12 @@
 #         The C# SDK now uses forward-compatible enums which are not compatible with the previously generated enums.
 #         Set `enable-forward-compatible-enums` to `false` in the configuration to generate the old enums.
 #   irVersion: 53
+- version: 1.17.6
+  changelogEntry:
+    - summary: Fix generated pagination endpoints that include path parameters.
+      type: fix
+  createdAt: '2025-06-05'
+  irVersion: 58
 - version: 1.17.5
   changelogEntry:
     - summary: Update the IR to v58.

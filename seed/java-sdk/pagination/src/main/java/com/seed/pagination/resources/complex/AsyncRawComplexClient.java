@@ -41,14 +41,15 @@ public class AsyncRawComplexClient {
     }
 
     public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<Conversation>>> search(
-            SearchRequest request) {
-        return search(request, null);
+            String index, SearchRequest request) {
+        return search(index, request, null);
     }
 
     public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<Conversation>>> search(
-            SearchRequest request, RequestOptions requestOptions) {
+            String index, SearchRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegment(index)
                 .addPathSegments("conversations/search")
                 .build();
         RequestBody body;
@@ -95,7 +96,7 @@ public class AsyncRawComplexClient {
                         future.complete(new SeedPaginationHttpResponse<>(
                                 new SyncPagingIterable<Conversation>(startingAfter.isPresent(), result, () -> {
                                     try {
-                                        return search(nextRequest, requestOptions)
+                                        return search(index, nextRequest, requestOptions)
                                                 .get()
                                                 .body();
                                     } catch (InterruptedException | ExecutionException e) {

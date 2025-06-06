@@ -1,6 +1,6 @@
 # Reference
 ## Conversations
-<details><summary><code>client.Complex.<a href="/src/SeedPagination/Complex/ComplexClient.cs">SearchAsync</a>(SearchRequest { ... }) -> Pager<Conversation></code></summary>
+<details><summary><code>client.Complex.<a href="/src/SeedPagination/Complex/ComplexClient.cs">SearchAsync</a>(index, SearchRequest { ... }) -> Pager<Conversation></code></summary>
 <dl>
 <dd>
 
@@ -14,6 +14,7 @@
 
 ```csharp
 await client.Complex.SearchAsync(
+    "index",
     new SearchRequest
     {
         Pagination = new StartingAfterPaging { PerPage = 1, StartingAfter = "starting_after" },
@@ -35,6 +36,14 @@ await client.Complex.SearchAsync(
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**index:** `string` 
+    
+</dd>
+</dl>
 
 <dl>
 <dd>

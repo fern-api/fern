@@ -27,12 +27,12 @@ public class AsyncComplexClient {
         return this.rawClient;
     }
 
-    public CompletableFuture<SyncPagingIterable<Conversation>> search(SearchRequest request) {
-        return this.rawClient.search(request).thenApply(response -> response.body());
+    public CompletableFuture<SyncPagingIterable<Conversation>> search(String index, SearchRequest request) {
+        return this.rawClient.search(index, request).thenApply(response -> response.body());
     }
 
     public CompletableFuture<SyncPagingIterable<Conversation>> search(
-            SearchRequest request, RequestOptions requestOptions) {
-        return this.rawClient.search(request, requestOptions).thenApply(response -> response.body());
+            String index, SearchRequest request, RequestOptions requestOptions) {
+        return this.rawClient.search(index, request, requestOptions).thenApply(response -> response.body());
     }
 }

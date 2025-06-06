@@ -19,10 +19,13 @@ export declare namespace Endpoints {
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
+        /** Additional headers to include in requests. */
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 }
 
 export class Endpoints {
+    protected readonly _options: Endpoints.Options;
     protected _container: Container | undefined;
     protected _contentType: ContentType | undefined;
     protected _enum: Enum | undefined;
@@ -33,7 +36,9 @@ export class Endpoints {
     protected _put: Put | undefined;
     protected _union: Union | undefined;
 
-    constructor(protected readonly _options: Endpoints.Options) {}
+    constructor(_options: Endpoints.Options) {
+        this._options = _options;
+    }
 
     public get container(): Container {
         return (this._container ??= new Container(this._options));

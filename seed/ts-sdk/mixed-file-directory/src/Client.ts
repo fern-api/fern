@@ -3,6 +3,7 @@
  */
 
 import * as core from "./core/index.js";
+import { mergeHeaders } from "./core/headers.js";
 import { Organization } from "./api/resources/organization/client/Client.js";
 import { User } from "./api/resources/user/client/Client.js";
 
@@ -11,6 +12,8 @@ export declare namespace SeedMixedFileDirectoryClient {
         environment: core.Supplier<string>;
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
+        /** Additional headers to include in requests. */
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 
     export interface RequestOptions {
@@ -21,15 +24,31 @@ export declare namespace SeedMixedFileDirectoryClient {
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
         /** Additional headers to include in the request. */
-        headers?: Record<string, string>;
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 }
 
 export class SeedMixedFileDirectoryClient {
+    protected readonly _options: SeedMixedFileDirectoryClient.Options;
     protected _organization: Organization | undefined;
     protected _user: User | undefined;
 
-    constructor(protected readonly _options: SeedMixedFileDirectoryClient.Options) {}
+    constructor(_options: SeedMixedFileDirectoryClient.Options) {
+        this._options = {
+            ..._options,
+            headers: mergeHeaders(
+                {
+                    "X-Fern-Language": "JavaScript",
+                    "X-Fern-SDK-Name": "@fern/mixed-file-directory",
+                    "X-Fern-SDK-Version": "0.0.1",
+                    "User-Agent": "@fern/mixed-file-directory/0.0.1",
+                    "X-Fern-Runtime": core.RUNTIME.type,
+                    "X-Fern-Runtime-Version": core.RUNTIME.version,
+                },
+                _options?.headers,
+            ),
+        };
+    }
 
     public get organization(): Organization {
         return (this._organization ??= new Organization(this._options));

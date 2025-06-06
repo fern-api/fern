@@ -820,11 +820,29 @@
           "originalEndpointId": "endpoint_complex.search",
           "name": "Search conversations",
           "path": {
-            "pathParameters": [],
+            "pathParameters": [
+              {
+                "key": "index",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
             "parts": [
               {
                 "type": "literal",
                 "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/"
+              },
+              {
+                "type": "pathParameter",
+                "value": "index"
               },
               {
                 "type": "literal",
@@ -859,8 +877,10 @@
           "errorsV2": [],
           "examples": [
             {
-              "path": "/conversations/search",
-              "pathParameters": {},
+              "path": "/index/conversations/search",
+              "pathParameters": {
+                "index": "index"
+              },
               "queryParameters": {},
               "headers": {},
               "requestBody": {

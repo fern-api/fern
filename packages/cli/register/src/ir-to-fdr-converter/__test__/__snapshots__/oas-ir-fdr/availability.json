@@ -232,7 +232,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "availability": "Beta"
           }
         ],
         "headers": [
@@ -284,7 +285,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "availability": "Beta"
           }
         ],
         "response": {
@@ -590,6 +592,7 @@
         }
       },
       {
+        "availability": "Beta",
         "auth": false,
         "method": "POST",
         "id": "postSuccessInlineBetaBody",
