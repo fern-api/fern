@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
+  - summary: |
+      Invert condition for running `next` in the generated service.
+    type: fix
+  irVersion: 58
+  createdAt: '2025-06-06'
+  version: 0.18.2
+
+- changelogEntry:
   - summary: Update the IR to v58.
     type: internal
   irVersion: 58
