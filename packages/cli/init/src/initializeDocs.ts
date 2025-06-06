@@ -37,7 +37,10 @@ export async function initializeDocs({
             return;
         } else {
             try {
-                await writeFile(docsYmlPath, yaml.dump(getDocsConfig(createDirectoryResponse.organization)));
+                await writeFile(
+                    docsYmlPath,
+                    yaml.dump(kebabCaseParserConfig(getDocsConfig(createDirectoryResponse.organization)))
+                );
                 taskContext.logger.info(chalk.green("Created docs configuration"));
                 return;
             } catch (writeError) {
@@ -62,6 +65,26 @@ function getDocsConfig(organization: string): docsYml.RawSchemas.DocsConfigurati
         colors: {
             accentPrimary: "#ffffff",
             background: "#000000"
+        },
+        experimental: {
+            openapiParserV3: true
+        }
+    };
+}
+
+function kebabCaseParserConfig(config: docsYml.RawSchemas.DocsConfiguration): docsYml.RawSchemas.DocsConfiguration & {
+    experimental: docsYml.RawSchemas.ExperimentalConfig & {
+        "openapi-parser-v3"?: boolean;
+    };
+} {
+    const enableOpenapiParserV3 = config.experimental?.openapiParserV3 ?? true;
+    const { openapiParserV3: _, ...restExperimental } = config.experimental ?? {};
+
+    return {
+        ...config,
+        experimental: {
+            ...restExperimental,
+            "openapi-parser-v3": enableOpenapiParserV3
         }
     };
 }
