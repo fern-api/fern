@@ -85,12 +85,11 @@ function convertExperimentalToKebabCase(
     config: docsYml.RawSchemas.DocsConfiguration
 ): Omit<docsYml.RawSchemas.DocsConfiguration, "experimental"> & KebabCaseExperimentalConfig {
     const { experimental, ...restConfig } = config;
-    const { openapiParserV3 = true, ...restExperimental } = experimental ?? {};
+    const { openapiParserV3 = true } = experimental ?? {};
 
     return {
         ...restConfig,
         experimental: {
-            ...restExperimental,
             "openapi-parser-v3": openapiParserV3
         }
     };
