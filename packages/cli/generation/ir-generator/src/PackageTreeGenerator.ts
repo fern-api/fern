@@ -109,6 +109,12 @@ export class PackageTreeGenerator {
                                     ? subpackage.service
                                     : undefined
                                 : undefined,
+                        websocket:
+                            subpackage.websocket != null
+                                ? filteredIr.hasChannel(subpackage.websocket)
+                                    ? subpackage.websocket
+                                    : undefined
+                                : undefined,
                         subpackages: subpackage.subpackages.filter((subpackageId) =>
                             filteredIr.hasSubpackageId(subpackageId)
                         )
