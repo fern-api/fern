@@ -113,11 +113,7 @@ export function convertUndiscriminatedOneOf({
             return false;
         }
         try {
-            const schemaObj = schema as OpenAPIV3_1.SchemaObject;
-            return (
-                (schemaObj.type === "number" && schemaObj.const != null) ||
-                (schemaObj.type === "string" && schemaObj.const != null)
-            );
+            return (schema as OpenAPIV3_1.SchemaObject).const != null;
         } catch {
             return false;
         }
@@ -147,7 +143,7 @@ export function convertUndiscriminatedOneOf({
             const enumValue = enumOptionSchema.const;
             return [
                 SchemaWithExample.literal({
-                    nameOverride: undefined,
+                    nameOverride: enumValueTitle,
                     generatedName: getGeneratedTypeName(
                         [generatedName, enumValue.toString()],
                         context.options.preserveSchemaIds
@@ -243,9 +239,10 @@ function processSubtypes({
     encoding: Encoding | undefined;
     source: Source;
 }): SchemaWithExample {
-    const everySubTypeIsLiteral = Object.entries(uniqueSubtypes).every(([_, schema]) => {
+    const everySubTypeIsLiteral = uniqueSubtypes.every((schema) => {
         return schema.type === "literal";
     });
+
     if (everySubTypeIsLiteral) {
         const enumDescriptions: Record<string, { description: string }> = {};
         const enumValues: string[] = [];
@@ -253,8 +250,8 @@ function processSubtypes({
         Object.entries(uniqueSubtypes).forEach(([_, schema]) => {
             if (schema.type === "literal" && schema.value.type === "string") {
                 enumValues.push(schema.value.value);
-                if (title != null) {
-                    enumVarNames.push(title);
+                if (schema.title != null) {
+                    enumVarNames.push(schema.title);
                 } else {
                     enumVarNames.push(schema.value.value);
                 }
@@ -265,6 +262,7 @@ function processSubtypes({
                 }
             }
         });
+
         return convertEnum({
             nameOverride,
             generatedName,
@@ -273,7 +271,7 @@ function processSubtypes({
             description,
             availability,
             fernEnum: enumDescriptions,
-            enumVarNames: undefined,
+            enumVarNames,
             enumValues,
             _default: undefined,
             namespace,
