@@ -4,6 +4,7 @@
 
 import * as core from "../../../../../../core/index.js";
 import * as SeedCrossPackageTypeNames from "../../../../../index.js";
+import { mergeHeaders } from "../../../../../../core/headers.js";
 import * as errors from "../../../../../../errors/index.js";
 
 export declare namespace Service {
@@ -11,6 +12,8 @@ export declare namespace Service {
         environment: core.Supplier<string>;
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
+        /** Additional headers to include in requests. */
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 
     export interface RequestOptions {
@@ -21,12 +24,16 @@ export declare namespace Service {
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
         /** Additional headers to include in the request. */
-        headers?: Record<string, string>;
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 }
 
 export class Service {
-    constructor(protected readonly _options: Service.Options) {}
+    protected readonly _options: Service.Options;
+
+    constructor(_options: Service.Options) {
+        this._options = _options;
+    }
 
     /**
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
@@ -48,15 +55,7 @@ export class Service {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                 (await core.Supplier.get(this._options.environment)),
             method: "GET",
-            headers: {
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/cross-package-type-names",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/cross-package-type-names/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ...requestOptions?.headers,
-            },
+            headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

@@ -31,6 +31,7 @@ class ComplexClient:
 
     def search(
         self,
+        index: str,
         *,
         query: SearchRequestQuery,
         pagination: typing.Optional[StartingAfterPaging] = OMIT,
@@ -39,6 +40,8 @@ class ComplexClient:
         """
         Parameters
         ----------
+        index : str
+
         query : SearchRequestQuery
 
         pagination : typing.Optional[StartingAfterPaging]
@@ -60,6 +63,7 @@ class ComplexClient:
             base_url="https://yourhost.com/path/to/api",
         )
         response = client.complex_.search(
+            index="index",
             pagination=StartingAfterPaging(
                 per_page=1,
                 starting_after="starting_after",
@@ -76,7 +80,7 @@ class ComplexClient:
         for page in response.iter_pages():
             yield page
         """
-        return self._raw_client.search(query=query, pagination=pagination, request_options=request_options)
+        return self._raw_client.search(index, query=query, pagination=pagination, request_options=request_options)
 
 
 class AsyncComplexClient:
@@ -96,6 +100,7 @@ class AsyncComplexClient:
 
     async def search(
         self,
+        index: str,
         *,
         query: SearchRequestQuery,
         pagination: typing.Optional[StartingAfterPaging] = OMIT,
@@ -104,6 +109,8 @@ class AsyncComplexClient:
         """
         Parameters
         ----------
+        index : str
+
         query : SearchRequestQuery
 
         pagination : typing.Optional[StartingAfterPaging]
@@ -130,6 +137,7 @@ class AsyncComplexClient:
 
         async def main() -> None:
             response = await client.complex_.search(
+                index="index",
                 pagination=StartingAfterPaging(
                     per_page=1,
                     starting_after="starting_after",
@@ -150,4 +158,4 @@ class AsyncComplexClient:
 
         asyncio.run(main())
         """
-        return await self._raw_client.search(query=query, pagination=pagination, request_options=request_options)
+        return await self._raw_client.search(index, query=query, pagination=pagination, request_options=request_options)

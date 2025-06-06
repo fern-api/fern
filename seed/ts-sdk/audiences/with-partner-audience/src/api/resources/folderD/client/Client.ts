@@ -10,13 +10,18 @@ export declare namespace FolderD {
         environment: core.Supplier<string>;
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
+        /** Additional headers to include in requests. */
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 }
 
 export class FolderD {
+    protected readonly _options: FolderD.Options;
     protected _service: Service | undefined;
 
-    constructor(protected readonly _options: FolderD.Options) {}
+    constructor(_options: FolderD.Options) {
+        this._options = _options;
+    }
 
     public get service(): Service {
         return (this._service ??= new Service(this._options));

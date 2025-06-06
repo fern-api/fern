@@ -15,6 +15,7 @@ public partial class ComplexClient
     }
 
     private async Task<PaginatedConversationResponse> SearchInternalAsync(
+        string index,
         SearchRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -26,7 +27,10 @@ public partial class ComplexClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
-                    Path = "conversations/search",
+                    Path = string.Format(
+                        "{0}/conversations/search",
+                        ValueConvert.ToPathParameterString(index)
+                    ),
                     Body = request,
                     ContentType = "application/json",
                     Options = options,
@@ -59,6 +63,7 @@ public partial class ComplexClient
 
     /// <example><code>
     /// await client.Complex.SearchAsync(
+    ///     "index",
     ///     new SearchRequest
     ///     {
     ///         Pagination = new StartingAfterPaging { PerPage = 1, StartingAfter = "starting_after" },
@@ -72,6 +77,7 @@ public partial class ComplexClient
     /// );
     /// </code></example>
     public async Task<Pager<Conversation>> SearchAsync(
+        string index,
         SearchRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -91,7 +97,8 @@ public partial class ComplexClient
             .CreateInstanceAsync(
                 request,
                 options,
-                SearchInternalAsync,
+                (request, options, cancellationToken) =>
+                    SearchInternalAsync(index, request, options, cancellationToken),
                 (request, cursor) =>
                 {
                     request.Pagination ??= new();

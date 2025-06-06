@@ -3,6 +3,7 @@
  */
 
 import * as core from "./core/index.js";
+import { mergeHeaders } from "./core/headers.js";
 import { Headers } from "./api/resources/headers/client/Client.js";
 import { Inlined } from "./api/resources/inlined/client/Client.js";
 import { Path } from "./api/resources/path/client/Client.js";
@@ -18,6 +19,8 @@ export declare namespace SeedLiteralClient {
         version?: "02-02-2024";
         /** Override the X-API-Enable-Audit-Logging header */
         auditLogging?: true;
+        /** Additional headers to include in requests. */
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 
     export interface RequestOptions {
@@ -32,18 +35,36 @@ export declare namespace SeedLiteralClient {
         /** Override the X-API-Enable-Audit-Logging header */
         auditLogging?: true;
         /** Additional headers to include in the request. */
-        headers?: Record<string, string>;
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 }
 
 export class SeedLiteralClient {
+    protected readonly _options: SeedLiteralClient.Options;
     protected _headers: Headers | undefined;
     protected _inlined: Inlined | undefined;
     protected _path: Path | undefined;
     protected _query: Query | undefined;
     protected _reference: Reference | undefined;
 
-    constructor(protected readonly _options: SeedLiteralClient.Options) {}
+    constructor(_options: SeedLiteralClient.Options) {
+        this._options = {
+            ..._options,
+            headers: mergeHeaders(
+                {
+                    "X-API-Version": _options?.version ?? "02-02-2024",
+                    "X-API-Enable-Audit-Logging": (_options?.auditLogging ?? true).toString(),
+                    "X-Fern-Language": "JavaScript",
+                    "X-Fern-SDK-Name": "@fern/literal",
+                    "X-Fern-SDK-Version": "0.0.1",
+                    "User-Agent": "@fern/literal/0.0.1",
+                    "X-Fern-Runtime": core.RUNTIME.type,
+                    "X-Fern-Runtime-Version": core.RUNTIME.version,
+                },
+                _options?.headers,
+            ),
+        };
+    }
 
     public get headers(): Headers {
         return (this._headers ??= new Headers(this._options));

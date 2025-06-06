@@ -12,13 +12,18 @@ export declare namespace Notification {
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
+        /** Additional headers to include in requests. */
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 }
 
 export class Notification {
+    protected readonly _options: Notification.Options;
     protected _service: Service | undefined;
 
-    constructor(protected readonly _options: Notification.Options) {}
+    constructor(_options: Notification.Options) {
+        this._options = _options;
+    }
 
     public get service(): Service {
         return (this._service ??= new Service(this._options));

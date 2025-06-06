@@ -3,5 +3,4 @@
 # isort: skip_file
 
 from .resources import UnauthorizedRequestErrorBody, errors
-
 __all__ = ["UnauthorizedRequestErrorBody", "errors"]

@@ -3,6 +3,7 @@
  */
 
 import * as core from "./core/index.js";
+import { mergeHeaders } from "./core/headers.js";
 import { Payment } from "./api/resources/payment/client/Client.js";
 
 export declare namespace SeedIdempotencyHeadersClient {
@@ -11,6 +12,8 @@ export declare namespace SeedIdempotencyHeadersClient {
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
         token: core.Supplier<core.BearerToken>;
+        /** Additional headers to include in requests. */
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 
     export interface RequestOptions {
@@ -21,14 +24,30 @@ export declare namespace SeedIdempotencyHeadersClient {
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
         /** Additional headers to include in the request. */
-        headers?: Record<string, string>;
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 }
 
 export class SeedIdempotencyHeadersClient {
+    protected readonly _options: SeedIdempotencyHeadersClient.Options;
     protected _payment: Payment | undefined;
 
-    constructor(protected readonly _options: SeedIdempotencyHeadersClient.Options) {}
+    constructor(_options: SeedIdempotencyHeadersClient.Options) {
+        this._options = {
+            ..._options,
+            headers: mergeHeaders(
+                {
+                    "X-Fern-Language": "JavaScript",
+                    "X-Fern-SDK-Name": "@fern/idempotency-headers",
+                    "X-Fern-SDK-Version": "0.0.1",
+                    "User-Agent": "@fern/idempotency-headers/0.0.1",
+                    "X-Fern-Runtime": core.RUNTIME.type,
+                    "X-Fern-Runtime-Version": core.RUNTIME.version,
+                },
+                _options?.headers,
+            ),
+        };
+    }
 
     public get payment(): Payment {
         return (this._payment ??= new Payment(this._options));

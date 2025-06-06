@@ -1,6 +1,5 @@
 from fern_python.codegen import AST
-from fern_python.codegen.ast.dependency.dependency import \
-    DependencyCompatibility
+from fern_python.codegen.ast.dependency.dependency import DependencyCompatibility
 
 WEBSOCKETS_MODULE = AST.Module.external(
     module_path=("websockets",),
