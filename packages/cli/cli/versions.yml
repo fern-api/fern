@@ -1,6 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Don't hard fail on non-string $ref values.
+        Limit ExampleConverter depth to prevent heap exhaustion.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-06-06"
+  version: 0.63.38
+
+- changelogEntry:
+    - summary: |
         Correctly filter audience-specific websocket channels when constructing the filtered IR.
       type: fix
   irVersion: 58
