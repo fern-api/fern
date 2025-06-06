@@ -100,6 +100,10 @@ public abstract class AbstractHttpEndpointMethodSpecFactory {
 
     public abstract HttpEndpointMethodSpecsFactory httpEndpointMethodSpecsFactory();
 
+    public HttpEndpoint getHttpEndpoint() {
+        return httpEndpoint;
+    }
+
     public HttpEndpointMethodSpecs create() {
         if (httpEndpoint.getSdkRequest().isPresent()) {
             return httpEndpoint.getSdkRequest().get().getShape().visit(new SdkRequestShape.Visitor<>() {

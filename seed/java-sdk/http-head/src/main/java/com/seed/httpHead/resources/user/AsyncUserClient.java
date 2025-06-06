@@ -7,7 +7,9 @@ import com.seed.httpHead.core.ClientOptions;
 import com.seed.httpHead.core.RequestOptions;
 import com.seed.httpHead.resources.user.requests.ListUsersRequest;
 import com.seed.httpHead.resources.user.types.User;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 public class AsyncUserClient {
@@ -27,12 +29,12 @@ public class AsyncUserClient {
         return this.rawClient;
     }
 
-    public CompletableFuture<Void> head() {
-        return this.rawClient.head().thenApply(response -> response.body());
+    public CompletableFuture<Map<String, List<String>>> head() {
+        return this.rawClient.head().thenApply(response -> new HashMap<>(response.headers()));
     }
 
-    public CompletableFuture<Void> head(RequestOptions requestOptions) {
-        return this.rawClient.head(requestOptions).thenApply(response -> response.body());
+    public CompletableFuture<Map<String, List<String>>> head(RequestOptions requestOptions) {
+        return this.rawClient.head(requestOptions).thenApply(response -> new HashMap<>(response.headers()));
     }
 
     public CompletableFuture<List<User>> list(ListUsersRequest request) {

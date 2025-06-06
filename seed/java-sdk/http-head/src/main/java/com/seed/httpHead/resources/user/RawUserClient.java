@@ -15,6 +15,7 @@ import com.seed.httpHead.resources.user.requests.ListUsersRequest;
 import com.seed.httpHead.resources.user.types.User;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -29,11 +30,11 @@ public class RawUserClient {
         this.clientOptions = clientOptions;
     }
 
-    public SeedHttpHeadHttpResponse<Void> head() {
+    public SeedHttpHeadHttpResponse<Map<String, List<String>>> head() {
         return head(null);
     }
 
-    public SeedHttpHeadHttpResponse<Void> head(RequestOptions requestOptions) {
+    public SeedHttpHeadHttpResponse<Map<String, List<String>>> head(RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("users")
@@ -49,9 +50,7 @@ public class RawUserClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return new SeedHttpHeadHttpResponse<>(null, response);
-            }
+            if (response.isSuccessful()) {}
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedHttpHeadApiException(
                     "Error with status code " + response.code(),

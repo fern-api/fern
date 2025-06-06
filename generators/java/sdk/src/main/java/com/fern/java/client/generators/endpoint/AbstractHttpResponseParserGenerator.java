@@ -161,6 +161,8 @@ public abstract class AbstractHttpResponseParserGenerator {
                     .getBody()
                     .get()
                     .visit(new SuccessResponseWriter(httpResponseBuilder, endpointMethodBuilder));
+        } else if (httpEndpoint.getMethod().equals(HttpMethod.HEAD)) {
+            endpointMethodBuilder.returns(getHeadMethodReturnType());
         } else {
             addNoBodySuccessResponse(httpResponseBuilder);
         }
@@ -1273,5 +1275,12 @@ public abstract class AbstractHttpResponseParserGenerator {
         public Void _visitUnknown(Object unknownType) {
             throw new RuntimeException("Unknown pagination type " + unknownType);
         }
+    }
+
+    private TypeName getHeadMethodReturnType() {
+        return ParameterizedTypeName.get(
+                ClassName.get(Map.class),
+                ClassName.get(String.class),
+                ParameterizedTypeName.get(ClassName.get(List.class), ClassName.get(String.class)));
     }
 }

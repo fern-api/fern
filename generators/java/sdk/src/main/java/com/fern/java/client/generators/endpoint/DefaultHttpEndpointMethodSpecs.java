@@ -16,11 +16,13 @@
 
 package com.fern.java.client.generators.endpoint;
 
+import com.fern.ir.model.http.HttpEndpoint;
 import com.squareup.javapoet.MethodSpec;
 import java.util.Optional;
 
 public final class DefaultHttpEndpointMethodSpecs implements HttpEndpointMethodSpecs {
 
+    private final HttpEndpoint httpEndpoint;
     private final MethodSpec nonRequestOptionsMethodSpec;
     private final MethodSpec requestOptionsMethodSpec;
     private final MethodSpec noRequestBodyMethodSpec;
@@ -28,16 +30,23 @@ public final class DefaultHttpEndpointMethodSpecs implements HttpEndpointMethodS
     private final MethodSpec nonRequestOptionsByteArrayMethodSpec;
 
     public DefaultHttpEndpointMethodSpecs(
+            HttpEndpoint httpEndpoint,
             MethodSpec requestOptionsMethodSpec,
             MethodSpec nonRequestOptionsMethodSpec,
             MethodSpec noRequestBodyMethodSpec,
             MethodSpec byteArrayMethodSpec,
             MethodSpec nonRequestOptionsByteArrayMethodSpec) {
+        this.httpEndpoint = httpEndpoint;
         this.nonRequestOptionsMethodSpec = nonRequestOptionsMethodSpec;
         this.requestOptionsMethodSpec = requestOptionsMethodSpec;
         this.noRequestBodyMethodSpec = noRequestBodyMethodSpec;
         this.byteArrayMethodSpec = byteArrayMethodSpec;
         this.nonRequestOptionsByteArrayMethodSpec = nonRequestOptionsByteArrayMethodSpec;
+    }
+
+    @Override
+    public HttpEndpoint getHttpEndpoint() {
+        return httpEndpoint;
     }
 
     @Override
