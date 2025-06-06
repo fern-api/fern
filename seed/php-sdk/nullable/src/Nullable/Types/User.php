@@ -84,6 +84,8 @@ class User extends JsonSerializableType
     public function __construct(
         array $values,
     ) {
+        parent::__construct($values);
+
         $this->name = $values['name'];
         $this->id = $values['id'];
         $this->tags = $values['tags'] ?? null;
