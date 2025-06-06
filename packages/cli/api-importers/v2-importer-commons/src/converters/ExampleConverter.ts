@@ -59,7 +59,7 @@ export declare namespace ExampleConverter {
 }
 
 export class ExampleConverter extends AbstractConverter<AbstractConverterContext<object>, ExampleConverter.Output> {
-    protected readonly MAX_DEPTH = 12;
+    protected readonly MAX_DEPTH = 5;
     protected readonly EXAMPLE_STRING = "foo";
     protected readonly EXAMPLE_NUMBER = 42.0;
     protected readonly EXAMPLE_BOOLEAN = true;
@@ -180,13 +180,12 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             });
         }
 
-        if (resolvedSchema.type == "object" || resolvedSchema.properties != null || resolvedSchema.allOf != null) {
-            return this.convertObject({
-                resolvedSchema
-            });
-        }
-
-        if (typeof resolvedSchema === "object" && Object.keys(resolvedSchema).length === 0) {
+        if (resolvedSchema.type == "object") {
+            if (resolvedSchema.properties != null || resolvedSchema.allOf != null) {
+                return this.convertObject({
+                    resolvedSchema
+                });
+            }
             return {
                 isValid: true,
                 coerced: false,

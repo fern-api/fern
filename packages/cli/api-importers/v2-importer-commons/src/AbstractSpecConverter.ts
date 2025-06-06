@@ -234,7 +234,7 @@ export abstract class AbstractSpecConverter<
 
         while (this.context.isReferenceObject(resolvedRefVal)) {
             const isExternalRef = this.context.isExternalReference(resolvedRefVal.$ref);
-            const nextResolvedRef = await this.context.resolveMaybeExternalReference({ $ref: resolvedRefVal.$ref });
+            const nextResolvedRef = await this.context.resolveMaybeExternalReference(resolvedRefVal);
             if (nextResolvedRef.resolved) {
                 resolvedRefVal = nextResolvedRef.value;
                 if (isExternalRef) {
