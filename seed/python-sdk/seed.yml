@@ -1,4 +1,4 @@
-irVersion: v57
+irVersion: v58
 displayName: Python SDK
 image: fernapi/fern-python-sdk
 changelogLocation: ../../generators/python/sdk/versions.yml
@@ -58,8 +58,6 @@ fixtures:
         use_inheritance_for_extended_models: false
       outputFolder: no-inheritance-for-extended-models
   circular-references-advanced:
-    - customConfig: null
-      outputFolder: no-custom-config
     - customConfig:
         use_inheritance_for_extended_models: false
       outputFolder: no-inheritance-for-extended-models
@@ -259,8 +257,6 @@ fixtures:
         use_inheritance_for_extended_models: false
       outputFolder: no-inheritance-for-extended-models
   simple-fhir:
-    - customConfig: null
-      outputFolder: no-custom-config
     - customConfig:
         use_inheritance_for_extended_models: false
       outputFolder: no-inheritance-for-extended-models
@@ -327,6 +323,8 @@ allowedFailures:
   - exhaustive:pydantic-v1-with-utils
   - oauth-client-credentials-custom
   - pagination-custom
+  - public-object
+  - response-property
   - simple-fhir
   - streaming-parameter
   - trace

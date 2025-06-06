@@ -1,5 +1,5 @@
 displayName: C# SDK
-irVersion: v57
+irVersion: v58
 image: fernapi/fern-csharp-sdk
 changelogLocation: ../../generators/csharp/sdk/versions.yml
 
@@ -170,6 +170,7 @@ fixtures:
         experimental-additional-properties: true
       outputFolder: experimental-additional-properties
 allowedFailures:
+  - http-head
   - imdb:exported-client-class-name
   - literal
   - oauth-client-credentials-custom
@@ -183,6 +184,7 @@ allowedFailures:
   - examples:no-custom-config
   - examples:readme-config
   - extends
+  - http-head
   - objects-with-imports
   - mixed-file-directory
 

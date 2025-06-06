@@ -37,8 +37,178 @@
       {
         "auth": false,
         "method": "POST",
+        "id": "upload-file",
+        "originalEndpointId": "endpoint_.upload-file",
+        "name": "Upload a file",
+        "path": {
+          "pathParameters": [],
+          "parts": [
+            {
+              "type": "literal",
+              "value": ""
+            },
+            {
+              "type": "literal",
+              "value": "/upload"
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "request": {
+          "type": {
+            "type": "fileUpload",
+            "value": {
+              "name": "upload-file_Request",
+              "properties": [
+                {
+                  "type": "file",
+                  "value": {
+                    "type": "file",
+                    "key": "file",
+                    "isOptional": false,
+                    "contentType": "multipart/form-data",
+                    "description": "The file to upload"
+                  }
+                },
+                {
+                  "type": "file",
+                  "value": {
+                    "type": "file",
+                    "key": "maybe_file",
+                    "isOptional": true,
+                    "contentType": "multipart/form-data",
+                    "description": "An optional file to upload"
+                  }
+                }
+              ]
+            },
+            "contentType": "multipart/form-data"
+          }
+        },
+        "errorsV2": [],
+        "examples": [
+          {
+            "name": "uploadFileExample",
+            "description": "",
+            "path": "/upload",
+            "pathParameters": {},
+            "queryParameters": {},
+            "headers": {},
+            "requestBody": {
+              "file": "foo"
+            },
+            "requestBodyV3": {
+              "type": "form",
+              "value": {
+                "file": {
+                  "type": "filename",
+                  "value": "foo"
+                },
+                "maybe_file": {
+                  "type": "filename",
+                  "value": "<file1>"
+                }
+              }
+            },
+            "responseStatusCode": 200
+          }
+        ],
+        "protocol": {
+          "type": "rest"
+        }
+      },
+      {
+        "auth": false,
+        "method": "POST",
+        "id": "upload-list",
+        "originalEndpointId": "endpoint_.upload-list",
+        "name": "Upload a list of files",
+        "path": {
+          "pathParameters": [],
+          "parts": [
+            {
+              "type": "literal",
+              "value": ""
+            },
+            {
+              "type": "literal",
+              "value": "/upload-list"
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "request": {
+          "type": {
+            "type": "fileUpload",
+            "value": {
+              "name": "upload-list_Request",
+              "properties": [
+                {
+                  "type": "file",
+                  "value": {
+                    "type": "fileArray",
+                    "key": "list_file",
+                    "isOptional": false,
+                    "contentType": "multipart/form-data"
+                  }
+                },
+                {
+                  "type": "file",
+                  "value": {
+                    "type": "fileArray",
+                    "key": "maybe_list_file",
+                    "isOptional": true,
+                    "contentType": "multipart/form-data"
+                  }
+                }
+              ]
+            },
+            "contentType": "multipart/form-data"
+          }
+        },
+        "errorsV2": [],
+        "examples": [
+          {
+            "name": "uploadListExample",
+            "description": "",
+            "path": "/upload-list",
+            "pathParameters": {},
+            "queryParameters": {},
+            "headers": {},
+            "requestBody": {
+              "list_file": [
+                "foo"
+              ]
+            },
+            "requestBodyV3": {
+              "type": "form",
+              "value": {
+                "list_file": {
+                  "type": "filenames",
+                  "value": [
+                    "foo"
+                  ]
+                },
+                "maybe_list_file": {
+                  "type": "filenames",
+                  "value": []
+                }
+              }
+            },
+            "responseStatusCode": 200
+          }
+        ],
+        "protocol": {
+          "type": "rest"
+        }
+      },
+      {
+        "auth": false,
+        "method": "POST",
         "id": "upload-with-content-type",
-        "originalEndpointId": "upload-with-content-type",
+        "originalEndpointId": "endpoint_.upload-with-content-type",
         "name": "Upload a file with a content type",
         "path": {
           "pathParameters": [],

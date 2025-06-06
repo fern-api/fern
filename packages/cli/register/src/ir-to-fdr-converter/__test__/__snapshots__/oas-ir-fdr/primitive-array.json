@@ -17,7 +17,7 @@
             "type": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           }
@@ -41,7 +41,7 @@
             "type": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           }
@@ -56,7 +56,7 @@
         "auth": false,
         "method": "GET",
         "id": "getSearch",
-        "originalEndpointId": "getSearch",
+        "originalEndpointId": "endpoint_.getSearch",
         "name": "Get Search",
         "path": {
           "pathParameters": [],
@@ -119,10 +119,7 @@
               "value": "foo"
             },
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "json",
-              "value": "foo"
-            },
+            "responseBody": "foo",
             "responseBodyV3": {
               "type": "json",
               "value": "foo"
@@ -137,7 +134,7 @@
         "auth": false,
         "method": "GET",
         "id": "getSearchWithUnion",
-        "originalEndpointId": "getSearchWithUnion",
+        "originalEndpointId": "endpoint_.getSearchWithUnion",
         "name": "Get Search With Union",
         "path": {
           "pathParameters": [],
@@ -195,10 +192,7 @@
               "value": "foo"
             },
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "json",
-              "value": "foo"
-            },
+            "responseBody": "foo",
             "responseBodyV3": {
               "type": "json",
               "value": "foo"
@@ -213,7 +207,7 @@
         "auth": false,
         "method": "GET",
         "id": "getSearchWithUnionAndNull",
-        "originalEndpointId": "getSearchWithUnionAndNull",
+        "originalEndpointId": "endpoint_.getSearchWithUnionAndNull",
         "name": "Get Search With Union And Null",
         "path": {
           "pathParameters": [],
@@ -274,10 +268,7 @@
               "value": "foo"
             },
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "json",
-              "value": "foo"
-            },
+            "responseBody": "foo",
             "responseBodyV3": {
               "type": "json",
               "value": "foo"

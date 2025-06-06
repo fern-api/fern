@@ -481,6 +481,7 @@ await client.service.createBigEntity({
         id: "id",
     },
     extendedMovie: {
+        cast: ["cast", "cast"],
         id: "id",
         prequel: "prequel",
         title: "title",
@@ -495,7 +496,6 @@ await client.service.createBigEntity({
             },
         },
         revenue: 1000000,
-        cast: ["cast", "cast"],
     },
     entity: {
         type: "primitive",

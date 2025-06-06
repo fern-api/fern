@@ -155,6 +155,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Audio Input",
               "typeId": "type_:AudioInput",
               "type": "named"
             }
@@ -184,6 +185,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Session Settings",
               "typeId": "type_:SessionSettings",
               "type": "named"
             }
@@ -213,6 +215,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "User Input",
               "typeId": "type_:UserInput",
               "type": "named"
             }
@@ -242,6 +245,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Assistant Input",
               "typeId": "type_:AssistantInput",
               "type": "named"
             }
@@ -271,6 +275,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Tool Response Message",
               "typeId": "type_:ToolResponseMessage",
               "type": "named"
             }
@@ -300,6 +305,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Tool Error Message",
               "typeId": "type_:ToolErrorMessage",
               "type": "named"
             }
@@ -329,6 +335,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Pause Assistant Message",
               "typeId": "type_:PauseAssistantMessage",
               "type": "named"
             }
@@ -358,6 +365,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Resume Assistant Message",
               "typeId": "type_:ResumeAssistantMessage",
               "type": "named"
             }
@@ -465,6 +473,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Assistant End",
               "typeId": "type_:AssistantEnd",
               "type": "named"
             }
@@ -494,6 +503,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Assistant Message",
               "typeId": "type_:AssistantMessage",
               "type": "named"
             }
@@ -523,6 +533,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Audio Output",
               "typeId": "type_:AudioOutput",
               "type": "named"
             }
@@ -552,6 +563,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Chat Metadata",
               "typeId": "type_:ChatMetadata",
               "type": "named"
             }
@@ -581,6 +593,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Error",
               "typeId": "type_:Error",
               "type": "named"
             }
@@ -610,6 +623,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "User Interruption",
               "typeId": "type_:UserInterruption",
               "type": "named"
             }
@@ -639,6 +653,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "User Message",
               "typeId": "type_:UserMessage",
               "type": "named"
             }
@@ -668,6 +683,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Tool Call Message",
               "typeId": "type_:ToolCallMessage",
               "type": "named"
             }
@@ -697,6 +713,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Tool Response Message",
               "typeId": "type_:ToolResponseMessage",
               "type": "named"
             }
@@ -726,6 +743,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Tool Error Message",
               "typeId": "type_:ToolErrorMessage",
               "type": "named"
             }
@@ -16924,6 +16942,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Tool Response Message",
               "typeId": "type_:ToolResponseMessage",
               "type": "named"
             }
@@ -16953,6 +16972,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Tool Error Message",
               "typeId": "type_:ToolErrorMessage",
               "type": "named"
             }

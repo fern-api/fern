@@ -26,11 +26,11 @@ public class ComplexClient {
         return this.rawClient;
     }
 
-    public SyncPagingIterable<Conversation> search(SearchRequest request) {
-        return this.rawClient.search(request).body();
+    public SyncPagingIterable<Conversation> search(String index, SearchRequest request) {
+        return this.rawClient.search(index, request).body();
     }
 
-    public SyncPagingIterable<Conversation> search(SearchRequest request, RequestOptions requestOptions) {
-        return this.rawClient.search(request, requestOptions).body();
+    public SyncPagingIterable<Conversation> search(String index, SearchRequest request, RequestOptions requestOptions) {
+        return this.rawClient.search(index, request, requestOptions).body();
     }
 }

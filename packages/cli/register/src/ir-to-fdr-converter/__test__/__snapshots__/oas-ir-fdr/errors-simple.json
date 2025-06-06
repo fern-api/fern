@@ -47,7 +47,7 @@
           }
         ],
         "id": "list",
-        "originalEndpointId": "list",
+        "originalEndpointId": "endpoint_.list",
         "name": "List",
         "path": {
           "pathParameters": [],
@@ -184,10 +184,7 @@
               }
             },
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "json",
-              "value": "Hello, world!"
-            },
+            "responseBody": "Hello, world!",
             "responseBodyV3": {
               "type": "json",
               "value": "Hello, world!"

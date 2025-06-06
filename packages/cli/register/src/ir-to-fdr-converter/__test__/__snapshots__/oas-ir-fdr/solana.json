@@ -90,12 +90,11 @@
         ]
       }
     },
-    "MethodsParams1Commitment": {
+    "GetAccountInfoParamConfigurationCommitment": {
       "description": "Configures the state commitment for querying.",
-      "name": "MethodsParams1Commitment",
+      "name": "GetAccountInfoParamConfigurationCommitment",
       "shape": {
         "type": "enum",
-        "default": "finalized",
         "values": [
           {
             "value": "processed"
@@ -109,24 +108,29 @@
         ]
       }
     },
-    "MethodsParams1Encoding": {
-      "description": "Encoding used for the transaction data.",
-      "name": "MethodsParams1Encoding",
+    "GetAccountInfoParamConfigurationEncoding": {
+      "description": "Encoding format for account data.",
+      "name": "GetAccountInfoParamConfigurationEncoding",
       "shape": {
         "type": "enum",
-        "default": "base58",
         "values": [
           {
             "value": "base58"
           },
           {
             "value": "base64"
+          },
+          {
+            "value": "base64+zstd"
+          },
+          {
+            "value": "jsonParsed"
           }
         ]
       }
     },
-    "MethodsParams1DataSlice": {
-      "name": "MethodsParams1DataSlice",
+    "GetAccountInfoParamConfigurationDataSlice": {
+      "name": "GetAccountInfoParamConfigurationDataSlice",
       "shape": {
         "type": "object",
         "extends": [],
@@ -173,7 +177,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "MethodsParams1Commitment"
+                "value": "GetAccountInfoParamConfigurationCommitment"
               }
             }
           },
@@ -184,7 +188,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "MethodsParams1Encoding"
+                "value": "GetAccountInfoParamConfigurationEncoding"
               }
             }
           },
@@ -194,7 +198,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "MethodsParams1DataSlice"
+                "value": "GetAccountInfoParamConfigurationDataSlice"
               }
             }
           },
@@ -227,7 +231,7 @@
         }
       }
     },
-    "g_e_t_A_c_c_o_u_n_t_I_n_f_o_Result": {
+    "getAccountInfo_Result": {
       "name": "GetAccountInfoResult",
       "shape": {
         "type": "object",
@@ -317,6 +321,24 @@
         ]
       }
     },
+    "GetBalanceParamConfigurationCommitment": {
+      "description": "Configures the state commitment for querying.",
+      "name": "GetBalanceParamConfigurationCommitment",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "processed"
+          },
+          {
+            "value": "confirmed"
+          },
+          {
+            "value": "finalized"
+          }
+        ]
+      }
+    },
     "getBalance_Param_Configuration": {
       "name": "getBalance_Param_Configuration",
       "shape": {
@@ -330,7 +352,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "MethodsParams1Commitment"
+                "value": "GetBalanceParamConfigurationCommitment"
               }
             }
           },
@@ -363,7 +385,7 @@
         }
       }
     },
-    "g_e_t_B_a_l_a_n_c_e_Result": {
+    "getBalance_Result": {
       "description": "The balance in lamports of the account.",
       "name": "GetBalanceResult",
       "shape": {
@@ -709,7 +731,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -773,7 +795,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -1402,9 +1424,50 @@
         ]
       }
     },
-    "MethodsParams1TransactionDetails": {
+    "GetBlockParamConfigurationCommitment": {
+      "description": "Configures the state commitment for querying.",
+      "name": "GetBlockParamConfigurationCommitment",
+      "shape": {
+        "type": "enum",
+        "default": "finalized",
+        "values": [
+          {
+            "value": "processed"
+          },
+          {
+            "value": "confirmed"
+          },
+          {
+            "value": "finalized"
+          }
+        ]
+      }
+    },
+    "GetBlockParamConfigurationEncoding": {
+      "description": "Encoding format for transactions.",
+      "name": "GetBlockParamConfigurationEncoding",
+      "shape": {
+        "type": "enum",
+        "default": "json",
+        "values": [
+          {
+            "value": "json"
+          },
+          {
+            "value": "jsonParsed"
+          },
+          {
+            "value": "base58"
+          },
+          {
+            "value": "base64"
+          }
+        ]
+      }
+    },
+    "GetBlockParamConfigurationTransactionDetails": {
       "description": "Level of transaction detail to return.",
-      "name": "MethodsParams1TransactionDetails",
+      "name": "GetBlockParamConfigurationTransactionDetails",
       "shape": {
         "type": "enum",
         "default": "full",
@@ -1437,7 +1500,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "MethodsParams1Commitment"
+                "value": "GetBlockParamConfigurationCommitment"
               }
             }
           },
@@ -1448,7 +1511,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "MethodsParams1Encoding"
+                "value": "GetBlockParamConfigurationEncoding"
               }
             }
           },
@@ -1459,7 +1522,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "MethodsParams1TransactionDetails"
+                "value": "GetBlockParamConfigurationTransactionDetails"
               }
             }
           },
@@ -1505,7 +1568,7 @@
         }
       }
     },
-    "g_e_t_B_l_o_c_k_Result": {
+    "getBlock_Result": {
       "name": "GetBlockResult",
       "shape": {
         "type": "object",
@@ -1676,7 +1739,7 @@
         }
       }
     },
-    "g_e_t_B_l_o_c_k_C_o_m_m_i_t_m_e_n_t_Result": {
+    "getBlockCommitment_Result": {
       "name": "GetBlockCommitmentResult",
       "shape": {
         "type": "object",
@@ -1717,9 +1780,9 @@
         ]
       }
     },
-    "MethodsParams0Commitment": {
+    "GetBlockHeightParamConfigurationCommitment": {
       "description": "Configures the state commitment for querying.",
-      "name": "MethodsParams0Commitment",
+      "name": "GetBlockHeightParamConfigurationCommitment",
       "shape": {
         "type": "enum",
         "values": [
@@ -1748,7 +1811,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "MethodsParams0Commitment"
+                "value": "GetBlockHeightParamConfigurationCommitment"
               }
             }
           },
@@ -1768,7 +1831,7 @@
         ]
       }
     },
-    "g_e_t_B_l_o_c_k_H_e_i_g_h_t_Result": {
+    "getBlockHeight_Result": {
       "description": "The current block height.",
       "name": "GetBlockHeightResult",
       "shape": {
@@ -1860,8 +1923,26 @@
         ]
       }
     },
-    "MethodsParams0Range": {
-      "name": "MethodsParams0Range",
+    "GetBlockProductionParamConfigurationCommitment": {
+      "description": "Configures the state commitment for querying.",
+      "name": "GetBlockProductionParamConfigurationCommitment",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "processed"
+          },
+          {
+            "value": "confirmed"
+          },
+          {
+            "value": "finalized"
+          }
+        ]
+      }
+    },
+    "GetBlockProductionParamConfigurationRange": {
+      "name": "GetBlockProductionParamConfigurationRange",
       "shape": {
         "type": "object",
         "extends": [],
@@ -1908,7 +1989,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "MethodsParams0Commitment"
+                "value": "GetBlockProductionParamConfigurationCommitment"
               }
             }
           },
@@ -1931,14 +2012,14 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "MethodsParams0Range"
+                "value": "GetBlockProductionParamConfigurationRange"
               }
             }
           }
         ]
       }
     },
-    "g_e_t_B_l_o_c_k_P_r_o_d_u_c_t_i_o_n_Result": {
+    "getBlockProduction_Result": {
       "name": "GetBlockProductionResult",
       "shape": {
         "type": "object",
@@ -1982,11 +2063,12 @@
         ]
       }
     },
-    "MethodsParams2Commitment": {
+    "GetBlocksParamConfigurationCommitment": {
       "description": "Configures the state commitment for querying.",
-      "name": "MethodsParams2Commitment",
+      "name": "GetBlocksParamConfigurationCommitment",
       "shape": {
         "type": "enum",
+        "default": "finalized",
         "values": [
           {
             "value": "processed"
@@ -2013,7 +2095,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "MethodsParams2Commitment"
+                "value": "GetBlocksParamConfigurationCommitment"
               }
             }
           }
@@ -2044,7 +2126,7 @@
         }
       }
     },
-    "g_e_t_B_l_o_c_k_s_Result": {
+    "getBlocks_Result": {
       "description": "List of confirmed blocks between slots.",
       "name": "GetBlocksResult",
       "shape": {
@@ -2060,6 +2142,25 @@
         }
       }
     },
+    "GetBlocksWithLimitParamConfigurationCommitment": {
+      "description": "Configures the state commitment for querying.",
+      "name": "GetBlocksWithLimitParamConfigurationCommitment",
+      "shape": {
+        "type": "enum",
+        "default": "finalized",
+        "values": [
+          {
+            "value": "processed"
+          },
+          {
+            "value": "confirmed"
+          },
+          {
+            "value": "finalized"
+          }
+        ]
+      }
+    },
     "getBlocksWithLimit_Param_Configuration": {
       "name": "getBlocksWithLimit_Param_Configuration",
       "shape": {
@@ -2073,7 +2174,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "MethodsParams2Commitment"
+                "value": "GetBlocksWithLimitParamConfigurationCommitment"
               }
             }
           }
@@ -2104,7 +2205,7 @@
         }
       }
     },
-    "g_e_t_B_l_o_c_k_s_W_i_t_h_L_i_m_i_t_Result": {
+    "getBlocksWithLimit_Result": {
       "description": "List of confirmed blocks between slots.",
       "name": "GetBlocksWithLimitResult",
       "shape": {
@@ -2142,7 +2243,7 @@
         ]
       }
     },
-    "g_e_t_B_l_o_c_k_T_i_m_e_Result": {
+    "getBlockTime_Result": {
       "description": "Estimated production time as Unix timestamp.",
       "name": "GetBlockTimeResult",
       "shape": {
@@ -2273,7 +2374,7 @@
         ]
       }
     },
-    "g_e_t_C_l_u_s_t_e_r_N_o_d_e_s_Result": {
+    "getClusterNodes_Result": {
       "description": "Information about all nodes participating in the cluster.",
       "name": "GetClusterNodesResult",
       "shape": {
@@ -2377,6 +2478,24 @@
         ]
       }
     },
+    "GetEpochInfoParamConfigurationCommitment": {
+      "description": "Configures the state commitment for querying.",
+      "name": "GetEpochInfoParamConfigurationCommitment",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "processed"
+          },
+          {
+            "value": "confirmed"
+          },
+          {
+            "value": "finalized"
+          }
+        ]
+      }
+    },
     "getEpochInfo_Param_Configuration": {
       "name": "getEpochInfo_Param_Configuration",
       "shape": {
@@ -2390,7 +2509,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "MethodsParams0Commitment"
+                "value": "GetEpochInfoParamConfigurationCommitment"
               }
             }
           },
@@ -2410,7 +2529,7 @@
         ]
       }
     },
-    "g_e_t_E_p_o_c_h_I_n_f_o_Result": {
+    "getEpochInfo_Result": {
       "name": "GetEpochInfoResult",
       "shape": {
         "type": "object",
@@ -2574,7 +2693,7 @@
         ]
       }
     },
-    "g_e_t_E_p_o_c_h_S_c_h_e_d_u_l_e_Result": {
+    "getEpochSchedule_Result": {
       "name": "GetEpochScheduleResult",
       "shape": {
         "type": "object",
@@ -2648,6 +2767,24 @@
         ]
       }
     },
+    "GetFeeForMessageParamConfigurationCommitment": {
+      "description": "Configures the state commitment for querying.",
+      "name": "GetFeeForMessageParamConfigurationCommitment",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "processed"
+          },
+          {
+            "value": "confirmed"
+          },
+          {
+            "value": "finalized"
+          }
+        ]
+      }
+    },
     "getFeeForMessage_Param_Configuration": {
       "name": "getFeeForMessage_Param_Configuration",
       "shape": {
@@ -2661,7 +2798,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "MethodsParams1Commitment"
+                "value": "GetFeeForMessageParamConfigurationCommitment"
               }
             }
           },
@@ -2703,7 +2840,7 @@
         ]
       }
     },
-    "g_e_t_F_e_e_F_o_r_M_e_s_s_a_g_e_Result": {
+    "getFeeForMessage_Result": {
       "description": "Fee corresponding to the message at the specified blockhash.",
       "name": "GetFeeForMessageResult",
       "shape": {
@@ -2716,7 +2853,7 @@
         }
       }
     },
-    "g_e_t_F_i_r_s_t_A_v_a_i_l_a_b_l_e_B_l_o_c_k_Result": {
+    "getFirstAvailableBlock_Result": {
       "description": "Slot of the lowest confirmed block still available in the ledger.",
       "name": "GetFirstAvailableBlockResult",
       "shape": {
@@ -2729,7 +2866,7 @@
         }
       }
     },
-    "g_e_t_G_e_n_e_s_i_s_H_a_s_h_Result": {
+    "getGenesisHash_Result": {
       "description": "The genesis hash as a base-58 encoded string.",
       "name": "GetGenesisHashResult",
       "shape": {
@@ -2740,15 +2877,6 @@
             "type": "string"
           }
         }
-      }
-    },
-    "GetHealthResult1": {
-      "description": "An error object if unhealthy.",
-      "name": "GetHealthResult1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
       }
     },
     "GetHealthResult": {
@@ -2767,17 +2895,24 @@
             }
           },
           {
-            "typeName": "GetHealthResult1",
             "description": "An error object if unhealthy.",
             "type": {
-              "type": "id",
-              "value": "GetHealthResult1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
       }
     },
-    "g_e_t_H_e_a_l_t_h_Result": {
+    "getHealth_Result": {
       "description": "Result is 'ok' if healthy, or an error object if unhealthy.",
       "name": "GetHealthResult",
       "shape": {
@@ -2793,11 +2928,18 @@
             }
           },
           {
-            "typeName": "GetHealthResult1",
             "description": "An error object if unhealthy.",
             "type": {
-              "type": "id",
-              "value": "GetHealthResult1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
@@ -2841,7 +2983,7 @@
         ]
       }
     },
-    "g_e_t_H_i_g_h_e_s_t_S_n_a_p_s_h_o_t_S_l_o_t_Result": {
+    "getHighestSnapshotSlot_Result": {
       "name": "GetHighestSnapshotSlotResult",
       "shape": {
         "type": "object",
@@ -2901,7 +3043,7 @@
         ]
       }
     },
-    "g_e_t_I_d_e_n_t_i_t_y_Result": {
+    "getIdentity_Result": {
       "name": "GetIdentityResult",
       "shape": {
         "type": "object",
@@ -2937,7 +3079,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -2950,7 +3092,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -2963,7 +3105,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -2976,7 +3118,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -2989,10 +3131,28 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
+          }
+        ]
+      }
+    },
+    "GetInflationGovernorParamConfigurationCommitment": {
+      "description": "Configures the state commitment for querying.",
+      "name": "GetInflationGovernorParamConfigurationCommitment",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "processed"
+          },
+          {
+            "value": "confirmed"
+          },
+          {
+            "value": "finalized"
           }
         ]
       }
@@ -3010,7 +3170,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "MethodsParams0Commitment"
+                "value": "GetInflationGovernorParamConfigurationCommitment"
               }
             }
           },
@@ -3030,7 +3190,7 @@
         ]
       }
     },
-    "g_e_t_I_n_f_l_a_t_i_o_n_G_o_v_e_r_n_o_r_Result": {
+    "getInflationGovernor_Result": {
       "name": "GetInflationGovernorResult",
       "shape": {
         "type": "object",
@@ -3044,7 +3204,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -3057,7 +3217,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -3070,7 +3230,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -3083,7 +3243,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -3096,7 +3256,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -3118,7 +3278,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -3131,7 +3291,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -3144,7 +3304,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -3165,7 +3325,7 @@
         ]
       }
     },
-    "g_e_t_I_n_f_l_a_t_i_o_n_R_a_t_e_Result": {
+    "getInflationRate_Result": {
       "name": "GetInflationRateResult",
       "shape": {
         "type": "object",
@@ -3179,7 +3339,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -3192,7 +3352,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -3205,7 +3365,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -3303,6 +3463,24 @@
         ]
       }
     },
+    "GetInflationRewardParamAddressesCommitment": {
+      "description": "Configures the state commitment for querying.",
+      "name": "GetInflationRewardParamAddressesCommitment",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "processed"
+          },
+          {
+            "value": "confirmed"
+          },
+          {
+            "value": "finalized"
+          }
+        ]
+      }
+    },
     "getInflationReward_Param_Addresses": {
       "name": "getInflationReward_Param_Addresses",
       "shape": {
@@ -3332,7 +3510,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "MethodsParams0Commitment"
+                "value": "GetInflationRewardParamAddressesCommitment"
               }
             }
           },
@@ -3365,7 +3543,7 @@
         ]
       }
     },
-    "g_e_t_I_n_f_l_a_t_i_o_n_R_e_w_a_r_d_Result": {
+    "getInflationReward_Result": {
       "name": "GetInflationRewardResult",
       "shape": {
         "type": "alias",
@@ -3413,9 +3591,27 @@
         ]
       }
     },
-    "MethodsParams0Filter": {
+    "GetLargestAccountsParamConfigurationCommitment": {
+      "description": "Configures the state commitment for querying.",
+      "name": "GetLargestAccountsParamConfigurationCommitment",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "processed"
+          },
+          {
+            "value": "confirmed"
+          },
+          {
+            "value": "finalized"
+          }
+        ]
+      }
+    },
+    "GetLargestAccountsParamConfigurationFilter": {
       "description": "Filter results by account type.",
-      "name": "MethodsParams0Filter",
+      "name": "GetLargestAccountsParamConfigurationFilter",
       "shape": {
         "type": "enum",
         "values": [
@@ -3441,7 +3637,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "MethodsParams0Commitment"
+                "value": "GetLargestAccountsParamConfigurationCommitment"
               }
             }
           },
@@ -3452,14 +3648,14 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "MethodsParams0Filter"
+                "value": "GetLargestAccountsParamConfigurationFilter"
               }
             }
           }
         ]
       }
     },
-    "g_e_t_L_a_r_g_e_s_t_A_c_c_o_u_n_t_s_Result": {
+    "getLargestAccounts_Result": {
       "description": "List of the 20 largest accounts.",
       "name": "GetLargestAccountsResult",
       "shape": {
@@ -3508,6 +3704,24 @@
         ]
       }
     },
+    "GetLatestBlockhashParamConfigurationCommitment": {
+      "description": "Configures the state commitment for querying.",
+      "name": "GetLatestBlockhashParamConfigurationCommitment",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "processed"
+          },
+          {
+            "value": "confirmed"
+          },
+          {
+            "value": "finalized"
+          }
+        ]
+      }
+    },
     "getLatestBlockhash_Param_Configuration": {
       "name": "getLatestBlockhash_Param_Configuration",
       "shape": {
@@ -3521,7 +3735,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "MethodsParams0Commitment"
+                "value": "GetLatestBlockhashParamConfigurationCommitment"
               }
             }
           },
@@ -3541,7 +3755,7 @@
         ]
       }
     },
-    "g_e_t_L_a_t_e_s_t_B_l_o_c_k_h_a_s_h_Result": {
+    "getLatestBlockhash_Result": {
       "name": "GetLatestBlockhashResult",
       "shape": {
         "type": "object",
@@ -3576,7 +3790,7 @@
         ]
       }
     },
-    "g_e_t_M_a_x_R_e_t_r_a_n_s_m_i_t_S_l_o_t_Result": {
+    "getMaxRetransmitSlot_Result": {
       "description": "The maximum slot number observed.",
       "name": "GetMaxRetransmitSlotResult",
       "shape": {
@@ -3589,7 +3803,7 @@
         }
       }
     },
-    "g_e_t_M_a_x_S_h_r_e_d_I_n_s_e_r_t_S_l_o_t_Result": {
+    "getMaxShredInsertSlot_Result": {
       "description": "The maximum slot number observed.",
       "name": "GetMaxShredInsertSlotResult",
       "shape": {
@@ -3600,6 +3814,24 @@
             "type": "integer"
           }
         }
+      }
+    },
+    "GetMinimumBalanceForRentExemptionParamConfigurationCommitment": {
+      "description": "Configures the state commitment for querying.",
+      "name": "GetMinimumBalanceForRentExemptionParamConfigurationCommitment",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "processed"
+          },
+          {
+            "value": "confirmed"
+          },
+          {
+            "value": "finalized"
+          }
+        ]
       }
     },
     "getMinimumBalanceForRentExemption_Param_Configuration": {
@@ -3615,7 +3847,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "MethodsParams1Commitment"
+                "value": "GetMinimumBalanceForRentExemptionParamConfigurationCommitment"
               }
             }
           }
@@ -3644,7 +3876,7 @@
         ]
       }
     },
-    "g_e_t_M_i_n_i_m_u_m_B_a_l_a_n_c_e_F_o_r_R_e_n_t_E_x_e_m_p_t_i_o_n_Result": {
+    "getMinimumBalanceForRentExemption_Result": {
       "description": "Minimum lamports required to make an account rent exempt.",
       "name": "GetMinimumBalanceForRentExemptionResult",
       "shape": {
@@ -3747,6 +3979,81 @@
         ]
       }
     },
+    "GetMultipleAccountsParamConfigurationCommitment": {
+      "description": "Configures the state commitment for querying.",
+      "name": "GetMultipleAccountsParamConfigurationCommitment",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "processed"
+          },
+          {
+            "value": "confirmed"
+          },
+          {
+            "value": "finalized"
+          }
+        ]
+      }
+    },
+    "GetMultipleAccountsParamConfigurationDataSlice": {
+      "name": "GetMultipleAccountsParamConfigurationDataSlice",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "Number of bytes to return.",
+            "key": "length",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "description": "Byte offset from which to start reading.",
+            "key": "offset",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "GetMultipleAccountsParamConfigurationEncoding": {
+      "description": "Encoding format for data.",
+      "name": "GetMultipleAccountsParamConfigurationEncoding",
+      "shape": {
+        "type": "enum",
+        "default": "base64",
+        "values": [
+          {
+            "value": "base58"
+          },
+          {
+            "value": "base64"
+          },
+          {
+            "value": "base64+zstd"
+          },
+          {
+            "value": "jsonParsed"
+          }
+        ]
+      }
+    },
     "getMultipleAccounts_Param_Configuration": {
       "name": "getMultipleAccounts_Param_Configuration",
       "shape": {
@@ -3760,7 +4067,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "MethodsParams1Commitment"
+                "value": "GetMultipleAccountsParamConfigurationCommitment"
               }
             }
           },
@@ -3783,7 +4090,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "MethodsParams1DataSlice"
+                "value": "GetMultipleAccountsParamConfigurationDataSlice"
               }
             }
           },
@@ -3794,7 +4101,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "MethodsParams1Encoding"
+                "value": "GetMultipleAccountsParamConfigurationEncoding"
               }
             }
           }
@@ -3816,7 +4123,7 @@
         }
       }
     },
-    "g_e_t_M_u_l_t_i_p_l_e_A_c_c_o_u_n_t_s_Result": {
+    "getMultipleAccounts_Result": {
       "name": "GetMultipleAccountsResult",
       "shape": {
         "type": "alias",
@@ -3951,6 +4258,80 @@
         ]
       }
     },
+    "GetProgramAccountsParamConfigurationCommitment": {
+      "description": "Configures the state commitment for querying.",
+      "name": "GetProgramAccountsParamConfigurationCommitment",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "processed"
+          },
+          {
+            "value": "confirmed"
+          },
+          {
+            "value": "finalized"
+          }
+        ]
+      }
+    },
+    "GetProgramAccountsParamConfigurationEncoding": {
+      "description": "Encoding format for data.",
+      "name": "GetProgramAccountsParamConfigurationEncoding",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "base58"
+          },
+          {
+            "value": "base64"
+          },
+          {
+            "value": "base64+zstd"
+          },
+          {
+            "value": "jsonParsed"
+          }
+        ]
+      }
+    },
+    "GetProgramAccountsParamConfigurationDataSlice": {
+      "name": "GetProgramAccountsParamConfigurationDataSlice",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "Number of bytes to return.",
+            "key": "length",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "description": "Byte offset from which to start reading.",
+            "key": "offset",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
     "getProgramAccounts_Param_Configuration": {
       "name": "getProgramAccounts_Param_Configuration",
       "shape": {
@@ -3964,7 +4345,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "MethodsParams1Commitment"
+                "value": "GetProgramAccountsParamConfigurationCommitment"
               }
             }
           },
@@ -4001,7 +4382,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "MethodsParams1Encoding"
+                "value": "GetProgramAccountsParamConfigurationEncoding"
               }
             }
           },
@@ -4011,7 +4392,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "MethodsParams1DataSlice"
+                "value": "GetProgramAccountsParamConfigurationDataSlice"
               }
             }
           },
@@ -4044,7 +4425,7 @@
         }
       }
     },
-    "g_e_t_P_r_o_g_r_a_m_A_c_c_o_u_n_t_s_Result": {
+    "getProgramAccounts_Result": {
       "name": "GetProgramAccountsResult",
       "shape": {
         "type": "alias",
@@ -4143,7 +4524,7 @@
         }
       }
     },
-    "g_e_t_R_e_c_e_n_t_P_e_r_f_o_r_m_a_n_c_e_S_a_m_p_l_e_s_Result": {
+    "getRecentPerformanceSamples_Result": {
       "name": "GetRecentPerformanceSamplesResult",
       "shape": {
         "type": "alias",
@@ -4206,7 +4587,7 @@
         }
       }
     },
-    "g_e_t_R_e_c_e_n_t_P_r_i_o_r_i_t_i_z_a_t_i_o_n_F_e_e_s_Result": {
+    "getRecentPrioritizationFees_Result": {
       "description": "An array of prioritization fees observed in recent blocks.",
       "name": "GetRecentPrioritizationFeesResult",
       "shape": {
@@ -4326,6 +4707,24 @@
         ]
       }
     },
+    "GetSignaturesForAddressParamConfigurationCommitment": {
+      "description": "Configures the state commitment for querying.",
+      "name": "GetSignaturesForAddressParamConfigurationCommitment",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "processed"
+          },
+          {
+            "value": "confirmed"
+          },
+          {
+            "value": "finalized"
+          }
+        ]
+      }
+    },
     "getSignaturesForAddress_Param_Configuration": {
       "name": "getSignaturesForAddress_Param_Configuration",
       "shape": {
@@ -4339,7 +4738,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "MethodsParams1Commitment"
+                "value": "GetSignaturesForAddressParamConfigurationCommitment"
               }
             }
           },
@@ -4412,7 +4811,7 @@
         }
       }
     },
-    "g_e_t_S_i_g_n_a_t_u_r_e_s_F_o_r_A_d_d_r_e_s_s_Result": {
+    "getSignaturesForAddress_Result": {
       "name": "GetSignaturesForAddressResult",
       "shape": {
         "type": "alias",
@@ -4559,7 +4958,7 @@
         }
       }
     },
-    "g_e_t_S_i_g_n_a_t_u_r_e_S_t_a_t_u_s_e_s_Result": {
+    "getSignatureStatuses_Result": {
       "name": "GetSignatureStatusesResult",
       "shape": {
         "type": "alias",
@@ -4570,6 +4969,24 @@
             "value": "GetSignatureStatusesResultItems"
           }
         }
+      }
+    },
+    "GetSlotParamConfigurationCommitment": {
+      "description": "Configures the state commitment for querying.",
+      "name": "GetSlotParamConfigurationCommitment",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "processed"
+          },
+          {
+            "value": "confirmed"
+          },
+          {
+            "value": "finalized"
+          }
+        ]
       }
     },
     "getSlot_Param_Configuration": {
@@ -4585,7 +5002,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "MethodsParams0Commitment"
+                "value": "GetSlotParamConfigurationCommitment"
               }
             }
           },
@@ -4605,7 +5022,7 @@
         ]
       }
     },
-    "g_e_t_S_l_o_t_Result": {
+    "getSlot_Result": {
       "name": "GetSlotResult",
       "shape": {
         "type": "alias",
@@ -4615,6 +5032,24 @@
             "type": "integer"
           }
         }
+      }
+    },
+    "GetSlotLeaderParamConfigurationCommitment": {
+      "description": "Configures the state commitment for querying.",
+      "name": "GetSlotLeaderParamConfigurationCommitment",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "processed"
+          },
+          {
+            "value": "confirmed"
+          },
+          {
+            "value": "finalized"
+          }
+        ]
       }
     },
     "getSlotLeader_Param_Configuration": {
@@ -4630,7 +5065,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "MethodsParams0Commitment"
+                "value": "GetSlotLeaderParamConfigurationCommitment"
               }
             }
           },
@@ -4650,7 +5085,7 @@
         ]
       }
     },
-    "g_e_t_S_l_o_t_L_e_a_d_e_r_Result": {
+    "getSlotLeader_Result": {
       "description": "The node identity Pubkey as a base-58 encoded string.",
       "name": "GetSlotLeaderResult",
       "shape": {
@@ -4687,7 +5122,7 @@
         }
       }
     },
-    "g_e_t_S_l_o_t_L_e_a_d_e_r_s_Result": {
+    "getSlotLeaders_Result": {
       "description": "An array of node identity public keys as base-58 encoded strings.",
       "name": "GetSlotLeadersResult",
       "shape": {
@@ -4767,6 +5202,24 @@
         ]
       }
     },
+    "GetSupplyParamConfigurationCommitment": {
+      "description": "Configures the state commitment for querying.",
+      "name": "GetSupplyParamConfigurationCommitment",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "processed"
+          },
+          {
+            "value": "confirmed"
+          },
+          {
+            "value": "finalized"
+          }
+        ]
+      }
+    },
     "getSupply_Param_Configuration": {
       "name": "getSupply_Param_Configuration",
       "shape": {
@@ -4780,7 +5233,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "MethodsParams0Commitment"
+                "value": "GetSupplyParamConfigurationCommitment"
               }
             }
           },
@@ -4800,7 +5253,7 @@
         ]
       }
     },
-    "g_e_t_S_u_p_p_l_y_Result": {
+    "getSupply_Result": {
       "name": "GetSupplyResult",
       "shape": {
         "type": "object",
@@ -4906,7 +5359,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -4928,6 +5381,24 @@
         ]
       }
     },
+    "GetTokenAccountBalanceParamConfigurationCommitment": {
+      "description": "Configures the state commitment for querying.",
+      "name": "GetTokenAccountBalanceParamConfigurationCommitment",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "processed"
+          },
+          {
+            "value": "confirmed"
+          },
+          {
+            "value": "finalized"
+          }
+        ]
+      }
+    },
     "getTokenAccountBalance_Param_Configuration": {
       "name": "getTokenAccountBalance_Param_Configuration",
       "shape": {
@@ -4941,7 +5412,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "MethodsParams1Commitment"
+                "value": "GetTokenAccountBalanceParamConfigurationCommitment"
               }
             }
           }
@@ -4961,7 +5432,7 @@
         }
       }
     },
-    "g_e_t_T_o_k_e_n_A_c_c_o_u_n_t_B_a_l_a_n_c_e_Result": {
+    "getTokenAccountBalance_Result": {
       "name": "GetTokenAccountBalanceResult",
       "shape": {
         "type": "object",
@@ -5003,7 +5474,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -5147,8 +5618,26 @@
         ]
       }
     },
-    "MethodsParams2DataSlice": {
-      "name": "MethodsParams2DataSlice",
+    "GetTokenAccountsByOwnerParamConfigurationCommitment": {
+      "description": "Configures the state commitment for querying.",
+      "name": "GetTokenAccountsByOwnerParamConfigurationCommitment",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "processed"
+          },
+          {
+            "value": "confirmed"
+          },
+          {
+            "value": "finalized"
+          }
+        ]
+      }
+    },
+    "GetTokenAccountsByOwnerParamConfigurationDataSlice": {
+      "name": "GetTokenAccountsByOwnerParamConfigurationDataSlice",
       "shape": {
         "type": "object",
         "extends": [],
@@ -5182,9 +5671,9 @@
         ]
       }
     },
-    "MethodsParams2Encoding": {
+    "GetTokenAccountsByOwnerParamConfigurationEncoding": {
       "description": "Encoding format for account data.",
-      "name": "MethodsParams2Encoding",
+      "name": "GetTokenAccountsByOwnerParamConfigurationEncoding",
       "shape": {
         "type": "enum",
         "values": [
@@ -5216,7 +5705,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "MethodsParams2Commitment"
+                "value": "GetTokenAccountsByOwnerParamConfigurationCommitment"
               }
             }
           },
@@ -5239,7 +5728,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "MethodsParams2DataSlice"
+                "value": "GetTokenAccountsByOwnerParamConfigurationDataSlice"
               }
             }
           },
@@ -5250,7 +5739,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "MethodsParams2Encoding"
+                "value": "GetTokenAccountsByOwnerParamConfigurationEncoding"
               }
             }
           }
@@ -5305,7 +5794,7 @@
         }
       }
     },
-    "g_e_t_T_o_k_e_n_A_c_c_o_u_n_t_s_B_y_O_w_n_e_r_Result": {
+    "getTokenAccountsByOwner_Result": {
       "name": "GetTokenAccountsByOwnerResult",
       "shape": {
         "type": "alias",
@@ -5360,7 +5849,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -5382,6 +5871,24 @@
         ]
       }
     },
+    "GetTokenSupplyParamConfigurationCommitment": {
+      "description": "Configures the state commitment for querying.",
+      "name": "GetTokenSupplyParamConfigurationCommitment",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "processed"
+          },
+          {
+            "value": "confirmed"
+          },
+          {
+            "value": "finalized"
+          }
+        ]
+      }
+    },
     "getTokenSupply_Param_Configuration": {
       "name": "getTokenSupply_Param_Configuration",
       "shape": {
@@ -5395,7 +5902,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "MethodsParams1Commitment"
+                "value": "GetTokenSupplyParamConfigurationCommitment"
               }
             }
           }
@@ -5415,7 +5922,7 @@
         }
       }
     },
-    "g_e_t_T_o_k_e_n_S_u_p_p_l_y_Result": {
+    "getTokenSupply_Result": {
       "name": "GetTokenSupplyResult",
       "shape": {
         "type": "object",
@@ -5457,7 +5964,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -5479,15 +5986,6 @@
         ]
       }
     },
-    "GetTransactionResultTransaction0": {
-      "description": "The transaction details in JSON format.",
-      "name": "GetTransactionResultTransaction0",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "GetTransactionResultTransaction": {
       "description": "The transaction details, either in JSON format or encoded binary data.",
       "name": "GetTransactionResultTransaction",
@@ -5495,11 +5993,18 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "GetTransactionResultTransaction0",
             "description": "The transaction details in JSON format.",
             "type": {
-              "type": "id",
-              "value": "GetTransactionResultTransaction0"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           },
           {
@@ -5541,7 +6046,7 @@
             "type": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           }
@@ -5625,6 +6130,45 @@
         ]
       }
     },
+    "GetTransactionParamConfigurationCommitment": {
+      "description": "Commitment level to use. `Processed` is not supported.",
+      "name": "GetTransactionParamConfigurationCommitment",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "processed"
+          },
+          {
+            "value": "confirmed"
+          },
+          {
+            "value": "finalized"
+          }
+        ]
+      }
+    },
+    "GetTransactionParamConfigurationEncoding": {
+      "description": "Encoding format for the returned transaction.",
+      "name": "GetTransactionParamConfigurationEncoding",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "json"
+          },
+          {
+            "value": "jsonParsed"
+          },
+          {
+            "value": "base64"
+          },
+          {
+            "value": "base58"
+          }
+        ]
+      }
+    },
     "getTransaction_Param_Configuration": {
       "name": "getTransaction_Param_Configuration",
       "shape": {
@@ -5638,7 +6182,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "MethodsParams1Commitment"
+                "value": "GetTransactionParamConfigurationCommitment"
               }
             }
           },
@@ -5662,7 +6206,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "MethodsParams1Encoding"
+                "value": "GetTransactionParamConfigurationEncoding"
               }
             }
           }
@@ -5681,7 +6225,7 @@
         }
       }
     },
-    "g_e_t_T_r_a_n_s_a_c_t_i_o_n_Result": {
+    "getTransaction_Result": {
       "name": "GetTransactionResult",
       "shape": {
         "type": "object",
@@ -5793,7 +6337,7 @@
         ]
       }
     },
-    "g_e_t_V_e_r_s_i_o_n_Result": {
+    "getVersion_Result": {
       "name": "GetVersionResult",
       "shape": {
         "type": "object",
@@ -5894,7 +6438,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -6013,7 +6557,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -6103,6 +6647,24 @@
         ]
       }
     },
+    "GetVoteAccountsParamConfigurationCommitment": {
+      "description": "Configures the state commitment for querying.",
+      "name": "GetVoteAccountsParamConfigurationCommitment",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "processed"
+          },
+          {
+            "value": "confirmed"
+          },
+          {
+            "value": "finalized"
+          }
+        ]
+      }
+    },
     "getVoteAccounts_Param_Configuration": {
       "name": "getVoteAccounts_Param_Configuration",
       "shape": {
@@ -6116,7 +6678,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "MethodsParams0Commitment"
+                "value": "GetVoteAccountsParamConfigurationCommitment"
               }
             }
           },
@@ -6162,7 +6724,7 @@
         ]
       }
     },
-    "g_e_t_V_o_t_e_A_c_c_o_u_n_t_s_Result": {
+    "getVoteAccounts_Result": {
       "name": "GetVoteAccountsResult",
       "shape": {
         "type": "object",
@@ -6199,6 +6761,24 @@
         ]
       }
     },
+    "IsBlockhashValidParamConfigurationCommitment": {
+      "description": "Configures the state commitment for querying.",
+      "name": "IsBlockhashValidParamConfigurationCommitment",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "processed"
+          },
+          {
+            "value": "confirmed"
+          },
+          {
+            "value": "finalized"
+          }
+        ]
+      }
+    },
     "isBlockhashValid_Param_Configuration": {
       "name": "isBlockhashValid_Param_Configuration",
       "shape": {
@@ -6225,7 +6805,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "MethodsParams1Commitment"
+                "value": "IsBlockhashValidParamConfigurationCommitment"
               }
             }
           },
@@ -6257,7 +6837,7 @@
         }
       }
     },
-    "i_s_B_l_o_c_k_h_a_s_h_V_a_l_i_d_Result": {
+    "isBlockhashValid_Result": {
       "description": "Indicates if the blockhash is still valid.",
       "name": "IsBlockhashValidResult",
       "shape": {
@@ -6270,7 +6850,7 @@
         }
       }
     },
-    "m_i_n_i_m_u_m_L_e_d_g_e_r_S_l_o_t_Result": {
+    "minimumLedgerSlot_Result": {
       "description": "The lowest slot number the node has information about.",
       "name": "MinimumLedgerSlotResult",
       "shape": {
@@ -6281,6 +6861,24 @@
             "type": "integer"
           }
         }
+      }
+    },
+    "RequestAirdropParamConfigurationCommitment": {
+      "description": "Configures the state commitment for querying.",
+      "name": "RequestAirdropParamConfigurationCommitment",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "processed"
+          },
+          {
+            "value": "confirmed"
+          },
+          {
+            "value": "finalized"
+          }
+        ]
       }
     },
     "requestAirdrop_Param_Configuration": {
@@ -6296,7 +6894,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "MethodsParams2Commitment"
+                "value": "RequestAirdropParamConfigurationCommitment"
               }
             }
           }
@@ -6328,7 +6926,7 @@
         }
       }
     },
-    "r_e_q_u_e_s_t_A_i_r_d_r_o_p_Result": {
+    "requestAirdrop_Result": {
       "name": "RequestAirdropResult",
       "shape": {
         "type": "alias",
@@ -6340,9 +6938,25 @@
         }
       }
     },
-    "MethodsParams1PreflightCommitment": {
+    "SendTransactionParamConfigurationEncoding": {
+      "description": "Encoding used for the transaction data.",
+      "name": "SendTransactionParamConfigurationEncoding",
+      "shape": {
+        "type": "enum",
+        "default": "base58",
+        "values": [
+          {
+            "value": "base58"
+          },
+          {
+            "value": "base64"
+          }
+        ]
+      }
+    },
+    "SendTransactionParamConfigurationPreflightCommitment": {
       "description": "Commitment level to use for preflight.",
-      "name": "MethodsParams1PreflightCommitment",
+      "name": "SendTransactionParamConfigurationPreflightCommitment",
       "shape": {
         "type": "enum",
         "default": "finalized",
@@ -6372,7 +6986,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "MethodsParams1Encoding"
+                "value": "SendTransactionParamConfigurationEncoding"
               }
             }
           },
@@ -6397,7 +7011,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "MethodsParams1PreflightCommitment"
+                "value": "SendTransactionParamConfigurationPreflightCommitment"
               }
             }
           },
@@ -6442,7 +7056,7 @@
         }
       }
     },
-    "s_e_n_d_T_r_a_n_s_a_c_t_i_o_n_Result": {
+    "sendTransaction_Result": {
       "description": "The transaction signature as a base-58 encoded string.",
       "name": "SendTransactionResult",
       "shape": {
@@ -6693,9 +7307,44 @@
         ]
       }
     },
-    "MethodsParams1AccountsEncoding": {
+    "SimulateTransactionParamConfigurationCommitment": {
+      "description": "Configures the state commitment for querying.",
+      "name": "SimulateTransactionParamConfigurationCommitment",
+      "shape": {
+        "type": "enum",
+        "default": "finalized",
+        "values": [
+          {
+            "value": "processed"
+          },
+          {
+            "value": "confirmed"
+          },
+          {
+            "value": "finalized"
+          }
+        ]
+      }
+    },
+    "SimulateTransactionParamConfigurationEncoding": {
+      "description": "Encoding used for the transaction data.",
+      "name": "SimulateTransactionParamConfigurationEncoding",
+      "shape": {
+        "type": "enum",
+        "default": "base58",
+        "values": [
+          {
+            "value": "base58"
+          },
+          {
+            "value": "base64"
+          }
+        ]
+      }
+    },
+    "SimulateTransactionParamConfigurationAccountsEncoding": {
       "description": "Encoding for returned account data.",
-      "name": "MethodsParams1AccountsEncoding",
+      "name": "SimulateTransactionParamConfigurationAccountsEncoding",
       "shape": {
         "type": "enum",
         "default": "base64",
@@ -6715,8 +7364,8 @@
         ]
       }
     },
-    "MethodsParams1Accounts": {
-      "name": "MethodsParams1Accounts",
+    "SimulateTransactionParamConfigurationAccounts": {
+      "name": "SimulateTransactionParamConfigurationAccounts",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6744,7 +7393,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "MethodsParams1AccountsEncoding"
+                "value": "SimulateTransactionParamConfigurationAccountsEncoding"
               }
             }
           }
@@ -6764,7 +7413,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "MethodsParams1Commitment"
+                "value": "SimulateTransactionParamConfigurationCommitment"
               }
             }
           },
@@ -6816,7 +7465,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "MethodsParams1Encoding"
+                "value": "SimulateTransactionParamConfigurationEncoding"
               }
             }
           },
@@ -6840,7 +7489,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "MethodsParams1Accounts"
+                "value": "SimulateTransactionParamConfigurationAccounts"
               }
             }
           }
@@ -6859,7 +7508,7 @@
         }
       }
     },
-    "s_i_m_u_l_a_t_e_T_r_a_n_s_a_c_t_i_o_n_Result": {
+    "simulateTransaction_Result": {
       "name": "SimulateTransactionResult",
       "shape": {
         "type": "object",
@@ -7007,8 +7656,11 @@
                   "description": "Optional configuration object for additional settings.",
                   "key": "Configuration",
                   "valueType": {
-                    "type": "id",
-                    "value": "getAccountInfo_Param_Configuration"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "getAccountInfo_Param_Configuration"
+                    }
                   }
                 }
               ]
@@ -7039,12 +7691,9 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": {}
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": {}
             },
             "responseBodyV3": {
               "type": "json",
@@ -7104,8 +7753,11 @@
                   "description": "Optional configuration object containing additional settings.",
                   "key": "Configuration",
                   "valueType": {
-                    "type": "id",
-                    "value": "getBalance_Param_Configuration"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "getBalance_Param_Configuration"
+                    }
                   }
                 }
               ]
@@ -7138,12 +7790,9 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": 42
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": 42
             },
             "responseBodyV3": {
               "type": "json",
@@ -7203,8 +7852,11 @@
                   "description": "Optional configuration object containing additional settings.",
                   "key": "Configuration",
                   "valueType": {
-                    "type": "id",
-                    "value": "getBlock_Param_Configuration"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "getBlock_Param_Configuration"
+                    }
                   }
                 }
               ]
@@ -7235,12 +7887,9 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": {}
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": {}
             },
             "responseBodyV3": {
               "type": "json",
@@ -7324,12 +7973,9 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": {}
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": {}
             },
             "responseBodyV3": {
               "type": "json",
@@ -7379,8 +8025,11 @@
                   "description": "Optional configuration object containing additional request parameters.",
                   "key": "Configuration",
                   "valueType": {
-                    "type": "id",
-                    "value": "getBlockHeight_Param_Configuration"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "getBlockHeight_Param_Configuration"
+                    }
                   }
                 }
               ]
@@ -7413,12 +8062,9 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": 42
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": 42
             },
             "responseBodyV3": {
               "type": "json",
@@ -7468,8 +8114,11 @@
                   "description": "Optional configuration object containing additional settings.",
                   "key": "Configuration",
                   "valueType": {
-                    "type": "id",
-                    "value": "getBlockProduction_Param_Configuration"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "getBlockProduction_Param_Configuration"
+                    }
                   }
                 }
               ]
@@ -7500,12 +8149,9 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": {}
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": {}
             },
             "responseBodyV3": {
               "type": "json",
@@ -7565,9 +8211,12 @@
                   "description": "The ending slot.",
                   "key": "end_slot",
                   "valueType": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "integer"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "integer"
+                      }
                     }
                   }
                 },
@@ -7575,8 +8224,11 @@
                   "description": "Optional configuration object.",
                   "key": "Configuration",
                   "valueType": {
-                    "type": "id",
-                    "value": "getBlocks_Param_Configuration"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "getBlocks_Param_Configuration"
+                    }
                   }
                 }
               ]
@@ -7612,14 +8264,11 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": [
-                  42
-                ]
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": [
+                42
+              ]
             },
             "responseBodyV3": {
               "type": "json",
@@ -7691,8 +8340,11 @@
                   "description": "Optional configuration object.",
                   "key": "Configuration",
                   "valueType": {
-                    "type": "id",
-                    "value": "getBlocksWithLimit_Param_Configuration"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "getBlocksWithLimit_Param_Configuration"
+                    }
                   }
                 }
               ]
@@ -7728,14 +8380,11 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": [
-                  42
-                ]
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": [
+                42
+              ]
             },
             "responseBodyV3": {
               "type": "json",
@@ -7821,12 +8470,9 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": 42
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": 42
             },
             "responseBodyV3": {
               "type": "json",
@@ -7888,14 +8534,11 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": [
-                  {}
-                ]
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": [
+                {}
+              ]
             },
             "responseBodyV3": {
               "type": "json",
@@ -7947,8 +8590,11 @@
                   "description": "Optional configuration object.",
                   "key": "Configuration",
                   "valueType": {
-                    "type": "id",
-                    "value": "getEpochInfo_Param_Configuration"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "getEpochInfo_Param_Configuration"
+                    }
                   }
                 }
               ]
@@ -7979,12 +8625,9 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": {}
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": {}
             },
             "responseBodyV3": {
               "type": "json",
@@ -8043,12 +8686,9 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": {}
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": {}
             },
             "responseBodyV3": {
               "type": "json",
@@ -8106,8 +8746,11 @@
                   "description": "Optional configuration object.",
                   "key": "Configuration",
                   "valueType": {
-                    "type": "id",
-                    "value": "getFeeForMessage_Param_Configuration"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "getFeeForMessage_Param_Configuration"
+                    }
                   }
                 }
               ]
@@ -8140,12 +8783,9 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": 42
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": 42
             },
             "responseBodyV3": {
               "type": "json",
@@ -8206,12 +8846,9 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": 42
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": 42
             },
             "responseBodyV3": {
               "type": "json",
@@ -8272,12 +8909,9 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": "foo"
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": "foo"
             },
             "responseBodyV3": {
               "type": "json",
@@ -8336,12 +8970,9 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": {}
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": {}
             },
             "responseBodyV3": {
               "type": "json",
@@ -8400,12 +9031,9 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": {}
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": {}
             },
             "responseBodyV3": {
               "type": "json",
@@ -8464,12 +9092,9 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": {}
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": {}
             },
             "responseBodyV3": {
               "type": "json",
@@ -8519,8 +9144,11 @@
                   "description": "Optional configuration object.",
                   "key": "Configuration",
                   "valueType": {
-                    "type": "id",
-                    "value": "getInflationGovernor_Param_Configuration"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "getInflationGovernor_Param_Configuration"
+                    }
                   }
                 }
               ]
@@ -8551,12 +9179,9 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": {}
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": {}
             },
             "responseBodyV3": {
               "type": "json",
@@ -8615,12 +9240,9 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": {}
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": {}
             },
             "responseBodyV3": {
               "type": "json",
@@ -8705,14 +9327,11 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": [
-                  {}
-                ]
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": [
+                {}
+              ]
             },
             "responseBodyV3": {
               "type": "json",
@@ -8764,8 +9383,11 @@
                   "description": "Optional configuration object.",
                   "key": "Configuration",
                   "valueType": {
-                    "type": "id",
-                    "value": "getLargestAccounts_Param_Configuration"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "getLargestAccounts_Param_Configuration"
+                    }
                   }
                 }
               ]
@@ -8799,14 +9421,11 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": [
-                  {}
-                ]
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": [
+                {}
+              ]
             },
             "responseBodyV3": {
               "type": "json",
@@ -8858,8 +9477,11 @@
                   "description": "A configuration object with optional fields for specifying commitment and minimum context slot.",
                   "key": "Configuration",
                   "valueType": {
-                    "type": "id",
-                    "value": "getLatestBlockhash_Param_Configuration"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "getLatestBlockhash_Param_Configuration"
+                    }
                   }
                 }
               ]
@@ -8890,12 +9512,9 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": {}
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": {}
             },
             "responseBodyV3": {
               "type": "json",
@@ -8956,12 +9575,9 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": 42
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": 42
             },
             "responseBodyV3": {
               "type": "json",
@@ -9022,12 +9638,9 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": 42
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": 42
             },
             "responseBodyV3": {
               "type": "json",
@@ -9085,8 +9698,11 @@
                   "description": "Optional configuration object.",
                   "key": "Configuration",
                   "valueType": {
-                    "type": "id",
-                    "value": "getMinimumBalanceForRentExemption_Param_Configuration"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "getMinimumBalanceForRentExemption_Param_Configuration"
+                    }
                   }
                 }
               ]
@@ -9119,12 +9735,9 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": 42
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": 42
             },
             "responseBodyV3": {
               "type": "json",
@@ -9187,8 +9800,11 @@
                   "description": "Optional configuration object.",
                   "key": "Configuration",
                   "valueType": {
-                    "type": "id",
-                    "value": "getMultipleAccounts_Param_Configuration"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "getMultipleAccounts_Param_Configuration"
+                    }
                   }
                 }
               ]
@@ -9222,14 +9838,11 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": [
-                  {}
-                ]
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": [
+                {}
+              ]
             },
             "responseBodyV3": {
               "type": "json",
@@ -9291,8 +9904,11 @@
                   "description": "Optional configuration object.",
                   "key": "Configuration",
                   "valueType": {
-                    "type": "id",
-                    "value": "getProgramAccounts_Param_Configuration"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "getProgramAccounts_Param_Configuration"
+                    }
                   }
                 }
               ]
@@ -9326,14 +9942,11 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": [
-                  {}
-                ]
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": [
+                {}
+              ]
             },
             "responseBodyV3": {
               "type": "json",
@@ -9385,9 +9998,12 @@
                   "description": "The number of samples to return.",
                   "key": "limit",
                   "valueType": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "integer"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "integer"
+                      }
                     }
                   }
                 }
@@ -9422,14 +10038,11 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": [
-                  {}
-                ]
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": [
+                {}
+              ]
             },
             "responseBodyV3": {
               "type": "json",
@@ -9481,11 +10094,14 @@
                   "description": "An array of up to 128 account addresses. If provided, the response will reflect a fee to land a transaction locking all of the provided accounts as writable.",
                   "key": "Account addresses",
                   "valueType": {
-                    "type": "list",
+                    "type": "optional",
                     "itemType": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
+                      "type": "list",
+                      "itemType": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
                       }
                     }
                   }
@@ -9521,14 +10137,11 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": [
-                  {}
-                ]
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": [
+                {}
+              ]
             },
             "responseBodyV3": {
               "type": "json",
@@ -9590,8 +10203,11 @@
                   "description": "Optional configuration object.",
                   "key": "Configuration",
                   "valueType": {
-                    "type": "id",
-                    "value": "getSignaturesForAddress_Param_Configuration"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "getSignaturesForAddress_Param_Configuration"
+                    }
                   }
                 }
               ]
@@ -9625,14 +10241,11 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": [
-                  {}
-                ]
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": [
+                {}
+              ]
             },
             "responseBodyV3": {
               "type": "json",
@@ -9697,8 +10310,11 @@
                   "description": "Optional configuration object.",
                   "key": "Configuration",
                   "valueType": {
-                    "type": "id",
-                    "value": "getSignatureStatuses_Param_Configuration"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "getSignatureStatuses_Param_Configuration"
+                    }
                   }
                 }
               ]
@@ -9732,14 +10348,11 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": [
-                  {}
-                ]
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": [
+                {}
+              ]
             },
             "responseBodyV3": {
               "type": "json",
@@ -9791,8 +10404,11 @@
                   "description": "Optional configuration object containing additional settings.",
                   "key": "Configuration",
                   "valueType": {
-                    "type": "id",
-                    "value": "getSlot_Param_Configuration"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "getSlot_Param_Configuration"
+                    }
                   }
                 }
               ]
@@ -9825,12 +10441,9 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": 42
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": 42
             },
             "responseBodyV3": {
               "type": "json",
@@ -9880,8 +10493,11 @@
                   "description": "Optional configuration object containing additional settings.",
                   "key": "Configuration",
                   "valueType": {
-                    "type": "id",
-                    "value": "getSlotLeader_Param_Configuration"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "getSlotLeader_Param_Configuration"
+                    }
                   }
                 }
               ]
@@ -9914,12 +10530,9 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": "foo"
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": "foo"
             },
             "responseBodyV3": {
               "type": "json",
@@ -10018,14 +10631,11 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": [
-                  "foo"
-                ]
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": [
+                "foo"
+              ]
             },
             "responseBodyV3": {
               "type": "json",
@@ -10077,8 +10687,11 @@
                   "description": "Optional configuration object containing additional settings.",
                   "key": "Configuration",
                   "valueType": {
-                    "type": "id",
-                    "value": "getSupply_Param_Configuration"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "getSupply_Param_Configuration"
+                    }
                   }
                 }
               ]
@@ -10109,12 +10722,9 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": {}
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": {}
             },
             "responseBodyV3": {
               "type": "json",
@@ -10174,8 +10784,11 @@
                   "description": "Optional configuration object containing additional settings.",
                   "key": "Configuration",
                   "valueType": {
-                    "type": "id",
-                    "value": "getTokenAccountBalance_Param_Configuration"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "getTokenAccountBalance_Param_Configuration"
+                    }
                   }
                 }
               ]
@@ -10206,12 +10819,9 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": {}
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": {}
             },
             "responseBodyV3": {
               "type": "json",
@@ -10271,16 +10881,22 @@
                   "description": "A filter object containing either the Mint Pubkey or the Token program Pubkey.",
                   "key": "Token filter",
                   "valueType": {
-                    "type": "id",
-                    "value": "getTokenAccountsByOwner_Param_Token filter"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "getTokenAccountsByOwner_Param_Token filter"
+                    }
                   }
                 },
                 {
                   "description": "Optional configuration object containing additional settings.",
                   "key": "Configuration",
                   "valueType": {
-                    "type": "id",
-                    "value": "getTokenAccountsByOwner_Param_Configuration"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "getTokenAccountsByOwner_Param_Configuration"
+                    }
                   }
                 }
               ]
@@ -10314,14 +10930,11 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": [
-                  {}
-                ]
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": [
+                {}
+              ]
             },
             "responseBodyV3": {
               "type": "json",
@@ -10383,8 +10996,11 @@
                   "description": "Optional configuration object containing additional settings.",
                   "key": "Configuration",
                   "valueType": {
-                    "type": "id",
-                    "value": "getTokenSupply_Param_Configuration"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "getTokenSupply_Param_Configuration"
+                    }
                   }
                 }
               ]
@@ -10415,12 +11031,9 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": {}
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": {}
             },
             "responseBodyV3": {
               "type": "json",
@@ -10480,8 +11093,11 @@
                   "description": "Optional configuration object containing additional settings.",
                   "key": "Configuration",
                   "valueType": {
-                    "type": "id",
-                    "value": "getTransaction_Param_Configuration"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "getTransaction_Param_Configuration"
+                    }
                   }
                 }
               ]
@@ -10512,12 +11128,9 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": {}
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": {}
             },
             "responseBodyV3": {
               "type": "json",
@@ -10576,12 +11189,9 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": {}
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": {}
             },
             "responseBodyV3": {
               "type": "json",
@@ -10631,8 +11241,11 @@
                   "description": "Optional configuration object.",
                   "key": "Configuration",
                   "valueType": {
-                    "type": "id",
-                    "value": "getVoteAccounts_Param_Configuration"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "getVoteAccounts_Param_Configuration"
+                    }
                   }
                 }
               ]
@@ -10663,12 +11276,9 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": {}
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": {}
             },
             "responseBodyV3": {
               "type": "json",
@@ -10728,8 +11338,11 @@
                   "description": "Optional configuration object.",
                   "key": "Configuration",
                   "valueType": {
-                    "type": "id",
-                    "value": "isBlockhashValid_Param_Configuration"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "isBlockhashValid_Param_Configuration"
+                    }
                   }
                 }
               ]
@@ -10762,12 +11375,9 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": true
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": true
             },
             "responseBodyV3": {
               "type": "json",
@@ -10828,12 +11438,9 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": 42
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": 42
             },
             "responseBodyV3": {
               "type": "json",
@@ -10903,8 +11510,11 @@
                   "description": "Optional configuration object.",
                   "key": "Configuration",
                   "valueType": {
-                    "type": "id",
-                    "value": "requestAirdrop_Param_Configuration"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "requestAirdrop_Param_Configuration"
+                    }
                   }
                 }
               ]
@@ -10937,12 +11547,9 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": "foo"
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": "foo"
             },
             "responseBodyV3": {
               "type": "json",
@@ -11002,8 +11609,11 @@
                   "description": "Optional configuration object.",
                   "key": "Configuration",
                   "valueType": {
-                    "type": "id",
-                    "value": "sendTransaction_Param_Configuration"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "sendTransaction_Param_Configuration"
+                    }
                   }
                 }
               ]
@@ -11036,12 +11646,9 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": "foo"
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": "foo"
             },
             "responseBodyV3": {
               "type": "json",
@@ -11101,8 +11708,11 @@
                   "description": "Optional configuration object containing additional options.",
                   "key": "Configuration",
                   "valueType": {
-                    "type": "id",
-                    "value": "simulateTransaction_Param_Configuration"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "simulateTransaction_Param_Configuration"
+                    }
                   }
                 }
               ]
@@ -11133,12 +11743,9 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": {}
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": {}
             },
             "responseBodyV3": {
               "type": "json",

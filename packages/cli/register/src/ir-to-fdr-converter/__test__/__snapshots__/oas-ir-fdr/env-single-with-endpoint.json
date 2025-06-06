@@ -9,12 +9,12 @@
         "defaultEnvironment": "Prod",
         "environments": [
           {
-            "id": "Prod",
+            "id": "Debug",
             "baseUrl": "http://debug.api.com"
           }
         ],
         "id": "list",
-        "originalEndpointId": "list",
+        "originalEndpointId": "endpoint_.list",
         "name": "List",
         "path": {
           "pathParameters": [],
@@ -54,10 +54,7 @@
             "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "json",
-              "value": "foo"
-            },
+            "responseBody": "foo",
             "responseBodyV3": {
               "type": "json",
               "value": "foo"

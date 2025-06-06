@@ -14,12 +14,8 @@ on:
         required: true
         type: string
 
-env:
-  DOCKER_BUILDKIT: 1
-
 jobs:
-  run:
-    if: ${{ github.event_name == 'push' }}
+  publish:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo at current ref
@@ -27,54 +23,20 @@ jobs:
         with:
           ref: main
           fetch-depth: 2
-
-      - name: Install
-        uses: ./.github/actions/install
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-
-      - name: Run publish
-        env:
-          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
-          DOCKER_USERNAME: fernapi
-          DOCKER_PASSWORD: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
-        run: |
-          VERSIONS_FILE="generators/postman/versions.yml"
-          git show HEAD~1:${VERSIONS_FILE} > tmp_previous_versions.yml
-
-          if [ $? -eq 0 ]; then
-            pnpm seed:local publish generator postman --changelog $VERSIONS_FILE --previous-changelog tmp_previous_versions.yml --log-level debug
-          else
-            echo "No previous versions found, skipping publish."
-          fi
-
-          pnpm seed:local register generator --generators postman
-
-  # Manually publish and register generators
-  # The logic is identical to the step above, but could not find a good way to work with the matrix AND manual trigger in one job
-  manual:
-    runs-on: ubuntu-latest
-    # Only run this job if this has been triggered manually
-    if: ${{ github.event_name == 'workflow_dispatch' }}
-    steps:
-      - name: Checkout repo at current ref
-        uses: actions/checkout@v4
+      - name: automated publish
+        if: ${{ github.event_name == 'push' }}
+        uses: ./.github/actions/publish-generator
         with:
-          ref: main
-          fetch-depth: 2
-
-      - name: Install
-        uses: ./.github/actions/install
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-
-      - name: Run publish
-        env:
-          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
-          DOCKER_USERNAME: fernapi
-          DOCKER_PASSWORD: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
-        run: |
-          pnpm seed:local publish generator postman --ver ${{ inputs.version }} --log-level debug
-          pnpm seed:local register generator --generators postman
+          generator-name: "postman"
+          version-file: "generators/postman/versions.yml"
+          fern-token: ${{ secrets.FERN_TOKEN }}
+          docker-pwd: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+      - name: manual publish
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        uses: ./.github/actions/publish-generator
+        with:
+          generator-name: "postman"
+          version: ${{ inputs.version }}
+          manual-trigger: "true"
+          fern-token: ${{ secrets.FERN_TOKEN }}
+          docker-pwd: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}

@@ -1,3 +1,4 @@
+import { mergeWith } from "lodash-es";
 import { OpenAPIV3_1 } from "openapi-types";
 
 import * as FernIr from "@fern-api/ir-sdk";
@@ -159,7 +160,7 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
 
     private tryConvertSingularAllOfSchema(): SchemaConverter.Output | undefined {
         if (
-            this.schemaOnlyHasAllowedKeys(["allOf"]) &&
+            this.schemaOnlyHasAllowedKeys(["allOf", "type", "title"]) &&
             this.schema.allOf?.length === 1 &&
             this.schema.allOf[0] != null
         ) {
@@ -184,6 +185,39 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
                 }
             }
         }
+
+        const shouldMergeAllOf =
+            this.schemaOnlyHasAllowedKeys(["allOf", "type", "title"]) &&
+            Array.isArray(this.schema.allOf) &&
+            this.schema.allOf.length >= 1;
+
+        if (shouldMergeAllOf) {
+            let mergedSchema: Record<string, unknown> = {};
+            for (const allOfSchema of this.schema.allOf ?? []) {
+                if (this.context.isReferenceObject(allOfSchema)) {
+                    return undefined;
+                }
+                mergedSchema = mergeWith(mergedSchema, allOfSchema, (objValue, srcValue) => {
+                    if (srcValue === allOfSchema) {
+                        return objValue;
+                    }
+                    if (Array.isArray(objValue) && Array.isArray(srcValue)) {
+                        return [...objValue, ...srcValue];
+                    }
+                    return undefined;
+                });
+            }
+
+            const mergedConverter = new SchemaConverter({
+                context: this.context,
+                breadcrumbs: this.breadcrumbs,
+                schema: mergedSchema,
+                id: this.id,
+                inlined: true
+            });
+            return mergedConverter.convert();
+        }
+
         return undefined;
     }
 
@@ -283,15 +317,19 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
 
     private tryConvertMapSchema(): SchemaConverter.Output | undefined {
         if (
-            typeof this.schema.additionalProperties === "object" &&
+            (typeof this.schema.additionalProperties === "object" ||
+                typeof this.schema.additionalProperties === "boolean") &&
             this.schema.additionalProperties != null &&
             !this.schema.properties &&
             !this.schema.allOf
         ) {
+            if (typeof this.schema.additionalProperties === "boolean" && this.schema.additionalProperties === false) {
+                return undefined;
+            }
             const additionalPropertiesConverter = new MapSchemaConverter({
                 context: this.context,
                 breadcrumbs: this.breadcrumbs,
-                schema: this.schema.additionalProperties
+                schemaOrReferenceOrBoolean: this.schema.additionalProperties
             });
             const additionalPropertiesType = additionalPropertiesConverter.convert();
             if (additionalPropertiesType != null) {
@@ -420,7 +458,8 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
         return {
             typeId: this.id,
             fernFilepath: this.context.createFernFilepath(),
-            name: this.context.casingsGenerator.generateName(this.nameOverride ?? this.id)
+            name: this.context.casingsGenerator.generateName(this.id),
+            displayName: this.nameOverride
         };
     }
 
@@ -439,7 +478,6 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
         if (
             this.schema &&
             typeof this.schema === "object" &&
-            !("type" in this.schema) &&
             !("oneOf" in this.schema) &&
             !("anyOf" in this.schema) &&
             !("allOf" in this.schema) &&

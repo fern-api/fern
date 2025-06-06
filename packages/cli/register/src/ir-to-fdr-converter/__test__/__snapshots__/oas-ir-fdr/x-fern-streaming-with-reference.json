@@ -81,8 +81,101 @@
         {
           "auth": false,
           "method": "POST",
+          "id": "create_stream",
+          "originalEndpointId": "endpoint_chatCompletions.create_stream",
+          "name": "Create Stream",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/completions/chat"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "type": "json",
+              "contentType": "application/json",
+              "shape": {
+                "type": "object",
+                "extends": [],
+                "properties": [
+                  {
+                    "key": "stream",
+                    "valueType": {
+                      "type": "literal",
+                      "value": {
+                        "type": "booleanLiteral",
+                        "value": true
+                      }
+                    }
+                  },
+                  {
+                    "key": "prompt",
+                    "valueType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "response": {
+            "type": {
+              "type": "stream",
+              "shape": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "CompletionChunk"
+                }
+              }
+            },
+            "statusCode": 200,
+            "description": "Success!"
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "name": "chatCompletionsCreateExample",
+              "description": "",
+              "path": "/completions/chat",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "stream": true,
+                "prompt": "foo"
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "stream": true,
+                  "prompt": "foo"
+                }
+              },
+              "responseStatusCode": 200
+            }
+          ],
+          "protocol": {
+            "type": "rest"
+          }
+        },
+        {
+          "auth": false,
+          "method": "POST",
           "id": "create",
-          "originalEndpointId": "chatCompletions.create",
+          "originalEndpointId": "endpoint_chatCompletions.create",
           "name": "Create",
           "path": {
             "pathParameters": [],
@@ -104,25 +197,38 @@
               "type": "json",
               "contentType": "application/json",
               "shape": {
-                "type": "reference",
-                "value": {
-                  "type": "id",
-                  "value": "CreateCompletionRequest"
-                }
+                "type": "object",
+                "extends": [],
+                "properties": [
+                  {
+                    "key": "stream",
+                    "valueType": {
+                      "type": "literal",
+                      "value": {
+                        "type": "booleanLiteral",
+                        "value": false
+                      }
+                    }
+                  },
+                  {
+                    "key": "prompt",
+                    "valueType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                ]
               }
             }
           },
           "response": {
             "type": {
-              "type": "stream",
-              "shape": {
-                "type": "reference",
-                "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
-                }
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Completion"
               }
             },
             "statusCode": 200,
@@ -138,30 +244,17 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
+                "stream": false,
                 "prompt": "foo"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
+                  "stream": false,
                   "prompt": "foo"
                 }
               },
-              "responseStatusCode": 200,
-              "responseBody": {
-                "type": "stream",
-                "value": [
-                  "foo"
-                ]
-              },
-              "responseBodyV3": {
-                "type": "stream",
-                "value": [
-                  {
-                    "type": "json",
-                    "value": "foo"
-                  }
-                ]
-              }
+              "responseStatusCode": 200
             }
           ],
           "protocol": {

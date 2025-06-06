@@ -173,7 +173,7 @@ export class AsyncAPIConverter extends AbstractSpecConverter<AsyncAPIConverterCo
                 operation: channel,
                 context: this.context
             });
-            const group = groupNameExtension.convert()?.groups;
+            const websocketGroup = groupNameExtension.convert()?.groups;
 
             let convertedChannel: AbstractChannelConverter.Output | undefined;
             if (this.isAsyncAPIV3(this.context)) {
@@ -183,19 +183,19 @@ export class AsyncAPIConverter extends AbstractSpecConverter<AsyncAPIConverterCo
                 const channelConverter = new ChannelConverter3_0({
                     context: this.context,
                     breadcrumbs: ["channels", channelPath],
+                    websocketGroup,
                     channel,
                     channelPath,
-                    operations,
-                    group
+                    operations
                 });
                 convertedChannel = channelConverter.convert();
             } else {
                 const channelConverter = new ChannelConverter2_X({
                     context: this.context,
                     breadcrumbs: ["channels", channelPath],
+                    websocketGroup,
                     channel,
-                    channelPath,
-                    group
+                    channelPath
                 });
                 convertedChannel = channelConverter.convert();
             }
@@ -204,7 +204,7 @@ export class AsyncAPIConverter extends AbstractSpecConverter<AsyncAPIConverterCo
                     websocketChannel: convertedChannel.channel,
                     channelPath,
                     audiences: convertedChannel.audiences,
-                    group
+                    websocketGroup
                 });
                 this.addTypesToIr(convertedChannel.inlinedTypes);
             }

@@ -1,4 +1,4 @@
-irVersion: v55
+irVersion: v58
 displayName: PHP Model
 image: fernapi/fern-php-model
 changelogLocation: ../../generators/php/model/versions.yml

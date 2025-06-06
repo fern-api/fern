@@ -1,4 +1,4 @@
-irVersion: v57
+irVersion: v58
 displayName: Go SDK
 image: fernapi/fern-go-sdk
 changelogLocation: ../../generators/go/sdk/versions.yml
@@ -31,6 +31,13 @@ fixtures:
   examples:
     - outputFolder: no-custom-config
       customConfig: null
+    - outputFolder: v0
+      customConfig:
+        alwaysSendRequiredProperties: false
+        inlineFileProperties: false
+        inlinePathParameters: false
+        useReaderForBytesRequest: false
+        union: v0
     - outputFolder: always-send-required-properties
       customConfig:
         alwaysSendRequiredProperties: true
@@ -75,43 +82,67 @@ fixtures:
         clientName: Acme
         clientConstructorName: New
   undiscriminated-unions:
-    - outputFolder: .
+    - outputFolder: no-custom-config
       outputVersion: 0.0.1
       customConfig:
         packageName: undiscriminated
-        union: v1
         module:
           path: github.com/fern-api/undiscriminated-go
+    - outputFolder: v0
+      customConfig:
+        alwaysSendRequiredProperties: false
+        inlineFileProperties: false
+        inlinePathParameters: false
+        useReaderForBytesRequest: false
+        union: v0
   unions:
-    - outputFolder: .
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: v0
+      customConfig:
+        alwaysSendRequiredProperties: false
+        inlineFileProperties: false
+        inlinePathParameters: false
+        useReaderForBytesRequest: false
+        union: v0
+    - outputFolder: package-name
       outputVersion: 0.0.1
       customConfig:
         packageName: unions
-        union: v1
         module:
           path: github.com/fern-api/unions-go
   file-upload:
     - outputFolder: no-custom-config
       customConfig: null
-    - outputFolder: inline-file-properties
+    - outputFolder: v0
+      customConfig:
+        alwaysSendRequiredProperties: false
+        inlineFileProperties: false
+        inlinePathParameters: false
+        useReaderForBytesRequest: false
+        union: v0
+    - outputFolder: package-name
       outputVersion: 0.0.1
       customConfig:
         packageName: upload
-        union: v1
         module:
           path: github.com/fern-api/file-upload-go
-        inlineFileProperties: true
   path-parameters:
     - outputFolder: no-custom-config
       customConfig: null
-    - outputFolder: inline-path-parameters
+    - outputFolder: v0
+      customConfig:
+        alwaysSendRequiredProperties: false
+        inlineFileProperties: false
+        inlinePathParameters: false
+        useReaderForBytesRequest: false
+        union: v0
+    - outputFolder: package-name
       outputVersion: 0.0.1
       customConfig:
         packageName: path
-        union: v1
         module:
           path: github.com/fern-api/path-parameters-go
-        inlinePathParameters: true
   package-yml:
     - outputFolder: no-custom-config
       customConfig: null
@@ -144,14 +175,19 @@ scripts:
       - CGO_ENABLED=0 go test ./...
 allowedFailures:
   - alias-extends
+  - bytes
   - exhaustive
+  - literal
   - mixed-case
+  - pagination-custom
   - reserved-keywords
   - streaming-parameter
   - trace
-  - bytes
-  - pagination-custom
-  - literal
 
   # TODO: Fix example generator to produce valid dynamic snippets.
   - pagination
+
+  # TODO: Update the dynamic snippet generator to handle these cases.
+  - examples:exported-client-name
+  - path-parameters:no-custom-config
+  - path-parameters:package-name

@@ -157,8 +157,146 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "list",
           "method": "GET",
+          "baseUrl": "Test API",
+          "path": {
+            "head": "/trees",
+            "parts": []
+          },
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "ListRequestBadRequestError",
+                  "camelCase": {
+                    "unsafeName": "listRequestBadRequestError",
+                    "safeName": "listRequestBadRequestError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "list_request_bad_request_error",
+                    "safeName": "list_request_bad_request_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "LIST_REQUEST_BAD_REQUEST_ERROR",
+                    "safeName": "LIST_REQUEST_BAD_REQUEST_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ListRequestBadRequestError",
+                    "safeName": "ListRequestBadRequestError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "ListRequestBadRequestError"
+              },
+              "docs": "Bad Request"
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "ListRequestUnauthorizedError",
+                  "camelCase": {
+                    "unsafeName": "listRequestUnauthorizedError",
+                    "safeName": "listRequestUnauthorizedError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "list_request_unauthorized_error",
+                    "safeName": "list_request_unauthorized_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "LIST_REQUEST_UNAUTHORIZED_ERROR",
+                    "safeName": "LIST_REQUEST_UNAUTHORIZED_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ListRequestUnauthorizedError",
+                    "safeName": "ListRequestUnauthorizedError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "ListRequestUnauthorizedError"
+              },
+              "docs": "Unauthorized"
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "ListRequestNotFoundError",
+                  "camelCase": {
+                    "unsafeName": "listRequestNotFoundError",
+                    "safeName": "listRequestNotFoundError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "list_request_not_found_error",
+                    "safeName": "list_request_not_found_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "LIST_REQUEST_NOT_FOUND_ERROR",
+                    "safeName": "LIST_REQUEST_NOT_FOUND_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ListRequestNotFoundError",
+                    "safeName": "ListRequestNotFoundError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "ListRequestNotFoundError"
+              },
+              "docs": "Not Found"
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "ListRequestInternalServerError",
+                  "camelCase": {
+                    "unsafeName": "listRequestInternalServerError",
+                    "safeName": "listRequestInternalServerError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "list_request_internal_server_error",
+                    "safeName": "list_request_internal_server_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "LIST_REQUEST_INTERNAL_SERVER_ERROR",
+                    "safeName": "LIST_REQUEST_INTERNAL_SERVER_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ListRequestInternalServerError",
+                    "safeName": "ListRequestInternalServerError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "ListRequestInternalServerError"
+              },
+              "docs": "Internal Server Error"
+            }
+          ],
+          "auth": false,
+          "userSpecifiedExamples": [],
+          "autogeneratedExamples": [],
+          "idempotent": false,
+          "fullPath": {
+            "head": "/trees",
+            "parts": []
+          },
+          "allPathParameters": [],
+          "source": {
+            "type": "openapi"
+          },
+          "id": "endpoint_.list",
           "name": {
             "originalName": "list",
             "camelCase": {
@@ -178,14 +316,6 @@
               "safeName": "List"
             }
           },
-          "baseUrl": "Test API",
-          "path": {
-            "head": "/trees",
-            "parts": []
-          },
-          "pathParameters": [],
-          "queryParameters": [],
-          "headers": [],
           "requestBody": {
             "contentType": "application/json",
             "name": {
@@ -310,249 +440,32 @@
             },
             "type": "inlinedRequestBody"
           },
-          "errors": [
-            {
-              "error": {
-                "name": {
-                  "originalName": "ListRequestBadRequestError",
-                  "camelCase": {
-                    "unsafeName": "listRequestBadRequestError",
-                    "safeName": "listRequestBadRequestError"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "list_request_bad_request_error",
-                    "safeName": "list_request_bad_request_error"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "LIST_REQUEST_BAD_REQUEST_ERROR",
-                    "safeName": "LIST_REQUEST_BAD_REQUEST_ERROR"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "ListRequestBadRequestError",
-                    "safeName": "ListRequestBadRequestError"
-                  }
-                },
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
-                },
-                "errorId": "ListRequestBadRequestError"
-              },
-              "docs": "Bad Request"
-            },
-            {
-              "error": {
-                "name": {
-                  "originalName": "ListRequestUnauthorizedError",
-                  "camelCase": {
-                    "unsafeName": "listRequestUnauthorizedError",
-                    "safeName": "listRequestUnauthorizedError"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "list_request_unauthorized_error",
-                    "safeName": "list_request_unauthorized_error"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "LIST_REQUEST_UNAUTHORIZED_ERROR",
-                    "safeName": "LIST_REQUEST_UNAUTHORIZED_ERROR"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "ListRequestUnauthorizedError",
-                    "safeName": "ListRequestUnauthorizedError"
-                  }
-                },
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
-                },
-                "errorId": "ListRequestUnauthorizedError"
-              },
-              "docs": "Unauthorized"
-            },
-            {
-              "error": {
-                "name": {
-                  "originalName": "ListRequestNotFoundError",
-                  "camelCase": {
-                    "unsafeName": "listRequestNotFoundError",
-                    "safeName": "listRequestNotFoundError"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "list_request_not_found_error",
-                    "safeName": "list_request_not_found_error"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "LIST_REQUEST_NOT_FOUND_ERROR",
-                    "safeName": "LIST_REQUEST_NOT_FOUND_ERROR"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "ListRequestNotFoundError",
-                    "safeName": "ListRequestNotFoundError"
-                  }
-                },
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
-                },
-                "errorId": "ListRequestNotFoundError"
-              },
-              "docs": "Not Found"
-            },
-            {
-              "error": {
-                "name": {
-                  "originalName": "ListRequestInternalServerError",
-                  "camelCase": {
-                    "unsafeName": "listRequestInternalServerError",
-                    "safeName": "listRequestInternalServerError"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "list_request_internal_server_error",
-                    "safeName": "list_request_internal_server_error"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "LIST_REQUEST_INTERNAL_SERVER_ERROR",
-                    "safeName": "LIST_REQUEST_INTERNAL_SERVER_ERROR"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "ListRequestInternalServerError",
-                    "safeName": "ListRequestInternalServerError"
-                  }
-                },
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
-                },
-                "errorId": "ListRequestInternalServerError"
-              },
-              "docs": "Internal Server Error"
-            }
-          ],
-          "auth": false,
-          "userSpecifiedExamples": [],
-          "autogeneratedExamples": [
-            {
-              "example": {
-                "id": "ef539470",
-                "url": "/trees",
-                "endpointHeaders": [],
-                "endpointPathParameters": [],
-                "queryParameters": [],
-                "servicePathParameters": [],
-                "serviceHeaders": [],
-                "rootPathParameters": [],
-                "request": {
-                  "jsonExample": {
-                    "limit": 1
-                  },
-                  "properties": [
-                    {
-                      "name": {
-                        "name": {
-                          "originalName": "limit",
-                          "camelCase": {
-                            "unsafeName": "limit",
-                            "safeName": "limit"
-                          },
-                          "snakeCase": {
-                            "unsafeName": "limit",
-                            "safeName": "limit"
-                          },
-                          "screamingSnakeCase": {
-                            "unsafeName": "LIMIT",
-                            "safeName": "LIMIT"
-                          },
-                          "pascalCase": {
-                            "unsafeName": "Limit",
-                            "safeName": "Limit"
-                          }
-                        },
-                        "wireValue": "limit"
-                      },
-                      "value": {
-                        "jsonExample": 1,
-                        "shape": {
-                          "primitive": {
-                            "integer": 1,
-                            "type": "integer"
-                          },
-                          "type": "primitive"
-                        }
-                      }
-                    },
-                    {
-                      "name": {
-                        "name": {
-                          "originalName": "offset",
-                          "camelCase": {
-                            "unsafeName": "offset",
-                            "safeName": "offset"
-                          },
-                          "snakeCase": {
-                            "unsafeName": "offset",
-                            "safeName": "offset"
-                          },
-                          "screamingSnakeCase": {
-                            "unsafeName": "OFFSET",
-                            "safeName": "OFFSET"
-                          },
-                          "pascalCase": {
-                            "unsafeName": "Offset",
-                            "safeName": "Offset"
-                          }
-                        },
-                        "wireValue": "offset"
-                      },
-                      "value": {
-                        "shape": {
-                          "container": {
-                            "valueType": {
-                              "primitive": {
-                                "v1": "INTEGER",
-                                "v2": {
-                                  "default": 0,
-                                  "validation": {},
-                                  "type": "integer"
-                                }
-                              },
-                              "type": "primitive"
-                            },
-                            "type": "optional"
-                          },
-                          "type": "container"
-                        }
-                      }
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {},
+                      "type": "string"
                     }
-                  ],
-                  "type": "inlinedRequestBody"
-                },
-                "response": {
-                  "value": {
-                    "value": {
-                      "jsonExample": "string",
-                      "shape": {
-                        "primitive": {
-                          "string": {
-                            "original": "string"
-                          },
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "body"
                   },
-                  "type": "ok"
-                }
-              }
+                  "type": "primitive"
+                },
+                "docs": "A response",
+                "v2Examples": {
+                  "userSpecifiedExamples": {},
+                  "autogeneratedExamples": {
+                    "listExample": "Hello, world!"
+                  }
+                },
+                "type": "response"
+              },
+              "type": "json"
             }
-          ],
-          "idempotent": false,
-          "fullPath": {
-            "head": "/trees",
-            "parts": []
           },
-          "allPathParameters": [],
           "v2Examples": {
             "autogeneratedExamples": {
               "listExample": {
@@ -579,35 +492,6 @@
               }
             },
             "userSpecifiedExamples": {}
-          },
-          "source": {
-            "type": "openapi"
-          },
-          "response": {
-            "statusCode": 200,
-            "body": {
-              "value": {
-                "responseBodyType": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {},
-                      "type": "string"
-                    }
-                  },
-                  "type": "primitive"
-                },
-                "docs": "A response",
-                "v2Examples": {
-                  "userSpecifiedExamples": {},
-                  "autogeneratedExamples": {
-                    "listExample": "Hello, world!"
-                  }
-                },
-                "type": "response"
-              },
-              "type": "json"
-            }
           }
         }
       ]

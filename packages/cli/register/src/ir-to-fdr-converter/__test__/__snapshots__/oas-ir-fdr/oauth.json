@@ -94,7 +94,7 @@
             }
           ],
           "id": "get-token",
-          "originalEndpointId": "auth.get-token",
+          "originalEndpointId": "endpoint_auth.get-token",
           "name": "Request an access token",
           "path": {
             "pathParameters": [],
@@ -250,13 +250,10 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "access_token": "foo",
-                  "token_type": "Bearer",
-                  "expires_in": 42,
-                  "refresh_token": "foo"
-                }
+                "access_token": "foo",
+                "token_type": "Bearer",
+                "expires_in": 42,
+                "refresh_token": "foo"
               },
               "responseBodyV3": {
                 "type": "json",

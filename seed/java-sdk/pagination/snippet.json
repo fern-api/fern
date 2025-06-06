@@ -1,20 +1,20 @@
 {
     "endpoints": [
         {
-            "example_identifier": "e00f975c",
+            "example_identifier": "c329f38b",
             "id": {
                 "method": "POST",
-                "path": "/conversations/search",
+                "path": "/{index}/conversations/search",
                 "identifier_override": "endpoint_complex.search"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.complex.types.SearchRequest;\nimport com.seed.pagination.resources.complex.types.SearchRequestQuery;\nimport com.seed.pagination.resources.complex.types.SingleFilterSearchRequest;\nimport com.seed.pagination.resources.complex.types.SingleFilterSearchRequestOperator;\nimport com.seed.pagination.resources.complex.types.StartingAfterPaging;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.complex().search(\n            SearchRequest\n                .builder()\n                .query(\n                    SearchRequestQuery.ofSingleFilterSearchRequest(\n                        SingleFilterSearchRequest\n                            .builder()\n                            .field(\"field\")\n                            .operator(SingleFilterSearchRequestOperator.EQUALS)\n                            .value(\"value\")\n                            .build()\n                    )\n                )\n                .pagination(\n                    StartingAfterPaging\n                        .builder()\n                        .perPage(1)\n                        .startingAfter(\"starting_after\")\n                        .build()\n                )\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.complex.types.SearchRequest;\nimport com.seed.pagination.resources.complex.types.SearchRequestQuery;\nimport com.seed.pagination.resources.complex.types.SingleFilterSearchRequest;\nimport com.seed.pagination.resources.complex.types.SingleFilterSearchRequestOperator;\nimport com.seed.pagination.resources.complex.types.StartingAfterPaging;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.complex().search(\n            SearchRequest\n                .builder()\n                .query(\n                    SearchRequestQuery.ofSingleFilterSearchRequest(\n                        SingleFilterSearchRequest\n                            .builder()\n                            .field(\"field\")\n                            .operator(SingleFilterSearchRequestOperator.EQUALS)\n                            .value(\"value\")\n                            .build()\n                    )\n                )\n                .pagination(\n                    StartingAfterPaging\n                        .builder()\n                        .perPage(1)\n                        .startingAfter(\"starting_after\")\n                        .build()\n                )\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.complex.types.SearchRequest;\nimport com.seed.pagination.resources.complex.types.SearchRequestQuery;\nimport com.seed.pagination.resources.complex.types.SingleFilterSearchRequest;\nimport com.seed.pagination.resources.complex.types.SingleFilterSearchRequestOperator;\nimport com.seed.pagination.resources.complex.types.StartingAfterPaging;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.complex().search(\n            \"index\",\n            SearchRequest\n                .builder()\n                .query(\n                    SearchRequestQuery.ofSingleFilterSearchRequest(\n                        SingleFilterSearchRequest\n                            .builder()\n                            .field(\"field\")\n                            .operator(SingleFilterSearchRequestOperator.EQUALS)\n                            .value(\"value\")\n                            .build()\n                    )\n                )\n                .pagination(\n                    StartingAfterPaging\n                        .builder()\n                        .perPage(1)\n                        .startingAfter(\"starting_after\")\n                        .build()\n                )\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.complex.types.SearchRequest;\nimport com.seed.pagination.resources.complex.types.SearchRequestQuery;\nimport com.seed.pagination.resources.complex.types.SingleFilterSearchRequest;\nimport com.seed.pagination.resources.complex.types.SingleFilterSearchRequestOperator;\nimport com.seed.pagination.resources.complex.types.StartingAfterPaging;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.complex().search(\n            \"index\",\n            SearchRequest\n                .builder()\n                .query(\n                    SearchRequestQuery.ofSingleFilterSearchRequest(\n                        SingleFilterSearchRequest\n                            .builder()\n                            .field(\"field\")\n                            .operator(SingleFilterSearchRequestOperator.EQUALS)\n                            .value(\"value\")\n                            .build()\n                    )\n                )\n                .pagination(\n                    StartingAfterPaging\n                        .builder()\n                        .perPage(1)\n                        .startingAfter(\"starting_after\")\n                        .build()\n                )\n                .build()\n        );\n    }\n}\n"
             }
         },
         {
-            "example_identifier": "cbd0e284",
+            "example_identifier": "27f10232",
             "id": {
                 "method": "GET",
                 "path": "/users",
@@ -27,7 +27,7 @@
             }
         },
         {
-            "example_identifier": "bafc4509",
+            "example_identifier": "4e8b6653",
             "id": {
                 "method": "POST",
                 "path": "/users",
@@ -40,7 +40,7 @@
             }
         },
         {
-            "example_identifier": "6f868586",
+            "example_identifier": "f9f4281b",
             "id": {
                 "method": "POST",
                 "path": "/users",
@@ -53,7 +53,7 @@
             }
         },
         {
-            "example_identifier": "f0937c14",
+            "example_identifier": "a9964dc2",
             "id": {
                 "method": "GET",
                 "path": "/users",
@@ -66,7 +66,7 @@
             }
         },
         {
-            "example_identifier": "fbb1a4a",
+            "example_identifier": "cdd3c5f8",
             "id": {
                 "method": "GET",
                 "path": "/users",
@@ -79,7 +79,7 @@
             }
         },
         {
-            "example_identifier": "388ebf7a",
+            "example_identifier": "e0fd703f",
             "id": {
                 "method": "POST",
                 "path": "/users",
@@ -92,7 +92,7 @@
             }
         },
         {
-            "example_identifier": "6e1b1c66",
+            "example_identifier": "37523564",
             "id": {
                 "method": "GET",
                 "path": "/users",
@@ -105,7 +105,7 @@
             }
         },
         {
-            "example_identifier": "6e1b1c66",
+            "example_identifier": "37523564",
             "id": {
                 "method": "GET",
                 "path": "/users",
@@ -118,7 +118,7 @@
             }
         },
         {
-            "example_identifier": "e43cc797",
+            "example_identifier": "27ab18f2",
             "id": {
                 "method": "GET",
                 "path": "/users",
@@ -131,7 +131,7 @@
             }
         },
         {
-            "example_identifier": "11eba8ef",
+            "example_identifier": "c29fdeeb",
             "id": {
                 "method": "GET",
                 "path": "/users",
@@ -144,7 +144,7 @@
             }
         },
         {
-            "example_identifier": "91e01c94",
+            "example_identifier": "eb406109",
             "id": {
                 "method": "GET",
                 "path": "/users",
@@ -157,7 +157,7 @@
             }
         },
         {
-            "example_identifier": "5356d9a3",
+            "example_identifier": "63aafe0d",
             "id": {
                 "method": "GET",
                 "path": "/users",

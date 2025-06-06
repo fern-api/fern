@@ -410,8 +410,8 @@
         ]
       }
     },
-    "PetFindByStatusGetParametersSchema": {
-      "name": "PetFindByStatusGetParametersSchema",
+    "PetFindByStatusGetParametersStatus": {
+      "name": "PetFindByStatusGetParametersStatus",
       "shape": {
         "type": "enum",
         "default": "available",
@@ -438,14 +438,14 @@
       "websockets": [],
       "types": [],
       "subpackages": [
-        "subpackage_petsV1.petsV1",
-        "subpackage_petsV1.pet",
-        "subpackage_petsV1.store",
-        "subpackage_petsV1.user"
+        "subpackage_petsV1/petsV1",
+        "subpackage_petsV1/pet",
+        "subpackage_petsV1/store",
+        "subpackage_petsV1/user"
       ]
     },
-    "subpackage_petsV1.petsV1": {
-      "subpackageId": "subpackage_petsV1.petsV1",
+    "subpackage_petsV1/petsV1": {
+      "subpackageId": "subpackage_petsV1/petsV1",
       "name": "petsV1",
       "endpoints": [],
       "webhooks": [],
@@ -460,8 +460,8 @@
       ],
       "subpackages": []
     },
-    "subpackage_petsV1.pet": {
-      "subpackageId": "subpackage_petsV1.pet",
+    "subpackage_petsV1/pet": {
+      "subpackageId": "subpackage_petsV1/pet",
       "name": "pet",
       "endpoints": [
         {
@@ -476,7 +476,7 @@
             }
           ],
           "id": "addPet",
-          "originalEndpointId": "petsV1.pet.addPet",
+          "originalEndpointId": "endpoint_petsV1/pet.addPet",
           "name": "Add a new pet to the store.",
           "path": {
             "pathParameters": [],
@@ -570,25 +570,22 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": 10,
-                  "name": "doggie",
-                  "category": {
-                    "id": 1,
-                    "name": "Dogs"
-                  },
-                  "photoUrls": [
-                    "foo"
-                  ],
-                  "tags": [
-                    {
-                      "id": 42,
-                      "name": "foo"
-                    }
-                  ],
-                  "status": "available"
-                }
+                "id": 10,
+                "name": "doggie",
+                "category": {
+                  "id": 1,
+                  "name": "Dogs"
+                },
+                "photoUrls": [
+                  "foo"
+                ],
+                "tags": [
+                  {
+                    "id": 42,
+                    "name": "foo"
+                  }
+                ],
+                "status": "available"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -629,7 +626,7 @@
             }
           ],
           "id": "updatePet",
-          "originalEndpointId": "petsV1.pet.updatePet",
+          "originalEndpointId": "endpoint_petsV1/pet.updatePet",
           "name": "Update an existing pet.",
           "path": {
             "pathParameters": [],
@@ -735,25 +732,22 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": 10,
-                  "name": "doggie",
-                  "category": {
-                    "id": 1,
-                    "name": "Dogs"
-                  },
-                  "photoUrls": [
-                    "foo"
-                  ],
-                  "tags": [
-                    {
-                      "id": 42,
-                      "name": "foo"
-                    }
-                  ],
-                  "status": "available"
-                }
+                "id": 10,
+                "name": "doggie",
+                "category": {
+                  "id": 1,
+                  "name": "Dogs"
+                },
+                "photoUrls": [
+                  "foo"
+                ],
+                "tags": [
+                  {
+                    "id": 42,
+                    "name": "foo"
+                  }
+                ],
+                "status": "available"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -794,7 +788,7 @@
             }
           ],
           "id": "findPetsByStatus",
-          "originalEndpointId": "petsV1.pet.findPetsByStatus",
+          "originalEndpointId": "endpoint_petsV1/pet.findPetsByStatus",
           "name": "Finds Pets by status.",
           "path": {
             "pathParameters": [],
@@ -817,7 +811,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "PetFindByStatusGetParametersSchema"
+                  "value": "PetFindByStatusGetParametersStatus"
                 }
               }
             }
@@ -860,29 +854,26 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": [
-                  {
-                    "id": 10,
-                    "name": "doggie",
-                    "category": {
-                      "id": 1,
-                      "name": "Dogs"
-                    },
-                    "photoUrls": [
-                      "foo"
-                    ],
-                    "tags": [
-                      {
-                        "id": 42,
-                        "name": "foo"
-                      }
-                    ],
-                    "status": "available"
-                  }
-                ]
-              },
+              "responseBody": [
+                {
+                  "id": 10,
+                  "name": "doggie",
+                  "category": {
+                    "id": 1,
+                    "name": "Dogs"
+                  },
+                  "photoUrls": [
+                    "foo"
+                  ],
+                  "tags": [
+                    {
+                      "id": 42,
+                      "name": "foo"
+                    }
+                  ],
+                  "status": "available"
+                }
+              ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
@@ -924,7 +915,7 @@
             }
           ],
           "id": "findPetsByTags",
-          "originalEndpointId": "petsV1.pet.findPetsByTags",
+          "originalEndpointId": "endpoint_petsV1/pet.findPetsByTags",
           "name": "Finds Pets by tags.",
           "path": {
             "pathParameters": [],
@@ -995,29 +986,26 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": [
-                  {
-                    "id": 10,
-                    "name": "doggie",
-                    "category": {
-                      "id": 1,
-                      "name": "Dogs"
-                    },
-                    "photoUrls": [
-                      "foo"
-                    ],
-                    "tags": [
-                      {
-                        "id": 42,
-                        "name": "foo"
-                      }
-                    ],
-                    "status": "available"
-                  }
-                ]
-              },
+              "responseBody": [
+                {
+                  "id": 10,
+                  "name": "doggie",
+                  "category": {
+                    "id": 1,
+                    "name": "Dogs"
+                  },
+                  "photoUrls": [
+                    "foo"
+                  ],
+                  "tags": [
+                    {
+                      "id": 42,
+                      "name": "foo"
+                    }
+                  ],
+                  "status": "available"
+                }
+              ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
@@ -1059,7 +1047,7 @@
             }
           ],
           "id": "getPetById",
-          "originalEndpointId": "petsV1.pet.getPetById",
+          "originalEndpointId": "endpoint_petsV1/pet.getPetById",
           "name": "Find pet by ID.",
           "path": {
             "pathParameters": [
@@ -1144,25 +1132,22 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": 10,
-                  "name": "doggie",
-                  "category": {
-                    "id": 1,
-                    "name": "Dogs"
-                  },
-                  "photoUrls": [
-                    "foo"
-                  ],
-                  "tags": [
-                    {
-                      "id": 42,
-                      "name": "foo"
-                    }
-                  ],
-                  "status": "available"
-                }
+                "id": 10,
+                "name": "doggie",
+                "category": {
+                  "id": 1,
+                  "name": "Dogs"
+                },
+                "photoUrls": [
+                  "foo"
+                ],
+                "tags": [
+                  {
+                    "id": 42,
+                    "name": "foo"
+                  }
+                ],
+                "status": "available"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -1203,7 +1188,7 @@
             }
           ],
           "id": "updatePetWithForm",
-          "originalEndpointId": "petsV1.pet.updatePetWithForm",
+          "originalEndpointId": "endpoint_petsV1/pet.updatePetWithForm",
           "name": "Updates a pet in the store with form data.",
           "path": {
             "pathParameters": [
@@ -1303,25 +1288,22 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": 10,
-                  "name": "doggie",
-                  "category": {
-                    "id": 1,
-                    "name": "Dogs"
-                  },
-                  "photoUrls": [
-                    "foo"
-                  ],
-                  "tags": [
-                    {
-                      "id": 42,
-                      "name": "foo"
-                    }
-                  ],
-                  "status": "available"
-                }
+                "id": 10,
+                "name": "doggie",
+                "category": {
+                  "id": 1,
+                  "name": "Dogs"
+                },
+                "photoUrls": [
+                  "foo"
+                ],
+                "tags": [
+                  {
+                    "id": 42,
+                    "name": "foo"
+                  }
+                ],
+                "status": "available"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -1362,7 +1344,7 @@
             }
           ],
           "id": "deletePet",
-          "originalEndpointId": "petsV1.pet.deletePet",
+          "originalEndpointId": "endpoint_petsV1/pet.deletePet",
           "name": "Deletes a pet.",
           "path": {
             "pathParameters": [
@@ -1455,7 +1437,7 @@
             }
           ],
           "id": "uploadFile",
-          "originalEndpointId": "petsV1.pet.uploadFile",
+          "originalEndpointId": "endpoint_petsV1/pet.uploadFile",
           "name": "Uploads an image.",
           "path": {
             "pathParameters": [
@@ -1561,12 +1543,9 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "code": 42,
-                  "type": "foo",
-                  "message": "foo"
-                }
+                "code": 42,
+                "type": "foo",
+                "message": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -1588,8 +1567,8 @@
       "types": [],
       "subpackages": []
     },
-    "subpackage_petsV1.store": {
-      "subpackageId": "subpackage_petsV1.store",
+    "subpackage_petsV1/store": {
+      "subpackageId": "subpackage_petsV1/store",
       "name": "store",
       "endpoints": [
         {
@@ -1604,7 +1583,7 @@
             }
           ],
           "id": "getInventory",
-          "originalEndpointId": "petsV1.store.getInventory",
+          "originalEndpointId": "endpoint_petsV1/store.getInventory",
           "name": "Returns pet inventories by status.",
           "path": {
             "pathParameters": [],
@@ -1653,10 +1632,7 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              },
+              "responseBody": {},
               "responseBodyV3": {
                 "type": "json",
                 "value": {}
@@ -1679,7 +1655,7 @@
             }
           ],
           "id": "placeOrder",
-          "originalEndpointId": "petsV1.store.placeOrder",
+          "originalEndpointId": "endpoint_petsV1/store.placeOrder",
           "name": "Place an order for a pet.",
           "path": {
             "pathParameters": [],
@@ -1761,15 +1737,12 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": 10,
-                  "petId": 198772,
-                  "quantity": 7,
-                  "shipDate": "foo",
-                  "status": "placed",
-                  "complete": true
-                }
+                "id": 10,
+                "petId": 198772,
+                "quantity": 7,
+                "shipDate": "foo",
+                "status": "placed",
+                "complete": true
               },
               "responseBodyV3": {
                 "type": "json",
@@ -1800,7 +1773,7 @@
             }
           ],
           "id": "getOrderById",
-          "originalEndpointId": "petsV1.store.getOrderById",
+          "originalEndpointId": "endpoint_petsV1/store.getOrderById",
           "name": "Find purchase order by ID.",
           "path": {
             "pathParameters": [
@@ -1885,15 +1858,12 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": 10,
-                  "petId": 198772,
-                  "quantity": 7,
-                  "shipDate": "foo",
-                  "status": "placed",
-                  "complete": true
-                }
+                "id": 10,
+                "petId": 198772,
+                "quantity": 7,
+                "shipDate": "foo",
+                "status": "placed",
+                "complete": true
               },
               "responseBodyV3": {
                 "type": "json",
@@ -1924,7 +1894,7 @@
             }
           ],
           "id": "deleteOrder",
-          "originalEndpointId": "petsV1.store.deleteOrder",
+          "originalEndpointId": "endpoint_petsV1/store.deleteOrder",
           "name": "Delete purchase order by identifier.",
           "path": {
             "pathParameters": [
@@ -2009,8 +1979,8 @@
       "types": [],
       "subpackages": []
     },
-    "subpackage_petsV1.user": {
-      "subpackageId": "subpackage_petsV1.user",
+    "subpackage_petsV1/user": {
+      "subpackageId": "subpackage_petsV1/user",
       "name": "user",
       "endpoints": [
         {
@@ -2025,7 +1995,7 @@
             }
           ],
           "id": "createUser",
-          "originalEndpointId": "petsV1.user.createUser",
+          "originalEndpointId": "endpoint_petsV1/user.createUser",
           "name": "Create user.",
           "path": {
             "pathParameters": [],
@@ -2084,17 +2054,14 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": 10,
-                  "username": "theUser",
-                  "firstName": "John",
-                  "lastName": "James",
-                  "email": "john@email.com",
-                  "password": "12345",
-                  "phone": "12345",
-                  "userStatus": 1
-                }
+                "id": 10,
+                "username": "theUser",
+                "firstName": "John",
+                "lastName": "James",
+                "email": "john@email.com",
+                "password": "12345",
+                "phone": "12345",
+                "userStatus": 1
               },
               "responseBodyV3": {
                 "type": "json",
@@ -2127,7 +2094,7 @@
             }
           ],
           "id": "createUsersWithListInput",
-          "originalEndpointId": "petsV1.user.createUsersWithListInput",
+          "originalEndpointId": "endpoint_petsV1/user.createUsersWithListInput",
           "name": "Creates list of users with given input array.",
           "path": {
             "pathParameters": [],
@@ -2191,17 +2158,14 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": 10,
-                  "username": "theUser",
-                  "firstName": "John",
-                  "lastName": "James",
-                  "email": "john@email.com",
-                  "password": "12345",
-                  "phone": "12345",
-                  "userStatus": 1
-                }
+                "id": 10,
+                "username": "theUser",
+                "firstName": "John",
+                "lastName": "James",
+                "email": "john@email.com",
+                "password": "12345",
+                "phone": "12345",
+                "userStatus": 1
               },
               "responseBodyV3": {
                 "type": "json",
@@ -2234,7 +2198,7 @@
             }
           ],
           "id": "loginUser",
-          "originalEndpointId": "petsV1.user.loginUser",
+          "originalEndpointId": "endpoint_petsV1/user.loginUser",
           "name": "Logs user into the system.",
           "path": {
             "pathParameters": [],
@@ -2314,10 +2278,7 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": "foo"
-              },
+              "responseBody": "foo",
               "responseBodyV3": {
                 "type": "json",
                 "value": "foo"
@@ -2340,7 +2301,7 @@
             }
           ],
           "id": "logoutUser",
-          "originalEndpointId": "petsV1.user.logoutUser",
+          "originalEndpointId": "endpoint_petsV1/user.logoutUser",
           "name": "Logs out current logged in user session.",
           "path": {
             "pathParameters": [],
@@ -2385,7 +2346,7 @@
             }
           ],
           "id": "getUserByName",
-          "originalEndpointId": "petsV1.user.getUserByName",
+          "originalEndpointId": "endpoint_petsV1/user.getUserByName",
           "name": "Get user by user name.",
           "path": {
             "pathParameters": [
@@ -2470,17 +2431,14 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": 10,
-                  "username": "theUser",
-                  "firstName": "John",
-                  "lastName": "James",
-                  "email": "john@email.com",
-                  "password": "12345",
-                  "phone": "12345",
-                  "userStatus": 1
-                }
+                "id": 10,
+                "username": "theUser",
+                "firstName": "John",
+                "lastName": "James",
+                "email": "john@email.com",
+                "password": "12345",
+                "phone": "12345",
+                "userStatus": 1
               },
               "responseBodyV3": {
                 "type": "json",
@@ -2513,7 +2471,7 @@
             }
           ],
           "id": "updateUser",
-          "originalEndpointId": "petsV1.user.updateUser",
+          "originalEndpointId": "endpoint_petsV1/user.updateUser",
           "name": "Update user resource.",
           "path": {
             "pathParameters": [
@@ -2624,7 +2582,7 @@
             }
           ],
           "id": "deleteUser",
-          "originalEndpointId": "petsV1.user.deleteUser",
+          "originalEndpointId": "endpoint_petsV1/user.deleteUser",
           "name": "Delete user resource.",
           "path": {
             "pathParameters": [
@@ -2717,14 +2675,14 @@
       "websockets": [],
       "types": [],
       "subpackages": [
-        "subpackage_petsV2.petsV2",
-        "subpackage_petsV2.pet",
-        "subpackage_petsV2.store",
-        "subpackage_petsV2.user"
+        "subpackage_petsV2/petsV2",
+        "subpackage_petsV2/pet",
+        "subpackage_petsV2/store",
+        "subpackage_petsV2/user"
       ]
     },
-    "subpackage_petsV2.petsV2": {
-      "subpackageId": "subpackage_petsV2.petsV2",
+    "subpackage_petsV2/petsV2": {
+      "subpackageId": "subpackage_petsV2/petsV2",
       "name": "petsV2",
       "endpoints": [],
       "webhooks": [],
@@ -2739,8 +2697,8 @@
       ],
       "subpackages": []
     },
-    "subpackage_petsV2.pet": {
-      "subpackageId": "subpackage_petsV2.pet",
+    "subpackage_petsV2/pet": {
+      "subpackageId": "subpackage_petsV2/pet",
       "name": "pet",
       "endpoints": [
         {
@@ -2755,7 +2713,7 @@
             }
           ],
           "id": "addPet",
-          "originalEndpointId": "petsV2.pet.addPet",
+          "originalEndpointId": "endpoint_petsV2/pet.addPet",
           "name": "Add a new pet to the store.",
           "path": {
             "pathParameters": [],
@@ -2849,25 +2807,22 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": 10,
-                  "name": "doggie",
-                  "category": {
-                    "id": 1,
-                    "name": "Dogs"
-                  },
-                  "photoUrls": [
-                    "foo"
-                  ],
-                  "tags": [
-                    {
-                      "id": 42,
-                      "name": "foo"
-                    }
-                  ],
-                  "status": "available"
-                }
+                "id": 10,
+                "name": "doggie",
+                "category": {
+                  "id": 1,
+                  "name": "Dogs"
+                },
+                "photoUrls": [
+                  "foo"
+                ],
+                "tags": [
+                  {
+                    "id": 42,
+                    "name": "foo"
+                  }
+                ],
+                "status": "available"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -2908,7 +2863,7 @@
             }
           ],
           "id": "updatePet",
-          "originalEndpointId": "petsV2.pet.updatePet",
+          "originalEndpointId": "endpoint_petsV2/pet.updatePet",
           "name": "Update an existing pet.",
           "path": {
             "pathParameters": [],
@@ -3014,25 +2969,22 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": 10,
-                  "name": "doggie",
-                  "category": {
-                    "id": 1,
-                    "name": "Dogs"
-                  },
-                  "photoUrls": [
-                    "foo"
-                  ],
-                  "tags": [
-                    {
-                      "id": 42,
-                      "name": "foo"
-                    }
-                  ],
-                  "status": "available"
-                }
+                "id": 10,
+                "name": "doggie",
+                "category": {
+                  "id": 1,
+                  "name": "Dogs"
+                },
+                "photoUrls": [
+                  "foo"
+                ],
+                "tags": [
+                  {
+                    "id": 42,
+                    "name": "foo"
+                  }
+                ],
+                "status": "available"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -3073,7 +3025,7 @@
             }
           ],
           "id": "findPetsByStatus",
-          "originalEndpointId": "petsV2.pet.findPetsByStatus",
+          "originalEndpointId": "endpoint_petsV2/pet.findPetsByStatus",
           "name": "Finds Pets by status.",
           "path": {
             "pathParameters": [],
@@ -3096,7 +3048,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "PetFindByStatusGetParametersSchema"
+                  "value": "PetFindByStatusGetParametersStatus"
                 }
               }
             }
@@ -3139,29 +3091,26 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": [
-                  {
-                    "id": 10,
-                    "name": "doggie",
-                    "category": {
-                      "id": 1,
-                      "name": "Dogs"
-                    },
-                    "photoUrls": [
-                      "foo"
-                    ],
-                    "tags": [
-                      {
-                        "id": 42,
-                        "name": "foo"
-                      }
-                    ],
-                    "status": "available"
-                  }
-                ]
-              },
+              "responseBody": [
+                {
+                  "id": 10,
+                  "name": "doggie",
+                  "category": {
+                    "id": 1,
+                    "name": "Dogs"
+                  },
+                  "photoUrls": [
+                    "foo"
+                  ],
+                  "tags": [
+                    {
+                      "id": 42,
+                      "name": "foo"
+                    }
+                  ],
+                  "status": "available"
+                }
+              ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
@@ -3203,7 +3152,7 @@
             }
           ],
           "id": "findPetsByTags",
-          "originalEndpointId": "petsV2.pet.findPetsByTags",
+          "originalEndpointId": "endpoint_petsV2/pet.findPetsByTags",
           "name": "Finds Pets by tags.",
           "path": {
             "pathParameters": [],
@@ -3274,29 +3223,26 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": [
-                  {
-                    "id": 10,
-                    "name": "doggie",
-                    "category": {
-                      "id": 1,
-                      "name": "Dogs"
-                    },
-                    "photoUrls": [
-                      "foo"
-                    ],
-                    "tags": [
-                      {
-                        "id": 42,
-                        "name": "foo"
-                      }
-                    ],
-                    "status": "available"
-                  }
-                ]
-              },
+              "responseBody": [
+                {
+                  "id": 10,
+                  "name": "doggie",
+                  "category": {
+                    "id": 1,
+                    "name": "Dogs"
+                  },
+                  "photoUrls": [
+                    "foo"
+                  ],
+                  "tags": [
+                    {
+                      "id": 42,
+                      "name": "foo"
+                    }
+                  ],
+                  "status": "available"
+                }
+              ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
@@ -3338,7 +3284,7 @@
             }
           ],
           "id": "getPetById",
-          "originalEndpointId": "petsV2.pet.getPetById",
+          "originalEndpointId": "endpoint_petsV2/pet.getPetById",
           "name": "Find pet by ID.",
           "path": {
             "pathParameters": [
@@ -3423,25 +3369,22 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": 10,
-                  "name": "doggie",
-                  "category": {
-                    "id": 1,
-                    "name": "Dogs"
-                  },
-                  "photoUrls": [
-                    "foo"
-                  ],
-                  "tags": [
-                    {
-                      "id": 42,
-                      "name": "foo"
-                    }
-                  ],
-                  "status": "available"
-                }
+                "id": 10,
+                "name": "doggie",
+                "category": {
+                  "id": 1,
+                  "name": "Dogs"
+                },
+                "photoUrls": [
+                  "foo"
+                ],
+                "tags": [
+                  {
+                    "id": 42,
+                    "name": "foo"
+                  }
+                ],
+                "status": "available"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -3482,7 +3425,7 @@
             }
           ],
           "id": "updatePetWithForm",
-          "originalEndpointId": "petsV2.pet.updatePetWithForm",
+          "originalEndpointId": "endpoint_petsV2/pet.updatePetWithForm",
           "name": "Updates a pet in the store with form data.",
           "path": {
             "pathParameters": [
@@ -3582,25 +3525,22 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": 10,
-                  "name": "doggie",
-                  "category": {
-                    "id": 1,
-                    "name": "Dogs"
-                  },
-                  "photoUrls": [
-                    "foo"
-                  ],
-                  "tags": [
-                    {
-                      "id": 42,
-                      "name": "foo"
-                    }
-                  ],
-                  "status": "available"
-                }
+                "id": 10,
+                "name": "doggie",
+                "category": {
+                  "id": 1,
+                  "name": "Dogs"
+                },
+                "photoUrls": [
+                  "foo"
+                ],
+                "tags": [
+                  {
+                    "id": 42,
+                    "name": "foo"
+                  }
+                ],
+                "status": "available"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -3641,7 +3581,7 @@
             }
           ],
           "id": "deletePet",
-          "originalEndpointId": "petsV2.pet.deletePet",
+          "originalEndpointId": "endpoint_petsV2/pet.deletePet",
           "name": "Deletes a pet.",
           "path": {
             "pathParameters": [
@@ -3734,7 +3674,7 @@
             }
           ],
           "id": "uploadFile",
-          "originalEndpointId": "petsV2.pet.uploadFile",
+          "originalEndpointId": "endpoint_petsV2/pet.uploadFile",
           "name": "Uploads an image.",
           "path": {
             "pathParameters": [
@@ -3840,12 +3780,9 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "code": 42,
-                  "type": "foo",
-                  "message": "foo"
-                }
+                "code": 42,
+                "type": "foo",
+                "message": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -3867,8 +3804,8 @@
       "types": [],
       "subpackages": []
     },
-    "subpackage_petsV2.store": {
-      "subpackageId": "subpackage_petsV2.store",
+    "subpackage_petsV2/store": {
+      "subpackageId": "subpackage_petsV2/store",
       "name": "store",
       "endpoints": [
         {
@@ -3883,7 +3820,7 @@
             }
           ],
           "id": "getInventory",
-          "originalEndpointId": "petsV2.store.getInventory",
+          "originalEndpointId": "endpoint_petsV2/store.getInventory",
           "name": "Returns pet inventories by status.",
           "path": {
             "pathParameters": [],
@@ -3932,10 +3869,7 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              },
+              "responseBody": {},
               "responseBodyV3": {
                 "type": "json",
                 "value": {}
@@ -3958,7 +3892,7 @@
             }
           ],
           "id": "placeOrder",
-          "originalEndpointId": "petsV2.store.placeOrder",
+          "originalEndpointId": "endpoint_petsV2/store.placeOrder",
           "name": "Place an order for a pet.",
           "path": {
             "pathParameters": [],
@@ -4040,15 +3974,12 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": 10,
-                  "petId": 198772,
-                  "quantity": 7,
-                  "shipDate": "foo",
-                  "status": "placed",
-                  "complete": true
-                }
+                "id": 10,
+                "petId": 198772,
+                "quantity": 7,
+                "shipDate": "foo",
+                "status": "placed",
+                "complete": true
               },
               "responseBodyV3": {
                 "type": "json",
@@ -4079,7 +4010,7 @@
             }
           ],
           "id": "getOrderById",
-          "originalEndpointId": "petsV2.store.getOrderById",
+          "originalEndpointId": "endpoint_petsV2/store.getOrderById",
           "name": "Find purchase order by ID.",
           "path": {
             "pathParameters": [
@@ -4164,15 +4095,12 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": 10,
-                  "petId": 198772,
-                  "quantity": 7,
-                  "shipDate": "foo",
-                  "status": "placed",
-                  "complete": true
-                }
+                "id": 10,
+                "petId": 198772,
+                "quantity": 7,
+                "shipDate": "foo",
+                "status": "placed",
+                "complete": true
               },
               "responseBodyV3": {
                 "type": "json",
@@ -4203,7 +4131,7 @@
             }
           ],
           "id": "deleteOrder",
-          "originalEndpointId": "petsV2.store.deleteOrder",
+          "originalEndpointId": "endpoint_petsV2/store.deleteOrder",
           "name": "Delete purchase order by identifier.",
           "path": {
             "pathParameters": [
@@ -4288,8 +4216,8 @@
       "types": [],
       "subpackages": []
     },
-    "subpackage_petsV2.user": {
-      "subpackageId": "subpackage_petsV2.user",
+    "subpackage_petsV2/user": {
+      "subpackageId": "subpackage_petsV2/user",
       "name": "user",
       "endpoints": [
         {
@@ -4304,7 +4232,7 @@
             }
           ],
           "id": "createUser",
-          "originalEndpointId": "petsV2.user.createUser",
+          "originalEndpointId": "endpoint_petsV2/user.createUser",
           "name": "Create user.",
           "path": {
             "pathParameters": [],
@@ -4363,17 +4291,14 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": 10,
-                  "username": "theUser",
-                  "firstName": "John",
-                  "lastName": "James",
-                  "email": "john@email.com",
-                  "password": "12345",
-                  "phone": "12345",
-                  "userStatus": 1
-                }
+                "id": 10,
+                "username": "theUser",
+                "firstName": "John",
+                "lastName": "James",
+                "email": "john@email.com",
+                "password": "12345",
+                "phone": "12345",
+                "userStatus": 1
               },
               "responseBodyV3": {
                 "type": "json",
@@ -4406,7 +4331,7 @@
             }
           ],
           "id": "createUsersWithListInput",
-          "originalEndpointId": "petsV2.user.createUsersWithListInput",
+          "originalEndpointId": "endpoint_petsV2/user.createUsersWithListInput",
           "name": "Creates list of users with given input array.",
           "path": {
             "pathParameters": [],
@@ -4470,17 +4395,14 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": 10,
-                  "username": "theUser",
-                  "firstName": "John",
-                  "lastName": "James",
-                  "email": "john@email.com",
-                  "password": "12345",
-                  "phone": "12345",
-                  "userStatus": 1
-                }
+                "id": 10,
+                "username": "theUser",
+                "firstName": "John",
+                "lastName": "James",
+                "email": "john@email.com",
+                "password": "12345",
+                "phone": "12345",
+                "userStatus": 1
               },
               "responseBodyV3": {
                 "type": "json",
@@ -4513,7 +4435,7 @@
             }
           ],
           "id": "loginUser",
-          "originalEndpointId": "petsV2.user.loginUser",
+          "originalEndpointId": "endpoint_petsV2/user.loginUser",
           "name": "Logs user into the system.",
           "path": {
             "pathParameters": [],
@@ -4593,10 +4515,7 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": "foo"
-              },
+              "responseBody": "foo",
               "responseBodyV3": {
                 "type": "json",
                 "value": "foo"
@@ -4619,7 +4538,7 @@
             }
           ],
           "id": "logoutUser",
-          "originalEndpointId": "petsV2.user.logoutUser",
+          "originalEndpointId": "endpoint_petsV2/user.logoutUser",
           "name": "Logs out current logged in user session.",
           "path": {
             "pathParameters": [],
@@ -4664,7 +4583,7 @@
             }
           ],
           "id": "getUserByName",
-          "originalEndpointId": "petsV2.user.getUserByName",
+          "originalEndpointId": "endpoint_petsV2/user.getUserByName",
           "name": "Get user by user name.",
           "path": {
             "pathParameters": [
@@ -4749,17 +4668,14 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": 10,
-                  "username": "theUser",
-                  "firstName": "John",
-                  "lastName": "James",
-                  "email": "john@email.com",
-                  "password": "12345",
-                  "phone": "12345",
-                  "userStatus": 1
-                }
+                "id": 10,
+                "username": "theUser",
+                "firstName": "John",
+                "lastName": "James",
+                "email": "john@email.com",
+                "password": "12345",
+                "phone": "12345",
+                "userStatus": 1
               },
               "responseBodyV3": {
                 "type": "json",
@@ -4792,7 +4708,7 @@
             }
           ],
           "id": "updateUser",
-          "originalEndpointId": "petsV2.user.updateUser",
+          "originalEndpointId": "endpoint_petsV2/user.updateUser",
           "name": "Update user resource.",
           "path": {
             "pathParameters": [
@@ -4903,7 +4819,7 @@
             }
           ],
           "id": "deleteUser",
-          "originalEndpointId": "petsV2.user.deleteUser",
+          "originalEndpointId": "endpoint_petsV2/user.deleteUser",
           "name": "Delete user resource.",
           "path": {
             "pathParameters": [
@@ -4998,6 +4914,10 @@
       "subpackage_petsV1",
       "subpackage_petsV2"
     ]
+  },
+  "auth": {
+    "type": "bearerAuth",
+    "tokenName": "token"
   },
   "snippetsConfiguration": {},
   "globalHeaders": []

@@ -35,9 +35,11 @@ export class DynamicSnippetsGoTestGenerator {
         this.context.logger.debug("Generating dynamic snippet tests...");
         for (const [idx, request] of requests.entries()) {
             try {
-                const response = await this.dynamicSnippetsGenerator.generate(
-                    convertDynamicEndpointSnippetRequest(request)
-                );
+                const convertedRequest = convertDynamicEndpointSnippetRequest(request);
+                if (convertedRequest == null) {
+                    continue;
+                }
+                const response = await this.dynamicSnippetsGenerator.generate(convertedRequest);
                 const dynamicSnippetFilePath = this.getTestFilePath({ outputDir, idx });
                 await mkdir(path.dirname(dynamicSnippetFilePath), { recursive: true });
                 await writeFile(dynamicSnippetFilePath, response.snippet);

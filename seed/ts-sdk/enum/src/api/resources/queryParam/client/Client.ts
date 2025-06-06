@@ -5,6 +5,7 @@
 import * as core from "../../../../core/index.js";
 import * as SeedEnum from "../../../index.js";
 import { toJson } from "../../../../core/json.js";
+import { mergeHeaders } from "../../../../core/headers.js";
 import urlJoin from "url-join";
 import * as errors from "../../../../errors/index.js";
 
@@ -13,6 +14,8 @@ export declare namespace QueryParam {
         environment: core.Supplier<string>;
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
+        /** Additional headers to include in requests. */
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 
     export interface RequestOptions {
@@ -23,12 +26,16 @@ export declare namespace QueryParam {
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
         /** Additional headers to include in the request. */
-        headers?: Record<string, string>;
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 }
 
 export class QueryParam {
-    constructor(protected readonly _options: QueryParam.Options) {}
+    protected readonly _options: QueryParam.Options;
+
+    constructor(_options: QueryParam.Options) {
+        this._options = _options;
+    }
 
     /**
      * @param {SeedEnum.SendEnumAsQueryParamRequest} request
@@ -71,18 +78,8 @@ export class QueryParam {
                 "query",
             ),
             method: "POST",
-            headers: {
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/enum",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/enum/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ...requestOptions?.headers,
-            },
-            contentType: "application/json",
+            headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
             queryParameters: _queryParams,
-            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -182,18 +179,8 @@ export class QueryParam {
                 "query-list",
             ),
             method: "POST",
-            headers: {
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/enum",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/enum/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ...requestOptions?.headers,
-            },
-            contentType: "application/json",
+            headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
             queryParameters: _queryParams,
-            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

@@ -13,7 +13,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -25,7 +25,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -76,8 +76,51 @@
         ]
       }
     },
-    "SearchGetParametersSchema": {
-      "name": "SearchGetParametersSchema",
+    "SearchGetParametersFilter": {
+      "name": "SearchGetParametersFilter",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "name",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "age",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "location",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "SearchGetParametersSchemaLocation"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "SearchGetParametersSort": {
+      "name": "SearchGetParametersSort",
       "shape": {
         "type": "enum",
         "values": [
@@ -122,7 +165,7 @@
         "auth": false,
         "method": "GET",
         "id": "search",
-        "originalEndpointId": "search",
+        "originalEndpointId": "endpoint_.search",
         "name": "Search",
         "path": {
           "pathParameters": [],
@@ -144,7 +187,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "SearchGetParametersSchema"
+                "value": "SearchGetParametersFilter"
               }
             }
           },
@@ -154,7 +197,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "SearchGetParametersSchema"
+                "value": "SearchGetParametersSort"
               }
             }
           },
@@ -211,12 +254,9 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "results": [
-                  "foo"
-                ]
-              }
+              "results": [
+                "foo"
+              ]
             },
             "responseBodyV3": {
               "type": "json",

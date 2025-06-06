@@ -3,6 +3,7 @@
  */
 
 import * as core from "./core/index.js";
+import { mergeHeaders } from "./core/headers.js";
 import { Service } from "./api/resources/service/client/Client.js";
 
 export declare namespace SeedBearerTokenEnvironmentVariableClient {
@@ -13,6 +14,8 @@ export declare namespace SeedBearerTokenEnvironmentVariableClient {
         apiKey?: core.Supplier<core.BearerToken | undefined>;
         /** Override the X-API-Version header */
         version?: "1.0.0";
+        /** Additional headers to include in requests. */
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 
     export interface RequestOptions {
@@ -25,14 +28,31 @@ export declare namespace SeedBearerTokenEnvironmentVariableClient {
         /** Override the X-API-Version header */
         version?: "1.0.0";
         /** Additional headers to include in the request. */
-        headers?: Record<string, string>;
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 }
 
 export class SeedBearerTokenEnvironmentVariableClient {
+    protected readonly _options: SeedBearerTokenEnvironmentVariableClient.Options;
     protected _service: Service | undefined;
 
-    constructor(protected readonly _options: SeedBearerTokenEnvironmentVariableClient.Options) {}
+    constructor(_options: SeedBearerTokenEnvironmentVariableClient.Options) {
+        this._options = {
+            ..._options,
+            headers: mergeHeaders(
+                {
+                    "X-API-Version": _options?.version ?? "1.0.0",
+                    "X-Fern-Language": "JavaScript",
+                    "X-Fern-SDK-Name": "@fern/bearer-token-environment-variable",
+                    "X-Fern-SDK-Version": "0.0.1",
+                    "User-Agent": "@fern/bearer-token-environment-variable/0.0.1",
+                    "X-Fern-Runtime": core.RUNTIME.type,
+                    "X-Fern-Runtime-Version": core.RUNTIME.version,
+                },
+                _options?.headers,
+            ),
+        };
+    }
 
     public get service(): Service {
         return (this._service ??= new Service(this._options));

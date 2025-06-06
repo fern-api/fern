@@ -43,7 +43,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -60,6 +60,7 @@
         "variants": [
           {
             "discriminantValue": "request",
+            "displayName": "request",
             "additionalProperties": {
               "extends": [
                 "Request"
@@ -69,6 +70,7 @@
           },
           {
             "discriminantValue": "response",
+            "displayName": "response",
             "additionalProperties": {
               "extends": [
                 "Response"
@@ -87,7 +89,7 @@
         "auth": false,
         "method": "POST",
         "id": "Post",
-        "originalEndpointId": "Post",
+        "originalEndpointId": "endpoint_.Post",
         "name": "Post",
         "path": {
           "pathParameters": [],
@@ -146,10 +148,7 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "value": 42
-              }
+              "value": 42
             },
             "responseBodyV3": {
               "type": "json",

@@ -109,11 +109,13 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
     public async getIntermediateRepresentation({
         context,
         audiences,
-        enableUniqueErrorsPerEndpoint
+        enableUniqueErrorsPerEndpoint,
+        generateV1Examples
     }: {
         context: TaskContext;
         audiences: Audiences;
         enableUniqueErrorsPerEndpoint: boolean;
+        generateV1Examples: boolean;
     }): Promise<IntermediateRepresentation> {
         const specs = await getAllOpenAPISpecs({ context, specs: this.specs });
         const documents = await this.loader.loadDocuments({ context, specs });
@@ -168,6 +170,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                         environmentOverrides,
                         globalHeaderOverrides,
                         enableUniqueErrorsPerEndpoint,
+                        generateV1Examples,
                         settings: document.settings
                     });
                     const converter = new OpenAPI3_1Converter({ context: converterContext, audiences });
@@ -184,7 +187,8 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                         exampleGenerationArgs: { disabled: false },
                         errorCollector,
                         enableUniqueErrorsPerEndpoint,
-                        settings: document.settings
+                        settings: document.settings,
+                        generateV1Examples
                     });
                     const converter = new AsyncAPIConverter({ context: converterContext, audiences });
                     result = await converter.convert();
@@ -231,7 +235,8 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                     }),
                     exampleGenerationArgs: { disabled: false },
                     errorCollector,
-                    enableUniqueErrorsPerEndpoint
+                    enableUniqueErrorsPerEndpoint,
+                    generateV1Examples
                 });
 
                 const converter = new OpenRPCConverter({ context: converterContext, audiences });

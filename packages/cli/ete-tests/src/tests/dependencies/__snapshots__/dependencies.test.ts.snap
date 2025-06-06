@@ -101,6 +101,7 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
                     ],
                     "file": null
                 },
+                "displayName": null,
                 "typeId": "type_imported:RootString"
             },
             "shape": {
@@ -205,6 +206,7 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
                         }
                     }
                 },
+                "displayName": null,
                 "typeId": "type_y:IntegerAlias"
             },
             "shape": {
@@ -348,6 +350,7 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
                         }
                     }
                 },
+                "displayName": null,
                 "typeId": "type_imported/x:StringAlias"
             },
             "shape": {
@@ -479,6 +482,7 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
                     "auth": false,
                     "idempotent": false,
                     "baseUrl": null,
+                    "v2BaseUrls": null,
                     "method": "GET",
                     "basePath": null,
                     "path": {
@@ -1230,4 +1234,4 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
 }"
 `;
 
-exports[`dependencies > file dependencies 1`] = `3516675`;
+exports[`dependencies > file dependencies 1`] = `3539992`;

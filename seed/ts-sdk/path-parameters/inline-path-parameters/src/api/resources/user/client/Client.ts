@@ -4,6 +4,7 @@
 
 import * as core from "../../../../core/index.js";
 import * as SeedPathParameters from "../../../index.js";
+import { mergeHeaders } from "../../../../core/headers.js";
 import urlJoin from "url-join";
 import * as errors from "../../../../errors/index.js";
 
@@ -13,6 +14,8 @@ export declare namespace User {
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
         tenantId: string;
+        /** Additional headers to include in requests. */
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 
     export interface RequestOptions {
@@ -23,12 +26,16 @@ export declare namespace User {
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
         /** Additional headers to include in the request. */
-        headers?: Record<string, string>;
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 }
 
 export class User {
-    constructor(protected readonly _options: User.Options) {}
+    protected readonly _options: User.Options;
+
+    constructor(_options: User.Options) {
+        this._options = _options;
+    }
 
     /**
      * @param {SeedPathParameters.GetUsersRequest} request
@@ -58,17 +65,7 @@ export class User {
                 `/${encodeURIComponent(this._options.tenantId)}/user/${encodeURIComponent(userId)}`,
             ),
             method: "GET",
-            headers: {
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/path-parameters",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/path-parameters/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ...requestOptions?.headers,
-            },
-            contentType: "application/json",
-            requestType: "json",
+            headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -132,15 +129,7 @@ export class User {
                 `/${encodeURIComponent(this._options.tenantId)}/user/`,
             ),
             method: "POST",
-            headers: {
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/path-parameters",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/path-parameters/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ...requestOptions?.headers,
-            },
+            headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
             contentType: "application/json",
             requestType: "json",
             body: request,
@@ -211,15 +200,7 @@ export class User {
                 `/${encodeURIComponent(this._options.tenantId)}/user/${encodeURIComponent(userId)}`,
             ),
             method: "PATCH",
-            headers: {
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/path-parameters",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/path-parameters/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ...requestOptions?.headers,
-            },
+            headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
             contentType: "application/json",
             requestType: "json",
             body: _body,
@@ -292,18 +273,8 @@ export class User {
                 `/${encodeURIComponent(this._options.tenantId)}/user/${encodeURIComponent(userId)}/search`,
             ),
             method: "GET",
-            headers: {
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/path-parameters",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/path-parameters/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ...requestOptions?.headers,
-            },
-            contentType: "application/json",
+            headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
             queryParameters: _queryParams,
-            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

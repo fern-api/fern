@@ -244,16 +244,22 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         const resolvedDefault = this.context.isReferenceObject(this.schema)
             ? this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
                   schemaOrReference: this.schema,
-                  breadcrumbs: this.breadcrumbs,
-                  skipErrorCollector: true
+                  breadcrumbs: this.breadcrumbs
               })?.default
             : this.schema.default;
 
-        if (typeof resolvedDefault === "boolean") {
+        const resolvedConst = this.context.isReferenceObject(this.schema)
+            ? this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                  schemaOrReference: this.schema,
+                  breadcrumbs: this.breadcrumbs
+              })?.const
+            : this.schema.const;
+
+        if (typeof resolvedDefault === "boolean" || typeof resolvedConst === "boolean") {
             return {
                 isValid: true,
                 coerced: false,
-                validExample: resolvedDefault,
+                validExample: resolvedConst ?? resolvedDefault,
                 errors: []
             };
         }
@@ -469,7 +475,9 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         if (resolvedSchema.items == null) {
             resolvedSchema.items = { type: "string" };
         }
-        const exampleArray = Array.isArray(this.example) ? this.example : [this.example];
+        const usedFallbackExample = this.example == null;
+        const maybeExampleArray = this.example ?? resolvedSchema.example;
+        const exampleArray = Array.isArray(maybeExampleArray) ? maybeExampleArray : [maybeExampleArray];
         const results = exampleArray.map((item) => {
             const exampleConverter = new ExampleConverter({
                 breadcrumbs: [...this.breadcrumbs, "items"],
@@ -483,7 +491,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             return exampleConverter.convert();
         });
 
-        const isValid = results.every((result) => result?.isValid ?? false);
+        const isValid = results.every((result) => result?.isValid ?? false) && !usedFallbackExample;
 
         return {
             isValid,
@@ -505,6 +513,17 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             if (typeof property !== "object") {
                 return { key, result: { isValid: true, coerced: false, validExample: undefined, errors: [] } };
             }
+
+            if (this.isDeprecatedProperty(property)) {
+                const isOptionalProperty = !this.isRequiredProperty({ key, resolvedSchema });
+                if (isOptionalProperty) {
+                    return {
+                        key,
+                        result: { isValid: true, coerced: false, validExample: undefined, errors: [] }
+                    };
+                }
+            }
+
             if (
                 "readOnly" in property &&
                 property.readOnly === true &&
@@ -749,5 +768,21 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             return Object.values(resolvedSchema.examples ?? {})[0] as Type;
         }
         return undefined;
+    }
+
+    private isDeprecatedProperty(
+        property: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject
+    ): property is OpenAPIV3_1.SchemaObject & { availability: "deprecated" } {
+        return property != null && "availability" in property && property.availability === "deprecated";
+    }
+
+    private isRequiredProperty({
+        key,
+        resolvedSchema
+    }: {
+        key: string;
+        resolvedSchema: OpenAPIV3_1.SchemaObject;
+    }): boolean {
+        return resolvedSchema.required?.includes(key) ?? false;
     }
 }

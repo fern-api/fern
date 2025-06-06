@@ -38,7 +38,7 @@
         "auth": false,
         "method": "POST",
         "id": "upload-file",
-        "originalEndpointId": "upload-file",
+        "originalEndpointId": "endpoint_.upload-file",
         "name": "Upload a file",
         "path": {
           "pathParameters": [],
@@ -122,7 +122,7 @@
         "auth": false,
         "method": "POST",
         "id": "upload-list",
-        "originalEndpointId": "upload-list",
+        "originalEndpointId": "endpoint_.upload-list",
         "name": "Upload a list of files",
         "path": {
           "pathParameters": [],
@@ -208,7 +208,7 @@
         "auth": false,
         "method": "POST",
         "id": "upload-with-content-type",
-        "originalEndpointId": "upload-with-content-type",
+        "originalEndpointId": "endpoint_.upload-with-content-type",
         "name": "Upload a file with a content type",
         "path": {
           "pathParameters": [],

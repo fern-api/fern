@@ -1308,8 +1308,8 @@
         ]
       }
     },
-    "V1AudioStreamPostParametersSchema": {
-      "name": "V1AudioStreamPostParametersSchema",
+    "V1AudioStreamPostParametersAccept": {
+      "name": "V1AudioStreamPostParametersAccept",
       "shape": {
         "type": "enum",
         "values": [
@@ -1343,7 +1343,7 @@
             }
           ],
           "id": "ExperimentalStreamCreate",
-          "originalEndpointId": "audio.ExperimentalStreamCreate",
+          "originalEndpointId": "endpoint_audio.ExperimentalStreamCreate",
           "name": "Experimental Stream Create",
           "path": {
             "pathParameters": [],
@@ -1461,7 +1461,7 @@
             }
           ],
           "id": "GetSpeech",
-          "originalEndpointId": "audio.GetSpeech",
+          "originalEndpointId": "endpoint_audio.GetSpeech",
           "name": "Get Speech",
           "path": {
             "pathParameters": [],
@@ -1579,7 +1579,7 @@
             }
           ],
           "id": "GetStream",
-          "originalEndpointId": "audio.GetStream",
+          "originalEndpointId": "endpoint_audio.GetStream",
           "name": "Get Stream",
           "path": {
             "pathParameters": [],
@@ -1600,7 +1600,7 @@
               "key": "Accept",
               "type": {
                 "type": "id",
-                "value": "V1AudioStreamPostParametersSchema"
+                "value": "V1AudioStreamPostParametersAccept"
               }
             }
           ],
@@ -1717,7 +1717,7 @@
             }
           ],
           "id": "CreateAccessToken",
-          "originalEndpointId": "auth.CreateAccessToken",
+          "originalEndpointId": "endpoint_auth.CreateAccessToken",
           "name": "Create Access Token",
           "path": {
             "pathParameters": [],
@@ -1794,7 +1794,7 @@
             }
           ],
           "id": "ListAPIKeys",
-          "originalEndpointId": "apikey.ListAPIKeys",
+          "originalEndpointId": "endpoint_apikey.ListAPIKeys",
           "name": "List API Keys",
           "path": {
             "pathParameters": [],
@@ -1839,7 +1839,7 @@
             }
           ],
           "id": "CreateAPIKey",
-          "originalEndpointId": "apikey.CreateAPIKey",
+          "originalEndpointId": "endpoint_apikey.CreateAPIKey",
           "name": "Create API Key",
           "path": {
             "pathParameters": [],
@@ -1884,7 +1884,7 @@
             }
           ],
           "id": "DeleteAPIKey",
-          "originalEndpointId": "apikey.DeleteAPIKey",
+          "originalEndpointId": "endpoint_apikey.DeleteAPIKey",
           "name": "Delete API Key",
           "path": {
             "pathParameters": [
@@ -1950,7 +1950,7 @@
             }
           ],
           "id": "UpdateApiKey",
-          "originalEndpointId": "apikey.UpdateApiKey",
+          "originalEndpointId": "endpoint_apikey.UpdateApiKey",
           "name": "Update Api Key",
           "path": {
             "pathParameters": [
@@ -2046,7 +2046,7 @@
             }
           ],
           "id": "GetVoices",
-          "originalEndpointId": "voices.GetVoices",
+          "originalEndpointId": "endpoint_voices.GetVoices",
           "name": "Get Voices",
           "path": {
             "pathParameters": [],
@@ -2116,7 +2116,7 @@
             }
           ],
           "id": "CreateVoice",
-          "originalEndpointId": "voices.CreateVoice",
+          "originalEndpointId": "endpoint_voices.CreateVoice",
           "name": "Create Voice",
           "path": {
             "pathParameters": [],
@@ -2267,7 +2267,7 @@
             }
           ],
           "id": "DeleteVoice",
-          "originalEndpointId": "voices.DeleteVoice",
+          "originalEndpointId": "endpoint_voices.DeleteVoice",
           "name": "Delete Voice",
           "path": {
             "pathParameters": [
@@ -2396,6 +2396,11 @@
       "subpackage_apikey",
       "subpackage_voices"
     ]
+  },
+  "auth": {
+    "type": "header",
+    "headerWireValue": "Authorization",
+    "nameOverride": "Authorization"
   },
   "snippetsConfiguration": {},
   "globalHeaders": []

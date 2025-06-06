@@ -1,4 +1,5 @@
 export * from "./PublishingConfig";
+export * from "./Filesystem";
 export * from "./GithubPublish";
 export * from "./DirectPublish";
 export * from "./PublishTarget";

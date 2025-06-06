@@ -144,18 +144,7 @@ export class ErrorCollector {
                         this.logger.log(LogLevel.Error, `\t- at location (${locationInfo})`);
                     }
                     break;
-                case APIErrorLevel.WARNING:
-                default:
-                    this.logger.log(LogLevel.Warn, error.message);
-                    if (error.path && error.path.length > 0) {
-                        const sourceLocation = await this.breadcrumbToLineNumberMapper?.getSourceLocation(error.path);
-                        const locationInfo = sourceLocation
-                            ? `${this.relativeFilepathToSpec}:${sourceLocation.line}:${sourceLocation.column}`
-                            : error.path.join(" -> ");
-                        this.logger.log(LogLevel.Warn, `\t- at location (${locationInfo})`);
-                    }
             }
-            this.logger.log(LogLevel.Info, "");
         }
     }
 }

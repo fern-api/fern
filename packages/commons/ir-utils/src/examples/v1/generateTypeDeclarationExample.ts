@@ -73,7 +73,14 @@ export function generateTypeDeclarationExample({
             const baseJsonExample: Record<string, unknown> = {};
             const baseProperties: ExampleObjectProperty[] = [];
 
-            if (typeDeclaration.shape.extends != null) {
+            // TODO: remove dependency on .extends and only use .extendedProperties
+            // The dependency on .extends is here to keep compatibility with the V3 parser which doesn't supply .extendedProperties yet
+            // When v3 parser supplies .extendedProperties, we should stop relying on .extends.
+            if (
+                (typeDeclaration.shape.extendedProperties == null ||
+                    typeDeclaration.shape.extendedProperties.length === 0) &&
+                typeDeclaration.shape.extends != null
+            ) {
                 for (const extendedTypeReference of typeDeclaration.shape.extends) {
                     const extendedTypeDeclaration = typeDeclarations[extendedTypeReference.typeId];
                     if (extendedTypeDeclaration == null) {
@@ -96,7 +103,6 @@ export function generateTypeDeclarationExample({
                     }
                 }
             }
-
             const objectExample = generateObjectDeclarationExample({
                 fieldName,
                 typeDeclaration,
@@ -113,7 +119,6 @@ export function generateTypeDeclarationExample({
             return {
                 type: "success",
                 example: ExampleTypeShape.object({
-                    ...example,
                     properties: [...baseProperties, ...example.properties]
                 }),
                 jsonExample: Object.assign({}, baseJsonExample, jsonExample)

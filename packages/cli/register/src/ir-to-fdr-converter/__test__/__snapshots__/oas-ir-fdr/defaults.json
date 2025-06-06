@@ -52,7 +52,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer",
+                  "type": "double",
                   "default": 3.14
                 }
               }
@@ -69,7 +69,7 @@
         "auth": false,
         "method": "GET",
         "id": "getTest",
-        "originalEndpointId": "getTest",
+        "originalEndpointId": "endpoint_.getTest",
         "name": "Get Test",
         "path": {
           "pathParameters": [],
@@ -157,7 +157,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer",
+                  "type": "double",
                   "default": 42
                 }
               }
@@ -200,13 +200,10 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "boolField1": true,
-                "boolField2": true,
-                "stringField": "defaultValue",
-                "numberField": 3.14
-              }
+              "boolField1": true,
+              "boolField2": true,
+              "stringField": "defaultValue",
+              "numberField": 3.14
             },
             "responseBodyV3": {
               "type": "json",

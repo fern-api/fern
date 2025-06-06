@@ -255,6 +255,7 @@
         "variants": [
           {
             "discriminantValue": "google_apps",
+            "displayName": "google_apps",
             "additionalProperties": {
               "extends": [
                 "auth-connection-options-google-apps"
@@ -308,6 +309,7 @@
           },
           {
             "discriminantValue": "oidc",
+            "displayName": "oidc",
             "additionalProperties": {
               "extends": [
                 "auth-connection-options-oidc"
@@ -361,6 +363,7 @@
           },
           {
             "discriminantValue": "samlp",
+            "displayName": "samlp",
             "additionalProperties": {
               "extends": [
                 "auth-connection-options-saml"
@@ -414,6 +417,7 @@
           },
           {
             "discriminantValue": "social",
+            "displayName": "social",
             "additionalProperties": {
               "extends": [
                 "auth-connection-options-social"
@@ -467,6 +471,7 @@
           },
           {
             "discriminantValue": "waad",
+            "displayName": "waad",
             "additionalProperties": {
               "extends": [
                 "auth-connection-options-azure-ad"
@@ -1490,6 +1495,7 @@
         "variants": [
           {
             "discriminantValue": "google_apps",
+            "displayName": "google_apps",
             "additionalProperties": {
               "extends": [
                 "auth-connection-options-google-apps"
@@ -1520,6 +1526,7 @@
           },
           {
             "discriminantValue": "oidc",
+            "displayName": "oidc",
             "additionalProperties": {
               "extends": [
                 "auth-connection-options-oidc"
@@ -1550,6 +1557,7 @@
           },
           {
             "discriminantValue": "samlp",
+            "displayName": "samlp",
             "additionalProperties": {
               "extends": [
                 "auth-connection-options-saml"
@@ -1580,6 +1588,7 @@
           },
           {
             "discriminantValue": "waad",
+            "displayName": "waad",
             "additionalProperties": {
               "extends": [
                 "auth-connection-options-azure-ad"
@@ -1746,6 +1755,7 @@
         "variants": [
           {
             "discriminantValue": "google_apps",
+            "displayName": "google_apps",
             "additionalProperties": {
               "extends": [
                 "auth-connection-options-google-apps"
@@ -1786,6 +1796,7 @@
           },
           {
             "discriminantValue": "none",
+            "displayName": "none",
             "additionalProperties": {
               "extends": [
                 "empty"
@@ -1826,6 +1837,7 @@
           },
           {
             "discriminantValue": "oidc",
+            "displayName": "oidc",
             "additionalProperties": {
               "extends": [
                 "auth-connection-options-oidc"
@@ -1866,6 +1878,7 @@
           },
           {
             "discriminantValue": "samlp",
+            "displayName": "samlp",
             "additionalProperties": {
               "extends": [
                 "auth-connection-options-saml"
@@ -1906,6 +1919,7 @@
           },
           {
             "discriminantValue": "waad",
+            "displayName": "waad",
             "additionalProperties": {
               "extends": [
                 "auth-connection-options-azure-ad"
@@ -3026,6 +3040,7 @@
         "variants": [
           {
             "discriminantValue": "rev_org",
+            "displayName": "rev_org",
             "additionalProperties": {
               "extends": [
                 "rev-org-summary"
@@ -3063,6 +3078,7 @@
         "variants": [
           {
             "discriminantValue": "capability",
+            "displayName": "capability",
             "additionalProperties": {
               "extends": [
                 "capability"
@@ -3080,6 +3096,7 @@
           },
           {
             "discriminantValue": "enhancement",
+            "displayName": "enhancement",
             "additionalProperties": {
               "extends": [
                 "enhancement"
@@ -3097,6 +3114,7 @@
           },
           {
             "discriminantValue": "feature",
+            "displayName": "feature",
             "additionalProperties": {
               "extends": [
                 "feature"
@@ -3114,6 +3132,7 @@
           },
           {
             "discriminantValue": "product",
+            "displayName": "product",
             "additionalProperties": {
               "extends": [
                 "product"
@@ -3234,6 +3253,7 @@
         "variants": [
           {
             "discriminantValue": "capability",
+            "displayName": "capability",
             "additionalProperties": {
               "extends": [
                 "capability-summary"
@@ -3251,6 +3271,7 @@
           },
           {
             "discriminantValue": "enhancement",
+            "displayName": "enhancement",
             "additionalProperties": {
               "extends": [
                 "enhancement-summary"
@@ -3268,6 +3289,7 @@
           },
           {
             "discriminantValue": "feature",
+            "displayName": "feature",
             "additionalProperties": {
               "extends": [
                 "feature-summary"
@@ -3285,6 +3307,7 @@
           },
           {
             "discriminantValue": "product",
+            "displayName": "product",
             "additionalProperties": {
               "extends": [
                 "product-summary"
@@ -3331,6 +3354,7 @@
         "variants": [
           {
             "discriminantValue": "capability",
+            "displayName": "capability",
             "additionalProperties": {
               "extends": [
                 "parts-create-request-capability"
@@ -3384,6 +3408,7 @@
           },
           {
             "discriminantValue": "enhancement",
+            "displayName": "enhancement",
             "additionalProperties": {
               "extends": [
                 "parts-create-request-enhancement"
@@ -3437,6 +3462,7 @@
           },
           {
             "discriminantValue": "feature",
+            "displayName": "feature",
             "additionalProperties": {
               "extends": [
                 "parts-create-request-feature"
@@ -3490,6 +3516,7 @@
           },
           {
             "discriminantValue": "product",
+            "displayName": "product",
             "additionalProperties": {
               "extends": [
                 "parts-create-request-product"
@@ -3745,6 +3772,7 @@
         "variants": [
           {
             "discriminantValue": "capability",
+            "displayName": "capability",
             "additionalProperties": {
               "extends": [
                 "parts-update-request-capability"
@@ -3808,6 +3836,7 @@
           },
           {
             "discriminantValue": "enhancement",
+            "displayName": "enhancement",
             "additionalProperties": {
               "extends": [
                 "parts-update-request-enhancement"
@@ -3871,6 +3900,7 @@
           },
           {
             "discriminantValue": "feature",
+            "displayName": "feature",
             "additionalProperties": {
               "extends": [
                 "parts-update-request-feature"
@@ -3934,6 +3964,7 @@
           },
           {
             "discriminantValue": "none",
+            "displayName": "none",
             "additionalProperties": {
               "extends": [
                 "empty"
@@ -3997,6 +4028,7 @@
           },
           {
             "discriminantValue": "product",
+            "displayName": "product",
             "additionalProperties": {
               "extends": [
                 "parts-update-request-product"
@@ -5187,6 +5219,7 @@
         "variants": [
           {
             "discriminantValue": "timeline_comment",
+            "displayName": "timeline_comment",
             "additionalProperties": {
               "extends": [
                 "timeline-entries-create-request-timeline-comment"
@@ -5394,6 +5427,7 @@
         "variants": [
           {
             "discriminantValue": "timeline_comment",
+            "displayName": "timeline_comment",
             "additionalProperties": {
               "extends": [
                 "timeline-entries-update-request-timeline-comment"
@@ -5577,6 +5611,7 @@
         "variants": [
           {
             "discriminantValue": "timeline_comment",
+            "displayName": "timeline_comment",
             "additionalProperties": {
               "extends": [
                 "timeline-comment"
@@ -5816,6 +5851,7 @@
         "variants": [
           {
             "discriminantValue": "dev_user",
+            "displayName": "dev_user",
             "additionalProperties": {
               "extends": [
                 "dev-user-summary"
@@ -5833,6 +5869,7 @@
           },
           {
             "discriminantValue": "rev_user",
+            "displayName": "rev_user",
             "additionalProperties": {
               "extends": [
                 "rev-user-summary"
@@ -5850,6 +5887,7 @@
           },
           {
             "discriminantValue": "sys_user",
+            "displayName": "sys_user",
             "additionalProperties": {
               "extends": [
                 "sys-user-summary"
@@ -6598,6 +6636,7 @@
         "variants": [
           {
             "discriminantValue": "issue",
+            "displayName": "issue",
             "additionalProperties": {
               "extends": [
                 "issue"
@@ -6615,6 +6654,7 @@
           },
           {
             "discriminantValue": "ticket",
+            "displayName": "ticket",
             "additionalProperties": {
               "extends": [
                 "ticket"
@@ -6776,6 +6816,7 @@
         "variants": [
           {
             "discriminantValue": "issue",
+            "displayName": "issue",
             "additionalProperties": {
               "extends": [
                 "works-create-request-issue"
@@ -6909,6 +6950,7 @@
           },
           {
             "discriminantValue": "ticket",
+            "displayName": "ticket",
             "additionalProperties": {
               "extends": [
                 "works-create-request-ticket"
@@ -7253,6 +7295,7 @@
         "variants": [
           {
             "discriminantValue": "issue",
+            "displayName": "issue",
             "additionalProperties": {
               "extends": [
                 "works-update-request-issue"
@@ -7383,6 +7426,7 @@
           },
           {
             "discriminantValue": "none",
+            "displayName": "none",
             "additionalProperties": {
               "extends": [
                 "empty"
@@ -7513,6 +7557,7 @@
           },
           {
             "discriminantValue": "ticket",
+            "displayName": "ticket",
             "additionalProperties": {
               "extends": [
                 "works-update-request-ticket"
@@ -7859,7 +7904,7 @@
             }
           ],
           "id": "locate",
-          "originalEndpointId": "artifacts.locate",
+          "originalEndpointId": "endpoint_artifacts.locate",
           "name": "Locate",
           "path": {
             "pathParameters": [],
@@ -8003,11 +8048,8 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "expires_at": "foo",
-                  "url": "foo"
-                }
+                "expires_at": "foo",
+                "url": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -8034,7 +8076,7 @@
             }
           ],
           "id": "prepare",
-          "originalEndpointId": "artifacts.prepare",
+          "originalEndpointId": "endpoint_artifacts.prepare",
           "name": "Prepare",
           "path": {
             "pathParameters": [],
@@ -8174,17 +8216,14 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "form_data": [
-                    {
-                      "key": "foo",
-                      "value": "foo"
-                    }
-                  ],
-                  "id": "don:<partition>:core:devo/<dev-org-id>:artifact/<artifact-id>",
-                  "url": "foo"
-                }
+                "form_data": [
+                  {
+                    "key": "foo",
+                    "value": "foo"
+                  }
+                ],
+                "id": "don:<partition>:core:devo/<dev-org-id>:artifact/<artifact-id>",
+                "url": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -8227,7 +8266,7 @@
             }
           ],
           "id": "create",
-          "originalEndpointId": "auth-tokens.create",
+          "originalEndpointId": "endpoint_authTokens.create",
           "name": "Create",
           "path": {
             "pathParameters": [],
@@ -8363,15 +8402,12 @@
               },
               "responseStatusCode": 201,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "access_token": "foo",
-                  "client_id": "foo",
-                  "expires_in": 42,
-                  "refresh_token": "foo",
-                  "scope": "foo",
-                  "token_type": "bearer"
-                }
+                "access_token": "foo",
+                "client_id": "foo",
+                "expires_in": 42,
+                "refresh_token": "foo",
+                "scope": "foo",
+                "token_type": "bearer"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -8402,7 +8438,7 @@
             }
           ],
           "id": "delete",
-          "originalEndpointId": "auth-tokens.delete",
+          "originalEndpointId": "endpoint_authTokens.delete",
           "name": "Delete",
           "path": {
             "pathParameters": [],
@@ -8557,7 +8593,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "auth-tokens.get",
+          "originalEndpointId": "endpoint_authTokens.get",
           "name": "Get",
           "path": {
             "pathParameters": [],
@@ -8701,48 +8737,45 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "token": {
-                    "created_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
-                      "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
-                      },
-                      "email": "foo",
-                      "full_name": "foo",
-                      "state": "active"
-                    },
-                    "created_date": "foo",
+                "token": {
+                  "created_by": {
                     "display_id": "foo",
                     "id": "foo",
-                    "modified_by": {
+                    "display_name": "foo",
+                    "display_picture": {
                       "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
-                      "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
-                      },
-                      "email": "foo",
-                      "full_name": "foo",
-                      "state": "active"
+                      "id": "foo"
                     },
-                    "modified_date": "foo",
-                    "client_id": "foo",
-                    "expires_at": "foo",
-                    "issued_at": "foo",
-                    "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
-                    "scopes": [
-                      "foo"
-                    ],
-                    "status": "active",
-                    "subject": "foo",
-                    "token_hint": "foo"
-                  }
+                    "email": "foo",
+                    "full_name": "foo",
+                    "state": "active"
+                  },
+                  "created_date": "foo",
+                  "display_id": "foo",
+                  "id": "foo",
+                  "modified_by": {
+                    "display_id": "foo",
+                    "id": "foo",
+                    "display_name": "foo",
+                    "display_picture": {
+                      "display_id": "foo",
+                      "id": "foo"
+                    },
+                    "email": "foo",
+                    "full_name": "foo",
+                    "state": "active"
+                  },
+                  "modified_date": "foo",
+                  "client_id": "foo",
+                  "expires_at": "foo",
+                  "issued_at": "foo",
+                  "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
+                  "scopes": [
+                    "foo"
+                  ],
+                  "status": "active",
+                  "subject": "foo",
+                  "token_hint": "foo"
                 }
               },
               "responseBodyV3": {
@@ -8808,7 +8841,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "auth-tokens.list",
+          "originalEndpointId": "endpoint_authTokens.list",
           "name": "List",
           "path": {
             "pathParameters": [],
@@ -8977,51 +9010,48 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "tokens": [
-                    {
-                      "created_by": {
-                        "display_id": "foo",
-                        "id": "foo",
-                        "display_name": "foo",
-                        "display_picture": {
-                          "display_id": "foo",
-                          "id": "foo"
-                        },
-                        "email": "foo",
-                        "full_name": "foo",
-                        "state": "active"
-                      },
-                      "created_date": "foo",
+                "tokens": [
+                  {
+                    "created_by": {
                       "display_id": "foo",
                       "id": "foo",
-                      "modified_by": {
+                      "display_name": "foo",
+                      "display_picture": {
                         "display_id": "foo",
-                        "id": "foo",
-                        "display_name": "foo",
-                        "display_picture": {
-                          "display_id": "foo",
-                          "id": "foo"
-                        },
-                        "email": "foo",
-                        "full_name": "foo",
-                        "state": "active"
+                        "id": "foo"
                       },
-                      "modified_date": "foo",
-                      "client_id": "foo",
-                      "expires_at": "foo",
-                      "issued_at": "foo",
-                      "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
-                      "scopes": [
-                        "foo"
-                      ],
-                      "status": "active",
-                      "subject": "foo",
-                      "token_hint": "foo"
-                    }
-                  ]
-                }
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
+                    },
+                    "created_date": "foo",
+                    "display_id": "foo",
+                    "id": "foo",
+                    "modified_by": {
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
+                    },
+                    "modified_date": "foo",
+                    "client_id": "foo",
+                    "expires_at": "foo",
+                    "issued_at": "foo",
+                    "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
+                    "scopes": [
+                      "foo"
+                    ],
+                    "status": "active",
+                    "subject": "foo",
+                    "token_hint": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -9088,7 +9118,7 @@
             }
           ],
           "id": "selfDelete",
-          "originalEndpointId": "auth-tokens.selfDelete",
+          "originalEndpointId": "endpoint_authTokens.selfDelete",
           "name": "Self Delete",
           "path": {
             "pathParameters": [],
@@ -9243,7 +9273,7 @@
             }
           ],
           "id": "update",
-          "originalEndpointId": "auth-tokens.update",
+          "originalEndpointId": "endpoint_authTokens.update",
           "name": "Update",
           "path": {
             "pathParameters": [],
@@ -9398,48 +9428,45 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "token": {
-                    "created_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
-                      "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
-                      },
-                      "email": "foo",
-                      "full_name": "foo",
-                      "state": "active"
-                    },
-                    "created_date": "foo",
+                "token": {
+                  "created_by": {
                     "display_id": "foo",
                     "id": "foo",
-                    "modified_by": {
+                    "display_name": "foo",
+                    "display_picture": {
                       "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
-                      "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
-                      },
-                      "email": "foo",
-                      "full_name": "foo",
-                      "state": "active"
+                      "id": "foo"
                     },
-                    "modified_date": "foo",
-                    "client_id": "foo",
-                    "expires_at": "foo",
-                    "issued_at": "foo",
-                    "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
-                    "scopes": [
-                      "foo"
-                    ],
-                    "status": "active",
-                    "subject": "foo",
-                    "token_hint": "foo"
-                  }
+                    "email": "foo",
+                    "full_name": "foo",
+                    "state": "active"
+                  },
+                  "created_date": "foo",
+                  "display_id": "foo",
+                  "id": "foo",
+                  "modified_by": {
+                    "display_id": "foo",
+                    "id": "foo",
+                    "display_name": "foo",
+                    "display_picture": {
+                      "display_id": "foo",
+                      "id": "foo"
+                    },
+                    "email": "foo",
+                    "full_name": "foo",
+                    "state": "active"
+                  },
+                  "modified_date": "foo",
+                  "client_id": "foo",
+                  "expires_at": "foo",
+                  "issued_at": "foo",
+                  "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
+                  "scopes": [
+                    "foo"
+                  ],
+                  "status": "active",
+                  "subject": "foo",
+                  "token_hint": "foo"
                 }
               },
               "responseBodyV3": {
@@ -9515,7 +9542,7 @@
             }
           ],
           "id": "dev-org-auth-connections-create",
-          "originalEndpointId": "auth-connection.dev-org-auth-connections-create",
+          "originalEndpointId": "endpoint_authConnection.dev-org-auth-connections-create",
           "name": "Dev Org Auth Connections Create",
           "path": {
             "pathParameters": [],
@@ -9651,10 +9678,7 @@
               },
               "responseStatusCode": 201,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "auth_connection": {}
-                }
+                "auth_connection": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -9680,7 +9704,7 @@
             }
           ],
           "id": "dev-org-auth-connections-delete",
-          "originalEndpointId": "auth-connection.dev-org-auth-connections-delete",
+          "originalEndpointId": "endpoint_authConnection.dev-org-auth-connections-delete",
           "name": "Dev Org Auth Connections Delete",
           "path": {
             "pathParameters": [],
@@ -9839,7 +9863,7 @@
             }
           ],
           "id": "dev-org-auth-connections-get",
-          "originalEndpointId": "auth-connection.dev-org-auth-connections-get",
+          "originalEndpointId": "endpoint_authConnection.dev-org-auth-connections-get",
           "name": "Dev Org Auth Connections Get",
           "path": {
             "pathParameters": [],
@@ -9983,10 +10007,7 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "auth_connection": {}
-                }
+                "auth_connection": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -10012,7 +10033,7 @@
             }
           ],
           "id": "dev-org-auth-connections-list",
-          "originalEndpointId": "auth-connection.dev-org-auth-connections-list",
+          "originalEndpointId": "endpoint_authConnection.dev-org-auth-connections-list",
           "name": "Dev Org Auth Connections List",
           "path": {
             "pathParameters": [],
@@ -10130,12 +10151,9 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "auth_connections": [
-                    {}
-                  ]
-                }
+                "auth_connections": [
+                  {}
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -10163,7 +10181,7 @@
             }
           ],
           "id": "dev-org-auth-connections-toggle",
-          "originalEndpointId": "auth-connection.dev-org-auth-connections-toggle",
+          "originalEndpointId": "endpoint_authConnection.dev-org-auth-connections-toggle",
           "name": "Dev Org Auth Connections Toggle",
           "path": {
             "pathParameters": [],
@@ -10322,7 +10340,7 @@
             }
           ],
           "id": "dev-org-auth-connections-update",
-          "originalEndpointId": "auth-connection.dev-org-auth-connections-update",
+          "originalEndpointId": "endpoint_authConnection.dev-org-auth-connections-update",
           "name": "Dev Org Auth Connections Update",
           "path": {
             "pathParameters": [],
@@ -10471,10 +10489,7 @@
               },
               "responseStatusCode": 201,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "auth_connection": {}
-                }
+                "auth_connection": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -10510,7 +10525,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "dev-users.list",
+          "originalEndpointId": "endpoint_devUsers.list",
           "name": "List",
           "path": {
             "pathParameters": [],
@@ -10712,38 +10727,11 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "dev_users": [
-                    {
-                      "created_by": {
-                        "display_id": "foo",
-                        "id": "foo",
-                        "display_name": "foo",
-                        "display_picture": {
-                          "display_id": "foo",
-                          "id": "foo"
-                        },
-                        "email": "foo",
-                        "full_name": "foo",
-                        "state": "active"
-                      },
-                      "created_date": "foo",
+                "dev_users": [
+                  {
+                    "created_by": {
                       "display_id": "foo",
                       "id": "foo",
-                      "modified_by": {
-                        "display_id": "foo",
-                        "id": "foo",
-                        "display_name": "foo",
-                        "display_picture": {
-                          "display_id": "foo",
-                          "id": "foo"
-                        },
-                        "email": "foo",
-                        "full_name": "foo",
-                        "state": "active"
-                      },
-                      "modified_date": "foo",
                       "display_name": "foo",
                       "display_picture": {
                         "display_id": "foo",
@@ -10751,18 +10739,42 @@
                       },
                       "email": "foo",
                       "full_name": "foo",
-                      "phone_numbers": [
-                        "foo"
-                      ],
-                      "state": "active",
-                      "external_identities": [
-                        {}
-                      ]
-                    }
-                  ],
-                  "next_cursor": "foo",
-                  "prev_cursor": "foo"
-                }
+                      "state": "active"
+                    },
+                    "created_date": "foo",
+                    "display_id": "foo",
+                    "id": "foo",
+                    "modified_by": {
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
+                    },
+                    "modified_date": "foo",
+                    "display_name": "foo",
+                    "display_picture": {
+                      "display_id": "foo",
+                      "id": "foo"
+                    },
+                    "email": "foo",
+                    "full_name": "foo",
+                    "phone_numbers": [
+                      "foo"
+                    ],
+                    "state": "active",
+                    "external_identities": [
+                      {}
+                    ]
+                  }
+                ],
+                "next_cursor": "foo",
+                "prev_cursor": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -10835,7 +10847,7 @@
             }
           ],
           "id": "self",
-          "originalEndpointId": "dev-users.self",
+          "originalEndpointId": "endpoint_devUsers.self",
           "name": "Self",
           "path": {
             "pathParameters": [],
@@ -10953,37 +10965,10 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "dev_user": {
-                    "created_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
-                      "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
-                      },
-                      "email": "foo",
-                      "full_name": "foo",
-                      "state": "active"
-                    },
-                    "created_date": "foo",
+                "dev_user": {
+                  "created_by": {
                     "display_id": "foo",
                     "id": "foo",
-                    "modified_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
-                      "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
-                      },
-                      "email": "foo",
-                      "full_name": "foo",
-                      "state": "active"
-                    },
-                    "modified_date": "foo",
                     "display_name": "foo",
                     "display_picture": {
                       "display_id": "foo",
@@ -10991,14 +10976,38 @@
                     },
                     "email": "foo",
                     "full_name": "foo",
-                    "phone_numbers": [
-                      "foo"
-                    ],
-                    "state": "active",
-                    "external_identities": [
-                      {}
-                    ]
-                  }
+                    "state": "active"
+                  },
+                  "created_date": "foo",
+                  "display_id": "foo",
+                  "id": "foo",
+                  "modified_by": {
+                    "display_id": "foo",
+                    "id": "foo",
+                    "display_name": "foo",
+                    "display_picture": {
+                      "display_id": "foo",
+                      "id": "foo"
+                    },
+                    "email": "foo",
+                    "full_name": "foo",
+                    "state": "active"
+                  },
+                  "modified_date": "foo",
+                  "display_name": "foo",
+                  "display_picture": {
+                    "display_id": "foo",
+                    "id": "foo"
+                  },
+                  "email": "foo",
+                  "full_name": "foo",
+                  "phone_numbers": [
+                    "foo"
+                  ],
+                  "state": "active",
+                  "external_identities": [
+                    {}
+                  ]
                 }
               },
               "responseBodyV3": {
@@ -11078,7 +11087,7 @@
             }
           ],
           "id": "create",
-          "originalEndpointId": "parts.create",
+          "originalEndpointId": "endpoint_parts.create",
           "name": "Create",
           "path": {
             "pathParameters": [],
@@ -11214,25 +11223,45 @@
               },
               "responseStatusCode": 201,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "part": {
-                    "created_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
-                      "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
-                      },
-                      "email": "foo",
-                      "full_name": "foo",
-                      "state": "active"
-                    },
-                    "created_date": "foo",
+                "part": {
+                  "created_by": {
                     "display_id": "foo",
                     "id": "foo",
-                    "modified_by": {
+                    "display_name": "foo",
+                    "display_picture": {
+                      "display_id": "foo",
+                      "id": "foo"
+                    },
+                    "email": "foo",
+                    "full_name": "foo",
+                    "state": "active"
+                  },
+                  "created_date": "foo",
+                  "display_id": "foo",
+                  "id": "foo",
+                  "modified_by": {
+                    "display_id": "foo",
+                    "id": "foo",
+                    "display_name": "foo",
+                    "display_picture": {
+                      "display_id": "foo",
+                      "id": "foo"
+                    },
+                    "email": "foo",
+                    "full_name": "foo",
+                    "state": "active"
+                  },
+                  "modified_date": "foo",
+                  "artifacts": [
+                    {
+                      "display_id": "foo",
+                      "id": "foo"
+                    }
+                  ],
+                  "description": "foo",
+                  "name": "foo",
+                  "owned_by": [
+                    {
                       "display_id": "foo",
                       "id": "foo",
                       "display_name": "foo",
@@ -11243,41 +11272,18 @@
                       "email": "foo",
                       "full_name": "foo",
                       "state": "active"
-                    },
-                    "modified_date": "foo",
-                    "artifacts": [
-                      {
-                        "display_id": "foo",
-                        "id": "foo"
-                      }
-                    ],
-                    "description": "foo",
-                    "name": "foo",
-                    "owned_by": [
-                      {
+                    }
+                  ],
+                  "tags": [
+                    {
+                      "tag": {
                         "display_id": "foo",
                         "id": "foo",
-                        "display_name": "foo",
-                        "display_picture": {
-                          "display_id": "foo",
-                          "id": "foo"
-                        },
-                        "email": "foo",
-                        "full_name": "foo",
-                        "state": "active"
-                      }
-                    ],
-                    "tags": [
-                      {
-                        "tag": {
-                          "display_id": "foo",
-                          "id": "foo",
-                          "name": "foo"
-                        },
-                        "value": "foo"
-                      }
-                    ]
-                  }
+                        "name": "foo"
+                      },
+                      "value": "foo"
+                    }
+                  ]
                 }
               },
               "responseBodyV3": {
@@ -11365,7 +11371,7 @@
             }
           ],
           "id": "delete",
-          "originalEndpointId": "parts.delete",
+          "originalEndpointId": "endpoint_parts.delete",
           "name": "Delete",
           "path": {
             "pathParameters": [],
@@ -11517,10 +11523,7 @@
                 }
               },
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              },
+              "responseBody": {},
               "responseBodyV3": {
                 "type": "json",
                 "value": {}
@@ -11543,7 +11546,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "parts.get",
+          "originalEndpointId": "endpoint_parts.get",
           "name": "Get",
           "path": {
             "pathParameters": [],
@@ -11687,25 +11690,45 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "part": {
-                    "created_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
-                      "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
-                      },
-                      "email": "foo",
-                      "full_name": "foo",
-                      "state": "active"
-                    },
-                    "created_date": "foo",
+                "part": {
+                  "created_by": {
                     "display_id": "foo",
                     "id": "foo",
-                    "modified_by": {
+                    "display_name": "foo",
+                    "display_picture": {
+                      "display_id": "foo",
+                      "id": "foo"
+                    },
+                    "email": "foo",
+                    "full_name": "foo",
+                    "state": "active"
+                  },
+                  "created_date": "foo",
+                  "display_id": "foo",
+                  "id": "foo",
+                  "modified_by": {
+                    "display_id": "foo",
+                    "id": "foo",
+                    "display_name": "foo",
+                    "display_picture": {
+                      "display_id": "foo",
+                      "id": "foo"
+                    },
+                    "email": "foo",
+                    "full_name": "foo",
+                    "state": "active"
+                  },
+                  "modified_date": "foo",
+                  "artifacts": [
+                    {
+                      "display_id": "foo",
+                      "id": "foo"
+                    }
+                  ],
+                  "description": "foo",
+                  "name": "foo",
+                  "owned_by": [
+                    {
                       "display_id": "foo",
                       "id": "foo",
                       "display_name": "foo",
@@ -11716,41 +11739,18 @@
                       "email": "foo",
                       "full_name": "foo",
                       "state": "active"
-                    },
-                    "modified_date": "foo",
-                    "artifacts": [
-                      {
-                        "display_id": "foo",
-                        "id": "foo"
-                      }
-                    ],
-                    "description": "foo",
-                    "name": "foo",
-                    "owned_by": [
-                      {
+                    }
+                  ],
+                  "tags": [
+                    {
+                      "tag": {
                         "display_id": "foo",
                         "id": "foo",
-                        "display_name": "foo",
-                        "display_picture": {
-                          "display_id": "foo",
-                          "id": "foo"
-                        },
-                        "email": "foo",
-                        "full_name": "foo",
-                        "state": "active"
-                      }
-                    ],
-                    "tags": [
-                      {
-                        "tag": {
-                          "display_id": "foo",
-                          "id": "foo",
-                          "name": "foo"
-                        },
-                        "value": "foo"
-                      }
-                    ]
-                  }
+                        "name": "foo"
+                      },
+                      "value": "foo"
+                    }
+                  ]
                 }
               },
               "responseBodyV3": {
@@ -11838,7 +11838,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "parts.list",
+          "originalEndpointId": "endpoint_parts.list",
           "name": "List",
           "path": {
             "pathParameters": [],
@@ -12056,72 +12056,69 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "next_cursor": "foo",
-                  "parts": [
-                    {
-                      "created_by": {
-                        "display_id": "foo",
-                        "id": "foo",
-                        "display_name": "foo",
-                        "display_picture": {
-                          "display_id": "foo",
-                          "id": "foo"
-                        },
-                        "email": "foo",
-                        "full_name": "foo",
-                        "state": "active"
-                      },
-                      "created_date": "foo",
+                "next_cursor": "foo",
+                "parts": [
+                  {
+                    "created_by": {
                       "display_id": "foo",
                       "id": "foo",
-                      "modified_by": {
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
+                    },
+                    "created_date": "foo",
+                    "display_id": "foo",
+                    "id": "foo",
+                    "modified_by": {
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
+                    },
+                    "modified_date": "foo",
+                    "artifacts": [
+                      {
+                        "display_id": "foo",
+                        "id": "foo"
+                      }
+                    ],
+                    "description": "foo",
+                    "name": "foo",
+                    "owned_by": [
+                      {
                         "display_id": "foo",
                         "id": "foo",
                         "display_name": "foo",
-                        "display_picture": {
-                          "display_id": "foo",
-                          "id": "foo"
-                        },
+                        "display_picture": {},
                         "email": "foo",
                         "full_name": "foo",
                         "state": "active"
-                      },
-                      "modified_date": "foo",
-                      "artifacts": [
-                        {
-                          "display_id": "foo",
-                          "id": "foo"
-                        }
-                      ],
-                      "description": "foo",
-                      "name": "foo",
-                      "owned_by": [
-                        {
+                      }
+                    ],
+                    "tags": [
+                      {
+                        "tag": {
                           "display_id": "foo",
                           "id": "foo",
-                          "display_name": "foo",
-                          "display_picture": {},
-                          "email": "foo",
-                          "full_name": "foo",
-                          "state": "active"
-                        }
-                      ],
-                      "tags": [
-                        {
-                          "tag": {
-                            "display_id": "foo",
-                            "id": "foo",
-                            "name": "foo"
-                          },
-                          "value": "foo"
-                        }
-                      ]
-                    }
-                  ],
-                  "prev_cursor": "foo"
-                }
+                          "name": "foo"
+                        },
+                        "value": "foo"
+                      }
+                    ]
+                  }
+                ],
+                "prev_cursor": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -12209,7 +12206,7 @@
             }
           ],
           "id": "update",
-          "originalEndpointId": "parts.update",
+          "originalEndpointId": "endpoint_parts.update",
           "name": "Update",
           "path": {
             "pathParameters": [],
@@ -12358,25 +12355,45 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "part": {
-                    "created_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
-                      "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
-                      },
-                      "email": "foo",
-                      "full_name": "foo",
-                      "state": "active"
-                    },
-                    "created_date": "foo",
+                "part": {
+                  "created_by": {
                     "display_id": "foo",
                     "id": "foo",
-                    "modified_by": {
+                    "display_name": "foo",
+                    "display_picture": {
+                      "display_id": "foo",
+                      "id": "foo"
+                    },
+                    "email": "foo",
+                    "full_name": "foo",
+                    "state": "active"
+                  },
+                  "created_date": "foo",
+                  "display_id": "foo",
+                  "id": "foo",
+                  "modified_by": {
+                    "display_id": "foo",
+                    "id": "foo",
+                    "display_name": "foo",
+                    "display_picture": {
+                      "display_id": "foo",
+                      "id": "foo"
+                    },
+                    "email": "foo",
+                    "full_name": "foo",
+                    "state": "active"
+                  },
+                  "modified_date": "foo",
+                  "artifacts": [
+                    {
+                      "display_id": "foo",
+                      "id": "foo"
+                    }
+                  ],
+                  "description": "foo",
+                  "name": "foo",
+                  "owned_by": [
+                    {
                       "display_id": "foo",
                       "id": "foo",
                       "display_name": "foo",
@@ -12387,41 +12404,18 @@
                       "email": "foo",
                       "full_name": "foo",
                       "state": "active"
-                    },
-                    "modified_date": "foo",
-                    "artifacts": [
-                      {
-                        "display_id": "foo",
-                        "id": "foo"
-                      }
-                    ],
-                    "description": "foo",
-                    "name": "foo",
-                    "owned_by": [
-                      {
+                    }
+                  ],
+                  "tags": [
+                    {
+                      "tag": {
                         "display_id": "foo",
                         "id": "foo",
-                        "display_name": "foo",
-                        "display_picture": {
-                          "display_id": "foo",
-                          "id": "foo"
-                        },
-                        "email": "foo",
-                        "full_name": "foo",
-                        "state": "active"
-                      }
-                    ],
-                    "tags": [
-                      {
-                        "tag": {
-                          "display_id": "foo",
-                          "id": "foo",
-                          "name": "foo"
-                        },
-                        "value": "foo"
-                      }
-                    ]
-                  }
+                        "name": "foo"
+                      },
+                      "value": "foo"
+                    }
+                  ]
                 }
               },
               "responseBodyV3": {
@@ -12519,7 +12513,7 @@
             }
           ],
           "id": "create",
-          "originalEndpointId": "rev-orgs.create",
+          "originalEndpointId": "endpoint_revOrgs.create",
           "name": "Create",
           "path": {
             "pathParameters": [],
@@ -12659,42 +12653,39 @@
               },
               "responseStatusCode": 201,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "rev_org": {
-                    "created_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
-                      "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
-                      },
-                      "email": "foo",
-                      "full_name": "foo",
-                      "state": "active"
-                    },
-                    "created_date": "foo",
+                "rev_org": {
+                  "created_by": {
                     "display_id": "foo",
                     "id": "foo",
-                    "modified_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
-                      "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
-                      },
-                      "email": "foo",
-                      "full_name": "foo",
-                      "state": "active"
-                    },
-                    "modified_date": "foo",
                     "display_name": "foo",
-                    "description": "foo",
-                    "domain": "foo",
-                    "external_ref": "foo"
-                  }
+                    "display_picture": {
+                      "display_id": "foo",
+                      "id": "foo"
+                    },
+                    "email": "foo",
+                    "full_name": "foo",
+                    "state": "active"
+                  },
+                  "created_date": "foo",
+                  "display_id": "foo",
+                  "id": "foo",
+                  "modified_by": {
+                    "display_id": "foo",
+                    "id": "foo",
+                    "display_name": "foo",
+                    "display_picture": {
+                      "display_id": "foo",
+                      "id": "foo"
+                    },
+                    "email": "foo",
+                    "full_name": "foo",
+                    "state": "active"
+                  },
+                  "modified_date": "foo",
+                  "display_name": "foo",
+                  "description": "foo",
+                  "domain": "foo",
+                  "external_ref": "foo"
                 }
               },
               "responseBodyV3": {
@@ -12754,7 +12745,7 @@
             }
           ],
           "id": "delete",
-          "originalEndpointId": "rev-orgs.delete",
+          "originalEndpointId": "endpoint_revOrgs.delete",
           "name": "Delete",
           "path": {
             "pathParameters": [],
@@ -12906,10 +12897,7 @@
                 }
               },
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              },
+              "responseBody": {},
               "responseBodyV3": {
                 "type": "json",
                 "value": {}
@@ -12932,7 +12920,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "rev-orgs.get",
+          "originalEndpointId": "endpoint_revOrgs.get",
           "name": "Get",
           "path": {
             "pathParameters": [],
@@ -13076,42 +13064,39 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "rev_org": {
-                    "created_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
-                      "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
-                      },
-                      "email": "foo",
-                      "full_name": "foo",
-                      "state": "active"
-                    },
-                    "created_date": "foo",
+                "rev_org": {
+                  "created_by": {
                     "display_id": "foo",
                     "id": "foo",
-                    "modified_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
-                      "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
-                      },
-                      "email": "foo",
-                      "full_name": "foo",
-                      "state": "active"
-                    },
-                    "modified_date": "foo",
                     "display_name": "foo",
-                    "description": "foo",
-                    "domain": "foo",
-                    "external_ref": "foo"
-                  }
+                    "display_picture": {
+                      "display_id": "foo",
+                      "id": "foo"
+                    },
+                    "email": "foo",
+                    "full_name": "foo",
+                    "state": "active"
+                  },
+                  "created_date": "foo",
+                  "display_id": "foo",
+                  "id": "foo",
+                  "modified_by": {
+                    "display_id": "foo",
+                    "id": "foo",
+                    "display_name": "foo",
+                    "display_picture": {
+                      "display_id": "foo",
+                      "id": "foo"
+                    },
+                    "email": "foo",
+                    "full_name": "foo",
+                    "state": "active"
+                  },
+                  "modified_date": "foo",
+                  "display_name": "foo",
+                  "description": "foo",
+                  "domain": "foo",
+                  "external_ref": "foo"
                 }
               },
               "responseBodyV3": {
@@ -13171,7 +13156,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "rev-orgs.list",
+          "originalEndpointId": "endpoint_revOrgs.list",
           "name": "List",
           "path": {
             "pathParameters": [],
@@ -13444,47 +13429,44 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "next_cursor": "foo",
-                  "prev_cursor": "foo",
-                  "rev_orgs": [
-                    {
-                      "created_by": {
-                        "display_id": "foo",
-                        "id": "foo",
-                        "display_name": "foo",
-                        "display_picture": {
-                          "display_id": "foo",
-                          "id": "foo"
-                        },
-                        "email": "foo",
-                        "full_name": "foo",
-                        "state": "active"
-                      },
-                      "created_date": "foo",
+                "next_cursor": "foo",
+                "prev_cursor": "foo",
+                "rev_orgs": [
+                  {
+                    "created_by": {
                       "display_id": "foo",
                       "id": "foo",
-                      "modified_by": {
-                        "display_id": "foo",
-                        "id": "foo",
-                        "display_name": "foo",
-                        "display_picture": {
-                          "display_id": "foo",
-                          "id": "foo"
-                        },
-                        "email": "foo",
-                        "full_name": "foo",
-                        "state": "active"
-                      },
-                      "modified_date": "foo",
                       "display_name": "foo",
-                      "description": "foo",
-                      "domain": "foo",
-                      "external_ref": "foo"
-                    }
-                  ]
-                }
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
+                    },
+                    "created_date": "foo",
+                    "display_id": "foo",
+                    "id": "foo",
+                    "modified_by": {
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
+                    },
+                    "modified_date": "foo",
+                    "display_name": "foo",
+                    "description": "foo",
+                    "domain": "foo",
+                    "external_ref": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -13547,7 +13529,7 @@
             }
           ],
           "id": "update",
-          "originalEndpointId": "rev-orgs.update",
+          "originalEndpointId": "endpoint_revOrgs.update",
           "name": "Update",
           "path": {
             "pathParameters": [],
@@ -13700,42 +13682,39 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "rev_org": {
-                    "created_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
-                      "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
-                      },
-                      "email": "foo",
-                      "full_name": "foo",
-                      "state": "active"
-                    },
-                    "created_date": "foo",
+                "rev_org": {
+                  "created_by": {
                     "display_id": "foo",
                     "id": "foo",
-                    "modified_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
-                      "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
-                      },
-                      "email": "foo",
-                      "full_name": "foo",
-                      "state": "active"
-                    },
-                    "modified_date": "foo",
                     "display_name": "foo",
-                    "description": "foo",
-                    "domain": "foo",
-                    "external_ref": "foo"
-                  }
+                    "display_picture": {
+                      "display_id": "foo",
+                      "id": "foo"
+                    },
+                    "email": "foo",
+                    "full_name": "foo",
+                    "state": "active"
+                  },
+                  "created_date": "foo",
+                  "display_id": "foo",
+                  "id": "foo",
+                  "modified_by": {
+                    "display_id": "foo",
+                    "id": "foo",
+                    "display_name": "foo",
+                    "display_picture": {
+                      "display_id": "foo",
+                      "id": "foo"
+                    },
+                    "email": "foo",
+                    "full_name": "foo",
+                    "state": "active"
+                  },
+                  "modified_date": "foo",
+                  "display_name": "foo",
+                  "description": "foo",
+                  "domain": "foo",
+                  "external_ref": "foo"
                 }
               },
               "responseBodyV3": {
@@ -13805,7 +13784,7 @@
             }
           ],
           "id": "create",
-          "originalEndpointId": "tags.create",
+          "originalEndpointId": "endpoint_tags.create",
           "name": "Create",
           "path": {
             "pathParameters": [],
@@ -13945,43 +13924,40 @@
               },
               "responseStatusCode": 201,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "tag": {
-                    "created_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
-                      "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
-                      },
-                      "email": "foo",
-                      "full_name": "foo",
-                      "state": "active"
-                    },
-                    "created_date": "foo",
+                "tag": {
+                  "created_by": {
                     "display_id": "foo",
                     "id": "foo",
-                    "modified_by": {
+                    "display_name": "foo",
+                    "display_picture": {
                       "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
-                      "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
-                      },
-                      "email": "foo",
-                      "full_name": "foo",
-                      "state": "active"
+                      "id": "foo"
                     },
-                    "modified_date": "foo",
-                    "allowed_values": [
-                      "foo"
-                    ],
-                    "description": "foo",
-                    "name": "foo"
-                  }
+                    "email": "foo",
+                    "full_name": "foo",
+                    "state": "active"
+                  },
+                  "created_date": "foo",
+                  "display_id": "foo",
+                  "id": "foo",
+                  "modified_by": {
+                    "display_id": "foo",
+                    "id": "foo",
+                    "display_name": "foo",
+                    "display_picture": {
+                      "display_id": "foo",
+                      "id": "foo"
+                    },
+                    "email": "foo",
+                    "full_name": "foo",
+                    "state": "active"
+                  },
+                  "modified_date": "foo",
+                  "allowed_values": [
+                    "foo"
+                  ],
+                  "description": "foo",
+                  "name": "foo"
                 }
               },
               "responseBodyV3": {
@@ -14042,7 +14018,7 @@
             }
           ],
           "id": "delete",
-          "originalEndpointId": "tags.delete",
+          "originalEndpointId": "endpoint_tags.delete",
           "name": "Delete",
           "path": {
             "pathParameters": [],
@@ -14194,10 +14170,7 @@
                 }
               },
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              },
+              "responseBody": {},
               "responseBodyV3": {
                 "type": "json",
                 "value": {}
@@ -14220,7 +14193,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "tags.get",
+          "originalEndpointId": "endpoint_tags.get",
           "name": "Get",
           "path": {
             "pathParameters": [],
@@ -14364,43 +14337,40 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "tag": {
-                    "created_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
-                      "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
-                      },
-                      "email": "foo",
-                      "full_name": "foo",
-                      "state": "active"
-                    },
-                    "created_date": "foo",
+                "tag": {
+                  "created_by": {
                     "display_id": "foo",
                     "id": "foo",
-                    "modified_by": {
+                    "display_name": "foo",
+                    "display_picture": {
                       "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
-                      "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
-                      },
-                      "email": "foo",
-                      "full_name": "foo",
-                      "state": "active"
+                      "id": "foo"
                     },
-                    "modified_date": "foo",
-                    "allowed_values": [
-                      "foo"
-                    ],
-                    "description": "foo",
-                    "name": "foo"
-                  }
+                    "email": "foo",
+                    "full_name": "foo",
+                    "state": "active"
+                  },
+                  "created_date": "foo",
+                  "display_id": "foo",
+                  "id": "foo",
+                  "modified_by": {
+                    "display_id": "foo",
+                    "id": "foo",
+                    "display_name": "foo",
+                    "display_picture": {
+                      "display_id": "foo",
+                      "id": "foo"
+                    },
+                    "email": "foo",
+                    "full_name": "foo",
+                    "state": "active"
+                  },
+                  "modified_date": "foo",
+                  "allowed_values": [
+                    "foo"
+                  ],
+                  "description": "foo",
+                  "name": "foo"
                 }
               },
               "responseBodyV3": {
@@ -14461,7 +14431,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "tags.list",
+          "originalEndpointId": "endpoint_tags.list",
           "name": "List",
           "path": {
             "pathParameters": [],
@@ -14617,48 +14587,45 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "next_cursor": "foo",
-                  "prev_cursor": "foo",
-                  "tags": [
-                    {
-                      "created_by": {
-                        "display_id": "foo",
-                        "id": "foo",
-                        "display_name": "foo",
-                        "display_picture": {
-                          "display_id": "foo",
-                          "id": "foo"
-                        },
-                        "email": "foo",
-                        "full_name": "foo",
-                        "state": "active"
-                      },
-                      "created_date": "foo",
+                "next_cursor": "foo",
+                "prev_cursor": "foo",
+                "tags": [
+                  {
+                    "created_by": {
                       "display_id": "foo",
                       "id": "foo",
-                      "modified_by": {
+                      "display_name": "foo",
+                      "display_picture": {
                         "display_id": "foo",
-                        "id": "foo",
-                        "display_name": "foo",
-                        "display_picture": {
-                          "display_id": "foo",
-                          "id": "foo"
-                        },
-                        "email": "foo",
-                        "full_name": "foo",
-                        "state": "active"
+                        "id": "foo"
                       },
-                      "modified_date": "foo",
-                      "allowed_values": [
-                        "foo"
-                      ],
-                      "description": "foo",
-                      "name": "foo"
-                    }
-                  ]
-                }
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
+                    },
+                    "created_date": "foo",
+                    "display_id": "foo",
+                    "id": "foo",
+                    "modified_by": {
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
+                    },
+                    "modified_date": "foo",
+                    "allowed_values": [
+                      "foo"
+                    ],
+                    "description": "foo",
+                    "name": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -14722,7 +14689,7 @@
             }
           ],
           "id": "update",
-          "originalEndpointId": "tags.update",
+          "originalEndpointId": "endpoint_tags.update",
           "name": "Update",
           "path": {
             "pathParameters": [],
@@ -14875,43 +14842,40 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "tag": {
-                    "created_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
-                      "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
-                      },
-                      "email": "foo",
-                      "full_name": "foo",
-                      "state": "active"
-                    },
-                    "created_date": "foo",
+                "tag": {
+                  "created_by": {
                     "display_id": "foo",
                     "id": "foo",
-                    "modified_by": {
+                    "display_name": "foo",
+                    "display_picture": {
                       "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
-                      "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
-                      },
-                      "email": "foo",
-                      "full_name": "foo",
-                      "state": "active"
+                      "id": "foo"
                     },
-                    "modified_date": "foo",
-                    "allowed_values": [
-                      "foo"
-                    ],
-                    "description": "foo",
-                    "name": "foo"
-                  }
+                    "email": "foo",
+                    "full_name": "foo",
+                    "state": "active"
+                  },
+                  "created_date": "foo",
+                  "display_id": "foo",
+                  "id": "foo",
+                  "modified_by": {
+                    "display_id": "foo",
+                    "id": "foo",
+                    "display_name": "foo",
+                    "display_picture": {
+                      "display_id": "foo",
+                      "id": "foo"
+                    },
+                    "email": "foo",
+                    "full_name": "foo",
+                    "state": "active"
+                  },
+                  "modified_date": "foo",
+                  "allowed_values": [
+                    "foo"
+                  ],
+                  "description": "foo",
+                  "name": "foo"
                 }
               },
               "responseBodyV3": {
@@ -14982,7 +14946,7 @@
             }
           ],
           "id": "create",
-          "originalEndpointId": "timeline-entries.create",
+          "originalEndpointId": "endpoint_timelineEntries.create",
           "name": "Create",
           "path": {
             "pathParameters": [],
@@ -15118,47 +15082,44 @@
               },
               "responseStatusCode": 201,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "timeline_entry": {
-                    "created_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
-                      "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
-                      },
-                      "email": "foo",
-                      "full_name": "foo",
-                      "state": "active"
-                    },
-                    "created_date": "foo",
+                "timeline_entry": {
+                  "created_by": {
                     "display_id": "foo",
                     "id": "foo",
-                    "modified_by": {
+                    "display_name": "foo",
+                    "display_picture": {
                       "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
-                      "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
-                      },
-                      "email": "foo",
-                      "full_name": "foo",
-                      "state": "active"
+                      "id": "foo"
                     },
-                    "modified_date": "foo",
-                    "artifacts": [
-                      {
-                        "display_id": "foo",
-                        "id": "foo"
-                      }
-                    ],
-                    "body": "foo",
-                    "body_type": "snap_kit",
-                    "snap_kit_body": {}
-                  }
+                    "email": "foo",
+                    "full_name": "foo",
+                    "state": "active"
+                  },
+                  "created_date": "foo",
+                  "display_id": "foo",
+                  "id": "foo",
+                  "modified_by": {
+                    "display_id": "foo",
+                    "id": "foo",
+                    "display_name": "foo",
+                    "display_picture": {
+                      "display_id": "foo",
+                      "id": "foo"
+                    },
+                    "email": "foo",
+                    "full_name": "foo",
+                    "state": "active"
+                  },
+                  "modified_date": "foo",
+                  "artifacts": [
+                    {
+                      "display_id": "foo",
+                      "id": "foo"
+                    }
+                  ],
+                  "body": "foo",
+                  "body_type": "snap_kit",
+                  "snap_kit_body": {}
                 }
               },
               "responseBodyV3": {
@@ -15223,7 +15184,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "timeline-entries.get",
+          "originalEndpointId": "endpoint_timelineEntries.get",
           "name": "Get",
           "path": {
             "pathParameters": [],
@@ -15367,47 +15328,44 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "timeline_entry": {
-                    "created_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
-                      "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
-                      },
-                      "email": "foo",
-                      "full_name": "foo",
-                      "state": "active"
-                    },
-                    "created_date": "foo",
+                "timeline_entry": {
+                  "created_by": {
                     "display_id": "foo",
                     "id": "foo",
-                    "modified_by": {
+                    "display_name": "foo",
+                    "display_picture": {
                       "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
-                      "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
-                      },
-                      "email": "foo",
-                      "full_name": "foo",
-                      "state": "active"
+                      "id": "foo"
                     },
-                    "modified_date": "foo",
-                    "artifacts": [
-                      {
-                        "display_id": "foo",
-                        "id": "foo"
-                      }
-                    ],
-                    "body": "foo",
-                    "body_type": "snap_kit",
-                    "snap_kit_body": {}
-                  }
+                    "email": "foo",
+                    "full_name": "foo",
+                    "state": "active"
+                  },
+                  "created_date": "foo",
+                  "display_id": "foo",
+                  "id": "foo",
+                  "modified_by": {
+                    "display_id": "foo",
+                    "id": "foo",
+                    "display_name": "foo",
+                    "display_picture": {
+                      "display_id": "foo",
+                      "id": "foo"
+                    },
+                    "email": "foo",
+                    "full_name": "foo",
+                    "state": "active"
+                  },
+                  "modified_date": "foo",
+                  "artifacts": [
+                    {
+                      "display_id": "foo",
+                      "id": "foo"
+                    }
+                  ],
+                  "body": "foo",
+                  "body_type": "snap_kit",
+                  "snap_kit_body": {}
                 }
               },
               "responseBodyV3": {
@@ -15472,7 +15430,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "timeline-entries.list",
+          "originalEndpointId": "endpoint_timelineEntries.list",
           "name": "List",
           "path": {
             "pathParameters": [],
@@ -15653,52 +15611,49 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "next_cursor": "foo",
-                  "prev_cursor": "foo",
-                  "timeline_entries": [
-                    {
-                      "created_by": {
-                        "display_id": "foo",
-                        "id": "foo",
-                        "display_name": "foo",
-                        "display_picture": {
-                          "display_id": "foo",
-                          "id": "foo"
-                        },
-                        "email": "foo",
-                        "full_name": "foo",
-                        "state": "active"
-                      },
-                      "created_date": "foo",
+                "next_cursor": "foo",
+                "prev_cursor": "foo",
+                "timeline_entries": [
+                  {
+                    "created_by": {
                       "display_id": "foo",
                       "id": "foo",
-                      "modified_by": {
+                      "display_name": "foo",
+                      "display_picture": {
                         "display_id": "foo",
-                        "id": "foo",
-                        "display_name": "foo",
-                        "display_picture": {
-                          "display_id": "foo",
-                          "id": "foo"
-                        },
-                        "email": "foo",
-                        "full_name": "foo",
-                        "state": "active"
+                        "id": "foo"
                       },
-                      "modified_date": "foo",
-                      "artifacts": [
-                        {
-                          "display_id": "foo",
-                          "id": "foo"
-                        }
-                      ],
-                      "body": "foo",
-                      "body_type": "snap_kit",
-                      "snap_kit_body": {}
-                    }
-                  ]
-                }
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
+                    },
+                    "created_date": "foo",
+                    "display_id": "foo",
+                    "id": "foo",
+                    "modified_by": {
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
+                    },
+                    "modified_date": "foo",
+                    "artifacts": [
+                      {
+                        "display_id": "foo",
+                        "id": "foo"
+                      }
+                    ],
+                    "body": "foo",
+                    "body_type": "snap_kit",
+                    "snap_kit_body": {}
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -15766,7 +15721,7 @@
             }
           ],
           "id": "update",
-          "originalEndpointId": "timeline-entries.update",
+          "originalEndpointId": "endpoint_timelineEntries.update",
           "name": "Update",
           "path": {
             "pathParameters": [],
@@ -15902,47 +15857,44 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "timeline_entry": {
-                    "created_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
-                      "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
-                      },
-                      "email": "foo",
-                      "full_name": "foo",
-                      "state": "active"
-                    },
-                    "created_date": "foo",
+                "timeline_entry": {
+                  "created_by": {
                     "display_id": "foo",
                     "id": "foo",
-                    "modified_by": {
+                    "display_name": "foo",
+                    "display_picture": {
                       "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
-                      "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
-                      },
-                      "email": "foo",
-                      "full_name": "foo",
-                      "state": "active"
+                      "id": "foo"
                     },
-                    "modified_date": "foo",
-                    "artifacts": [
-                      {
-                        "display_id": "foo",
-                        "id": "foo"
-                      }
-                    ],
-                    "body": "foo",
-                    "body_type": "snap_kit",
-                    "snap_kit_body": {}
-                  }
+                    "email": "foo",
+                    "full_name": "foo",
+                    "state": "active"
+                  },
+                  "created_date": "foo",
+                  "display_id": "foo",
+                  "id": "foo",
+                  "modified_by": {
+                    "display_id": "foo",
+                    "id": "foo",
+                    "display_name": "foo",
+                    "display_picture": {
+                      "display_id": "foo",
+                      "id": "foo"
+                    },
+                    "email": "foo",
+                    "full_name": "foo",
+                    "state": "active"
+                  },
+                  "modified_date": "foo",
+                  "artifacts": [
+                    {
+                      "display_id": "foo",
+                      "id": "foo"
+                    }
+                  ],
+                  "body": "foo",
+                  "body_type": "snap_kit",
+                  "snap_kit_body": {}
                 }
               },
               "responseBodyV3": {
@@ -16017,7 +15969,7 @@
             }
           ],
           "id": "create",
-          "originalEndpointId": "webhooks.create",
+          "originalEndpointId": "endpoint_webhooks.create",
           "name": "Create",
           "path": {
             "pathParameters": [],
@@ -16157,44 +16109,41 @@
               },
               "responseStatusCode": 201,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "webhook": {
-                    "created_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
-                      "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
-                      },
-                      "email": "foo",
-                      "full_name": "foo",
-                      "state": "active"
-                    },
-                    "created_date": "foo",
+                "webhook": {
+                  "created_by": {
                     "display_id": "foo",
                     "id": "foo",
-                    "modified_by": {
+                    "display_name": "foo",
+                    "display_picture": {
                       "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
-                      "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
-                      },
-                      "email": "foo",
-                      "full_name": "foo",
-                      "state": "active"
+                      "id": "foo"
                     },
-                    "modified_date": "foo",
-                    "event_types": [
-                      "part_created"
-                    ],
-                    "secret": "foo",
-                    "status": "active",
-                    "url": "foo"
-                  }
+                    "email": "foo",
+                    "full_name": "foo",
+                    "state": "active"
+                  },
+                  "created_date": "foo",
+                  "display_id": "foo",
+                  "id": "foo",
+                  "modified_by": {
+                    "display_id": "foo",
+                    "id": "foo",
+                    "display_name": "foo",
+                    "display_picture": {
+                      "display_id": "foo",
+                      "id": "foo"
+                    },
+                    "email": "foo",
+                    "full_name": "foo",
+                    "state": "active"
+                  },
+                  "modified_date": "foo",
+                  "event_types": [
+                    "part_created"
+                  ],
+                  "secret": "foo",
+                  "status": "active",
+                  "url": "foo"
                 }
               },
               "responseBodyV3": {
@@ -16256,7 +16205,7 @@
             }
           ],
           "id": "delete",
-          "originalEndpointId": "webhooks.delete",
+          "originalEndpointId": "endpoint_webhooks.delete",
           "name": "Delete",
           "path": {
             "pathParameters": [],
@@ -16408,10 +16357,7 @@
                 }
               },
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              },
+              "responseBody": {},
               "responseBodyV3": {
                 "type": "json",
                 "value": {}
@@ -16434,7 +16380,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "webhooks.get",
+          "originalEndpointId": "endpoint_webhooks.get",
           "name": "Get",
           "path": {
             "pathParameters": [],
@@ -16578,44 +16524,41 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "webhook": {
-                    "created_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
-                      "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
-                      },
-                      "email": "foo",
-                      "full_name": "foo",
-                      "state": "active"
-                    },
-                    "created_date": "foo",
+                "webhook": {
+                  "created_by": {
                     "display_id": "foo",
                     "id": "foo",
-                    "modified_by": {
+                    "display_name": "foo",
+                    "display_picture": {
                       "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
-                      "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
-                      },
-                      "email": "foo",
-                      "full_name": "foo",
-                      "state": "active"
+                      "id": "foo"
                     },
-                    "modified_date": "foo",
-                    "event_types": [
-                      "part_created"
-                    ],
-                    "secret": "foo",
-                    "status": "active",
-                    "url": "foo"
-                  }
+                    "email": "foo",
+                    "full_name": "foo",
+                    "state": "active"
+                  },
+                  "created_date": "foo",
+                  "display_id": "foo",
+                  "id": "foo",
+                  "modified_by": {
+                    "display_id": "foo",
+                    "id": "foo",
+                    "display_name": "foo",
+                    "display_picture": {
+                      "display_id": "foo",
+                      "id": "foo"
+                    },
+                    "email": "foo",
+                    "full_name": "foo",
+                    "state": "active"
+                  },
+                  "modified_date": "foo",
+                  "event_types": [
+                    "part_created"
+                  ],
+                  "secret": "foo",
+                  "status": "active",
+                  "url": "foo"
                 }
               },
               "responseBodyV3": {
@@ -16677,7 +16620,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "webhooks.list",
+          "originalEndpointId": "endpoint_webhooks.list",
           "name": "List",
           "path": {
             "pathParameters": [],
@@ -16795,47 +16738,44 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "webhooks": [
-                    {
-                      "created_by": {
-                        "display_id": "foo",
-                        "id": "foo",
-                        "display_name": "foo",
-                        "display_picture": {
-                          "display_id": "foo",
-                          "id": "foo"
-                        },
-                        "email": "foo",
-                        "full_name": "foo",
-                        "state": "active"
-                      },
-                      "created_date": "foo",
+                "webhooks": [
+                  {
+                    "created_by": {
                       "display_id": "foo",
                       "id": "foo",
-                      "modified_by": {
+                      "display_name": "foo",
+                      "display_picture": {
                         "display_id": "foo",
-                        "id": "foo",
-                        "display_name": "foo",
-                        "display_picture": {
-                          "display_id": "foo",
-                          "id": "foo"
-                        },
-                        "email": "foo",
-                        "full_name": "foo",
-                        "state": "active"
+                        "id": "foo"
                       },
-                      "modified_date": "foo",
-                      "event_types": [
-                        "part_created"
-                      ],
-                      "secret": "foo",
-                      "status": "active",
-                      "url": "foo"
-                    }
-                  ]
-                }
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
+                    },
+                    "created_date": "foo",
+                    "display_id": "foo",
+                    "id": "foo",
+                    "modified_by": {
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
+                    },
+                    "modified_date": "foo",
+                    "event_types": [
+                      "part_created"
+                    ],
+                    "secret": "foo",
+                    "status": "active",
+                    "url": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -16898,7 +16838,7 @@
             }
           ],
           "id": "update",
-          "originalEndpointId": "webhooks.update",
+          "originalEndpointId": "endpoint_webhooks.update",
           "name": "Update",
           "path": {
             "pathParameters": [],
@@ -17051,44 +16991,41 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "webhook": {
-                    "created_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
-                      "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
-                      },
-                      "email": "foo",
-                      "full_name": "foo",
-                      "state": "active"
-                    },
-                    "created_date": "foo",
+                "webhook": {
+                  "created_by": {
                     "display_id": "foo",
                     "id": "foo",
-                    "modified_by": {
+                    "display_name": "foo",
+                    "display_picture": {
                       "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
-                      "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
-                      },
-                      "email": "foo",
-                      "full_name": "foo",
-                      "state": "active"
+                      "id": "foo"
                     },
-                    "modified_date": "foo",
-                    "event_types": [
-                      "part_created"
-                    ],
-                    "secret": "foo",
-                    "status": "active",
-                    "url": "foo"
-                  }
+                    "email": "foo",
+                    "full_name": "foo",
+                    "state": "active"
+                  },
+                  "created_date": "foo",
+                  "display_id": "foo",
+                  "id": "foo",
+                  "modified_by": {
+                    "display_id": "foo",
+                    "id": "foo",
+                    "display_name": "foo",
+                    "display_picture": {
+                      "display_id": "foo",
+                      "id": "foo"
+                    },
+                    "email": "foo",
+                    "full_name": "foo",
+                    "state": "active"
+                  },
+                  "modified_date": "foo",
+                  "event_types": [
+                    "part_created"
+                  ],
+                  "secret": "foo",
+                  "status": "active",
+                  "url": "foo"
                 }
               },
               "responseBodyV3": {
@@ -17160,7 +17097,7 @@
             }
           ],
           "id": "create",
-          "originalEndpointId": "works.create",
+          "originalEndpointId": "endpoint_works.create",
           "name": "Create",
           "path": {
             "pathParameters": [],
@@ -17296,25 +17233,49 @@
               },
               "responseStatusCode": 201,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "work": {
-                    "created_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
-                      "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
-                      },
-                      "email": "foo",
-                      "full_name": "foo",
-                      "state": "active"
-                    },
-                    "created_date": "foo",
+                "work": {
+                  "created_by": {
                     "display_id": "foo",
                     "id": "foo",
-                    "modified_by": {
+                    "display_name": "foo",
+                    "display_picture": {
+                      "display_id": "foo",
+                      "id": "foo"
+                    },
+                    "email": "foo",
+                    "full_name": "foo",
+                    "state": "active"
+                  },
+                  "created_date": "foo",
+                  "display_id": "foo",
+                  "id": "foo",
+                  "modified_by": {
+                    "display_id": "foo",
+                    "id": "foo",
+                    "display_name": "foo",
+                    "display_picture": {
+                      "display_id": "foo",
+                      "id": "foo"
+                    },
+                    "email": "foo",
+                    "full_name": "foo",
+                    "state": "active"
+                  },
+                  "modified_date": "foo",
+                  "applies_to_part": {
+                    "display_id": "foo",
+                    "id": "foo",
+                    "name": "foo"
+                  },
+                  "artifacts": [
+                    {
+                      "display_id": "foo",
+                      "id": "foo"
+                    }
+                  ],
+                  "body": "foo",
+                  "owned_by": [
+                    {
                       "display_id": "foo",
                       "id": "foo",
                       "display_name": "foo",
@@ -17325,65 +17286,38 @@
                       "email": "foo",
                       "full_name": "foo",
                       "state": "active"
-                    },
-                    "modified_date": "foo",
-                    "applies_to_part": {
+                    }
+                  ],
+                  "reported_by": [
+                    {
                       "display_id": "foo",
                       "id": "foo",
-                      "name": "foo"
-                    },
-                    "artifacts": [
-                      {
+                      "display_name": "foo",
+                      "display_picture": {
                         "display_id": "foo",
                         "id": "foo"
-                      }
-                    ],
-                    "body": "foo",
-                    "owned_by": [
-                      {
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
+                    }
+                  ],
+                  "stage": {
+                    "name": "foo"
+                  },
+                  "tags": [
+                    {
+                      "tag": {
                         "display_id": "foo",
                         "id": "foo",
-                        "display_name": "foo",
-                        "display_picture": {
-                          "display_id": "foo",
-                          "id": "foo"
-                        },
-                        "email": "foo",
-                        "full_name": "foo",
-                        "state": "active"
-                      }
-                    ],
-                    "reported_by": [
-                      {
-                        "display_id": "foo",
-                        "id": "foo",
-                        "display_name": "foo",
-                        "display_picture": {
-                          "display_id": "foo",
-                          "id": "foo"
-                        },
-                        "email": "foo",
-                        "full_name": "foo",
-                        "state": "active"
-                      }
-                    ],
-                    "stage": {
-                      "name": "foo"
-                    },
-                    "tags": [
-                      {
-                        "tag": {
-                          "display_id": "foo",
-                          "id": "foo",
-                          "name": "foo"
-                        },
-                        "value": "foo"
-                      }
-                    ],
-                    "target_close_date": "foo",
-                    "title": "foo",
-                    "priority": "p0"
-                  }
+                        "name": "foo"
+                      },
+                      "value": "foo"
+                    }
+                  ],
+                  "target_close_date": "foo",
+                  "title": "foo",
+                  "priority": "p0"
                 }
               },
               "responseBodyV3": {
@@ -17495,7 +17429,7 @@
             }
           ],
           "id": "delete",
-          "originalEndpointId": "works.delete",
+          "originalEndpointId": "endpoint_works.delete",
           "name": "Delete",
           "path": {
             "pathParameters": [],
@@ -17647,10 +17581,7 @@
                 }
               },
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              },
+              "responseBody": {},
               "responseBodyV3": {
                 "type": "json",
                 "value": {}
@@ -17673,7 +17604,7 @@
             }
           ],
           "id": "export",
-          "originalEndpointId": "works.export",
+          "originalEndpointId": "endpoint_works.export",
           "name": "Export",
           "path": {
             "pathParameters": [],
@@ -17943,91 +17874,88 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "works": [
-                    {
-                      "created_by": {
-                        "display_id": "foo",
-                        "id": "foo",
-                        "display_name": "foo",
-                        "display_picture": {
-                          "display_id": "foo",
-                          "id": "foo"
-                        },
-                        "email": "foo",
-                        "full_name": "foo",
-                        "state": "active"
-                      },
-                      "created_date": "foo",
+                "works": [
+                  {
+                    "created_by": {
                       "display_id": "foo",
                       "id": "foo",
-                      "modified_by": {
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
+                    },
+                    "created_date": "foo",
+                    "display_id": "foo",
+                    "id": "foo",
+                    "modified_by": {
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
+                    },
+                    "modified_date": "foo",
+                    "applies_to_part": {
+                      "display_id": "foo",
+                      "id": "foo",
+                      "name": "foo"
+                    },
+                    "artifacts": [
+                      {
+                        "display_id": "foo",
+                        "id": "foo"
+                      }
+                    ],
+                    "body": "foo",
+                    "owned_by": [
+                      {
                         "display_id": "foo",
                         "id": "foo",
                         "display_name": "foo",
-                        "display_picture": {
-                          "display_id": "foo",
-                          "id": "foo"
-                        },
+                        "display_picture": {},
                         "email": "foo",
                         "full_name": "foo",
                         "state": "active"
-                      },
-                      "modified_date": "foo",
-                      "applies_to_part": {
+                      }
+                    ],
+                    "reported_by": [
+                      {
                         "display_id": "foo",
                         "id": "foo",
-                        "name": "foo"
-                      },
-                      "artifacts": [
-                        {
-                          "display_id": "foo",
-                          "id": "foo"
-                        }
-                      ],
-                      "body": "foo",
-                      "owned_by": [
-                        {
-                          "display_id": "foo",
-                          "id": "foo",
-                          "display_name": "foo",
-                          "display_picture": {},
-                          "email": "foo",
-                          "full_name": "foo",
-                          "state": "active"
-                        }
-                      ],
-                      "reported_by": [
-                        {
+                        "display_name": "foo",
+                        "display_picture": {},
+                        "email": "foo",
+                        "full_name": "foo",
+                        "state": "active"
+                      }
+                    ],
+                    "stage": {
+                      "name": "foo"
+                    },
+                    "tags": [
+                      {
+                        "tag": {
                           "display_id": "foo",
                           "id": "foo",
-                          "display_name": "foo",
-                          "display_picture": {},
-                          "email": "foo",
-                          "full_name": "foo",
-                          "state": "active"
-                        }
-                      ],
-                      "stage": {
-                        "name": "foo"
-                      },
-                      "tags": [
-                        {
-                          "tag": {
-                            "display_id": "foo",
-                            "id": "foo",
-                            "name": "foo"
-                          },
-                          "value": "foo"
-                        }
-                      ],
-                      "target_close_date": "foo",
-                      "title": "foo",
-                      "priority": "p0"
-                    }
-                  ]
-                }
+                          "name": "foo"
+                        },
+                        "value": "foo"
+                      }
+                    ],
+                    "target_close_date": "foo",
+                    "title": "foo",
+                    "priority": "p0"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -18134,7 +18062,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "works.get",
+          "originalEndpointId": "endpoint_works.get",
           "name": "Get",
           "path": {
             "pathParameters": [],
@@ -18278,25 +18206,49 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "work": {
-                    "created_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
-                      "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
-                      },
-                      "email": "foo",
-                      "full_name": "foo",
-                      "state": "active"
-                    },
-                    "created_date": "foo",
+                "work": {
+                  "created_by": {
                     "display_id": "foo",
                     "id": "foo",
-                    "modified_by": {
+                    "display_name": "foo",
+                    "display_picture": {
+                      "display_id": "foo",
+                      "id": "foo"
+                    },
+                    "email": "foo",
+                    "full_name": "foo",
+                    "state": "active"
+                  },
+                  "created_date": "foo",
+                  "display_id": "foo",
+                  "id": "foo",
+                  "modified_by": {
+                    "display_id": "foo",
+                    "id": "foo",
+                    "display_name": "foo",
+                    "display_picture": {
+                      "display_id": "foo",
+                      "id": "foo"
+                    },
+                    "email": "foo",
+                    "full_name": "foo",
+                    "state": "active"
+                  },
+                  "modified_date": "foo",
+                  "applies_to_part": {
+                    "display_id": "foo",
+                    "id": "foo",
+                    "name": "foo"
+                  },
+                  "artifacts": [
+                    {
+                      "display_id": "foo",
+                      "id": "foo"
+                    }
+                  ],
+                  "body": "foo",
+                  "owned_by": [
+                    {
                       "display_id": "foo",
                       "id": "foo",
                       "display_name": "foo",
@@ -18307,65 +18259,38 @@
                       "email": "foo",
                       "full_name": "foo",
                       "state": "active"
-                    },
-                    "modified_date": "foo",
-                    "applies_to_part": {
+                    }
+                  ],
+                  "reported_by": [
+                    {
                       "display_id": "foo",
                       "id": "foo",
-                      "name": "foo"
-                    },
-                    "artifacts": [
-                      {
+                      "display_name": "foo",
+                      "display_picture": {
                         "display_id": "foo",
                         "id": "foo"
-                      }
-                    ],
-                    "body": "foo",
-                    "owned_by": [
-                      {
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
+                    }
+                  ],
+                  "stage": {
+                    "name": "foo"
+                  },
+                  "tags": [
+                    {
+                      "tag": {
                         "display_id": "foo",
                         "id": "foo",
-                        "display_name": "foo",
-                        "display_picture": {
-                          "display_id": "foo",
-                          "id": "foo"
-                        },
-                        "email": "foo",
-                        "full_name": "foo",
-                        "state": "active"
-                      }
-                    ],
-                    "reported_by": [
-                      {
-                        "display_id": "foo",
-                        "id": "foo",
-                        "display_name": "foo",
-                        "display_picture": {
-                          "display_id": "foo",
-                          "id": "foo"
-                        },
-                        "email": "foo",
-                        "full_name": "foo",
-                        "state": "active"
-                      }
-                    ],
-                    "stage": {
-                      "name": "foo"
-                    },
-                    "tags": [
-                      {
-                        "tag": {
-                          "display_id": "foo",
-                          "id": "foo",
-                          "name": "foo"
-                        },
-                        "value": "foo"
-                      }
-                    ],
-                    "target_close_date": "foo",
-                    "title": "foo",
-                    "priority": "p0"
-                  }
+                        "name": "foo"
+                      },
+                      "value": "foo"
+                    }
+                  ],
+                  "target_close_date": "foo",
+                  "title": "foo",
+                  "priority": "p0"
                 }
               },
               "responseBodyV3": {
@@ -18477,7 +18402,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "works.list",
+          "originalEndpointId": "endpoint_works.list",
           "name": "List",
           "path": {
             "pathParameters": [],
@@ -18771,93 +18696,90 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "next_cursor": "foo",
-                  "prev_cursor": "foo",
-                  "works": [
-                    {
-                      "created_by": {
-                        "display_id": "foo",
-                        "id": "foo",
-                        "display_name": "foo",
-                        "display_picture": {
-                          "display_id": "foo",
-                          "id": "foo"
-                        },
-                        "email": "foo",
-                        "full_name": "foo",
-                        "state": "active"
-                      },
-                      "created_date": "foo",
+                "next_cursor": "foo",
+                "prev_cursor": "foo",
+                "works": [
+                  {
+                    "created_by": {
                       "display_id": "foo",
                       "id": "foo",
-                      "modified_by": {
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
+                    },
+                    "created_date": "foo",
+                    "display_id": "foo",
+                    "id": "foo",
+                    "modified_by": {
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
+                    },
+                    "modified_date": "foo",
+                    "applies_to_part": {
+                      "display_id": "foo",
+                      "id": "foo",
+                      "name": "foo"
+                    },
+                    "artifacts": [
+                      {
+                        "display_id": "foo",
+                        "id": "foo"
+                      }
+                    ],
+                    "body": "foo",
+                    "owned_by": [
+                      {
                         "display_id": "foo",
                         "id": "foo",
                         "display_name": "foo",
-                        "display_picture": {
-                          "display_id": "foo",
-                          "id": "foo"
-                        },
+                        "display_picture": {},
                         "email": "foo",
                         "full_name": "foo",
                         "state": "active"
-                      },
-                      "modified_date": "foo",
-                      "applies_to_part": {
+                      }
+                    ],
+                    "reported_by": [
+                      {
                         "display_id": "foo",
                         "id": "foo",
-                        "name": "foo"
-                      },
-                      "artifacts": [
-                        {
-                          "display_id": "foo",
-                          "id": "foo"
-                        }
-                      ],
-                      "body": "foo",
-                      "owned_by": [
-                        {
-                          "display_id": "foo",
-                          "id": "foo",
-                          "display_name": "foo",
-                          "display_picture": {},
-                          "email": "foo",
-                          "full_name": "foo",
-                          "state": "active"
-                        }
-                      ],
-                      "reported_by": [
-                        {
+                        "display_name": "foo",
+                        "display_picture": {},
+                        "email": "foo",
+                        "full_name": "foo",
+                        "state": "active"
+                      }
+                    ],
+                    "stage": {
+                      "name": "foo"
+                    },
+                    "tags": [
+                      {
+                        "tag": {
                           "display_id": "foo",
                           "id": "foo",
-                          "display_name": "foo",
-                          "display_picture": {},
-                          "email": "foo",
-                          "full_name": "foo",
-                          "state": "active"
-                        }
-                      ],
-                      "stage": {
-                        "name": "foo"
-                      },
-                      "tags": [
-                        {
-                          "tag": {
-                            "display_id": "foo",
-                            "id": "foo",
-                            "name": "foo"
-                          },
-                          "value": "foo"
-                        }
-                      ],
-                      "target_close_date": "foo",
-                      "title": "foo",
-                      "priority": "p0"
-                    }
-                  ]
-                }
+                          "name": "foo"
+                        },
+                        "value": "foo"
+                      }
+                    ],
+                    "target_close_date": "foo",
+                    "title": "foo",
+                    "priority": "p0"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -18966,7 +18888,7 @@
             }
           ],
           "id": "update",
-          "originalEndpointId": "works.update",
+          "originalEndpointId": "endpoint_works.update",
           "name": "Update",
           "path": {
             "pathParameters": [],
@@ -19115,25 +19037,49 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "work": {
-                    "created_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
-                      "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
-                      },
-                      "email": "foo",
-                      "full_name": "foo",
-                      "state": "active"
-                    },
-                    "created_date": "foo",
+                "work": {
+                  "created_by": {
                     "display_id": "foo",
                     "id": "foo",
-                    "modified_by": {
+                    "display_name": "foo",
+                    "display_picture": {
+                      "display_id": "foo",
+                      "id": "foo"
+                    },
+                    "email": "foo",
+                    "full_name": "foo",
+                    "state": "active"
+                  },
+                  "created_date": "foo",
+                  "display_id": "foo",
+                  "id": "foo",
+                  "modified_by": {
+                    "display_id": "foo",
+                    "id": "foo",
+                    "display_name": "foo",
+                    "display_picture": {
+                      "display_id": "foo",
+                      "id": "foo"
+                    },
+                    "email": "foo",
+                    "full_name": "foo",
+                    "state": "active"
+                  },
+                  "modified_date": "foo",
+                  "applies_to_part": {
+                    "display_id": "foo",
+                    "id": "foo",
+                    "name": "foo"
+                  },
+                  "artifacts": [
+                    {
+                      "display_id": "foo",
+                      "id": "foo"
+                    }
+                  ],
+                  "body": "foo",
+                  "owned_by": [
+                    {
                       "display_id": "foo",
                       "id": "foo",
                       "display_name": "foo",
@@ -19144,65 +19090,38 @@
                       "email": "foo",
                       "full_name": "foo",
                       "state": "active"
-                    },
-                    "modified_date": "foo",
-                    "applies_to_part": {
+                    }
+                  ],
+                  "reported_by": [
+                    {
                       "display_id": "foo",
                       "id": "foo",
-                      "name": "foo"
-                    },
-                    "artifacts": [
-                      {
+                      "display_name": "foo",
+                      "display_picture": {
                         "display_id": "foo",
                         "id": "foo"
-                      }
-                    ],
-                    "body": "foo",
-                    "owned_by": [
-                      {
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
+                    }
+                  ],
+                  "stage": {
+                    "name": "foo"
+                  },
+                  "tags": [
+                    {
+                      "tag": {
                         "display_id": "foo",
                         "id": "foo",
-                        "display_name": "foo",
-                        "display_picture": {
-                          "display_id": "foo",
-                          "id": "foo"
-                        },
-                        "email": "foo",
-                        "full_name": "foo",
-                        "state": "active"
-                      }
-                    ],
-                    "reported_by": [
-                      {
-                        "display_id": "foo",
-                        "id": "foo",
-                        "display_name": "foo",
-                        "display_picture": {
-                          "display_id": "foo",
-                          "id": "foo"
-                        },
-                        "email": "foo",
-                        "full_name": "foo",
-                        "state": "active"
-                      }
-                    ],
-                    "stage": {
-                      "name": "foo"
-                    },
-                    "tags": [
-                      {
-                        "tag": {
-                          "display_id": "foo",
-                          "id": "foo",
-                          "name": "foo"
-                        },
-                        "value": "foo"
-                      }
-                    ],
-                    "target_close_date": "foo",
-                    "title": "foo",
-                    "priority": "p0"
-                  }
+                        "name": "foo"
+                      },
+                      "value": "foo"
+                    }
+                  ],
+                  "target_close_date": "foo",
+                  "title": "foo",
+                  "priority": "p0"
                 }
               },
               "responseBodyV3": {

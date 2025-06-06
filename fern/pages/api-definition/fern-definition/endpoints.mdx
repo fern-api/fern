@@ -67,17 +67,17 @@ The full path for the endpoint is the concatenation of:
 
 The display name will appear as the title of an endpoint. By default, the display name is equal to the 'Title Case' of the endpoint name. If you would like to customize the endpoint name, you can **set the display name**. 
 
-In the example below, ["Create User"](https://plantstore.dev/api-reference/user/create-user) displays as the title of the endpoint page within the API Reference.
+In the example below, ["Add a new plant to the store"](https://plantstore.dev/api-reference/plant/add-plant) displays as the title of the endpoint page within the API Reference.
 
 <CodeBlock title="user.yml">
 ```yaml {7}
 service:
-  base-path: /
+  base-path: /v3
   auth: false
   endpoints:
-    createUser:
-      path: /user
-      display-name: Create user
+    addPlant:
+      path: /plant
+      display-name: Add a new plant to the store
       method: POST
 ```
 </CodeBlock>

@@ -283,6 +283,7 @@ class ServiceClient:
                 id="id",
             ),
             extended_movie=ExtendedMovie(
+                cast=["cast", "cast"],
                 id="id",
                 prequel="prequel",
                 title="title",
@@ -292,7 +293,6 @@ class ServiceClient:
                 book="book",
                 metadata={"metadata": {"key": "value"}},
                 revenue=1000000,
-                cast=["cast", "cast"],
             ),
             entity=Entity(
                 type="primitive",
@@ -782,6 +782,7 @@ class AsyncServiceClient:
                     id="id",
                 ),
                 extended_movie=ExtendedMovie(
+                    cast=["cast", "cast"],
                     id="id",
                     prequel="prequel",
                     title="title",
@@ -791,7 +792,6 @@ class AsyncServiceClient:
                     book="book",
                     metadata={"metadata": {"key": "value"}},
                     revenue=1000000,
-                    cast=["cast", "cast"],
                 ),
                 entity=Entity(
                     type="primitive",

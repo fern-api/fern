@@ -8,7 +8,7 @@
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/examples/fern\"\n\tfernclient \"github.com/examples/fern/client\"\n\toption \"github.com/examples/fern/option\"\n)\n\nclient := fernclient.New(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n\toption.WithBaseURL(\n\t\tfern.Environments.Production,\n\t),\n)\nresponse, err := client.CreateType(\n\tcontext.TODO(),\n\tfern.NewTypeFromBasicType(\n\t\tfern.BasicTypePrimitive,\n\t),\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/examples/fern\"\n\tfernclient \"github.com/examples/fern/client\"\n\toption \"github.com/examples/fern/option\"\n)\n\nclient := fernclient.New(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n\toption.WithBaseURL(\n\t\tfern.Environments.Production,\n\t),\n)\nresponse, err := client.CreateType(\n\tcontext.TODO(),\n\t\u0026fern.Type{\n\t\tBasicType: fern.BasicTypePrimitive,\n\t},\n)\n"
             }
         },
         {

@@ -179,6 +179,8 @@ types:
         name: claude_3_5
       - value: "claude-3.7"
         name: claude_3_7
+      - value: "claude-4"
+        name: claude_4
       - value: command-a
         name: command_a
 
@@ -1071,6 +1073,9 @@ types:
         docs: The relative path to the version's docs.yml file.
       subtitle: optional<string>
       icon: optional<string>
+      image:
+        type: optional<string>
+        docs: The image to display in the product card. This will override the icon field if both are set.
       slug:
         type: optional<string>
         docs: The "slug" is this version's basePath. If not set, the slug will be generated from the display-name.

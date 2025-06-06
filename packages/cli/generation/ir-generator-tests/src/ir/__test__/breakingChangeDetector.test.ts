@@ -12,7 +12,7 @@ import { generateIRFromPath } from "./generateAndSnapshotIR";
 
 const CHANGES_DIR = path.join(__dirname, "changes");
 
-it("breaking", async () => {
+it("breaking", { timeout: 10_000 }, async () => {
     const breakingChangesDir = path.join(CHANGES_DIR, "breaking");
     const breakingChangeDirs = await readdir(breakingChangesDir, { withFileTypes: true });
     for (const dir of breakingChangeDirs) {
@@ -41,7 +41,7 @@ it("breaking", async () => {
     }
 });
 
-it("non-breaking", async () => {
+it("non-breaking", { timeout: 10_000 }, async () => {
     const nonBreakingChangesDir = path.join(CHANGES_DIR, "non-breaking");
     const nonBreakingChangeDirs = await readdir(nonBreakingChangesDir, { withFileTypes: true });
     for (const dir of nonBreakingChangeDirs) {

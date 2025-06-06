@@ -4,6 +4,7 @@
 
 import * as environments from "./environments.js";
 import * as core from "./core/index.js";
+import { mergeHeaders } from "./core/headers.js";
 import { Dummy } from "./api/resources/dummy/client/Client.js";
 
 export declare namespace SeedSingleUrlEnvironmentNoDefaultClient {
@@ -12,6 +13,8 @@ export declare namespace SeedSingleUrlEnvironmentNoDefaultClient {
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
         token: core.Supplier<core.BearerToken>;
+        /** Additional headers to include in requests. */
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 
     export interface RequestOptions {
@@ -22,14 +25,30 @@ export declare namespace SeedSingleUrlEnvironmentNoDefaultClient {
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
         /** Additional headers to include in the request. */
-        headers?: Record<string, string>;
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 }
 
 export class SeedSingleUrlEnvironmentNoDefaultClient {
+    protected readonly _options: SeedSingleUrlEnvironmentNoDefaultClient.Options;
     protected _dummy: Dummy | undefined;
 
-    constructor(protected readonly _options: SeedSingleUrlEnvironmentNoDefaultClient.Options) {}
+    constructor(_options: SeedSingleUrlEnvironmentNoDefaultClient.Options) {
+        this._options = {
+            ..._options,
+            headers: mergeHeaders(
+                {
+                    "X-Fern-Language": "JavaScript",
+                    "X-Fern-SDK-Name": "@fern/single-url-environment-no-default",
+                    "X-Fern-SDK-Version": "0.0.1",
+                    "User-Agent": "@fern/single-url-environment-no-default/0.0.1",
+                    "X-Fern-Runtime": core.RUNTIME.type,
+                    "X-Fern-Runtime-Version": core.RUNTIME.version,
+                },
+                _options?.headers,
+            ),
+        };
+    }
 
     public get dummy(): Dummy {
         return (this._dummy ??= new Dummy(this._options));

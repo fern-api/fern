@@ -44,6 +44,7 @@ types:
       method: HttpMethod
       headers: list<HttpHeader>
       baseUrl: optional<environment.EnvironmentBaseUrlId>
+      v2BaseUrls: optional<list<environment.EnvironmentBaseUrlId>>
       basePath:
         type: optional<HttpPath>
         docs: Overrides the service and endpoint level base paths
@@ -90,6 +91,7 @@ types:
       - PUT
       - PATCH
       - DELETE
+      - HEAD
 
   HttpHeader:
     extends: commons.Declaration

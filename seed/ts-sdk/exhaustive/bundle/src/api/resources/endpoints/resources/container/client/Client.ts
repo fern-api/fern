@@ -4,6 +4,7 @@
 
 import * as core from "../../../../../../core/index.js";
 import * as Fiddle from "../../../../../index.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/headers.js";
 import urlJoin from "url-join";
 
 export declare namespace Container {
@@ -12,6 +13,8 @@ export declare namespace Container {
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
+        /** Additional headers to include in requests. */
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 
     export interface RequestOptions {
@@ -22,12 +25,16 @@ export declare namespace Container {
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
         /** Additional headers to include in the request. */
-        headers?: Record<string, string>;
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 }
 
 export class Container {
-    constructor(protected readonly _options: Container.Options) {}
+    protected readonly _options: Container.Options;
+
+    constructor(_options: Container.Options) {
+        this._options = _options;
+    }
 
     /**
      * @param {string[]} request
@@ -58,16 +65,11 @@ export class Container {
                 "/container/list-of-primitives",
             ),
             method: "POST",
-            headers: {
-                Authorization: await this._getAuthorizationHeader(),
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/exhaustive",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/exhaustive/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ...requestOptions?.headers,
-            },
+            headers: mergeHeaders(
+                this._options?.headers,
+                mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+                requestOptions?.headers,
+            ),
             contentType: "application/json",
             requestType: "json",
             body: request,
@@ -138,16 +140,11 @@ export class Container {
                 "/container/list-of-objects",
             ),
             method: "POST",
-            headers: {
-                Authorization: await this._getAuthorizationHeader(),
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/exhaustive",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/exhaustive/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ...requestOptions?.headers,
-            },
+            headers: mergeHeaders(
+                this._options?.headers,
+                mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+                requestOptions?.headers,
+            ),
             contentType: "application/json",
             requestType: "json",
             body: request,
@@ -182,7 +179,7 @@ export class Container {
      * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.endpoints.container.getAndReturnSetOfPrimitives(new Set(["string"]))
+     *     await client.endpoints.container.getAndReturnSetOfPrimitives(["string"])
      */
     public getAndReturnSetOfPrimitives(
         request: string[],
@@ -206,16 +203,11 @@ export class Container {
                 "/container/set-of-primitives",
             ),
             method: "POST",
-            headers: {
-                Authorization: await this._getAuthorizationHeader(),
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/exhaustive",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/exhaustive/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ...requestOptions?.headers,
-            },
+            headers: mergeHeaders(
+                this._options?.headers,
+                mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+                requestOptions?.headers,
+            ),
             contentType: "application/json",
             requestType: "json",
             body: request,
@@ -250,9 +242,9 @@ export class Container {
      * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.endpoints.container.getAndReturnSetOfObjects(new Set([{
+     *     await client.endpoints.container.getAndReturnSetOfObjects([{
      *             string: "string"
-     *         }]))
+     *         }])
      */
     public getAndReturnSetOfObjects(
         request: Fiddle.types.ObjectWithRequiredField[],
@@ -284,16 +276,11 @@ export class Container {
                 "/container/set-of-objects",
             ),
             method: "POST",
-            headers: {
-                Authorization: await this._getAuthorizationHeader(),
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/exhaustive",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/exhaustive/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ...requestOptions?.headers,
-            },
+            headers: mergeHeaders(
+                this._options?.headers,
+                mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+                requestOptions?.headers,
+            ),
             contentType: "application/json",
             requestType: "json",
             body: request,
@@ -356,16 +343,11 @@ export class Container {
                 "/container/map-prim-to-prim",
             ),
             method: "POST",
-            headers: {
-                Authorization: await this._getAuthorizationHeader(),
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/exhaustive",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/exhaustive/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ...requestOptions?.headers,
-            },
+            headers: mergeHeaders(
+                this._options?.headers,
+                mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+                requestOptions?.headers,
+            ),
             contentType: "application/json",
             requestType: "json",
             body: request,
@@ -436,16 +418,11 @@ export class Container {
                 "/container/map-prim-to-object",
             ),
             method: "POST",
-            headers: {
-                Authorization: await this._getAuthorizationHeader(),
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/exhaustive",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/exhaustive/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ...requestOptions?.headers,
-            },
+            headers: mergeHeaders(
+                this._options?.headers,
+                mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+                requestOptions?.headers,
+            ),
             contentType: "application/json",
             requestType: "json",
             body: request,
@@ -514,16 +491,11 @@ export class Container {
                 "/container/opt-objects",
             ),
             method: "POST",
-            headers: {
-                Authorization: await this._getAuthorizationHeader(),
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/exhaustive",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/exhaustive/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ...requestOptions?.headers,
-            },
+            headers: mergeHeaders(
+                this._options?.headers,
+                mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+                requestOptions?.headers,
+            ),
             contentType: "application/json",
             requestType: "json",
             body: request != null ? request : undefined,

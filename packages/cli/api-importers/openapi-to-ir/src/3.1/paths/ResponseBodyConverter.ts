@@ -9,8 +9,8 @@ import { FernStreamingExtension } from "../../extensions/x-fern-streaming";
 export declare namespace ResponseBodyConverter {
     export interface Args extends Converters.AbstractConverters.AbstractMediaTypeObjectConverter.Args {
         responseBody: OpenAPIV3_1.ResponseObject;
-        statusCode: string;
         streamingExtension: FernStreamingExtension.Output | undefined;
+        statusCode: string;
     }
 
     export interface Output extends Converters.AbstractConverters.AbstractMediaTypeObjectConverter.Output {
@@ -40,10 +40,69 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
     }
 
     public convert(): ResponseBodyConverter.Output | undefined {
+        return this.shouldConvertAsStreaming()
+            ? this.convertStreamingResponseBody()
+            : this.convertNonStreamingResponseBody();
+    }
+
+    private convertStreamingResponseBody(): ResponseBodyConverter.Output | undefined {
+        if (this.streamingExtension == null) {
+            return undefined;
+        }
+        if (this.streamingExtension.type == "streamCondition") {
+            const streamingResponse = this.streamingExtension.responseStream;
+            const nonStreamingResponse = this.streamingExtension.response;
+            const nonStreamingSchemaId = [...this.group, this.method, "Response", this.statusCode].join("_");
+            const streamingSchemaId = `${nonStreamingSchemaId}_streaming`;
+
+            const convertedStreamingSchema = this.parseMediaTypeSchemaOrReference({
+                schemaOrReference: streamingResponse,
+                schemaId: streamingSchemaId
+            });
+            const convertedNonStreamingSchema = this.parseMediaTypeSchemaOrReference({
+                schemaOrReference: nonStreamingResponse,
+                schemaId: nonStreamingSchemaId
+            });
+
+            return this.convertStreamConditionResponse({
+                convertedStreamingSchema,
+                convertedNonStreamingSchema
+            });
+        }
+        if (this.streamingExtension.type === "stream") {
+            const schemaId = [...this.group, this.method, "Response", this.statusCode].join("_");
+            const contentTypes = Object.keys(this.responseBody.content ?? {});
+            for (const contentType of contentTypes) {
+                const mediaTypeObject = this.responseBody.content?.[contentType];
+                if (mediaTypeObject == null) {
+                    continue;
+                }
+                const convertedSchema = this.parseMediaTypeObject({
+                    mediaTypeObject,
+                    schemaId,
+                    contentType: this.streamingExtension.format
+                });
+                if (convertedSchema == null) {
+                    continue;
+                }
+                return this.convertStreamingResponse({
+                    mediaTypeObject,
+                    convertedSchema
+                });
+            }
+        }
+
+        return undefined;
+    }
+
+    private convertNonStreamingResponseBody(): ResponseBodyConverter.Output | undefined {
         const schemaId = [...this.group, this.method, "Response", this.statusCode].join("_");
         const jsonContentTypes = Object.keys(this.responseBody.content ?? {}).filter((type) => type.includes("json"));
         for (const contentType of jsonContentTypes) {
             const mediaTypeObject = this.responseBody.content?.[contentType];
+            if (mediaTypeObject == null) {
+                continue;
+            }
             const convertedSchema = this.parseMediaTypeObject({
                 mediaTypeObject,
                 schemaId,
@@ -52,13 +111,7 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
             if (convertedSchema == null) {
                 continue;
             }
-            if (this.streamingExtension != null) {
-                return this.convertStreamingResponse({
-                    mediaTypeObject,
-                    convertedSchema
-                });
-            }
-            if (contentType.includes("json")) {
+            if (this.shouldReturnJsonResponse(contentType)) {
                 return this.returnJsonResponse({
                     mediaTypeObject,
                     convertedSchema
@@ -71,6 +124,9 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
         );
         for (const contentType of nonJsonContentTypes) {
             const mediaTypeObject = this.responseBody.content?.[contentType];
+            if (mediaTypeObject == null) {
+                continue;
+            }
             const convertedSchema = this.parseMediaTypeObject({
                 mediaTypeObject,
                 schemaId,
@@ -80,16 +136,15 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
                 continue;
             }
             if (this.isBinarySchema(convertedSchema)) {
-                if (this.context.settings?.useBytesForBinaryResponse && this.streamingExtension == null) {
-                    return this.returnBytesResponse({
-                        mediaTypeObject
-                    });
-                }
-                return this.returnFileDownloadResponse({
-                    mediaTypeObject
-                });
+                return this.shouldReturnBytesResponse()
+                    ? this.returnBytesResponse({
+                          mediaTypeObject
+                      })
+                    : this.returnFileDownloadResponse({
+                          mediaTypeObject
+                      });
             }
-            if (MediaType.parse(contentType)?.isText()) {
+            if (this.shouldReturnTextResponse(contentType)) {
                 return this.returnTextResponse({
                     mediaTypeObject
                 });
@@ -99,11 +154,49 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
         return undefined;
     }
 
+    private convertStreamConditionResponse({
+        convertedStreamingSchema,
+        convertedNonStreamingSchema
+    }: {
+        convertedStreamingSchema:
+            | Converters.AbstractConverters.AbstractMediaTypeObjectConverter.MediaTypeObject
+            | undefined;
+        convertedNonStreamingSchema:
+            | Converters.AbstractConverters.AbstractMediaTypeObjectConverter.MediaTypeObject
+            | undefined;
+    }): ResponseBodyConverter.Output | undefined {
+        if (convertedStreamingSchema == null || convertedNonStreamingSchema == null) {
+            return undefined;
+        }
+        return {
+            responseBody: HttpResponseBody.json(
+                JsonResponse.response({
+                    responseBodyType: convertedNonStreamingSchema.type,
+                    docs: this.responseBody.description,
+                    v2Examples: convertedNonStreamingSchema.schema?.typeDeclaration.v2Examples
+                })
+            ),
+            streamResponseBody: HttpResponseBody.streaming(
+                StreamingResponse.json({
+                    // TODO: Use the streamExtension.streamDescription
+                    docs: this.responseBody.description,
+                    payload: convertedStreamingSchema.type,
+                    terminator: undefined,
+                    v2Examples: convertedStreamingSchema.schema?.typeDeclaration.v2Examples
+                })
+            ),
+            inlinedTypes: {
+                ...convertedStreamingSchema.inlinedTypes,
+                ...convertedNonStreamingSchema.inlinedTypes
+            }
+        };
+    }
+
     private convertStreamingResponse({
         mediaTypeObject,
         convertedSchema
     }: {
-        mediaTypeObject: OpenAPIV3_1.MediaTypeObject | undefined;
+        mediaTypeObject: OpenAPIV3_1.MediaTypeObject;
         convertedSchema: Converters.AbstractConverters.AbstractMediaTypeObjectConverter.MediaTypeObject;
     }): ResponseBodyConverter.Output | undefined {
         if (this.streamingExtension == null) {
@@ -127,8 +220,8 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
                         })
                     ),
                     streamResponseBody: undefined,
-                    inlinedTypes: {},
-                    examples: {}
+                    inlinedTypes: convertedSchema.inlinedTypes,
+                    examples: convertedSchema.examples
                 };
             }
             case "sse": {
@@ -146,8 +239,8 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
                         })
                     ),
                     streamResponseBody: undefined,
-                    inlinedTypes: {},
-                    examples: {}
+                    inlinedTypes: convertedSchema.inlinedTypes,
+                    examples: convertedSchema.examples
                 };
             }
             default: {
@@ -160,9 +253,9 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
         mediaTypeObject,
         convertedSchema
     }: {
-        mediaTypeObject: OpenAPIV3_1.MediaTypeObject | undefined;
+        mediaTypeObject: OpenAPIV3_1.MediaTypeObject;
         convertedSchema: Converters.AbstractConverters.AbstractMediaTypeObjectConverter.MediaTypeObject;
-    }): ResponseBodyConverter.Output | undefined {
+    }): ResponseBodyConverter.Output {
         return {
             responseBody: HttpResponseBody.json(
                 JsonResponse.response({
@@ -184,8 +277,8 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
     private returnBytesResponse({
         mediaTypeObject
     }: {
-        mediaTypeObject: OpenAPIV3_1.MediaTypeObject | undefined;
-    }): ResponseBodyConverter.Output | undefined {
+        mediaTypeObject: OpenAPIV3_1.MediaTypeObject;
+    }): ResponseBodyConverter.Output {
         return {
             responseBody: HttpResponseBody.bytes({
                 docs: this.responseBody.description,
@@ -203,8 +296,8 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
     private returnFileDownloadResponse({
         mediaTypeObject
     }: {
-        mediaTypeObject: OpenAPIV3_1.MediaTypeObject | undefined;
-    }): ResponseBodyConverter.Output | undefined {
+        mediaTypeObject: OpenAPIV3_1.MediaTypeObject;
+    }): ResponseBodyConverter.Output {
         return {
             responseBody: HttpResponseBody.fileDownload({
                 docs: this.responseBody.description,
@@ -222,8 +315,8 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
     private returnTextResponse({
         mediaTypeObject
     }: {
-        mediaTypeObject: OpenAPIV3_1.MediaTypeObject | undefined;
-    }): ResponseBodyConverter.Output | undefined {
+        mediaTypeObject: OpenAPIV3_1.MediaTypeObject;
+    }): ResponseBodyConverter.Output {
         return {
             responseBody: HttpResponseBody.text({
                 docs: this.responseBody.description,
@@ -256,5 +349,21 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
             default:
                 return false;
         }
+    }
+
+    private shouldConvertAsStreaming(): boolean {
+        return this.streamingExtension != null;
+    }
+
+    private shouldReturnJsonResponse(contentType: string): boolean {
+        return contentType.includes("json");
+    }
+
+    private shouldReturnBytesResponse(): boolean {
+        return (this.context.settings?.useBytesForBinaryResponse ?? false) && this.streamingExtension == null;
+    }
+
+    private shouldReturnTextResponse(contentType: string): boolean {
+        return MediaType.parse(contentType)?.isText() ?? false;
     }
 }

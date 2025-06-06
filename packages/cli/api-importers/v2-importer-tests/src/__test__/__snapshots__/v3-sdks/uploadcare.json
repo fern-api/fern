@@ -97,20 +97,20 @@
       "shape": {
         "aliasOf": {
           "primitive": {
-            "v1": "INTEGER",
+            "v1": "DOUBLE",
             "v2": {
               "validation": {},
-              "type": "integer"
+              "type": "double"
             }
           },
           "type": "primitive"
         },
         "resolvedType": {
           "primitive": {
-            "v1": "INTEGER",
+            "v1": "DOUBLE",
             "v2": {
               "validation": {},
-              "type": "integer"
+              "type": "double"
             }
           },
           "type": "primitive"
@@ -1583,10 +1583,10 @@
                   "container": {
                     "nullable": {
                       "primitive": {
-                        "v1": "INTEGER",
+                        "v1": "DOUBLE",
                         "v2": {
                           "validation": {},
-                          "type": "integer"
+                          "type": "double"
                         }
                       },
                       "type": "primitive"
@@ -1634,10 +1634,10 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "INTEGER",
+                    "v1": "DOUBLE",
                     "v2": {
                       "validation": {},
-                      "type": "integer"
+                      "type": "double"
                     }
                   },
                   "type": "primitive"
@@ -2682,6 +2682,7 @@
               },
               "datetime_original": "foo",
               "dpi": [
+                72,
                 72
               ]
             },
@@ -3132,10 +3133,10 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "INTEGER",
+                    "v1": "DOUBLE",
                     "v2": {
                       "validation": {},
-                      "type": "integer"
+                      "type": "double"
                     }
                   },
                   "type": "primitive"
@@ -7653,10 +7654,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -7694,10 +7695,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -8178,10 +8179,10 @@
                   "container": {
                     "list": {
                       "primitive": {
-                        "v1": "INTEGER",
+                        "v1": "DOUBLE",
                         "v2": {
                           "validation": {},
-                          "type": "integer"
+                          "type": "double"
                         }
                       },
                       "type": "primitive"
@@ -8232,6 +8233,7 @@
             },
             "datetime_original": "foo",
             "dpi": [
+              72,
               72
             ]
           }
@@ -8296,10 +8298,10 @@
                   "container": {
                     "nullable": {
                       "primitive": {
-                        "v1": "INTEGER",
+                        "v1": "DOUBLE",
                         "v2": {
                           "validation": {},
-                          "type": "integer"
+                          "type": "double"
                         }
                       },
                       "type": "primitive"
@@ -8402,10 +8404,10 @@
                   "container": {
                     "nullable": {
                       "primitive": {
-                        "v1": "INTEGER",
+                        "v1": "DOUBLE",
                         "v2": {
                           "validation": {},
-                          "type": "integer"
+                          "type": "double"
                         }
                       },
                       "type": "primitive"
@@ -8553,10 +8555,10 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "INTEGER",
+                    "v1": "DOUBLE",
                     "v2": {
                       "validation": {},
-                      "type": "integer"
+                      "type": "double"
                     }
                   },
                   "type": "primitive"
@@ -8600,10 +8602,10 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "INTEGER",
+                    "v1": "DOUBLE",
                     "v2": {
                       "validation": {},
-                      "type": "integer"
+                      "type": "double"
                     }
                   },
                   "type": "primitive"
@@ -8647,10 +8649,10 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "INTEGER",
+                    "v1": "DOUBLE",
                     "v2": {
                       "validation": {},
-                      "type": "integer"
+                      "type": "double"
                     }
                   },
                   "type": "primitive"
@@ -8694,10 +8696,10 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "INTEGER",
+                    "v1": "DOUBLE",
                     "v2": {
                       "validation": {},
-                      "type": "integer"
+                      "type": "double"
                     }
                   },
                   "type": "primitive"
@@ -8835,10 +8837,10 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "INTEGER",
+                    "v1": "DOUBLE",
                     "v2": {
                       "validation": {},
-                      "type": "integer"
+                      "type": "double"
                     }
                   },
                   "type": "primitive"
@@ -8929,10 +8931,10 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "INTEGER",
+                    "v1": "DOUBLE",
                     "v2": {
                       "validation": {},
-                      "type": "integer"
+                      "type": "double"
                     }
                   },
                   "type": "primitive"
@@ -9513,10 +9515,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -9554,10 +9556,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -10038,10 +10040,10 @@
                   "container": {
                     "list": {
                       "primitive": {
-                        "v1": "INTEGER",
+                        "v1": "DOUBLE",
                         "v2": {
                           "validation": {},
-                          "type": "integer"
+                          "type": "double"
                         }
                       },
                       "type": "primitive"
@@ -10092,6 +10094,7 @@
             },
             "datetime_original": "foo",
             "dpi": [
+              72,
               72
             ]
           }
@@ -10474,10 +10477,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -12209,7 +12212,7 @@
     }
   },
   "services": {
-    "service_Upload": {
+    "service_upload": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -12263,9 +12266,30 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "Upload.baseUpload",
           "displayName": "Direct uploads",
           "method": "POST",
+          "baseUrl": "Production server",
+          "path": {
+            "head": "/base/",
+            "parts": []
+          },
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "errors": [],
+          "auth": false,
+          "userSpecifiedExamples": [],
+          "autogeneratedExamples": [],
+          "idempotent": false,
+          "fullPath": {
+            "head": "/base/",
+            "parts": []
+          },
+          "allPathParameters": [],
+          "source": {
+            "type": "openapi"
+          },
+          "id": "endpoint_upload.baseUpload",
           "name": {
             "originalName": "baseUpload",
             "camelCase": {
@@ -12285,14 +12309,6 @@
               "safeName": "BaseUpload"
             }
           },
-          "baseUrl": "Production server",
-          "path": {
-            "head": "/base/",
-            "parts": []
-          },
-          "pathParameters": [],
-          "queryParameters": [],
-          "headers": [],
           "requestBody": {
             "contentType": "multipart/form-data",
             "name": {
@@ -12682,17 +12698,51 @@
             },
             "type": "fileUpload"
           },
-          "errors": [],
-          "auth": false,
-          "docs": "Direct file uploads comply with the [RFC 7578](https://www.rfc-editor.org/rfc/rfc7578) standard.\nIn other words, you can perform a direct upload by making an HTTP POST request with the Content-Type\nheader set to `multipart/form-data`.\n\n**Note**: Direct file uploads support files smaller than 100 megabytes only.\nIf you would like to upload larger files, please use [Multipart Uploads](/api-refs/upload-api/#operation/multipartFileUploadStart) instead.\n\nFile upload example with curl:\n\n```\ncurl -F \"UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY\" -F \"my_file.jpg=@my_file.jpg\" \"https://upload.uploadcare.com/base/\"\n```\n",
-          "userSpecifiedExamples": [],
-          "autogeneratedExamples": [],
-          "idempotent": false,
-          "fullPath": {
-            "head": "/base/",
-            "parts": []
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "Upload_baseUpload_Response_200",
+                    "camelCase": {
+                      "unsafeName": "uploadBaseUploadResponse200",
+                      "safeName": "uploadBaseUploadResponse200"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "upload_base_upload_response_200",
+                      "safeName": "upload_base_upload_response_200"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "UPLOAD_BASE_UPLOAD_RESPONSE_200",
+                      "safeName": "UPLOAD_BASE_UPLOAD_RESPONSE_200"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "UploadBaseUploadResponse200",
+                      "safeName": "UploadBaseUploadResponse200"
+                    }
+                  },
+                  "typeId": "Upload_baseUpload_Response_200",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "The file was uploaded successfully.",
+                "v2Examples": {
+                  "userSpecifiedExamples": {},
+                  "autogeneratedExamples": {
+                    "uploadBaseUploadExample": {}
+                  }
+                },
+                "type": "response"
+              },
+              "type": "json"
+            }
           },
-          "allPathParameters": [],
+          "docs": "Direct file uploads comply with the [RFC 7578](https://www.rfc-editor.org/rfc/rfc7578) standard.\nIn other words, you can perform a direct upload by making an HTTP POST request with the Content-Type\nheader set to `multipart/form-data`.\n\n**Note**: Direct file uploads support files smaller than 100 megabytes only.\nIf you would like to upload larger files, please use [Multipart Uploads](/api-refs/upload-api/#operation/multipartFileUploadStart) instead.\n\nFile upload example with curl:\n\n```\ncurl -F \"UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY\" -F \"my_file.jpg=@my_file.jpg\" \"https://upload.uploadcare.com/base/\"\n```\n",
           "v2Examples": {
             "autogeneratedExamples": {},
             "userSpecifiedExamples": {
@@ -12749,59 +12799,33 @@
                 }
               }
             }
-          },
-          "source": {
-            "type": "openapi"
-          },
-          "response": {
-            "statusCode": 200,
-            "body": {
-              "value": {
-                "responseBodyType": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
-                  },
-                  "name": {
-                    "originalName": "Upload_baseUpload_Response_200",
-                    "camelCase": {
-                      "unsafeName": "uploadBaseUploadResponse200",
-                      "safeName": "uploadBaseUploadResponse200"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "upload_base_upload_response_200",
-                      "safeName": "upload_base_upload_response_200"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "UPLOAD_BASE_UPLOAD_RESPONSE_200",
-                      "safeName": "UPLOAD_BASE_UPLOAD_RESPONSE_200"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "UploadBaseUploadResponse200",
-                      "safeName": "UploadBaseUploadResponse200"
-                    }
-                  },
-                  "typeId": "Upload_baseUpload_Response_200",
-                  "inline": false,
-                  "type": "named"
-                },
-                "docs": "The file was uploaded successfully.",
-                "v2Examples": {
-                  "userSpecifiedExamples": {},
-                  "autogeneratedExamples": {
-                    "uploadBaseUploadExample": {}
-                  }
-                },
-                "type": "response"
-              },
-              "type": "json"
-            }
           }
         },
         {
-          "id": "Upload.multipartFileUploadStart",
           "displayName": "Start multipart upload",
           "method": "POST",
+          "baseUrl": "Production server",
+          "path": {
+            "head": "/multipart/start/",
+            "parts": []
+          },
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "errors": [],
+          "auth": false,
+          "userSpecifiedExamples": [],
+          "autogeneratedExamples": [],
+          "idempotent": false,
+          "fullPath": {
+            "head": "/multipart/start/",
+            "parts": []
+          },
+          "allPathParameters": [],
+          "source": {
+            "type": "openapi"
+          },
+          "id": "endpoint_upload.multipartFileUploadStart",
           "name": {
             "originalName": "multipartFileUploadStart",
             "camelCase": {
@@ -12821,14 +12845,6 @@
               "safeName": "MultipartFileUploadStart"
             }
           },
-          "baseUrl": "Production server",
-          "path": {
-            "head": "/multipart/start/",
-            "parts": []
-          },
-          "pathParameters": [],
-          "queryParameters": [],
-          "headers": [],
           "requestBody": {
             "contentType": "multipart/form-data",
             "name": {
@@ -13362,60 +13378,6 @@
             },
             "type": "fileUpload"
           },
-          "errors": [],
-          "auth": false,
-          "docs": "Multipart uploads should be used if you need to upload files larger than 100 megabytes or if you want to\nexplicitly trigger [AWS S3 Transfer Acceleration](https://aws.amazon.com/s3/transfer-acceleration/).\nWhen you use Multipart Uploads your files go straight to AWS S3 bypassing our upload instances.\n\nTo upload large files, 3 requests are sent in sequence:\n1. `/multipart/start/`\n2. `<presigned-url-x>`\n3. `/multipart/complete/`.\n\n**Note**: Multipart uploads support files larger than 10 megabytes only.\n",
-          "userSpecifiedExamples": [],
-          "autogeneratedExamples": [],
-          "idempotent": false,
-          "fullPath": {
-            "head": "/multipart/start/",
-            "parts": []
-          },
-          "allPathParameters": [],
-          "v2Examples": {
-            "autogeneratedExamples": {},
-            "userSpecifiedExamples": {
-              "Upload_multipartFileUploadStart_example": {
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/multipart/start/"
-                  },
-                  "environment": "Production server",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "UPLOADCARE_PUB_KEY": "YOUR_PUBLIC_KEY",
-                    "UPLOADCARE_STORE": "auto",
-                    "filename": "myfile.mp4",
-                    "size": 27796904,
-                    "content_type": "video/mp4"
-                  }
-                },
-                "response": {
-                  "statusCode": 200,
-                  "body": {
-                    "value": {
-                      "uuid": "67947755-1584-4e3f-902b-d4e2bf76a841",
-                      "parts": [
-                        "<presigned-url-1>",
-                        "<presigned-url-2>",
-                        "<presigned-url-3>",
-                        "<presigned-url-4>",
-                        "<presigned-url-5>"
-                      ]
-                    },
-                    "type": "json"
-                  }
-                }
-              }
-            }
-          },
-          "source": {
-            "type": "openapi"
-          },
           "response": {
             "statusCode": 200,
             "body": {
@@ -13468,12 +13430,74 @@
               },
               "type": "json"
             }
+          },
+          "docs": "Multipart uploads should be used if you need to upload files larger than 100 megabytes or if you want to\nexplicitly trigger [AWS S3 Transfer Acceleration](https://aws.amazon.com/s3/transfer-acceleration/).\nWhen you use Multipart Uploads your files go straight to AWS S3 bypassing our upload instances.\n\nTo upload large files, 3 requests are sent in sequence:\n1. `/multipart/start/`\n2. `<presigned-url-x>`\n3. `/multipart/complete/`.\n\n**Note**: Multipart uploads support files larger than 10 megabytes only.\n",
+          "v2Examples": {
+            "autogeneratedExamples": {},
+            "userSpecifiedExamples": {
+              "Upload_multipartFileUploadStart_example": {
+                "request": {
+                  "endpoint": {
+                    "method": "POST",
+                    "path": "/multipart/start/"
+                  },
+                  "environment": "Production server",
+                  "pathParameters": {},
+                  "queryParameters": {},
+                  "headers": {},
+                  "requestBody": {
+                    "UPLOADCARE_PUB_KEY": "YOUR_PUBLIC_KEY",
+                    "UPLOADCARE_STORE": "auto",
+                    "filename": "myfile.mp4",
+                    "size": 27796904,
+                    "content_type": "video/mp4"
+                  }
+                },
+                "response": {
+                  "statusCode": 200,
+                  "body": {
+                    "value": {
+                      "uuid": "67947755-1584-4e3f-902b-d4e2bf76a841",
+                      "parts": [
+                        "<presigned-url-1>",
+                        "<presigned-url-2>",
+                        "<presigned-url-3>",
+                        "<presigned-url-4>",
+                        "<presigned-url-5>"
+                      ]
+                    },
+                    "type": "json"
+                  }
+                }
+              }
+            }
           }
         },
         {
-          "id": "Upload.multipartFileUploadPart",
           "displayName": "Upload individual file parts",
           "method": "PUT",
+          "baseUrl": "Production server",
+          "path": {
+            "head": "/<presigned-url-x>",
+            "parts": []
+          },
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "errors": [],
+          "auth": false,
+          "userSpecifiedExamples": [],
+          "autogeneratedExamples": [],
+          "idempotent": false,
+          "fullPath": {
+            "head": "/<presigned-url-x>",
+            "parts": []
+          },
+          "allPathParameters": [],
+          "source": {
+            "type": "openapi"
+          },
+          "id": "endpoint_upload.multipartFileUploadPart",
           "name": {
             "originalName": "multipartFileUploadPart",
             "camelCase": {
@@ -13493,14 +13517,6 @@
               "safeName": "MultipartFileUploadPart"
             }
           },
-          "baseUrl": "Production server",
-          "path": {
-            "head": "/<presigned-url-x>",
-            "parts": []
-          },
-          "pathParameters": [],
-          "queryParameters": [],
-          "headers": [],
           "requestBody": {
             "contentType": "application/octet-stream",
             "isOptional": false,
@@ -13512,17 +13528,7 @@
             },
             "type": "bytes"
           },
-          "errors": [],
-          "auth": false,
           "docs": "The second phase is about uploading the file parts to the presigned upload URLs returned from the\n`/multipart/start/` endpoint.\n\nEach uploaded part should be at least 5 MiB (5242880 bytes) in size except for the last one, which can be smaller.\nYou can upload the file parts in parallel provided that the byte order stays unchanged.\n\n**Note**: You MUST define `Content-Type` header for your data.\n",
-          "userSpecifiedExamples": [],
-          "autogeneratedExamples": [],
-          "idempotent": false,
-          "fullPath": {
-            "head": "/<presigned-url-x>",
-            "parts": []
-          },
-          "allPathParameters": [],
           "v2Examples": {
             "autogeneratedExamples": {
               "multipartFileUploadPartExample": {
@@ -13540,15 +13546,33 @@
               }
             },
             "userSpecifiedExamples": {}
-          },
-          "source": {
-            "type": "openapi"
           }
         },
         {
-          "id": "Upload.multipartFileUploadComplete",
           "displayName": "Complete multipart upload",
           "method": "POST",
+          "baseUrl": "Production server",
+          "path": {
+            "head": "/multipart/complete/",
+            "parts": []
+          },
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "errors": [],
+          "auth": false,
+          "userSpecifiedExamples": [],
+          "autogeneratedExamples": [],
+          "idempotent": false,
+          "fullPath": {
+            "head": "/multipart/complete/",
+            "parts": []
+          },
+          "allPathParameters": [],
+          "source": {
+            "type": "openapi"
+          },
+          "id": "endpoint_upload.multipartFileUploadComplete",
           "name": {
             "originalName": "multipartFileUploadComplete",
             "camelCase": {
@@ -13568,14 +13592,6 @@
               "safeName": "MultipartFileUploadComplete"
             }
           },
-          "baseUrl": "Production server",
-          "path": {
-            "head": "/multipart/complete/",
-            "parts": []
-          },
-          "pathParameters": [],
-          "queryParameters": [],
-          "headers": [],
           "requestBody": {
             "contentType": "multipart/form-data",
             "name": {
@@ -13713,106 +13729,6 @@
             },
             "type": "fileUpload"
           },
-          "errors": [],
-          "auth": false,
-          "docs": "Once all the file parts have been uploaded successfully, complete the\nupload session to assemble all the file parts into a single resulting file.\n",
-          "userSpecifiedExamples": [],
-          "autogeneratedExamples": [],
-          "idempotent": false,
-          "fullPath": {
-            "head": "/multipart/complete/",
-            "parts": []
-          },
-          "allPathParameters": [],
-          "v2Examples": {
-            "autogeneratedExamples": {},
-            "userSpecifiedExamples": {
-              "Upload_multipartFileUploadComplete_example": {
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/multipart/complete/"
-                  },
-                  "environment": "Production server",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "UPLOADCARE_PUB_KEY": "YOUR_PUBLIC_KEY",
-                    "uuid": "67947755-1584-4e3f-902b-d4e2bf76a841"
-                  }
-                },
-                "response": {
-                  "statusCode": 200,
-                  "body": {
-                    "value": {
-                      "uuid": "be3b4d5e-179d-460e-8a5d-69112ac86cbb",
-                      "file_id": "be3b4d5e-179d-460e-8a5d-69112ac86cbb",
-                      "size": 2667636,
-                      "total": 2667636,
-                      "done": 2667636,
-                      "original_filename": "IMG-0412_123.JPG",
-                      "filename": "IMG0412_123.JPG",
-                      "mime_type": "image/jpeg",
-                      "image_info": {
-                        "color_mode": "RGB",
-                        "orientation": 6,
-                        "format": "JPEG",
-                        "sequence": false,
-                        "height": 4032,
-                        "width": 3024,
-                        "geo_location": {
-                          "latitude": 55.62013611111111,
-                          "longitude": 37.66299166666666
-                        },
-                        "datetime_original": "foo",
-                        "dpi": [
-                          72,
-                          72
-                        ]
-                      },
-                      "video_info": null,
-                      "content_info": {
-                        "mime": {
-                          "mime": "image/jpeg",
-                          "type": "image",
-                          "subtype": "jpeg"
-                        },
-                        "image": {
-                          "color_mode": "RGB",
-                          "orientation": 6,
-                          "format": "JPEG",
-                          "sequence": false,
-                          "height": 4032,
-                          "width": 3024,
-                          "geo_location": {
-                            "latitude": 55.62013611111111,
-                            "longitude": 37.66299166666666
-                          },
-                          "datetime_original": "foo",
-                          "dpi": [
-                            72,
-                            72
-                          ]
-                        }
-                      },
-                      "metadata": {
-                        "subsystem": "uploader",
-                        "pet": "cat"
-                      },
-                      "is_image": true,
-                      "is_stored": true,
-                      "is_ready": true
-                    },
-                    "type": "json"
-                  }
-                }
-              }
-            }
-          },
-          "source": {
-            "type": "openapi"
-          },
           "response": {
             "statusCode": 200,
             "body": {
@@ -13914,12 +13830,120 @@
               },
               "type": "json"
             }
+          },
+          "docs": "Once all the file parts have been uploaded successfully, complete the\nupload session to assemble all the file parts into a single resulting file.\n",
+          "v2Examples": {
+            "autogeneratedExamples": {},
+            "userSpecifiedExamples": {
+              "Upload_multipartFileUploadComplete_example": {
+                "request": {
+                  "endpoint": {
+                    "method": "POST",
+                    "path": "/multipart/complete/"
+                  },
+                  "environment": "Production server",
+                  "pathParameters": {},
+                  "queryParameters": {},
+                  "headers": {},
+                  "requestBody": {
+                    "UPLOADCARE_PUB_KEY": "YOUR_PUBLIC_KEY",
+                    "uuid": "67947755-1584-4e3f-902b-d4e2bf76a841"
+                  }
+                },
+                "response": {
+                  "statusCode": 200,
+                  "body": {
+                    "value": {
+                      "uuid": "be3b4d5e-179d-460e-8a5d-69112ac86cbb",
+                      "file_id": "be3b4d5e-179d-460e-8a5d-69112ac86cbb",
+                      "size": 2667636,
+                      "total": 2667636,
+                      "done": 2667636,
+                      "original_filename": "IMG-0412_123.JPG",
+                      "filename": "IMG0412_123.JPG",
+                      "mime_type": "image/jpeg",
+                      "image_info": {
+                        "color_mode": "RGB",
+                        "orientation": 6,
+                        "format": "JPEG",
+                        "sequence": false,
+                        "height": 4032,
+                        "width": 3024,
+                        "geo_location": {
+                          "latitude": 55.62013611111111,
+                          "longitude": 37.66299166666666
+                        },
+                        "datetime_original": "foo",
+                        "dpi": [
+                          72,
+                          72
+                        ]
+                      },
+                      "video_info": null,
+                      "content_info": {
+                        "mime": {
+                          "mime": "image/jpeg",
+                          "type": "image",
+                          "subtype": "jpeg"
+                        },
+                        "image": {
+                          "color_mode": "RGB",
+                          "orientation": 6,
+                          "format": "JPEG",
+                          "sequence": false,
+                          "height": 4032,
+                          "width": 3024,
+                          "geo_location": {
+                            "latitude": 55.62013611111111,
+                            "longitude": 37.66299166666666
+                          },
+                          "datetime_original": "foo",
+                          "dpi": [
+                            72,
+                            72
+                          ]
+                        }
+                      },
+                      "metadata": {
+                        "subsystem": "uploader",
+                        "pet": "cat"
+                      },
+                      "is_image": true,
+                      "is_stored": true,
+                      "is_ready": true
+                    },
+                    "type": "json"
+                  }
+                }
+              }
+            }
           }
         },
         {
-          "id": "Upload.fromURLUpload",
           "displayName": "Upload files from URLs",
           "method": "POST",
+          "baseUrl": "Production server",
+          "path": {
+            "head": "/from_url/",
+            "parts": []
+          },
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "errors": [],
+          "auth": false,
+          "userSpecifiedExamples": [],
+          "autogeneratedExamples": [],
+          "idempotent": false,
+          "fullPath": {
+            "head": "/from_url/",
+            "parts": []
+          },
+          "allPathParameters": [],
+          "source": {
+            "type": "openapi"
+          },
+          "id": "endpoint_upload.fromURLUpload",
           "name": {
             "originalName": "fromURLUpload",
             "camelCase": {
@@ -13939,14 +13963,6 @@
               "safeName": "FromUrlUpload"
             }
           },
-          "baseUrl": "Production server",
-          "path": {
-            "head": "/from_url/",
-            "parts": []
-          },
-          "pathParameters": [],
-          "queryParameters": [],
-          "headers": [],
           "requestBody": {
             "contentType": "multipart/form-data",
             "name": {
@@ -14523,17 +14539,57 @@
             },
             "type": "fileUpload"
           },
-          "errors": [],
-          "auth": false,
-          "docs": "Uploadcare can fetch a file from a publicly available URL and then automatically upload the\nfetched file to your project.\n\n#### Upload tokens\nRequests to the endpoint return a JSON dictionary with a `token` that can be further used\nto [check the status](/api-refs/upload-api/#operation/fromURLUploadStatus) of the upload\nrequest.\n\n**Note:** The token is not a file ID and can't be used to address the file directly.\nThe actual file ID should be retrieved by calling the `/from_url/status/` endpoint.\n\n#### Duplicates prevention\nBy default, every call to the `/from_url/` endpoint with the same `source_url` results in\na new upload leading to file duplication.\n\nIf you would like Uploadcare to keep track of the requested URLs and avoid the duplicate\nuploads, pass the `save_URL_duplicates` and `check_URL_duplicates` parameters described below.\n",
-          "userSpecifiedExamples": [],
-          "autogeneratedExamples": [],
-          "idempotent": false,
-          "fullPath": {
-            "head": "/from_url/",
-            "parts": []
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "Upload_fromURLUpload_Response_200",
+                    "camelCase": {
+                      "unsafeName": "uploadFromUrlUploadResponse200",
+                      "safeName": "uploadFromUrlUploadResponse200"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "upload_from_url_upload_response_200",
+                      "safeName": "upload_from_url_upload_response_200"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "UPLOAD_FROM_URL_UPLOAD_RESPONSE_200",
+                      "safeName": "UPLOAD_FROM_URL_UPLOAD_RESPONSE_200"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "UploadFromUrlUploadResponse200",
+                      "safeName": "UploadFromUrlUploadResponse200"
+                    }
+                  },
+                  "typeId": "Upload_fromURLUpload_Response_200",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "Status Token or File Info of an already downloaded file.",
+                "v2Examples": {
+                  "userSpecifiedExamples": {
+                    "type-token": {
+                      "type": "token",
+                      "token": "945ebb27-1fd6-46c6-a859-b9893712d650"
+                    },
+                    "type-file-info": {
+                      "type": "token"
+                    }
+                  },
+                  "autogeneratedExamples": {}
+                },
+                "type": "response"
+              },
+              "type": "json"
+            }
           },
-          "allPathParameters": [],
+          "docs": "Uploadcare can fetch a file from a publicly available URL and then automatically upload the\nfetched file to your project.\n\n#### Upload tokens\nRequests to the endpoint return a JSON dictionary with a `token` that can be further used\nto [check the status](/api-refs/upload-api/#operation/fromURLUploadStatus) of the upload\nrequest.\n\n**Note:** The token is not a file ID and can't be used to address the file directly.\nThe actual file ID should be retrieved by calling the `/from_url/status/` endpoint.\n\n#### Duplicates prevention\nBy default, every call to the `/from_url/` endpoint with the same `source_url` results in\na new upload leading to file duplication.\n\nIf you would like Uploadcare to keep track of the requested URLs and avoid the duplicate\nuploads, pass the `save_URL_duplicates` and `check_URL_duplicates` parameters described below.\n",
           "v2Examples": {
             "autogeneratedExamples": {},
             "userSpecifiedExamples": {
@@ -14600,84 +14656,11 @@
                 }
               }
             }
-          },
-          "source": {
-            "type": "openapi"
-          },
-          "response": {
-            "statusCode": 200,
-            "body": {
-              "value": {
-                "responseBodyType": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
-                  },
-                  "name": {
-                    "originalName": "Upload_fromURLUpload_Response_200",
-                    "camelCase": {
-                      "unsafeName": "uploadFromUrlUploadResponse200",
-                      "safeName": "uploadFromUrlUploadResponse200"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "upload_from_url_upload_response_200",
-                      "safeName": "upload_from_url_upload_response_200"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "UPLOAD_FROM_URL_UPLOAD_RESPONSE_200",
-                      "safeName": "UPLOAD_FROM_URL_UPLOAD_RESPONSE_200"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "UploadFromUrlUploadResponse200",
-                      "safeName": "UploadFromUrlUploadResponse200"
-                    }
-                  },
-                  "typeId": "Upload_fromURLUpload_Response_200",
-                  "inline": false,
-                  "type": "named"
-                },
-                "docs": "Status Token or File Info of an already downloaded file.",
-                "v2Examples": {
-                  "userSpecifiedExamples": {
-                    "type-token": {
-                      "type": "token",
-                      "token": "945ebb27-1fd6-46c6-a859-b9893712d650"
-                    },
-                    "type-file-info": {
-                      "type": "token"
-                    }
-                  },
-                  "autogeneratedExamples": {}
-                },
-                "type": "response"
-              },
-              "type": "json"
-            }
           }
         },
         {
-          "id": "Upload.fromURLUploadStatus",
           "displayName": "Check the status of a task to fetch/upload a file from a URL",
           "method": "GET",
-          "name": {
-            "originalName": "fromURLUploadStatus",
-            "camelCase": {
-              "unsafeName": "fromUrlUploadStatus",
-              "safeName": "fromUrlUploadStatus"
-            },
-            "snakeCase": {
-              "unsafeName": "from_url_upload_status",
-              "safeName": "from_url_upload_status"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "FROM_URL_UPLOAD_STATUS",
-              "safeName": "FROM_URL_UPLOAD_STATUS"
-            },
-            "pascalCase": {
-              "unsafeName": "FromUrlUploadStatus",
-              "safeName": "FromUrlUploadStatus"
-            }
-          },
           "baseUrl": "Production server",
           "path": {
             "head": "/from_url/status/",
@@ -14733,12 +14716,11 @@
           "headers": [],
           "errors": [],
           "auth": false,
-          "docs": "The endpoint notifies about the progress of the task by changing the value of the `status` field:\n  * the field is set to `waiting` initially\n  * once the system starts processing the request, the field is set to `progress`\n  * if the file is fetched and uploaded successfully, the `status` field is set to `success`\n    and the endpoint returns a JSON object holding information about the uploaded file\n  * if the system fails to fetch/upload the file, the `status` field is set to `error` and\n    the `error` field is set to the cause of the error.\n",
           "userSpecifiedExamples": [],
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "44358218",
+                "id": "44cb2f3",
                 "url": "/from_url/status/",
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
@@ -15022,6 +15004,88 @@
             "parts": []
           },
           "allPathParameters": [],
+          "source": {
+            "type": "openapi"
+          },
+          "id": "endpoint_upload.fromURLUploadStatus",
+          "name": {
+            "originalName": "fromURLUploadStatus",
+            "camelCase": {
+              "unsafeName": "fromUrlUploadStatus",
+              "safeName": "fromUrlUploadStatus"
+            },
+            "snakeCase": {
+              "unsafeName": "from_url_upload_status",
+              "safeName": "from_url_upload_status"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "FROM_URL_UPLOAD_STATUS",
+              "safeName": "FROM_URL_UPLOAD_STATUS"
+            },
+            "pascalCase": {
+              "unsafeName": "FromUrlUploadStatus",
+              "safeName": "FromUrlUploadStatus"
+            }
+          },
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "Upload_fromURLUploadStatus_Response_200",
+                    "camelCase": {
+                      "unsafeName": "uploadFromUrlUploadStatusResponse200",
+                      "safeName": "uploadFromUrlUploadStatusResponse200"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "upload_from_url_upload_status_response_200",
+                      "safeName": "upload_from_url_upload_status_response_200"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "UPLOAD_FROM_URL_UPLOAD_STATUS_RESPONSE_200",
+                      "safeName": "UPLOAD_FROM_URL_UPLOAD_STATUS_RESPONSE_200"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "UploadFromUrlUploadStatusResponse200",
+                      "safeName": "UploadFromUrlUploadStatusResponse200"
+                    }
+                  },
+                  "typeId": "Upload_fromURLUploadStatus_Response_200",
+                  "inline": false,
+                  "type": "named"
+                },
+                "docs": "Request was processed successfully.\n",
+                "v2Examples": {
+                  "userSpecifiedExamples": {
+                    "status-waiting": {
+                      "status": "waiting"
+                    },
+                    "status-progress": {
+                      "status": "waiting"
+                    },
+                    "status-success": {
+                      "status": "waiting"
+                    },
+                    "status-error": {
+                      "status": "waiting"
+                    },
+                    "status-unknown": {
+                      "status": "waiting"
+                    }
+                  },
+                  "autogeneratedExamples": {}
+                },
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
+          "docs": "The endpoint notifies about the progress of the task by changing the value of the `status` field:\n  * the field is set to `waiting` initially\n  * once the system starts processing the request, the field is set to `progress`\n  * if the file is fetched and uploaded successfully, the `status` field is set to `success`\n    and the endpoint returns a JSON object holding information about the uploaded file\n  * if the system fails to fetch/upload the file, the `status` field is set to `error` and\n    the `error` field is set to the cause of the error.\n",
           "v2Examples": {
             "autogeneratedExamples": {},
             "userSpecifiedExamples": {
@@ -15141,92 +15205,11 @@
                 }
               }
             }
-          },
-          "source": {
-            "type": "openapi"
-          },
-          "response": {
-            "statusCode": 200,
-            "body": {
-              "value": {
-                "responseBodyType": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
-                  },
-                  "name": {
-                    "originalName": "Upload_fromURLUploadStatus_Response_200",
-                    "camelCase": {
-                      "unsafeName": "uploadFromUrlUploadStatusResponse200",
-                      "safeName": "uploadFromUrlUploadStatusResponse200"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "upload_from_url_upload_status_response_200",
-                      "safeName": "upload_from_url_upload_status_response_200"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "UPLOAD_FROM_URL_UPLOAD_STATUS_RESPONSE_200",
-                      "safeName": "UPLOAD_FROM_URL_UPLOAD_STATUS_RESPONSE_200"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "UploadFromUrlUploadStatusResponse200",
-                      "safeName": "UploadFromUrlUploadStatusResponse200"
-                    }
-                  },
-                  "typeId": "Upload_fromURLUploadStatus_Response_200",
-                  "inline": false,
-                  "type": "named"
-                },
-                "docs": "Request was processed successfully.\n",
-                "v2Examples": {
-                  "userSpecifiedExamples": {
-                    "status-waiting": {
-                      "status": "waiting"
-                    },
-                    "status-progress": {
-                      "status": "waiting"
-                    },
-                    "status-success": {
-                      "status": "waiting"
-                    },
-                    "status-error": {
-                      "status": "waiting"
-                    },
-                    "status-unknown": {
-                      "status": "waiting"
-                    }
-                  },
-                  "autogeneratedExamples": {}
-                },
-                "type": "response"
-              },
-              "type": "json"
-            }
           }
         },
         {
-          "id": "Upload.fileUploadInfo",
           "displayName": "Get information about an uploaded file",
           "method": "GET",
-          "name": {
-            "originalName": "fileUploadInfo",
-            "camelCase": {
-              "unsafeName": "fileUploadInfo",
-              "safeName": "fileUploadInfo"
-            },
-            "snakeCase": {
-              "unsafeName": "file_upload_info",
-              "safeName": "file_upload_info"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "FILE_UPLOAD_INFO",
-              "safeName": "FILE_UPLOAD_INFO"
-            },
-            "pascalCase": {
-              "unsafeName": "FileUploadInfo",
-              "safeName": "FileUploadInfo"
-            }
-          },
           "baseUrl": "Production server",
           "path": {
             "head": "/info/",
@@ -15341,12 +15324,11 @@
           "headers": [],
           "errors": [],
           "auth": false,
-          "docs": "Returns a JSON object with information about an uploaded file (file size, MIME type, metadata, etc).\n",
           "userSpecifiedExamples": [],
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "e4621916",
+                "id": "3eecffc0",
                 "url": "/info/",
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
@@ -15488,30 +15470,30 @@
                           "height": 1,
                           "width": 1,
                           "geo_location": {
-                            "latitude": 1,
-                            "longitude": 1
+                            "latitude": 1.1,
+                            "longitude": 1.1
                           },
                           "datetime_original": "datetime_original",
                           "dpi": [
-                            1,
-                            1
+                            1.1,
+                            1.1
                           ]
                         },
                         "video_info": {
-                          "duration": 1,
+                          "duration": 1.1,
                           "format": "format",
-                          "bitrate": 1,
+                          "bitrate": 1.1,
                           "audio": {
-                            "bitrate": 1,
+                            "bitrate": 1.1,
                             "codec": "codec",
-                            "sample_rate": 1,
+                            "sample_rate": 1.1,
                             "channels": "channels"
                           },
                           "video": {
-                            "height": 1,
-                            "width": 1,
-                            "frame_rate": 1,
-                            "bitrate": 1,
+                            "height": 1.1,
+                            "width": 1.1,
+                            "frame_rate": 1.1,
+                            "bitrate": 1.1,
                             "codec": "codec"
                           }
                         },
@@ -15529,13 +15511,13 @@
                             "height": 1,
                             "width": 1,
                             "geo_location": {
-                              "latitude": 1,
-                              "longitude": 1
+                              "latitude": 1.1,
+                              "longitude": 1.1
                             },
                             "datetime_original": "datetime_original",
                             "dpi": [
-                              1,
-                              1
+                              1.1,
+                              1.1
                             ]
                           },
                           "video": {
@@ -15560,14 +15542,14 @@
                               {
                                 "height": 1,
                                 "width": 1,
-                                "frame_rate": 1,
+                                "frame_rate": 1.1,
                                 "bitrate": 1,
                                 "codec": "codec"
                               },
                               {
                                 "height": 1,
                                 "width": 1,
-                                "frame_rate": 1,
+                                "frame_rate": 1.1,
                                 "bitrate": 1,
                                 "codec": "codec"
                               }
@@ -16131,13 +16113,13 @@
                                   "height": 1,
                                   "width": 1,
                                   "geo_location": {
-                                    "latitude": 1,
-                                    "longitude": 1
+                                    "latitude": 1.1,
+                                    "longitude": 1.1
                                   },
                                   "datetime_original": "datetime_original",
                                   "dpi": [
-                                    1,
-                                    1
+                                    1.1,
+                                    1.1
                                   ]
                                 },
                                 "shape": {
@@ -16625,15 +16607,15 @@
                                         },
                                         "value": {
                                           "jsonExample": {
-                                            "latitude": 1,
-                                            "longitude": 1
+                                            "latitude": 1.1,
+                                            "longitude": 1.1
                                           },
                                           "shape": {
                                             "container": {
                                               "nullable": {
                                                 "jsonExample": {
-                                                  "latitude": 1,
-                                                  "longitude": 1
+                                                  "latitude": 1.1,
+                                                  "longitude": 1.1
                                                 },
                                                 "shape": {
                                                   "shape": {
@@ -16688,11 +16670,11 @@
                                                           }
                                                         },
                                                         "value": {
-                                                          "jsonExample": 1,
+                                                          "jsonExample": 1.1,
                                                           "shape": {
                                                             "primitive": {
-                                                              "integer": 1,
-                                                              "type": "integer"
+                                                              "double": 1.1,
+                                                              "type": "double"
                                                             },
                                                             "type": "primitive"
                                                           }
@@ -16748,11 +16730,11 @@
                                                           }
                                                         },
                                                         "value": {
-                                                          "jsonExample": 1,
+                                                          "jsonExample": 1.1,
                                                           "shape": {
                                                             "primitive": {
-                                                              "integer": 1,
-                                                              "type": "integer"
+                                                              "double": 1.1,
+                                                              "type": "double"
                                                             },
                                                             "type": "primitive"
                                                           }
@@ -16958,35 +16940,35 @@
                                         },
                                         "value": {
                                           "jsonExample": [
-                                            1,
-                                            1
+                                            1.1,
+                                            1.1
                                           ],
                                           "shape": {
                                             "container": {
                                               "nullable": {
                                                 "jsonExample": [
-                                                  1,
-                                                  1
+                                                  1.1,
+                                                  1.1
                                                 ],
                                                 "shape": {
                                                   "container": {
                                                     "list": [
                                                       {
-                                                        "jsonExample": 1,
+                                                        "jsonExample": 1.1,
                                                         "shape": {
                                                           "primitive": {
-                                                            "integer": 1,
-                                                            "type": "integer"
+                                                            "double": 1.1,
+                                                            "type": "double"
                                                           },
                                                           "type": "primitive"
                                                         }
                                                       },
                                                       {
-                                                        "jsonExample": 1,
+                                                        "jsonExample": 1.1,
                                                         "shape": {
                                                           "primitive": {
-                                                            "integer": 1,
-                                                            "type": "integer"
+                                                            "double": 1.1,
+                                                            "type": "double"
                                                           },
                                                           "type": "primitive"
                                                         }
@@ -16994,10 +16976,10 @@
                                                     ],
                                                     "itemType": {
                                                       "primitive": {
-                                                        "v1": "INTEGER",
+                                                        "v1": "DOUBLE",
                                                         "v2": {
                                                           "validation": {},
-                                                          "type": "integer"
+                                                          "type": "double"
                                                         }
                                                       },
                                                       "type": "primitive"
@@ -17011,10 +16993,10 @@
                                                 "container": {
                                                   "list": {
                                                     "primitive": {
-                                                      "v1": "INTEGER",
+                                                      "v1": "DOUBLE",
                                                       "v2": {
                                                         "validation": {},
-                                                        "type": "integer"
+                                                        "type": "double"
                                                       }
                                                     },
                                                     "type": "primitive"
@@ -17113,20 +17095,20 @@
                               },
                               "value": {
                                 "jsonExample": {
-                                  "duration": 1,
+                                  "duration": 1.1,
                                   "format": "format",
-                                  "bitrate": 1,
+                                  "bitrate": 1.1,
                                   "audio": {
-                                    "bitrate": 1,
+                                    "bitrate": 1.1,
                                     "codec": "codec",
-                                    "sample_rate": 1,
+                                    "sample_rate": 1.1,
                                     "channels": "channels"
                                   },
                                   "video": {
-                                    "height": 1,
-                                    "width": 1,
-                                    "frame_rate": 1,
-                                    "bitrate": 1,
+                                    "height": 1.1,
+                                    "width": 1.1,
+                                    "frame_rate": 1.1,
+                                    "bitrate": 1.1,
                                     "codec": "codec"
                                   }
                                 },
@@ -17183,25 +17165,25 @@
                                           }
                                         },
                                         "value": {
-                                          "jsonExample": 1,
+                                          "jsonExample": 1.1,
                                           "shape": {
                                             "container": {
                                               "optional": {
-                                                "jsonExample": 1,
+                                                "jsonExample": 1.1,
                                                 "shape": {
                                                   "primitive": {
-                                                    "integer": 1,
-                                                    "type": "integer"
+                                                    "double": 1.1,
+                                                    "type": "double"
                                                   },
                                                   "type": "primitive"
                                                 }
                                               },
                                               "valueType": {
                                                 "primitive": {
-                                                  "v1": "INTEGER",
+                                                  "v1": "DOUBLE",
                                                   "v2": {
                                                     "validation": {},
-                                                    "type": "integer"
+                                                    "type": "double"
                                                   }
                                                 },
                                                 "type": "primitive"
@@ -17343,25 +17325,25 @@
                                           }
                                         },
                                         "value": {
-                                          "jsonExample": 1,
+                                          "jsonExample": 1.1,
                                           "shape": {
                                             "container": {
                                               "optional": {
-                                                "jsonExample": 1,
+                                                "jsonExample": 1.1,
                                                 "shape": {
                                                   "primitive": {
-                                                    "integer": 1,
-                                                    "type": "integer"
+                                                    "double": 1.1,
+                                                    "type": "double"
                                                   },
                                                   "type": "primitive"
                                                 }
                                               },
                                               "valueType": {
                                                 "primitive": {
-                                                  "v1": "INTEGER",
+                                                  "v1": "DOUBLE",
                                                   "v2": {
                                                     "validation": {},
-                                                    "type": "integer"
+                                                    "type": "double"
                                                   }
                                                 },
                                                 "type": "primitive"
@@ -17423,27 +17405,27 @@
                                         },
                                         "value": {
                                           "jsonExample": {
-                                            "bitrate": 1,
+                                            "bitrate": 1.1,
                                             "codec": "codec",
-                                            "sample_rate": 1,
+                                            "sample_rate": 1.1,
                                             "channels": "channels"
                                           },
                                           "shape": {
                                             "container": {
                                               "optional": {
                                                 "jsonExample": {
-                                                  "bitrate": 1,
+                                                  "bitrate": 1.1,
                                                   "codec": "codec",
-                                                  "sample_rate": 1,
+                                                  "sample_rate": 1.1,
                                                   "channels": "channels"
                                                 },
                                                 "shape": {
                                                   "container": {
                                                     "nullable": {
                                                       "jsonExample": {
-                                                        "bitrate": 1,
+                                                        "bitrate": 1.1,
                                                         "codec": "codec",
-                                                        "sample_rate": 1,
+                                                        "sample_rate": 1.1,
                                                         "channels": "channels"
                                                       },
                                                       "shape": {
@@ -17499,29 +17481,29 @@
                                                                 }
                                                               },
                                                               "value": {
-                                                                "jsonExample": 1,
+                                                                "jsonExample": 1.1,
                                                                 "shape": {
                                                                   "container": {
                                                                     "optional": {
-                                                                      "jsonExample": 1,
+                                                                      "jsonExample": 1.1,
                                                                       "shape": {
                                                                         "container": {
                                                                           "nullable": {
-                                                                            "jsonExample": 1,
+                                                                            "jsonExample": 1.1,
                                                                             "shape": {
                                                                               "primitive": {
-                                                                                "integer": 1,
-                                                                                "type": "integer"
+                                                                                "double": 1.1,
+                                                                                "type": "double"
                                                                               },
                                                                               "type": "primitive"
                                                                             }
                                                                           },
                                                                           "valueType": {
                                                                             "primitive": {
-                                                                              "v1": "INTEGER",
+                                                                              "v1": "DOUBLE",
                                                                               "v2": {
                                                                                 "validation": {},
-                                                                                "type": "integer"
+                                                                                "type": "double"
                                                                               }
                                                                             },
                                                                             "type": "primitive"
@@ -17535,10 +17517,10 @@
                                                                       "container": {
                                                                         "nullable": {
                                                                           "primitive": {
-                                                                            "v1": "INTEGER",
+                                                                            "v1": "DOUBLE",
                                                                             "v2": {
                                                                               "validation": {},
-                                                                              "type": "integer"
+                                                                              "type": "double"
                                                                             }
                                                                           },
                                                                           "type": "primitive"
@@ -17709,29 +17691,29 @@
                                                                 }
                                                               },
                                                               "value": {
-                                                                "jsonExample": 1,
+                                                                "jsonExample": 1.1,
                                                                 "shape": {
                                                                   "container": {
                                                                     "optional": {
-                                                                      "jsonExample": 1,
+                                                                      "jsonExample": 1.1,
                                                                       "shape": {
                                                                         "container": {
                                                                           "nullable": {
-                                                                            "jsonExample": 1,
+                                                                            "jsonExample": 1.1,
                                                                             "shape": {
                                                                               "primitive": {
-                                                                                "integer": 1,
-                                                                                "type": "integer"
+                                                                                "double": 1.1,
+                                                                                "type": "double"
                                                                               },
                                                                               "type": "primitive"
                                                                             }
                                                                           },
                                                                           "valueType": {
                                                                             "primitive": {
-                                                                              "v1": "INTEGER",
+                                                                              "v1": "DOUBLE",
                                                                               "v2": {
                                                                                 "validation": {},
-                                                                                "type": "integer"
+                                                                                "type": "double"
                                                                               }
                                                                             },
                                                                             "type": "primitive"
@@ -17745,10 +17727,10 @@
                                                                       "container": {
                                                                         "nullable": {
                                                                           "primitive": {
-                                                                            "v1": "INTEGER",
+                                                                            "v1": "DOUBLE",
                                                                             "v2": {
                                                                               "validation": {},
-                                                                              "type": "integer"
+                                                                              "type": "double"
                                                                             }
                                                                           },
                                                                           "type": "primitive"
@@ -18025,20 +18007,20 @@
                                         },
                                         "value": {
                                           "jsonExample": {
-                                            "height": 1,
-                                            "width": 1,
-                                            "frame_rate": 1,
-                                            "bitrate": 1,
+                                            "height": 1.1,
+                                            "width": 1.1,
+                                            "frame_rate": 1.1,
+                                            "bitrate": 1.1,
                                             "codec": "codec"
                                           },
                                           "shape": {
                                             "container": {
                                               "optional": {
                                                 "jsonExample": {
-                                                  "height": 1,
-                                                  "width": 1,
-                                                  "frame_rate": 1,
-                                                  "bitrate": 1,
+                                                  "height": 1.1,
+                                                  "width": 1.1,
+                                                  "frame_rate": 1.1,
+                                                  "bitrate": 1.1,
                                                   "codec": "codec"
                                                 },
                                                 "shape": {
@@ -18094,25 +18076,25 @@
                                                           }
                                                         },
                                                         "value": {
-                                                          "jsonExample": 1,
+                                                          "jsonExample": 1.1,
                                                           "shape": {
                                                             "container": {
                                                               "optional": {
-                                                                "jsonExample": 1,
+                                                                "jsonExample": 1.1,
                                                                 "shape": {
                                                                   "primitive": {
-                                                                    "integer": 1,
-                                                                    "type": "integer"
+                                                                    "double": 1.1,
+                                                                    "type": "double"
                                                                   },
                                                                   "type": "primitive"
                                                                 }
                                                               },
                                                               "valueType": {
                                                                 "primitive": {
-                                                                  "v1": "INTEGER",
+                                                                  "v1": "DOUBLE",
                                                                   "v2": {
                                                                     "validation": {},
-                                                                    "type": "integer"
+                                                                    "type": "double"
                                                                   }
                                                                 },
                                                                 "type": "primitive"
@@ -18173,25 +18155,25 @@
                                                           }
                                                         },
                                                         "value": {
-                                                          "jsonExample": 1,
+                                                          "jsonExample": 1.1,
                                                           "shape": {
                                                             "container": {
                                                               "optional": {
-                                                                "jsonExample": 1,
+                                                                "jsonExample": 1.1,
                                                                 "shape": {
                                                                   "primitive": {
-                                                                    "integer": 1,
-                                                                    "type": "integer"
+                                                                    "double": 1.1,
+                                                                    "type": "double"
                                                                   },
                                                                   "type": "primitive"
                                                                 }
                                                               },
                                                               "valueType": {
                                                                 "primitive": {
-                                                                  "v1": "INTEGER",
+                                                                  "v1": "DOUBLE",
                                                                   "v2": {
                                                                     "validation": {},
-                                                                    "type": "integer"
+                                                                    "type": "double"
                                                                   }
                                                                 },
                                                                 "type": "primitive"
@@ -18252,25 +18234,25 @@
                                                           }
                                                         },
                                                         "value": {
-                                                          "jsonExample": 1,
+                                                          "jsonExample": 1.1,
                                                           "shape": {
                                                             "container": {
                                                               "optional": {
-                                                                "jsonExample": 1,
+                                                                "jsonExample": 1.1,
                                                                 "shape": {
                                                                   "primitive": {
-                                                                    "integer": 1,
-                                                                    "type": "integer"
+                                                                    "double": 1.1,
+                                                                    "type": "double"
                                                                   },
                                                                   "type": "primitive"
                                                                 }
                                                               },
                                                               "valueType": {
                                                                 "primitive": {
-                                                                  "v1": "INTEGER",
+                                                                  "v1": "DOUBLE",
                                                                   "v2": {
                                                                     "validation": {},
-                                                                    "type": "integer"
+                                                                    "type": "double"
                                                                   }
                                                                 },
                                                                 "type": "primitive"
@@ -18331,25 +18313,25 @@
                                                           }
                                                         },
                                                         "value": {
-                                                          "jsonExample": 1,
+                                                          "jsonExample": 1.1,
                                                           "shape": {
                                                             "container": {
                                                               "optional": {
-                                                                "jsonExample": 1,
+                                                                "jsonExample": 1.1,
                                                                 "shape": {
                                                                   "primitive": {
-                                                                    "integer": 1,
-                                                                    "type": "integer"
+                                                                    "double": 1.1,
+                                                                    "type": "double"
                                                                   },
                                                                   "type": "primitive"
                                                                 }
                                                               },
                                                               "valueType": {
                                                                 "primitive": {
-                                                                  "v1": "INTEGER",
+                                                                  "v1": "DOUBLE",
                                                                   "v2": {
                                                                     "validation": {},
-                                                                    "type": "integer"
+                                                                    "type": "double"
                                                                   }
                                                                 },
                                                                 "type": "primitive"
@@ -18604,13 +18586,13 @@
                                     "height": 1,
                                     "width": 1,
                                     "geo_location": {
-                                      "latitude": 1,
-                                      "longitude": 1
+                                      "latitude": 1.1,
+                                      "longitude": 1.1
                                     },
                                     "datetime_original": "datetime_original",
                                     "dpi": [
-                                      1,
-                                      1
+                                      1.1,
+                                      1.1
                                     ]
                                   },
                                   "video": {
@@ -18635,14 +18617,14 @@
                                       {
                                         "height": 1,
                                         "width": 1,
-                                        "frame_rate": 1,
+                                        "frame_rate": 1.1,
                                         "bitrate": 1,
                                         "codec": "codec"
                                       },
                                       {
                                         "height": 1,
                                         "width": 1,
-                                        "frame_rate": 1,
+                                        "frame_rate": 1.1,
                                         "bitrate": 1,
                                         "codec": "codec"
                                       }
@@ -19028,13 +19010,13 @@
                                             "height": 1,
                                             "width": 1,
                                             "geo_location": {
-                                              "latitude": 1,
-                                              "longitude": 1
+                                              "latitude": 1.1,
+                                              "longitude": 1.1
                                             },
                                             "datetime_original": "datetime_original",
                                             "dpi": [
-                                              1,
-                                              1
+                                              1.1,
+                                              1.1
                                             ]
                                           },
                                           "shape": {
@@ -19048,13 +19030,13 @@
                                                   "height": 1,
                                                   "width": 1,
                                                   "geo_location": {
-                                                    "latitude": 1,
-                                                    "longitude": 1
+                                                    "latitude": 1.1,
+                                                    "longitude": 1.1
                                                   },
                                                   "datetime_original": "datetime_original",
                                                   "dpi": [
-                                                    1,
-                                                    1
+                                                    1.1,
+                                                    1.1
                                                   ]
                                                 },
                                                 "shape": {
@@ -19542,15 +19524,15 @@
                                                         },
                                                         "value": {
                                                           "jsonExample": {
-                                                            "latitude": 1,
-                                                            "longitude": 1
+                                                            "latitude": 1.1,
+                                                            "longitude": 1.1
                                                           },
                                                           "shape": {
                                                             "container": {
                                                               "nullable": {
                                                                 "jsonExample": {
-                                                                  "latitude": 1,
-                                                                  "longitude": 1
+                                                                  "latitude": 1.1,
+                                                                  "longitude": 1.1
                                                                 },
                                                                 "shape": {
                                                                   "shape": {
@@ -19605,11 +19587,11 @@
                                                                           }
                                                                         },
                                                                         "value": {
-                                                                          "jsonExample": 1,
+                                                                          "jsonExample": 1.1,
                                                                           "shape": {
                                                                             "primitive": {
-                                                                              "integer": 1,
-                                                                              "type": "integer"
+                                                                              "double": 1.1,
+                                                                              "type": "double"
                                                                             },
                                                                             "type": "primitive"
                                                                           }
@@ -19665,11 +19647,11 @@
                                                                           }
                                                                         },
                                                                         "value": {
-                                                                          "jsonExample": 1,
+                                                                          "jsonExample": 1.1,
                                                                           "shape": {
                                                                             "primitive": {
-                                                                              "integer": 1,
-                                                                              "type": "integer"
+                                                                              "double": 1.1,
+                                                                              "type": "double"
                                                                             },
                                                                             "type": "primitive"
                                                                           }
@@ -19875,35 +19857,35 @@
                                                         },
                                                         "value": {
                                                           "jsonExample": [
-                                                            1,
-                                                            1
+                                                            1.1,
+                                                            1.1
                                                           ],
                                                           "shape": {
                                                             "container": {
                                                               "nullable": {
                                                                 "jsonExample": [
-                                                                  1,
-                                                                  1
+                                                                  1.1,
+                                                                  1.1
                                                                 ],
                                                                 "shape": {
                                                                   "container": {
                                                                     "list": [
                                                                       {
-                                                                        "jsonExample": 1,
+                                                                        "jsonExample": 1.1,
                                                                         "shape": {
                                                                           "primitive": {
-                                                                            "integer": 1,
-                                                                            "type": "integer"
+                                                                            "double": 1.1,
+                                                                            "type": "double"
                                                                           },
                                                                           "type": "primitive"
                                                                         }
                                                                       },
                                                                       {
-                                                                        "jsonExample": 1,
+                                                                        "jsonExample": 1.1,
                                                                         "shape": {
                                                                           "primitive": {
-                                                                            "integer": 1,
-                                                                            "type": "integer"
+                                                                            "double": 1.1,
+                                                                            "type": "double"
                                                                           },
                                                                           "type": "primitive"
                                                                         }
@@ -19911,10 +19893,10 @@
                                                                     ],
                                                                     "itemType": {
                                                                       "primitive": {
-                                                                        "v1": "INTEGER",
+                                                                        "v1": "DOUBLE",
                                                                         "v2": {
                                                                           "validation": {},
-                                                                          "type": "integer"
+                                                                          "type": "double"
                                                                         }
                                                                       },
                                                                       "type": "primitive"
@@ -19928,10 +19910,10 @@
                                                                 "container": {
                                                                   "list": {
                                                                     "primitive": {
-                                                                      "v1": "INTEGER",
+                                                                      "v1": "DOUBLE",
                                                                       "v2": {
                                                                         "validation": {},
-                                                                        "type": "integer"
+                                                                        "type": "double"
                                                                       }
                                                                     },
                                                                     "type": "primitive"
@@ -20084,14 +20066,14 @@
                                               {
                                                 "height": 1,
                                                 "width": 1,
-                                                "frame_rate": 1,
+                                                "frame_rate": 1.1,
                                                 "bitrate": 1,
                                                 "codec": "codec"
                                               },
                                               {
                                                 "height": 1,
                                                 "width": 1,
-                                                "frame_rate": 1,
+                                                "frame_rate": 1.1,
                                                 "bitrate": 1,
                                                 "codec": "codec"
                                               }
@@ -20122,14 +20104,14 @@
                                                     {
                                                       "height": 1,
                                                       "width": 1,
-                                                      "frame_rate": 1,
+                                                      "frame_rate": 1.1,
                                                       "bitrate": 1,
                                                       "codec": "codec"
                                                     },
                                                     {
                                                       "height": 1,
                                                       "width": 1,
-                                                      "frame_rate": 1,
+                                                      "frame_rate": 1.1,
                                                       "bitrate": 1,
                                                       "codec": "codec"
                                                     }
@@ -21234,14 +21216,14 @@
                                                             {
                                                               "height": 1,
                                                               "width": 1,
-                                                              "frame_rate": 1,
+                                                              "frame_rate": 1.1,
                                                               "bitrate": 1,
                                                               "codec": "codec"
                                                             },
                                                             {
                                                               "height": 1,
                                                               "width": 1,
-                                                              "frame_rate": 1,
+                                                              "frame_rate": 1.1,
                                                               "bitrate": 1,
                                                               "codec": "codec"
                                                             }
@@ -21253,7 +21235,7 @@
                                                                   "jsonExample": {
                                                                     "height": 1,
                                                                     "width": 1,
-                                                                    "frame_rate": 1,
+                                                                    "frame_rate": 1.1,
                                                                     "bitrate": 1,
                                                                     "codec": "codec"
                                                                   },
@@ -21430,11 +21412,11 @@
                                                                             }
                                                                           },
                                                                           "value": {
-                                                                            "jsonExample": 1,
+                                                                            "jsonExample": 1.1,
                                                                             "shape": {
                                                                               "primitive": {
-                                                                                "integer": 1,
-                                                                                "type": "integer"
+                                                                                "double": 1.1,
+                                                                                "type": "double"
                                                                               },
                                                                               "type": "primitive"
                                                                             }
@@ -21636,7 +21618,7 @@
                                                                   "jsonExample": {
                                                                     "height": 1,
                                                                     "width": 1,
-                                                                    "frame_rate": 1,
+                                                                    "frame_rate": 1.1,
                                                                     "bitrate": 1,
                                                                     "codec": "codec"
                                                                   },
@@ -21813,11 +21795,11 @@
                                                                             }
                                                                           },
                                                                           "value": {
-                                                                            "jsonExample": 1,
+                                                                            "jsonExample": 1.1,
                                                                             "shape": {
                                                                               "primitive": {
-                                                                                "integer": 1,
-                                                                                "type": "integer"
+                                                                                "double": 1.1,
+                                                                                "type": "double"
                                                                               },
                                                                               "type": "primitive"
                                                                             }
@@ -22566,93 +22548,28 @@
             "parts": []
           },
           "allPathParameters": [],
-          "v2Examples": {
-            "autogeneratedExamples": {
-              "fileUploadInfoExample": {
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/info/"
-                  },
-                  "environment": "Production server",
-                  "pathParameters": {},
-                  "queryParameters": {
-                    "pub_key": "YOUR_PUBLIC_KEY",
-                    "file_id": "67947755-1584-4e3f-902b-d4e2bf76a841"
-                  },
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200,
-                  "body": {
-                    "value": {
-                      "uuid": "be3b4d5e-179d-460e-8a5d-69112ac86cbb",
-                      "file_id": "be3b4d5e-179d-460e-8a5d-69112ac86cbb",
-                      "size": 2667636,
-                      "total": 2667636,
-                      "done": 2667636,
-                      "original_filename": "IMG-0412_123.JPG",
-                      "filename": "IMG0412_123.JPG",
-                      "mime_type": "image/jpeg",
-                      "image_info": {
-                        "color_mode": "RGB",
-                        "orientation": 6,
-                        "format": "JPEG",
-                        "sequence": false,
-                        "height": 4032,
-                        "width": 3024,
-                        "geo_location": {
-                          "latitude": 55.62013611111111,
-                          "longitude": 37.66299166666666
-                        },
-                        "datetime_original": "foo",
-                        "dpi": [
-                          72,
-                          72
-                        ]
-                      },
-                      "video_info": null,
-                      "content_info": {
-                        "mime": {
-                          "mime": "image/jpeg",
-                          "type": "image",
-                          "subtype": "jpeg"
-                        },
-                        "image": {
-                          "color_mode": "RGB",
-                          "orientation": 6,
-                          "format": "JPEG",
-                          "sequence": false,
-                          "height": 4032,
-                          "width": 3024,
-                          "geo_location": {
-                            "latitude": 55.62013611111111,
-                            "longitude": 37.66299166666666
-                          },
-                          "datetime_original": "foo",
-                          "dpi": [
-                            72,
-                            72
-                          ]
-                        }
-                      },
-                      "metadata": {
-                        "subsystem": "uploader",
-                        "pet": "cat"
-                      },
-                      "is_image": true,
-                      "is_stored": true,
-                      "is_ready": true
-                    },
-                    "type": "json"
-                  }
-                }
-              }
-            },
-            "userSpecifiedExamples": {}
-          },
           "source": {
             "type": "openapi"
+          },
+          "id": "endpoint_upload.fileUploadInfo",
+          "name": {
+            "originalName": "fileUploadInfo",
+            "camelCase": {
+              "unsafeName": "fileUploadInfo",
+              "safeName": "fileUploadInfo"
+            },
+            "snakeCase": {
+              "unsafeName": "file_upload_info",
+              "safeName": "file_upload_info"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "FILE_UPLOAD_INFO",
+              "safeName": "FILE_UPLOAD_INFO"
+            },
+            "pascalCase": {
+              "unsafeName": "FileUploadInfo",
+              "safeName": "FileUploadInfo"
+            }
           },
           "response": {
             "statusCode": 200,
@@ -22755,11 +22672,97 @@
               },
               "type": "json"
             }
+          },
+          "docs": "Returns a JSON object with information about an uploaded file (file size, MIME type, metadata, etc).\n",
+          "v2Examples": {
+            "autogeneratedExamples": {
+              "fileUploadInfoExample": {
+                "request": {
+                  "endpoint": {
+                    "method": "GET",
+                    "path": "/info/"
+                  },
+                  "environment": "Production server",
+                  "pathParameters": {},
+                  "queryParameters": {
+                    "pub_key": "YOUR_PUBLIC_KEY",
+                    "file_id": "67947755-1584-4e3f-902b-d4e2bf76a841"
+                  },
+                  "headers": {}
+                },
+                "response": {
+                  "statusCode": 200,
+                  "body": {
+                    "value": {
+                      "uuid": "be3b4d5e-179d-460e-8a5d-69112ac86cbb",
+                      "file_id": "be3b4d5e-179d-460e-8a5d-69112ac86cbb",
+                      "size": 2667636,
+                      "total": 2667636,
+                      "done": 2667636,
+                      "original_filename": "IMG-0412_123.JPG",
+                      "filename": "IMG0412_123.JPG",
+                      "mime_type": "image/jpeg",
+                      "image_info": {
+                        "color_mode": "RGB",
+                        "orientation": 6,
+                        "format": "JPEG",
+                        "sequence": false,
+                        "height": 4032,
+                        "width": 3024,
+                        "geo_location": {
+                          "latitude": 55.62013611111111,
+                          "longitude": 37.66299166666666
+                        },
+                        "datetime_original": "foo",
+                        "dpi": [
+                          72,
+                          72
+                        ]
+                      },
+                      "video_info": null,
+                      "content_info": {
+                        "mime": {
+                          "mime": "image/jpeg",
+                          "type": "image",
+                          "subtype": "jpeg"
+                        },
+                        "image": {
+                          "color_mode": "RGB",
+                          "orientation": 6,
+                          "format": "JPEG",
+                          "sequence": false,
+                          "height": 4032,
+                          "width": 3024,
+                          "geo_location": {
+                            "latitude": 55.62013611111111,
+                            "longitude": 37.66299166666666
+                          },
+                          "datetime_original": "foo",
+                          "dpi": [
+                            72,
+                            72
+                          ]
+                        }
+                      },
+                      "metadata": {
+                        "subsystem": "uploader",
+                        "pet": "cat"
+                      },
+                      "is_image": true,
+                      "is_stored": true,
+                      "is_ready": true
+                    },
+                    "type": "json"
+                  }
+                }
+              }
+            },
+            "userSpecifiedExamples": {}
           }
         }
       ]
     },
-    "service_Groups": {
+    "service_groups": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -22813,9 +22816,30 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "Groups.createFilesGroup",
           "displayName": "Create a file group",
           "method": "POST",
+          "baseUrl": "Production server",
+          "path": {
+            "head": "/group/",
+            "parts": []
+          },
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "errors": [],
+          "auth": false,
+          "userSpecifiedExamples": [],
+          "autogeneratedExamples": [],
+          "idempotent": false,
+          "fullPath": {
+            "head": "/group/",
+            "parts": []
+          },
+          "allPathParameters": [],
+          "source": {
+            "type": "openapi"
+          },
+          "id": "endpoint_groups.createFilesGroup",
           "name": {
             "originalName": "createFilesGroup",
             "camelCase": {
@@ -22835,14 +22859,6 @@
               "safeName": "CreateFilesGroup"
             }
           },
-          "baseUrl": "Production server",
-          "path": {
-            "head": "/group/",
-            "parts": []
-          },
-          "pathParameters": [],
-          "queryParameters": [],
-          "headers": [],
           "requestBody": {
             "contentType": "multipart/form-data",
             "name": {
@@ -23117,61 +23133,6 @@
             },
             "type": "fileUpload"
           },
-          "errors": [],
-          "auth": false,
-          "docs": "Create a file group from a set of already uploaded files.\n\nThe most common use case for creating a file group is when a user uploads\nmultiple files at once and then wants to display them together.\n\n**Note:** A group itself and files within it MUST belong to the same project.\n\n**Note:** Groups are immutable and the only way to add/remove a file to a group\nis to create a new one.\n",
-          "userSpecifiedExamples": [],
-          "autogeneratedExamples": [],
-          "idempotent": false,
-          "fullPath": {
-            "head": "/group/",
-            "parts": []
-          },
-          "allPathParameters": [],
-          "v2Examples": {
-            "autogeneratedExamples": {},
-            "userSpecifiedExamples": {
-              "Groups_createFilesGroup_example": {
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/group/"
-                  },
-                  "environment": "Production server",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "pub_key": "YOUR_PUBLIC_KEY",
-                    "files[]": [
-                      "d6d34fa9-addd-472c-868d-2e5c105f9fcd",
-                      "b1026315-8116-4632-8364-607e64fca723/-/resize/x800/"
-                    ]
-                  }
-                },
-                "response": {
-                  "statusCode": 200,
-                  "body": {
-                    "value": {
-                      "id": "0d712319-b970-4602-850c-bae1ced521a6~1",
-                      "datetime_created": "2018-09-12T10:03:38.686710Z",
-                      "datetime_stored": null,
-                      "files_count": 1,
-                      "cdn_url": "https://ucarecdn.com/0d712319-b970-4602-850c-bae1ced521a6~1/",
-                      "url": "https://api.uploadcare.com/groups/0d712319-b970-4602-850c-bae1ced521a6~1/",
-                      "files": [
-                        "foo"
-                      ]
-                    },
-                    "type": "json"
-                  }
-                }
-              }
-            }
-          },
-          "source": {
-            "type": "openapi"
-          },
           "response": {
             "statusCode": 200,
             "body": {
@@ -23225,31 +23186,53 @@
               },
               "type": "json"
             }
+          },
+          "docs": "Create a file group from a set of already uploaded files.\n\nThe most common use case for creating a file group is when a user uploads\nmultiple files at once and then wants to display them together.\n\n**Note:** A group itself and files within it MUST belong to the same project.\n\n**Note:** Groups are immutable and the only way to add/remove a file to a group\nis to create a new one.\n",
+          "v2Examples": {
+            "autogeneratedExamples": {},
+            "userSpecifiedExamples": {
+              "Groups_createFilesGroup_example": {
+                "request": {
+                  "endpoint": {
+                    "method": "POST",
+                    "path": "/group/"
+                  },
+                  "environment": "Production server",
+                  "pathParameters": {},
+                  "queryParameters": {},
+                  "headers": {},
+                  "requestBody": {
+                    "pub_key": "YOUR_PUBLIC_KEY",
+                    "files[]": [
+                      "d6d34fa9-addd-472c-868d-2e5c105f9fcd",
+                      "b1026315-8116-4632-8364-607e64fca723/-/resize/x800/"
+                    ]
+                  }
+                },
+                "response": {
+                  "statusCode": 200,
+                  "body": {
+                    "value": {
+                      "id": "0d712319-b970-4602-850c-bae1ced521a6~1",
+                      "datetime_created": "2018-09-12T10:03:38.686710Z",
+                      "datetime_stored": null,
+                      "files_count": 1,
+                      "cdn_url": "https://ucarecdn.com/0d712319-b970-4602-850c-bae1ced521a6~1/",
+                      "url": "https://api.uploadcare.com/groups/0d712319-b970-4602-850c-bae1ced521a6~1/",
+                      "files": [
+                        "foo"
+                      ]
+                    },
+                    "type": "json"
+                  }
+                }
+              }
+            }
           }
         },
         {
-          "id": "Groups.filesGroupInfo",
           "displayName": "Get information about a file group",
           "method": "GET",
-          "name": {
-            "originalName": "filesGroupInfo",
-            "camelCase": {
-              "unsafeName": "filesGroupInfo",
-              "safeName": "filesGroupInfo"
-            },
-            "snakeCase": {
-              "unsafeName": "files_group_info",
-              "safeName": "files_group_info"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "FILES_GROUP_INFO",
-              "safeName": "FILES_GROUP_INFO"
-            },
-            "pascalCase": {
-              "unsafeName": "FilesGroupInfo",
-              "safeName": "FilesGroupInfo"
-            }
-          },
           "baseUrl": "Production server",
           "path": {
             "head": "/group/info/",
@@ -23362,12 +23345,11 @@
           "headers": [],
           "errors": [],
           "auth": false,
-          "docs": "Returns a JSON object with information about a file group (when the group was created,\nnumber of the files in the group, etc).\n",
           "userSpecifiedExamples": [],
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "d8923740",
+                "id": "dc2169db",
                 "url": "/group/info/",
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
@@ -23496,7 +23478,7 @@
                         "id": "id",
                         "datetime_created": "datetime_created",
                         "datetime_stored": "datetime_stored",
-                        "files_count": 1,
+                        "files_count": 1.1,
                         "cdn_url": "cdn_url",
                         "url": "url",
                         "files": [
@@ -23835,25 +23817,25 @@
                                 }
                               },
                               "value": {
-                                "jsonExample": 1,
+                                "jsonExample": 1.1,
                                 "shape": {
                                   "container": {
                                     "optional": {
-                                      "jsonExample": 1,
+                                      "jsonExample": 1.1,
                                       "shape": {
                                         "primitive": {
-                                          "integer": 1,
-                                          "type": "integer"
+                                          "double": 1.1,
+                                          "type": "double"
                                         },
                                         "type": "primitive"
                                       }
                                     },
                                     "valueType": {
                                       "primitive": {
-                                        "v1": "INTEGER",
+                                        "v1": "DOUBLE",
                                         "v2": {
                                           "validation": {},
-                                          "type": "integer"
+                                          "type": "double"
                                         }
                                       },
                                       "type": "primitive"
@@ -24224,45 +24206,28 @@
             "parts": []
           },
           "allPathParameters": [],
-          "v2Examples": {
-            "autogeneratedExamples": {
-              "filesGroupInfoExample": {
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/group/info/"
-                  },
-                  "environment": "Production server",
-                  "pathParameters": {},
-                  "queryParameters": {
-                    "pub_key": "YOUR_PUBLIC_KEY",
-                    "group_id": "d52d7136-a2e5-4338-9f45-affbf83b857d~2"
-                  },
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200,
-                  "body": {
-                    "value": {
-                      "id": "0d712319-b970-4602-850c-bae1ced521a6~1",
-                      "datetime_created": "2018-09-12T10:03:38.686710Z",
-                      "datetime_stored": null,
-                      "files_count": 1,
-                      "cdn_url": "https://ucarecdn.com/0d712319-b970-4602-850c-bae1ced521a6~1/",
-                      "url": "https://api.uploadcare.com/groups/0d712319-b970-4602-850c-bae1ced521a6~1/",
-                      "files": [
-                        "foo"
-                      ]
-                    },
-                    "type": "json"
-                  }
-                }
-              }
-            },
-            "userSpecifiedExamples": {}
-          },
           "source": {
             "type": "openapi"
+          },
+          "id": "endpoint_groups.filesGroupInfo",
+          "name": {
+            "originalName": "filesGroupInfo",
+            "camelCase": {
+              "unsafeName": "filesGroupInfo",
+              "safeName": "filesGroupInfo"
+            },
+            "snakeCase": {
+              "unsafeName": "files_group_info",
+              "safeName": "files_group_info"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "FILES_GROUP_INFO",
+              "safeName": "FILES_GROUP_INFO"
+            },
+            "pascalCase": {
+              "unsafeName": "FilesGroupInfo",
+              "safeName": "FilesGroupInfo"
+            }
           },
           "response": {
             "statusCode": 200,
@@ -24317,6 +24282,44 @@
               },
               "type": "json"
             }
+          },
+          "docs": "Returns a JSON object with information about a file group (when the group was created,\nnumber of the files in the group, etc).\n",
+          "v2Examples": {
+            "autogeneratedExamples": {
+              "filesGroupInfoExample": {
+                "request": {
+                  "endpoint": {
+                    "method": "GET",
+                    "path": "/group/info/"
+                  },
+                  "environment": "Production server",
+                  "pathParameters": {},
+                  "queryParameters": {
+                    "pub_key": "YOUR_PUBLIC_KEY",
+                    "group_id": "d52d7136-a2e5-4338-9f45-affbf83b857d~2"
+                  },
+                  "headers": {}
+                },
+                "response": {
+                  "statusCode": 200,
+                  "body": {
+                    "value": {
+                      "id": "0d712319-b970-4602-850c-bae1ced521a6~1",
+                      "datetime_created": "2018-09-12T10:03:38.686710Z",
+                      "datetime_stored": null,
+                      "files_count": 1,
+                      "cdn_url": "https://ucarecdn.com/0d712319-b970-4602-850c-bae1ced521a6~1/",
+                      "url": "https://api.uploadcare.com/groups/0d712319-b970-4602-850c-bae1ced521a6~1/",
+                      "files": [
+                        "foo"
+                      ]
+                    },
+                    "type": "json"
+                  }
+                }
+              }
+            },
+            "userSpecifiedExamples": {}
           }
         }
       ]
@@ -24526,7 +24529,7 @@
           }
         }
       },
-      "service": "service_Upload",
+      "service": "service_upload",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -24595,7 +24598,7 @@
           }
         }
       },
-      "service": "service_Groups",
+      "service": "service_groups",
       "types": [],
       "errors": [],
       "subpackages": [],

@@ -52,7 +52,14 @@
               }
             }
           },
-          "examples": []
+          "examples": [
+            {
+              "name": "statusUpdateExample",
+              "payload": {
+                "message": "foo"
+              }
+            }
+          ]
         },
         {
           "id": "updateInlined",
@@ -92,7 +99,12 @@
               ]
             }
           },
-          "examples": []
+          "examples": [
+            {
+              "name": "statusUpdateInlinedExample",
+              "payload": {}
+            }
+          ]
         }
       ],
       "websockets": [],
@@ -110,6 +122,10 @@
     "subpackages": [
       "subpackage_status"
     ]
+  },
+  "auth": {
+    "type": "bearerAuth",
+    "tokenName": "token"
   },
   "snippetsConfiguration": {},
   "globalHeaders": []

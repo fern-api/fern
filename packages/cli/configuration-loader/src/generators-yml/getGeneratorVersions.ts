@@ -102,6 +102,12 @@ function getGeneratorMetadataFromName(generatorName: string, context?: TaskConte
         case "fern-openapi":
             return "openapi";
 
+        // PHP
+        case "fern-php-sdk":
+            return "php-sdk";
+        case "fern-php-model":
+            return "php-model";
+
         default: {
             context?.logger.warn(`Unrecognized generator name found, attempting to parse manually: ${generatorName}`);
             if (generatorName.startsWith("fern-")) {

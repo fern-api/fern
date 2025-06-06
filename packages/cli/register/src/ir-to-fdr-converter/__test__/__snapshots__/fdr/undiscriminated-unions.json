@@ -120,14 +120,16 @@
             "type": {
               "type": "id",
               "value": "type_union:OptionalMetadata"
-            }
+            },
+            "displayName": "Optional Metadata"
           },
           {
             "typeName": "NamedMetadata",
             "type": {
               "type": "id",
               "value": "type_union:NamedMetadata"
-            }
+            },
+            "displayName": "Named Metadata"
           }
         ]
       }
@@ -216,7 +218,8 @@
             "type": {
               "type": "id",
               "value": "type_union:KeyType"
-            }
+            },
+            "displayName": "Key Type"
           },
           {
             "type": {

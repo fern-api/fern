@@ -119,7 +119,7 @@
           }
         ],
         "id": "listUsers",
-        "originalEndpointId": "listUsers",
+        "originalEndpointId": "endpoint_.listUsers",
         "name": "List Users",
         "path": {
           "pathParameters": [],
@@ -183,13 +183,10 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": "foo",
-                "username": "foo",
-                "email": "foo",
-                "createdAt": "foo"
-              }
+              "id": "foo",
+              "username": "foo",
+              "email": "foo",
+              "createdAt": "foo"
             },
             "responseBodyV3": {
               "type": "json",
@@ -218,7 +215,7 @@
           }
         ],
         "id": "getUserInformation",
-        "originalEndpointId": "getUserInformation",
+        "originalEndpointId": "endpoint_.getUserInformation",
         "name": "Get user information",
         "path": {
           "pathParameters": [
@@ -302,13 +299,10 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": "foo",
-                "username": "foo",
-                "email": "foo",
-                "createdAt": "foo"
-              }
+              "id": "foo",
+              "username": "foo",
+              "email": "foo",
+              "createdAt": "foo"
             },
             "responseBodyV3": {
               "type": "json",
@@ -337,7 +331,7 @@
           }
         ],
         "id": "getAuthenticationToken",
-        "originalEndpointId": "getAuthenticationToken",
+        "originalEndpointId": "endpoint_.getAuthenticationToken",
         "name": "Get authentication token",
         "path": {
           "pathParameters": [],
@@ -389,12 +383,9 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "accessToken": "foo",
-                "tokenType": "foo",
-                "expiresIn": 42
-              }
+              "accessToken": "foo",
+              "tokenType": "foo",
+              "expiresIn": 42
             },
             "responseBodyV3": {
               "type": "json",

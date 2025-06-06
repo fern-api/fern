@@ -309,7 +309,7 @@
         "auth": false,
         "method": "POST",
         "id": "createAUser",
-        "originalEndpointId": "createAUser",
+        "originalEndpointId": "endpoint_.createAUser",
         "name": "Create a user",
         "path": {
           "pathParameters": [],
@@ -366,22 +366,19 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": "foo",
-                "name": "foo",
-                "email": "foo",
-                "createdAt": "foo",
-                "settings": {
-                  "theme": "foo",
-                  "notifications": true,
-                  "lastModified": "foo"
-                },
-                "stats": {
-                  "totalLogins": 42,
-                  "lastLoginTime": "foo",
-                  "accountStatus": "active"
-                }
+              "id": "foo",
+              "name": "foo",
+              "email": "foo",
+              "createdAt": "foo",
+              "settings": {
+                "theme": "foo",
+                "notifications": true,
+                "lastModified": "foo"
+              },
+              "stats": {
+                "totalLogins": 42,
+                "lastLoginTime": "foo",
+                "accountStatus": "active"
               }
             },
             "responseBodyV3": {
@@ -413,7 +410,7 @@
         "auth": false,
         "method": "PUT",
         "id": "updateAUser",
-        "originalEndpointId": "updateAUser",
+        "originalEndpointId": "endpoint_.updateAUser",
         "name": "Update a user",
         "path": {
           "pathParameters": [],
@@ -470,22 +467,19 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": "foo",
-                "name": "foo",
-                "email": "foo",
-                "createdAt": "foo",
-                "settings": {
-                  "theme": "foo",
-                  "notifications": true,
-                  "lastModified": "foo"
-                },
-                "stats": {
-                  "totalLogins": 42,
-                  "lastLoginTime": "foo",
-                  "accountStatus": "active"
-                }
+              "id": "foo",
+              "name": "foo",
+              "email": "foo",
+              "createdAt": "foo",
+              "settings": {
+                "theme": "foo",
+                "notifications": true,
+                "lastModified": "foo"
+              },
+              "stats": {
+                "totalLogins": 42,
+                "lastLoginTime": "foo",
+                "accountStatus": "active"
               }
             },
             "responseBodyV3": {
@@ -517,7 +511,7 @@
         "auth": false,
         "method": "GET",
         "id": "getAUser",
-        "originalEndpointId": "getAUser",
+        "originalEndpointId": "endpoint_.getAUser",
         "name": "Get a user",
         "path": {
           "pathParameters": [
@@ -600,22 +594,19 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": "foo",
-                "name": "foo",
-                "email": "foo",
-                "createdAt": "foo",
-                "settings": {
-                  "theme": "foo",
-                  "notifications": true,
-                  "lastModified": "foo"
-                },
-                "stats": {
-                  "totalLogins": 42,
-                  "lastLoginTime": "foo",
-                  "accountStatus": "active"
-                }
+              "id": "foo",
+              "name": "foo",
+              "email": "foo",
+              "createdAt": "foo",
+              "settings": {
+                "theme": "foo",
+                "notifications": true,
+                "lastModified": "foo"
+              },
+              "stats": {
+                "totalLogins": 42,
+                "lastLoginTime": "foo",
+                "accountStatus": "active"
               }
             },
             "responseBodyV3": {

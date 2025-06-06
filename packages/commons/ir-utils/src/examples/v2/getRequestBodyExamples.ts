@@ -1,12 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import {
-    HttpEndpoint,
-    HttpService,
-    TypeDeclaration,
-    TypeId,
-    V2HttpEndpointRequest,
-    V2SchemaExample
-} from "@fern-api/ir-sdk";
+import { HttpEndpoint, HttpService, TypeDeclaration, TypeId, V2HttpEndpointRequest } from "@fern-api/ir-sdk";
 
 import { getParameterExamples } from "./getParameterExamples";
 import { getFirstExamples, getV2Examples } from "./getV2Examples";
@@ -127,6 +120,8 @@ function getUrlForExample(endpoint: HttpEndpoint): string {
     });
     const url =
         endpoint.fullPath.head +
-        endpoint.fullPath.parts.map((pathPart) => pathParameters[pathPart.pathParameter] + pathPart.tail).join("");
+        endpoint.fullPath.parts
+            .map((pathPart) => encodeURIComponent(`${pathParameters[pathPart.pathParameter]}`) + pathPart.tail)
+            .join("");
     return url.startsWith("/") || url === "" ? url : `/${url}`;
 }

@@ -53,6 +53,7 @@ types:
   V2HttpEndpointCodeSample:
     extends: commons.WithDocs
     properties:
+      name: optional<string>
       language: string
       code: string
 
@@ -124,6 +125,7 @@ types:
       - PUT
       - PATCH
       - DELETE
+      - HEAD
 
   V2EnvironmentValues:
     discriminated: false

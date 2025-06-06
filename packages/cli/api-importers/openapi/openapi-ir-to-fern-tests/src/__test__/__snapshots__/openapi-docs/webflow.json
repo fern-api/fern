@@ -11259,12 +11259,12 @@ service:
               "fields": {
                 "access": "read-only",
                 "docs": "The list of fields in the Collection",
-                "type": "list<CollectionsCreateResponseFieldsItem>",
+                "type": "optional<list<CollectionsCreateResponseFieldsItem>>",
               },
               "id": {
                 "access": "read-only",
                 "docs": "Unique identifier for a Collection",
-                "type": "string",
+                "type": "optional<string>",
               },
               "lastUpdated": {
                 "access": "read-only",
@@ -11299,7 +11299,7 @@ service:
               "id": {
                 "access": "read-only",
                 "docs": "Unique identifier for a Field",
-                "type": "string",
+                "type": "optional<string>",
               },
               "isEditable": {
                 "access": "read-only",
@@ -11361,12 +11361,12 @@ service:
               "fields": {
                 "access": "read-only",
                 "docs": "The list of fields in the Collection",
-                "type": "list<CollectionsGetResponseFieldsItem>",
+                "type": "optional<list<CollectionsGetResponseFieldsItem>>",
               },
               "id": {
                 "access": "read-only",
                 "docs": "Unique identifier for a Collection",
-                "type": "string",
+                "type": "optional<string>",
               },
               "lastUpdated": {
                 "access": "read-only",
@@ -11401,7 +11401,7 @@ service:
               "id": {
                 "access": "read-only",
                 "docs": "Unique identifier for a Field",
-                "type": "string",
+                "type": "optional<string>",
               },
               "isEditable": {
                 "access": "read-only",
@@ -11476,7 +11476,7 @@ service:
               "id": {
                 "access": "read-only",
                 "docs": "Unique identifier for a Collection",
-                "type": "string",
+                "type": "optional<string>",
               },
               "lastUpdated": {
                 "access": "read-only",
@@ -11503,7 +11503,7 @@ service:
     docs: A collection object
     properties:
       id:
-        type: string
+        type: optional<string>
         docs: Unique identifier for a Collection
         access: read-only
       displayName:
@@ -11558,7 +11558,7 @@ service:
     docs: The details of a field in a collection
     properties:
       id:
-        type: string
+        type: optional<string>
         docs: Unique identifier for a Field
         access: read-only
       isRequired:
@@ -11589,7 +11589,7 @@ service:
     docs: A collection object
     properties:
       id:
-        type: string
+        type: optional<string>
         docs: Unique identifier for a Collection
         access: read-only
       displayName:
@@ -11612,8 +11612,8 @@ service:
         docs: The date the collection was last updated
         access: read-only
       fields:
+        type: optional<list<CollectionsCreateResponseFieldsItem>>
         docs: The list of fields in the Collection
-        type: list<CollectionsCreateResponseFieldsItem>
         access: read-only
     source:
       openapi: ../openapi.yml
@@ -11640,7 +11640,7 @@ service:
     docs: The details of a field in a collection
     properties:
       id:
-        type: string
+        type: optional<string>
         docs: Unique identifier for a Field
         access: read-only
       isRequired:
@@ -11671,7 +11671,7 @@ service:
     docs: A collection object
     properties:
       id:
-        type: string
+        type: optional<string>
         docs: Unique identifier for a Collection
         access: read-only
       displayName:
@@ -11694,8 +11694,8 @@ service:
         docs: The date the collection was last updated
         access: read-only
       fields:
+        type: optional<list<CollectionsGetResponseFieldsItem>>
         docs: The list of fields in the Collection
-        type: list<CollectionsGetResponseFieldsItem>
         access: read-only
     source:
       openapi: ../openapi.yml
@@ -12122,7 +12122,7 @@ service:
               "id": {
                 "access": "read-only",
                 "docs": "Unique identifier for a Field",
-                "type": "string",
+                "type": "optional<string>",
               },
               "isEditable": {
                 "access": "read-only",
@@ -12183,7 +12183,7 @@ service:
               "id": {
                 "access": "read-only",
                 "docs": "Unique identifier for a Field",
-                "type": "string",
+                "type": "optional<string>",
               },
               "isEditable": {
                 "access": "read-only",
@@ -12274,7 +12274,7 @@ service:
     docs: The details of a field in a collection
     properties:
       id:
-        type: string
+        type: optional<string>
         docs: Unique identifier for a Field
         access: read-only
       isRequired:
@@ -12323,7 +12323,7 @@ service:
     docs: The details of a field in a collection
     properties:
       id:
-        type: string
+        type: optional<string>
         docs: Unique identifier for a Field
         access: read-only
       isRequired:
@@ -13505,7 +13505,7 @@ service:
               "id": {
                 "access": "read-only",
                 "docs": "Unique identifier for the Item",
-                "type": "string",
+                "type": "optional<string>",
               },
               "isArchived": {
                 "default": false,
@@ -13586,7 +13586,7 @@ service:
               "id": {
                 "access": "read-only",
                 "docs": "Unique identifier for the Item",
-                "type": "string",
+                "type": "optional<string>",
               },
               "isArchived": {
                 "default": false,
@@ -13667,7 +13667,7 @@ service:
               "id": {
                 "access": "read-only",
                 "docs": "Unique identifier for the Item",
-                "type": "string",
+                "type": "optional<string>",
               },
               "isArchived": {
                 "default": false,
@@ -13730,7 +13730,7 @@ service:
               "id": {
                 "access": "read-only",
                 "docs": "Unique identifier for the Item",
-                "type": "string",
+                "type": "optional<string>",
               },
               "isArchived": {
                 "default": false,
@@ -13793,7 +13793,7 @@ service:
               "id": {
                 "access": "read-only",
                 "docs": "Unique identifier for the Item",
-                "type": "string",
+                "type": "optional<string>",
               },
               "isArchived": {
                 "default": false,
@@ -13891,7 +13891,7 @@ service:
               "id": {
                 "access": "read-only",
                 "docs": "Unique identifier for the Item",
-                "type": "string",
+                "type": "optional<string>",
               },
               "isArchived": {
                 "default": false,
@@ -14012,7 +14012,7 @@ service:
               "id": {
                 "access": "read-only",
                 "docs": "Unique identifier for the Item",
-                "type": "string",
+                "type": "optional<string>",
               },
               "isArchived": {
                 "default": false,
@@ -14127,7 +14127,7 @@ service:
               "id": {
                 "access": "read-only",
                 "docs": "Unique identifier for the Item",
-                "type": "string",
+                "type": "optional<string>",
               },
               "isArchived": {
                 "default": false,
@@ -14208,7 +14208,7 @@ service:
               "id": {
                 "access": "read-only",
                 "docs": "Unique identifier for the Item",
-                "type": "string",
+                "type": "optional<string>",
               },
               "isArchived": {
                 "default": false,
@@ -14291,7 +14291,7 @@ service:
       items
     properties:
       id:
-        type: string
+        type: optional<string>
         docs: Unique identifier for the Item
         access: read-only
       cmsLocaleId:
@@ -14382,7 +14382,7 @@ service:
       items
     properties:
       id:
-        type: string
+        type: optional<string>
         docs: Unique identifier for the Item
         access: read-only
       cmsLocaleId:
@@ -14446,7 +14446,7 @@ service:
       items
     properties:
       id:
-        type: string
+        type: optional<string>
         docs: Unique identifier for the Item
         access: read-only
       cmsLocaleId:
@@ -14537,7 +14537,7 @@ service:
       items
     properties:
       id:
-        type: string
+        type: optional<string>
         docs: Unique identifier for the Item
         access: read-only
       cmsLocaleId:
@@ -14602,7 +14602,7 @@ service:
       items
     properties:
       id:
-        type: string
+        type: optional<string>
         docs: Unique identifier for the Item
         access: read-only
       cmsLocaleIds:
@@ -14653,7 +14653,7 @@ service:
       items
     properties:
       id:
-        type: string
+        type: optional<string>
         docs: Unique identifier for the Item
         access: read-only
       cmsLocaleId:
@@ -14718,7 +14718,7 @@ service:
       items
     properties:
       id:
-        type: string
+        type: optional<string>
         docs: Unique identifier for the Item
         access: read-only
       cmsLocaleId:
@@ -14769,7 +14769,7 @@ service:
       items
     properties:
       id:
-        type: string
+        type: optional<string>
         docs: Unique identifier for the Item
         access: read-only
       cmsLocaleId:
@@ -14834,7 +14834,7 @@ service:
       items
     properties:
       id:
-        type: string
+        type: optional<string>
         docs: Unique identifier for the Item
         access: read-only
       cmsLocaleId:
@@ -17905,7 +17905,7 @@ webhooks:
               "id": {
                 "access": "read-only",
                 "docs": "Unique identifier for the Item",
-                "type": "string",
+                "type": "optional<string>",
               },
               "isArchived": {
                 "default": false,
@@ -17968,7 +17968,7 @@ webhooks:
               "id": {
                 "access": "read-only",
                 "docs": "Unique identifier for the Item",
-                "type": "string",
+                "type": "optional<string>",
               },
               "isArchived": {
                 "default": false,
@@ -18234,7 +18234,7 @@ webhooks:
       items
     properties:
       id:
-        type: string
+        type: optional<string>
         docs: Unique identifier for the Item
         access: read-only
       cmsLocaleId:
@@ -18285,7 +18285,7 @@ webhooks:
       items
     properties:
       id:
-        type: string
+        type: optional<string>
         docs: Unique identifier for the Item
         access: read-only
       cmsLocaleId:
@@ -37188,7 +37188,7 @@ Required scope | `pages:write`
               "id": {
                 "access": "read-only",
                 "docs": "Unique identifier for the Page",
-                "type": "string",
+                "type": "optional<string>",
               },
               "isMembersOnly": {
                 "access": "read-only",
@@ -37337,7 +37337,7 @@ Required scope | `pages:write`
               "id": {
                 "access": "read-only",
                 "docs": "Unique identifier for the Page",
-                "type": "string",
+                "type": "optional<string>",
               },
               "isMembersOnly": {
                 "access": "read-only",
@@ -37539,7 +37539,7 @@ Required scope | `pages:write`
               "id": {
                 "access": "read-only",
                 "docs": "Unique identifier for the Page",
-                "type": "string",
+                "type": "optional<string>",
               },
               "isMembersOnly": {
                 "access": "read-only",
@@ -37789,7 +37789,7 @@ Required scope | `pages:write`
     docs: The Page object
     properties:
       id:
-        type: string
+        type: optional<string>
         docs: Unique identifier for the Page
         access: read-only
       siteId:
@@ -37925,7 +37925,7 @@ Required scope | `pages:write`
     docs: The Page object
     properties:
       id:
-        type: string
+        type: optional<string>
         docs: Unique identifier for the Page
         access: read-only
       siteId:
@@ -38072,7 +38072,7 @@ Required scope | `pages:write`
     docs: The Page object
     properties:
       id:
-        type: string
+        type: optional<string>
         docs: Unique identifier for the Page
         access: read-only
       siteId:
@@ -48083,7 +48083,7 @@ service:
               "id": {
                 "access": "read-only",
                 "docs": "Unique identifier for the Domain",
-                "type": "string",
+                "type": "optional<string>",
               },
               "url": {
                 "docs": "The registered Domain name",
@@ -48158,7 +48158,7 @@ service:
               "id": {
                 "access": "read-only",
                 "docs": "Unique identifier for the Domain",
-                "type": "string",
+                "type": "optional<string>",
               },
               "url": {
                 "docs": "The registered Domain name",
@@ -48342,7 +48342,7 @@ service:
               "id": {
                 "access": "read-only",
                 "docs": "Unique identifier for the Domain",
-                "type": "string",
+                "type": "optional<string>",
               },
               "url": {
                 "docs": "The registered Domain name",
@@ -48477,7 +48477,7 @@ service:
               "id": {
                 "access": "read-only",
                 "docs": "Unique identifier for the Domain",
-                "type": "string",
+                "type": "optional<string>",
               },
               "url": {
                 "docs": "The registered Domain name",
@@ -48525,7 +48525,7 @@ service:
   SitesListResponseSitesItemCustomDomainsItem:
     properties:
       id:
-        type: string
+        type: optional<string>
         docs: Unique identifier for the Domain
         access: read-only
       url:
@@ -48655,7 +48655,7 @@ service:
   SitesGetResponseCustomDomainsItem:
     properties:
       id:
-        type: string
+        type: optional<string>
         docs: Unique identifier for the Domain
         access: read-only
       url:
@@ -48779,7 +48779,7 @@ service:
   SitesGetCustomDomainResponseCustomDomainsItem:
     properties:
       id:
-        type: string
+        type: optional<string>
         docs: Unique identifier for the Domain
         access: read-only
       url:
@@ -48796,7 +48796,7 @@ service:
   SitesPublishResponseCustomDomainsItem:
     properties:
       id:
-        type: string
+        type: optional<string>
         docs: Unique identifier for the Domain
         access: read-only
       url:

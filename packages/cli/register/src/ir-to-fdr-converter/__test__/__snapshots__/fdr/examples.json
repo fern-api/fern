@@ -10,14 +10,16 @@
             "type": {
               "type": "id",
               "value": "type_:BasicType"
-            }
+            },
+            "displayName": "Basic Type"
           },
           {
             "typeName": "ComplexType",
             "type": {
               "type": "id",
               "value": "type_:ComplexType"
-            }
+            },
+            "displayName": "Complex Type"
           }
         ]
       }
@@ -367,21 +369,24 @@
             "type": {
               "type": "id",
               "value": "type_types:Actor"
-            }
+            },
+            "displayName": "Actor"
           },
           {
             "typeName": "Actress",
             "type": {
               "type": "id",
               "value": "type_types:Actress"
-            }
+            },
+            "displayName": "Actress"
           },
           {
             "typeName": "StuntDouble",
             "type": {
               "type": "id",
               "value": "type_types:StuntDouble"
-            }
+            },
+            "displayName": "Stunt Double"
           }
         ]
       }

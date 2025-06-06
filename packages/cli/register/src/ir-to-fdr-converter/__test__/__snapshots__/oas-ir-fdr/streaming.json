@@ -135,6 +135,86 @@
           }
         ]
       }
+    },
+    "user_v3_Response_200_streaming": {
+      "name": "user_v3_Response_200_streaming",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              }
+            }
+          },
+          {
+            "key": "inline",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          {
+            "key": "streamed",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "user_v3_Response_200": {
+      "name": "user_v3_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              }
+            }
+          },
+          {
+            "key": "inline",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        ]
+      }
     }
   },
   "subpackages": {},
@@ -143,8 +223,59 @@
       {
         "auth": false,
         "method": "POST",
+        "id": "user_stream",
+        "originalEndpointId": "endpoint_.user_stream",
+        "name": "User Stream",
+        "path": {
+          "pathParameters": [],
+          "parts": [
+            {
+              "type": "literal",
+              "value": ""
+            },
+            {
+              "type": "literal",
+              "value": "/v1/users"
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "response": {
+          "type": {
+            "type": "stream",
+            "shape": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "StreamUser"
+              }
+            }
+          },
+          "statusCode": 200,
+          "description": ""
+        },
+        "errorsV2": [],
+        "examples": [
+          {
+            "name": "userStreamExample",
+            "description": "",
+            "path": "/v1/users",
+            "pathParameters": {},
+            "queryParameters": {},
+            "headers": {},
+            "responseStatusCode": 200
+          }
+        ],
+        "protocol": {
+          "type": "rest"
+        }
+      },
+      {
+        "auth": false,
+        "method": "POST",
         "id": "user",
-        "originalEndpointId": "user",
+        "originalEndpointId": "endpoint_.user",
         "name": "User",
         "path": {
           "pathParameters": [],
@@ -161,40 +292,12 @@
         },
         "queryParameters": [],
         "headers": [],
-        "request": {
-          "type": {
-            "type": "json",
-            "contentType": "application/json",
-            "shape": {
-              "type": "object",
-              "extends": [],
-              "properties": [
-                {
-                  "description": "",
-                  "key": "id",
-                  "valueType": {
-                    "type": "optional",
-                    "itemType": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
-                    }
-                  }
-                }
-              ]
-            }
-          }
-        },
         "response": {
           "type": {
-            "type": "stream",
-            "shape": {
-              "type": "reference",
-              "value": {
-                "type": "id",
-                "value": "User"
-              }
+            "type": "reference",
+            "value": {
+              "type": "id",
+              "value": "User"
             }
           },
           "statusCode": 200,
@@ -209,31 +312,58 @@
             "pathParameters": {},
             "queryParameters": {},
             "headers": {},
-            "requestBody": {},
-            "requestBodyV3": {
-              "type": "json",
-              "value": {}
+            "responseStatusCode": 200
+          }
+        ],
+        "protocol": {
+          "type": "rest"
+        }
+      },
+      {
+        "auth": false,
+        "method": "POST",
+        "id": "user_v2_stream",
+        "originalEndpointId": "endpoint_.user_v2_stream",
+        "name": "User V 2 Stream",
+        "path": {
+          "pathParameters": [],
+          "parts": [
+            {
+              "type": "literal",
+              "value": ""
             },
-            "responseStatusCode": 200,
-            "responseBody": {
-              "type": "stream",
-              "value": [
-                {
-                  "id": "foo"
-                }
-              ]
-            },
-            "responseBodyV3": {
-              "type": "stream",
-              "value": [
-                {
-                  "type": "json",
-                  "value": {
-                    "id": "foo"
-                  }
-                }
-              ]
+            {
+              "type": "literal",
+              "value": "/v2/users"
             }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "response": {
+          "type": {
+            "type": "stream",
+            "shape": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "StreamUser-2"
+              }
+            }
+          },
+          "statusCode": 200,
+          "description": ""
+        },
+        "errorsV2": [],
+        "examples": [
+          {
+            "name": "userV2StreamExample",
+            "description": "",
+            "path": "/v2/users",
+            "pathParameters": {},
+            "queryParameters": {},
+            "headers": {},
+            "responseStatusCode": 200
           }
         ],
         "protocol": {
@@ -244,7 +374,7 @@
         "auth": false,
         "method": "POST",
         "id": "user_v2",
-        "originalEndpointId": "user_v2",
+        "originalEndpointId": "endpoint_.user_v2",
         "name": "User V 2",
         "path": {
           "pathParameters": [],
@@ -261,40 +391,12 @@
         },
         "queryParameters": [],
         "headers": [],
-        "request": {
-          "type": {
-            "type": "json",
-            "contentType": "application/json",
-            "shape": {
-              "type": "object",
-              "extends": [],
-              "properties": [
-                {
-                  "description": "",
-                  "key": "id",
-                  "valueType": {
-                    "type": "optional",
-                    "itemType": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
-                    }
-                  }
-                }
-              ]
-            }
-          }
-        },
         "response": {
           "type": {
-            "type": "stream",
-            "shape": {
-              "type": "reference",
-              "value": {
-                "type": "id",
-                "value": "User"
-              }
+            "type": "reference",
+            "value": {
+              "type": "id",
+              "value": "User-2"
             }
           },
           "statusCode": 200,
@@ -309,28 +411,67 @@
             "pathParameters": {},
             "queryParameters": {},
             "headers": {},
-            "requestBody": {},
-            "requestBodyV3": {
-              "type": "json",
-              "value": {}
+            "responseStatusCode": 200
+          }
+        ],
+        "protocol": {
+          "type": "rest"
+        }
+      },
+      {
+        "auth": false,
+        "method": "POST",
+        "id": "user_v3_stream",
+        "originalEndpointId": "endpoint_.user_v3_stream",
+        "name": "User V 3 Stream",
+        "path": {
+          "pathParameters": [],
+          "parts": [
+            {
+              "type": "literal",
+              "value": ""
             },
+            {
+              "type": "literal",
+              "value": "/v3/users"
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "response": {
+          "type": {
+            "type": "stream",
+            "shape": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "user_v3_Response_200_streaming"
+              }
+            }
+          },
+          "statusCode": 200,
+          "description": ""
+        },
+        "errorsV2": [],
+        "examples": [
+          {
+            "name": "userV3StreamExample",
+            "description": "",
+            "path": "/v3/users",
+            "pathParameters": {},
+            "queryParameters": {},
+            "headers": {},
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "stream",
-              "value": [
-                {
-                  "id": "foo"
-                }
-              ]
-            },
+            "responseBody": [
+              {}
+            ],
             "responseBodyV3": {
               "type": "stream",
               "value": [
                 {
                   "type": "json",
-                  "value": {
-                    "id": "foo"
-                  }
+                  "value": {}
                 }
               ]
             }
@@ -344,7 +485,7 @@
         "auth": false,
         "method": "POST",
         "id": "user_v3",
-        "originalEndpointId": "user_v3",
+        "originalEndpointId": "endpoint_.user_v3",
         "name": "User V 3",
         "path": {
           "pathParameters": [],
@@ -361,40 +502,12 @@
         },
         "queryParameters": [],
         "headers": [],
-        "request": {
-          "type": {
-            "type": "json",
-            "contentType": "application/json",
-            "shape": {
-              "type": "object",
-              "extends": [],
-              "properties": [
-                {
-                  "description": "",
-                  "key": "id",
-                  "valueType": {
-                    "type": "optional",
-                    "itemType": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
-                    }
-                  }
-                }
-              ]
-            }
-          }
-        },
         "response": {
           "type": {
-            "type": "stream",
-            "shape": {
-              "type": "reference",
-              "value": {
-                "type": "id",
-                "value": "User"
-              }
+            "type": "reference",
+            "value": {
+              "type": "id",
+              "value": "user_v3_Response_200"
             }
           },
           "statusCode": 200,
@@ -409,30 +522,11 @@
             "pathParameters": {},
             "queryParameters": {},
             "headers": {},
-            "requestBody": {},
-            "requestBodyV3": {
+            "responseStatusCode": 200,
+            "responseBody": {},
+            "responseBodyV3": {
               "type": "json",
               "value": {}
-            },
-            "responseStatusCode": 200,
-            "responseBody": {
-              "type": "stream",
-              "value": [
-                {
-                  "id": "foo"
-                }
-              ]
-            },
-            "responseBodyV3": {
-              "type": "stream",
-              "value": [
-                {
-                  "type": "json",
-                  "value": {
-                    "id": "foo"
-                  }
-                }
-              ]
             }
           }
         ],

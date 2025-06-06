@@ -123,6 +123,13 @@ function getOperationObjectsFromPathItem(
         });
     }
 
+    if (pathItemObject.head != null) {
+        operations.push({
+            method: HttpMethod.Head,
+            operation: pathItemObject.head
+        });
+    }
+
     return operations;
 }
 

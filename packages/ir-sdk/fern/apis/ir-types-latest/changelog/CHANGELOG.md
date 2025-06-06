@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v58.2.0] - 2024-05-29
+
+- Feature: Add support for named code samples in HTTP endpoints.
+
+## [v58.1.0] - 2024-05-22
+
+- Feature: Add support for github mode but disabling actual push of the contents.
+
+## [v58.0.0] - 2024-05-22
+
+- Feature: Add support for `HEAD` method.
+
 ## [v57.15.0] - 2024-05-05
 
 - Feature: Enable stream HTTP examples.
@@ -27,7 +39,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [v57.10.0] - 2024-04-23
 
-- Fix: `examples.yml` cannot have any recurisve reference to `http.yml` in fern otherwise the Python SDK will not build.
+- Fix: `examples.yml` cannot have any recursive reference to `http.yml` in fern otherwise the Python SDK will not build.
 
 ## [v57.8.0] - 2024-04-23
 

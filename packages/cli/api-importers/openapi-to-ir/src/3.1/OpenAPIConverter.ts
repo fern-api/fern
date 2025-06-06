@@ -4,6 +4,8 @@ import { AuthScheme, FernIr, IntermediateRepresentation } from "@fern-api/ir-sdk
 import { convertApiAuth, convertEnvironments } from "@fern-api/ir-utils";
 import { AbstractSpecConverter, Converters, ServersConverter } from "@fern-api/v2-importer-commons";
 
+import { FernGlobalHeadersExtension } from "../extensions/x-fern-global-headers";
+import { convertGlobalHeadersExtension } from "../utils/convertGlobalHeadersExtension";
 import { OpenAPIConverterContext3_1 } from "./OpenAPIConverterContext3_1";
 import { PathConverter } from "./paths/PathConverter";
 import { WebhookConverter } from "./paths/operations/WebhookConverter";
@@ -31,6 +33,8 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
 
         const idToAuthScheme = this.convertSecuritySchemes();
 
+        this.convertGlobalHeaders();
+
         this.convertSchemas();
 
         this.convertWebhooks();
@@ -46,6 +50,27 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
         return this.finalizeIr();
     }
 
+    private convertGlobalHeaders(): void {
+        if (this.context.globalHeaderOverrides) {
+            // TODO: Convert global headers to IR
+        }
+
+        const globalHeadersExtension = new FernGlobalHeadersExtension({
+            breadcrumbs: ["x-fern-global-headers"],
+            document: this.context.spec,
+            context: this.context
+        });
+        const convertedGlobalHeaders = globalHeadersExtension.convert();
+        if (convertedGlobalHeaders != null) {
+            const globalHeaders = convertGlobalHeadersExtension({
+                globalHeaders: convertedGlobalHeaders,
+                context: this.context
+            });
+            this.addGlobalHeadersToIr(globalHeaders);
+            this.context.setGlobalHeaders(globalHeaders);
+        }
+    }
+
     private convertSecuritySchemes(): Record<string, AuthScheme> {
         if (this.context.authOverrides) {
             this.addAuthToIR(
@@ -56,10 +81,6 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
             );
             return {};
         }
-
-        const topLevelSchemes = new Set<string>(
-            this.context.spec.security?.flatMap((securityRequirement) => Object.keys(securityRequirement)) ?? []
-        );
 
         // Create a map to store converted auth schemes by their ID
         const idToAuthScheme: Record<string, AuthScheme> = {};
@@ -80,17 +101,26 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
                 securityScheme: resolvedSecurityScheme
             });
             const convertedScheme = securitySchemeConverter.convert();
-            // if no top level schemes, then just add the scheme to the whole api
-            if (convertedScheme != null && (topLevelSchemes.size === 0 || topLevelSchemes.has(id))) {
+            if (convertedScheme == null) {
+                continue;
+            }
+
+            if (
+                this.shouldAddAuthSchemeToIr({
+                    authScheme: convertedScheme,
+                    schemeId: id,
+                    currentSecuritySchemes: securitySchemes
+                })
+            ) {
                 securitySchemes.push(convertedScheme);
-            } else if (convertedScheme != null) {
+            } else {
                 idToAuthScheme[id] = convertedScheme;
             }
         }
 
         if (securitySchemes.length > 0) {
             this.addAuthToIR({
-                requirement: "ANY",
+                requirement: securitySchemes.length === 1 ? "ALL" : "ANY",
                 schemes: securitySchemes,
                 docs: undefined
             });
@@ -132,11 +162,6 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
     }
 
     private convertSchemas(): void {
-        const group = this.context.getGroup({
-            groupParts: [],
-            namespace: this.context.namespace
-        });
-
         for (const [id, schema] of Object.entries(this.context.spec.components?.schemas ?? {})) {
             const schemaConverter = new Converters.SchemaConverters.SchemaConverter({
                 context: this.context,
@@ -146,7 +171,7 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
             });
             const convertedSchema = schemaConverter.convert();
             if (convertedSchema != null) {
-                this.addTypeToPackage(id, group);
+                this.addTypeToPackage(id);
                 this.addTypesToIr({
                     ...convertedSchema.inlinedTypes,
                     [id]: convertedSchema.convertedSchema
@@ -226,12 +251,6 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
             const convertedPath = pathConverter.convert();
             if (convertedPath != null) {
                 for (const endpoint of convertedPath.endpoints) {
-                    this.addEndpointToIr({
-                        endpoint: endpoint.endpoint,
-                        audiences: endpoint.audiences,
-                        endpointGroup: endpoint.group
-                    });
-
                     if (endpoint.streamEndpoint != null) {
                         this.addEndpointToIr({
                             endpoint: endpoint.streamEndpoint,
@@ -240,8 +259,23 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
                         });
                     }
 
-                    if (endpoint.servers && endpoint.servers[0] != null) {
-                        endpointLevelServers.push(endpoint.servers[0]);
+                    this.addEndpointToIr({
+                        endpoint: endpoint.endpoint,
+                        audiences: endpoint.audiences,
+                        endpointGroup: endpoint.group
+                    });
+
+                    if (endpoint.servers) {
+                        for (const server of endpoint.servers) {
+                            if (
+                                this.shouldAddServerToCollectedServers({
+                                    server,
+                                    currentServers: endpointLevelServers
+                                })
+                            ) {
+                                endpointLevelServers.push(server);
+                            }
+                        }
                     }
                     if (endpoint.errors) {
                         // TODO: For SDK-IR, errorIds are not guaranteed to be unique.
@@ -268,5 +302,30 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
             }
         }
         return { endpointLevelServers, errors };
+    }
+
+    private shouldAddAuthSchemeToIr({
+        authScheme,
+        schemeId,
+        currentSecuritySchemes
+    }: {
+        authScheme: AuthScheme;
+        schemeId: string;
+        currentSecuritySchemes: AuthScheme[];
+    }): boolean {
+        const schemeAlreadyExists = currentSecuritySchemes.some((scheme) => {
+            if (scheme.type === authScheme.type) {
+                if (scheme.type === "bearer" && authScheme.type === "bearer") {
+                    return scheme.token === authScheme.token;
+                }
+                // TODO: Add other scheme types as needed
+            }
+            return false;
+        });
+
+        const topLevelSchemes = new Set<string>(
+            this.context.spec.security?.flatMap((securityRequirement) => Object.keys(securityRequirement)) ?? []
+        );
+        return (topLevelSchemes.size === 0 || topLevelSchemes.has(schemeId)) && !schemeAlreadyExists;
     }
 }

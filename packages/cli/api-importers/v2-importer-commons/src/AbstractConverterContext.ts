@@ -23,6 +23,8 @@ import { Extensions } from ".";
 import { APIErrorLevel, ErrorCollector } from "./ErrorCollector";
 import { SchemaConverter } from "./converters/schema/SchemaConverter";
 
+export type DisplayNameOverrideSource = "schema_identifier" | "discriminator_key" | "reference_identifier";
+
 export declare namespace Spec {
     export interface Args<T> {
         spec: T;
@@ -37,6 +39,7 @@ export declare namespace Spec {
         environmentOverrides?: RawSchemas.WithEnvironmentsSchema;
         globalHeaderOverrides?: RawSchemas.WithHeadersSchema;
         enableUniqueErrorsPerEndpoint: boolean;
+        generateV1Examples: boolean;
     }
 }
 
@@ -58,6 +61,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
     public readonly environmentOverrides?: RawSchemas.WithEnvironmentsSchema;
     public readonly globalHeaderOverrides?: RawSchemas.WithHeadersSchema;
     public readonly enableUniqueErrorsPerEndpoint: boolean;
+    public readonly generateV1Examples: boolean;
 
     constructor(protected readonly args: Spec.Args<Spec>) {
         this.spec = args.spec;
@@ -77,17 +81,24 @@ export abstract class AbstractConverterContext<Spec extends object> {
         this.environmentOverrides = args.environmentOverrides;
         this.globalHeaderOverrides = args.globalHeaderOverrides;
         this.enableUniqueErrorsPerEndpoint = args.enableUniqueErrorsPerEndpoint;
+        this.generateV1Examples = args.generateV1Examples;
     }
 
     private static BREADCRUMBS_TO_IGNORE = ["properties", "allOf", "anyOf"];
 
     public abstract convertReferenceToTypeReference({
         reference,
-        breadcrumbs
+        breadcrumbs,
+        displayNameOverride,
+        displayNameOverrideSource
     }: {
         reference: OpenAPIV3_1.ReferenceObject;
         breadcrumbs?: string[];
-    }): { ok: true; reference: TypeReference } | { ok: false };
+        displayNameOverride?: string | undefined;
+        displayNameOverrideSource?: DisplayNameOverrideSource;
+    }):
+        | { ok: true; reference: TypeReference; inlinedTypes?: Record<string, SchemaConverter.ConvertedSchema> }
+        | { ok: false };
 
     /**
      * Converts breadcrumbs into a schema name or type id
@@ -582,7 +593,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
         return schemaMatch[1];
     }
 
-    public createNamedTypeReference(id: string): TypeReference {
+    public createNamedTypeReference(id: string, displayName?: string | undefined): TypeReference {
         return TypeReference.named({
             fernFilepath: {
                 allParts: [],
@@ -591,6 +602,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
             },
             name: this.casingsGenerator.generateName(id),
             typeId: id,
+            displayName,
             default: undefined,
             inline: false
         });
@@ -608,7 +620,8 @@ export abstract class AbstractConverterContext<Spec extends object> {
                 packagePath: [],
                 file: undefined
             },
-            name: this.casingsGenerator.generateName(typeId)
+            name: this.casingsGenerator.generateName(typeId),
+            displayName: typeReference.displayName
         };
     }
 
@@ -646,6 +659,16 @@ export abstract class AbstractConverterContext<Spec extends object> {
 
     public isExternalReference($ref: string): boolean {
         return $ref.startsWith("http://") || $ref.startsWith("https://");
+    }
+
+    public isReferenceObjectWithIdentifier(
+        value: unknown
+    ): value is OpenAPIV3_1.ReferenceObject & { title?: string; name?: string; messageId?: string } {
+        return this.isReferenceObject(value) && ("title" in value || "name" in value || "messageId" in value);
+    }
+
+    public isExampleWithSummary(example: unknown): example is { summary: string } {
+        return typeof example === "object" && example != null && "summary" in example;
     }
 
     public isExampleWithValue(example: unknown): example is { value: unknown } {

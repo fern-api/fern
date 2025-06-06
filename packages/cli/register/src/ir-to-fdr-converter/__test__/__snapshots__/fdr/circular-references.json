@@ -57,14 +57,16 @@
             "type": {
               "type": "id",
               "value": "type_ast:T"
-            }
+            },
+            "displayName": "T"
           },
           {
             "typeName": "U",
             "type": {
               "type": "id",
               "value": "type_ast:U"
-            }
+            },
+            "displayName": "U"
           }
         ]
       }

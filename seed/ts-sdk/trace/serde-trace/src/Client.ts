@@ -4,6 +4,7 @@
 
 import * as environments from "./environments.js";
 import * as core from "./core/index.js";
+import { mergeHeaders } from "./core/headers.js";
 import { V2 } from "./api/resources/v2/client/Client.js";
 import { Admin } from "./api/resources/admin/client/Client.js";
 import { Homepage } from "./api/resources/homepage/client/Client.js";
@@ -21,6 +22,8 @@ export declare namespace SeedTraceClient {
         token?: core.Supplier<core.BearerToken | undefined>;
         /** Override the X-Random-Header header */
         xRandomHeader?: core.Supplier<string | undefined>;
+        /** Additional headers to include in requests. */
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 
     export interface RequestOptions {
@@ -33,11 +36,12 @@ export declare namespace SeedTraceClient {
         /** Override the X-Random-Header header */
         xRandomHeader?: string | undefined;
         /** Additional headers to include in the request. */
-        headers?: Record<string, string>;
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 }
 
 export class SeedTraceClient {
+    protected readonly _options: SeedTraceClient.Options;
     protected _v2: V2 | undefined;
     protected _admin: Admin | undefined;
     protected _homepage: Homepage | undefined;
@@ -47,7 +51,23 @@ export class SeedTraceClient {
     protected _submission: Submission | undefined;
     protected _sysprop: Sysprop | undefined;
 
-    constructor(protected readonly _options: SeedTraceClient.Options = {}) {}
+    constructor(_options: SeedTraceClient.Options = {}) {
+        this._options = {
+            ..._options,
+            headers: mergeHeaders(
+                {
+                    "X-Random-Header": _options?.xRandomHeader,
+                    "X-Fern-Language": "JavaScript",
+                    "X-Fern-SDK-Name": "@fern/trace",
+                    "X-Fern-SDK-Version": "0.0.1",
+                    "User-Agent": "@fern/trace/0.0.1",
+                    "X-Fern-Runtime": core.RUNTIME.type,
+                    "X-Fern-Runtime-Version": core.RUNTIME.version,
+                },
+                _options?.headers,
+            ),
+        };
+    }
 
     public get v2(): V2 {
         return (this._v2 ??= new V2(this._options));

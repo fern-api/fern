@@ -1,4 +1,10 @@
-import { ContentDescriptorObject, ExampleObject, ExamplePairingObject, MethodObject } from "@open-rpc/meta-schema";
+import {
+    ContentDescriptorObject,
+    ExampleObject,
+    ExamplePairingObject,
+    MethodObject,
+    ServerObject
+} from "@open-rpc/meta-schema";
 import { OpenAPIV3 } from "openapi-types";
 
 import {
@@ -15,7 +21,7 @@ import {
     TypeId
 } from "@fern-api/ir-sdk";
 import { constructHttpPath } from "@fern-api/ir-utils";
-import { AbstractConverter, Converters } from "@fern-api/v2-importer-commons";
+import { AbstractConverter, Converters, ServersConverter } from "@fern-api/v2-importer-commons";
 
 import { OpenRPCConverterContext3_1 } from "../OpenRPCConverterContext3_1";
 
@@ -25,12 +31,14 @@ export declare namespace MethodConverter {
         pathParameters?: PathParameter[];
         queryParameters?: FernIr.QueryParameter[];
         headers?: FernIr.HttpHeader[];
+        topLevelServers?: ServerObject[];
     }
 
     export interface Output {
         endpoint: HttpEndpoint;
         audiences: string[];
         inlinedTypes: Record<TypeId, Converters.SchemaConverters.SchemaConverter.ConvertedSchema>;
+        servers?: ServerObject[];
     }
 }
 
@@ -39,20 +47,22 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
     private readonly pathParameters: PathParameter[];
     private readonly queryParameters: FernIr.QueryParameter[];
     private readonly headers: FernIr.HttpHeader[];
-
+    private readonly topLevelServers: ServerObject[];
     constructor({
         context,
         breadcrumbs,
         method,
         pathParameters = [],
         queryParameters = [],
-        headers = []
+        headers = [],
+        topLevelServers = []
     }: MethodConverter.Args) {
         super({ context, breadcrumbs });
         this.method = method;
         this.pathParameters = pathParameters;
         this.queryParameters = queryParameters;
         this.headers = headers;
+        this.topLevelServers = topLevelServers;
     }
 
     public convert(): MethodConverter.Output | undefined {
@@ -82,10 +92,11 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
             }
             const schemaId = [this.method.name, "Param", resolvedParam.name].join("_");
             const parameterSchemaConverter = new Converters.SchemaConverters.SchemaOrReferenceConverter({
-                breadcrumbs: [...this.breadcrumbs, `params[${index}]`],
+                breadcrumbs: [this.method.name, "Param", resolvedParam.name],
                 schemaIdOverride: schemaId,
                 context: this.context,
-                schemaOrReference: resolvedParam.schema as OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject
+                schemaOrReference: resolvedParam.schema as OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject,
+                wrapAsOptional: !resolvedParam.required
             });
             const schema = parameterSchemaConverter.convert();
             if (schema != null) {
@@ -123,7 +134,7 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
                     context: this.context,
                     schemaOrReference: resolvedResult.schema as OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject
                 });
-                const schemaId = [...this.method.name, "Result"].join("_");
+                const schemaId = [this.method.name, "Result"].join("_");
                 const convertedResultSchema = resultSchemaConverter.convert();
                 if (convertedResultSchema != null) {
                     jsonResponseBody = {
@@ -140,6 +151,8 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
             }
         }
 
+        const v2BaseUrls = this.getEndpointBaseUrls();
+
         const audiences =
             this.context.getAudiences({
                 operation: this.method,
@@ -148,6 +161,7 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
 
         const endpoint: HttpEndpoint = {
             baseUrl: undefined,
+            v2BaseUrls,
             basePath: undefined,
             auth: false,
             method: "POST",
@@ -196,8 +210,43 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
         return {
             endpoint,
             audiences,
-            inlinedTypes
+            inlinedTypes,
+            servers: this.filterOutTopLevelServers(this.method.servers ?? [])
         };
+    }
+
+    private filterOutTopLevelServers(servers: ServerObject[]): ServerObject[] {
+        return servers.filter(
+            (server) => !this.topLevelServers.some((topLevelServer) => topLevelServer.url === server.url)
+        );
+    }
+
+    private getEndpointBaseUrls(): string[] | undefined {
+        const methodServers = this.method.servers;
+        if (methodServers == null) {
+            return undefined;
+        }
+        const baseUrls = methodServers.map((server) => {
+            const matchingTopLevelServerNameWithDifferentUrl = this.topLevelServers.find(
+                (topLevelServer) => topLevelServer.name === server.name && topLevelServer.url !== server.url
+            );
+
+            if (matchingTopLevelServerNameWithDifferentUrl != null) {
+                return server.url;
+            }
+
+            const matchingTopLevelServerUrl = this.topLevelServers.find(
+                (topLevelServer) => topLevelServer.url === server.url
+            );
+
+            const serverToUse = matchingTopLevelServerUrl ?? server;
+
+            return ServersConverter.getServerName({
+                server: serverToUse,
+                context: this.context
+            });
+        });
+        return baseUrls;
     }
 
     private convertExamples(): Record<string, FernIr.V2HttpEndpointExample> {

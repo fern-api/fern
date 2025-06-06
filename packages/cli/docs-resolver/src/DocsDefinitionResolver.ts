@@ -129,12 +129,13 @@ export class DocsDefinitionResolver {
                     apiSection: async ({ workspace }) => {
                         const fernWorkspace = await workspace.toFernWorkspace(
                             { context: this.taskContext },
+
                             {
                                 enableUniqueErrorsPerEndpoint: true,
                                 detectGlobalHeaders: false,
+                                preserveSchemaIds: true,
                                 objectQueryParameters: true,
-                                respectReadonlySchemas: true,
-                                respectNullableSchemas: true
+                                respectReadonlySchemas: true
                             }
                         );
                         fernWorkspace.changelog?.files.forEach((file) => {
@@ -180,17 +181,24 @@ export class DocsDefinitionResolver {
 
         // preprocess markdown files to extract image paths
         for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
-            const { filepaths, markdown: newMarkdown } = parseImagePaths(markdown, {
-                absolutePathToMarkdownFile: this.resolveFilepath(relativePath),
-                absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath
-            });
+            try {
+                const { filepaths, markdown: newMarkdown } = parseImagePaths(markdown, {
+                    absolutePathToMarkdownFile: this.resolveFilepath(relativePath),
+                    absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath
+                });
 
-            // store the updated markdown in pages
-            this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = newMarkdown;
+                // store the updated markdown in pages
+                this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = newMarkdown;
 
-            // store the image filepaths to upload
-            for (const filepath of filepaths) {
-                filesToUploadSet.add(filepath);
+                // store the image filepaths to upload
+                for (const filepath of filepaths) {
+                    filesToUploadSet.add(filepath);
+                }
+            } catch (error) {
+                this.taskContext.logger.error(
+                    `Failed to parse ${relativePath}: ${error instanceof Error ? error.message : String(error)}`
+                );
+                throw error;
             }
         }
 
@@ -667,6 +675,7 @@ export class DocsDefinitionResolver {
             hidden: undefined,
             authed: undefined,
             icon: product.icon,
+            image: product.image != null ? this.getFileId(product.image) : undefined,
             pointsTo: undefined,
             viewers: undefined,
             orphaned: undefined,
@@ -842,7 +851,8 @@ export class DocsDefinitionResolver {
             ir = await workspace.getIntermediateRepresentation({
                 context: this.taskContext,
                 audiences: item.audiences,
-                enableUniqueErrorsPerEndpoint: true
+                enableUniqueErrorsPerEndpoint: true,
+                generateV1Examples: false
             });
         } else {
             workspace = await this.getFernWorkspaceForApiSection(item).toFernWorkspace(
@@ -851,8 +861,7 @@ export class DocsDefinitionResolver {
                     enableUniqueErrorsPerEndpoint: true,
                     detectGlobalHeaders: false,
                     objectQueryParameters: true,
-                    respectReadonlySchemas: true,
-                    respectNullableSchemas: true
+                    preserveSchemaIds: true
                 }
             );
             ir = generateIntermediateRepresentation({

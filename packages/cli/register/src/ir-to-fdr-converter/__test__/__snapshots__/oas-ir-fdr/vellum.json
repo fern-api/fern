@@ -822,28 +822,32 @@
             "type": {
               "type": "id",
               "value": "InitiatedExecutePromptEvent"
-            }
+            },
+            "displayName": "INITIATED"
           },
           {
             "typeName": "StreamingExecutePromptEvent",
             "type": {
               "type": "id",
               "value": "StreamingExecutePromptEvent"
-            }
+            },
+            "displayName": "STREAMING"
           },
           {
             "typeName": "FulfilledExecutePromptEvent",
             "type": {
               "type": "id",
               "value": "FulfilledExecutePromptEvent"
-            }
+            },
+            "displayName": "FULFILLED"
           },
           {
             "typeName": "RejectedExecutePromptEvent",
             "type": {
               "type": "id",
               "value": "RejectedExecutePromptEvent"
-            }
+            },
+            "displayName": "REJECTED"
           }
         ]
       }
@@ -1117,28 +1121,32 @@
             "type": {
               "type": "id",
               "value": "StringVellumValue"
-            }
+            },
+            "displayName": "STRING"
           },
           {
             "typeName": "JsonVellumValue",
             "type": {
               "type": "id",
               "value": "JsonVellumValue"
-            }
+            },
+            "displayName": "JSON"
           },
           {
             "typeName": "ErrorVellumValue",
             "type": {
               "type": "id",
               "value": "ErrorVellumValue"
-            }
+            },
+            "displayName": "ERROR"
           },
           {
             "typeName": "FunctionCallVellumValue",
             "type": {
               "type": "id",
               "value": "FunctionCallVellumValue"
-            }
+            },
+            "displayName": "FUNCTION_CALL"
           }
         ]
       }
@@ -5094,21 +5102,24 @@
             "type": {
               "type": "id",
               "value": "TerminalNodeStringResult"
-            }
+            },
+            "displayName": "STRING"
           },
           {
             "typeName": "TerminalNodeJsonResult",
             "type": {
               "type": "id",
               "value": "TerminalNodeJsonResult"
-            }
+            },
+            "displayName": "JSON"
           },
           {
             "typeName": "TerminalNodeChatHistoryResult",
             "type": {
               "type": "id",
               "value": "TerminalNodeChatHistoryResult"
-            }
+            },
+            "displayName": "CHAT_HISTORY"
           }
         ]
       }
@@ -5673,42 +5684,48 @@
             "type": {
               "type": "id",
               "value": "PromptNodeResult"
-            }
+            },
+            "displayName": "PROMPT"
           },
           {
             "typeName": "SandboxNodeResult",
             "type": {
               "type": "id",
               "value": "SandboxNodeResult"
-            }
+            },
+            "displayName": "SANDBOX"
           },
           {
             "typeName": "DeploymentNodeResult",
             "type": {
               "type": "id",
               "value": "DeploymentNodeResult"
-            }
+            },
+            "displayName": "DEPLOYMENT"
           },
           {
             "typeName": "SearchNodeResult",
             "type": {
               "type": "id",
               "value": "SearchNodeResult"
-            }
+            },
+            "displayName": "SEARCH"
           },
           {
             "typeName": "ConditionalNodeResult",
             "type": {
               "type": "id",
               "value": "ConditionalNodeResult"
-            }
+            },
+            "displayName": "CONDITIONAL"
           },
           {
             "typeName": "TerminalNodeResult",
             "type": {
               "type": "id",
               "value": "TerminalNodeResult"
-            }
+            },
+            "displayName": "TERMINAL"
           }
         ]
       }
@@ -5854,6 +5871,7 @@
         "variants": [
           {
             "discriminantValue": "STRING",
+            "displayName": "STRING",
             "additionalProperties": {
               "extends": [
                 "WorkflowRequestStringInputRequest"
@@ -5863,6 +5881,7 @@
           },
           {
             "discriminantValue": "JSON",
+            "displayName": "JSON",
             "additionalProperties": {
               "extends": [
                 "WorkflowRequestJSONInputRequest"
@@ -5872,6 +5891,7 @@
           },
           {
             "discriminantValue": "CHAT_HISTORY",
+            "displayName": "CHAT_HISTORY",
             "additionalProperties": {
               "extends": [
                 "WorkflowRequestChatHistoryInputRequest"
@@ -6014,21 +6034,24 @@
             "type": {
               "type": "id",
               "value": "WorkflowResultEventOutputDataString"
-            }
+            },
+            "displayName": "STRING"
           },
           {
             "typeName": "WorkflowResultEventOutputDataJSON",
             "type": {
               "type": "id",
               "value": "WorkflowResultEventOutputDataJSON"
-            }
+            },
+            "displayName": "JSON"
           },
           {
             "typeName": "WorkflowResultEventOutputDataChatHistory",
             "type": {
               "type": "id",
               "value": "WorkflowResultEventOutputDataChatHistory"
-            }
+            },
+            "displayName": "CHAT_HISTORY"
           }
         ]
       }
@@ -6263,14 +6286,16 @@
             "type": {
               "type": "id",
               "value": "WorkflowExecutionWorkflowResultEvent"
-            }
+            },
+            "displayName": "WORKFLOW"
           },
           {
             "typeName": "WorkflowExecutionNodeResultEvent",
             "type": {
               "type": "id",
               "value": "WorkflowExecutionNodeResultEvent"
-            }
+            },
+            "displayName": "NODE"
           }
         ]
       }
@@ -6293,7 +6318,7 @@
             }
           ],
           "id": "retrieve",
-          "originalEndpointId": "deployments.retrieve",
+          "originalEndpointId": "endpoint_deployments.retrieve",
           "name": "Retrieve",
           "path": {
             "pathParameters": [
@@ -6353,20 +6378,17 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "created": "foo",
-                  "label": "foo",
-                  "name": "foo",
-                  "status": "ACTIVE",
-                  "environment": "DEVELOPMENT",
-                  "model_type": "GENERATE",
-                  "active_model_version_ids": [
-                    "foo"
-                  ],
-                  "last_deployed_on": "foo"
-                }
+                "id": "foo",
+                "created": "foo",
+                "label": "foo",
+                "name": "foo",
+                "status": "ACTIVE",
+                "environment": "DEVELOPMENT",
+                "model_type": "GENERATE",
+                "active_model_version_ids": [
+                  "foo"
+                ],
+                "last_deployed_on": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -6412,7 +6434,7 @@
             }
           ],
           "id": "create",
-          "originalEndpointId": "document-indexes.create",
+          "originalEndpointId": "endpoint_documentIndexes.create",
           "name": "Create",
           "path": {
             "pathParameters": [],
@@ -6456,7 +6478,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "Example1",
+              "name": "Index Using Instructor Model",
               "description": "",
               "path": "/v1/document-indexes",
               "pathParameters": {},
@@ -6509,16 +6531,13 @@
               },
               "responseStatusCode": 201,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "created": "foo",
-                  "label": "foo",
-                  "name": "foo",
-                  "status": "ACTIVE",
-                  "environment": "DEVELOPMENT",
-                  "indexing_config": {}
-                }
+                "id": "foo",
+                "created": "foo",
+                "label": "foo",
+                "name": "foo",
+                "status": "ACTIVE",
+                "environment": "DEVELOPMENT",
+                "indexing_config": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -6534,7 +6553,7 @@
               }
             },
             {
-              "name": "Example2",
+              "name": "Index Using a Sentence Transformers Model",
               "description": "",
               "path": "/v1/document-indexes",
               "pathParameters": {},
@@ -6579,16 +6598,13 @@
               },
               "responseStatusCode": 201,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "created": "foo",
-                  "label": "foo",
-                  "name": "foo",
-                  "status": "ACTIVE",
-                  "environment": "DEVELOPMENT",
-                  "indexing_config": {}
-                }
+                "id": "foo",
+                "created": "foo",
+                "label": "foo",
+                "name": "foo",
+                "status": "ACTIVE",
+                "environment": "DEVELOPMENT",
+                "indexing_config": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -6604,7 +6620,7 @@
               }
             },
             {
-              "name": "Example3",
+              "name": "Index Using OpenAI Model",
               "description": "",
               "path": "/v1/document-indexes",
               "pathParameters": {},
@@ -6653,16 +6669,13 @@
               },
               "responseStatusCode": 201,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "created": "foo",
-                  "label": "foo",
-                  "name": "foo",
-                  "status": "ACTIVE",
-                  "environment": "DEVELOPMENT",
-                  "indexing_config": {}
-                }
+                "id": "foo",
+                "created": "foo",
+                "label": "foo",
+                "name": "foo",
+                "status": "ACTIVE",
+                "environment": "DEVELOPMENT",
+                "indexing_config": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -6704,7 +6717,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "documents.list",
+          "originalEndpointId": "endpoint_documents.list",
           "name": "List",
           "path": {
             "pathParameters": [],
@@ -6797,33 +6810,30 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "count": 123,
-                  "next": "http://api.example.org/accounts/?offset=400&limit=100",
-                  "previous": "http://api.example.org/accounts/?offset=200&limit=100",
-                  "results": [
-                    {
-                      "id": "foo",
-                      "external_id": "foo",
-                      "last_uploaded_at": "foo",
-                      "label": "foo",
-                      "processing_state": "QUEUED",
-                      "processing_failure_reason": "EXCEEDED_CHARACTER_LIMIT",
-                      "status": "ACTIVE",
-                      "keywords": [
-                        "foo"
-                      ],
-                      "document_to_document_indexes": [
-                        {
-                          "id": "foo",
-                          "document_index_id": "foo",
-                          "indexing_state": "AWAITING_PROCESSING"
-                        }
-                      ]
-                    }
-                  ]
-                }
+                "count": 123,
+                "next": "http://api.example.org/accounts/?offset=400&limit=100",
+                "previous": "http://api.example.org/accounts/?offset=200&limit=100",
+                "results": [
+                  {
+                    "id": "foo",
+                    "external_id": "foo",
+                    "last_uploaded_at": "foo",
+                    "label": "foo",
+                    "processing_state": "QUEUED",
+                    "processing_failure_reason": "EXCEEDED_CHARACTER_LIMIT",
+                    "status": "ACTIVE",
+                    "keywords": [
+                      "foo"
+                    ],
+                    "document_to_document_indexes": [
+                      {
+                        "id": "foo",
+                        "document_index_id": "foo",
+                        "indexing_state": "AWAITING_PROCESSING"
+                      }
+                    ]
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -6867,12 +6877,12 @@
           "defaultEnvironment": "Default",
           "environments": [
             {
-              "id": "Default",
+              "id": "Documents",
               "baseUrl": "https://documents.vellum.ai"
             }
           ],
           "id": "upload",
-          "originalEndpointId": "documents.upload",
+          "originalEndpointId": "endpoint_documents.upload",
           "name": "Upload",
           "path": {
             "pathParameters": [],
@@ -6975,10 +6985,7 @@
               },
               "responseStatusCode": 201,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "document_id": "foo"
-                }
+                "document_id": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -7014,7 +7021,7 @@
             }
           ],
           "id": "retrieve",
-          "originalEndpointId": "model-versions.retrieve",
+          "originalEndpointId": "endpoint_modelVersions.retrieve",
           "name": "Retrieve",
           "path": {
             "pathParameters": [
@@ -7075,86 +7082,83 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "created": "foo",
-                  "label": "foo",
-                  "model_type": "GENERATE",
-                  "provider": "ANTHROPIC",
-                  "external_id": "foo",
-                  "build_config": {
-                    "base_model": "foo",
-                    "sandbox_snapshot": {
-                      "id": "foo",
-                      "prompt_index": 42,
-                      "prompt_id": "foo",
-                      "sandbox_id": "foo"
-                    }
-                  },
-                  "exec_config": {
-                    "parameters": {
-                      "temperature": 42,
-                      "max_tokens": 42,
-                      "top_p": 42,
-                      "frequency_penalty": 42,
-                      "presence_penalty": 42,
-                      "logit_bias": {},
-                      "stop": [
-                        "foo"
-                      ],
-                      "top_k": 42
-                    },
-                    "input_variables": [
-                      {
-                        "key": "foo"
-                      }
+                "id": "foo",
+                "created": "foo",
+                "label": "foo",
+                "model_type": "GENERATE",
+                "provider": "ANTHROPIC",
+                "external_id": "foo",
+                "build_config": {
+                  "base_model": "foo",
+                  "sandbox_snapshot": {
+                    "id": "foo",
+                    "prompt_index": 42,
+                    "prompt_id": "foo",
+                    "sandbox_id": "foo"
+                  }
+                },
+                "exec_config": {
+                  "parameters": {
+                    "temperature": 42,
+                    "max_tokens": 42,
+                    "top_p": 42,
+                    "frequency_penalty": 42,
+                    "presence_penalty": 42,
+                    "logit_bias": {},
+                    "stop": [
+                      "foo"
                     ],
-                    "prompt_template": "foo",
-                    "prompt_block_data": {
-                      "version": 42,
-                      "blocks": [
-                        {
-                          "id": "foo",
-                          "block_type": "CHAT_MESSAGE",
-                          "properties": {
-                            "chat_role": "SYSTEM",
-                            "chat_message_unterminated": false,
-                            "template": "foo",
-                            "template_type": "STRING",
-                            "function_name": "foo",
-                            "function_description": "foo",
-                            "function_parameters": {},
-                            "blocks": [
-                              {
-                                "id": "foo",
-                                "block_type": "CHAT_MESSAGE",
-                                "properties": {
-                                  "chat_role": "SYSTEM",
-                                  "chat_message_unterminated": false,
-                                  "template": "foo",
-                                  "template_type": "STRING",
-                                  "function_name": "foo",
-                                  "function_description": "foo",
-                                  "function_parameters": {},
-                                  "blocks": [
-                                    {
-                                      "id": "foo",
-                                      "block_type": "CHAT_MESSAGE",
-                                      "properties": {}
-                                    }
-                                  ]
-                                }
-                              }
-                            ]
-                          }
-                        }
-                      ]
-                    },
-                    "prompt_syntax_version": 42
+                    "top_k": 42
                   },
-                  "status": "CREATING"
-                }
+                  "input_variables": [
+                    {
+                      "key": "foo"
+                    }
+                  ],
+                  "prompt_template": "foo",
+                  "prompt_block_data": {
+                    "version": 42,
+                    "blocks": [
+                      {
+                        "id": "foo",
+                        "block_type": "CHAT_MESSAGE",
+                        "properties": {
+                          "chat_role": "SYSTEM",
+                          "chat_message_unterminated": false,
+                          "template": "foo",
+                          "template_type": "STRING",
+                          "function_name": "foo",
+                          "function_description": "foo",
+                          "function_parameters": {},
+                          "blocks": [
+                            {
+                              "id": "foo",
+                              "block_type": "CHAT_MESSAGE",
+                              "properties": {
+                                "chat_role": "SYSTEM",
+                                "chat_message_unterminated": false,
+                                "template": "foo",
+                                "template_type": "STRING",
+                                "function_name": "foo",
+                                "function_description": "foo",
+                                "function_parameters": {},
+                                "blocks": [
+                                  {
+                                    "id": "foo",
+                                    "block_type": "CHAT_MESSAGE",
+                                    "properties": {}
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  },
+                  "prompt_syntax_version": 42
+                },
+                "status": "CREATING"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -7256,7 +7260,7 @@
             }
           ],
           "id": "model_version_compile_prompt",
-          "originalEndpointId": "model-versions.model_version_compile_prompt",
+          "originalEndpointId": "endpoint_modelVersions.model_version_compile_prompt",
           "name": "Model Version Compile Prompt",
           "path": {
             "pathParameters": [
@@ -7339,12 +7343,9 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "prompt": {
-                    "text": "foo",
-                    "num_tokens": 42
-                  }
+                "prompt": {
+                  "text": "foo",
+                  "num_tokens": 42
                 }
               },
               "responseBodyV3": {
@@ -7384,7 +7385,7 @@
             }
           ],
           "id": "register_prompt",
-          "originalEndpointId": "registered-prompts.register_prompt",
+          "originalEndpointId": "endpoint_registeredPrompts.register_prompt",
           "name": "Register Prompt",
           "path": {
             "pathParameters": [],
@@ -7519,28 +7520,25 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "prompt": {
-                    "id": "foo",
-                    "label": "foo"
-                  },
-                  "sandbox_snapshot": {
-                    "id": "foo"
-                  },
-                  "sandbox": {
-                    "id": "foo",
-                    "label": "foo"
-                  },
-                  "model_version": {
-                    "id": "foo",
-                    "label": "foo"
-                  },
-                  "deployment": {
-                    "id": "foo",
-                    "name": "foo",
-                    "label": "foo"
-                  }
+                "prompt": {
+                  "id": "foo",
+                  "label": "foo"
+                },
+                "sandbox_snapshot": {
+                  "id": "foo"
+                },
+                "sandbox": {
+                  "id": "foo",
+                  "label": "foo"
+                },
+                "model_version": {
+                  "id": "foo",
+                  "label": "foo"
+                },
+                "deployment": {
+                  "id": "foo",
+                  "name": "foo",
+                  "label": "foo"
                 }
               },
               "responseBodyV3": {
@@ -7596,7 +7594,7 @@
             }
           ],
           "id": "upsert_sandbox_scenario",
-          "originalEndpointId": "sandboxes.upsert_sandbox_scenario",
+          "originalEndpointId": "endpoint_sandboxes.upsert_sandbox_scenario",
           "name": "Upsert Sandbox Scenario",
           "path": {
             "pathParameters": [
@@ -7660,7 +7658,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "Example1",
+              "name": "Basic Example",
               "description": "",
               "path": "/v1/sandboxes/id/scenarios",
               "pathParameters": {
@@ -7709,27 +7707,24 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "label": "Untitled Scenario",
-                  "inputs": [
-                    {
-                      "key": "foo",
-                      "type": "TEXT",
-                      "value": "foo",
-                      "chat_history": [
-                        {
-                          "text": "foo",
-                          "role": "SYSTEM"
-                        }
-                      ]
-                    }
-                  ],
-                  "id": "foo",
-                  "metric_input_params": {
-                    "params": {
-                      "target": "foo"
-                    }
+                "label": "Untitled Scenario",
+                "inputs": [
+                  {
+                    "key": "foo",
+                    "type": "TEXT",
+                    "value": "foo",
+                    "chat_history": [
+                      {
+                        "text": "foo",
+                        "role": "SYSTEM"
+                      }
+                    ]
+                  }
+                ],
+                "id": "foo",
+                "metric_input_params": {
+                  "params": {
+                    "target": "foo"
                   }
                 }
               },
@@ -7760,7 +7755,7 @@
               }
             },
             {
-              "name": "Example2",
+              "name": "Chat History Example",
               "description": "",
               "path": "/v1/sandboxes/id/scenarios",
               "pathParameters": {
@@ -7817,27 +7812,24 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "label": "Untitled Scenario",
-                  "inputs": [
-                    {
-                      "key": "foo",
-                      "type": "TEXT",
-                      "value": "foo",
-                      "chat_history": [
-                        {
-                          "text": "foo",
-                          "role": "SYSTEM"
-                        }
-                      ]
-                    }
-                  ],
-                  "id": "foo",
-                  "metric_input_params": {
-                    "params": {
-                      "target": "foo"
-                    }
+                "label": "Untitled Scenario",
+                "inputs": [
+                  {
+                    "key": "foo",
+                    "type": "TEXT",
+                    "value": "foo",
+                    "chat_history": [
+                      {
+                        "text": "foo",
+                        "role": "SYSTEM"
+                      }
+                    ]
+                  }
+                ],
+                "id": "foo",
+                "metric_input_params": {
+                  "params": {
+                    "target": "foo"
                   }
                 }
               },
@@ -7884,7 +7876,7 @@
             }
           ],
           "id": "delete_sandbox_scenario",
-          "originalEndpointId": "sandboxes.delete_sandbox_scenario",
+          "originalEndpointId": "endpoint_sandboxes.delete_sandbox_scenario",
           "name": "Delete Sandbox Scenario",
           "path": {
             "pathParameters": [
@@ -7980,7 +7972,7 @@
             }
           ],
           "id": "upsert_test_suite_test_case",
-          "originalEndpointId": "test-suites.upsert_test_suite_test_case",
+          "originalEndpointId": "endpoint_testSuites.upsert_test_suite_test_case",
           "name": "Upsert Test Suite Test Case",
           "path": {
             "pathParameters": [
@@ -8065,14 +8057,11 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "test_case_id": "foo",
-                  "label": "foo",
-                  "input_values": {},
-                  "evaluation_params": {
-                    "target": "foo"
-                  }
+                "test_case_id": "foo",
+                "label": "foo",
+                "input_values": {},
+                "evaluation_params": {
+                  "target": "foo"
                 }
               },
               "responseBodyV3": {
@@ -8104,7 +8093,7 @@
             }
           ],
           "id": "delete_test_suite_test_case",
-          "originalEndpointId": "test-suites.delete_test_suite_test_case",
+          "originalEndpointId": "endpoint_testSuites.delete_test_suite_test_case",
           "name": "Delete Test Suite Test Case",
           "path": {
             "pathParameters": [
@@ -8188,18 +8177,19 @@
   "rootPackage": {
     "endpoints": [
       {
+        "availability": "GenerallyAvailable",
         "auth": true,
         "description": "Executes a deployed Prompt and streams back the results.",
         "method": "POST",
         "defaultEnvironment": "Default",
         "environments": [
           {
-            "id": "Default",
+            "id": "Predict",
             "baseUrl": "https://predict.vellum.ai"
           }
         ],
         "id": "execute-prompt-stream",
-        "originalEndpointId": "execute-prompt-stream",
+        "originalEndpointId": "endpoint_.execute-prompt-stream",
         "name": "Execute Prompt Stream",
         "path": {
           "pathParameters": [],
@@ -8319,21 +8309,18 @@
               }
             },
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "stream",
-              "value": [
-                {
-                  "state": "INITIATED",
-                  "meta": {
-                    "model_name": "foo",
-                    "latency": 42,
-                    "deployment_release_tag": "foo",
-                    "prompt_version_id": "foo"
-                  },
-                  "execution_id": "foo"
-                }
-              ]
-            },
+            "responseBody": [
+              {
+                "state": "INITIATED",
+                "meta": {
+                  "model_name": "foo",
+                  "latency": 42,
+                  "deployment_release_tag": "foo",
+                  "prompt_version_id": "foo"
+                },
+                "execution_id": "foo"
+              }
+            ],
             "responseBodyV3": {
               "type": "stream",
               "value": [
@@ -8365,12 +8352,12 @@
         "defaultEnvironment": "Default",
         "environments": [
           {
-            "id": "Default",
+            "id": "Predict",
             "baseUrl": "https://predict.vellum.ai"
           }
         ],
         "id": "execute-workflow-stream",
-        "originalEndpointId": "execute-workflow-stream",
+        "originalEndpointId": "endpoint_.execute-workflow-stream",
         "name": "Execute Workflow Stream",
         "path": {
           "pathParameters": [],
@@ -8443,33 +8430,30 @@
               }
             },
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "stream",
-              "value": [
-                {
-                  "run_id": "foo",
-                  "external_id": "foo",
-                  "type": "foo",
-                  "data": {
-                    "id": "foo",
+            "responseBody": [
+              {
+                "run_id": "foo",
+                "external_id": "foo",
+                "type": "foo",
+                "data": {
+                  "id": "foo",
+                  "state": "INITIATED",
+                  "ts": "foo",
+                  "output": {
+                    "name": "foo",
                     "state": "INITIATED",
-                    "ts": "foo",
-                    "output": {
-                      "name": "foo",
-                      "state": "INITIATED",
-                      "node_id": "foo",
-                      "type": "foo",
-                      "delta": "foo",
-                      "value": "foo"
-                    },
-                    "error": {
-                      "message": "foo",
-                      "code": "WORKFLOW_INITIALIZATION"
-                    }
+                    "node_id": "foo",
+                    "type": "foo",
+                    "delta": "foo",
+                    "value": "foo"
+                  },
+                  "error": {
+                    "message": "foo",
+                    "code": "WORKFLOW_INITIALIZATION"
                   }
                 }
-              ]
-            },
+              }
+            ],
             "responseBodyV3": {
               "type": "stream",
               "value": [
@@ -8513,12 +8497,12 @@
         "defaultEnvironment": "Default",
         "environments": [
           {
-            "id": "Default",
+            "id": "Predict",
             "baseUrl": "https://predict.vellum.ai"
           }
         ],
         "id": "generate",
-        "originalEndpointId": "generate",
+        "originalEndpointId": "endpoint_.generate",
         "name": "Generate",
         "path": {
           "pathParameters": [],
@@ -8640,39 +8624,36 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "results": [
-                  {
-                    "data": {
-                      "completions": [
-                        {
-                          "id": "foo",
-                          "external_id": "foo",
-                          "text": "foo",
-                          "finish_reason": "LENGTH",
-                          "logprobs": {
-                            "tokens": [
-                              {
-                                "token": "foo",
-                                "logprob": 42,
-                                "top_logprobs": {},
-                                "text_offset": 42
-                              }
-                            ],
-                            "likelihood": 42
-                          },
-                          "model_version_id": "foo",
-                          "type": "STRING"
-                        }
-                      ]
-                    },
-                    "error": {
-                      "message": "foo"
-                    }
+              "results": [
+                {
+                  "data": {
+                    "completions": [
+                      {
+                        "id": "foo",
+                        "external_id": "foo",
+                        "text": "foo",
+                        "finish_reason": "LENGTH",
+                        "logprobs": {
+                          "tokens": [
+                            {
+                              "token": "foo",
+                              "logprob": 42,
+                              "top_logprobs": {},
+                              "text_offset": 42
+                            }
+                          ],
+                          "likelihood": 42
+                        },
+                        "model_version_id": "foo",
+                        "type": "STRING"
+                      }
+                    ]
+                  },
+                  "error": {
+                    "message": "foo"
                   }
-                ]
-              }
+                }
+              ]
             },
             "responseBodyV3": {
               "type": "json",
@@ -8722,12 +8703,12 @@
         "defaultEnvironment": "Default",
         "environments": [
           {
-            "id": "Default",
+            "id": "Predict",
             "baseUrl": "https://predict.vellum.ai"
           }
         ],
         "id": "generate-stream",
-        "originalEndpointId": "generate-stream",
+        "originalEndpointId": "endpoint_.generate-stream",
         "name": "Generate Stream",
         "path": {
           "pathParameters": [],
@@ -8851,41 +8832,38 @@
               }
             },
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "stream",
-              "value": [
-                {
-                  "delta": {
-                    "request_index": 42,
-                    "data": {
-                      "completion_index": 42,
-                      "completion": {
-                        "id": "foo",
-                        "external_id": "foo",
-                        "text": "foo",
-                        "finish_reason": "LENGTH",
-                        "logprobs": {
-                          "tokens": [
-                            {
-                              "token": "foo",
-                              "logprob": 42,
-                              "top_logprobs": {},
-                              "text_offset": 42
-                            }
-                          ],
-                          "likelihood": 42
-                        },
-                        "model_version_id": "foo",
-                        "type": "STRING"
-                      }
-                    },
-                    "error": {
-                      "message": "foo"
+            "responseBody": [
+              {
+                "delta": {
+                  "request_index": 42,
+                  "data": {
+                    "completion_index": 42,
+                    "completion": {
+                      "id": "foo",
+                      "external_id": "foo",
+                      "text": "foo",
+                      "finish_reason": "LENGTH",
+                      "logprobs": {
+                        "tokens": [
+                          {
+                            "token": "foo",
+                            "logprob": 42,
+                            "top_logprobs": {},
+                            "text_offset": 42
+                          }
+                        ],
+                        "likelihood": 42
+                      },
+                      "model_version_id": "foo",
+                      "type": "STRING"
                     }
+                  },
+                  "error": {
+                    "message": "foo"
                   }
                 }
-              ]
-            },
+              }
+            ],
             "responseBodyV3": {
               "type": "stream",
               "value": [
@@ -8937,12 +8915,12 @@
         "defaultEnvironment": "Default",
         "environments": [
           {
-            "id": "Default",
+            "id": "Predict",
             "baseUrl": "https://predict.vellum.ai"
           }
         ],
         "id": "search",
-        "originalEndpointId": "search",
+        "originalEndpointId": "endpoint_.search",
         "name": "Search",
         "path": {
           "pathParameters": [],
@@ -9043,23 +9021,20 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "results": [
-                  {
-                    "document": {
-                      "id": "foo",
-                      "label": "foo",
-                      "external_id": "foo"
-                    },
-                    "text": "foo",
-                    "keywords": [
-                      "foo"
-                    ],
-                    "score": 42
-                  }
-                ]
-              }
+              "results": [
+                {
+                  "document": {
+                    "id": "foo",
+                    "label": "foo",
+                    "external_id": "foo"
+                  },
+                  "text": "foo",
+                  "keywords": [
+                    "foo"
+                  ],
+                  "score": 42
+                }
+              ]
             },
             "responseBodyV3": {
               "type": "json",
@@ -9093,12 +9068,12 @@
         "defaultEnvironment": "Default",
         "environments": [
           {
-            "id": "Default",
+            "id": "Predict",
             "baseUrl": "https://predict.vellum.ai"
           }
         ],
         "id": "submit-completion-actuals",
-        "originalEndpointId": "submit-completion-actuals",
+        "originalEndpointId": "endpoint_.submit-completion-actuals",
         "name": "Submit Completion Actuals",
         "path": {
           "pathParameters": [],

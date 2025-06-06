@@ -1,10 +1,10 @@
-import { HttpMethodSchema } from "../schemas";
-
 export declare namespace HttpEndpointReferenceParser {
     interface Parsed {
         path: string;
-        method: HttpMethodSchema;
+        method: Method;
     }
+
+    type Method = "GET" | "POST" | "PUT" | "DELETE" | "PATCH" | "HEAD";
 
     export type ValidationResult = Valid | Invalid;
 
@@ -22,7 +22,7 @@ export declare namespace HttpEndpointReferenceParser {
  */
 export class HttpEndpointReferenceParser {
     //eslint-disable-next-line
-    private REFERENCE_REGEX = /^(GET|POST|PUT|DELETE|PATCH)\s(\/\S*)$/;
+    private REFERENCE_REGEX = /^(GET|POST|PUT|DELETE|PATCH|HEAD)\s(\/\S*)$/;
 
     public validate(reference: string): HttpEndpointReferenceParser.ValidationResult {
         const validFormat = this.REFERENCE_REGEX.test(reference);
@@ -42,7 +42,7 @@ export class HttpEndpointReferenceParser {
             return undefined;
         }
         return {
-            method: match[1] as HttpMethodSchema,
+            method: match[1] as HttpEndpointReferenceParser.Method,
             path: match[2]
         };
     }

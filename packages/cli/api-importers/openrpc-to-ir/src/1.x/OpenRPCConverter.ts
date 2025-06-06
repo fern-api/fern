@@ -24,16 +24,20 @@ export class OpenRPCConverter extends AbstractSpecConverter<OpenRPCConverterCont
             document: this.context.spec
         }) as OpenrpcDocument;
 
-        this.convertServers({});
-
         this.convertSchemas();
 
-        this.convertMethods();
+        const { endpointLevelServers } = this.convertMethods();
+
+        const { defaultUrl } = this.convertServers({ endpointLevelServers });
+
+        this.updateEndpointsWithDefaultUrl(defaultUrl);
 
         return this.finalizeIr();
     }
 
-    private convertServers({ endpointLevelServers }: { endpointLevelServers?: ServerObject[] }): void {
+    private convertServers({ endpointLevelServers }: { endpointLevelServers?: ServerObject[] }): {
+        defaultUrl: string | undefined;
+    } {
         const serversConverter = new ServersConverter({
             context: this.context,
             breadcrumbs: ["servers"],
@@ -42,18 +46,12 @@ export class OpenRPCConverter extends AbstractSpecConverter<OpenRPCConverterCont
         });
         const convertedServers = serversConverter.convert();
         this.addEnvironmentsToIr({ environmentConfig: convertedServers?.value });
+        return {
+            defaultUrl: convertedServers?.defaultUrl
+        };
     }
 
     private convertSchemas(): void {
-        const group = this.context.getGroup({
-            groupParts: [],
-            namespace: this.context.namespace
-        });
-
-        const pkg = this.getOrCreatePackage({
-            group
-        });
-
         for (const [id, schema] of Object.entries(this.context.spec.components?.schemas ?? {})) {
             const schemaConverter = new Converters.SchemaConverters.SchemaConverter({
                 context: this.context,
@@ -63,7 +61,7 @@ export class OpenRPCConverter extends AbstractSpecConverter<OpenRPCConverterCont
             });
             const convertedSchema = schemaConverter.convert();
             if (convertedSchema != null) {
-                this.addTypeToPackage(id, group);
+                this.addTypeToPackage(id);
                 this.addTypesToIr({
                     ...convertedSchema.inlinedTypes,
                     [id]: convertedSchema.convertedSchema
@@ -72,8 +70,11 @@ export class OpenRPCConverter extends AbstractSpecConverter<OpenRPCConverterCont
         }
     }
 
-    private convertMethods(): void {
+    private convertMethods(): { endpointLevelServers?: ServerObject[] } {
         // Import the FernParametersExtension to handle custom parameters
+
+        const endpointLevelServers: ServerObject[] = [];
+
         const fernParametersExtension = new FernParametersExtension({
             context: this.context,
             breadcrumbs: ["methods"],
@@ -135,7 +136,8 @@ export class OpenRPCConverter extends AbstractSpecConverter<OpenRPCConverterCont
                 method: resolvedMethod,
                 pathParameters,
                 queryParameters,
-                headers
+                headers,
+                topLevelServers: this.context.spec.servers
             });
 
             const convertedMethod = methodConverter.convert();
@@ -149,7 +151,30 @@ export class OpenRPCConverter extends AbstractSpecConverter<OpenRPCConverterCont
                 });
 
                 this.addTypesToIr(convertedMethod.inlinedTypes);
+
+                if (convertedMethod.servers) {
+                    for (const server of convertedMethod.servers) {
+                        if (
+                            this.shouldAddServerToCollectedServers({
+                                server,
+                                currentServers: endpointLevelServers,
+                                specType: "openrpc"
+                            })
+                        ) {
+                            endpointLevelServers.push(this.maybeDeduplicateServerName(server));
+                        }
+                    }
+                }
             }
         }
+
+        return { endpointLevelServers };
+    }
+
+    private maybeDeduplicateServerName(server: ServerObject): ServerObject {
+        const conflictingTopLevelServer = this.context.spec.servers?.find(
+            (s) => s.name === server.name && s.url !== server.url
+        );
+        return conflictingTopLevelServer ? { ...server, name: server.url } : server;
     }
 }

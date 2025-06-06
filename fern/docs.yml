@@ -216,6 +216,9 @@ navigation:
           - section: Changelogs
             slug: changelog
             contents:
+              - changelog: ./pages/changelogs/ts-sdk
+                title: TypeScript
+                slug: ts            
               - changelog: ./pages/changelogs/python-sdk
                 title: Python
                 slug: python
@@ -233,7 +236,7 @@ navigation:
                 slug: php
               - changelog: ./pages/changelogs/ruby-sdk
                 title: Ruby
-                slug: ruby
+                slug: ruby                
       - section: Capabilities
         contents:
           - page: Strongly Typed
@@ -369,6 +372,9 @@ navigation:
           - page: Navigation
             icon: fa-regular fa-map-signs
             path: ./pages/docs/building-your-docs/navigation.mdx
+          - page: Product Switching
+            icon: fa-regular fa-boxes-stacked
+            path: ./pages/docs/building-your-docs/product-switcher.mdx
           - page: Versioning
             icon: fa-regular fa-code-branch
             path: ./pages/docs/building-your-docs/versioning.mdx
@@ -460,6 +466,10 @@ navigation:
                 path: ./pages/docs/components/endpoint-response-snippet.mdx
                 icon: fa-regular fa-arrow-down
                 slug: response-snippet
+              - page: Endpoint Schema Snippet
+                path: ./pages/docs/components/endpoint-schema-snippet.mdx
+                icon: fa-regular fa-table
+                slug: schema-snippet
               - page: Frames
                 path: ./pages/docs/components/frames.mdx
                 icon: fa-regular fa-border-all
@@ -480,6 +490,10 @@ navigation:
                 path: ./pages/docs/components/tabs.mdx
                 icon: fa-regular fa-window-restore
                 slug: tabs
+              - page: Tooltips
+                path: ./pages/docs/components/tooltips.mdx
+                icon: fa-regular fa-circle-info
+                slug: tooltips
           - page: Custom React Components
             icon: fa-brands fa-react
             path: ./pages/docs/writing-content/custom-react-components.mdx
@@ -641,6 +655,9 @@ navigation:
         api-name: public-api
         icon: fa-regular fa-pro
         paginated: true
+        snippets:
+          python: fern-api
+          typescript: '@fern-api/node-sdk'
         audiences:
           - external
         layout:
@@ -792,4 +809,7 @@ redirects:
     permanent: true   
   - source: /learn/ai-search/ai-search-customer-showcase
     destination: /learn/ai-search/customer-showcase
+    permanent: true
+  - source: /learn/docs/getting-started/changelog/2025/5/23
+    destination: /learn/docs/getting-started/changelog/2025/6/5
     permanent: true

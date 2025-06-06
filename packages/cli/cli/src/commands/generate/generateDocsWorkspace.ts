@@ -1,4 +1,4 @@
-import { createOrganizationIfDoesNotExist } from "@fern-api/auth";
+import { FernToken, FernUserToken, createOrganizationIfDoesNotExist } from "@fern-api/auth";
 import { filterOssWorkspaces } from "@fern-api/docs-resolver";
 import { askToLogin } from "@fern-api/login";
 import { Project } from "@fern-api/project-loader";
@@ -25,21 +25,36 @@ export async function generateDocsWorkspace({
 }): Promise<void> {
     const docsWorkspace = project.docsWorkspaces;
     if (docsWorkspace == null) {
+        cliContext.failAndThrow("No docs.yml file found. Please make sure your project has one.");
         return;
     }
+    const shouldSkipAuth = process.env["FERN_SELF_HOSTED"] === "true";
 
-    const token = await cliContext.runTask(async (context) => {
-        return askToLogin(context);
-    });
-
-    if (token.type === "user") {
-        await cliContext.runTask(async (context) => {
-            await createOrganizationIfDoesNotExist({
-                organization: project.config.organization,
-                token,
-                context
-            });
+    let token: FernToken | null = null;
+    if (shouldSkipAuth) {
+        const fernToken = process.env["FERN_TOKEN"]; // token can be a dummy token
+        if (!fernToken) {
+            cliContext.failAndThrow("No token found. Please set the FERN_TOKEN environment variable.");
+            return;
+        }
+        token = {
+            type: "organization",
+            value: fernToken
+        };
+    } else {
+        token = await cliContext.runTask(async (context) => {
+            return askToLogin(context);
         });
+        if (token.type === "user") {
+            const userToken = token as FernUserToken;
+            await cliContext.runTask(async (context) => {
+                await createOrganizationIfDoesNotExist({
+                    organization: project.config.organization,
+                    token: userToken,
+                    context
+                });
+            });
+        }
     }
 
     await cliContext.instrumentPostHogEvent({

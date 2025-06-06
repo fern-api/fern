@@ -25,7 +25,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -58,7 +58,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -74,7 +74,7 @@
         "auth": false,
         "method": "GET",
         "id": "getObjectWithArrayOfObjects",
-        "originalEndpointId": "getObjectWithArrayOfObjects",
+        "originalEndpointId": "endpoint_.getObjectWithArrayOfObjects",
         "name": "Get Object With Array Of Objects",
         "path": {
           "pathParameters": [],
@@ -144,10 +144,7 @@
               "value": {}
             },
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "json",
-              "value": "foo"
-            },
+            "responseBody": "foo",
             "responseBodyV3": {
               "type": "json",
               "value": "foo"
@@ -162,7 +159,7 @@
         "auth": false,
         "method": "GET",
         "id": "getImplicitObjectWithArrayOfObjects",
-        "originalEndpointId": "getImplicitObjectWithArrayOfObjects",
+        "originalEndpointId": "endpoint_.getImplicitObjectWithArrayOfObjects",
         "name": "Get Implicit Object With Array Of Objects",
         "path": {
           "pathParameters": [],
@@ -232,10 +229,7 @@
               "value": null
             },
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "json",
-              "value": "foo"
-            },
+            "responseBody": "foo",
             "responseBodyV3": {
               "type": "json",
               "value": "foo"

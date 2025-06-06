@@ -82,7 +82,7 @@
           "auth": false,
           "method": "POST",
           "id": "create",
-          "originalEndpointId": "chatCompletions.create",
+          "originalEndpointId": "endpoint_chatCompletions.create",
           "name": "Create",
           "path": {
             "pathParameters": [],
@@ -144,10 +144,7 @@
                 }
               },
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": "foo"
-              },
+              "responseBody": "foo",
               "responseBodyV3": {
                 "type": "json",
                 "value": "foo"
@@ -177,6 +174,10 @@
     "subpackages": [
       "subpackage_chatCompletions"
     ]
+  },
+  "auth": {
+    "type": "bearerAuth",
+    "tokenName": "token"
   },
   "snippetsConfiguration": {},
   "globalHeaders": []

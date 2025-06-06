@@ -888,6 +888,16 @@
             }
           ]
         },
+        "image": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "slug": {
           "oneOf": [
             {
@@ -2613,6 +2623,7 @@
       "enum": [
         "claude-3.5",
         "claude-3.7",
+        "claude-4",
         "command-a"
       ]
     },

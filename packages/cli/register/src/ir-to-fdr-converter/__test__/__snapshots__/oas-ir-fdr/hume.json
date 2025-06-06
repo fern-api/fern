@@ -2274,6 +2274,7 @@
         "variants": [
           {
             "discriminantValue": "url",
+            "displayName": "url",
             "additionalProperties": {
               "extends": [
                 "Source_Url"
@@ -2283,6 +2284,7 @@
           },
           {
             "discriminantValue": "file",
+            "displayName": "file",
             "additionalProperties": {
               "extends": [
                 "Source_File"
@@ -2380,6 +2382,7 @@
         "variants": [
           {
             "discriminantValue": "QUEUED",
+            "displayName": "QUEUED",
             "additionalProperties": {
               "extends": [
                 "State_Queued"
@@ -2389,6 +2392,7 @@
           },
           {
             "discriminantValue": "IN_PROGRESS",
+            "displayName": "IN_PROGRESS",
             "additionalProperties": {
               "extends": [
                 "State_InProgress"
@@ -2398,6 +2402,7 @@
           },
           {
             "discriminantValue": "COMPLETED",
+            "displayName": "COMPLETED",
             "additionalProperties": {
               "extends": [
                 "State_Completed"
@@ -2407,6 +2412,7 @@
           },
           {
             "discriminantValue": "FAILED",
+            "displayName": "FAILED",
             "additionalProperties": {
               "extends": [
                 "State_Failed"
@@ -2717,8 +2723,28 @@
         ]
       }
     },
-    "V0BatchJobsGetParametersSchema": {
-      "name": "V0BatchJobsGetParametersSchema",
+    "V0BatchJobsGetParametersWhen": {
+      "name": "V0BatchJobsGetParametersWhen",
+      "shape": {
+        "type": "object",
+        "extends": [
+          "When"
+        ],
+        "properties": []
+      }
+    },
+    "V0BatchJobsGetParametersSortBy": {
+      "name": "V0BatchJobsGetParametersSortBy",
+      "shape": {
+        "type": "object",
+        "extends": [
+          "SortBy"
+        ],
+        "properties": []
+      }
+    },
+    "V0BatchJobsGetParametersDirection": {
+      "name": "V0BatchJobsGetParametersDirection",
       "shape": {
         "type": "object",
         "extends": [
@@ -4062,14 +4088,16 @@
             "type": {
               "type": "id",
               "value": "ToolResponseMessage"
-            }
+            },
+            "displayName": "ToolResponseMessage"
           },
           {
             "typeName": "ToolErrorMessage",
             "type": {
               "type": "id",
               "value": "ToolErrorMessage"
-            }
+            },
+            "displayName": "ToolErrorMessage"
           }
         ]
       }
@@ -4146,7 +4174,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -4155,7 +4183,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -4164,7 +4192,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -4173,7 +4201,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -4182,7 +4210,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -4191,7 +4219,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -4200,7 +4228,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -4209,7 +4237,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -4218,7 +4246,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -4227,7 +4255,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -4236,7 +4264,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -4245,7 +4273,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -4254,7 +4282,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -4263,7 +4291,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -4272,7 +4300,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -4281,7 +4309,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -4290,7 +4318,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -4299,7 +4327,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -4308,7 +4336,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -4317,7 +4345,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -4326,7 +4354,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -4335,7 +4363,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -4344,7 +4372,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -4353,7 +4381,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -4362,7 +4390,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -4371,7 +4399,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -4380,7 +4408,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -4389,7 +4417,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -4398,7 +4426,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -4407,7 +4435,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -4416,7 +4444,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -4425,7 +4453,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -4434,7 +4462,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -4443,7 +4471,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -4452,7 +4480,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -4461,7 +4489,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -4470,7 +4498,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -4479,7 +4507,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -4488,7 +4516,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -4497,7 +4525,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -4506,7 +4534,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -4515,7 +4543,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -4524,7 +4552,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -4533,7 +4561,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -4542,7 +4570,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -4551,7 +4579,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -4560,7 +4588,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -4569,7 +4597,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           }
@@ -4675,70 +4703,80 @@
             "type": {
               "type": "id",
               "value": "AssistantEnd"
-            }
+            },
+            "displayName": "AssistantEnd"
           },
           {
             "typeName": "AssistantMessage",
             "type": {
               "type": "id",
               "value": "AssistantMessage"
-            }
+            },
+            "displayName": "AssistantMessage"
           },
           {
             "typeName": "AudioOutput",
             "type": {
               "type": "id",
               "value": "AudioOutput"
-            }
+            },
+            "displayName": "AudioOutput"
           },
           {
             "typeName": "ChatMetadata",
             "type": {
               "type": "id",
               "value": "ChatMetadata"
-            }
+            },
+            "displayName": "ChatMetadata"
           },
           {
             "typeName": "Error",
             "type": {
               "type": "id",
               "value": "Error"
-            }
+            },
+            "displayName": "Error"
           },
           {
             "typeName": "UserInterruption",
             "type": {
               "type": "id",
               "value": "UserInterruption"
-            }
+            },
+            "displayName": "UserInterruption"
           },
           {
             "typeName": "UserMessage",
             "type": {
               "type": "id",
               "value": "UserMessage"
-            }
+            },
+            "displayName": "UserMessage"
           },
           {
             "typeName": "ToolCallMessage",
             "type": {
               "type": "id",
               "value": "ToolCallMessage"
-            }
+            },
+            "displayName": "ToolCallMessage"
           },
           {
             "typeName": "ToolResponseMessage",
             "type": {
               "type": "id",
               "value": "ToolResponseMessage"
-            }
+            },
+            "displayName": "ToolResponseMessage"
           },
           {
             "typeName": "ToolErrorMessage",
             "type": {
               "type": "id",
               "value": "ToolErrorMessage"
-            }
+            },
+            "displayName": "ToolErrorMessage"
           }
         ]
       }
@@ -4753,56 +4791,64 @@
             "type": {
               "type": "id",
               "value": "AudioInput"
-            }
+            },
+            "displayName": "AudioInput"
           },
           {
             "typeName": "SessionSettings",
             "type": {
               "type": "id",
               "value": "SessionSettings"
-            }
+            },
+            "displayName": "SessionSettings"
           },
           {
             "typeName": "UserInput",
             "type": {
               "type": "id",
               "value": "UserInput"
-            }
+            },
+            "displayName": "UserInput"
           },
           {
             "typeName": "AssistantInput",
             "type": {
               "type": "id",
               "value": "AssistantInput"
-            }
+            },
+            "displayName": "AssistantInput"
           },
           {
             "typeName": "ToolResponseMessage",
             "type": {
               "type": "id",
               "value": "ToolResponseMessage"
-            }
+            },
+            "displayName": "ToolResponseMessage"
           },
           {
             "typeName": "ToolErrorMessage",
             "type": {
               "type": "id",
               "value": "ToolErrorMessage"
-            }
+            },
+            "displayName": "ToolErrorMessage"
           },
           {
             "typeName": "PauseAssistantMessage",
             "type": {
               "type": "id",
               "value": "PauseAssistantMessage"
-            }
+            },
+            "displayName": "PauseAssistantMessage"
           },
           {
             "typeName": "ResumeAssistantMessage",
             "type": {
               "type": "id",
               "value": "ResumeAssistantMessage"
-            }
+            },
+            "displayName": "ResumeAssistantMessage"
           }
         ]
       }
@@ -4825,7 +4871,7 @@
             }
           ],
           "id": "get_job_artifacts",
-          "originalEndpointId": "Get Job Predictions.get_job_artifacts",
+          "originalEndpointId": "endpoint_getJobPredictions.get_job_artifacts",
           "name": "Get Job Artifacts",
           "path": {
             "pathParameters": [
@@ -4898,7 +4944,7 @@
             }
           ],
           "id": "get_job",
-          "originalEndpointId": "Get Job Predictions.get_job",
+          "originalEndpointId": "endpoint_getJobPredictions.get_job",
           "name": "Get Job Details",
           "path": {
             "pathParameters": [
@@ -4958,61 +5004,58 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "user_id": "foo",
-                  "job_id": "foo",
-                  "request": {
-                    "models": {
-                      "face": {
-                        "fps_pred": 3,
-                        "prob_threshold": 0.99,
-                        "identify_faces": false,
-                        "min_face_size": 60,
-                        "facs": null,
-                        "descriptions": null,
-                        "save_faces": false
-                      },
-                      "burst": null,
-                      "prosody": {
-                        "granularity": "word",
-                        "identify_speakers": false,
-                        "window": {
-                          "length": 4,
-                          "step": 1
-                        }
-                      },
-                      "language": {
-                        "granularity": "word",
-                        "identify_speakers": false,
-                        "sentiment": null,
-                        "toxicity": null
-                      },
-                      "ner": {
-                        "identify_speakers": false
-                      },
-                      "facemesh": null
+                "user_id": "foo",
+                "job_id": "foo",
+                "request": {
+                  "models": {
+                    "face": {
+                      "fps_pred": 3,
+                      "prob_threshold": 0.99,
+                      "identify_faces": false,
+                      "min_face_size": 60,
+                      "facs": null,
+                      "descriptions": null,
+                      "save_faces": false
                     },
-                    "transcription": {
-                      "language": "zh"
-                    },
-                    "urls": [
-                      "foo"
-                    ],
-                    "callback_url": "foo",
-                    "notify": false,
-                    "files": [
-                      {
-                        "filename": "foo",
-                        "content_type": "foo",
-                        "md5sum": "foo"
+                    "burst": null,
+                    "prosody": {
+                      "granularity": "word",
+                      "identify_speakers": false,
+                      "window": {
+                        "length": 4,
+                        "step": 1
                       }
-                    ]
+                    },
+                    "language": {
+                      "granularity": "word",
+                      "identify_speakers": false,
+                      "sentiment": null,
+                      "toxicity": null
+                    },
+                    "ner": {
+                      "identify_speakers": false
+                    },
+                    "facemesh": null
                   },
-                  "state": {
-                    "status": "QUEUED",
-                    "created_timestamp_ms": 42
-                  }
+                  "transcription": {
+                    "language": "zh"
+                  },
+                  "urls": [
+                    "foo"
+                  ],
+                  "callback_url": "foo",
+                  "notify": false,
+                  "files": [
+                    {
+                      "filename": "foo",
+                      "content_type": "foo",
+                      "md5sum": "foo"
+                    }
+                  ]
+                },
+                "state": {
+                  "status": "QUEUED",
+                  "created_timestamp_ms": 42
                 }
               },
               "responseBodyV3": {
@@ -5102,7 +5145,7 @@
             }
           ],
           "id": "chat",
-          "name": "/chat",
+          "name": "Chat",
           "path": {
             "pathParameters": [],
             "parts": [
@@ -5251,7 +5294,7 @@
           }
         ],
         "id": "List Jobs",
-        "originalEndpointId": "List Jobs",
+        "originalEndpointId": "endpoint_.List Jobs",
         "name": "List Jobs",
         "path": {
           "pathParameters": [],
@@ -5302,7 +5345,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V0BatchJobsGetParametersSchema"
+                "value": "V0BatchJobsGetParametersWhen"
               }
             }
           },
@@ -5326,7 +5369,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V0BatchJobsGetParametersSchema"
+                "value": "V0BatchJobsGetParametersSortBy"
               }
             }
           },
@@ -5337,7 +5380,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V0BatchJobsGetParametersSchema"
+                "value": "V0BatchJobsGetParametersDirection"
               }
             }
           }
@@ -5367,66 +5410,63 @@
             "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "json",
-              "value": [
-                {
-                  "user_id": "foo",
-                  "job_id": "foo",
-                  "request": {
-                    "models": {
-                      "face": {
-                        "fps_pred": 3,
-                        "prob_threshold": 0.99,
-                        "identify_faces": false,
-                        "min_face_size": 60,
-                        "facs": null,
-                        "descriptions": null,
-                        "save_faces": false
-                      },
-                      "burst": null,
-                      "prosody": {
-                        "granularity": "word",
-                        "identify_speakers": false,
-                        "window": {
-                          "length": 4,
-                          "step": 1
-                        }
-                      },
-                      "language": {
-                        "granularity": "word",
-                        "identify_speakers": false,
-                        "sentiment": null,
-                        "toxicity": null
-                      },
-                      "ner": {
-                        "identify_speakers": false
-                      },
-                      "facemesh": null
+            "responseBody": [
+              {
+                "user_id": "foo",
+                "job_id": "foo",
+                "request": {
+                  "models": {
+                    "face": {
+                      "fps_pred": 3,
+                      "prob_threshold": 0.99,
+                      "identify_faces": false,
+                      "min_face_size": 60,
+                      "facs": null,
+                      "descriptions": null,
+                      "save_faces": false
                     },
-                    "transcription": {
-                      "language": "zh"
-                    },
-                    "urls": [
-                      "foo"
-                    ],
-                    "callback_url": "foo",
-                    "notify": false,
-                    "files": [
-                      {
-                        "filename": "foo",
-                        "content_type": "foo",
-                        "md5sum": "foo"
+                    "burst": null,
+                    "prosody": {
+                      "granularity": "word",
+                      "identify_speakers": false,
+                      "window": {
+                        "length": 4,
+                        "step": 1
                       }
-                    ]
+                    },
+                    "language": {
+                      "granularity": "word",
+                      "identify_speakers": false,
+                      "sentiment": null,
+                      "toxicity": null
+                    },
+                    "ner": {
+                      "identify_speakers": false
+                    },
+                    "facemesh": null
                   },
-                  "state": {
-                    "status": "QUEUED",
-                    "created_timestamp_ms": 42
-                  }
+                  "transcription": {
+                    "language": "zh"
+                  },
+                  "urls": [
+                    "foo"
+                  ],
+                  "callback_url": "foo",
+                  "notify": false,
+                  "files": [
+                    {
+                      "filename": "foo",
+                      "content_type": "foo",
+                      "md5sum": "foo"
+                    }
+                  ]
+                },
+                "state": {
+                  "status": "QUEUED",
+                  "created_timestamp_ms": 42
                 }
-              ]
-            },
+              }
+            ],
             "responseBodyV3": {
               "type": "json",
               "value": [
@@ -5505,7 +5545,7 @@
           }
         ],
         "id": "Start Job",
-        "originalEndpointId": "Start Job",
+        "originalEndpointId": "endpoint_.Start Job",
         "name": "Start Job",
         "path": {
           "pathParameters": [],
@@ -5562,10 +5602,7 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "job_id": "foo"
-              }
+              "job_id": "foo"
             },
             "responseBodyV3": {
               "type": "json",
@@ -5591,7 +5628,7 @@
           }
         ],
         "id": "Get Job Predictions",
-        "originalEndpointId": "Get Job Predictions",
+        "originalEndpointId": "endpoint_.Get Job Predictions",
         "name": "Get Job Predictions",
         "path": {
           "pathParameters": [
@@ -5653,170 +5690,167 @@
             "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "json",
-              "value": [
-                {
-                  "source": {
-                    "type": "url",
-                    "url": "foo"
-                  },
-                  "results": {
-                    "predictions": [
-                      {
-                        "file": "foo",
-                        "models": {
-                          "face": {
-                            "metadata": {},
-                            "grouped_predictions": [
-                              {
-                                "id": "foo",
-                                "predictions": [
-                                  {
-                                    "frame": 42,
-                                    "time": 42,
-                                    "prob": 42,
-                                    "box": {},
-                                    "emotions": [
-                                      null
-                                    ],
-                                    "facs": [
-                                      null
-                                    ],
-                                    "descriptions": [
-                                      null
-                                    ]
-                                  }
-                                ]
-                              }
-                            ]
+            "responseBody": [
+              {
+                "source": {
+                  "type": "url",
+                  "url": "foo"
+                },
+                "results": {
+                  "predictions": [
+                    {
+                      "file": "foo",
+                      "models": {
+                        "face": {
+                          "metadata": {},
+                          "grouped_predictions": [
+                            {
+                              "id": "foo",
+                              "predictions": [
+                                {
+                                  "frame": 42,
+                                  "time": 42,
+                                  "prob": 42,
+                                  "box": {},
+                                  "emotions": [
+                                    null
+                                  ],
+                                  "facs": [
+                                    null
+                                  ],
+                                  "descriptions": [
+                                    null
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        "burst": {
+                          "metadata": {},
+                          "grouped_predictions": [
+                            {
+                              "id": "foo",
+                              "predictions": [
+                                {
+                                  "time": {},
+                                  "emotions": [
+                                    null
+                                  ],
+                                  "descriptions": [
+                                    null
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        "prosody": {
+                          "metadata": {
+                            "confidence": 42,
+                            "detected_language": "zh"
                           },
-                          "burst": {
-                            "metadata": {},
-                            "grouped_predictions": [
-                              {
-                                "id": "foo",
-                                "predictions": [
-                                  {
-                                    "time": {},
-                                    "emotions": [
-                                      null
-                                    ],
-                                    "descriptions": [
-                                      null
-                                    ]
-                                  }
-                                ]
-                              }
-                            ]
+                          "grouped_predictions": [
+                            {
+                              "id": "foo",
+                              "predictions": [
+                                {
+                                  "text": "foo",
+                                  "time": {},
+                                  "confidence": 42,
+                                  "speaker_confidence": 42,
+                                  "emotions": [
+                                    null
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        "language": {
+                          "metadata": {
+                            "confidence": 42,
+                            "detected_language": "zh"
                           },
-                          "prosody": {
-                            "metadata": {
-                              "confidence": 42,
-                              "detected_language": "zh"
-                            },
-                            "grouped_predictions": [
-                              {
-                                "id": "foo",
-                                "predictions": [
-                                  {
-                                    "text": "foo",
-                                    "time": {},
-                                    "confidence": 42,
-                                    "speaker_confidence": 42,
-                                    "emotions": [
-                                      null
-                                    ]
-                                  }
-                                ]
-                              }
-                            ]
+                          "grouped_predictions": [
+                            {
+                              "id": "foo",
+                              "predictions": [
+                                {
+                                  "text": "foo",
+                                  "position": {},
+                                  "time": {},
+                                  "confidence": 42,
+                                  "speaker_confidence": 42,
+                                  "emotions": [
+                                    null
+                                  ],
+                                  "sentiment": [
+                                    null
+                                  ],
+                                  "toxicity": [
+                                    null
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        "ner": {
+                          "metadata": {
+                            "confidence": 42,
+                            "detected_language": "zh"
                           },
-                          "language": {
-                            "metadata": {
-                              "confidence": 42,
-                              "detected_language": "zh"
-                            },
-                            "grouped_predictions": [
-                              {
-                                "id": "foo",
-                                "predictions": [
-                                  {
-                                    "text": "foo",
-                                    "position": {},
-                                    "time": {},
-                                    "confidence": 42,
-                                    "speaker_confidence": 42,
-                                    "emotions": [
-                                      null
-                                    ],
-                                    "sentiment": [
-                                      null
-                                    ],
-                                    "toxicity": [
-                                      null
-                                    ]
-                                  }
-                                ]
-                              }
-                            ]
-                          },
-                          "ner": {
-                            "metadata": {
-                              "confidence": 42,
-                              "detected_language": "zh"
-                            },
-                            "grouped_predictions": [
-                              {
-                                "id": "foo",
-                                "predictions": [
-                                  {
-                                    "entity": "foo",
-                                    "position": {},
-                                    "entity_confidence": 42,
-                                    "support": 42,
-                                    "uri": "foo",
-                                    "link_word": "foo",
-                                    "time": {},
-                                    "confidence": 42,
-                                    "speaker_confidence": 42,
-                                    "emotions": [
-                                      null
-                                    ]
-                                  }
-                                ]
-                              }
-                            ]
-                          },
-                          "facemesh": {
-                            "metadata": {},
-                            "grouped_predictions": [
-                              {
-                                "id": "foo",
-                                "predictions": [
-                                  {
-                                    "emotions": [
-                                      null
-                                    ]
-                                  }
-                                ]
-                              }
-                            ]
-                          }
+                          "grouped_predictions": [
+                            {
+                              "id": "foo",
+                              "predictions": [
+                                {
+                                  "entity": "foo",
+                                  "position": {},
+                                  "entity_confidence": 42,
+                                  "support": 42,
+                                  "uri": "foo",
+                                  "link_word": "foo",
+                                  "time": {},
+                                  "confidence": 42,
+                                  "speaker_confidence": 42,
+                                  "emotions": [
+                                    null
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        "facemesh": {
+                          "metadata": {},
+                          "grouped_predictions": [
+                            {
+                              "id": "foo",
+                              "predictions": [
+                                {
+                                  "emotions": [
+                                    null
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
                         }
                       }
-                    ],
-                    "errors": [
-                      {
-                        "message": "foo",
-                        "file": "foo"
-                      }
-                    ]
-                  },
-                  "error": "foo"
-                }
-              ]
-            },
+                    }
+                  ],
+                  "errors": [
+                    {
+                      "message": "foo",
+                      "file": "foo"
+                    }
+                  ]
+                },
+                "error": "foo"
+              }
+            ],
             "responseBodyV3": {
               "type": "json",
               "value": [

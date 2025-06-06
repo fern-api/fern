@@ -23,6 +23,7 @@ public class Example {
             .build();
 
         client.user().createUser(
+            "tenant_id",
             User
                 .builder()
                 .name("name")
@@ -86,27 +87,24 @@ SeedPathParametersClient client = SeedPathParametersClient
 ### Retries
 
 The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long
-as the request is deemed retriable and the number of retry attempts has not grown larger than the configured
+as the request is deemed retryable and the number of retry attempts has not grown larger than the configured
 retry limit (default: 2).
 
-A request is deemed retriable when any of the following HTTP status codes is returned:
+A request is deemed retryable when any of the following HTTP status codes is returned:
 
 - [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
 - [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
 - [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
 
-Use the `maxRetries` request option to configure this behavior.
+Use the `maxRetries` client option to configure this behavior.
 
 ```java
-import com.seed.pathParameters.core.RequestOptions;
+import com.seed.pathParameters.SeedPathParametersClient;
 
-client.user().createUser(
-    ...,
-    RequestOptions
-        .builder()
-        .maxRetries(1)
-        .build()
-);
+SeedPathParametersClient client = SeedPathParametersClient
+    .builder()
+    .maxRetries(1)
+    .build();
 ```
 
 ### Timeouts

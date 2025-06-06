@@ -1,13 +1,13 @@
 import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
 
 import { TypeReference } from "@fern-api/ir-sdk";
-import { AbstractConverterContext } from "@fern-api/v2-importer-commons";
+import { AbstractConverterContext, DisplayNameOverrideSource } from "@fern-api/v2-importer-commons";
 
 import { AsyncAPIV2 } from "./2.x";
 import { AsyncAPIV3 } from "./3.0";
 
 /**
- * Context class for converting OpenAPI 3.1 specifications
+ * Context class for converting AsyncAPI specifications
  */
 export class AsyncAPIConverterContext extends AbstractConverterContext<AsyncAPIV2.DocumentV2 | AsyncAPIV3.DocumentV3> {
     public isReferenceObject(parameter: unknown): parameter is OpenAPIV3.ReferenceObject | OpenAPIV3_1.ReferenceObject {
@@ -29,10 +29,14 @@ export class AsyncAPIConverterContext extends AbstractConverterContext<AsyncAPIV
 
     public convertReferenceToTypeReference({
         reference,
-        breadcrumbs
+        breadcrumbs,
+        displayNameOverride,
+        displayNameOverrideSource
     }: {
         reference: OpenAPIV3_1.ReferenceObject;
         breadcrumbs?: string[];
+        displayNameOverride?: string | undefined;
+        displayNameOverrideSource?: DisplayNameOverrideSource;
     }): { ok: true; reference: TypeReference } | { ok: false } {
         let typeId: string | undefined;
 
@@ -42,27 +46,161 @@ export class AsyncAPIConverterContext extends AbstractConverterContext<AsyncAPIV
 
         if (schemaMatch && schemaMatch[1]) {
             typeId = schemaMatch[1];
+            return this.convertSchemaReferenceToTypeReference({
+                reference,
+                breadcrumbs,
+                displayNameOverride,
+                displayNameOverrideSource,
+                typeId
+            });
         } else if (messageMatch && messageMatch[2]) {
             const channelPath = messageMatch[1];
             const messageId = messageMatch[2];
             typeId = `${channelPath}_${messageId}`;
+            return this.convertV3MessageReferenceToTypeReference({
+                reference,
+                breadcrumbs,
+                displayNameOverride,
+                displayNameOverrideSource,
+                typeId
+            });
         } else if (simpleMessageMatch && simpleMessageMatch[1]) {
             typeId = simpleMessageMatch[1];
-        }
-
-        if (typeId == null) {
+            return this.convertV2MessageReferenceToTypeReference({
+                reference,
+                breadcrumbs,
+                displayNameOverride,
+                displayNameOverrideSource,
+                typeId
+            });
+        } else {
             return { ok: false };
         }
+    }
+
+    public convertSchemaReferenceToTypeReference({
+        reference,
+        breadcrumbs,
+        displayNameOverride,
+        displayNameOverrideSource,
+        typeId
+    }: {
+        reference: OpenAPIV3_1.ReferenceObject;
+        breadcrumbs?: string[];
+        displayNameOverride?: string | undefined;
+        displayNameOverrideSource?: DisplayNameOverrideSource;
+        typeId: string;
+    }): { ok: true; reference: TypeReference } | { ok: false } {
         const resolvedReference = this.resolveReference<OpenAPIV3_1.SchemaObject>({ reference, breadcrumbs });
         if (!resolvedReference.resolved) {
             return { ok: false };
         }
+
+        let displayName: string | undefined;
+
+        if (displayNameOverrideSource === "reference_identifier") {
+            displayName = displayNameOverride ?? resolvedReference.value.title;
+        } else if (
+            displayNameOverrideSource === "discriminator_key" ||
+            displayNameOverrideSource === "schema_identifier"
+        ) {
+            displayName = resolvedReference.value.title ?? displayNameOverride;
+        }
+
         return {
             ok: true,
             reference: TypeReference.named({
                 fernFilepath: this.createFernFilepath(),
                 name: this.casingsGenerator.generateName(typeId),
                 typeId,
+                displayName,
+                default: undefined,
+                inline: false
+            })
+        };
+    }
+
+    public convertV3MessageReferenceToTypeReference({
+        reference,
+        breadcrumbs,
+        displayNameOverride,
+        displayNameOverrideSource,
+        typeId
+    }: {
+        reference: OpenAPIV3_1.ReferenceObject;
+        breadcrumbs?: string[];
+        displayNameOverride?: string | undefined;
+        displayNameOverrideSource?: DisplayNameOverrideSource;
+        typeId: string;
+    }): { ok: true; reference: TypeReference } | { ok: false } {
+        const resolvedReference = this.resolveReference<AsyncAPIV3.ChannelMessage>({
+            reference,
+            breadcrumbs
+        });
+        if (!resolvedReference.resolved) {
+            return { ok: false };
+        }
+
+        let displayName: string | undefined;
+
+        if (displayNameOverrideSource === "reference_identifier") {
+            displayName = displayNameOverride ?? resolvedReference.value.name;
+        } else if (
+            displayNameOverrideSource === "discriminator_key" ||
+            displayNameOverrideSource === "schema_identifier"
+        ) {
+            displayName = resolvedReference.value.name ?? displayNameOverride;
+        }
+
+        return {
+            ok: true,
+            reference: TypeReference.named({
+                fernFilepath: this.createFernFilepath(),
+                name: this.casingsGenerator.generateName(typeId),
+                typeId,
+                displayName,
+                default: undefined,
+                inline: false
+            })
+        };
+    }
+
+    public convertV2MessageReferenceToTypeReference({
+        reference,
+        breadcrumbs,
+        displayNameOverride,
+        displayNameOverrideSource,
+        typeId
+    }: {
+        reference: OpenAPIV3_1.ReferenceObject;
+        breadcrumbs?: string[];
+        displayNameOverride?: string | undefined;
+        displayNameOverrideSource?: DisplayNameOverrideSource;
+        typeId: string;
+    }): { ok: true; reference: TypeReference } | { ok: false } {
+        const resolvedReference = this.resolveReference<AsyncAPIV2.MessageV2>({ reference, breadcrumbs });
+        if (!resolvedReference.resolved) {
+            return { ok: false };
+        }
+
+        let displayName: string | undefined;
+
+        if (displayNameOverrideSource === "reference_identifier") {
+            displayName = displayNameOverride ?? resolvedReference.value.messageId ?? resolvedReference.value.name;
+        } else if (
+            displayNameOverrideSource === "discriminator_key" ||
+            displayNameOverrideSource === "schema_identifier"
+        ) {
+            displayName = resolvedReference.value.messageId ?? resolvedReference.value.name ?? displayNameOverride;
+        }
+
+        return {
+            ok: true,
+            reference: TypeReference.named({
+                fernFilepath: this.createFernFilepath(),
+                name: this.casingsGenerator.generateName(typeId),
+                typeId,
+                displayName,
                 default: undefined,
                 inline: false
             })

@@ -20,5 +20,7 @@ packages/cli/configuration/src/generators-yml/schemas/**
 packages/cli/fern-definition/schema/src/schemas/**
 packages/seed/**
 generators/typescript/utils/core-utilities/**
+generators/typescript/asIs/**
+generators/typescript-mcp/base/src/asIs/**
 seed/**
 docker/seed/**

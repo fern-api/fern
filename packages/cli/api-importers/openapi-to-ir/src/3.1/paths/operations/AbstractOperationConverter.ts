@@ -2,7 +2,7 @@ import { camelCase, compact, isEqual } from "lodash-es";
 import { OpenAPIV3_1 } from "openapi-types";
 
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { HttpHeader, HttpMethod, HttpRequestBody, HttpResponse, PathParameter, QueryParameter } from "@fern-api/ir-sdk";
+import { HttpHeader, HttpMethod, HttpRequestBody, PathParameter, QueryParameter } from "@fern-api/ir-sdk";
 import { AbstractConverter, Converters, Extensions } from "@fern-api/v2-importer-commons";
 
 import { FernStreamingExtension } from "../../../extensions/x-fern-streaming";
@@ -10,8 +10,6 @@ import { GroupNameAndLocation } from "../../../types/GroupNameAndLocation";
 import { OpenAPIConverterContext3_1 } from "../../OpenAPIConverterContext3_1";
 import { ParameterConverter } from "../ParameterConverter";
 import { RequestBodyConverter } from "../RequestBodyConverter";
-import { ResponseBodyConverter } from "../ResponseBodyConverter";
-import { ResponseErrorConverter } from "../ResponseErrorConverter";
 
 const PATH_PARAM_REGEX = /{([^}]+)}/g;
 
@@ -39,13 +37,8 @@ export declare namespace AbstractOperationConverter {
     }
 }
 interface ConvertedRequestBody {
-    value: HttpRequestBody;
-    examples?: Record<string, OpenAPIV3_1.ExampleObject>;
-}
-interface ConvertedResponseBody {
-    response: HttpResponse | undefined;
-    streamResponse: HttpResponse | undefined;
-    errors: ResponseErrorConverter.Output[];
+    requestBody: HttpRequestBody;
+    streamRequestBody: HttpRequestBody | undefined;
     examples?: Record<string, OpenAPIV3_1.ExampleObject>;
 }
 
@@ -79,6 +72,8 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
                 return HttpMethod.Delete;
             case "patch":
                 return HttpMethod.Patch;
+            case "head":
+                return HttpMethod.Head;
             default:
                 return undefined;
         }
@@ -141,7 +136,11 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
                             }
                         }
 
-                        if (!HEADERS_TO_SKIP.has(headerName.toLowerCase()) && !duplicateHeader) {
+                        if (
+                            !HEADERS_TO_SKIP.has(headerName.toLowerCase()) &&
+                            !duplicateHeader &&
+                            !this.context.globalHeaderNames?.includes(headerWireValue)
+                        ) {
                             headers.push(convertedParameter.parameter);
                         }
                         break;
@@ -183,11 +182,13 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
     protected convertRequestBody({
         breadcrumbs,
         group,
-        method
+        method,
+        streamingExtension
     }: {
         breadcrumbs: string[];
         group: string[] | undefined;
         method: string;
+        streamingExtension: FernStreamingExtension.Output | undefined;
     }): ConvertedRequestBody | undefined | null {
         if (this.operation.requestBody == null) {
             return undefined;
@@ -207,7 +208,8 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
             breadcrumbs,
             requestBody: resolvedRequestBody,
             group: group ?? [],
-            method
+            method,
+            streamingExtension
         });
         const convertedRequestBody = requestBodyConverter.convert();
 
@@ -216,114 +218,14 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
                 ...this.inlinedTypes,
                 ...convertedRequestBody.inlinedTypes
             };
-            return { value: convertedRequestBody.requestBody, examples: convertedRequestBody.examples };
+            return {
+                requestBody: convertedRequestBody.requestBody,
+                streamRequestBody: convertedRequestBody.streamRequestBody,
+                examples: convertedRequestBody.examples
+            };
         }
 
         return undefined;
-    }
-
-    protected convertResponseBody({
-        breadcrumbs,
-        group,
-        method,
-        streamingExtension
-    }: {
-        breadcrumbs: string[];
-        group: string[] | undefined;
-        method: string;
-        streamingExtension: FernStreamingExtension.Output | undefined;
-    }): ConvertedResponseBody | undefined {
-        if (this.operation.responses == null) {
-            return undefined;
-        }
-
-        let convertedResponseBody: ConvertedResponseBody | undefined = undefined;
-        // TODO: Our existing Parser will only parse the first successful response.
-        // We'll need to update it to parse all successful responses.
-        let hasSuccessfulResponse = false;
-
-        for (const [statusCode, response] of Object.entries(this.operation.responses)) {
-            const statusCodeNum = parseInt(statusCode);
-            if (isNaN(statusCodeNum) || statusCodeNum < 200 || (statusCodeNum >= 300 && statusCodeNum < 400)) {
-                continue;
-            }
-            if (convertedResponseBody == null) {
-                convertedResponseBody = {
-                    response: undefined,
-                    streamResponse: undefined,
-                    errors: [],
-                    examples: {}
-                };
-            }
-            // Convert Successful Responses (2xx)
-            if (statusCodeNum >= 200 && statusCodeNum < 300 && !hasSuccessfulResponse) {
-                const resolvedResponse = this.context.resolveMaybeReference<OpenAPIV3_1.ResponseObject>({
-                    schemaOrReference: response,
-                    breadcrumbs: [...breadcrumbs, statusCode]
-                });
-
-                if (resolvedResponse == null) {
-                    continue;
-                }
-
-                const responseBodyConverter = new ResponseBodyConverter({
-                    context: this.context,
-                    breadcrumbs: [...breadcrumbs, statusCode],
-                    responseBody: resolvedResponse,
-                    group: group ?? [],
-                    method,
-                    statusCode,
-                    streamingExtension
-                });
-                const converted = responseBodyConverter.convert();
-                if (converted != null) {
-                    hasSuccessfulResponse = true;
-                    this.inlinedTypes = {
-                        ...this.inlinedTypes,
-                        ...converted.inlinedTypes
-                    };
-                    convertedResponseBody.response = {
-                        statusCode: statusCodeNum,
-                        body: converted.responseBody
-                    };
-                    convertedResponseBody.streamResponse = {
-                        statusCode: statusCodeNum,
-                        body: converted.streamResponseBody
-                    };
-                }
-            }
-            // Convert Error Responses (4xx and 5xx)
-            if (statusCodeNum >= 400 && statusCodeNum < 600) {
-                const resolvedResponse = this.context.resolveMaybeReference<OpenAPIV3_1.ResponseObject>({
-                    schemaOrReference: response,
-                    breadcrumbs: [...breadcrumbs, statusCode]
-                });
-
-                if (resolvedResponse == null) {
-                    continue;
-                }
-
-                const responseErrorConverter = new ResponseErrorConverter({
-                    context: this.context,
-                    breadcrumbs: [...breadcrumbs, statusCode],
-                    responseError: resolvedResponse,
-                    group: group ?? [],
-                    method,
-                    methodName: this.evaluateMethodNameFromOperation(),
-                    statusCode: statusCodeNum
-                });
-                const converted = responseErrorConverter.convert();
-                if (converted != null) {
-                    this.inlinedTypes = {
-                        ...this.inlinedTypes,
-                        ...converted.inlinedTypes
-                    };
-                    convertedResponseBody.errors.push(converted);
-                }
-            }
-        }
-
-        return convertedResponseBody;
     }
 
     protected computeGroupNameAndLocationFromExtensions(): GroupNameAndLocation | undefined {

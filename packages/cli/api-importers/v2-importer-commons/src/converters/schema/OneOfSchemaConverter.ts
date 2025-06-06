@@ -2,6 +2,7 @@ import { OpenAPIV3_1 } from "openapi-types";
 
 import {
     ContainerType,
+    DeclaredTypeName,
     SingleUnionType,
     SingleUnionTypeProperties,
     Type,
@@ -55,6 +56,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
         ) {
             return this.convertAsDiscriminatedUnion();
         }
+
         return this.convertAsUndiscriminatedUnion();
     }
 
@@ -107,7 +109,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
                     docs: undefined,
                     discriminantValue: nameAndWireValue,
                     availability: convertedSchema.availability,
-                    displayName: undefined,
+                    displayName: discriminant,
                     shape: SingleUnionTypeProperties.samePropertiesAsObject({
                         typeId,
                         name: this.context.casingsGenerator.generateName(typeId),
@@ -115,7 +117,8 @@ export class OneOfSchemaConverter extends AbstractConverter<
                             allParts: [],
                             packagePath: [],
                             file: undefined
-                        }
+                        },
+                        displayName: discriminant
                     })
                 });
                 inlinedTypes = {
@@ -138,6 +141,30 @@ export class OneOfSchemaConverter extends AbstractConverter<
         });
 
         referencedTypes = new Set([...referencedTypes, ...baseReferencedTypes]);
+
+        const extends_: DeclaredTypeName[] = [];
+        for (const [index, allOfSchema] of (this.schema.allOf ?? []).entries()) {
+            const breadcrumbs = [...this.breadcrumbs, "allOf", index.toString()];
+
+            if (this.context.isReferenceObject(allOfSchema)) {
+                const maybeTypeReference = this.context.convertReferenceToTypeReference({
+                    reference: allOfSchema,
+                    breadcrumbs
+                });
+                if (maybeTypeReference.ok) {
+                    const declaredTypeName = this.context.typeReferenceToDeclaredTypeName(maybeTypeReference.reference);
+                    if (declaredTypeName != null) {
+                        extends_.push(declaredTypeName);
+                    }
+                }
+                const typeId = this.context.getTypeIdFromSchemaReference(allOfSchema);
+                if (typeId != null) {
+                    referencedTypes.add(typeId);
+                }
+                continue;
+            }
+        }
+
         for (const typeId of Object.keys({ ...inlinedTypes, ...inlinedTypesFromProperties })) {
             referencedTypes.add(typeId);
         }
@@ -149,7 +176,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
                     name: this.schema.discriminator.propertyName,
                     wireValue: this.schema.discriminator.propertyName
                 }),
-                extends: [],
+                extends: extends_,
                 types: unionTypes
             }),
             referencedTypes,
@@ -177,7 +204,28 @@ export class OneOfSchemaConverter extends AbstractConverter<
             ...(this.schema.anyOf ?? []).entries()
         ]) {
             if (this.context.isReferenceObject(subSchema)) {
-                const maybeTypeReference = this.context.convertReferenceToTypeReference({ reference: subSchema });
+                let maybeTypeReference;
+
+                if (this.context.isReferenceObjectWithIdentifier(subSchema)) {
+                    maybeTypeReference = this.context.convertReferenceToTypeReference({
+                        reference: subSchema,
+                        displayNameOverride: subSchema.title ?? subSchema.name ?? subSchema.messageId,
+                        displayNameOverrideSource: "reference_identifier"
+                    });
+                } else if (this.getDiscriminatorKeyForRef(subSchema) != null) {
+                    const mappingEntry = this.getDiscriminatorKeyForRef(subSchema);
+                    maybeTypeReference = this.context.convertReferenceToTypeReference({
+                        reference: subSchema,
+                        displayNameOverride: mappingEntry,
+                        displayNameOverrideSource: "discriminator_key"
+                    });
+                } else {
+                    maybeTypeReference = this.context.convertReferenceToTypeReference({
+                        reference: subSchema,
+                        displayNameOverrideSource: "schema_identifier"
+                    });
+                }
+
                 if (maybeTypeReference.ok) {
                     unionTypes.push({
                         type: maybeTypeReference.reference,
@@ -194,10 +242,11 @@ export class OneOfSchemaConverter extends AbstractConverter<
             const extendedSubSchema = this.extendSubSchema(subSchema);
 
             const schemaId = this.context.convertBreadcrumbsToName([`${this.id}_${index}`]);
+            const displayName = subSchema.title;
             const schemaConverter = new SchemaConverter({
                 context: this.context,
                 id: schemaId,
-                nameOverride: subSchema.title,
+                nameOverride: displayName,
                 breadcrumbs: [...this.breadcrumbs, `oneOf[${index}]`],
                 schema: extendedSubSchema ?? subSchema
             });
@@ -209,9 +258,19 @@ export class OneOfSchemaConverter extends AbstractConverter<
                         type: typeShape.aliasOf,
                         docs: subSchema.description
                     });
+                } else if (typeShape.type === "object" && typeShape.properties.length === 0) {
+                    unionTypes.push({
+                        type: TypeReference.container(
+                            ContainerType.map({
+                                keyType: AbstractConverter.STRING,
+                                valueType: TypeReference.unknown()
+                            })
+                        ),
+                        docs: subSchema.description
+                    });
                 } else {
                     unionTypes.push({
-                        type: this.context.createNamedTypeReference(schemaId),
+                        type: this.context.createNamedTypeReference(schemaId, displayName),
                         docs: subSchema.description
                     });
                     inlinedTypes = {
@@ -262,7 +321,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
 
         if (withoutNull.length === 0) {
             this.context.errorCollector.collect({
-                message: `Received ${schemaType} schema with no valid non-null types: ${JSON.stringify(this.schema)}`,
+                message: `Received ${schemaType} schema with no valid non-null types`,
                 path: this.breadcrumbs
             });
             return undefined;
@@ -318,7 +377,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
             case "primitive":
                 return true;
             case "unknown":
-                return false;
+                return true;
             default:
                 return false;
         }
@@ -374,10 +433,14 @@ export class OneOfSchemaConverter extends AbstractConverter<
 
         if (!this.context.isObjectSchemaType(subSchema)) {
             this.context.errorCollector.collect({
-                message: `Received additional object properties for oneOf/anyOf that are not objects: ${JSON.stringify(subSchema)}`,
+                message: "Received additional object properties for oneOf/anyOf that are not objects",
                 path: this.breadcrumbs
             });
         }
         return undefined;
+    }
+
+    private getDiscriminatorKeyForRef(subSchema: OpenAPIV3_1.ReferenceObject): string | undefined {
+        return Object.entries(this.schema.discriminator?.mapping ?? {}).find(([_, ref]) => ref === subSchema.$ref)?.[0];
     }
 }

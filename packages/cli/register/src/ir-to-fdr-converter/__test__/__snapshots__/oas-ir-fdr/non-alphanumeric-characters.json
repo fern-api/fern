@@ -50,7 +50,7 @@
         "auth": false,
         "method": "PATCH",
         "id": "patchSettings",
-        "originalEndpointId": "patchSettings",
+        "originalEndpointId": "endpoint_.patchSettings",
         "name": "Patch Settings",
         "path": {
           "pathParameters": [],
@@ -107,10 +107,7 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "separator": "/"
-              }
+              "separator": "/"
             },
             "responseBodyV3": {
               "type": "json",

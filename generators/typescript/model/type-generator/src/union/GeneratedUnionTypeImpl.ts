@@ -1,4 +1,4 @@
-import { GetReferenceOpts } from "@fern-typescript/commons";
+import { GetReferenceOpts, getPropertyKey } from "@fern-typescript/commons";
 import { BaseContext, GeneratedUnion, GeneratedUnionType } from "@fern-typescript/contexts";
 import { GeneratedUnionImpl } from "@fern-typescript/union-generator";
 import { ModuleDeclarationStructure, StatementStructures, WriterFunction, ts } from "ts-morph";
@@ -142,10 +142,12 @@ export class GeneratedUnionTypeImpl<Context extends BaseContext>
                         }
                         return [
                             ts.factory.createPropertyAssignment(
-                                ParsedSingleUnionTypeForUnion.getSinglePropertyKey(unionMember.shape, {
-                                    includeSerdeLayer: this.includeSerdeLayer,
-                                    retainOriginalCasing: this.retainOriginalCasing
-                                }),
+                                getPropertyKey(
+                                    ParsedSingleUnionTypeForUnion.getSinglePropertyKey(unionMember.shape, {
+                                        includeSerdeLayer: this.includeSerdeLayer,
+                                        retainOriginalCasing: this.retainOriginalCasing
+                                    })
+                                ),
                                 context.type.getGeneratedExample(property).build(context, opts)
                             )
                         ];

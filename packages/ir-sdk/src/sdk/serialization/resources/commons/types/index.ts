@@ -2,6 +2,7 @@ export * from "./WithDocs";
 export * from "./WithDocsAndAvailability";
 export * from "./FernFilepath";
 export * from "./Name";
+export * from "./DisplayName";
 export * from "./NameAndWireValue";
 export * from "./SafeAndUnsafeString";
 export * from "./EscapedString";

@@ -27,7 +27,8 @@ describe("OpenAPIConverterContext3_1", async () => {
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 logger: undefined as any
             }),
-            enableUniqueErrorsPerEndpoint: false
+            enableUniqueErrorsPerEndpoint: false,
+            generateV1Examples: false
         });
 
         const result = await context.resolveMaybeExternalReference<OpenAPIV3_1.SchemaObject>({

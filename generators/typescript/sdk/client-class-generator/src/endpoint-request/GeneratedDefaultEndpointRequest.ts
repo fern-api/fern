@@ -3,6 +3,7 @@ import {
     GetReferenceOpts,
     PackageId,
     getParameterNameForPositionalPathParameter,
+    getPropertyKey,
     getTextOfTsNode
 } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
@@ -197,14 +198,43 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
             headers: this.getHeaders(context),
             queryParameters: this.queryParams.getReferenceTo(context),
             body: this.getSerializedRequestBodyWithNullCheck(context),
-            contentType: this.requestBody?.contentType ?? "application/json",
-            requestType: "json"
+            contentType: this.requestBody?.contentType ?? this.getFallbackContentType(),
+            requestType: this.getRequestType()
         };
     }
 
-    private getHeaders(context: SdkContext): ts.ObjectLiteralElementLike[] {
+    private getFallbackContentType(): string | undefined {
+        const requestBodyType = this.requestBody?.type ?? "undefined";
+        switch (requestBodyType) {
+            case "inlinedRequestBody":
+                return "application/json";
+            case "reference":
+                return "application/json";
+            case "undefined":
+                return undefined;
+            default:
+                assertNever(requestBodyType);
+        }
+    }
+
+    private getRequestType(): "json" | undefined {
+        const requestBodyType = this.requestBody?.type ?? "undefined";
+        switch (requestBodyType) {
+            case "inlinedRequestBody":
+                return "json";
+            case "reference":
+                return "json";
+            case "undefined":
+                return undefined;
+            default:
+                assertNever(requestBodyType);
+        }
+    }
+
+    private getHeaders(context: SdkContext): ts.Expression {
         return generateHeaders({
             context,
+            intermediateRepresentation: this.ir,
             requestParameter: this.requestParameter,
             generatedSdkClientClass: this.generatedSdkClientClass,
             idempotencyHeaders: this.ir.idempotencyHeaders,
@@ -285,7 +315,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
                 ts.factory.createSpreadAssignment(ts.factory.createParenthesizedExpression(serializeExpression)),
                 ...literalProperties.map((property) => {
                     return ts.factory.createPropertyAssignment(
-                        property.propertyWireKey,
+                        getPropertyKey(property.propertyWireKey),
                         typeof property.propertyValue === "string"
                             ? ts.factory.createStringLiteral(property.propertyValue)
                             : property.propertyValue

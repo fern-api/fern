@@ -1,6 +1,6 @@
 {
   "types": {
-    "e_t_h___b_l_o_c_k_N_u_m_b_e_r_Result": {
+    "eth_blockNumber_Result": {
       "name": "EthBlockNumberResult",
       "shape": {
         "type": "alias",
@@ -15,7 +15,7 @@
     },
     "EthCallParamBlock1": {
       "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
-      "name": "Block tag",
+      "name": "EthCallParamBlock1",
       "shape": {
         "type": "enum",
         "values": [
@@ -35,7 +35,8 @@
             "value": "pending"
           }
         ]
-      }
+      },
+      "displayName": "Block tag"
     },
     "eth_call_Param_Block": {
       "name": "eth_call_Param_Block",
@@ -57,7 +58,8 @@
             "type": {
               "type": "id",
               "value": "EthCallParamBlock1"
-            }
+            },
+            "displayName": "Block tag"
           },
           {
             "type": {
@@ -71,8 +73,8 @@
         ]
       }
     },
-    "MethodsParams0AccessListItems": {
-      "name": "MethodsParams0AccessListItems",
+    "EthCallParamTransactionAccessListItems": {
+      "name": "EthCallParamTransactionAccessListItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -274,7 +276,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "MethodsParams0AccessListItems"
+                  "value": "EthCallParamTransactionAccessListItems"
                 }
               }
             }
@@ -330,7 +332,7 @@
         ]
       }
     },
-    "e_t_h___c_a_l_l_Result": {
+    "eth_call_Result": {
       "name": "EthCallResult",
       "shape": {
         "type": "alias",
@@ -343,7 +345,7 @@
         }
       }
     },
-    "e_t_h___c_h_a_i_n_I_d_Result": {
+    "eth_chainId_Result": {
       "name": "EthChainIdResult",
       "shape": {
         "type": "alias",
@@ -358,7 +360,7 @@
     },
     "EthEstimateGasParamBlock1": {
       "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
-      "name": "Block tag",
+      "name": "EthEstimateGasParamBlock1",
       "shape": {
         "type": "enum",
         "values": [
@@ -378,7 +380,8 @@
             "value": "pending"
           }
         ]
-      }
+      },
+      "displayName": "Block tag"
     },
     "eth_estimateGas_Param_Block": {
       "name": "eth_estimateGas_Param_Block",
@@ -400,6 +403,45 @@
             "type": {
               "type": "id",
               "value": "EthEstimateGasParamBlock1"
+            },
+            "displayName": "Block tag"
+          }
+        ]
+      }
+    },
+    "EthEstimateGasParamTransactionAccessListItems": {
+      "name": "EthEstimateGasParamTransactionAccessListItems",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "address",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-fA-F]{40}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "storageKeys",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "regex": "^0x[0-9a-f]{64}$"
+                  }
+                }
+              }
             }
           }
         ]
@@ -570,7 +612,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "MethodsParams0AccessListItems"
+                  "value": "EthEstimateGasParamTransactionAccessListItems"
                 }
               }
             }
@@ -626,7 +668,7 @@
         ]
       }
     },
-    "e_t_h___e_s_t_i_m_a_t_e_G_a_s_Result": {
+    "eth_estimateGas_Result": {
       "name": "EthEstimateGasResult",
       "shape": {
         "type": "alias",
@@ -639,7 +681,7 @@
         }
       }
     },
-    "e_t_h___g_a_s_P_r_i_c_e_Result": {
+    "eth_gasPrice_Result": {
       "name": "EthGasPriceResult",
       "shape": {
         "type": "alias",
@@ -654,7 +696,7 @@
     },
     "EthGetBalanceParamBlock1": {
       "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
-      "name": "Block tag",
+      "name": "EthGetBalanceParamBlock1",
       "shape": {
         "type": "enum",
         "values": [
@@ -674,7 +716,8 @@
             "value": "pending"
           }
         ]
-      }
+      },
+      "displayName": "Block tag"
     },
     "eth_getBalance_Param_Block": {
       "name": "eth_getBalance_Param_Block",
@@ -696,7 +739,8 @@
             "type": {
               "type": "id",
               "value": "EthGetBalanceParamBlock1"
-            }
+            },
+            "displayName": "Block tag"
           },
           {
             "type": {
@@ -723,7 +767,7 @@
         }
       }
     },
-    "e_t_h___g_e_t_B_a_l_a_n_c_e_Result": {
+    "eth_getBalance_Result": {
       "name": "EthGetBalanceResult",
       "shape": {
         "type": "alias",
@@ -775,7 +819,7 @@
       }
     },
     "EthGetBlockByHashResultTransactionsOneOf1Items0": {
-      "name": "Signed 4844 Transaction",
+      "name": "EthGetBlockByHashResultTransactionsOneOf1Items0",
       "shape": {
         "type": "object",
         "extends": [],
@@ -1006,7 +1050,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "Signed 4844 Transaction"
     },
     "EthGetBlockByHashResultTransactionsOneOf1ItemsOneOf1AccessListItems": {
       "name": "EthGetBlockByHashResultTransactionsOneOf1ItemsOneOf1AccessListItems",
@@ -1047,7 +1092,7 @@
       }
     },
     "EthGetBlockByHashResultTransactionsOneOf1Items1": {
-      "name": "Signed 1559 Transaction",
+      "name": "EthGetBlockByHashResultTransactionsOneOf1Items1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -1284,7 +1329,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "Signed 1559 Transaction"
     },
     "EthGetBlockByHashResultTransactionsOneOf1ItemsOneOf2AccessListItems": {
       "name": "EthGetBlockByHashResultTransactionsOneOf1ItemsOneOf2AccessListItems",
@@ -1325,7 +1371,7 @@
       }
     },
     "EthGetBlockByHashResultTransactionsOneOf1Items2": {
-      "name": "Signed 2930 Transaction",
+      "name": "EthGetBlockByHashResultTransactionsOneOf1Items2",
       "shape": {
         "type": "object",
         "extends": [],
@@ -1540,10 +1586,11 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "Signed 2930 Transaction"
     },
     "EthGetBlockByHashResultTransactionsOneOf1Items3": {
-      "name": "Signed Legacy Transaction",
+      "name": "EthGetBlockByHashResultTransactionsOneOf1Items3",
       "shape": {
         "type": "object",
         "extends": [],
@@ -1735,7 +1782,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "Signed Legacy Transaction"
     },
     "EthGetBlockByHashResultTransactionsOneOf1Items": {
       "name": "EthGetBlockByHashResultTransactionsOneOf1Items",
@@ -1747,34 +1795,38 @@
             "type": {
               "type": "id",
               "value": "EthGetBlockByHashResultTransactionsOneOf1Items0"
-            }
+            },
+            "displayName": "Signed 4844 Transaction"
           },
           {
             "typeName": "EthGetBlockByHashResultTransactionsOneOf1Items1",
             "type": {
               "type": "id",
               "value": "EthGetBlockByHashResultTransactionsOneOf1Items1"
-            }
+            },
+            "displayName": "Signed 1559 Transaction"
           },
           {
             "typeName": "EthGetBlockByHashResultTransactionsOneOf1Items2",
             "type": {
               "type": "id",
               "value": "EthGetBlockByHashResultTransactionsOneOf1Items2"
-            }
+            },
+            "displayName": "Signed 2930 Transaction"
           },
           {
             "typeName": "EthGetBlockByHashResultTransactionsOneOf1Items3",
             "type": {
               "type": "id",
               "value": "EthGetBlockByHashResultTransactionsOneOf1Items3"
-            }
+            },
+            "displayName": "Signed Legacy Transaction"
           }
         ]
       }
     },
     "EthGetBlockByHashResultTransactions1": {
-      "name": "Full transactions",
+      "name": "EthGetBlockByHashResultTransactions1",
       "shape": {
         "type": "alias",
         "value": {
@@ -1784,7 +1836,8 @@
             "value": "EthGetBlockByHashResultTransactionsOneOf1Items"
           }
         }
-      }
+      },
+      "displayName": "Full transactions"
     },
     "EthGetBlockByHashResultTransactions": {
       "name": "EthGetBlockByHashResultTransactions",
@@ -1808,7 +1861,8 @@
             "type": {
               "type": "id",
               "value": "EthGetBlockByHashResultTransactions1"
-            }
+            },
+            "displayName": "Full transactions"
           }
         ]
       }
@@ -2167,7 +2221,7 @@
         }
       }
     },
-    "e_t_h___g_e_t_B_l_o_c_k_B_y_H_a_s_h_Result": {
+    "eth_getBlockByHash_Result": {
       "name": "EthGetBlockByHashResult",
       "shape": {
         "type": "alias",
@@ -2219,7 +2273,7 @@
       }
     },
     "EthGetBlockByNumberResultTransactionsOneOf1Items0": {
-      "name": "Signed 4844 Transaction",
+      "name": "EthGetBlockByNumberResultTransactionsOneOf1Items0",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2450,7 +2504,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "Signed 4844 Transaction"
     },
     "EthGetBlockByNumberResultTransactionsOneOf1ItemsOneOf1AccessListItems": {
       "name": "EthGetBlockByNumberResultTransactionsOneOf1ItemsOneOf1AccessListItems",
@@ -2491,7 +2546,7 @@
       }
     },
     "EthGetBlockByNumberResultTransactionsOneOf1Items1": {
-      "name": "Signed 1559 Transaction",
+      "name": "EthGetBlockByNumberResultTransactionsOneOf1Items1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2728,7 +2783,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "Signed 1559 Transaction"
     },
     "EthGetBlockByNumberResultTransactionsOneOf1ItemsOneOf2AccessListItems": {
       "name": "EthGetBlockByNumberResultTransactionsOneOf1ItemsOneOf2AccessListItems",
@@ -2769,7 +2825,7 @@
       }
     },
     "EthGetBlockByNumberResultTransactionsOneOf1Items2": {
-      "name": "Signed 2930 Transaction",
+      "name": "EthGetBlockByNumberResultTransactionsOneOf1Items2",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2984,10 +3040,11 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "Signed 2930 Transaction"
     },
     "EthGetBlockByNumberResultTransactionsOneOf1Items3": {
-      "name": "Signed Legacy Transaction",
+      "name": "EthGetBlockByNumberResultTransactionsOneOf1Items3",
       "shape": {
         "type": "object",
         "extends": [],
@@ -3179,7 +3236,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "Signed Legacy Transaction"
     },
     "EthGetBlockByNumberResultTransactionsOneOf1Items": {
       "name": "EthGetBlockByNumberResultTransactionsOneOf1Items",
@@ -3191,34 +3249,38 @@
             "type": {
               "type": "id",
               "value": "EthGetBlockByNumberResultTransactionsOneOf1Items0"
-            }
+            },
+            "displayName": "Signed 4844 Transaction"
           },
           {
             "typeName": "EthGetBlockByNumberResultTransactionsOneOf1Items1",
             "type": {
               "type": "id",
               "value": "EthGetBlockByNumberResultTransactionsOneOf1Items1"
-            }
+            },
+            "displayName": "Signed 1559 Transaction"
           },
           {
             "typeName": "EthGetBlockByNumberResultTransactionsOneOf1Items2",
             "type": {
               "type": "id",
               "value": "EthGetBlockByNumberResultTransactionsOneOf1Items2"
-            }
+            },
+            "displayName": "Signed 2930 Transaction"
           },
           {
             "typeName": "EthGetBlockByNumberResultTransactionsOneOf1Items3",
             "type": {
               "type": "id",
               "value": "EthGetBlockByNumberResultTransactionsOneOf1Items3"
-            }
+            },
+            "displayName": "Signed Legacy Transaction"
           }
         ]
       }
     },
     "EthGetBlockByNumberResultTransactions1": {
-      "name": "Full transactions",
+      "name": "EthGetBlockByNumberResultTransactions1",
       "shape": {
         "type": "alias",
         "value": {
@@ -3228,7 +3290,8 @@
             "value": "EthGetBlockByNumberResultTransactionsOneOf1Items"
           }
         }
-      }
+      },
+      "displayName": "Full transactions"
     },
     "EthGetBlockByNumberResultTransactions": {
       "name": "EthGetBlockByNumberResultTransactions",
@@ -3252,7 +3315,8 @@
             "type": {
               "type": "id",
               "value": "EthGetBlockByNumberResultTransactions1"
-            }
+            },
+            "displayName": "Full transactions"
           }
         ]
       }
@@ -3588,7 +3652,7 @@
     },
     "EthGetBlockByNumberParamBlockNumberOrTag1": {
       "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
-      "name": "Block tag",
+      "name": "EthGetBlockByNumberParamBlockNumberOrTag1",
       "shape": {
         "type": "enum",
         "values": [
@@ -3608,7 +3672,8 @@
             "value": "pending"
           }
         ]
-      }
+      },
+      "displayName": "Block tag"
     },
     "eth_getBlockByNumber_Param_Block number or tag": {
       "name": "eth_getBlockByNumber_Param_Block number or tag",
@@ -3630,7 +3695,8 @@
             "type": {
               "type": "id",
               "value": "EthGetBlockByNumberParamBlockNumberOrTag1"
-            }
+            },
+            "displayName": "Block tag"
           }
         ]
       }
@@ -3647,7 +3713,7 @@
         }
       }
     },
-    "e_t_h___g_e_t_B_l_o_c_k_B_y_N_u_m_b_e_r_Result": {
+    "eth_getBlockByNumber_Result": {
       "name": "EthGetBlockByNumberResult",
       "shape": {
         "type": "alias",
@@ -3673,7 +3739,7 @@
         }
       }
     },
-    "e_t_h___g_e_t_B_l_o_c_k_T_r_a_n_s_a_c_t_i_o_n_C_o_u_n_t_B_y_H_a_s_h_Result": {
+    "eth_getBlockTransactionCountByHash_Result": {
       "name": "EthGetBlockTransactionCountByHashResult",
       "shape": {
         "type": "alias",
@@ -3691,7 +3757,7 @@
     },
     "EthGetBlockTransactionCountByNumberParamBlockNumberOrTag1": {
       "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
-      "name": "Block tag",
+      "name": "EthGetBlockTransactionCountByNumberParamBlockNumberOrTag1",
       "shape": {
         "type": "enum",
         "values": [
@@ -3711,7 +3777,8 @@
             "value": "pending"
           }
         ]
-      }
+      },
+      "displayName": "Block tag"
     },
     "eth_getBlockTransactionCountByNumber_Param_Block number or tag": {
       "name": "eth_getBlockTransactionCountByNumber_Param_Block number or tag",
@@ -3733,12 +3800,13 @@
             "type": {
               "type": "id",
               "value": "EthGetBlockTransactionCountByNumberParamBlockNumberOrTag1"
-            }
+            },
+            "displayName": "Block tag"
           }
         ]
       }
     },
-    "e_t_h___g_e_t_B_l_o_c_k_T_r_a_n_s_a_c_t_i_o_n_C_o_u_n_t_B_y_N_u_m_b_e_r_Result": {
+    "eth_getBlockTransactionCountByNumber_Result": {
       "name": "EthGetBlockTransactionCountByNumberResult",
       "shape": {
         "type": "alias",
@@ -3756,7 +3824,7 @@
     },
     "EthGetCodeParamBlock1": {
       "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
-      "name": "Block tag",
+      "name": "EthGetCodeParamBlock1",
       "shape": {
         "type": "enum",
         "values": [
@@ -3776,7 +3844,8 @@
             "value": "pending"
           }
         ]
-      }
+      },
+      "displayName": "Block tag"
     },
     "eth_getCode_Param_Block": {
       "name": "eth_getCode_Param_Block",
@@ -3798,7 +3867,8 @@
             "type": {
               "type": "id",
               "value": "EthGetCodeParamBlock1"
-            }
+            },
+            "displayName": "Block tag"
           },
           {
             "type": {
@@ -3825,7 +3895,7 @@
         }
       }
     },
-    "e_t_h___g_e_t_C_o_d_e_Result": {
+    "eth_getCode_Result": {
       "name": "EthGetCodeResult",
       "shape": {
         "type": "alias",
@@ -3964,7 +4034,7 @@
       }
     },
     "EthGetLogsResult1": {
-      "name": "new logs",
+      "name": "EthGetLogsResult1",
       "shape": {
         "type": "alias",
         "value": {
@@ -3974,7 +4044,8 @@
             "value": "EthGetLogsResultOneOf1Items"
           }
         }
-      }
+      },
+      "displayName": "new logs"
     },
     "EthGetLogsResult": {
       "name": "EthGetLogsResult",
@@ -3998,13 +4069,14 @@
             "type": {
               "type": "id",
               "value": "EthGetLogsResult1"
-            }
+            },
+            "displayName": "new logs"
           }
         ]
       }
     },
-    "MethodsParams0Address": {
-      "name": "MethodsParams0Address",
+    "EthGetLogsParamFilterAddress": {
+      "name": "EthGetLogsParamFilterAddress",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -4032,8 +4104,8 @@
         ]
       }
     },
-    "MethodsParams0TopicsItems": {
-      "name": "MethodsParams0TopicsItems",
+    "EthGetLogsParamFilterTopicsItems": {
+      "name": "EthGetLogsParamFilterTopicsItems",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -4101,7 +4173,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "MethodsParams0Address"
+                  "value": "EthGetLogsParamFilterAddress"
                 }
               }
             }
@@ -4116,7 +4188,7 @@
                   "type": "list",
                   "itemType": {
                     "type": "id",
-                    "value": "MethodsParams0TopicsItems"
+                    "value": "EthGetLogsParamFilterTopicsItems"
                   }
                 }
               }
@@ -4125,7 +4197,7 @@
         ]
       }
     },
-    "e_t_h___g_e_t_L_o_g_s_Result": {
+    "eth_getLogs_Result": {
       "name": "EthGetLogsResult",
       "shape": {
         "type": "undiscriminatedUnion",
@@ -4147,7 +4219,8 @@
             "type": {
               "type": "id",
               "value": "EthGetLogsResult1"
-            }
+            },
+            "displayName": "new logs"
           }
         ]
       }
@@ -4278,7 +4351,7 @@
     },
     "EthGetProofParamBlock1": {
       "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
-      "name": "Block tag",
+      "name": "EthGetProofParamBlock1",
       "shape": {
         "type": "enum",
         "values": [
@@ -4298,7 +4371,8 @@
             "value": "pending"
           }
         ]
-      }
+      },
+      "displayName": "Block tag"
     },
     "eth_getProof_Param_Block": {
       "name": "eth_getProof_Param_Block",
@@ -4320,7 +4394,8 @@
             "type": {
               "type": "id",
               "value": "EthGetProofParamBlock1"
-            }
+            },
+            "displayName": "Block tag"
           },
           {
             "type": {
@@ -4363,7 +4438,7 @@
         }
       }
     },
-    "e_t_h___g_e_t_P_r_o_o_f_Result": {
+    "eth_getProof_Result": {
       "name": "EthGetProofResult",
       "shape": {
         "type": "object",
@@ -4447,7 +4522,7 @@
     },
     "EthGetStorageAtParamBlock1": {
       "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
-      "name": "Block tag",
+      "name": "EthGetStorageAtParamBlock1",
       "shape": {
         "type": "enum",
         "values": [
@@ -4467,7 +4542,8 @@
             "value": "pending"
           }
         ]
-      }
+      },
+      "displayName": "Block tag"
     },
     "eth_getStorageAt_Param_Block": {
       "name": "eth_getStorageAt_Param_Block",
@@ -4489,7 +4565,8 @@
             "type": {
               "type": "id",
               "value": "EthGetStorageAtParamBlock1"
-            }
+            },
+            "displayName": "Block tag"
           },
           {
             "type": {
@@ -4529,7 +4606,7 @@
         }
       }
     },
-    "e_t_h___g_e_t_S_t_o_r_a_g_e_A_t_Result": {
+    "eth_getStorageAt_Result": {
       "name": "EthGetStorageAtResult",
       "shape": {
         "type": "alias",
@@ -4581,7 +4658,7 @@
       }
     },
     "EthGetTransactionByBlockHashAndIndexResult0": {
-      "name": "Signed 4844 Transaction",
+      "name": "EthGetTransactionByBlockHashAndIndexResult0",
       "shape": {
         "type": "object",
         "extends": [],
@@ -4812,7 +4889,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "Signed 4844 Transaction"
     },
     "EthGetTransactionByBlockHashAndIndexResultOneOf1AccessListItems": {
       "name": "EthGetTransactionByBlockHashAndIndexResultOneOf1AccessListItems",
@@ -4853,7 +4931,7 @@
       }
     },
     "EthGetTransactionByBlockHashAndIndexResult1": {
-      "name": "Signed 1559 Transaction",
+      "name": "EthGetTransactionByBlockHashAndIndexResult1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -5090,7 +5168,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "Signed 1559 Transaction"
     },
     "EthGetTransactionByBlockHashAndIndexResultOneOf2AccessListItems": {
       "name": "EthGetTransactionByBlockHashAndIndexResultOneOf2AccessListItems",
@@ -5131,7 +5210,7 @@
       }
     },
     "EthGetTransactionByBlockHashAndIndexResult2": {
-      "name": "Signed 2930 Transaction",
+      "name": "EthGetTransactionByBlockHashAndIndexResult2",
       "shape": {
         "type": "object",
         "extends": [],
@@ -5346,10 +5425,11 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "Signed 2930 Transaction"
     },
     "EthGetTransactionByBlockHashAndIndexResult3": {
-      "name": "Signed Legacy Transaction",
+      "name": "EthGetTransactionByBlockHashAndIndexResult3",
       "shape": {
         "type": "object",
         "extends": [],
@@ -5541,7 +5621,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "Signed Legacy Transaction"
     },
     "EthGetTransactionByBlockHashAndIndexResult": {
       "name": "EthGetTransactionByBlockHashAndIndexResult",
@@ -5553,28 +5634,32 @@
             "type": {
               "type": "id",
               "value": "EthGetTransactionByBlockHashAndIndexResult0"
-            }
+            },
+            "displayName": "Signed 4844 Transaction"
           },
           {
             "typeName": "EthGetTransactionByBlockHashAndIndexResult1",
             "type": {
               "type": "id",
               "value": "EthGetTransactionByBlockHashAndIndexResult1"
-            }
+            },
+            "displayName": "Signed 1559 Transaction"
           },
           {
             "typeName": "EthGetTransactionByBlockHashAndIndexResult2",
             "type": {
               "type": "id",
               "value": "EthGetTransactionByBlockHashAndIndexResult2"
-            }
+            },
+            "displayName": "Signed 2930 Transaction"
           },
           {
             "typeName": "EthGetTransactionByBlockHashAndIndexResult3",
             "type": {
               "type": "id",
               "value": "EthGetTransactionByBlockHashAndIndexResult3"
-            }
+            },
+            "displayName": "Signed Legacy Transaction"
           }
         ]
       }
@@ -5605,7 +5690,7 @@
         }
       }
     },
-    "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_B_y_B_l_o_c_k_H_a_s_h_A_n_d_I_n_d_e_x_Result": {
+    "eth_getTransactionByBlockHashAndIndex_Result": {
       "name": "EthGetTransactionByBlockHashAndIndexResult",
       "shape": {
         "type": "alias",
@@ -5657,7 +5742,7 @@
       }
     },
     "EthGetTransactionByBlockNumberAndIndexResult0": {
-      "name": "Signed 4844 Transaction",
+      "name": "EthGetTransactionByBlockNumberAndIndexResult0",
       "shape": {
         "type": "object",
         "extends": [],
@@ -5888,7 +5973,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "Signed 4844 Transaction"
     },
     "EthGetTransactionByBlockNumberAndIndexResultOneOf1AccessListItems": {
       "name": "EthGetTransactionByBlockNumberAndIndexResultOneOf1AccessListItems",
@@ -5929,7 +6015,7 @@
       }
     },
     "EthGetTransactionByBlockNumberAndIndexResult1": {
-      "name": "Signed 1559 Transaction",
+      "name": "EthGetTransactionByBlockNumberAndIndexResult1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6166,7 +6252,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "Signed 1559 Transaction"
     },
     "EthGetTransactionByBlockNumberAndIndexResultOneOf2AccessListItems": {
       "name": "EthGetTransactionByBlockNumberAndIndexResultOneOf2AccessListItems",
@@ -6207,7 +6294,7 @@
       }
     },
     "EthGetTransactionByBlockNumberAndIndexResult2": {
-      "name": "Signed 2930 Transaction",
+      "name": "EthGetTransactionByBlockNumberAndIndexResult2",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6422,10 +6509,11 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "Signed 2930 Transaction"
     },
     "EthGetTransactionByBlockNumberAndIndexResult3": {
-      "name": "Signed Legacy Transaction",
+      "name": "EthGetTransactionByBlockNumberAndIndexResult3",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6617,7 +6705,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "Signed Legacy Transaction"
     },
     "EthGetTransactionByBlockNumberAndIndexResult": {
       "name": "EthGetTransactionByBlockNumberAndIndexResult",
@@ -6629,35 +6718,39 @@
             "type": {
               "type": "id",
               "value": "EthGetTransactionByBlockNumberAndIndexResult0"
-            }
+            },
+            "displayName": "Signed 4844 Transaction"
           },
           {
             "typeName": "EthGetTransactionByBlockNumberAndIndexResult1",
             "type": {
               "type": "id",
               "value": "EthGetTransactionByBlockNumberAndIndexResult1"
-            }
+            },
+            "displayName": "Signed 1559 Transaction"
           },
           {
             "typeName": "EthGetTransactionByBlockNumberAndIndexResult2",
             "type": {
               "type": "id",
               "value": "EthGetTransactionByBlockNumberAndIndexResult2"
-            }
+            },
+            "displayName": "Signed 2930 Transaction"
           },
           {
             "typeName": "EthGetTransactionByBlockNumberAndIndexResult3",
             "type": {
               "type": "id",
               "value": "EthGetTransactionByBlockNumberAndIndexResult3"
-            }
+            },
+            "displayName": "Signed Legacy Transaction"
           }
         ]
       }
     },
     "EthGetTransactionByBlockNumberAndIndexParamBlock1": {
       "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
-      "name": "Block tag",
+      "name": "EthGetTransactionByBlockNumberAndIndexParamBlock1",
       "shape": {
         "type": "enum",
         "values": [
@@ -6677,7 +6770,8 @@
             "value": "pending"
           }
         ]
-      }
+      },
+      "displayName": "Block tag"
     },
     "eth_getTransactionByBlockNumberAndIndex_Param_Block": {
       "name": "eth_getTransactionByBlockNumberAndIndex_Param_Block",
@@ -6699,7 +6793,8 @@
             "type": {
               "type": "id",
               "value": "EthGetTransactionByBlockNumberAndIndexParamBlock1"
-            }
+            },
+            "displayName": "Block tag"
           }
         ]
       }
@@ -6717,7 +6812,7 @@
         }
       }
     },
-    "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_B_y_B_l_o_c_k_N_u_m_b_e_r_A_n_d_I_n_d_e_x_Result": {
+    "eth_getTransactionByBlockNumberAndIndex_Result": {
       "name": "EthGetTransactionByBlockNumberAndIndexResult",
       "shape": {
         "type": "alias",
@@ -6769,7 +6864,7 @@
       }
     },
     "EthGetTransactionByHashResult0": {
-      "name": "Signed 4844 Transaction",
+      "name": "EthGetTransactionByHashResult0",
       "shape": {
         "type": "object",
         "extends": [],
@@ -7000,7 +7095,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "Signed 4844 Transaction"
     },
     "EthGetTransactionByHashResultOneOf1AccessListItems": {
       "name": "EthGetTransactionByHashResultOneOf1AccessListItems",
@@ -7041,7 +7137,7 @@
       }
     },
     "EthGetTransactionByHashResult1": {
-      "name": "Signed 1559 Transaction",
+      "name": "EthGetTransactionByHashResult1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -7278,7 +7374,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "Signed 1559 Transaction"
     },
     "EthGetTransactionByHashResultOneOf2AccessListItems": {
       "name": "EthGetTransactionByHashResultOneOf2AccessListItems",
@@ -7319,7 +7416,7 @@
       }
     },
     "EthGetTransactionByHashResult2": {
-      "name": "Signed 2930 Transaction",
+      "name": "EthGetTransactionByHashResult2",
       "shape": {
         "type": "object",
         "extends": [],
@@ -7534,10 +7631,11 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "Signed 2930 Transaction"
     },
     "EthGetTransactionByHashResult3": {
-      "name": "Signed Legacy Transaction",
+      "name": "EthGetTransactionByHashResult3",
       "shape": {
         "type": "object",
         "extends": [],
@@ -7729,7 +7827,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "Signed Legacy Transaction"
     },
     "EthGetTransactionByHashResult": {
       "name": "EthGetTransactionByHashResult",
@@ -7741,28 +7840,32 @@
             "type": {
               "type": "id",
               "value": "EthGetTransactionByHashResult0"
-            }
+            },
+            "displayName": "Signed 4844 Transaction"
           },
           {
             "typeName": "EthGetTransactionByHashResult1",
             "type": {
               "type": "id",
               "value": "EthGetTransactionByHashResult1"
-            }
+            },
+            "displayName": "Signed 1559 Transaction"
           },
           {
             "typeName": "EthGetTransactionByHashResult2",
             "type": {
               "type": "id",
               "value": "EthGetTransactionByHashResult2"
-            }
+            },
+            "displayName": "Signed 2930 Transaction"
           },
           {
             "typeName": "EthGetTransactionByHashResult3",
             "type": {
               "type": "id",
               "value": "EthGetTransactionByHashResult3"
-            }
+            },
+            "displayName": "Signed Legacy Transaction"
           }
         ]
       }
@@ -7780,7 +7883,7 @@
         }
       }
     },
-    "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_B_y_H_a_s_h_Result": {
+    "eth_getTransactionByHash_Result": {
       "name": "EthGetTransactionByHashResult",
       "shape": {
         "type": "alias",
@@ -7795,7 +7898,7 @@
     },
     "EthGetTransactionCountParamBlock1": {
       "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
-      "name": "Block tag",
+      "name": "EthGetTransactionCountParamBlock1",
       "shape": {
         "type": "enum",
         "values": [
@@ -7815,7 +7918,8 @@
             "value": "pending"
           }
         ]
-      }
+      },
+      "displayName": "Block tag"
     },
     "eth_getTransactionCount_Param_Block": {
       "name": "eth_getTransactionCount_Param_Block",
@@ -7837,7 +7941,8 @@
             "type": {
               "type": "id",
               "value": "EthGetTransactionCountParamBlock1"
-            }
+            },
+            "displayName": "Block tag"
           },
           {
             "type": {
@@ -7864,7 +7969,7 @@
         }
       }
     },
-    "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_C_o_u_n_t_Result": {
+    "eth_getTransactionCount_Result": {
       "name": "EthGetTransactionCountResult",
       "shape": {
         "type": "alias",
@@ -8230,7 +8335,7 @@
         }
       }
     },
-    "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_R_e_c_e_i_p_t_Result": {
+    "eth_getTransactionReceipt_Result": {
       "name": "EthGetTransactionReceiptResult",
       "shape": {
         "type": "alias",
@@ -8256,7 +8361,7 @@
         }
       }
     },
-    "e_t_h___s_e_n_d_R_a_w_T_r_a_n_s_a_c_t_i_o_n_Result": {
+    "eth_sendRawTransaction_Result": {
       "name": "EthSendRawTransactionResult",
       "shape": {
         "type": "alias",
@@ -8270,7 +8375,7 @@
       }
     },
     "EthSyncingResult10": {
-      "name": "Syncing progress",
+      "name": "EthSyncingResult10",
       "shape": {
         "type": "object",
         "extends": [],
@@ -8315,10 +8420,11 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "Syncing progress"
     },
     "EthSyncingResult1": {
-      "name": "Syncing status",
+      "name": "EthSyncingResult1",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -8327,7 +8433,8 @@
             "type": {
               "type": "id",
               "value": "EthSyncingResult10"
-            }
+            },
+            "displayName": "Syncing progress"
           },
           {
             "description": "Should always return false if not syncing.",
@@ -8339,7 +8446,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "Syncing status"
     },
     "EthSyncingResult": {
       "name": "EthSyncingResult",
@@ -8359,12 +8467,13 @@
             "type": {
               "type": "id",
               "value": "EthSyncingResult1"
-            }
+            },
+            "displayName": "Syncing status"
           }
         ]
       }
     },
-    "e_t_h___s_y_n_c_i_n_g_Result": {
+    "eth_syncing_Result": {
       "name": "EthSyncingResult",
       "shape": {
         "type": "undiscriminatedUnion",
@@ -8382,12 +8491,13 @@
             "type": {
               "type": "id",
               "value": "EthSyncingResult1"
-            }
+            },
+            "displayName": "Syncing status"
           }
         ]
       }
     },
-    "n_e_t___v_e_r_s_i_o_n_Result": {
+    "net_version_Result": {
       "name": "NetVersionResult",
       "shape": {
         "type": "alias",
@@ -8399,7 +8509,7 @@
         }
       }
     },
-    "w_e_b_3___c_l_i_e_n_t_V_e_r_s_i_o_n_Result": {
+    "web3_clientVersion_Result": {
       "name": "Web3ClientVersionResult",
       "shape": {
         "type": "alias",
@@ -8424,7 +8534,7 @@
         }
       }
     },
-    "w_e_b_3___s_h_a_3_Result": {
+    "web3_sha3_Result": {
       "name": "Web3Sha3Result",
       "shape": {
         "type": "alias",
@@ -8444,15 +8554,15 @@
       {
         "auth": false,
         "method": "POST",
-        "defaultEnvironment": "https://ink-mainnet.g.alchemy.com/v2/",
+        "defaultEnvironment": "Ink Mainnet",
         "environments": [
           {
-            "id": "https://ink-mainnet.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+            "id": "Ink Mainnet",
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2"
           },
           {
-            "id": "https://ink-sepolia.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+            "id": "Ink Sepolia",
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2"
           }
         ],
         "id": "eth_blockNumber",
@@ -8498,12 +8608,9 @@
             "requestBody": [],
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "jsonrpc": "2.0",
-                "id": "1",
-                "result": "0x2377"
-              }
+              "jsonrpc": "2.0",
+              "id": "1",
+              "result": "0x2377"
             },
             "responseBodyV3": {
               "type": "json",
@@ -8524,15 +8631,15 @@
       {
         "auth": false,
         "method": "POST",
-        "defaultEnvironment": "https://ink-mainnet.g.alchemy.com/v2/",
+        "defaultEnvironment": "Ink Mainnet",
         "environments": [
           {
-            "id": "https://ink-mainnet.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+            "id": "Ink Mainnet",
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2"
           },
           {
-            "id": "https://ink-sepolia.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+            "id": "Ink Sepolia",
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2"
           }
         ],
         "id": "eth_call",
@@ -8573,8 +8680,11 @@
                   "description": "The block number, tag, or hash at which to execute the call. Defaults to `'latest'` if not provided.",
                   "key": "Block",
                   "valueType": {
-                    "type": "id",
-                    "value": "eth_call_Param_Block"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "eth_call_Param_Block"
+                    }
                   }
                 }
               ]
@@ -8622,12 +8732,9 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "jsonrpc": "2.0",
-                "id": "1",
-                "result": "0x"
-              }
+              "jsonrpc": "2.0",
+              "id": "1",
+              "result": "0x"
             },
             "responseBodyV3": {
               "type": "json",
@@ -8648,15 +8755,15 @@
       {
         "auth": false,
         "method": "POST",
-        "defaultEnvironment": "https://ink-mainnet.g.alchemy.com/v2/",
+        "defaultEnvironment": "Ink Mainnet",
         "environments": [
           {
-            "id": "https://ink-mainnet.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+            "id": "Ink Mainnet",
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2"
           },
           {
-            "id": "https://ink-sepolia.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+            "id": "Ink Sepolia",
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2"
           }
         ],
         "id": "eth_chainId",
@@ -8702,12 +8809,9 @@
             "requestBody": [],
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "jsonrpc": "2.0",
-                "id": "1",
-                "result": "0x1"
-              }
+              "jsonrpc": "2.0",
+              "id": "1",
+              "result": "0x1"
             },
             "responseBodyV3": {
               "type": "json",
@@ -8728,15 +8832,15 @@
       {
         "auth": false,
         "method": "POST",
-        "defaultEnvironment": "https://ink-mainnet.g.alchemy.com/v2/",
+        "defaultEnvironment": "Ink Mainnet",
         "environments": [
           {
-            "id": "https://ink-mainnet.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+            "id": "Ink Mainnet",
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2"
           },
           {
-            "id": "https://ink-sepolia.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+            "id": "Ink Sepolia",
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2"
           }
         ],
         "id": "eth_estimateGas",
@@ -8777,8 +8881,11 @@
                   "description": "The block number or tag at which to estimate gas usage. Defaults to `'latest'` if not provided.",
                   "key": "Block",
                   "valueType": {
-                    "type": "id",
-                    "value": "eth_estimateGas_Param_Block"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "eth_estimateGas_Param_Block"
+                    }
                   }
                 }
               ]
@@ -8826,12 +8933,9 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "jsonrpc": "2.0",
-                "id": "1",
-                "result": "0x5208"
-              }
+              "jsonrpc": "2.0",
+              "id": "1",
+              "result": "0x5208"
             },
             "responseBodyV3": {
               "type": "json",
@@ -8852,15 +8956,15 @@
       {
         "auth": false,
         "method": "POST",
-        "defaultEnvironment": "https://ink-mainnet.g.alchemy.com/v2/",
+        "defaultEnvironment": "Ink Mainnet",
         "environments": [
           {
-            "id": "https://ink-mainnet.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+            "id": "Ink Mainnet",
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2"
           },
           {
-            "id": "https://ink-sepolia.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+            "id": "Ink Sepolia",
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2"
           }
         ],
         "id": "eth_gasPrice",
@@ -8906,12 +9010,9 @@
             "requestBody": [],
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "jsonrpc": "2.0",
-                "id": "1",
-                "result": "0x3e8"
-              }
+              "jsonrpc": "2.0",
+              "id": "1",
+              "result": "0x3e8"
             },
             "responseBodyV3": {
               "type": "json",
@@ -8932,15 +9033,15 @@
       {
         "auth": false,
         "method": "POST",
-        "defaultEnvironment": "https://ink-mainnet.g.alchemy.com/v2/",
+        "defaultEnvironment": "Ink Mainnet",
         "environments": [
           {
-            "id": "https://ink-mainnet.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+            "id": "Ink Mainnet",
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2"
           },
           {
-            "id": "https://ink-sepolia.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+            "id": "Ink Sepolia",
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2"
           }
         ],
         "id": "eth_getBalance",
@@ -9027,12 +9128,9 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "jsonrpc": "2.0",
-                "id": "1",
-                "result": "0x1cfe56f3795885980000"
-              }
+              "jsonrpc": "2.0",
+              "id": "1",
+              "result": "0x1cfe56f3795885980000"
             },
             "responseBodyV3": {
               "type": "json",
@@ -9053,15 +9151,15 @@
       {
         "auth": false,
         "method": "POST",
-        "defaultEnvironment": "https://ink-mainnet.g.alchemy.com/v2/",
+        "defaultEnvironment": "Ink Mainnet",
         "environments": [
           {
-            "id": "https://ink-mainnet.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+            "id": "Ink Mainnet",
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2"
           },
           {
-            "id": "https://ink-sepolia.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+            "id": "Ink Sepolia",
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2"
           }
         ],
         "id": "eth_getBlockByHash",
@@ -9150,48 +9248,45 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "jsonrpc": "2.0",
-                "id": "1",
-                "result": {
-                  "number": "0x68b3",
-                  "hash": "0xd5f1812548be429cbdc6376b29611fc49e06f1359758c4ceaaa3b393e2239f9c",
-                  "mixHash": "0x24900fb3da77674a861c428429dce0762707ecb6052325bbd9b3c64e74b5af9d",
-                  "parentHash": "0x1f68ac259155e2f38211ddad0f0a15394d55417b185a93923e2abe71bb7a4d6d",
-                  "nonce": "0x378da40ff335b070",
-                  "sha3Uncles": "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
-                  "logsBloom": "0x00000000000000100000004080000000000500000000000000020000100000000800001000000004000001000000000000000800040010000020100000000400000010000000000000000040000000000000040000000000000000000000000000000400002400000000000000000000000000000004000004000000000000840000000800000080010004000000001000000800000000000000000000000000000000000800000000000040000000020000000000000000000800000400000000000000000000000600000400000000002000000000000000000000004000000000000000100000000000000000000000000000000000040000900010000000",
-                  "transactionsRoot": "0x4d0c8e91e16bdff538c03211c5c73632ed054d00a7e210c0eb25146c20048126",
-                  "stateRoot": "0x91309efa7e42c1f137f31fe9edbe88ae087e6620d0d59031324da3e2f4f93233",
-                  "receiptsRoot": "0x68461ab700003503a305083630a8fb8d14927238f0bc8b6b3d246c0c64f21f4a",
-                  "miner": "0xb42b6c4a95406c78ff892d270ad20b22642e102d",
-                  "difficulty": "0x66e619a",
-                  "totalDifficulty": "0x1e875d746ae",
-                  "extraData": "0xd583010502846765746885676f312e37856c696e7578",
-                  "size": "0x334",
-                  "gasLimit": "0x47e7c4",
-                  "gasUsed": "0x37993",
-                  "timestamp": "0x5835c54d",
-                  "uncles": [],
-                  "transactions": [
-                    "0xa0807e117a8dd124ab949f460f08c36c72b710188f01609595223b325e58e0fc",
-                    "0xeae6d797af50cb62a596ec3939114d63967c374fa57de9bc0f4e2b576ed6639d"
-                  ],
-                  "baseFeePerGas": "0x7",
-                  "withdrawalsRoot": "0x7a4ecf19774d15cf9c15adf0dd8e8a250c128b26c9e2ab2a08d6c9c8ffbd104f",
-                  "withdrawals": [
-                    {
-                      "index": "0x0",
-                      "validatorIndex": "0x9d8c0",
-                      "address": "0xb9d7934878b5fb9610b3fe8a5e441e8fad7e293f",
-                      "amount": "0x11a33e3760"
-                    }
-                  ],
-                  "blobGasUsed": "0x0",
-                  "excessBlobGas": "0x0",
-                  "parentBeaconBlockRoot": "0x95c4dbd5b19f6fe3cbc3183be85ff4e85ebe75c5b4fc911f1c91e5b7a554a685"
-                }
+              "jsonrpc": "2.0",
+              "id": "1",
+              "result": {
+                "number": "0x68b3",
+                "hash": "0xd5f1812548be429cbdc6376b29611fc49e06f1359758c4ceaaa3b393e2239f9c",
+                "mixHash": "0x24900fb3da77674a861c428429dce0762707ecb6052325bbd9b3c64e74b5af9d",
+                "parentHash": "0x1f68ac259155e2f38211ddad0f0a15394d55417b185a93923e2abe71bb7a4d6d",
+                "nonce": "0x378da40ff335b070",
+                "sha3Uncles": "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                "logsBloom": "0x00000000000000100000004080000000000500000000000000020000100000000800001000000004000001000000000000000800040010000020100000000400000010000000000000000040000000000000040000000000000000000000000000000400002400000000000000000000000000000004000004000000000000840000000800000080010004000000001000000800000000000000000000000000000000000800000000000040000000020000000000000000000800000400000000000000000000000600000400000000002000000000000000000000004000000000000000100000000000000000000000000000000000040000900010000000",
+                "transactionsRoot": "0x4d0c8e91e16bdff538c03211c5c73632ed054d00a7e210c0eb25146c20048126",
+                "stateRoot": "0x91309efa7e42c1f137f31fe9edbe88ae087e6620d0d59031324da3e2f4f93233",
+                "receiptsRoot": "0x68461ab700003503a305083630a8fb8d14927238f0bc8b6b3d246c0c64f21f4a",
+                "miner": "0xb42b6c4a95406c78ff892d270ad20b22642e102d",
+                "difficulty": "0x66e619a",
+                "totalDifficulty": "0x1e875d746ae",
+                "extraData": "0xd583010502846765746885676f312e37856c696e7578",
+                "size": "0x334",
+                "gasLimit": "0x47e7c4",
+                "gasUsed": "0x37993",
+                "timestamp": "0x5835c54d",
+                "uncles": [],
+                "transactions": [
+                  "0xa0807e117a8dd124ab949f460f08c36c72b710188f01609595223b325e58e0fc",
+                  "0xeae6d797af50cb62a596ec3939114d63967c374fa57de9bc0f4e2b576ed6639d"
+                ],
+                "baseFeePerGas": "0x7",
+                "withdrawalsRoot": "0x7a4ecf19774d15cf9c15adf0dd8e8a250c128b26c9e2ab2a08d6c9c8ffbd104f",
+                "withdrawals": [
+                  {
+                    "index": "0x0",
+                    "validatorIndex": "0x9d8c0",
+                    "address": "0xb9d7934878b5fb9610b3fe8a5e441e8fad7e293f",
+                    "amount": "0x11a33e3760"
+                  }
+                ],
+                "blobGasUsed": "0x0",
+                "excessBlobGas": "0x0",
+                "parentBeaconBlockRoot": "0x95c4dbd5b19f6fe3cbc3183be85ff4e85ebe75c5b4fc911f1c91e5b7a554a685"
               }
             },
             "responseBodyV3": {
@@ -9250,15 +9345,15 @@
       {
         "auth": false,
         "method": "POST",
-        "defaultEnvironment": "https://ink-mainnet.g.alchemy.com/v2/",
+        "defaultEnvironment": "Ink Mainnet",
         "environments": [
           {
-            "id": "https://ink-mainnet.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+            "id": "Ink Mainnet",
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2"
           },
           {
-            "id": "https://ink-sepolia.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+            "id": "Ink Sepolia",
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2"
           }
         ],
         "id": "eth_getBlockByNumber",
@@ -9344,48 +9439,45 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "jsonrpc": "2.0",
-                "id": "1",
-                "result": {
-                  "number": "0x68b3",
-                  "hash": "0xd5f1812548be429cbdc6376b29611fc49e06f1359758c4ceaaa3b393e2239f9c",
-                  "mixHash": "0x24900fb3da77674a861c428429dce0762707ecb6052325bbd9b3c64e74b5af9d",
-                  "parentHash": "0x1f68ac259155e2f38211ddad0f0a15394d55417b185a93923e2abe71bb7a4d6d",
-                  "nonce": "0x378da40ff335b070",
-                  "sha3Uncles": "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
-                  "logsBloom": "0x00000000000000100000004080000000000500000000000000020000100000000800001000000004000001000000000000000800040010000020100000000400000010000000000000000040000000000000040000000000000000000000000000000400002400000000000000000000000000000004000004000000000000840000000800000080010004000000001000000800000000000000000000000000000000000800000000000040000000020000000000000000000800000400000000000000000000000600000400000000002000000000000000000000004000000000000000100000000000000000000000000000000000040000900010000000",
-                  "transactionsRoot": "0x4d0c8e91e16bdff538c03211c5c73632ed054d00a7e210c0eb25146c20048126",
-                  "stateRoot": "0x91309efa7e42c1f137f31fe9edbe88ae087e6620d0d59031324da3e2f4f93233",
-                  "receiptsRoot": "0x68461ab700003503a305083630a8fb8d14927238f0bc8b6b3d246c0c64f21f4a",
-                  "miner": "0xb42b6c4a95406c78ff892d270ad20b22642e102d",
-                  "difficulty": "0x66e619a",
-                  "totalDifficulty": "0x1e875d746ae",
-                  "extraData": "0xd583010502846765746885676f312e37856c696e7578",
-                  "size": "0x334",
-                  "gasLimit": "0x47e7c4",
-                  "gasUsed": "0x37993",
-                  "timestamp": "0x5835c54d",
-                  "uncles": [],
-                  "transactions": [
-                    "0xa0807e117a8dd124ab949f460f08c36c72b710188f01609595223b325e58e0fc",
-                    "0xeae6d797af50cb62a596ec3939114d63967c374fa57de9bc0f4e2b576ed6639d"
-                  ],
-                  "baseFeePerGas": "0x7",
-                  "withdrawalsRoot": "0x7a4ecf19774d15cf9c15adf0dd8e8a250c128b26c9e2ab2a08d6c9c8ffbd104f",
-                  "withdrawals": [
-                    {
-                      "index": "0x0",
-                      "validatorIndex": "0x9d8c0",
-                      "address": "0xb9d7934878b5fb9610b3fe8a5e441e8fad7e293f",
-                      "amount": "0x11a33e3760"
-                    }
-                  ],
-                  "blobGasUsed": "0x0",
-                  "excessBlobGas": "0x0",
-                  "parentBeaconBlockRoot": "0x95c4dbd5b19f6fe3cbc3183be85ff4e85ebe75c5b4fc911f1c91e5b7a554a685"
-                }
+              "jsonrpc": "2.0",
+              "id": "1",
+              "result": {
+                "number": "0x68b3",
+                "hash": "0xd5f1812548be429cbdc6376b29611fc49e06f1359758c4ceaaa3b393e2239f9c",
+                "mixHash": "0x24900fb3da77674a861c428429dce0762707ecb6052325bbd9b3c64e74b5af9d",
+                "parentHash": "0x1f68ac259155e2f38211ddad0f0a15394d55417b185a93923e2abe71bb7a4d6d",
+                "nonce": "0x378da40ff335b070",
+                "sha3Uncles": "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                "logsBloom": "0x00000000000000100000004080000000000500000000000000020000100000000800001000000004000001000000000000000800040010000020100000000400000010000000000000000040000000000000040000000000000000000000000000000400002400000000000000000000000000000004000004000000000000840000000800000080010004000000001000000800000000000000000000000000000000000800000000000040000000020000000000000000000800000400000000000000000000000600000400000000002000000000000000000000004000000000000000100000000000000000000000000000000000040000900010000000",
+                "transactionsRoot": "0x4d0c8e91e16bdff538c03211c5c73632ed054d00a7e210c0eb25146c20048126",
+                "stateRoot": "0x91309efa7e42c1f137f31fe9edbe88ae087e6620d0d59031324da3e2f4f93233",
+                "receiptsRoot": "0x68461ab700003503a305083630a8fb8d14927238f0bc8b6b3d246c0c64f21f4a",
+                "miner": "0xb42b6c4a95406c78ff892d270ad20b22642e102d",
+                "difficulty": "0x66e619a",
+                "totalDifficulty": "0x1e875d746ae",
+                "extraData": "0xd583010502846765746885676f312e37856c696e7578",
+                "size": "0x334",
+                "gasLimit": "0x47e7c4",
+                "gasUsed": "0x37993",
+                "timestamp": "0x5835c54d",
+                "uncles": [],
+                "transactions": [
+                  "0xa0807e117a8dd124ab949f460f08c36c72b710188f01609595223b325e58e0fc",
+                  "0xeae6d797af50cb62a596ec3939114d63967c374fa57de9bc0f4e2b576ed6639d"
+                ],
+                "baseFeePerGas": "0x7",
+                "withdrawalsRoot": "0x7a4ecf19774d15cf9c15adf0dd8e8a250c128b26c9e2ab2a08d6c9c8ffbd104f",
+                "withdrawals": [
+                  {
+                    "index": "0x0",
+                    "validatorIndex": "0x9d8c0",
+                    "address": "0xb9d7934878b5fb9610b3fe8a5e441e8fad7e293f",
+                    "amount": "0x11a33e3760"
+                  }
+                ],
+                "blobGasUsed": "0x0",
+                "excessBlobGas": "0x0",
+                "parentBeaconBlockRoot": "0x95c4dbd5b19f6fe3cbc3183be85ff4e85ebe75c5b4fc911f1c91e5b7a554a685"
               }
             },
             "responseBodyV3": {
@@ -9444,15 +9536,15 @@
       {
         "auth": false,
         "method": "POST",
-        "defaultEnvironment": "https://ink-mainnet.g.alchemy.com/v2/",
+        "defaultEnvironment": "Ink Mainnet",
         "environments": [
           {
-            "id": "https://ink-mainnet.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+            "id": "Ink Mainnet",
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2"
           },
           {
-            "id": "https://ink-sepolia.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+            "id": "Ink Sepolia",
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2"
           }
         ],
         "id": "eth_getBlockTransactionCountByHash",
@@ -9532,12 +9624,9 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "jsonrpc": "2.0",
-                "id": "1",
-                "result": "0x8"
-              }
+              "jsonrpc": "2.0",
+              "id": "1",
+              "result": "0x8"
             },
             "responseBodyV3": {
               "type": "json",
@@ -9558,15 +9647,15 @@
       {
         "auth": false,
         "method": "POST",
-        "defaultEnvironment": "https://ink-mainnet.g.alchemy.com/v2/",
+        "defaultEnvironment": "Ink Mainnet",
         "environments": [
           {
-            "id": "https://ink-mainnet.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+            "id": "Ink Mainnet",
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2"
           },
           {
-            "id": "https://ink-sepolia.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+            "id": "Ink Sepolia",
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2"
           }
         ],
         "id": "eth_getBlockTransactionCountByNumber",
@@ -9643,12 +9732,9 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "jsonrpc": "2.0",
-                "id": "1",
-                "result": "0x8"
-              }
+              "jsonrpc": "2.0",
+              "id": "1",
+              "result": "0x8"
             },
             "responseBodyV3": {
               "type": "json",
@@ -9669,15 +9755,15 @@
       {
         "auth": false,
         "method": "POST",
-        "defaultEnvironment": "https://ink-mainnet.g.alchemy.com/v2/",
+        "defaultEnvironment": "Ink Mainnet",
         "environments": [
           {
-            "id": "https://ink-mainnet.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+            "id": "Ink Mainnet",
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2"
           },
           {
-            "id": "https://ink-sepolia.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+            "id": "Ink Sepolia",
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2"
           }
         ],
         "id": "eth_getCode",
@@ -9764,12 +9850,9 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "jsonrpc": "2.0",
-                "id": "1",
-                "result": "0x60806040526004361060485763ffffffff7c01000000000000000000000000000000000000000000000000000000006000350416633fa4f2458114604d57806355241077146071575b600080fd5b348015605857600080fd5b50605f6088565b60408051918252519081900360200190f35b348015607c57600080fd5b506086600435608e565b005b60005481565b60008190556040805182815290517f199cd93e851e4c78c437891155e2112093f8f15394aa89dab09e38d6ca0727879181900360200190a1505600a165627a7a723058209d8929142720a69bde2ab3bfa2da6217674b984899b62753979743c0470a2ea70029"
-              }
+              "jsonrpc": "2.0",
+              "id": "1",
+              "result": "0x60806040526004361060485763ffffffff7c01000000000000000000000000000000000000000000000000000000006000350416633fa4f2458114604d57806355241077146071575b600080fd5b348015605857600080fd5b50605f6088565b60408051918252519081900360200190f35b348015607c57600080fd5b506086600435608e565b005b60005481565b60008190556040805182815290517f199cd93e851e4c78c437891155e2112093f8f15394aa89dab09e38d6ca0727879181900360200190a1505600a165627a7a723058209d8929142720a69bde2ab3bfa2da6217674b984899b62753979743c0470a2ea70029"
             },
             "responseBodyV3": {
               "type": "json",
@@ -9790,15 +9873,15 @@
       {
         "auth": false,
         "method": "POST",
-        "defaultEnvironment": "https://ink-mainnet.g.alchemy.com/v2/",
+        "defaultEnvironment": "Ink Mainnet",
         "environments": [
           {
-            "id": "https://ink-mainnet.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+            "id": "Ink Mainnet",
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2"
           },
           {
-            "id": "https://ink-sepolia.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+            "id": "Ink Sepolia",
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2"
           }
         ],
         "id": "eth_getLogs",
@@ -9879,39 +9962,36 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "jsonrpc": "2.0",
-                "id": "1",
-                "result": [
-                  {
-                    "logIndex": "0x0",
-                    "removed": false,
-                    "blockNumber": "0x233",
-                    "blockHash": "0xfc139f5e2edee9e9c888d8df9a2d2226133a9bd87c88ccbd9c930d3d4c9f9ef5",
-                    "transactionHash": "0x66e7a140c8fa27fe98fde923defea7562c3ca2d6bb89798aabec65782c08f63d",
-                    "transactionIndex": "0x0",
-                    "address": "0x42699a7612a82f1d9c36148af9c77354759b210b",
-                    "data": "0x0000000000000000000000000000000000000000000000000000000000000004",
-                    "topics": [
-                      "0x04474795f5b996ff80cb47c148d4c5ccdbe09ef27551820caa9c2f8ed149cce3"
-                    ]
-                  },
-                  {
-                    "logIndex": "0x0",
-                    "removed": false,
-                    "blockNumber": "0x238",
-                    "blockHash": "0x98b0ec0f9fea0018a644959accbe69cd046a8582e89402e1ab0ada91cad644ed",
-                    "transactionHash": "0xdb17aa1c2ce609132f599155d384c0bc5334c988a6c368056d7e167e23eee058",
-                    "transactionIndex": "0x0",
-                    "address": "0x42699a7612a82f1d9c36148af9c77354759b210b",
-                    "data": "0x0000000000000000000000000000000000000000000000000000000000000007",
-                    "topics": [
-                      "0x04474795f5b996ff80cb47c148d4c5ccdbe09ef27551820caa9c2f8ed149cce3"
-                    ]
-                  }
-                ]
-              }
+              "jsonrpc": "2.0",
+              "id": "1",
+              "result": [
+                {
+                  "logIndex": "0x0",
+                  "removed": false,
+                  "blockNumber": "0x233",
+                  "blockHash": "0xfc139f5e2edee9e9c888d8df9a2d2226133a9bd87c88ccbd9c930d3d4c9f9ef5",
+                  "transactionHash": "0x66e7a140c8fa27fe98fde923defea7562c3ca2d6bb89798aabec65782c08f63d",
+                  "transactionIndex": "0x0",
+                  "address": "0x42699a7612a82f1d9c36148af9c77354759b210b",
+                  "data": "0x0000000000000000000000000000000000000000000000000000000000000004",
+                  "topics": [
+                    "0x04474795f5b996ff80cb47c148d4c5ccdbe09ef27551820caa9c2f8ed149cce3"
+                  ]
+                },
+                {
+                  "logIndex": "0x0",
+                  "removed": false,
+                  "blockNumber": "0x238",
+                  "blockHash": "0x98b0ec0f9fea0018a644959accbe69cd046a8582e89402e1ab0ada91cad644ed",
+                  "transactionHash": "0xdb17aa1c2ce609132f599155d384c0bc5334c988a6c368056d7e167e23eee058",
+                  "transactionIndex": "0x0",
+                  "address": "0x42699a7612a82f1d9c36148af9c77354759b210b",
+                  "data": "0x0000000000000000000000000000000000000000000000000000000000000007",
+                  "topics": [
+                    "0x04474795f5b996ff80cb47c148d4c5ccdbe09ef27551820caa9c2f8ed149cce3"
+                  ]
+                }
+              ]
             },
             "responseBodyV3": {
               "type": "json",
@@ -9959,15 +10039,15 @@
       {
         "auth": false,
         "method": "POST",
-        "defaultEnvironment": "https://ink-mainnet.g.alchemy.com/v2/",
+        "defaultEnvironment": "Ink Mainnet",
         "environments": [
           {
-            "id": "https://ink-mainnet.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+            "id": "Ink Mainnet",
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2"
           },
           {
-            "id": "https://ink-sepolia.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+            "id": "Ink Sepolia",
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2"
           }
         ],
         "id": "eth_getProof",
@@ -10073,28 +10153,25 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "jsonrpc": "2.0",
-                "id": "1",
-                "result": {
-                  "accountProof": [
-                    "0xf90211a06a718c2c9da77c253b12d7b2569657901e37bb691718f5dda1b86157ab1dd5eda0e7f19ed5e21bccc8d3260236b24f80ad88b3634f5d005f37b838881f0e12f1bda0abb301291704e4d92686c0f5f8ebb1734185321559b8d717ffdca95c99591976a0d0c2026bfab65c3b95276bfa82af9dec860b485f8857f293c148d63a2182128fa0c98044ec9a1273a218bed58b478277dd39173ad7b8edb95c200423a6bc8fc25fa056e5a55d9ddccdbf49362857200bbb1f042d61187c9f5f9ddcff5d2f1fc984a2a02a5b7200af424114f99a4b5f0a21c19aac82209e431ed80bfde177adb1004bdfa0026e4374f0518ff44a80fa374838ecb86cc64ac93bb710fea6dff4198f947b27a03fea341d87984673ad523177ed52f278bf4d8f97e6531c8ece932aeede4802f4a0bfe2f4a7fcb78f7e9f080dea7b6977fb1d88c441696e4456dad92b9d34ff0f43a02a3eb5c0edb14626c9c629601027bd60178bb2b688a67cea4d179fc432436615a0747355b8e02f3b884b4ffe5cea1619e32515fea064cca98208591af8c744e894a0874253737bae37f020ad3bb7e3292c7c4a63cdc158af6b33aaa4deaef016dccba03d8192bc1fc6aa1548912e763a0b5013a94399cefad7b47cf388873b2b794068a09b67f9737c6028d796bfd1c5da57a6f45824dc891f848ea0e1f8019d1fb5fba8a0aa871f9de8da85960fcd8a22cdf21c27f11e3966c14a6737ffd414b98dda00b280"
-                  ],
-                  "balance": "0x0",
-                  "codeHash": "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470",
-                  "nonce": "0x0",
-                  "storageHash": "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
-                  "storageProof": [
-                    {
-                      "key": "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
-                      "proof": [
-                        "0xf90211a0c87222cccea2bf32759fcee9dbaacbe3ea4165dd6184af6773651c5e00e34a8ba0be90e6e5d1a67ab5587779c60ac136d6a96db62b84c04998a5f03a367346abd6a05344aa1c9ca2e3e56bf98fd718ec43728578d148e1967fbaf8bf17a2a073a0bda011a2f9312c3308640a0d6ceeae218747290f23806067456da1d444c65abae437a0b3097a108bfce79af6699da4ae3003cd4929f0b4576aad655c31cb725bde84c7a0c133d3c637e174f36a73c22b1039eb003da6374bc0929321241badb3efa3c4a9a0f13059f2301ad9862ce02e3f7f3f2c9ab78eb30583764d73654f7f1f8b1e86fda06544e3915748b18204e09df75ff20d2fa6bd8121e2e669699012d54590383d6fa070e3a8e093691581d58fadb560b510262a758037632cd8670d3a36df828976b7a062a88a2900544dc76a32255a6b2b2a2eef8fa68279700c00adc7508286702552a0a474aeebd5603dfce46a6ecd1ecd519068dc034a544fde03ac42d4018e60a334a0b7d528fc41c8fdc8ea18c6e7d0099270c777ec1403cf879d1f5134bdc12a6c6ca04440f1242e42c5bfa7c536591ab89c8e84bea417435871c32eef1e25295b20daa06a5dcfe3cc84cff9d3e3c3ae868cfba8f0dd111a90c3f85869dab5b893f96643a026b2fb9dd7d08b0ed2f1c44fbf875011412a384f86f751c92e1013248d4aa371a0c75597b2b789fc4e939b71937390ce9d7d53159431328ac52180eef08ef200f280"
-                      ],
-                      "value": "0x1"
-                    }
-                  ]
-                }
+              "jsonrpc": "2.0",
+              "id": "1",
+              "result": {
+                "accountProof": [
+                  "0xf90211a06a718c2c9da77c253b12d7b2569657901e37bb691718f5dda1b86157ab1dd5eda0e7f19ed5e21bccc8d3260236b24f80ad88b3634f5d005f37b838881f0e12f1bda0abb301291704e4d92686c0f5f8ebb1734185321559b8d717ffdca95c99591976a0d0c2026bfab65c3b95276bfa82af9dec860b485f8857f293c148d63a2182128fa0c98044ec9a1273a218bed58b478277dd39173ad7b8edb95c200423a6bc8fc25fa056e5a55d9ddccdbf49362857200bbb1f042d61187c9f5f9ddcff5d2f1fc984a2a02a5b7200af424114f99a4b5f0a21c19aac82209e431ed80bfde177adb1004bdfa0026e4374f0518ff44a80fa374838ecb86cc64ac93bb710fea6dff4198f947b27a03fea341d87984673ad523177ed52f278bf4d8f97e6531c8ece932aeede4802f4a0bfe2f4a7fcb78f7e9f080dea7b6977fb1d88c441696e4456dad92b9d34ff0f43a02a3eb5c0edb14626c9c629601027bd60178bb2b688a67cea4d179fc432436615a0747355b8e02f3b884b4ffe5cea1619e32515fea064cca98208591af8c744e894a0874253737bae37f020ad3bb7e3292c7c4a63cdc158af6b33aaa4deaef016dccba03d8192bc1fc6aa1548912e763a0b5013a94399cefad7b47cf388873b2b794068a09b67f9737c6028d796bfd1c5da57a6f45824dc891f848ea0e1f8019d1fb5fba8a0aa871f9de8da85960fcd8a22cdf21c27f11e3966c14a6737ffd414b98dda00b280"
+                ],
+                "balance": "0x0",
+                "codeHash": "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470",
+                "nonce": "0x0",
+                "storageHash": "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
+                "storageProof": [
+                  {
+                    "key": "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
+                    "proof": [
+                      "0xf90211a0c87222cccea2bf32759fcee9dbaacbe3ea4165dd6184af6773651c5e00e34a8ba0be90e6e5d1a67ab5587779c60ac136d6a96db62b84c04998a5f03a367346abd6a05344aa1c9ca2e3e56bf98fd718ec43728578d148e1967fbaf8bf17a2a073a0bda011a2f9312c3308640a0d6ceeae218747290f23806067456da1d444c65abae437a0b3097a108bfce79af6699da4ae3003cd4929f0b4576aad655c31cb725bde84c7a0c133d3c637e174f36a73c22b1039eb003da6374bc0929321241badb3efa3c4a9a0f13059f2301ad9862ce02e3f7f3f2c9ab78eb30583764d73654f7f1f8b1e86fda06544e3915748b18204e09df75ff20d2fa6bd8121e2e669699012d54590383d6fa070e3a8e093691581d58fadb560b510262a758037632cd8670d3a36df828976b7a062a88a2900544dc76a32255a6b2b2a2eef8fa68279700c00adc7508286702552a0a474aeebd5603dfce46a6ecd1ecd519068dc034a544fde03ac42d4018e60a334a0b7d528fc41c8fdc8ea18c6e7d0099270c777ec1403cf879d1f5134bdc12a6c6ca04440f1242e42c5bfa7c536591ab89c8e84bea417435871c32eef1e25295b20daa06a5dcfe3cc84cff9d3e3c3ae868cfba8f0dd111a90c3f85869dab5b893f96643a026b2fb9dd7d08b0ed2f1c44fbf875011412a384f86f751c92e1013248d4aa371a0c75597b2b789fc4e939b71937390ce9d7d53159431328ac52180eef08ef200f280"
+                    ],
+                    "value": "0x1"
+                  }
+                ]
               }
             },
             "responseBodyV3": {
@@ -10133,15 +10210,15 @@
       {
         "auth": false,
         "method": "POST",
-        "defaultEnvironment": "https://ink-mainnet.g.alchemy.com/v2/",
+        "defaultEnvironment": "Ink Mainnet",
         "environments": [
           {
-            "id": "https://ink-mainnet.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+            "id": "Ink Mainnet",
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2"
           },
           {
-            "id": "https://ink-sepolia.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+            "id": "Ink Sepolia",
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2"
           }
         ],
         "id": "eth_getStorageAt",
@@ -10241,12 +10318,9 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "jsonrpc": "2.0",
-                "id": "1",
-                "result": "0x0000000000000000000000000000000000000000000000000000000000000000"
-              }
+              "jsonrpc": "2.0",
+              "id": "1",
+              "result": "0x0000000000000000000000000000000000000000000000000000000000000000"
             },
             "responseBodyV3": {
               "type": "json",
@@ -10267,15 +10341,15 @@
       {
         "auth": false,
         "method": "POST",
-        "defaultEnvironment": "https://ink-mainnet.g.alchemy.com/v2/",
+        "defaultEnvironment": "Ink Mainnet",
         "environments": [
           {
-            "id": "https://ink-mainnet.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+            "id": "Ink Mainnet",
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2"
           },
           {
-            "id": "https://ink-sepolia.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+            "id": "Ink Sepolia",
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2"
           }
         ],
         "id": "eth_getTransactionByBlockHashAndIndex",
@@ -10365,27 +10439,24 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "jsonrpc": "2.0",
-                "id": "1",
-                "result": {
-                  "blockHash": "0x510efccf44a192e6e34bcb439a1947e24b86244280762cbb006858c237093fda",
-                  "blockNumber": "0x422",
-                  "chainId": "0x7e2",
-                  "from": "0xfe3b557e8fb62b89f4916b721be55ceb828dbd73",
-                  "gas": "0x5208",
-                  "gasPrice": "0x3b9aca00",
-                  "hash": "0xa52be92809541220ee0aaaede6047d9a6c5d0cd96a517c854d944ee70a0ebb44",
-                  "input": "0x",
-                  "nonce": "0x1",
-                  "to": "0x627306090abab3a6e1400e9345bc60c78a8bef57",
-                  "transactionIndex": "0x2",
-                  "value": "0x4e1003b28d9280000",
-                  "v": "0x1c",
-                  "r": "0x84caf09aefbd5e539295acc67217563438a4efb224879b6855f56857fa2037d3",
-                  "s": "0x5e863be3829812c81439f0ae9d8ecb832b531d651fb234c848d1bf45e62be8b9"
-                }
+              "jsonrpc": "2.0",
+              "id": "1",
+              "result": {
+                "blockHash": "0x510efccf44a192e6e34bcb439a1947e24b86244280762cbb006858c237093fda",
+                "blockNumber": "0x422",
+                "chainId": "0x7e2",
+                "from": "0xfe3b557e8fb62b89f4916b721be55ceb828dbd73",
+                "gas": "0x5208",
+                "gasPrice": "0x3b9aca00",
+                "hash": "0xa52be92809541220ee0aaaede6047d9a6c5d0cd96a517c854d944ee70a0ebb44",
+                "input": "0x",
+                "nonce": "0x1",
+                "to": "0x627306090abab3a6e1400e9345bc60c78a8bef57",
+                "transactionIndex": "0x2",
+                "value": "0x4e1003b28d9280000",
+                "v": "0x1c",
+                "r": "0x84caf09aefbd5e539295acc67217563438a4efb224879b6855f56857fa2037d3",
+                "s": "0x5e863be3829812c81439f0ae9d8ecb832b531d651fb234c848d1bf45e62be8b9"
               }
             },
             "responseBodyV3": {
@@ -10423,15 +10494,15 @@
       {
         "auth": false,
         "method": "POST",
-        "defaultEnvironment": "https://ink-mainnet.g.alchemy.com/v2/",
+        "defaultEnvironment": "Ink Mainnet",
         "environments": [
           {
-            "id": "https://ink-mainnet.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+            "id": "Ink Mainnet",
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2"
           },
           {
-            "id": "https://ink-sepolia.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+            "id": "Ink Sepolia",
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2"
           }
         ],
         "id": "eth_getTransactionByBlockNumberAndIndex",
@@ -10518,27 +10589,24 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "jsonrpc": "2.0",
-                "id": "1",
-                "result": {
-                  "blockHash": "0x510efccf44a192e6e34bcb439a1947e24b86244280762cbb006858c237093fda",
-                  "blockNumber": "0x1442e",
-                  "chainId": "0x7e2",
-                  "from": "0xfe3b557e8fb62b89f4916b721be55ceb828dbd73",
-                  "gas": "0x5208",
-                  "gasPrice": "0x3b9aca00",
-                  "hash": "0xa52be92809541220ee0aaaede6047d9a6c5d0cd96a517c854d944ee70a0ebb44",
-                  "input": "0x",
-                  "nonce": "0x1",
-                  "to": "0x627306090abab3a6e1400e9345bc60c78a8bef57",
-                  "transactionIndex": "0x2",
-                  "value": "0x4e1003b28d9280000",
-                  "v": "0x1c",
-                  "r": "0x84caf09aefbd5e539295acc67217563438a4efb224879b6855f56857fa2037d3",
-                  "s": "0x5e863be3829812c81439f0ae9d8ecb832b531d651fb234c848d1bf45e62be8b9"
-                }
+              "jsonrpc": "2.0",
+              "id": "1",
+              "result": {
+                "blockHash": "0x510efccf44a192e6e34bcb439a1947e24b86244280762cbb006858c237093fda",
+                "blockNumber": "0x1442e",
+                "chainId": "0x7e2",
+                "from": "0xfe3b557e8fb62b89f4916b721be55ceb828dbd73",
+                "gas": "0x5208",
+                "gasPrice": "0x3b9aca00",
+                "hash": "0xa52be92809541220ee0aaaede6047d9a6c5d0cd96a517c854d944ee70a0ebb44",
+                "input": "0x",
+                "nonce": "0x1",
+                "to": "0x627306090abab3a6e1400e9345bc60c78a8bef57",
+                "transactionIndex": "0x2",
+                "value": "0x4e1003b28d9280000",
+                "v": "0x1c",
+                "r": "0x84caf09aefbd5e539295acc67217563438a4efb224879b6855f56857fa2037d3",
+                "s": "0x5e863be3829812c81439f0ae9d8ecb832b531d651fb234c848d1bf45e62be8b9"
               }
             },
             "responseBodyV3": {
@@ -10576,15 +10644,15 @@
       {
         "auth": false,
         "method": "POST",
-        "defaultEnvironment": "https://ink-mainnet.g.alchemy.com/v2/",
+        "defaultEnvironment": "Ink Mainnet",
         "environments": [
           {
-            "id": "https://ink-mainnet.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+            "id": "Ink Mainnet",
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2"
           },
           {
-            "id": "https://ink-sepolia.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+            "id": "Ink Sepolia",
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2"
           }
         ],
         "id": "eth_getTransactionByHash",
@@ -10661,27 +10729,24 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "jsonrpc": "2.0",
-                "id": "1",
-                "result": {
-                  "blockHash": "0x510efccf44a192e6e34bcb439a1947e24b86244280762cbb006858c237093fda",
-                  "blockNumber": "0x422",
-                  "chainId": "0x7e2",
-                  "from": "0xfe3b557e8fb62b89f4916b721be55ceb828dbd73",
-                  "gas": "0x5208",
-                  "gasPrice": "0x3b9aca00",
-                  "hash": "0xa52be92809541220ee0aaaede6047d9a6c5d0cd96a517c854d944ee70a0ebb44",
-                  "input": "0x",
-                  "nonce": "0x1",
-                  "to": "0x627306090abab3a6e1400e9345bc60c78a8bef57",
-                  "transactionIndex": "0x0",
-                  "value": "0x4e1003b28d9280000",
-                  "v": "0x1c",
-                  "r": "0x84caf09aefbd5e539295acc67217563438a4efb224879b6855f56857fa2037d3",
-                  "s": "0x5e863be3829812c81439f0ae9d8ecb832b531d651fb234c848d1bf45e62be8b9"
-                }
+              "jsonrpc": "2.0",
+              "id": "1",
+              "result": {
+                "blockHash": "0x510efccf44a192e6e34bcb439a1947e24b86244280762cbb006858c237093fda",
+                "blockNumber": "0x422",
+                "chainId": "0x7e2",
+                "from": "0xfe3b557e8fb62b89f4916b721be55ceb828dbd73",
+                "gas": "0x5208",
+                "gasPrice": "0x3b9aca00",
+                "hash": "0xa52be92809541220ee0aaaede6047d9a6c5d0cd96a517c854d944ee70a0ebb44",
+                "input": "0x",
+                "nonce": "0x1",
+                "to": "0x627306090abab3a6e1400e9345bc60c78a8bef57",
+                "transactionIndex": "0x0",
+                "value": "0x4e1003b28d9280000",
+                "v": "0x1c",
+                "r": "0x84caf09aefbd5e539295acc67217563438a4efb224879b6855f56857fa2037d3",
+                "s": "0x5e863be3829812c81439f0ae9d8ecb832b531d651fb234c848d1bf45e62be8b9"
               }
             },
             "responseBodyV3": {
@@ -10719,15 +10784,15 @@
       {
         "auth": false,
         "method": "POST",
-        "defaultEnvironment": "https://ink-mainnet.g.alchemy.com/v2/",
+        "defaultEnvironment": "Ink Mainnet",
         "environments": [
           {
-            "id": "https://ink-mainnet.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+            "id": "Ink Mainnet",
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2"
           },
           {
-            "id": "https://ink-sepolia.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+            "id": "Ink Sepolia",
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2"
           }
         ],
         "id": "eth_getTransactionCount",
@@ -10814,12 +10879,9 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "jsonrpc": "2.0",
-                "id": "1",
-                "result": "0x1"
-              }
+              "jsonrpc": "2.0",
+              "id": "1",
+              "result": "0x1"
             },
             "responseBodyV3": {
               "type": "json",
@@ -10840,15 +10902,15 @@
       {
         "auth": false,
         "method": "POST",
-        "defaultEnvironment": "https://ink-mainnet.g.alchemy.com/v2/",
+        "defaultEnvironment": "Ink Mainnet",
         "environments": [
           {
-            "id": "https://ink-mainnet.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+            "id": "Ink Mainnet",
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2"
           },
           {
-            "id": "https://ink-sepolia.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+            "id": "Ink Sepolia",
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2"
           }
         ],
         "id": "eth_getTransactionReceipt",
@@ -10925,26 +10987,23 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "jsonrpc": "2.0",
-                "id": "1",
-                "result": {
-                  "blockHash": "0xe7212a92cfb9b06addc80dec2a0dfae9ea94fd344efeb157c41e12994fcad60a",
-                  "blockNumber": "0x50",
-                  "contractAddress": null,
-                  "cumulativeGasUsed": "0x5208",
-                  "from": "0x627306090abab3a6e1400e9345bc60c78a8bef57",
-                  "gasUsed": "0x5208",
-                  "effectiveGasPrice": "0x1",
-                  "logs": [],
-                  "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
-                  "status": "0x1",
-                  "to": "0xf17f52151ebef6c7334fad080c5704d77216b732",
-                  "transactionHash": "0x504ce587a65bdbdb6414a0c6c16d86a04dd79bfcc4f2950eec9634b30ce5370f",
-                  "transactionIndex": "0x0",
-                  "type": "0x0"
-                }
+              "jsonrpc": "2.0",
+              "id": "1",
+              "result": {
+                "blockHash": "0xe7212a92cfb9b06addc80dec2a0dfae9ea94fd344efeb157c41e12994fcad60a",
+                "blockNumber": "0x50",
+                "contractAddress": null,
+                "cumulativeGasUsed": "0x5208",
+                "from": "0x627306090abab3a6e1400e9345bc60c78a8bef57",
+                "gasUsed": "0x5208",
+                "effectiveGasPrice": "0x1",
+                "logs": [],
+                "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+                "status": "0x1",
+                "to": "0xf17f52151ebef6c7334fad080c5704d77216b732",
+                "transactionHash": "0x504ce587a65bdbdb6414a0c6c16d86a04dd79bfcc4f2950eec9634b30ce5370f",
+                "transactionIndex": "0x0",
+                "type": "0x0"
               }
             },
             "responseBodyV3": {
@@ -10982,15 +11041,15 @@
         "auth": false,
         "description": "Submits a raw transaction (serialized and signed) for broadcasting to the network. The transaction data should be encoded as a hexadecimal string starting with `0x`. You can create and sign a transaction externally using libraries like [web3.js](https://web3js.readthedocs.io/) or [ethers.js](https://docs.ethers.org/). \n\n**Note:** For [EIP-4844](https://eips.ethereum.org/EIPS/eip-4844) transactions, the raw form must be in the network format, which includes blobs, KZG commitments, and KZG proofs.\n",
         "method": "POST",
-        "defaultEnvironment": "https://ink-mainnet.g.alchemy.com/v2/",
+        "defaultEnvironment": "Ink Mainnet",
         "environments": [
           {
-            "id": "https://ink-mainnet.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+            "id": "Ink Mainnet",
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2"
           },
           {
-            "id": "https://ink-sepolia.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+            "id": "Ink Sepolia",
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2"
           }
         ],
         "id": "eth_sendRawTransaction",
@@ -11067,12 +11126,9 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "jsonrpc": "2.0",
-                "id": "1",
-                "result": "0xe670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331"
-              }
+              "jsonrpc": "2.0",
+              "id": "1",
+              "result": "0xe670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331"
             },
             "responseBodyV3": {
               "type": "json",
@@ -11093,15 +11149,15 @@
       {
         "auth": false,
         "method": "POST",
-        "defaultEnvironment": "https://ink-mainnet.g.alchemy.com/v2/",
+        "defaultEnvironment": "Ink Mainnet",
         "environments": [
           {
-            "id": "https://ink-mainnet.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+            "id": "Ink Mainnet",
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2"
           },
           {
-            "id": "https://ink-sepolia.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+            "id": "Ink Sepolia",
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2"
           }
         ],
         "id": "eth_syncing",
@@ -11144,15 +11200,12 @@
             "requestBody": [],
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "jsonrpc": "2.0",
-                "id": "1",
-                "result": {
-                  "startingBlock": "0x0",
-                  "currentBlock": "0x1518",
-                  "highestBlock": "0x9567a3"
-                }
+              "jsonrpc": "2.0",
+              "id": "1",
+              "result": {
+                "startingBlock": "0x0",
+                "currentBlock": "0x1518",
+                "highestBlock": "0x9567a3"
               }
             },
             "responseBodyV3": {
@@ -11189,15 +11242,15 @@
       {
         "auth": false,
         "method": "POST",
-        "defaultEnvironment": "https://ink-mainnet.g.alchemy.com/v2/",
+        "defaultEnvironment": "Ink Mainnet",
         "environments": [
           {
-            "id": "https://ink-mainnet.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+            "id": "Ink Mainnet",
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2"
           },
           {
-            "id": "https://ink-sepolia.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+            "id": "Ink Sepolia",
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2"
           }
         ],
         "id": "net_version",
@@ -11242,12 +11295,9 @@
             "requestBody": [],
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "jsonrpc": "2.0",
-                "id": "1",
-                "result": "1"
-              }
+              "jsonrpc": "2.0",
+              "id": "1",
+              "result": "1"
             },
             "responseBodyV3": {
               "type": "json",
@@ -11268,15 +11318,15 @@
       {
         "auth": false,
         "method": "POST",
-        "defaultEnvironment": "https://ink-mainnet.g.alchemy.com/v2/",
+        "defaultEnvironment": "Ink Mainnet",
         "environments": [
           {
-            "id": "https://ink-mainnet.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+            "id": "Ink Mainnet",
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2"
           },
           {
-            "id": "https://ink-sepolia.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+            "id": "Ink Sepolia",
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2"
           }
         ],
         "id": "web3_clientVersion",
@@ -11321,12 +11371,9 @@
             "requestBody": [],
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "jsonrpc": "2.0",
-                "id": "1",
-                "result": "Geth/v1.10.8-stable-26675454/linux-amd64/go1.16.6"
-              }
+              "jsonrpc": "2.0",
+              "id": "1",
+              "result": "Geth/v1.10.8-stable-26675454/linux-amd64/go1.16.6"
             },
             "responseBodyV3": {
               "type": "json",
@@ -11347,15 +11394,15 @@
       {
         "auth": false,
         "method": "POST",
-        "defaultEnvironment": "https://ink-mainnet.g.alchemy.com/v2/",
+        "defaultEnvironment": "Ink Mainnet",
         "environments": [
           {
-            "id": "https://ink-mainnet.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+            "id": "Ink Mainnet",
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2"
           },
           {
-            "id": "https://ink-sepolia.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+            "id": "Ink Sepolia",
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2"
           }
         ],
         "id": "web3_sha3",
@@ -11432,12 +11479,9 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "jsonrpc": "2.0",
-                "id": "1",
-                "result": "0x47173285a8d734ad4162d1b2ca3c6f0d0fabc60b8d702d31fd8e5c98569c36f9"
-              }
+              "jsonrpc": "2.0",
+              "id": "1",
+              "result": "0x47173285a8d734ad4162d1b2ca3c6f0d0fabc60b8d702d31fd8e5c98569c36f9"
             },
             "responseBodyV3": {
               "type": "json",
