@@ -701,7 +701,10 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
 
         statements.push(
             ts.factory.createIfStatement(
-                ts.factory.createPropertyAccessExpression(expressResponse, "writableEnded"),
+                ts.factory.createPrefixUnaryExpression(
+                    ts.SyntaxKind.ExclamationToken,
+                    ts.factory.createPropertyAccessExpression(expressResponse, "writableEnded")
+                ),
                 ts.factory.createBlock(
                     [ts.factory.createExpressionStatement(ts.factory.createCallExpression(next, undefined, undefined))],
                     true

@@ -97,7 +97,7 @@ export class OrganizationsService {
                     },
                     next,
                 );
-                if (res.writableEnded) {
+                if (!res.writableEnded) {
                     next();
                 }
             } catch (error) {
@@ -127,7 +127,7 @@ export class OrganizationsService {
                     },
                     next,
                 );
-                if (res.writableEnded) {
+                if (!res.writableEnded) {
                     next();
                 }
             } catch (error) {
@@ -161,7 +161,7 @@ export class OrganizationsService {
                     },
                     next,
                 );
-                if (res.writableEnded) {
+                if (!res.writableEnded) {
                     next();
                 }
             } catch (error) {

@@ -103,7 +103,7 @@ export class SubmissionService {
                     },
                     next,
                 );
-                if (res.writableEnded) {
+                if (!res.writableEnded) {
                     next();
                 }
             } catch (error) {
@@ -133,7 +133,7 @@ export class SubmissionService {
                     },
                     next,
                 );
-                if (res.writableEnded) {
+                if (!res.writableEnded) {
                     next();
                 }
             } catch (error) {
@@ -163,7 +163,7 @@ export class SubmissionService {
                     },
                     next,
                 );
-                if (res.writableEnded) {
+                if (!res.writableEnded) {
                     next();
                 }
             } catch (error) {
@@ -193,7 +193,7 @@ export class SubmissionService {
                     },
                     next,
                 );
-                if (res.writableEnded) {
+                if (!res.writableEnded) {
                     next();
                 }
             } catch (error) {

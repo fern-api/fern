@@ -81,7 +81,7 @@ export class QueryParamService {
                     },
                     next,
                 );
-                if (res.writableEnded) {
+                if (!res.writableEnded) {
                     next();
                 }
             } catch (error) {
@@ -111,7 +111,7 @@ export class QueryParamService {
                     },
                     next,
                 );
-                if (res.writableEnded) {
+                if (!res.writableEnded) {
                     next();
                 }
             } catch (error) {

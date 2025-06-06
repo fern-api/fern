@@ -66,7 +66,7 @@ export class NoReqBodyService {
                     },
                     next,
                 );
-                if (res.writableEnded) {
+                if (!res.writableEnded) {
                     next();
                 }
             } catch (error) {
@@ -100,7 +100,7 @@ export class NoReqBodyService {
                     },
                     next,
                 );
-                if (res.writableEnded) {
+                if (!res.writableEnded) {
                     next();
                 }
             } catch (error) {

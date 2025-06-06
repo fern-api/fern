@@ -65,7 +65,7 @@ export class BasicAuthService {
                     },
                     next,
                 );
-                if (res.writableEnded) {
+                if (!res.writableEnded) {
                     next();
                 }
             } catch (error) {
@@ -104,7 +104,7 @@ export class BasicAuthService {
                     },
                     next,
                 );
-                if (res.writableEnded) {
+                if (!res.writableEnded) {
                     next();
                 }
             } catch (error) {

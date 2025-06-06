@@ -60,7 +60,7 @@ export class ReferenceService {
                         },
                         next,
                     );
-                    if (res.writableEnded) {
+                    if (!res.writableEnded) {
                         next();
                     }
                 } catch (error) {

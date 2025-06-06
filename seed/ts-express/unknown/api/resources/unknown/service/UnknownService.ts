@@ -66,7 +66,7 @@ export class UnknownService {
                     },
                     next,
                 );
-                if (res.writableEnded) {
+                if (!res.writableEnded) {
                     next();
                 }
             } catch (error) {
@@ -103,7 +103,7 @@ export class UnknownService {
                         },
                         next,
                     );
-                    if (res.writableEnded) {
+                    if (!res.writableEnded) {
                         next();
                     }
                 } catch (error) {
