@@ -7,7 +7,9 @@ import com.seed.httpHead.core.ClientOptions;
 import com.seed.httpHead.core.RequestOptions;
 import com.seed.httpHead.resources.user.requests.ListUsersRequest;
 import com.seed.httpHead.resources.user.types.User;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class UserClient {
     protected final ClientOptions clientOptions;
@@ -26,12 +28,12 @@ public class UserClient {
         return this.rawClient;
     }
 
-    public void head() {
-        this.rawClient.head().body();
+    public Map<String, List<String>> head() {
+        return new HashMap<>(this.rawClient.head().headers());
     }
 
-    public void head(RequestOptions requestOptions) {
-        this.rawClient.head(requestOptions).body();
+    public Map<String, List<String>> head(RequestOptions requestOptions) {
+        return new HashMap<>(this.rawClient.head(requestOptions).headers());
     }
 
     public List<User> list(ListUsersRequest request) {

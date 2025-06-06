@@ -1,5 +1,7 @@
 package com.fern.java.client.generators.endpoint;
 
+import com.fern.ir.model.http.HttpEndpoint;
+import com.fern.ir.model.http.HttpMethod;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import java.util.Objects;
@@ -17,6 +19,8 @@ public abstract class AbstractDelegatingHttpEndpointMethodSpecs implements HttpE
         this.rawClientName = rawClientName;
         this.bodyGetterName = bodyGetterName;
     }
+
+    public abstract HttpEndpoint getHttpEndpoint();
 
     public abstract MethodSpec getNonRequestOptionsMethodSpec();
 
@@ -39,5 +43,9 @@ public abstract class AbstractDelegatingHttpEndpointMethodSpecs implements HttpE
         }
         argString.append(")");
         return argString.toString();
+    }
+
+    protected boolean isHeadMethod() {
+        return getHttpEndpoint().getMethod().equals(HttpMethod.HEAD);
     }
 }

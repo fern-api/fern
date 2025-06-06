@@ -63,6 +63,6 @@ public class SyncHttpEndpointMethodSpecFactory extends AbstractHttpEndpointMetho
 
     @Override
     public HttpEndpointMethodSpecsFactory httpEndpointMethodSpecsFactory() {
-        return new SyncHttpEndpointMethodSpecsFactory();
+        return new SyncHttpEndpointMethodSpecsFactory(getHttpEndpoint());
     }
 }

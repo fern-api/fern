@@ -56,10 +56,7 @@ public class AsyncRawUserClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
-                    if (response.isSuccessful()) {
-                        future.complete(new SeedHttpHeadHttpResponse<>(null, response));
-                        return;
-                    }
+                    if (response.isSuccessful()) {}
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     future.completeExceptionally(new SeedHttpHeadApiException(
                             "Error with status code " + response.code(),
