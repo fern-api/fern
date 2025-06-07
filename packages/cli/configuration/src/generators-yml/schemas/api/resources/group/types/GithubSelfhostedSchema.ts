@@ -5,4 +5,5 @@
 export interface GithubSelfhostedSchema {
     uri: string;
     token: string;
+    path?: string;
 }
