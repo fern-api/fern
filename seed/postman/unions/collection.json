@@ -24,11 +24,12 @@
           "request": {
             "description": null,
             "url": {
-              "raw": "{{baseUrl}}/:id",
+              "raw": "{{baseUrl}}/big-union/:id",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
+                "big-union",
                 ":id"
               ],
               "query": [],
@@ -59,11 +60,12 @@
               "originalRequest": {
                 "description": null,
                 "url": {
-                  "raw": "{{baseUrl}}/:id",
+                  "raw": "{{baseUrl}}/big-union/:id",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
+                    "big-union",
                     ":id"
                   ],
                   "query": [],
@@ -98,11 +100,13 @@
           "request": {
             "description": null,
             "url": {
-              "raw": "{{baseUrl}}",
+              "raw": "{{baseUrl}}/big-union",
               "host": [
                 "{{baseUrl}}"
               ],
-              "path": [],
+              "path": [
+                "big-union"
+              ],
               "query": [],
               "variable": []
             },
@@ -133,11 +137,13 @@
               "originalRequest": {
                 "description": null,
                 "url": {
-                  "raw": "{{baseUrl}}",
+                  "raw": "{{baseUrl}}/big-union",
                   "host": [
                     "{{baseUrl}}"
                   ],
-                  "path": [],
+                  "path": [
+                    "big-union"
+                  ],
                   "query": [],
                   "variable": []
                 },
@@ -172,11 +178,12 @@
           "request": {
             "description": null,
             "url": {
-              "raw": "{{baseUrl}}/many",
+              "raw": "{{baseUrl}}/big-union/many",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
+                "big-union",
                 "many"
               ],
               "query": [],
@@ -209,11 +216,12 @@
               "originalRequest": {
                 "description": null,
                 "url": {
-                  "raw": "{{baseUrl}}/many",
+                  "raw": "{{baseUrl}}/big-union/many",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
+                    "big-union",
                     "many"
                   ],
                   "query": [],
@@ -257,11 +265,12 @@
           "request": {
             "description": null,
             "url": {
-              "raw": "{{baseUrl}}/:id",
+              "raw": "{{baseUrl}}/union/:id",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
+                "union",
                 ":id"
               ],
               "query": [],
@@ -292,11 +301,12 @@
               "originalRequest": {
                 "description": null,
                 "url": {
-                  "raw": "{{baseUrl}}/:id",
+                  "raw": "{{baseUrl}}/union/:id",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
+                    "union",
                     ":id"
                   ],
                   "query": [],
@@ -331,11 +341,13 @@
           "request": {
             "description": null,
             "url": {
-              "raw": "{{baseUrl}}",
+              "raw": "{{baseUrl}}/union",
               "host": [
                 "{{baseUrl}}"
               ],
-              "path": [],
+              "path": [
+                "union"
+              ],
               "query": [],
               "variable": []
             },
@@ -366,11 +378,13 @@
               "originalRequest": {
                 "description": null,
                 "url": {
-                  "raw": "{{baseUrl}}",
+                  "raw": "{{baseUrl}}/union",
                   "host": [
                     "{{baseUrl}}"
                   ],
-                  "path": [],
+                  "path": [
+                    "union"
+                  ],
                   "query": [],
                   "variable": []
                 },

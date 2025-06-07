@@ -71,7 +71,7 @@ class UnionClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/{$id}",
+                    path: "/union/{$id}",
                     method: HttpMethod::GET,
                 ),
                 $options,
@@ -124,7 +124,7 @@ class UnionClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "",
+                    path: "/union",
                     method: HttpMethod::PATCH,
                     body: $request,
                 ),

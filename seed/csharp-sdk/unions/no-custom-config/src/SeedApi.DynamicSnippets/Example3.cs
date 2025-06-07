@@ -12,7 +12,7 @@ public class Example3
             }
         );
 
-        await client.Bigunion.GetAsync(
+        await client.Union.GetAsync(
             "id"
         );
     }

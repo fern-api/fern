@@ -29,7 +29,7 @@ public partial class UnionClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = string.Format("/{0}", ValueConvert.ToPathParameterString(id)),
+                    Path = string.Format("/union/{0}", ValueConvert.ToPathParameterString(id)),
                     Options = options,
                 },
                 cancellationToken
@@ -73,7 +73,7 @@ public partial class UnionClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethodExtensions.Patch,
-                    Path = "",
+                    Path = "/union",
                     Body = request,
                     Options = options,
                 },
