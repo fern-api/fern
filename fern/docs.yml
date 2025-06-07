@@ -545,6 +545,10 @@ navigation:
           - page: Generate Webhook Reference
             icon: fa-regular fa-webhook
             path: ./pages/docs/api-references/generate-webhook-ref.mdx
+          - page: Multiple Server URLs
+            icon: fa-regular fa-server
+            path: ./pages/docs/api-references/server-urls.mdx
+            slug: server-urls
           - page: Generate WebSocket Reference
             icon: fa-regular fa-plug
             path: ./pages/docs/api-references/generate-websocket-ref.mdx
