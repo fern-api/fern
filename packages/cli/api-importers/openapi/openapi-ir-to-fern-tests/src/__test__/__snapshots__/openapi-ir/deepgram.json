@@ -2986,17 +2986,59 @@
           "description": "The bitrate of the audio in bits per second. Choose from predefined ranges or specific values based on the encoding type.",
           "name": "bit_rate",
           "schema": {
-            "description": "Encoding -aac. Bitrate range - 4000-192000 bps.",
-            "schema": {
-              "minimum": 4000,
-              "maximum": 192000,
-              "type": "int"
-            },
             "generatedName": "SpeakRequestBitRate",
-            "nameOverride": "aac",
-            "title": "aac",
+            "value": {
+              "value": {
+                "generatedName": "SpeakRequestBitRate",
+                "schemas": [
+                  {
+                    "description": "Encoding - mp3(default). Supported bitrates - 32000, 48000(default) bps.",
+                    "schema": {
+                      "type": "int"
+                    },
+                    "generatedName": "SpeakRequestBitRate",
+                    "title": "mp3(default)",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  {
+                    "description": "Encoding - opus. Bitrate range - 4000-650000 bps.",
+                    "schema": {
+                      "minimum": 4000,
+                      "maximum": 650000,
+                      "type": "int"
+                    },
+                    "generatedName": "SpeakRequestBitRate",
+                    "nameOverride": "opus",
+                    "title": "opus",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  {
+                    "description": "Encoding -aac. Bitrate range - 4000-192000 bps.",
+                    "schema": {
+                      "minimum": 4000,
+                      "maximum": 192000,
+                      "type": "int"
+                    },
+                    "generatedName": "SpeakRequestBitRate",
+                    "nameOverride": "aac",
+                    "title": "aac",
+                    "groupName": [],
+                    "type": "primitive"
+                  }
+                ],
+                "groupName": [],
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "undiscriminated"
+              },
+              "type": "oneOf"
+            },
             "groupName": [],
-            "type": "primitive"
+            "type": "nullable"
           },
           "source": {
             "file": "../openapi.yml",
@@ -3221,15 +3263,76 @@
           "description": "Sample Rate specifies the sample rate for the output audio. Based on the encoding, different sample rates are supported. For some encodings, the sample rate is not configurable",
           "name": "speak_sample_rate",
           "schema": {
-            "description": "Encoding - opus. Sample rate is fixed at 48000 Hz.",
-            "schema": {
-              "type": "int"
-            },
             "generatedName": "SpeakRequestSpeakSampleRate",
-            "nameOverride": "opus",
-            "title": "opus",
+            "value": {
+              "value": {
+                "generatedName": "SpeakRequestSpeakSampleRate",
+                "schemas": [
+                  {
+                    "description": "Encoding - linear16. Supported sample rates - 8000, 16000, 24000, 32000, 48000 Hz.",
+                    "schema": {
+                      "type": "int"
+                    },
+                    "generatedName": "SpeakRequestSpeakSampleRate",
+                    "title": "linear16",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  {
+                    "description": "Encoding - mulaw. Supported sample rates - 8000, 16000 Hz.",
+                    "schema": {
+                      "type": "int"
+                    },
+                    "generatedName": "SpeakRequestSpeakSampleRate",
+                    "nameOverride": "mulaw",
+                    "title": "mulaw",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  {
+                    "description": "Encoding - alaw. Supported sample rates - 8000, 16000 Hz.",
+                    "schema": {
+                      "type": "int"
+                    },
+                    "generatedName": "SpeakRequestSpeakSampleRate",
+                    "nameOverride": "alaw",
+                    "title": "alaw",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  {
+                    "description": "Encoding - mp3. Sample rate is fixed and not configurable (22050 Hz).",
+                    "schema": {
+                      "type": "int"
+                    },
+                    "generatedName": "SpeakRequestSpeakSampleRate",
+                    "title": "mp3",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  {
+                    "description": "Encoding - opus. Sample rate is fixed at 48000 Hz.",
+                    "schema": {
+                      "type": "int"
+                    },
+                    "generatedName": "SpeakRequestSpeakSampleRate",
+                    "nameOverride": "opus",
+                    "title": "opus",
+                    "groupName": [],
+                    "type": "primitive"
+                  }
+                ],
+                "groupName": [],
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "undiscriminated"
+              },
+              "type": "oneOf"
+            },
             "groupName": [],
-            "type": "primitive"
+            "type": "nullable"
           },
           "source": {
             "file": "../openapi.yml",
