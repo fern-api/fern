@@ -4,6 +4,7 @@
 
 import * as core from "../../../../core/index.js";
 import * as SeedVersion from "../../../index.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import urlJoin from "url-join";
 import * as errors from "../../../../errors/index.js";
 
@@ -14,6 +15,8 @@ export declare namespace User {
         baseUrl?: core.Supplier<string>;
         /** Override the X-API-Version header */
         xApiVersion?: "1.0.0" | "2.0.0" | "latest";
+        /** Additional headers to include in requests. */
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 
     export interface RequestOptions {
@@ -24,14 +27,18 @@ export declare namespace User {
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
         /** Additional headers to include in the request. */
-        headers?: Record<string, string>;
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
         /** Override the X-API-Version header */
         xApiVersion?: "1.0.0" | "2.0.0" | "latest";
     }
 }
 
 export class User {
-    constructor(protected readonly _options: User.Options) {}
+    protected readonly _options: User.Options;
+
+    constructor(_options: User.Options) {
+        this._options = _options;
+    }
 
     /**
      * @param {SeedVersion.UserId} userId
@@ -58,16 +65,11 @@ export class User {
                 `/users/${encodeURIComponent(userId)}`,
             ),
             method: "GET",
-            headers: {
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/version",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/version/0.0.1",
-                "X-API-Version": requestOptions?.xApiVersion ?? this._options?.xApiVersion ?? "2.0.0",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ...requestOptions?.headers,
-            },
+            headers: mergeHeaders(
+                this._options?.headers,
+                mergeOnlyDefinedHeaders({ "X-API-Version": requestOptions?.xApiVersion }),
+                requestOptions?.headers,
+            ),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

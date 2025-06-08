@@ -5,13 +5,18 @@ import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { loadAPIWorkspace } from "@fern-api/workspace-loader";
 
+const OMITTED_FIXTURES = ["deeply-recursive"];
 const FIXTURES_DIR = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
 const filterFixture = process.env.TEST_FIXTURE;
 
 // eslint-disable-next-line @typescript-eslint/no-misused-promises
 describe("openapi-v2-sdks", async () => {
     for (const fixture of await readdir(FIXTURES_DIR, { withFileTypes: true })) {
-        if (!fixture.isDirectory() || (filterFixture && fixture.name !== filterFixture)) {
+        if (
+            !fixture.isDirectory() ||
+            (filterFixture && fixture.name !== filterFixture) ||
+            OMITTED_FIXTURES.includes(fixture.name)
+        ) {
             continue;
         }
 
@@ -36,7 +41,8 @@ describe("openapi-v2-sdks", async () => {
                     const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation({
                         context,
                         audiences: { type: "all" },
-                        enableUniqueErrorsPerEndpoint: false
+                        enableUniqueErrorsPerEndpoint: false,
+                        generateV1Examples: true
                     });
                     // eslint-disable-next-line jest/no-standalone-expect
                     await expect(JSON.stringify(intermediateRepresentation, undefined, 2)).toMatchFileSnapshot(

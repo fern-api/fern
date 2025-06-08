@@ -8936,23 +8936,16 @@
               "responseStatusCode": 200,
               "responseBody": [
                 {
-                  "if": {
-                    "!": {
-                      "!": {}
-                    }
-                  },
+                  "if": {},
                   "then": [
                     {
-                      "if": {
-                        "!": {}
-                      }
+                      "set": "logo",
+                      "to": "http://example.com/favicon.ico"
                     }
                   ],
                   "else": [
                     {
-                      "if": {
-                        "!": {}
-                      }
+                      "remove_label": "example label"
                     }
                   ]
                 }
@@ -8961,23 +8954,16 @@
                 "type": "json",
                 "value": [
                   {
-                    "if": {
-                      "!": {
-                        "!": {}
-                      }
-                    },
+                    "if": {},
                     "then": [
                       {
-                        "if": {
-                          "!": {}
-                        }
+                        "set": "logo",
+                        "to": "http://example.com/favicon.ico"
                       }
                     ],
                     "else": [
                       {
-                        "if": {
-                          "!": {}
-                        }
+                        "remove_label": "example label"
                       }
                     ]
                   }
@@ -9090,23 +9076,16 @@
               "headers": {},
               "requestBody": [
                 {
-                  "if": {
-                    "!": {
-                      "!": {}
-                    }
-                  },
+                  "if": {},
                   "then": [
                     {
-                      "if": {
-                        "!": {}
-                      }
+                      "set": "logo",
+                      "to": "http://example.com/favicon.ico"
                     }
                   ],
                   "else": [
                     {
-                      "if": {
-                        "!": {}
-                      }
+                      "remove_label": "example label"
                     }
                   ]
                 }
@@ -9115,23 +9094,16 @@
                 "type": "json",
                 "value": [
                   {
-                    "if": {
-                      "!": {
-                        "!": {}
-                      }
-                    },
+                    "if": {},
                     "then": [
                       {
-                        "if": {
-                          "!": {}
-                        }
+                        "set": "logo",
+                        "to": "http://example.com/favicon.ico"
                       }
                     ],
                     "else": [
                       {
-                        "if": {
-                          "!": {}
-                        }
+                        "remove_label": "example label"
                       }
                     ]
                   }
@@ -9244,20 +9216,12 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "if": {
-                  "!": {
-                    "!": {}
-                  }
-                }
+                "if": {}
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "if": {
-                    "!": {
-                      "!": {}
-                    }
-                  }
+                  "if": {}
                 }
               },
               "responseStatusCode": 200
@@ -9476,20 +9440,12 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "if": {
-                  "!": {
-                    "!": {}
-                  }
-                }
+                "if": {}
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "if": {
-                    "!": {
-                      "!": {}
-                    }
-                  }
+                  "if": {}
                 }
               },
               "responseStatusCode": 200

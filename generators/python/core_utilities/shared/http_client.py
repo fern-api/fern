@@ -8,13 +8,13 @@ from contextlib import asynccontextmanager, contextmanager
 from random import random
 
 import httpx
-from httpx._types import RequestFiles
 from .file import File, convert_file_dict_to_httpx_tuples
 from .force_multipart import FORCE_MULTIPART
 from .jsonable_encoder import jsonable_encoder
 from .query_encoder import encode_query
 from .remove_none_from_dict import remove_none_from_dict
 from .request_options import RequestOptions
+from httpx._types import RequestFiles
 
 INITIAL_RETRY_DELAY_SECONDS = 0.5
 MAX_RETRY_DELAY_SECONDS = 10
@@ -199,7 +199,7 @@ class HttpClient:
 
         json_body, data_body = get_request_body(json=json, data=data, request_options=request_options, omit=omit)
 
-        request_files: typing.Optional[RequestFiles] =  (
+        request_files: typing.Optional[RequestFiles] = (
             convert_file_dict_to_httpx_tuples(remove_omit_from_dict(remove_none_from_dict(files), omit))
             if (files is not None and files is not omit and isinstance(files, dict))
             else None
@@ -294,7 +294,7 @@ class HttpClient:
             else self.base_timeout()
         )
 
-        request_files: typing.Optional[RequestFiles] =  (
+        request_files: typing.Optional[RequestFiles] = (
             convert_file_dict_to_httpx_tuples(remove_omit_from_dict(remove_none_from_dict(files), omit))
             if (files is not None and files is not omit and isinstance(files, dict))
             else None
@@ -395,7 +395,7 @@ class AsyncHttpClient:
             else self.base_timeout()
         )
 
-        request_files: typing.Optional[RequestFiles] =  (
+        request_files: typing.Optional[RequestFiles] = (
             convert_file_dict_to_httpx_tuples(remove_omit_from_dict(remove_none_from_dict(files), omit))
             if (files is not None and files is not omit and isinstance(files, dict))
             else None
@@ -492,7 +492,7 @@ class AsyncHttpClient:
             else self.base_timeout()
         )
 
-        request_files: typing.Optional[RequestFiles] =  (
+        request_files: typing.Optional[RequestFiles] = (
             convert_file_dict_to_httpx_tuples(remove_omit_from_dict(remove_none_from_dict(files), omit))
             if (files is not None and files is not omit and isinstance(files, dict))
             else None

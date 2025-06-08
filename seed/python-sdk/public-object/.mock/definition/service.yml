@@ -1,8 +1,0 @@
-service:
-  auth: false
-  base-path: /
-  endpoints:
-    get:
-      path: /helloworld.txt
-      method: GET
-      response: file

@@ -3826,11 +3826,40 @@
             },
             "location": {
                 "method": "POST",
-                "path": "/conversations/search"
+                "path": "/{index}/conversations/search"
             },
             "request": {
                 "type": "body",
-                "pathParameters": [],
+                "pathParameters": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "index",
+                                "camelCase": {
+                                    "unsafeName": "index",
+                                    "safeName": "index"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "index",
+                                    "safeName": "index"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "INDEX",
+                                    "safeName": "INDEX"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Index",
+                                    "safeName": "Index"
+                                }
+                            },
+                            "wireValue": "index"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    }
+                ],
                 "body": {
                     "type": "typeReference",
                     "value": {

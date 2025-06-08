@@ -39,6 +39,7 @@ export declare namespace Spec {
         environmentOverrides?: RawSchemas.WithEnvironmentsSchema;
         globalHeaderOverrides?: RawSchemas.WithHeadersSchema;
         enableUniqueErrorsPerEndpoint: boolean;
+        generateV1Examples: boolean;
     }
 }
 
@@ -60,6 +61,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
     public readonly environmentOverrides?: RawSchemas.WithEnvironmentsSchema;
     public readonly globalHeaderOverrides?: RawSchemas.WithHeadersSchema;
     public readonly enableUniqueErrorsPerEndpoint: boolean;
+    public readonly generateV1Examples: boolean;
 
     constructor(protected readonly args: Spec.Args<Spec>) {
         this.spec = args.spec;
@@ -79,6 +81,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
         this.environmentOverrides = args.environmentOverrides;
         this.globalHeaderOverrides = args.globalHeaderOverrides;
         this.enableUniqueErrorsPerEndpoint = args.enableUniqueErrorsPerEndpoint;
+        this.generateV1Examples = args.generateV1Examples;
     }
 
     private static BREADCRUMBS_TO_IGNORE = ["properties", "allOf", "anyOf"];
@@ -282,7 +285,12 @@ export abstract class AbstractConverterContext<Spec extends object> {
             }
         }
 
-        const keys = (referencePath ?? reference.$ref)
+        const maybeReferenceString = referencePath ?? reference.$ref;
+        if (maybeReferenceString == null || typeof maybeReferenceString !== "string") {
+            return { resolved: false };
+        }
+
+        const keys = maybeReferenceString
             .replace(/^(?:(?:https?:\/\/)?|#?\/?)?/, "")
             .split("/")
             .map((key) => key.replace(/~1/g, "/"));
@@ -655,7 +663,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
     }
 
     public isExternalReference($ref: string): boolean {
-        return $ref.startsWith("http://") || $ref.startsWith("https://");
+        return typeof $ref === "string" && ($ref.startsWith("http://") || $ref.startsWith("https://"));
     }
 
     public isReferenceObjectWithIdentifier(

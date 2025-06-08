@@ -814,3 +814,6 @@ redirects:
   - source: /learn/ai-search/ai-search-customer-showcase
     destination: /learn/ai-search/customer-showcase
     permanent: true
+  - source: /learn/docs/getting-started/changelog/2025/5/23
+    destination: /learn/docs/getting-started/changelog/2025/6/5
+    permanent: true

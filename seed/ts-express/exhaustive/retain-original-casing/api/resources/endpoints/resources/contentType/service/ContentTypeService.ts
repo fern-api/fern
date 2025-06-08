@@ -65,7 +65,7 @@ export class ContentTypeService {
                         },
                         next,
                     );
-                    if (res.writableEnded) {
+                    if (!res.writableEnded) {
                         next();
                     }
                 } catch (error) {
@@ -106,7 +106,7 @@ export class ContentTypeService {
                         },
                         next,
                     );
-                    if (res.writableEnded) {
+                    if (!res.writableEnded) {
                         next();
                     }
                 } catch (error) {

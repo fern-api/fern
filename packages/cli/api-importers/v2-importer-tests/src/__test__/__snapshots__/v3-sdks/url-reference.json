@@ -9096,6 +9096,141 @@
             }
           ],
           "url": "/petowners"
+        },
+        {
+          "pathParameters": [],
+          "headers": [],
+          "queryParameters": [],
+          "messages": [
+            {
+              "type": "subscribe",
+              "body": {
+                "jsonExample": {},
+                "shape": {
+                  "shape": {
+                    "properties": [
+                      {
+                        "name": {
+                          "name": {
+                            "originalName": "params",
+                            "camelCase": {
+                              "unsafeName": "params",
+                              "safeName": "params"
+                            },
+                            "snakeCase": {
+                              "unsafeName": "params",
+                              "safeName": "params"
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "PARAMS",
+                              "safeName": "PARAMS"
+                            },
+                            "pascalCase": {
+                              "unsafeName": "Params",
+                              "safeName": "Params"
+                            }
+                          },
+                          "wireValue": "params"
+                        },
+                        "originalTypeDeclaration": {
+                          "typeId": "PetownersSubscribe",
+                          "fernFilepath": {
+                            "allParts": [],
+                            "packagePath": []
+                          },
+                          "name": {
+                            "originalName": "PetownersSubscribe",
+                            "camelCase": {
+                              "unsafeName": "petownersSubscribe",
+                              "safeName": "petownersSubscribe"
+                            },
+                            "snakeCase": {
+                              "unsafeName": "petowners_subscribe",
+                              "safeName": "petowners_subscribe"
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "PETOWNERS_SUBSCRIBE",
+                              "safeName": "PETOWNERS_SUBSCRIBE"
+                            },
+                            "pascalCase": {
+                              "unsafeName": "PetownersSubscribe",
+                              "safeName": "PetownersSubscribe"
+                            }
+                          }
+                        },
+                        "value": {
+                          "shape": {
+                            "container": {
+                              "valueType": {
+                                "fernFilepath": {
+                                  "allParts": [],
+                                  "packagePath": []
+                                },
+                                "name": {
+                                  "originalName": "ChannelsPetownersSubscribeParams",
+                                  "camelCase": {
+                                    "unsafeName": "channelsPetownersSubscribeParams",
+                                    "safeName": "channelsPetownersSubscribeParams"
+                                  },
+                                  "snakeCase": {
+                                    "unsafeName": "channels_petowners_subscribe_params",
+                                    "safeName": "channels_petowners_subscribe_params"
+                                  },
+                                  "screamingSnakeCase": {
+                                    "unsafeName": "CHANNELS_PETOWNERS_SUBSCRIBE_PARAMS",
+                                    "safeName": "CHANNELS_PETOWNERS_SUBSCRIBE_PARAMS"
+                                  },
+                                  "pascalCase": {
+                                    "unsafeName": "ChannelsPetownersSubscribeParams",
+                                    "safeName": "ChannelsPetownersSubscribeParams"
+                                  }
+                                },
+                                "typeId": "ChannelsPetownersSubscribeParams",
+                                "inline": false,
+                                "type": "named"
+                              },
+                              "type": "optional"
+                            },
+                            "type": "container"
+                          }
+                        }
+                      }
+                    ],
+                    "type": "object"
+                  },
+                  "typeName": {
+                    "typeId": "PetownersSubscribe",
+                    "fernFilepath": {
+                      "allParts": [],
+                      "packagePath": []
+                    },
+                    "name": {
+                      "originalName": "PetownersSubscribe",
+                      "camelCase": {
+                        "unsafeName": "petownersSubscribe",
+                        "safeName": "petownersSubscribe"
+                      },
+                      "snakeCase": {
+                        "unsafeName": "petowners_subscribe",
+                        "safeName": "petowners_subscribe"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "PETOWNERS_SUBSCRIBE",
+                        "safeName": "PETOWNERS_SUBSCRIBE"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "PetownersSubscribe",
+                        "safeName": "PetownersSubscribe"
+                      }
+                    }
+                  },
+                  "type": "named"
+                },
+                "type": "reference"
+              }
+            }
+          ],
+          "url": "/petowners"
         }
       ],
       "v2Examples": {
@@ -9208,6 +9343,209 @@
         }
       ],
       "examples": [
+        {
+          "pathParameters": [],
+          "headers": [],
+          "queryParameters": [],
+          "messages": [
+            {
+              "type": "send",
+              "body": {
+                "jsonExample": {},
+                "shape": {
+                  "shape": {
+                    "properties": [
+                      {
+                        "name": {
+                          "name": {
+                            "originalName": "message",
+                            "camelCase": {
+                              "unsafeName": "message",
+                              "safeName": "message"
+                            },
+                            "snakeCase": {
+                              "unsafeName": "message",
+                              "safeName": "message"
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "MESSAGE",
+                              "safeName": "MESSAGE"
+                            },
+                            "pascalCase": {
+                              "unsafeName": "Message",
+                              "safeName": "Message"
+                            }
+                          },
+                          "wireValue": "message"
+                        },
+                        "originalTypeDeclaration": {
+                          "typeId": "testChannel_sendMessage",
+                          "fernFilepath": {
+                            "allParts": [],
+                            "packagePath": []
+                          },
+                          "name": {
+                            "originalName": "testChannel_sendMessage",
+                            "camelCase": {
+                              "unsafeName": "testChannelSendMessage",
+                              "safeName": "testChannelSendMessage"
+                            },
+                            "snakeCase": {
+                              "unsafeName": "test_channel_send_message",
+                              "safeName": "test_channel_send_message"
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "TEST_CHANNEL_SEND_MESSAGE",
+                              "safeName": "TEST_CHANNEL_SEND_MESSAGE"
+                            },
+                            "pascalCase": {
+                              "unsafeName": "TestChannelSendMessage",
+                              "safeName": "TestChannelSendMessage"
+                            }
+                          }
+                        },
+                        "value": {
+                          "shape": {
+                            "container": {
+                              "valueType": {
+                                "primitive": {
+                                  "v1": "STRING",
+                                  "v2": {
+                                    "validation": {},
+                                    "type": "string"
+                                  }
+                                },
+                                "type": "primitive"
+                              },
+                              "type": "optional"
+                            },
+                            "type": "container"
+                          }
+                        }
+                      },
+                      {
+                        "name": {
+                          "name": {
+                            "originalName": "data",
+                            "camelCase": {
+                              "unsafeName": "data",
+                              "safeName": "data"
+                            },
+                            "snakeCase": {
+                              "unsafeName": "data",
+                              "safeName": "data"
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "DATA",
+                              "safeName": "DATA"
+                            },
+                            "pascalCase": {
+                              "unsafeName": "Data",
+                              "safeName": "Data"
+                            }
+                          },
+                          "wireValue": "data"
+                        },
+                        "originalTypeDeclaration": {
+                          "typeId": "testChannel_sendMessage",
+                          "fernFilepath": {
+                            "allParts": [],
+                            "packagePath": []
+                          },
+                          "name": {
+                            "originalName": "testChannel_sendMessage",
+                            "camelCase": {
+                              "unsafeName": "testChannelSendMessage",
+                              "safeName": "testChannelSendMessage"
+                            },
+                            "snakeCase": {
+                              "unsafeName": "test_channel_send_message",
+                              "safeName": "test_channel_send_message"
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "TEST_CHANNEL_SEND_MESSAGE",
+                              "safeName": "TEST_CHANNEL_SEND_MESSAGE"
+                            },
+                            "pascalCase": {
+                              "unsafeName": "TestChannelSendMessage",
+                              "safeName": "TestChannelSendMessage"
+                            }
+                          }
+                        },
+                        "value": {
+                          "shape": {
+                            "container": {
+                              "valueType": {
+                                "fernFilepath": {
+                                  "allParts": [],
+                                  "packagePath": []
+                                },
+                                "name": {
+                                  "originalName": "ChannelsTestChannelMessagesSendMessageData",
+                                  "camelCase": {
+                                    "unsafeName": "channelsTestChannelMessagesSendMessageData",
+                                    "safeName": "channelsTestChannelMessagesSendMessageData"
+                                  },
+                                  "snakeCase": {
+                                    "unsafeName": "channels_test_channel_messages_send_message_data",
+                                    "safeName": "channels_test_channel_messages_send_message_data"
+                                  },
+                                  "screamingSnakeCase": {
+                                    "unsafeName": "CHANNELS_TEST_CHANNEL_MESSAGES_SEND_MESSAGE_DATA",
+                                    "safeName": "CHANNELS_TEST_CHANNEL_MESSAGES_SEND_MESSAGE_DATA"
+                                  },
+                                  "pascalCase": {
+                                    "unsafeName": "ChannelsTestChannelMessagesSendMessageData",
+                                    "safeName": "ChannelsTestChannelMessagesSendMessageData"
+                                  }
+                                },
+                                "typeId": "ChannelsTestChannelMessagesSendMessageData",
+                                "inline": false,
+                                "type": "named"
+                              },
+                              "type": "optional"
+                            },
+                            "type": "container"
+                          }
+                        }
+                      }
+                    ],
+                    "type": "object"
+                  },
+                  "typeName": {
+                    "typeId": "testChannel_sendMessage",
+                    "fernFilepath": {
+                      "allParts": [],
+                      "packagePath": []
+                    },
+                    "name": {
+                      "originalName": "testChannel_sendMessage",
+                      "camelCase": {
+                        "unsafeName": "testChannelSendMessage",
+                        "safeName": "testChannelSendMessage"
+                      },
+                      "snakeCase": {
+                        "unsafeName": "test_channel_send_message",
+                        "safeName": "test_channel_send_message"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "TEST_CHANNEL_SEND_MESSAGE",
+                        "safeName": "TEST_CHANNEL_SEND_MESSAGE"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "TestChannelSendMessage",
+                        "safeName": "TestChannelSendMessage"
+                      }
+                    }
+                  },
+                  "type": "named"
+                },
+                "type": "reference"
+              }
+            }
+          ],
+          "url": "/test"
+        },
         {
           "pathParameters": [],
           "headers": [],

@@ -76,7 +76,7 @@ export class PaymentService {
                         },
                         next,
                     );
-                    if (res.writableEnded) {
+                    if (!res.writableEnded) {
                         next();
                     }
                 } catch (error) {
@@ -114,7 +114,7 @@ export class PaymentService {
                     },
                     next,
                 );
-                if (res.writableEnded) {
+                if (!res.writableEnded) {
                     next();
                 }
             } catch (error) {

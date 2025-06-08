@@ -231,9 +231,10 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         }
     }
 
-    private getHeaders(context: SdkContext): ts.ObjectLiteralElementLike[] {
+    private getHeaders(context: SdkContext): ts.Expression {
         return generateHeaders({
             context,
+            intermediateRepresentation: this.ir,
             requestParameter: this.requestParameter,
             generatedSdkClientClass: this.generatedSdkClientClass,
             idempotencyHeaders: this.ir.idempotencyHeaders,

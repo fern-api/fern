@@ -6,7 +6,7 @@
             "type": "python"
         },
         "endpointId": {
-            "path": "/conversations/search",
+            "path": "/{index}/conversations/search",
             "method": "POST",
             "identifierOverride": "endpoint_complex.search"
         },
@@ -43,6 +43,22 @@
                 "isOptional": true,
                 "templateString": "client.complex_.search(\n\t$FERN_INPUT\n)",
                 "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "index=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "PATH",
+                                    "path": "index",
+                                    "type": "payload"
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    },
                     {
                         "type": "template",
                         "value": {
@@ -870,6 +886,22 @@
                     "isOptional": true,
                     "templateString": "await client.complex_.search(\n\t$FERN_INPUT\n)",
                     "templateInputs": [
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "index=$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "PATH",
+                                        "path": "index",
+                                        "type": "payload"
+                                    }
+                                ],
+                                "type": "generic"
+                            }
+                        },
                         {
                             "type": "template",
                             "value": {

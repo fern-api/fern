@@ -5,6 +5,7 @@
 import * as environments from "../../../../environments.js";
 import * as core from "../../../../core/index.js";
 import * as SeedMultiUrlEnvironment from "../../../index.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import urlJoin from "url-join";
 import * as errors from "../../../../errors/index.js";
 
@@ -16,6 +17,8 @@ export declare namespace Ec2 {
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
         token: core.Supplier<core.BearerToken>;
+        /** Additional headers to include in requests. */
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 
     export interface RequestOptions {
@@ -26,12 +29,16 @@ export declare namespace Ec2 {
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
         /** Additional headers to include in the request. */
-        headers?: Record<string, string>;
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 }
 
 export class Ec2 {
-    constructor(protected readonly _options: Ec2.Options) {}
+    protected readonly _options: Ec2.Options;
+
+    constructor(_options: Ec2.Options) {
+        this._options = _options;
+    }
 
     /**
      * @param {SeedMultiUrlEnvironment.BootInstanceRequest} request
@@ -63,16 +70,11 @@ export class Ec2 {
                 "/ec2/boot",
             ),
             method: "POST",
-            headers: {
-                Authorization: await this._getAuthorizationHeader(),
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/multi-url-environment",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/multi-url-environment/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ...requestOptions?.headers,
-            },
+            headers: mergeHeaders(
+                this._options?.headers,
+                mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+                requestOptions?.headers,
+            ),
             contentType: "application/json",
             requestType: "json",
             body: request,

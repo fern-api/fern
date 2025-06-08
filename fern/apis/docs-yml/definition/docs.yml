@@ -179,6 +179,8 @@ types:
         name: claude_3_5
       - value: "claude-3.7"
         name: claude_3_7
+      - value: "claude-4"
+        name: claude_4
       - value: command-a
         name: command_a
 

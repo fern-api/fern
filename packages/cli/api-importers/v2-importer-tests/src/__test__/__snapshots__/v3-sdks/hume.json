@@ -46606,15 +46606,29 @@
                                           "frame": 42,
                                           "time": 42,
                                           "prob": 42,
-                                          "box": {},
+                                          "box": {
+                                            "x": 42,
+                                            "y": 42,
+                                            "w": 42,
+                                            "h": 42
+                                          },
                                           "emotions": [
-                                            null
+                                            {
+                                              "name": "foo",
+                                              "score": "foo"
+                                            }
                                           ],
                                           "facs": [
-                                            null
+                                            {
+                                              "name": "foo",
+                                              "score": "foo"
+                                            }
                                           ],
                                           "descriptions": [
-                                            null
+                                            {
+                                              "name": "foo",
+                                              "score": "foo"
+                                            }
                                           ]
                                         }
                                       ]
@@ -46628,12 +46642,21 @@
                                       "id": "foo",
                                       "predictions": [
                                         {
-                                          "time": {},
+                                          "time": {
+                                            "begin": 42,
+                                            "end": 42
+                                          },
                                           "emotions": [
-                                            null
+                                            {
+                                              "name": "foo",
+                                              "score": "foo"
+                                            }
                                           ],
                                           "descriptions": [
-                                            null
+                                            {
+                                              "name": "foo",
+                                              "score": "foo"
+                                            }
                                           ]
                                         }
                                       ]
@@ -46651,11 +46674,17 @@
                                       "predictions": [
                                         {
                                           "text": "foo",
-                                          "time": {},
+                                          "time": {
+                                            "begin": 42,
+                                            "end": 42
+                                          },
                                           "confidence": 42,
                                           "speaker_confidence": 42,
                                           "emotions": [
-                                            null
+                                            {
+                                              "name": "foo",
+                                              "score": "foo"
+                                            }
                                           ]
                                         }
                                       ]
@@ -46673,18 +46702,33 @@
                                       "predictions": [
                                         {
                                           "text": "foo",
-                                          "position": {},
-                                          "time": {},
+                                          "position": {
+                                            "begin": 42,
+                                            "end": 42
+                                          },
+                                          "time": {
+                                            "begin": 42,
+                                            "end": 42
+                                          },
                                           "confidence": 42,
                                           "speaker_confidence": 42,
                                           "emotions": [
-                                            null
+                                            {
+                                              "name": "foo",
+                                              "score": "foo"
+                                            }
                                           ],
                                           "sentiment": [
-                                            null
+                                            {
+                                              "name": "foo",
+                                              "score": "foo"
+                                            }
                                           ],
                                           "toxicity": [
-                                            null
+                                            {
+                                              "name": "foo",
+                                              "score": "foo"
+                                            }
                                           ]
                                         }
                                       ]
@@ -46702,16 +46746,25 @@
                                       "predictions": [
                                         {
                                           "entity": "foo",
-                                          "position": {},
+                                          "position": {
+                                            "begin": 42,
+                                            "end": 42
+                                          },
                                           "entity_confidence": 42,
                                           "support": 42,
                                           "uri": "foo",
                                           "link_word": "foo",
-                                          "time": {},
+                                          "time": {
+                                            "begin": 42,
+                                            "end": 42
+                                          },
                                           "confidence": 42,
                                           "speaker_confidence": 42,
                                           "emotions": [
-                                            null
+                                            {
+                                              "name": "foo",
+                                              "score": "foo"
+                                            }
                                           ]
                                         }
                                       ]
@@ -46726,7 +46779,10 @@
                                       "predictions": [
                                         {
                                           "emotions": [
-                                            null
+                                            {
+                                              "name": "foo",
+                                              "score": "foo"
+                                            }
                                           ]
                                         }
                                       ]
@@ -46793,15 +46849,29 @@
                                           "frame": 42,
                                           "time": 42,
                                           "prob": 42,
-                                          "box": {},
+                                          "box": {
+                                            "x": 42,
+                                            "y": 42,
+                                            "w": 42,
+                                            "h": 42
+                                          },
                                           "emotions": [
-                                            null
+                                            {
+                                              "name": "foo",
+                                              "score": "foo"
+                                            }
                                           ],
                                           "facs": [
-                                            null
+                                            {
+                                              "name": "foo",
+                                              "score": "foo"
+                                            }
                                           ],
                                           "descriptions": [
-                                            null
+                                            {
+                                              "name": "foo",
+                                              "score": "foo"
+                                            }
                                           ]
                                         }
                                       ]
@@ -46815,12 +46885,21 @@
                                       "id": "foo",
                                       "predictions": [
                                         {
-                                          "time": {},
+                                          "time": {
+                                            "begin": 42,
+                                            "end": 42
+                                          },
                                           "emotions": [
-                                            null
+                                            {
+                                              "name": "foo",
+                                              "score": "foo"
+                                            }
                                           ],
                                           "descriptions": [
-                                            null
+                                            {
+                                              "name": "foo",
+                                              "score": "foo"
+                                            }
                                           ]
                                         }
                                       ]
@@ -46838,11 +46917,17 @@
                                       "predictions": [
                                         {
                                           "text": "foo",
-                                          "time": {},
+                                          "time": {
+                                            "begin": 42,
+                                            "end": 42
+                                          },
                                           "confidence": 42,
                                           "speaker_confidence": 42,
                                           "emotions": [
-                                            null
+                                            {
+                                              "name": "foo",
+                                              "score": "foo"
+                                            }
                                           ]
                                         }
                                       ]
@@ -46860,18 +46945,33 @@
                                       "predictions": [
                                         {
                                           "text": "foo",
-                                          "position": {},
-                                          "time": {},
+                                          "position": {
+                                            "begin": 42,
+                                            "end": 42
+                                          },
+                                          "time": {
+                                            "begin": 42,
+                                            "end": 42
+                                          },
                                           "confidence": 42,
                                           "speaker_confidence": 42,
                                           "emotions": [
-                                            null
+                                            {
+                                              "name": "foo",
+                                              "score": "foo"
+                                            }
                                           ],
                                           "sentiment": [
-                                            null
+                                            {
+                                              "name": "foo",
+                                              "score": "foo"
+                                            }
                                           ],
                                           "toxicity": [
-                                            null
+                                            {
+                                              "name": "foo",
+                                              "score": "foo"
+                                            }
                                           ]
                                         }
                                       ]
@@ -46889,16 +46989,25 @@
                                       "predictions": [
                                         {
                                           "entity": "foo",
-                                          "position": {},
+                                          "position": {
+                                            "begin": 42,
+                                            "end": 42
+                                          },
                                           "entity_confidence": 42,
                                           "support": 42,
                                           "uri": "foo",
                                           "link_word": "foo",
-                                          "time": {},
+                                          "time": {
+                                            "begin": 42,
+                                            "end": 42
+                                          },
                                           "confidence": 42,
                                           "speaker_confidence": 42,
                                           "emotions": [
-                                            null
+                                            {
+                                              "name": "foo",
+                                              "score": "foo"
+                                            }
                                           ]
                                         }
                                       ]
@@ -46913,7 +47022,10 @@
                                       "predictions": [
                                         {
                                           "emotions": [
-                                            null
+                                            {
+                                              "name": "foo",
+                                              "score": "foo"
+                                            }
                                           ]
                                         }
                                       ]
@@ -52277,6 +52389,518 @@
       ],
       "docs": "Chat with Empathic Voice Interface (EVI)",
       "examples": [
+        {
+          "pathParameters": [],
+          "headers": [],
+          "queryParameters": [],
+          "messages": [
+            {
+              "type": "publish",
+              "body": {
+                "jsonExample": {
+                  "type": "audio_input",
+                  "data": "data"
+                },
+                "shape": {
+                  "shape": {
+                    "index": 0,
+                    "singleUnionType": {
+                      "jsonExample": {
+                        "type": "audio_input",
+                        "data": "data"
+                      },
+                      "shape": {
+                        "shape": {
+                          "properties": [
+                            {
+                              "name": {
+                                "name": {
+                                  "originalName": "type",
+                                  "camelCase": {
+                                    "unsafeName": "type",
+                                    "safeName": "type_"
+                                  },
+                                  "snakeCase": {
+                                    "unsafeName": "type",
+                                    "safeName": "type_"
+                                  },
+                                  "screamingSnakeCase": {
+                                    "unsafeName": "TYPE",
+                                    "safeName": "TYPE"
+                                  },
+                                  "pascalCase": {
+                                    "unsafeName": "Type",
+                                    "safeName": "Type"
+                                  }
+                                },
+                                "wireValue": "type"
+                              },
+                              "originalTypeDeclaration": {
+                                "typeId": "AudioInput",
+                                "fernFilepath": {
+                                  "allParts": [],
+                                  "packagePath": []
+                                },
+                                "name": {
+                                  "originalName": "AudioInput",
+                                  "camelCase": {
+                                    "unsafeName": "audioInput",
+                                    "safeName": "audioInput"
+                                  },
+                                  "snakeCase": {
+                                    "unsafeName": "audio_input",
+                                    "safeName": "audio_input"
+                                  },
+                                  "screamingSnakeCase": {
+                                    "unsafeName": "AUDIO_INPUT",
+                                    "safeName": "AUDIO_INPUT"
+                                  },
+                                  "pascalCase": {
+                                    "unsafeName": "AudioInput",
+                                    "safeName": "AudioInput"
+                                  }
+                                }
+                              },
+                              "value": {
+                                "jsonExample": "audio_input",
+                                "shape": {
+                                  "container": {
+                                    "literal": {
+                                      "string": {
+                                        "original": "audio_input"
+                                      },
+                                      "type": "string"
+                                    },
+                                    "type": "literal"
+                                  },
+                                  "type": "container"
+                                }
+                              }
+                            },
+                            {
+                              "name": {
+                                "name": {
+                                  "originalName": "custom_session_id",
+                                  "camelCase": {
+                                    "unsafeName": "customSessionId",
+                                    "safeName": "customSessionId"
+                                  },
+                                  "snakeCase": {
+                                    "unsafeName": "custom_session_id",
+                                    "safeName": "custom_session_id"
+                                  },
+                                  "screamingSnakeCase": {
+                                    "unsafeName": "CUSTOM_SESSION_ID",
+                                    "safeName": "CUSTOM_SESSION_ID"
+                                  },
+                                  "pascalCase": {
+                                    "unsafeName": "CustomSessionId",
+                                    "safeName": "CustomSessionId"
+                                  }
+                                },
+                                "wireValue": "custom_session_id"
+                              },
+                              "originalTypeDeclaration": {
+                                "typeId": "AudioInput",
+                                "fernFilepath": {
+                                  "allParts": [],
+                                  "packagePath": []
+                                },
+                                "name": {
+                                  "originalName": "AudioInput",
+                                  "camelCase": {
+                                    "unsafeName": "audioInput",
+                                    "safeName": "audioInput"
+                                  },
+                                  "snakeCase": {
+                                    "unsafeName": "audio_input",
+                                    "safeName": "audio_input"
+                                  },
+                                  "screamingSnakeCase": {
+                                    "unsafeName": "AUDIO_INPUT",
+                                    "safeName": "AUDIO_INPUT"
+                                  },
+                                  "pascalCase": {
+                                    "unsafeName": "AudioInput",
+                                    "safeName": "AudioInput"
+                                  }
+                                }
+                              },
+                              "value": {
+                                "shape": {
+                                  "container": {
+                                    "valueType": {
+                                      "container": {
+                                        "nullable": {
+                                          "primitive": {
+                                            "v1": "STRING",
+                                            "v2": {
+                                              "validation": {},
+                                              "type": "string"
+                                            }
+                                          },
+                                          "type": "primitive"
+                                        },
+                                        "type": "nullable"
+                                      },
+                                      "type": "container"
+                                    },
+                                    "type": "optional"
+                                  },
+                                  "type": "container"
+                                }
+                              }
+                            },
+                            {
+                              "name": {
+                                "name": {
+                                  "originalName": "data",
+                                  "camelCase": {
+                                    "unsafeName": "data",
+                                    "safeName": "data"
+                                  },
+                                  "snakeCase": {
+                                    "unsafeName": "data",
+                                    "safeName": "data"
+                                  },
+                                  "screamingSnakeCase": {
+                                    "unsafeName": "DATA",
+                                    "safeName": "DATA"
+                                  },
+                                  "pascalCase": {
+                                    "unsafeName": "Data",
+                                    "safeName": "Data"
+                                  }
+                                },
+                                "wireValue": "data"
+                              },
+                              "originalTypeDeclaration": {
+                                "typeId": "AudioInput",
+                                "fernFilepath": {
+                                  "allParts": [],
+                                  "packagePath": []
+                                },
+                                "name": {
+                                  "originalName": "AudioInput",
+                                  "camelCase": {
+                                    "unsafeName": "audioInput",
+                                    "safeName": "audioInput"
+                                  },
+                                  "snakeCase": {
+                                    "unsafeName": "audio_input",
+                                    "safeName": "audio_input"
+                                  },
+                                  "screamingSnakeCase": {
+                                    "unsafeName": "AUDIO_INPUT",
+                                    "safeName": "AUDIO_INPUT"
+                                  },
+                                  "pascalCase": {
+                                    "unsafeName": "AudioInput",
+                                    "safeName": "AudioInput"
+                                  }
+                                }
+                              },
+                              "value": {
+                                "jsonExample": "data",
+                                "shape": {
+                                  "primitive": {
+                                    "string": {
+                                      "original": "data"
+                                    },
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                }
+                              }
+                            }
+                          ],
+                          "type": "object"
+                        },
+                        "typeName": {
+                          "typeId": "AudioInput",
+                          "fernFilepath": {
+                            "allParts": [],
+                            "packagePath": []
+                          },
+                          "name": {
+                            "originalName": "AudioInput",
+                            "camelCase": {
+                              "unsafeName": "audioInput",
+                              "safeName": "audioInput"
+                            },
+                            "snakeCase": {
+                              "unsafeName": "audio_input",
+                              "safeName": "audio_input"
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "AUDIO_INPUT",
+                              "safeName": "AUDIO_INPUT"
+                            },
+                            "pascalCase": {
+                              "unsafeName": "AudioInput",
+                              "safeName": "AudioInput"
+                            }
+                          }
+                        },
+                        "type": "named"
+                      }
+                    },
+                    "type": "undiscriminatedUnion"
+                  },
+                  "typeName": {
+                    "typeId": "ChatPublish",
+                    "fernFilepath": {
+                      "allParts": [],
+                      "packagePath": []
+                    },
+                    "name": {
+                      "originalName": "ChatPublish",
+                      "camelCase": {
+                        "unsafeName": "chatPublish",
+                        "safeName": "chatPublish"
+                      },
+                      "snakeCase": {
+                        "unsafeName": "chat_publish",
+                        "safeName": "chat_publish"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "CHAT_PUBLISH",
+                        "safeName": "CHAT_PUBLISH"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "ChatPublish",
+                        "safeName": "ChatPublish"
+                      }
+                    }
+                  },
+                  "type": "named"
+                },
+                "type": "reference"
+              }
+            },
+            {
+              "type": "subscribe",
+              "body": {
+                "jsonExample": {
+                  "type": "assistant_end"
+                },
+                "shape": {
+                  "shape": {
+                    "index": 0,
+                    "singleUnionType": {
+                      "jsonExample": {
+                        "type": "assistant_end"
+                      },
+                      "shape": {
+                        "shape": {
+                          "properties": [
+                            {
+                              "name": {
+                                "name": {
+                                  "originalName": "type",
+                                  "camelCase": {
+                                    "unsafeName": "type",
+                                    "safeName": "type_"
+                                  },
+                                  "snakeCase": {
+                                    "unsafeName": "type",
+                                    "safeName": "type_"
+                                  },
+                                  "screamingSnakeCase": {
+                                    "unsafeName": "TYPE",
+                                    "safeName": "TYPE"
+                                  },
+                                  "pascalCase": {
+                                    "unsafeName": "Type",
+                                    "safeName": "Type"
+                                  }
+                                },
+                                "wireValue": "type"
+                              },
+                              "originalTypeDeclaration": {
+                                "typeId": "AssistantEnd",
+                                "fernFilepath": {
+                                  "allParts": [],
+                                  "packagePath": []
+                                },
+                                "name": {
+                                  "originalName": "AssistantEnd",
+                                  "camelCase": {
+                                    "unsafeName": "assistantEnd",
+                                    "safeName": "assistantEnd"
+                                  },
+                                  "snakeCase": {
+                                    "unsafeName": "assistant_end",
+                                    "safeName": "assistant_end"
+                                  },
+                                  "screamingSnakeCase": {
+                                    "unsafeName": "ASSISTANT_END",
+                                    "safeName": "ASSISTANT_END"
+                                  },
+                                  "pascalCase": {
+                                    "unsafeName": "AssistantEnd",
+                                    "safeName": "AssistantEnd"
+                                  }
+                                }
+                              },
+                              "value": {
+                                "jsonExample": "assistant_end",
+                                "shape": {
+                                  "container": {
+                                    "literal": {
+                                      "string": {
+                                        "original": "assistant_end"
+                                      },
+                                      "type": "string"
+                                    },
+                                    "type": "literal"
+                                  },
+                                  "type": "container"
+                                }
+                              }
+                            },
+                            {
+                              "name": {
+                                "name": {
+                                  "originalName": "custom_session_id",
+                                  "camelCase": {
+                                    "unsafeName": "customSessionId",
+                                    "safeName": "customSessionId"
+                                  },
+                                  "snakeCase": {
+                                    "unsafeName": "custom_session_id",
+                                    "safeName": "custom_session_id"
+                                  },
+                                  "screamingSnakeCase": {
+                                    "unsafeName": "CUSTOM_SESSION_ID",
+                                    "safeName": "CUSTOM_SESSION_ID"
+                                  },
+                                  "pascalCase": {
+                                    "unsafeName": "CustomSessionId",
+                                    "safeName": "CustomSessionId"
+                                  }
+                                },
+                                "wireValue": "custom_session_id"
+                              },
+                              "originalTypeDeclaration": {
+                                "typeId": "AssistantEnd",
+                                "fernFilepath": {
+                                  "allParts": [],
+                                  "packagePath": []
+                                },
+                                "name": {
+                                  "originalName": "AssistantEnd",
+                                  "camelCase": {
+                                    "unsafeName": "assistantEnd",
+                                    "safeName": "assistantEnd"
+                                  },
+                                  "snakeCase": {
+                                    "unsafeName": "assistant_end",
+                                    "safeName": "assistant_end"
+                                  },
+                                  "screamingSnakeCase": {
+                                    "unsafeName": "ASSISTANT_END",
+                                    "safeName": "ASSISTANT_END"
+                                  },
+                                  "pascalCase": {
+                                    "unsafeName": "AssistantEnd",
+                                    "safeName": "AssistantEnd"
+                                  }
+                                }
+                              },
+                              "value": {
+                                "shape": {
+                                  "container": {
+                                    "valueType": {
+                                      "container": {
+                                        "nullable": {
+                                          "primitive": {
+                                            "v1": "STRING",
+                                            "v2": {
+                                              "validation": {},
+                                              "type": "string"
+                                            }
+                                          },
+                                          "type": "primitive"
+                                        },
+                                        "type": "nullable"
+                                      },
+                                      "type": "container"
+                                    },
+                                    "type": "optional"
+                                  },
+                                  "type": "container"
+                                }
+                              }
+                            }
+                          ],
+                          "type": "object"
+                        },
+                        "typeName": {
+                          "typeId": "AssistantEnd",
+                          "fernFilepath": {
+                            "allParts": [],
+                            "packagePath": []
+                          },
+                          "name": {
+                            "originalName": "AssistantEnd",
+                            "camelCase": {
+                              "unsafeName": "assistantEnd",
+                              "safeName": "assistantEnd"
+                            },
+                            "snakeCase": {
+                              "unsafeName": "assistant_end",
+                              "safeName": "assistant_end"
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "ASSISTANT_END",
+                              "safeName": "ASSISTANT_END"
+                            },
+                            "pascalCase": {
+                              "unsafeName": "AssistantEnd",
+                              "safeName": "AssistantEnd"
+                            }
+                          }
+                        },
+                        "type": "named"
+                      }
+                    },
+                    "type": "undiscriminatedUnion"
+                  },
+                  "typeName": {
+                    "typeId": "ChatSubscribe",
+                    "fernFilepath": {
+                      "allParts": [],
+                      "packagePath": []
+                    },
+                    "name": {
+                      "originalName": "ChatSubscribe",
+                      "camelCase": {
+                        "unsafeName": "chatSubscribe",
+                        "safeName": "chatSubscribe"
+                      },
+                      "snakeCase": {
+                        "unsafeName": "chat_subscribe",
+                        "safeName": "chat_subscribe"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "CHAT_SUBSCRIBE",
+                        "safeName": "CHAT_SUBSCRIBE"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "ChatSubscribe",
+                        "safeName": "ChatSubscribe"
+                      }
+                    }
+                  },
+                  "type": "named"
+                },
+                "type": "reference"
+              }
+            }
+          ],
+          "url": "/chat"
+        },
         {
           "pathParameters": [],
           "headers": [],

@@ -3,6 +3,7 @@
  */
 
 import * as core from "./core/index.js";
+import { mergeHeaders } from "./core/headers.js";
 import { Organizations } from "./api/resources/organizations/client/Client.js";
 import { User } from "./api/resources/user/client/Client.js";
 
@@ -12,6 +13,8 @@ export declare namespace SeedPathParametersClient {
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
         tenantId: string;
+        /** Additional headers to include in requests. */
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 
     export interface RequestOptions {
@@ -22,15 +25,31 @@ export declare namespace SeedPathParametersClient {
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
         /** Additional headers to include in the request. */
-        headers?: Record<string, string>;
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 }
 
 export class SeedPathParametersClient {
+    protected readonly _options: SeedPathParametersClient.Options;
     protected _organizations: Organizations | undefined;
     protected _user: User | undefined;
 
-    constructor(protected readonly _options: SeedPathParametersClient.Options) {}
+    constructor(_options: SeedPathParametersClient.Options) {
+        this._options = {
+            ..._options,
+            headers: mergeHeaders(
+                {
+                    "X-Fern-Language": "JavaScript",
+                    "X-Fern-SDK-Name": "@fern/path-parameters",
+                    "X-Fern-SDK-Version": "0.0.1",
+                    "User-Agent": "@fern/path-parameters/0.0.1",
+                    "X-Fern-Runtime": core.RUNTIME.type,
+                    "X-Fern-Runtime-Version": core.RUNTIME.version,
+                },
+                _options?.headers,
+            ),
+        };
+    }
 
     public get organizations(): Organizations {
         return (this._organizations ??= new Organizations(this._options));

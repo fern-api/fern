@@ -4,6 +4,7 @@
 
 import * as core from "../../../../core/index.js";
 import * as SeedNurseryApi from "../../../index.js";
+import { mergeHeaders } from "../../../../core/headers.js";
 import * as errors from "../../../../errors/index.js";
 
 export declare namespace Package {
@@ -11,6 +12,8 @@ export declare namespace Package {
         environment: core.Supplier<string>;
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
+        /** Additional headers to include in requests. */
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 
     export interface RequestOptions {
@@ -21,12 +24,16 @@ export declare namespace Package {
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
         /** Additional headers to include in the request. */
-        headers?: Record<string, string>;
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 }
 
 export class Package {
-    constructor(protected readonly _options: Package.Options) {}
+    protected readonly _options: Package.Options;
+
+    constructor(_options: Package.Options) {
+        this._options = _options;
+    }
 
     /**
      * @param {SeedNurseryApi.TestRequest} request
@@ -56,15 +63,7 @@ export class Package {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                 (await core.Supplier.get(this._options.environment)),
             method: "POST",
-            headers: {
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/reserved-keywords",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/reserved-keywords/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ...requestOptions?.headers,
-            },
+            headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
             queryParameters: _queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,

@@ -7131,26 +7131,7 @@
                           "function_description": "foo",
                           "function_parameters": {},
                           "blocks": [
-                            {
-                              "id": "foo",
-                              "block_type": "CHAT_MESSAGE",
-                              "properties": {
-                                "chat_role": "SYSTEM",
-                                "chat_message_unterminated": false,
-                                "template": "foo",
-                                "template_type": "STRING",
-                                "function_name": "foo",
-                                "function_description": "foo",
-                                "function_parameters": {},
-                                "blocks": [
-                                  {
-                                    "id": "foo",
-                                    "block_type": "CHAT_MESSAGE",
-                                    "properties": {}
-                                  }
-                                ]
-                              }
-                            }
+                            null
                           ]
                         }
                       }
@@ -7212,26 +7193,7 @@
                             "function_description": "foo",
                             "function_parameters": {},
                             "blocks": [
-                              {
-                                "id": "foo",
-                                "block_type": "CHAT_MESSAGE",
-                                "properties": {
-                                  "chat_role": "SYSTEM",
-                                  "chat_message_unterminated": false,
-                                  "template": "foo",
-                                  "template_type": "STRING",
-                                  "function_name": "foo",
-                                  "function_description": "foo",
-                                  "function_parameters": {},
-                                  "blocks": [
-                                    {
-                                      "id": "foo",
-                                      "block_type": "CHAT_MESSAGE",
-                                      "properties": {}
-                                    }
-                                  ]
-                                }
-                              }
+                              null
                             ]
                           }
                         }
@@ -8177,6 +8139,7 @@
   "rootPackage": {
     "endpoints": [
       {
+        "availability": "GenerallyAvailable",
         "auth": true,
         "description": "Executes a deployed Prompt and streams back the results.",
         "method": "POST",
