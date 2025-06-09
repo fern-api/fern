@@ -64,7 +64,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "sendExample",
             "description": "",
             "path": "/send",
             "pathParameters": {},

@@ -95,7 +95,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "getSearchWithArrayUnionExample",
             "description": "",
             "path": "/search-with-array-union",
             "pathParameters": {},
@@ -175,7 +174,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "getSearchWithObjectUnionExample",
             "description": "",
             "path": "/search-with-object-union",
             "pathParameters": {},

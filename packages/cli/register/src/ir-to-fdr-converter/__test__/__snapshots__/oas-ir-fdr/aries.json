@@ -18708,7 +18708,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "closeMenuByConnIdExample",
               "description": "",
               "path": "/action-menu/conn_id/close",
               "pathParameters": {
@@ -18789,7 +18788,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "fetchMenuByConnIdExample",
               "description": "",
               "path": "/action-menu/conn_id/fetch",
               "pathParameters": {
@@ -18883,7 +18881,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "actionMenuPerformActionByConnIdExample",
               "description": "",
               "path": "/action-menu/conn_id/perform",
               "pathParameters": {
@@ -18979,7 +18976,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "requestMenuByConnIdExample",
               "description": "",
               "path": "/action-menu/conn_id/request",
               "pathParameters": {
@@ -19073,7 +19069,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "actionMenuSendMenuToConnIdExample",
               "description": "",
               "path": "/action-menu/conn_id/send-menu",
               "pathParameters": {
@@ -19286,7 +19281,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getMatchingConnectionsExample",
               "description": "",
               "path": "/connections",
               "pathParameters": {},
@@ -19506,7 +19500,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "connectionCreateConnectionInvitationExample",
               "description": "",
               "path": "/connections/create-invitation",
               "pathParameters": {},
@@ -19648,7 +19641,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "connectionCreateStaticConnectionExample",
               "description": "",
               "path": "/connections/create-static",
               "pathParameters": {},
@@ -19841,7 +19833,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "connectionReceiveConnectionInvitationExample",
               "description": "",
               "path": "/connections/receive-invitation",
               "pathParameters": {},
@@ -19995,7 +19986,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getConnectionRecordExample",
               "description": "",
               "path": "/connections/conn_id",
               "pathParameters": {
@@ -20118,7 +20108,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "deleteConnectionRecordExample",
               "description": "",
               "path": "/connections/conn_id",
               "pathParameters": {
@@ -20241,7 +20230,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "acceptConnectionInvitationExample",
               "description": "",
               "path": "/connections/conn_id/accept-invitation",
               "pathParameters": {
@@ -20379,7 +20367,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "acceptConnectionRequestExample",
               "description": "",
               "path": "/connections/conn_id/accept-request",
               "pathParameters": {
@@ -20502,7 +20489,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getConnectionEndpointExample",
               "description": "",
               "path": "/connections/conn_id/endpoints",
               "pathParameters": {
@@ -20607,7 +20593,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "setInboundConnectionExample",
               "description": "",
               "path": "/connections/conn_id/establish-inbound/ref_id",
               "pathParameters": {
@@ -20703,7 +20688,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getConnectionMetadataExample",
               "description": "",
               "path": "/connections/conn_id/metadata",
               "pathParameters": {
@@ -20801,7 +20785,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "connectionSetConnectionMetadataExample",
               "description": "",
               "path": "/connections/conn_id/metadata",
               "pathParameters": {
@@ -20919,7 +20902,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "basicmessageSendMessageExample",
               "description": "",
               "path": "/connections/conn_id/send-message",
               "pathParameters": {
@@ -21033,7 +21015,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "trustpingSendPingExample",
               "description": "",
               "path": "/connections/conn_id/send-ping",
               "pathParameters": {
@@ -21162,7 +21143,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "startConnectionIntroductionExample",
               "description": "",
               "path": "/connections/conn_id/start-introduction",
               "pathParameters": {
@@ -21277,7 +21257,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "credentialDefinitionPublishCredentialDefinitionExample",
               "description": "",
               "path": "/credential-definitions",
               "pathParameters": {},
@@ -21444,7 +21423,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getCreatedCredDefsExample",
               "description": "",
               "path": "/credential-definitions/created",
               "pathParameters": {},
@@ -21534,7 +21512,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getCredentialDefinitionExample",
               "description": "",
               "path": "/credential-definitions/cred_def_id",
               "pathParameters": {
@@ -21632,7 +21609,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "writeCredentialDefinitionExample",
               "description": "",
               "path": "/credential-definitions/cred_def_id/write_record",
               "pathParameters": {
@@ -21740,7 +21716,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getCredentialMimeTypesExample",
               "description": "",
               "path": "/credential/mime-types/credential_id",
               "pathParameters": {
@@ -21858,7 +21833,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getRevocationStatusExample",
               "description": "",
               "path": "/credential/revoked/credential_id",
               "pathParameters": {
@@ -21943,7 +21917,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getW3CCredentialExample",
               "description": "",
               "path": "/credential/w3c/credential_id",
               "pathParameters": {
@@ -22080,7 +22053,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "deleteW3CCredentialExample",
               "description": "",
               "path": "/credential/w3c/credential_id",
               "pathParameters": {
@@ -22161,7 +22133,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getCredentialRecordExample",
               "description": "",
               "path": "/credential/credential_id",
               "pathParameters": {
@@ -22260,7 +22231,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "deleteCredentialRecordExample",
               "description": "",
               "path": "/credential/credential_id",
               "pathParameters": {
@@ -22365,7 +22335,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getCredentialsExample",
               "description": "",
               "path": "/credentials",
               "pathParameters": {},
@@ -22527,7 +22496,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "credentialsGetW3CCredentialsExample",
               "description": "",
               "path": "/credentials/w3c",
               "pathParameters": {},
@@ -22858,7 +22826,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "createDidexRequestExample",
               "description": "",
               "path": "/didexchange/create-request",
               "pathParameters": {},
@@ -23030,7 +22997,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "didExchangeReceiveDidexRequestExample",
               "description": "",
               "path": "/didexchange/receive-request",
               "pathParameters": {},
@@ -23192,7 +23158,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "acceptDidexInvitationExample",
               "description": "",
               "path": "/didexchange/conn_id/accept-invitation",
               "pathParameters": {
@@ -23344,7 +23309,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "acceptDidexRequestExample",
               "description": "",
               "path": "/didexchange/conn_id/accept-request",
               "pathParameters": {
@@ -23498,7 +23462,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getV20FeaturesQueriesExample",
               "description": "",
               "path": "/discover-features-2.0/queries",
               "pathParameters": {},
@@ -23572,7 +23535,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getV20FeatureRecordsExample",
               "description": "",
               "path": "/discover-features-2.0/records",
               "pathParameters": {},
@@ -23693,7 +23655,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getV10FeaturesQueryExample",
               "description": "",
               "path": "/discover-features/query",
               "pathParameters": {},
@@ -23783,7 +23744,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getV10FeatureRecordsExample",
               "description": "",
               "path": "/discover-features/records",
               "pathParameters": {},
@@ -23876,7 +23836,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "issueCredentialV20CreateCredentialRecordExample",
               "description": "",
               "path": "/issue-credential-2.0/create",
               "pathParameters": {},
@@ -24024,7 +23983,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "issueCredentialV20CreateFreeCredentialOfferExample",
               "description": "",
               "path": "/issue-credential-2.0/create-offer",
               "pathParameters": {},
@@ -24212,7 +24170,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getMatchingCredExRecordsV2Example",
               "description": "",
               "path": "/issue-credential-2.0/records",
               "pathParameters": {},
@@ -24382,7 +24339,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getCredExRecordExample",
               "description": "",
               "path": "/issue-credential-2.0/records/cred_ex_id",
               "pathParameters": {
@@ -24504,7 +24460,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "deleteCredExRecordExample",
               "description": "",
               "path": "/issue-credential-2.0/records/cred_ex_id",
               "pathParameters": {
@@ -24599,7 +24554,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "issueCredentialV20IssueCredentialToHolderExample",
               "description": "",
               "path": "/issue-credential-2.0/records/cred_ex_id/issue",
               "pathParameters": {
@@ -24743,7 +24697,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "issueCredentialV20ReportCredExProblemExample",
               "description": "",
               "path": "/issue-credential-2.0/records/cred_ex_id/problem-report",
               "pathParameters": {
@@ -24847,7 +24800,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "issueCredentialV20SendCredentialOfferExample",
               "description": "",
               "path": "/issue-credential-2.0/records/cred_ex_id/send-offer",
               "pathParameters": {
@@ -24977,7 +24929,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "issueCredentialV20SendCredentialRequestExample",
               "description": "",
               "path": "/issue-credential-2.0/records/cred_ex_id/send-request",
               "pathParameters": {
@@ -25111,7 +25062,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "issueCredentialV20StoreReceivedCredentialExample",
               "description": "",
               "path": "/issue-credential-2.0/records/cred_ex_id/store",
               "pathParameters": {
@@ -25235,7 +25185,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "issueCredentialV20SendFreeCredentialExample",
               "description": "",
               "path": "/issue-credential-2.0/send",
               "pathParameters": {},
@@ -25387,7 +25336,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "issueCredentialV20SendFreeCredentialOfferExample",
               "description": "",
               "path": "/issue-credential-2.0/send-offer",
               "pathParameters": {},
@@ -25539,7 +25487,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "issueCredentialV20SendFreeCredentialProposalExample",
               "description": "",
               "path": "/issue-credential-2.0/send-proposal",
               "pathParameters": {},
@@ -25691,7 +25638,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "issueCredentialV20SendFreeCredentialRequestExample",
               "description": "",
               "path": "/issue-credential-2.0/send-request",
               "pathParameters": {},
@@ -25861,7 +25807,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "issueCredentialV10CreateCredentialRecordExample",
               "description": "",
               "path": "/issue-credential/create",
               "pathParameters": {},
@@ -26031,7 +25976,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "issueCredentialV10CreateFreeCredentialOfferExample",
               "description": "",
               "path": "/issue-credential/create-offer",
               "pathParameters": {},
@@ -26231,7 +26175,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getMatchingCredExRecordsExample",
               "description": "",
               "path": "/issue-credential/records",
               "pathParameters": {},
@@ -26405,7 +26348,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getCredExRecordExample",
               "description": "",
               "path": "/issue-credential/records/cred_ex_id",
               "pathParameters": {
@@ -26529,7 +26471,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "deleteCredExRecordExample",
               "description": "",
               "path": "/issue-credential/records/cred_ex_id",
               "pathParameters": {
@@ -26624,7 +26565,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "issueCredentialV10IssueCredentialToHolderExample",
               "description": "",
               "path": "/issue-credential/records/cred_ex_id/issue",
               "pathParameters": {
@@ -26770,7 +26710,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "issueCredentialV10ReportCredExProblemExample",
               "description": "",
               "path": "/issue-credential/records/cred_ex_id/problem-report",
               "pathParameters": {
@@ -26874,7 +26813,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "issueCredentialV10SendCredentialOfferExample",
               "description": "",
               "path": "/issue-credential/records/cred_ex_id/send-offer",
               "pathParameters": {
@@ -27003,7 +26941,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "sendCredentialRequestExample",
               "description": "",
               "path": "/issue-credential/records/cred_ex_id/send-request",
               "pathParameters": {
@@ -27140,7 +27077,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "issueCredentialV10StoreReceivedCredentialExample",
               "description": "",
               "path": "/issue-credential/records/cred_ex_id/store",
               "pathParameters": {
@@ -27266,7 +27202,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "issueCredentialV10SendFreeCredentialExample",
               "description": "",
               "path": "/issue-credential/send",
               "pathParameters": {},
@@ -27438,7 +27373,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "issueCredentialV10SendFreeCredentialOfferExample",
               "description": "",
               "path": "/issue-credential/send-offer",
               "pathParameters": {},
@@ -27602,7 +27536,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "issueCredentialV10SendFreeCredentialProposalExample",
               "description": "",
               "path": "/issue-credential/send-proposal",
               "pathParameters": {},
@@ -27785,7 +27718,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "jsonldSignExample",
               "description": "",
               "path": "/jsonld/sign",
               "pathParameters": {},
@@ -27887,7 +27819,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "jsonldVerifyExample",
               "description": "",
               "path": "/jsonld/verify",
               "pathParameters": {},
@@ -28008,7 +27939,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getPublishedDidEndpointExample",
               "description": "",
               "path": "/ledger/did-endpoint",
               "pathParameters": {},
@@ -28086,7 +28016,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getDidVerkeyExample",
               "description": "",
               "path": "/ledger/did-verkey",
               "pathParameters": {},
@@ -28164,7 +28093,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getDidNymRoleExample",
               "description": "",
               "path": "/ledger/get-nym-role",
               "pathParameters": {},
@@ -28230,7 +28158,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getMultipleLedgerConfigExample",
               "description": "",
               "path": "/ledger/multiple/config",
               "pathParameters": {},
@@ -28324,7 +28251,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getWriteLedgerExample",
               "description": "",
               "path": "/ledger/multiple/get-write-ledger",
               "pathParameters": {},
@@ -28461,7 +28387,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "registerNymExample",
               "description": "",
               "path": "/ledger/register-nym",
               "pathParameters": {},
@@ -28528,7 +28453,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "rotatePublicDidKeypairExample",
               "description": "",
               "path": "/ledger/rotate-public-did-keypair",
               "pathParameters": {},
@@ -28588,7 +28512,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getTaaExample",
               "description": "",
               "path": "/ledger/taa",
               "pathParameters": {},
@@ -28701,7 +28624,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "ledgerAcceptTaaExample",
               "description": "",
               "path": "/ledger/taa/accept",
               "pathParameters": {},
@@ -28785,7 +28707,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getDefaultMediatorExample",
               "description": "",
               "path": "/mediation/default-mediator",
               "pathParameters": {},
@@ -28885,7 +28806,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "clearDefaultMediatorExample",
               "description": "",
               "path": "/mediation/default-mediator",
               "pathParameters": {},
@@ -29011,7 +28931,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getKeylistsExample",
               "description": "",
               "path": "/mediation/keylists",
               "pathParameters": {},
@@ -29179,7 +29098,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "mediationSendKeylistQueryToMediatorExample",
               "description": "",
               "path": "/mediation/keylists/mediation_id/send-keylist-query",
               "pathParameters": {
@@ -29291,7 +29209,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "mediationSendKeylistUpdateToMediatorExample",
               "description": "",
               "path": "/mediation/keylists/mediation_id/send-keylist-update",
               "pathParameters": {
@@ -29438,7 +29355,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "mediationRequestMediationForConnectionExample",
               "description": "",
               "path": "/mediation/request/conn_id",
               "pathParameters": {
@@ -29621,7 +29537,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getMatchingMediationRecordsExample",
               "description": "",
               "path": "/mediation/requests",
               "pathParameters": {},
@@ -29791,7 +29706,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getMediationRecordExample",
               "description": "",
               "path": "/mediation/requests/mediation_id",
               "pathParameters": {
@@ -29913,7 +29827,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "deleteMediationRecordExample",
               "description": "",
               "path": "/mediation/requests/mediation_id",
               "pathParameters": {
@@ -30048,7 +29961,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "mediationDenyMediationRequestExample",
               "description": "",
               "path": "/mediation/requests/mediation_id/deny",
               "pathParameters": {
@@ -30175,7 +30087,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "grantMediationRequestExample",
               "description": "",
               "path": "/mediation/requests/mediation_id/grant",
               "pathParameters": {
@@ -30285,7 +30196,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "mediationUpdateKeylistForConnIdExample",
               "description": "",
               "path": "/mediation/update-keylist/conn_id",
               "pathParameters": {
@@ -30402,7 +30312,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "setDefaultMediatorExample",
               "description": "",
               "path": "/mediation/mediation_id/default-mediator",
               "pathParameters": {
@@ -30528,7 +30437,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "multitenancyCreateWalletExample",
               "description": "",
               "path": "/multitenancy/wallet",
               "pathParameters": {},
@@ -30654,7 +30562,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getWalletRecordExample",
               "description": "",
               "path": "/multitenancy/wallet/wallet_id",
               "pathParameters": {
@@ -30762,7 +30669,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "multitenancyUpdateWalletExample",
               "description": "",
               "path": "/multitenancy/wallet/wallet_id",
               "pathParameters": {
@@ -30891,7 +30797,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "multitenancyDeleteWalletExample",
               "description": "",
               "path": "/multitenancy/wallet/wallet_id/remove",
               "pathParameters": {
@@ -30993,7 +30898,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "multitenancyGetAuthTokenExample",
               "description": "",
               "path": "/multitenancy/wallet/wallet_id/token",
               "pathParameters": {
@@ -31082,7 +30986,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getMatchingWalletsExample",
               "description": "",
               "path": "/multitenancy/wallets",
               "pathParameters": {},
@@ -31231,7 +31134,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "outOfBandCreateOobInvitationExample",
               "description": "",
               "path": "/out-of-band/create-invitation",
               "pathParameters": {},
@@ -31431,7 +31333,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "outOfBandReceiveOobInvitationExample",
               "description": "",
               "path": "/out-of-band/receive-invitation",
               "pathParameters": {},
@@ -31681,7 +31582,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getLoadedPluginsExample",
               "description": "",
               "path": "/plugins",
               "pathParameters": {},
@@ -31751,7 +31651,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "shutdownServerExample",
               "description": "",
               "path": "/shutdown",
               "pathParameters": {},
@@ -31811,7 +31710,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getStatusExample",
               "description": "",
               "path": "/status",
               "pathParameters": {},
@@ -31881,7 +31779,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getConfigExample",
               "description": "",
               "path": "/status/config",
               "pathParameters": {},
@@ -31945,7 +31842,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getLivelinessExample",
               "description": "",
               "path": "/status/live",
               "pathParameters": {},
@@ -32009,7 +31905,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getReadinessExample",
               "description": "",
               "path": "/status/ready",
               "pathParameters": {},
@@ -32073,7 +31968,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "resetStatisticsExample",
               "description": "",
               "path": "/status/reset",
               "pathParameters": {},
@@ -32156,7 +32050,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "presentProofV20CreateProofRequestExample",
               "description": "",
               "path": "/present-proof-2.0/create-request",
               "pathParameters": {},
@@ -32318,7 +32211,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getMatchingPresExRecordsV2Example",
               "description": "",
               "path": "/present-proof-2.0/records",
               "pathParameters": {},
@@ -32480,7 +32372,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getPresExRecordExample",
               "description": "",
               "path": "/present-proof-2.0/records/pres_ex_id",
               "pathParameters": {
@@ -32598,7 +32489,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "deletePresExRecordExample",
               "description": "",
               "path": "/present-proof-2.0/records/pres_ex_id",
               "pathParameters": {
@@ -32739,7 +32629,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getPresExCredentialsV2Example",
               "description": "",
               "path": "/present-proof-2.0/records/pres_ex_id/credentials",
               "pathParameters": {
@@ -32870,7 +32759,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "presentProofV20ReportPresExProblemExample",
               "description": "",
               "path": "/present-proof-2.0/records/pres_ex_id/problem-report",
               "pathParameters": {
@@ -32974,7 +32862,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "presentProofV20SendProofPresentationExample",
               "description": "",
               "path": "/present-proof-2.0/records/pres_ex_id/send-presentation",
               "pathParameters": {
@@ -33114,7 +33001,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "presentProofV20SendProofPresentationRequestExample",
               "description": "",
               "path": "/present-proof-2.0/records/pres_ex_id/send-request",
               "pathParameters": {
@@ -33243,7 +33129,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "verifyReceivedPresentationExample",
               "description": "",
               "path": "/present-proof-2.0/records/pres_ex_id/verify-presentation",
               "pathParameters": {
@@ -33354,7 +33239,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "presentProofV20SendPresentationProposalExample",
               "description": "",
               "path": "/present-proof-2.0/send-proposal",
               "pathParameters": {},
@@ -33480,7 +33364,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "presentProofV20SendFreePresentationRequestExample",
               "description": "",
               "path": "/present-proof-2.0/send-request",
               "pathParameters": {},
@@ -33616,7 +33499,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "presentProofV10CreateFreeProofRequestExample",
               "description": "",
               "path": "/present-proof/create-request",
               "pathParameters": {},
@@ -33854,7 +33736,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getMatchingPresExRecordsExample",
               "description": "",
               "path": "/present-proof/records",
               "pathParameters": {},
@@ -34016,7 +33897,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getPresExRecordExample",
               "description": "",
               "path": "/present-proof/records/pres_ex_id",
               "pathParameters": {
@@ -34134,7 +34014,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "deletePresExRecordExample",
               "description": "",
               "path": "/present-proof/records/pres_ex_id",
               "pathParameters": {
@@ -34275,7 +34154,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getPresExCredentialsExample",
               "description": "",
               "path": "/present-proof/records/pres_ex_id/credentials",
               "pathParameters": {
@@ -34406,7 +34284,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "presentProofV10ReportPresExProblemExample",
               "description": "",
               "path": "/present-proof/records/pres_ex_id/problem-report",
               "pathParameters": {
@@ -34510,7 +34387,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "presentProofV10SendProofPresentationExample",
               "description": "",
               "path": "/present-proof/records/pres_ex_id/send-presentation",
               "pathParameters": {
@@ -34680,7 +34556,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "presentProofV10SendProofPresentationRequestExample",
               "description": "",
               "path": "/present-proof/records/pres_ex_id/send-request",
               "pathParameters": {
@@ -34809,7 +34684,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "verifyReceivedPresentationExample",
               "description": "",
               "path": "/present-proof/records/pres_ex_id/verify-presentation",
               "pathParameters": {
@@ -34920,7 +34794,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "presentProofV10SendPresentationProposalExample",
               "description": "",
               "path": "/present-proof/send-proposal",
               "pathParameters": {},
@@ -35110,7 +34983,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "presentProofV10SendFreePresentationRequestExample",
               "description": "",
               "path": "/present-proof/send-request",
               "pathParameters": {},
@@ -35330,7 +35202,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getDidDocumentExample",
               "description": "",
               "path": "/resolver/resolve/did",
               "pathParameters": {
@@ -35429,7 +35300,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getActiveRegistryForCredDefIdExample",
               "description": "",
               "path": "/revocation/active-registry/cred_def_id",
               "pathParameters": {
@@ -35546,7 +35416,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "revocationClearPendingRevocationsExample",
               "description": "",
               "path": "/revocation/clear-pending-revocations",
               "pathParameters": {},
@@ -35652,7 +35521,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "revocationCreateRevocationRegistryExample",
               "description": "",
               "path": "/revocation/create-registry",
               "pathParameters": {},
@@ -35808,7 +35676,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getCredentialRevocationRecordExample",
               "description": "",
               "path": "/revocation/credential-record",
               "pathParameters": {},
@@ -35905,7 +35772,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "revocationPublishRevocationsExample",
               "description": "",
               "path": "/revocation/publish-revocations",
               "pathParameters": {},
@@ -36028,7 +35894,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getCreatedRegistriesExample",
               "description": "",
               "path": "/revocation/registries/created",
               "pathParameters": {},
@@ -36127,7 +35992,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "deleteTailsFileExample",
               "description": "",
               "path": "/revocation/registry/delete-tails-file",
               "pathParameters": {},
@@ -36211,7 +36075,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getRevocationRegistryExample",
               "description": "",
               "path": "/revocation/registry/rev_reg_id",
               "pathParameters": {
@@ -36348,7 +36211,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "revocationUpdateRevocationRegistryExample",
               "description": "",
               "path": "/revocation/registry/rev_reg_id",
               "pathParameters": {
@@ -36508,7 +36370,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "publishRevocationRegistryDefinitionExample",
               "description": "",
               "path": "/revocation/registry/rev_reg_id/definition",
               "pathParameters": {
@@ -36663,7 +36524,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "publishRevocationRegistryEntryExample",
               "description": "",
               "path": "/revocation/registry/rev_reg_id/entry",
               "pathParameters": {
@@ -36798,7 +36658,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "updateRevocationEntryStateExample",
               "description": "",
               "path": "/revocation/registry/rev_reg_id/fix-revocation-entry-state",
               "pathParameters": {
@@ -36890,7 +36749,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getIssuedCredentialsCountExample",
               "description": "",
               "path": "/revocation/registry/rev_reg_id/issued",
               "pathParameters": {
@@ -36976,7 +36834,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getIssuedCredentialDetailsExample",
               "description": "",
               "path": "/revocation/registry/rev_reg_id/issued/details",
               "pathParameters": {
@@ -37108,7 +36965,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getPublishedCredentialDetailsExample",
               "description": "",
               "path": "/revocation/registry/rev_reg_id/issued/indy_recs",
               "pathParameters": {
@@ -37203,7 +37059,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "setRevocationRegistryStateExample",
               "description": "",
               "path": "/revocation/registry/rev_reg_id/set-state",
               "pathParameters": {
@@ -37318,7 +37173,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "downloadTailsFileSparseExample",
               "description": "",
               "path": "/revocation/registry/rev_reg_id/tails-file-less-deets",
               "pathParameters": {
@@ -37391,7 +37245,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "downloadTailsFileExample",
               "description": "",
               "path": "/revocation/registry/rev_reg_id/tails-file",
               "pathParameters": {
@@ -37468,7 +37321,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "uploadTailsFileExample",
               "description": "",
               "path": "/revocation/registry/rev_reg_id/tails-file",
               "pathParameters": {
@@ -37543,7 +37395,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "revocationRevokeIssuedCredentialExample",
               "description": "",
               "path": "/revocation/revoke",
               "pathParameters": {},
@@ -37679,7 +37530,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "schemaPublishSchemaExample",
               "description": "",
               "path": "/schemas",
               "pathParameters": {},
@@ -37814,7 +37664,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getMatchingCreatedSchemasExample",
               "description": "",
               "path": "/schemas/created",
               "pathParameters": {},
@@ -37904,7 +37753,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getSchemaExample",
               "description": "",
               "path": "/schemas/schema_id",
               "pathParameters": {
@@ -38010,7 +37858,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "writeSchemaRecordToWalletExample",
               "description": "",
               "path": "/schemas/schema_id/write_record",
               "pathParameters": {
@@ -38126,7 +37973,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "resendTransactionRequestExample",
               "description": "",
               "path": "/transaction/tran_id/resend",
               "pathParameters": {
@@ -38256,7 +38102,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getTransactionListExample",
               "description": "",
               "path": "/transactions",
               "pathParameters": {},
@@ -38499,7 +38344,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "endorseTransactionCreateTransactionRequestExample",
               "description": "",
               "path": "/transactions/create-request",
               "pathParameters": {},
@@ -38681,7 +38525,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "setEndorserInfoForConnIdExample",
               "description": "",
               "path": "/transactions/conn_id/set-endorser-info",
               "pathParameters": {
@@ -38782,7 +38625,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "setEndorserRoleForConnIdExample",
               "description": "",
               "path": "/transactions/conn_id/set-endorser-role",
               "pathParameters": {
@@ -38869,7 +38711,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getTransactionRecordExample",
               "description": "",
               "path": "/transactions/tran_id",
               "pathParameters": {
@@ -39018,7 +38859,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "cancelTransactionRequestExample",
               "description": "",
               "path": "/transactions/tran_id/cancel",
               "pathParameters": {
@@ -39167,7 +39007,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "refuseTransactionExample",
               "description": "",
               "path": "/transactions/tran_id/refuse",
               "pathParameters": {
@@ -39316,7 +39155,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "publishEndorsedTransactionExample",
               "description": "",
               "path": "/transactions/tran_id/write",
               "pathParameters": {
@@ -39519,7 +39357,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getDidsExample",
               "description": "",
               "path": "/wallet/did",
               "pathParameters": {},
@@ -39626,7 +39463,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "walletCreateLocalDidExample",
               "description": "",
               "path": "/wallet/did/create",
               "pathParameters": {},
@@ -39725,7 +39561,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "rotateKeypairExample",
               "description": "",
               "path": "/wallet/did/local/rotate-keypair",
               "pathParameters": {},
@@ -39787,7 +39622,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getPublicDidExample",
               "description": "",
               "path": "/wallet/did/public",
               "pathParameters": {},
@@ -39914,7 +39748,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "setPublicDidExample",
               "description": "",
               "path": "/wallet/did/public",
               "pathParameters": {},
@@ -40004,7 +39837,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getDidEndpointExample",
               "description": "",
               "path": "/wallet/get-did-endpoint",
               "pathParameters": {},
@@ -40112,7 +39944,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "walletSetDidEndpointExample",
               "description": "",
               "path": "/wallet/set-did-endpoint",
               "pathParameters": {},
@@ -40227,7 +40058,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "endorseTransactionExample",
             "description": "",
             "path": "/transactions/tran_id/endorse",
             "pathParameters": {

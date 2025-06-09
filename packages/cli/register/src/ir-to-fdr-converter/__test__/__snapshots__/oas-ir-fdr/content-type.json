@@ -125,7 +125,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "testUploadExample",
             "description": "",
             "path": "/test",
             "pathParameters": {
@@ -247,7 +246,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "testWithDualContentTypeRequestTypesExample",
             "description": "",
             "path": "/example",
             "pathParameters": {

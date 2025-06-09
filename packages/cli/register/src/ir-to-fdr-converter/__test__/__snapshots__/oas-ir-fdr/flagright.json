@@ -7473,7 +7473,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "example-1",
             "description": "",
             "path": "/transactions",
             "pathParameters": {},
@@ -7700,7 +7699,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "example-1",
             "description": "",
             "path": "/transactions/transactionId",
             "pathParameters": {
@@ -8192,7 +8190,6 @@
         ],
         "examples": [
           {
-            "name": "example-1",
             "description": "",
             "path": "/consumer/users",
             "pathParameters": {},
@@ -8443,7 +8440,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "example-1",
             "description": "",
             "path": "/consumer/users/userId",
             "pathParameters": {
@@ -8658,7 +8654,6 @@
         ],
         "examples": [
           {
-            "name": "example-1",
             "description": "",
             "path": "/business/users",
             "pathParameters": {},
@@ -8791,7 +8786,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "example-2",
             "description": "",
             "path": "/business/users/userId",
             "pathParameters": {
@@ -9246,7 +9240,6 @@
         ],
         "examples": [
           {
-            "name": "postUserEventExample",
             "description": "",
             "path": "/events/consumer/user",
             "pathParameters": {},
@@ -10496,7 +10489,6 @@
         ],
         "examples": [
           {
-            "name": "postBusinessUserEventExample",
             "description": "",
             "path": "/events/business/user",
             "pathParameters": {},
