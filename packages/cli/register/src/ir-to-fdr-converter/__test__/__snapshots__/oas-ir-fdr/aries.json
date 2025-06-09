@@ -18644,6 +18644,7 @@
   "subpackages": {
     "subpackage_actionMenu": {
       "subpackageId": "subpackage_actionMenu",
+      "displayName": "action-menu",
       "name": "actionMenu",
       "endpoints": [
         {
@@ -19123,6 +19124,7 @@
     },
     "subpackage_connection": {
       "subpackageId": "subpackage_connection",
+      "displayName": "connection",
       "name": "connection",
       "endpoints": [
         {
@@ -20840,6 +20842,7 @@
     },
     "subpackage_basicmessage": {
       "subpackageId": "subpackage_basicmessage",
+      "displayName": "basicmessage",
       "name": "basicmessage",
       "endpoints": [
         {
@@ -20953,6 +20956,7 @@
     },
     "subpackage_trustping": {
       "subpackageId": "subpackage_trustping",
+      "displayName": "trustping",
       "name": "trustping",
       "endpoints": [
         {
@@ -21070,6 +21074,7 @@
     },
     "subpackage_introduction": {
       "subpackageId": "subpackage_introduction",
+      "displayName": "introduction",
       "name": "introduction",
       "endpoints": [
         {
@@ -21187,6 +21192,7 @@
     },
     "subpackage_credentialDefinition": {
       "subpackageId": "subpackage_credentialDefinition",
+      "displayName": "credential-definition",
       "name": "credentialDefinition",
       "endpoints": [
         {
@@ -21670,6 +21676,7 @@
     },
     "subpackage_credentials": {
       "subpackageId": "subpackage_credentials",
+      "displayName": "credentials",
       "name": "credentials",
       "endpoints": [
         {
@@ -22727,6 +22734,7 @@
     },
     "subpackage_didExchange": {
       "subpackageId": "subpackage_didExchange",
+      "displayName": "did-exchange",
       "name": "didExchange",
       "endpoints": [
         {
@@ -23600,6 +23608,7 @@
     },
     "subpackage_discoverFeatures": {
       "subpackageId": "subpackage_discoverFeatures",
+      "displayName": "discover-features",
       "name": "discoverFeatures",
       "endpoints": [
         {
@@ -27718,6 +27727,7 @@
     },
     "subpackage_jsonld": {
       "subpackageId": "subpackage_jsonld",
+      "displayName": "jsonld",
       "name": "jsonld",
       "endpoints": [
         {
@@ -27930,6 +27940,7 @@
     },
     "subpackage_ledger": {
       "subpackageId": "subpackage_ledger",
+      "displayName": "ledger",
       "name": "ledger",
       "endpoints": [
         {
@@ -28729,6 +28740,7 @@
     },
     "subpackage_mediation": {
       "subpackageId": "subpackage_mediation",
+      "displayName": "mediation",
       "name": "mediation",
       "endpoints": [
         {
@@ -30458,6 +30470,7 @@
     },
     "subpackage_multitenancy": {
       "subpackageId": "subpackage_multitenancy",
+      "displayName": "multitenancy",
       "name": "multitenancy",
       "endpoints": [
         {
@@ -31133,6 +31146,7 @@
     },
     "subpackage_outOfBand": {
       "subpackageId": "subpackage_outOfBand",
+      "displayName": "out-of-band",
       "name": "outOfBand",
       "endpoints": [
         {
@@ -31622,6 +31636,7 @@
     },
     "subpackage_server": {
       "subpackageId": "subpackage_server",
+      "displayName": "server",
       "name": "server",
       "endpoints": [
         {
@@ -35250,6 +35265,7 @@
     },
     "subpackage_resolver": {
       "subpackageId": "subpackage_resolver",
+      "displayName": "resolver",
       "name": "resolver",
       "endpoints": [
         {
@@ -35348,6 +35364,7 @@
     },
     "subpackage_revocation": {
       "subpackageId": "subpackage_revocation",
+      "displayName": "revocation",
       "name": "revocation",
       "endpoints": [
         {
@@ -37577,6 +37594,7 @@
     },
     "subpackage_schema": {
       "subpackageId": "subpackage_schema",
+      "displayName": "schema",
       "name": "schema",
       "endpoints": [
         {
@@ -38044,6 +38062,7 @@
     },
     "subpackage_endorseTransaction": {
       "subpackageId": "subpackage_endorseTransaction",
+      "displayName": "endorse-transaction",
       "name": "endorseTransaction",
       "endpoints": [
         {
@@ -39393,6 +39412,7 @@
     },
     "subpackage_wallet": {
       "subpackageId": "subpackage_wallet",
+      "displayName": "wallet",
       "name": "wallet",
       "endpoints": [
         {
@@ -40699,7 +40719,7 @@
   "auth": {
     "type": "header",
     "headerWireValue": "Authorization",
-    "nameOverride": "Authorization"
+    "nameOverride": "apiKey"
   },
   "snippetsConfiguration": {},
   "globalHeaders": []

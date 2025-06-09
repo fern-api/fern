@@ -10852,7 +10852,7 @@
   "auth": {
     "type": "header",
     "headerWireValue": "X-Api-Key",
-    "nameOverride": "X-Api-Key"
+    "nameOverride": "apiKey"
   },
   "snippetsConfiguration": {},
   "globalHeaders": []

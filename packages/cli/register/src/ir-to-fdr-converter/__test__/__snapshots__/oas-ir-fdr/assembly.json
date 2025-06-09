@@ -4423,6 +4423,7 @@
     },
     "subpackage_transcript": {
       "subpackageId": "subpackage_transcript",
+      "displayName": "transcript",
       "name": "transcript",
       "endpoints": [
         {
@@ -7268,6 +7269,7 @@
     },
     "subpackage_realtime": {
       "subpackageId": "subpackage_realtime",
+      "displayName": "realtime",
       "name": "realtime",
       "endpoints": [
         {
@@ -7457,6 +7459,7 @@
     },
     "subpackage_lemur": {
       "subpackageId": "subpackage_lemur",
+      "displayName": "LeMUR",
       "name": "lemur",
       "endpoints": [
         {
@@ -8662,7 +8665,7 @@
   "auth": {
     "type": "header",
     "headerWireValue": "Authorization",
-    "nameOverride": "Authorization"
+    "nameOverride": "apiKey"
   },
   "snippetsConfiguration": {},
   "globalHeaders": []

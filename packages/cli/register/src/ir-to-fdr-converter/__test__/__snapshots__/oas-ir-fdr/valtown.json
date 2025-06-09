@@ -3184,6 +3184,7 @@
   "subpackages": {
     "subpackage_search": {
       "subpackageId": "subpackage_search",
+      "displayName": "search",
       "name": "search",
       "endpoints": [
         {
@@ -3353,6 +3354,7 @@
     },
     "subpackage_alias": {
       "subpackageId": "subpackage_alias",
+      "displayName": "alias",
       "name": "alias",
       "endpoints": [
         {
@@ -3608,6 +3610,7 @@
     },
     "subpackage_me": {
       "subpackageId": "subpackage_me",
+      "displayName": "me",
       "name": "me",
       "endpoints": [
         {
@@ -4192,6 +4195,7 @@
     },
     "subpackage_blobs": {
       "subpackageId": "subpackage_blobs",
+      "displayName": "blobs",
       "name": "blobs",
       "endpoints": [
         {
@@ -4526,6 +4530,7 @@
     },
     "subpackage_users": {
       "subpackageId": "subpackage_users",
+      "displayName": "users",
       "name": "users",
       "endpoints": [
         {
@@ -4803,6 +4808,7 @@
     },
     "subpackage_sqlite": {
       "subpackageId": "subpackage_sqlite",
+      "displayName": "sqlite",
       "name": "sqlite",
       "endpoints": [
         {
@@ -5134,6 +5140,7 @@
     },
     "subpackage_vals": {
       "subpackageId": "subpackage_vals",
+      "displayName": "vals",
       "name": "vals",
       "endpoints": [
         {
@@ -7014,6 +7021,7 @@
     },
     "subpackage_emails": {
       "subpackageId": "subpackage_emails",
+      "displayName": "emails",
       "name": "emails",
       "endpoints": [
         {

@@ -11954,6 +11954,7 @@
   "subpackages": {
     "subpackage_org": {
       "subpackageId": "subpackage_org",
+      "displayName": "org",
       "name": "org",
       "endpoints": [
         {
@@ -14241,6 +14242,7 @@
     },
     "subpackage_user": {
       "subpackageId": "subpackage_user",
+      "displayName": "user",
       "name": "user",
       "endpoints": [
         {
@@ -14540,6 +14542,7 @@
     },
     "subpackage_project": {
       "subpackageId": "subpackage_project",
+      "displayName": "project",
       "name": "project",
       "endpoints": [
         {
@@ -16454,6 +16457,7 @@
     },
     "subpackage_collection": {
       "subpackageId": "subpackage_collection",
+      "displayName": "collection",
       "name": "collection",
       "endpoints": [
         {
@@ -19197,6 +19201,7 @@
     },
     "subpackage_document": {
       "subpackageId": "subpackage_document",
+      "displayName": "document",
       "name": "document",
       "endpoints": [
         {
@@ -21970,6 +21975,7 @@
     },
     "subpackage_chat": {
       "subpackageId": "subpackage_chat",
+      "displayName": "chat",
       "name": "chat",
       "endpoints": [
         {
@@ -35259,6 +35265,7 @@
     },
     "subpackage_internal": {
       "subpackageId": "subpackage_internal",
+      "displayName": "internal",
       "name": "internal",
       "endpoints": [
         {
@@ -35748,6 +35755,7 @@
     },
     "subpackage_scrape": {
       "subpackageId": "subpackage_scrape",
+      "displayName": "scrape",
       "name": "scrape",
       "endpoints": [
         {
@@ -36362,6 +36370,7 @@
     },
     "subpackage_compose": {
       "subpackageId": "subpackage_compose",
+      "displayName": "compose",
       "name": "compose",
       "endpoints": [
         {
@@ -37167,6 +37176,7 @@
     },
     "subpackage_tasks": {
       "subpackageId": "subpackage_tasks",
+      "displayName": "tasks",
       "name": "tasks",
       "endpoints": [
         {
@@ -40441,6 +40451,7 @@
     },
     "subpackage_listings": {
       "subpackageId": "subpackage_listings",
+      "displayName": "listings",
       "name": "listings",
       "endpoints": [
         {

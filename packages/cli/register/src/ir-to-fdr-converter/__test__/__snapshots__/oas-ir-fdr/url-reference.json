@@ -1177,6 +1177,7 @@
   "subpackages": {
     "subpackage_pet": {
       "subpackageId": "subpackage_pet",
+      "displayName": "pet",
       "name": "pet",
       "endpoints": [
         {
@@ -1425,6 +1426,7 @@
     },
     "subpackage_order": {
       "subpackageId": "subpackage_order",
+      "displayName": "order",
       "name": "order",
       "endpoints": [
         {

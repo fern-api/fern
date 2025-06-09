@@ -2270,7 +2270,7 @@
   "auth": {
     "type": "header",
     "headerWireValue": "x-access-token",
-    "nameOverride": "x-access-token"
+    "nameOverride": "apiKey"
   },
   "snippetsConfiguration": {},
   "globalHeaders": []

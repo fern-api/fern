@@ -6304,6 +6304,7 @@
   "subpackages": {
     "subpackage_deployments": {
       "subpackageId": "subpackage_deployments",
+      "displayName": "deployments",
       "name": "deployments",
       "endpoints": [
         {
@@ -6420,6 +6421,7 @@
     },
     "subpackage_documentIndexes": {
       "subpackageId": "subpackage_documentIndexes",
+      "displayName": "document-indexes",
       "name": "documentIndexes",
       "endpoints": [
         {
@@ -6703,6 +6705,7 @@
     },
     "subpackage_documents": {
       "subpackageId": "subpackage_documents",
+      "displayName": "documents",
       "name": "documents",
       "endpoints": [
         {
@@ -7007,6 +7010,7 @@
     },
     "subpackage_modelVersions": {
       "subpackageId": "subpackage_modelVersions",
+      "displayName": "model-versions",
       "name": "modelVersions",
       "endpoints": [
         {
@@ -7333,6 +7337,7 @@
     },
     "subpackage_registeredPrompts": {
       "subpackageId": "subpackage_registeredPrompts",
+      "displayName": "registered-prompts",
       "name": "registeredPrompts",
       "endpoints": [
         {
@@ -7542,6 +7547,7 @@
     },
     "subpackage_sandboxes": {
       "subpackageId": "subpackage_sandboxes",
+      "displayName": "sandboxes",
       "name": "sandboxes",
       "endpoints": [
         {
@@ -7920,6 +7926,7 @@
     },
     "subpackage_testSuites": {
       "subpackageId": "subpackage_testSuites",
+      "displayName": "test-suites",
       "name": "testSuites",
       "endpoints": [
         {
@@ -9306,7 +9313,7 @@
   "auth": {
     "type": "header",
     "headerWireValue": "X_API_KEY",
-    "nameOverride": "X_API_KEY"
+    "nameOverride": "apiKey"
   },
   "snippetsConfiguration": {},
   "globalHeaders": []

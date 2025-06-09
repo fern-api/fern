@@ -12688,6 +12688,7 @@
     },
     "subpackage_users": {
       "subpackageId": "subpackage_users",
+      "displayName": "Users",
       "name": "users",
       "endpoints": [
         {
@@ -13113,6 +13114,7 @@
     },
     "subpackage_translations": {
       "subpackageId": "subpackage_translations",
+      "displayName": "Translations",
       "name": "translations",
       "endpoints": [
         {
@@ -13263,6 +13265,7 @@
     },
     "subpackage_templates": {
       "subpackageId": "subpackage_templates",
+      "displayName": "Templates",
       "name": "templates",
       "endpoints": [
         {
@@ -13482,6 +13485,7 @@
     },
     "subpackage_teams": {
       "subpackageId": "subpackage_teams",
+      "displayName": "Teams",
       "name": "teams",
       "endpoints": [
         {
@@ -14644,6 +14648,7 @@
     },
     "subpackage_statistics": {
       "subpackageId": "subpackage_statistics",
+      "displayName": "Statistics",
       "name": "statistics",
       "endpoints": [
         {
@@ -15649,6 +15654,7 @@
     },
     "subpackage_search": {
       "subpackageId": "subpackage_search",
+      "displayName": "Search",
       "name": "search",
       "endpoints": [
         {
@@ -15797,6 +15803,7 @@
     },
     "subpackage_schemas": {
       "subpackageId": "subpackage_schemas",
+      "displayName": "Schemas",
       "name": "schemas",
       "endpoints": [
         {
@@ -26478,6 +26485,7 @@
     },
     "subpackage_rules": {
       "subpackageId": "subpackage_rules",
+      "displayName": "Rules",
       "name": "rules",
       "endpoints": [
         {
@@ -29103,6 +29111,7 @@
     },
     "subpackage_plans": {
       "subpackageId": "subpackage_plans",
+      "displayName": "Plans",
       "name": "plans",
       "endpoints": [
         {
@@ -29723,6 +29732,7 @@
     },
     "subpackage_ping": {
       "subpackageId": "subpackage_ping",
+      "displayName": "Ping",
       "name": "ping",
       "endpoints": [
         {
@@ -29946,6 +29956,7 @@
     },
     "subpackage_news": {
       "subpackageId": "subpackage_news",
+      "displayName": "News",
       "name": "news",
       "endpoints": [
         {
@@ -30061,6 +30072,7 @@
     },
     "subpackage_languages": {
       "subpackageId": "subpackage_languages",
+      "displayName": "Languages",
       "name": "languages",
       "endpoints": [
         {
@@ -30161,6 +30173,7 @@
     },
     "subpackage_history": {
       "subpackageId": "subpackage_history",
+      "displayName": "History",
       "name": "history",
       "endpoints": [
         {
@@ -30973,6 +30986,7 @@
     },
     "subpackage_diagnostics": {
       "subpackageId": "subpackage_diagnostics",
+      "displayName": "Diagnostics",
       "name": "diagnostics",
       "endpoints": [
         {
@@ -31125,6 +31139,7 @@
     },
     "subpackage_contents": {
       "subpackageId": "subpackage_contents",
+      "displayName": "Contents",
       "name": "contents",
       "endpoints": [
         {
@@ -36430,6 +36445,7 @@
     },
     "subpackage_comments": {
       "subpackageId": "subpackage_comments",
+      "displayName": "Comments",
       "name": "comments",
       "endpoints": [
         {
@@ -37246,6 +37262,7 @@
     },
     "subpackage_notifications": {
       "subpackageId": "subpackage_notifications",
+      "displayName": "Notifications",
       "name": "notifications",
       "endpoints": [
         {
@@ -37536,6 +37553,7 @@
     },
     "subpackage_backups": {
       "subpackageId": "subpackage_backups",
+      "displayName": "Backups",
       "name": "backups",
       "endpoints": [
         {
@@ -38334,6 +38352,7 @@
     },
     "subpackage_assets": {
       "subpackageId": "subpackage_assets",
+      "displayName": "Assets",
       "name": "assets",
       "endpoints": [
         {
@@ -42241,6 +42260,7 @@
     },
     "subpackage_apps": {
       "subpackageId": "subpackage_apps",
+      "displayName": "Apps",
       "name": "apps",
       "endpoints": [
         {

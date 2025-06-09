@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        The V3 parser will use the underlying tag displayName, if available.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-06-09"
+  version: 0.63.39
+
+- changelogEntry:
+    - summary: |
         Don't hard fail on non-string $ref values.
         Limit ExampleConverter depth to prevent heap exhaustion.
       type: feat

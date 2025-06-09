@@ -1743,6 +1743,7 @@
   "subpackages": {
     "subpackage_api": {
       "subpackageId": "subpackage_api",
+      "displayName": "api",
       "name": "api",
       "endpoints": [
         {
