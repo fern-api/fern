@@ -63,7 +63,7 @@ Finally, to invoke the generator, run:
 fern generate
 ```
 
-When prompted to entert your organization, enter `Saltbox`
+When prompted to enter your organization, enter `Saltbox`
 
 🎉 Once the command completes, you'll see your SDK in `/generated/sdks/typescript`.
 
