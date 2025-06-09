@@ -5,7 +5,7 @@
     type: fix
   irVersion: 58
   createdAt: '2025-06-06'
-  version: 0.18.2
+  version: 0.18.3
 
 - changelogEntry:
   - summary: Update the IR to v58.
