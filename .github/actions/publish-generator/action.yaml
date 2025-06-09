@@ -36,7 +36,7 @@ runs:
       uses: docker/login-action@v3
       with:
         username: fernapi
-        password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}   
+        password: ${{ inputs.docker-pwd }}  
 
     - name: Run publish (auto)
       if: inputs.manual-trigger == 'false'
