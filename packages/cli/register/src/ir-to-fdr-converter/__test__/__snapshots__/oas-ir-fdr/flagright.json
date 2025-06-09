@@ -12211,7 +12211,7 @@
   "auth": {
     "type": "header",
     "headerWireValue": "x-api-key",
-    "nameOverride": "x-api-key"
+    "nameOverride": "apiKey"
   },
   "snippetsConfiguration": {},
   "globalHeaders": []

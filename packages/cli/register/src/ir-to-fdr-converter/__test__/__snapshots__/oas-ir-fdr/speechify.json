@@ -1329,6 +1329,7 @@
   "subpackages": {
     "subpackage_audio": {
       "subpackageId": "subpackage_audio",
+      "displayName": "audio",
       "name": "audio",
       "endpoints": [
         {
@@ -1703,6 +1704,7 @@
     },
     "subpackage_auth": {
       "subpackageId": "subpackage_auth",
+      "displayName": "auth",
       "name": "auth",
       "endpoints": [
         {
@@ -1780,6 +1782,7 @@
     },
     "subpackage_apikey": {
       "subpackageId": "subpackage_apikey",
+      "displayName": "apikey",
       "name": "apikey",
       "endpoints": [
         {
@@ -2032,6 +2035,7 @@
     },
     "subpackage_voices": {
       "subpackageId": "subpackage_voices",
+      "displayName": "voices",
       "name": "voices",
       "endpoints": [
         {
@@ -2400,7 +2404,7 @@
   "auth": {
     "type": "header",
     "headerWireValue": "Authorization",
-    "nameOverride": "Authorization"
+    "nameOverride": "apiKey"
   },
   "snippetsConfiguration": {},
   "globalHeaders": []

@@ -5,22 +5,22 @@
       {
         "name": {
           "name": {
-            "originalName": "Authorization",
+            "originalName": "apiKey",
             "camelCase": {
-              "unsafeName": "authorization",
-              "safeName": "authorization"
+              "unsafeName": "apiKey",
+              "safeName": "apiKey"
             },
             "snakeCase": {
-              "unsafeName": "authorization",
-              "safeName": "authorization"
+              "unsafeName": "api_key",
+              "safeName": "api_key"
             },
             "screamingSnakeCase": {
-              "unsafeName": "AUTHORIZATION",
-              "safeName": "AUTHORIZATION"
+              "unsafeName": "API_KEY",
+              "safeName": "API_KEY"
             },
             "pascalCase": {
-              "unsafeName": "Authorization",
-              "safeName": "Authorization"
+              "unsafeName": "ApiKey",
+              "safeName": "ApiKey"
             }
           },
           "wireValue": "Authorization"
@@ -67807,6 +67807,7 @@
           }
         }
       },
+      "displayName": "account-details",
       "basePath": {
         "head": "",
         "parts": []
@@ -68041,6 +68042,7 @@
           }
         }
       },
+      "displayName": "account-token",
       "basePath": {
         "head": "",
         "parts": []
@@ -68327,6 +68329,7 @@
           }
         }
       },
+      "displayName": "available-actions",
       "basePath": {
         "head": "",
         "parts": []
@@ -68603,6 +68606,7 @@
           }
         }
       },
+      "displayName": "bank-info",
       "basePath": {
         "head": "",
         "parts": []
@@ -70279,6 +70283,7 @@
           }
         }
       },
+      "displayName": "benefits",
       "basePath": {
         "head": "",
         "parts": []
@@ -71511,6 +71516,7 @@
           }
         }
       },
+      "displayName": "companies",
       "basePath": {
         "head": "",
         "parts": []
@@ -72559,6 +72565,7 @@
           }
         }
       },
+      "displayName": "delete-account",
       "basePath": {
         "head": "",
         "parts": []
@@ -72721,6 +72728,7 @@
           }
         }
       },
+      "displayName": "employee-payroll-runs",
       "basePath": {
         "head": "",
         "parts": []
@@ -74314,6 +74322,7 @@
           }
         }
       },
+      "displayName": "employees",
       "basePath": {
         "head": "",
         "parts": []
@@ -77634,6 +77643,7 @@
           }
         }
       },
+      "displayName": "employments",
       "basePath": {
         "head": "",
         "parts": []
@@ -79212,6 +79222,7 @@
           }
         }
       },
+      "displayName": "generate-key",
       "basePath": {
         "head": "",
         "parts": []
@@ -79429,6 +79440,7 @@
           }
         }
       },
+      "displayName": "groups",
       "basePath": {
         "head": "",
         "parts": []
@@ -80778,6 +80790,7 @@
           }
         }
       },
+      "displayName": "issues",
       "basePath": {
         "head": "",
         "parts": []
@@ -81863,6 +81876,7 @@
           }
         }
       },
+      "displayName": "link-token",
       "basePath": {
         "head": "",
         "parts": []
@@ -82092,6 +82106,7 @@
           }
         }
       },
+      "displayName": "linked-accounts",
       "basePath": {
         "head": "",
         "parts": []
@@ -82995,6 +83010,7 @@
           }
         }
       },
+      "displayName": "locations",
       "basePath": {
         "head": "",
         "parts": []
@@ -84320,6 +84336,7 @@
           }
         }
       },
+      "displayName": "passthrough",
       "basePath": {
         "head": "",
         "parts": []
@@ -84593,6 +84610,7 @@
           }
         }
       },
+      "displayName": "pay-groups",
       "basePath": {
         "head": "",
         "parts": []
@@ -85617,6 +85635,7 @@
           }
         }
       },
+      "displayName": "payroll-runs",
       "basePath": {
         "head": "",
         "parts": []
@@ -87192,6 +87211,7 @@
           }
         }
       },
+      "displayName": "regenerate-key",
       "basePath": {
         "head": "",
         "parts": []
@@ -87409,6 +87429,7 @@
           }
         }
       },
+      "displayName": "selective-sync",
       "basePath": {
         "head": "",
         "parts": []
@@ -88254,6 +88275,7 @@
           }
         }
       },
+      "displayName": "sync-status",
       "basePath": {
         "head": "",
         "parts": []
@@ -88593,6 +88615,7 @@
           }
         }
       },
+      "displayName": "force-resync",
       "basePath": {
         "head": "",
         "parts": []
@@ -88831,6 +88854,7 @@
           }
         }
       },
+      "displayName": "teams",
       "basePath": {
         "head": "",
         "parts": []
@@ -90043,6 +90067,7 @@
           }
         }
       },
+      "displayName": "time-off",
       "basePath": {
         "head": "",
         "parts": []
@@ -92314,6 +92339,7 @@
           }
         }
       },
+      "displayName": "time-off-balances",
       "basePath": {
         "head": "",
         "parts": []
@@ -93868,6 +93894,7 @@
           }
         }
       },
+      "displayName": "webhook-receivers",
       "basePath": {
         "head": "",
         "parts": []

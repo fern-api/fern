@@ -48162,6 +48162,7 @@
   "subpackages": {
     "subpackage_forms": {
       "subpackageId": "subpackage_forms",
+      "displayName": "Forms",
       "name": "forms",
       "endpoints": [
         {
@@ -49442,6 +49443,7 @@
     },
     "subpackage_sites": {
       "subpackageId": "subpackage_sites",
+      "displayName": "Sites",
       "name": "sites",
       "endpoints": [
         {
@@ -50433,6 +50435,7 @@
     },
     "subpackage_orders": {
       "subpackageId": "subpackage_orders",
+      "displayName": "Orders",
       "name": "orders",
       "endpoints": [
         {
@@ -55944,6 +55947,7 @@
     },
     "subpackage_inventory": {
       "subpackageId": "subpackage_inventory",
+      "displayName": "Inventory",
       "name": "inventory",
       "endpoints": [
         {
@@ -58240,6 +58244,7 @@
     },
     "subpackage_pages": {
       "subpackageId": "subpackage_pages",
+      "displayName": "Pages",
       "name": "pages",
       "endpoints": [
         {
@@ -60322,6 +60327,7 @@
     },
     "subpackage_collections": {
       "subpackageId": "subpackage_collections",
+      "displayName": "Collections",
       "name": "collections",
       "endpoints": [
         {
@@ -61718,6 +61724,7 @@
     },
     "subpackage_collections/items": {
       "subpackageId": "subpackage_collections/items",
+      "displayName": "Items",
       "name": "items",
       "endpoints": [
         {
@@ -66981,6 +66988,7 @@
     },
     "subpackage_assets": {
       "subpackageId": "subpackage_assets",
+      "displayName": "Assets",
       "name": "assets",
       "endpoints": [
         {
@@ -68536,6 +68544,7 @@
     },
     "subpackage_webhooks": {
       "subpackageId": "subpackage_webhooks",
+      "displayName": "Webhooks",
       "name": "webhooks",
       "endpoints": [
         {

@@ -6258,7 +6258,7 @@
   "auth": {
     "type": "header",
     "headerWireValue": "X-Hume-Api-Key",
-    "nameOverride": "X-Hume-Api-Key"
+    "nameOverride": "apiKey"
   },
   "snippetsConfiguration": {},
   "globalHeaders": []

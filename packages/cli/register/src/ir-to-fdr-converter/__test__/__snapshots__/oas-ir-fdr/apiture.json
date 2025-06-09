@@ -3421,6 +3421,7 @@
   "subpackages": {
     "subpackage_accounts": {
       "subpackageId": "subpackage_accounts",
+      "displayName": "Accounts",
       "name": "accounts",
       "endpoints": [
         {
@@ -5222,6 +5223,7 @@
     },
     "subpackage_institutions": {
       "subpackageId": "subpackage_institutions",
+      "displayName": "Institutions",
       "name": "institutions",
       "endpoints": [
         {
@@ -6244,6 +6246,7 @@
     },
     "subpackage_transactions": {
       "subpackageId": "subpackage_transactions",
+      "displayName": "Transactions",
       "name": "transactions",
       "endpoints": [
         {
@@ -6844,6 +6847,7 @@
     },
     "subpackage_transfers": {
       "subpackageId": "subpackage_transfers",
+      "displayName": "Transfers",
       "name": "transfers",
       "endpoints": [
         {
@@ -8025,7 +8029,7 @@
   "auth": {
     "type": "header",
     "headerWireValue": "API-Key",
-    "nameOverride": "API-Key"
+    "nameOverride": "apiKey"
   },
   "snippetsConfiguration": {},
   "globalHeaders": []

@@ -7890,6 +7890,7 @@
   "subpackages": {
     "subpackage_artifacts": {
       "subpackageId": "subpackage_artifacts",
+      "displayName": "artifacts",
       "name": "artifacts",
       "endpoints": [
         {
@@ -8252,6 +8253,7 @@
     },
     "subpackage_authTokens": {
       "subpackageId": "subpackage_authTokens",
+      "displayName": "auth-tokens",
       "name": "authTokens",
       "endpoints": [
         {
@@ -9528,6 +9530,7 @@
     },
     "subpackage_authConnection": {
       "subpackageId": "subpackage_authConnection",
+      "displayName": "auth-connection",
       "name": "authConnection",
       "endpoints": [
         {
@@ -10511,6 +10514,7 @@
     },
     "subpackage_devUsers": {
       "subpackageId": "subpackage_devUsers",
+      "displayName": "dev-users",
       "name": "devUsers",
       "endpoints": [
         {
@@ -11073,6 +11077,7 @@
     },
     "subpackage_parts": {
       "subpackageId": "subpackage_parts",
+      "displayName": "parts",
       "name": "parts",
       "endpoints": [
         {
@@ -12505,6 +12510,7 @@
     },
     "subpackage_revOrgs": {
       "subpackageId": "subpackage_revOrgs",
+      "displayName": "rev-orgs",
       "name": "revOrgs",
       "endpoints": [
         {
@@ -13776,6 +13782,7 @@
     },
     "subpackage_tags": {
       "subpackageId": "subpackage_tags",
+      "displayName": "tags",
       "name": "tags",
       "endpoints": [
         {
@@ -14938,6 +14945,7 @@
     },
     "subpackage_timelineEntries": {
       "subpackageId": "subpackage_timelineEntries",
+      "displayName": "timeline-entries",
       "name": "timelineEntries",
       "endpoints": [
         {
@@ -15961,6 +15969,7 @@
     },
     "subpackage_webhooks": {
       "subpackageId": "subpackage_webhooks",
+      "displayName": "webhooks",
       "name": "webhooks",
       "endpoints": [
         {
@@ -17089,6 +17098,7 @@
     },
     "subpackage_works": {
       "subpackageId": "subpackage_works",
+      "displayName": "works",
       "name": "works",
       "endpoints": [
         {
@@ -19499,7 +19509,7 @@
   "auth": {
     "type": "header",
     "headerWireValue": "Authorization",
-    "nameOverride": "Authorization"
+    "nameOverride": "apiKey"
   },
   "snippetsConfiguration": {},
   "globalHeaders": []

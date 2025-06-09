@@ -25,6 +25,7 @@
   "subpackages": {
     "subpackage_generativelanguage": {
       "subpackageId": "subpackage_generativelanguage",
+      "displayName": "generativelanguage",
       "name": "generativelanguage",
       "endpoints": [
         {

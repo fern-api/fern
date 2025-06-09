@@ -5,22 +5,22 @@
       {
         "name": {
           "name": {
-            "originalName": "Authorization",
+            "originalName": "apiKey",
             "camelCase": {
-              "unsafeName": "authorization",
-              "safeName": "authorization"
+              "unsafeName": "apiKey",
+              "safeName": "apiKey"
             },
             "snakeCase": {
-              "unsafeName": "authorization",
-              "safeName": "authorization"
+              "unsafeName": "api_key",
+              "safeName": "api_key"
             },
             "screamingSnakeCase": {
-              "unsafeName": "AUTHORIZATION",
-              "safeName": "AUTHORIZATION"
+              "unsafeName": "API_KEY",
+              "safeName": "API_KEY"
             },
             "pascalCase": {
-              "unsafeName": "Authorization",
-              "safeName": "Authorization"
+              "unsafeName": "ApiKey",
+              "safeName": "ApiKey"
             }
           },
           "wireValue": "Authorization"
@@ -35611,6 +35611,7 @@
           }
         }
       },
+      "displayName": "artifacts",
       "basePath": {
         "head": "",
         "parts": []
@@ -36383,6 +36384,7 @@
           }
         }
       },
+      "displayName": "auth-tokens",
       "basePath": {
         "head": "",
         "parts": []
@@ -38845,6 +38847,7 @@
           }
         }
       },
+      "displayName": "auth-connection",
       "basePath": {
         "head": "",
         "parts": []
@@ -40873,6 +40876,7 @@
           }
         }
       },
+      "displayName": "dev-users",
       "basePath": {
         "head": "",
         "parts": []
@@ -42041,6 +42045,7 @@
           }
         }
       },
+      "displayName": "parts",
       "basePath": {
         "head": "",
         "parts": []
@@ -44706,6 +44711,7 @@
           }
         }
       },
+      "displayName": "rev-orgs",
       "basePath": {
         "head": "",
         "parts": []
@@ -47310,6 +47316,7 @@
           }
         }
       },
+      "displayName": "tags",
       "basePath": {
         "head": "",
         "parts": []
@@ -49525,6 +49532,7 @@
           }
         }
       },
+      "displayName": "timeline-entries",
       "basePath": {
         "head": "",
         "parts": []
@@ -51448,6 +51456,7 @@
           }
         }
       },
+      "displayName": "webhooks",
       "basePath": {
         "head": "",
         "parts": []
@@ -53504,6 +53513,7 @@
           }
         }
       },
+      "displayName": "works",
       "basePath": {
         "head": "",
         "parts": []

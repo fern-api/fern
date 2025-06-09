@@ -480,6 +480,7 @@
     },
     "subpackage_petsV1/pet": {
       "subpackageId": "subpackage_petsV1/pet",
+      "displayName": "pet",
       "name": "pet",
       "endpoints": [
         {
@@ -1587,6 +1588,7 @@
     },
     "subpackage_petsV1/store": {
       "subpackageId": "subpackage_petsV1/store",
+      "displayName": "store",
       "name": "store",
       "endpoints": [
         {
@@ -1999,6 +2001,7 @@
     },
     "subpackage_petsV1/user": {
       "subpackageId": "subpackage_petsV1/user",
+      "displayName": "user",
       "name": "user",
       "endpoints": [
         {
@@ -2723,6 +2726,7 @@
     },
     "subpackage_petsV2/pet": {
       "subpackageId": "subpackage_petsV2/pet",
+      "displayName": "pet",
       "name": "pet",
       "endpoints": [
         {
@@ -4927,6 +4931,7 @@
     },
     "subpackage_petsV2/store": {
       "subpackageId": "subpackage_petsV2/store",
+      "displayName": "store",
       "name": "store",
       "endpoints": [
         {
@@ -5339,6 +5344,7 @@
     },
     "subpackage_petsV2/user": {
       "subpackageId": "subpackage_petsV2/user",
+      "displayName": "user",
       "name": "user",
       "endpoints": [
         {
