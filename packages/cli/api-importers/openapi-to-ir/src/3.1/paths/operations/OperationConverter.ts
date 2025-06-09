@@ -72,6 +72,7 @@ export class OperationConverter extends AbstractOperationConverter {
 
         const { group, method } =
             this.computeGroupNameAndLocationFromExtensions() ?? this.computeGroupNameFromTagAndOperationId();
+        const groupDisplayName = this.getGroupDisplayName(group);
 
         const { headers, pathParameters, queryParameters } = this.convertParameters({
             breadcrumbs: [...this.breadcrumbs, "parameters"]
@@ -177,6 +178,7 @@ export class OperationConverter extends AbstractOperationConverter {
                     breadcrumbs: this.breadcrumbs
                 }) ?? [],
             group,
+            groupDisplayName,
             errors: topLevelErrors,
             endpoint: {
                 ...baseEndpoint,
@@ -566,5 +568,15 @@ export class OperationConverter extends AbstractOperationConverter {
         return servers.filter(
             (server) => !this.topLevelServers?.some((topLevelServer) => topLevelServer.url === server.url)
         );
+    }
+
+    private getGroupDisplayName(group: string[] | undefined): string | undefined {
+        const rawOperationTag = this.operation.tags?.[0];
+        const baseGroupName = group?.[group.length - 1];
+        if (baseGroupName != null && rawOperationTag != null) {
+            const lowerCaseRawOperationTag = rawOperationTag.toLowerCase().replaceAll(" ", "");
+            return lowerCaseRawOperationTag === baseGroupName ? rawOperationTag : undefined;
+        }
+        return undefined;
     }
 }

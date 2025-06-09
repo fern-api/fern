@@ -255,14 +255,16 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
                         this.addEndpointToIr({
                             endpoint: endpoint.streamEndpoint,
                             audiences: endpoint.audiences,
-                            endpointGroup: endpoint.group
+                            endpointGroup: endpoint.group,
+                            endpointGroupDisplayName: endpoint.groupDisplayName
                         });
                     }
 
                     this.addEndpointToIr({
                         endpoint: endpoint.endpoint,
                         audiences: endpoint.audiences,
-                        endpointGroup: endpoint.group
+                        endpointGroup: endpoint.group,
+                        endpointGroupDisplayName: endpoint.groupDisplayName
                     });
 
                     if (endpoint.servers) {
