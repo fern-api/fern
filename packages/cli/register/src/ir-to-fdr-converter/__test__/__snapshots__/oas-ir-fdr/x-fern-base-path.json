@@ -34,7 +34,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "exampleEndpointExample",
             "description": "",
             "path": "/example",
             "pathParameters": {},

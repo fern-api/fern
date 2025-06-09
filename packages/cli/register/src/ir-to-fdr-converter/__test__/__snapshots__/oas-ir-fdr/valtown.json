@@ -3268,7 +3268,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "valsExample",
               "description": "",
               "path": "/v1/search/vals",
               "pathParameters": {},
@@ -3419,7 +3418,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "usernameExample",
               "description": "",
               "path": "/v1/alias/username",
               "pathParameters": {
@@ -3537,7 +3535,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "valExample",
               "description": "",
               "path": "/v1/alias/username/val_name",
               "pathParameters": {
@@ -3656,7 +3653,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "me_get_example",
               "description": "",
               "path": "/v1/me",
               "pathParameters": {},
@@ -3765,7 +3761,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "likesExample",
               "description": "",
               "path": "/v1/me/likes",
               "pathParameters": {},
@@ -3947,7 +3942,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "commentsExample",
               "description": "",
               "path": "/v1/me/comments",
               "pathParameters": {},
@@ -4120,7 +4114,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "referencesExample",
               "description": "",
               "path": "/v1/me/references",
               "pathParameters": {},
@@ -4258,7 +4251,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "blobs_list_example",
               "description": "",
               "path": "/v1/blob",
               "pathParameters": {},
@@ -4348,7 +4340,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getExample",
               "description": "",
               "path": "/v1/blob/key",
               "pathParameters": {
@@ -4434,7 +4425,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "blobsStoreExample",
               "description": "",
               "path": "/v1/blob/key",
               "pathParameters": {
@@ -4507,7 +4497,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "deleteExample",
               "description": "",
               "path": "/v1/blob/key",
               "pathParameters": {
@@ -4595,7 +4584,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getExample",
               "description": "",
               "path": "/v1/users/user_id",
               "pathParameters": {
@@ -4721,7 +4709,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "valsExample",
               "description": "",
               "path": "/v1/users/user_id/vals",
               "pathParameters": {
@@ -5069,7 +5056,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "sqlite_batch_example",
               "description": "",
               "path": "/v1/sqlite/batch",
               "pathParameters": {},
@@ -5388,7 +5374,6 @@
           ],
           "examples": [
             {
-              "name": "evalGetExample",
               "description": "",
               "path": "/v1/eval/code",
               "pathParameters": {
@@ -5475,7 +5460,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "runGetExample",
               "description": "",
               "path": "/v1/run/valname",
               "pathParameters": {
@@ -5568,7 +5552,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "vals_runPost_example",
               "description": "",
               "path": "/v1/run/valname",
               "pathParameters": {
@@ -5715,7 +5698,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "vals_create_example",
               "description": "",
               "path": "/v1/vals",
               "pathParameters": {},
@@ -5863,7 +5845,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "vals_put_example",
               "description": "",
               "path": "/v1/vals",
               "pathParameters": {},
@@ -5950,7 +5931,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getExample",
               "description": "",
               "path": "/v1/vals/val_id",
               "pathParameters": {
@@ -6241,7 +6221,6 @@
           ],
           "examples": [
             {
-              "name": "deleteExample",
               "description": "",
               "path": "/v1/vals/val_id",
               "pathParameters": {
@@ -6345,7 +6324,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "listExample",
               "description": "",
               "path": "/v1/vals/val_id/versions",
               "pathParameters": {
@@ -6533,7 +6511,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "vals_createVersion_example",
               "description": "",
               "path": "/v1/vals/val_id/versions",
               "pathParameters": {
@@ -6722,7 +6699,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getVersionExample",
               "description": "",
               "path": "/v1/vals/val_id/versions/42",
               "pathParameters": {
@@ -6874,7 +6850,6 @@
           ],
           "examples": [
             {
-              "name": "deleteVersionExample",
               "description": "",
               "path": "/v1/vals/val_id/versions/42",
               "pathParameters": {
@@ -6988,7 +6963,6 @@
           ],
           "examples": [
             {
-              "name": "cancelExample",
               "description": "",
               "path": "/v1/vals/val_id/evaluations/evaluation_id/cancel",
               "pathParameters": {
@@ -7201,7 +7175,6 @@
           ],
           "examples": [
             {
-              "name": "emails_send_example",
               "description": "",
               "path": "/v1/email",
               "pathParameters": {},

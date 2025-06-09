@@ -18296,7 +18296,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getOwnersForNFT_response",
               "description": "",
               "path": "/v3/docs-demo/getOwnersForNFT",
               "pathParameters": {
@@ -18560,7 +18559,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getOwnersForContractV3Example",
               "description": "",
               "path": "/v3/docs-demo/getOwnersForContract",
               "pathParameters": {
@@ -18823,7 +18821,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "isHolderOfContractV3Example",
               "description": "",
               "path": "/v3/docs-demo/isHolderOfContract",
               "pathParameters": {
@@ -19977,7 +19974,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getNfTsForContractV3Example",
               "description": "",
               "path": "/v3/docs-demo/getNFTsForContract",
               "pathParameters": {
@@ -20413,7 +20409,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getNfTsForCollectionV3Example",
               "description": "",
               "path": "/v3/docs-demo/getNFTsForCollection",
               "pathParameters": {
@@ -20806,7 +20801,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getNftMetadataV3Example",
               "description": "",
               "path": "/v3/docs-demo/getNFTMetadata",
               "pathParameters": {
@@ -21205,7 +21199,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "nftMetadataEndpointsGetNftMetadataBatchV3Example",
               "description": "",
               "path": "/v3/docs-demo/getNFTMetadataBatch",
               "pathParameters": {
@@ -21568,7 +21561,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getContractMetadataV3Example",
               "description": "",
               "path": "/v3/docs-demo/getContractMetadata",
               "pathParameters": {
@@ -21834,7 +21826,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getCollectionMetadataV3Example",
               "description": "",
               "path": "/v3/docs-demo/getCollectionMetadata",
               "pathParameters": {
@@ -22086,7 +22077,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "invalidateContractV3Example",
               "description": "",
               "path": "/v3/docs-demo/invalidateContract",
               "pathParameters": {
@@ -22340,7 +22330,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "nftMetadataEndpointsGetContractMetadataBatchV3Example",
               "description": "",
               "path": "/v3/docs-demo/getContractMetadataBatch",
               "pathParameters": {
@@ -22613,7 +22602,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "summarizeNFTAttributes_response",
               "description": "",
               "path": "/v3/docs-demo/summarizeNFTAttributes",
               "pathParameters": {
@@ -23276,7 +23264,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "searchContractMetadataV3Example",
               "description": "",
               "path": "/v3/docs-demo/searchContractMetadata",
               "pathParameters": {
@@ -23557,7 +23544,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "computeRarityV3Example",
               "description": "",
               "path": "/v3/docs-demo/computeRarity",
               "pathParameters": {
@@ -23830,7 +23816,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "Successful Response",
               "description": "",
               "path": "/v3/docs-demo/refreshNftMetadata",
               "pathParameters": {
@@ -24065,7 +24050,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getSpamContractsV3Example",
               "description": "",
               "path": "/v3/docs-demo/getSpamContracts",
               "pathParameters": {
@@ -24299,7 +24283,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "isSpamContractV3Example",
               "description": "",
               "path": "/v3/docs-demo/isSpamContract",
               "pathParameters": {
@@ -24542,7 +24525,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "isAirdropNftV3Example",
               "description": "",
               "path": "/v3/docs-demo/isAirdropNFT",
               "pathParameters": {
@@ -24777,7 +24759,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "reportSpamV3Example",
               "description": "",
               "path": "/v3/docs-demo/reportSpam",
               "pathParameters": {
@@ -25032,7 +25013,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getFloorPriceV3Example",
               "description": "",
               "path": "/v3/docs-demo/getFloorPrice",
               "pathParameters": {
@@ -25404,7 +25384,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "Response (with pagination)",
               "description": "",
               "path": "/v3/docs-demo/getNFTSales",
               "pathParameters": {
@@ -26671,7 +26650,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getNftMetadataExample",
               "description": "",
               "path": "/v2/docs-demo/getNFTMetadata",
               "pathParameters": {
@@ -27096,7 +27074,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "nftApiV2MethodsOlderVersionGetNftMetadataBatchExample",
               "description": "",
               "path": "/v2/docs-demo/getNFTMetadataBatch",
               "pathParameters": {
@@ -27485,7 +27462,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getContractMetadataExample",
               "description": "",
               "path": "/v2/docs-demo/getContractMetadata",
               "pathParameters": {
@@ -27775,7 +27751,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "nftApiV2MethodsOlderVersionGetContractMetadataBatchExample",
               "description": "",
               "path": "/v2/docs-demo/getContractMetadataBatch",
               "pathParameters": {
@@ -28150,7 +28125,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getNfTsForCollectionExample",
               "description": "",
               "path": "/v2/docs-demo/getNFTsForCollection",
               "pathParameters": {
@@ -28529,7 +28503,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getOwnersForTokenExample",
               "description": "",
               "path": "/v2/docs-demo/getOwnersForToken",
               "pathParameters": {
@@ -28798,7 +28771,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getOwnersForCollectionExample",
               "description": "",
               "path": "/v2/docs-demo/getOwnersForCollection",
               "pathParameters": {
@@ -29018,7 +28990,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getSpamContractsExample",
               "description": "",
               "path": "/v2/docs-demo/getSpamContracts",
               "pathParameters": {
@@ -29254,7 +29225,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "isSpamContractExample",
               "description": "",
               "path": "/v2/docs-demo/isSpamContract",
               "pathParameters": {
@@ -29495,7 +29465,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "isAirdropExample",
               "description": "",
               "path": "/v2/docs-demo/isAirdrop",
               "pathParameters": {
@@ -29724,7 +29693,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "invalidateContractExample",
               "description": "",
               "path": "/v2/docs-demo/invalidateContract",
               "pathParameters": {
@@ -29958,7 +29926,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getFloorPriceExample",
               "description": "",
               "path": "/v2/docs-demo/getFloorPrice",
               "pathParameters": {
@@ -30213,7 +30180,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "computeRarityExample",
               "description": "",
               "path": "/v2/docs-demo/computeRarity",
               "pathParameters": {
@@ -30461,7 +30427,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "searchContractMetadataExample",
               "description": "",
               "path": "/v2/docs-demo/searchContractMetadata",
               "pathParameters": {
@@ -30735,7 +30700,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "summarizeNftAttributesExample",
               "description": "",
               "path": "/v2/docs-demo/summarizeNFTAttributes",
               "pathParameters": {
@@ -30982,7 +30946,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "isHolderOfCollectionExample",
               "description": "",
               "path": "/v2/docs-demo/isHolderOfCollection",
               "pathParameters": {
@@ -31345,7 +31308,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "Response (with pagination)",
               "description": "",
               "path": "/v2/docs-demo/getNFTSales",
               "pathParameters": {
@@ -32114,7 +32076,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "reportSpamExample",
               "description": "",
               "path": "/v2/docs-demo/reportSpam",
               "pathParameters": {

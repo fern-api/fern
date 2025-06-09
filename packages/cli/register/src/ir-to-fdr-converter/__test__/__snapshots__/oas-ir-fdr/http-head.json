@@ -107,7 +107,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "listUsersExample",
             "description": "",
             "path": "/users",
             "pathParameters": {},
@@ -163,7 +162,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "headMethodsShouldNotDefineAResponseBodyExample",
             "description": "",
             "path": "/users",
             "pathParameters": {},

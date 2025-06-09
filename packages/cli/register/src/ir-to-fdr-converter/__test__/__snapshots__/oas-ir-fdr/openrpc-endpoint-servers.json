@@ -1259,7 +1259,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "alchemy_requestGasAndPaymasterAndData example",
             "description": "",
             "path": "/{apiKey}",
             "pathParameters": {},
@@ -1434,7 +1433,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "alchemy_requestFeePayer example",
             "description": "",
             "path": "/{apiKey}",
             "pathParameters": {},

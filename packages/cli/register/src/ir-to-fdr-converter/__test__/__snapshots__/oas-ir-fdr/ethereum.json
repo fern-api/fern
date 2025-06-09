@@ -2389,7 +2389,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "web3ClientVersionExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -2477,7 +2476,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "sha3Example",
             "description": "",
             "path": "/{apiKey}",
             "pathParameters": {},
@@ -2551,7 +2549,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "netListeningTrueExample",
             "description": "",
             "path": "/{apiKey}",
             "pathParameters": {},
@@ -2617,7 +2614,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "netPeerCountExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -2682,7 +2678,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "netVersionExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -2742,7 +2737,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "ethBlockNumberExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -2829,7 +2823,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "ethCallExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -2884,7 +2877,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "ethChainIdExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -2945,7 +2937,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "ethCoinbaseExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -3012,7 +3003,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "ethEstimateGasExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -3062,7 +3052,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "ethGasPriceExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -3140,7 +3129,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "ethGetBalanceExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -3219,7 +3207,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "ethGetBlockByHashExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -3298,7 +3285,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "ethGetBlockByNumberExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -3368,7 +3354,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "ethGetBlockTransactionCountByHashExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -3438,7 +3423,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "ethGetBlockTransactionCountByNumberExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -3519,7 +3503,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "ethGetCodeExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -3591,7 +3574,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "ethGetFilterChangesExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -3681,7 +3663,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "ethGetFilterLogsExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -3768,7 +3749,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "ethGetRawTransactionByHashExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -3846,7 +3826,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "ethGetRawTransactionByBlockHashAndIndexExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -3924,7 +3903,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "ethGetRawTransactionByBlockNumberAndIndexExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -3997,7 +3975,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "ethGetLogsExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -4097,7 +4074,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "ethGetStorageAtExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -4175,7 +4151,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "nullExample",
             "description": "",
             "path": "/{apiKey}",
             "pathParameters": {},
@@ -4262,7 +4237,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "ethGetTransactionByBlockNumberAndIndexExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -4353,7 +4327,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "ethGetTransactionByHashExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -4450,7 +4423,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "ethGetTransactionCountExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -4533,7 +4505,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "ethGetTransactionReceiptExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -4651,7 +4622,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "ethGetUncleByBlockHashAndIndexExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -4730,7 +4700,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "nullResultExample",
             "description": "",
             "path": "/{apiKey}",
             "pathParameters": {},
@@ -4809,7 +4778,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "ethGetUncleCountByBlockHashExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -4879,7 +4847,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "ethGetUncleCountByBlockNumberExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -4956,7 +4923,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "ethGetProofExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -5022,7 +4988,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "ethGetWorkExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -5087,7 +5052,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "ethHashrateExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -5137,7 +5101,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "ethMiningExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -5197,7 +5160,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "ethNewBlockFilterExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -5264,7 +5226,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "ethNewFilterExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -5314,7 +5275,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "ethNewPendingTransactionFilterExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -5361,7 +5321,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "ethPendingTransactionsExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -5409,7 +5368,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "ethProtocolVersionExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -5477,7 +5435,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "ethSendRawTransactionExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -5557,7 +5514,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "ethSubmitHashrateExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -5656,7 +5612,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "submitWorkExample",
             "description": "",
             "path": "/{apiKey}",
             "pathParameters": {},
@@ -5717,7 +5672,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "ethSyncingExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -5799,7 +5753,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "ethUninstallFilterExample",
             "description": "",
             "path": "",
             "pathParameters": {},

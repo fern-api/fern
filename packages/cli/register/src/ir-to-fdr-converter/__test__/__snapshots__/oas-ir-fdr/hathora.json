@@ -1671,7 +1671,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getAppsExample",
               "description": "",
               "path": "/apps/v1/list",
               "pathParameters": {},
@@ -1853,7 +1852,6 @@
           ],
           "examples": [
             {
-              "name": "appV1CreateAppExample",
               "description": "",
               "path": "/apps/v1/create",
               "pathParameters": {},
@@ -2020,7 +2018,6 @@
           ],
           "examples": [
             {
-              "name": "appV1UpdateAppExample",
               "description": "",
               "path": "/apps/v1/update/appId",
               "pathParameters": {
@@ -2161,7 +2158,6 @@
           ],
           "examples": [
             {
-              "name": "getAppInfoExample",
               "description": "",
               "path": "/apps/v1/info/appId",
               "pathParameters": {
@@ -2295,7 +2291,6 @@
           ],
           "examples": [
             {
-              "name": "deleteAppExample",
               "description": "",
               "path": "/apps/v1/delete/appId",
               "pathParameters": {
@@ -2398,7 +2393,6 @@
           ],
           "examples": [
             {
-              "name": "loginAnonymousExample",
               "description": "",
               "path": "/auth/v1/appId/login/anonymous",
               "pathParameters": {
@@ -2521,7 +2515,6 @@
           ],
           "examples": [
             {
-              "name": "authV1LoginNicknameExample",
               "description": "",
               "path": "/auth/v1/appId/login/nickname",
               "pathParameters": {
@@ -2668,7 +2661,6 @@
           ],
           "examples": [
             {
-              "name": "authV1LoginGoogleExample",
               "description": "",
               "path": "/auth/v1/appId/login/google",
               "pathParameters": {
@@ -2792,7 +2784,6 @@
           ],
           "examples": [
             {
-              "name": "getBuildsExample",
               "description": "",
               "path": "/builds/v1/appId/list",
               "pathParameters": {
@@ -2941,7 +2932,6 @@
           ],
           "examples": [
             {
-              "name": "getBuildInfoExample",
               "description": "",
               "path": "/builds/v1/appId/info/42",
               "pathParameters": {
@@ -3102,7 +3092,6 @@
           ],
           "examples": [
             {
-              "name": "createBuildExample",
               "description": "",
               "path": "/builds/v1/appId/create",
               "pathParameters": {
@@ -3279,7 +3268,6 @@
           ],
           "examples": [
             {
-              "name": "buildV1RunBuildExample",
               "description": "",
               "path": "/builds/v1/appId/run/42",
               "pathParameters": {
@@ -3424,7 +3412,6 @@
           ],
           "examples": [
             {
-              "name": "deleteBuildExample",
               "description": "",
               "path": "/builds/v1/appId/delete/42",
               "pathParameters": {
@@ -3531,7 +3518,6 @@
           ],
           "examples": [
             {
-              "name": "getDeploymentsExample",
               "description": "",
               "path": "/deployments/v1/appId/list",
               "pathParameters": {
@@ -3684,7 +3670,6 @@
           ],
           "examples": [
             {
-              "name": "getDeploymentInfoExample",
               "description": "",
               "path": "/deployments/v1/appId/info/42",
               "pathParameters": {
@@ -3877,7 +3862,6 @@
           ],
           "examples": [
             {
-              "name": "deploymentV1CreateDeploymentExample",
               "description": "",
               "path": "/deployments/v1/appId/create/42",
               "pathParameters": {
@@ -4017,7 +4001,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getPingServiceEndpointsExample",
               "description": "",
               "path": "/discovery/v1/ping",
               "pathParameters": {},
@@ -4230,7 +4213,6 @@
           ],
           "examples": [
             {
-              "name": "createPrivateLobbyDeprecatedExample",
               "description": "",
               "path": "/lobby/v1/appId/create/private",
               "pathParameters": {
@@ -4425,7 +4407,6 @@
           ],
           "examples": [
             {
-              "name": "createPublicLobbyDeprecatedExample",
               "description": "",
               "path": "/lobby/v1/appId/create/public",
               "pathParameters": {
@@ -4578,7 +4559,6 @@
           ],
           "examples": [
             {
-              "name": "listActivePublicLobbiesDeprecatedExample",
               "description": "",
               "path": "/lobby/v1/appId/list",
               "pathParameters": {
@@ -4820,7 +4800,6 @@
           ],
           "examples": [
             {
-              "name": "lobbyV2CreatePrivateLobbyExample",
               "description": "",
               "path": "/lobby/v2/appId/create/private",
               "pathParameters": {
@@ -5059,7 +5038,6 @@
           ],
           "examples": [
             {
-              "name": "lobbyV2CreatePublicLobbyExample",
               "description": "",
               "path": "/lobby/v2/appId/create/public",
               "pathParameters": {
@@ -5298,7 +5276,6 @@
           ],
           "examples": [
             {
-              "name": "lobbyV2CreateLocalLobbyExample",
               "description": "",
               "path": "/lobby/v2/appId/create/local",
               "pathParameters": {
@@ -5543,7 +5520,6 @@
           ],
           "examples": [
             {
-              "name": "lobbyV2CreateLobbyExample",
               "description": "",
               "path": "/lobby/v2/appId/create",
               "pathParameters": {
@@ -5674,7 +5650,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "listActivePublicLobbiesExample",
               "description": "",
               "path": "/lobby/v2/appId/list/public",
               "pathParameters": {
@@ -5811,7 +5786,6 @@
           ],
           "examples": [
             {
-              "name": "getLobbyInfoExample",
               "description": "",
               "path": "/lobby/v2/appId/info/roomId",
               "pathParameters": {
@@ -5979,7 +5953,6 @@
           ],
           "examples": [
             {
-              "name": "lobbyV2SetLobbyStateExample",
               "description": "",
               "path": "/lobby/v2/appId/setState/roomId",
               "pathParameters": {
@@ -6148,7 +6121,6 @@
           ],
           "examples": [
             {
-              "name": "getLogsForAppExample",
               "description": "",
               "path": "/logs/v1/appId/all",
               "pathParameters": {
@@ -6282,7 +6254,6 @@
           ],
           "examples": [
             {
-              "name": "getLogsForProcessExample",
               "description": "",
               "path": "/logs/v1/appId/process/processId",
               "pathParameters": {
@@ -6417,7 +6388,6 @@
           ],
           "examples": [
             {
-              "name": "getLogsForDeploymentExample",
               "description": "",
               "path": "/logs/v1/appId/deployment/42",
               "pathParameters": {
@@ -6602,7 +6572,6 @@
           ],
           "examples": [
             {
-              "name": "getMetricsExample",
               "description": "",
               "path": "/metrics/v1/appId/process/processId",
               "pathParameters": {
@@ -6775,7 +6744,6 @@
           ],
           "examples": [
             {
-              "name": "getRunningProcessesExample",
               "description": "",
               "path": "/processes/v1/appId/list/running",
               "pathParameters": {
@@ -6933,7 +6901,6 @@
           ],
           "examples": [
             {
-              "name": "getStoppedProcessesExample",
               "description": "",
               "path": "/processes/v1/appId/list/stopped",
               "pathParameters": {
@@ -7084,7 +7051,6 @@
           ],
           "examples": [
             {
-              "name": "getProcessInfoExample",
               "description": "",
               "path": "/processes/v1/appId/info/processId",
               "pathParameters": {
@@ -7261,7 +7227,6 @@
           ],
           "examples": [
             {
-              "name": "roomV1CreateRoomExample",
               "description": "",
               "path": "/rooms/v1/appId/create",
               "pathParameters": {
@@ -7383,7 +7348,6 @@
           ],
           "examples": [
             {
-              "name": "getRoomInfoExample",
               "description": "",
               "path": "/rooms/v1/appId/info/roomId",
               "pathParameters": {
@@ -7536,7 +7500,6 @@
           ],
           "examples": [
             {
-              "name": "getActiveRoomsForProcessExample",
               "description": "",
               "path": "/rooms/v1/appId/list/processId/active",
               "pathParameters": {
@@ -7657,7 +7620,6 @@
           ],
           "examples": [
             {
-              "name": "getInactiveRoomsForProcessExample",
               "description": "",
               "path": "/rooms/v1/appId/list/processId/inactive",
               "pathParameters": {
@@ -7779,7 +7741,6 @@
           ],
           "examples": [
             {
-              "name": "destroyRoomExample",
               "description": "",
               "path": "/rooms/v1/appId/destroy/roomId",
               "pathParameters": {
@@ -7892,7 +7853,6 @@
           ],
           "examples": [
             {
-              "name": "suspendRoomExample",
               "description": "",
               "path": "/rooms/v1/appId/suspend/roomId",
               "pathParameters": {
@@ -8031,7 +7991,6 @@
           ],
           "examples": [
             {
-              "name": "getConnectionInfoExample",
               "description": "",
               "path": "/rooms/v1/appId/connectioninfo/roomId",
               "pathParameters": {

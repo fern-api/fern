@@ -534,7 +534,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "listAllAgentsApiV1AgentsGetExample",
               "description": "",
               "path": "/api/v1/agents",
               "pathParameters": {},
@@ -609,7 +608,6 @@
           ],
           "examples": [
             {
-              "name": "agentCreateAgentApiV1AgentsPostExample",
               "description": "",
               "path": "/api/v1/agents",
               "pathParameters": {},
@@ -700,7 +698,6 @@
           ],
           "examples": [
             {
-              "name": "getAgentApiV1AgentsAgentIdGetExample",
               "description": "",
               "path": "/api/v1/agents/agentId",
               "pathParameters": {
@@ -782,7 +779,6 @@
           ],
           "examples": [
             {
-              "name": "deleteAgentApiV1AgentsAgentIdDeleteExample",
               "description": "",
               "path": "/api/v1/agents/agentId",
               "pathParameters": {
@@ -875,7 +871,6 @@
           ],
           "examples": [
             {
-              "name": "agentPatchAgentApiV1AgentsAgentIdPatchExample",
               "description": "",
               "path": "/api/v1/agents/agentId",
               "pathParameters": {
@@ -975,7 +970,6 @@
           ],
           "examples": [
             {
-              "name": "agentPromptAgentApiV1AgentsAgentIdPredictPostExample",
               "description": "",
               "path": "/api/v1/agents/agentId/predict",
               "pathParameters": {
@@ -1070,7 +1064,6 @@
           ],
           "examples": [
             {
-              "name": "authSignInApiV1AuthSignInPostExample",
               "description": "",
               "path": "/api/v1/auth/sign-in",
               "pathParameters": {},
@@ -1155,7 +1148,6 @@
           ],
           "examples": [
             {
-              "name": "authSignUpApiV1AuthSignUpPostExample",
               "description": "",
               "path": "/api/v1/auth/sign-up",
               "pathParameters": {},
@@ -1223,7 +1215,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "readUserMeApiV1UsersMeGetExample",
               "description": "",
               "path": "/api/v1/users/me",
               "pathParameters": {},
@@ -1302,7 +1293,6 @@
           ],
           "examples": [
             {
-              "name": "readUserApiV1UsersUserIdGetExample",
               "description": "",
               "path": "/api/v1/users/userId",
               "pathParameters": {
@@ -1362,7 +1352,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "listApiTokensApiV1ApiTokensGetExample",
               "description": "",
               "path": "/api/v1/api-tokens",
               "pathParameters": {},
@@ -1437,7 +1426,6 @@
           ],
           "examples": [
             {
-              "name": "apiTokenCreateApiTokenApiV1ApiTokensPostExample",
               "description": "",
               "path": "/api/v1/api-tokens",
               "pathParameters": {},
@@ -1526,7 +1514,6 @@
           ],
           "examples": [
             {
-              "name": "getApiTokenApiV1ApiTokensTokenIdGetExample",
               "description": "",
               "path": "/api/v1/api-tokens/tokenId",
               "pathParameters": {
@@ -1608,7 +1595,6 @@
           ],
           "examples": [
             {
-              "name": "deleteApiTokenApiV1ApiTokensTokenIdDeleteExample",
               "description": "",
               "path": "/api/v1/api-tokens/tokenId",
               "pathParameters": {
@@ -1668,7 +1654,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "listDocumentsApiV1DocumentsGetExample",
               "description": "",
               "path": "/api/v1/documents",
               "pathParameters": {},
@@ -1743,7 +1728,6 @@
           ],
           "examples": [
             {
-              "name": "documentsCreateDocumentApiV1DocumentsPostExample",
               "description": "",
               "path": "/api/v1/documents",
               "pathParameters": {},
@@ -1836,7 +1820,6 @@
           ],
           "examples": [
             {
-              "name": "getDocumentApiV1DocumentsDocumentIdGetExample",
               "description": "",
               "path": "/api/v1/documents/documentId",
               "pathParameters": {
@@ -1918,7 +1901,6 @@
           ],
           "examples": [
             {
-              "name": "deleteDocumentApiV1DocumentsDocumentIdDeleteExample",
               "description": "",
               "path": "/api/v1/documents/documentId",
               "pathParameters": {
@@ -1978,7 +1960,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "listPromptsApiV1PromptsGetExample",
               "description": "",
               "path": "/api/v1/prompts",
               "pathParameters": {},
@@ -2053,7 +2034,6 @@
           ],
           "examples": [
             {
-              "name": "promptsCreateAPromptApiV1PromptsPostExample",
               "description": "",
               "path": "/api/v1/prompts",
               "pathParameters": {},
@@ -2150,7 +2130,6 @@
           ],
           "examples": [
             {
-              "name": "getPromptApiV1PromptsPromptIdGetExample",
               "description": "",
               "path": "/api/v1/prompts/promptId",
               "pathParameters": {
@@ -2232,7 +2211,6 @@
           ],
           "examples": [
             {
-              "name": "deletePromptApiV1PromptsPromptIdDeleteExample",
               "description": "",
               "path": "/api/v1/prompts/promptId",
               "pathParameters": {
@@ -2325,7 +2303,6 @@
           ],
           "examples": [
             {
-              "name": "promptsPatchPromptApiV1PromptsPromptIdPatchExample",
               "description": "",
               "path": "/api/v1/prompts/promptId",
               "pathParameters": {
@@ -2390,7 +2367,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "listToolsApiV1ToolsGetExample",
               "description": "",
               "path": "/api/v1/tools",
               "pathParameters": {},
@@ -2465,7 +2441,6 @@
           ],
           "examples": [
             {
-              "name": "toolsCreateAToolApiV1ToolsPostExample",
               "description": "",
               "path": "/api/v1/tools",
               "pathParameters": {},
@@ -2556,7 +2531,6 @@
           ],
           "examples": [
             {
-              "name": "getToolApiV1ToolsToolIdGetExample",
               "description": "",
               "path": "/api/v1/tools/toolId",
               "pathParameters": {
@@ -2638,7 +2612,6 @@
           ],
           "examples": [
             {
-              "name": "deleteToolApiV1ToolsToolIdDeleteExample",
               "description": "",
               "path": "/api/v1/tools/toolId",
               "pathParameters": {
@@ -2698,7 +2671,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "listAgentTracesApiV1TracesGetExample",
               "description": "",
               "path": "/api/v1/traces",
               "pathParameters": {},
