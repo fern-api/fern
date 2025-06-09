@@ -103,7 +103,9 @@ export async function getPreviewDocsDefinition({
     }
 
     let fernWorkspaces: FernWorkspace[] = [];
-    if (!project.docsWorkspaces?.config.experimental?.openapiParserV3) {
+    const openapiParserV3 = project.docsWorkspaces?.config.experimental?.openapiParserV3;
+    const useV1Parser = openapiParserV3 != null && !openapiParserV3;
+    if (useV1Parser) {
         fernWorkspaces = await Promise.all(
             apiWorkspaces.map(
                 async (workspace) =>

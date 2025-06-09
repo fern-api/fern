@@ -122,7 +122,9 @@ export class DocsDefinitionResolver {
         });
 
         // track all changelog markdown files in parsedDocsConfig.pages
-        if (this.docsWorkspace.config.navigation != null && !this.parsedDocsConfig.experimental?.openapiParserV3) {
+        const openapiParserV3 = this.parsedDocsConfig.experimental?.openapiParserV3;
+        const useV1Parser = openapiParserV3 != null && !openapiParserV3;
+        if (this.docsWorkspace.config.navigation != null && useV1Parser) {
             await visitNavigationAst({
                 navigation: this.docsWorkspace.config.navigation,
                 visitor: {
@@ -846,7 +848,9 @@ export class DocsDefinitionResolver {
 
         let ir: IntermediateRepresentation;
         let workspace: FernWorkspace | undefined = undefined;
-        if (this.parsedDocsConfig.experimental?.openapiParserV3) {
+        const openapiParserV3 = this.parsedDocsConfig.experimental?.openapiParserV3;
+        const useV1Parser = openapiParserV3 != null && !openapiParserV3;
+        if (!useV1Parser) {
             const workspace = this.getOpenApiWorkspaceForApiSection(item);
             ir = await workspace.getIntermediateRepresentation({
                 context: this.taskContext,
