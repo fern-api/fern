@@ -10,17 +10,7 @@ import { FormDataUtils } from "./FormDataUtils";
 export class FormDataUtilsImpl extends CoreUtility implements FormDataUtils {
     public readonly MANIFEST = {
         name: "form-data-utils",
-        repoInfoForTesting: {
-            path: RelativeFilePath.of("generators/typescript/utils/core-utilities/fetcher/src/form-data-utils")
-        },
-        unitTests: {
-            fromDirectory: RelativeFilePath.of("__test__"),
-            findAndReplace: {
-                "../FormDataWrapper": "../../../src/core/form-data-utils/FormDataWrapper"
-            }
-        },
-        originalPathOnDocker: AbsoluteFilePath.of("/assets/fetcher/form-data-utils"),
-        pathInCoreUtilities: [{ nameOnDisk: "form-data-utils", exportDeclaration: { exportAll: true } }],
+        pathInCoreUtilities: { nameOnDisk: "form-data-utils", exportDeclaration: { exportAll: true } },
         addDependencies: (dependencyManager: DependencyManager): void => {
             dependencyManager.addDependency("form-data", "^4.0.0");
             dependencyManager.addDependency("form-data-encoder", "^4.0.2");

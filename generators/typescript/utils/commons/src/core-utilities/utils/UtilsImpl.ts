@@ -1,18 +1,12 @@
 import { ts } from "ts-morph";
 
-import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
-
 import { CoreUtility } from "../CoreUtility";
 import { Utils } from "./Utils";
 
 export class UtilsImpl extends CoreUtility implements Utils {
     public readonly MANIFEST = {
         name: "utils",
-        repoInfoForTesting: {
-            path: RelativeFilePath.of("generators/typescript/utils/core-utilities/utils/src/utils")
-        },
-        originalPathOnDocker: AbsoluteFilePath.of("/assets/utils"),
-        pathInCoreUtilities: [{ nameOnDisk: "utils", exportDeclaration: { exportAll: true } }]
+        pathInCoreUtilities: { nameOnDisk: "utils", exportDeclaration: { exportAll: true } }
     };
 
     public setObjectProperty = {

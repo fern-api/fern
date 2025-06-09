@@ -1,29 +1,14 @@
 import { SchemaOptions } from "@fern-typescript/zurg";
 import { ts } from "ts-morph";
 
-import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
-
 import { Reference } from "../../referencing";
 import { CoreUtility } from "../CoreUtility";
 import { Zurg } from "./Zurg";
 
 export class ZurgImpl extends CoreUtility implements Zurg {
     public readonly MANIFEST = {
-        name: "zurg",
-        repoInfoForTesting: {
-            path: RelativeFilePath.of("generators/typescript/utils/core-utilities/zurg/src"),
-            ignoreGlob: "**/__test__"
-        },
-        unitTests: {
-            fromDirectory: RelativeFilePath.of("__test__"),
-            findAndReplace: {
-                "../../builders": "../../../../src/core/schemas/builders",
-                "../builders": "../../../src/core/schemas/builders",
-                "../../Schema": "../../../../src/core/schemas/Schema"
-            }
-        },
-        originalPathOnDocker: AbsoluteFilePath.of("/assets/zurg"),
-        pathInCoreUtilities: [{ nameOnDisk: "schemas", exportDeclaration: { namespaceExport: "serialization" } }]
+        name: "schemas",
+        pathInCoreUtilities: { nameOnDisk: "schemas", exportDeclaration: { namespaceExport: "serialization" } }
     };
 
     public object = this.withExportedName("object", (object) => (properties: Zurg.Property[]): Zurg.ObjectSchema => {

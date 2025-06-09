@@ -1,5 +1,5 @@
 import { AbstractGeneratorCli } from "@fern-typescript/abstract-generator-cli";
-import { JavaScriptRuntime, NpmPackage, PersistedTypescriptProject, fixImportsForEsm } from "@fern-typescript/commons";
+import { JavaScriptRuntime, NpmPackage, PersistedTypescriptProject, fixImportsForEsm, writeTemplateFiles } from "@fern-typescript/commons";
 import { GeneratorContext } from "@fern-typescript/contexts";
 import { SdkGenerator } from "@fern-typescript/sdk-generator";
 
@@ -158,14 +158,21 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
         });
         const typescriptProject = await sdkGenerator.generate();
         const persistedTypescriptProject = await typescriptProject.persist();
+        const rootDirectory = persistedTypescriptProject.getRootDirectory();
         await sdkGenerator.copyCoreUtilities({
             pathToSrc: persistedTypescriptProject.getSrcDirectory(),
-            pathToRoot: persistedTypescriptProject.getRootDirectory()
+            pathToRoot: rootDirectory
         });
-
+        await writeTemplateFiles(rootDirectory, this.getTemplateVariables())
         await this.postProcess(persistedTypescriptProject, customConfig);
 
         return persistedTypescriptProject;
+    }
+
+    private getTemplateVariables(): Record<string, unknown> {
+        return {
+            streamResponseType: "wrapper",
+        }
     }
 
     private async postProcess(

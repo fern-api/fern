@@ -13,21 +13,8 @@ export declare namespace CoreUtility {
 
     export interface Manifest {
         name: CoreUtilityName;
-        repoInfoForTesting: {
-            path: RelativeFilePath;
-            ignoreGlob?: string;
-        };
-        unitTests?: {
-            fromDirectory: RelativeFilePath;
-            /**
-             * Import strings that we want to find + replace
-             */
-            findAndReplace: Record<string, string>;
-        };
-        originalPathOnDocker: AbsoluteFilePath;
-        pathInCoreUtilities: ExportedDirectory[];
+        pathInCoreUtilities: ExportedDirectory;
         addDependencies?: (dependencyManager: DependencyManager) => void;
-        writeConditionalFiles?: (pathToSrc: AbsoluteFilePath) => Promise<void>;
         dependsOn?: CoreUtility.Manifest[];
     }
 }

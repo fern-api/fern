@@ -559,7 +559,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                         [
                             ts.factory.createPropertyAssignment(
                                 ts.factory.createIdentifier("data"),
-                                context.coreUtilities.streamUtils.Stream._construct({
+                                context.coreUtilities.streamingFetcher.Stream._construct({
                                     stream: ts.factory.createPropertyAccessChain(
                                         ts.factory.createIdentifier(
                                             GeneratedThrowingEndpointResponse.RESPONSE_VARIABLE_NAME

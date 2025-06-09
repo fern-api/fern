@@ -1,7 +1,5 @@
 import { ts } from "ts-morph";
 
-import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
-
 import { CoreUtility } from "../CoreUtility";
 import { MANIFEST as FetcherManifest } from "../fetcher/FetcherImpl";
 import { Pagination } from "./Pagination";
@@ -9,11 +7,7 @@ import { Pagination } from "./Pagination";
 export class PaginationImpl extends CoreUtility implements Pagination {
     public readonly MANIFEST = {
         name: "pagination",
-        repoInfoForTesting: {
-            path: RelativeFilePath.of("generators/typescript/utils/core-utilities/fetcher/src/pagination")
-        },
-        originalPathOnDocker: AbsoluteFilePath.of("/assets/fetcher/pagination"),
-        pathInCoreUtilities: [{ nameOnDisk: "pagination", exportDeclaration: { exportAll: true } }],
+        pathInCoreUtilities: { nameOnDisk: "pagination", exportDeclaration: { exportAll: true } },
         addDependencies: (): void => {
             return;
         },

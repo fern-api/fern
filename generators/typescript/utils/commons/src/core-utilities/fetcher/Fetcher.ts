@@ -1,11 +1,25 @@
-import { Fetcher as ActualFetcher } from "@fern-typescript/fetcher";
 import { ts } from "ts-morph";
 
 export interface Fetcher {
     readonly Fetcher: {
         Args: {
             _getReferenceToType: () => ts.TypeNode;
-            properties: { [Arg in keyof ActualFetcher.Args]-?: Arg };
+            properties: { 
+                url: "url";
+                method: "method";
+                headers: "headers";
+                contentType: "contentType";
+                queryParameters: "queryParameters";
+                body: "body";
+                abortSignal: "abortSignal";
+                withCredentials: "withCredentials";
+                timeoutInSeconds: "timeoutInSeconds";
+                maxRetries: "maxRetries";
+                requestType: "requestType";
+                responseType: "responseType";
+                duplex: "duplex";
+                timeoutMs: "timeoutMs";
+             };
         };
         Error: {
             _getReferenceToType: () => ts.TypeNode;

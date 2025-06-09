@@ -1,7 +1,5 @@
 import { ts } from "ts-morph";
 
-import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
-
 import { DependencyManager, DependencyType } from "../../dependency-manager/DependencyManager";
 import { CoreUtility } from "../CoreUtility";
 import { MANIFEST as RuntimeManifest } from "../runtime/RuntimeImpl";
@@ -9,36 +7,7 @@ import { Fetcher } from "./Fetcher";
 
 export const MANIFEST: CoreUtility.Manifest = {
     name: "fetcher",
-    repoInfoForTesting: {
-        path: RelativeFilePath.of("generators/typescript/utils/core-utilities/fetcher/src/fetcher")
-    },
-    unitTests: {
-        fromDirectory: RelativeFilePath.of("__test__"),
-        findAndReplace: {
-            "../createRequestUrl": "../../../src/core/fetcher/createRequestUrl",
-            "../Fetcher": "../../../src/core/fetcher/Fetcher",
-            "../../runtime": "../../../src/core/runtime",
-            "../getFetchFn": "../../../src/core/fetcher/getFetchFn",
-            "../getRequestBody": "../../../src/core/fetcher/getRequestBody",
-            "../getResponseBody": "../../../src/core/fetcher/getResponseBody",
-            "../makeRequest": "../../../src/core/fetcher/makeRequest",
-            "../requestWithRetries": "../../../src/core/fetcher/requestWithRetries",
-            "../signals": "../../../src/core/fetcher/signals",
-            "../../stream-wrappers/Node18UniversalStreamWrapper":
-                "../../../../src/core/fetcher/stream-wrappers/Node18UniversalStreamWrapper",
-            "../../stream-wrappers/NodePre18StreamWrapper":
-                "../../../../src/core/fetcher/stream-wrappers/NodePre18StreamWrapper",
-            "../../stream-wrappers/UndiciStreamWrapper":
-                "../../../../src/core/fetcher/stream-wrappers/UndiciStreamWrapper",
-            "../../stream-wrappers/chooseStreamWrapper":
-                "../../../../src/core/fetcher/stream-wrappers/chooseStreamWrapper",
-            "../stream-wrappers/chooseStreamWrapper": "../../../src/core/fetcher/stream-wrappers/chooseStreamWrapper",
-            "../RawResponse": "../../../src/core/fetcher/RawResponse",
-            "../HttpResponsePromise": "../../../src/core/fetcher/HttpResponsePromise"
-        }
-    },
-    originalPathOnDocker: AbsoluteFilePath.of("/assets/fetcher/fetcher"),
-    pathInCoreUtilities: [{ nameOnDisk: "fetcher", exportDeclaration: { exportAll: true } }],
+    pathInCoreUtilities: { nameOnDisk: "fetcher", exportDeclaration: { exportAll: true } },
     addDependencies: (dependencyManager: DependencyManager): void => {
         dependencyManager.addDependency("form-data", "^4.0.0");
         dependencyManager.addDependency("formdata-node", "^6.0.3");
@@ -81,7 +50,8 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                 requestType: "requestType",
                 responseType: "responseType",
                 abortSignal: "abortSignal",
-                duplex: "duplex"
+                duplex: "duplex",
+                timeoutInSeconds: "timeoutInSeconds"
             },
             _getReferenceToType: this.getReferenceToTypeInFetcherModule("Args")
         },
