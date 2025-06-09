@@ -227,9 +227,6 @@
           ]
         }
       },
-      "required": [
-        "type"
-      ],
       "oneOf": [
         {
           "properties": {
