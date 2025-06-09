@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        The V3 parser will only specify example names for endpoints that have more than one example.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-06-09"
+  version: 0.63.40
+
+- changelogEntry:
+    - summary: |
         The V3 parser will use the underlying tag displayName, if available.
       type: fix
   irVersion: 58
