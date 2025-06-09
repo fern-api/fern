@@ -1,18 +1,16 @@
 import { assertNever } from "@fern-api/core-utils";
-import { HttpEndpoint, HttpService, TypeDeclaration, TypeId, V2HttpEndpointRequest } from "@fern-api/ir-sdk";
+import { HttpEndpoint, IntermediateRepresentation, V2HttpEndpointRequest } from "@fern-api/ir-sdk";
 
 import { getParameterExamples } from "./getParameterExamples";
 import { getFirstExamples, getV2Examples } from "./getV2Examples";
 
 export function getRequestBodyExamples({
     endpoint,
-    service,
-    typeDeclarations,
+    ir,
     skipOptionalRequestProperties
 }: {
     endpoint: HttpEndpoint;
-    service: HttpService;
-    typeDeclarations: Record<TypeId, TypeDeclaration>;
+    ir: Omit<IntermediateRepresentation, "sdkConfig" | "subpackages" | "rootPackage">;
     skipOptionalRequestProperties: boolean;
 }): {
     userRequestExamples: Record<string, V2HttpEndpointRequest>;
@@ -20,9 +18,8 @@ export function getRequestBodyExamples({
     baseExample: V2HttpEndpointRequest;
 } {
     const { pathParameters, queryParameters, headers } = getParameterExamples({
-        service,
         endpoint,
-        typeDeclarations,
+        ir,
         skipOptionalRequestProperties
     });
     const userRequestExamples: Record<string, V2HttpEndpointRequest> = {};

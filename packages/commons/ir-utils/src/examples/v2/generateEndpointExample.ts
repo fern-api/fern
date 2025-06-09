@@ -1,23 +1,14 @@
 import { camelCase } from "lodash-es";
 
-import {
-    HttpEndpoint,
-    HttpService,
-    IntermediateRepresentation,
-    TypeDeclaration,
-    TypeId,
-    V2HttpEndpointExample,
-    V2HttpEndpointResponse
-} from "@fern-api/ir-sdk";
+import { HttpEndpoint, IntermediateRepresentation, V2HttpEndpointExample } from "@fern-api/ir-sdk";
 
 import { getRequestBodyExamples } from "./getRequestBodyExamples";
 import { getResponseExamples } from "./getResponseExamples";
 
 export declare namespace generateEndpointExample {
     interface Args {
-        service: HttpService;
         endpoint: HttpEndpoint;
-        typeDeclarations: Record<TypeId, TypeDeclaration>;
+        ir: Omit<IntermediateRepresentation, "sdkConfig" | "subpackages" | "rootPackage">;
         skipOptionalRequestProperties: boolean;
     }
 
@@ -29,8 +20,7 @@ export declare namespace generateEndpointExample {
 
 export function generateEndpointExample({
     endpoint,
-    service,
-    typeDeclarations,
+    ir,
     skipOptionalRequestProperties
 }: generateEndpointExample.Args): generateEndpointExample.Result {
     const userResults: Record<string, V2HttpEndpointExample> = {};
@@ -41,8 +31,7 @@ export function generateEndpointExample({
         baseExample: baseRequestExample
     } = getRequestBodyExamples({
         endpoint,
-        service,
-        typeDeclarations,
+        ir,
         skipOptionalRequestProperties
     });
     const {
