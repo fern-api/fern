@@ -69,7 +69,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             generateWireTests: parsed?.generateWireTests ?? true,
             noScripts: parsed?.noScripts ?? false,
             useBigInt: parsed?.useBigInt ?? false,
-            useLegacyExports: parsed?.useLegacyExports ?? false
+            useLegacyExports: parsed?.useLegacyExports ?? false,
+            packagePath: parsed?.packagePath
         };
     }
 
@@ -153,13 +154,13 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 useBigInt: customConfig.useBigInt ?? false,
                 enableInlineTypes: customConfig.enableInlineTypes ?? true,
                 useLegacyExports,
-                generateWireTests: customConfig.generateWireTests ?? false
+                generateWireTests: customConfig.generateWireTests ?? false,
+                packagePath: customConfig.packagePath
             }
         });
         const typescriptProject = await sdkGenerator.generate();
         const persistedTypescriptProject = await typescriptProject.persist();
         await sdkGenerator.copyCoreUtilities({
-            pathToSrc: persistedTypescriptProject.getSrcDirectory(),
             pathToRoot: persistedTypescriptProject.getRootDirectory()
         });
 

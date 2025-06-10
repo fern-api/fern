@@ -10,7 +10,7 @@ export interface ExportedFilePath {
     /**
      * @default "src"
      */
-    rootDir?: "src" | "tests" | "";
+    rootDir?: string;
 }
 
 export interface ExportedDirectory extends ExportedFilePathPart {
@@ -38,7 +38,7 @@ export function convertExportedFilePathToFilePath(exportedFilePath: ExportedFile
 
 export function convertExportedDirectoryPathToFilePath(
     exportedDirectoryPath: ExportedDirectory[],
-    rootDir: "src" | "tests" | "" = "src"
+    rootDir: string = ""
 ): string {
     return path.join(
         // within a ts-morph Project, we treat "/src" as the root of the project

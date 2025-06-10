@@ -38,4 +38,5 @@ export interface SdkCustomConfig {
     noScripts: boolean | undefined;
     useBigInt: boolean | undefined;
     useLegacyExports: boolean | undefined;
+    packagePath: string | undefined;
 }

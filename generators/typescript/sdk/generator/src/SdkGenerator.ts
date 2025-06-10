@@ -33,11 +33,12 @@ import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-e
 import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
 import { WebsocketTypeSchemaGenerator } from "@fern-typescript/websocket-type-schema-generator";
 import { writeFile } from "fs/promises";
+import path from "path";
 import { Directory, Project, SourceFile, ts } from "ts-morph";
 import { v4 as uuidv4 } from "uuid";
 
 import { ReferenceConfigBuilder } from "@fern-api/base-generator";
-import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
@@ -84,6 +85,9 @@ const WHITELABEL_FILE_HEADER = `/**
  * This file was auto-generated from our API Definition.
  */
 `;
+
+const ROOT_DIRECTORY_PATH = "/";
+const DEFAULT_SRC_DIRECTORY = "src";
 
 export declare namespace SdkGenerator {
     export interface Init {
@@ -141,6 +145,7 @@ export declare namespace SdkGenerator {
         useBigInt: boolean;
         useLegacyExports: boolean;
         generateWireTests: boolean;
+        packagePath: string | undefined;
     }
 }
 
@@ -162,6 +167,9 @@ export class SdkGenerator {
 
     private project: Project;
     private rootDirectory: Directory;
+    private rootDirectoryWithPackagePath: Directory;
+    private testRootDirectoryWithPackagePath: Directory;
+    private relativePathToSrc: RelativeFilePath;
     private exportsManager: ExportsManager;
     private dependencyManager = new DependencyManager();
     private coreUtilitiesManager: CoreUtilitiesManager;
@@ -229,16 +237,24 @@ export class SdkGenerator {
             this.intermediateRepresentation.auth.schemes.some((scheme) => scheme.type === "oauth");
         this.shouldGenerateWebsocketClients = this.config.shouldGenerateWebsocketClients;
 
-        this.exportsManager = new ExportsManager();
         this.coreUtilitiesManager = new CoreUtilitiesManager();
 
         this.project = new Project({
             useInMemoryFileSystem: true
         });
-        this.rootDirectory = this.project.createDirectory("/");
+        this.rootDirectory = this.project.createDirectory(ROOT_DIRECTORY_PATH);
+        this.rootDirectoryWithPackagePath = this.config.packagePath
+            ? this.project.createDirectory(this.getPackagePathPrefix(this.config.packagePath))
+            : this.rootDirectory;
+        this.testRootDirectoryWithPackagePath = this.project.createDirectory(
+            path.join(this.rootDirectoryWithPackagePath.getPath(), "tests")
+        );
+        this.relativePathToSrc = RelativeFilePath.of(this.rootDirectoryWithPackagePath.getPath().replace(/^\//, ""));
         this.typeResolver = new TypeResolver(intermediateRepresentation);
         this.errorResolver = new ErrorResolver(intermediateRepresentation);
         this.packageResolver = new PackageResolver(intermediateRepresentation);
+
+        this.exportsManager = new ExportsManager(this.rootDirectoryWithPackagePath.getPath());
 
         const apiDirectory: ExportedDirectory[] = [
             {
@@ -408,7 +424,7 @@ export class SdkGenerator {
         this.jestTestGenerator = new JestTestGenerator({
             ir: intermediateRepresentation,
             dependencyManager: this.dependencyManager,
-            rootDirectory: this.rootDirectory,
+            rootDirectory: this.testRootDirectoryWithPackagePath,
             writeUnitTests: this.config.writeUnitTests,
             includeSerdeLayer: config.includeSerdeLayer,
             generateWireTests: config.generateWireTests,
@@ -437,7 +453,9 @@ export class SdkGenerator {
 
         this.asIsManager = new AsIsManager({
             useBigInt: config.useBigInt,
-            generateWireTests: config.generateWireTests
+            generateWireTests: config.generateWireTests,
+            rootDirectory: this.rootDirectoryWithPackagePath.getPath(),
+            testDirectory: this.testRootDirectoryWithPackagePath.getPath()
         });
 
         this.websocketTypeSchemaDeclarationReferencer = new WebsocketTypeSchemaDeclarationReferencer({
@@ -513,13 +531,13 @@ export class SdkGenerator {
         if (this.npmPackage?.version != null) {
             const versionFileGenerator = new VersionFileGenerator({
                 version: this.npmPackage.version,
-                rootDirectory: this.rootDirectory
+                rootDirectory: this.rootDirectoryWithPackagePath
             });
             versionFileGenerator.generate();
         }
 
         this.coreUtilitiesManager.finalize(this.exportsManager, this.dependencyManager);
-        this.exportsManager.writeExportsToProject(this.rootDirectory);
+        this.exportsManager.writeExportsToProject(this.rootDirectoryWithPackagePath);
         this.context.logger.debug("Generated exports");
 
         if (this.generateJestTests && this.config.writeUnitTests) {
@@ -600,7 +618,8 @@ export class SdkGenerator {
                   extraConfigs: this.config.packageJson,
                   outputJsr: this.config.outputJsr,
                   runScripts: this.config.runScripts,
-                  exportSerde
+                  exportSerde,
+                  packagePath: this.relativePathToSrc
               })
             : new SimpleTypescriptProject({
                   npmPackage: this.npmPackage,
@@ -618,7 +637,8 @@ export class SdkGenerator {
                   extraConfigs: this.config.packageJson,
                   runScripts: this.config.runScripts,
                   exportSerde,
-                  useLegacyExports: this.config.useLegacyExports
+                  useLegacyExports: this.config.useLegacyExports,
+                  packagePath: this.relativePathToSrc
               });
     }
 
@@ -637,20 +657,26 @@ export class SdkGenerator {
         return this.intermediateRepresentation.types;
     }
 
-    public async copyCoreUtilities({
-        pathToSrc,
-        pathToRoot
-    }: {
-        pathToSrc: AbsoluteFilePath;
-        pathToRoot: AbsoluteFilePath;
-    }): Promise<void> {
-        await this.coreUtilitiesManager.copyCoreUtilities({ pathToSrc, pathToRoot });
+    public async copyCoreUtilities({ pathToRoot }: { pathToRoot: AbsoluteFilePath }): Promise<void> {
+        const packagePathWithoutLeadingSlash = this.rootDirectoryWithPackagePath.getPath().replace(/^\//, "");
+        const pathToSource = packagePathWithoutLeadingSlash ?? "src";
+        const updatedPathToRoot = join(pathToRoot, RelativeFilePath.of(packagePathWithoutLeadingSlash));
+        const pathToSrc = join(pathToRoot, RelativeFilePath.of(pathToSource));
+        await this.coreUtilitiesManager.copyCoreUtilities({
+            pathToSrc,
+            pathToRoot: updatedPathToRoot
+        });
     }
 
     private generateTypeDeclarations() {
         for (const typeDeclaration of Object.values(this.getTypesToGenerate())) {
-            this.withSourceFile({
+            const filepath = this.setRootDirectoryInFilePath({
                 filepath: this.typeDeclarationReferencer.getExportedFilepath(typeDeclaration.name),
+                rootDirectory: this.rootDirectoryWithPackagePath
+            });
+
+            this.withSourceFile({
+                filepath,
                 run: ({ sourceFile, importsManager }) => {
                     const context = this.generateSdkContext({ sourceFile, importsManager });
                     context.type.getGeneratedType(typeDeclaration.name).writeToFile(context);
@@ -662,8 +688,13 @@ export class SdkGenerator {
     private generateTypeSchemas(): { generated: boolean } {
         let generated = false;
         for (const typeDeclaration of Object.values(this.getTypesToGenerate())) {
-            this.withSourceFile({
+            const filepath = this.setRootDirectoryInFilePath({
                 filepath: this.typeSchemaDeclarationReferencer.getExportedFilepath(typeDeclaration.name),
+                rootDirectory: this.rootDirectoryWithPackagePath
+            });
+
+            this.withSourceFile({
+                filepath,
                 run: ({ sourceFile, importsManager }) => {
                     if (!generated) {
                         generated = true;
@@ -680,8 +711,14 @@ export class SdkGenerator {
         this.forPackageChannel((channel, packageId) => {
             if (!packageId.isRoot) {
                 const subpackageId = packageId.subpackageId;
-                this.withSourceFile({
+
+                const filepath = this.setRootDirectoryInFilePath({
                     filepath: this.websocketSocketDeclarationReferencer.getExportedFilepath(subpackageId),
+                    rootDirectory: this.rootDirectoryWithPackagePath
+                });
+
+                this.withSourceFile({
+                    filepath,
                     run: ({ sourceFile, importsManager }) => {
                         const context = this.generateSdkContext({ sourceFile, importsManager });
                         context.websocket
@@ -695,8 +732,13 @@ export class SdkGenerator {
 
     private generateErrorDeclarations() {
         for (const errorDeclaration of Object.values(this.intermediateRepresentation.errors)) {
-            this.withSourceFile({
+            const filepath = this.setRootDirectoryInFilePath({
                 filepath: this.errorDeclarationReferencer.getExportedFilepath(errorDeclaration.name),
+                rootDirectory: this.rootDirectoryWithPackagePath
+            });
+
+            this.withSourceFile({
+                filepath,
                 run: ({ sourceFile, importsManager }) => {
                     const context = this.generateSdkContext({ sourceFile, importsManager });
                     context.sdkError.getGeneratedSdkError(errorDeclaration.name)?.writeToFile(context);
@@ -707,8 +749,13 @@ export class SdkGenerator {
 
     private generateSdkErrorSchemas() {
         for (const errorDeclaration of Object.values(this.intermediateRepresentation.errors)) {
-            this.withSourceFile({
+            const filepath = this.setRootDirectoryInFilePath({
                 filepath: this.sdkErrorSchemaDeclarationReferencer.getExportedFilepath(errorDeclaration.name),
+                rootDirectory: this.rootDirectoryWithPackagePath
+            });
+
+            this.withSourceFile({
+                filepath,
                 run: ({ sourceFile, importsManager }) => {
                     const context = this.generateSdkContext({ sourceFile, importsManager });
                     context.sdkErrorSchema.getGeneratedSdkErrorSchema(errorDeclaration.name)?.writeToFile(context);
@@ -720,11 +767,16 @@ export class SdkGenerator {
     private generateEndpointErrorUnion() {
         this.forEachService((service, packageId) => {
             for (const endpoint of service.endpoints) {
-                this.withSourceFile({
+                const filepath = this.setRootDirectoryInFilePath({
                     filepath: this.endpointErrorUnionDeclarationReferencer.getExportedFilepath({
                         packageId,
                         endpoint
                     }),
+                    rootDirectory: this.rootDirectoryWithPackagePath
+                });
+
+                this.withSourceFile({
+                    filepath,
                     run: ({ sourceFile, importsManager }) => {
                         const context = this.generateSdkContext({ sourceFile, importsManager });
                         context.endpointErrorUnion
@@ -740,11 +792,16 @@ export class SdkGenerator {
         let generated = false;
         this.forEachService((service, packageId) => {
             for (const endpoint of service.endpoints) {
-                this.withSourceFile({
+                const filepath = this.setRootDirectoryInFilePath({
                     filepath: this.sdkEndpointSchemaDeclarationReferencer.getExportedFilepath({
                         packageId,
                         endpoint
                     }),
+                    rootDirectory: this.rootDirectoryWithPackagePath
+                });
+
+                this.withSourceFile({
+                    filepath,
                     run: ({ sourceFile, importsManager }) => {
                         const context = this.generateSdkContext({ sourceFile, importsManager });
                         context.sdkEndpointTypeSchemas
@@ -764,11 +821,16 @@ export class SdkGenerator {
         this.forEachService((service, packageId) => {
             for (const endpoint of service.endpoints) {
                 if (endpoint.sdkRequest?.shape.type === "wrapper") {
-                    this.withSourceFile({
+                    const filepath = this.setRootDirectoryInFilePath({
                         filepath: this.requestWrapperDeclarationReferencer.getExportedFilepath({
                             packageId,
                             endpoint
                         }),
+                        rootDirectory: this.rootDirectoryWithPackagePath
+                    });
+
+                    this.withSourceFile({
+                        filepath,
                         run: ({ sourceFile, importsManager }) => {
                             const context = this.generateSdkContext({ sourceFile, importsManager });
                             context.requestWrapper
@@ -792,11 +854,17 @@ export class SdkGenerator {
                 .filter((message) => message.origin === "server")
                 .map((message) => message.body)
                 .filter((message) => message.type === "reference");
-            this.withSourceFile({
+
+            const filepath = this.setRootDirectoryInFilePath({
                 filepath: this.websocketTypeSchemaDeclarationReferencer.getExportedFilepath({
                     packageId,
                     channel
                 }),
+                rootDirectory: this.rootDirectoryWithPackagePath
+            });
+
+            this.withSourceFile({
+                filepath,
                 run: ({ sourceFile, importsManager }) => {
                     const context = this.generateSdkContext({ sourceFile, importsManager });
                     context.websocketTypeSchema
@@ -816,11 +884,16 @@ export class SdkGenerator {
         this.forEachService((service, packageId) => {
             for (const endpoint of service.endpoints) {
                 if (endpoint.requestBody?.type === "inlinedRequestBody") {
-                    this.withSourceFile({
+                    const filepath = this.setRootDirectoryInFilePath({
                         filepath: this.sdkInlinedRequestBodySchemaDeclarationReferencer.getExportedFilepath({
                             packageId,
                             endpoint
                         }),
+                        rootDirectory: this.rootDirectoryWithPackagePath
+                    });
+
+                    this.withSourceFile({
+                        filepath,
                         run: ({ sourceFile, importsManager }) => {
                             const context = this.generateSdkContext({ sourceFile, importsManager });
                             context.sdkInlinedRequestBodySchema
@@ -844,8 +917,14 @@ export class SdkGenerator {
             if (!package_.hasEndpointsInTree && (!this.shouldGenerateWebsocketClients || package_.websocket == null)) {
                 continue;
             }
-            this.withSourceFile({
+
+            const filepath = this.setRootDirectoryInFilePath({
                 filepath: this.sdkClientClassDeclarationReferencer.getExportedFilepath(packageId),
+                rootDirectory: this.rootDirectoryWithPackagePath
+            });
+
+            this.withSourceFile({
+                filepath,
                 run: ({ sourceFile, importsManager }) => {
                     const context = this.generateSdkContext({ sourceFile, importsManager });
                     context.sdkClientClass.getGeneratedSdkClientClass(packageId).writeToFile(context);
@@ -856,8 +935,13 @@ export class SdkGenerator {
 
     private generateOAuthTokenProvider(oauthScheme: OAuthScheme) {
         this.context.logger.debug("Generating OAuth token provider...");
-        this.withSourceFile({
+        const filepath = this.setRootDirectoryInFilePath({
             filepath: this.oauthTokenProviderGenerator.getExportedFilePath(),
+            rootDirectory: this.rootDirectoryWithPackagePath
+        });
+
+        this.withSourceFile({
+            filepath,
             run: ({ sourceFile, importsManager }) => {
                 const context = this.generateSdkContext({ sourceFile, importsManager });
                 const file = this.oauthTokenProviderGenerator.buildFile({
@@ -875,13 +959,19 @@ export class SdkGenerator {
 
     private generateTestFiles() {
         this.context.logger.debug("Generating test files...");
+        const packagePathPrefix = this.getPackagePathPrefix(this.config.packagePath);
         this.forEachService((service, packageId) => {
             if (service.endpoints.length === 0) {
                 return;
             }
 
-            this.withSourceFile({
+            const filepath = this.setRootDirectoryInFilePath({
                 filepath: this.jestTestGenerator.getTestFile(service),
+                rootDirectory: this.testRootDirectoryWithPackagePath
+            });
+
+            this.withSourceFile({
+                filepath,
                 run: ({ sourceFile, importsManager }) => {
                     const context = this.generateSdkContext({ sourceFile, importsManager });
                     const file = this.jestTestGenerator.buildFile(
@@ -1005,7 +1095,11 @@ export class SdkGenerator {
             });
 
             const exportedFilepath = this.sdkClientClassDeclarationReferencer.getExportedFilepath(packageId);
-            const serviceFilepath = convertExportedFilePathToFilePath(exportedFilepath);
+            const filepath = this.setRootDirectoryInFilePath({
+                filepath: exportedFilepath,
+                rootDirectory: this.rootDirectoryWithPackagePath
+            });
+            const serviceFilepath = convertExportedFilePathToFilePath(filepath);
 
             for (const endpoint of service.endpoints) {
                 if (packageId.isRoot) {
@@ -1233,8 +1327,13 @@ export class SdkGenerator {
     }
 
     private generateEnvironments(): void {
-        this.withSourceFile({
+        const filepath = this.setRootDirectoryInFilePath({
             filepath: this.environmentsDeclarationReferencer.getExportedFilepath(),
+            rootDirectory: this.rootDirectoryWithPackagePath
+        });
+
+        this.withSourceFile({
+            filepath,
             run: ({ sourceFile, importsManager }) => {
                 const context = this.generateSdkContext({ sourceFile, importsManager });
                 context.environments.getGeneratedEnvironments().writeToFile(context);
@@ -1243,8 +1342,13 @@ export class SdkGenerator {
     }
 
     private generateGenericAPISdkError(): void {
-        this.withSourceFile({
+        const filepath = this.setRootDirectoryInFilePath({
             filepath: this.genericAPISdkErrorDeclarationReferencer.getExportedFilepath(),
+            rootDirectory: this.rootDirectoryWithPackagePath
+        });
+
+        this.withSourceFile({
+            filepath,
             run: ({ sourceFile, importsManager }) => {
                 const context = this.generateSdkContext({ sourceFile, importsManager });
                 this.genericAPISdkErrorGenerator
@@ -1257,8 +1361,13 @@ export class SdkGenerator {
     }
 
     private generateTimeoutSdkError(): void {
-        this.withSourceFile({
+        const filepath = this.setRootDirectoryInFilePath({
             filepath: this.timeoutSdkErrorDeclarationReferencer.getExportedFilepath(),
+            rootDirectory: this.rootDirectoryWithPackagePath
+        });
+
+        this.withSourceFile({
+            filepath,
             run: ({ sourceFile, importsManager }) => {
                 const context = this.generateSdkContext({ sourceFile, importsManager });
                 this.timeoutSdkErrorGenerator
@@ -1448,5 +1557,29 @@ export class SdkGenerator {
             neverThrowErrors: this.config.neverThrowErrors,
             allowExtraFields: this.config.allowExtraFields
         });
+    }
+
+    private getPackagePathPrefix(packagePath?: string): string {
+        if (!packagePath) {
+            return "";
+        }
+        if (!packagePath.endsWith("/")) {
+            packagePath += "/";
+        }
+        if (!packagePath.startsWith("/")) {
+            packagePath = "/" + packagePath;
+        }
+        return packagePath;
+    }
+
+    private setRootDirectoryInFilePath({
+        filepath,
+        rootDirectory
+    }: {
+        filepath: ExportedFilePath;
+        rootDirectory: Directory;
+    }) {
+        filepath.rootDir = rootDirectory.getPath();
+        return filepath;
     }
 }
