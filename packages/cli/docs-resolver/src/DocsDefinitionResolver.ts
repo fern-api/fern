@@ -853,8 +853,8 @@ export class DocsDefinitionResolver {
         // The v3 parser is enabled on default. We attempt to load the OpenAPI workspace and generate an IR directly.
         if (useV3Parser) {
             try {
-                const workspace = this.getOpenApiWorkspaceForApiSection(item);
-                ir = await workspace.getIntermediateRepresentation({
+                const openapiWorkspace = this.getOpenApiWorkspaceForApiSection(item);
+                ir = await openapiWorkspace.getIntermediateRepresentation({
                     context: this.taskContext,
                     audiences: item.audiences,
                     enableUniqueErrorsPerEndpoint: true,
