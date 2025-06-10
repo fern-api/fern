@@ -1,0 +1,18 @@
+name: oauth-client-credentials
+imports:
+  auth: auth.yml
+
+auth: OAuthScheme
+auth-schemes:
+  OAuthScheme:
+    scheme: oauth
+    type: client-credentials
+    get-token:
+      endpoint: auth.getTokenWithClientCredentials
+      request-properties:
+        client-id: $request.cid
+        client-secret: $request.csr
+        scopes: $request.scp
+      response-properties: 
+        access-token: $response.access_token
+        expires-in: $response.expires_in

@@ -1,0 +1,83 @@
+types:
+  Type:
+    docs: |
+      Exercises all of the built-in types.
+    properties:
+      one: integer
+      two: double
+      three: string
+      four: boolean
+      five: long
+      six: datetime
+      seven: date
+      eight: uuid
+      nine: base64
+      ten: list<integer>
+      eleven: set<double>
+      twelve: map<string, boolean>
+      thirteen: optional<long>
+      fourteen: unknown
+      fifteen: list<list<integer>>
+      sixteen: list<map<string, integer>>
+      seventeen: list<optional<uuid>>
+      eighteen: literal<"eighteen">
+      nineteen: Name
+      twenty: uint
+      twentyone: uint64
+      twentytwo: float
+      twentythree: bigint
+      twentyfour: optional<datetime>
+      twentyfive: optional<date>
+    examples:
+      - name: One
+        value:
+          one: 1
+          two: 2
+          three: three
+          four: true
+          five: 5
+          six: 1994-01-01T01:01:01Z
+          seven: 1994-01-01
+          eight: 7f71f677-e138-4a5c-bb01-e4453a19bfef
+          nine: TWFueSBoYW5kcyBtYWtlIGxpZ2h0IHdvcmsu
+          ten:
+            - 10
+            - 10
+          eleven:
+            - 11
+          twelve:
+            invalid: false
+            exists: true
+          thirteen: 13
+          fourteen: {}
+          fifteen:
+            - - 15
+              - 15
+            - - 15
+              - 15
+          sixteen:
+            - foo: 16
+              bar: 16
+          seventeen:
+            - 244c6643-f99d-4bfc-b20d-a6518f3a4cf4
+            - 07791987-dec3-43b5-8dc4-250ab5dc0478
+          eighteen: eighteen
+          nineteen:
+            id: name-129fsdj9
+            value: nineteen
+          twenty: 20
+          twentyone: 21
+          twentytwo: 22.22
+          twentythree: "23"
+          twentyfour: 1994-01-01T01:01:01Z
+          twentyfive: 1994-01-01
+
+  Name:
+    properties:
+      id: string
+      value: string
+    examples:
+      - name: One
+        value:
+          id: name-sdfg8ajk
+          value: name
