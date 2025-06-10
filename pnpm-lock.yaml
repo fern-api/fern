@@ -5220,6 +5220,9 @@ importers:
 
   packages/cli/api-importers/openapi-to-ir:
     dependencies:
+      '@fern-api/api-workspace-commons':
+        specifier: workspace:*
+        version: link:../../workspace/commons
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../../commons/core-utils
