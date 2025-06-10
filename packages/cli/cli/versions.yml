@@ -4,7 +4,7 @@
         The OpenAPI v3 Parser will now be used on default for all docs generation codepaths.
       type: feat
   irVersion: 58
-  createdAt: "2025-06-09"
+  createdAt: "2025-06-10"
   version: 0.63.42
 
 - changelogEntry:
