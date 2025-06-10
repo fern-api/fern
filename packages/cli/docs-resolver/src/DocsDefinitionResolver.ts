@@ -846,19 +846,26 @@ export class DocsDefinitionResolver {
 
         const snippetsConfig = convertDocsSnippetsConfigToFdr(item.snippetsConfiguration);
 
-        let ir: IntermediateRepresentation;
+        let ir: IntermediateRepresentation | undefined = undefined;
         let workspace: FernWorkspace | undefined = undefined;
         const openapiParserV3 = this.parsedDocsConfig.experimental?.openapiParserV3;
-        const useV1Parser = openapiParserV3 != null && !openapiParserV3;
-        if (!useV1Parser) {
-            const workspace = this.getOpenApiWorkspaceForApiSection(item);
-            ir = await workspace.getIntermediateRepresentation({
-                context: this.taskContext,
-                audiences: item.audiences,
-                enableUniqueErrorsPerEndpoint: true,
-                generateV1Examples: false
-            });
-        } else {
+        const useV3Parser = openapiParserV3 == null || openapiParserV3;
+        // The v3 parser is enabled on default. We attempt to load the OpenAPI workspace and generate an IR directly.
+        if (useV3Parser) {
+            try {
+                const workspace = this.getOpenApiWorkspaceForApiSection(item);
+                ir = await workspace.getIntermediateRepresentation({
+                    context: this.taskContext,
+                    audiences: item.audiences,
+                    enableUniqueErrorsPerEndpoint: true,
+                    generateV1Examples: false
+                });
+            } catch (error) {
+                // noop
+            }
+        }
+        // This case runs if either the V3 parser is not enabled, or if we failed to load the OpenAPI workspace
+        if (ir == null) {
             workspace = await this.getFernWorkspaceForApiSection(item).toFernWorkspace(
                 { context: this.taskContext },
                 {

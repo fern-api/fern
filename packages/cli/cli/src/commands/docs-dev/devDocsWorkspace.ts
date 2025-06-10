@@ -58,8 +58,8 @@ export async function previewDocsWorkspace({
                     }
                     const excludeRules = brokenLinks ? [] : ["valid-markdown-links"];
                     const openapiParserV3 = docsWorkspace.config.experimental?.openapiParserV3;
-                    const useV1Parser = openapiParserV3 != null && !openapiParserV3;
-                    if (!useV1Parser) {
+                    const useV3Parser = openapiParserV3 == null || openapiParserV3;
+                    if (useV3Parser) {
                         await validateDocsWorkspaceWithoutExiting({
                             workspace: docsWorkspace,
                             context,
@@ -109,8 +109,8 @@ export async function previewDocsWorkspace({
                 }
                 const excludeRules = brokenLinks ? [] : ["valid-markdown-links"];
                 const openapiParserV3 = docsWorkspace.config.experimental?.openapiParserV3;
-                const useV1Parser = openapiParserV3 != null && !openapiParserV3;
-                if (!useV1Parser) {
+                const useV3Parser = openapiParserV3 == null || openapiParserV3;
+                if (useV3Parser) {
                     await validateDocsWorkspaceWithoutExiting({
                         workspace: docsWorkspace,
                         context,

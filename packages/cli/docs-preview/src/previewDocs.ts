@@ -102,21 +102,6 @@ export async function getPreviewDocsDefinition({
         }
     }
 
-    let fernWorkspaces: FernWorkspace[] = [];
-    const openapiParserV3 = project.docsWorkspaces?.config.experimental?.openapiParserV3;
-    const useV1Parser = openapiParserV3 != null && !openapiParserV3;
-    if (useV1Parser) {
-        fernWorkspaces = await Promise.all(
-            apiWorkspaces.map(
-                async (workspace) =>
-                    await workspace.toFernWorkspace(
-                        { context },
-                        { enableUniqueErrorsPerEndpoint: true, detectGlobalHeaders: false, preserveSchemaIds: true }
-                    )
-            )
-        );
-    }
-
     const ossWorkspaces = await filterOssWorkspaces(project);
 
     const apiCollector = new ReferencedAPICollector(context);
@@ -128,7 +113,7 @@ export async function getPreviewDocsDefinition({
         domain,
         docsWorkspace,
         ossWorkspaces,
-        fernWorkspaces,
+        apiWorkspaces,
         context,
         undefined,
         async (files) =>
