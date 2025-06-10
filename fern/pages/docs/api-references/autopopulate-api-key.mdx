@@ -18,7 +18,7 @@ With this feature, you can **create new users of your API** directly from within
 To enable this feature, you need to configure authentication so that Fern can securely retrieve API keys for your users. The process works as follows:
 
 1. When a user clicks the "Login" button in the API Explorer, they are redirected to your authentication page.
-2. After successful authentication, your system must set a cookie called `fern_token` in the user's browser .
+2. After successful authentication, your system must set a cookie called `fern_token` in the user's browser.
 3. This token should be a [JWT](https://jwt.io) encrypted with a secret key that we provide. The JWT should contain the user's API key.
 
 The JWT should have a structure similar to:
