@@ -60,45 +60,45 @@
                         ]
                       },
                       {
-                        "id": "c171d4ec282b23db89a99880cd624e9ba2940c1d894783602edab5d7481dc1ea",
+                        "id": "03b26944890929ff751653acb2f2af795cee38f937f379f52ed654a68ce91216",
                         "type": "apiReference",
                         "title": "API Reference",
-                        "apiDefinitionId": "-10",
+                        "apiDefinitionId": "-6",
                         "paginated": false,
                         "slug": "product-docs/v-3/api-reference",
                         "hideTitle": false,
                         "showErrors": true,
                         "children": [
                           {
-                            "id": "-10:subpackage_pets",
+                            "id": "-6:subpackage_pets",
                             "type": "apiPackage",
                             "children": [
                               {
-                                "id": "-10:endpoint_pets.listPets",
+                                "id": "-6:endpoint_pets.listPets",
                                 "type": "endpoint",
                                 "method": "GET",
                                 "endpointId": "endpoint_pets.listPets",
-                                "apiDefinitionId": "-10",
+                                "apiDefinitionId": "-6",
                                 "isResponseStream": false,
                                 "title": "List all pets",
                                 "slug": "product-docs/v-3/api-reference/pets/list-pets"
                               },
                               {
-                                "id": "-10:endpoint_pets.createPets",
+                                "id": "-6:endpoint_pets.createPets",
                                 "type": "endpoint",
                                 "method": "POST",
                                 "endpointId": "endpoint_pets.createPets",
-                                "apiDefinitionId": "-10",
+                                "apiDefinitionId": "-6",
                                 "isResponseStream": false,
                                 "title": "Create a pet",
                                 "slug": "product-docs/v-3/api-reference/pets/create-pets"
                               },
                               {
-                                "id": "-10:endpoint_pets.showPetById",
+                                "id": "-6:endpoint_pets.showPetById",
                                 "type": "endpoint",
                                 "method": "GET",
                                 "endpointId": "endpoint_pets.showPetById",
-                                "apiDefinitionId": "-10",
+                                "apiDefinitionId": "-6",
                                 "isResponseStream": false,
                                 "title": "Info for a specific pet",
                                 "slug": "product-docs/v-3/api-reference/pets/show-pet-by-id"
@@ -106,7 +106,7 @@
                             ],
                             "title": "pets",
                             "slug": "product-docs/v-3/api-reference/pets",
-                            "apiDefinitionId": "-10"
+                            "apiDefinitionId": "-6"
                           }
                         ],
                         "pointsTo": "product-docs/v-3/api-reference/pets/list-pets"
@@ -155,45 +155,45 @@
                         ]
                       },
                       {
-                        "id": "03b26944890929ff751653acb2f2af795cee38f937f379f52ed654a68ce91216",
+                        "id": "a770d3270c9dcdedf12ed9fd70444f7c8a95c26cae3cae9bd867499090a2f14b",
                         "type": "apiReference",
                         "title": "API Reference",
-                        "apiDefinitionId": "-6",
+                        "apiDefinitionId": "-7",
                         "paginated": false,
                         "slug": "product-docs/v-2/api-reference",
                         "hideTitle": false,
                         "showErrors": true,
                         "children": [
                           {
-                            "id": "-6:subpackage_pets",
+                            "id": "-7:subpackage_pets",
                             "type": "apiPackage",
                             "children": [
                               {
-                                "id": "-6:endpoint_pets.listPets",
+                                "id": "-7:endpoint_pets.listPets",
                                 "type": "endpoint",
                                 "method": "GET",
                                 "endpointId": "endpoint_pets.listPets",
-                                "apiDefinitionId": "-6",
+                                "apiDefinitionId": "-7",
                                 "isResponseStream": false,
                                 "title": "List all pets",
                                 "slug": "product-docs/v-2/api-reference/pets/list-pets"
                               },
                               {
-                                "id": "-6:endpoint_pets.createPets",
+                                "id": "-7:endpoint_pets.createPets",
                                 "type": "endpoint",
                                 "method": "POST",
                                 "endpointId": "endpoint_pets.createPets",
-                                "apiDefinitionId": "-6",
+                                "apiDefinitionId": "-7",
                                 "isResponseStream": false,
                                 "title": "Create a pet",
                                 "slug": "product-docs/v-2/api-reference/pets/create-pets"
                               },
                               {
-                                "id": "-6:endpoint_pets.showPetById",
+                                "id": "-7:endpoint_pets.showPetById",
                                 "type": "endpoint",
                                 "method": "GET",
                                 "endpointId": "endpoint_pets.showPetById",
-                                "apiDefinitionId": "-6",
+                                "apiDefinitionId": "-7",
                                 "isResponseStream": false,
                                 "title": "Info for a specific pet",
                                 "slug": "product-docs/v-2/api-reference/pets/show-pet-by-id"
@@ -201,7 +201,7 @@
                             ],
                             "title": "pets",
                             "slug": "product-docs/v-2/api-reference/pets",
-                            "apiDefinitionId": "-6"
+                            "apiDefinitionId": "-7"
                           }
                         ],
                         "pointsTo": "product-docs/v-2/api-reference/pets/list-pets"
@@ -250,45 +250,45 @@
                         ]
                       },
                       {
-                        "id": "a770d3270c9dcdedf12ed9fd70444f7c8a95c26cae3cae9bd867499090a2f14b",
+                        "id": "e91592205d3881e3ea35d66973bb4898d7282126ab5afcb355c95d2fc17f3822",
                         "type": "apiReference",
                         "title": "API Reference",
-                        "apiDefinitionId": "-7",
+                        "apiDefinitionId": "-8",
                         "paginated": false,
                         "slug": "product-docs/v-1/api-reference",
                         "hideTitle": false,
                         "showErrors": true,
                         "children": [
                           {
-                            "id": "-7:subpackage_pets",
+                            "id": "-8:subpackage_pets",
                             "type": "apiPackage",
                             "children": [
                               {
-                                "id": "-7:endpoint_pets.listPets",
+                                "id": "-8:endpoint_pets.listPets",
                                 "type": "endpoint",
                                 "method": "GET",
                                 "endpointId": "endpoint_pets.listPets",
-                                "apiDefinitionId": "-7",
+                                "apiDefinitionId": "-8",
                                 "isResponseStream": false,
                                 "title": "List all pets",
                                 "slug": "product-docs/v-1/api-reference/pets/list-pets"
                               },
                               {
-                                "id": "-7:endpoint_pets.createPets",
+                                "id": "-8:endpoint_pets.createPets",
                                 "type": "endpoint",
                                 "method": "POST",
                                 "endpointId": "endpoint_pets.createPets",
-                                "apiDefinitionId": "-7",
+                                "apiDefinitionId": "-8",
                                 "isResponseStream": false,
                                 "title": "Create a pet",
                                 "slug": "product-docs/v-1/api-reference/pets/create-pets"
                               },
                               {
-                                "id": "-7:endpoint_pets.showPetById",
+                                "id": "-8:endpoint_pets.showPetById",
                                 "type": "endpoint",
                                 "method": "GET",
                                 "endpointId": "endpoint_pets.showPetById",
-                                "apiDefinitionId": "-7",
+                                "apiDefinitionId": "-8",
                                 "isResponseStream": false,
                                 "title": "Info for a specific pet",
                                 "slug": "product-docs/v-1/api-reference/pets/show-pet-by-id"
@@ -296,7 +296,7 @@
                             ],
                             "title": "pets",
                             "slug": "product-docs/v-1/api-reference/pets",
-                            "apiDefinitionId": "-7"
+                            "apiDefinitionId": "-8"
                           }
                         ],
                         "pointsTo": "product-docs/v-1/api-reference/pets/list-pets"
@@ -361,45 +361,45 @@
                         ]
                       },
                       {
-                        "id": "e91592205d3881e3ea35d66973bb4898d7282126ab5afcb355c95d2fc17f3822",
+                        "id": "c171d4ec282b23db89a99880cd624e9ba2940c1d894783602edab5d7481dc1ea",
                         "type": "apiReference",
                         "title": "API Reference",
-                        "apiDefinitionId": "-8",
+                        "apiDefinitionId": "-10",
                         "paginated": false,
                         "slug": "product-sdks/latest/api-reference",
                         "hideTitle": false,
                         "showErrors": true,
                         "children": [
                           {
-                            "id": "-8:subpackage_pets",
+                            "id": "-10:subpackage_pets",
                             "type": "apiPackage",
                             "children": [
                               {
-                                "id": "-8:endpoint_pets.listPets",
+                                "id": "-10:endpoint_pets.listPets",
                                 "type": "endpoint",
                                 "method": "GET",
                                 "endpointId": "endpoint_pets.listPets",
-                                "apiDefinitionId": "-8",
+                                "apiDefinitionId": "-10",
                                 "isResponseStream": false,
                                 "title": "List all pets",
                                 "slug": "product-sdks/latest/api-reference/pets/list-pets"
                               },
                               {
-                                "id": "-8:endpoint_pets.createPets",
+                                "id": "-10:endpoint_pets.createPets",
                                 "type": "endpoint",
                                 "method": "POST",
                                 "endpointId": "endpoint_pets.createPets",
-                                "apiDefinitionId": "-8",
+                                "apiDefinitionId": "-10",
                                 "isResponseStream": false,
                                 "title": "Create a pet",
                                 "slug": "product-sdks/latest/api-reference/pets/create-pets"
                               },
                               {
-                                "id": "-8:endpoint_pets.showPetById",
+                                "id": "-10:endpoint_pets.showPetById",
                                 "type": "endpoint",
                                 "method": "GET",
                                 "endpointId": "endpoint_pets.showPetById",
-                                "apiDefinitionId": "-8",
+                                "apiDefinitionId": "-10",
                                 "isResponseStream": false,
                                 "title": "Info for a specific pet",
                                 "slug": "product-sdks/latest/api-reference/pets/show-pet-by-id"
@@ -407,7 +407,7 @@
                             ],
                             "title": "pets",
                             "slug": "product-sdks/latest/api-reference/pets",
-                            "apiDefinitionId": "-8"
+                            "apiDefinitionId": "-10"
                           }
                         ],
                         "pointsTo": "product-sdks/latest/api-reference/pets/list-pets"
