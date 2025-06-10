@@ -122,7 +122,9 @@ export class DocsDefinitionResolver {
         });
 
         // track all changelog markdown files in parsedDocsConfig.pages
-        if (this.docsWorkspace.config.navigation != null && !this.parsedDocsConfig.experimental?.openapiParserV3) {
+        const openapiParserV3 = this.parsedDocsConfig.experimental?.openapiParserV3;
+        const useV1Parser = openapiParserV3 != null && !openapiParserV3;
+        if (this.docsWorkspace.config.navigation != null && useV1Parser) {
             await visitNavigationAst({
                 navigation: this.docsWorkspace.config.navigation,
                 visitor: {
@@ -844,17 +846,26 @@ export class DocsDefinitionResolver {
 
         const snippetsConfig = convertDocsSnippetsConfigToFdr(item.snippetsConfiguration);
 
-        let ir: IntermediateRepresentation;
+        let ir: IntermediateRepresentation | undefined = undefined;
         let workspace: FernWorkspace | undefined = undefined;
-        if (this.parsedDocsConfig.experimental?.openapiParserV3) {
-            const workspace = this.getOpenApiWorkspaceForApiSection(item);
-            ir = await workspace.getIntermediateRepresentation({
-                context: this.taskContext,
-                audiences: item.audiences,
-                enableUniqueErrorsPerEndpoint: true,
-                generateV1Examples: false
-            });
-        } else {
+        const openapiParserV3 = this.parsedDocsConfig.experimental?.openapiParserV3;
+        const useV3Parser = openapiParserV3 == null || openapiParserV3;
+        // The v3 parser is enabled on default. We attempt to load the OpenAPI workspace and generate an IR directly.
+        if (useV3Parser) {
+            try {
+                const openapiWorkspace = this.getOpenApiWorkspaceForApiSection(item);
+                ir = await openapiWorkspace.getIntermediateRepresentation({
+                    context: this.taskContext,
+                    audiences: item.audiences,
+                    enableUniqueErrorsPerEndpoint: true,
+                    generateV1Examples: false
+                });
+            } catch (error) {
+                // noop
+            }
+        }
+        // This case runs if either the V3 parser is not enabled, or if we failed to load the OpenAPI workspace
+        if (ir == null) {
             workspace = await this.getFernWorkspaceForApiSection(item).toFernWorkspace(
                 { context: this.taskContext },
                 {

@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        The OpenAPI v3 Parser will now be used on default for all docs generation codepaths.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-06-10"
+  version: 0.64.0
+
+- changelogEntry:
+    - summary: |
         Generate parameter examples for idempotency and global headers.
         Generate v2Examples for headers specified by the `x-fern-global-headers` extension.
       type: fix
