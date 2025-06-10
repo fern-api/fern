@@ -1,6 +1,31 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Generate parameter examples for idempotency and global headers.
+        Generate v2Examples for headers specified by the `x-fern-global-headers` extension.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-06-09"
+  version: 0.63.41
+
+- changelogEntry:
+    - summary: |
+        The V3 parser will only specify example names for endpoints that have more than one example.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-06-09"
+  version: 0.63.40
+
+- changelogEntry:
+    - summary: |
+        The V3 parser will use the underlying tag displayName, if available.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-06-09"
+  version: 0.63.39
+
+- changelogEntry:
+    - summary: |
         Don't hard fail on non-string $ref values.
         Limit ExampleConverter depth to prevent heap exhaustion.
       type: feat

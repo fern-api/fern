@@ -732,7 +732,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "getTestExample",
             "description": "",
             "path": "/test",
             "pathParameters": {},

@@ -303,7 +303,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "getCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParamExample",
             "description": "",
             "path": "/collection/id/active_id/deprecated_ref_id/x-fern-availability_path_param",
             "pathParameters": {
@@ -378,7 +377,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "postSuccessRefExample",
             "description": "",
             "path": "/success-ref",
             "pathParameters": {},
@@ -477,7 +475,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "postSuccessInlinePropertyDeprecationExample",
             "description": "",
             "path": "/success-inline-property-deprecation",
             "pathParameters": {},
@@ -564,7 +561,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "postSuccessInlineObjectDeprecationExample",
             "description": "",
             "path": "/success-inline-object-deprecation",
             "pathParameters": {},
@@ -651,7 +647,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "postSuccessInlineBetaBodyExample",
             "description": "",
             "path": "/success-inline-beta-body",
             "pathParameters": {},

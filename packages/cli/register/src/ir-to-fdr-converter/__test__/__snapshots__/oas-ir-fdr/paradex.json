@@ -12647,7 +12647,6 @@
           ],
           "examples": [
             {
-              "name": "getAccountExample",
               "description": "",
               "path": "/account",
               "pathParameters": {},
@@ -12768,7 +12767,6 @@
           ],
           "examples": [
             {
-              "name": "getAccountHistoryExample",
               "description": "",
               "path": "/account/history",
               "pathParameters": {},
@@ -12844,7 +12842,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getAccountsInfoExample",
               "description": "",
               "path": "/account/info",
               "pathParameters": {},
@@ -12985,7 +12982,6 @@
           ],
           "examples": [
             {
-              "name": "getAccountMarginExample",
               "description": "",
               "path": "/account/margin",
               "pathParameters": {},
@@ -13116,7 +13112,6 @@
           ],
           "examples": [
             {
-              "name": "accountUpsertAccountMarginExample",
               "description": "",
               "path": "/account/margin/market",
               "pathParameters": {
@@ -13227,7 +13222,6 @@
           ],
           "examples": [
             {
-              "name": "getAccountProfileExample",
               "description": "",
               "path": "/account/profile",
               "pathParameters": {},
@@ -13435,7 +13429,6 @@
           ],
           "examples": [
             {
-              "name": "accountUpdateAccountMarketMaxSlippageExample",
               "description": "",
               "path": "/account/profile/market_max_slippage/market",
               "pathParameters": {
@@ -13620,7 +13613,6 @@
           ],
           "examples": [
             {
-              "name": "updateAccountProfileReferralCodeExample",
               "description": "",
               "path": "/account/profile/referral_code",
               "pathParameters": {},
@@ -13794,7 +13786,6 @@
           ],
           "examples": [
             {
-              "name": "updateAccountProfileUsernameExample",
               "description": "",
               "path": "/account/profile/username",
               "pathParameters": {},
@@ -13968,7 +13959,6 @@
           ],
           "examples": [
             {
-              "name": "getAccountSettingsExample",
               "description": "",
               "path": "/account/settings",
               "pathParameters": {},
@@ -14075,7 +14065,6 @@
           ],
           "examples": [
             {
-              "name": "accountUpdateAccountTradingValueDisplayExample",
               "description": "",
               "path": "/account/settings/trading_value_display",
               "pathParameters": {},
@@ -14231,7 +14220,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getSubAccountsExample",
               "description": "",
               "path": "/account/subaccounts",
               "pathParameters": {},
@@ -14361,7 +14349,6 @@
           ],
           "examples": [
             {
-              "name": "getBalanceExample",
               "description": "",
               "path": "/balance",
               "pathParameters": {},
@@ -14534,7 +14521,6 @@
           ],
           "examples": [
             {
-              "name": "listFillsExample",
               "description": "",
               "path": "/fills",
               "pathParameters": {},
@@ -14736,7 +14722,6 @@
           ],
           "examples": [
             {
-              "name": "getFundingExample",
               "description": "",
               "path": "/funding/payments",
               "pathParameters": {},
@@ -14827,7 +14812,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getPositionsExample",
               "description": "",
               "path": "/positions",
               "pathParameters": {},
@@ -15014,7 +14998,6 @@
           ],
           "examples": [
             {
-              "name": "tradebustsExample",
               "description": "",
               "path": "/tradebusts",
               "pathParameters": {},
@@ -15165,7 +15148,6 @@
           ],
           "examples": [
             {
-              "name": "transactionsExample",
               "description": "",
               "path": "/transactions",
               "pathParameters": {},
@@ -15371,7 +15353,6 @@
           ],
           "examples": [
             {
-              "name": "getOpenAlgoOrdersExample",
               "description": "",
               "path": "/algo/orders",
               "pathParameters": {},
@@ -15497,7 +15478,6 @@
           ],
           "examples": [
             {
-              "name": "algosCreateAlgoOrderExample",
               "description": "",
               "path": "/algo/orders",
               "pathParameters": {},
@@ -15738,7 +15718,6 @@
           ],
           "examples": [
             {
-              "name": "getAlgoOrdersHistoryExample",
               "description": "",
               "path": "/algo/orders-history",
               "pathParameters": {},
@@ -15875,7 +15854,6 @@
           ],
           "examples": [
             {
-              "name": "getAlgoOrderByIdExample",
               "description": "",
               "path": "/algo/orders/algo_id",
               "pathParameters": {
@@ -15988,7 +15966,6 @@
           ],
           "examples": [
             {
-              "name": "cancelAlgoOrderExample",
               "description": "",
               "path": "/algo/orders/algo_id",
               "pathParameters": {
@@ -16140,7 +16117,6 @@
           ],
           "examples": [
             {
-              "name": "authExample",
               "description": "",
               "path": "/auth",
               "pathParameters": {},
@@ -16271,7 +16247,6 @@
           ],
           "examples": [
             {
-              "name": "authenticationOnboardingExample",
               "description": "",
               "path": "/onboarding",
               "pathParameters": {},
@@ -16379,7 +16354,6 @@
           ],
           "examples": [
             {
-              "name": "getBboExample",
               "description": "",
               "path": "/bbo/market",
               "pathParameters": {
@@ -16538,7 +16512,6 @@
           ],
           "examples": [
             {
-              "name": "getFundingDataExample",
               "description": "",
               "path": "/funding/data",
               "pathParameters": {},
@@ -16653,7 +16626,6 @@
           ],
           "examples": [
             {
-              "name": "getMarketsExample",
               "description": "",
               "path": "/markets",
               "pathParameters": {},
@@ -16905,7 +16877,6 @@
           ],
           "examples": [
             {
-              "name": "klinesExample",
               "description": "",
               "path": "/markets/klines",
               "pathParameters": {},
@@ -17017,7 +16988,6 @@
           ],
           "examples": [
             {
-              "name": "getMarketsSummaryExample",
               "description": "",
               "path": "/markets/summary",
               "pathParameters": {},
@@ -17190,7 +17160,6 @@
           ],
           "examples": [
             {
-              "name": "getOrderbookExample",
               "description": "",
               "path": "/orderbook/market",
               "pathParameters": {
@@ -17291,7 +17260,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getInsuranceFundExample",
               "description": "",
               "path": "/insurance",
               "pathParameters": {},
@@ -17413,7 +17381,6 @@
           ],
           "examples": [
             {
-              "name": "getLiquidationsExample",
               "description": "",
               "path": "/liquidations",
               "pathParameters": {},
@@ -17526,7 +17493,6 @@
           ],
           "examples": [
             {
-              "name": "getOpenOrdersExample",
               "description": "",
               "path": "/orders",
               "pathParameters": {},
@@ -17686,7 +17652,6 @@
           ],
           "examples": [
             {
-              "name": "ordersNewExample",
               "description": "",
               "path": "/orders",
               "pathParameters": {},
@@ -17848,7 +17813,6 @@
           ],
           "examples": [
             {
-              "name": "cancelAllExample",
               "description": "",
               "path": "/orders",
               "pathParameters": {},
@@ -18033,7 +17997,6 @@
           ],
           "examples": [
             {
-              "name": "getOrdersExample",
               "description": "",
               "path": "/orders-history",
               "pathParameters": {},
@@ -18203,7 +18166,6 @@
           ],
           "examples": [
             {
-              "name": "ordersNewBatchExample",
               "description": "",
               "path": "/orders/batch",
               "pathParameters": {},
@@ -18402,7 +18364,6 @@
           ],
           "examples": [
             {
-              "name": "ordersCancelBatchExample",
               "description": "",
               "path": "/orders/batch",
               "pathParameters": {},
@@ -18521,7 +18482,6 @@
           ],
           "examples": [
             {
-              "name": "getByClientIdExample",
               "description": "",
               "path": "/orders/by_client_id/client_id",
               "pathParameters": {
@@ -18667,7 +18627,6 @@
           ],
           "examples": [
             {
-              "name": "cancelByClientIdExample",
               "description": "",
               "path": "/orders/by_client_id/client_id",
               "pathParameters": {
@@ -18758,7 +18717,6 @@
           ],
           "examples": [
             {
-              "name": "getExample",
               "description": "",
               "path": "/orders/order_id",
               "pathParameters": {
@@ -18931,7 +18889,6 @@
           ],
           "examples": [
             {
-              "name": "ordersModifyExample",
               "description": "",
               "path": "/orders/order_id",
               "pathParameters": {
@@ -19101,7 +19058,6 @@
           ],
           "examples": [
             {
-              "name": "cancelExample",
               "description": "",
               "path": "/orders/order_id",
               "pathParameters": {
@@ -19281,7 +19237,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getReferralQrCodeExample",
               "description": "",
               "path": "/referrals/qr-code",
               "pathParameters": {},
@@ -19364,7 +19319,6 @@
           ],
           "examples": [
             {
-              "name": "getReferralsSummaryExample",
               "description": "",
               "path": "/referrals/summary",
               "pathParameters": {},
@@ -19455,7 +19409,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getSystemConfigExample",
               "description": "",
               "path": "/system/config",
               "pathParameters": {},
@@ -19578,7 +19531,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getSystemStateExample",
               "description": "",
               "path": "/system/state",
               "pathParameters": {},
@@ -19643,7 +19595,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getSystemTimeUnixMillisecondsExample",
               "description": "",
               "path": "/system/time",
               "pathParameters": {},
@@ -19797,7 +19748,6 @@
           ],
           "examples": [
             {
-              "name": "getTransfersExample",
               "description": "",
               "path": "/transfers",
               "pathParameters": {},
@@ -20054,7 +20004,6 @@
           ],
           "examples": [
             {
-              "name": "getExample",
               "description": "",
               "path": "/vaults",
               "pathParameters": {},
@@ -20233,7 +20182,6 @@
           ],
           "examples": [
             {
-              "name": "vaultsCreateExample",
               "description": "",
               "path": "/vaults",
               "pathParameters": {},
@@ -20372,7 +20320,6 @@
           ],
           "examples": [
             {
-              "name": "getAccountSummaryExample",
               "description": "",
               "path": "/vaults/account-summary",
               "pathParameters": {},
@@ -20493,7 +20440,6 @@
           ],
           "examples": [
             {
-              "name": "getBalanceExample",
               "description": "",
               "path": "/vaults/balance",
               "pathParameters": {},
@@ -20586,7 +20532,6 @@
           ],
           "examples": [
             {
-              "name": "getConfigExample",
               "description": "",
               "path": "/vaults/config",
               "pathParameters": {},
@@ -20715,7 +20660,6 @@
           ],
           "examples": [
             {
-              "name": "getHistoricalDataExample",
               "description": "",
               "path": "/vaults/history",
               "pathParameters": {},
@@ -20842,7 +20786,6 @@
           ],
           "examples": [
             {
-              "name": "getPositionsExample",
               "description": "",
               "path": "/vaults/positions",
               "pathParameters": {},
@@ -20989,7 +20932,6 @@
           ],
           "examples": [
             {
-              "name": "getSummaryExample",
               "description": "",
               "path": "/vaults/summary",
               "pathParameters": {},
@@ -21133,7 +21075,6 @@
           ],
           "examples": [
             {
-              "name": "getTransfersExample",
               "description": "",
               "path": "/vaults/transfers",
               "pathParameters": {},
@@ -22699,7 +22640,6 @@
         ],
         "examples": [
           {
-            "name": "tradesExample",
             "description": "",
             "path": "/trades",
             "pathParameters": {},
@@ -22883,7 +22823,7 @@
   "auth": {
     "type": "header",
     "headerWireValue": "Authorization",
-    "nameOverride": "Authorization"
+    "nameOverride": "apiKey"
   },
   "snippetsConfiguration": {},
   "globalHeaders": []

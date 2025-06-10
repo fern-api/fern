@@ -4393,7 +4393,6 @@
           ],
           "examples": [
             {
-              "name": "uploadExample",
               "description": "",
               "path": "/v2/upload",
               "pathParameters": {},
@@ -4423,6 +4422,7 @@
     },
     "subpackage_transcript": {
       "subpackageId": "subpackage_transcript",
+      "displayName": "transcript",
       "name": "transcript",
       "endpoints": [
         {
@@ -4625,7 +4625,6 @@
           ],
           "examples": [
             {
-              "name": "listExample",
               "description": "",
               "path": "/v2/transcript",
               "pathParameters": {},
@@ -4827,7 +4826,6 @@
           ],
           "examples": [
             {
-              "name": "transcriptCreateExample",
               "description": "",
               "path": "/v2/transcript",
               "pathParameters": {},
@@ -5350,7 +5348,6 @@
           ],
           "examples": [
             {
-              "name": "getExample",
               "description": "",
               "path": "/v2/transcript/transcript_id",
               "pathParameters": {
@@ -5866,7 +5863,6 @@
           ],
           "examples": [
             {
-              "name": "deleteExample",
               "description": "",
               "path": "/v2/transcript/transcript_id",
               "pathParameters": {
@@ -6409,7 +6405,6 @@
           ],
           "examples": [
             {
-              "name": "getSubtitlesExample",
               "description": "",
               "path": "/v2/transcript/transcript_id/srt",
               "pathParameters": {
@@ -6582,7 +6577,6 @@
           ],
           "examples": [
             {
-              "name": "getSentencesExample",
               "description": "",
               "path": "/v2/transcript/transcript_id/sentences",
               "pathParameters": {
@@ -6796,7 +6790,6 @@
           ],
           "examples": [
             {
-              "name": "getParagraphsExample",
               "description": "",
               "path": "/v2/transcript/transcript_id/paragraphs",
               "pathParameters": {
@@ -7024,7 +7017,6 @@
           ],
           "examples": [
             {
-              "name": "wordSearchExample",
               "description": "",
               "path": "/v2/transcript/transcript_id/word-search",
               "pathParameters": {
@@ -7234,7 +7226,6 @@
           ],
           "examples": [
             {
-              "name": "getRedactedAudioExample",
               "description": "",
               "path": "/v2/transcript/transcript_id/redacted-audio",
               "pathParameters": {
@@ -7268,6 +7259,7 @@
     },
     "subpackage_realtime": {
       "subpackageId": "subpackage_realtime",
+      "displayName": "realtime",
       "name": "realtime",
       "endpoints": [
         {
@@ -7418,7 +7410,6 @@
           ],
           "examples": [
             {
-              "name": "realtimeCreateTemporaryTokenExample",
               "description": "",
               "path": "/v2/realtime/token",
               "pathParameters": {},
@@ -7457,6 +7448,7 @@
     },
     "subpackage_lemur": {
       "subpackageId": "subpackage_lemur",
+      "displayName": "LeMUR",
       "name": "lemur",
       "endpoints": [
         {
@@ -7607,7 +7599,6 @@
           ],
           "examples": [
             {
-              "name": "lemurSummaryExample",
               "description": "",
               "path": "/lemur/v3/generate/summary",
               "pathParameters": {},
@@ -7792,7 +7783,6 @@
           ],
           "examples": [
             {
-              "name": "lemurQuestionAnswerExample",
               "description": "",
               "path": "/lemur/v3/generate/question-answer",
               "pathParameters": {},
@@ -7997,7 +7987,6 @@
           ],
           "examples": [
             {
-              "name": "lemurActionItemsExample",
               "description": "",
               "path": "/lemur/v3/generate/action-items",
               "pathParameters": {},
@@ -8182,7 +8171,6 @@
           ],
           "examples": [
             {
-              "name": "lemurTaskExample",
               "description": "",
               "path": "/lemur/v3/generate/task",
               "pathParameters": {},
@@ -8373,7 +8361,6 @@
           ],
           "examples": [
             {
-              "name": "purgeRequestDataExample",
               "description": "",
               "path": "/lemur/v3/request_id",
               "pathParameters": {
@@ -8662,7 +8649,7 @@
   "auth": {
     "type": "header",
     "headerWireValue": "Authorization",
-    "nameOverride": "Authorization"
+    "nameOverride": "apiKey"
   },
   "snippetsConfiguration": {},
   "globalHeaders": []

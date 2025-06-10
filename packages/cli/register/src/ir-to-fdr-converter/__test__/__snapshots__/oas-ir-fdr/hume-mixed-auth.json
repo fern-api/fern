@@ -2545,7 +2545,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getReturnToolsForUserExample",
               "description": "",
               "path": "/v0/evi/tools",
               "pathParameters": {},
@@ -2611,7 +2610,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "toolsCreateNewToolExample",
               "description": "",
               "path": "/v0/evi/tools",
               "pathParameters": {},
@@ -2727,7 +2725,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getReturnToolByToolIdExample",
               "description": "",
               "path": "/v0/evi/tools/id",
               "pathParameters": {
@@ -2815,7 +2812,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "toolsAddNewToolVersionExample",
               "description": "",
               "path": "/v0/evi/tools/id",
               "pathParameters": {
@@ -2884,7 +2880,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "deleteToolVersionExample",
               "description": "",
               "path": "/v0/evi/tools/id",
               "pathParameters": {
@@ -2962,7 +2957,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "toolsUpdateToolNameExample",
               "description": "",
               "path": "/v0/evi/tools/id",
               "pathParameters": {
@@ -3059,7 +3053,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getReturnToolByVersionNumberExample",
               "description": "",
               "path": "/v0/evi/tools/id/version/42",
               "pathParameters": {
@@ -3144,7 +3137,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "deleteToolVersion1Example",
               "description": "",
               "path": "/v0/evi/tools/id/version/42",
               "pathParameters": {
@@ -3251,7 +3243,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "toolsUpdateToolVersionDescriptionExample",
               "description": "",
               "path": "/v0/evi/tools/id/version/42",
               "pathParameters": {
@@ -3387,7 +3378,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getReturnPromptsForUserExample",
               "description": "",
               "path": "/v0/evi/prompts",
               "pathParameters": {},
@@ -3453,7 +3443,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "promptsCreateNewPromptExample",
               "description": "",
               "path": "/v0/evi/prompts",
               "pathParameters": {},
@@ -3569,7 +3558,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getReturnPromptByPromptIdExample",
               "description": "",
               "path": "/v0/evi/prompts/id",
               "pathParameters": {
@@ -3657,7 +3645,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "promptsAddNewPromptVersionExample",
               "description": "",
               "path": "/v0/evi/prompts/id",
               "pathParameters": {
@@ -3726,7 +3713,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "deletePromptVersionExample",
               "description": "",
               "path": "/v0/evi/prompts/id",
               "pathParameters": {
@@ -3804,7 +3790,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "promptsUpdatePromptNameExample",
               "description": "",
               "path": "/v0/evi/prompts/id",
               "pathParameters": {
@@ -3901,7 +3886,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getReturnPromptByVersionNumberExample",
               "description": "",
               "path": "/v0/evi/prompts/id/version/42",
               "pathParameters": {
@@ -3986,7 +3970,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "deletePromptVersion1Example",
               "description": "",
               "path": "/v0/evi/prompts/id/version/42",
               "pathParameters": {
@@ -4093,7 +4076,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "promptsUpdatePromptVersionDescriptionExample",
               "description": "",
               "path": "/v0/evi/prompts/id/version/42",
               "pathParameters": {
@@ -4216,7 +4198,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getReturnCustomVoicesForUserExample",
               "description": "",
               "path": "/v0/evi/custom_voices",
               "pathParameters": {},
@@ -4282,7 +4263,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "customVoicesCreateNewCustomVoiceExample",
               "description": "",
               "path": "/v0/evi/custom_voices",
               "pathParameters": {},
@@ -4359,7 +4339,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getReturnCustomVoiceByCustomVoiceIdExample",
               "description": "",
               "path": "/v0/evi/custom_voices/id",
               "pathParameters": {
@@ -4447,7 +4426,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "customVoicesAddNewCustomVoiceVersionExample",
               "description": "",
               "path": "/v0/evi/custom_voices/id",
               "pathParameters": {
@@ -4516,7 +4494,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "deleteCustomVoiceExample",
               "description": "",
               "path": "/v0/evi/custom_voices/id",
               "pathParameters": {
@@ -4594,7 +4571,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "customVoicesUpdateCustomVoiceNameExample",
               "description": "",
               "path": "/v0/evi/custom_voices/id",
               "pathParameters": {
@@ -4729,7 +4705,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getReturnConfigsForUserExample",
               "description": "",
               "path": "/v0/evi/configs",
               "pathParameters": {},
@@ -4795,7 +4770,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "configsCreateNewConfigExample",
               "description": "",
               "path": "/v0/evi/configs",
               "pathParameters": {},
@@ -4912,7 +4886,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getReturnConfigByVersionIdExample",
               "description": "",
               "path": "/v0/evi/configs/id",
               "pathParameters": {
@@ -5000,7 +4973,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "configsAddNewConfigVersionExample",
               "description": "",
               "path": "/v0/evi/configs/id",
               "pathParameters": {
@@ -5069,7 +5041,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "deleteConfigExample",
               "description": "",
               "path": "/v0/evi/configs/id",
               "pathParameters": {
@@ -5147,7 +5118,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "configsUpdateConfigNameExample",
               "description": "",
               "path": "/v0/evi/configs/id",
               "pathParameters": {
@@ -5244,7 +5214,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getReturnPromptByRevisionIdExample",
               "description": "",
               "path": "/v0/evi/configs/id/version/42",
               "pathParameters": {
@@ -5329,7 +5298,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "deleteConfigVersionExample",
               "description": "",
               "path": "/v0/evi/configs/id/version/42",
               "pathParameters": {
@@ -5436,7 +5404,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "configsUpdateConfigVersionDescriptionExample",
               "description": "",
               "path": "/v0/evi/configs/id/version/42",
               "pathParameters": {
@@ -5560,7 +5527,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getReturnChatsForUserExample",
               "description": "",
               "path": "/v0/evi/chats",
               "pathParameters": {},
@@ -5674,7 +5640,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getChatByChatIdExample",
               "description": "",
               "path": "/v0/evi/chats/id",
               "pathParameters": {
@@ -5750,7 +5715,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getReconstructionByChatIdExample",
               "description": "",
               "path": "/v0/evi/chats/id/audio",
               "pathParameters": {
@@ -5870,7 +5834,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getReturnChatGroupsForUserExample",
               "description": "",
               "path": "/v0/evi/chat_groups",
               "pathParameters": {},
@@ -5984,7 +5947,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getChatsByChatGroupIdExample",
               "description": "",
               "path": "/v0/evi/chat_groups/id",
               "pathParameters": {
@@ -6100,7 +6062,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getChatEventsByChatGroupIdExample",
               "description": "",
               "path": "/v0/evi/chat_groups/id/events",
               "pathParameters": {
@@ -6216,7 +6177,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getReconstructionByChatGroupIdExample",
               "description": "",
               "path": "/v0/evi/chat_groups/id/audio",
               "pathParameters": {
@@ -6282,7 +6242,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "languageModelsV0EviLanguageModelsGetExample",
             "description": "",
             "path": "/v0/evi/language_models",
             "pathParameters": {},
@@ -6387,7 +6346,6 @@
         ],
         "examples": [
           {
-            "name": "ttsV0EviTtsPostExample",
             "description": "",
             "path": "/v0/evi/tts",
             "pathParameters": {},
@@ -6494,7 +6452,6 @@
         ],
         "examples": [
           {
-            "name": "twilioWebhookV0EviTwilioPostExample",
             "description": "",
             "path": "/v0/evi/twilio",
             "pathParameters": {},
@@ -6593,7 +6550,6 @@
         ],
         "examples": [
           {
-            "name": "voiceV0EviVoicePostExample",
             "description": "",
             "path": "/v0/evi/voice",
             "pathParameters": {},
@@ -6664,7 +6620,6 @@
         ],
         "examples": [
           {
-            "name": "voiceNamesV0EviVoiceNamesGetExample",
             "description": "",
             "path": "/v0/evi/voice-names",
             "pathParameters": {},
@@ -6743,7 +6698,7 @@
   "auth": {
     "type": "header",
     "headerWireValue": "X-Hume-Api-Key",
-    "nameOverride": "X-Hume-Api-Key"
+    "nameOverride": "apiKey"
   },
   "snippetsConfiguration": {},
   "globalHeaders": []

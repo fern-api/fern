@@ -1311,7 +1311,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "Ignition_StartIgnition_example",
               "description": "",
               "path": "/ignition",
               "pathParameters": {},
@@ -1456,7 +1455,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "tokensExchangeTokenExample",
               "description": "",
               "path": "/token/exchange",
               "pathParameters": {},
@@ -1614,7 +1612,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getAccountExample",
               "description": "",
               "path": "/accounts/id",
               "pathParameters": {
@@ -1779,7 +1776,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getPolicyExample",
               "description": "",
               "path": "/policies/id",
               "pathParameters": {
@@ -2046,7 +2042,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getCarrierExample",
               "description": "",
               "path": "/carriers/id",
               "pathParameters": {
@@ -2173,7 +2168,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getCarriersExample",
               "description": "",
               "path": "/carriers",
               "pathParameters": {},
@@ -2270,7 +2264,7 @@
   "auth": {
     "type": "header",
     "headerWireValue": "x-access-token",
-    "nameOverride": "x-access-token"
+    "nameOverride": "apiKey"
   },
   "snippetsConfiguration": {},
   "globalHeaders": []

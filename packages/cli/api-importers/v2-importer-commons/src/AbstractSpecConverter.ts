@@ -275,11 +275,13 @@ export abstract class AbstractSpecConverter<
         endpoint,
         audiences,
         endpointGroup,
+        endpointGroupDisplayName,
         serviceName
     }: {
         endpoint: FernIr.HttpEndpoint;
         audiences: string[];
         endpointGroup?: string[];
+        endpointGroupDisplayName?: string;
         serviceName?: string;
     }): void {
         const group = this.context.getGroup({
@@ -296,7 +298,7 @@ export abstract class AbstractSpecConverter<
         }
 
         if (this.ir.services[pkg.service] == null) {
-            this.ir.services[pkg.service] = this.createNewService({ allParts, finalpart });
+            this.ir.services[pkg.service] = this.createNewService({ allParts, finalpart, endpointGroupDisplayName });
         }
         this.ir.services[pkg.service]?.endpoints.push(endpoint);
 
@@ -453,10 +455,12 @@ export abstract class AbstractSpecConverter<
 
     protected createNewService({
         allParts,
-        finalpart
+        finalpart,
+        endpointGroupDisplayName
     }: {
         allParts: FernIr.Name[];
         finalpart: FernIr.Name | undefined;
+        endpointGroupDisplayName?: string;
     }): FernIr.HttpService {
         return {
             name: {
@@ -466,7 +470,7 @@ export abstract class AbstractSpecConverter<
                     file: finalpart
                 }
             },
-            displayName: undefined,
+            displayName: endpointGroupDisplayName,
             basePath: constructHttpPath(""),
             headers: [],
             pathParameters: [],

@@ -7890,6 +7890,7 @@
   "subpackages": {
     "subpackage_artifacts": {
       "subpackageId": "subpackage_artifacts",
+      "displayName": "artifacts",
       "name": "artifacts",
       "endpoints": [
         {
@@ -8038,7 +8039,6 @@
           ],
           "examples": [
             {
-              "name": "locateExample",
               "description": "",
               "path": "/artifacts.locate",
               "pathParameters": {},
@@ -8199,7 +8199,6 @@
           ],
           "examples": [
             {
-              "name": "artifactsPrepareExample",
               "description": "",
               "path": "/artifacts.prepare",
               "pathParameters": {},
@@ -8252,6 +8251,7 @@
     },
     "subpackage_authTokens": {
       "subpackageId": "subpackage_authTokens",
+      "displayName": "auth-tokens",
       "name": "authTokens",
       "endpoints": [
         {
@@ -8389,7 +8389,6 @@
           ],
           "examples": [
             {
-              "name": "authTokensCreateExample",
               "description": "",
               "path": "/auth-tokens.create",
               "pathParameters": {},
@@ -8563,7 +8562,6 @@
           ],
           "examples": [
             {
-              "name": "authTokensDeleteExample",
               "description": "",
               "path": "/auth-tokens.delete",
               "pathParameters": {},
@@ -8727,7 +8725,6 @@
           ],
           "examples": [
             {
-              "name": "getExample",
               "description": "",
               "path": "/auth-tokens.get",
               "pathParameters": {},
@@ -9002,7 +8999,6 @@
           ],
           "examples": [
             {
-              "name": "listExample",
               "description": "",
               "path": "/auth-tokens.list",
               "pathParameters": {},
@@ -9243,7 +9239,6 @@
           ],
           "examples": [
             {
-              "name": "authTokensSelfDeleteExample",
               "description": "",
               "path": "/auth-tokens.self.delete",
               "pathParameters": {},
@@ -9409,7 +9404,6 @@
           ],
           "examples": [
             {
-              "name": "authTokensUpdateExample",
               "description": "",
               "path": "/auth-tokens.update",
               "pathParameters": {},
@@ -9528,6 +9522,7 @@
     },
     "subpackage_authConnection": {
       "subpackageId": "subpackage_authConnection",
+      "displayName": "auth-connection",
       "name": "authConnection",
       "endpoints": [
         {
@@ -9665,7 +9660,6 @@
           ],
           "examples": [
             {
-              "name": "authConnectionDevOrgAuthConnectionsCreateExample",
               "description": "",
               "path": "/dev-orgs.auth-connections.create",
               "pathParameters": {},
@@ -9829,7 +9823,6 @@
           ],
           "examples": [
             {
-              "name": "authConnectionDevOrgAuthConnectionsDeleteExample",
               "description": "",
               "path": "/dev-orgs.auth-connections.delete",
               "pathParameters": {},
@@ -9997,7 +9990,6 @@
           ],
           "examples": [
             {
-              "name": "devOrgAuthConnectionsGetExample",
               "description": "",
               "path": "/dev-orgs.auth-connections.get",
               "pathParameters": {},
@@ -10143,7 +10135,6 @@
           ],
           "examples": [
             {
-              "name": "devOrgAuthConnectionsListExample",
               "description": "",
               "path": "/dev-orgs.auth-connections.list",
               "pathParameters": {},
@@ -10306,7 +10297,6 @@
           ],
           "examples": [
             {
-              "name": "authConnectionDevOrgAuthConnectionsToggleExample",
               "description": "",
               "path": "/dev-orgs.auth-connections.toggle",
               "pathParameters": {},
@@ -10476,7 +10466,6 @@
           ],
           "examples": [
             {
-              "name": "authConnectionDevOrgAuthConnectionsUpdateExample",
               "description": "",
               "path": "/dev-orgs.auth-connections.update",
               "pathParameters": {},
@@ -10511,6 +10500,7 @@
     },
     "subpackage_devUsers": {
       "subpackageId": "subpackage_devUsers",
+      "displayName": "dev-users",
       "name": "devUsers",
       "endpoints": [
         {
@@ -10719,7 +10709,6 @@
           ],
           "examples": [
             {
-              "name": "listExample",
               "description": "",
               "path": "/dev-users.list",
               "pathParameters": {},
@@ -10957,7 +10946,6 @@
           ],
           "examples": [
             {
-              "name": "selfExample",
               "description": "",
               "path": "/dev-users.self",
               "pathParameters": {},
@@ -11073,6 +11061,7 @@
     },
     "subpackage_parts": {
       "subpackageId": "subpackage_parts",
+      "displayName": "parts",
       "name": "parts",
       "endpoints": [
         {
@@ -11210,7 +11199,6 @@
           ],
           "examples": [
             {
-              "name": "partsCreateExample",
               "description": "",
               "path": "/parts.create",
               "pathParameters": {},
@@ -11507,7 +11495,6 @@
           ],
           "examples": [
             {
-              "name": "partsDeleteExample",
               "description": "",
               "path": "/parts.delete",
               "pathParameters": {},
@@ -11680,7 +11667,6 @@
           ],
           "examples": [
             {
-              "name": "getExample",
               "description": "",
               "path": "/parts.get",
               "pathParameters": {},
@@ -12048,7 +12034,6 @@
           ],
           "examples": [
             {
-              "name": "listExample",
               "description": "",
               "path": "/parts.list",
               "pathParameters": {},
@@ -12348,7 +12333,6 @@
           ],
           "examples": [
             {
-              "name": "partsUpdateExample",
               "description": "",
               "path": "/parts.update",
               "pathParameters": {},
@@ -12505,6 +12489,7 @@
     },
     "subpackage_revOrgs": {
       "subpackageId": "subpackage_revOrgs",
+      "displayName": "rev-orgs",
       "name": "revOrgs",
       "endpoints": [
         {
@@ -12642,7 +12627,6 @@
           ],
           "examples": [
             {
-              "name": "revOrgsCreateExample",
               "description": "",
               "path": "/rev-orgs.create",
               "pathParameters": {},
@@ -12887,7 +12871,6 @@
           ],
           "examples": [
             {
-              "name": "revOrgsDeleteExample",
               "description": "",
               "path": "/rev-orgs.delete",
               "pathParameters": {},
@@ -13060,7 +13043,6 @@
           ],
           "examples": [
             {
-              "name": "getExample",
               "description": "",
               "path": "/rev-orgs.get",
               "pathParameters": {},
@@ -13427,7 +13409,6 @@
           ],
           "examples": [
             {
-              "name": "listExample",
               "description": "",
               "path": "/rev-orgs.list",
               "pathParameters": {},
@@ -13671,7 +13652,6 @@
           ],
           "examples": [
             {
-              "name": "revOrgsUpdateExample",
               "description": "",
               "path": "/rev-orgs.update",
               "pathParameters": {},
@@ -13776,6 +13756,7 @@
     },
     "subpackage_tags": {
       "subpackageId": "subpackage_tags",
+      "displayName": "tags",
       "name": "tags",
       "endpoints": [
         {
@@ -13913,7 +13894,6 @@
           ],
           "examples": [
             {
-              "name": "tagsCreateExample",
               "description": "",
               "path": "/tags.create",
               "pathParameters": {},
@@ -14160,7 +14140,6 @@
           ],
           "examples": [
             {
-              "name": "tagsDeleteExample",
               "description": "",
               "path": "/tags.delete",
               "pathParameters": {},
@@ -14333,7 +14312,6 @@
           ],
           "examples": [
             {
-              "name": "getExample",
               "description": "",
               "path": "/tags.get",
               "pathParameters": {},
@@ -14585,7 +14563,6 @@
           ],
           "examples": [
             {
-              "name": "listExample",
               "description": "",
               "path": "/tags.list",
               "pathParameters": {},
@@ -14831,7 +14808,6 @@
           ],
           "examples": [
             {
-              "name": "tagsUpdateExample",
               "description": "",
               "path": "/tags.update",
               "pathParameters": {},
@@ -14938,6 +14914,7 @@
     },
     "subpackage_timelineEntries": {
       "subpackageId": "subpackage_timelineEntries",
+      "displayName": "timeline-entries",
       "name": "timelineEntries",
       "endpoints": [
         {
@@ -15075,7 +15052,6 @@
           ],
           "examples": [
             {
-              "name": "timelineEntriesCreateExample",
               "description": "",
               "path": "/timeline-entries.create",
               "pathParameters": {},
@@ -15324,7 +15300,6 @@
           ],
           "examples": [
             {
-              "name": "getExample",
               "description": "",
               "path": "/timeline-entries.get",
               "pathParameters": {},
@@ -15607,7 +15582,6 @@
           ],
           "examples": [
             {
-              "name": "listExample",
               "description": "",
               "path": "/timeline-entries.list",
               "pathParameters": {},
@@ -15850,7 +15824,6 @@
           ],
           "examples": [
             {
-              "name": "timelineEntriesUpdateExample",
               "description": "",
               "path": "/timeline-entries.update",
               "pathParameters": {},
@@ -15961,6 +15934,7 @@
     },
     "subpackage_webhooks": {
       "subpackageId": "subpackage_webhooks",
+      "displayName": "webhooks",
       "name": "webhooks",
       "endpoints": [
         {
@@ -16098,7 +16072,6 @@
           ],
           "examples": [
             {
-              "name": "webhooksCreateExample",
               "description": "",
               "path": "/webhooks.create",
               "pathParameters": {},
@@ -16347,7 +16320,6 @@
           ],
           "examples": [
             {
-              "name": "webhooksDeleteExample",
               "description": "",
               "path": "/webhooks.delete",
               "pathParameters": {},
@@ -16520,7 +16492,6 @@
           ],
           "examples": [
             {
-              "name": "getExample",
               "description": "",
               "path": "/webhooks.get",
               "pathParameters": {},
@@ -16736,7 +16707,6 @@
           ],
           "examples": [
             {
-              "name": "listExample",
               "description": "",
               "path": "/webhooks.list",
               "pathParameters": {},
@@ -16980,7 +16950,6 @@
           ],
           "examples": [
             {
-              "name": "webhooksUpdateExample",
               "description": "",
               "path": "/webhooks.update",
               "pathParameters": {},
@@ -17089,6 +17058,7 @@
     },
     "subpackage_works": {
       "subpackageId": "subpackage_works",
+      "displayName": "works",
       "name": "works",
       "endpoints": [
         {
@@ -17226,7 +17196,6 @@
           ],
           "examples": [
             {
-              "name": "worksCreateExample",
               "description": "",
               "path": "/works.create",
               "pathParameters": {},
@@ -17571,7 +17540,6 @@
           ],
           "examples": [
             {
-              "name": "worksDeleteExample",
               "description": "",
               "path": "/works.delete",
               "pathParameters": {},
@@ -17872,7 +17840,6 @@
           ],
           "examples": [
             {
-              "name": "exportExample",
               "description": "",
               "path": "/works.export",
               "pathParameters": {},
@@ -18214,7 +18181,6 @@
           ],
           "examples": [
             {
-              "name": "getExample",
               "description": "",
               "path": "/works.get",
               "pathParameters": {},
@@ -18706,7 +18672,6 @@
           ],
           "examples": [
             {
-              "name": "listExample",
               "description": "",
               "path": "/works.list",
               "pathParameters": {},
@@ -19054,7 +19019,6 @@
           ],
           "examples": [
             {
-              "name": "worksUpdateExample",
               "description": "",
               "path": "/works.update",
               "pathParameters": {},
@@ -19499,7 +19463,7 @@
   "auth": {
     "type": "header",
     "headerWireValue": "Authorization",
-    "nameOverride": "Authorization"
+    "nameOverride": "apiKey"
   },
   "snippetsConfiguration": {},
   "globalHeaders": []

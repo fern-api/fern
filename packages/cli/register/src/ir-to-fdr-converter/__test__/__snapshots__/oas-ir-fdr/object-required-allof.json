@@ -163,7 +163,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "createTreeExample",
             "description": "",
             "path": "/trees",
             "pathParameters": {},

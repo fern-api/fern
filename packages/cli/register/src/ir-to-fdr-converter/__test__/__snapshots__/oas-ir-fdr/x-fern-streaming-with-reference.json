@@ -147,7 +147,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "chatCompletionsCreateExample",
               "description": "",
               "path": "/completions/chat",
               "pathParameters": {},
@@ -237,7 +236,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "chatCompletionsCreateExample",
               "description": "",
               "path": "/completions/chat",
               "pathParameters": {},

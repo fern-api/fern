@@ -161,7 +161,6 @@
         ],
         "examples": [
           {
-            "name": "listExample",
             "description": "",
             "path": "/trees",
             "pathParameters": {},
@@ -293,7 +292,6 @@
         ],
         "examples": [
           {
-            "name": "postTreesExample",
             "description": "",
             "path": "/trees",
             "pathParameters": {},

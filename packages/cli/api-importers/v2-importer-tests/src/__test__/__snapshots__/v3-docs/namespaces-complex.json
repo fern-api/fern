@@ -47,7 +47,7 @@
       {
         "name": {
           "name": {
-            "originalName": "api_key",
+            "originalName": "apiKey",
             "camelCase": {
               "unsafeName": "apiKey",
               "safeName": "apiKey"
@@ -4219,6 +4219,7 @@
           }
         }
       },
+      "displayName": "pet",
       "basePath": {
         "head": "",
         "parts": []
@@ -6581,6 +6582,7 @@
           }
         }
       },
+      "displayName": "store",
       "basePath": {
         "head": "",
         "parts": []
@@ -7502,6 +7504,7 @@
           }
         }
       },
+      "displayName": "user",
       "basePath": {
         "head": "",
         "parts": []
@@ -8989,6 +8992,7 @@
           }
         }
       },
+      "displayName": "pet",
       "basePath": {
         "head": "",
         "parts": []
@@ -13619,6 +13623,7 @@
           }
         }
       },
+      "displayName": "store",
       "basePath": {
         "head": "",
         "parts": []
@@ -14540,6 +14545,7 @@
           }
         }
       },
+      "displayName": "user",
       "basePath": {
         "head": "",
         "parts": []

@@ -159,7 +159,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "createExample",
             "description": "",
             "path": "/v2/test",
             "pathParameters": {},
@@ -257,7 +256,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "createExample",
             "description": "",
             "path": "/v2/test",
             "pathParameters": {},

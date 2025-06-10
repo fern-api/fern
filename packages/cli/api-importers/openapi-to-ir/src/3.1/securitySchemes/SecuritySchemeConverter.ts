@@ -44,7 +44,7 @@ export class SecuritySchemeConverter extends AbstractConverter<OpenAPIConverterC
                 if (this.securityScheme.in === "header") {
                     return AuthScheme.header({
                         name: {
-                            name: this.context.casingsGenerator.generateName(this.securityScheme.name),
+                            name: this.context.casingsGenerator.generateName("apiKey"),
                             wireValue: this.securityScheme.name
                         },
                         valueType: AbstractConverter.OPTIONAL_STRING,

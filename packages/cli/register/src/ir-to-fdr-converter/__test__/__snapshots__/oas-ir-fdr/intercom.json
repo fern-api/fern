@@ -18023,7 +18023,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "Successful response",
               "description": "",
               "path": "/me",
               "pathParameters": {},
@@ -18416,7 +18415,6 @@
           ],
           "examples": [
             {
-              "name": "Successful response",
               "description": "",
               "path": "/admins/activity_logs",
               "pathParameters": {},
@@ -18585,7 +18583,6 @@
           ],
           "examples": [
             {
-              "name": "Successful response",
               "description": "",
               "path": "/admins",
               "pathParameters": {},
@@ -18739,7 +18736,6 @@
           ],
           "examples": [
             {
-              "name": "Admin found",
               "description": "",
               "path": "/admins/123",
               "pathParameters": {
@@ -18863,7 +18859,6 @@
           ],
           "examples": [
             {
-              "name": "successful",
               "description": "",
               "path": "/articles",
               "pathParameters": {},
@@ -19274,7 +19269,6 @@
           ],
           "examples": [
             {
-              "name": "Article found",
               "description": "",
               "path": "/articles/123",
               "pathParameters": {
@@ -19668,7 +19662,6 @@
           ],
           "examples": [
             {
-              "name": "successful",
               "description": "",
               "path": "/articles/123",
               "pathParameters": {
@@ -19825,7 +19818,6 @@
           ],
           "examples": [
             {
-              "name": "Search successful",
               "description": "",
               "path": "/articles/search",
               "pathParameters": {},
@@ -19994,7 +19986,6 @@
           ],
           "examples": [
             {
-              "name": "Successful",
               "description": "",
               "path": "/help_center/collections",
               "pathParameters": {},
@@ -20367,7 +20358,6 @@
           ],
           "examples": [
             {
-              "name": "Collection found",
               "description": "",
               "path": "/help_center/collections/123",
               "pathParameters": {
@@ -20713,7 +20703,6 @@
           ],
           "examples": [
             {
-              "name": "successful",
               "description": "",
               "path": "/help_center/collections/123",
               "pathParameters": {
@@ -20849,7 +20838,6 @@
           ],
           "examples": [
             {
-              "name": "Collection found",
               "description": "",
               "path": "/help_center/help_centers/123",
               "pathParameters": {
@@ -20961,7 +20949,6 @@
           ],
           "examples": [
             {
-              "name": "Help Centers found",
               "description": "",
               "path": "/help_center/help_centers",
               "pathParameters": {},
@@ -21163,7 +21150,6 @@
           ],
           "examples": [
             {
-              "name": "Successful",
               "description": "",
               "path": "/companies",
               "pathParameters": {},
@@ -21559,7 +21545,6 @@
           ],
           "examples": [
             {
-              "name": "Successful",
               "description": "",
               "path": "/companies/5f4d3c1c-7b1b-4d7d-a97e-6095715c6632",
               "pathParameters": {
@@ -21731,7 +21716,6 @@
           ],
           "examples": [
             {
-              "name": "Successful",
               "description": "",
               "path": "/companies/5f4d3c1c-7b1b-4d7d-a97e-6095715c6632",
               "pathParameters": {
@@ -21903,7 +21887,6 @@
           ],
           "examples": [
             {
-              "name": "Successful",
               "description": "",
               "path": "/companies/5f4d3c1c-7b1b-4d7d-a97e-6095715c6632",
               "pathParameters": {
@@ -22039,7 +22022,6 @@
           ],
           "examples": [
             {
-              "name": "Successful",
               "description": "",
               "path": "/companies/5f4d3c1c-7b1b-4d7d-a97e-6095715c6632/contacts",
               "pathParameters": {
@@ -22187,7 +22169,6 @@
           ],
           "examples": [
             {
-              "name": "Successful",
               "description": "",
               "path": "/companies/5f4d3c1c-7b1b-4d7d-a97e-6095715c6632/segments",
               "pathParameters": {
@@ -22329,7 +22310,6 @@
           ],
           "examples": [
             {
-              "name": "Successful",
               "description": "",
               "path": "/companies/list",
               "pathParameters": {},
@@ -22509,7 +22489,6 @@
           ],
           "examples": [
             {
-              "name": "Successful",
               "description": "",
               "path": "/companies/scroll",
               "pathParameters": {},
@@ -22947,7 +22926,6 @@
           ],
           "examples": [
             {
-              "name": "Successful",
               "description": "",
               "path": "/contacts/58a430d35458202d41b1e65b/companies/58a430d35458202d41b1e65b",
               "pathParameters": {
@@ -23130,7 +23108,6 @@
           ],
           "examples": [
             {
-              "name": "successful",
               "description": "",
               "path": "/contacts/63a07ddf05a32042dffac965/companies",
               "pathParameters": {
@@ -23278,7 +23255,6 @@
           ],
           "examples": [
             {
-              "name": "successful",
               "description": "",
               "path": "/contacts/63a07ddf05a32042dffac965/segments",
               "pathParameters": {
@@ -23430,7 +23406,6 @@
           ],
           "examples": [
             {
-              "name": "Successful",
               "description": "",
               "path": "/contacts/63a07ddf05a32042dffac965/subscriptions",
               "pathParameters": {
@@ -23650,7 +23625,6 @@
           ],
           "examples": [
             {
-              "name": "successful",
               "description": "",
               "path": "/contacts/63a07ddf05a32042dffac965/tags",
               "pathParameters": {
@@ -23783,7 +23757,6 @@
           ],
           "examples": [
             {
-              "name": "successful",
               "description": "",
               "path": "/contacts/63a07ddf05a32042dffac965",
               "pathParameters": {
@@ -24043,7 +24016,6 @@
           ],
           "examples": [
             {
-              "name": "successful",
               "description": "",
               "path": "/contacts/63a07ddf05a32042dffac965",
               "pathParameters": {
@@ -24301,7 +24273,6 @@
           ],
           "examples": [
             {
-              "name": "successful",
               "description": "",
               "path": "/contacts/id",
               "pathParameters": {
@@ -24420,7 +24391,6 @@
           ],
           "examples": [
             {
-              "name": "successful",
               "description": "",
               "path": "/contacts/merge",
               "pathParameters": {},
@@ -24670,7 +24640,6 @@
           ],
           "examples": [
             {
-              "name": "successful",
               "description": "",
               "path": "/contacts/search",
               "pathParameters": {},
@@ -24817,7 +24786,6 @@
           ],
           "examples": [
             {
-              "name": "successful",
               "description": "",
               "path": "/contacts",
               "pathParameters": {},
@@ -24944,7 +24912,6 @@
           ],
           "examples": [
             {
-              "name": "successful",
               "description": "",
               "path": "/contacts",
               "pathParameters": {},
@@ -25180,7 +25147,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "successful",
               "description": "",
               "path": "/contacts/63a07ddf05a32042dffac965/archive",
               "pathParameters": {
@@ -25291,7 +25257,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "successful",
               "description": "",
               "path": "/contacts/63a07ddf05a32042dffac965/unarchive",
               "pathParameters": {
@@ -25426,7 +25391,6 @@
           ],
           "examples": [
             {
-              "name": "Successful response",
               "description": "",
               "path": "/contacts/42/notes",
               "pathParameters": {
@@ -25942,7 +25906,6 @@
           ],
           "examples": [
             {
-              "name": "Note found",
               "description": "",
               "path": "/notes/1",
               "pathParameters": {
@@ -26387,7 +26350,6 @@
           ],
           "examples": [
             {
-              "name": "Successful",
               "description": "",
               "path": "/contacts/63a07ddf05a32042dffac965/subscriptions/37846",
               "pathParameters": {
@@ -26524,7 +26486,6 @@
           ],
           "examples": [
             {
-              "name": "Successful",
               "description": "",
               "path": "/subscription_types",
               "pathParameters": {},
@@ -26935,7 +26896,6 @@
           ],
           "examples": [
             {
-              "name": "successful",
               "description": "",
               "path": "/contacts/63a07ddf05a32042dffac965/tags/7522907",
               "pathParameters": {
@@ -27469,7 +27429,6 @@
           ],
           "examples": [
             {
-              "name": "successful",
               "description": "",
               "path": "/tags",
               "pathParameters": {},
@@ -27817,7 +27776,6 @@
           ],
           "examples": [
             {
-              "name": "Tag found",
               "description": "",
               "path": "/tags/123",
               "pathParameters": {
@@ -27955,7 +27913,6 @@
           ],
           "examples": [
             {
-              "name": "deleteTagExample",
               "description": "",
               "path": "/tags/123",
               "pathParameters": {
@@ -28527,7 +28484,6 @@
           ],
           "examples": [
             {
-              "name": "successful",
               "description": "",
               "path": "/conversations",
               "pathParameters": {},
@@ -28888,7 +28844,6 @@
           ],
           "examples": [
             {
-              "name": "conversation found",
               "description": "",
               "path": "/conversations/123",
               "pathParameters": {
@@ -29518,7 +29473,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "successful",
               "description": "",
               "path": "/conversations/search",
               "pathParameters": {},
@@ -31477,7 +31431,6 @@
           ],
           "examples": [
             {
-              "name": "Assign a conversation using assignment rules",
               "description": "",
               "path": "/conversations/123/run_assignment_rules",
               "pathParameters": {
@@ -32871,7 +32824,6 @@
           ],
           "examples": [
             {
-              "name": "Successful response",
               "description": "",
               "path": "/data_attributes",
               "pathParameters": {},
@@ -34092,7 +34044,6 @@
           ],
           "examples": [
             {
-              "name": "Successful response",
               "description": "",
               "path": "/events",
               "pathParameters": {},
@@ -34205,7 +34156,6 @@
           ],
           "examples": [
             {
-              "name": "dataEventsCreateDataEventExample",
               "description": "",
               "path": "/events",
               "pathParameters": {},
@@ -34301,7 +34251,6 @@
           ],
           "examples": [
             {
-              "name": "dataEventsDataEventSummariesExample",
               "description": "",
               "path": "/events/summaries",
               "pathParameters": {},
@@ -34404,7 +34353,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "successful",
               "description": "",
               "path": "/export/content/data",
               "pathParameters": {},
@@ -34522,7 +34470,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "successful",
               "description": "",
               "path": "/export/content/data/job_identifier",
               "pathParameters": {
@@ -34631,7 +34578,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "successful",
               "description": "",
               "path": "/export/cancel/job_identifier",
               "pathParameters": {
@@ -34729,7 +34675,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "downloadDataExportExample",
               "description": "",
               "path": "/download/content/data/job_identifier",
               "pathParameters": {
@@ -35113,7 +35058,6 @@
           ],
           "examples": [
             {
-              "name": "successful",
               "description": "",
               "path": "/news/news_items",
               "pathParameters": {},
@@ -35326,7 +35270,6 @@
           ],
           "examples": [
             {
-              "name": "successful",
               "description": "",
               "path": "/news/news_items",
               "pathParameters": {},
@@ -35553,7 +35496,6 @@
           ],
           "examples": [
             {
-              "name": "successful",
               "description": "",
               "path": "/news/news_items/123",
               "pathParameters": {
@@ -35960,7 +35902,6 @@
           ],
           "examples": [
             {
-              "name": "successful",
               "description": "",
               "path": "/news/news_items/123",
               "pathParameters": {
@@ -36083,7 +36024,6 @@
           ],
           "examples": [
             {
-              "name": "successful",
               "description": "",
               "path": "/news/newsfeeds/123/items",
               "pathParameters": {
@@ -36199,7 +36139,6 @@
           ],
           "examples": [
             {
-              "name": "successful",
               "description": "",
               "path": "/news/newsfeeds",
               "pathParameters": {},
@@ -36362,7 +36301,6 @@
           ],
           "examples": [
             {
-              "name": "successful",
               "description": "",
               "path": "/news/newsfeeds/123",
               "pathParameters": {
@@ -36494,7 +36432,6 @@
           ],
           "examples": [
             {
-              "name": "Successful response",
               "description": "",
               "path": "/segments",
               "pathParameters": {},
@@ -36662,7 +36599,6 @@
           ],
           "examples": [
             {
-              "name": "Successful response",
               "description": "",
               "path": "/segments/123",
               "pathParameters": {
@@ -36998,7 +36934,6 @@
           ],
           "examples": [
             {
-              "name": "successful",
               "description": "",
               "path": "/teams",
               "pathParameters": {},
@@ -37130,7 +37065,6 @@
           ],
           "examples": [
             {
-              "name": "successful",
               "description": "",
               "path": "/teams/123",
               "pathParameters": {
@@ -37278,7 +37212,6 @@
           ],
           "examples": [
             {
-              "name": "Ticket Type Attribute created",
               "description": "",
               "path": "/ticket_types/ticket_type_id/attributes",
               "pathParameters": {
@@ -37479,7 +37412,6 @@
           ],
           "examples": [
             {
-              "name": "Ticket Type Attribute updated",
               "description": "",
               "path": "/ticket_types/ticket_type_id/attributes/id",
               "pathParameters": {
@@ -37629,7 +37561,6 @@
           ],
           "examples": [
             {
-              "name": "successful",
               "description": "",
               "path": "/ticket_types",
               "pathParameters": {},
@@ -37740,7 +37671,6 @@
           ],
           "examples": [
             {
-              "name": "Ticket type created",
               "description": "",
               "path": "/ticket_types",
               "pathParameters": {},
@@ -37896,7 +37826,6 @@
           ],
           "examples": [
             {
-              "name": "Ticket type found",
               "description": "",
               "path": "/ticket_types/id",
               "pathParameters": {
@@ -38052,7 +37981,6 @@
           ],
           "examples": [
             {
-              "name": "Ticket type updated",
               "description": "",
               "path": "/ticket_types/id",
               "pathParameters": {
@@ -38535,7 +38463,6 @@
           ],
           "examples": [
             {
-              "name": "Successful response",
               "description": "",
               "path": "/tickets",
               "pathParameters": {},
@@ -38819,7 +38746,6 @@
           ],
           "examples": [
             {
-              "name": "Ticket found",
               "description": "",
               "path": "/tickets/id",
               "pathParameters": {
@@ -39595,7 +39521,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "successful",
               "description": "",
               "path": "/tickets/search",
               "pathParameters": {},
@@ -39924,7 +39849,6 @@
           ],
           "examples": [
             {
-              "name": "successful",
               "description": "",
               "path": "/visitors",
               "pathParameters": {},
@@ -40364,7 +40288,6 @@
           ],
           "examples": [
             {
-              "name": "successful",
               "description": "",
               "path": "/visitors/convert",
               "pathParameters": {},

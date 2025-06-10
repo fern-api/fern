@@ -229,7 +229,6 @@
           ],
           "examples": [
             {
-              "name": "authGetTokenExample",
               "description": "",
               "path": "/oauth/token",
               "pathParameters": {},

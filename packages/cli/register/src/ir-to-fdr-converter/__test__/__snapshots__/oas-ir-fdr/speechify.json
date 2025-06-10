@@ -1329,6 +1329,7 @@
   "subpackages": {
     "subpackage_audio": {
       "subpackageId": "subpackage_audio",
+      "displayName": "audio",
       "name": "audio",
       "endpoints": [
         {
@@ -1425,7 +1426,6 @@
           ],
           "examples": [
             {
-              "name": "audioExperimentalStreamCreateExample",
               "description": "",
               "path": "/experimental/audio/stream",
               "pathParameters": {},
@@ -1543,7 +1543,6 @@
           ],
           "examples": [
             {
-              "name": "audioGetSpeechExample",
               "description": "",
               "path": "/v1/audio/speech",
               "pathParameters": {},
@@ -1669,7 +1668,6 @@
           ],
           "examples": [
             {
-              "name": "audioGetStreamExample",
               "description": "",
               "path": "/v1/audio/stream",
               "pathParameters": {},
@@ -1703,6 +1701,7 @@
     },
     "subpackage_auth": {
       "subpackageId": "subpackage_auth",
+      "displayName": "auth",
       "name": "auth",
       "endpoints": [
         {
@@ -1750,7 +1749,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "authCreateAccessTokenExample",
               "description": "",
               "path": "/v1/auth/token",
               "pathParameters": {},
@@ -1780,6 +1778,7 @@
     },
     "subpackage_apikey": {
       "subpackageId": "subpackage_apikey",
+      "displayName": "apikey",
       "name": "apikey",
       "endpoints": [
         {
@@ -1814,7 +1813,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "listApiKeysExample",
               "description": "",
               "path": "/v1/token",
               "pathParameters": {},
@@ -1859,7 +1857,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "createApiKeyExample",
               "description": "",
               "path": "/v1/token",
               "pathParameters": {},
@@ -1923,7 +1920,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "deleteApiKeyExample",
               "description": "",
               "path": "/v1/token/id",
               "pathParameters": {
@@ -2004,7 +2000,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "apikeyUpdateApiKeyExample",
               "description": "",
               "path": "/v1/token/id",
               "pathParameters": {
@@ -2032,6 +2027,7 @@
     },
     "subpackage_voices": {
       "subpackageId": "subpackage_voices",
+      "displayName": "voices",
       "name": "voices",
       "endpoints": [
         {
@@ -2091,7 +2087,6 @@
           ],
           "examples": [
             {
-              "name": "getVoicesExample",
               "description": "",
               "path": "/v1/voices",
               "pathParameters": {},
@@ -2220,7 +2215,6 @@
           ],
           "examples": [
             {
-              "name": "voicesCreateVoiceExample",
               "description": "",
               "path": "/v1/voices",
               "pathParameters": {},
@@ -2343,7 +2337,6 @@
           ],
           "examples": [
             {
-              "name": "deleteVoiceExample",
               "description": "",
               "path": "/v1/voices/id",
               "pathParameters": {
@@ -2400,7 +2393,7 @@
   "auth": {
     "type": "header",
     "headerWireValue": "Authorization",
-    "nameOverride": "Authorization"
+    "nameOverride": "apiKey"
   },
   "snippetsConfiguration": {},
   "globalHeaders": []

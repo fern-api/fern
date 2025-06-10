@@ -5,7 +5,7 @@
       {
         "name": {
           "name": {
-            "originalName": "API-Key",
+            "originalName": "apiKey",
             "camelCase": {
               "unsafeName": "apiKey",
               "safeName": "apiKey"
@@ -18773,6 +18773,7 @@
           }
         }
       },
+      "displayName": "Accounts",
       "basePath": {
         "head": "",
         "parts": []
@@ -22935,6 +22936,7 @@
           }
         }
       },
+      "displayName": "Institutions",
       "basePath": {
         "head": "",
         "parts": []
@@ -25494,6 +25496,7 @@
           }
         }
       },
+      "displayName": "Transactions",
       "basePath": {
         "head": "",
         "parts": []
@@ -27152,6 +27155,7 @@
           }
         }
       },
+      "displayName": "Transfers",
       "basePath": {
         "head": "",
         "parts": []

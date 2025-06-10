@@ -3421,6 +3421,7 @@
   "subpackages": {
     "subpackage_accounts": {
       "subpackageId": "subpackage_accounts",
+      "displayName": "Accounts",
       "name": "accounts",
       "endpoints": [
         {
@@ -3590,7 +3591,6 @@
           ],
           "examples": [
             {
-              "name": "listAccountsExample",
               "description": "",
               "path": "/accounts",
               "pathParameters": {},
@@ -3809,7 +3809,6 @@
           ],
           "examples": [
             {
-              "name": "getAccountExample",
               "description": "",
               "path": "/accounts/accountId",
               "pathParameters": {
@@ -4013,7 +4012,6 @@
           ],
           "examples": [
             {
-              "name": "listAccountBalancesExample",
               "description": "",
               "path": "/accountBalances",
               "pathParameters": {},
@@ -4227,7 +4225,6 @@
           ],
           "examples": [
             {
-              "name": "listEligibleAchAccountsExample",
               "description": "",
               "path": "/achEligibleAccounts",
               "pathParameters": {},
@@ -4474,7 +4471,6 @@
           ],
           "examples": [
             {
-              "name": "listAccountJointOwnersExample",
               "description": "",
               "path": "/accounts/accountId/jointOwners",
               "pathParameters": {
@@ -4685,7 +4681,6 @@
           ],
           "examples": [
             {
-              "name": "listEligibleOverdraftAccountsExample",
               "description": "",
               "path": "/accounts/accountId/eligibleOverdraftAccounts",
               "pathParameters": {
@@ -4816,7 +4811,6 @@
           ],
           "examples": [
             {
-              "name": "getOverdraftProtectionExample",
               "description": "",
               "path": "/accounts/accountId/overdraftProtection",
               "pathParameters": {
@@ -4982,7 +4976,6 @@
           ],
           "examples": [
             {
-              "name": "overdraftProtectionPatchOverdraftAccountsExample",
               "description": "",
               "path": "/accounts/accountId/overdraftProtection",
               "pathParameters": {
@@ -5163,7 +5156,6 @@
           ],
           "examples": [
             {
-              "name": "jointOwnersCreateJointOwnerInvitationExample",
               "description": "",
               "path": "/accounts/accountId/jointOwnerInvitations",
               "pathParameters": {
@@ -5222,6 +5214,7 @@
     },
     "subpackage_institutions": {
       "subpackageId": "subpackage_institutions",
+      "displayName": "Institutions",
       "name": "institutions",
       "endpoints": [
         {
@@ -5365,7 +5358,6 @@
           ],
           "examples": [
             {
-              "name": "lookUpInstitutionByLocatorExample",
               "description": "",
               "path": "/institutionByLocator",
               "pathParameters": {},
@@ -5599,7 +5591,6 @@
           ],
           "examples": [
             {
-              "name": "listTransferScheduleExample",
               "description": "",
               "path": "/institutions/TIBURON/transferSchedule",
               "pathParameters": {
@@ -5843,7 +5834,6 @@
           ],
           "examples": [
             {
-              "name": "getCutoffTimesExample",
               "description": "",
               "path": "/institutions/TIBURON/cutoffTimes",
               "pathParameters": {
@@ -6080,7 +6070,6 @@
           ],
           "examples": [
             {
-              "name": "getTransferDateRestrictionsExample",
               "description": "",
               "path": "/institutions/TIBURON/transferDateRestrictions",
               "pathParameters": {
@@ -6244,6 +6233,7 @@
     },
     "subpackage_transactions": {
       "subpackageId": "subpackage_transactions",
+      "displayName": "Transactions",
       "name": "transactions",
       "endpoints": [
         {
@@ -6561,7 +6551,6 @@
           ],
           "examples": [
             {
-              "name": "listTransactionsExample",
               "description": "",
               "path": "/accounts/accountId/transactions",
               "pathParameters": {
@@ -6782,7 +6771,6 @@
           ],
           "examples": [
             {
-              "name": "listTransactionCategoriesExample",
               "description": "",
               "path": "/transactionCategories",
               "pathParameters": {},
@@ -6844,6 +6832,7 @@
     },
     "subpackage_transfers": {
       "subpackageId": "subpackage_transfers",
+      "displayName": "Transfers",
       "name": "transfers",
       "endpoints": [
         {
@@ -7020,7 +7009,6 @@
           ],
           "examples": [
             {
-              "name": "listTransfersExample",
               "description": "",
               "path": "/transfers",
               "pathParameters": {},
@@ -7273,7 +7261,6 @@
           ],
           "examples": [
             {
-              "name": "transfersCreateTransferExample",
               "description": "",
               "path": "/transfers",
               "pathParameters": {},
@@ -7473,7 +7460,6 @@
           ],
           "examples": [
             {
-              "name": "getTransferExample",
               "description": "",
               "path": "/transfers/transferId",
               "pathParameters": {
@@ -7642,7 +7628,6 @@
           ],
           "examples": [
             {
-              "name": "deleteTransferExample",
               "description": "",
               "path": "/transfers/transferId",
               "pathParameters": {
@@ -7811,7 +7796,6 @@
           ],
           "examples": [
             {
-              "name": "transfersPatchTransferExample",
               "description": "",
               "path": "/transfers/transferId",
               "pathParameters": {
@@ -8025,7 +8009,7 @@
   "auth": {
     "type": "header",
     "headerWireValue": "API-Key",
-    "nameOverride": "API-Key"
+    "nameOverride": "apiKey"
   },
   "snippetsConfiguration": {},
   "globalHeaders": []
