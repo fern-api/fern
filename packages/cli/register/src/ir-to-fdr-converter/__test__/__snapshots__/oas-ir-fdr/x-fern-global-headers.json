@@ -181,7 +181,9 @@
               "queryParameters": {},
               "headers": {
                 "x-api-key": "x-api-key",
-                "my-api-version": "my-api-version"
+                "my-api-version": "my-api-version",
+                "": "another_header",
+                "Square-Version": "version"
               },
               "requestBody": {
                 "stream": true
@@ -301,7 +303,9 @@
               "queryParameters": {},
               "headers": {
                 "x-api-key": "x-api-key",
-                "my-api-version": "my-api-version"
+                "my-api-version": "my-api-version",
+                "": "another_header",
+                "Square-Version": "version"
               },
               "requestBody": {
                 "stream": false

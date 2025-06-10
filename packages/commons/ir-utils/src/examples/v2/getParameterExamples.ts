@@ -1,23 +1,22 @@
-import { HttpEndpoint, HttpService, TypeDeclaration, TypeId, V2ValueExamples } from "@fern-api/ir-sdk";
+import { HttpEndpoint, IntermediateRepresentation, TypeDeclaration, TypeId, V2ValueExamples } from "@fern-api/ir-sdk";
 
 import { isTypeReferenceOptional } from "../../utils/isTypeReferenceOptional";
 import { getFirstExamples } from "./getV2Examples";
 
 export function getParameterExamples({
-    service,
+    ir,
     endpoint,
-    typeDeclarations,
     skipOptionalRequestProperties
 }: {
-    service: HttpService;
+    ir: Omit<IntermediateRepresentation, "sdkConfig" | "subpackages" | "rootPackage">;
     endpoint: HttpEndpoint;
-    typeDeclarations: Record<TypeId, TypeDeclaration>;
     skipOptionalRequestProperties: boolean;
 }): {
     pathParameters: V2ValueExamples;
     queryParameters: V2ValueExamples;
     headers: V2ValueExamples;
 } {
+    const typeDeclarations: Record<TypeId, TypeDeclaration> = ir.types;
     const result: {
         pathParameters: V2ValueExamples;
         queryParameters: V2ValueExamples;
@@ -55,7 +54,8 @@ export function getParameterExamples({
         }
     }
 
-    for (const parameter of endpoint.headers) {
+    const combinedHeaders = [...endpoint.headers, ...ir.headers, ...ir.idempotencyHeaders];
+    for (const parameter of combinedHeaders) {
         const { userExample, autoExample } = getFirstExamples(parameter.v2Examples);
 
         if (userExample !== undefined) {

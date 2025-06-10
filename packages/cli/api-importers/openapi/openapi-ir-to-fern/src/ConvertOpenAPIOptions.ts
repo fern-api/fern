@@ -70,7 +70,7 @@ export function getConvertOptions({
     options,
     overrides
 }: {
-    options?: ConvertOpenAPIOptions;
+    options?: Partial<ConvertOpenAPIOptions>;
     overrides?: Partial<ConvertOpenAPIOptions>;
 }): ConvertOpenAPIOptions {
     return {
