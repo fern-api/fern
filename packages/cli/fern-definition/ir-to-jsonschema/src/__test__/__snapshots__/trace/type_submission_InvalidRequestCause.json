@@ -10,9 +10,6 @@
       ]
     }
   },
-  "required": [
-    "type"
-  ],
   "oneOf": [
     {
       "properties": {
