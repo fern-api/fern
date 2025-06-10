@@ -2150,9 +2150,6 @@
           ]
         }
       },
-      "required": [
-        "location"
-      ],
       "oneOf": [
         {
           "properties": {
