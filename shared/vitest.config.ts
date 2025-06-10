@@ -8,6 +8,13 @@ export default defineConfig({
             deps: {
                 fallbackCJS: true
             }
+        },
+        maxConcurrency: 10,
+        pool: "threads",
+        poolOptions: {
+            threads: {
+                useAtomics: true
+            }
         }
     }
 });
