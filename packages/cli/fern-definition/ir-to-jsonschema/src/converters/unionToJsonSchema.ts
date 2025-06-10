@@ -24,7 +24,6 @@ export function convertUnionToJsonSchema({ union, context }: convertUnionToJsonS
                 enum: union.types.map((member) => member.discriminantValue.wireValue)
             }
         },
-        required: [discriminant],
         oneOf: union.types.map((member) => {
             let properties: Record<string, JSONSchema4> = {};
             let required: string[] = [];
