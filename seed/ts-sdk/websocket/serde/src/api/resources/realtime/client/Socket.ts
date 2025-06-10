@@ -5,6 +5,7 @@
 import * as core from "../../../../core/index.js";
 import * as SeedWebsocket from "../../../index.js";
 import { SendEvent } from "../../../../serialization/resources/realtime/types/SendEvent.js";
+import { SendSnakeCase } from "../../../../serialization/resources/realtime/types/SendSnakeCase.js";
 import { SendEvent2 } from "../../../../serialization/resources/realtime/types/SendEvent2.js";
 import { fromJson } from "../../../../core/json.js";
 import * as serializers from "../../../../serialization/index.js";
@@ -14,7 +15,11 @@ export declare namespace RealtimeSocket {
         socket: core.ReconnectingWebSocket;
     }
 
-    export type Response = SeedWebsocket.ReceiveEvent | SeedWebsocket.ReceiveEvent2 | SeedWebsocket.ReceiveEvent3;
+    export type Response =
+        | SeedWebsocket.ReceiveEvent
+        | SeedWebsocket.ReceiveSnakeCase
+        | SeedWebsocket.ReceiveEvent2
+        | SeedWebsocket.ReceiveEvent3;
     type EventHandlers = {
         open?: () => void;
         message?: (message: Response) => void;
@@ -80,6 +85,17 @@ export class RealtimeSocket {
     public sendSend(message: SeedWebsocket.SendEvent): void {
         this.assertSocketIsOpen();
         const jsonPayload = SendEvent.jsonOrThrow(message, {
+            unrecognizedObjectKeys: "strip",
+            allowUnrecognizedUnionMembers: true,
+            allowUnrecognizedEnumValues: true,
+            skipValidation: true,
+        });
+        this.socket.send(JSON.stringify(jsonPayload));
+    }
+
+    public sendSendSnakeCase(message: SeedWebsocket.SendSnakeCase): void {
+        this.assertSocketIsOpen();
+        const jsonPayload = SendSnakeCase.jsonOrThrow(message, {
             unrecognizedObjectKeys: "strip",
             allowUnrecognizedUnionMembers: true,
             allowUnrecognizedEnumValues: true,

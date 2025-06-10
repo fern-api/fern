@@ -11,7 +11,11 @@ export declare namespace RealtimeSocket {
         socket: core.ReconnectingWebSocket;
     }
 
-    export type Response = SeedWebsocket.ReceiveEvent | SeedWebsocket.ReceiveEvent2 | SeedWebsocket.ReceiveEvent3;
+    export type Response =
+        | SeedWebsocket.ReceiveEvent
+        | SeedWebsocket.ReceiveSnakeCase
+        | SeedWebsocket.ReceiveEvent2
+        | SeedWebsocket.ReceiveEvent3;
     type EventHandlers = {
         open?: () => void;
         message?: (message: Response) => void;
@@ -67,6 +71,11 @@ export class RealtimeSocket {
     }
 
     public sendSend(message: SeedWebsocket.SendEvent): void {
+        this.assertSocketIsOpen();
+        this.sendJson(message);
+    }
+
+    public sendSendSnakeCase(message: SeedWebsocket.SendSnakeCase): void {
         this.assertSocketIsOpen();
         this.sendJson(message);
     }
@@ -134,7 +143,7 @@ export class RealtimeSocket {
     }
 
     /** Send a JSON payload to the websocket. */
-    private sendJson(payload: SeedWebsocket.SendEvent | SeedWebsocket.SendEvent2): void {
+    private sendJson(payload: SeedWebsocket.SendEvent | SeedWebsocket.SendSnakeCase | SeedWebsocket.SendEvent2): void {
         const jsonPayload = toJson(payload);
         this.socket.send(jsonPayload);
     }

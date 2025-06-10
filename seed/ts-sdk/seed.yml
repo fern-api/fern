@@ -253,7 +253,7 @@ fixtures:
     - customConfig:
         noSerdeLayer: true
         shouldGenerateWebsocketClients: true
-      outputFolder: with-serde
+      outputFolder: no-serde
 scripts:
   - docker: fernapi/ts-seed
     commands:
