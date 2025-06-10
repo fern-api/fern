@@ -78,6 +78,6 @@
     "@types/object-hash": "^3.0.6",
     "@types/swagger2openapi": "^7.0.4",
     "@types/tar": "^6.1.11",
-    "vitest": "^2.1.9"
+    "vitest": "^3.2.3"
   }
 }

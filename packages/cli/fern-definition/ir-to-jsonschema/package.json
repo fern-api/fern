@@ -48,6 +48,6 @@
     "@trivago/prettier-plugin-sort-imports": "^5.2.1",
     "typescript": "5.7.2",
     "@types/json-schema": "^7.0.15",
-    "vitest": "^2.1.9"
+    "vitest": "^3.2.3"
   }
 }

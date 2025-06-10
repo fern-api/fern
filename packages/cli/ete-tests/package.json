@@ -54,6 +54,6 @@
     "@types/node-fetch": "2.6.9",
     "form-data": "4.0.1",
     "jest-environment-jsdom": "^29.7.0",
-    "vitest": "^2.1.9"
+    "vitest": "^3.2.3"
   }
 }

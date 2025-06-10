@@ -106,6 +106,6 @@
     "typescript": "5.7.2",
     "@types/jest": "^29.5.14",
     "@types/lodash-es": "^4.17.12",
-    "vitest": "^2.1.9"
+    "vitest": "^3.2.3"
   }
 }

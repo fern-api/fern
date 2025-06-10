@@ -61,6 +61,6 @@
     "@types/uuid": "^9.0.8",
     "@types/ws": "^8.5.10",
     "@types/xml2js": "^0.4.14",
-    "vitest": "^2.1.9"
+    "vitest": "^3.2.3"
   }
 }

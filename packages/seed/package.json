@@ -47,7 +47,7 @@
     "prettier": "^3.4.2",
     "@trivago/prettier-plugin-sort-imports": "^5.2.1",
     "typescript": "5.7.2",
-    "vitest": "^2.1.9",
+    "vitest": "^3.2.3",
     "@fern-api/workspace-loader": "workspace:*",
     "@fern-fern/fiddle-sdk": "0.0.584",
     "@fern-fern/generator-exec-sdk": "^0.0.1045",

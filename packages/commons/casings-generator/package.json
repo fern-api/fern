@@ -40,6 +40,6 @@
     "@trivago/prettier-plugin-sort-imports": "^5.2.1",
     "typescript": "5.7.2",
     "@types/lodash-es": "^4.17.12",
-    "vitest": "^2.1.9"
+    "vitest": "^3.2.3"
   }
 }

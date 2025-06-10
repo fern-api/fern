@@ -50,6 +50,6 @@
     "@types/inquirer": "^9.0.7",
     "@types/jest": "^29.5.14",
     "@types/qs": "6.9.15",
-    "vitest": "^2.1.9"
+    "vitest": "^3.2.3"
   }
 }

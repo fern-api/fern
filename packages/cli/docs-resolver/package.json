@@ -60,6 +60,6 @@
     "typescript": "5.7.2",
     "@fern-api/workspace-loader": "workspace:*",
     "@types/lodash-es": "^4.17.12",
-    "vitest": "^2.1.9"
+    "vitest": "^3.2.3"
   }
 }
