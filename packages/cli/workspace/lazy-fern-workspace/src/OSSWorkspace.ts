@@ -184,7 +184,8 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                         generationLanguage: "typescript",
                         logger: context.logger,
                         smartCasing: false,
-                        spec: document.value,
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                        spec: document.value as any,
                         exampleGenerationArgs: { disabled: false },
                         errorCollector,
                         enableUniqueErrorsPerEndpoint,

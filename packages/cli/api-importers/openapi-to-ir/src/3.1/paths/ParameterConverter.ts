@@ -22,7 +22,7 @@ export class ParameterConverter extends Converters.AbstractConverters
 
             const schemaOrReferenceConverter = new Converters.SchemaConverters.SchemaOrReferenceConverter({
                 context: this.context,
-                breadcrumbs: [...this.breadcrumbs, "schema"],
+                breadcrumbs: [...this.breadcrumbs, this.parameter.name, "schema"],
                 schemaOrReference: this.parameter.schema,
                 wrapAsOptional: this.parameter.required == null || !this.parameter.required,
                 schemaIdOverride
