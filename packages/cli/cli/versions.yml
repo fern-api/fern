@@ -2,7 +2,7 @@
 - changelogEntry:
     - summary: |
         Dont use posthog when CLI is running from self-hosted container.
-      type: feat
+      type: fix
   irVersion: 58
   createdAt: "2025-06-11"
   version: 0.64.4
