@@ -1,5 +1,5 @@
 import * as fs from "fs/promises";
-import _ from "lodash";
+import { template } from "lodash-es";
 import * as path from "path";
 
 export async function writeTemplateFiles(directory: string, templateVariables: Record<string, unknown>): Promise<void> {
@@ -36,8 +36,8 @@ async function processTemplateFile(
     templateVariables: Record<string, unknown>
 ): Promise<void> {
     const templateContent = await fs.readFile(templateFilePath, "utf8");
-    const template = _.template(templateContent);
-    const content = template(templateVariables);
+    const compiledTemplate = template(templateContent);
+    const content = compiledTemplate(templateVariables);
     const outputFilePath = templateFilePath.replace(/\.template\./, ".");
     await fs.writeFile(outputFilePath, content, "utf8");
     await fs.unlink(templateFilePath);

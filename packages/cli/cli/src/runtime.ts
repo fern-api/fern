@@ -11,6 +11,9 @@ interface BunGlobal {
 declare const Deno: DenoGlobal | undefined;
 declare const Bun: BunGlobal | undefined;
 declare const EdgeRuntime: string | undefined;
+declare const self: typeof globalThis.self & {
+    importScripts?: Function;
+};
 
 /**
  * A constant that indicates which environment and version the SDK is running in.
@@ -31,7 +34,7 @@ function evaluateRuntime(): Runtime {
     if (isBrowser) {
         return {
             type: "browser",
-            version: window.navigator.userAgent,
+            version: window.navigator.userAgent
         };
     }
 
@@ -42,7 +45,7 @@ function evaluateRuntime(): Runtime {
     const isCloudflare = typeof globalThis !== "undefined" && globalThis?.navigator?.userAgent === "Cloudflare-Workers";
     if (isCloudflare) {
         return {
-            type: "workerd",
+            type: "workerd"
         };
     }
 
@@ -53,7 +56,7 @@ function evaluateRuntime(): Runtime {
     const isEdgeRuntime = typeof EdgeRuntime === "string";
     if (isEdgeRuntime) {
         return {
-            type: "edge-runtime",
+            type: "edge-runtime"
         };
     }
 
@@ -62,14 +65,13 @@ function evaluateRuntime(): Runtime {
      */
     const isWebWorker =
         typeof self === "object" &&
-        // @ts-ignore
         typeof self?.importScripts === "function" &&
         (self.constructor?.name === "DedicatedWorkerGlobalScope" ||
             self.constructor?.name === "ServiceWorkerGlobalScope" ||
             self.constructor?.name === "SharedWorkerGlobalScope");
     if (isWebWorker) {
         return {
-            type: "web-worker",
+            type: "web-worker"
         };
     }
 
@@ -82,7 +84,7 @@ function evaluateRuntime(): Runtime {
     if (isDeno) {
         return {
             type: "deno",
-            version: Deno.version.deno,
+            version: Deno.version.deno
         };
     }
 
@@ -93,7 +95,7 @@ function evaluateRuntime(): Runtime {
     if (isBun) {
         return {
             type: "bun",
-            version: Bun.version,
+            version: Bun.version
         };
     }
 
@@ -110,7 +112,7 @@ function evaluateRuntime(): Runtime {
         return {
             type: "node",
             version: process.versions.node,
-            parsedVersion: Number(process.versions.node.split(".")[0]),
+            parsedVersion: Number(process.versions.node.split(".")[0])
         };
     }
 
@@ -121,11 +123,11 @@ function evaluateRuntime(): Runtime {
     const isReactNative = typeof navigator !== "undefined" && navigator?.product === "ReactNative";
     if (isReactNative) {
         return {
-            type: "react-native",
+            type: "react-native"
         };
     }
 
     return {
-        type: "unknown",
+        type: "unknown"
     };
 }
