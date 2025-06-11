@@ -1,7 +1,7 @@
 {
   "types": {
-    "SearchGetParametersSchemaLocationCoordinates": {
-      "name": "SearchGetParametersSchemaLocationCoordinates",
+    "SearchGetParametersFilterSchemaLocationCoordinates": {
+      "name": "SearchGetParametersFilterSchemaLocationCoordinates",
       "shape": {
         "type": "object",
         "extends": [],
@@ -33,8 +33,8 @@
         ]
       }
     },
-    "SearchGetParametersSchemaLocation": {
-      "name": "SearchGetParametersSchemaLocation",
+    "SearchGetParametersFilterSchemaLocation": {
+      "name": "SearchGetParametersFilterSchemaLocation",
       "shape": {
         "type": "object",
         "extends": [],
@@ -69,7 +69,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "SearchGetParametersSchemaLocationCoordinates"
+                "value": "SearchGetParametersFilterSchemaLocationCoordinates"
               }
             }
           }
@@ -112,7 +112,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "SearchGetParametersSchemaLocation"
+                "value": "SearchGetParametersFilterSchemaLocation"
               }
             }
           }

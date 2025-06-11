@@ -7102,16 +7102,16 @@
         ]
       }
     },
-    "IssueTriggersGetParametersSchemaOneOf1Items": {
-      "name": "IssueTriggersGetParametersSchemaOneOf1Items",
+    "IssueTriggersGetParametersOrderBySchemaOneOf1Items": {
+      "name": "IssueTriggersGetParametersOrderBySchemaOneOf1Items",
       "shape": {
         "type": "enum",
         "values": [
           {
-            "value": "asc"
+            "value": "created_at"
           },
           {
-            "value": "desc"
+            "value": "type"
           }
         ]
       }
@@ -7124,7 +7124,7 @@
           "type": "list",
           "itemType": {
             "type": "id",
-            "value": "IssueTriggersGetParametersSchemaOneOf1Items"
+            "value": "IssueTriggersGetParametersOrderBySchemaOneOf1Items"
           }
         }
       }
@@ -7166,6 +7166,20 @@
         ]
       }
     },
+    "IssueTriggersGetParametersDirSchemaOneOf1Items": {
+      "name": "IssueTriggersGetParametersDirSchemaOneOf1Items",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "asc"
+          },
+          {
+            "value": "desc"
+          }
+        ]
+      }
+    },
     "IssueTriggersGetParametersDir1": {
       "name": "IssueTriggersGetParametersDir1",
       "shape": {
@@ -7174,7 +7188,7 @@
           "type": "list",
           "itemType": {
             "type": "id",
-            "value": "IssueTriggersGetParametersSchemaOneOf1Items"
+            "value": "IssueTriggersGetParametersDirSchemaOneOf1Items"
           }
         }
       }
@@ -7334,16 +7348,13 @@
         ]
       }
     },
-    "AttemptsGetParametersSchemaOneOf1Items": {
-      "name": "AttemptsGetParametersSchemaOneOf1Items",
+    "AttemptsGetParametersOrderBySchemaOneOf1Items": {
+      "name": "AttemptsGetParametersOrderBySchemaOneOf1Items",
       "shape": {
         "type": "enum",
         "values": [
           {
-            "value": "asc"
-          },
-          {
-            "value": "desc"
+            "value": "created_at"
           }
         ]
       }
@@ -7356,7 +7367,7 @@
           "type": "list",
           "itemType": {
             "type": "id",
-            "value": "AttemptsGetParametersSchemaOneOf1Items"
+            "value": "AttemptsGetParametersOrderBySchemaOneOf1Items"
           }
         }
       }
@@ -7398,6 +7409,20 @@
         ]
       }
     },
+    "AttemptsGetParametersDirSchemaOneOf1Items": {
+      "name": "AttemptsGetParametersDirSchemaOneOf1Items",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "asc"
+          },
+          {
+            "value": "desc"
+          }
+        ]
+      }
+    },
     "AttemptsGetParametersDir1": {
       "name": "AttemptsGetParametersDir1",
       "shape": {
@@ -7406,7 +7431,7 @@
           "type": "list",
           "itemType": {
             "type": "id",
-            "value": "AttemptsGetParametersSchemaOneOf1Items"
+            "value": "AttemptsGetParametersDirSchemaOneOf1Items"
           }
         }
       }
@@ -7717,16 +7742,13 @@
         ]
       }
     },
-    "BookmarksGetParametersSchemaOneOf1Items": {
-      "name": "BookmarksGetParametersSchemaOneOf1Items",
+    "BookmarksGetParametersOrderBySchemaOneOf1Items": {
+      "name": "BookmarksGetParametersOrderBySchemaOneOf1Items",
       "shape": {
         "type": "enum",
         "values": [
           {
-            "value": "asc"
-          },
-          {
-            "value": "desc"
+            "value": "created_at"
           }
         ]
       }
@@ -7739,7 +7761,7 @@
           "type": "list",
           "itemType": {
             "type": "id",
-            "value": "BookmarksGetParametersSchemaOneOf1Items"
+            "value": "BookmarksGetParametersOrderBySchemaOneOf1Items"
           }
         }
       }
@@ -7781,6 +7803,20 @@
         ]
       }
     },
+    "BookmarksGetParametersDirSchemaOneOf1Items": {
+      "name": "BookmarksGetParametersDirSchemaOneOf1Items",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "asc"
+          },
+          {
+            "value": "desc"
+          }
+        ]
+      }
+    },
     "BookmarksGetParametersDir1": {
       "name": "BookmarksGetParametersDir1",
       "shape": {
@@ -7789,7 +7825,7 @@
           "type": "list",
           "itemType": {
             "type": "id",
-            "value": "BookmarksGetParametersSchemaOneOf1Items"
+            "value": "BookmarksGetParametersDirSchemaOneOf1Items"
           }
         }
       }
@@ -8188,16 +8224,13 @@
         ]
       }
     },
-    "DestinationsGetParametersSchemaOneOf1Items": {
-      "name": "DestinationsGetParametersSchemaOneOf1Items",
+    "DestinationsGetParametersOrderBySchemaOneOf1Items": {
+      "name": "DestinationsGetParametersOrderBySchemaOneOf1Items",
       "shape": {
         "type": "enum",
         "values": [
           {
-            "value": "asc"
-          },
-          {
-            "value": "desc"
+            "value": "created_at"
           }
         ]
       }
@@ -8210,7 +8243,7 @@
           "type": "list",
           "itemType": {
             "type": "id",
-            "value": "DestinationsGetParametersSchemaOneOf1Items"
+            "value": "DestinationsGetParametersOrderBySchemaOneOf1Items"
           }
         }
       }
@@ -8252,6 +8285,20 @@
         ]
       }
     },
+    "DestinationsGetParametersDirSchemaOneOf1Items": {
+      "name": "DestinationsGetParametersDirSchemaOneOf1Items",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "asc"
+          },
+          {
+            "value": "desc"
+          }
+        ]
+      }
+    },
     "DestinationsGetParametersDir1": {
       "name": "DestinationsGetParametersDir1",
       "shape": {
@@ -8260,7 +8307,7 @@
           "type": "list",
           "itemType": {
             "type": "id",
-            "value": "DestinationsGetParametersSchemaOneOf1Items"
+            "value": "DestinationsGetParametersDirSchemaOneOf1Items"
           }
         }
       }
@@ -9358,16 +9405,19 @@
         ]
       }
     },
-    "EventsGetParametersSchemaOneOf1Items": {
-      "name": "EventsGetParametersSchemaOneOf1Items",
+    "EventsGetParametersOrderBySchemaOneOf1Items": {
+      "name": "EventsGetParametersOrderBySchemaOneOf1Items",
       "shape": {
         "type": "enum",
         "values": [
           {
-            "value": "asc"
+            "value": "last_attempt_at"
           },
           {
-            "value": "desc"
+            "value": "next_attempt_at"
+          },
+          {
+            "value": "created_at"
           }
         ]
       }
@@ -9380,7 +9430,7 @@
           "type": "list",
           "itemType": {
             "type": "id",
-            "value": "EventsGetParametersSchemaOneOf1Items"
+            "value": "EventsGetParametersOrderBySchemaOneOf1Items"
           }
         }
       }
@@ -9422,6 +9472,20 @@
         ]
       }
     },
+    "EventsGetParametersDirSchemaOneOf1Items": {
+      "name": "EventsGetParametersDirSchemaOneOf1Items",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "asc"
+          },
+          {
+            "value": "desc"
+          }
+        ]
+      }
+    },
     "EventsGetParametersDir1": {
       "name": "EventsGetParametersDir1",
       "shape": {
@@ -9430,7 +9494,7 @@
           "type": "list",
           "itemType": {
             "type": "id",
-            "value": "EventsGetParametersSchemaOneOf1Items"
+            "value": "EventsGetParametersDirSchemaOneOf1Items"
           }
         }
       }
@@ -9819,9 +9883,9 @@
         ]
       }
     },
-    "BulkEventsRetryGetParametersSchemaId": {
+    "BulkEventsRetryGetParametersQuerySchemaId": {
       "description": "Filter by event IDs",
-      "name": "BulkEventsRetryGetParametersSchemaId",
+      "name": "BulkEventsRetryGetParametersQuerySchemaId",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -9850,8 +9914,8 @@
         ]
       }
     },
-    "BulkEventsRetryGetParametersSchemaStatus1": {
-      "name": "BulkEventsRetryGetParametersSchemaStatus1",
+    "BulkEventsRetryGetParametersQuerySchemaStatus1": {
+      "name": "BulkEventsRetryGetParametersQuerySchemaStatus1",
       "shape": {
         "type": "alias",
         "value": {
@@ -9863,9 +9927,9 @@
         }
       }
     },
-    "BulkEventsRetryGetParametersSchemaStatus": {
+    "BulkEventsRetryGetParametersQuerySchemaStatus": {
       "description": "Lifecyle status of the event",
-      "name": "BulkEventsRetryGetParametersSchemaStatus",
+      "name": "BulkEventsRetryGetParametersQuerySchemaStatus",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -9877,17 +9941,17 @@
             }
           },
           {
-            "typeName": "BulkEventsRetryGetParametersSchemaStatus1",
+            "typeName": "BulkEventsRetryGetParametersQuerySchemaStatus1",
             "type": {
               "type": "id",
-              "value": "BulkEventsRetryGetParametersSchemaStatus1"
+              "value": "BulkEventsRetryGetParametersQuerySchemaStatus1"
             }
           }
         ]
       }
     },
-    "BulkEventsRetryGetParametersSchemaIssueId": {
-      "name": "BulkEventsRetryGetParametersSchemaIssueId",
+    "BulkEventsRetryGetParametersQuerySchemaIssueId": {
+      "name": "BulkEventsRetryGetParametersQuerySchemaIssueId",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -9915,9 +9979,9 @@
         ]
       }
     },
-    "BulkEventsRetryGetParametersSchemaWebhookId": {
+    "BulkEventsRetryGetParametersQuerySchemaWebhookId": {
       "description": "Filter by webhook connection IDs",
-      "name": "BulkEventsRetryGetParametersSchemaWebhookId",
+      "name": "BulkEventsRetryGetParametersQuerySchemaWebhookId",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -9946,9 +10010,9 @@
         ]
       }
     },
-    "BulkEventsRetryGetParametersSchemaDestinationId": {
+    "BulkEventsRetryGetParametersQuerySchemaDestinationId": {
       "description": "Filter by destination IDs",
-      "name": "BulkEventsRetryGetParametersSchemaDestinationId",
+      "name": "BulkEventsRetryGetParametersQuerySchemaDestinationId",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -9977,9 +10041,9 @@
         ]
       }
     },
-    "BulkEventsRetryGetParametersSchemaSourceId": {
+    "BulkEventsRetryGetParametersQuerySchemaSourceId": {
       "description": "Filter by source IDs",
-      "name": "BulkEventsRetryGetParametersSchemaSourceId",
+      "name": "BulkEventsRetryGetParametersQuerySchemaSourceId",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -10008,8 +10072,8 @@
         ]
       }
     },
-    "BulkEventsRetryGetParametersSchemaAttempts1": {
-      "name": "BulkEventsRetryGetParametersSchemaAttempts1",
+    "BulkEventsRetryGetParametersQuerySchemaAttempts1": {
+      "name": "BulkEventsRetryGetParametersQuerySchemaAttempts1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -10094,9 +10158,9 @@
         ]
       }
     },
-    "BulkEventsRetryGetParametersSchemaAttempts": {
+    "BulkEventsRetryGetParametersQuerySchemaAttempts": {
       "description": "Filter by number of attempts",
-      "name": "BulkEventsRetryGetParametersSchemaAttempts",
+      "name": "BulkEventsRetryGetParametersQuerySchemaAttempts",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -10110,17 +10174,17 @@
             }
           },
           {
-            "typeName": "BulkEventsRetryGetParametersSchemaAttempts1",
+            "typeName": "BulkEventsRetryGetParametersQuerySchemaAttempts1",
             "type": {
               "type": "id",
-              "value": "BulkEventsRetryGetParametersSchemaAttempts1"
+              "value": "BulkEventsRetryGetParametersQuerySchemaAttempts1"
             }
           }
         ]
       }
     },
-    "BulkEventsRetryGetParametersSchemaResponseStatus1": {
-      "name": "BulkEventsRetryGetParametersSchemaResponseStatus1",
+    "BulkEventsRetryGetParametersQuerySchemaResponseStatus1": {
+      "name": "BulkEventsRetryGetParametersQuerySchemaResponseStatus1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -10210,9 +10274,9 @@
         ]
       }
     },
-    "BulkEventsRetryGetParametersSchemaResponseStatus": {
+    "BulkEventsRetryGetParametersQuerySchemaResponseStatus": {
       "description": "Filter by HTTP response status code",
-      "name": "BulkEventsRetryGetParametersSchemaResponseStatus",
+      "name": "BulkEventsRetryGetParametersQuerySchemaResponseStatus",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -10227,10 +10291,10 @@
             }
           },
           {
-            "typeName": "BulkEventsRetryGetParametersSchemaResponseStatus1",
+            "typeName": "BulkEventsRetryGetParametersQuerySchemaResponseStatus1",
             "type": {
               "type": "id",
-              "value": "BulkEventsRetryGetParametersSchemaResponseStatus1"
+              "value": "BulkEventsRetryGetParametersQuerySchemaResponseStatus1"
             }
           },
           {
@@ -10249,8 +10313,8 @@
         ]
       }
     },
-    "BulkEventsRetryGetParametersSchemaSuccessfulAt1": {
-      "name": "BulkEventsRetryGetParametersSchemaSuccessfulAt1",
+    "BulkEventsRetryGetParametersQuerySchemaSuccessfulAt1": {
+      "name": "BulkEventsRetryGetParametersQuerySchemaSuccessfulAt1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -10322,9 +10386,9 @@
         ]
       }
     },
-    "BulkEventsRetryGetParametersSchemaSuccessfulAt": {
+    "BulkEventsRetryGetParametersQuerySchemaSuccessfulAt": {
       "description": "Filter by `successful_at` date using a date operator",
-      "name": "BulkEventsRetryGetParametersSchemaSuccessfulAt",
+      "name": "BulkEventsRetryGetParametersQuerySchemaSuccessfulAt",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -10338,17 +10402,17 @@
             }
           },
           {
-            "typeName": "BulkEventsRetryGetParametersSchemaSuccessfulAt1",
+            "typeName": "BulkEventsRetryGetParametersQuerySchemaSuccessfulAt1",
             "type": {
               "type": "id",
-              "value": "BulkEventsRetryGetParametersSchemaSuccessfulAt1"
+              "value": "BulkEventsRetryGetParametersQuerySchemaSuccessfulAt1"
             }
           }
         ]
       }
     },
-    "BulkEventsRetryGetParametersSchemaCreatedAt1": {
-      "name": "BulkEventsRetryGetParametersSchemaCreatedAt1",
+    "BulkEventsRetryGetParametersQuerySchemaCreatedAt1": {
+      "name": "BulkEventsRetryGetParametersQuerySchemaCreatedAt1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -10420,9 +10484,9 @@
         ]
       }
     },
-    "BulkEventsRetryGetParametersSchemaCreatedAt": {
+    "BulkEventsRetryGetParametersQuerySchemaCreatedAt": {
       "description": "Filter by `created_at` date using a date operator",
-      "name": "BulkEventsRetryGetParametersSchemaCreatedAt",
+      "name": "BulkEventsRetryGetParametersQuerySchemaCreatedAt",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -10436,17 +10500,17 @@
             }
           },
           {
-            "typeName": "BulkEventsRetryGetParametersSchemaCreatedAt1",
+            "typeName": "BulkEventsRetryGetParametersQuerySchemaCreatedAt1",
             "type": {
               "type": "id",
-              "value": "BulkEventsRetryGetParametersSchemaCreatedAt1"
+              "value": "BulkEventsRetryGetParametersQuerySchemaCreatedAt1"
             }
           }
         ]
       }
     },
-    "BulkEventsRetryGetParametersSchemaErrorCode": {
-      "name": "BulkEventsRetryGetParametersSchemaErrorCode",
+    "BulkEventsRetryGetParametersQuerySchemaErrorCode": {
+      "name": "BulkEventsRetryGetParametersQuerySchemaErrorCode",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -10474,8 +10538,8 @@
         ]
       }
     },
-    "BulkEventsRetryGetParametersSchemaCliId1": {
-      "name": "BulkEventsRetryGetParametersSchemaCliId1",
+    "BulkEventsRetryGetParametersQuerySchemaCliId1": {
+      "name": "BulkEventsRetryGetParametersQuerySchemaCliId1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -10495,9 +10559,9 @@
         ]
       }
     },
-    "BulkEventsRetryGetParametersSchemaCliId": {
+    "BulkEventsRetryGetParametersQuerySchemaCliId": {
       "description": "Filter by CLI IDs. `?[any]=true` operator for any CLI.",
-      "name": "BulkEventsRetryGetParametersSchemaCliId",
+      "name": "BulkEventsRetryGetParametersQuerySchemaCliId",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -10510,10 +10574,10 @@
             }
           },
           {
-            "typeName": "BulkEventsRetryGetParametersSchemaCliId1",
+            "typeName": "BulkEventsRetryGetParametersQuerySchemaCliId1",
             "type": {
               "type": "id",
-              "value": "BulkEventsRetryGetParametersSchemaCliId1"
+              "value": "BulkEventsRetryGetParametersQuerySchemaCliId1"
             }
           },
           {
@@ -10530,8 +10594,8 @@
         ]
       }
     },
-    "BulkEventsRetryGetParametersSchemaCliUserId": {
-      "name": "BulkEventsRetryGetParametersSchemaCliUserId",
+    "BulkEventsRetryGetParametersQuerySchemaCliUserId": {
+      "name": "BulkEventsRetryGetParametersQuerySchemaCliUserId",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -10557,8 +10621,8 @@
         ]
       }
     },
-    "BulkEventsRetryGetParametersSchemaLastAttemptAt1": {
-      "name": "BulkEventsRetryGetParametersSchemaLastAttemptAt1",
+    "BulkEventsRetryGetParametersQuerySchemaLastAttemptAt1": {
+      "name": "BulkEventsRetryGetParametersQuerySchemaLastAttemptAt1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -10630,9 +10694,9 @@
         ]
       }
     },
-    "BulkEventsRetryGetParametersSchemaLastAttemptAt": {
+    "BulkEventsRetryGetParametersQuerySchemaLastAttemptAt": {
       "description": "Filter by `last_attempt_at` date using a date operator",
-      "name": "BulkEventsRetryGetParametersSchemaLastAttemptAt",
+      "name": "BulkEventsRetryGetParametersQuerySchemaLastAttemptAt",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -10646,17 +10710,17 @@
             }
           },
           {
-            "typeName": "BulkEventsRetryGetParametersSchemaLastAttemptAt1",
+            "typeName": "BulkEventsRetryGetParametersQuerySchemaLastAttemptAt1",
             "type": {
               "type": "id",
-              "value": "BulkEventsRetryGetParametersSchemaLastAttemptAt1"
+              "value": "BulkEventsRetryGetParametersQuerySchemaLastAttemptAt1"
             }
           }
         ]
       }
     },
-    "BulkEventsRetryGetParametersSchemaEventDataId": {
-      "name": "BulkEventsRetryGetParametersSchemaEventDataId",
+    "BulkEventsRetryGetParametersQuerySchemaEventDataId": {
+      "name": "BulkEventsRetryGetParametersQuerySchemaEventDataId",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -10684,9 +10748,9 @@
         ]
       }
     },
-    "BulkEventsRetryGetParametersSchemaHeaders": {
+    "BulkEventsRetryGetParametersQuerySchemaHeaders": {
       "description": "URL Encoded string of the JSON to match to the data headers",
-      "name": "BulkEventsRetryGetParametersSchemaHeaders",
+      "name": "BulkEventsRetryGetParametersQuerySchemaHeaders",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -10715,9 +10779,9 @@
         ]
       }
     },
-    "BulkEventsRetryGetParametersSchemaBody": {
+    "BulkEventsRetryGetParametersQuerySchemaBody": {
       "description": "URL Encoded string of the JSON to match to the data body",
-      "name": "BulkEventsRetryGetParametersSchemaBody",
+      "name": "BulkEventsRetryGetParametersQuerySchemaBody",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -10746,9 +10810,9 @@
         ]
       }
     },
-    "BulkEventsRetryGetParametersSchemaParsedQuery": {
+    "BulkEventsRetryGetParametersQuerySchemaParsedQuery": {
       "description": "URL Encoded string of the JSON to match to the parsed query (JSON representation of the query)",
-      "name": "BulkEventsRetryGetParametersSchemaParsedQuery",
+      "name": "BulkEventsRetryGetParametersQuerySchemaParsedQuery",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -10777,8 +10841,8 @@
         ]
       }
     },
-    "BulkEventsRetryGetParametersSchemaBulkRetryId": {
-      "name": "BulkEventsRetryGetParametersSchemaBulkRetryId",
+    "BulkEventsRetryGetParametersQuerySchemaBulkRetryId": {
+      "name": "BulkEventsRetryGetParametersQuerySchemaBulkRetryId",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -10806,9 +10870,9 @@
         ]
       }
     },
-    "BulkEventsRetryGetParametersSchemaInclude": {
+    "BulkEventsRetryGetParametersQuerySchemaInclude": {
       "description": "Include the data object in the event model",
-      "name": "BulkEventsRetryGetParametersSchemaInclude",
+      "name": "BulkEventsRetryGetParametersQuerySchemaInclude",
       "shape": {
         "type": "enum",
         "values": [
@@ -10818,8 +10882,8 @@
         ]
       }
     },
-    "BulkEventsRetryGetParametersSchemaOrderBy0": {
-      "name": "BulkEventsRetryGetParametersSchemaOrderBy0",
+    "BulkEventsRetryGetParametersQuerySchemaOrderBy0": {
+      "name": "BulkEventsRetryGetParametersQuerySchemaOrderBy0",
       "shape": {
         "type": "enum",
         "values": [
@@ -10835,8 +10899,8 @@
         ]
       }
     },
-    "BulkEventsRetryGetParametersSchemaOrderByOneOf1Items": {
-      "name": "BulkEventsRetryGetParametersSchemaOrderByOneOf1Items",
+    "BulkEventsRetryGetParametersQuerySchemaOrderByOneOf1Items": {
+      "name": "BulkEventsRetryGetParametersQuerySchemaOrderByOneOf1Items",
       "shape": {
         "type": "enum",
         "values": [
@@ -10852,44 +10916,44 @@
         ]
       }
     },
-    "BulkEventsRetryGetParametersSchemaOrderBy1": {
-      "name": "BulkEventsRetryGetParametersSchemaOrderBy1",
+    "BulkEventsRetryGetParametersQuerySchemaOrderBy1": {
+      "name": "BulkEventsRetryGetParametersQuerySchemaOrderBy1",
       "shape": {
         "type": "alias",
         "value": {
           "type": "list",
           "itemType": {
             "type": "id",
-            "value": "BulkEventsRetryGetParametersSchemaOrderByOneOf1Items"
+            "value": "BulkEventsRetryGetParametersQuerySchemaOrderByOneOf1Items"
           }
         }
       }
     },
-    "BulkEventsRetryGetParametersSchemaOrderBy": {
+    "BulkEventsRetryGetParametersQuerySchemaOrderBy": {
       "description": "Sort key(s)",
-      "name": "BulkEventsRetryGetParametersSchemaOrderBy",
+      "name": "BulkEventsRetryGetParametersQuerySchemaOrderBy",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkEventsRetryGetParametersSchemaOrderBy0",
+            "typeName": "BulkEventsRetryGetParametersQuerySchemaOrderBy0",
             "type": {
               "type": "id",
-              "value": "BulkEventsRetryGetParametersSchemaOrderBy0"
+              "value": "BulkEventsRetryGetParametersQuerySchemaOrderBy0"
             }
           },
           {
-            "typeName": "BulkEventsRetryGetParametersSchemaOrderBy1",
+            "typeName": "BulkEventsRetryGetParametersQuerySchemaOrderBy1",
             "type": {
               "type": "id",
-              "value": "BulkEventsRetryGetParametersSchemaOrderBy1"
+              "value": "BulkEventsRetryGetParametersQuerySchemaOrderBy1"
             }
           }
         ]
       }
     },
-    "BulkEventsRetryGetParametersSchemaDir0": {
-      "name": "BulkEventsRetryGetParametersSchemaDir0",
+    "BulkEventsRetryGetParametersQuerySchemaDir0": {
+      "name": "BulkEventsRetryGetParametersQuerySchemaDir0",
       "shape": {
         "type": "enum",
         "values": [
@@ -10902,8 +10966,8 @@
         ]
       }
     },
-    "BulkEventsRetryGetParametersSchemaDirOneOf1Items": {
-      "name": "BulkEventsRetryGetParametersSchemaDirOneOf1Items",
+    "BulkEventsRetryGetParametersQuerySchemaDirOneOf1Items": {
+      "name": "BulkEventsRetryGetParametersQuerySchemaDirOneOf1Items",
       "shape": {
         "type": "enum",
         "values": [
@@ -10916,37 +10980,37 @@
         ]
       }
     },
-    "BulkEventsRetryGetParametersSchemaDir1": {
-      "name": "BulkEventsRetryGetParametersSchemaDir1",
+    "BulkEventsRetryGetParametersQuerySchemaDir1": {
+      "name": "BulkEventsRetryGetParametersQuerySchemaDir1",
       "shape": {
         "type": "alias",
         "value": {
           "type": "list",
           "itemType": {
             "type": "id",
-            "value": "BulkEventsRetryGetParametersSchemaDirOneOf1Items"
+            "value": "BulkEventsRetryGetParametersQuerySchemaDirOneOf1Items"
           }
         }
       }
     },
-    "BulkEventsRetryGetParametersSchemaDir": {
+    "BulkEventsRetryGetParametersQuerySchemaDir": {
       "description": "Sort direction",
-      "name": "BulkEventsRetryGetParametersSchemaDir",
+      "name": "BulkEventsRetryGetParametersQuerySchemaDir",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkEventsRetryGetParametersSchemaDir0",
+            "typeName": "BulkEventsRetryGetParametersQuerySchemaDir0",
             "type": {
               "type": "id",
-              "value": "BulkEventsRetryGetParametersSchemaDir0"
+              "value": "BulkEventsRetryGetParametersQuerySchemaDir0"
             }
           },
           {
-            "typeName": "BulkEventsRetryGetParametersSchemaDir1",
+            "typeName": "BulkEventsRetryGetParametersQuerySchemaDir1",
             "type": {
               "type": "id",
-              "value": "BulkEventsRetryGetParametersSchemaDir1"
+              "value": "BulkEventsRetryGetParametersQuerySchemaDir1"
             }
           }
         ]
@@ -10966,7 +11030,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BulkEventsRetryGetParametersSchemaId"
+                "value": "BulkEventsRetryGetParametersQuerySchemaId"
               }
             }
           },
@@ -10977,7 +11041,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BulkEventsRetryGetParametersSchemaStatus"
+                "value": "BulkEventsRetryGetParametersQuerySchemaStatus"
               }
             }
           },
@@ -10987,7 +11051,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BulkEventsRetryGetParametersSchemaIssueId"
+                "value": "BulkEventsRetryGetParametersQuerySchemaIssueId"
               }
             }
           },
@@ -10998,7 +11062,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BulkEventsRetryGetParametersSchemaWebhookId"
+                "value": "BulkEventsRetryGetParametersQuerySchemaWebhookId"
               }
             }
           },
@@ -11009,7 +11073,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BulkEventsRetryGetParametersSchemaDestinationId"
+                "value": "BulkEventsRetryGetParametersQuerySchemaDestinationId"
               }
             }
           },
@@ -11020,7 +11084,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BulkEventsRetryGetParametersSchemaSourceId"
+                "value": "BulkEventsRetryGetParametersQuerySchemaSourceId"
               }
             }
           },
@@ -11031,7 +11095,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BulkEventsRetryGetParametersSchemaAttempts"
+                "value": "BulkEventsRetryGetParametersQuerySchemaAttempts"
               }
             }
           },
@@ -11044,7 +11108,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "BulkEventsRetryGetParametersSchemaResponseStatus"
+                  "value": "BulkEventsRetryGetParametersQuerySchemaResponseStatus"
                 }
               }
             }
@@ -11058,7 +11122,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "BulkEventsRetryGetParametersSchemaSuccessfulAt"
+                  "value": "BulkEventsRetryGetParametersQuerySchemaSuccessfulAt"
                 }
               }
             }
@@ -11070,7 +11134,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BulkEventsRetryGetParametersSchemaCreatedAt"
+                "value": "BulkEventsRetryGetParametersQuerySchemaCreatedAt"
               }
             }
           },
@@ -11080,7 +11144,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BulkEventsRetryGetParametersSchemaErrorCode"
+                "value": "BulkEventsRetryGetParametersQuerySchemaErrorCode"
               }
             }
           },
@@ -11093,7 +11157,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "BulkEventsRetryGetParametersSchemaCliId"
+                  "value": "BulkEventsRetryGetParametersQuerySchemaCliId"
                 }
               }
             }
@@ -11106,7 +11170,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "BulkEventsRetryGetParametersSchemaCliUserId"
+                  "value": "BulkEventsRetryGetParametersQuerySchemaCliUserId"
                 }
               }
             }
@@ -11120,7 +11184,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "BulkEventsRetryGetParametersSchemaLastAttemptAt"
+                  "value": "BulkEventsRetryGetParametersQuerySchemaLastAttemptAt"
                 }
               }
             }
@@ -11131,7 +11195,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BulkEventsRetryGetParametersSchemaEventDataId"
+                "value": "BulkEventsRetryGetParametersQuerySchemaEventDataId"
               }
             }
           },
@@ -11142,7 +11206,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BulkEventsRetryGetParametersSchemaHeaders"
+                "value": "BulkEventsRetryGetParametersQuerySchemaHeaders"
               }
             }
           },
@@ -11153,7 +11217,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BulkEventsRetryGetParametersSchemaBody"
+                "value": "BulkEventsRetryGetParametersQuerySchemaBody"
               }
             }
           },
@@ -11164,7 +11228,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BulkEventsRetryGetParametersSchemaParsedQuery"
+                "value": "BulkEventsRetryGetParametersQuerySchemaParsedQuery"
               }
             }
           },
@@ -11174,7 +11238,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BulkEventsRetryGetParametersSchemaBulkRetryId"
+                "value": "BulkEventsRetryGetParametersQuerySchemaBulkRetryId"
               }
             }
           },
@@ -11198,7 +11262,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BulkEventsRetryGetParametersSchemaInclude"
+                "value": "BulkEventsRetryGetParametersQuerySchemaInclude"
               }
             }
           },
@@ -11209,7 +11273,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BulkEventsRetryGetParametersSchemaOrderBy"
+                "value": "BulkEventsRetryGetParametersQuerySchemaOrderBy"
               }
             }
           },
@@ -11220,7 +11284,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BulkEventsRetryGetParametersSchemaDir"
+                "value": "BulkEventsRetryGetParametersQuerySchemaDir"
               }
             }
           },
@@ -11281,16 +11345,13 @@
         ]
       }
     },
-    "BulkEventsRetryGetParametersSchemaOneOf1Items": {
-      "name": "BulkEventsRetryGetParametersSchemaOneOf1Items",
+    "BulkEventsRetryGetParametersOrderBySchemaOneOf1Items": {
+      "name": "BulkEventsRetryGetParametersOrderBySchemaOneOf1Items",
       "shape": {
         "type": "enum",
         "values": [
           {
-            "value": "asc"
-          },
-          {
-            "value": "desc"
+            "value": "created_at"
           }
         ]
       }
@@ -11303,7 +11364,7 @@
           "type": "list",
           "itemType": {
             "type": "id",
-            "value": "BulkEventsRetryGetParametersSchemaOneOf1Items"
+            "value": "BulkEventsRetryGetParametersOrderBySchemaOneOf1Items"
           }
         }
       }
@@ -11345,6 +11406,20 @@
         ]
       }
     },
+    "BulkEventsRetryGetParametersDirSchemaOneOf1Items": {
+      "name": "BulkEventsRetryGetParametersDirSchemaOneOf1Items",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "asc"
+          },
+          {
+            "value": "desc"
+          }
+        ]
+      }
+    },
     "BulkEventsRetryGetParametersDir1": {
       "name": "BulkEventsRetryGetParametersDir1",
       "shape": {
@@ -11353,7 +11428,7 @@
           "type": "list",
           "itemType": {
             "type": "id",
-            "value": "BulkEventsRetryGetParametersSchemaOneOf1Items"
+            "value": "BulkEventsRetryGetParametersDirSchemaOneOf1Items"
           }
         }
       }
@@ -12610,9 +12685,9 @@
         ]
       }
     },
-    "BulkEventsRetryPlanGetParametersSchemaId": {
+    "BulkEventsRetryPlanGetParametersQuerySchemaId": {
       "description": "Filter by event IDs",
-      "name": "BulkEventsRetryPlanGetParametersSchemaId",
+      "name": "BulkEventsRetryPlanGetParametersQuerySchemaId",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -12641,8 +12716,8 @@
         ]
       }
     },
-    "BulkEventsRetryPlanGetParametersSchemaStatus1": {
-      "name": "BulkEventsRetryPlanGetParametersSchemaStatus1",
+    "BulkEventsRetryPlanGetParametersQuerySchemaStatus1": {
+      "name": "BulkEventsRetryPlanGetParametersQuerySchemaStatus1",
       "shape": {
         "type": "alias",
         "value": {
@@ -12654,9 +12729,9 @@
         }
       }
     },
-    "BulkEventsRetryPlanGetParametersSchemaStatus": {
+    "BulkEventsRetryPlanGetParametersQuerySchemaStatus": {
       "description": "Lifecyle status of the event",
-      "name": "BulkEventsRetryPlanGetParametersSchemaStatus",
+      "name": "BulkEventsRetryPlanGetParametersQuerySchemaStatus",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -12668,17 +12743,17 @@
             }
           },
           {
-            "typeName": "BulkEventsRetryPlanGetParametersSchemaStatus1",
+            "typeName": "BulkEventsRetryPlanGetParametersQuerySchemaStatus1",
             "type": {
               "type": "id",
-              "value": "BulkEventsRetryPlanGetParametersSchemaStatus1"
+              "value": "BulkEventsRetryPlanGetParametersQuerySchemaStatus1"
             }
           }
         ]
       }
     },
-    "BulkEventsRetryPlanGetParametersSchemaIssueId": {
-      "name": "BulkEventsRetryPlanGetParametersSchemaIssueId",
+    "BulkEventsRetryPlanGetParametersQuerySchemaIssueId": {
+      "name": "BulkEventsRetryPlanGetParametersQuerySchemaIssueId",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -12706,9 +12781,9 @@
         ]
       }
     },
-    "BulkEventsRetryPlanGetParametersSchemaWebhookId": {
+    "BulkEventsRetryPlanGetParametersQuerySchemaWebhookId": {
       "description": "Filter by webhook connection IDs",
-      "name": "BulkEventsRetryPlanGetParametersSchemaWebhookId",
+      "name": "BulkEventsRetryPlanGetParametersQuerySchemaWebhookId",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -12737,9 +12812,9 @@
         ]
       }
     },
-    "BulkEventsRetryPlanGetParametersSchemaDestinationId": {
+    "BulkEventsRetryPlanGetParametersQuerySchemaDestinationId": {
       "description": "Filter by destination IDs",
-      "name": "BulkEventsRetryPlanGetParametersSchemaDestinationId",
+      "name": "BulkEventsRetryPlanGetParametersQuerySchemaDestinationId",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -12768,9 +12843,9 @@
         ]
       }
     },
-    "BulkEventsRetryPlanGetParametersSchemaSourceId": {
+    "BulkEventsRetryPlanGetParametersQuerySchemaSourceId": {
       "description": "Filter by source IDs",
-      "name": "BulkEventsRetryPlanGetParametersSchemaSourceId",
+      "name": "BulkEventsRetryPlanGetParametersQuerySchemaSourceId",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -12799,8 +12874,8 @@
         ]
       }
     },
-    "BulkEventsRetryPlanGetParametersSchemaAttempts1": {
-      "name": "BulkEventsRetryPlanGetParametersSchemaAttempts1",
+    "BulkEventsRetryPlanGetParametersQuerySchemaAttempts1": {
+      "name": "BulkEventsRetryPlanGetParametersQuerySchemaAttempts1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -12885,9 +12960,9 @@
         ]
       }
     },
-    "BulkEventsRetryPlanGetParametersSchemaAttempts": {
+    "BulkEventsRetryPlanGetParametersQuerySchemaAttempts": {
       "description": "Filter by number of attempts",
-      "name": "BulkEventsRetryPlanGetParametersSchemaAttempts",
+      "name": "BulkEventsRetryPlanGetParametersQuerySchemaAttempts",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -12901,17 +12976,17 @@
             }
           },
           {
-            "typeName": "BulkEventsRetryPlanGetParametersSchemaAttempts1",
+            "typeName": "BulkEventsRetryPlanGetParametersQuerySchemaAttempts1",
             "type": {
               "type": "id",
-              "value": "BulkEventsRetryPlanGetParametersSchemaAttempts1"
+              "value": "BulkEventsRetryPlanGetParametersQuerySchemaAttempts1"
             }
           }
         ]
       }
     },
-    "BulkEventsRetryPlanGetParametersSchemaResponseStatus1": {
-      "name": "BulkEventsRetryPlanGetParametersSchemaResponseStatus1",
+    "BulkEventsRetryPlanGetParametersQuerySchemaResponseStatus1": {
+      "name": "BulkEventsRetryPlanGetParametersQuerySchemaResponseStatus1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -13001,9 +13076,9 @@
         ]
       }
     },
-    "BulkEventsRetryPlanGetParametersSchemaResponseStatus": {
+    "BulkEventsRetryPlanGetParametersQuerySchemaResponseStatus": {
       "description": "Filter by HTTP response status code",
-      "name": "BulkEventsRetryPlanGetParametersSchemaResponseStatus",
+      "name": "BulkEventsRetryPlanGetParametersQuerySchemaResponseStatus",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -13018,10 +13093,10 @@
             }
           },
           {
-            "typeName": "BulkEventsRetryPlanGetParametersSchemaResponseStatus1",
+            "typeName": "BulkEventsRetryPlanGetParametersQuerySchemaResponseStatus1",
             "type": {
               "type": "id",
-              "value": "BulkEventsRetryPlanGetParametersSchemaResponseStatus1"
+              "value": "BulkEventsRetryPlanGetParametersQuerySchemaResponseStatus1"
             }
           },
           {
@@ -13040,8 +13115,8 @@
         ]
       }
     },
-    "BulkEventsRetryPlanGetParametersSchemaSuccessfulAt1": {
-      "name": "BulkEventsRetryPlanGetParametersSchemaSuccessfulAt1",
+    "BulkEventsRetryPlanGetParametersQuerySchemaSuccessfulAt1": {
+      "name": "BulkEventsRetryPlanGetParametersQuerySchemaSuccessfulAt1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -13113,9 +13188,9 @@
         ]
       }
     },
-    "BulkEventsRetryPlanGetParametersSchemaSuccessfulAt": {
+    "BulkEventsRetryPlanGetParametersQuerySchemaSuccessfulAt": {
       "description": "Filter by `successful_at` date using a date operator",
-      "name": "BulkEventsRetryPlanGetParametersSchemaSuccessfulAt",
+      "name": "BulkEventsRetryPlanGetParametersQuerySchemaSuccessfulAt",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -13129,17 +13204,17 @@
             }
           },
           {
-            "typeName": "BulkEventsRetryPlanGetParametersSchemaSuccessfulAt1",
+            "typeName": "BulkEventsRetryPlanGetParametersQuerySchemaSuccessfulAt1",
             "type": {
               "type": "id",
-              "value": "BulkEventsRetryPlanGetParametersSchemaSuccessfulAt1"
+              "value": "BulkEventsRetryPlanGetParametersQuerySchemaSuccessfulAt1"
             }
           }
         ]
       }
     },
-    "BulkEventsRetryPlanGetParametersSchemaCreatedAt1": {
-      "name": "BulkEventsRetryPlanGetParametersSchemaCreatedAt1",
+    "BulkEventsRetryPlanGetParametersQuerySchemaCreatedAt1": {
+      "name": "BulkEventsRetryPlanGetParametersQuerySchemaCreatedAt1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -13211,9 +13286,9 @@
         ]
       }
     },
-    "BulkEventsRetryPlanGetParametersSchemaCreatedAt": {
+    "BulkEventsRetryPlanGetParametersQuerySchemaCreatedAt": {
       "description": "Filter by `created_at` date using a date operator",
-      "name": "BulkEventsRetryPlanGetParametersSchemaCreatedAt",
+      "name": "BulkEventsRetryPlanGetParametersQuerySchemaCreatedAt",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -13227,17 +13302,17 @@
             }
           },
           {
-            "typeName": "BulkEventsRetryPlanGetParametersSchemaCreatedAt1",
+            "typeName": "BulkEventsRetryPlanGetParametersQuerySchemaCreatedAt1",
             "type": {
               "type": "id",
-              "value": "BulkEventsRetryPlanGetParametersSchemaCreatedAt1"
+              "value": "BulkEventsRetryPlanGetParametersQuerySchemaCreatedAt1"
             }
           }
         ]
       }
     },
-    "BulkEventsRetryPlanGetParametersSchemaErrorCode": {
-      "name": "BulkEventsRetryPlanGetParametersSchemaErrorCode",
+    "BulkEventsRetryPlanGetParametersQuerySchemaErrorCode": {
+      "name": "BulkEventsRetryPlanGetParametersQuerySchemaErrorCode",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -13265,8 +13340,8 @@
         ]
       }
     },
-    "BulkEventsRetryPlanGetParametersSchemaCliId1": {
-      "name": "BulkEventsRetryPlanGetParametersSchemaCliId1",
+    "BulkEventsRetryPlanGetParametersQuerySchemaCliId1": {
+      "name": "BulkEventsRetryPlanGetParametersQuerySchemaCliId1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -13286,9 +13361,9 @@
         ]
       }
     },
-    "BulkEventsRetryPlanGetParametersSchemaCliId": {
+    "BulkEventsRetryPlanGetParametersQuerySchemaCliId": {
       "description": "Filter by CLI IDs. `?[any]=true` operator for any CLI.",
-      "name": "BulkEventsRetryPlanGetParametersSchemaCliId",
+      "name": "BulkEventsRetryPlanGetParametersQuerySchemaCliId",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -13301,10 +13376,10 @@
             }
           },
           {
-            "typeName": "BulkEventsRetryPlanGetParametersSchemaCliId1",
+            "typeName": "BulkEventsRetryPlanGetParametersQuerySchemaCliId1",
             "type": {
               "type": "id",
-              "value": "BulkEventsRetryPlanGetParametersSchemaCliId1"
+              "value": "BulkEventsRetryPlanGetParametersQuerySchemaCliId1"
             }
           },
           {
@@ -13321,8 +13396,8 @@
         ]
       }
     },
-    "BulkEventsRetryPlanGetParametersSchemaCliUserId": {
-      "name": "BulkEventsRetryPlanGetParametersSchemaCliUserId",
+    "BulkEventsRetryPlanGetParametersQuerySchemaCliUserId": {
+      "name": "BulkEventsRetryPlanGetParametersQuerySchemaCliUserId",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -13348,8 +13423,8 @@
         ]
       }
     },
-    "BulkEventsRetryPlanGetParametersSchemaLastAttemptAt1": {
-      "name": "BulkEventsRetryPlanGetParametersSchemaLastAttemptAt1",
+    "BulkEventsRetryPlanGetParametersQuerySchemaLastAttemptAt1": {
+      "name": "BulkEventsRetryPlanGetParametersQuerySchemaLastAttemptAt1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -13421,9 +13496,9 @@
         ]
       }
     },
-    "BulkEventsRetryPlanGetParametersSchemaLastAttemptAt": {
+    "BulkEventsRetryPlanGetParametersQuerySchemaLastAttemptAt": {
       "description": "Filter by `last_attempt_at` date using a date operator",
-      "name": "BulkEventsRetryPlanGetParametersSchemaLastAttemptAt",
+      "name": "BulkEventsRetryPlanGetParametersQuerySchemaLastAttemptAt",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -13437,17 +13512,17 @@
             }
           },
           {
-            "typeName": "BulkEventsRetryPlanGetParametersSchemaLastAttemptAt1",
+            "typeName": "BulkEventsRetryPlanGetParametersQuerySchemaLastAttemptAt1",
             "type": {
               "type": "id",
-              "value": "BulkEventsRetryPlanGetParametersSchemaLastAttemptAt1"
+              "value": "BulkEventsRetryPlanGetParametersQuerySchemaLastAttemptAt1"
             }
           }
         ]
       }
     },
-    "BulkEventsRetryPlanGetParametersSchemaEventDataId": {
-      "name": "BulkEventsRetryPlanGetParametersSchemaEventDataId",
+    "BulkEventsRetryPlanGetParametersQuerySchemaEventDataId": {
+      "name": "BulkEventsRetryPlanGetParametersQuerySchemaEventDataId",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -13475,9 +13550,9 @@
         ]
       }
     },
-    "BulkEventsRetryPlanGetParametersSchemaHeaders": {
+    "BulkEventsRetryPlanGetParametersQuerySchemaHeaders": {
       "description": "URL Encoded string of the JSON to match to the data headers",
-      "name": "BulkEventsRetryPlanGetParametersSchemaHeaders",
+      "name": "BulkEventsRetryPlanGetParametersQuerySchemaHeaders",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -13506,9 +13581,9 @@
         ]
       }
     },
-    "BulkEventsRetryPlanGetParametersSchemaBody": {
+    "BulkEventsRetryPlanGetParametersQuerySchemaBody": {
       "description": "URL Encoded string of the JSON to match to the data body",
-      "name": "BulkEventsRetryPlanGetParametersSchemaBody",
+      "name": "BulkEventsRetryPlanGetParametersQuerySchemaBody",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -13537,9 +13612,9 @@
         ]
       }
     },
-    "BulkEventsRetryPlanGetParametersSchemaParsedQuery": {
+    "BulkEventsRetryPlanGetParametersQuerySchemaParsedQuery": {
       "description": "URL Encoded string of the JSON to match to the parsed query (JSON representation of the query)",
-      "name": "BulkEventsRetryPlanGetParametersSchemaParsedQuery",
+      "name": "BulkEventsRetryPlanGetParametersQuerySchemaParsedQuery",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -13568,8 +13643,8 @@
         ]
       }
     },
-    "BulkEventsRetryPlanGetParametersSchemaBulkRetryId": {
-      "name": "BulkEventsRetryPlanGetParametersSchemaBulkRetryId",
+    "BulkEventsRetryPlanGetParametersQuerySchemaBulkRetryId": {
+      "name": "BulkEventsRetryPlanGetParametersQuerySchemaBulkRetryId",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -13611,7 +13686,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BulkEventsRetryPlanGetParametersSchemaId"
+                "value": "BulkEventsRetryPlanGetParametersQuerySchemaId"
               }
             }
           },
@@ -13622,7 +13697,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BulkEventsRetryPlanGetParametersSchemaStatus"
+                "value": "BulkEventsRetryPlanGetParametersQuerySchemaStatus"
               }
             }
           },
@@ -13632,7 +13707,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BulkEventsRetryPlanGetParametersSchemaIssueId"
+                "value": "BulkEventsRetryPlanGetParametersQuerySchemaIssueId"
               }
             }
           },
@@ -13643,7 +13718,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BulkEventsRetryPlanGetParametersSchemaWebhookId"
+                "value": "BulkEventsRetryPlanGetParametersQuerySchemaWebhookId"
               }
             }
           },
@@ -13654,7 +13729,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BulkEventsRetryPlanGetParametersSchemaDestinationId"
+                "value": "BulkEventsRetryPlanGetParametersQuerySchemaDestinationId"
               }
             }
           },
@@ -13665,7 +13740,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BulkEventsRetryPlanGetParametersSchemaSourceId"
+                "value": "BulkEventsRetryPlanGetParametersQuerySchemaSourceId"
               }
             }
           },
@@ -13676,7 +13751,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BulkEventsRetryPlanGetParametersSchemaAttempts"
+                "value": "BulkEventsRetryPlanGetParametersQuerySchemaAttempts"
               }
             }
           },
@@ -13689,7 +13764,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "BulkEventsRetryPlanGetParametersSchemaResponseStatus"
+                  "value": "BulkEventsRetryPlanGetParametersQuerySchemaResponseStatus"
                 }
               }
             }
@@ -13703,7 +13778,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "BulkEventsRetryPlanGetParametersSchemaSuccessfulAt"
+                  "value": "BulkEventsRetryPlanGetParametersQuerySchemaSuccessfulAt"
                 }
               }
             }
@@ -13715,7 +13790,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BulkEventsRetryPlanGetParametersSchemaCreatedAt"
+                "value": "BulkEventsRetryPlanGetParametersQuerySchemaCreatedAt"
               }
             }
           },
@@ -13725,7 +13800,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BulkEventsRetryPlanGetParametersSchemaErrorCode"
+                "value": "BulkEventsRetryPlanGetParametersQuerySchemaErrorCode"
               }
             }
           },
@@ -13738,7 +13813,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "BulkEventsRetryPlanGetParametersSchemaCliId"
+                  "value": "BulkEventsRetryPlanGetParametersQuerySchemaCliId"
                 }
               }
             }
@@ -13751,7 +13826,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "BulkEventsRetryPlanGetParametersSchemaCliUserId"
+                  "value": "BulkEventsRetryPlanGetParametersQuerySchemaCliUserId"
                 }
               }
             }
@@ -13765,7 +13840,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "BulkEventsRetryPlanGetParametersSchemaLastAttemptAt"
+                  "value": "BulkEventsRetryPlanGetParametersQuerySchemaLastAttemptAt"
                 }
               }
             }
@@ -13776,7 +13851,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BulkEventsRetryPlanGetParametersSchemaEventDataId"
+                "value": "BulkEventsRetryPlanGetParametersQuerySchemaEventDataId"
               }
             }
           },
@@ -13787,7 +13862,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BulkEventsRetryPlanGetParametersSchemaHeaders"
+                "value": "BulkEventsRetryPlanGetParametersQuerySchemaHeaders"
               }
             }
           },
@@ -13798,7 +13873,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BulkEventsRetryPlanGetParametersSchemaBody"
+                "value": "BulkEventsRetryPlanGetParametersQuerySchemaBody"
               }
             }
           },
@@ -13809,7 +13884,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BulkEventsRetryPlanGetParametersSchemaParsedQuery"
+                "value": "BulkEventsRetryPlanGetParametersQuerySchemaParsedQuery"
               }
             }
           },
@@ -13819,7 +13894,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BulkEventsRetryPlanGetParametersSchemaBulkRetryId"
+                "value": "BulkEventsRetryPlanGetParametersQuerySchemaBulkRetryId"
               }
             }
           },
@@ -14200,9 +14275,9 @@
         ]
       }
     },
-    "BulkIgnoredEventsRetryGetParametersSchemaCause": {
+    "BulkIgnoredEventsRetryGetParametersQuerySchemaCause": {
       "description": "The cause of the ignored event",
-      "name": "BulkIgnoredEventsRetryGetParametersSchemaCause",
+      "name": "BulkIgnoredEventsRetryGetParametersQuerySchemaCause",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -14230,9 +14305,9 @@
         ]
       }
     },
-    "BulkIgnoredEventsRetryGetParametersSchemaWebhookId": {
+    "BulkIgnoredEventsRetryGetParametersQuerySchemaWebhookId": {
       "description": "Connection ID of the ignored event",
-      "name": "BulkIgnoredEventsRetryGetParametersSchemaWebhookId",
+      "name": "BulkIgnoredEventsRetryGetParametersQuerySchemaWebhookId",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -14274,7 +14349,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BulkIgnoredEventsRetryGetParametersSchemaCause"
+                "value": "BulkIgnoredEventsRetryGetParametersQuerySchemaCause"
               }
             }
           },
@@ -14285,7 +14360,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BulkIgnoredEventsRetryGetParametersSchemaWebhookId"
+                "value": "BulkIgnoredEventsRetryGetParametersQuerySchemaWebhookId"
               }
             }
           },
@@ -14317,16 +14392,13 @@
         ]
       }
     },
-    "BulkIgnoredEventsRetryGetParametersSchemaOneOf1Items": {
-      "name": "BulkIgnoredEventsRetryGetParametersSchemaOneOf1Items",
+    "BulkIgnoredEventsRetryGetParametersOrderBySchemaOneOf1Items": {
+      "name": "BulkIgnoredEventsRetryGetParametersOrderBySchemaOneOf1Items",
       "shape": {
         "type": "enum",
         "values": [
           {
-            "value": "asc"
-          },
-          {
-            "value": "desc"
+            "value": "created_at"
           }
         ]
       }
@@ -14339,7 +14411,7 @@
           "type": "list",
           "itemType": {
             "type": "id",
-            "value": "BulkIgnoredEventsRetryGetParametersSchemaOneOf1Items"
+            "value": "BulkIgnoredEventsRetryGetParametersOrderBySchemaOneOf1Items"
           }
         }
       }
@@ -14381,6 +14453,20 @@
         ]
       }
     },
+    "BulkIgnoredEventsRetryGetParametersDirSchemaOneOf1Items": {
+      "name": "BulkIgnoredEventsRetryGetParametersDirSchemaOneOf1Items",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "asc"
+          },
+          {
+            "value": "desc"
+          }
+        ]
+      }
+    },
     "BulkIgnoredEventsRetryGetParametersDir1": {
       "name": "BulkIgnoredEventsRetryGetParametersDir1",
       "shape": {
@@ -14389,7 +14475,7 @@
           "type": "list",
           "itemType": {
             "type": "id",
-            "value": "BulkIgnoredEventsRetryGetParametersSchemaOneOf1Items"
+            "value": "BulkIgnoredEventsRetryGetParametersDirSchemaOneOf1Items"
           }
         }
       }
@@ -14523,9 +14609,9 @@
         ]
       }
     },
-    "BulkIgnoredEventsRetryPlanGetParametersSchemaCause": {
+    "BulkIgnoredEventsRetryPlanGetParametersQuerySchemaCause": {
       "description": "The cause of the ignored event",
-      "name": "BulkIgnoredEventsRetryPlanGetParametersSchemaCause",
+      "name": "BulkIgnoredEventsRetryPlanGetParametersQuerySchemaCause",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -14553,9 +14639,9 @@
         ]
       }
     },
-    "BulkIgnoredEventsRetryPlanGetParametersSchemaWebhookId": {
+    "BulkIgnoredEventsRetryPlanGetParametersQuerySchemaWebhookId": {
       "description": "Connection ID of the ignored event",
-      "name": "BulkIgnoredEventsRetryPlanGetParametersSchemaWebhookId",
+      "name": "BulkIgnoredEventsRetryPlanGetParametersQuerySchemaWebhookId",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -14597,7 +14683,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BulkIgnoredEventsRetryPlanGetParametersSchemaCause"
+                "value": "BulkIgnoredEventsRetryPlanGetParametersQuerySchemaCause"
               }
             }
           },
@@ -14608,7 +14694,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BulkIgnoredEventsRetryPlanGetParametersSchemaWebhookId"
+                "value": "BulkIgnoredEventsRetryPlanGetParametersQuerySchemaWebhookId"
               }
             }
           },
@@ -14796,16 +14882,20 @@
         ]
       }
     },
-    "IssuesGetParametersSchemaOneOf1Items": {
-      "name": "IssuesGetParametersSchemaOneOf1Items",
+    "IssuesGetParametersTypeSchemaOneOf1Items": {
+      "description": "Issue type",
+      "name": "IssuesGetParametersTypeSchemaOneOf1Items",
       "shape": {
         "type": "enum",
         "values": [
           {
-            "value": "asc"
+            "value": "delivery"
           },
           {
-            "value": "desc"
+            "value": "transformation"
+          },
+          {
+            "value": "backpressure"
           }
         ]
       }
@@ -14818,7 +14908,7 @@
           "type": "list",
           "itemType": {
             "type": "id",
-            "value": "IssuesGetParametersSchemaOneOf1Items"
+            "value": "IssuesGetParametersTypeSchemaOneOf1Items"
           }
         }
       }
@@ -14868,6 +14958,27 @@
         ]
       }
     },
+    "IssuesGetParametersStatusSchemaOneOf1Items": {
+      "description": "Issue status",
+      "name": "IssuesGetParametersStatusSchemaOneOf1Items",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "OPENED"
+          },
+          {
+            "value": "IGNORED"
+          },
+          {
+            "value": "ACKNOWLEDGED"
+          },
+          {
+            "value": "RESOLVED"
+          }
+        ]
+      }
+    },
     "IssuesGetParametersStatus1": {
       "name": "IssuesGetParametersStatus1",
       "shape": {
@@ -14876,7 +14987,7 @@
           "type": "list",
           "itemType": {
             "type": "id",
-            "value": "IssuesGetParametersSchemaOneOf1Items"
+            "value": "IssuesGetParametersStatusSchemaOneOf1Items"
           }
         }
       }
@@ -14934,8 +15045,8 @@
         ]
       }
     },
-    "IssuesGetParametersSchemaWebhookId": {
-      "name": "IssuesGetParametersSchemaWebhookId",
+    "IssuesGetParametersAggregationKeysSchemaWebhookId": {
+      "name": "IssuesGetParametersAggregationKeysSchemaWebhookId",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -14961,8 +15072,8 @@
         ]
       }
     },
-    "IssuesGetParametersSchemaResponseStatus": {
-      "name": "IssuesGetParametersSchemaResponseStatus",
+    "IssuesGetParametersAggregationKeysSchemaResponseStatus": {
+      "name": "IssuesGetParametersAggregationKeysSchemaResponseStatus",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -14988,8 +15099,8 @@
         ]
       }
     },
-    "IssuesGetParametersSchemaErrorCode1": {
-      "name": "IssuesGetParametersSchemaErrorCode1",
+    "IssuesGetParametersAggregationKeysSchemaErrorCode1": {
+      "name": "IssuesGetParametersAggregationKeysSchemaErrorCode1",
       "shape": {
         "type": "alias",
         "value": {
@@ -15001,8 +15112,8 @@
         }
       }
     },
-    "IssuesGetParametersSchemaErrorCode": {
-      "name": "IssuesGetParametersSchemaErrorCode",
+    "IssuesGetParametersAggregationKeysSchemaErrorCode": {
+      "name": "IssuesGetParametersAggregationKeysSchemaErrorCode",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -15014,10 +15125,10 @@
             }
           },
           {
-            "typeName": "IssuesGetParametersSchemaErrorCode1",
+            "typeName": "IssuesGetParametersAggregationKeysSchemaErrorCode1",
             "type": {
               "type": "id",
-              "value": "IssuesGetParametersSchemaErrorCode1"
+              "value": "IssuesGetParametersAggregationKeysSchemaErrorCode1"
             }
           }
         ]
@@ -15036,7 +15147,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "IssuesGetParametersSchemaWebhookId"
+                "value": "IssuesGetParametersAggregationKeysSchemaWebhookId"
               }
             }
           },
@@ -15046,7 +15157,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "IssuesGetParametersSchemaResponseStatus"
+                "value": "IssuesGetParametersAggregationKeysSchemaResponseStatus"
               }
             }
           },
@@ -15056,7 +15167,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "IssuesGetParametersSchemaErrorCode"
+                "value": "IssuesGetParametersAggregationKeysSchemaErrorCode"
               }
             }
           }
@@ -15526,6 +15637,29 @@
         ]
       }
     },
+    "IssuesGetParametersOrderBySchemaOneOf1Items": {
+      "name": "IssuesGetParametersOrderBySchemaOneOf1Items",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "created_at"
+          },
+          {
+            "value": "first_seen_at"
+          },
+          {
+            "value": "last_seen_at"
+          },
+          {
+            "value": "opened_at"
+          },
+          {
+            "value": "status"
+          }
+        ]
+      }
+    },
     "IssuesGetParametersOrderBy1": {
       "name": "IssuesGetParametersOrderBy1",
       "shape": {
@@ -15534,7 +15668,7 @@
           "type": "list",
           "itemType": {
             "type": "id",
-            "value": "IssuesGetParametersSchemaOneOf1Items"
+            "value": "IssuesGetParametersOrderBySchemaOneOf1Items"
           }
         }
       }
@@ -15576,6 +15710,20 @@
         ]
       }
     },
+    "IssuesGetParametersDirSchemaOneOf1Items": {
+      "name": "IssuesGetParametersDirSchemaOneOf1Items",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "asc"
+          },
+          {
+            "value": "desc"
+          }
+        ]
+      }
+    },
     "IssuesGetParametersDir1": {
       "name": "IssuesGetParametersDir1",
       "shape": {
@@ -15584,7 +15732,7 @@
           "type": "list",
           "itemType": {
             "type": "id",
-            "value": "IssuesGetParametersSchemaOneOf1Items"
+            "value": "IssuesGetParametersDirSchemaOneOf1Items"
           }
         }
       }
@@ -15691,16 +15839,20 @@
         ]
       }
     },
-    "IssuesCountGetParametersSchemaOneOf1Items": {
-      "name": "IssuesCountGetParametersSchemaOneOf1Items",
+    "IssuesCountGetParametersTypeSchemaOneOf1Items": {
+      "description": "Issue type",
+      "name": "IssuesCountGetParametersTypeSchemaOneOf1Items",
       "shape": {
         "type": "enum",
         "values": [
           {
-            "value": "asc"
+            "value": "delivery"
           },
           {
-            "value": "desc"
+            "value": "transformation"
+          },
+          {
+            "value": "backpressure"
           }
         ]
       }
@@ -15713,7 +15865,7 @@
           "type": "list",
           "itemType": {
             "type": "id",
-            "value": "IssuesCountGetParametersSchemaOneOf1Items"
+            "value": "IssuesCountGetParametersTypeSchemaOneOf1Items"
           }
         }
       }
@@ -15763,6 +15915,27 @@
         ]
       }
     },
+    "IssuesCountGetParametersStatusSchemaOneOf1Items": {
+      "description": "Issue status",
+      "name": "IssuesCountGetParametersStatusSchemaOneOf1Items",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "OPENED"
+          },
+          {
+            "value": "IGNORED"
+          },
+          {
+            "value": "ACKNOWLEDGED"
+          },
+          {
+            "value": "RESOLVED"
+          }
+        ]
+      }
+    },
     "IssuesCountGetParametersStatus1": {
       "name": "IssuesCountGetParametersStatus1",
       "shape": {
@@ -15771,7 +15944,7 @@
           "type": "list",
           "itemType": {
             "type": "id",
-            "value": "IssuesCountGetParametersSchemaOneOf1Items"
+            "value": "IssuesCountGetParametersStatusSchemaOneOf1Items"
           }
         }
       }
@@ -15829,8 +16002,8 @@
         ]
       }
     },
-    "IssuesCountGetParametersSchemaWebhookId": {
-      "name": "IssuesCountGetParametersSchemaWebhookId",
+    "IssuesCountGetParametersAggregationKeysSchemaWebhookId": {
+      "name": "IssuesCountGetParametersAggregationKeysSchemaWebhookId",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -15856,8 +16029,8 @@
         ]
       }
     },
-    "IssuesCountGetParametersSchemaResponseStatus": {
-      "name": "IssuesCountGetParametersSchemaResponseStatus",
+    "IssuesCountGetParametersAggregationKeysSchemaResponseStatus": {
+      "name": "IssuesCountGetParametersAggregationKeysSchemaResponseStatus",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -15883,8 +16056,8 @@
         ]
       }
     },
-    "IssuesCountGetParametersSchemaErrorCode1": {
-      "name": "IssuesCountGetParametersSchemaErrorCode1",
+    "IssuesCountGetParametersAggregationKeysSchemaErrorCode1": {
+      "name": "IssuesCountGetParametersAggregationKeysSchemaErrorCode1",
       "shape": {
         "type": "alias",
         "value": {
@@ -15896,8 +16069,8 @@
         }
       }
     },
-    "IssuesCountGetParametersSchemaErrorCode": {
-      "name": "IssuesCountGetParametersSchemaErrorCode",
+    "IssuesCountGetParametersAggregationKeysSchemaErrorCode": {
+      "name": "IssuesCountGetParametersAggregationKeysSchemaErrorCode",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -15909,10 +16082,10 @@
             }
           },
           {
-            "typeName": "IssuesCountGetParametersSchemaErrorCode1",
+            "typeName": "IssuesCountGetParametersAggregationKeysSchemaErrorCode1",
             "type": {
               "type": "id",
-              "value": "IssuesCountGetParametersSchemaErrorCode1"
+              "value": "IssuesCountGetParametersAggregationKeysSchemaErrorCode1"
             }
           }
         ]
@@ -15931,7 +16104,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "IssuesCountGetParametersSchemaWebhookId"
+                "value": "IssuesCountGetParametersAggregationKeysSchemaWebhookId"
               }
             }
           },
@@ -15941,7 +16114,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "IssuesCountGetParametersSchemaResponseStatus"
+                "value": "IssuesCountGetParametersAggregationKeysSchemaResponseStatus"
               }
             }
           },
@@ -15951,7 +16124,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "IssuesCountGetParametersSchemaErrorCode"
+                "value": "IssuesCountGetParametersAggregationKeysSchemaErrorCode"
               }
             }
           }
@@ -16421,6 +16594,29 @@
         ]
       }
     },
+    "IssuesCountGetParametersOrderBySchemaOneOf1Items": {
+      "name": "IssuesCountGetParametersOrderBySchemaOneOf1Items",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "created_at"
+          },
+          {
+            "value": "first_seen_at"
+          },
+          {
+            "value": "last_seen_at"
+          },
+          {
+            "value": "opened_at"
+          },
+          {
+            "value": "status"
+          }
+        ]
+      }
+    },
     "IssuesCountGetParametersOrderBy1": {
       "name": "IssuesCountGetParametersOrderBy1",
       "shape": {
@@ -16429,7 +16625,7 @@
           "type": "list",
           "itemType": {
             "type": "id",
-            "value": "IssuesCountGetParametersSchemaOneOf1Items"
+            "value": "IssuesCountGetParametersOrderBySchemaOneOf1Items"
           }
         }
       }
@@ -16471,6 +16667,20 @@
         ]
       }
     },
+    "IssuesCountGetParametersDirSchemaOneOf1Items": {
+      "name": "IssuesCountGetParametersDirSchemaOneOf1Items",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "asc"
+          },
+          {
+            "value": "desc"
+          }
+        ]
+      }
+    },
     "IssuesCountGetParametersDir1": {
       "name": "IssuesCountGetParametersDir1",
       "shape": {
@@ -16479,7 +16689,7 @@
           "type": "list",
           "itemType": {
             "type": "id",
-            "value": "IssuesCountGetParametersSchemaOneOf1Items"
+            "value": "IssuesCountGetParametersDirSchemaOneOf1Items"
           }
         }
       }
@@ -17303,16 +17513,16 @@
         ]
       }
     },
-    "RequestsGetParametersSchemaOneOf1Items": {
-      "name": "RequestsGetParametersSchemaOneOf1Items",
+    "RequestsGetParametersOrderBySchemaOneOf1Items": {
+      "name": "RequestsGetParametersOrderBySchemaOneOf1Items",
       "shape": {
         "type": "enum",
         "values": [
           {
-            "value": "asc"
+            "value": "ingested_at"
           },
           {
-            "value": "desc"
+            "value": "created_at"
           }
         ]
       }
@@ -17325,7 +17535,7 @@
           "type": "list",
           "itemType": {
             "type": "id",
-            "value": "RequestsGetParametersSchemaOneOf1Items"
+            "value": "RequestsGetParametersOrderBySchemaOneOf1Items"
           }
         }
       }
@@ -17367,6 +17577,20 @@
         ]
       }
     },
+    "RequestsGetParametersDirSchemaOneOf1Items": {
+      "name": "RequestsGetParametersDirSchemaOneOf1Items",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "asc"
+          },
+          {
+            "value": "desc"
+          }
+        ]
+      }
+    },
     "RequestsGetParametersDir1": {
       "name": "RequestsGetParametersDir1",
       "shape": {
@@ -17375,7 +17599,7 @@
           "type": "list",
           "itemType": {
             "type": "id",
-            "value": "RequestsGetParametersSchemaOneOf1Items"
+            "value": "RequestsGetParametersDirSchemaOneOf1Items"
           }
         }
       }
@@ -18419,16 +18643,19 @@
         ]
       }
     },
-    "RequestsIdEventsGetParametersSchemaOneOf1Items": {
-      "name": "RequestsIdEventsGetParametersSchemaOneOf1Items",
+    "RequestsIdEventsGetParametersOrderBySchemaOneOf1Items": {
+      "name": "RequestsIdEventsGetParametersOrderBySchemaOneOf1Items",
       "shape": {
         "type": "enum",
         "values": [
           {
-            "value": "asc"
+            "value": "last_attempt_at"
           },
           {
-            "value": "desc"
+            "value": "next_attempt_at"
+          },
+          {
+            "value": "created_at"
           }
         ]
       }
@@ -18441,7 +18668,7 @@
           "type": "list",
           "itemType": {
             "type": "id",
-            "value": "RequestsIdEventsGetParametersSchemaOneOf1Items"
+            "value": "RequestsIdEventsGetParametersOrderBySchemaOneOf1Items"
           }
         }
       }
@@ -18483,6 +18710,20 @@
         ]
       }
     },
+    "RequestsIdEventsGetParametersDirSchemaOneOf1Items": {
+      "name": "RequestsIdEventsGetParametersDirSchemaOneOf1Items",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "asc"
+          },
+          {
+            "value": "desc"
+          }
+        ]
+      }
+    },
     "RequestsIdEventsGetParametersDir1": {
       "name": "RequestsIdEventsGetParametersDir1",
       "shape": {
@@ -18491,7 +18732,7 @@
           "type": "list",
           "itemType": {
             "type": "id",
-            "value": "RequestsIdEventsGetParametersSchemaOneOf1Items"
+            "value": "RequestsIdEventsGetParametersDirSchemaOneOf1Items"
           }
         }
       }
@@ -18561,16 +18802,13 @@
         ]
       }
     },
-    "RequestsIdIgnoredEventsGetParametersSchemaOneOf1Items": {
-      "name": "RequestsIdIgnoredEventsGetParametersSchemaOneOf1Items",
+    "RequestsIdIgnoredEventsGetParametersOrderBySchemaOneOf1Items": {
+      "name": "RequestsIdIgnoredEventsGetParametersOrderBySchemaOneOf1Items",
       "shape": {
         "type": "enum",
         "values": [
           {
-            "value": "asc"
-          },
-          {
-            "value": "desc"
+            "value": "created_at"
           }
         ]
       }
@@ -18583,7 +18821,7 @@
           "type": "list",
           "itemType": {
             "type": "id",
-            "value": "RequestsIdIgnoredEventsGetParametersSchemaOneOf1Items"
+            "value": "RequestsIdIgnoredEventsGetParametersOrderBySchemaOneOf1Items"
           }
         }
       }
@@ -18625,6 +18863,20 @@
         ]
       }
     },
+    "RequestsIdIgnoredEventsGetParametersDirSchemaOneOf1Items": {
+      "name": "RequestsIdIgnoredEventsGetParametersDirSchemaOneOf1Items",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "asc"
+          },
+          {
+            "value": "desc"
+          }
+        ]
+      }
+    },
     "RequestsIdIgnoredEventsGetParametersDir1": {
       "name": "RequestsIdIgnoredEventsGetParametersDir1",
       "shape": {
@@ -18633,7 +18885,7 @@
           "type": "list",
           "itemType": {
             "type": "id",
-            "value": "RequestsIdIgnoredEventsGetParametersSchemaOneOf1Items"
+            "value": "RequestsIdIgnoredEventsGetParametersDirSchemaOneOf1Items"
           }
         }
       }
@@ -19022,9 +19274,9 @@
         ]
       }
     },
-    "BulkRequestsRetryGetParametersSchemaId": {
+    "BulkRequestsRetryGetParametersQuerySchemaId": {
       "description": "Filter by requests IDs",
-      "name": "BulkRequestsRetryGetParametersSchemaId",
+      "name": "BulkRequestsRetryGetParametersQuerySchemaId",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -19053,8 +19305,8 @@
         ]
       }
     },
-    "BulkRequestsRetryGetParametersSchemaStatus": {
-      "name": "BulkRequestsRetryGetParametersSchemaStatus",
+    "BulkRequestsRetryGetParametersQuerySchemaStatus": {
+      "name": "BulkRequestsRetryGetParametersQuerySchemaStatus",
       "shape": {
         "type": "enum",
         "values": [
@@ -19067,8 +19319,8 @@
         ]
       }
     },
-    "BulkRequestsRetryGetParametersSchemaRejectionCause1": {
-      "name": "BulkRequestsRetryGetParametersSchemaRejectionCause1",
+    "BulkRequestsRetryGetParametersQuerySchemaRejectionCause1": {
+      "name": "BulkRequestsRetryGetParametersQuerySchemaRejectionCause1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -19138,8 +19390,8 @@
         ]
       }
     },
-    "BulkRequestsRetryGetParametersSchemaRejectionCause2": {
-      "name": "BulkRequestsRetryGetParametersSchemaRejectionCause2",
+    "BulkRequestsRetryGetParametersQuerySchemaRejectionCause2": {
+      "name": "BulkRequestsRetryGetParametersQuerySchemaRejectionCause2",
       "shape": {
         "type": "alias",
         "value": {
@@ -19151,9 +19403,9 @@
         }
       }
     },
-    "BulkRequestsRetryGetParametersSchemaRejectionCause": {
+    "BulkRequestsRetryGetParametersQuerySchemaRejectionCause": {
       "description": "Filter by rejection cause",
-      "name": "BulkRequestsRetryGetParametersSchemaRejectionCause",
+      "name": "BulkRequestsRetryGetParametersQuerySchemaRejectionCause",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -19165,24 +19417,24 @@
             }
           },
           {
-            "typeName": "BulkRequestsRetryGetParametersSchemaRejectionCause1",
+            "typeName": "BulkRequestsRetryGetParametersQuerySchemaRejectionCause1",
             "type": {
               "type": "id",
-              "value": "BulkRequestsRetryGetParametersSchemaRejectionCause1"
+              "value": "BulkRequestsRetryGetParametersQuerySchemaRejectionCause1"
             }
           },
           {
-            "typeName": "BulkRequestsRetryGetParametersSchemaRejectionCause2",
+            "typeName": "BulkRequestsRetryGetParametersQuerySchemaRejectionCause2",
             "type": {
               "type": "id",
-              "value": "BulkRequestsRetryGetParametersSchemaRejectionCause2"
+              "value": "BulkRequestsRetryGetParametersQuerySchemaRejectionCause2"
             }
           }
         ]
       }
     },
-    "BulkRequestsRetryGetParametersSchemaIgnoredCount1": {
-      "name": "BulkRequestsRetryGetParametersSchemaIgnoredCount1",
+    "BulkRequestsRetryGetParametersQuerySchemaIgnoredCount1": {
+      "name": "BulkRequestsRetryGetParametersQuerySchemaIgnoredCount1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -19267,8 +19519,8 @@
         ]
       }
     },
-    "BulkRequestsRetryGetParametersSchemaIgnoredCount": {
-      "name": "BulkRequestsRetryGetParametersSchemaIgnoredCount",
+    "BulkRequestsRetryGetParametersQuerySchemaIgnoredCount": {
+      "name": "BulkRequestsRetryGetParametersQuerySchemaIgnoredCount",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -19282,10 +19534,10 @@
             }
           },
           {
-            "typeName": "BulkRequestsRetryGetParametersSchemaIgnoredCount1",
+            "typeName": "BulkRequestsRetryGetParametersQuerySchemaIgnoredCount1",
             "type": {
               "type": "id",
-              "value": "BulkRequestsRetryGetParametersSchemaIgnoredCount1"
+              "value": "BulkRequestsRetryGetParametersQuerySchemaIgnoredCount1"
             }
           },
           {
@@ -19303,8 +19555,8 @@
         ]
       }
     },
-    "BulkRequestsRetryGetParametersSchemaEventsCount1": {
-      "name": "BulkRequestsRetryGetParametersSchemaEventsCount1",
+    "BulkRequestsRetryGetParametersQuerySchemaEventsCount1": {
+      "name": "BulkRequestsRetryGetParametersQuerySchemaEventsCount1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -19389,8 +19641,8 @@
         ]
       }
     },
-    "BulkRequestsRetryGetParametersSchemaEventsCount": {
-      "name": "BulkRequestsRetryGetParametersSchemaEventsCount",
+    "BulkRequestsRetryGetParametersQuerySchemaEventsCount": {
+      "name": "BulkRequestsRetryGetParametersQuerySchemaEventsCount",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -19404,10 +19656,10 @@
             }
           },
           {
-            "typeName": "BulkRequestsRetryGetParametersSchemaEventsCount1",
+            "typeName": "BulkRequestsRetryGetParametersQuerySchemaEventsCount1",
             "type": {
               "type": "id",
-              "value": "BulkRequestsRetryGetParametersSchemaEventsCount1"
+              "value": "BulkRequestsRetryGetParametersQuerySchemaEventsCount1"
             }
           },
           {
@@ -19425,9 +19677,9 @@
         ]
       }
     },
-    "BulkRequestsRetryGetParametersSchemaSourceId": {
+    "BulkRequestsRetryGetParametersQuerySchemaSourceId": {
       "description": "Filter by source IDs",
-      "name": "BulkRequestsRetryGetParametersSchemaSourceId",
+      "name": "BulkRequestsRetryGetParametersQuerySchemaSourceId",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -19456,9 +19708,9 @@
         ]
       }
     },
-    "BulkRequestsRetryGetParametersSchemaHeaders": {
+    "BulkRequestsRetryGetParametersQuerySchemaHeaders": {
       "description": "URL Encoded string of the JSON to match to the data headers",
-      "name": "BulkRequestsRetryGetParametersSchemaHeaders",
+      "name": "BulkRequestsRetryGetParametersQuerySchemaHeaders",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -19487,9 +19739,9 @@
         ]
       }
     },
-    "BulkRequestsRetryGetParametersSchemaBody": {
+    "BulkRequestsRetryGetParametersQuerySchemaBody": {
       "description": "URL Encoded string of the JSON to match to the data body",
-      "name": "BulkRequestsRetryGetParametersSchemaBody",
+      "name": "BulkRequestsRetryGetParametersQuerySchemaBody",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -19518,9 +19770,9 @@
         ]
       }
     },
-    "BulkRequestsRetryGetParametersSchemaParsedQuery": {
+    "BulkRequestsRetryGetParametersQuerySchemaParsedQuery": {
       "description": "URL Encoded string of the JSON to match to the parsed query (JSON representation of the query)",
-      "name": "BulkRequestsRetryGetParametersSchemaParsedQuery",
+      "name": "BulkRequestsRetryGetParametersQuerySchemaParsedQuery",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -19549,8 +19801,8 @@
         ]
       }
     },
-    "BulkRequestsRetryGetParametersSchemaCreatedAt1": {
-      "name": "BulkRequestsRetryGetParametersSchemaCreatedAt1",
+    "BulkRequestsRetryGetParametersQuerySchemaCreatedAt1": {
+      "name": "BulkRequestsRetryGetParametersQuerySchemaCreatedAt1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -19622,8 +19874,8 @@
         ]
       }
     },
-    "BulkRequestsRetryGetParametersSchemaCreatedAt": {
-      "name": "BulkRequestsRetryGetParametersSchemaCreatedAt",
+    "BulkRequestsRetryGetParametersQuerySchemaCreatedAt": {
+      "name": "BulkRequestsRetryGetParametersQuerySchemaCreatedAt",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -19637,17 +19889,17 @@
             }
           },
           {
-            "typeName": "BulkRequestsRetryGetParametersSchemaCreatedAt1",
+            "typeName": "BulkRequestsRetryGetParametersQuerySchemaCreatedAt1",
             "type": {
               "type": "id",
-              "value": "BulkRequestsRetryGetParametersSchemaCreatedAt1"
+              "value": "BulkRequestsRetryGetParametersQuerySchemaCreatedAt1"
             }
           }
         ]
       }
     },
-    "BulkRequestsRetryGetParametersSchemaIngestedAt1": {
-      "name": "BulkRequestsRetryGetParametersSchemaIngestedAt1",
+    "BulkRequestsRetryGetParametersQuerySchemaIngestedAt1": {
+      "name": "BulkRequestsRetryGetParametersQuerySchemaIngestedAt1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -19719,8 +19971,8 @@
         ]
       }
     },
-    "BulkRequestsRetryGetParametersSchemaIngestedAt": {
-      "name": "BulkRequestsRetryGetParametersSchemaIngestedAt",
+    "BulkRequestsRetryGetParametersQuerySchemaIngestedAt": {
+      "name": "BulkRequestsRetryGetParametersQuerySchemaIngestedAt",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -19734,17 +19986,17 @@
             }
           },
           {
-            "typeName": "BulkRequestsRetryGetParametersSchemaIngestedAt1",
+            "typeName": "BulkRequestsRetryGetParametersQuerySchemaIngestedAt1",
             "type": {
               "type": "id",
-              "value": "BulkRequestsRetryGetParametersSchemaIngestedAt1"
+              "value": "BulkRequestsRetryGetParametersQuerySchemaIngestedAt1"
             }
           }
         ]
       }
     },
-    "BulkRequestsRetryGetParametersSchemaBulkRetryId": {
-      "name": "BulkRequestsRetryGetParametersSchemaBulkRetryId",
+    "BulkRequestsRetryGetParametersQuerySchemaBulkRetryId": {
+      "name": "BulkRequestsRetryGetParametersQuerySchemaBulkRetryId",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -19772,8 +20024,8 @@
         ]
       }
     },
-    "BulkRequestsRetryGetParametersSchemaInclude": {
-      "name": "BulkRequestsRetryGetParametersSchemaInclude",
+    "BulkRequestsRetryGetParametersQuerySchemaInclude": {
+      "name": "BulkRequestsRetryGetParametersQuerySchemaInclude",
       "shape": {
         "type": "enum",
         "values": [
@@ -19783,8 +20035,8 @@
         ]
       }
     },
-    "BulkRequestsRetryGetParametersSchemaOrderBy0": {
-      "name": "BulkRequestsRetryGetParametersSchemaOrderBy0",
+    "BulkRequestsRetryGetParametersQuerySchemaOrderBy0": {
+      "name": "BulkRequestsRetryGetParametersQuerySchemaOrderBy0",
       "shape": {
         "type": "enum",
         "values": [
@@ -19797,8 +20049,8 @@
         ]
       }
     },
-    "BulkRequestsRetryGetParametersSchemaOrderByOneOf1Items": {
-      "name": "BulkRequestsRetryGetParametersSchemaOrderByOneOf1Items",
+    "BulkRequestsRetryGetParametersQuerySchemaOrderByOneOf1Items": {
+      "name": "BulkRequestsRetryGetParametersQuerySchemaOrderByOneOf1Items",
       "shape": {
         "type": "enum",
         "values": [
@@ -19811,44 +20063,44 @@
         ]
       }
     },
-    "BulkRequestsRetryGetParametersSchemaOrderBy1": {
-      "name": "BulkRequestsRetryGetParametersSchemaOrderBy1",
+    "BulkRequestsRetryGetParametersQuerySchemaOrderBy1": {
+      "name": "BulkRequestsRetryGetParametersQuerySchemaOrderBy1",
       "shape": {
         "type": "alias",
         "value": {
           "type": "list",
           "itemType": {
             "type": "id",
-            "value": "BulkRequestsRetryGetParametersSchemaOrderByOneOf1Items"
+            "value": "BulkRequestsRetryGetParametersQuerySchemaOrderByOneOf1Items"
           }
         }
       }
     },
-    "BulkRequestsRetryGetParametersSchemaOrderBy": {
+    "BulkRequestsRetryGetParametersQuerySchemaOrderBy": {
       "description": "Sort key(s)",
-      "name": "BulkRequestsRetryGetParametersSchemaOrderBy",
+      "name": "BulkRequestsRetryGetParametersQuerySchemaOrderBy",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkRequestsRetryGetParametersSchemaOrderBy0",
+            "typeName": "BulkRequestsRetryGetParametersQuerySchemaOrderBy0",
             "type": {
               "type": "id",
-              "value": "BulkRequestsRetryGetParametersSchemaOrderBy0"
+              "value": "BulkRequestsRetryGetParametersQuerySchemaOrderBy0"
             }
           },
           {
-            "typeName": "BulkRequestsRetryGetParametersSchemaOrderBy1",
+            "typeName": "BulkRequestsRetryGetParametersQuerySchemaOrderBy1",
             "type": {
               "type": "id",
-              "value": "BulkRequestsRetryGetParametersSchemaOrderBy1"
+              "value": "BulkRequestsRetryGetParametersQuerySchemaOrderBy1"
             }
           }
         ]
       }
     },
-    "BulkRequestsRetryGetParametersSchemaDir0": {
-      "name": "BulkRequestsRetryGetParametersSchemaDir0",
+    "BulkRequestsRetryGetParametersQuerySchemaDir0": {
+      "name": "BulkRequestsRetryGetParametersQuerySchemaDir0",
       "shape": {
         "type": "enum",
         "values": [
@@ -19861,8 +20113,8 @@
         ]
       }
     },
-    "BulkRequestsRetryGetParametersSchemaDirOneOf1Items": {
-      "name": "BulkRequestsRetryGetParametersSchemaDirOneOf1Items",
+    "BulkRequestsRetryGetParametersQuerySchemaDirOneOf1Items": {
+      "name": "BulkRequestsRetryGetParametersQuerySchemaDirOneOf1Items",
       "shape": {
         "type": "enum",
         "values": [
@@ -19875,37 +20127,37 @@
         ]
       }
     },
-    "BulkRequestsRetryGetParametersSchemaDir1": {
-      "name": "BulkRequestsRetryGetParametersSchemaDir1",
+    "BulkRequestsRetryGetParametersQuerySchemaDir1": {
+      "name": "BulkRequestsRetryGetParametersQuerySchemaDir1",
       "shape": {
         "type": "alias",
         "value": {
           "type": "list",
           "itemType": {
             "type": "id",
-            "value": "BulkRequestsRetryGetParametersSchemaDirOneOf1Items"
+            "value": "BulkRequestsRetryGetParametersQuerySchemaDirOneOf1Items"
           }
         }
       }
     },
-    "BulkRequestsRetryGetParametersSchemaDir": {
+    "BulkRequestsRetryGetParametersQuerySchemaDir": {
       "description": "Sort direction",
-      "name": "BulkRequestsRetryGetParametersSchemaDir",
+      "name": "BulkRequestsRetryGetParametersQuerySchemaDir",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkRequestsRetryGetParametersSchemaDir0",
+            "typeName": "BulkRequestsRetryGetParametersQuerySchemaDir0",
             "type": {
               "type": "id",
-              "value": "BulkRequestsRetryGetParametersSchemaDir0"
+              "value": "BulkRequestsRetryGetParametersQuerySchemaDir0"
             }
           },
           {
-            "typeName": "BulkRequestsRetryGetParametersSchemaDir1",
+            "typeName": "BulkRequestsRetryGetParametersQuerySchemaDir1",
             "type": {
               "type": "id",
-              "value": "BulkRequestsRetryGetParametersSchemaDir1"
+              "value": "BulkRequestsRetryGetParametersQuerySchemaDir1"
             }
           }
         ]
@@ -19925,7 +20177,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BulkRequestsRetryGetParametersSchemaId"
+                "value": "BulkRequestsRetryGetParametersQuerySchemaId"
               }
             }
           },
@@ -19935,7 +20187,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BulkRequestsRetryGetParametersSchemaStatus"
+                "value": "BulkRequestsRetryGetParametersQuerySchemaStatus"
               }
             }
           },
@@ -19948,7 +20200,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "BulkRequestsRetryGetParametersSchemaRejectionCause"
+                  "value": "BulkRequestsRetryGetParametersQuerySchemaRejectionCause"
                 }
               }
             }
@@ -19959,7 +20211,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BulkRequestsRetryGetParametersSchemaIgnoredCount"
+                "value": "BulkRequestsRetryGetParametersQuerySchemaIgnoredCount"
               }
             }
           },
@@ -19969,7 +20221,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BulkRequestsRetryGetParametersSchemaEventsCount"
+                "value": "BulkRequestsRetryGetParametersQuerySchemaEventsCount"
               }
             }
           },
@@ -19980,7 +20232,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BulkRequestsRetryGetParametersSchemaSourceId"
+                "value": "BulkRequestsRetryGetParametersQuerySchemaSourceId"
               }
             }
           },
@@ -20004,7 +20256,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BulkRequestsRetryGetParametersSchemaHeaders"
+                "value": "BulkRequestsRetryGetParametersQuerySchemaHeaders"
               }
             }
           },
@@ -20015,7 +20267,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BulkRequestsRetryGetParametersSchemaBody"
+                "value": "BulkRequestsRetryGetParametersQuerySchemaBody"
               }
             }
           },
@@ -20026,7 +20278,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BulkRequestsRetryGetParametersSchemaParsedQuery"
+                "value": "BulkRequestsRetryGetParametersQuerySchemaParsedQuery"
               }
             }
           },
@@ -20049,7 +20301,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BulkRequestsRetryGetParametersSchemaCreatedAt"
+                "value": "BulkRequestsRetryGetParametersQuerySchemaCreatedAt"
               }
             }
           },
@@ -20059,7 +20311,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BulkRequestsRetryGetParametersSchemaIngestedAt"
+                "value": "BulkRequestsRetryGetParametersQuerySchemaIngestedAt"
               }
             }
           },
@@ -20069,7 +20321,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BulkRequestsRetryGetParametersSchemaBulkRetryId"
+                "value": "BulkRequestsRetryGetParametersQuerySchemaBulkRetryId"
               }
             }
           },
@@ -20079,7 +20331,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BulkRequestsRetryGetParametersSchemaInclude"
+                "value": "BulkRequestsRetryGetParametersQuerySchemaInclude"
               }
             }
           },
@@ -20090,7 +20342,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BulkRequestsRetryGetParametersSchemaOrderBy"
+                "value": "BulkRequestsRetryGetParametersQuerySchemaOrderBy"
               }
             }
           },
@@ -20101,7 +20353,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BulkRequestsRetryGetParametersSchemaDir"
+                "value": "BulkRequestsRetryGetParametersQuerySchemaDir"
               }
             }
           },
@@ -20162,16 +20414,13 @@
         ]
       }
     },
-    "BulkRequestsRetryGetParametersSchemaOneOf1Items": {
-      "name": "BulkRequestsRetryGetParametersSchemaOneOf1Items",
+    "BulkRequestsRetryGetParametersOrderBySchemaOneOf1Items": {
+      "name": "BulkRequestsRetryGetParametersOrderBySchemaOneOf1Items",
       "shape": {
         "type": "enum",
         "values": [
           {
-            "value": "asc"
-          },
-          {
-            "value": "desc"
+            "value": "created_at"
           }
         ]
       }
@@ -20184,7 +20433,7 @@
           "type": "list",
           "itemType": {
             "type": "id",
-            "value": "BulkRequestsRetryGetParametersSchemaOneOf1Items"
+            "value": "BulkRequestsRetryGetParametersOrderBySchemaOneOf1Items"
           }
         }
       }
@@ -20226,6 +20475,20 @@
         ]
       }
     },
+    "BulkRequestsRetryGetParametersDirSchemaOneOf1Items": {
+      "name": "BulkRequestsRetryGetParametersDirSchemaOneOf1Items",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "asc"
+          },
+          {
+            "value": "desc"
+          }
+        ]
+      }
+    },
     "BulkRequestsRetryGetParametersDir1": {
       "name": "BulkRequestsRetryGetParametersDir1",
       "shape": {
@@ -20234,7 +20497,7 @@
           "type": "list",
           "itemType": {
             "type": "id",
-            "value": "BulkRequestsRetryGetParametersSchemaOneOf1Items"
+            "value": "BulkRequestsRetryGetParametersDirSchemaOneOf1Items"
           }
         }
       }
@@ -21177,9 +21440,9 @@
         ]
       }
     },
-    "BulkRequestsRetryPlanGetParametersSchemaId": {
+    "BulkRequestsRetryPlanGetParametersQuerySchemaId": {
       "description": "Filter by requests IDs",
-      "name": "BulkRequestsRetryPlanGetParametersSchemaId",
+      "name": "BulkRequestsRetryPlanGetParametersQuerySchemaId",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -21208,8 +21471,8 @@
         ]
       }
     },
-    "BulkRequestsRetryPlanGetParametersSchemaStatus": {
-      "name": "BulkRequestsRetryPlanGetParametersSchemaStatus",
+    "BulkRequestsRetryPlanGetParametersQuerySchemaStatus": {
+      "name": "BulkRequestsRetryPlanGetParametersQuerySchemaStatus",
       "shape": {
         "type": "enum",
         "values": [
@@ -21222,8 +21485,8 @@
         ]
       }
     },
-    "BulkRequestsRetryPlanGetParametersSchemaRejectionCause1": {
-      "name": "BulkRequestsRetryPlanGetParametersSchemaRejectionCause1",
+    "BulkRequestsRetryPlanGetParametersQuerySchemaRejectionCause1": {
+      "name": "BulkRequestsRetryPlanGetParametersQuerySchemaRejectionCause1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -21293,8 +21556,8 @@
         ]
       }
     },
-    "BulkRequestsRetryPlanGetParametersSchemaRejectionCause2": {
-      "name": "BulkRequestsRetryPlanGetParametersSchemaRejectionCause2",
+    "BulkRequestsRetryPlanGetParametersQuerySchemaRejectionCause2": {
+      "name": "BulkRequestsRetryPlanGetParametersQuerySchemaRejectionCause2",
       "shape": {
         "type": "alias",
         "value": {
@@ -21306,9 +21569,9 @@
         }
       }
     },
-    "BulkRequestsRetryPlanGetParametersSchemaRejectionCause": {
+    "BulkRequestsRetryPlanGetParametersQuerySchemaRejectionCause": {
       "description": "Filter by rejection cause",
-      "name": "BulkRequestsRetryPlanGetParametersSchemaRejectionCause",
+      "name": "BulkRequestsRetryPlanGetParametersQuerySchemaRejectionCause",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -21320,24 +21583,24 @@
             }
           },
           {
-            "typeName": "BulkRequestsRetryPlanGetParametersSchemaRejectionCause1",
+            "typeName": "BulkRequestsRetryPlanGetParametersQuerySchemaRejectionCause1",
             "type": {
               "type": "id",
-              "value": "BulkRequestsRetryPlanGetParametersSchemaRejectionCause1"
+              "value": "BulkRequestsRetryPlanGetParametersQuerySchemaRejectionCause1"
             }
           },
           {
-            "typeName": "BulkRequestsRetryPlanGetParametersSchemaRejectionCause2",
+            "typeName": "BulkRequestsRetryPlanGetParametersQuerySchemaRejectionCause2",
             "type": {
               "type": "id",
-              "value": "BulkRequestsRetryPlanGetParametersSchemaRejectionCause2"
+              "value": "BulkRequestsRetryPlanGetParametersQuerySchemaRejectionCause2"
             }
           }
         ]
       }
     },
-    "BulkRequestsRetryPlanGetParametersSchemaIgnoredCount1": {
-      "name": "BulkRequestsRetryPlanGetParametersSchemaIgnoredCount1",
+    "BulkRequestsRetryPlanGetParametersQuerySchemaIgnoredCount1": {
+      "name": "BulkRequestsRetryPlanGetParametersQuerySchemaIgnoredCount1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -21422,8 +21685,8 @@
         ]
       }
     },
-    "BulkRequestsRetryPlanGetParametersSchemaIgnoredCount": {
-      "name": "BulkRequestsRetryPlanGetParametersSchemaIgnoredCount",
+    "BulkRequestsRetryPlanGetParametersQuerySchemaIgnoredCount": {
+      "name": "BulkRequestsRetryPlanGetParametersQuerySchemaIgnoredCount",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -21437,10 +21700,10 @@
             }
           },
           {
-            "typeName": "BulkRequestsRetryPlanGetParametersSchemaIgnoredCount1",
+            "typeName": "BulkRequestsRetryPlanGetParametersQuerySchemaIgnoredCount1",
             "type": {
               "type": "id",
-              "value": "BulkRequestsRetryPlanGetParametersSchemaIgnoredCount1"
+              "value": "BulkRequestsRetryPlanGetParametersQuerySchemaIgnoredCount1"
             }
           },
           {
@@ -21458,8 +21721,8 @@
         ]
       }
     },
-    "BulkRequestsRetryPlanGetParametersSchemaEventsCount1": {
-      "name": "BulkRequestsRetryPlanGetParametersSchemaEventsCount1",
+    "BulkRequestsRetryPlanGetParametersQuerySchemaEventsCount1": {
+      "name": "BulkRequestsRetryPlanGetParametersQuerySchemaEventsCount1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -21544,8 +21807,8 @@
         ]
       }
     },
-    "BulkRequestsRetryPlanGetParametersSchemaEventsCount": {
-      "name": "BulkRequestsRetryPlanGetParametersSchemaEventsCount",
+    "BulkRequestsRetryPlanGetParametersQuerySchemaEventsCount": {
+      "name": "BulkRequestsRetryPlanGetParametersQuerySchemaEventsCount",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -21559,10 +21822,10 @@
             }
           },
           {
-            "typeName": "BulkRequestsRetryPlanGetParametersSchemaEventsCount1",
+            "typeName": "BulkRequestsRetryPlanGetParametersQuerySchemaEventsCount1",
             "type": {
               "type": "id",
-              "value": "BulkRequestsRetryPlanGetParametersSchemaEventsCount1"
+              "value": "BulkRequestsRetryPlanGetParametersQuerySchemaEventsCount1"
             }
           },
           {
@@ -21580,9 +21843,9 @@
         ]
       }
     },
-    "BulkRequestsRetryPlanGetParametersSchemaSourceId": {
+    "BulkRequestsRetryPlanGetParametersQuerySchemaSourceId": {
       "description": "Filter by source IDs",
-      "name": "BulkRequestsRetryPlanGetParametersSchemaSourceId",
+      "name": "BulkRequestsRetryPlanGetParametersQuerySchemaSourceId",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -21611,9 +21874,9 @@
         ]
       }
     },
-    "BulkRequestsRetryPlanGetParametersSchemaHeaders": {
+    "BulkRequestsRetryPlanGetParametersQuerySchemaHeaders": {
       "description": "URL Encoded string of the JSON to match to the data headers",
-      "name": "BulkRequestsRetryPlanGetParametersSchemaHeaders",
+      "name": "BulkRequestsRetryPlanGetParametersQuerySchemaHeaders",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -21642,9 +21905,9 @@
         ]
       }
     },
-    "BulkRequestsRetryPlanGetParametersSchemaBody": {
+    "BulkRequestsRetryPlanGetParametersQuerySchemaBody": {
       "description": "URL Encoded string of the JSON to match to the data body",
-      "name": "BulkRequestsRetryPlanGetParametersSchemaBody",
+      "name": "BulkRequestsRetryPlanGetParametersQuerySchemaBody",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -21673,9 +21936,9 @@
         ]
       }
     },
-    "BulkRequestsRetryPlanGetParametersSchemaParsedQuery": {
+    "BulkRequestsRetryPlanGetParametersQuerySchemaParsedQuery": {
       "description": "URL Encoded string of the JSON to match to the parsed query (JSON representation of the query)",
-      "name": "BulkRequestsRetryPlanGetParametersSchemaParsedQuery",
+      "name": "BulkRequestsRetryPlanGetParametersQuerySchemaParsedQuery",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -21704,8 +21967,8 @@
         ]
       }
     },
-    "BulkRequestsRetryPlanGetParametersSchemaCreatedAt1": {
-      "name": "BulkRequestsRetryPlanGetParametersSchemaCreatedAt1",
+    "BulkRequestsRetryPlanGetParametersQuerySchemaCreatedAt1": {
+      "name": "BulkRequestsRetryPlanGetParametersQuerySchemaCreatedAt1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -21777,8 +22040,8 @@
         ]
       }
     },
-    "BulkRequestsRetryPlanGetParametersSchemaCreatedAt": {
-      "name": "BulkRequestsRetryPlanGetParametersSchemaCreatedAt",
+    "BulkRequestsRetryPlanGetParametersQuerySchemaCreatedAt": {
+      "name": "BulkRequestsRetryPlanGetParametersQuerySchemaCreatedAt",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -21792,17 +22055,17 @@
             }
           },
           {
-            "typeName": "BulkRequestsRetryPlanGetParametersSchemaCreatedAt1",
+            "typeName": "BulkRequestsRetryPlanGetParametersQuerySchemaCreatedAt1",
             "type": {
               "type": "id",
-              "value": "BulkRequestsRetryPlanGetParametersSchemaCreatedAt1"
+              "value": "BulkRequestsRetryPlanGetParametersQuerySchemaCreatedAt1"
             }
           }
         ]
       }
     },
-    "BulkRequestsRetryPlanGetParametersSchemaIngestedAt1": {
-      "name": "BulkRequestsRetryPlanGetParametersSchemaIngestedAt1",
+    "BulkRequestsRetryPlanGetParametersQuerySchemaIngestedAt1": {
+      "name": "BulkRequestsRetryPlanGetParametersQuerySchemaIngestedAt1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -21874,8 +22137,8 @@
         ]
       }
     },
-    "BulkRequestsRetryPlanGetParametersSchemaIngestedAt": {
-      "name": "BulkRequestsRetryPlanGetParametersSchemaIngestedAt",
+    "BulkRequestsRetryPlanGetParametersQuerySchemaIngestedAt": {
+      "name": "BulkRequestsRetryPlanGetParametersQuerySchemaIngestedAt",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -21889,17 +22152,17 @@
             }
           },
           {
-            "typeName": "BulkRequestsRetryPlanGetParametersSchemaIngestedAt1",
+            "typeName": "BulkRequestsRetryPlanGetParametersQuerySchemaIngestedAt1",
             "type": {
               "type": "id",
-              "value": "BulkRequestsRetryPlanGetParametersSchemaIngestedAt1"
+              "value": "BulkRequestsRetryPlanGetParametersQuerySchemaIngestedAt1"
             }
           }
         ]
       }
     },
-    "BulkRequestsRetryPlanGetParametersSchemaBulkRetryId": {
-      "name": "BulkRequestsRetryPlanGetParametersSchemaBulkRetryId",
+    "BulkRequestsRetryPlanGetParametersQuerySchemaBulkRetryId": {
+      "name": "BulkRequestsRetryPlanGetParametersQuerySchemaBulkRetryId",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -21941,7 +22204,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BulkRequestsRetryPlanGetParametersSchemaId"
+                "value": "BulkRequestsRetryPlanGetParametersQuerySchemaId"
               }
             }
           },
@@ -21951,7 +22214,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BulkRequestsRetryPlanGetParametersSchemaStatus"
+                "value": "BulkRequestsRetryPlanGetParametersQuerySchemaStatus"
               }
             }
           },
@@ -21964,7 +22227,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "BulkRequestsRetryPlanGetParametersSchemaRejectionCause"
+                  "value": "BulkRequestsRetryPlanGetParametersQuerySchemaRejectionCause"
                 }
               }
             }
@@ -21975,7 +22238,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BulkRequestsRetryPlanGetParametersSchemaIgnoredCount"
+                "value": "BulkRequestsRetryPlanGetParametersQuerySchemaIgnoredCount"
               }
             }
           },
@@ -21985,7 +22248,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BulkRequestsRetryPlanGetParametersSchemaEventsCount"
+                "value": "BulkRequestsRetryPlanGetParametersQuerySchemaEventsCount"
               }
             }
           },
@@ -21996,7 +22259,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BulkRequestsRetryPlanGetParametersSchemaSourceId"
+                "value": "BulkRequestsRetryPlanGetParametersQuerySchemaSourceId"
               }
             }
           },
@@ -22020,7 +22283,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BulkRequestsRetryPlanGetParametersSchemaHeaders"
+                "value": "BulkRequestsRetryPlanGetParametersQuerySchemaHeaders"
               }
             }
           },
@@ -22031,7 +22294,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BulkRequestsRetryPlanGetParametersSchemaBody"
+                "value": "BulkRequestsRetryPlanGetParametersQuerySchemaBody"
               }
             }
           },
@@ -22042,7 +22305,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BulkRequestsRetryPlanGetParametersSchemaParsedQuery"
+                "value": "BulkRequestsRetryPlanGetParametersQuerySchemaParsedQuery"
               }
             }
           },
@@ -22065,7 +22328,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BulkRequestsRetryPlanGetParametersSchemaCreatedAt"
+                "value": "BulkRequestsRetryPlanGetParametersQuerySchemaCreatedAt"
               }
             }
           },
@@ -22075,7 +22338,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BulkRequestsRetryPlanGetParametersSchemaIngestedAt"
+                "value": "BulkRequestsRetryPlanGetParametersQuerySchemaIngestedAt"
               }
             }
           },
@@ -22085,7 +22348,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BulkRequestsRetryPlanGetParametersSchemaBulkRetryId"
+                "value": "BulkRequestsRetryPlanGetParametersQuerySchemaBulkRetryId"
               }
             }
           }
@@ -22153,8 +22416,8 @@
         ]
       }
     },
-    "RulesetsGetParametersSchemaOneOf1Gt": {
-      "name": "RulesetsGetParametersSchemaOneOf1Gt",
+    "RulesetsGetParametersNameSchemaOneOf1Gt": {
+      "name": "RulesetsGetParametersNameSchemaOneOf1Gt",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -22184,8 +22447,8 @@
         ]
       }
     },
-    "RulesetsGetParametersSchemaOneOf1Gte": {
-      "name": "RulesetsGetParametersSchemaOneOf1Gte",
+    "RulesetsGetParametersNameSchemaOneOf1Gte": {
+      "name": "RulesetsGetParametersNameSchemaOneOf1Gte",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -22215,8 +22478,8 @@
         ]
       }
     },
-    "RulesetsGetParametersSchemaOneOf1Le": {
-      "name": "RulesetsGetParametersSchemaOneOf1Le",
+    "RulesetsGetParametersNameSchemaOneOf1Le": {
+      "name": "RulesetsGetParametersNameSchemaOneOf1Le",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -22246,8 +22509,8 @@
         ]
       }
     },
-    "RulesetsGetParametersSchemaOneOf1Lte": {
-      "name": "RulesetsGetParametersSchemaOneOf1Lte",
+    "RulesetsGetParametersNameSchemaOneOf1Lte": {
+      "name": "RulesetsGetParametersNameSchemaOneOf1Lte",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -22277,8 +22540,8 @@
         ]
       }
     },
-    "RulesetsGetParametersSchemaOneOf1Contains": {
-      "name": "RulesetsGetParametersSchemaOneOf1Contains",
+    "RulesetsGetParametersNameSchemaOneOf1Contains": {
+      "name": "RulesetsGetParametersNameSchemaOneOf1Contains",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -22320,7 +22583,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "RulesetsGetParametersSchemaOneOf1Gt"
+                "value": "RulesetsGetParametersNameSchemaOneOf1Gt"
               }
             }
           },
@@ -22330,7 +22593,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "RulesetsGetParametersSchemaOneOf1Gte"
+                "value": "RulesetsGetParametersNameSchemaOneOf1Gte"
               }
             }
           },
@@ -22340,7 +22603,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "RulesetsGetParametersSchemaOneOf1Le"
+                "value": "RulesetsGetParametersNameSchemaOneOf1Le"
               }
             }
           },
@@ -22350,7 +22613,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "RulesetsGetParametersSchemaOneOf1Lte"
+                "value": "RulesetsGetParametersNameSchemaOneOf1Lte"
               }
             }
           },
@@ -22372,7 +22635,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "RulesetsGetParametersSchemaOneOf1Contains"
+                "value": "RulesetsGetParametersNameSchemaOneOf1Contains"
               }
             }
           }
@@ -22523,16 +22786,13 @@
         ]
       }
     },
-    "RulesetsGetParametersSchemaOneOf1Items": {
-      "name": "RulesetsGetParametersSchemaOneOf1Items",
+    "RulesetsGetParametersOrderBySchemaOneOf1Items": {
+      "name": "RulesetsGetParametersOrderBySchemaOneOf1Items",
       "shape": {
         "type": "enum",
         "values": [
           {
-            "value": "asc"
-          },
-          {
-            "value": "desc"
+            "value": "created_at"
           }
         ]
       }
@@ -22545,7 +22805,7 @@
           "type": "list",
           "itemType": {
             "type": "id",
-            "value": "RulesetsGetParametersSchemaOneOf1Items"
+            "value": "RulesetsGetParametersOrderBySchemaOneOf1Items"
           }
         }
       }
@@ -22587,6 +22847,20 @@
         ]
       }
     },
+    "RulesetsGetParametersDirSchemaOneOf1Items": {
+      "name": "RulesetsGetParametersDirSchemaOneOf1Items",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "asc"
+          },
+          {
+            "value": "desc"
+          }
+        ]
+      }
+    },
     "RulesetsGetParametersDir1": {
       "name": "RulesetsGetParametersDir1",
       "shape": {
@@ -22595,7 +22869,7 @@
           "type": "list",
           "itemType": {
             "type": "id",
-            "value": "RulesetsGetParametersSchemaOneOf1Items"
+            "value": "RulesetsGetParametersDirSchemaOneOf1Items"
           }
         }
       }
@@ -22936,16 +23210,13 @@
         ]
       }
     },
-    "SourcesGetParametersSchemaOneOf1Items": {
-      "name": "SourcesGetParametersSchemaOneOf1Items",
+    "SourcesGetParametersOrderBySchemaOneOf1Items": {
+      "name": "SourcesGetParametersOrderBySchemaOneOf1Items",
       "shape": {
         "type": "enum",
         "values": [
           {
-            "value": "asc"
-          },
-          {
-            "value": "desc"
+            "value": "created_at"
           }
         ]
       }
@@ -22958,7 +23229,7 @@
           "type": "list",
           "itemType": {
             "type": "id",
-            "value": "SourcesGetParametersSchemaOneOf1Items"
+            "value": "SourcesGetParametersOrderBySchemaOneOf1Items"
           }
         }
       }
@@ -23000,6 +23271,20 @@
         ]
       }
     },
+    "SourcesGetParametersDirSchemaOneOf1Items": {
+      "name": "SourcesGetParametersDirSchemaOneOf1Items",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "asc"
+          },
+          {
+            "value": "desc"
+          }
+        ]
+      }
+    },
     "SourcesGetParametersDir1": {
       "name": "SourcesGetParametersDir1",
       "shape": {
@@ -23008,7 +23293,7 @@
           "type": "list",
           "itemType": {
             "type": "id",
-            "value": "SourcesGetParametersSchemaOneOf1Items"
+            "value": "SourcesGetParametersDirSchemaOneOf1Items"
           }
         }
       }
@@ -23109,16 +23394,13 @@
         ]
       }
     },
-    "TransformationsGetParametersSchemaOneOf1Items": {
-      "name": "TransformationsGetParametersSchemaOneOf1Items",
+    "TransformationsGetParametersOrderBySchemaOneOf1Items": {
+      "name": "TransformationsGetParametersOrderBySchemaOneOf1Items",
       "shape": {
         "type": "enum",
         "values": [
           {
-            "value": "asc"
-          },
-          {
-            "value": "desc"
+            "value": "created_at"
           }
         ]
       }
@@ -23131,7 +23413,7 @@
           "type": "list",
           "itemType": {
             "type": "id",
-            "value": "TransformationsGetParametersSchemaOneOf1Items"
+            "value": "TransformationsGetParametersOrderBySchemaOneOf1Items"
           }
         }
       }
@@ -23173,6 +23455,20 @@
         ]
       }
     },
+    "TransformationsGetParametersDirSchemaOneOf1Items": {
+      "name": "TransformationsGetParametersDirSchemaOneOf1Items",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "asc"
+          },
+          {
+            "value": "desc"
+          }
+        ]
+      }
+    },
     "TransformationsGetParametersDir1": {
       "name": "TransformationsGetParametersDir1",
       "shape": {
@@ -23181,7 +23477,7 @@
           "type": "list",
           "itemType": {
             "type": "id",
-            "value": "TransformationsGetParametersSchemaOneOf1Items"
+            "value": "TransformationsGetParametersDirSchemaOneOf1Items"
           }
         }
       }
@@ -23389,16 +23685,25 @@
         ]
       }
     },
-    "TransformationsIdExecutionsGetParametersSchemaOneOf1Items": {
-      "name": "TransformationsIdExecutionsGetParametersSchemaOneOf1Items",
+    "TransformationsIdExecutionsGetParametersLogLevelSchemaOneOf1Items": {
+      "name": "TransformationsIdExecutionsGetParametersLogLevelSchemaOneOf1Items",
       "shape": {
         "type": "enum",
         "values": [
           {
-            "value": "asc"
+            "value": "debug"
           },
           {
-            "value": "desc"
+            "value": "info"
+          },
+          {
+            "value": "warn"
+          },
+          {
+            "value": "error"
+          },
+          {
+            "value": "fatal"
           }
         ]
       }
@@ -23411,7 +23716,7 @@
           "type": "list",
           "itemType": {
             "type": "id",
-            "value": "TransformationsIdExecutionsGetParametersSchemaOneOf1Items"
+            "value": "TransformationsIdExecutionsGetParametersLogLevelSchemaOneOf1Items"
           }
         }
       }
@@ -23608,6 +23913,17 @@
         ]
       }
     },
+    "TransformationsIdExecutionsGetParametersOrderBySchemaOneOf1Items": {
+      "name": "TransformationsIdExecutionsGetParametersOrderBySchemaOneOf1Items",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "created_at"
+          }
+        ]
+      }
+    },
     "TransformationsIdExecutionsGetParametersOrderBy1": {
       "name": "TransformationsIdExecutionsGetParametersOrderBy1",
       "shape": {
@@ -23616,7 +23932,7 @@
           "type": "list",
           "itemType": {
             "type": "id",
-            "value": "TransformationsIdExecutionsGetParametersSchemaOneOf1Items"
+            "value": "TransformationsIdExecutionsGetParametersOrderBySchemaOneOf1Items"
           }
         }
       }
@@ -23658,6 +23974,20 @@
         ]
       }
     },
+    "TransformationsIdExecutionsGetParametersDirSchemaOneOf1Items": {
+      "name": "TransformationsIdExecutionsGetParametersDirSchemaOneOf1Items",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "asc"
+          },
+          {
+            "value": "desc"
+          }
+        ]
+      }
+    },
     "TransformationsIdExecutionsGetParametersDir1": {
       "name": "TransformationsIdExecutionsGetParametersDir1",
       "shape": {
@@ -23666,7 +23996,7 @@
           "type": "list",
           "itemType": {
             "type": "id",
-            "value": "TransformationsIdExecutionsGetParametersSchemaOneOf1Items"
+            "value": "TransformationsIdExecutionsGetParametersDirSchemaOneOf1Items"
           }
         }
       }
@@ -24132,16 +24462,13 @@
         ]
       }
     },
-    "WebhooksGetParametersSchemaOneOf1Items": {
-      "name": "WebhooksGetParametersSchemaOneOf1Items",
+    "WebhooksGetParametersOrderBySchemaOneOf1Items": {
+      "name": "WebhooksGetParametersOrderBySchemaOneOf1Items",
       "shape": {
         "type": "enum",
         "values": [
           {
-            "value": "asc"
-          },
-          {
-            "value": "desc"
+            "value": "created_at"
           }
         ]
       }
@@ -24154,7 +24481,7 @@
           "type": "list",
           "itemType": {
             "type": "id",
-            "value": "WebhooksGetParametersSchemaOneOf1Items"
+            "value": "WebhooksGetParametersOrderBySchemaOneOf1Items"
           }
         }
       }
@@ -24196,6 +24523,20 @@
         ]
       }
     },
+    "WebhooksGetParametersDirSchemaOneOf1Items": {
+      "name": "WebhooksGetParametersDirSchemaOneOf1Items",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "asc"
+          },
+          {
+            "value": "desc"
+          }
+        ]
+      }
+    },
     "WebhooksGetParametersDir1": {
       "name": "WebhooksGetParametersDir1",
       "shape": {
@@ -24204,7 +24545,7 @@
           "type": "list",
           "itemType": {
             "type": "id",
-            "value": "WebhooksGetParametersSchemaOneOf1Items"
+            "value": "WebhooksGetParametersDirSchemaOneOf1Items"
           }
         }
       }

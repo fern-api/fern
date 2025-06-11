@@ -21224,8 +21224,8 @@
         ]
       }
     },
-    "PurchaseOrdersGetParametersSchemaItems": {
-      "name": "PurchaseOrdersGetParametersSchemaItems",
+    "PurchaseOrdersGetParametersFRolesSchemaItems": {
+      "name": "PurchaseOrdersGetParametersFRolesSchemaItems",
       "shape": {
         "type": "enum",
         "values": [
@@ -38426,7 +38426,7 @@
                   "type": "list",
                   "itemType": {
                     "type": "id",
-                    "value": "PurchaseOrdersGetParametersSchemaItems"
+                    "value": "PurchaseOrdersGetParametersFRolesSchemaItems"
                   }
                 }
               }
