@@ -1,15 +1,18 @@
-import { SchemaOptions } from "@fern-typescript/zurg";
 import { ts } from "ts-morph";
 
 import { Reference } from "../../referencing";
 import { CoreUtility } from "../CoreUtility";
-import { Zurg } from "./Zurg";
+import { SchemaOptions, Zurg } from "./Zurg";
 
+export const MANIFEST: CoreUtility.Manifest = {
+    name: "schemas",
+    pathInCoreUtilities: { nameOnDisk: "schemas", exportDeclaration: { namespaceExport: "serialization" } },
+    getFilesPatterns: () => {
+        return { patterns: ["src/core/schemas/**", "tests/unit/schemas/**"] };
+    }
+};
 export class ZurgImpl extends CoreUtility implements Zurg {
-    public readonly MANIFEST = {
-        name: "schemas",
-        pathInCoreUtilities: { nameOnDisk: "schemas", exportDeclaration: { namespaceExport: "serialization" } }
-    };
+    public readonly MANIFEST = MANIFEST;
 
     public object = this.withExportedName("object", (object) => (properties: Zurg.Property[]): Zurg.ObjectSchema => {
         const baseSchema: Zurg.BaseSchema = {

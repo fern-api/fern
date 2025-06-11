@@ -1,5 +1,11 @@
 import { AbstractGeneratorCli } from "@fern-typescript/abstract-generator-cli";
-import { JavaScriptRuntime, NpmPackage, PersistedTypescriptProject, fixImportsForEsm, writeTemplateFiles } from "@fern-typescript/commons";
+import {
+    JavaScriptRuntime,
+    NpmPackage,
+    PersistedTypescriptProject,
+    fixImportsForEsm,
+    writeTemplateFiles
+} from "@fern-typescript/commons";
 import { GeneratorContext } from "@fern-typescript/contexts";
 import { SdkGenerator } from "@fern-typescript/sdk-generator";
 
@@ -69,7 +75,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             generateWireTests: parsed?.generateWireTests ?? true,
             noScripts: parsed?.noScripts ?? false,
             useBigInt: parsed?.useBigInt ?? false,
-            useLegacyExports: parsed?.useLegacyExports ?? false
+            useLegacyExports: parsed?.useLegacyExports ?? false,
+            streamResponseType: parsed?.streamResponseType ?? "wrapper"
         };
     }
 
@@ -153,7 +160,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 useBigInt: customConfig.useBigInt ?? false,
                 enableInlineTypes: customConfig.enableInlineTypes ?? true,
                 useLegacyExports,
-                generateWireTests: customConfig.generateWireTests ?? false
+                generateWireTests: customConfig.generateWireTests ?? false,
+                streamResponseType: customConfig.streamResponseType ?? "wrapper"
             }
         });
         const typescriptProject = await sdkGenerator.generate();
@@ -163,7 +171,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             pathToSrc: persistedTypescriptProject.getSrcDirectory(),
             pathToRoot: rootDirectory
         });
-        await writeTemplateFiles(rootDirectory, this.getTemplateVariables())
+        await writeTemplateFiles(rootDirectory, this.getTemplateVariables());
         await this.postProcess(persistedTypescriptProject, customConfig);
 
         return persistedTypescriptProject;
@@ -171,8 +179,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
 
     private getTemplateVariables(): Record<string, unknown> {
         return {
-            streamResponseType: "wrapper",
-        }
+            streamResponseType: "wrapper"
+        };
     }
 
     private async postProcess(

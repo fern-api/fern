@@ -289,7 +289,13 @@ export class ExpressGenerator {
         pathToSrc: AbsoluteFilePath;
         pathToRoot: AbsoluteFilePath;
     }): Promise<void> {
-        await this.coreUtilitiesManager.copyCoreUtilities({ pathToSrc, pathToRoot });
+        await this.coreUtilitiesManager.copyCoreUtilities({
+            pathToSrc,
+            pathToRoot,
+            config: {
+                streamResponseType: "web"
+            }
+        });
     }
 
     private getTypesToGenerate(): Record<TypeId, TypeDeclaration> {

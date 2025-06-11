@@ -3,11 +3,15 @@ import { ts } from "ts-morph";
 import { CoreUtility } from "../CoreUtility";
 import { Utils } from "./Utils";
 
+export const MANIFEST: CoreUtility.Manifest = {
+    name: "utils",
+    pathInCoreUtilities: { nameOnDisk: "utils", exportDeclaration: { exportAll: true } },
+    getFilesPatterns: () => {
+        return { patterns: ["src/core/utils/setObjectProperty.ts", "tests/unit/utils/setObjectProperty.test.ts"] };
+    }
+};
 export class UtilsImpl extends CoreUtility implements Utils {
-    public readonly MANIFEST = {
-        name: "utils",
-        pathInCoreUtilities: { nameOnDisk: "utils", exportDeclaration: { exportAll: true } }
-    };
+    public readonly MANIFEST = MANIFEST;
 
     public setObjectProperty = {
         _invoke: this.withExportedName(

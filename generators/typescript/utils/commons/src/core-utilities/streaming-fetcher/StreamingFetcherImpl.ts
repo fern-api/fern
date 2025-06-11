@@ -4,15 +4,19 @@ import { CoreUtility } from "../CoreUtility";
 import { MANIFEST as RuntimeManifest } from "../runtime/RuntimeImpl";
 import { StreamingFetcher } from "./StreamingFetcher";
 
+export const MANIFEST: CoreUtility.Manifest = {
+    name: "stream-fetcher",
+    pathInCoreUtilities: { nameOnDisk: "streaming-fetcher", exportDeclaration: { exportAll: true } },
+    addDependencies: (): void => {
+        return;
+    },
+    dependsOn: [RuntimeManifest],
+    getFilesPatterns: () => {
+        return { patterns: "src/core/stream/**" };
+    }
+};
 export class StreamingFetcherImpl extends CoreUtility implements StreamingFetcher {
-    public readonly MANIFEST = {
-        name: "stream-fetcher",
-        pathInCoreUtilities: { nameOnDisk: "streaming-fetcher", exportDeclaration: { exportAll: true } },
-        addDependencies: (): void => {
-            return;
-        },
-        dependsOn: [RuntimeManifest]
-    };
+    public readonly MANIFEST = MANIFEST;
 
     public Stream = {
         _construct: this.withExportedName(

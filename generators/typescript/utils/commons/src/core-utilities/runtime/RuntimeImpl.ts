@@ -8,6 +8,9 @@ export const MANIFEST: CoreUtility.Manifest = {
     pathInCoreUtilities: { nameOnDisk: "runtime", exportDeclaration: { exportAll: true } },
     addDependencies: (): void => {
         return;
+    },
+    getFilesPatterns: () => {
+        return { patterns: "src/core/runtime/**" };
     }
 };
 

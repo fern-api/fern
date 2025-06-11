@@ -1,22 +1,24 @@
 import { ts } from "ts-morph";
 
-import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
-
 import { DependencyManager, DependencyType } from "../../dependency-manager/DependencyManager";
 import { CoreUtility } from "../CoreUtility";
 import { MANIFEST as RuntimeManifest } from "../runtime/RuntimeImpl";
 import { Websocket } from "./Websocket";
 
+export const MANIFEST: CoreUtility.Manifest = {
+    name: "websocket",
+    pathInCoreUtilities: { nameOnDisk: "websocket", exportDeclaration: { exportAll: true } },
+    addDependencies: (dependencyManager: DependencyManager): void => {
+        dependencyManager.addDependency("ws", "^8.16.0");
+        dependencyManager.addDependency("@types/ws", "^8.5.10", { type: DependencyType.DEV });
+    },
+    dependsOn: [RuntimeManifest],
+    getFilesPatterns: () => {
+        return { patterns: "src/core/websocket/**" };
+    }
+};
 export class WebsocketImpl extends CoreUtility implements Websocket {
-    public readonly MANIFEST = {
-        name: "websocket",
-        pathInCoreUtilities: { nameOnDisk: "websocket", exportDeclaration: { exportAll: true } },
-        addDependencies: (dependencyManager: DependencyManager): void => {
-            dependencyManager.addDependency("ws", "^8.16.0");
-            dependencyManager.addDependency("@types/ws", "^8.5.10", { type: DependencyType.DEV });
-        },
-        dependsOn: [RuntimeManifest]
-    };
+    public readonly MANIFEST = MANIFEST;
 
     public ReconnectingWebSocket = {
         _getReferenceToType: this.withExportedName(

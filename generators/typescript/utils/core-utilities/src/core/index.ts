@@ -9,5 +9,3 @@ export * from "./stream/index.js";
 export * from "./utils/index.js";
 export * from "./websocket/index.js";
 export * from "./utils/index.js";
-export * from "./headers.js";
-export * from "./json.js";

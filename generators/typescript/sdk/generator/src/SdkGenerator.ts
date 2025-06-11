@@ -141,6 +141,7 @@ export declare namespace SdkGenerator {
         useBigInt: boolean;
         useLegacyExports: boolean;
         generateWireTests: boolean;
+        streamResponseType: "wrapper" | "web";
     }
 }
 
@@ -644,7 +645,7 @@ export class SdkGenerator {
         pathToSrc: AbsoluteFilePath;
         pathToRoot: AbsoluteFilePath;
     }): Promise<void> {
-        await this.coreUtilitiesManager.copyCoreUtilities({ pathToSrc, pathToRoot });
+        await this.coreUtilitiesManager.copyCoreUtilities({ pathToSrc, pathToRoot, config: this.config });
     }
 
     private generateTypeDeclarations() {

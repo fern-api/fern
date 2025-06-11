@@ -1,4 +1,5 @@
-import { cp, writeFile } from "fs/promises";
+import { cp, mkdir, writeFile } from "fs/promises";
+import { Glob, glob } from "glob";
 import path from "path";
 import { SourceFile } from "ts-morph";
 
@@ -69,41 +70,53 @@ export class CoreUtilitiesManager {
 
     public async copyCoreUtilities({
         pathToSrc,
-        pathToRoot
+        pathToRoot,
+        config
     }: {
         pathToSrc: AbsoluteFilePath;
         pathToRoot: AbsoluteFilePath;
+        config: {
+            streamResponseType: "wrapper" | "web";
+        };
     }): Promise<void> {
-        await Promise.all(
-            [...Object.entries(this.referencedCoreUtilities)].map(async ([utilityName, utility]) => {
-                const sourceUtilityPath = path.join("/assets/core-utilities", utilityName);
-                try {
-                    await cp(path.join(sourceUtilityPath, "src"), path.join(pathToRoot, "src"), {
-                        recursive: true,
-                        force: false
+        const pathOnContainer = "/assets/core-utilities";
+        const files = new Set(
+            await Promise.all(
+                Object.entries(this.referencedCoreUtilities).map(async ([_, utility]) => {
+                    const { patterns, ignore } = utility.getFilesPatterns(config);
+                    return await glob(patterns, {
+                        ignore,
+                        cwd: pathOnContainer,
+                        nodir: true
                     });
-                } catch (error) {
-                    // src directory might not exist, which is fine to ignore
-                }
-                try {
-                    await cp(path.join(sourceUtilityPath, "tests"), path.join(pathToRoot, "tests"), {
-                        recursive: true,
-                        force: false
-                    });
-                } catch (error) {
-                    // Tests directory might not exist, which is fine to ignore
-                }
+                })
+            ).then((results) => results.flat())
+        );
 
-                const pathToUtilityFolder = path.join(pathToSrc, "core", utility.pathInCoreUtilities.nameOnDisk);
-                if (utilityName === "auth") {
-                    // TODO(amckinney): Find a better way to add utility-scoped overrides. The way we designed the
-                    // core utilities manifest is not flexible enough.
-                    for (const [filepath, content] of Object.entries(this.authOverrides)) {
-                        await writeFile(path.join(pathToUtilityFolder, filepath), content);
-                    }
-                }
+        // Copy each file to the destination preserving the directory structure
+        await Promise.all(
+            Array.from(files).map(async (file) => {
+                const sourcePath = path.join(pathOnContainer, file);
+                const destPath = path.join(pathToRoot, file);
+
+                // Ensure the destination directory exists
+                const destDir = path.dirname(destPath);
+                await mkdir(destDir, { recursive: true });
+
+                // Copy the file
+                await cp(sourcePath, destPath);
             })
         );
+
+        // Handle auth overrides
+        if (this.referencedCoreUtilities["auth"] != null) {
+            await Promise.all(
+                Object.entries(this.authOverrides).map(async ([filepath, content]) => {
+                    const destPath = path.join(pathToSrc, "core", "auth", filepath);
+                    await writeFile(destPath, content);
+                })
+            );
+        }
     }
 
     public addAuthOverride({ filepath, content }: { filepath: RelativeFilePath; content: string }): void {

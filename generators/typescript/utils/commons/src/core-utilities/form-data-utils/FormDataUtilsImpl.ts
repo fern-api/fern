@@ -1,24 +1,26 @@
 import { ts } from "ts-morph";
 
-import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
-
 import { DependencyManager } from "../../dependency-manager/DependencyManager";
 import { CoreUtility } from "../CoreUtility";
 import { MANIFEST as RuntimeManifest } from "../runtime/RuntimeImpl";
 import { FormDataUtils } from "./FormDataUtils";
 
-export class FormDataUtilsImpl extends CoreUtility implements FormDataUtils {
-    public readonly MANIFEST = {
-        name: "form-data-utils",
-        pathInCoreUtilities: { nameOnDisk: "form-data-utils", exportDeclaration: { exportAll: true } },
-        addDependencies: (dependencyManager: DependencyManager): void => {
-            dependencyManager.addDependency("form-data", "^4.0.0");
-            dependencyManager.addDependency("form-data-encoder", "^4.0.2");
-            dependencyManager.addDependency("formdata-node", "^6.0.3");
-        },
-        dependsOn: [RuntimeManifest]
-    };
+export const MANIFEST: CoreUtility.Manifest = {
+    name: "form-data-utils",
+    pathInCoreUtilities: { nameOnDisk: "form-data-utils", exportDeclaration: { exportAll: true } },
+    addDependencies: (dependencyManager: DependencyManager): void => {
+        dependencyManager.addDependency("form-data", "^4.0.0");
+        dependencyManager.addDependency("form-data-encoder", "^4.0.2");
+        dependencyManager.addDependency("formdata-node", "^6.0.3");
+    },
+    dependsOn: [RuntimeManifest],
+    getFilesPatterns: () => {
+        return { patterns: ["src/core/form-data-utils/**", "tests/form-data-utils/**"] };
+    }
+};
 
+export class FormDataUtilsImpl extends CoreUtility implements FormDataUtils {
+    public readonly MANIFEST = MANIFEST;
     public readonly newFormData = this.withExportedName(
         "newFormData",
         (fdw) => () =>

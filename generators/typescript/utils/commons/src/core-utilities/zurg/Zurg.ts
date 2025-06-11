@@ -1,5 +1,13 @@
-import { SchemaOptions } from "@fern-typescript/zurg";
 import { ts } from "ts-morph";
+
+export interface SchemaOptions {
+    unrecognizedObjectKeys?: "fail" | "passthrough" | "strip";
+    allowUnrecognizedUnionMembers?: boolean;
+    allowUnrecognizedEnumValues?: boolean;
+    skipValidation?: boolean;
+    omitUndefined?: boolean;
+    breadcrumbsPrefix?: string[];
+}
 
 export interface Zurg {
     object: (properties: Zurg.Property[]) => Zurg.ObjectSchema;

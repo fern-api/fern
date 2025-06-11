@@ -4,16 +4,19 @@ import { CoreUtility } from "../CoreUtility";
 import { MANIFEST as FetcherManifest } from "../fetcher/FetcherImpl";
 import { Pagination } from "./Pagination";
 
+export const MANIFEST: CoreUtility.Manifest = {
+    name: "pagination",
+    pathInCoreUtilities: { nameOnDisk: "pagination", exportDeclaration: { exportAll: true } },
+    addDependencies: (): void => {
+        return;
+    },
+    dependsOn: [FetcherManifest],
+    getFilesPatterns: () => {
+        return { patterns: "src/core/pagination/**" };
+    }
+};
 export class PaginationImpl extends CoreUtility implements Pagination {
-    public readonly MANIFEST = {
-        name: "pagination",
-        pathInCoreUtilities: { nameOnDisk: "pagination", exportDeclaration: { exportAll: true } },
-        addDependencies: (): void => {
-            return;
-        },
-        dependsOn: [FetcherManifest]
-    };
-
+    public readonly MANIFEST = MANIFEST;
     public Page = {
         _getReferenceToType: this.withExportedName(
             "Page",

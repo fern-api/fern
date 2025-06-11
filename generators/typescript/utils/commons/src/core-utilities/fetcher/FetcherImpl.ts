@@ -30,7 +30,16 @@ export const MANIFEST: CoreUtility.Manifest = {
             type: DependencyType.DEV
         });
     },
-    dependsOn: [RuntimeManifest]
+    dependsOn: [RuntimeManifest],
+    getFilesPatterns: (options) => {
+        return {
+            patterns: ["src/core/fetcher/**", "tests/unit/fetcher/**"],
+            ignore:
+                options.streamResponseType === "web"
+                    ? ["src/core/fetcher/stream-wrappers", "tests/unit/fetcher/stream-wrappers"]
+                    : undefined
+        };
+    }
 };
 
 export class FetcherImpl extends CoreUtility implements Fetcher {

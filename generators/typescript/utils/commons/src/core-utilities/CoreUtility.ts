@@ -1,3 +1,5 @@
+import { Glob, GlobOptions } from "glob";
+
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { DependencyManager } from "../dependency-manager/DependencyManager";
@@ -16,6 +18,16 @@ export declare namespace CoreUtility {
         pathInCoreUtilities: ExportedDirectory;
         addDependencies?: (dependencyManager: DependencyManager) => void;
         dependsOn?: CoreUtility.Manifest[];
+        getFilesPatterns: (options: getFilesGlob.Options) => {
+            patterns: string | string[];
+            ignore?: string | string[];
+        };
+    }
+
+    export namespace getFilesGlob {
+        export type Options = {
+            streamResponseType: "wrapper" | "web";
+        };
     }
 }
 

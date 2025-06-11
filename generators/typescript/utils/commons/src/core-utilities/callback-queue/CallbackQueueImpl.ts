@@ -1,15 +1,18 @@
 import { ts } from "ts-morph";
 
-import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
-
 import { CoreUtility } from "../CoreUtility";
 import { CallbackQueue } from "./CallbackQueue";
 
+export const MANIFEST: CoreUtility.Manifest = {
+    name: "callback-queue",
+    pathInCoreUtilities: { nameOnDisk: "callback-queue", exportDeclaration: { exportAll: true } },
+    getFilesPatterns: () => {
+        return { patterns: ["src/core/callback-queue/**", "tests/unit/callback-queue/**"] };
+    }
+};
+
 export class CallbackQueueImpl extends CoreUtility implements CallbackQueue {
-    public readonly MANIFEST = {
-        name: "callback-queue",
-        pathInCoreUtilities: { nameOnDisk: "callback-queue", exportDeclaration: { exportAll: true } }
-    };
+    public readonly MANIFEST = MANIFEST;
 
     public readonly _instantiate = this.withExportedName(
         "CallbackQueue",
