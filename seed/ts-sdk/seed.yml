@@ -135,6 +135,9 @@ fixtures:
       customConfig:
         useBigInt: true
         noSerdeLayer: false
+    - outputFolder: web-stream-wrapper
+      customConfig:
+        streamResponseType: "web"
   error-property:
     - customConfig:
         private: true

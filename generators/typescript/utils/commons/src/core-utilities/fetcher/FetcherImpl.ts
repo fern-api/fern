@@ -35,8 +35,8 @@ export const MANIFEST: CoreUtility.Manifest = {
         return {
             patterns: ["src/core/fetcher/**", "tests/unit/fetcher/**"],
             ignore:
-                options.streamResponseType === "web"
-                    ? ["src/core/fetcher/stream-wrappers", "tests/unit/fetcher/stream-wrappers"]
+                options.streamResponseType !== "wrapper"
+                    ? ["src/core/fetcher/stream-wrappers/**", "tests/unit/fetcher/stream-wrappers/**"]
                     : undefined
         };
     }

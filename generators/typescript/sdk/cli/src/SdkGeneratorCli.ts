@@ -171,15 +171,15 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             pathToSrc: persistedTypescriptProject.getSrcDirectory(),
             pathToRoot: rootDirectory
         });
-        await writeTemplateFiles(rootDirectory, this.getTemplateVariables());
+        await writeTemplateFiles(rootDirectory, this.getTemplateVariables(customConfig));
         await this.postProcess(persistedTypescriptProject, customConfig);
 
         return persistedTypescriptProject;
     }
 
-    private getTemplateVariables(): Record<string, unknown> {
+    private getTemplateVariables(customConfig: SdkCustomConfig): Record<string, unknown> {
         return {
-            streamResponseType: "wrapper"
+            streamResponseType: customConfig.streamResponseType
         };
     }
 
