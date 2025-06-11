@@ -57,10 +57,12 @@ export async function generateDocsWorkspace({
         }
     }
 
-    await cliContext.instrumentPostHogEvent({
-        orgId: project.config.organization,
-        command: "fern generate --docs"
-    });
+    if (!shouldSkipAuth) {
+        await cliContext.instrumentPostHogEvent({
+            orgId: project.config.organization,
+            command: "fern generate --docs"
+        });
+    }
 
     await cliContext.runTaskForWorkspace(docsWorkspace, async (context) => {
         await validateDocsWorkspaceAndLogIssues({
