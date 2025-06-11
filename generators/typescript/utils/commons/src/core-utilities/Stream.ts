@@ -1,12 +1,47 @@
 import { ts } from "ts-morph";
 
-import { CoreUtility } from "../CoreUtility";
-import { MANIFEST as RuntimeManifest } from "../runtime/RuntimeImpl";
-import { StreamingFetcher } from "./StreamingFetcher";
+import { CoreUtility } from "./CoreUtility";
+import { MANIFEST as RuntimeManifest } from "./Runtime";
+
+export interface Stream {
+    readonly Stream: {
+        _construct: (args: {
+            stream: ts.Expression;
+            parse: ts.Expression;
+            eventShape: Stream.SSEEventShape | Stream.MessageEventShape;
+            signal: ts.Expression;
+        }) => ts.Expression;
+        _getReferenceToType: (response: ts.TypeNode) => ts.TypeNode;
+    };
+}
+
+export declare namespace Stream {
+    export interface Args {
+        url: ts.Expression;
+        method: ts.Expression;
+        headers: ts.ObjectLiteralElementLike[];
+        queryParameters: ts.Expression | undefined;
+        body: ts.Expression | undefined;
+        timeoutInSeconds: ts.Expression;
+        withCredentials: boolean;
+
+        abortController: ts.Expression | undefined;
+    }
+
+    export interface SSEEventShape {
+        type: "sse";
+        streamTerminator?: ts.Expression;
+    }
+
+    export interface MessageEventShape {
+        type: "json";
+        messageTerminator?: ts.Expression;
+    }
+}
 
 export const MANIFEST: CoreUtility.Manifest = {
-    name: "stream-fetcher",
-    pathInCoreUtilities: { nameOnDisk: "streaming-fetcher", exportDeclaration: { exportAll: true } },
+    name: "stream",
+    pathInCoreUtilities: { nameOnDisk: "stream", exportDeclaration: { exportAll: true } },
     addDependencies: (): void => {
         return;
     },
@@ -15,7 +50,8 @@ export const MANIFEST: CoreUtility.Manifest = {
         return { patterns: "src/core/stream/**" };
     }
 };
-export class StreamingFetcherImpl extends CoreUtility implements StreamingFetcher {
+
+export class StreamImpl extends CoreUtility implements Stream {
     public readonly MANIFEST = MANIFEST;
 
     public Stream = {
@@ -30,7 +66,7 @@ export class StreamingFetcherImpl extends CoreUtility implements StreamingFetche
                 }: {
                     stream: ts.Expression;
                     parse: ts.Expression;
-                    eventShape: StreamingFetcher.SSEEventShape | StreamingFetcher.MessageEventShape;
+                    eventShape: Stream.SSEEventShape | Stream.MessageEventShape;
                     signal: ts.Expression;
                 }): ts.Expression => {
                     const eventShapeProperties: ts.ObjectLiteralElementLike[] = [];

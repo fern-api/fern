@@ -1,8 +1,28 @@
 import { ts } from "ts-morph";
 
-import { DependencyManager } from "../../dependency-manager/DependencyManager";
-import { CoreUtility } from "../CoreUtility";
-import { Auth } from "./Auth";
+import { DependencyManager } from "../dependency-manager/DependencyManager";
+import { CoreUtility } from "./CoreUtility";
+
+export interface Auth {
+    BearerToken: {
+        _getReferenceToType: () => ts.TypeNode;
+
+        toAuthorizationHeader: (token: ts.Expression) => ts.Expression;
+        fromAuthorizationHeader: (header: ts.Expression) => ts.Expression;
+    };
+
+    BasicAuth: {
+        _getReferenceToType: () => ts.TypeNode;
+
+        toAuthorizationHeader: (username: ts.Expression, password: ts.Expression) => ts.Expression;
+        fromAuthorizationHeader: (header: ts.Expression) => ts.Expression;
+    };
+
+    OAuthTokenProvider: {
+        _getExpression: () => ts.Expression;
+        _getReferenceToType: () => ts.TypeNode;
+    };
+}
 
 export const MANIFEST: CoreUtility.Manifest = {
     name: "auth",
@@ -14,6 +34,7 @@ export const MANIFEST: CoreUtility.Manifest = {
         return { patterns: ["src/core/auth/**", "tests/unit/auth/**"] };
     }
 };
+
 export class AuthImpl extends CoreUtility implements Auth {
     public readonly MANIFEST = MANIFEST;
 

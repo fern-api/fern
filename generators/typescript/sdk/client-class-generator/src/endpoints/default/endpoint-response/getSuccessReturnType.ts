@@ -51,7 +51,7 @@ export function getSuccessReturnType(
                     throw new Error(`Encountered unknown data event type ${type}`);
                 }
             });
-            return context.coreUtilities.streamingFetcher.Stream._getReferenceToType(dataEventType.typeNode);
+            return context.coreUtilities.stream.Stream._getReferenceToType(dataEventType.typeNode);
         }
         default:
             assertNever(response);

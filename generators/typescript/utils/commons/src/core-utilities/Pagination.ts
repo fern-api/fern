@@ -1,8 +1,26 @@
 import { ts } from "ts-morph";
 
-import { CoreUtility } from "../CoreUtility";
-import { MANIFEST as FetcherManifest } from "../fetcher/FetcherImpl";
-import { Pagination } from "./Pagination";
+import { CoreUtility } from "./CoreUtility";
+import { MANIFEST as FetcherManifest } from "./Fetcher";
+
+export interface Pagination {
+    readonly Page: {
+        _getReferenceToType: (itemType: ts.TypeNode) => ts.TypeNode;
+    };
+
+    readonly Pageable: {
+        _construct: (args: {
+            responseType: ts.TypeNode;
+            itemType: ts.TypeNode;
+            response: ts.Expression;
+            rawResponse: ts.Expression;
+            hasNextPage: ts.Expression;
+            getItems: ts.Expression;
+            loadPage: ts.Expression;
+        }) => ts.Expression;
+        _getReferenceToType: (response: ts.TypeNode, itemType: ts.TypeNode) => ts.TypeNode;
+    };
+}
 
 export const MANIFEST: CoreUtility.Manifest = {
     name: "pagination",
@@ -15,6 +33,7 @@ export const MANIFEST: CoreUtility.Manifest = {
         return { patterns: "src/core/pagination/**" };
     }
 };
+
 export class PaginationImpl extends CoreUtility implements Pagination {
     public readonly MANIFEST = MANIFEST;
     public Page = {

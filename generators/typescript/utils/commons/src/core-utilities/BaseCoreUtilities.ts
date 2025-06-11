@@ -1,7 +1,10 @@
 import { ts } from "ts-morph";
 
-import { CoreUtility } from "../CoreUtility";
-import { BaseCoreUtilities } from "./BaseCoreUtilities";
+import { CoreUtility } from "./CoreUtility";
+
+export interface BaseCoreUtilities {
+    addNonEnumerableProperty: (object: ts.Expression, key: ts.Expression, value: ts.Expression) => ts.Expression;
+}
 
 export const MANIFEST: CoreUtility.Manifest = {
     name: "base-core-utilities",

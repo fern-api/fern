@@ -1,19 +1,19 @@
-import { Auth } from "./auth/Auth";
-import { BaseCoreUtilities } from "./base-core-utilities/BaseCoreUtilities";
-import { CallbackQueue } from "./callback-queue/CallbackQueue";
-import { Fetcher } from "./fetcher/Fetcher";
-import { FormDataUtils } from "./form-data-utils/FormDataUtils";
-import { Pagination } from "./pagination/Pagination";
-import { Runtime } from "./runtime/Runtime";
-import { StreamingFetcher } from "./streaming-fetcher/StreamingFetcher";
-import { Utils } from "./utils/Utils";
-import { Websocket } from "./websocket/Websocket";
-import { Zurg } from "./zurg/Zurg";
+import { Auth } from "./Auth";
+import { BaseCoreUtilities } from "./BaseCoreUtilities";
+import { CallbackQueue } from "./CallbackQueue";
+import { Fetcher } from "./Fetcher";
+import { FormDataUtils } from "./FormDataUtils";
+import { Pagination } from "./Pagination";
+import { Runtime } from "./Runtime";
+import { Stream } from "./Stream";
+import { Utils } from "./Utils";
+import { Websocket } from "./Websocket";
+import { Zurg } from "./Zurg";
 
 export interface CoreUtilities {
     zurg: Zurg;
     fetcher: Fetcher;
-    streamingFetcher: StreamingFetcher;
+    stream: Stream;
     callbackQueue: CallbackQueue;
     auth: Auth;
     baseCoreUtilities: BaseCoreUtilities;

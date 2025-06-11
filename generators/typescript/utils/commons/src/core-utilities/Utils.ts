@@ -1,7 +1,12 @@
 import { ts } from "ts-morph";
 
-import { CoreUtility } from "../CoreUtility";
-import { Utils } from "./Utils";
+import { CoreUtility } from "./CoreUtility";
+
+export interface Utils {
+    readonly setObjectProperty: {
+        _invoke: (args: { referenceToObject: ts.Expression; path: string; value: ts.Expression }) => ts.Expression;
+    };
+}
 
 export const MANIFEST: CoreUtility.Manifest = {
     name: "utils",

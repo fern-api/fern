@@ -1,5 +1,5 @@
 import { cp, mkdir, writeFile } from "fs/promises";
-import { Glob, glob } from "glob";
+import { glob } from "glob";
 import path from "path";
 import { SourceFile } from "ts-morph";
 
@@ -9,19 +9,19 @@ import { DependencyManager } from "../dependency-manager/DependencyManager";
 import { ExportsManager } from "../exports-manager";
 import { ImportsManager } from "../imports-manager";
 import { getReferenceToExportViaNamespaceImport } from "../referencing";
+import { AuthImpl } from "./Auth";
+import { BaseCoreUtilitiesImpl } from "./BaseCoreUtilities";
+import { CallbackQueueImpl } from "./CallbackQueue";
 import { CoreUtilities } from "./CoreUtilities";
 import { CoreUtility, CoreUtilityName } from "./CoreUtility";
-import { AuthImpl } from "./auth/AuthImpl";
-import { BaseCoreUtilitiesImpl } from "./base-core-utilities/BaseCoreUtilitiesImpl";
-import { CallbackQueueImpl } from "./callback-queue/CallbackQueueImpl";
-import { FetcherImpl } from "./fetcher/FetcherImpl";
-import { FormDataUtilsImpl } from "./form-data-utils/FormDataUtilsImpl";
-import { PaginationImpl } from "./pagination/PaginationImpl";
-import { RuntimeImpl } from "./runtime/RuntimeImpl";
-import { StreamingFetcherImpl } from "./streaming-fetcher/StreamingFetcherImpl";
-import { UtilsImpl } from "./utils/UtilsImpl";
-import { WebsocketImpl } from "./websocket/WebsocketImpl";
-import { ZurgImpl } from "./zurg/ZurgImpl";
+import { FetcherImpl } from "./Fetcher";
+import { FormDataUtilsImpl } from "./FormDataUtils";
+import { PaginationImpl } from "./Pagination";
+import { RuntimeImpl } from "./Runtime";
+import { StreamImpl } from "./Stream";
+import { UtilsImpl } from "./Utils";
+import { WebsocketImpl } from "./Websocket";
+import { ZurgImpl } from "./Zurg";
 
 export declare namespace CoreUtilitiesManager {
     namespace getCoreUtilities {
@@ -41,7 +41,7 @@ export class CoreUtilitiesManager {
         return {
             zurg: new ZurgImpl({ getReferenceToExport }),
             fetcher: new FetcherImpl({ getReferenceToExport }),
-            streamingFetcher: new StreamingFetcherImpl({ getReferenceToExport }),
+            stream: new StreamImpl({ getReferenceToExport }),
             auth: new AuthImpl({ getReferenceToExport }),
             baseCoreUtilities: new BaseCoreUtilitiesImpl({ getReferenceToExport }),
             callbackQueue: new CallbackQueueImpl({ getReferenceToExport }),

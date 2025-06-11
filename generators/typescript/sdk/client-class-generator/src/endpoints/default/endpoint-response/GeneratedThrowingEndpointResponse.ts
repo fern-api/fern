@@ -1,4 +1,4 @@
-import { PackageId, StreamingFetcher, getFullPathForEndpoint, getTextOfTsNode } from "@fern-typescript/commons";
+import { PackageId, Stream, getFullPathForEndpoint, getTextOfTsNode } from "@fern-typescript/commons";
 import { GeneratedSdkEndpointTypeSchemas, SdkContext } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { ts } from "ts-morph";
@@ -534,9 +534,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                 )
             ];
         } else if (this.response?.type === "streaming") {
-            const eventShape = this.response.value._visit<
-                StreamingFetcher.MessageEventShape | StreamingFetcher.SSEEventShape
-            >({
+            const eventShape = this.response.value._visit<Stream.MessageEventShape | Stream.SSEEventShape>({
                 sse: (sse) => ({
                     type: "sse",
                     streamTerminator: ts.factory.createStringLiteral(sse.terminator ?? "[DONE]")
@@ -559,7 +557,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                         [
                             ts.factory.createPropertyAssignment(
                                 ts.factory.createIdentifier("data"),
-                                context.coreUtilities.streamingFetcher.Stream._construct({
+                                context.coreUtilities.stream.Stream._construct({
                                     stream: ts.factory.createPropertyAccessChain(
                                         ts.factory.createIdentifier(
                                             GeneratedThrowingEndpointResponse.RESPONSE_VARIABLE_NAME

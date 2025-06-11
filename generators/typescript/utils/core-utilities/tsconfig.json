@@ -1,5 +1,4 @@
 {
-  "extends": "@fern-api/configs/tsconfig/main.json",
   "include": [],
   "exclude": ["./*"]
 }

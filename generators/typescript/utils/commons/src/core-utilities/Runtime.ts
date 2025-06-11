@@ -1,7 +1,16 @@
 import { ts } from "ts-morph";
 
-import { CoreUtility } from "../CoreUtility";
-import { Runtime } from "./Runtime";
+import { CoreUtility } from "./CoreUtility";
+
+export interface Runtime {
+    readonly type: {
+        _getReferenceTo: () => ts.Expression;
+    };
+
+    readonly version: {
+        _getReferenceTo: () => ts.Expression;
+    };
+}
 
 export const MANIFEST: CoreUtility.Manifest = {
     name: "runtime",

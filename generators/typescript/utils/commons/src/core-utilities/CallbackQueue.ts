@@ -1,7 +1,11 @@
 import { ts } from "ts-morph";
 
-import { CoreUtility } from "../CoreUtility";
-import { CallbackQueue } from "./CallbackQueue";
+import { CoreUtility } from "./CoreUtility";
+
+export interface CallbackQueue {
+    _instantiate: () => ts.NewExpression;
+    wrap: (args: { referenceToCallbackQueue: ts.Expression; functionToWrap: ts.Expression }) => ts.Expression;
+}
 
 export const MANIFEST: CoreUtility.Manifest = {
     name: "callback-queue",
