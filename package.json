@@ -131,8 +131,7 @@
   ],
   "pnpm": {
     "overrides": {
-      "node-fetch@2.x>whatwg-url": "^14.0.0",
-      "cross-spawn": "7.0.5"
+      "node-fetch@2.x>whatwg-url": "^14.0.0"
     }
   }
 }
