@@ -2,6 +2,7 @@ import { Name, ObjectProperty, ObjectTypeDeclaration, TypeDeclaration } from "@f
 
 import { RelativeFilePath } from "../../../../packages/commons/fs-utils/src";
 import { BaseRubyCustomConfigSchema, ruby } from "../../ast/src";
+import { Field } from "../../ast/src/ast";
 import { FileGenerator, RubyFile } from "../../base/src";
 import { ModelGeneratorContext } from "./ModelGeneratorContext";
 
@@ -17,15 +18,30 @@ export class ObjectGenerator extends FileGenerator<RubyFile, BaseRubyCustomConfi
         this.otd = otd;
     }
 
-    public doGenerate(): RubyFile | undefined {}
+    public doGenerate(): RubyFile {
+        const klass = ruby.object_({
+            ...this.td.name,
+            fields: []
+        });
 
-    private toField({ property, inherited }: { property: ObjectProperty; inherited?: boolean }): ruby.Field {
-        const convertedType = this.context.rubyTypeMapper.convert({ reference: property.valueType });
+        for (const property of this.otd.properties) {
+            const field = this.toField({ property });
+            klass.addField(field);
+        }
+
+        return new RubyFile({
+            node: klass,
+            filename: `${klass.name}.rb`,
+            directory: this.getFilepath(),
+            customConfig: this.context.customConfig
+        });
+    }
+
+    private toField({ property, optional }: { property: ObjectProperty; optional?: boolean }): Field {
         return ruby.field({
             name: property.name.name,
-            type: convertedType,
-            docs: property.docs,
-            inherited
+            type: property.valueType,
+            optional
         });
     }
 
