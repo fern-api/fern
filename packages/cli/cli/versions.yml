@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- changelogEntry:
+    - summary: |
+        Don't use posthog when CLI is running from self-hosted container.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-06-11"
+  version: 0.64.4
 
 - changelogEntry:
     - summary: |
