@@ -141,6 +141,11 @@ fixtures:
       outputFolder: pydantic-v1-wrapped
     - customConfig:
         pydantic_config:
+          version: v2
+          wrapped_aliases: True
+      outputFolder: pydantic-v2-wrapped
+    - customConfig:
+        pydantic_config:
           version: v1
           include_union_utils: true
       outputFolder: pydantic-v1-with-utils
