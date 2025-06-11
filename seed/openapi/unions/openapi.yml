@@ -1,0 +1,1135 @@
+openapi: 3.0.1
+info:
+  title: unions
+  version: ''
+paths:
+  /big-union/{id}:
+    get:
+      operationId: bigunion_get
+      tags:
+        - Bigunion
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BigUnion'
+  /big-union:
+    patch:
+      operationId: bigunion_update
+      tags:
+        - Bigunion
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: boolean
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BigUnion'
+  /big-union/many:
+    patch:
+      operationId: bigunion_update-many
+      tags:
+        - Bigunion
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: boolean
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/BigUnion'
+  /union/{id}:
+    get:
+      operationId: union_get
+      tags:
+        - Union
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Shape'
+  /union:
+    patch:
+      operationId: union_update
+      tags:
+        - Union
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: boolean
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Shape'
+components:
+  schemas:
+    BigUnion:
+      title: BigUnion
+      oneOf:
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - normalSweet
+            - $ref: '#/components/schemas/NormalSweet'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - thankfulFactor
+            - $ref: '#/components/schemas/ThankfulFactor'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - jumboEnd
+            - $ref: '#/components/schemas/JumboEnd'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - hastyPain
+            - $ref: '#/components/schemas/HastyPain'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - mistySnow
+            - $ref: '#/components/schemas/MistySnow'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - distinctFailure
+            - $ref: '#/components/schemas/DistinctFailure'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - practicalPrinciple
+            - $ref: '#/components/schemas/PracticalPrinciple'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - limpingStep
+            - $ref: '#/components/schemas/LimpingStep'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - vibrantExcitement
+            - $ref: '#/components/schemas/VibrantExcitement'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - activeDiamond
+            - $ref: '#/components/schemas/ActiveDiamond'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - popularLimit
+            - $ref: '#/components/schemas/PopularLimit'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - falseMirror
+            - $ref: '#/components/schemas/FalseMirror'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - primaryBlock
+            - $ref: '#/components/schemas/PrimaryBlock'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - rotatingRatio
+            - $ref: '#/components/schemas/RotatingRatio'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - colorfulCover
+            - $ref: '#/components/schemas/ColorfulCover'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - disloyalValue
+            - $ref: '#/components/schemas/DisloyalValue'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - gruesomeCoach
+            - $ref: '#/components/schemas/GruesomeCoach'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - totalWork
+            - $ref: '#/components/schemas/TotalWork'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - harmoniousPlay
+            - $ref: '#/components/schemas/HarmoniousPlay'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - uniqueStress
+            - $ref: '#/components/schemas/UniqueStress'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - unwillingSmoke
+            - $ref: '#/components/schemas/UnwillingSmoke'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - frozenSleep
+            - $ref: '#/components/schemas/FrozenSleep'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - diligentDeal
+            - $ref: '#/components/schemas/DiligentDeal'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - attractiveScript
+            - $ref: '#/components/schemas/AttractiveScript'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - hoarseMouse
+            - $ref: '#/components/schemas/HoarseMouse'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - circularCard
+            - $ref: '#/components/schemas/CircularCard'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - potableBad
+            - $ref: '#/components/schemas/PotableBad'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - triangularRepair
+            - $ref: '#/components/schemas/TriangularRepair'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - gaseousRoad
+            - $ref: '#/components/schemas/GaseousRoad'
+          required:
+            - type
+      required:
+        - id
+        - created-at
+      properties:
+        id:
+          type: string
+        created-at:
+          type: string
+          format: date-time
+        archived-at:
+          type: string
+          format: date-time
+          nullable: true
+    NormalSweet:
+      title: NormalSweet
+      type: object
+      properties:
+        value:
+          type: string
+          example: example1
+      required:
+        - value
+    ThankfulFactor:
+      title: ThankfulFactor
+      type: object
+      properties:
+        value:
+          type: string
+          example: example1
+      required:
+        - value
+    JumboEnd:
+      title: JumboEnd
+      type: object
+      properties:
+        value:
+          type: string
+      required:
+        - value
+    HastyPain:
+      title: HastyPain
+      type: object
+      properties:
+        value:
+          type: string
+      required:
+        - value
+    MistySnow:
+      title: MistySnow
+      type: object
+      properties:
+        value:
+          type: string
+      required:
+        - value
+    DistinctFailure:
+      title: DistinctFailure
+      type: object
+      properties:
+        value:
+          type: string
+      required:
+        - value
+    PracticalPrinciple:
+      title: PracticalPrinciple
+      type: object
+      properties:
+        value:
+          type: string
+      required:
+        - value
+    LimpingStep:
+      title: LimpingStep
+      type: object
+      properties:
+        value:
+          type: string
+      required:
+        - value
+    VibrantExcitement:
+      title: VibrantExcitement
+      type: object
+      properties:
+        value:
+          type: string
+      required:
+        - value
+    ActiveDiamond:
+      title: ActiveDiamond
+      type: object
+      properties:
+        value:
+          type: string
+      required:
+        - value
+    PopularLimit:
+      title: PopularLimit
+      type: object
+      properties:
+        value:
+          type: string
+      required:
+        - value
+    FalseMirror:
+      title: FalseMirror
+      type: object
+      properties:
+        value:
+          type: string
+      required:
+        - value
+    PrimaryBlock:
+      title: PrimaryBlock
+      type: object
+      properties:
+        value:
+          type: string
+      required:
+        - value
+    RotatingRatio:
+      title: RotatingRatio
+      type: object
+      properties:
+        value:
+          type: string
+      required:
+        - value
+    ColorfulCover:
+      title: ColorfulCover
+      type: object
+      properties:
+        value:
+          type: string
+      required:
+        - value
+    DisloyalValue:
+      title: DisloyalValue
+      type: object
+      properties:
+        value:
+          type: string
+      required:
+        - value
+    GruesomeCoach:
+      title: GruesomeCoach
+      type: object
+      properties:
+        value:
+          type: string
+      required:
+        - value
+    TotalWork:
+      title: TotalWork
+      type: object
+      properties:
+        value:
+          type: string
+      required:
+        - value
+    HarmoniousPlay:
+      title: HarmoniousPlay
+      type: object
+      properties:
+        value:
+          type: string
+      required:
+        - value
+    UniqueStress:
+      title: UniqueStress
+      type: object
+      properties:
+        value:
+          type: string
+      required:
+        - value
+    UnwillingSmoke:
+      title: UnwillingSmoke
+      type: object
+      properties:
+        value:
+          type: string
+      required:
+        - value
+    FrozenSleep:
+      title: FrozenSleep
+      type: object
+      properties:
+        value:
+          type: string
+      required:
+        - value
+    DiligentDeal:
+      title: DiligentDeal
+      type: object
+      properties:
+        value:
+          type: string
+      required:
+        - value
+    AttractiveScript:
+      title: AttractiveScript
+      type: object
+      properties:
+        value:
+          type: string
+      required:
+        - value
+    HoarseMouse:
+      title: HoarseMouse
+      type: object
+      properties:
+        value:
+          type: string
+      required:
+        - value
+    CircularCard:
+      title: CircularCard
+      type: object
+      properties:
+        value:
+          type: string
+      required:
+        - value
+    PotableBad:
+      title: PotableBad
+      type: object
+      properties:
+        value:
+          type: string
+      required:
+        - value
+    TriangularRepair:
+      title: TriangularRepair
+      type: object
+      properties:
+        value:
+          type: string
+      required:
+        - value
+    GaseousRoad:
+      title: GaseousRoad
+      type: object
+      properties:
+        value:
+          type: string
+      required:
+        - value
+    Union:
+      title: Union
+      oneOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - foo
+            foo:
+              $ref: '#/components/schemas/Foo'
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - bar
+            bar:
+              $ref: '#/components/schemas/Bar'
+          required:
+            - type
+      description: This is a simple union.
+    UnionWithDiscriminant:
+      title: UnionWithDiscriminant
+      oneOf:
+        - type: object
+          properties:
+            _type:
+              type: string
+              enum:
+                - foo
+            foo:
+              $ref: '#/components/schemas/Foo'
+          required:
+            - _type
+        - type: object
+          properties:
+            _type:
+              type: string
+              enum:
+                - bar
+            bar:
+              $ref: '#/components/schemas/Bar'
+          required:
+            - _type
+    UnionWithPrimitive:
+      title: UnionWithPrimitive
+      oneOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - integer
+            value:
+              type: integer
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - string
+            value:
+              type: string
+          required:
+            - type
+    UnionWithDuplicatePrimitive:
+      title: UnionWithDuplicatePrimitive
+      oneOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - integer1
+            value:
+              type: integer
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - integer2
+            value:
+              type: integer
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - string1
+            value:
+              type: string
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - string2
+            value:
+              type: string
+          required:
+            - type
+    UnionWithoutKey:
+      title: UnionWithoutKey
+      oneOf:
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - foo
+            - $ref: '#/components/schemas/Foo'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - bar
+            - $ref: '#/components/schemas/Bar'
+          required:
+            - type
+    UnionWithNoProperties:
+      title: UnionWithNoProperties
+      oneOf:
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - foo
+            - $ref: '#/components/schemas/Foo'
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - empty
+          required:
+            - type
+    UnionWithMultipleNoProperties:
+      title: UnionWithMultipleNoProperties
+      oneOf:
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - foo
+            - $ref: '#/components/schemas/Foo'
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - empty1
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - empty2
+          required:
+            - type
+    UnionWithLiteral:
+      title: UnionWithLiteral
+      oneOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - fern
+            value:
+              type: string
+              const: fern
+          required:
+            - type
+      required:
+        - base
+      properties:
+        base:
+          type: string
+          const: base
+    UnionWithBaseProperties:
+      title: UnionWithBaseProperties
+      oneOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - integer
+            value:
+              type: integer
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - string
+            value:
+              type: string
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - foo
+            - $ref: '#/components/schemas/Foo'
+          required:
+            - type
+      required:
+        - id
+      properties:
+        id:
+          type: string
+    UnionWithTime:
+      title: UnionWithTime
+      oneOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - value
+            value:
+              type: integer
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - date
+            value:
+              type: string
+              format: date
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - datetime
+            value:
+              type: string
+              format: date-time
+          required:
+            - type
+    UnionWithOptionalTime:
+      title: UnionWithOptionalTime
+      oneOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - date
+            value:
+              type: string
+              format: date
+              nullable: true
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - datetime
+            value:
+              type: string
+              format: date-time
+              nullable: true
+          required:
+            - type
+    UnionWithSingleElement:
+      title: UnionWithSingleElement
+      oneOf:
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - foo
+            - $ref: '#/components/schemas/Foo'
+          required:
+            - type
+    UnionWithDuplicateTypes:
+      title: UnionWithDuplicateTypes
+      oneOf:
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - foo1
+            - $ref: '#/components/schemas/Foo'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - foo2
+            - $ref: '#/components/schemas/Foo'
+          required:
+            - type
+    UnionWithSubTypes:
+      title: UnionWithSubTypes
+      oneOf:
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - foo
+            - $ref: '#/components/schemas/Foo'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - fooExtended
+            - $ref: '#/components/schemas/FooExtended'
+          required:
+            - type
+    Foo:
+      title: Foo
+      type: object
+      properties:
+        name:
+          type: string
+          example: example1
+      required:
+        - name
+    FooExtended:
+      title: FooExtended
+      type: object
+      properties:
+        age:
+          type: integer
+          example: 5
+      required:
+        - age
+      allOf:
+        - $ref: '#/components/schemas/Foo'
+    Bar:
+      title: Bar
+      type: object
+      properties:
+        name:
+          type: string
+          example: example1
+      required:
+        - name
+    GetShapeRequest:
+      title: GetShapeRequest
+      type: object
+      properties:
+        id:
+          type: string
+          example: example
+      required:
+        - id
+    Shape:
+      title: Shape
+      oneOf:
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - circle
+            - $ref: '#/components/schemas/Circle'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - square
+            - $ref: '#/components/schemas/Square'
+          required:
+            - type
+      required:
+        - id
+      properties:
+        id:
+          type: string
+    Circle:
+      title: Circle
+      type: object
+      properties:
+        radius:
+          type: number
+          format: double
+      required:
+        - radius
+    Square:
+      title: Square
+      type: object
+      properties:
+        length:
+          type: number
+          format: double
+      required:
+        - length
+  securitySchemes: {}

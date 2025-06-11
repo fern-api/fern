@@ -43,7 +43,7 @@ func (c *Client) Get(
 		"",
 	)
 	endpointURL := internal.EncodeURL(
-		baseURL+"/%v",
+		baseURL+"/big-union/%v",
 		id,
 	)
 	headers := internal.MergeHeaders(
@@ -81,7 +81,7 @@ func (c *Client) Update(
 		c.baseURL,
 		"",
 	)
-	endpointURL := baseURL
+	endpointURL := baseURL + "/big-union"
 	headers := internal.MergeHeaders(
 		c.header.Clone(),
 		options.ToHeader(),
@@ -118,7 +118,7 @@ func (c *Client) UpdateMany(
 		c.baseURL,
 		"",
 	)
-	endpointURL := baseURL + "/many"
+	endpointURL := baseURL + "/big-union/many"
 	headers := internal.MergeHeaders(
 		c.header.Clone(),
 		options.ToHeader(),

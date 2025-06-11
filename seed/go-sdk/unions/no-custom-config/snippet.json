@@ -2,7 +2,7 @@
     "endpoints": [
         {
             "id": {
-                "path": "/",
+                "path": "/big-union",
                 "method": "PATCH",
                 "identifier_override": "endpoint_bigunion.update"
             },
@@ -13,18 +13,7 @@
         },
         {
             "id": {
-                "path": "/",
-                "method": "PATCH",
-                "identifier_override": "endpoint_union.update"
-            },
-            "snippet": {
-                "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/unions/fern\"\n\tfernclient \"github.com/unions/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Union.Update(\n\tcontext.TODO(),\n\t\u0026fern.Shape{\n\t\tCircle: \u0026fern.Circle{\n\t\t\tRadius: 1.1,\n\t\t},\n\t},\n)\n"
-            }
-        },
-        {
-            "id": {
-                "path": "/many",
+                "path": "/big-union/many",
                 "method": "PATCH",
                 "identifier_override": "endpoint_bigunion.update-many"
             },
@@ -35,7 +24,7 @@
         },
         {
             "id": {
-                "path": "/{id}",
+                "path": "/big-union/{id}",
                 "method": "GET",
                 "identifier_override": "endpoint_bigunion.get"
             },
@@ -46,7 +35,18 @@
         },
         {
             "id": {
-                "path": "/{id}",
+                "path": "/union",
+                "method": "PATCH",
+                "identifier_override": "endpoint_union.update"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/unions/fern\"\n\tfernclient \"github.com/unions/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Union.Update(\n\tcontext.TODO(),\n\t\u0026fern.Shape{\n\t\tCircle: \u0026fern.Circle{\n\t\t\tRadius: 1.1,\n\t\t},\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/union/{id}",
                 "method": "GET",
                 "identifier_override": "endpoint_union.get"
             },

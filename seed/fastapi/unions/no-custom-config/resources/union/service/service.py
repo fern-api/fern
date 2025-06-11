@@ -68,7 +68,7 @@ class AbstractUnionService(AbstractFernService):
         wrapper.__globals__.update(cls.get.__globals__)
 
         router.get(
-            path="/{id}",
+            path="/union/{id}",
             response_model=Shape,
             description=AbstractUnionService.get.__doc__,
             **get_route_args(cls.get, default_tag="union"),
@@ -104,7 +104,7 @@ class AbstractUnionService(AbstractFernService):
         wrapper.__globals__.update(cls.update.__globals__)
 
         router.patch(
-            path="/",
+            path="/union",
             response_model=bool,
             description=AbstractUnionService.update.__doc__,
             **get_route_args(cls.update, default_tag="union"),

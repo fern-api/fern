@@ -9,13 +9,4 @@ from .object_with_map_of_map import ObjectWithMapOfMap
 from .object_with_optional_field import ObjectWithOptionalField
 from .object_with_required_field import ObjectWithRequiredField
 from .optional_alias import OptionalAlias
-
-__all__ = [
-    "DoubleOptional",
-    "NestedObjectWithOptionalField",
-    "NestedObjectWithRequiredField",
-    "ObjectWithMapOfMap",
-    "ObjectWithOptionalField",
-    "ObjectWithRequiredField",
-    "OptionalAlias",
-]
+__all__ = ["DoubleOptional", "NestedObjectWithOptionalField", "NestedObjectWithRequiredField", "ObjectWithMapOfMap", "ObjectWithOptionalField", "ObjectWithRequiredField", "OptionalAlias"]
