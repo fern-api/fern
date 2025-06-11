@@ -184,7 +184,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                         generationLanguage: "typescript",
                         logger: context.logger,
                         smartCasing: false,
-                        spec: document.value,
+                        spec: document.value as any,
                         exampleGenerationArgs: { disabled: false },
                         errorCollector,
                         enableUniqueErrorsPerEndpoint,

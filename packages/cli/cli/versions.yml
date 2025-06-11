@@ -1,6 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        The AsyncAPI importer now supports parameter references and computing location of the parameter based on the address. 
+        This allows for more flexible parameter definitions in AsyncAPI specifications, where parameters can be referenced from other 
+        parts of the specification and their location can be dynamically determined based on the channel address.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-06-11"
+  version: 0.64.1
+
+- changelogEntry:
+    - summary: |
         The OpenAPI v3 Parser will now be used on default for all docs generation codepaths.
       type: feat
   irVersion: 58
