@@ -9079,7 +9079,7 @@ service:
               "origin": "client",
             },
           },
-          "path": "/audio-bridge/v2/interactions/{id}/streams?tenant-name={tenantName}&token={token}",
+          "path": "/audio-bridge/v2/interactions/{id}/streams",
           "path-parameters": {
             "id": {
               "docs": "Unique identifier for the interaction session.",
@@ -9090,6 +9090,12 @@ service:
               "type": "string",
             },
           },
+          "query-parameters": {
+            "token": {
+              "docs": "Short-term token as per RFC 7519 (https://jwt.io).",
+              "type": "string",
+            },
+          },
           "url": "beta-eu",
         },
         "imports": {
@@ -9097,8 +9103,7 @@ service:
         },
       },
       "rawContents": "channel:
-  path: >-
-    /audio-bridge/v2/interactions/{id}/streams?tenant-name={tenantName}&token={token}
+  path: /audio-bridge/v2/interactions/{id}/streams
   url: beta-eu
   auth: false
   docs: >-
@@ -9111,6 +9116,10 @@ service:
     tenantName:
       type: string
       docs: Unique identifier for the interaction session.
+  query-parameters:
+    token:
+      type: string
+      docs: Short-term token as per RFC 7519 (https://jwt.io).
   messages:
     configuration:
       origin: server

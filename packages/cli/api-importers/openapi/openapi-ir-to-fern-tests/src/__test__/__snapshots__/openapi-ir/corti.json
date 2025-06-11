@@ -8416,7 +8416,33 @@
       "audiences": [],
       "handshake": {
         "headers": [],
-        "queryParameters": [],
+        "queryParameters": [
+          {
+            "name": "token",
+            "description": "Short-term token as per RFC 7519 (https://jwt.io).",
+            "schema": {
+              "description": "Short-term token as per RFC 7519 (https://jwt.io).",
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "Token",
+              "nameOverride": "StreamToken",
+              "title": "StreamToken",
+              "namespace": "stream",
+              "groupName": [
+                {
+                  "type": "namespace",
+                  "name": "stream"
+                }
+              ],
+              "type": "primitive"
+            },
+            "source": {
+              "file": "../asyncapi-original.json",
+              "type": "openapi"
+            }
+          }
+        ],
         "pathParameters": [
           {
             "name": "id",
@@ -8558,7 +8584,7 @@
           "url": "wss://api.us.corti.app"
         }
       ],
-      "path": "/audio-bridge/v2/interactions/{id}/streams?tenant-name={tenantName}&token={token}",
+      "path": "/audio-bridge/v2/interactions/{id}/streams",
       "description": "Channel for streaming real-time audio, transcripts, and fact updates during medical interactions.",
       "examples": [
         {
