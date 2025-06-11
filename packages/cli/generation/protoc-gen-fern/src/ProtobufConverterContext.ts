@@ -1,9 +1,11 @@
 import { CodeGeneratorRequest } from "@bufbuild/protobuf/wkt";
-import { FernFilepath, TypeReference } from "@fern-api/ir-sdk";
-import { ProtobufSettings } from "./commons/ProtobufSettings";
-import { ErrorCollector } from "@fern-api/v2-importer-commons";
-import { Logger } from "@fern-api/logger";
+
 import { CasingsGenerator, constructCasingsGenerator } from "@fern-api/casings-generator";
+import { FernFilepath, TypeReference } from "@fern-api/ir-sdk";
+import { Logger } from "@fern-api/logger";
+import { ErrorCollector } from "@fern-api/v2-importer-commons";
+
+import { ProtobufSettings } from "./commons/ProtobufSettings";
 
 export declare namespace Spec {
     export interface Args {
@@ -18,7 +20,6 @@ export declare namespace Spec {
         generateV1Examples: boolean;
     }
 }
-
 
 /**
  * Context class for converting protobuf file descriptors to intermediate representations
@@ -35,10 +36,7 @@ export class ProtobufConverterContext {
     public readonly exampleGenerationArgs: undefined;
     public readonly generateV1Examples: boolean;
 
-
-    constructor(
-        protected readonly args: Spec.Args
-    ) {
+    constructor(protected readonly args: Spec.Args) {
         this.spec = args.spec;
         this.settings = args.settings;
         this.errorCollector = args.errorCollector;
@@ -52,7 +50,7 @@ export class ProtobufConverterContext {
             smartCasing: args.smartCasing
         });
         this.exampleGenerationArgs = args.exampleGenerationArgs;
-        this.generateV1Examples = args.generateV1Examples;        
+        this.generateV1Examples = args.generateV1Examples;
     }
 
     public createFernFilepath(args: { name?: string } = {}): FernFilepath {

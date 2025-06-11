@@ -1,8 +1,3 @@
 export class ServiceConverterContext {
-
-
-    constructor(
-    ) {
-    }
-
+    constructor() {}
 }

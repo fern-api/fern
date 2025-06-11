@@ -1,8 +1,10 @@
 import { MethodDescriptorProto } from "@bufbuild/protobuf/wkt";
+
 import { HttpEndpoint } from "@fern-api/ir-sdk";
+
 import { MethodConverterContext } from "../MethodConverterContext";
 
-export type gRPCMethodType = 'UNARY' | 'CLIENT_STREAM' | 'SERVER_STREAM' | 'BIDI_STREAM';
+export type gRPCMethodType = "UNARY" | "CLIENT_STREAM" | "SERVER_STREAM" | "BIDI_STREAM";
 
 export declare namespace MethodConverter {
     export interface Args {
@@ -24,14 +26,14 @@ export class MethodConverter {
     constructor(args: MethodConverter.Args) {
         this.context = args.context;
         this.operation = args.operation;
-        this.method = args.method; 
+        this.method = args.method;
     }
 
     public convert(): MethodConverter.Output {
         // TODO: convert method by parsing name, request type, and response type
-        
+
         return {
             endpoint: {}
-        }
+        };
     }
 }

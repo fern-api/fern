@@ -1,8 +1,3 @@
 export class MessageConverterContext {
-
-
-    constructor(
-    ) {
-    }
-
+    constructor() {}
 }

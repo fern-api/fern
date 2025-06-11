@@ -1,7 +1,9 @@
 import { DescriptorProto } from "@bufbuild/protobuf/wkt";
-import { ProtobufConverterContext } from "../ProtobufConverterContext";
+
 import * as FernIr from "@fern-api/ir-sdk";
-import { Converters } from "@fern-api/v2-importer-commons"
+import { Converters } from "@fern-api/v2-importer-commons";
+
+import { ProtobufConverterContext } from "../ProtobufConverterContext";
 
 export declare namespace MessageConverter {
     export interface Args {
@@ -33,6 +35,6 @@ export class MessageConverter {
         return {
             convertedMessage: {},
             inlinedTypes: {}
-        }
+        };
     }
 }

@@ -1,9 +1,10 @@
 import { DescriptorProto, ServiceDescriptorProto } from "@bufbuild/protobuf/wkt";
-import { ProtobufConverterContext } from "../ProtobufConverterContext";
-import { MethodConverter } from "./MethodConverter";
-import { Converters } from "@fern-api/v2-importer-commons";
 
 import * as FernIr from "@fern-api/ir-sdk";
+import { Converters } from "@fern-api/v2-importer-commons";
+
+import { ProtobufConverterContext } from "../ProtobufConverterContext";
+import { MethodConverter } from "./MethodConverter";
 
 export declare namespace ServiceConverter {
     export interface Args {
@@ -34,6 +35,6 @@ export class ServiceConverter {
         return {
             endpoints: [],
             inlinedTypes: {}
-        }
+        };
     }
 }

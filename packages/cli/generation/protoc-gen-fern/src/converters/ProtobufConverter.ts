@@ -1,6 +1,7 @@
-import { BaseIntermediateRepresentation } from "@fern-api/v2-importer-commons/lib/AbstractConverter";
-import { ProtobufConverterContext } from "../ProtobufConverterContext";
 import { FernIr, IntermediateRepresentation, Package } from "@fern-api/ir-sdk";
+import { BaseIntermediateRepresentation } from "@fern-api/v2-importer-commons/lib/AbstractConverter";
+
+import { ProtobufConverterContext } from "../ProtobufConverterContext";
 import { MessageConverter } from "./MessageConverter";
 
 export declare namespace ProtobufConverter {
@@ -33,7 +34,7 @@ export class ProtobufConverter {
     private convertOptions() {
         // TODO: convert options
     }
-    
+
     private convertEnums() {
         // TODO: convert enums
         // TODO: add to IR as type/schema
@@ -71,7 +72,7 @@ export class ProtobufConverter {
                     name: "errorInstanceId"
                 })
             }
-        }
+        };
     }
 
     public createPackage(args: { name?: string } = {}): Package {
@@ -135,7 +136,6 @@ export class ProtobufConverter {
                     userAgent: undefined
                 }
             }
-        }
+        };
     }
-
 }

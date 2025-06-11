@@ -1,8 +1,3 @@
 export class MethodConverterContext {
-
-
-    constructor(
-    ) {
-    }
-
+    constructor() {}
 }
