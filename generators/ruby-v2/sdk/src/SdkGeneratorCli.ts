@@ -6,6 +6,8 @@ import { AbstractRubyGeneratorCli, RubyFile } from "@fern-api/ruby-base";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
+import { ModelGeneratorContext } from "../../model/src/ModelGeneratorContext";
+import { ObjectGenerator } from "../../model/src/ObjectGenerator";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
 
@@ -50,8 +52,7 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
             const file = typeDeclaration.shape._visit<RubyFile | undefined>({
                 alias: () => undefined,
                 object: (otd) => {
-                    return undefined;
-                    // TODO: return new ObjectGenerator(args).generate();
+                    return new ObjectGenerator(context, typeDeclaration, otd).generate();
                 },
                 enum: () => undefined,
                 undiscriminatedUnion: () => undefined,
