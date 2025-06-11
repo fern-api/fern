@@ -1,5 +1,5 @@
-import { RUNTIME } from "../../../src/core/runtime";
 import { getRequestBody } from "../../../src/core/fetcher/getRequestBody";
+import { RUNTIME } from "../../../src/core/runtime";
 
 describe("Test getRequestBody", () => {
     it("should return FormData as is in Node environment", async () => {

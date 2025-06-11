@@ -1,8 +1,9 @@
 // this file is used for testing inside of the Fern repo, but the getResponseBody.test.ts.template is used in the generator
-import { RUNTIME } from "../../../src/core/runtime";
 import { getResponseBody } from "../../../src/core/fetcher/getResponseBody";
 // <% if (streamResponseType === "wrapper") { %>
 import { chooseStreamWrapper } from "../../../src/core/fetcher/stream-wrappers/chooseStreamWrapper";
+import { RUNTIME } from "../../../src/core/runtime";
+
 // <% } %>
 
 describe("Test getResponseBody", () => {
@@ -23,7 +24,7 @@ describe("Test getResponseBody", () => {
         }
     });
 
-// <% if (streamResponseType === "wrapper") { %>
+    // <% if (streamResponseType === "wrapper") { %>
     it("should handle streaming response type", async () => {
         if (RUNTIME.type === "node") {
             const mockStream = new ReadableStream();
@@ -33,31 +34,31 @@ describe("Test getResponseBody", () => {
             expect(JSON.stringify(result)).toBe(JSON.stringify(await chooseStreamWrapper(new ReadableStream())));
         }
     });
-// <% } else { %>
-//     it("should handle streaming response type", async () => {
-//         // Create a ReadableStream with some test data
-//         const encoder = new TextEncoder();
-//         const testData = "test stream data";
-//         const mockStream = new ReadableStream({
-//             start(controller) {
-//                 controller.enqueue(encoder.encode(testData));
-//                 controller.close();
-//             }
-//         });
+    // <% } else { %>
+    //     it("should handle streaming response type", async () => {
+    //         // Create a ReadableStream with some test data
+    //         const encoder = new TextEncoder();
+    //         const testData = "test stream data";
+    //         const mockStream = new ReadableStream({
+    //             start(controller) {
+    //                 controller.enqueue(encoder.encode(testData));
+    //                 controller.close();
+    //             }
+    //         });
 
-//         const mockResponse = new Response(mockStream);
-//         const result = (await getResponseBody(mockResponse, "streaming")) as ReadableStream;
+    //         const mockResponse = new Response(mockStream);
+    //         const result = (await getResponseBody(mockResponse, "streaming")) as ReadableStream;
 
-//         expect(result).toBeInstanceOf(ReadableStream);
+    //         expect(result).toBeInstanceOf(ReadableStream);
 
-//         // Read and verify the stream content
-//         const reader = result.getReader();
-//         const decoder = new TextDecoder();
-//         const { value } = await reader.read();
-//         const streamContent = decoder.decode(value);
-//         expect(streamContent).toBe(testData);
-//     });
-// <% } %>
+    //         // Read and verify the stream content
+    //         const reader = result.getReader();
+    //         const decoder = new TextDecoder();
+    //         const { value } = await reader.read();
+    //         const streamContent = decoder.decode(value);
+    //         expect(streamContent).toBe(testData);
+    //     });
+    // <% } %>
 
     it("should handle text response type", async () => {
         const mockResponse = new Response("test text");

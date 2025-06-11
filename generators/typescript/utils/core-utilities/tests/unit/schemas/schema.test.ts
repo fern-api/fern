@@ -1,4 +1,13 @@
-import { boolean, discriminant, list, number, object, string, stringLiteral, union } from "../../../src/core/schemas/builders";
+import {
+    boolean,
+    discriminant,
+    list,
+    number,
+    object,
+    string,
+    stringLiteral,
+    union
+} from "../../../src/core/schemas/builders";
 import { booleanLiteral } from "../../../src/core/schemas/builders/literals/booleanLiteral";
 import { property } from "../../../src/core/schemas/builders/object/property";
 import { itSchema } from "./utils/itSchema";

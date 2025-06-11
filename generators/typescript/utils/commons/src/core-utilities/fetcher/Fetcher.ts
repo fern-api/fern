@@ -4,7 +4,7 @@ export interface Fetcher {
     readonly Fetcher: {
         Args: {
             _getReferenceToType: () => ts.TypeNode;
-            properties: { 
+            properties: {
                 url: "url";
                 method: "method";
                 headers: "headers";
@@ -19,7 +19,7 @@ export interface Fetcher {
                 responseType: "responseType";
                 duplex: "duplex";
                 timeoutMs: "timeoutMs";
-             };
+            };
         };
         Error: {
             _getReferenceToType: () => ts.TypeNode;
