@@ -5,7 +5,7 @@ const client = new SeedPaginationClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
-await client.complex.search({
+await client.complex.search("index", {
   pagination: {
     per_page: 1,
     starting_after: "starting_after",
