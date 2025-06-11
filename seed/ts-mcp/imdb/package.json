@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.8.0",
+    "cross-spawn": "^7.0.5",
     "seed-api": "file:./sdk",
     "zod": "^3.24.2"
   },
