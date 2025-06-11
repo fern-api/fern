@@ -5,4 +5,5 @@
 from . import service
 from .client import AsyncSeedPublicObject, SeedPublicObject
 from .version import __version__
+
 __all__ = ["AsyncSeedPublicObject", "SeedPublicObject", "__version__", "service"]
