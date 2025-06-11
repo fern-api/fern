@@ -8,28 +8,26 @@ import { runFernCli } from "../../utils/runFernCli";
 const FIXTURES_DIR = path.join(__dirname, "fixtures");
 
 describe("write-docs-definition", () => {
-    itFixture("petstore");
-    itFixture("products-with-versions");
+    it("petstore", async () => {
+        await runWriteDocsDefinitionTest("petstore");
+    });
+
+    it("products-with-versions", async () => {
+        await runWriteDocsDefinitionTest("products-with-versions");
+    });
 });
 
-function itFixture(fixtureName: string) {
-    it(
-        // eslint-disable-next-line jest/valid-title
-        fixtureName,
-        async () => {
-            const fixturePath = path.join(FIXTURES_DIR, fixtureName);
+async function runWriteDocsDefinitionTest(fixtureName: string) {
+    const fixturePath = path.join(FIXTURES_DIR, fixtureName);
 
-            const docsDefinitionOutputPath = path.join(fixturePath, "docs-definition.json");
-            if (await doesPathExist(AbsoluteFilePath.of(docsDefinitionOutputPath))) {
-                await rm(docsDefinitionOutputPath, { force: true, recursive: true });
-            }
+    const docsDefinitionOutputPath = path.join(fixturePath, "docs-definition.json");
+    if (await doesPathExist(AbsoluteFilePath.of(docsDefinitionOutputPath))) {
+        await rm(docsDefinitionOutputPath, { force: true, recursive: true });
+    }
 
-            await runFernCli(["write-docs-definition", "docs-definition.json", "--log-level", "debug"], {
-                cwd: fixturePath
-            });
+    await runFernCli(["write-docs-definition", "docs-definition.json", "--log-level", "debug"], {
+        cwd: fixturePath
+    });
 
-            expect(await readFile(AbsoluteFilePath.of(docsDefinitionOutputPath), "utf-8")).toMatchSnapshot();
-        },
-        90_000
-    );
+    expect(await readFile(AbsoluteFilePath.of(docsDefinitionOutputPath), "utf-8")).toMatchSnapshot();
 }
