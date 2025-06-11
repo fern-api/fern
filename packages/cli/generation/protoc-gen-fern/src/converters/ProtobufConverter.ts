@@ -3,6 +3,7 @@ import { BaseIntermediateRepresentation } from "@fern-api/v2-importer-commons/li
 
 import { ProtobufConverterContext } from "../ProtobufConverterContext";
 import { MessageConverter } from "./MessageConverter";
+import { AbstractSpecConverter } from "@fern-api/v2-importer-commons";
 
 export declare namespace ProtobufConverter {
     export interface Args {
@@ -11,15 +12,9 @@ export declare namespace ProtobufConverter {
     }
 }
 
-export class ProtobufConverter {
-    private ir: BaseIntermediateRepresentation;
-    private breadcrumbs: string[];
-    private context: ProtobufConverterContext;
-
-    constructor({ breadcrumbs, context }: ProtobufConverter.Args) {
-        this.breadcrumbs = breadcrumbs;
-        this.context = context;
-        this.ir = this.initializeBaseIR();
+export class ProtobufConverter extends AbstractSpecConverter<ProtobufConverterContext, IntermediateRepresentation> {
+    constructor({ breadcrumbs, context, audiences }: AbstractSpecConverter.Args<ProtobufConverterContext>) {
+        super({ breadcrumbs, context, audiences });
     }
 
     public convert(): IntermediateRepresentation {
@@ -60,82 +55,5 @@ export class ProtobufConverter {
 
     private addToPackage() {
         // TODO: add to correct (sub)package
-    }
-
-    private finalizeIr(): IntermediateRepresentation {
-        return {
-            ...this.ir,
-            apiName: this.context.casingsGenerator.generateName(this.ir.apiDisplayName ?? ""),
-            constants: {
-                errorInstanceIdKey: this.context.casingsGenerator.generateNameAndWireValue({
-                    wireValue: "errorInstanceId",
-                    name: "errorInstanceId"
-                })
-            }
-        };
-    }
-
-    public createPackage(args: { name?: string } = {}): Package {
-        return {
-            fernFilepath: this.context.createFernFilepath(args),
-            service: undefined,
-            types: [],
-            errors: [],
-            subpackages: [],
-            docs: undefined,
-            webhooks: undefined,
-            websocket: undefined,
-            hasEndpointsInTree: false,
-            navigationConfig: undefined
-        };
-    }
-
-    private initializeBaseIR(): BaseIntermediateRepresentation {
-        return {
-            auth: {
-                docs: undefined,
-                requirement: FernIr.AuthSchemesRequirement.Any,
-                schemes: []
-            },
-            selfHosted: false,
-            types: {},
-            services: {},
-            errors: {},
-            webhookGroups: {},
-            websocketChannels: undefined,
-            headers: [],
-            idempotencyHeaders: [],
-            apiVersion: undefined,
-            apiDisplayName: undefined,
-            apiDocs: undefined,
-            basePath: undefined,
-            pathParameters: [],
-            errorDiscriminationStrategy: FernIr.ErrorDiscriminationStrategy.statusCode(),
-            variables: [],
-            serviceTypeReferenceInfo: {
-                sharedTypes: [],
-                typesReferencedOnlyByService: {}
-            },
-            readmeConfig: undefined,
-            sourceConfig: undefined,
-            publishConfig: undefined,
-            dynamic: undefined,
-            environments: undefined,
-            fdrApiDefinitionId: undefined,
-            rootPackage: this.createPackage(),
-            subpackages: {},
-            sdkConfig: {
-                hasFileDownloadEndpoints: false,
-                hasPaginatedEndpoints: false,
-                hasStreamingEndpoints: false,
-                isAuthMandatory: true,
-                platformHeaders: {
-                    language: "",
-                    sdkName: "",
-                    sdkVersion: "",
-                    userAgent: undefined
-                }
-            }
-        };
     }
 }

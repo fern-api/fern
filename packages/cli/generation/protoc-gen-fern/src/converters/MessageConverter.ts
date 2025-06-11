@@ -1,16 +1,14 @@
 import { DescriptorProto } from "@bufbuild/protobuf/wkt";
 
 import * as FernIr from "@fern-api/ir-sdk";
-import { Converters } from "@fern-api/v2-importer-commons";
+import { AbstractConverter, AbstractConverterContext, Converters } from "@fern-api/v2-importer-commons";
 
 import { ProtobufConverterContext } from "../ProtobufConverterContext";
 
 export declare namespace MessageConverter {
-    export interface Args {
+    export interface Args extends AbstractConverter.Args<ProtobufConverterContext> {
         id: string;
         message: DescriptorProto;
-        breadcrumbs: string[];
-        context: ProtobufConverterContext;
     }
 
     export interface Output {
@@ -19,15 +17,14 @@ export declare namespace MessageConverter {
     }
 }
 
-export class MessageConverter {
-    private context: ProtobufConverterContext;
+export class MessageConverter extends AbstractConverter<ProtobufConverterContext, MessageConverter.Output> {
+    private readonly id: string;
     private readonly message: DescriptorProto;
-    private readonly breadcrumbs: string[];
 
-    constructor(args: MessageConverter.Args) {
-        this.context = args.context;
-        this.message = args.message;
-        this.breadcrumbs = args.breadcrumbs;
+    constructor({ context, breadcrumbs, id, message }: MessageConverter.Args) {
+        super({ context, breadcrumbs });
+        this.id = id;
+        this.message = message;
     }
 
     public convert(): MessageConverter.Output {
