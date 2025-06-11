@@ -4,14 +4,14 @@ import { RelativeFilePath } from "../../../../packages/commons/fs-utils/src";
 import { BaseRubyCustomConfigSchema, ruby } from "../../ast/src";
 import { Field } from "../../ast/src/ast";
 import { FileGenerator, RubyFile } from "../../base/src";
-import { ModelGeneratorContext } from "./ModelGeneratorContext";
+import { SdkGeneratorContext } from "../../sdk/src/SdkGeneratorContext";
 
-export class ObjectGenerator extends FileGenerator<RubyFile, BaseRubyCustomConfigSchema, ModelGeneratorContext> {
-    private readonly context: ModelGeneratorContext;
+export class ObjectGenerator extends FileGenerator<RubyFile, BaseRubyCustomConfigSchema, SdkGeneratorContext> {
+    private readonly context: SdkGeneratorContext;
     private readonly td: TypeDeclaration;
     private readonly otd: ObjectTypeDeclaration;
 
-    constructor(context: ModelGeneratorContext, td: TypeDeclaration, otd: ObjectTypeDeclaration) {
+    constructor(context: SdkGeneratorContext, td: TypeDeclaration, otd: ObjectTypeDeclaration) {
         super(context);
         this.context = context;
         this.td = td;
