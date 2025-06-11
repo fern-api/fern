@@ -2,6 +2,17 @@
 
 - changelogEntry:
     - summary: |
+        The OpenAPI v3 Parser now uniquely stores schemas across endpoint parameters to prevent overwriting. Previously, 
+        schemas with the same name across different parameters would overwrite each other, leading to potential data loss 
+        and incorrect type definitions. This fix ensures that each parameter's schema is properly preserved and referenced 
+        throughout the API specification.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-06-11"
+  version: 0.64.3
+
+- changelogEntry:
+    - summary: |
         The AsyncAPI v3 importer now properly detects query parameters by analyzing the channel address specification. 
         When a channel address contains a parameter reference in the format `={paramName}`, the importer will automatically 
         identify it as a query parameter. This allows for more accurate parameter type detection and better handling of 
