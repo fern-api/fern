@@ -12,7 +12,7 @@ declare const Deno: DenoGlobal | undefined;
 declare const Bun: BunGlobal | undefined;
 declare const EdgeRuntime: string | undefined;
 declare const self: typeof globalThis.self & {
-    importScripts?: Function;
+    importScripts?: unknown;
 };
 
 /**
