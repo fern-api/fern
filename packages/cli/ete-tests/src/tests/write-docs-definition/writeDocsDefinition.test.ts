@@ -1,6 +1,8 @@
 import { readFile, rm } from "fs/promises";
 import path from "path";
+
 import { AbsoluteFilePath, doesPathExist } from "@fern-api/fs-utils";
+
 import { runFernCli } from "../../utils/runFernCli";
 
 const FIXTURES_DIR = path.join(__dirname, "fixtures");
@@ -27,11 +29,13 @@ async function testFixture(fixtureName: string) {
     // Read and verify output
     const contents = await readFile(AbsoluteFilePath.of(outputPath), "utf-8");
     const parsed = JSON.parse(contents);
-    
+
     // Remove IDs for snapshot comparison
-    const cleanOutput = JSON.parse(JSON.stringify(parsed, (key, value) => {
-        return key === 'apiDefinitionId' || key === 'id' ? undefined : value;
-    }));
+    const cleanOutput = JSON.parse(
+        JSON.stringify(parsed, (key, value) => {
+            return key === "apiDefinitionId" || key === "id" ? undefined : value;
+        })
+    );
 
     expect(cleanOutput).toMatchSnapshot();
 }
