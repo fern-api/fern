@@ -290,7 +290,10 @@ class SdkGenerator(AbstractGenerator):
         )
 
         snippets = snippet_registry.snippets()
-        if snippets is not None and generator_config.output.mode.get_as_union().type == "downloadFiles":
+        if snippets is not None and (
+            generator_config.output.mode.get_as_union().type != "downloadFiles" or
+            ir.self_hosted
+        ):
             self._maybe_write_snippets(
                 context=context,
                 snippets=snippets,
