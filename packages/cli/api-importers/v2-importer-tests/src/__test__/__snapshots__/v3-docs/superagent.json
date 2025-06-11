@@ -27,22 +27,22 @@
       {
         "name": {
           "name": {
-            "originalName": "X_SUPERAGENT_API_KEY",
+            "originalName": "apiKey",
             "camelCase": {
-              "unsafeName": "xSuperagentApiKey",
-              "safeName": "xSuperagentApiKey"
+              "unsafeName": "apiKey",
+              "safeName": "apiKey"
             },
             "snakeCase": {
-              "unsafeName": "x_superagent_api_key",
-              "safeName": "x_superagent_api_key"
+              "unsafeName": "api_key",
+              "safeName": "api_key"
             },
             "screamingSnakeCase": {
-              "unsafeName": "X_SUPERAGENT_API_KEY",
-              "safeName": "X_SUPERAGENT_API_KEY"
+              "unsafeName": "API_KEY",
+              "safeName": "API_KEY"
             },
             "pascalCase": {
-              "unsafeName": "XSuperagentApiKey",
-              "safeName": "XSuperagentApiKey"
+              "unsafeName": "ApiKey",
+              "safeName": "ApiKey"
             }
           },
           "wireValue": "X_SUPERAGENT_API_KEY"

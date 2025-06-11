@@ -4917,7 +4917,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getJobArtifactsExample",
               "description": "",
               "path": "/v0/batch/jobs/id/artifacts",
               "pathParameters": {
@@ -4994,7 +4993,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getJobExample",
               "description": "",
               "path": "/v0/batch/jobs/id",
               "pathParameters": {
@@ -5403,7 +5401,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "listJobsExample",
             "description": "",
             "path": "/v0/batch/jobs",
             "pathParameters": {},
@@ -5589,7 +5586,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "startJobExample",
             "description": "",
             "path": "/v0/batch/jobs",
             "pathParameters": {},
@@ -5681,7 +5677,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "getJobPredictionsExample",
             "description": "",
             "path": "/v0/batch/jobs/id/predictions",
             "pathParameters": {
@@ -6258,7 +6253,7 @@
   "auth": {
     "type": "header",
     "headerWireValue": "X-Hume-Api-Key",
-    "nameOverride": "X-Hume-Api-Key"
+    "nameOverride": "apiKey"
   },
   "snippetsConfiguration": {},
   "globalHeaders": []

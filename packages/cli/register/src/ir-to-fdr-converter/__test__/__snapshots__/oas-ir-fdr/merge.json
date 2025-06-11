@@ -12370,6 +12370,7 @@
   "subpackages": {
     "subpackage_accountDetails": {
       "subpackageId": "subpackage_accountDetails",
+      "displayName": "account-details",
       "name": "accountDetails",
       "endpoints": [
         {
@@ -12430,7 +12431,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "retrieveExample",
               "description": "",
               "path": "/account-details",
               "pathParameters": {},
@@ -12480,6 +12480,7 @@
     },
     "subpackage_accountToken": {
       "subpackageId": "subpackage_accountToken",
+      "displayName": "account-token",
       "name": "accountToken",
       "endpoints": [
         {
@@ -12547,7 +12548,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "retrieveExample",
               "description": "",
               "path": "/account-token/public_token",
               "pathParameters": {
@@ -12603,6 +12603,7 @@
     },
     "subpackage_availableActions": {
       "subpackageId": "subpackage_availableActions",
+      "displayName": "available-actions",
       "name": "availableActions",
       "endpoints": [
         {
@@ -12663,7 +12664,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "retrieveExample",
               "description": "",
               "path": "/available-actions",
               "pathParameters": {},
@@ -12755,6 +12755,7 @@
     },
     "subpackage_bankInfo": {
       "subpackageId": "subpackage_bankInfo",
+      "displayName": "bank-info",
       "name": "bankInfo",
       "endpoints": [
         {
@@ -13018,7 +13019,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "listExample",
               "description": "",
               "path": "/bank-info",
               "pathParameters": {},
@@ -13220,7 +13220,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "retrieveExample",
               "description": "",
               "path": "/bank-info/id",
               "pathParameters": {
@@ -13294,6 +13293,7 @@
     },
     "subpackage_benefits": {
       "subpackageId": "subpackage_benefits",
+      "displayName": "benefits",
       "name": "benefits",
       "endpoints": [
         {
@@ -13500,7 +13500,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "listExample",
               "description": "",
               "path": "/benefits",
               "pathParameters": {},
@@ -13680,7 +13679,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "retrieveExample",
               "description": "",
               "path": "/benefits/id",
               "pathParameters": {
@@ -13754,6 +13752,7 @@
     },
     "subpackage_companies": {
       "subpackageId": "subpackage_companies",
+      "displayName": "companies",
       "name": "companies",
       "endpoints": [
         {
@@ -13936,7 +13935,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "listExample",
               "description": "",
               "path": "/companies",
               "pathParameters": {},
@@ -14103,7 +14101,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "retrieveExample",
               "description": "",
               "path": "/companies/id",
               "pathParameters": {
@@ -14175,6 +14172,7 @@
     },
     "subpackage_deleteAccount": {
       "subpackageId": "subpackage_deleteAccount",
+      "displayName": "delete-account",
       "name": "deleteAccount",
       "endpoints": [
         {
@@ -14224,7 +14222,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "createExample",
               "description": "",
               "path": "/delete-account",
               "pathParameters": {},
@@ -14247,6 +14244,7 @@
     },
     "subpackage_employeePayrollRuns": {
       "subpackageId": "subpackage_employeePayrollRuns",
+      "displayName": "employee-payroll-runs",
       "name": "employeePayrollRuns",
       "endpoints": [
         {
@@ -14522,7 +14520,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "listExample",
               "description": "",
               "path": "/employee-payroll-runs",
               "pathParameters": {},
@@ -14759,7 +14756,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "retrieveExample",
               "description": "",
               "path": "/employee-payroll-runs/id",
               "pathParameters": {
@@ -14889,6 +14885,7 @@
     },
     "subpackage_employees": {
       "subpackageId": "subpackage_employees",
+      "displayName": "employees",
       "name": "employees",
       "endpoints": [
         {
@@ -15329,7 +15326,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "listExample",
               "description": "",
               "path": "/employees",
               "pathParameters": {},
@@ -15561,7 +15557,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "employeesCreateExample",
               "description": "",
               "path": "/employees",
               "pathParameters": {},
@@ -15885,7 +15880,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "retrieveExample",
               "description": "",
               "path": "/employees/id",
               "pathParameters": {
@@ -16082,7 +16076,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "employeesIgnoreCreateExample",
               "description": "",
               "path": "/employees/ignore/model_id",
               "pathParameters": {
@@ -16166,7 +16159,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "metaPostRetrieveExample",
               "description": "",
               "path": "/employees/meta/post",
               "pathParameters": {},
@@ -16212,6 +16204,7 @@
     },
     "subpackage_employments": {
       "subpackageId": "subpackage_employments",
+      "displayName": "employments",
       "name": "employments",
       "endpoints": [
         {
@@ -16451,7 +16444,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "listExample",
               "description": "",
               "path": "/employments",
               "pathParameters": {},
@@ -16661,7 +16653,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "retrieveExample",
               "description": "",
               "path": "/employments/id",
               "pathParameters": {
@@ -16743,6 +16734,7 @@
     },
     "subpackage_generateKey": {
       "subpackageId": "subpackage_generateKey",
+      "displayName": "generate-key",
       "name": "generateKey",
       "endpoints": [
         {
@@ -16805,7 +16797,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "generateKeyCreateExample",
               "description": "",
               "path": "/generate-key",
               "pathParameters": {},
@@ -16846,6 +16837,7 @@
     },
     "subpackage_groups": {
       "subpackageId": "subpackage_groups",
+      "displayName": "groups",
       "name": "groups",
       "endpoints": [
         {
@@ -17063,7 +17055,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "listExample",
               "description": "",
               "path": "/groups",
               "pathParameters": {},
@@ -17246,7 +17237,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "retrieveExample",
               "description": "",
               "path": "/groups/id",
               "pathParameters": {
@@ -17313,6 +17303,7 @@
     },
     "subpackage_issues": {
       "subpackageId": "subpackage_issues",
+      "displayName": "issues",
       "name": "issues",
       "endpoints": [
         {
@@ -17531,7 +17522,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "listExample",
               "description": "",
               "path": "/issues",
               "pathParameters": {},
@@ -17653,7 +17643,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "retrieveExample",
               "description": "",
               "path": "/issues/id",
               "pathParameters": {
@@ -17705,6 +17694,7 @@
     },
     "subpackage_linkToken": {
       "subpackageId": "subpackage_linkToken",
+      "displayName": "link-token",
       "name": "linkToken",
       "endpoints": [
         {
@@ -17767,7 +17757,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "linkTokenCreateExample",
               "description": "",
               "path": "/link-token",
               "pathParameters": {},
@@ -17820,6 +17809,7 @@
     },
     "subpackage_linkedAccounts": {
       "subpackageId": "subpackage_linkedAccounts",
+      "displayName": "linked-accounts",
       "name": "linkedAccounts",
       "endpoints": [
         {
@@ -18037,7 +18027,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "listExample",
               "description": "",
               "path": "/linked-accounts",
               "pathParameters": {},
@@ -18155,6 +18144,7 @@
     },
     "subpackage_locations": {
       "subpackageId": "subpackage_locations",
+      "displayName": "locations",
       "name": "locations",
       "endpoints": [
         {
@@ -18359,7 +18349,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "listExample",
               "description": "",
               "path": "/locations",
               "pathParameters": {},
@@ -18554,7 +18543,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "retrieveExample",
               "description": "",
               "path": "/locations/id",
               "pathParameters": {
@@ -18633,6 +18621,7 @@
     },
     "subpackage_passthrough": {
       "subpackageId": "subpackage_passthrough",
+      "displayName": "passthrough",
       "name": "passthrough",
       "endpoints": [
         {
@@ -18706,7 +18695,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "passthroughCreateExample",
               "description": "",
               "path": "/passthrough",
               "pathParameters": {},
@@ -18761,6 +18749,7 @@
     },
     "subpackage_payGroups": {
       "subpackageId": "subpackage_payGroups",
+      "displayName": "pay-groups",
       "name": "payGroups",
       "endpoints": [
         {
@@ -18943,7 +18932,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "listExample",
               "description": "",
               "path": "/pay-groups",
               "pathParameters": {},
@@ -19098,7 +19086,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "retrieveExample",
               "description": "",
               "path": "/pay-groups/id",
               "pathParameters": {
@@ -19158,6 +19145,7 @@
     },
     "subpackage_payrollRuns": {
       "subpackageId": "subpackage_payrollRuns",
+      "displayName": "payroll-runs",
       "name": "payrollRuns",
       "endpoints": [
         {
@@ -19429,7 +19417,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "listExample",
               "description": "",
               "path": "/payroll-runs",
               "pathParameters": {},
@@ -19616,7 +19603,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "retrieveExample",
               "description": "",
               "path": "/payroll-runs/id",
               "pathParameters": {
@@ -19687,6 +19673,7 @@
     },
     "subpackage_regenerateKey": {
       "subpackageId": "subpackage_regenerateKey",
+      "displayName": "regenerate-key",
       "name": "regenerateKey",
       "endpoints": [
         {
@@ -19749,7 +19736,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "regenerateKeyCreateExample",
               "description": "",
               "path": "/regenerate-key",
               "pathParameters": {},
@@ -19790,6 +19776,7 @@
     },
     "subpackage_selectiveSync": {
       "subpackageId": "subpackage_selectiveSync",
+      "displayName": "selective-sync",
       "name": "selectiveSync",
       "endpoints": [
         {
@@ -19853,7 +19840,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "Employees that started on or after January 1st, 2022",
               "description": "",
               "path": "/selective-sync/configurations",
               "pathParameters": {},
@@ -19973,7 +19959,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "Employees that started on or after January 1st, 2022",
               "description": "",
               "path": "/selective-sync/configurations",
               "pathParameters": {},
@@ -20145,7 +20130,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "Employees that started on or after January 1st, 2022",
               "description": "",
               "path": "/selective-sync/meta",
               "pathParameters": {},
@@ -20221,6 +20205,7 @@
     },
     "subpackage_syncStatus": {
       "subpackageId": "subpackage_syncStatus",
+      "displayName": "sync-status",
       "name": "syncStatus",
       "endpoints": [
         {
@@ -20308,7 +20293,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "listExample",
               "description": "",
               "path": "/sync-status",
               "pathParameters": {},
@@ -20366,6 +20350,7 @@
     },
     "subpackage_forceResync": {
       "subpackageId": "subpackage_forceResync",
+      "displayName": "force-resync",
       "name": "forceResync",
       "endpoints": [
         {
@@ -20429,7 +20414,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "syncStatusResyncCreateExample",
               "description": "",
               "path": "/sync-status/resync",
               "pathParameters": {},
@@ -20477,6 +20461,7 @@
     },
     "subpackage_teams": {
       "subpackageId": "subpackage_teams",
+      "displayName": "teams",
       "name": "teams",
       "endpoints": [
         {
@@ -20683,7 +20668,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "listExample",
               "description": "",
               "path": "/teams",
               "pathParameters": {},
@@ -20853,7 +20837,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "retrieveExample",
               "description": "",
               "path": "/teams/id",
               "pathParameters": {
@@ -20917,6 +20900,7 @@
     },
     "subpackage_timeOff": {
       "subpackageId": "subpackage_timeOff",
+      "displayName": "time-off",
       "name": "timeOff",
       "endpoints": [
         {
@@ -21180,7 +21164,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "listExample",
               "description": "",
               "path": "/time-off",
               "pathParameters": {},
@@ -21363,7 +21346,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "timeOffCreateExample",
               "description": "",
               "path": "/time-off",
               "pathParameters": {},
@@ -21628,7 +21610,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "retrieveExample",
               "description": "",
               "path": "/time-off/id",
               "pathParameters": {
@@ -21758,7 +21739,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "metaPostRetrieveExample",
               "description": "",
               "path": "/time-off/meta/post",
               "pathParameters": {},
@@ -21804,6 +21784,7 @@
     },
     "subpackage_timeOffBalances": {
       "subpackageId": "subpackage_timeOffBalances",
+      "displayName": "time-off-balances",
       "name": "timeOffBalances",
       "endpoints": [
         {
@@ -22043,7 +22024,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "listExample",
               "description": "",
               "path": "/time-off-balances",
               "pathParameters": {},
@@ -22241,7 +22221,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "retrieveExample",
               "description": "",
               "path": "/time-off-balances/id",
               "pathParameters": {
@@ -22311,6 +22290,7 @@
     },
     "subpackage_webhookReceivers": {
       "subpackageId": "subpackage_webhookReceivers",
+      "displayName": "webhook-receivers",
       "name": "webhookReceivers",
       "endpoints": [
         {
@@ -22374,7 +22354,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "listExample",
               "description": "",
               "path": "/webhook-receivers",
               "pathParameters": {},
@@ -22477,7 +22456,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "webhookReceiversCreateExample",
               "description": "",
               "path": "/webhook-receivers",
               "pathParameters": {},
@@ -22670,7 +22648,7 @@
   "auth": {
     "type": "header",
     "headerWireValue": "Authorization",
-    "nameOverride": "Authorization"
+    "nameOverride": "apiKey"
   },
   "snippetsConfiguration": {},
   "globalHeaders": []

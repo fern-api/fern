@@ -122,7 +122,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "getAuthUserExample",
             "description": "",
             "path": "/auth/user",
             "pathParameters": {},

@@ -38,6 +38,7 @@ jobs:
     outputs:
       seed: ${{ steps.filter.outputs.seed }}
       ruby: ${{ steps.filter.outputs.ruby }}
+      ruby-v2: ${{ steps.filter.outputs.ruby }}
       openapi: ${{ steps.filter.outputs.openapi }}
       python: ${{ steps.filter.outputs.python }}
       postman: ${{ steps.filter.outputs.postman }}
@@ -63,6 +64,8 @@ jobs:
               - 'generators/ruby/**'
               - 'seed/ruby-sdk/**'
               - 'seed/ruby-model/**'
+            ruby-v2:
+              - 'generators/ruby-v2/**'
             openapi:
               - 'generators/openapi/**'
               - 'seed/openapi/**'
@@ -132,6 +135,20 @@ jobs:
         with:
           generator-name: ruby-sdk
           generator-path: generators/ruby
+
+  ruby-sdk-v2:
+    runs-on: Seed
+    needs: changes
+    if: ${{ needs.changes.outputs.ruby-v2 == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Run seed
+        uses: ./.github/actions/cached-seed
+        with:
+          generator-name: ruby-sdk-v2
+          generator-path: generators/ruby-v2
 
   pydantic-model:
     runs-on: Seed

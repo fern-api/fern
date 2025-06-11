@@ -5,22 +5,22 @@
       {
         "name": {
           "name": {
-            "originalName": "X_API_KEY",
+            "originalName": "apiKey",
             "camelCase": {
-              "unsafeName": "xApiKey",
-              "safeName": "xApiKey"
+              "unsafeName": "apiKey",
+              "safeName": "apiKey"
             },
             "snakeCase": {
-              "unsafeName": "x_api_key",
-              "safeName": "x_api_key"
+              "unsafeName": "api_key",
+              "safeName": "api_key"
             },
             "screamingSnakeCase": {
-              "unsafeName": "X_API_KEY",
-              "safeName": "X_API_KEY"
+              "unsafeName": "API_KEY",
+              "safeName": "API_KEY"
             },
             "pascalCase": {
-              "unsafeName": "XApiKey",
-              "safeName": "XApiKey"
+              "unsafeName": "ApiKey",
+              "safeName": "ApiKey"
             }
           },
           "wireValue": "X_API_KEY"
@@ -30251,6 +30251,7 @@
           }
         }
       },
+      "displayName": "deployments",
       "basePath": {
         "head": "",
         "parts": []
@@ -32235,6 +32236,7 @@
           }
         }
       },
+      "displayName": "document-indexes",
       "basePath": {
         "head": "",
         "parts": []
@@ -32624,6 +32626,7 @@
           }
         }
       },
+      "displayName": "documents",
       "basePath": {
         "head": "",
         "parts": []
@@ -33290,6 +33293,7 @@
           }
         }
       },
+      "displayName": "model-versions",
       "basePath": {
         "head": "",
         "parts": []
@@ -33934,6 +33938,7 @@
           }
         }
       },
+      "displayName": "registered-prompts",
       "basePath": {
         "head": "",
         "parts": []
@@ -34277,6 +34282,7 @@
           }
         }
       },
+      "displayName": "sandboxes",
       "basePath": {
         "head": "",
         "parts": []
@@ -34988,6 +34994,7 @@
           }
         }
       },
+      "displayName": "test-suites",
       "basePath": {
         "head": "",
         "parts": []

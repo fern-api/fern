@@ -1177,6 +1177,7 @@
   "subpackages": {
     "subpackage_pet": {
       "subpackageId": "subpackage_pet",
+      "displayName": "pet",
       "name": "pet",
       "endpoints": [
         {
@@ -1306,7 +1307,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "petUpdateAnExistingPetExample",
               "description": "",
               "path": "/pet",
               "pathParameters": {},
@@ -1425,6 +1425,7 @@
     },
     "subpackage_order": {
       "subpackageId": "subpackage_order",
+      "displayName": "order",
       "name": "order",
       "endpoints": [
         {
@@ -1473,7 +1474,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getAnOrderExample",
               "description": "",
               "path": "/order",
               "pathParameters": {},

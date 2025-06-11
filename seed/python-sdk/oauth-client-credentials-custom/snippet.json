@@ -1,0 +1,31 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/token",
+                "method": "POST",
+                "identifier_override": "endpoint_auth.getTokenWithClientCredentials"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedOauthClientCredentials\n\nclient = SeedOauthClientCredentials(\n    base_url=\"https://yourhost.com/path/to/api\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\nclient.auth.get_token_with_client_credentials(\n    cid=\"cid\",\n    csr=\"csr\",\n    scp=\"scp\",\n    entity_id=\"entity_id\",\n    scope=\"scope\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedOauthClientCredentials\n\nclient = AsyncSeedOauthClientCredentials(\n    base_url=\"https://yourhost.com/path/to/api\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\n\n\nasync def main() -> None:\n    await client.auth.get_token_with_client_credentials(\n        cid=\"cid\",\n        csr=\"csr\",\n        scp=\"scp\",\n        entity_id=\"entity_id\",\n        scope=\"scope\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/token",
+                "method": "POST",
+                "identifier_override": "endpoint_auth.refreshToken"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedOauthClientCredentials\n\nclient = SeedOauthClientCredentials(\n    base_url=\"https://yourhost.com/path/to/api\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\nclient.auth.refresh_token(\n    client_id=\"client_id\",\n    client_secret=\"client_secret\",\n    refresh_token=\"refresh_token\",\n    scope=\"scope\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedOauthClientCredentials\n\nclient = AsyncSeedOauthClientCredentials(\n    base_url=\"https://yourhost.com/path/to/api\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\n\n\nasync def main() -> None:\n    await client.auth.refresh_token(\n        client_id=\"client_id\",\n        client_secret=\"client_secret\",\n        refresh_token=\"refresh_token\",\n        scope=\"scope\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        }
+    ]
+}

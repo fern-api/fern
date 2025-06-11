@@ -8,7 +8,8 @@ import {
     IdentifiableSource,
     OpenAPISpec,
     ProtobufSpec,
-    Spec
+    Spec,
+    getOpenAPISettings
 } from "@fern-api/api-workspace-commons";
 import { AsyncAPIConverter, AsyncAPIConverterContext } from "@fern-api/asyncapi-to-ir";
 import { Audiences } from "@fern-api/configuration";
@@ -170,7 +171,8 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                         environmentOverrides,
                         globalHeaderOverrides,
                         enableUniqueErrorsPerEndpoint,
-                        generateV1Examples
+                        generateV1Examples,
+                        settings: getOpenAPISettings({ options: document.settings })
                     });
                     const converter = new OpenAPI3_1Converter({ context: converterContext, audiences });
                     result = await converter.convert();
@@ -182,10 +184,12 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                         generationLanguage: "typescript",
                         logger: context.logger,
                         smartCasing: false,
-                        spec: document.value,
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                        spec: document.value as any,
                         exampleGenerationArgs: { disabled: false },
                         errorCollector,
                         enableUniqueErrorsPerEndpoint,
+                        settings: getOpenAPISettings({ options: document.settings }),
                         generateV1Examples
                     });
                     const converter = new AsyncAPIConverter({ context: converterContext, audiences });
@@ -234,7 +238,8 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                     exampleGenerationArgs: { disabled: false },
                     errorCollector,
                     enableUniqueErrorsPerEndpoint,
-                    generateV1Examples
+                    generateV1Examples,
+                    settings: getOpenAPISettings()
                 });
 
                 const converter = new OpenRPCConverter({ context: converterContext, audiences });

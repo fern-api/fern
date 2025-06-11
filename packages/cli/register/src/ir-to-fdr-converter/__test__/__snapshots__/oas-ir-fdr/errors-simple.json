@@ -168,7 +168,6 @@
         ],
         "examples": [
           {
-            "name": "listExample",
             "description": "",
             "path": "/trees",
             "pathParameters": {},

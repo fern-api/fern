@@ -5198,7 +5198,6 @@
           ],
           "examples": [
             {
-              "name": "getTransactionV3TransactionsIdGetExample",
               "description": "",
               "path": "/v3/transactions/id",
               "pathParameters": {
@@ -5398,7 +5397,6 @@
           ],
           "examples": [
             {
-              "name": "deleteTransactionV3TransactionsIdDeleteExample",
               "description": "",
               "path": "/v3/transactions/id",
               "pathParameters": {
@@ -5541,7 +5539,6 @@
           ],
           "examples": [
             {
-              "name": "listTransactionsV3TransactionsGetExample",
               "description": "",
               "path": "/v3/transactions",
               "pathParameters": {},
@@ -5743,7 +5740,6 @@
           ],
           "examples": [
             {
-              "name": "transactionsPostTransactionsV3TransactionsPostExample",
               "description": "",
               "path": "/v3/transactions",
               "pathParameters": {},
@@ -6000,7 +5996,6 @@
           ],
           "examples": [
             {
-              "name": "transactionsSetTransactionAhV3TransactionsIdAssignPostExample",
               "description": "",
               "path": "/v3/transactions/id/assign",
               "pathParameters": {
@@ -6269,7 +6264,6 @@
           ],
           "examples": [
             {
-              "name": "getBatchesV3BatchesGetExample",
               "description": "",
               "path": "/v3/batches",
               "pathParameters": {},
@@ -6381,7 +6375,6 @@
           ],
           "examples": [
             {
-              "name": "batchesPostBatchV3BatchesPostExample",
               "description": "",
               "path": "/v3/batches",
               "pathParameters": {},
@@ -6528,7 +6521,6 @@
           ],
           "examples": [
             {
-              "name": "getSingleBatchV3BatchesIdGetExample",
               "description": "",
               "path": "/v3/batches/id",
               "pathParameters": {
@@ -6649,7 +6641,6 @@
           ],
           "examples": [
             {
-              "name": "getBatchResultsV3BatchesIdResultsGetExample",
               "description": "",
               "path": "/v3/batches/id/results",
               "pathParameters": {
@@ -6925,7 +6916,6 @@
           ],
           "examples": [
             {
-              "name": "getBankStatementsV3BankStatementsGetExample",
               "description": "",
               "path": "/v3/bank_statements",
               "pathParameters": {},
@@ -7048,7 +7038,6 @@
           ],
           "examples": [
             {
-              "name": "bankStatementsPostBankStatementV3BankStatementsPostExample",
               "description": "",
               "path": "/v3/bank_statements",
               "pathParameters": {},
@@ -7182,7 +7171,6 @@
           ],
           "examples": [
             {
-              "name": "getBankStatementV3BankStatementsIdGetExample",
               "description": "",
               "path": "/v3/bank_statements/id",
               "pathParameters": {
@@ -7295,7 +7283,6 @@
           ],
           "examples": [
             {
-              "name": "deleteBankStatementV3BankStatementsIdDeleteExample",
               "description": "",
               "path": "/v3/bank_statements/id",
               "pathParameters": {
@@ -7397,7 +7384,6 @@
           ],
           "examples": [
             {
-              "name": "getBankStatementStatementInfoV3BankStatementsIdOverviewPostExample",
               "description": "",
               "path": "/v3/bank_statements/id/overview",
               "pathParameters": {
@@ -7552,7 +7538,6 @@
           ],
           "examples": [
             {
-              "name": "getBankStatementResultV3BankStatementsIdResultsGetExample",
               "description": "",
               "path": "/v3/bank_statements/id/results",
               "pathParameters": {
@@ -7716,7 +7701,6 @@
           ],
           "examples": [
             {
-              "name": "getAccountHolderV3AccountHoldersIdGetExample",
               "description": "",
               "path": "/v3/account_holders/id",
               "pathParameters": {
@@ -7822,7 +7806,6 @@
           ],
           "examples": [
             {
-              "name": "deleteAccountHolderV3AccountHoldersIdDeleteExample",
               "description": "",
               "path": "/v3/account_holders/id",
               "pathParameters": {
@@ -7951,7 +7934,6 @@
           ],
           "examples": [
             {
-              "name": "getAccountHoldersV3AccountHoldersGetExample",
               "description": "",
               "path": "/v3/account_holders",
               "pathParameters": {},
@@ -8070,7 +8052,6 @@
           ],
           "examples": [
             {
-              "name": "accountHoldersCreateAccountHolderV3AccountHoldersPostExample",
               "description": "",
               "path": "/v3/account_holders",
               "pathParameters": {},
@@ -8209,7 +8190,6 @@
           ],
           "examples": [
             {
-              "name": "getAccountHolderRecurringPaymentsV3AccountHoldersIdRecurringGroupsPostExample",
               "description": "",
               "path": "/v3/account_holders/id/recurring_groups",
               "pathParameters": {
@@ -8350,7 +8330,6 @@
           ],
           "examples": [
             {
-              "name": "getWebhooksV3WebhooksGetExample",
               "description": "",
               "path": "/v3/webhooks",
               "pathParameters": {},
@@ -8468,7 +8447,6 @@
           ],
           "examples": [
             {
-              "name": "webhooksPostWebhookV3WebhooksPostExample",
               "description": "",
               "path": "/v3/webhooks",
               "pathParameters": {},
@@ -8596,7 +8574,6 @@
           ],
           "examples": [
             {
-              "name": "getWebhookV3WebhooksIdGetExample",
               "description": "",
               "path": "/v3/webhooks/id",
               "pathParameters": {
@@ -8712,7 +8689,6 @@
           ],
           "examples": [
             {
-              "name": "deleteWebhookV3WebhooksIdDeleteExample",
               "description": "",
               "path": "/v3/webhooks/id",
               "pathParameters": {
@@ -8815,7 +8791,6 @@
           ],
           "examples": [
             {
-              "name": "webhooksPatchWebhookV3WebhooksIdPatchExample",
               "description": "",
               "path": "/v3/webhooks/id",
               "pathParameters": {
@@ -8927,7 +8902,6 @@
           ],
           "examples": [
             {
-              "name": "filterGetV3RulesGetExample",
               "description": "",
               "path": "/v3/rules",
               "pathParameters": {},
@@ -9068,7 +9042,6 @@
           ],
           "examples": [
             {
-              "name": "personalizationFilterPostV3RulesPostExample",
               "description": "",
               "path": "/v3/rules",
               "pathParameters": {},
@@ -9209,7 +9182,6 @@
           ],
           "examples": [
             {
-              "name": "personalizationFilterAppendV3RulesAppendPostExample",
               "description": "",
               "path": "/v3/rules/append",
               "pathParameters": {},
@@ -9317,7 +9289,6 @@
           ],
           "examples": [
             {
-              "name": "filterDeleteV3RulesIndexDeleteExample",
               "description": "",
               "path": "/v3/rules/42",
               "pathParameters": {
@@ -9431,7 +9402,6 @@
           ],
           "examples": [
             {
-              "name": "personalizationFilterPatchV3RulesIndexPatchExample",
               "description": "",
               "path": "/v3/rules/42",
               "pathParameters": {
@@ -9591,7 +9561,6 @@
           ],
           "examples": [
             {
-              "name": "getReportsV3ReportsGetExample",
               "description": "",
               "path": "/v3/reports",
               "pathParameters": {},
@@ -9709,7 +9678,6 @@
           ],
           "examples": [
             {
-              "name": "reportsPostReportV3ReportsPostExample",
               "description": "",
               "path": "/v3/reports",
               "pathParameters": {},
@@ -9849,7 +9817,6 @@
           ],
           "examples": [
             {
-              "name": "getReportV3ReportsIdGetExample",
               "description": "",
               "path": "/v3/reports/id",
               "pathParameters": {
@@ -9963,7 +9930,6 @@
           ],
           "examples": [
             {
-              "name": "deleteReportV3ReportsIdDeleteExample",
               "description": "",
               "path": "/v3/reports/id",
               "pathParameters": {
@@ -10061,7 +10027,6 @@
           ],
           "examples": [
             {
-              "name": "getCategorySetV3CategoriesAccountHolderTypeGetExample",
               "description": "",
               "path": "/v3/categories/consumer",
               "pathParameters": {
@@ -10223,7 +10188,6 @@
           ],
           "examples": [
             {
-              "name": "categoriesCustomCategoriesPostV3CategoriesAccountHolderTypePostExample",
               "description": "",
               "path": "/v3/categories/consumer",
               "pathParameters": {
@@ -10369,7 +10333,6 @@
           ],
           "examples": [
             {
-              "name": "deleteCustomCategorySetV3CategoriesAccountHolderTypeResetPostExample",
               "description": "",
               "path": "/v3/categories/consumer/reset",
               "pathParameters": {
@@ -10576,7 +10539,6 @@
           ],
           "examples": [
             {
-              "name": "searchEntityV3EntitiesLookupGetExample",
               "description": "",
               "path": "/v3/entities/lookup",
               "pathParameters": {},
@@ -10710,7 +10672,6 @@
           ],
           "examples": [
             {
-              "name": "getEntityByIdV3EntitiesIdGetExample",
               "description": "",
               "path": "/v3/entities/id",
               "pathParameters": {
@@ -10852,7 +10813,7 @@
   "auth": {
     "type": "header",
     "headerWireValue": "X-Api-Key",
-    "nameOverride": "X-Api-Key"
+    "nameOverride": "apiKey"
   },
   "snippetsConfiguration": {},
   "globalHeaders": []

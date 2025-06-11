@@ -33,6 +33,7 @@ export declare namespace AbstractOperationConverter {
 
     export interface Output {
         group?: string[];
+        groupDisplayName?: string;
         inlinedTypes: Record<string, Converters.SchemaConverters.SchemaConverter.ConvertedSchema>;
     }
 }

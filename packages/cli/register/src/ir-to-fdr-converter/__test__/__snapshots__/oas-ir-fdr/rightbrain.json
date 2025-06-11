@@ -8076,8 +8076,8 @@
         ]
       }
     },
-    "OrgOrgIdIamMembersGetParametersSchema": {
-      "name": "OrgOrgIdIamMembersGetParametersSchema",
+    "OrgOrgIdIamMembersGetParametersTypeSchema": {
+      "name": "OrgOrgIdIamMembersGetParametersTypeSchema",
       "shape": {
         "type": "enum",
         "values": [
@@ -8693,8 +8693,8 @@
         ]
       }
     },
-    "OrgOrgIdProjectProjectIdIamMembersGetParametersSchema": {
-      "name": "OrgOrgIdProjectProjectIdIamMembersGetParametersSchema",
+    "OrgOrgIdProjectProjectIdIamMembersGetParametersTypeSchema": {
+      "name": "OrgOrgIdProjectProjectIdIamMembersGetParametersTypeSchema",
       "shape": {
         "type": "enum",
         "values": [
@@ -9134,8 +9134,8 @@
         ]
       }
     },
-    "OrgOrgIdProjectProjectIdCollectionCollectionIdIamMembersGetParametersSchema": {
-      "name": "OrgOrgIdProjectProjectIdCollectionCollectionIdIamMembersGetParametersSchema",
+    "OrgOrgIdProjectProjectIdCollectionCollectionIdIamMembersGetParametersTypeSchema": {
+      "name": "OrgOrgIdProjectProjectIdCollectionCollectionIdIamMembersGetParametersTypeSchema",
       "shape": {
         "type": "enum",
         "values": [
@@ -9335,8 +9335,8 @@
         ]
       }
     },
-    "OrgOrgIdProjectProjectIdDocumentGetParametersSchema": {
-      "name": "OrgOrgIdProjectProjectIdDocumentGetParametersSchema",
+    "OrgOrgIdProjectProjectIdDocumentGetParametersSourceSchema": {
+      "name": "OrgOrgIdProjectProjectIdDocumentGetParametersSourceSchema",
       "shape": {
         "type": "enum",
         "values": [
@@ -9586,8 +9586,8 @@
         ]
       }
     },
-    "OrgOrgIdProjectProjectIdDocumentDocumentIdIamMembersGetParametersSchema": {
-      "name": "OrgOrgIdProjectProjectIdDocumentDocumentIdIamMembersGetParametersSchema",
+    "OrgOrgIdProjectProjectIdDocumentDocumentIdIamMembersGetParametersTypeSchema": {
+      "name": "OrgOrgIdProjectProjectIdDocumentDocumentIdIamMembersGetParametersTypeSchema",
       "shape": {
         "type": "enum",
         "values": [
@@ -9931,8 +9931,8 @@
         ]
       }
     },
-    "ChatChatIdIamMembersGetParametersSchema": {
-      "name": "ChatChatIdIamMembersGetParametersSchema",
+    "ChatChatIdIamMembersGetParametersTypeSchema": {
+      "name": "ChatChatIdIamMembersGetParametersTypeSchema",
       "shape": {
         "type": "enum",
         "values": [
@@ -11605,8 +11605,8 @@
         ]
       }
     },
-    "OrgOrgIdProjectProjectIdTaskTaskIdIamMembersGetParametersSchema": {
-      "name": "OrgOrgIdProjectProjectIdTaskTaskIdIamMembersGetParametersSchema",
+    "OrgOrgIdProjectProjectIdTaskTaskIdIamMembersGetParametersTypeSchema": {
+      "name": "OrgOrgIdProjectProjectIdTaskTaskIdIamMembersGetParametersTypeSchema",
       "shape": {
         "type": "enum",
         "values": [
@@ -11954,6 +11954,7 @@
   "subpackages": {
     "subpackage_org": {
       "subpackageId": "subpackage_org",
+      "displayName": "org",
       "name": "org",
       "endpoints": [
         {
@@ -12004,7 +12005,7 @@
                   "type": "optional",
                   "itemType": {
                     "type": "id",
-                    "value": "OrgOrgIdIamMembersGetParametersSchema"
+                    "value": "OrgOrgIdIamMembersGetParametersTypeSchema"
                   }
                 }
               }
@@ -12065,7 +12066,6 @@
           ],
           "examples": [
             {
-              "name": "organizationIamListMembersExample",
               "description": "",
               "path": "/org/org_id/iam/members",
               "pathParameters": {
@@ -12231,7 +12231,6 @@
           ],
           "examples": [
             {
-              "name": "organizationGetMemberExample",
               "description": "",
               "path": "/org/org_id/iam/members/member",
               "pathParameters": {
@@ -12406,7 +12405,6 @@
           ],
           "examples": [
             {
-              "name": "orgOrganizationIamUpdateMemberRolesExample",
               "description": "",
               "path": "/org/org_id/iam/members/member",
               "pathParameters": {
@@ -12569,7 +12567,6 @@
           ],
           "examples": [
             {
-              "name": "orgOrganizationIamTestPermissionsExample",
               "description": "",
               "path": "/org/org_id/iam/test",
               "pathParameters": {
@@ -12700,7 +12697,6 @@
           ],
           "examples": [
             {
-              "name": "listOrgGetExample",
               "description": "",
               "path": "/org",
               "pathParameters": {},
@@ -12775,7 +12771,6 @@
           ],
           "examples": [
             {
-              "name": "orgCreateOrgPostExample",
               "description": "",
               "path": "/org",
               "pathParameters": {},
@@ -12908,7 +12903,6 @@
           ],
           "examples": [
             {
-              "name": "getOrgOrgIdGetExample",
               "description": "",
               "path": "/org/org_id",
               "pathParameters": {
@@ -13045,7 +13039,6 @@
           ],
           "examples": [
             {
-              "name": "orgUpdateOrgOrgIdPostExample",
               "description": "",
               "path": "/org/org_id",
               "pathParameters": {
@@ -13173,7 +13166,6 @@
           ],
           "examples": [
             {
-              "name": "joinOrgOrgIdJoinPostExample",
               "description": "",
               "path": "/org/org_id/join",
               "pathParameters": {
@@ -13342,7 +13334,6 @@
           ],
           "examples": [
             {
-              "name": "invitesListOrgOrgIdInviteGetExample",
               "description": "",
               "path": "/org/org_id/invite",
               "pathParameters": {
@@ -13498,7 +13489,6 @@
           ],
           "examples": [
             {
-              "name": "orgInvitesCreateOrgOrgIdInvitePostExample",
               "description": "",
               "path": "/org/org_id/invite",
               "pathParameters": {
@@ -13640,7 +13630,6 @@
           ],
           "examples": [
             {
-              "name": "invitesDeleteOrgOrgIdInviteOrgInviteIdDeleteExample",
               "description": "",
               "path": "/org/org_id/invite/org_invite_id",
               "pathParameters": {
@@ -13749,7 +13738,6 @@
           ],
           "examples": [
             {
-              "name": "domainsListOrgOrgIdDomainsGetExample",
               "description": "",
               "path": "/org/org_id/domains",
               "pathParameters": {
@@ -13901,7 +13889,6 @@
           ],
           "examples": [
             {
-              "name": "orgDomainsPostOrgOrgIdDomainsPostExample",
               "description": "",
               "path": "/org/org_id/domains",
               "pathParameters": {
@@ -14048,7 +14035,6 @@
           ],
           "examples": [
             {
-              "name": "domainDeleteOrgOrgIdDomainsDomainIdDeleteExample",
               "description": "",
               "path": "/org/org_id/domains/domain_id",
               "pathParameters": {
@@ -14191,7 +14177,6 @@
           ],
           "examples": [
             {
-              "name": "orgUpdateAvatarOrgOrgIdAvatarPostExample",
               "description": "",
               "path": "/org/org_id/avatar",
               "pathParameters": {
@@ -14241,6 +14226,7 @@
     },
     "subpackage_user": {
       "subpackageId": "subpackage_user",
+      "displayName": "user",
       "name": "user",
       "endpoints": [
         {
@@ -14293,7 +14279,6 @@
           ],
           "examples": [
             {
-              "name": "getUserGetExample",
               "description": "",
               "path": "/user",
               "pathParameters": {},
@@ -14386,7 +14371,6 @@
           ],
           "examples": [
             {
-              "name": "userPostUserPostExample",
               "description": "",
               "path": "/user",
               "pathParameters": {},
@@ -14490,7 +14474,6 @@
           ],
           "examples": [
             {
-              "name": "userUpdateAvatarUserAvatarPostExample",
               "description": "",
               "path": "/user/avatar",
               "pathParameters": {},
@@ -14540,6 +14523,7 @@
     },
     "subpackage_project": {
       "subpackageId": "subpackage_project",
+      "displayName": "project",
       "name": "project",
       "endpoints": [
         {
@@ -14665,7 +14649,6 @@
           ],
           "examples": [
             {
-              "name": "listProjectOrgOrgIdProjectGetExample",
               "description": "",
               "path": "/org/org_id/project",
               "pathParameters": {
@@ -14822,7 +14805,6 @@
           ],
           "examples": [
             {
-              "name": "projectCreateProjectOrgOrgIdProjectPostExample",
               "description": "",
               "path": "/org/org_id/project",
               "pathParameters": {
@@ -14975,7 +14957,6 @@
           ],
           "examples": [
             {
-              "name": "getProjectOrgOrgIdProjectProjectIdGetExample",
               "description": "",
               "path": "/org/org_id/project/project_id",
               "pathParameters": {
@@ -15165,7 +15146,6 @@
           ],
           "examples": [
             {
-              "name": "projectUpdateProjectOrgOrgIdProjectProjectIdPostExample",
               "description": "",
               "path": "/org/org_id/project/project_id",
               "pathParameters": {
@@ -15289,7 +15269,6 @@
           ],
           "examples": [
             {
-              "name": "getProjectConfigOrgOrgIdProjectProjectIdConfigGetExample",
               "description": "",
               "path": "/org/org_id/project/project_id/config",
               "pathParameters": {
@@ -15475,7 +15454,6 @@
           ],
           "examples": [
             {
-              "name": "projectSetProjectConfigOrgOrgIdProjectProjectIdConfigPostExample",
               "description": "",
               "path": "/org/org_id/project/project_id/config",
               "pathParameters": {
@@ -15673,7 +15651,6 @@
           ],
           "examples": [
             {
-              "name": "projectUpdateAvatarOrgOrgIdProjectProjectIdAvatarPostExample",
               "description": "",
               "path": "/org/org_id/project/project_id/avatar",
               "pathParameters": {
@@ -15783,7 +15760,7 @@
                   "type": "optional",
                   "itemType": {
                     "type": "id",
-                    "value": "OrgOrgIdProjectProjectIdIamMembersGetParametersSchema"
+                    "value": "OrgOrgIdProjectProjectIdIamMembersGetParametersTypeSchema"
                   }
                 }
               }
@@ -15844,7 +15821,6 @@
           ],
           "examples": [
             {
-              "name": "iamListMembersExample",
               "description": "",
               "path": "/org/org_id/project/project_id/iam/members",
               "pathParameters": {
@@ -16028,7 +16004,6 @@
           ],
           "examples": [
             {
-              "name": "getMemberExample",
               "description": "",
               "path": "/org/org_id/project/project_id/iam/members/member",
               "pathParameters": {
@@ -16221,7 +16196,6 @@
           ],
           "examples": [
             {
-              "name": "projectIamUpdateMemberRolesExample",
               "description": "",
               "path": "/org/org_id/project/project_id/iam/members/member",
               "pathParameters": {
@@ -16402,7 +16376,6 @@
           ],
           "examples": [
             {
-              "name": "projectIamTestPermissionsExample",
               "description": "",
               "path": "/org/org_id/project/project_id/iam/test",
               "pathParameters": {
@@ -16454,6 +16427,7 @@
     },
     "subpackage_collection": {
       "subpackageId": "subpackage_collection",
+      "displayName": "collection",
       "name": "collection",
       "endpoints": [
         {
@@ -16611,7 +16585,6 @@
           ],
           "examples": [
             {
-              "name": "listCollectionsOrgOrgIdProjectProjectIdCollectionGetExample",
               "description": "",
               "path": "/org/org_id/project/project_id/collection",
               "pathParameters": {
@@ -16804,7 +16777,6 @@
           ],
           "examples": [
             {
-              "name": "collectionCreateCollectionOrgOrgIdProjectProjectIdCollectionPostExample",
               "description": "",
               "path": "/org/org_id/project/project_id/collection",
               "pathParameters": {
@@ -16993,7 +16965,6 @@
           ],
           "examples": [
             {
-              "name": "getCollectionOrgOrgIdProjectProjectIdCollectionCollectionIdGetExample",
               "description": "",
               "path": "/org/org_id/project/project_id/collection/collection_id",
               "pathParameters": {
@@ -17188,7 +17159,6 @@
           ],
           "examples": [
             {
-              "name": "collectionEditOrgOrgIdProjectProjectIdCollectionCollectionIdPostExample",
               "description": "",
               "path": "/org/org_id/project/project_id/collection/collection_id",
               "pathParameters": {
@@ -17376,7 +17346,6 @@
           ],
           "examples": [
             {
-              "name": "statsOrgOrgIdProjectProjectIdCollectionCollectionIdStatsGetExample",
               "description": "",
               "path": "/org/org_id/project/project_id/collection/collection_id/stats",
               "pathParameters": {
@@ -17583,7 +17552,6 @@
           ],
           "examples": [
             {
-              "name": "listChatsOrgOrgIdProjectProjectIdCollectionCollectionIdChatGetExample",
               "description": "",
               "path": "/org/org_id/project/project_id/collection/collection_id/chat",
               "pathParameters": {
@@ -17784,7 +17752,6 @@
           ],
           "examples": [
             {
-              "name": "collectionQueryCollectionOrgOrgIdProjectProjectIdCollectionCollectionIdQueryPostExample",
               "description": "",
               "path": "/org/org_id/project/project_id/collection/collection_id/query",
               "pathParameters": {
@@ -17940,7 +17907,6 @@
           ],
           "examples": [
             {
-              "name": "updateSummaryOrgOrgIdProjectProjectIdCollectionCollectionIdUpdateSummaryPostExample",
               "description": "",
               "path": "/org/org_id/project/project_id/collection/collection_id/update_summary",
               "pathParameters": {
@@ -18115,7 +18081,6 @@
           ],
           "examples": [
             {
-              "name": "collectionAddOrgOrgIdProjectProjectIdCollectionCollectionIdAddPostExample",
               "description": "",
               "path": "/org/org_id/project/project_id/collection/collection_id/add",
               "pathParameters": {
@@ -18324,7 +18289,6 @@
           ],
           "examples": [
             {
-              "name": "collectionRemoveOrgOrgIdProjectProjectIdCollectionCollectionIdRemovePostExample",
               "description": "",
               "path": "/org/org_id/project/project_id/collection/collection_id/remove",
               "pathParameters": {
@@ -18471,7 +18435,7 @@
                   "type": "optional",
                   "itemType": {
                     "type": "id",
-                    "value": "OrgOrgIdProjectProjectIdCollectionCollectionIdIamMembersGetParametersSchema"
+                    "value": "OrgOrgIdProjectProjectIdCollectionCollectionIdIamMembersGetParametersTypeSchema"
                   }
                 }
               }
@@ -18532,7 +18496,6 @@
           ],
           "examples": [
             {
-              "name": "iamListMembersExample",
               "description": "",
               "path": "/org/org_id/project/project_id/collection/collection_id/iam/members",
               "pathParameters": {
@@ -18734,7 +18697,6 @@
           ],
           "examples": [
             {
-              "name": "getMemberExample",
               "description": "",
               "path": "/org/org_id/project/project_id/collection/collection_id/iam/members/member",
               "pathParameters": {
@@ -18945,7 +18907,6 @@
           ],
           "examples": [
             {
-              "name": "collectionIamUpdateMemberRolesExample",
               "description": "",
               "path": "/org/org_id/project/project_id/collection/collection_id/iam/members/member",
               "pathParameters": {
@@ -19144,7 +19105,6 @@
           ],
           "examples": [
             {
-              "name": "collectionIamTestPermissionsExample",
               "description": "",
               "path": "/org/org_id/project/project_id/collection/collection_id/iam/test",
               "pathParameters": {
@@ -19197,6 +19157,7 @@
     },
     "subpackage_document": {
       "subpackageId": "subpackage_document",
+      "displayName": "document",
       "name": "document",
       "endpoints": [
         {
@@ -19340,7 +19301,7 @@
                   "type": "optional",
                   "itemType": {
                     "type": "id",
-                    "value": "OrgOrgIdProjectProjectIdDocumentGetParametersSchema"
+                    "value": "OrgOrgIdProjectProjectIdDocumentGetParametersSourceSchema"
                   }
                 }
               }
@@ -19416,7 +19377,6 @@
           ],
           "examples": [
             {
-              "name": "listOrgOrgIdProjectProjectIdDocumentGetExample",
               "description": "",
               "path": "/org/org_id/project/project_id/document",
               "pathParameters": {
@@ -19637,7 +19597,6 @@
           ],
           "examples": [
             {
-              "name": "documentCreateOrgOrgIdProjectProjectIdDocumentPostExample",
               "description": "",
               "path": "/org/org_id/project/project_id/document",
               "pathParameters": {
@@ -19842,7 +19801,6 @@
           ],
           "examples": [
             {
-              "name": "documentUploadOrgOrgIdProjectProjectIdDocumentUploadPostExample",
               "description": "",
               "path": "/org/org_id/project/project_id/document/upload",
               "pathParameters": {
@@ -20048,7 +20006,6 @@
           ],
           "examples": [
             {
-              "name": "taskStatusOrgOrgIdProjectProjectIdDocumentCreateStatusGroupIdGetExample",
               "description": "",
               "path": "/org/org_id/project/project_id/document/create/status/group_id",
               "pathParameters": {
@@ -20231,7 +20188,6 @@
           ],
           "examples": [
             {
-              "name": "queryOrgOrgIdProjectProjectIdDocumentDocumentIdQueryGetExample",
               "description": "",
               "path": "/org/org_id/project/project_id/document/document_id/query",
               "pathParameters": {
@@ -20395,7 +20351,6 @@
           ],
           "examples": [
             {
-              "name": "fetchOrgOrgIdProjectProjectIdDocumentDocumentIdGetExample",
               "description": "",
               "path": "/org/org_id/project/project_id/document/document_id",
               "pathParameters": {
@@ -20596,7 +20551,6 @@
           ],
           "examples": [
             {
-              "name": "documentUpdateOrgOrgIdProjectProjectIdDocumentDocumentIdPostExample",
               "description": "",
               "path": "/org/org_id/project/project_id/document/document_id",
               "pathParameters": {
@@ -20792,7 +20746,6 @@
           ],
           "examples": [
             {
-              "name": "deleteOrgOrgIdProjectProjectIdDocumentDocumentIdDeleteExample",
               "description": "",
               "path": "/org/org_id/project/project_id/document/document_id",
               "pathParameters": {
@@ -20966,7 +20919,6 @@
           ],
           "examples": [
             {
-              "name": "embeddingQueryOrgOrgIdProjectProjectIdDocumentDocumentIdEmbeddingsGetExample",
               "description": "",
               "path": "/org/org_id/project/project_id/document/document_id/embeddings",
               "pathParameters": {
@@ -21133,7 +21085,6 @@
           ],
           "examples": [
             {
-              "name": "embeddingGetOrgOrgIdProjectProjectIdDocumentDocumentIdEmbeddingEmbeddingIdGetExample",
               "description": "",
               "path": "/org/org_id/project/project_id/document/document_id/embedding/embedding_id",
               "pathParameters": {
@@ -21244,7 +21195,7 @@
                   "type": "optional",
                   "itemType": {
                     "type": "id",
-                    "value": "OrgOrgIdProjectProjectIdDocumentDocumentIdIamMembersGetParametersSchema"
+                    "value": "OrgOrgIdProjectProjectIdDocumentDocumentIdIamMembersGetParametersTypeSchema"
                   }
                 }
               }
@@ -21305,7 +21256,6 @@
           ],
           "examples": [
             {
-              "name": "iamListMembersExample",
               "description": "",
               "path": "/org/org_id/project/project_id/document/document_id/iam/members",
               "pathParameters": {
@@ -21507,7 +21457,6 @@
           ],
           "examples": [
             {
-              "name": "getMemberExample",
               "description": "",
               "path": "/org/org_id/project/project_id/document/document_id/iam/members/member",
               "pathParameters": {
@@ -21718,7 +21667,6 @@
           ],
           "examples": [
             {
-              "name": "documentIamUpdateMemberRolesExample",
               "description": "",
               "path": "/org/org_id/project/project_id/document/document_id/iam/members/member",
               "pathParameters": {
@@ -21917,7 +21865,6 @@
           ],
           "examples": [
             {
-              "name": "documentIamTestPermissionsExample",
               "description": "",
               "path": "/org/org_id/project/project_id/document/document_id/iam/test",
               "pathParameters": {
@@ -21970,6 +21917,7 @@
     },
     "subpackage_chat": {
       "subpackageId": "subpackage_chat",
+      "displayName": "chat",
       "name": "chat",
       "endpoints": [
         {
@@ -22041,7 +21989,6 @@
           ],
           "examples": [
             {
-              "name": "getRecentChatsForUserChatRecentGetExample",
               "description": "",
               "path": "/chat/recent",
               "pathParameters": {},
@@ -22177,7 +22124,6 @@
           ],
           "examples": [
             {
-              "name": "getChatChatChatIdGetExample",
               "description": "",
               "path": "/chat/chat_id",
               "pathParameters": {
@@ -22324,7 +22270,6 @@
           ],
           "examples": [
             {
-              "name": "chatUpdateChatChatChatIdPostExample",
               "description": "",
               "path": "/chat/chat_id",
               "pathParameters": {
@@ -22467,7 +22412,6 @@
           ],
           "examples": [
             {
-              "name": "getChatConfigChatChatIdConfigGetExample",
               "description": "",
               "path": "/chat/chat_id/config",
               "pathParameters": {
@@ -22634,7 +22578,6 @@
           ],
           "examples": [
             {
-              "name": "chatSetChatConfigChatChatIdConfigPostExample",
               "description": "",
               "path": "/chat/chat_id/config",
               "pathParameters": {
@@ -22787,7 +22730,6 @@
           ],
           "examples": [
             {
-              "name": "chatCreateChatChatPostExample",
               "description": "",
               "path": "/chat",
               "pathParameters": {},
@@ -22941,7 +22883,6 @@
           ],
           "examples": [
             {
-              "name": "queryChatChatChatIdQueryGetExample",
               "description": "",
               "path": "/chat/chat_id/query",
               "pathParameters": {
@@ -23023,7 +22964,7 @@
                   "type": "optional",
                   "itemType": {
                     "type": "id",
-                    "value": "ChatChatIdIamMembersGetParametersSchema"
+                    "value": "ChatChatIdIamMembersGetParametersTypeSchema"
                   }
                 }
               }
@@ -23084,7 +23025,6 @@
           ],
           "examples": [
             {
-              "name": "iamListMembersExample",
               "description": "",
               "path": "/chat/chat_id/iam/members",
               "pathParameters": {
@@ -23250,7 +23190,6 @@
           ],
           "examples": [
             {
-              "name": "getMemberExample",
               "description": "",
               "path": "/chat/chat_id/iam/members/member",
               "pathParameters": {
@@ -23425,7 +23364,6 @@
           ],
           "examples": [
             {
-              "name": "chatIamUpdateMemberRolesExample",
               "description": "",
               "path": "/chat/chat_id/iam/members/member",
               "pathParameters": {
@@ -23588,7 +23526,6 @@
           ],
           "examples": [
             {
-              "name": "chatIamTestPermissionsExample",
               "description": "",
               "path": "/chat/chat_id/iam/test",
               "pathParameters": {
@@ -23759,7 +23696,6 @@
           ],
           "examples": [
             {
-              "name": "listFilesOrgOrgIdProjectProjectIdDatasourceBoxConnectionIdListFilesGetExample",
               "description": "",
               "path": "/org/org_id/project/project_id/datasource/box/connection_id/list-files",
               "pathParameters": {
@@ -23926,7 +23862,6 @@
           ],
           "examples": [
             {
-              "name": "datasourceBoxFetchOrgOrgIdProjectProjectIdDatasourceBoxConnectionIdFetchPostExample",
               "description": "",
               "path": "/org/org_id/project/project_id/datasource/box/connection_id/fetch",
               "pathParameters": {
@@ -24126,7 +24061,6 @@
           ],
           "examples": [
             {
-              "name": "authorizeOrgOrgIdProjectProjectIdDatasourceBoxAuthorizeGetExample",
               "description": "",
               "path": "/org/org_id/project/project_id/datasource/box/authorize",
               "pathParameters": {
@@ -24280,7 +24214,6 @@
           ],
           "examples": [
             {
-              "name": "authorizeOrgOrgIdProjectProjectIdDatasourceBoxConnectionIdAuthorizeGetExample",
               "description": "",
               "path": "/org/org_id/project/project_id/datasource/box/foo/authorize",
               "pathParameters": {
@@ -24426,7 +24359,6 @@
           ],
           "examples": [
             {
-              "name": "deleteOrgOrgIdProjectProjectIdDatasourceBoxConnectionIdDeleteExample",
               "description": "",
               "path": "/org/org_id/project/project_id/datasource/box/connection_id",
               "pathParameters": {
@@ -24602,7 +24534,6 @@
           ],
           "examples": [
             {
-              "name": "listRunsOrgOrgIdProjectProjectIdDatasourceBoxConnectionIdRunsGetExample",
               "description": "",
               "path": "/org/org_id/project/project_id/datasource/box/connection_id/runs",
               "pathParameters": {
@@ -24813,7 +24744,6 @@
           ],
           "examples": [
             {
-              "name": "checkStatusOrgOrgIdProjectProjectIdDatasourceBoxConnectionIdRunGetExample",
               "description": "",
               "path": "/org/org_id/project/project_id/datasource/box/connection_id/run",
               "pathParameters": {
@@ -24998,7 +24928,6 @@
           ],
           "examples": [
             {
-              "name": "getConfigurationOrgOrgIdProjectProjectIdDatasourceBoxConnectionIdConfigGetExample",
               "description": "",
               "path": "/org/org_id/project/project_id/datasource/box/connection_id/config",
               "pathParameters": {
@@ -25169,7 +25098,6 @@
           ],
           "examples": [
             {
-              "name": "datasourceBoxSetConfigurationOrgOrgIdProjectProjectIdDatasourceBoxConnectionIdConfigPostExample",
               "description": "",
               "path": "/org/org_id/project/project_id/datasource/box/connection_id/config",
               "pathParameters": {
@@ -25278,7 +25206,6 @@
           ],
           "examples": [
             {
-              "name": "callbackDatasourceBoxCallbackGetExample",
               "description": "",
               "path": "/datasource/box/callback",
               "pathParameters": {},
@@ -25419,7 +25346,6 @@
           ],
           "examples": [
             {
-              "name": "listFilesOrgOrgIdProjectProjectIdDatasourceConfluenceConnectionIdListFilesGetExample",
               "description": "",
               "path": "/org/org_id/project/project_id/datasource/confluence/connection_id/list-files",
               "pathParameters": {
@@ -25586,7 +25512,6 @@
           ],
           "examples": [
             {
-              "name": "datasourceConfluenceFetchOrgOrgIdProjectProjectIdDatasourceConfluenceConnectionIdFetchPostExample",
               "description": "",
               "path": "/org/org_id/project/project_id/datasource/confluence/connection_id/fetch",
               "pathParameters": {
@@ -25786,7 +25711,6 @@
           ],
           "examples": [
             {
-              "name": "authorizeOrgOrgIdProjectProjectIdDatasourceConfluenceAuthorizeGetExample",
               "description": "",
               "path": "/org/org_id/project/project_id/datasource/confluence/authorize",
               "pathParameters": {
@@ -25940,7 +25864,6 @@
           ],
           "examples": [
             {
-              "name": "authorizeOrgOrgIdProjectProjectIdDatasourceConfluenceConnectionIdAuthorizeGetExample",
               "description": "",
               "path": "/org/org_id/project/project_id/datasource/confluence/foo/authorize",
               "pathParameters": {
@@ -26086,7 +26009,6 @@
           ],
           "examples": [
             {
-              "name": "deleteOrgOrgIdProjectProjectIdDatasourceConfluenceConnectionIdDeleteExample",
               "description": "",
               "path": "/org/org_id/project/project_id/datasource/confluence/connection_id",
               "pathParameters": {
@@ -26262,7 +26184,6 @@
           ],
           "examples": [
             {
-              "name": "listRunsOrgOrgIdProjectProjectIdDatasourceConfluenceConnectionIdRunsGetExample",
               "description": "",
               "path": "/org/org_id/project/project_id/datasource/confluence/connection_id/runs",
               "pathParameters": {
@@ -26473,7 +26394,6 @@
           ],
           "examples": [
             {
-              "name": "checkStatusOrgOrgIdProjectProjectIdDatasourceConfluenceConnectionIdRunGetExample",
               "description": "",
               "path": "/org/org_id/project/project_id/datasource/confluence/connection_id/run",
               "pathParameters": {
@@ -26658,7 +26578,6 @@
           ],
           "examples": [
             {
-              "name": "getConfigurationOrgOrgIdProjectProjectIdDatasourceConfluenceConnectionIdConfigGetExample",
               "description": "",
               "path": "/org/org_id/project/project_id/datasource/confluence/connection_id/config",
               "pathParameters": {
@@ -26829,7 +26748,6 @@
           ],
           "examples": [
             {
-              "name": "datasourceConfluenceSetConfigurationOrgOrgIdProjectProjectIdDatasourceConfluenceConnectionIdConfigPostExample",
               "description": "",
               "path": "/org/org_id/project/project_id/datasource/confluence/connection_id/config",
               "pathParameters": {
@@ -26938,7 +26856,6 @@
           ],
           "examples": [
             {
-              "name": "callbackDatasourceConfluenceCallbackGetExample",
               "description": "",
               "path": "/datasource/confluence/callback",
               "pathParameters": {},
@@ -27079,7 +26996,6 @@
           ],
           "examples": [
             {
-              "name": "listFilesOrgOrgIdProjectProjectIdDatasourceDropboxConnectionIdListFilesGetExample",
               "description": "",
               "path": "/org/org_id/project/project_id/datasource/dropbox/connection_id/list-files",
               "pathParameters": {
@@ -27246,7 +27162,6 @@
           ],
           "examples": [
             {
-              "name": "datasourceDropboxFetchOrgOrgIdProjectProjectIdDatasourceDropboxConnectionIdFetchPostExample",
               "description": "",
               "path": "/org/org_id/project/project_id/datasource/dropbox/connection_id/fetch",
               "pathParameters": {
@@ -27446,7 +27361,6 @@
           ],
           "examples": [
             {
-              "name": "authorizeOrgOrgIdProjectProjectIdDatasourceDropboxAuthorizeGetExample",
               "description": "",
               "path": "/org/org_id/project/project_id/datasource/dropbox/authorize",
               "pathParameters": {
@@ -27600,7 +27514,6 @@
           ],
           "examples": [
             {
-              "name": "authorizeOrgOrgIdProjectProjectIdDatasourceDropboxConnectionIdAuthorizeGetExample",
               "description": "",
               "path": "/org/org_id/project/project_id/datasource/dropbox/foo/authorize",
               "pathParameters": {
@@ -27746,7 +27659,6 @@
           ],
           "examples": [
             {
-              "name": "deleteOrgOrgIdProjectProjectIdDatasourceDropboxConnectionIdDeleteExample",
               "description": "",
               "path": "/org/org_id/project/project_id/datasource/dropbox/connection_id",
               "pathParameters": {
@@ -27922,7 +27834,6 @@
           ],
           "examples": [
             {
-              "name": "listRunsOrgOrgIdProjectProjectIdDatasourceDropboxConnectionIdRunsGetExample",
               "description": "",
               "path": "/org/org_id/project/project_id/datasource/dropbox/connection_id/runs",
               "pathParameters": {
@@ -28133,7 +28044,6 @@
           ],
           "examples": [
             {
-              "name": "checkStatusOrgOrgIdProjectProjectIdDatasourceDropboxConnectionIdRunGetExample",
               "description": "",
               "path": "/org/org_id/project/project_id/datasource/dropbox/connection_id/run",
               "pathParameters": {
@@ -28318,7 +28228,6 @@
           ],
           "examples": [
             {
-              "name": "getConfigurationOrgOrgIdProjectProjectIdDatasourceDropboxConnectionIdConfigGetExample",
               "description": "",
               "path": "/org/org_id/project/project_id/datasource/dropbox/connection_id/config",
               "pathParameters": {
@@ -28489,7 +28398,6 @@
           ],
           "examples": [
             {
-              "name": "datasourceDropboxSetConfigurationOrgOrgIdProjectProjectIdDatasourceDropboxConnectionIdConfigPostExample",
               "description": "",
               "path": "/org/org_id/project/project_id/datasource/dropbox/connection_id/config",
               "pathParameters": {
@@ -28598,7 +28506,6 @@
           ],
           "examples": [
             {
-              "name": "callbackDatasourceDropboxCallbackGetExample",
               "description": "",
               "path": "/datasource/dropbox/callback",
               "pathParameters": {},
@@ -28739,7 +28646,6 @@
           ],
           "examples": [
             {
-              "name": "listFilesOrgOrgIdProjectProjectIdDatasourceGdriveConnectionIdListFilesGetExample",
               "description": "",
               "path": "/org/org_id/project/project_id/datasource/gdrive/connection_id/list-files",
               "pathParameters": {
@@ -28906,7 +28812,6 @@
           ],
           "examples": [
             {
-              "name": "datasourceGdriveFetchOrgOrgIdProjectProjectIdDatasourceGdriveConnectionIdFetchPostExample",
               "description": "",
               "path": "/org/org_id/project/project_id/datasource/gdrive/connection_id/fetch",
               "pathParameters": {
@@ -29106,7 +29011,6 @@
           ],
           "examples": [
             {
-              "name": "authorizeOrgOrgIdProjectProjectIdDatasourceGdriveAuthorizeGetExample",
               "description": "",
               "path": "/org/org_id/project/project_id/datasource/gdrive/authorize",
               "pathParameters": {
@@ -29260,7 +29164,6 @@
           ],
           "examples": [
             {
-              "name": "authorizeOrgOrgIdProjectProjectIdDatasourceGdriveConnectionIdAuthorizeGetExample",
               "description": "",
               "path": "/org/org_id/project/project_id/datasource/gdrive/foo/authorize",
               "pathParameters": {
@@ -29406,7 +29309,6 @@
           ],
           "examples": [
             {
-              "name": "deleteOrgOrgIdProjectProjectIdDatasourceGdriveConnectionIdDeleteExample",
               "description": "",
               "path": "/org/org_id/project/project_id/datasource/gdrive/connection_id",
               "pathParameters": {
@@ -29582,7 +29484,6 @@
           ],
           "examples": [
             {
-              "name": "listRunsOrgOrgIdProjectProjectIdDatasourceGdriveConnectionIdRunsGetExample",
               "description": "",
               "path": "/org/org_id/project/project_id/datasource/gdrive/connection_id/runs",
               "pathParameters": {
@@ -29793,7 +29694,6 @@
           ],
           "examples": [
             {
-              "name": "checkStatusOrgOrgIdProjectProjectIdDatasourceGdriveConnectionIdRunGetExample",
               "description": "",
               "path": "/org/org_id/project/project_id/datasource/gdrive/connection_id/run",
               "pathParameters": {
@@ -29978,7 +29878,6 @@
           ],
           "examples": [
             {
-              "name": "getConfigurationOrgOrgIdProjectProjectIdDatasourceGdriveConnectionIdConfigGetExample",
               "description": "",
               "path": "/org/org_id/project/project_id/datasource/gdrive/connection_id/config",
               "pathParameters": {
@@ -30149,7 +30048,6 @@
           ],
           "examples": [
             {
-              "name": "datasourceGdriveSetConfigurationOrgOrgIdProjectProjectIdDatasourceGdriveConnectionIdConfigPostExample",
               "description": "",
               "path": "/org/org_id/project/project_id/datasource/gdrive/connection_id/config",
               "pathParameters": {
@@ -30258,7 +30156,6 @@
           ],
           "examples": [
             {
-              "name": "callbackDatasourceGdriveCallbackGetExample",
               "description": "",
               "path": "/datasource/gdrive/callback",
               "pathParameters": {},
@@ -30399,7 +30296,6 @@
           ],
           "examples": [
             {
-              "name": "listFilesOrgOrgIdProjectProjectIdDatasourceNotionConnectionIdListFilesGetExample",
               "description": "",
               "path": "/org/org_id/project/project_id/datasource/notion/connection_id/list-files",
               "pathParameters": {
@@ -30566,7 +30462,6 @@
           ],
           "examples": [
             {
-              "name": "datasourceNotionFetchOrgOrgIdProjectProjectIdDatasourceNotionConnectionIdFetchPostExample",
               "description": "",
               "path": "/org/org_id/project/project_id/datasource/notion/connection_id/fetch",
               "pathParameters": {
@@ -30766,7 +30661,6 @@
           ],
           "examples": [
             {
-              "name": "authorizeOrgOrgIdProjectProjectIdDatasourceNotionAuthorizeGetExample",
               "description": "",
               "path": "/org/org_id/project/project_id/datasource/notion/authorize",
               "pathParameters": {
@@ -30920,7 +30814,6 @@
           ],
           "examples": [
             {
-              "name": "authorizeOrgOrgIdProjectProjectIdDatasourceNotionConnectionIdAuthorizeGetExample",
               "description": "",
               "path": "/org/org_id/project/project_id/datasource/notion/foo/authorize",
               "pathParameters": {
@@ -31066,7 +30959,6 @@
           ],
           "examples": [
             {
-              "name": "deleteOrgOrgIdProjectProjectIdDatasourceNotionConnectionIdDeleteExample",
               "description": "",
               "path": "/org/org_id/project/project_id/datasource/notion/connection_id",
               "pathParameters": {
@@ -31242,7 +31134,6 @@
           ],
           "examples": [
             {
-              "name": "listRunsOrgOrgIdProjectProjectIdDatasourceNotionConnectionIdRunsGetExample",
               "description": "",
               "path": "/org/org_id/project/project_id/datasource/notion/connection_id/runs",
               "pathParameters": {
@@ -31453,7 +31344,6 @@
           ],
           "examples": [
             {
-              "name": "checkStatusOrgOrgIdProjectProjectIdDatasourceNotionConnectionIdRunGetExample",
               "description": "",
               "path": "/org/org_id/project/project_id/datasource/notion/connection_id/run",
               "pathParameters": {
@@ -31638,7 +31528,6 @@
           ],
           "examples": [
             {
-              "name": "getConfigurationOrgOrgIdProjectProjectIdDatasourceNotionConnectionIdConfigGetExample",
               "description": "",
               "path": "/org/org_id/project/project_id/datasource/notion/connection_id/config",
               "pathParameters": {
@@ -31809,7 +31698,6 @@
           ],
           "examples": [
             {
-              "name": "datasourceNotionSetConfigurationOrgOrgIdProjectProjectIdDatasourceNotionConnectionIdConfigPostExample",
               "description": "",
               "path": "/org/org_id/project/project_id/datasource/notion/connection_id/config",
               "pathParameters": {
@@ -31918,7 +31806,6 @@
           ],
           "examples": [
             {
-              "name": "callbackDatasourceNotionCallbackGetExample",
               "description": "",
               "path": "/datasource/notion/callback",
               "pathParameters": {},
@@ -32059,7 +31946,6 @@
           ],
           "examples": [
             {
-              "name": "listFilesOrgOrgIdProjectProjectIdDatasourceOnedriveConnectionIdListFilesGetExample",
               "description": "",
               "path": "/org/org_id/project/project_id/datasource/onedrive/connection_id/list-files",
               "pathParameters": {
@@ -32226,7 +32112,6 @@
           ],
           "examples": [
             {
-              "name": "datasourceOnedriveFetchOrgOrgIdProjectProjectIdDatasourceOnedriveConnectionIdFetchPostExample",
               "description": "",
               "path": "/org/org_id/project/project_id/datasource/onedrive/connection_id/fetch",
               "pathParameters": {
@@ -32426,7 +32311,6 @@
           ],
           "examples": [
             {
-              "name": "authorizeOrgOrgIdProjectProjectIdDatasourceOnedriveAuthorizeGetExample",
               "description": "",
               "path": "/org/org_id/project/project_id/datasource/onedrive/authorize",
               "pathParameters": {
@@ -32580,7 +32464,6 @@
           ],
           "examples": [
             {
-              "name": "authorizeOrgOrgIdProjectProjectIdDatasourceOnedriveConnectionIdAuthorizeGetExample",
               "description": "",
               "path": "/org/org_id/project/project_id/datasource/onedrive/foo/authorize",
               "pathParameters": {
@@ -32726,7 +32609,6 @@
           ],
           "examples": [
             {
-              "name": "deleteOrgOrgIdProjectProjectIdDatasourceOnedriveConnectionIdDeleteExample",
               "description": "",
               "path": "/org/org_id/project/project_id/datasource/onedrive/connection_id",
               "pathParameters": {
@@ -32902,7 +32784,6 @@
           ],
           "examples": [
             {
-              "name": "listRunsOrgOrgIdProjectProjectIdDatasourceOnedriveConnectionIdRunsGetExample",
               "description": "",
               "path": "/org/org_id/project/project_id/datasource/onedrive/connection_id/runs",
               "pathParameters": {
@@ -33113,7 +32994,6 @@
           ],
           "examples": [
             {
-              "name": "checkStatusOrgOrgIdProjectProjectIdDatasourceOnedriveConnectionIdRunGetExample",
               "description": "",
               "path": "/org/org_id/project/project_id/datasource/onedrive/connection_id/run",
               "pathParameters": {
@@ -33298,7 +33178,6 @@
           ],
           "examples": [
             {
-              "name": "getConfigurationOrgOrgIdProjectProjectIdDatasourceOnedriveConnectionIdConfigGetExample",
               "description": "",
               "path": "/org/org_id/project/project_id/datasource/onedrive/connection_id/config",
               "pathParameters": {
@@ -33469,7 +33348,6 @@
           ],
           "examples": [
             {
-              "name": "datasourceOnedriveSetConfigurationOrgOrgIdProjectProjectIdDatasourceOnedriveConnectionIdConfigPostExample",
               "description": "",
               "path": "/org/org_id/project/project_id/datasource/onedrive/connection_id/config",
               "pathParameters": {
@@ -33578,7 +33456,6 @@
           ],
           "examples": [
             {
-              "name": "callbackDatasourceOnedriveCallbackGetExample",
               "description": "",
               "path": "/datasource/onedrive/callback",
               "pathParameters": {},
@@ -33719,7 +33596,6 @@
           ],
           "examples": [
             {
-              "name": "listFilesOrgOrgIdProjectProjectIdDatasourceSharepointConnectionIdListFilesGetExample",
               "description": "",
               "path": "/org/org_id/project/project_id/datasource/sharepoint/connection_id/list-files",
               "pathParameters": {
@@ -33886,7 +33762,6 @@
           ],
           "examples": [
             {
-              "name": "datasourceSharepointFetchOrgOrgIdProjectProjectIdDatasourceSharepointConnectionIdFetchPostExample",
               "description": "",
               "path": "/org/org_id/project/project_id/datasource/sharepoint/connection_id/fetch",
               "pathParameters": {
@@ -34086,7 +33961,6 @@
           ],
           "examples": [
             {
-              "name": "authorizeOrgOrgIdProjectProjectIdDatasourceSharepointAuthorizeGetExample",
               "description": "",
               "path": "/org/org_id/project/project_id/datasource/sharepoint/authorize",
               "pathParameters": {
@@ -34240,7 +34114,6 @@
           ],
           "examples": [
             {
-              "name": "authorizeOrgOrgIdProjectProjectIdDatasourceSharepointConnectionIdAuthorizeGetExample",
               "description": "",
               "path": "/org/org_id/project/project_id/datasource/sharepoint/foo/authorize",
               "pathParameters": {
@@ -34386,7 +34259,6 @@
           ],
           "examples": [
             {
-              "name": "deleteOrgOrgIdProjectProjectIdDatasourceSharepointConnectionIdDeleteExample",
               "description": "",
               "path": "/org/org_id/project/project_id/datasource/sharepoint/connection_id",
               "pathParameters": {
@@ -34562,7 +34434,6 @@
           ],
           "examples": [
             {
-              "name": "listRunsOrgOrgIdProjectProjectIdDatasourceSharepointConnectionIdRunsGetExample",
               "description": "",
               "path": "/org/org_id/project/project_id/datasource/sharepoint/connection_id/runs",
               "pathParameters": {
@@ -34773,7 +34644,6 @@
           ],
           "examples": [
             {
-              "name": "checkStatusOrgOrgIdProjectProjectIdDatasourceSharepointConnectionIdRunGetExample",
               "description": "",
               "path": "/org/org_id/project/project_id/datasource/sharepoint/connection_id/run",
               "pathParameters": {
@@ -34958,7 +34828,6 @@
           ],
           "examples": [
             {
-              "name": "getConfigurationOrgOrgIdProjectProjectIdDatasourceSharepointConnectionIdConfigGetExample",
               "description": "",
               "path": "/org/org_id/project/project_id/datasource/sharepoint/connection_id/config",
               "pathParameters": {
@@ -35129,7 +34998,6 @@
           ],
           "examples": [
             {
-              "name": "datasourceSharepointSetConfigurationOrgOrgIdProjectProjectIdDatasourceSharepointConnectionIdConfigPostExample",
               "description": "",
               "path": "/org/org_id/project/project_id/datasource/sharepoint/connection_id/config",
               "pathParameters": {
@@ -35238,7 +35106,6 @@
           ],
           "examples": [
             {
-              "name": "callbackDatasourceSharepointCallbackGetExample",
               "description": "",
               "path": "/datasource/sharepoint/callback",
               "pathParameters": {},
@@ -35259,6 +35126,7 @@
     },
     "subpackage_internal": {
       "subpackageId": "subpackage_internal",
+      "displayName": "internal",
       "name": "internal",
       "endpoints": [
         {
@@ -35322,7 +35190,6 @@
           ],
           "examples": [
             {
-              "name": "internalWebhookHydraTokenHookInternalWebhookHydraTokenHookPostExample",
               "description": "",
               "path": "/internal/webhook/hydra/token_hook",
               "pathParameters": {},
@@ -35461,7 +35328,6 @@
           ],
           "examples": [
             {
-              "name": "internalRegisterOauthClientInternalProjectProjectIdRegisterOauthClientPostExample",
               "description": "",
               "path": "/internal/project/project_id/register_oauth_client",
               "pathParameters": {
@@ -35568,7 +35434,6 @@
           ],
           "examples": [
             {
-              "name": "internalWebhookKratosSignupCheckInternalWebhookKratosSignupCheckPostExample",
               "description": "",
               "path": "/internal/webhook/kratos/signup_check",
               "pathParameters": {},
@@ -35685,7 +35550,6 @@
           ],
           "examples": [
             {
-              "name": "internalWebhookKratosSignupCommitInternalWebhookKratosSignupCommitPostExample",
               "description": "",
               "path": "/internal/webhook/kratos/signup_commit",
               "pathParameters": {},
@@ -35748,6 +35612,7 @@
     },
     "subpackage_scrape": {
       "subpackageId": "subpackage_scrape",
+      "displayName": "scrape",
       "name": "scrape",
       "endpoints": [
         {
@@ -35834,7 +35699,6 @@
           ],
           "examples": [
             {
-              "name": "enableOrgOrgIdProjectProjectIdScrapePostExample",
               "description": "",
               "path": "/org/org_id/project/project_id/scrape",
               "pathParameters": {
@@ -35948,7 +35812,6 @@
           ],
           "examples": [
             {
-              "name": "scrapeFetchOrgOrgIdProjectProjectIdScrapeStartPostExample",
               "description": "",
               "path": "/org/org_id/project/project_id/scrape/start",
               "pathParameters": {
@@ -36115,7 +35978,6 @@
           ],
           "examples": [
             {
-              "name": "checkStatusOrgOrgIdProjectProjectIdScrapeRunSyncRunIdGetExample",
               "description": "",
               "path": "/org/org_id/project/project_id/scrape/run/sync_run_id",
               "pathParameters": {
@@ -36283,7 +36145,6 @@
           ],
           "examples": [
             {
-              "name": "listRunsOrgOrgIdProjectProjectIdScrapeRunsGetExample",
               "description": "",
               "path": "/org/org_id/project/project_id/scrape/runs",
               "pathParameters": {
@@ -36362,6 +36223,7 @@
     },
     "subpackage_compose": {
       "subpackageId": "subpackage_compose",
+      "displayName": "compose",
       "name": "compose",
       "endpoints": [
         {
@@ -36486,7 +36348,6 @@
           ],
           "examples": [
             {
-              "name": "composeInitialiseOrgOrgIdProjectProjectIdComposePostExample",
               "description": "",
               "path": "/org/org_id/project/project_id/compose",
               "pathParameters": {
@@ -36633,7 +36494,6 @@
           ],
           "examples": [
             {
-              "name": "composeGenerateOrgOrgIdProjectProjectIdComposeGeneratePostExample",
               "description": "",
               "path": "/org/org_id/project/project_id/compose/generate",
               "pathParameters": {
@@ -36800,7 +36660,6 @@
           ],
           "examples": [
             {
-              "name": "composeUpdateSectionOrgOrgIdProjectProjectIdComposeUpdateSectionPostExample",
               "description": "",
               "path": "/org/org_id/project/project_id/compose/update_section",
               "pathParameters": {
@@ -36971,7 +36830,6 @@
           ],
           "examples": [
             {
-              "name": "composeSectionTalkingPointsOrgOrgIdProjectProjectIdComposeSectionTalkingPointsPostExample",
               "description": "",
               "path": "/org/org_id/project/project_id/compose/section_talking_points",
               "pathParameters": {
@@ -37134,7 +36992,6 @@
           ],
           "examples": [
             {
-              "name": "composeTopicOrgOrgIdProjectProjectIdComposeTopicPostExample",
               "description": "",
               "path": "/org/org_id/project/project_id/compose/topic",
               "pathParameters": {
@@ -37167,6 +37024,7 @@
     },
     "subpackage_tasks": {
       "subpackageId": "subpackage_tasks",
+      "displayName": "tasks",
       "name": "tasks",
       "endpoints": [
         {
@@ -37336,7 +37194,6 @@
           ],
           "examples": [
             {
-              "name": "getAllTasksExample",
               "description": "",
               "path": "/org/123e4567-e89b-12d3-a456-426614174000/project/123e4567-e89b-12d3-a456-426614174001/task",
               "pathParameters": {
@@ -37561,7 +37418,6 @@
           ],
           "examples": [
             {
-              "name": "tasksCreateTaskExample",
               "description": "",
               "path": "/org/123e4567-e89b-12d3-a456-426614174000/project/123e4567-e89b-12d3-a456-426614174001/task",
               "pathParameters": {
@@ -37816,7 +37672,6 @@
           ],
           "examples": [
             {
-              "name": "getTaskExample",
               "description": "",
               "path": "/org/123e4567-e89b-12d3-a456-426614174000/project/123e4567-e89b-12d3-a456-426614174001/task/01909843-3596-da54-4756-28af46917e74",
               "pathParameters": {
@@ -38042,7 +37897,6 @@
           ],
           "examples": [
             {
-              "name": "tasksEditTaskExample",
               "description": "",
               "path": "/org/123e4567-e89b-12d3-a456-426614174000/project/123e4567-e89b-12d3-a456-426614174001/task/01909843-3596-da54-4756-28af46917e74",
               "pathParameters": {
@@ -38315,7 +38169,6 @@
           ],
           "examples": [
             {
-              "name": "getTaskRunsExample",
               "description": "",
               "path": "/org/123e4567-e89b-12d3-a456-426614174000/project/123e4567-e89b-12d3-a456-426614174001/task/01909843-3596-da54-4756-28af46917e74/run",
               "pathParameters": {
@@ -38535,7 +38388,6 @@
           ],
           "examples": [
             {
-              "name": "Example_0",
               "description": "",
               "path": "/org/org_id/project/project_id/task/task_id/run",
               "pathParameters": {
@@ -38697,7 +38549,7 @@
                   "type": "optional",
                   "itemType": {
                     "type": "id",
-                    "value": "OrgOrgIdProjectProjectIdTaskTaskIdIamMembersGetParametersSchema"
+                    "value": "OrgOrgIdProjectProjectIdTaskTaskIdIamMembersGetParametersTypeSchema"
                   }
                 }
               }
@@ -38758,7 +38610,6 @@
           ],
           "examples": [
             {
-              "name": "taskIamListMembersExample",
               "description": "",
               "path": "/org/org_id/project/project_id/task/task_id/iam/members",
               "pathParameters": {
@@ -38960,7 +38811,6 @@
           ],
           "examples": [
             {
-              "name": "taskGetMemberExample",
               "description": "",
               "path": "/org/org_id/project/project_id/task/task_id/iam/members/member",
               "pathParameters": {
@@ -39171,7 +39021,6 @@
           ],
           "examples": [
             {
-              "name": "tasksTaskIamUpdateMemberRolesExample",
               "description": "",
               "path": "/org/org_id/project/project_id/task/task_id/iam/members/member",
               "pathParameters": {
@@ -39370,7 +39219,6 @@
           ],
           "examples": [
             {
-              "name": "tasksTaskIamTestPermissionsExample",
               "description": "",
               "path": "/org/org_id/project/project_id/task/task_id/iam/test",
               "pathParameters": {
@@ -39568,7 +39416,6 @@
           ],
           "examples": [
             {
-              "name": "getTaskRunExample",
               "description": "",
               "path": "/org/123e4567-e89b-12d3-a456-426614174000/project/123e4567-e89b-12d3-a456-426614174001/task/01909843-3596-da54-4756-28af46917e74/run/129c78d7-2e1f-4a77-adf3-68d69b0a3c71",
               "pathParameters": {
@@ -39790,7 +39637,6 @@
           ],
           "examples": [
             {
-              "name": "getAllTaskForwardersExample",
               "description": "",
               "path": "/org/123e4567-e89b-12d3-a456-426614174000/project/123e4567-e89b-12d3-a456-426614174001/task_forwarder",
               "pathParameters": {
@@ -39983,7 +39829,6 @@
           ],
           "examples": [
             {
-              "name": "taskForwardersCreateTaskForwarderExample",
               "description": "",
               "path": "/org/123e4567-e89b-12d3-a456-426614174000/project/123e4567-e89b-12d3-a456-426614174001/task_forwarder",
               "pathParameters": {
@@ -40186,7 +40031,6 @@
           ],
           "examples": [
             {
-              "name": "getTaskForwarderExample",
               "description": "",
               "path": "/org/123e4567-e89b-12d3-a456-426614174000/project/123e4567-e89b-12d3-a456-426614174001/task_forwarder/01909843-3596-da54-4756-28af46917e74",
               "pathParameters": {
@@ -40380,7 +40224,6 @@
           ],
           "examples": [
             {
-              "name": "taskForwardersUpdateTaskForwarderExample",
               "description": "",
               "path": "/org/123e4567-e89b-12d3-a456-426614174000/project/123e4567-e89b-12d3-a456-426614174001/task_forwarder/01909843-3596-da54-4756-28af46917e74",
               "pathParameters": {
@@ -40441,6 +40284,7 @@
     },
     "subpackage_listings": {
       "subpackageId": "subpackage_listings",
+      "displayName": "listings",
       "name": "listings",
       "endpoints": [
         {
@@ -40561,7 +40405,6 @@
           ],
           "examples": [
             {
-              "name": "Example_0",
               "description": "",
               "path": "",
               "pathParameters": {},
@@ -40822,7 +40665,6 @@
           ],
           "examples": [
             {
-              "name": "listAvailableGuardrailsOrgOrgIdProjectProjectIdGuardrailGetExample",
               "description": "",
               "path": "/org/org_id/project/project_id/guardrail",
               "pathParameters": {
@@ -40901,7 +40743,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "rootPingGetExample",
             "description": "",
             "path": "/ping",
             "pathParameters": {},
@@ -40962,7 +40803,6 @@
         ],
         "examples": [
           {
-            "name": "whoamiWhoamiGetExample",
             "description": "",
             "path": "/whoami",
             "pathParameters": {},

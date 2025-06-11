@@ -8,6 +8,7 @@ import { AsyncAPIV3 } from "..";
 import { AbstractChannelConverter } from "../../converters/AbstractChannelConverter";
 import { ParameterConverter } from "../../converters/ParameterConverter";
 import { DisplayNameExtension } from "../../extensions/x-fern-display-name";
+import { ChannelParameter } from "../types";
 
 export declare namespace ChannelConverter3_0 {
     export interface Args extends AbstractChannelConverter.Args<AsyncAPIV3.ChannelV3> {
@@ -147,14 +148,14 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
         channelPath: string;
     }): void {
         for (const parameter of Object.values(this.channel.parameters ?? {})) {
-            const parameterObject = this.context.resolveMaybeReference<OpenAPIV3_1.ParameterObject>({
+            const parameterObject = this.context.resolveMaybeReference<ChannelParameter>({
                 schemaOrReference: parameter,
                 breadcrumbs: [...this.breadcrumbs, "parameters"]
             });
             if (parameterObject == null) {
                 continue;
             }
-            const location = this.convertChannelParameterLocation(parameter.location);
+            const location = this.convertChannelParameterLocation(parameterObject.location);
             if (location == null) {
                 continue;
             }

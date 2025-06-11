@@ -28,10 +28,10 @@ export async function generateDocsWorkspace({
         cliContext.failAndThrow("No docs.yml file found. Please make sure your project has one.");
         return;
     }
-    const shouldSkipAuth = process.env["FERN_SELF_HOSTED"] === "true";
+    const isRunningOnSelfHosted = process.env["FERN_SELF_HOSTED"] === "true";
 
     let token: FernToken | null = null;
-    if (shouldSkipAuth) {
+    if (isRunningOnSelfHosted) {
         const fernToken = process.env["FERN_TOKEN"]; // token can be a dummy token
         if (!fernToken) {
             cliContext.failAndThrow("No token found. Please set the FERN_TOKEN environment variable.");
@@ -57,10 +57,12 @@ export async function generateDocsWorkspace({
         }
     }
 
-    await cliContext.instrumentPostHogEvent({
-        orgId: project.config.organization,
-        command: "fern generate --docs"
-    });
+    if (!isRunningOnSelfHosted) {
+        await cliContext.instrumentPostHogEvent({
+            orgId: project.config.organization,
+            command: "fern generate --docs"
+        });
+    }
 
     await cliContext.runTaskForWorkspace(docsWorkspace, async (context) => {
         await validateDocsWorkspaceAndLogIssues({
