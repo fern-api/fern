@@ -9085,12 +9085,12 @@ service:
               "docs": "Unique identifier for the interaction session.",
               "type": "string",
             },
+          },
+          "query-parameters": {
             "tenantName": {
               "docs": "Unique identifier for the interaction session.",
               "type": "string",
             },
-          },
-          "query-parameters": {
             "token": {
               "docs": "Short-term token as per RFC 7519 (https://jwt.io).",
               "type": "string",
@@ -9113,13 +9113,13 @@ service:
     id:
       type: string
       docs: Unique identifier for the interaction session.
-    tenantName:
-      type: string
-      docs: Unique identifier for the interaction session.
   query-parameters:
     token:
       type: string
       docs: Short-term token as per RFC 7519 (https://jwt.io).
+    tenantName:
+      type: string
+      docs: Unique identifier for the interaction session.
   messages:
     configuration:
       origin: server

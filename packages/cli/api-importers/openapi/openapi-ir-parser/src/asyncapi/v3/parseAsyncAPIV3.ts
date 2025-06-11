@@ -210,10 +210,7 @@ export function parseAsyncAPIV3({
                     resolvedParameter.location != null
                         ? convertChannelParameterLocation(resolvedParameter.location)
                         : {
-                              type:
-                                  channel.address?.includes(`?${name}=`) || channel.address?.includes(`&${name}=`)
-                                      ? ("query" as const)
-                                      : ("path" as const),
+                              type: channel.address?.includes(`={${name}}`) ? ("query" as const) : ("path" as const),
                               parameterKey: name
                           };
                 const isOptional = getExtension<boolean>(

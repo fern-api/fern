@@ -8441,6 +8441,31 @@
               "file": "../asyncapi-original.json",
               "type": "openapi"
             }
+          },
+          {
+            "name": "tenantName",
+            "description": "Unique identifier for the interaction session.",
+            "schema": {
+              "description": "Unique identifier for the interaction session.",
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "TenantName",
+              "nameOverride": "StreamTenantName",
+              "title": "StreamTenantName",
+              "namespace": "stream",
+              "groupName": [
+                {
+                  "type": "namespace",
+                  "name": "stream"
+                }
+              ],
+              "type": "primitive"
+            },
+            "source": {
+              "file": "../asyncapi-original.json",
+              "type": "openapi"
+            }
           }
         ],
         "pathParameters": [
@@ -8455,31 +8480,6 @@
               "generatedName": "Id",
               "nameOverride": "StreamId",
               "title": "StreamId",
-              "namespace": "stream",
-              "groupName": [
-                {
-                  "type": "namespace",
-                  "name": "stream"
-                }
-              ],
-              "type": "primitive"
-            },
-            "source": {
-              "file": "../asyncapi-original.json",
-              "type": "openapi"
-            }
-          },
-          {
-            "name": "tenantName",
-            "description": "Unique identifier for the interaction session.",
-            "schema": {
-              "description": "Unique identifier for the interaction session.",
-              "schema": {
-                "type": "string"
-              },
-              "generatedName": "TenantName",
-              "nameOverride": "StreamTenantName",
-              "title": "StreamTenantName",
               "namespace": "stream",
               "groupName": [
                 {

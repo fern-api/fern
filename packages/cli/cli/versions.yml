@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+
+- changelogEntry:
+    - summary: |
+        The AsyncAPI v3 importer now properly detects query parameters by analyzing the channel address specification. 
+        When a channel address contains a parameter reference in the format `={paramName}`, the importer will automatically 
+        identify it as a query parameter. This allows for more accurate parameter type detection and better handling of 
+        WebSocket channel parameters in AsyncAPI v3 specifications.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-06-11"
+  version: 0.64.2
+
 - changelogEntry:
     - summary: |
         The AsyncAPI importer now supports parameter references and computing location of the parameter based on the address. 
