@@ -2005,6 +2005,9 @@ importers:
       '@yarnpkg/esbuild-plugin-pnp':
         specifier: ^3.0.0-rc.14
         version: 3.0.0-rc.14(esbuild@0.25.0)
+      dedent:
+        specifier: ^1.5.1
+        version: 1.5.1
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
@@ -20899,14 +20902,14 @@ snapshots:
       msw: 2.8.4(@types/node@18.15.3)(typescript@5.7.2)
       vite: 5.4.14(@types/node@18.15.3)(sass@1.72.0)(terser@5.31.5)
 
-  '@vitest/mocker@2.1.9(msw@2.8.4(@types/node@22.15.3)(typescript@5.7.2))(vite@5.4.14(@types/node@18.15.3)(sass@1.72.0)(terser@5.31.5))':
+  '@vitest/mocker@2.1.9(msw@2.8.4(@types/node@22.15.3)(typescript@5.7.2))(vite@5.4.14(@types/node@22.15.3)(sass@1.72.0)(terser@5.31.5))':
     dependencies:
       '@vitest/spy': 2.1.9
       estree-walker: 3.0.3
       magic-string: 0.30.17
     optionalDependencies:
       msw: 2.8.4(@types/node@22.15.3)(typescript@5.7.2)
-      vite: 5.4.14(@types/node@18.15.3)(sass@1.72.0)(terser@5.31.5)
+      vite: 5.4.14(@types/node@22.15.3)(sass@1.72.0)(terser@5.31.5)
 
   '@vitest/pretty-format@2.1.9':
     dependencies:
@@ -27534,7 +27537,7 @@ snapshots:
   vitest@2.1.9(@types/node@22.15.3)(jsdom@20.0.3)(msw@2.8.4(@types/node@22.15.3)(typescript@5.7.2))(sass@1.72.0)(terser@5.31.5):
     dependencies:
       '@vitest/expect': 2.1.9
-      '@vitest/mocker': 2.1.9(msw@2.8.4(@types/node@22.15.3)(typescript@5.7.2))(vite@5.4.14(@types/node@18.15.3)(sass@1.72.0)(terser@5.31.5))
+      '@vitest/mocker': 2.1.9(msw@2.8.4(@types/node@22.15.3)(typescript@5.7.2))(vite@5.4.14(@types/node@22.15.3)(sass@1.72.0)(terser@5.31.5))
       '@vitest/pretty-format': 2.1.9
       '@vitest/runner': 2.1.9
       '@vitest/snapshot': 2.1.9

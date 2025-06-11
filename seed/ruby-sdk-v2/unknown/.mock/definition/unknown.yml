@@ -1,0 +1,26 @@
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    post:
+      path: ""
+      method: POST
+      request: unknown
+      response: list<unknown>
+    postObject:
+      path: "/with-object"
+      method: POST
+      request: MyObject
+      response: list<unknown>
+
+types:
+  MyAlias: unknown
+  MyObject:
+    properties:
+      unknown: unknown
+    examples:
+      - name: Example0
+        value:
+          unknown:
+            boolVal: true
+            strVal: string

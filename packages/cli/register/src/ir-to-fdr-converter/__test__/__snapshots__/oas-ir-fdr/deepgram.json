@@ -3652,8 +3652,8 @@
         ]
       }
     },
-    "V1ListenPostParametersSchemaOneOf1Items": {
-      "name": "V1ListenPostParametersSchemaOneOf1Items",
+    "V1ListenPostParametersRedactSchemaOneOf1Items": {
+      "name": "V1ListenPostParametersRedactSchemaOneOf1Items",
       "shape": {
         "type": "enum",
         "values": [
@@ -3677,7 +3677,7 @@
           "type": "list",
           "itemType": {
             "type": "id",
-            "value": "V1ListenPostParametersSchemaOneOf1Items"
+            "value": "V1ListenPostParametersRedactSchemaOneOf1Items"
           }
         }
       }
@@ -10471,8 +10471,8 @@
         ]
       }
     },
-    "V1ProjectsProjectIdSelfHostedDistributionCredentialsPostParametersSchemaItems": {
-      "name": "V1ProjectsProjectIdSelfHostedDistributionCredentialsPostParametersSchemaItems",
+    "V1ProjectsProjectIdSelfHostedDistributionCredentialsPostParametersScopesSchemaItems": {
+      "name": "V1ProjectsProjectIdSelfHostedDistributionCredentialsPostParametersScopesSchemaItems",
       "shape": {
         "type": "enum",
         "values": [
@@ -20831,7 +20831,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V1ProjectsProjectIdSelfHostedDistributionCredentialsPostParametersSchemaItems"
+                  "value": "V1ProjectsProjectIdSelfHostedDistributionCredentialsPostParametersScopesSchemaItems"
                 }
               }
             },

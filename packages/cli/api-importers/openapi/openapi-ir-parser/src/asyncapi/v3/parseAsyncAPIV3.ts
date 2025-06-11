@@ -201,16 +201,30 @@ export function parseAsyncAPIV3({
         const queryParameters: QueryParameterWithExample[] = [];
         if (channel.parameters != null) {
             for (const [name, parameter] of Object.entries(channel.parameters)) {
-                const { type, parameterKey } = convertChannelParameterLocation(parameter.location);
-                const isOptional = getExtension<boolean>(parameter, FernAsyncAPIExtension.FERN_PARAMETER_OPTIONAL);
+                // Resolve parameter reference if it exists
+                const resolvedParameter = context.isReferenceObject(parameter)
+                    ? context.resolveParameterReference(parameter)
+                    : parameter;
+
+                const { type, parameterKey } =
+                    resolvedParameter.location != null
+                        ? convertChannelParameterLocation(resolvedParameter.location)
+                        : {
+                              type: channel.address?.includes(`={${name}}`) ? ("query" as const) : ("path" as const),
+                              parameterKey: name
+                          };
+                const isOptional = getExtension<boolean>(
+                    resolvedParameter,
+                    FernAsyncAPIExtension.FERN_PARAMETER_OPTIONAL
+                );
                 const parameterName = upperFirst(camelCase(channelPath)) + upperFirst(camelCase(name));
                 const parameterSchemaObject = {
-                    ...parameter,
+                    ...resolvedParameter,
                     type: "string" as OpenAPIV3.NonArraySchemaObjectType,
                     title: parameterName,
-                    example: parameter.examples?.[0],
-                    default: parameter.default,
-                    enum: parameter.enum,
+                    example: resolvedParameter.examples?.[0],
+                    default: resolvedParameter.default,
+                    enum: resolvedParameter.enum,
                     required: undefined
                 };
                 let parameterSchema: SchemaWithExample = convertSchema(
@@ -236,7 +250,7 @@ export function parseAsyncAPIV3({
                 }
                 const parameterObject = {
                     name: parameterKey,
-                    description: parameter.description,
+                    description: resolvedParameter.description,
                     parameterNameOverride: undefined,
                     schema: parameterSchema,
                     variableReference: undefined,
@@ -251,7 +265,7 @@ export function parseAsyncAPIV3({
                     });
                 } else if (type === "path") {
                     pathParameters.push(parameterObject);
-                } else if (type === "payload") {
+                } else if (type === "payload" || type === "query") {
                     queryParameters.push(parameterObject);
                 }
             }
@@ -329,7 +343,7 @@ export function parseAsyncAPIV3({
                     Object.values(servers),
                 // TODO (Eden): This can be a LOT more complicated than this. See the link below for more details:
                 // https://www.asyncapi.com/docs/reference/specification/v3.0.0#channelObject
-                path: channel.address ?? transformToValidPath(channelPath),
+                path: channel.address?.split("?")[0] ?? transformToValidPath(channelPath),
                 description: channel.description,
                 examples,
                 source
