@@ -20,8 +20,8 @@ from .mock_server import MockServer, MockResponse
 
 class TestGetMovie:
     def test_get_movie_success(self, mock_server: MockServer, base_url: str):
-        movie_id = "this-is-a-movie-id"
-        movie_data = {"id": movie_id, "title": "The Matrix", "rating": 5.0}
+        movie_id = "tt0482571"
+        movie_data = {"id": movie_id, "title": "The Prestige", "rating": 8.5}
 
         mock_server.expect_request(
             uri=f"/imdb/movies/{movie_id}",
@@ -43,11 +43,11 @@ class TestGetMovie:
         movie = client.get_movie(movie_id=movie_id)
 
         assert movie.id == movie_id
-        assert movie.title == "The Matrix"
-        assert movie.rating == 5.0
+        assert movie.title == "The Prestige"
+        assert movie.rating == 8.5
 
     def test_get_movie_not_found(self, mock_server: MockServer, base_url: str):
-        movie_id = "this-movie-does-not-exist"
+        movie_id = "tt0000000"
 
         mock_server.expect_request(
             uri=f"/imdb/movies/{movie_id}",
@@ -73,7 +73,7 @@ class TestGetMovie:
         assert exc_info.value.body == movie_id
 
     def test_get_movie_server_error(self, mock_server: MockServer, base_url: str):
-        movie_id = "this-is-a-movie-id"
+        movie_id = "tt0482571"
         error_response = {"error": "Internal server error"}
 
         mock_server.expect_request(
