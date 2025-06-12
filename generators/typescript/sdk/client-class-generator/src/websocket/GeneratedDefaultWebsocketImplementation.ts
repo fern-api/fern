@@ -1,4 +1,9 @@
-import { PackageId, getParameterNameForPositionalPathParameter, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
+import {
+    PackageId,
+    getParameterNameForPositionalPathParameter,
+    getPropertyKey,
+    getTextOfTsNode
+} from "@fern-typescript/commons";
 import { ChannelSignature, GeneratedWebsocketImplementation, SdkContext } from "@fern-typescript/contexts";
 import {
     ClassDeclarationStructure,
@@ -9,9 +14,15 @@ import {
     ts
 } from "ts-morph";
 
-import { assertNever, SetRequired } from "@fern-api/core-utils";
+import { SetRequired, assertNever } from "@fern-api/core-utils";
 
-import { IntermediateRepresentation, PathParameter, PathParameterLocation, WebSocketChannel, WebSocketChannelId } from "@fern-fern/ir-sdk/api";
+import {
+    IntermediateRepresentation,
+    PathParameter,
+    PathParameterLocation,
+    WebSocketChannel,
+    WebSocketChannelId
+} from "@fern-fern/ir-sdk/api";
 
 import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
 import { GetReferenceToPathParameterVariableFromRequest } from "../endpoints/utils/buildUrl";
@@ -73,7 +84,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                 {
                     name: "args",
                     type: `${this.serviceClassName}.${GeneratedDefaultWebsocketImplementation.CONNECT_ARGS_INTERFACE_NAME}`,
-                    initializer: connectArgsInterface.properties?.every(p => p.hasQuestionToken) ? "{}" : undefined
+                    initializer: connectArgsInterface.properties?.every((p) => p.hasQuestionToken) ? "{}" : undefined
                 }
             ],
             returnTypeWithoutPromise: this.getSocketTypeNode(context)
@@ -118,7 +129,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                 {
                     name: "args",
                     type: `${this.serviceClassName}.${GeneratedDefaultWebsocketImplementation.CONNECT_ARGS_INTERFACE_NAME}`,
-                    initializer: connectArgsInterface.properties?.every(p => p.hasQuestionToken) ? "{}" : undefined
+                    initializer: connectArgsInterface.properties?.every((p) => p.hasQuestionToken) ? "{}" : undefined
                 }
             ],
             returnType: getTextOfTsNode(
@@ -395,16 +406,14 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                 url,
                 ts.factory.createTemplateMiddle(`${channel.path.head}?`, `${channel.path.head}?`)
             ),
-            ...channel.path.parts.map((part) => 
+            ...channel.path.parts.map((part) =>
                 ts.factory.createTemplateSpan(
-                    ts.factory.createCallExpression(
-                        ts.factory.createIdentifier("encodeURIComponent"),
-                        undefined,
-                        [ts.factory.createElementAccessExpression(
+                    ts.factory.createCallExpression(ts.factory.createIdentifier("encodeURIComponent"), undefined, [
+                        ts.factory.createElementAccessExpression(
                             ts.factory.createIdentifier("args"),
                             ts.factory.createStringLiteral(part.pathParameter)
-                        )]
-                    ),
+                        )
+                    ]),
                     ts.factory.createTemplateMiddle(part.tail, part.tail)
                 )
             ),
