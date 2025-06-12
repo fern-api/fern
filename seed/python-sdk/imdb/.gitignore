@@ -3,3 +3,7 @@
 __pycache__/
 dist/
 poetry.toml
+
+bin/
+lib/
+pyvenv.cfg
