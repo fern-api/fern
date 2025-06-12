@@ -78,4 +78,88 @@ class TestGetMovie(WireTestBase):
         self.assert_json_eq(expected_response, actual_response)
 
 
-# TODO: add TestCreateMovie tests
+class TestCreateMovie(WireTestBase):
+    def test_create_movie_success(self):
+        movie_id = "tt0482571"
+        movie_data = {
+            "title": "The Prestige",
+            "rating": 8.5,
+        }
+
+        self.expect_request(
+            uri="/movies/create-movie",
+            method="POST",
+            json_body=movie_data,
+            response=MockResponse(
+                status_code=200,
+                body=f'"{movie_id}"',
+                headers={"Content-Type": "application/json"},
+            ),
+        )
+
+        response = self.client.imdb.create_movie(
+            title=movie_data["title"],
+            rating=movie_data["rating"],
+        )
+
+        assert response == movie_id
+
+    def test_create_movie_validation_error(self):
+        movie_data = {
+            "title": "The Prestige",
+            "rating": 11.0,  # Invalid rating > 10
+        }
+        error_response = {"error": "Rating must be between 0 and 10"}
+
+        self.expect_request(
+            uri="/movies/create-movie",
+            method="POST",
+            json_body=movie_data,
+            response=MockResponse(
+                status_code=400,
+                body=error_response,
+                headers={"Content-Type": "application/json"},
+            ),
+        )
+
+        with pytest.raises(ApiError) as exc_info:
+            self.client.imdb.create_movie(
+                title=movie_data["title"],
+                rating=movie_data["rating"],
+            )
+        assert exc_info.value.status_code == 400
+
+        expected_response = json.dumps(error_response)
+        actual_response = json.dumps(exc_info.value.body)
+
+        self.assert_json_eq(expected_response, actual_response)
+
+    def test_create_movie_server_error(self):
+        movie_data = {
+            "title": "The Prestige",
+            "rating": 8.5,
+        }
+        error_response = {"error": "Internal server error"}
+
+        self.expect_request(
+            uri="/movies/create-movie",
+            method="POST",
+            json_body=movie_data,
+            response=MockResponse(
+                status_code=500,
+                body=error_response,
+                headers={"Content-Type": "application/json"},
+            ),
+        )
+
+        with pytest.raises(ApiError) as exc_info:
+            self.client.imdb.create_movie(
+                title=movie_data["title"],
+                rating=movie_data["rating"],
+            )
+        assert exc_info.value.status_code == 500
+
+        expected_response = json.dumps(error_response)
+        actual_response = json.dumps(exc_info.value.body)
+
+        self.assert_json_eq(expected_response, actual_response)

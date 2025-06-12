@@ -29,6 +29,7 @@ class MockServer:
         Sets up expectations for a request to the mock server and configures a mock
             response.
 
+        TODO(rmehndiratta): Define this like params in our generated code.
         Args:
             uri: The URI to expect the request on
             method: The HTTP method to expect
@@ -36,10 +37,11 @@ class MockServer:
             headers: The expected headers of the request
             response: The response to return
         """
-        matcher = self.server.expect_request(uri, method, headers=headers)
-
         if json_body:
-            matcher.with_json(json_body)
+            matcher = self.server.expect_request(uri, method, headers=headers, json=json_body)
+        else:
+            matcher = self.server.expect_request(uri, method, headers=headers)
+
         if response:
             if isinstance(response.body, dict):
                 matcher.respond_with_json(

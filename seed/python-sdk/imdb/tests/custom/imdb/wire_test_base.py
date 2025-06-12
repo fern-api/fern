@@ -32,6 +32,7 @@ class WireTestBase:
         uri: str,
         method: str = "GET",
         headers: dict | None = None,
+        json_body: dict | None = None,
         response: MockResponse | None = None,
     ) -> None:
         """Helper method to set up mock server expectations."""
@@ -41,6 +42,7 @@ class WireTestBase:
             uri=uri,
             method=method,
             headers=headers,
+            json_body=json_body,
             response=response,
         )
 
