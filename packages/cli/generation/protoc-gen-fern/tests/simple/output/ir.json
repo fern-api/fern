@@ -1,87 +1,352 @@
 {
-    "auth": {
-        "requirement": "ALL",
-        "schemes": []
-    },
-    "selfHosted": false,
-    "types": {},
-    "services": {},
-    "errors": {},
-    "webhookGroups": {},
-    "headers": [],
-    "idempotencyHeaders": [],
-    "pathParameters": [],
-    "errorDiscriminationStrategy": {
-        "type": "statusCode"
-    },
-    "variables": [],
-    "serviceTypeReferenceInfo": {
-        "sharedTypes": [],
-        "typesReferencedOnlyByService": {}
-    },
-    "rootPackage": {
+  "auth": {
+    "requirement": "ALL",
+    "schemes": []
+  },
+  "selfHosted": false,
+  "types": {
+    "Role": {
+      "name": {
+        "typeId": "Role",
         "fernFilepath": {
-            "allParts": [],
-            "packagePath": []
+          "allParts": [],
+          "packagePath": []
         },
-        "types": [],
-        "errors": [],
-        "subpackages": [],
-        "hasEndpointsInTree": false
-    },
-    "subpackages": {},
-    "sdkConfig": {
-        "hasFileDownloadEndpoints": false,
-        "hasPaginatedEndpoints": false,
-        "hasStreamingEndpoints": false,
-        "isAuthMandatory": true,
-        "platformHeaders": {
-            "language": "",
-            "sdkName": "",
-            "sdkVersion": ""
+        "name": {
+          "originalName": "Role",
+          "camelCase": {
+            "unsafeName": "role",
+            "safeName": "role"
+          },
+          "snakeCase": {
+            "unsafeName": "role",
+            "safeName": "role"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "ROLE",
+            "safeName": "ROLE"
+          },
+          "pascalCase": {
+            "unsafeName": "Role",
+            "safeName": "Role"
+          }
         }
-    },
-    "apiName": {
-        "originalName": "",
-        "camelCase": {
-            "unsafeName": "",
-            "safeName": ""
-        },
-        "snakeCase": {
-            "unsafeName": "",
-            "safeName": ""
-        },
-        "screamingSnakeCase": {
-            "unsafeName": "",
-            "safeName": ""
-        },
-        "pascalCase": {
-            "unsafeName": "",
-            "safeName": ""
-        }
-    },
-    "constants": {
-        "errorInstanceIdKey": {
+      },
+      "shape": {
+        "values": [
+          {
             "name": {
-                "originalName": "errorInstanceId",
+              "name": {
+                "originalName": "ROLE_UNSPECIFIED",
                 "camelCase": {
-                    "unsafeName": "errorInstanceId",
-                    "safeName": "errorInstanceId"
+                  "unsafeName": "roleUnspecified",
+                  "safeName": "roleUnspecified"
                 },
                 "snakeCase": {
-                    "unsafeName": "error_instance_id",
-                    "safeName": "error_instance_id"
+                  "unsafeName": "role_unspecified",
+                  "safeName": "role_unspecified"
                 },
                 "screamingSnakeCase": {
-                    "unsafeName": "ERROR_INSTANCE_ID",
-                    "safeName": "ERROR_INSTANCE_ID"
+                  "unsafeName": "ROLE_UNSPECIFIED",
+                  "safeName": "ROLE_UNSPECIFIED"
                 },
                 "pascalCase": {
-                    "unsafeName": "ErrorInstanceId",
-                    "safeName": "ErrorInstanceId"
+                  "unsafeName": "RoleUnspecified",
+                  "safeName": "RoleUnspecified"
                 }
-            },
-            "wireValue": "errorInstanceId"
+              },
+              "wireValue": "[object Object]"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "ROLE_ADMIN",
+                "camelCase": {
+                  "unsafeName": "roleAdmin",
+                  "safeName": "roleAdmin"
+                },
+                "snakeCase": {
+                  "unsafeName": "role_admin",
+                  "safeName": "role_admin"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ROLE_ADMIN",
+                  "safeName": "ROLE_ADMIN"
+                },
+                "pascalCase": {
+                  "unsafeName": "RoleAdmin",
+                  "safeName": "RoleAdmin"
+                }
+              },
+              "wireValue": "[object Object]"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "ROLE_USER",
+                "camelCase": {
+                  "unsafeName": "roleUser",
+                  "safeName": "roleUser"
+                },
+                "snakeCase": {
+                  "unsafeName": "role_user",
+                  "safeName": "role_user"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ROLE_USER",
+                  "safeName": "ROLE_USER"
+                },
+                "pascalCase": {
+                  "unsafeName": "RoleUser",
+                  "safeName": "RoleUser"
+                }
+              },
+              "wireValue": "[object Object]"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "ROLE_GUEST",
+                "camelCase": {
+                  "unsafeName": "roleGuest",
+                  "safeName": "roleGuest"
+                },
+                "snakeCase": {
+                  "unsafeName": "role_guest",
+                  "safeName": "role_guest"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ROLE_GUEST",
+                  "safeName": "ROLE_GUEST"
+                },
+                "pascalCase": {
+                  "unsafeName": "RoleGuest",
+                  "safeName": "RoleGuest"
+                }
+              },
+              "wireValue": "[object Object]"
+            }
+          }
+        ],
+        "type": "enum"
+      },
+      "autogeneratedExamples": [],
+      "userProvidedExamples": [],
+      "referencedTypes": {}
+    },
+    "Role2": {
+      "name": {
+        "typeId": "Role2",
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "Role2",
+          "camelCase": {
+            "unsafeName": "role2",
+            "safeName": "role2"
+          },
+          "snakeCase": {
+            "unsafeName": "role_2",
+            "safeName": "role_2"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "ROLE_2",
+            "safeName": "ROLE_2"
+          },
+          "pascalCase": {
+            "unsafeName": "Role2",
+            "safeName": "Role2"
+          }
         }
+      },
+      "shape": {
+        "values": [
+          {
+            "name": {
+              "name": {
+                "originalName": "ROLE_UNSPECIFIED2",
+                "camelCase": {
+                  "unsafeName": "roleUnspecified2",
+                  "safeName": "roleUnspecified2"
+                },
+                "snakeCase": {
+                  "unsafeName": "role_unspecified_2",
+                  "safeName": "role_unspecified_2"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ROLE_UNSPECIFIED_2",
+                  "safeName": "ROLE_UNSPECIFIED_2"
+                },
+                "pascalCase": {
+                  "unsafeName": "RoleUnspecified2",
+                  "safeName": "RoleUnspecified2"
+                }
+              },
+              "wireValue": "[object Object]"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "ROLE_ADMIN2",
+                "camelCase": {
+                  "unsafeName": "roleAdmin2",
+                  "safeName": "roleAdmin2"
+                },
+                "snakeCase": {
+                  "unsafeName": "role_admin_2",
+                  "safeName": "role_admin_2"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ROLE_ADMIN_2",
+                  "safeName": "ROLE_ADMIN_2"
+                },
+                "pascalCase": {
+                  "unsafeName": "RoleAdmin2",
+                  "safeName": "RoleAdmin2"
+                }
+              },
+              "wireValue": "[object Object]"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "ROLE_USER2",
+                "camelCase": {
+                  "unsafeName": "roleUser2",
+                  "safeName": "roleUser2"
+                },
+                "snakeCase": {
+                  "unsafeName": "role_user_2",
+                  "safeName": "role_user_2"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ROLE_USER_2",
+                  "safeName": "ROLE_USER_2"
+                },
+                "pascalCase": {
+                  "unsafeName": "RoleUser2",
+                  "safeName": "RoleUser2"
+                }
+              },
+              "wireValue": "[object Object]"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "ROLE_GUEST2",
+                "camelCase": {
+                  "unsafeName": "roleGuest2",
+                  "safeName": "roleGuest2"
+                },
+                "snakeCase": {
+                  "unsafeName": "role_guest_2",
+                  "safeName": "role_guest_2"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ROLE_GUEST_2",
+                  "safeName": "ROLE_GUEST_2"
+                },
+                "pascalCase": {
+                  "unsafeName": "RoleGuest2",
+                  "safeName": "RoleGuest2"
+                }
+              },
+              "wireValue": "[object Object]"
+            }
+          }
+        ],
+        "type": "enum"
+      },
+      "autogeneratedExamples": [],
+      "userProvidedExamples": [],
+      "referencedTypes": {}
     }
+  },
+  "services": {},
+  "errors": {},
+  "webhookGroups": {},
+  "headers": [],
+  "idempotencyHeaders": [],
+  "pathParameters": [],
+  "errorDiscriminationStrategy": {
+    "type": "statusCode"
+  },
+  "variables": [],
+  "serviceTypeReferenceInfo": {
+    "sharedTypes": [],
+    "typesReferencedOnlyByService": {}
+  },
+  "rootPackage": {
+    "fernFilepath": {
+      "allParts": [],
+      "packagePath": []
+    },
+    "types": [],
+    "errors": [],
+    "subpackages": [],
+    "hasEndpointsInTree": false
+  },
+  "subpackages": {},
+  "sdkConfig": {
+    "hasFileDownloadEndpoints": false,
+    "hasPaginatedEndpoints": false,
+    "hasStreamingEndpoints": false,
+    "isAuthMandatory": true,
+    "platformHeaders": {
+      "language": "",
+      "sdkName": "",
+      "sdkVersion": ""
+    }
+  },
+  "apiName": {
+    "originalName": "",
+    "camelCase": {
+      "unsafeName": "",
+      "safeName": ""
+    },
+    "snakeCase": {
+      "unsafeName": "",
+      "safeName": ""
+    },
+    "screamingSnakeCase": {
+      "unsafeName": "",
+      "safeName": ""
+    },
+    "pascalCase": {
+      "unsafeName": "",
+      "safeName": ""
+    }
+  },
+  "constants": {
+    "errorInstanceIdKey": {
+      "name": {
+        "originalName": "errorInstanceId",
+        "camelCase": {
+          "unsafeName": "errorInstanceId",
+          "safeName": "errorInstanceId"
+        },
+        "snakeCase": {
+          "unsafeName": "error_instance_id",
+          "safeName": "error_instance_id"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "ERROR_INSTANCE_ID",
+          "safeName": "ERROR_INSTANCE_ID"
+        },
+        "pascalCase": {
+          "unsafeName": "ErrorInstanceId",
+          "safeName": "ErrorInstanceId"
+        }
+      },
+      "wireValue": "errorInstanceId"
+    }
+  }
 }

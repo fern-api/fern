@@ -5,10 +5,10 @@ import { FileInfo, Printable } from "@bufbuild/protoplugin";
 import { constructCasingsGenerator } from "@fern-api/casings-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { mergeIntermediateRepresentation } from "@fern-api/ir-utils";
-import { createLogger } from "@fern-api/logger";
 import { ErrorCollector } from "@fern-api/v2-importer-commons";
 
 import { ProtobufConverterContext } from "./ProtobufConverterContext";
+import { Logger } from "./commons/logging";
 import { ProtobufConverter } from "./converters/ProtobufConverter";
 import { Options } from "./parseOptions";
 
@@ -29,7 +29,7 @@ export function generateIr({ req, options }: { req: CodeGeneratorRequest; option
                 },
                 relativeFilepathToSpec: undefined
             }),
-            logger: createLogger((level, ...args) => {}),
+            logger: new Logger(),
             generationLanguage: undefined,
             smartCasing: false,
             exampleGenerationArgs: {
@@ -59,7 +59,7 @@ export function generateIr({ req, options }: { req: CodeGeneratorRequest; option
 
     return {
         name: "ir.json",
-        content: `${JSON.stringify(mergedIr)}`
+        content: `${JSON.stringify(result, null, 2)}`
     };
 }
 

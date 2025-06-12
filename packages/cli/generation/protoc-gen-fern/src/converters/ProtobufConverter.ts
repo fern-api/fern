@@ -1,9 +1,12 @@
+import { Type } from "@fern-api/ir-sdk";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { AbstractSpecConverter } from "@fern-api/v2-importer-commons";
 
 import { ProtobufConverterContext } from "../ProtobufConverterContext";
-import { MessageConverter } from "./MessageConverter";
-import { ServiceConverter } from "./ServiceConverter";
+import { EnumConverter } from "./message/EnumConverter";
+import { EnumOrMessageConverter } from "./message/EnumOrMessageConverter";
+import { MessageConverter } from "./message/MessageConverter";
+import { ServiceConverter } from "./service/ServiceConverter";
 
 export declare namespace ProtobufConverter {
     type Args = AbstractSpecConverter.Args<ProtobufConverterContext>;
@@ -16,8 +19,7 @@ export class ProtobufConverter extends AbstractSpecConverter<ProtobufConverterCo
 
     public convert(): IntermediateRepresentation | undefined {
         this.convertOptions();
-        this.convertEnums();
-        this.convertMessages();
+        this.convertEnumsAndMessages();
         this.convertServices();
         this.addToPackage();
         return this.finalizeIr();
@@ -27,26 +29,19 @@ export class ProtobufConverter extends AbstractSpecConverter<ProtobufConverterCo
         // TODO: convert options
     }
 
-    private convertEnums() {
-        // TODO: convert enums
-        // TODO: add to IR as type/schema
-    }
-
-    private convertMessages() {
-        for (const protoFile of this.context.spec?.protoFile ?? []) {
-            for (const message of protoFile.messageType) {
-                // TODO: use MessageConverter to convert message
-                // TODO: add to IR as type/schema
-                const messageConverter = new MessageConverter({
+    private convertEnumsAndMessages() {
+        for (const protoFile of this.context.spec.protoFile) {
+            for (const schema of [...protoFile.enumType, ...protoFile.messageType]) {
+                const enumOrMessageConverter = new EnumOrMessageConverter({
                     context: this.context,
                     breadcrumbs: this.breadcrumbs,
-                    message
+                    schema
                 });
-                const convertedMessage = messageConverter.convert();
-                if (convertedMessage != null) {
+                const convertedEnum = enumOrMessageConverter.convert();
+                if (convertedEnum != null) {
                     this.addTypesToIr({
-                        ...convertedMessage.inlinedTypes,
-                        [message.name]: convertedMessage.convertedMessage
+                        ...convertedEnum.inlinedTypes,
+                        [schema.name]: convertedEnum.convertedSchema
                     });
                 }
             }

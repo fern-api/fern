@@ -4,18 +4,25 @@ package user.v1;
 
 message User {
   string name = 1;
-  string email = 2;
+  repeated int32 age = 2;
+  enum Status {
+    STATUS_UNSPECIFIED = 0;
+    STATUS_ACTIVE = 1;
+    STATUS_INACTIVE = 2;
+    STATUS_SUSPENDED = 3;
+  }
 }
 
-message GetUserRequest {
-  string name = 1;
+enum Role {
+  ROLE_UNSPECIFIED = 0;
+  ROLE_ADMIN = 1;
+  ROLE_USER = 2;
+  ROLE_GUEST = 3;
 }
 
-message GetUserResponse {
-  User user = 1;
-}
-
-service UserService {
-  rpc GetUser(GetUserRequest) returns (GetUserResponse);
-  rpc GetUser2(GetUserRequest) returns (GetUserResponse);
+enum Role2 {
+  ROLE_UNSPECIFIED2 = 0;
+  ROLE_ADMIN2 = 1;
+  ROLE_USER2 = 2;
+  ROLE_GUEST2 = 3;
 }

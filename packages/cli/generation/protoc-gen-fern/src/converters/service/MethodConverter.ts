@@ -3,7 +3,7 @@ import { MethodDescriptorProto } from "@bufbuild/protobuf/wkt";
 import { HttpEndpoint } from "@fern-api/ir-sdk";
 import { AbstractConverter } from "@fern-api/v2-importer-commons";
 
-import { ProtobufConverterContext } from "../ProtobufConverterContext";
+import { ProtobufConverterContext } from "../../ProtobufConverterContext";
 
 export type gRPCMethodType = "UNARY" | "CLIENT_STREAM" | "SERVER_STREAM" | "BIDI_STREAM";
 
