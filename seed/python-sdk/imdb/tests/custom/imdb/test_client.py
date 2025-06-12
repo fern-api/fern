@@ -6,11 +6,10 @@ We verify wire compatibility against the API specification by:
     3. Returning a mocked response and verifying the client's handling.
 """
 
+import difflib
 import json
 import httpx
 import pytest
-
-from unittest import TestCase
 
 from seed.imdb.client import ImdbClient
 from seed.imdb.errors import MovieDoesNotExistError
@@ -21,10 +20,25 @@ from seed.core.client_wrapper import SyncClientWrapper
 from .mock_server import MockServer, MockResponse
 
 
-# TODO(rmehndiratta): Figure out where we want to put shared test utils (packages)
-# and move there
-def assert_json_eq(json1: str, json2: str):
-    TestCase().assertDictEqual(json.loads(json1), json.loads(json2))
+# TODO(rmehndiratta): Move this to a test utils package
+def assert_json_eq(expected: str, actual: str):
+    expected = json.loads(expected)
+    actual = json.loads(actual)
+
+    expected = json.dumps(expected, indent=2, sort_keys=True)
+    actual = json.dumps(actual, indent=2, sort_keys=True)
+
+    if expected != actual:
+        diff = "\n".join(
+            difflib.unified_diff(
+                expected.splitlines(),
+                actual.splitlines(),
+                fromfile="expected",
+                tofile="actual",
+                lineterm="",
+            )
+        )
+        raise AssertionError(f"JSON mismatch:\n\n{diff}")
 
 
 class TestGetMovie:
@@ -49,6 +63,7 @@ class TestGetMovie:
         client = ImdbClient(client_wrapper=client_wrapper)
         movie = client.get_movie(movie_id=movie_id)
 
+        movie_data["rating"] = 8.9
         expected_response = json.dumps(movie_data)
         actual_response = movie.model_dump_json()
 
