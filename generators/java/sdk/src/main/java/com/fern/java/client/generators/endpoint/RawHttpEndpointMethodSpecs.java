@@ -1,5 +1,7 @@
 package com.fern.java.client.generators.endpoint;
 
+import com.fern.ir.model.http.HttpEndpoint;
+import com.fern.ir.model.http.HttpMethod;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
@@ -17,6 +19,11 @@ public final class RawHttpEndpointMethodSpecs implements HttpEndpointMethodSpecs
             HttpEndpointMethodSpecs httpEndpointMethodSpecs, ClassName rawHttpResponseClassName) {
         this.httpEndpointMethodSpecs = httpEndpointMethodSpecs;
         this.rawHttpResponseClassName = rawHttpResponseClassName;
+    }
+
+    @Override
+    public HttpEndpoint getHttpEndpoint() {
+        return httpEndpointMethodSpecs.getHttpEndpoint();
     }
 
     @Override
@@ -62,11 +69,15 @@ public final class RawHttpEndpointMethodSpecs implements HttpEndpointMethodSpecs
         if (rawTypeName instanceof ParameterizedTypeName
                 && ((ParameterizedTypeName) rawTypeName).rawType.equals(ClassName.get(CompletableFuture.class))) {
             TypeName typeArgument = Objects.requireNonNull(((ParameterizedTypeName) rawTypeName).typeArguments.get(0));
+            if (getHttpEndpoint().getMethod().equals(HttpMethod.HEAD)) {
+                return ParameterizedTypeName.get(
+                        ClassName.get(CompletableFuture.class),
+                        ParameterizedTypeName.get(rawHttpResponseClassName, ClassName.get(Void.class)));
+            }
             return ParameterizedTypeName.get(
                     ClassName.get(CompletableFuture.class),
                     ParameterizedTypeName.get(rawHttpResponseClassName, typeArgument));
         }
-
         return ParameterizedTypeName.get(
                 rawHttpResponseClassName,
                 rawTypeName.isPrimitive() || rawTypeName.equals(TypeName.VOID) ? rawTypeName.box() : rawTypeName);

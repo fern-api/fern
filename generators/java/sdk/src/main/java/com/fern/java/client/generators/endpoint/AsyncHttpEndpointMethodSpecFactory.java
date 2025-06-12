@@ -63,6 +63,6 @@ public class AsyncHttpEndpointMethodSpecFactory extends AbstractHttpEndpointMeth
 
     @Override
     public HttpEndpointMethodSpecsFactory httpEndpointMethodSpecsFactory() {
-        return new AsyncHttpEndpointMethodSpecsFactory();
+        return new AsyncHttpEndpointMethodSpecsFactory(getHttpEndpoint());
     }
 }
