@@ -1,9 +1,5 @@
-import urlJoin from "url-join";
-
 import { File, GeneratorNotificationService } from "@fern-api/base-generator";
-import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { go } from "@fern-api/go-ast";
 import { AbstractGoGeneratorCli } from "@fern-api/go-base";
 import { DynamicSnippetsGenerator } from "@fern-api/go-dynamic-snippets";
 

@@ -84,6 +84,10 @@ export abstract class AbstractGoGeneratorContext<
         return name.pascalCase.unsafeName;
     }
 
+    public getParameterName(name: Name): string {
+        return name.camelCase.safeName;
+    }
+
     public getLiteralAsString(literal: Literal): string {
         return literal.type === "string" ? `'${literal.string}'` : literal.boolean ? "'true'" : "'false'";
     }
