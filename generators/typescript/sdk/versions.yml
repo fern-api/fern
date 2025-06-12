@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+
+- version: 1.5.0
+  changelogEntry:
+    - summary: Add support for websocket connect methods with path parameters in the TypeScript generator
+      type: feat
+  createdAt: '2025-06-11'
+  irVersion: 58
+
 - version: 1.4.0
   changelogEntry:
     - summary: You can now pass in headers to the root client. These headers will be merged with service and endpoint specific headers.
