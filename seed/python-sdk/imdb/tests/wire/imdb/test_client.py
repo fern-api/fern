@@ -93,7 +93,7 @@ class TestCreateMovie(WireTestBase):
             json_body=movie_data,
             response=MockResponse(
                 status_code=200,
-                body=movie_id,
+                body=f'"{movie_id}"',
                 headers={"Content-Type": "application/json"},
             ),
         )
@@ -245,7 +245,7 @@ class TestAsyncCreateMovie(AsyncWireTestBase):
             json_body=movie_data,
             response=MockResponse(
                 status_code=200,
-                body=movie_id,
+                body=f'"{movie_id}"',
                 headers={"Content-Type": "application/json"},
             ),
         )
