@@ -151,13 +151,10 @@ public final class HttpUrlBuilder {
                     context.getPoetClassNameFactory().getQueryStringMapperClassName(),
                     httpUrlname,
                     queryParamProperty.wireKey().get(),
-                    PoetTypeNameStringifier.stringify(
-                            CodeBlock.of(
-                                            "$L.$N()" + (isOptional ? ".get()" : ""),
-                                            requestName,
-                                            queryParamProperty.getterProperty())
-                                    .toString(),
-                            queryParamProperty.poetTypeName()));
+                    CodeBlock.of(
+                            "$L.$N()" + (isOptional ? ".get()" : ""),
+                            requestName,
+                            queryParamProperty.getterProperty()));
             if (isOptional) {
                 codeBlock.endControlFlow();
             }
