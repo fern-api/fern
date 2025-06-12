@@ -2,6 +2,7 @@ import { MethodDescriptorProto } from "@bufbuild/protobuf/wkt";
 
 import { HttpEndpoint } from "@fern-api/ir-sdk";
 import { AbstractConverter } from "@fern-api/v2-importer-commons";
+
 import { ProtobufConverterContext } from "../ProtobufConverterContext";
 
 export type gRPCMethodType = "UNARY" | "CLIENT_STREAM" | "SERVER_STREAM" | "BIDI_STREAM";
@@ -27,11 +28,12 @@ export class MethodConverter extends AbstractConverter<ProtobufConverterContext,
         this.method = method;
     }
 
-    public convert(): MethodConverter.Output {
+    public convert(): MethodConverter.Output | undefined {
         // TODO: convert method by parsing name, request type, and response type
 
-        return {
-            endpoint: {}
-        };
+        // return {
+        //     endpoint: {}
+        // };
+        return undefined;
     }
 }

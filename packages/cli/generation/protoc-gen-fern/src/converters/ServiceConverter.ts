@@ -24,11 +24,12 @@ export class ServiceConverter extends AbstractConverter<ProtobufConverterContext
         this.service = service;
     }
 
-    public convert(): ServiceConverter.Output {
+    public convert(): ServiceConverter.Output | undefined {
         // TODO: convert service by using MethodConverter to convert contained methods
-        return {
-            endpoints: [],
-            inlinedTypes: {}
-        };
+        // return {
+        //     endpoints: [],
+        //     inlinedTypes: {}
+        // };
+        return undefined;
     }
 }

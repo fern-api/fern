@@ -7700,6 +7700,9 @@ importers:
       '@bufbuild/protoplugin':
         specifier: 2.2.5
         version: 2.2.5
+      '@fern-api/casings-generator':
+        specifier: workspace:*
+        version: link:../../../../../commons/casings-generator
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../../../../configs
@@ -7709,6 +7712,9 @@ importers:
       '@fern-api/ir-utils':
         specifier: workspace:*
         version: link:../../../../../commons/ir-utils
+      '@fern-api/logger':
+        specifier: workspace:*
+        version: link:../../../../logger
       '@fern-api/v2-importer-commons':
         specifier: workspace:*
         version: link:../../../../api-importers/v2-importer-commons

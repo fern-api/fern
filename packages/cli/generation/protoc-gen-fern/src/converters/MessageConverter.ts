@@ -7,7 +7,6 @@ import { ProtobufConverterContext } from "../ProtobufConverterContext";
 
 export declare namespace MessageConverter {
     export interface Args extends AbstractConverter.Args<ProtobufConverterContext> {
-        id: string;
         message: DescriptorProto;
     }
 
@@ -18,20 +17,19 @@ export declare namespace MessageConverter {
 }
 
 export class MessageConverter extends AbstractConverter<ProtobufConverterContext, MessageConverter.Output> {
-    private readonly id: string;
     private readonly message: DescriptorProto;
 
-    constructor({ context, breadcrumbs, id, message }: MessageConverter.Args) {
+    constructor({ context, breadcrumbs, message }: MessageConverter.Args) {
         super({ context, breadcrumbs });
-        this.id = id;
         this.message = message;
     }
 
-    public convert(): MessageConverter.Output {
+    public convert(): MessageConverter.Output | undefined {
         // TODO: convert message
-        return {
-            convertedMessage: {},
-            inlinedTypes: {}
-        };
+        // return {
+        //     convertedMessage: {},
+        //     inlinedTypes: {}
+        // };
+        return undefined;
     }
 }
