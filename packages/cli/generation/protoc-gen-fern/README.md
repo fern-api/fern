@@ -13,7 +13,7 @@ cd tests/simple
 buf generate
 ```
 
-  [buf]: https://github.com/bufbuild/buf
+[buf]: https://github.com/bufbuild/buf
 
 ## Contributing
 
@@ -22,5 +22,5 @@ suitable for producing generic source files instead of TypeScript or JavaScript 
 
 See the [user guide][user guide] for more details on how to get up and running.
 
-  [protoc-gen-es]: https://github.com/bufbuild/protobuf-es/blob/0d0c00e46cca489629a42b0c50e8e60d386f69b7/packages/protoc-gen-es/package.json#L2
-  [user guide]: https://github.com/bufbuild/protobuf-es/blob/main/MANUAL.md#example-hello-world-plugin
+[protoc-gen-es]: https://github.com/bufbuild/protobuf-es/blob/0d0c00e46cca489629a42b0c50e8e60d386f69b7/packages/protoc-gen-es/package.json#L2
+[user guide]: https://github.com/bufbuild/protobuf-es/blob/main/MANUAL.md#example-hello-world-plugin

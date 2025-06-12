@@ -17,4 +17,5 @@ message GetUserResponse {
 
 service UserService {
   rpc GetUser(GetUserRequest) returns (GetUserResponse);
+  rpc GetUser2(GetUserRequest) returns (GetUserResponse);
 }
