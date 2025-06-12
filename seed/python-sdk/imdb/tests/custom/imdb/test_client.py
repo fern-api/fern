@@ -13,7 +13,7 @@ from seed.imdb.errors import MovieDoesNotExistError
 from seed.core.api_error import ApiError
 
 from .mock_server import MockResponse
-from .wire_test_base import WireTestBase
+from .wire_test_base import WireTestBase, AsyncWireTestBase
 
 
 class TestGetMovie(WireTestBase):
@@ -154,6 +154,160 @@ class TestCreateMovie(WireTestBase):
 
         with pytest.raises(ApiError) as exc_info:
             self.client.imdb.create_movie(
+                title=movie_data["title"],
+                rating=movie_data["rating"],
+            )
+        assert exc_info.value.status_code == 500
+
+        expected_response = json.dumps(error_response)
+        actual_response = json.dumps(exc_info.value.body)
+
+        self.assert_json_eq(expected_response, actual_response)
+
+
+class TestAsyncGetMovie(AsyncWireTestBase):
+    @pytest.mark.asyncio
+    async def test_get_movie_success(self):
+        movie_id = "tt0482571"
+        movie_data = {"id": movie_id, "title": "The Prestige", "rating": 8.5}
+
+        self.expect_request(
+            uri=f"/movies/{movie_id}",
+            response=MockResponse(
+                status_code=200,
+                body=movie_data,
+                headers={"Content-Type": "application/json"},
+            ),
+        )
+
+        movie = await self.client.imdb.get_movie(movie_id=movie_id)
+
+        expected_response = json.dumps(movie_data)
+        actual_response = movie.model_dump_json()
+
+        self.assert_json_eq(expected_response, actual_response)
+
+    @pytest.mark.asyncio
+    async def test_get_movie_not_found(self):
+        movie_id = "tt0000000"
+
+        self.expect_request(
+            uri=f"/movies/{movie_id}",
+            response=MockResponse(
+                status_code=404,
+                body=f'"{movie_id}"',
+                headers={"Content-Type": "application/json"},
+            ),
+        )
+
+        with pytest.raises(MovieDoesNotExistError) as exc_info:
+            await self.client.imdb.get_movie(movie_id=movie_id)
+        assert exc_info.value.status_code == 404
+        assert exc_info.value.body == movie_id
+
+    @pytest.mark.asyncio
+    async def test_get_movie_server_error(self):
+        movie_id = "tt0482571"
+        error_response = {"error": "Internal server error"}
+
+        self.expect_request(
+            uri=f"/movies/{movie_id}",
+            response=MockResponse(
+                status_code=500,
+                body=error_response,
+                headers={"Content-Type": "application/json"},
+            ),
+        )
+
+        with pytest.raises(ApiError) as exc_info:
+            await self.client.imdb.get_movie(movie_id=movie_id)
+        assert exc_info.value.status_code == 500
+
+        expected_response = json.dumps(error_response)
+        actual_response = json.dumps(exc_info.value.body)
+
+        self.assert_json_eq(expected_response, actual_response)
+
+
+class TestAsyncCreateMovie(AsyncWireTestBase):
+    @pytest.mark.asyncio
+    async def test_create_movie_success(self):
+        movie_id = "tt0482571"
+        movie_data = {
+            "title": "The Prestige",
+            "rating": 8.5,
+        }
+
+        self.expect_request(
+            uri="/movies/create-movie",
+            method="POST",
+            json_body=movie_data,
+            response=MockResponse(
+                status_code=200,
+                body=f'"{movie_id}"',
+                headers={"Content-Type": "application/json"},
+            ),
+        )
+
+        response = await self.client.imdb.create_movie(
+            title=movie_data["title"],
+            rating=movie_data["rating"],
+        )
+
+        assert response == movie_id
+
+    @pytest.mark.asyncio
+    async def test_create_movie_validation_error(self):
+        movie_data = {
+            "title": "The Prestige",
+            "rating": 11.0,  # Invalid rating > 10
+        }
+        error_response = {"error": "Rating must be between 0 and 10"}
+
+        self.expect_request(
+            uri="/movies/create-movie",
+            method="POST",
+            json_body=movie_data,
+            response=MockResponse(
+                status_code=400,
+                body=error_response,
+                headers={"Content-Type": "application/json"},
+            ),
+        )
+
+        with pytest.raises(ApiError) as exc_info:
+            await self.client.imdb.create_movie(
+                title=movie_data["title"],
+                rating=movie_data["rating"],
+            )
+        assert exc_info.value.status_code == 400
+
+        expected_response = json.dumps(error_response)
+        actual_response = json.dumps(exc_info.value.body)
+
+        self.assert_json_eq(expected_response, actual_response)
+
+    @pytest.mark.asyncio
+    async def test_create_movie_server_error(self):
+        movie_data = {
+            "title": "The Prestige",
+            "rating": 8.5,
+        }
+        error_response = {"error": "Internal server error"}
+
+        self.expect_request(
+            uri="/movies/create-movie",
+            method="POST",
+            json_body=movie_data,
+            response=MockResponse(
+                status_code=500,
+                body=error_response,
+                headers={"Content-Type": "application/json"},
+            ),
+        )
+
+        with pytest.raises(ApiError) as exc_info:
+            await self.client.imdb.create_movie(
                 title=movie_data["title"],
                 rating=movie_data["rating"],
             )
