@@ -1,5 +1,4 @@
-from typing import Any, Dict, Optional, Union
-import json
+from typing import Any, Dict, Optional
 from dataclasses import dataclass
 from pytest_httpserver import HTTPServer
 
@@ -7,12 +6,11 @@ from pytest_httpserver import HTTPServer
 @dataclass
 class MockResponse:
     status_code: int
-    body: Union[str, Dict[str, Any]]
-    headers: Optional[Dict[str, str]] = None
+    body: Any
+    headers: Dict[str, str]
 
 
 class MockServer:
-    """A mock server for testing the IMDb SDK."""
 
     def __init__(self, server: HTTPServer):
         self.server = server
@@ -21,24 +19,23 @@ class MockServer:
         self,
         uri: str,
         method: str = "GET",
-        json_body: Optional[Dict[str, Any]] = None,
         headers: Optional[Dict[str, str]] = None,
-        response: Optional[MockResponse] = None,  # TODO: register only one response?
+        json_body: Optional[Dict[str, Any]] = None,
+        response: Optional[MockResponse] = None,
     ) -> None:
-        """
-        Sets up expectations for a request to the mock server and configures a mock
-            response.
+        """Set up an expectation for a request and configure a mock response.
 
-        TODO(rmehndiratta): Define this like params in our generated code.
         Args:
-            uri: The URI to expect the request on
+            uri: The URI to expect
             method: The HTTP method to expect
-            json_body: The expected JSON body of the request
-            headers: The expected headers of the request
+            headers: The headers to expect
+            json_body: The JSON body to expect
             response: The response to return
         """
         if json_body:
-            matcher = self.server.expect_request(uri, method, headers=headers, json=json_body)
+            matcher = self.server.expect_request(
+                uri, method, headers=headers, json=json_body
+            )
         else:
             matcher = self.server.expect_request(uri, method, headers=headers)
 
@@ -51,3 +48,9 @@ class MockServer:
                 matcher.respond_with_data(
                     response.body, status=response.status_code, headers=response.headers
                 )
+        else:
+            response = MockResponse(
+                status_code=200,
+                body={},
+                headers={"Content-Type": "application/json"},
+            )

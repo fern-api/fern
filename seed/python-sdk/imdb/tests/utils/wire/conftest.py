@@ -1,5 +1,3 @@
-"""Shared test fixtures for IMDb SDK tests."""
-
 import pytest
 from pytest_httpserver import HTTPServer
 from .mock_server import MockServer

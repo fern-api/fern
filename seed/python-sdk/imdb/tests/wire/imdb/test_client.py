@@ -12,8 +12,9 @@ import pytest
 from seed.imdb.errors import MovieDoesNotExistError
 from seed.core.api_error import ApiError
 
-from .mock_server import MockResponse
-from .wire_test_base import WireTestBase, AsyncWireTestBase
+from tests.utils.json_utils import assert_json_eq
+from tests.utils.wire.mock_server import MockResponse
+from tests.utils.wire.wire_test_base import WireTestBase, AsyncWireTestBase
 
 
 class TestGetMovie(WireTestBase):
@@ -35,7 +36,7 @@ class TestGetMovie(WireTestBase):
         expected_response = json.dumps(movie_data)
         actual_response = movie.model_dump_json()
 
-        self.assert_json_eq(expected_response, actual_response)
+        assert_json_eq(expected_response, actual_response)
 
     def test_get_movie_not_found(self):
         movie_id = "tt0000000"
@@ -75,7 +76,7 @@ class TestGetMovie(WireTestBase):
         expected_response = json.dumps(error_response)
         actual_response = json.dumps(exc_info.value.body)
 
-        self.assert_json_eq(expected_response, actual_response)
+        assert_json_eq(expected_response, actual_response)
 
 
 class TestCreateMovie(WireTestBase):
@@ -92,7 +93,7 @@ class TestCreateMovie(WireTestBase):
             json_body=movie_data,
             response=MockResponse(
                 status_code=200,
-                body=f'"{movie_id}"',
+                body=movie_id,
                 headers={"Content-Type": "application/json"},
             ),
         )
@@ -132,7 +133,7 @@ class TestCreateMovie(WireTestBase):
         expected_response = json.dumps(error_response)
         actual_response = json.dumps(exc_info.value.body)
 
-        self.assert_json_eq(expected_response, actual_response)
+        assert_json_eq(expected_response, actual_response)
 
     def test_create_movie_server_error(self):
         movie_data = {
@@ -162,7 +163,7 @@ class TestCreateMovie(WireTestBase):
         expected_response = json.dumps(error_response)
         actual_response = json.dumps(exc_info.value.body)
 
-        self.assert_json_eq(expected_response, actual_response)
+        assert_json_eq(expected_response, actual_response)
 
 
 class TestAsyncGetMovie(AsyncWireTestBase):
@@ -185,7 +186,7 @@ class TestAsyncGetMovie(AsyncWireTestBase):
         expected_response = json.dumps(movie_data)
         actual_response = movie.model_dump_json()
 
-        self.assert_json_eq(expected_response, actual_response)
+        assert_json_eq(expected_response, actual_response)
 
     @pytest.mark.asyncio
     async def test_get_movie_not_found(self):
@@ -226,7 +227,7 @@ class TestAsyncGetMovie(AsyncWireTestBase):
         expected_response = json.dumps(error_response)
         actual_response = json.dumps(exc_info.value.body)
 
-        self.assert_json_eq(expected_response, actual_response)
+        assert_json_eq(expected_response, actual_response)
 
 
 class TestAsyncCreateMovie(AsyncWireTestBase):
@@ -244,7 +245,7 @@ class TestAsyncCreateMovie(AsyncWireTestBase):
             json_body=movie_data,
             response=MockResponse(
                 status_code=200,
-                body=f'"{movie_id}"',
+                body=movie_id,
                 headers={"Content-Type": "application/json"},
             ),
         )
@@ -285,7 +286,7 @@ class TestAsyncCreateMovie(AsyncWireTestBase):
         expected_response = json.dumps(error_response)
         actual_response = json.dumps(exc_info.value.body)
 
-        self.assert_json_eq(expected_response, actual_response)
+        assert_json_eq(expected_response, actual_response)
 
     @pytest.mark.asyncio
     async def test_create_movie_server_error(self):
@@ -316,4 +317,4 @@ class TestAsyncCreateMovie(AsyncWireTestBase):
         expected_response = json.dumps(error_response)
         actual_response = json.dumps(exc_info.value.body)
 
-        self.assert_json_eq(expected_response, actual_response)
+        assert_json_eq(expected_response, actual_response)
