@@ -1,6 +1,4 @@
-"""
-Shared test fixtures for the IMDB SDK tests.
-"""
+"""Shared test fixtures for IMDb SDK tests."""
 import pytest
 from pytest_httpserver import HTTPServer
 from .mock_server import MockServer
@@ -9,8 +7,7 @@ from .mock_server import MockServer
 @pytest.fixture
 def mock_server() -> MockServer:
     """
-    Fixture that provides a mock HTTP server for testing.
-    The server is started before each test and stopped after.
+    Mock server, started before each test and stopped after.
     """
     server = HTTPServer()
     server.start()
@@ -22,6 +19,7 @@ def mock_server() -> MockServer:
 @pytest.fixture
 def base_url(mock_server: MockServer) -> str:
     """
-    Fixture that provides the base URL for the mock server.
+    Base URL for the mock server, to which the client sends requests and at which the
+    server expects client requests.
     """
-    return mock_server.server.url_for("/imdb") 
+    return mock_server.server.url_for("/imdb")

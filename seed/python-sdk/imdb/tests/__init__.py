@@ -1,3 +1,1 @@
-"""
-Test package for the IMDB SDK.
-""" 
+"""Tests for the IMDb SDK"""
