@@ -3,13 +3,8 @@ import { CodeGeneratorRequest } from "@bufbuild/protobuf/wkt";
 import { FileInfo, Printable } from "@bufbuild/protoplugin";
 
 import { constructCasingsGenerator } from "@fern-api/casings-generator";
-// import { createLogger } from "@fern-api/logger";
-// import { mergeIntermediateRepresentations } from "@fern-api/ir-utils";
-// import { ProtobufConverter } from "./converters/ProtobufConverter";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { mergeIntermediateRepresentation } from "@fern-api/ir-utils";
-// import { mergeIntermediateRepresentation } from "@fern-api/ir-utils";
-// import { constructCasingsGenerator } from "@fern-api/casings-generator";
 import { createLogger } from "@fern-api/logger";
 import { ErrorCollector } from "@fern-api/v2-importer-commons";
 
@@ -34,9 +29,7 @@ export function generateIr({ req, options }: { req: CodeGeneratorRequest; option
                 },
                 relativeFilepathToSpec: undefined
             }),
-            logger: createLogger((level, ...args) => {
-                console.log(level, ...args);
-            }),
+            logger: createLogger((level, ...args) => {}),
             generationLanguage: undefined,
             smartCasing: false,
             exampleGenerationArgs: {
@@ -66,7 +59,7 @@ export function generateIr({ req, options }: { req: CodeGeneratorRequest; option
 
     return {
         name: "ir.json",
-        content: `${JSON.stringify(result)}`
+        content: `${JSON.stringify(mergedIr)}`
     };
 }
 

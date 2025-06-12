@@ -1,4 +1,4 @@
-import { DescriptorProto, ServiceDescriptorProto } from "@bufbuild/protobuf/wkt";
+import { ServiceDescriptorProto } from "@bufbuild/protobuf/wkt";
 
 import * as FernIr from "@fern-api/ir-sdk";
 import { AbstractConverter, Converters } from "@fern-api/v2-importer-commons";

@@ -25,7 +25,7 @@ export class MessageConverter extends AbstractConverter<ProtobufConverterContext
     }
 
     public convert(): MessageConverter.Output | undefined {
-        // TODO: convert message
+        // TODO: convert message (i.e. convert schema)
         // return {
         //     convertedMessage: {},
         //     inlinedTypes: {}
