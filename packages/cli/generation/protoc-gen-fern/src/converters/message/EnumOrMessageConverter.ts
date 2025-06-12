@@ -51,7 +51,7 @@ export class EnumOrMessageConverter extends AbstractConverter<
         if (this.schema.$typeName === "google.protobuf.EnumDescriptorProto") {
             const enumConverter = new EnumConverter({
                 context: this.context,
-                breadcrumbs: this.breadcrumbs,
+                breadcrumbs: [...this.breadcrumbs, this.schema.name],
                 enum: this.schema
             });
             const convertedGrpcEnum = enumConverter.convert();
@@ -76,7 +76,7 @@ export class EnumOrMessageConverter extends AbstractConverter<
         if (this.schema.$typeName === "google.protobuf.DescriptorProto") {
             const messageConverter = new MessageConverter({
                 context: this.context,
-                breadcrumbs: this.breadcrumbs,
+                breadcrumbs: [...this.breadcrumbs, this.schema.name],
                 message: this.schema
             });
             const convertedGrpcMessage = messageConverter.convert();

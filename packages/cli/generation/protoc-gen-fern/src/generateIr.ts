@@ -59,7 +59,7 @@ export function generateIr({ req, options }: { req: CodeGeneratorRequest; option
 
     return {
         name: "ir.json",
-        content: `${JSON.stringify(result, null, 2)}`
+        content: `${JSON.stringify(mergedIr, null, 2)}`
     };
 }
 

@@ -4,7 +4,9 @@ export class Logger {
     private enabled = true;
 
     private write(level: string, ...messages: string[]): void {
-        if (!this.enabled) {return;}
+        if (!this.enabled) {
+            return;
+        }
         process.stderr.write(`[${level}] ${messages.join(" ")}\n`);
     }
 

@@ -3,9 +3,7 @@ import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { AbstractSpecConverter } from "@fern-api/v2-importer-commons";
 
 import { ProtobufConverterContext } from "../ProtobufConverterContext";
-import { EnumConverter } from "./message/EnumConverter";
 import { EnumOrMessageConverter } from "./message/EnumOrMessageConverter";
-import { MessageConverter } from "./message/MessageConverter";
 import { ServiceConverter } from "./service/ServiceConverter";
 
 export declare namespace ProtobufConverter {
@@ -34,7 +32,7 @@ export class ProtobufConverter extends AbstractSpecConverter<ProtobufConverterCo
             for (const schema of [...protoFile.enumType, ...protoFile.messageType]) {
                 const enumOrMessageConverter = new EnumOrMessageConverter({
                     context: this.context,
-                    breadcrumbs: this.breadcrumbs,
+                    breadcrumbs: [...this.breadcrumbs, protoFile.package],
                     schema
                 });
                 const convertedEnum = enumOrMessageConverter.convert();
