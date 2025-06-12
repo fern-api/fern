@@ -4,9 +4,9 @@ import { go } from "@fern-api/go-ast";
 import { HttpEndpoint, HttpService, PathParameter, SdkRequest, ServiceId } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { EndpointSignatureInfo } from "./EndpointSignatureInfo";
 import { EndpointRequest } from "./request/EndpointRequest";
 import { getEndpointRequest } from "./utils/getEndpointRequest";
-import { EndpointSignatureInfo } from "./EndpointSignatureInfo";
 import { getEndpointReturnType } from "./utils/getEndpointReturnType";
 
 export abstract class AbstractEndpointGenerator {
@@ -29,7 +29,9 @@ export abstract class AbstractEndpointGenerator {
         const request = getEndpointRequest({ context: this.context, endpoint, serviceId, service });
         const requestParameter = request != null ? this.getRequestParameter({ request }) : undefined;
         return {
-            baseParameters: [...pathParameters, requestParameter].filter((p): p is go.Parameter => p != null),
+            allParameters: [this.context.getContextTypeReference(), ...pathParameters, requestParameter].filter(
+                (p): p is go.Parameter => p != null
+            ),
             pathParameters,
             pathParameterReferences,
             request,
@@ -45,9 +47,9 @@ export abstract class AbstractEndpointGenerator {
         serviceId: ServiceId;
         endpoint: HttpEndpoint;
     }): Pick<EndpointSignatureInfo, "pathParameters" | "pathParameterReferences"> {
+        const service = this.context.getHttpServiceOrThrow(serviceId);
         const includePathParametersInSignature = this.includePathParametersInEndpointSignature({ endpoint });
         const pathParameters: go.Parameter[] = [];
-        const service = this.context.getHttpServiceOrThrow(serviceId);
         const pathParameterReferences: Record<string, string> = {};
         for (const pathParam of [
             ...this.context.ir.pathParameters,
@@ -79,7 +81,7 @@ export abstract class AbstractEndpointGenerator {
     private getRequestParameter({ request }: { request: EndpointRequest }): go.Parameter {
         return go.parameter({
             type: request.getRequestParameterType(),
-            name: request.getRequestParameterName(),
+            name: request.getRequestParameterName()
         });
     }
 

@@ -9,6 +9,7 @@ export { GoTypeReference } from "./GoTypeReference";
 export { Method } from "./Method";
 export { MethodInvocation } from "./MethodInvocation";
 export { Parameter } from "./Parameter";
+export { Selector } from "./Selector";
 export { Struct } from "./Struct";
 export { Type } from "./Type";
 export { TypeInstantiation, type StructField } from "./TypeInstantiation";

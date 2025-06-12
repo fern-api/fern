@@ -1,12 +1,9 @@
-import {
-    HttpEndpoint,
-    HttpService,
-    ServiceId
-} from "@fern-fern/ir-sdk/api";
+import { go } from "@fern-api/go-ast";
+
+import { HttpEndpoint, HttpService, ServiceId } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator";
-import { go } from "@fern-api/go-ast";
 
 export declare namespace EndpointGenerator {
     export interface Args {

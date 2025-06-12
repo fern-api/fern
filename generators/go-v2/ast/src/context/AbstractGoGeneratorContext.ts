@@ -22,7 +22,7 @@ import {
 } from "@fern-fern/ir-sdk/api";
 
 import { go } from "..";
-import { TimeTypeReference, UuidTypeReference } from "../ast/Type";
+import { IoReaderTypeReference, TimeTypeReference, UuidTypeReference } from "../ast/Type";
 import { BaseGoCustomConfigSchema } from "../custom-config/BaseGoCustomConfigSchema";
 import { resolveRootImportPath } from "../custom-config/resolveRootImportPath";
 import { GoTypeMapper } from "./GoTypeMapper";
@@ -80,6 +80,14 @@ export abstract class AbstractGoGeneratorContext<
         return `${this.rootImportPath}/core`;
     }
 
+    public getInternalImportPath(): string {
+        return `${this.rootImportPath}/internal`;
+    }
+
+    public getOptionImportPath(): string {
+        return `${this.rootImportPath}/option`;
+    }
+
     public getFieldName(name: Name): string {
         return name.pascalCase.unsafeName;
     }
@@ -92,12 +100,34 @@ export abstract class AbstractGoGeneratorContext<
         return literal.type === "string" ? `'${literal.string}'` : literal.boolean ? "'true'" : "'false'";
     }
 
+    public getContextTypeReference(): go.TypeReference {
+        return go.typeReference({
+            name: "Context",
+            importPath: "context"
+        });
+    }
+
+    public getVariadicRequestOptionType(): go.Type {
+        return go.Type.variadic(go.Type.reference(this.getRequestOptionTypeReference()));
+    }
+
+    public getRequestOptionTypeReference(): go.TypeReference {
+        return go.typeReference({
+            name: "RequestOption",
+            importPath: this.getOptionImportPath()
+        });
+    }
+
     public getUuidTypeReference(): go.TypeReference {
         return UuidTypeReference;
     }
 
     public getTimeTypeReference(): go.TypeReference {
         return TimeTypeReference;
+    }
+
+    public getIoReaderTypeReference(): go.TypeReference {
+        return IoReaderTypeReference;
     }
 
     public isOptional(typeReference: TypeReference): boolean {
