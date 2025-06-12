@@ -1,4 +1,6 @@
+import difflib
 import httpx
+import json
 import pytest
 
 from seed import SeedApi
@@ -41,3 +43,24 @@ class WireTestBase:
             headers=headers,
             response=response,
         )
+
+    @staticmethod
+    def assert_json_eq(expected: str, actual: str):
+        # for ordering invariance and ease of diffing, re-serialize as sorted JSON
+        def reserialize_as_ordered(json_obj: str):
+            json.dumps(json.loads(json_obj), indent=2, sort_keys=True)
+
+        expected = reserialize_as_ordered(expected)
+        actual = reserialize_as_ordered(actual)
+
+        if expected != actual:
+            diff = "\n".join(
+                difflib.unified_diff(
+                    expected.splitlines(),
+                    actual.splitlines(),
+                    fromfile="expected",
+                    tofile="actual",
+                    lineterm="",
+                )
+            )
+            raise AssertionError(f"JSON mismatch:\n\n{diff}")
