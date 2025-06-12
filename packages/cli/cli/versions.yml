@@ -1,6 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        The Readme importer now downloads MDX files from the source documentation. 
+        This allows for better handling of React components and dynamic content in the imported documentation. 
+        The importer will preserve the MDX syntax and structure while converting the content to a format compatible with Fern's documentation system.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-06-12"
+  version: 0.64.6
+
+- changelogEntry:
+    - summary: |
         Relative links between markdown files now works for docs using custom subpaths. 
       type: fix
   irVersion: 58
