@@ -7,7 +7,9 @@ export declare namespace Stream {
         /**
          * The HTTP response stream to read from.
          */
+
         stream: Readable | ReadableStream;
+
         /**
          * The event shape to use for parsing the stream data.
          */
@@ -33,6 +35,7 @@ const DATA_PREFIX = "data:";
 
 export class Stream<T> implements AsyncIterable<T> {
     private stream: Readable | ReadableStream;
+
     private parse: (val: unknown) => Promise<T>;
     /**
      * The prefix to use for each message. For example,
