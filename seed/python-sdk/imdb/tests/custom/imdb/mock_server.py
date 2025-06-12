@@ -13,6 +13,7 @@ class MockResponse:
 
 class MockServer:
     """A mock server for testing the IMDb SDK."""
+
     def __init__(self, server: HTTPServer):
         self.server = server
 
@@ -22,7 +23,7 @@ class MockServer:
         method: str = "GET",
         json_body: Optional[Dict[str, Any]] = None,
         headers: Optional[Dict[str, str]] = None,
-        response: Optional[MockResponse] = None, # TODO: register only one response?
+        response: Optional[MockResponse] = None,  # TODO: register only one response?
     ) -> None:
         """
         Sets up expectations for a request to the mock server and configures a mock
@@ -37,7 +38,6 @@ class MockServer:
         """
         matcher = self.server.expect_request(uri, method, headers=headers)
 
-        # TODO(rmehndiratta): This doesn't feel clean or clear to reasona about
         if json_body:
             matcher.with_json(json_body)
         if response:

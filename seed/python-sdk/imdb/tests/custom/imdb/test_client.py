@@ -6,17 +6,26 @@ We verify wire compatibility against the API specification by:
     3. Returning a mocked response and verifying the client's handling.
 """
 
-import pytest
+import json
 import httpx
+import pytest
+
+from unittest import TestCase
 
 from seed.imdb.client import ImdbClient
 from seed.imdb.errors import MovieDoesNotExistError
-from seed.imdb.types import Movie, MovieId
 
 from seed.core.api_error import ApiError
 from seed.core.client_wrapper import SyncClientWrapper
 
 from .mock_server import MockServer, MockResponse
+
+
+# TODO(rmehndiratta): Figure out where we want to put shared test utils (packages)
+# and move there
+def assert_json_eq(json1: str, json2: str):
+    TestCase().assertDictEqual(json.loads(json1), json.loads(json2))
+
 
 class TestGetMovie:
     def test_get_movie_success(self, mock_server: MockServer, base_url: str):
@@ -30,21 +39,20 @@ class TestGetMovie:
             response=MockResponse(
                 status_code=200,
                 body=movie_data,
-                headers={"Content-Type": "application/json"}
-            )
+                headers={"Content-Type": "application/json"},
+            ),
         )
 
         client_wrapper = SyncClientWrapper(
-            base_url=base_url,
-            httpx_client=httpx.Client(),
-            token="dummy-token"
+            base_url=base_url, httpx_client=httpx.Client(), token="dummy-token"
         )
         client = ImdbClient(client_wrapper=client_wrapper)
         movie = client.get_movie(movie_id=movie_id)
 
-        assert movie.id == movie_id
-        assert movie.title == "The Prestige"
-        assert movie.rating == 8.5
+        expected_response = json.dumps(movie_data)
+        actual_response = movie.model_dump_json()
+
+        assert_json_eq(expected_response, actual_response)
 
     def test_get_movie_not_found(self, mock_server: MockServer, base_url: str):
         movie_id = "tt0000000"
@@ -56,14 +64,12 @@ class TestGetMovie:
             response=MockResponse(
                 status_code=404,
                 body=f'"{movie_id}"',
-                headers={"Content-Type": "application/json"}
-            )
+                headers={"Content-Type": "application/json"},
+            ),
         )
 
         client_wrapper = SyncClientWrapper(
-            base_url=base_url,
-            httpx_client=httpx.Client(),
-            token="dummy-token"
+            base_url=base_url, httpx_client=httpx.Client(), token="dummy-token"
         )
         client = ImdbClient(client_wrapper=client_wrapper)
 
@@ -83,14 +89,12 @@ class TestGetMovie:
             response=MockResponse(
                 status_code=500,
                 body=error_response,
-                headers={"Content-Type": "application/json"}
-            )
+                headers={"Content-Type": "application/json"},
+            ),
         )
 
         client_wrapper = SyncClientWrapper(
-            base_url=base_url,
-            httpx_client=httpx.Client(),
-            token="dummy-token"
+            base_url=base_url, httpx_client=httpx.Client(), token="dummy-token"
         )
         client = ImdbClient(client_wrapper=client_wrapper)
 
@@ -98,5 +102,6 @@ class TestGetMovie:
             client.get_movie(movie_id=movie_id)
         assert exc_info.value.status_code == 500
         assert exc_info.value.body == error_response
+
 
 # TODO: add TestCreateMovie tests
