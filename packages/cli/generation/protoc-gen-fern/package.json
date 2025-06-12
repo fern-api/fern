@@ -36,6 +36,7 @@
     "@fern-api/configs": "workspace:*",
     "@fern-api/ir-sdk": "workspace:*",
     "@fern-api/ir-utils": "workspace:*",
+    "@fern-api/configuration": "workspace:*",
     "@fern-api/casings-generator": "workspace:*",
     "@fern-api/logger": "workspace:*",
     "@fern-api/v2-importer-commons": "workspace:*",

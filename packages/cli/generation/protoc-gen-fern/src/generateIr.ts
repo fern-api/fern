@@ -14,6 +14,8 @@ import { ErrorCollector } from "@fern-api/v2-importer-commons";
 import { ProtobufConverterContext } from "./ProtobufConverterContext";
 import { ProtobufConverter } from "./converters/ProtobufConverter";
 import { Options } from "./parseOptions";
+import { constructCasingsGenerator } from "@fern-api/casings-generator";
+import { mergeIntermediateRepresentation } from "@fern-api/ir-utils";
 
 export function generateIr({ req, options }: { req: CodeGeneratorRequest; options: Options }): FileInfo {
     let mergedIr: IntermediateRepresentation | undefined;
@@ -21,55 +23,52 @@ export function generateIr({ req, options }: { req: CodeGeneratorRequest; option
     // TODO: Initialize Protobuf Converter
     // TODO: Run ProtobufConverter.convert()
 
-    // const protobufConverter = new ProtobufConverter({
-    //     breadcrumbs: [],
-    //     context: new ProtobufConverterContext({
-    //         spec: req,
-    //         settings: undefined,
-    //         errorCollector: new ErrorCollector({
-    //             logger: {
-    //                 log: (level, ...args) => {}
-    //             },
-    //             relativeFilepathToSpec: undefined
-    //         }),
-    //         logger: createLogger((level, ...args) => {
-    //             console.log(level, ...args);
-    //         }),
-    //         generationLanguage: undefined,
-    //         smartCasing: false,
-    //         exampleGenerationArgs: {
-    //             disabled: true
-    //         },
-    //         enableUniqueErrorsPerEndpoint: false,
-    //         generateV1Examples: false
-    //     }),
-    //     audiences: {
-    //         type: "select",
-    //         audiences: []
-    //     }
-    // });
-
-    const protobufConverter = new ProtobufConverter();
+    const protobufConverter = new ProtobufConverter({
+        breadcrumbs: [],
+        context: new ProtobufConverterContext({
+            spec: req,
+            settings: undefined,
+            errorCollector: new ErrorCollector({
+                logger: {
+                    log: (level, ...args) => {}
+                },
+                relativeFilepathToSpec: undefined
+            }),
+            logger: createLogger((level, ...args) => {
+                console.log(level, ...args);
+            }),
+            generationLanguage: undefined,
+            smartCasing: false,
+            exampleGenerationArgs: {
+                disabled: true
+            },
+            enableUniqueErrorsPerEndpoint: false,
+            generateV1Examples: false
+        }),
+        audiences: {
+            type: "all"
+        }
+    });
 
     const result = protobufConverter.convert();
-    // const casingsGenerator = constructCasingsGenerator({
-    //     generationLanguage: undefined,
-    //     keywords: undefined,
-    //     smartCasing: false
-    // });
+    const casingsGenerator = constructCasingsGenerator({
+        generationLanguage: undefined,
+        keywords: undefined,
+        smartCasing: false
+    });
 
-    // // TODO: run mergeIntermediateRepresentations on protobuf output
+    // TODO: run mergeIntermediateRepresentations on protobuf output
 
-    // if (result != null) {
-    //     mergedIr =
-    //         mergedIr === undefined
-    //             ? result
-    //             : mergeIntermediateRepresentation(mergedIr, result, casingsGenerator);
-    // }
+    if (result != null) {
+        mergedIr =
+            mergedIr === undefined
+                ? result
+                : mergeIntermediateRepresentation(mergedIr, result, casingsGenerator);
+    }
 
     return {
         name: "ir.json",
-        content: `${JSON.stringify(req)}`
+        content: `${JSON.stringify(result)}`
     };
 }
 
