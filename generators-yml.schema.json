@@ -2423,6 +2423,16 @@
         },
         "token": {
           "type": "string"
+        },
+        "path": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -2487,6 +2497,16 @@
           "oneOf": [
             {
               "$ref": "#/definitions/group.GithubCommitAndReleaseMode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "path": {
+          "oneOf": [
+            {
+              "type": "string"
             },
             {
               "type": "null"
@@ -2581,6 +2601,16 @@
               "type": "null"
             }
           ]
+        },
+        "path": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -2609,6 +2639,16 @@
           "const": "push"
         },
         "branch": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "path": {
           "oneOf": [
             {
               "type": "string"

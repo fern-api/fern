@@ -8,4 +8,5 @@ export interface GithubCommitAndReleaseSchema {
     repository: string;
     license?: FernDefinition.GithubLicenseSchema;
     mode?: FernDefinition.GithubCommitAndReleaseMode;
+    path?: string;
 }
