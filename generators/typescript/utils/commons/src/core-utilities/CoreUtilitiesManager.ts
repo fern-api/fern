@@ -35,6 +35,11 @@ export declare namespace CoreUtilitiesManager {
 export class CoreUtilitiesManager {
     private referencedCoreUtilities: Record<CoreUtilityName, CoreUtility.Manifest> = {};
     private authOverrides: Record<RelativeFilePath, string> = {};
+    private streamType: "wrapper" | "web";
+
+    constructor({ streamType }: { streamType: "wrapper" | "web" }) {
+        this.streamType = streamType;
+    }
 
     public getCoreUtilities({ sourceFile, importsManager }: CoreUtilitiesManager.getCoreUtilities.Args): CoreUtilities {
         const getReferenceToExport = this.createGetReferenceToExport({ sourceFile, importsManager });
@@ -64,26 +69,26 @@ export class CoreUtilitiesManager {
                 ],
                 true
             );
-            utility.addDependencies?.(dependencyManager);
+            utility.addDependencies?.(dependencyManager, {
+                streamType: this.streamType
+            });
         }
     }
 
     public async copyCoreUtilities({
         pathToSrc,
-        pathToRoot,
-        config
+        pathToRoot
     }: {
         pathToSrc: AbsoluteFilePath;
         pathToRoot: AbsoluteFilePath;
-        config: {
-            streamResponseType: "wrapper" | "web";
-        };
     }): Promise<void> {
         const pathOnContainer = "/assets/core-utilities";
         const files = new Set(
             await Promise.all(
                 Object.entries(this.referencedCoreUtilities).map(async ([_, utility]) => {
-                    const { patterns, ignore } = utility.getFilesPatterns(config);
+                    const { patterns, ignore } = utility.getFilesPatterns({
+                        streamType: this.streamType
+                    });
                     return await glob(patterns, {
                         ignore,
                         cwd: pathOnContainer,

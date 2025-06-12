@@ -1,4 +1,6 @@
+<% if (streamType === "wrapper") { %>
 import { Readable } from "stream";
+<% } %>
 
 import { RUNTIME } from "../runtime";
 
@@ -7,7 +9,11 @@ export declare namespace Stream {
         /**
          * The HTTP response stream to read from.
          */
+        <% if (streamType === "wrapper") { %>
         stream: Readable | ReadableStream;
+        <% } else { %>
+        stream: ReadableStream;
+        <% } %>
         /**
          * The event shape to use for parsing the stream data.
          */
@@ -32,7 +38,11 @@ export declare namespace Stream {
 const DATA_PREFIX = "data:";
 
 export class Stream<T> implements AsyncIterable<T> {
+    <% if (streamType === "wrapper") { %>
     private stream: Readable | ReadableStream;
+    <% } else { %>
+    private stream: ReadableStream;
+    <% } %>
     private parse: (val: unknown) => Promise<T>;
     /**
      * The prefix to use for each message. For example,

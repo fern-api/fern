@@ -45,6 +45,7 @@ export declare namespace GeneratedThrowingEndpointResponse {
         errorResolver: ErrorResolver;
         includeContentHeadersOnResponse: boolean;
         clientClass: GeneratedSdkClientClassImpl;
+        streamType: "wrapper" | "web";
     }
 }
 
@@ -63,6 +64,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
     private errorResolver: ErrorResolver;
     private includeContentHeadersOnResponse: boolean;
     private clientClass: GeneratedSdkClientClassImpl;
+    private streamType: "wrapper" | "web";
 
     constructor({
         packageId,
@@ -71,7 +73,8 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         errorDiscriminationStrategy,
         errorResolver,
         includeContentHeadersOnResponse,
-        clientClass
+        clientClass,
+        streamType
     }: GeneratedThrowingEndpointResponse.Init) {
         this.packageId = packageId;
         this.endpoint = endpoint;
@@ -80,6 +83,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         this.errorResolver = errorResolver;
         this.includeContentHeadersOnResponse = includeContentHeadersOnResponse;
         this.clientClass = clientClass;
+        this.streamType = streamType;
     }
 
     private getItemTypeFromListOrOptionalList(typeReference: TypeReference): TypeReference | undefined {
@@ -97,7 +101,8 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
 
     public getPaginationInfo(context: SdkContext): PaginationResponseInfo | undefined {
         const successReturnType = getSuccessReturnType(this.endpoint, this.response, context, {
-            includeContentHeadersOnResponse: this.includeContentHeadersOnResponse
+            includeContentHeadersOnResponse: this.includeContentHeadersOnResponse,
+            streamType: this.streamType
         });
 
         if (this.endpoint.pagination != null) {
@@ -435,7 +440,8 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
 
     public getReturnType(context: SdkContext): ts.TypeNode {
         return getSuccessReturnType(this.endpoint, this.response, context, {
-            includeContentHeadersOnResponse: this.includeContentHeadersOnResponse
+            includeContentHeadersOnResponse: this.includeContentHeadersOnResponse,
+            streamType: this.streamType
         });
     }
 

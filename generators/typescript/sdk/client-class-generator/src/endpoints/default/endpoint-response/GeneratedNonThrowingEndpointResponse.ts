@@ -26,6 +26,7 @@ export declare namespace GeneratedNonThrowingEndpointResponse {
         errorDiscriminationStrategy: ErrorDiscriminationStrategy;
         errorResolver: ErrorResolver;
         includeSerdeLayer: boolean;
+        streamType: "wrapper" | "web";
     }
 }
 
@@ -43,6 +44,7 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
     private errorDiscriminationStrategy: ErrorDiscriminationStrategy;
     private errorResolver: ErrorResolver;
     private includeSerdeLayer: boolean;
+    private streamType: "wrapper" | "web";
 
     constructor({
         packageId,
@@ -50,7 +52,8 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
         response,
         errorDiscriminationStrategy,
         errorResolver,
-        includeSerdeLayer
+        includeSerdeLayer,
+        streamType
     }: GeneratedNonThrowingEndpointResponse.Init) {
         this.packageId = packageId;
         this.endpoint = endpoint;
@@ -58,6 +61,7 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
         this.errorDiscriminationStrategy = errorDiscriminationStrategy;
         this.errorResolver = errorResolver;
         this.includeSerdeLayer = includeSerdeLayer;
+        this.streamType = streamType;
     }
 
     public getPaginationInfo(): PaginationResponseInfo | undefined {
@@ -74,7 +78,10 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
 
     public getReturnType(context: SdkContext): ts.TypeNode {
         return context.coreUtilities.fetcher.APIResponse._getReferenceToType(
-            getSuccessReturnType(this.endpoint, this.response, context),
+            getSuccessReturnType(this.endpoint, this.response, context, {
+                includeContentHeadersOnResponse: false,
+                streamType: this.streamType
+            }),
             context.endpointErrorUnion
                 .getGeneratedEndpointErrorUnion(this.packageId, this.endpoint.name)
                 .getErrorUnion()

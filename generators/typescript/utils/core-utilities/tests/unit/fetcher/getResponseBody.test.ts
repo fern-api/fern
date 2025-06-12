@@ -1,6 +1,6 @@
 // this file is used for testing inside of the Fern repo, but the getResponseBody.test.ts.template is used in the generator
 import { getResponseBody } from "../../../src/core/fetcher/getResponseBody";
-// <% if (streamResponseType === "wrapper") { %>
+// <% if (streamType === "wrapper") { %>
 import { chooseStreamWrapper } from "../../../src/core/fetcher/stream-wrappers/chooseStreamWrapper";
 import { RUNTIME } from "../../../src/core/runtime";
 
@@ -24,7 +24,7 @@ describe("Test getResponseBody", () => {
         }
     });
 
-    // <% if (streamResponseType === "wrapper") { %>
+    // <% if (streamType === "wrapper") { %>
     it("should handle streaming response type", async () => {
         if (RUNTIME.type === "node") {
             const mockStream = new ReadableStream();

@@ -6,6 +6,8 @@ import { assertNever } from "@fern-api/core-utils";
 
 import { HttpEndpoint, HttpResponseBody, PrimitiveTypeV1, TypeReference } from "@fern-fern/ir-sdk/api";
 
+import { getReadableTypeNode } from "../../../getReadableTypeNode";
+
 export function getSuccessReturnType(
     endpoint: HttpEndpoint,
     response:
@@ -17,7 +19,8 @@ export function getSuccessReturnType(
     context: SdkContext,
     opts: {
         includeContentHeadersOnResponse: boolean;
-    } = { includeContentHeadersOnResponse: false }
+        streamType: "wrapper" | "web";
+    }
 ): ts.TypeNode {
     if (response == null) {
         if (endpoint.method === "HEAD") {
@@ -30,7 +33,8 @@ export function getSuccessReturnType(
             return getFileType({
                 targetRuntime: context.targetRuntime,
                 context,
-                includeContentHeadersOnResponse: opts.includeContentHeadersOnResponse
+                includeContentHeadersOnResponse: opts.includeContentHeadersOnResponse,
+                streamType: opts.streamType
             });
         }
         case "json":
@@ -66,15 +70,22 @@ export const CONTENT_LENGTH_RESPONSE_KEY = "contentLengthInBytes";
 function getFileType({
     targetRuntime,
     context,
-    includeContentHeadersOnResponse
+    includeContentHeadersOnResponse,
+    streamType
 }: {
     targetRuntime: JavaScriptRuntime;
     context: SdkContext;
     includeContentHeadersOnResponse: boolean;
+    streamType: "wrapper" | "web";
 }): ts.TypeNode {
     const fileType = visitJavaScriptRuntime(targetRuntime, {
         browser: () => ts.factory.createTypeReferenceNode("Blob"),
-        node: () => context.externalDependencies.stream.Readable._getReferenceToType()
+        node: () =>
+            getReadableTypeNode({
+                typeArgument: ts.factory.createTypeReferenceNode("Uint8Array"),
+                context,
+                streamType
+            })
     });
     if (includeContentHeadersOnResponse) {
         return ts.factory.createTypeLiteralNode([
@@ -82,7 +93,11 @@ function getFileType({
                 undefined,
                 READABLE_RESPONSE_KEY,
                 undefined,
-                context.externalDependencies.stream.Readable._getReferenceToType()
+                getReadableTypeNode({
+                    typeArgument: ts.factory.createTypeReferenceNode("Uint8Array"),
+                    context,
+                    streamType
+                })
             ),
             ts.factory.createPropertySignature(
                 undefined,

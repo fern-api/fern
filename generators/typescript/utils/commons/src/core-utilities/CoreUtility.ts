@@ -5,6 +5,9 @@ import { Reference } from "../referencing";
 export type CoreUtilityName = string;
 
 export declare namespace CoreUtility {
+    export interface Options {
+        streamType: "wrapper" | "web";
+    }
     export interface Init {
         getReferenceToExport: (args: { manifest: CoreUtility.Manifest; exportedName: string }) => Reference;
     }
@@ -12,17 +15,11 @@ export declare namespace CoreUtility {
     export interface Manifest {
         name: CoreUtilityName;
         pathInCoreUtilities: ExportedDirectory;
-        addDependencies?: (dependencyManager: DependencyManager) => void;
+        addDependencies?: (dependencyManager: DependencyManager, options: Options) => void;
         dependsOn?: CoreUtility.Manifest[];
-        getFilesPatterns: (options: getFilesGlob.Options) => {
+        getFilesPatterns: (options: Options) => {
             patterns: string | string[];
             ignore?: string | string[];
-        };
-    }
-
-    export namespace getFilesGlob {
-        export type Options = {
-            streamResponseType: "wrapper" | "web";
         };
     }
 }

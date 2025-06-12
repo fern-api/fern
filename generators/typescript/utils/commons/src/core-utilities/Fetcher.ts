@@ -136,21 +136,25 @@ export declare namespace Fetcher {
 export const MANIFEST: CoreUtility.Manifest = {
     name: "fetcher",
     pathInCoreUtilities: { nameOnDisk: "fetcher", exportDeclaration: { exportAll: true } },
-    addDependencies: (dependencyManager: DependencyManager): void => {
+    addDependencies: (dependencyManager: DependencyManager, options): void => {
         dependencyManager.addDependency("form-data", "^4.0.0");
         dependencyManager.addDependency("formdata-node", "^6.0.3");
         dependencyManager.addDependency("node-fetch", "^2.7.0");
         dependencyManager.addDependency("qs", "^6.13.1");
-        dependencyManager.addDependency("readable-stream", "^4.5.2");
+        if (options.streamType === "wrapper") {
+            dependencyManager.addDependency("readable-stream", "^4.5.2");
+        }
         dependencyManager.addDependency("@types/qs", "^6.9.17", {
             type: DependencyType.DEV
         });
         dependencyManager.addDependency("@types/node-fetch", "^2.6.12", {
             type: DependencyType.DEV
         });
-        dependencyManager.addDependency("@types/readable-stream", "^4.0.18", {
-            type: DependencyType.DEV
-        });
+        if (options.streamType === "wrapper") {
+            dependencyManager.addDependency("@types/readable-stream", "^4.0.18", {
+                type: DependencyType.DEV
+            });
+        }
         dependencyManager.addDependency("webpack", "^5.97.1", {
             type: DependencyType.DEV
         });
@@ -163,7 +167,7 @@ export const MANIFEST: CoreUtility.Manifest = {
         return {
             patterns: ["src/core/fetcher/**", "tests/unit/fetcher/**"],
             ignore:
-                options.streamResponseType !== "wrapper"
+                options.streamType !== "wrapper"
                     ? ["src/core/fetcher/stream-wrappers/**", "tests/unit/fetcher/stream-wrappers/**"]
                     : undefined
         };

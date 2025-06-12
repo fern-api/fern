@@ -1,6 +1,6 @@
 import { RUNTIME } from "../../../src/core/runtime";
 import { getResponseBody } from "../../../src/core/fetcher/getResponseBody";
-<% if (streamResponseType === "wrapper") { %>
+<% if (streamType === "wrapper") { %>
 import { chooseStreamWrapper } from "../../../src/core/fetcher/stream-wrappers/chooseStreamWrapper";
 <% } %>
 
@@ -22,7 +22,7 @@ describe("Test getResponseBody", () => {
         }
     });
 
-<% if (streamResponseType === "wrapper") { %>
+<% if (streamType === "wrapper") { %>
     it("should handle streaming response type", async () => {
         if (RUNTIME.type === "node") {
             const mockStream = new ReadableStream();

@@ -3,7 +3,7 @@
   changelogEntry:
     - summary: |
         You can now specify whether to return streams using the stream wrapper, or return the web standard stream.
-        Change the type of stream returned by setting `streamResponseType` to `wrapper` or `web` in the `config` of your generator configuration.
+        Change the type of stream returned by setting `streamType` to `wrapper` or `web` in the `config` of your generator configuration.
         The default is `wrapper`.
       type: feat
     - summary: |

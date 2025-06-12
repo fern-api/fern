@@ -1,4 +1,4 @@
-<% if (streamResponseType === "wrapper") { %>
+<% if (streamType === "wrapper") { %>
 import { chooseStreamWrapper } from "./stream-wrappers/chooseStreamWrapper";
 <% } %>
 
@@ -10,7 +10,7 @@ export async function getResponseBody(response: Response, responseType?: string)
     } else if (response.body != null && responseType === "sse") {
         return response.body;
     } else if (response.body != null && responseType === "streaming") {
-        <% if (streamResponseType === "wrapper") { %>
+        <% if (streamType === "wrapper") { %>
         return chooseStreamWrapper(response.body);
         <% } else { %>
         return response.body;

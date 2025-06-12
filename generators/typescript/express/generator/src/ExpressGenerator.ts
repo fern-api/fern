@@ -120,7 +120,9 @@ export class ExpressGenerator {
         this.config = config;
 
         this.exportsManager = new ExportsManager();
-        this.coreUtilitiesManager = new CoreUtilitiesManager();
+        this.coreUtilitiesManager = new CoreUtilitiesManager({
+            streamType: "wrapper"
+        });
 
         this.project = new Project({
             useInMemoryFileSystem: true
@@ -291,10 +293,7 @@ export class ExpressGenerator {
     }): Promise<void> {
         await this.coreUtilitiesManager.copyCoreUtilities({
             pathToSrc,
-            pathToRoot,
-            config: {
-                streamResponseType: "web"
-            }
+            pathToRoot
         });
     }
 

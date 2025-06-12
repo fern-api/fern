@@ -38,5 +38,5 @@ export interface SdkCustomConfig {
     noScripts: boolean | undefined;
     useBigInt: boolean | undefined;
     useLegacyExports: boolean | undefined;
-    streamResponseType: "wrapper" | "web";
+    streamType: "wrapper" | "web";
 }
