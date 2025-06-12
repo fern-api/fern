@@ -58,12 +58,11 @@ class TestGetMovie:
         )
 
         client_wrapper = SyncClientWrapper(
-            base_url=base_url, httpx_client=httpx.Client(), token="dummy-token"
+            base_url=f"{base_url}/imdb", httpx_client=httpx.Client(), token="dummy-token"
         )
         client = ImdbClient(client_wrapper=client_wrapper)
         movie = client.get_movie(movie_id=movie_id)
 
-        movie_data["rating"] = 8.9
         expected_response = json.dumps(movie_data)
         actual_response = movie.model_dump_json()
 
@@ -84,7 +83,7 @@ class TestGetMovie:
         )
 
         client_wrapper = SyncClientWrapper(
-            base_url=base_url, httpx_client=httpx.Client(), token="dummy-token"
+            base_url=f"{base_url}/imdb", httpx_client=httpx.Client(), token="dummy-token"
         )
         client = ImdbClient(client_wrapper=client_wrapper)
 
@@ -109,7 +108,7 @@ class TestGetMovie:
         )
 
         client_wrapper = SyncClientWrapper(
-            base_url=base_url, httpx_client=httpx.Client(), token="dummy-token"
+            base_url=f"{base_url}/imdb", httpx_client=httpx.Client(), token="dummy-token"
         )
         client = ImdbClient(client_wrapper=client_wrapper)
 
