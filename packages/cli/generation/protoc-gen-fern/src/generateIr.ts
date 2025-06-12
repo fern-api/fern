@@ -2,10 +2,12 @@ import { DescField, DescMessage } from "@bufbuild/protobuf";
 import { CodeGeneratorRequest } from "@bufbuild/protobuf/wkt";
 import { FileInfo, Printable } from "@bufbuild/protoplugin";
 
+import { constructCasingsGenerator } from "@fern-api/casings-generator";
 // import { createLogger } from "@fern-api/logger";
 // import { mergeIntermediateRepresentations } from "@fern-api/ir-utils";
 // import { ProtobufConverter } from "./converters/ProtobufConverter";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
+import { mergeIntermediateRepresentation } from "@fern-api/ir-utils";
 // import { mergeIntermediateRepresentation } from "@fern-api/ir-utils";
 // import { constructCasingsGenerator } from "@fern-api/casings-generator";
 import { createLogger } from "@fern-api/logger";
@@ -14,8 +16,6 @@ import { ErrorCollector } from "@fern-api/v2-importer-commons";
 import { ProtobufConverterContext } from "./ProtobufConverterContext";
 import { ProtobufConverter } from "./converters/ProtobufConverter";
 import { Options } from "./parseOptions";
-import { constructCasingsGenerator } from "@fern-api/casings-generator";
-import { mergeIntermediateRepresentation } from "@fern-api/ir-utils";
 
 export function generateIr({ req, options }: { req: CodeGeneratorRequest; options: Options }): FileInfo {
     let mergedIr: IntermediateRepresentation | undefined;
@@ -61,9 +61,7 @@ export function generateIr({ req, options }: { req: CodeGeneratorRequest; option
 
     if (result != null) {
         mergedIr =
-            mergedIr === undefined
-                ? result
-                : mergeIntermediateRepresentation(mergedIr, result, casingsGenerator);
+            mergedIr === undefined ? result : mergeIntermediateRepresentation(mergedIr, result, casingsGenerator);
     }
 
     return {

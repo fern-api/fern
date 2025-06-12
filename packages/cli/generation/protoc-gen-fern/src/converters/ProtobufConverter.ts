@@ -1,8 +1,9 @@
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
+import { AbstractSpecConverter } from "@fern-api/v2-importer-commons";
+
 import { ProtobufConverterContext } from "../ProtobufConverterContext";
 import { MessageConverter } from "./MessageConverter";
 import { ServiceConverter } from "./ServiceConverter";
-import { AbstractSpecConverter } from "@fern-api/v2-importer-commons";
 
 export declare namespace ProtobufConverter {
     type Args = AbstractSpecConverter.Args<ProtobufConverterContext>;
