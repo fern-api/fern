@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Relative links between markdown files now works for docs using custom subpaths. 
+      type: fix
+  irVersion: 58
+  createdAt: "2025-06-12"
+  version: 0.64.5
+
+- changelogEntry:
+    - summary: |
         Don't use posthog when CLI is running from self-hosted container.
       type: fix
   irVersion: 58
