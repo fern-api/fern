@@ -1,23 +1,17 @@
 import { FieldDescriptorProto, FieldDescriptorProto_Type } from "@bufbuild/protobuf/wkt";
 
-import {
-    ContainerType,
-    IntegerValidationRules,
-    Literal,
-    PrimitiveTypeV1,
-    PrimitiveTypeV2,
-    StringValidationRules,
-    TypeReference
-} from "@fern-api/ir-sdk";
-import { AbstractConverter, AbstractConverterContext } from "@fern-api/v2-importer-commons";
+import { PrimitiveTypeV1, PrimitiveTypeV2, TypeReference } from "@fern-api/ir-sdk";
+import { AbstractConverter } from "@fern-api/v2-importer-commons";
+
+import { ProtofileConverterContext } from "../ProtofileConverterContext";
 
 export declare namespace PrimitiveFieldConverter {
-    export interface Args extends AbstractConverter.AbstractArgs {
+    export interface Args extends AbstractConverter.Args<ProtofileConverterContext> {
         field: FieldDescriptorProto;
     }
 }
 
-export class PrimitiveFieldConverter extends AbstractConverter<AbstractConverterContext<object>, TypeReference> {
+export class PrimitiveFieldConverter extends AbstractConverter<ProtofileConverterContext, TypeReference> {
     private readonly field: FieldDescriptorProto;
 
     constructor({ context, breadcrumbs, field }: PrimitiveFieldConverter.Args) {

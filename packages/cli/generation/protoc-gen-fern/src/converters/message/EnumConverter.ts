@@ -3,10 +3,10 @@ import { EnumDescriptorProto } from "@bufbuild/protobuf/wkt";
 import { Type } from "@fern-api/ir-sdk";
 import { AbstractConverter, AbstractConverterContext } from "@fern-api/v2-importer-commons";
 
-import { ProtobufConverterContext } from "../../ProtobufConverterContext";
+import { ProtofileConverterContext } from "../ProtofileConverterContext";
 
 export declare namespace EnumConverter {
-    export interface Args extends AbstractConverter.AbstractArgs {
+    export interface Args extends AbstractConverter.Args<ProtofileConverterContext> {
         enum: EnumDescriptorProto;
     }
 
@@ -15,7 +15,7 @@ export declare namespace EnumConverter {
     }
 }
 
-export class EnumConverter extends AbstractConverter<AbstractConverterContext<object>, EnumConverter.Output> {
+export class EnumConverter extends AbstractConverter<ProtofileConverterContext, EnumConverter.Output> {
     private readonly enum: EnumDescriptorProto;
 
     constructor({ context, breadcrumbs, enum: enumType }: EnumConverter.Args) {

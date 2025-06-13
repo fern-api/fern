@@ -3,11 +3,12 @@ import { DescriptorProto, EnumDescriptorProto } from "@bufbuild/protobuf/wkt";
 import { FernIr } from "@fern-api/ir-sdk";
 import { AbstractConverter, AbstractConverterContext } from "@fern-api/v2-importer-commons";
 
+import { ProtofileConverterContext } from "../ProtofileConverterContext";
 import { EnumConverter } from "./EnumConverter";
 import { MessageConverter } from "./MessageConverter";
 
 export declare namespace EnumOrMessageConverter {
-    export interface Args extends AbstractConverter.AbstractArgs {
+    export interface Args extends AbstractConverter.Args<ProtofileConverterContext> {
         schema: EnumDescriptorProto | DescriptorProto;
     }
 
@@ -24,7 +25,7 @@ export declare namespace EnumOrMessageConverter {
 }
 
 export class EnumOrMessageConverter extends AbstractConverter<
-    AbstractConverterContext<object>,
+    ProtofileConverterContext,
     EnumOrMessageConverter.Output
 > {
     private readonly schema: EnumDescriptorProto | DescriptorProto;

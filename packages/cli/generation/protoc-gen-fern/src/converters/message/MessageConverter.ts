@@ -1,17 +1,15 @@
-import { DescriptorProto, FieldDescriptorProto_Type } from "@bufbuild/protobuf/wkt";
+import { DescriptorProto } from "@bufbuild/protobuf/wkt";
 
 import * as FernIr from "@fern-api/ir-sdk";
 import { Type } from "@fern-api/ir-sdk";
-import { AbstractConverter, AbstractConverterContext, Converters } from "@fern-api/v2-importer-commons";
+import { AbstractConverter } from "@fern-api/v2-importer-commons";
 
-import { isNonNullish } from "../../../../../../commons/core-utils/lib/isNonNullish";
-import { ProtobufConverterContext } from "../../ProtobufConverterContext";
+import { ProtofileConverterContext } from "../ProtofileConverterContext";
 import { convertFields } from "../utils/ConvertFields";
-import { EnumConverter } from "./EnumConverter";
 import { EnumOrMessageConverter } from "./EnumOrMessageConverter";
 
 export declare namespace MessageConverter {
-    export interface Args extends AbstractConverter.AbstractArgs {
+    export interface Args extends AbstractConverter.Args<ProtofileConverterContext> {
         message: DescriptorProto;
     }
 
@@ -21,9 +19,8 @@ export declare namespace MessageConverter {
     }
 }
 
-export class MessageConverter extends AbstractConverter<AbstractConverterContext<object>, MessageConverter.Output> {
+export class MessageConverter extends AbstractConverter<ProtofileConverterContext, MessageConverter.Output> {
     private readonly message: DescriptorProto;
-
     constructor({ context, breadcrumbs, message }: MessageConverter.Args) {
         super({ context, breadcrumbs });
         this.message = message;
@@ -32,46 +29,53 @@ export class MessageConverter extends AbstractConverter<AbstractConverterContext
     public convert(): MessageConverter.Output | undefined {
         // TODO: convert message (i.e. convert schema)
 
+        const inlinedTypes: Record<FernIr.TypeId, EnumOrMessageConverter.ConvertedSchema> = {};
+
         // Step 1: Convert all fields
-        if (this.message.field.length > 0) {
-            const { convertedFields, inlinedTypesFromFields, referencedTypes, propertiesByAudience } = convertFields({
-                fields: this.message.field,
-                breadcrumbs: this.breadcrumbs,
-                context: this.context
-            });
-            return {
-                convertedSchema: {
-                    typeDeclaration: this.createTypeDeclaration({
-                        shape: Type.object({
-                            properties: convertedFields,
-                            extends: [],
-                            extendedProperties: [],
-                            extraProperties: false
-                        }),
-                        referencedTypes
-                    }),
-                    audiences: [],
-                    propertiesByAudience
-                },
-                inlinedTypes: inlinedTypesFromFields
-            };
-        }
+        const { convertedFields, referencedTypes, propertiesByAudience } = convertFields({
+            fields: this.message.field,
+            breadcrumbs: this.breadcrumbs,
+            context: this.context
+        });
 
         // Step 2: Convert all nested messages and enums
-        for (const nestedMessage of [...this.message.nestedType, ...this.message.enumType]) {
+        for (const nestedEnumOrMessage of [...this.message.nestedType, ...this.message.enumType]) {
+            this.context.logger.info("Converting nested enum/message", JSON.stringify(nestedEnumOrMessage, null, 2));
             const enumOrMessageConverter = new EnumOrMessageConverter({
                 context: this.context,
                 breadcrumbs: this.breadcrumbs,
-                schema: nestedMessage
+                schema: nestedEnumOrMessage
             });
-            const convertedSchema = enumOrMessageConverter.convert();
+            const convertedNestedEnumOrMessage = enumOrMessageConverter.convert();
+            if (convertedNestedEnumOrMessage != null) {
+                // TODO: add it as an inlined type with "{ParentMessageName}.{NestedMessageName}"
+                this.context.logger.info(
+                    "Converted nested message\n",
+                    JSON.stringify(convertedNestedEnumOrMessage, null, 2)
+                );
+            }
         }
         // Step 3: Convert all oneofs
         for (const oneof of this.message.oneofDecl) {
             this.context.logger.info("Oneof", oneof.name);
         }
 
-        return undefined;
+        return {
+            convertedSchema: {
+                typeDeclaration: this.createTypeDeclaration({
+                    shape: Type.object({
+                        properties: convertedFields,
+                        extends: [],
+                        extendedProperties: [],
+                        extraProperties: false
+                    }),
+                    referencedTypes
+                }),
+                audiences: [],
+                propertiesByAudience
+            },
+            inlinedTypes
+        };
     }
 
     public createTypeDeclaration({

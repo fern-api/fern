@@ -1,8 +1,8 @@
 import { FieldDescriptorProto } from "@bufbuild/protobuf/wkt";
 
 import { ObjectProperty, Type, TypeId } from "@fern-api/ir-sdk";
-import { AbstractConverter, AbstractConverterContext } from "@fern-api/v2-importer-commons";
 
+import { ProtofileConverterContext } from "../ProtofileConverterContext";
 import { EnumOrMessageConverter } from "../message/EnumOrMessageConverter";
 import { FieldConverter } from "../message/FieldConverter";
 
@@ -13,15 +13,13 @@ export function convertFields({
 }: {
     fields: FieldDescriptorProto[];
     breadcrumbs: string[];
-    context: AbstractConverterContext<object>;
+    context: ProtofileConverterContext;
 }): {
     convertedFields: ObjectProperty[];
-    inlinedTypesFromFields: Record<TypeId, EnumOrMessageConverter.ConvertedSchema>;
     referencedTypes: Set<string>;
     propertiesByAudience: Record<string, Set<string>>;
 } {
     const convertedFields: ObjectProperty[] = [];
-    let inlinedTypesFromFields: Record<TypeId, EnumOrMessageConverter.ConvertedSchema> = {};
     const propertiesByAudience: Record<string, Set<string>> = {};
     const referencedTypes: Set<string> = new Set();
 
@@ -32,7 +30,6 @@ export function convertFields({
             field
         });
         const convertedField = fieldConverter.convert();
-
         if (convertedField != null) {
             convertedFields.push({
                 name: context.casingsGenerator.generateNameAndWireValue({
@@ -45,24 +42,11 @@ export function convertFields({
                 propertyAccess: undefined,
                 v2Examples: undefined
             });
-            inlinedTypesFromFields = {
-                ...inlinedTypesFromFields,
-                ...convertedField.inlinedTypes
-            };
         }
-
-        // const fieldBreadcrumbs = [...breadcrumbs, "fields", field.name];
-
-        // // TODO: support arrays
-        // const isRepeated = field.label === 3;
-
-        // const isReferencedType = field.type === 11 && field.typeName != null;
-        // context.logger.info(`Converting ${isRepeated ? "repeated ": ""}${isReferencedType ? "type reference " : "field "}'${field.name}' at ${fieldBreadcrumbs.join(".")}`);
     }
 
     return {
         convertedFields,
-        inlinedTypesFromFields,
         referencedTypes,
         propertiesByAudience
     };

@@ -1,15 +1,16 @@
 import { FieldDescriptorProto } from "@bufbuild/protobuf/wkt";
 
 import { Availability, TypeReference } from "@fern-api/ir-sdk";
-import { AbstractConverter, AbstractConverterContext } from "@fern-api/v2-importer-commons";
+import { AbstractConverter } from "@fern-api/v2-importer-commons";
 
 import { PRIMITIVE_TYPES } from "../../commons/ProtobufSettings";
+import { ProtofileConverterContext } from "../ProtofileConverterContext";
 import { ArrayFieldConverter } from "./ArrayFieldConverter";
 import { EnumOrMessageConverter } from "./EnumOrMessageConverter";
 import { PrimitiveFieldConverter } from "./PrimitiveFieldConverter";
 
 export declare namespace FieldConverter {
-    export interface Args extends AbstractConverter.AbstractArgs {
+    export interface Args extends AbstractConverter.Args<ProtofileConverterContext> {
         field: FieldDescriptorProto;
     }
 
@@ -20,7 +21,7 @@ export declare namespace FieldConverter {
     }
 }
 
-export class FieldConverter extends AbstractConverter<AbstractConverterContext<object>, FieldConverter.Output> {
+export class FieldConverter extends AbstractConverter<ProtofileConverterContext, FieldConverter.Output> {
     private readonly field: FieldDescriptorProto;
 
     constructor({ context, breadcrumbs, field }: FieldConverter.Args) {
@@ -62,8 +63,8 @@ export class FieldConverter extends AbstractConverter<AbstractConverterContext<o
         }
 
         if (this.field.type === 11 && this.field.typeName != null) {
-            const typeReference = this.convertReferenceToTypeReference({
-                typeName: this.field.typeName
+            const typeReference = this.context.convertGrpcReferenceToTypeReference({
+                typeName: this.context.maybeRemoveGrpcPackagePrefix(this.field.typeName)
             });
             if (typeReference.ok) {
                 return {
@@ -74,30 +75,5 @@ export class FieldConverter extends AbstractConverter<AbstractConverterContext<o
         }
 
         return undefined;
-    }
-
-    private convertReferenceToTypeReference({ typeName }: { typeName: string }):
-        | {
-              ok: true;
-              reference: TypeReference;
-              inlinedTypes?: Record<string, EnumOrMessageConverter.ConvertedSchema>;
-          }
-        | { ok: false } {
-        return {
-            ok: true,
-            reference: TypeReference.named({
-                fernFilepath: {
-                    allParts: [],
-                    packagePath: [],
-                    file: undefined
-                },
-                name: this.context.casingsGenerator.generateName(typeName),
-                typeId: typeName,
-                default: undefined,
-                inline: false,
-                displayName: undefined
-            }),
-            inlinedTypes: {}
-        };
     }
 }

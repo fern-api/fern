@@ -23,18 +23,15 @@ package user.v1;
 //   ROLE_GUEST = 3;
 // }
 
-enum Role2 {
-  ROLE_UNSPECIFIED2 = 0;
-  ROLE_ADMIN2 = 1;
-  ROLE_USER2 = 2;
-  ROLE_GUEST2 = 3;
-}
-
-message Address {
-  string street = 1;
-}
+// enum Role2 {
+//   ROLE_UNSPECIFIED2 = 0;
+//   ROLE_ADMIN2 = 1;
+//   ROLE_USER2 = 2;
+//   ROLE_GUEST2 = 3;
+// }
 
 message User {
-  string name = 1;
-  repeated Address address = 2;  // References Address message
+  message Contact {
+    string phone = 1;
+  }
 }
