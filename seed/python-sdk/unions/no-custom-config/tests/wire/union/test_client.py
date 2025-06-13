@@ -94,7 +94,7 @@ class TestUpdateShape(WireTestBase):
             json_body=shape.model_dump(),
             response=MockResponse(
                 status_code=200,
-                body=True,
+                body="true",
                 headers={"Content-Type": "application/json"},
             ),
         )
@@ -135,7 +135,7 @@ class TestUpdateShape(WireTestBase):
             json_body=shape.model_dump(),
             response=MockResponse(
                 status_code=500,
-                body=True,
+                body={"error": "Internal server error"},
                 headers={"Content-Type": "application/json"},
             ),
         )
@@ -144,7 +144,7 @@ class TestUpdateShape(WireTestBase):
             self.client.union.update(request=shape)
         assert exc_info.value.status_code == 500
 
-        expected_response = json.dumps(True)
+        expected_response = json.dumps({"error": "Internal server error"})
         actual_response = json.dumps(exc_info.value.body)
 
         assert_json_eq(expected_response, actual_response)
@@ -231,7 +231,7 @@ class TestAsyncUpdateShape(AsyncWireTestBase):
             json_body=shape.model_dump(),
             response=MockResponse(
                 status_code=200,
-                body=True,
+                body="true",
                 headers={"Content-Type": "application/json"},
             ),
         )
@@ -274,7 +274,7 @@ class TestAsyncUpdateShape(AsyncWireTestBase):
             json_body=shape.model_dump(),
             response=MockResponse(
                 status_code=500,
-                body=True,
+                body={"error": "Internal server error"},
                 headers={"Content-Type": "application/json"},
             ),
         )
@@ -283,7 +283,7 @@ class TestAsyncUpdateShape(AsyncWireTestBase):
             await self.client.union.update(request=shape)
         assert exc_info.value.status_code == 500
 
-        expected_response = json.dumps(True)
+        expected_response = json.dumps({"error": "Internal server error"})
         actual_response = json.dumps(exc_info.value.body)
 
         assert_json_eq(expected_response, actual_response)
