@@ -18,6 +18,7 @@ from tests.utils.wire.wire_test_base import WireTestBase, AsyncWireTestBase
 
 
 class TestGetMovie(WireTestBase):
+    # TODO(rmehndiratta): Use the examples from types.yml
     def test_get_movie_success(self):
         movie_id = "tt0482571"
         movie_data = {"id": movie_id, "title": "The Prestige", "rating": 8.5}
