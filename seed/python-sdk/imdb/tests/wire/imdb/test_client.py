@@ -41,6 +41,8 @@ class TestGetMovie(WireTestBase):
 
         self.expect_request(
             uri=f"/movies/{movie_id}",
+            method="GET",
+            headers={"Authorization": "Bearer dummy-token"},
             response=MockResponse(
                 status_code=200,
                 body=movie_data,
@@ -60,6 +62,8 @@ class TestGetMovie(WireTestBase):
 
         self.expect_request(
             uri=f"/movies/{movie_id}",
+            method="GET",
+            headers={"Authorization": "Bearer dummy-token"},
             response=MockResponse(
                 status_code=404,
                 body=f'"{movie_id}"',
@@ -79,6 +83,8 @@ class TestGetMovie(WireTestBase):
 
         self.expect_request(
             uri=f"/movies/{movie_id}",
+            method="GET",
+            headers={"Authorization": "Bearer dummy-token"},
             response=MockResponse(
                 status_code=500,
                 body=error_response,
@@ -107,6 +113,7 @@ class TestCreateMovie(WireTestBase):
         self.expect_request(
             uri="/movies/create-movie",
             method="POST",
+            headers={"Authorization": "Bearer dummy-token"},
             json_body=movie_data,
             response=MockResponse(
                 status_code=200,
@@ -132,6 +139,7 @@ class TestCreateMovie(WireTestBase):
         self.expect_request(
             uri="/movies/create-movie",
             method="POST",
+            headers={"Authorization": "Bearer dummy-token"},
             json_body=movie_data,
             response=MockResponse(
                 status_code=400,
@@ -162,6 +170,7 @@ class TestCreateMovie(WireTestBase):
         self.expect_request(
             uri="/movies/create-movie",
             method="POST",
+            headers={"Authorization": "Bearer dummy-token"},
             json_body=movie_data,
             response=MockResponse(
                 status_code=500,
@@ -205,6 +214,8 @@ class TestAsyncGetMovie(AsyncWireTestBase):
 
         self.expect_request(
             uri=f"/movies/{movie_id}",
+            method="GET",
+            headers={"Authorization": "Bearer dummy-token"},
             response=MockResponse(
                 status_code=200,
                 body=movie_data,
@@ -225,6 +236,8 @@ class TestAsyncGetMovie(AsyncWireTestBase):
 
         self.expect_request(
             uri=f"/movies/{movie_id}",
+            method="GET",
+            headers={"Authorization": "Bearer dummy-token"},
             response=MockResponse(
                 status_code=404,
                 body=f'"{movie_id}"',
@@ -244,6 +257,8 @@ class TestAsyncGetMovie(AsyncWireTestBase):
 
         self.expect_request(
             uri=f"/movies/{movie_id}",
+            method="GET",
+            headers={"Authorization": "Bearer dummy-token"},
             response=MockResponse(
                 status_code=500,
                 body=error_response,
@@ -273,6 +288,7 @@ class TestAsyncCreateMovie(AsyncWireTestBase):
         self.expect_request(
             uri="/movies/create-movie",
             method="POST",
+            headers={"Authorization": "Bearer dummy-token"},
             json_body=movie_data,
             response=MockResponse(
                 status_code=200,
@@ -299,6 +315,7 @@ class TestAsyncCreateMovie(AsyncWireTestBase):
         self.expect_request(
             uri="/movies/create-movie",
             method="POST",
+            headers={"Authorization": "Bearer dummy-token"},
             json_body=movie_data,
             response=MockResponse(
                 status_code=400,
@@ -330,6 +347,7 @@ class TestAsyncCreateMovie(AsyncWireTestBase):
         self.expect_request(
             uri="/movies/create-movie",
             method="POST",
+            headers={"Authorization": "Bearer dummy-token"},
             json_body=movie_data,
             response=MockResponse(
                 status_code=500,
