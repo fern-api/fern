@@ -1,0 +1,14 @@
+{
+  "ignores": [
+    "@fern-api/configs",
+    "@types/jest",
+    "@types/lodash-es",
+    "@types/node",
+    "depcheck",
+    "eslint",
+    "prettier",
+    "@trivago/prettier-plugin-sort-imports",
+    "typescript",
+    "vitest"
+  ]
+} 

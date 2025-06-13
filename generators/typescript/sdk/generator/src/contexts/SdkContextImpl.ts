@@ -13,6 +13,7 @@ import {
     GenericAPISdkErrorContext,
     JsonContext,
     SdkClientClassContext,
+    SdkClientUtilsContext,
     SdkContext,
     SdkInlinedRequestBodySchemaContext,
     TimeoutSdkErrorContext,
@@ -24,6 +25,7 @@ import { GenericAPISdkErrorGenerator, TimeoutSdkErrorGenerator } from "@fern-typ
 import { RequestWrapperGenerator } from "@fern-typescript/request-wrapper-generator";
 import { ErrorResolver, PackageResolver, TypeResolver } from "@fern-typescript/resolvers";
 import { SdkClientClassGenerator, WebsocketClassGenerator } from "@fern-typescript/sdk-client-class-generator";
+import { SdkClientUtilsGenerator } from "@fern-typescript/sdk-client-utils-generator";
 import { SdkEndpointTypeSchemasGenerator } from "@fern-typescript/sdk-endpoint-type-schemas-generator";
 import { SdkErrorGenerator } from "@fern-typescript/sdk-error-generator";
 import { SdkErrorSchemaGenerator } from "@fern-typescript/sdk-error-schema-generator";
@@ -46,6 +48,7 @@ import { GenericAPISdkErrorDeclarationReferencer } from "../declaration-referenc
 import { JsonDeclarationReferencer } from "../declaration-referencers/JsonDeclarationReferencer";
 import { RequestWrapperDeclarationReferencer } from "../declaration-referencers/RequestWrapperDeclarationReferencer";
 import { SdkClientClassDeclarationReferencer } from "../declaration-referencers/SdkClientClassDeclarationReferencer";
+import { SdkClientUtilsDeclarationReferencer } from "../declaration-referencers/SdkClientUtilsDeclarationReferencer";
 import { SdkErrorDeclarationReferencer } from "../declaration-referencers/SdkErrorDeclarationReferencer";
 import { SdkInlinedRequestBodyDeclarationReferencer } from "../declaration-referencers/SdkInlinedRequestBodyDeclarationReferencer";
 import { TimeoutSdkErrorDeclarationReferencer } from "../declaration-referencers/TimeoutSdkErrorDeclarationReferencer";
@@ -60,6 +63,7 @@ import { GenericAPISdkErrorContextImpl } from "./generic-api-sdk-error/GenericAP
 import { JsonContextImpl } from "./json/JsonContextImpl";
 import { RequestWrapperContextImpl } from "./request-wrapper/RequestWrapperContextImpl";
 import { SdkClientClassContextImpl } from "./sdk-client-class/SdkClientClassContextImpl";
+import { SdkClientUtilsContextImpl } from "./sdk-client-utils/SdkClientUtilsContextImpl";
 import { SdkEndpointTypeSchemasContextImpl } from "./sdk-endpoint-type-schemas/SdkEndpointTypeSchemasContextImpl";
 import { SdkErrorSchemaContextImpl } from "./sdk-error-schema/SdkErrorSchemaContextImpl";
 import { SdkErrorContextImpl } from "./sdk-error/SdkErrorContextImpl";
@@ -110,6 +114,8 @@ export declare namespace SdkContextImpl {
         sdkEndpointTypeSchemasGenerator: SdkEndpointTypeSchemasGenerator;
         sdkClientClassDeclarationReferencer: SdkClientClassDeclarationReferencer;
         sdkClientClassGenerator: SdkClientClassGenerator;
+        sdkClientUtilsDeclarationReferencer: SdkClientUtilsDeclarationReferencer;
+        sdkClientUtilsGenerator: SdkClientUtilsGenerator;
         websocketSocketDeclarationReferencer: WebsocketSocketDeclarationReferencer;
         websocketTypeSchemaDeclarationReferencer: WebsocketTypeSchemaDeclarationReferencer;
         websocketGenerator: WebsocketClassGenerator;
@@ -163,6 +169,7 @@ export class SdkContextImpl implements SdkContext {
     public readonly sdkInlinedRequestBodySchema: SdkInlinedRequestBodySchemaContext;
     public readonly sdkEndpointTypeSchemas: SdkEndpointTypeSchemasContextImpl;
     public readonly sdkClientClass: SdkClientClassContext;
+    public readonly sdkClientUtils: SdkClientUtilsContext;
     public readonly websocketTypeSchema: WebsocketTypeSchemaContext;
     public readonly websocket: WebsocketContextImpl;
     public readonly environments: EnvironmentsContext;
@@ -212,6 +219,8 @@ export class SdkContextImpl implements SdkContext {
         packageResolver,
         sdkClientClassDeclarationReferencer,
         sdkClientClassGenerator,
+        sdkClientUtilsDeclarationReferencer,
+        sdkClientUtilsGenerator,
         websocketTypeSchemaDeclarationReferencer,
         environmentsGenerator,
         environmentsDeclarationReferencer,
@@ -365,6 +374,12 @@ export class SdkContextImpl implements SdkContext {
             sdkClientClassDeclarationReferencer,
             sdkClientClassGenerator,
             packageResolver
+        });
+        this.sdkClientUtils = new SdkClientUtilsContextImpl({
+            sourceFile: this.sourceFile,
+            importsManager,
+            sdkClientUtilsDeclarationReferencer,
+            sdkClientUtilsGenerator
         });
         this.websocketTypeSchema = new WebsocketTypeSchemaContextImpl({
             sourceFile: this.sourceFile,

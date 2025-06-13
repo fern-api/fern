@@ -24,6 +24,7 @@ import { RequestWrapperGenerator } from "@fern-typescript/request-wrapper-genera
 import { ErrorResolver, PackageResolver, TypeResolver } from "@fern-typescript/resolvers";
 import { SdkClientClassGenerator, WebsocketClassGenerator } from "@fern-typescript/sdk-client-class-generator";
 import { OAuthTokenProviderGenerator } from "@fern-typescript/sdk-client-class-generator/src/oauth-generator/OAuthTokenProviderGenerator";
+import { SdkClientUtilsGenerator } from "@fern-typescript/sdk-client-utils-generator";
 import { SdkEndpointTypeSchemasGenerator } from "@fern-typescript/sdk-endpoint-type-schemas-generator";
 import { SdkErrorGenerator } from "@fern-typescript/sdk-error-generator";
 import { SdkErrorSchemaGenerator } from "@fern-typescript/sdk-error-schema-generator";
@@ -63,6 +64,7 @@ import { GenericAPISdkErrorDeclarationReferencer } from "./declaration-reference
 import { JsonDeclarationReferencer } from "./declaration-referencers/JsonDeclarationReferencer";
 import { RequestWrapperDeclarationReferencer } from "./declaration-referencers/RequestWrapperDeclarationReferencer";
 import { SdkClientClassDeclarationReferencer } from "./declaration-referencers/SdkClientClassDeclarationReferencer";
+import { SdkClientUtilsDeclarationReferencer } from "./declaration-referencers/SdkClientUtilsDeclarationReferencer";
 import { SdkErrorDeclarationReferencer } from "./declaration-referencers/SdkErrorDeclarationReferencer";
 import { SdkInlinedRequestBodyDeclarationReferencer } from "./declaration-referencers/SdkInlinedRequestBodyDeclarationReferencer";
 import { TimeoutSdkErrorDeclarationReferencer } from "./declaration-referencers/TimeoutSdkErrorDeclarationReferencer";
@@ -182,6 +184,7 @@ export class SdkGenerator {
     private genericAPISdkErrorDeclarationReferencer: GenericAPISdkErrorDeclarationReferencer;
     private timeoutSdkErrorDeclarationReferencer: TimeoutSdkErrorDeclarationReferencer;
     private jsonDeclarationReferencer: JsonDeclarationReferencer;
+    private utilsDeclarationReferencer: SdkClientUtilsDeclarationReferencer;
 
     private versionGenerator: VersionGenerator;
     private typeGenerator: TypeGenerator;
@@ -198,6 +201,7 @@ export class SdkGenerator {
     private sdkClientClassGenerator: SdkClientClassGenerator;
     private genericAPISdkErrorGenerator: GenericAPISdkErrorGenerator;
     private timeoutSdkErrorGenerator: TimeoutSdkErrorGenerator;
+    private sdkUtilsGenerator: SdkClientUtilsGenerator;
     private oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
     private jestTestGenerator: JestTestGenerator;
     private websocketGenerator: WebsocketClassGenerator;
@@ -319,6 +323,11 @@ export class SdkGenerator {
                 }
             ],
             namespaceExport: "json"
+        });
+        this.utilsDeclarationReferencer = new SdkClientUtilsDeclarationReferencer({
+            containingDirectory: apiDirectory,
+            namespaceExport,
+            packageResolver: this.packageResolver
         });
 
         this.versionGenerator = new VersionGenerator();
@@ -445,6 +454,18 @@ export class SdkGenerator {
             containingDirectory: apiDirectory,
             namespaceExport,
             packageResolver: this.packageResolver
+        });
+
+        this.sdkUtilsGenerator = new SdkClientUtilsGenerator({
+            intermediateRepresentation,
+            errorResolver: this.errorResolver,
+            packageResolver: this.packageResolver,
+            targetRuntime: config.targetRuntime,
+            npmPackage,
+            includeSerdeLayer: config.includeSerdeLayer,
+            retainOriginalCasing: config.retainOriginalCasing,
+            omitUndefined: config.omitUndefined,
+            allowExtraFields: config.allowExtraFields
         });
     }
 
@@ -839,6 +860,7 @@ export class SdkGenerator {
             if (!package_.hasEndpointsInTree && (!this.shouldGenerateWebsocketClients || package_.websocket == null)) {
                 continue;
             }
+
             this.withSourceFile({
                 filepath: this.sdkClientClassDeclarationReferencer.getExportedFilepath(packageId),
                 run: ({ sourceFile, importsManager }) => {
@@ -846,6 +868,23 @@ export class SdkGenerator {
                     context.sdkClientClass.getGeneratedSdkClientClass(packageId).writeToFile(context);
                 }
             });
+
+            if (package_.hasEndpointsInTree && !packageId.isRoot) {
+                this.context.logger.debug(`Generating utilities for package: ${packageId.subpackageId}`);
+                const filePaths = this.utilsDeclarationReferencer.getAllExportedFilepaths(packageId.subpackageId);
+
+                // Generate each utils file cleanly
+                for (const [filename, filepath] of Object.entries(filePaths)) {
+                    this.context.logger.debug(`Generating utils file: ${filename}`);
+                    this.withSourceFile({
+                        filepath,
+                        run: ({ sourceFile, importsManager }) => {
+                            const context = this.generateSdkContext({ sourceFile, importsManager });
+                            context.sdkClientUtils.getGeneratedUtilsFile(packageId, filename).writeToFile(context);
+                        }
+                    });
+                }
+            }
         }
     }
 
@@ -1423,6 +1462,8 @@ export class SdkGenerator {
             environmentsDeclarationReferencer: this.environmentsDeclarationReferencer,
             sdkClientClassDeclarationReferencer: this.sdkClientClassDeclarationReferencer,
             sdkClientClassGenerator: this.sdkClientClassGenerator,
+            sdkClientUtilsDeclarationReferencer: this.utilsDeclarationReferencer,
+            sdkClientUtilsGenerator: this.sdkUtilsGenerator,
             genericAPISdkErrorDeclarationReferencer: this.genericAPISdkErrorDeclarationReferencer,
             genericAPISdkErrorGenerator: this.genericAPISdkErrorGenerator,
             timeoutSdkErrorDeclarationReferencer: this.timeoutSdkErrorDeclarationReferencer,

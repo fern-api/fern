@@ -4009,6 +4009,9 @@ importers:
       '@fern-typescript/sdk-client-class-generator':
         specifier: workspace:*
         version: link:../client-class-generator
+      '@fern-typescript/sdk-client-utils-generator':
+        specifier: workspace:*
+        version: link:../sdk-client-utils-generator
       '@fern-typescript/sdk-endpoint-type-schemas-generator':
         specifier: workspace:*
         version: link:../sdk-endpoint-type-schemas-generator
@@ -4171,6 +4174,64 @@ importers:
       prettier:
         specifier: ^3.4.2
         version: 3.4.2
+      typescript:
+        specifier: 5.7.2
+        version: 5.7.2
+      vitest:
+        specifier: ^2.1.9
+        version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+
+  generators/typescript/sdk/sdk-client-utils-generator:
+    dependencies:
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../../../packages/commons/core-utils
+      '@fern-fern/ir-sdk':
+        specifier: 57.0.0
+        version: 57.0.0
+      '@fern-typescript/commons':
+        specifier: workspace:*
+        version: link:../../utils/commons
+      '@fern-typescript/contexts':
+        specifier: workspace:*
+        version: link:../../utils/contexts
+      '@fern-typescript/resolvers':
+        specifier: workspace:*
+        version: link:../../utils/resolvers
+      lodash-es:
+        specifier: ^4.17.21
+        version: 4.17.21
+      ts-morph:
+        specifier: ^15.1.0
+        version: 15.1.0
+      ts-poet:
+        specifier: ^6.7.0
+        version: 6.7.0
+    devDependencies:
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../../../packages/configs
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.2(@vue/compiler-sfc@3.5.13)(prettier@3.5.3)
+      '@types/jest':
+        specifier: ^29.5.14
+        version: 29.5.14
+      '@types/lodash-es':
+        specifier: ^4.17.12
+        version: 4.17.12
+      '@types/node':
+        specifier: 18.15.3
+        version: 18.15.3
+      depcheck:
+        specifier: ^1.4.7
+        version: 1.4.7
+      eslint:
+        specifier: ^8.56.0
+        version: 8.57.1
+      prettier:
+        specifier: ^3.4.2
+        version: 3.5.3
       typescript:
         specifier: 5.7.2
         version: 5.7.2
