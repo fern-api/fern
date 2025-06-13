@@ -107,17 +107,6 @@ export abstract class AbstractGoGeneratorContext<
         });
     }
 
-    public getVariadicRequestOptionType(): go.Type {
-        return go.Type.variadic(go.Type.reference(this.getRequestOptionTypeReference()));
-    }
-
-    public getRequestOptionTypeReference(): go.TypeReference {
-        return go.typeReference({
-            name: "RequestOption",
-            importPath: this.getOptionImportPath()
-        });
-    }
-
     public getUuidTypeReference(): go.TypeReference {
         return UuidTypeReference;
     }

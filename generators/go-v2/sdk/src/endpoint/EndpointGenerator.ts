@@ -29,4 +29,20 @@ export class EndpointGenerator extends AbstractEndpointGenerator {
             endpoint
         });
     }
+
+    public generateRaw({
+        serviceId,
+        service,
+        endpoint
+    }: {
+        serviceId: ServiceId;
+        service: HttpService;
+        endpoint: HttpEndpoint;
+    }): go.Method[] {
+        return this.http.generateRaw({
+            serviceId,
+            service,
+            endpoint
+        });
+    }
 }

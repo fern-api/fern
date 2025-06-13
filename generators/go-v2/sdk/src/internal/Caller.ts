@@ -1,6 +1,6 @@
 import { go } from "@fern-api/go-ast";
 
-import { HttpEndpoint, HttpMethod } from "@fern-fern/ir-sdk/api";
+import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
@@ -16,7 +16,7 @@ export declare namespace Caller {
 }
 
 /**
- * Utility class that helps make calls to the RawClient.
+ * Utility class that helps make HTTP calls.
  */
 export class Caller {
     public static TYPE_NAME = "Caller";
@@ -51,7 +51,7 @@ export class Caller {
     public getField(): go.Field {
         return go.field({
             name: this.getFieldName(),
-            type: go.Type.reference(this.getTypeReference())
+            type: go.Type.pointer(go.Type.reference(this.getTypeReference()))
         });
     }
 
@@ -70,18 +70,11 @@ export class Caller {
             },
             {
                 name: "Method",
-                value: go.TypeInstantiation.string("TODO: Add a method to map to the HTTP method type reference.")
+                value: go.TypeInstantiation.reference(this.context.getNetHttpMethodTypeReference(args.endpoint.method))
             },
-
-            // TODO: Add a function to map all options based on their field name.
             {
                 name: "Headers",
-                value: go.TypeInstantiation.reference(
-                    go.selector({
-                        on: args.optionsReference,
-                        selector: go.TypeInstantiation.string("Headers")
-                    })
-                )
+                value: go.TypeInstantiation.string("headers")
             },
             {
                 name: "MaxAttempts",
@@ -89,6 +82,33 @@ export class Caller {
                     go.selector({
                         on: args.optionsReference,
                         selector: go.TypeInstantiation.string("MaxAttempts")
+                    })
+                )
+            },
+            {
+                name: "BodyProperties",
+                value: go.TypeInstantiation.reference(
+                    go.selector({
+                        on: args.optionsReference,
+                        selector: go.TypeInstantiation.string("BodyProperties")
+                    })
+                )
+            },
+            {
+                name: "QueryParameters",
+                value: go.TypeInstantiation.reference(
+                    go.selector({
+                        on: args.optionsReference,
+                        selector: go.TypeInstantiation.string("QueryParameters")
+                    })
+                )
+            },
+            {
+                name: "Client",
+                value: go.TypeInstantiation.reference(
+                    go.selector({
+                        on: args.optionsReference,
+                        selector: go.TypeInstantiation.string("HTTPClient")
                     })
                 )
             }

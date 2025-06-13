@@ -28,4 +28,17 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         const methods: go.Method[] = [];
         return methods;
     }
+
+    public generateRaw({
+        serviceId,
+        service,
+        endpoint
+    }: {
+        serviceId: ServiceId;
+        service: HttpService;
+        endpoint: HttpEndpoint;
+    }): go.Method[] {
+        const methods: go.Method[] = [];
+        return methods;
+    }
 }

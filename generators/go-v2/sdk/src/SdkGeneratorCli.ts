@@ -65,30 +65,24 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
 
     private generateSnippets({ context }: { context: SdkGeneratorContext }): Endpoint[] {
         const endpointSnippets: Endpoint[] = [];
-        const dynamicIr = context.ir.dynamic;
 
-        if (!dynamicIr) {
+        const dynamicIr = context.ir.dynamic;
+        if (dynamicIr == null) {
             throw new Error("Cannot generate dynamic snippets without dynamic IR");
         }
 
         const dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
-            // TEMPORARY HACK: As of 11-Mar-25, convertIr is not a shared library, but ideally
-            // it should be. If you're reading this and considering copying convertIr and
-            // related helpers into another generator, first confirm whether now is a good time
-            // to invest in making this a shared library instead.
             ir: convertIr(dynamicIr),
             config: context.config
         });
 
         for (const [endpointId, endpoint] of Object.entries(dynamicIr.endpoints)) {
-            const method = endpoint.location.method;
             const path = FernGeneratorExec.EndpointPath(endpoint.location.path);
-
             for (const endpointExample of endpoint.examples ?? []) {
                 endpointSnippets.push({
                     exampleIdentifier: endpointExample.id,
                     id: {
-                        method,
+                        method: endpoint.location.method,
                         path,
                         identifierOverride: endpointId
                     },
@@ -115,7 +109,6 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
             context.logger.debug("No snippets were produced; skipping README.md generation.");
             return;
         }
-
         const content = await context.generatorAgent.generateReadme({ context, endpointSnippets });
         context.project.addRawFiles(
             new File(context.generatorAgent.README_FILENAME, RelativeFilePath.of("."), content)
