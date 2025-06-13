@@ -18,8 +18,8 @@ class MockServer:
     def expect_request(
         self,
         uri: str,
-        method: str = "GET",
-        headers: Optional[Dict[str, str]] = None,
+        method: str,
+        headers: Dict[str, str],
         json_body: Optional[Dict[str, Any]] = None,
         response: Optional[MockResponse] = None,
     ) -> None:
