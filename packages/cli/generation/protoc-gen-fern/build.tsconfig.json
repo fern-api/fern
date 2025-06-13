@@ -4,9 +4,6 @@
     "verbatimModuleSyntax": false,
     "module": "CommonJS"
   },
-  "include": [
-    "./package.json",
-    "./src/**/*"
-  ],
+  "include": ["./package.json", "./src/**/*"],
   "references": []
 }

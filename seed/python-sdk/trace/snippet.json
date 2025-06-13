@@ -1,0 +1,460 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/",
+                "method": "GET",
+                "identifier_override": "endpoint_v2.test"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedTrace\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.v_2.test()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedTrace\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\n\n\nasync def main() -> None:\n    await client.v_2.test()\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/admin/store-test-submission-status/{submissionId}",
+                "method": "POST",
+                "identifier_override": "endpoint_admin.updateTestSubmissionStatus"
+            },
+            "snippet": {
+                "sync_client": "import uuid\n\nfrom seed import SeedTrace\nfrom seed.submission import TestSubmissionStatus\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.admin.update_test_submission_status(\n    submission_id=uuid.UUID(\n        \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    ),\n    request=TestSubmissionStatus(),\n)\n",
+                "async_client": "import asyncio\nimport uuid\n\nfrom seed import AsyncSeedTrace\nfrom seed.submission import TestSubmissionStatus\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\n\n\nasync def main() -> None:\n    await client.admin.update_test_submission_status(\n        submission_id=uuid.UUID(\n            \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        ),\n        request=TestSubmissionStatus(),\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/admin/store-test-submission-status-v2/{submissionId}",
+                "method": "POST",
+                "identifier_override": "endpoint_admin.sendTestSubmissionUpdate"
+            },
+            "snippet": {
+                "sync_client": "import datetime\nimport uuid\n\nfrom seed import SeedTrace\nfrom seed.submission import TestSubmissionUpdateInfo_Running\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.admin.send_test_submission_update(\n    submission_id=uuid.UUID(\n        \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    ),\n    update_time=datetime.datetime.fromisoformat(\n        \"2024-01-15 09:30:00+00:00\",\n    ),\n    update_info=TestSubmissionUpdateInfo_Running(value=\"QUEUEING_SUBMISSION\"),\n)\n",
+                "async_client": "import asyncio\nimport datetime\nimport uuid\n\nfrom seed import AsyncSeedTrace\nfrom seed.submission import TestSubmissionUpdateInfo_Running\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\n\n\nasync def main() -> None:\n    await client.admin.send_test_submission_update(\n        submission_id=uuid.UUID(\n            \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        ),\n        update_time=datetime.datetime.fromisoformat(\n            \"2024-01-15 09:30:00+00:00\",\n        ),\n        update_info=TestSubmissionUpdateInfo_Running(\n            value=\"QUEUEING_SUBMISSION\"\n        ),\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/admin/store-workspace-submission-status/{submissionId}",
+                "method": "POST",
+                "identifier_override": "endpoint_admin.updateWorkspaceSubmissionStatus"
+            },
+            "snippet": {
+                "sync_client": "import uuid\n\nfrom seed import SeedTrace\nfrom seed.submission import WorkspaceSubmissionStatus\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.admin.update_workspace_submission_status(\n    submission_id=uuid.UUID(\n        \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    ),\n    request=WorkspaceSubmissionStatus(),\n)\n",
+                "async_client": "import asyncio\nimport uuid\n\nfrom seed import AsyncSeedTrace\nfrom seed.submission import WorkspaceSubmissionStatus\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\n\n\nasync def main() -> None:\n    await client.admin.update_workspace_submission_status(\n        submission_id=uuid.UUID(\n            \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        ),\n        request=WorkspaceSubmissionStatus(),\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/admin/store-workspace-submission-status-v2/{submissionId}",
+                "method": "POST",
+                "identifier_override": "endpoint_admin.sendWorkspaceSubmissionUpdate"
+            },
+            "snippet": {
+                "sync_client": "import datetime\nimport uuid\n\nfrom seed import SeedTrace\nfrom seed.submission import WorkspaceSubmissionUpdateInfo_Running\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.admin.send_workspace_submission_update(\n    submission_id=uuid.UUID(\n        \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    ),\n    update_time=datetime.datetime.fromisoformat(\n        \"2024-01-15 09:30:00+00:00\",\n    ),\n    update_info=WorkspaceSubmissionUpdateInfo_Running(\n        value=\"QUEUEING_SUBMISSION\"\n    ),\n)\n",
+                "async_client": "import asyncio\nimport datetime\nimport uuid\n\nfrom seed import AsyncSeedTrace\nfrom seed.submission import WorkspaceSubmissionUpdateInfo_Running\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\n\n\nasync def main() -> None:\n    await client.admin.send_workspace_submission_update(\n        submission_id=uuid.UUID(\n            \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        ),\n        update_time=datetime.datetime.fromisoformat(\n            \"2024-01-15 09:30:00+00:00\",\n        ),\n        update_info=WorkspaceSubmissionUpdateInfo_Running(\n            value=\"QUEUEING_SUBMISSION\"\n        ),\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/admin/store-test-trace/submission/{submissionId}/testCase/{testCaseId}",
+                "method": "POST",
+                "identifier_override": "endpoint_admin.storeTracedTestCase"
+            },
+            "snippet": {
+                "sync_client": "import uuid\n\nfrom seed import SeedTrace\nfrom seed.commons import (\n    DebugVariableValue_IntegerValue,\n    VariableValue_IntegerValue,\n)\nfrom seed.submission import (\n    ActualResult_Value,\n    ExpressionLocation,\n    Scope,\n    StackFrame,\n    StackInformation,\n    TestCaseResult,\n    TestCaseResultWithStdout,\n    TraceResponse,\n)\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.admin.store_traced_test_case(\n    submission_id=uuid.UUID(\n        \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    ),\n    test_case_id=\"testCaseId\",\n    result=TestCaseResultWithStdout(\n        result=TestCaseResult(\n            expected_result=VariableValue_IntegerValue(value=1),\n            actual_result=ActualResult_Value(\n                value=VariableValue_IntegerValue(value=1)\n            ),\n            passed=True,\n        ),\n        stdout=\"stdout\",\n    ),\n    trace_responses=[\n        TraceResponse(\n            submission_id=uuid.UUID(\n                \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n            ),\n            line_number=1,\n            return_value=DebugVariableValue_IntegerValue(value=1),\n            expression_location=ExpressionLocation(\n                start=1,\n                offset=1,\n            ),\n            stack=StackInformation(\n                num_stack_frames=1,\n                top_stack_frame=StackFrame(\n                    method_name=\"methodName\",\n                    line_number=1,\n                    scopes=[\n                        Scope(\n                            variables={\n                                \"variables\": DebugVariableValue_IntegerValue(\n                                    value=1\n                                )\n                            },\n                        ),\n                        Scope(\n                            variables={\n                                \"variables\": DebugVariableValue_IntegerValue(\n                                    value=1\n                                )\n                            },\n                        ),\n                    ],\n                ),\n            ),\n            stdout=\"stdout\",\n        ),\n        TraceResponse(\n            submission_id=uuid.UUID(\n                \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n            ),\n            line_number=1,\n            return_value=DebugVariableValue_IntegerValue(value=1),\n            expression_location=ExpressionLocation(\n                start=1,\n                offset=1,\n            ),\n            stack=StackInformation(\n                num_stack_frames=1,\n                top_stack_frame=StackFrame(\n                    method_name=\"methodName\",\n                    line_number=1,\n                    scopes=[\n                        Scope(\n                            variables={\n                                \"variables\": DebugVariableValue_IntegerValue(\n                                    value=1\n                                )\n                            },\n                        ),\n                        Scope(\n                            variables={\n                                \"variables\": DebugVariableValue_IntegerValue(\n                                    value=1\n                                )\n                            },\n                        ),\n                    ],\n                ),\n            ),\n            stdout=\"stdout\",\n        ),\n    ],\n)\n",
+                "async_client": "import asyncio\nimport uuid\n\nfrom seed import AsyncSeedTrace\nfrom seed.commons import (\n    DebugVariableValue_IntegerValue,\n    VariableValue_IntegerValue,\n)\nfrom seed.submission import (\n    ActualResult_Value,\n    ExpressionLocation,\n    Scope,\n    StackFrame,\n    StackInformation,\n    TestCaseResult,\n    TestCaseResultWithStdout,\n    TraceResponse,\n)\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\n\n\nasync def main() -> None:\n    await client.admin.store_traced_test_case(\n        submission_id=uuid.UUID(\n            \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        ),\n        test_case_id=\"testCaseId\",\n        result=TestCaseResultWithStdout(\n            result=TestCaseResult(\n                expected_result=VariableValue_IntegerValue(value=1),\n                actual_result=ActualResult_Value(\n                    value=VariableValue_IntegerValue(value=1)\n                ),\n                passed=True,\n            ),\n            stdout=\"stdout\",\n        ),\n        trace_responses=[\n            TraceResponse(\n                submission_id=uuid.UUID(\n                    \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n                ),\n                line_number=1,\n                return_value=DebugVariableValue_IntegerValue(value=1),\n                expression_location=ExpressionLocation(\n                    start=1,\n                    offset=1,\n                ),\n                stack=StackInformation(\n                    num_stack_frames=1,\n                    top_stack_frame=StackFrame(\n                        method_name=\"methodName\",\n                        line_number=1,\n                        scopes=[\n                            Scope(\n                                variables={\n                                    \"variables\": DebugVariableValue_IntegerValue(\n                                        value=1\n                                    )\n                                },\n                            ),\n                            Scope(\n                                variables={\n                                    \"variables\": DebugVariableValue_IntegerValue(\n                                        value=1\n                                    )\n                                },\n                            ),\n                        ],\n                    ),\n                ),\n                stdout=\"stdout\",\n            ),\n            TraceResponse(\n                submission_id=uuid.UUID(\n                    \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n                ),\n                line_number=1,\n                return_value=DebugVariableValue_IntegerValue(value=1),\n                expression_location=ExpressionLocation(\n                    start=1,\n                    offset=1,\n                ),\n                stack=StackInformation(\n                    num_stack_frames=1,\n                    top_stack_frame=StackFrame(\n                        method_name=\"methodName\",\n                        line_number=1,\n                        scopes=[\n                            Scope(\n                                variables={\n                                    \"variables\": DebugVariableValue_IntegerValue(\n                                        value=1\n                                    )\n                                },\n                            ),\n                            Scope(\n                                variables={\n                                    \"variables\": DebugVariableValue_IntegerValue(\n                                        value=1\n                                    )\n                                },\n                            ),\n                        ],\n                    ),\n                ),\n                stdout=\"stdout\",\n            ),\n        ],\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/admin/store-test-trace-v2/submission/{submissionId}/testCase/{testCaseId}",
+                "method": "POST",
+                "identifier_override": "endpoint_admin.storeTracedTestCaseV2"
+            },
+            "snippet": {
+                "sync_client": "import uuid\n\nfrom seed import SeedTrace\nfrom seed.commons import DebugVariableValue_IntegerValue\nfrom seed.submission import (\n    ExpressionLocation,\n    Scope,\n    StackFrame,\n    StackInformation,\n    TracedFile,\n    TraceResponseV2,\n)\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.admin.store_traced_test_case_v_2(\n    submission_id=uuid.UUID(\n        \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    ),\n    test_case_id=\"testCaseId\",\n    request=[\n        TraceResponseV2(\n            submission_id=uuid.UUID(\n                \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n            ),\n            line_number=1,\n            file=TracedFile(\n                filename=\"filename\",\n                directory=\"directory\",\n            ),\n            return_value=DebugVariableValue_IntegerValue(value=1),\n            expression_location=ExpressionLocation(\n                start=1,\n                offset=1,\n            ),\n            stack=StackInformation(\n                num_stack_frames=1,\n                top_stack_frame=StackFrame(\n                    method_name=\"methodName\",\n                    line_number=1,\n                    scopes=[\n                        Scope(\n                            variables={\n                                \"variables\": DebugVariableValue_IntegerValue(\n                                    value=1\n                                )\n                            },\n                        ),\n                        Scope(\n                            variables={\n                                \"variables\": DebugVariableValue_IntegerValue(\n                                    value=1\n                                )\n                            },\n                        ),\n                    ],\n                ),\n            ),\n            stdout=\"stdout\",\n        ),\n        TraceResponseV2(\n            submission_id=uuid.UUID(\n                \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n            ),\n            line_number=1,\n            file=TracedFile(\n                filename=\"filename\",\n                directory=\"directory\",\n            ),\n            return_value=DebugVariableValue_IntegerValue(value=1),\n            expression_location=ExpressionLocation(\n                start=1,\n                offset=1,\n            ),\n            stack=StackInformation(\n                num_stack_frames=1,\n                top_stack_frame=StackFrame(\n                    method_name=\"methodName\",\n                    line_number=1,\n                    scopes=[\n                        Scope(\n                            variables={\n                                \"variables\": DebugVariableValue_IntegerValue(\n                                    value=1\n                                )\n                            },\n                        ),\n                        Scope(\n                            variables={\n                                \"variables\": DebugVariableValue_IntegerValue(\n                                    value=1\n                                )\n                            },\n                        ),\n                    ],\n                ),\n            ),\n            stdout=\"stdout\",\n        ),\n    ],\n)\n",
+                "async_client": "import asyncio\nimport uuid\n\nfrom seed import AsyncSeedTrace\nfrom seed.commons import DebugVariableValue_IntegerValue\nfrom seed.submission import (\n    ExpressionLocation,\n    Scope,\n    StackFrame,\n    StackInformation,\n    TracedFile,\n    TraceResponseV2,\n)\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\n\n\nasync def main() -> None:\n    await client.admin.store_traced_test_case_v_2(\n        submission_id=uuid.UUID(\n            \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        ),\n        test_case_id=\"testCaseId\",\n        request=[\n            TraceResponseV2(\n                submission_id=uuid.UUID(\n                    \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n                ),\n                line_number=1,\n                file=TracedFile(\n                    filename=\"filename\",\n                    directory=\"directory\",\n                ),\n                return_value=DebugVariableValue_IntegerValue(value=1),\n                expression_location=ExpressionLocation(\n                    start=1,\n                    offset=1,\n                ),\n                stack=StackInformation(\n                    num_stack_frames=1,\n                    top_stack_frame=StackFrame(\n                        method_name=\"methodName\",\n                        line_number=1,\n                        scopes=[\n                            Scope(\n                                variables={\n                                    \"variables\": DebugVariableValue_IntegerValue(\n                                        value=1\n                                    )\n                                },\n                            ),\n                            Scope(\n                                variables={\n                                    \"variables\": DebugVariableValue_IntegerValue(\n                                        value=1\n                                    )\n                                },\n                            ),\n                        ],\n                    ),\n                ),\n                stdout=\"stdout\",\n            ),\n            TraceResponseV2(\n                submission_id=uuid.UUID(\n                    \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n                ),\n                line_number=1,\n                file=TracedFile(\n                    filename=\"filename\",\n                    directory=\"directory\",\n                ),\n                return_value=DebugVariableValue_IntegerValue(value=1),\n                expression_location=ExpressionLocation(\n                    start=1,\n                    offset=1,\n                ),\n                stack=StackInformation(\n                    num_stack_frames=1,\n                    top_stack_frame=StackFrame(\n                        method_name=\"methodName\",\n                        line_number=1,\n                        scopes=[\n                            Scope(\n                                variables={\n                                    \"variables\": DebugVariableValue_IntegerValue(\n                                        value=1\n                                    )\n                                },\n                            ),\n                            Scope(\n                                variables={\n                                    \"variables\": DebugVariableValue_IntegerValue(\n                                        value=1\n                                    )\n                                },\n                            ),\n                        ],\n                    ),\n                ),\n                stdout=\"stdout\",\n            ),\n        ],\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/admin/store-workspace-trace/submission/{submissionId}",
+                "method": "POST",
+                "identifier_override": "endpoint_admin.storeTracedWorkspace"
+            },
+            "snippet": {
+                "sync_client": "import uuid\n\nfrom seed import SeedTrace\nfrom seed.commons import DebugVariableValue_IntegerValue\nfrom seed.submission import (\n    ExceptionInfo,\n    ExceptionV2_Generic,\n    ExpressionLocation,\n    Scope,\n    StackFrame,\n    StackInformation,\n    TraceResponse,\n    WorkspaceRunDetails,\n)\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.admin.store_traced_workspace(\n    submission_id=uuid.UUID(\n        \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    ),\n    workspace_run_details=WorkspaceRunDetails(\n        exception_v_2=ExceptionV2_Generic(\n            exception_type=\"exceptionType\",\n            exception_message=\"exceptionMessage\",\n            exception_stacktrace=\"exceptionStacktrace\",\n        ),\n        exception=ExceptionInfo(\n            exception_type=\"exceptionType\",\n            exception_message=\"exceptionMessage\",\n            exception_stacktrace=\"exceptionStacktrace\",\n        ),\n        stdout=\"stdout\",\n    ),\n    trace_responses=[\n        TraceResponse(\n            submission_id=uuid.UUID(\n                \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n            ),\n            line_number=1,\n            return_value=DebugVariableValue_IntegerValue(value=1),\n            expression_location=ExpressionLocation(\n                start=1,\n                offset=1,\n            ),\n            stack=StackInformation(\n                num_stack_frames=1,\n                top_stack_frame=StackFrame(\n                    method_name=\"methodName\",\n                    line_number=1,\n                    scopes=[\n                        Scope(\n                            variables={\n                                \"variables\": DebugVariableValue_IntegerValue(\n                                    value=1\n                                )\n                            },\n                        ),\n                        Scope(\n                            variables={\n                                \"variables\": DebugVariableValue_IntegerValue(\n                                    value=1\n                                )\n                            },\n                        ),\n                    ],\n                ),\n            ),\n            stdout=\"stdout\",\n        ),\n        TraceResponse(\n            submission_id=uuid.UUID(\n                \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n            ),\n            line_number=1,\n            return_value=DebugVariableValue_IntegerValue(value=1),\n            expression_location=ExpressionLocation(\n                start=1,\n                offset=1,\n            ),\n            stack=StackInformation(\n                num_stack_frames=1,\n                top_stack_frame=StackFrame(\n                    method_name=\"methodName\",\n                    line_number=1,\n                    scopes=[\n                        Scope(\n                            variables={\n                                \"variables\": DebugVariableValue_IntegerValue(\n                                    value=1\n                                )\n                            },\n                        ),\n                        Scope(\n                            variables={\n                                \"variables\": DebugVariableValue_IntegerValue(\n                                    value=1\n                                )\n                            },\n                        ),\n                    ],\n                ),\n            ),\n            stdout=\"stdout\",\n        ),\n    ],\n)\n",
+                "async_client": "import asyncio\nimport uuid\n\nfrom seed import AsyncSeedTrace\nfrom seed.commons import DebugVariableValue_IntegerValue\nfrom seed.submission import (\n    ExceptionInfo,\n    ExceptionV2_Generic,\n    ExpressionLocation,\n    Scope,\n    StackFrame,\n    StackInformation,\n    TraceResponse,\n    WorkspaceRunDetails,\n)\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\n\n\nasync def main() -> None:\n    await client.admin.store_traced_workspace(\n        submission_id=uuid.UUID(\n            \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        ),\n        workspace_run_details=WorkspaceRunDetails(\n            exception_v_2=ExceptionV2_Generic(\n                exception_type=\"exceptionType\",\n                exception_message=\"exceptionMessage\",\n                exception_stacktrace=\"exceptionStacktrace\",\n            ),\n            exception=ExceptionInfo(\n                exception_type=\"exceptionType\",\n                exception_message=\"exceptionMessage\",\n                exception_stacktrace=\"exceptionStacktrace\",\n            ),\n            stdout=\"stdout\",\n        ),\n        trace_responses=[\n            TraceResponse(\n                submission_id=uuid.UUID(\n                    \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n                ),\n                line_number=1,\n                return_value=DebugVariableValue_IntegerValue(value=1),\n                expression_location=ExpressionLocation(\n                    start=1,\n                    offset=1,\n                ),\n                stack=StackInformation(\n                    num_stack_frames=1,\n                    top_stack_frame=StackFrame(\n                        method_name=\"methodName\",\n                        line_number=1,\n                        scopes=[\n                            Scope(\n                                variables={\n                                    \"variables\": DebugVariableValue_IntegerValue(\n                                        value=1\n                                    )\n                                },\n                            ),\n                            Scope(\n                                variables={\n                                    \"variables\": DebugVariableValue_IntegerValue(\n                                        value=1\n                                    )\n                                },\n                            ),\n                        ],\n                    ),\n                ),\n                stdout=\"stdout\",\n            ),\n            TraceResponse(\n                submission_id=uuid.UUID(\n                    \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n                ),\n                line_number=1,\n                return_value=DebugVariableValue_IntegerValue(value=1),\n                expression_location=ExpressionLocation(\n                    start=1,\n                    offset=1,\n                ),\n                stack=StackInformation(\n                    num_stack_frames=1,\n                    top_stack_frame=StackFrame(\n                        method_name=\"methodName\",\n                        line_number=1,\n                        scopes=[\n                            Scope(\n                                variables={\n                                    \"variables\": DebugVariableValue_IntegerValue(\n                                        value=1\n                                    )\n                                },\n                            ),\n                            Scope(\n                                variables={\n                                    \"variables\": DebugVariableValue_IntegerValue(\n                                        value=1\n                                    )\n                                },\n                            ),\n                        ],\n                    ),\n                ),\n                stdout=\"stdout\",\n            ),\n        ],\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/admin/store-workspace-trace-v2/submission/{submissionId}",
+                "method": "POST",
+                "identifier_override": "endpoint_admin.storeTracedWorkspaceV2"
+            },
+            "snippet": {
+                "sync_client": "import uuid\n\nfrom seed import SeedTrace\nfrom seed.commons import DebugVariableValue_IntegerValue\nfrom seed.submission import (\n    ExpressionLocation,\n    Scope,\n    StackFrame,\n    StackInformation,\n    TracedFile,\n    TraceResponseV2,\n)\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.admin.store_traced_workspace_v_2(\n    submission_id=uuid.UUID(\n        \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    ),\n    request=[\n        TraceResponseV2(\n            submission_id=uuid.UUID(\n                \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n            ),\n            line_number=1,\n            file=TracedFile(\n                filename=\"filename\",\n                directory=\"directory\",\n            ),\n            return_value=DebugVariableValue_IntegerValue(value=1),\n            expression_location=ExpressionLocation(\n                start=1,\n                offset=1,\n            ),\n            stack=StackInformation(\n                num_stack_frames=1,\n                top_stack_frame=StackFrame(\n                    method_name=\"methodName\",\n                    line_number=1,\n                    scopes=[\n                        Scope(\n                            variables={\n                                \"variables\": DebugVariableValue_IntegerValue(\n                                    value=1\n                                )\n                            },\n                        ),\n                        Scope(\n                            variables={\n                                \"variables\": DebugVariableValue_IntegerValue(\n                                    value=1\n                                )\n                            },\n                        ),\n                    ],\n                ),\n            ),\n            stdout=\"stdout\",\n        ),\n        TraceResponseV2(\n            submission_id=uuid.UUID(\n                \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n            ),\n            line_number=1,\n            file=TracedFile(\n                filename=\"filename\",\n                directory=\"directory\",\n            ),\n            return_value=DebugVariableValue_IntegerValue(value=1),\n            expression_location=ExpressionLocation(\n                start=1,\n                offset=1,\n            ),\n            stack=StackInformation(\n                num_stack_frames=1,\n                top_stack_frame=StackFrame(\n                    method_name=\"methodName\",\n                    line_number=1,\n                    scopes=[\n                        Scope(\n                            variables={\n                                \"variables\": DebugVariableValue_IntegerValue(\n                                    value=1\n                                )\n                            },\n                        ),\n                        Scope(\n                            variables={\n                                \"variables\": DebugVariableValue_IntegerValue(\n                                    value=1\n                                )\n                            },\n                        ),\n                    ],\n                ),\n            ),\n            stdout=\"stdout\",\n        ),\n    ],\n)\n",
+                "async_client": "import asyncio\nimport uuid\n\nfrom seed import AsyncSeedTrace\nfrom seed.commons import DebugVariableValue_IntegerValue\nfrom seed.submission import (\n    ExpressionLocation,\n    Scope,\n    StackFrame,\n    StackInformation,\n    TracedFile,\n    TraceResponseV2,\n)\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\n\n\nasync def main() -> None:\n    await client.admin.store_traced_workspace_v_2(\n        submission_id=uuid.UUID(\n            \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        ),\n        request=[\n            TraceResponseV2(\n                submission_id=uuid.UUID(\n                    \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n                ),\n                line_number=1,\n                file=TracedFile(\n                    filename=\"filename\",\n                    directory=\"directory\",\n                ),\n                return_value=DebugVariableValue_IntegerValue(value=1),\n                expression_location=ExpressionLocation(\n                    start=1,\n                    offset=1,\n                ),\n                stack=StackInformation(\n                    num_stack_frames=1,\n                    top_stack_frame=StackFrame(\n                        method_name=\"methodName\",\n                        line_number=1,\n                        scopes=[\n                            Scope(\n                                variables={\n                                    \"variables\": DebugVariableValue_IntegerValue(\n                                        value=1\n                                    )\n                                },\n                            ),\n                            Scope(\n                                variables={\n                                    \"variables\": DebugVariableValue_IntegerValue(\n                                        value=1\n                                    )\n                                },\n                            ),\n                        ],\n                    ),\n                ),\n                stdout=\"stdout\",\n            ),\n            TraceResponseV2(\n                submission_id=uuid.UUID(\n                    \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n                ),\n                line_number=1,\n                file=TracedFile(\n                    filename=\"filename\",\n                    directory=\"directory\",\n                ),\n                return_value=DebugVariableValue_IntegerValue(value=1),\n                expression_location=ExpressionLocation(\n                    start=1,\n                    offset=1,\n                ),\n                stack=StackInformation(\n                    num_stack_frames=1,\n                    top_stack_frame=StackFrame(\n                        method_name=\"methodName\",\n                        line_number=1,\n                        scopes=[\n                            Scope(\n                                variables={\n                                    \"variables\": DebugVariableValue_IntegerValue(\n                                        value=1\n                                    )\n                                },\n                            ),\n                            Scope(\n                                variables={\n                                    \"variables\": DebugVariableValue_IntegerValue(\n                                        value=1\n                                    )\n                                },\n                            ),\n                        ],\n                    ),\n                ),\n                stdout=\"stdout\",\n            ),\n        ],\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/homepage-problems",
+                "method": "GET",
+                "identifier_override": "endpoint_homepage.getHomepageProblems"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedTrace\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.homepage.get_homepage_problems()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedTrace\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\n\n\nasync def main() -> None:\n    await client.homepage.get_homepage_problems()\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/homepage-problems",
+                "method": "POST",
+                "identifier_override": "endpoint_homepage.setHomepageProblems"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedTrace\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.homepage.set_homepage_problems(\n    request=[\"string\", \"string\"],\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedTrace\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\n\n\nasync def main() -> None:\n    await client.homepage.set_homepage_problems(\n        request=[\"string\", \"string\"],\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/migration-info/all",
+                "method": "GET",
+                "identifier_override": "endpoint_migration.getAttemptedMigrations"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedTrace\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.migration.get_attempted_migrations(\n    admin_key_header=\"admin-key-header\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedTrace\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\n\n\nasync def main() -> None:\n    await client.migration.get_attempted_migrations(\n        admin_key_header=\"admin-key-header\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/v2/playlist/{serviceParam}/create",
+                "method": "POST",
+                "identifier_override": "endpoint_playlist.createPlaylist"
+            },
+            "snippet": {
+                "sync_client": "import datetime\n\nfrom seed import SeedTrace\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.playlist.create_playlist(\n    service_param=1,\n    datetime=datetime.datetime.fromisoformat(\n        \"2024-01-15 09:30:00+00:00\",\n    ),\n    optional_datetime=datetime.datetime.fromisoformat(\n        \"2024-01-15 09:30:00+00:00\",\n    ),\n    name=\"name\",\n    problems=[\"problems\", \"problems\"],\n)\n",
+                "async_client": "import asyncio\nimport datetime\n\nfrom seed import AsyncSeedTrace\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\n\n\nasync def main() -> None:\n    await client.playlist.create_playlist(\n        service_param=1,\n        datetime=datetime.datetime.fromisoformat(\n            \"2024-01-15 09:30:00+00:00\",\n        ),\n        optional_datetime=datetime.datetime.fromisoformat(\n            \"2024-01-15 09:30:00+00:00\",\n        ),\n        name=\"name\",\n        problems=[\"problems\", \"problems\"],\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/v2/playlist/{serviceParam}/all",
+                "method": "GET",
+                "identifier_override": "endpoint_playlist.getPlaylists"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedTrace\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.playlist.get_playlists(\n    service_param=1,\n    limit=1,\n    other_field=\"otherField\",\n    multi_line_docs=\"multiLineDocs\",\n    optional_multiple_field=\"optionalMultipleField\",\n    multiple_field=\"multipleField\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedTrace\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\n\n\nasync def main() -> None:\n    await client.playlist.get_playlists(\n        service_param=1,\n        limit=1,\n        other_field=\"otherField\",\n        multi_line_docs=\"multiLineDocs\",\n        optional_multiple_field=\"optionalMultipleField\",\n        multiple_field=\"multipleField\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/v2/playlist/{serviceParam}/{playlistId}",
+                "method": "GET",
+                "identifier_override": "endpoint_playlist.getPlaylist"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedTrace\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.playlist.get_playlist(\n    service_param=1,\n    playlist_id=\"playlistId\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedTrace\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\n\n\nasync def main() -> None:\n    await client.playlist.get_playlist(\n        service_param=1,\n        playlist_id=\"playlistId\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/v2/playlist/{serviceParam}/{playlistId}",
+                "method": "PUT",
+                "identifier_override": "endpoint_playlist.updatePlaylist"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedTrace\nfrom seed.playlist import UpdatePlaylistRequest\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.playlist.update_playlist(\n    service_param=1,\n    playlist_id=\"playlistId\",\n    request=UpdatePlaylistRequest(\n        name=\"name\",\n        problems=[\"problems\", \"problems\"],\n    ),\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedTrace\nfrom seed.playlist import UpdatePlaylistRequest\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\n\n\nasync def main() -> None:\n    await client.playlist.update_playlist(\n        service_param=1,\n        playlist_id=\"playlistId\",\n        request=UpdatePlaylistRequest(\n            name=\"name\",\n            problems=[\"problems\", \"problems\"],\n        ),\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/v2/playlist/{serviceParam}/{playlist_id}",
+                "method": "DELETE",
+                "identifier_override": "endpoint_playlist.deletePlaylist"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedTrace\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.playlist.delete_playlist(\n    service_param=1,\n    playlist_id=\"playlist_id\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedTrace\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\n\n\nasync def main() -> None:\n    await client.playlist.delete_playlist(\n        service_param=1,\n        playlist_id=\"playlist_id\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/problem-crud/create",
+                "method": "POST",
+                "identifier_override": "endpoint_problem.createProblem"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedTrace\nfrom seed.commons import (\n    FileInfo,\n    TestCase,\n    TestCaseWithExpectedResult,\n    VariableType,\n    VariableValue_IntegerValue,\n)\nfrom seed.problem import (\n    ProblemDescription,\n    ProblemDescriptionBoard_Html,\n    ProblemFiles,\n    VariableTypeAndName,\n)\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.problem.create_problem(\n    problem_name=\"problemName\",\n    problem_description=ProblemDescription(\n        boards=[\n            ProblemDescriptionBoard_Html(value=\"boards\"),\n            ProblemDescriptionBoard_Html(value=\"boards\"),\n        ],\n    ),\n    files={\n        \"JAVA\": ProblemFiles(\n            solution_file=FileInfo(\n                filename=\"filename\",\n                contents=\"contents\",\n            ),\n            read_only_files=[\n                FileInfo(\n                    filename=\"filename\",\n                    contents=\"contents\",\n                ),\n                FileInfo(\n                    filename=\"filename\",\n                    contents=\"contents\",\n                ),\n            ],\n        )\n    },\n    input_params=[\n        VariableTypeAndName(\n            variable_type=VariableType(),\n            name=\"name\",\n        ),\n        VariableTypeAndName(\n            variable_type=VariableType(),\n            name=\"name\",\n        ),\n    ],\n    output_type=VariableType(),\n    testcases=[\n        TestCaseWithExpectedResult(\n            test_case=TestCase(\n                id=\"id\",\n                params=[\n                    VariableValue_IntegerValue(value=1),\n                    VariableValue_IntegerValue(value=1),\n                ],\n            ),\n            expected_result=VariableValue_IntegerValue(value=1),\n        ),\n        TestCaseWithExpectedResult(\n            test_case=TestCase(\n                id=\"id\",\n                params=[\n                    VariableValue_IntegerValue(value=1),\n                    VariableValue_IntegerValue(value=1),\n                ],\n            ),\n            expected_result=VariableValue_IntegerValue(value=1),\n        ),\n    ],\n    method_name=\"methodName\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedTrace\nfrom seed.commons import (\n    FileInfo,\n    TestCase,\n    TestCaseWithExpectedResult,\n    VariableType,\n    VariableValue_IntegerValue,\n)\nfrom seed.problem import (\n    ProblemDescription,\n    ProblemDescriptionBoard_Html,\n    ProblemFiles,\n    VariableTypeAndName,\n)\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\n\n\nasync def main() -> None:\n    await client.problem.create_problem(\n        problem_name=\"problemName\",\n        problem_description=ProblemDescription(\n            boards=[\n                ProblemDescriptionBoard_Html(value=\"boards\"),\n                ProblemDescriptionBoard_Html(value=\"boards\"),\n            ],\n        ),\n        files={\n            \"JAVA\": ProblemFiles(\n                solution_file=FileInfo(\n                    filename=\"filename\",\n                    contents=\"contents\",\n                ),\n                read_only_files=[\n                    FileInfo(\n                        filename=\"filename\",\n                        contents=\"contents\",\n                    ),\n                    FileInfo(\n                        filename=\"filename\",\n                        contents=\"contents\",\n                    ),\n                ],\n            )\n        },\n        input_params=[\n            VariableTypeAndName(\n                variable_type=VariableType(),\n                name=\"name\",\n            ),\n            VariableTypeAndName(\n                variable_type=VariableType(),\n                name=\"name\",\n            ),\n        ],\n        output_type=VariableType(),\n        testcases=[\n            TestCaseWithExpectedResult(\n                test_case=TestCase(\n                    id=\"id\",\n                    params=[\n                        VariableValue_IntegerValue(value=1),\n                        VariableValue_IntegerValue(value=1),\n                    ],\n                ),\n                expected_result=VariableValue_IntegerValue(value=1),\n            ),\n            TestCaseWithExpectedResult(\n                test_case=TestCase(\n                    id=\"id\",\n                    params=[\n                        VariableValue_IntegerValue(value=1),\n                        VariableValue_IntegerValue(value=1),\n                    ],\n                ),\n                expected_result=VariableValue_IntegerValue(value=1),\n            ),\n        ],\n        method_name=\"methodName\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/problem-crud/update/{problemId}",
+                "method": "POST",
+                "identifier_override": "endpoint_problem.updateProblem"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedTrace\nfrom seed.commons import (\n    FileInfo,\n    TestCase,\n    TestCaseWithExpectedResult,\n    VariableType,\n    VariableValue_IntegerValue,\n)\nfrom seed.problem import (\n    ProblemDescription,\n    ProblemDescriptionBoard_Html,\n    ProblemFiles,\n    VariableTypeAndName,\n)\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.problem.update_problem(\n    problem_id=\"problemId\",\n    problem_name=\"problemName\",\n    problem_description=ProblemDescription(\n        boards=[\n            ProblemDescriptionBoard_Html(value=\"boards\"),\n            ProblemDescriptionBoard_Html(value=\"boards\"),\n        ],\n    ),\n    files={\n        \"JAVA\": ProblemFiles(\n            solution_file=FileInfo(\n                filename=\"filename\",\n                contents=\"contents\",\n            ),\n            read_only_files=[\n                FileInfo(\n                    filename=\"filename\",\n                    contents=\"contents\",\n                ),\n                FileInfo(\n                    filename=\"filename\",\n                    contents=\"contents\",\n                ),\n            ],\n        )\n    },\n    input_params=[\n        VariableTypeAndName(\n            variable_type=VariableType(),\n            name=\"name\",\n        ),\n        VariableTypeAndName(\n            variable_type=VariableType(),\n            name=\"name\",\n        ),\n    ],\n    output_type=VariableType(),\n    testcases=[\n        TestCaseWithExpectedResult(\n            test_case=TestCase(\n                id=\"id\",\n                params=[\n                    VariableValue_IntegerValue(value=1),\n                    VariableValue_IntegerValue(value=1),\n                ],\n            ),\n            expected_result=VariableValue_IntegerValue(value=1),\n        ),\n        TestCaseWithExpectedResult(\n            test_case=TestCase(\n                id=\"id\",\n                params=[\n                    VariableValue_IntegerValue(value=1),\n                    VariableValue_IntegerValue(value=1),\n                ],\n            ),\n            expected_result=VariableValue_IntegerValue(value=1),\n        ),\n    ],\n    method_name=\"methodName\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedTrace\nfrom seed.commons import (\n    FileInfo,\n    TestCase,\n    TestCaseWithExpectedResult,\n    VariableType,\n    VariableValue_IntegerValue,\n)\nfrom seed.problem import (\n    ProblemDescription,\n    ProblemDescriptionBoard_Html,\n    ProblemFiles,\n    VariableTypeAndName,\n)\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\n\n\nasync def main() -> None:\n    await client.problem.update_problem(\n        problem_id=\"problemId\",\n        problem_name=\"problemName\",\n        problem_description=ProblemDescription(\n            boards=[\n                ProblemDescriptionBoard_Html(value=\"boards\"),\n                ProblemDescriptionBoard_Html(value=\"boards\"),\n            ],\n        ),\n        files={\n            \"JAVA\": ProblemFiles(\n                solution_file=FileInfo(\n                    filename=\"filename\",\n                    contents=\"contents\",\n                ),\n                read_only_files=[\n                    FileInfo(\n                        filename=\"filename\",\n                        contents=\"contents\",\n                    ),\n                    FileInfo(\n                        filename=\"filename\",\n                        contents=\"contents\",\n                    ),\n                ],\n            )\n        },\n        input_params=[\n            VariableTypeAndName(\n                variable_type=VariableType(),\n                name=\"name\",\n            ),\n            VariableTypeAndName(\n                variable_type=VariableType(),\n                name=\"name\",\n            ),\n        ],\n        output_type=VariableType(),\n        testcases=[\n            TestCaseWithExpectedResult(\n                test_case=TestCase(\n                    id=\"id\",\n                    params=[\n                        VariableValue_IntegerValue(value=1),\n                        VariableValue_IntegerValue(value=1),\n                    ],\n                ),\n                expected_result=VariableValue_IntegerValue(value=1),\n            ),\n            TestCaseWithExpectedResult(\n                test_case=TestCase(\n                    id=\"id\",\n                    params=[\n                        VariableValue_IntegerValue(value=1),\n                        VariableValue_IntegerValue(value=1),\n                    ],\n                ),\n                expected_result=VariableValue_IntegerValue(value=1),\n            ),\n        ],\n        method_name=\"methodName\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/problem-crud/delete/{problemId}",
+                "method": "DELETE",
+                "identifier_override": "endpoint_problem.deleteProblem"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedTrace\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.problem.delete_problem(\n    problem_id=\"problemId\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedTrace\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\n\n\nasync def main() -> None:\n    await client.problem.delete_problem(\n        problem_id=\"problemId\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/problem-crud/default-starter-files",
+                "method": "POST",
+                "identifier_override": "endpoint_problem.getDefaultStarterFiles"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedTrace\nfrom seed.commons import VariableType\nfrom seed.problem import VariableTypeAndName\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.problem.get_default_starter_files(\n    input_params=[\n        VariableTypeAndName(\n            variable_type=VariableType(),\n            name=\"name\",\n        ),\n        VariableTypeAndName(\n            variable_type=VariableType(),\n            name=\"name\",\n        ),\n    ],\n    output_type=VariableType(),\n    method_name=\"methodName\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedTrace\nfrom seed.commons import VariableType\nfrom seed.problem import VariableTypeAndName\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\n\n\nasync def main() -> None:\n    await client.problem.get_default_starter_files(\n        input_params=[\n            VariableTypeAndName(\n                variable_type=VariableType(),\n                name=\"name\",\n            ),\n            VariableTypeAndName(\n                variable_type=VariableType(),\n                name=\"name\",\n            ),\n        ],\n        output_type=VariableType(),\n        method_name=\"methodName\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/sessions/create-session/{language}",
+                "method": "POST",
+                "identifier_override": "endpoint_submission.createExecutionSession"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedTrace\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.submission.create_execution_session(\n    language=\"JAVA\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedTrace\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\n\n\nasync def main() -> None:\n    await client.submission.create_execution_session(\n        language=\"JAVA\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/sessions/{sessionId}",
+                "method": "GET",
+                "identifier_override": "endpoint_submission.getExecutionSession"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedTrace\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.submission.get_execution_session(\n    session_id=\"sessionId\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedTrace\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\n\n\nasync def main() -> None:\n    await client.submission.get_execution_session(\n        session_id=\"sessionId\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/sessions/stop/{sessionId}",
+                "method": "DELETE",
+                "identifier_override": "endpoint_submission.stopExecutionSession"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedTrace\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.submission.stop_execution_session(\n    session_id=\"sessionId\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedTrace\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\n\n\nasync def main() -> None:\n    await client.submission.stop_execution_session(\n        session_id=\"sessionId\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/sessions/execution-sessions-state",
+                "method": "GET",
+                "identifier_override": "endpoint_submission.getExecutionSessionsState"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedTrace\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.submission.get_execution_sessions_state()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedTrace\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\n\n\nasync def main() -> None:\n    await client.submission.get_execution_sessions_state()\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/sysprop/num-warm-instances/{language}/{numWarmInstances}",
+                "method": "PUT",
+                "identifier_override": "endpoint_sysprop.setNumWarmInstances"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedTrace\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.sysprop.set_num_warm_instances(\n    language=\"JAVA\",\n    num_warm_instances=1,\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedTrace\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\n\n\nasync def main() -> None:\n    await client.sysprop.set_num_warm_instances(\n        language=\"JAVA\",\n        num_warm_instances=1,\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/sysprop/num-warm-instances",
+                "method": "GET",
+                "identifier_override": "endpoint_sysprop.getNumWarmInstances"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedTrace\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.sysprop.get_num_warm_instances()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedTrace\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\n\n\nasync def main() -> None:\n    await client.sysprop.get_num_warm_instances()\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/problems-v2/lightweight-problem-info",
+                "method": "GET",
+                "identifier_override": "endpoint_v2/problem.getLightweightProblems"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedTrace\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.v_2.problem.get_lightweight_problems()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedTrace\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\n\n\nasync def main() -> None:\n    await client.v_2.problem.get_lightweight_problems()\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/problems-v2/problem-info",
+                "method": "GET",
+                "identifier_override": "endpoint_v2/problem.getProblems"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedTrace\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.v_2.problem.get_problems()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedTrace\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\n\n\nasync def main() -> None:\n    await client.v_2.problem.get_problems()\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/problems-v2/problem-info/{problemId}",
+                "method": "GET",
+                "identifier_override": "endpoint_v2/problem.getLatestProblem"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedTrace\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.v_2.problem.get_latest_problem(\n    problem_id=\"problemId\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedTrace\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\n\n\nasync def main() -> None:\n    await client.v_2.problem.get_latest_problem(\n        problem_id=\"problemId\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/problems-v2/problem-info/{problemId}/version/{problemVersion}",
+                "method": "GET",
+                "identifier_override": "endpoint_v2/problem.getProblemVersion"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedTrace\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.v_2.problem.get_problem_version(\n    problem_id=\"problemId\",\n    problem_version=1,\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedTrace\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\n\n\nasync def main() -> None:\n    await client.v_2.problem.get_problem_version(\n        problem_id=\"problemId\",\n        problem_version=1,\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/problems-v2/lightweight-problem-info",
+                "method": "GET",
+                "identifier_override": "endpoint_v2/v3/problem.getLightweightProblems"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedTrace\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.v_2.v_3.problem.get_lightweight_problems()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedTrace\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\n\n\nasync def main() -> None:\n    await client.v_2.v_3.problem.get_lightweight_problems()\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/problems-v2/problem-info",
+                "method": "GET",
+                "identifier_override": "endpoint_v2/v3/problem.getProblems"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedTrace\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.v_2.v_3.problem.get_problems()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedTrace\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\n\n\nasync def main() -> None:\n    await client.v_2.v_3.problem.get_problems()\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/problems-v2/problem-info/{problemId}",
+                "method": "GET",
+                "identifier_override": "endpoint_v2/v3/problem.getLatestProblem"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedTrace\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.v_2.v_3.problem.get_latest_problem(\n    problem_id=\"problemId\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedTrace\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\n\n\nasync def main() -> None:\n    await client.v_2.v_3.problem.get_latest_problem(\n        problem_id=\"problemId\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/problems-v2/problem-info/{problemId}/version/{problemVersion}",
+                "method": "GET",
+                "identifier_override": "endpoint_v2/v3/problem.getProblemVersion"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedTrace\n\nclient = SeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\nclient.v_2.v_3.problem.get_problem_version(\n    problem_id=\"problemId\",\n    problem_version=1,\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedTrace\n\nclient = AsyncSeedTrace(\n    x_random_header=\"YOUR_X_RANDOM_HEADER\",\n    token=\"YOUR_TOKEN\",\n)\n\n\nasync def main() -> None:\n    await client.v_2.v_3.problem.get_problem_version(\n        problem_id=\"problemId\",\n        problem_version=1,\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        }
+    ]
+}

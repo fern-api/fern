@@ -25,7 +25,7 @@ export interface ChannelV2 {
     publish?: PublishEvent;
     subscribe?: SubscribeEvent;
     servers?: string[];
-    parameters?: Record<string, OpenAPIV3.ParameterObject>;
+    parameters?: Record<string, OpenAPIV3.ReferenceObject | OpenAPIV3.ParameterObject>;
     description?: string;
 }
 
