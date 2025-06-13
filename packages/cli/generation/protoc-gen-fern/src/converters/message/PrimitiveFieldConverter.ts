@@ -23,7 +23,7 @@ export class PrimitiveFieldConverter extends AbstractConverter<ProtofileConverte
         switch (this.field.type) {
             case FieldDescriptorProto_Type.STRING: {
                 return TypeReference.primitive({
-                    v1: "STRING",
+                    v1: PrimitiveTypeV1.String,
                     v2: PrimitiveTypeV2.string({
                         default: "",
                         validation: undefined
@@ -32,7 +32,7 @@ export class PrimitiveFieldConverter extends AbstractConverter<ProtofileConverte
             }
             case FieldDescriptorProto_Type.DOUBLE: {
                 return TypeReference.primitive({
-                    v1: "DOUBLE",
+                    v1: PrimitiveTypeV1.Double,
                     v2: PrimitiveTypeV2.double({
                         default: 0.0,
                         validation: undefined
@@ -41,7 +41,7 @@ export class PrimitiveFieldConverter extends AbstractConverter<ProtofileConverte
             }
             case FieldDescriptorProto_Type.FLOAT: {
                 return TypeReference.primitive({
-                    v1: "FLOAT",
+                    v1: PrimitiveTypeV1.Float,
                     v2: PrimitiveTypeV2.float({
                         default: 0.0
                     })
@@ -49,7 +49,7 @@ export class PrimitiveFieldConverter extends AbstractConverter<ProtofileConverte
             }
             case FieldDescriptorProto_Type.INT32: {
                 return TypeReference.primitive({
-                    v1: "INTEGER",
+                    v1: PrimitiveTypeV1.Integer,
                     v2: PrimitiveTypeV2.integer({
                         default: 0,
                         validation: undefined
@@ -58,7 +58,7 @@ export class PrimitiveFieldConverter extends AbstractConverter<ProtofileConverte
             }
             case FieldDescriptorProto_Type.INT64: {
                 return TypeReference.primitive({
-                    v1: "LONG",
+                    v1: PrimitiveTypeV1.Long,
                     v2: PrimitiveTypeV2.long({
                         default: 0
                     })
@@ -66,19 +66,19 @@ export class PrimitiveFieldConverter extends AbstractConverter<ProtofileConverte
             }
             case FieldDescriptorProto_Type.UINT32: {
                 return TypeReference.primitive({
-                    v1: "UINT",
+                    v1: PrimitiveTypeV1.Uint,
                     v2: PrimitiveTypeV2.uint({})
                 });
             }
             case FieldDescriptorProto_Type.UINT64: {
                 return TypeReference.primitive({
-                    v1: "UINT_64",
+                    v1: PrimitiveTypeV1.Uint64,
                     v2: PrimitiveTypeV2.uint64({})
                 });
             }
             case FieldDescriptorProto_Type.BOOL: {
                 return TypeReference.primitive({
-                    v1: "BOOLEAN",
+                    v1: PrimitiveTypeV1.Boolean,
                     v2: PrimitiveTypeV2.boolean({
                         default: false
                     })
