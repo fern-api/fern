@@ -4,7 +4,9 @@ import pytest_asyncio
 
 from typing import Optional
 
-from seed import SeedApi, AsyncSeedApi
+# NB: rmehndiratta - we need to consider this in generation, what the client api classes
+# are called
+from seed import SeedUnions, AsyncSeedUnions
 
 from .mock_server import MockServer, MockResponse
 
@@ -16,7 +18,7 @@ class _WireTestCommon:
         self,
         uri: str,
         method: str = "GET",
-        headers: dict,
+        headers: dict | None = None,
         json_body: Optional[dict] = None,
         response: Optional[MockResponse] = None,
     ) -> None:
@@ -38,10 +40,9 @@ class WireTestBase(_WireTestCommon):
         self.base_url = base_url
         self.client = self._create_client()
 
-    def _create_client(self) -> SeedApi:
-        return SeedApi(
+    def _create_client(self) -> SeedUnions:
+        return SeedUnions(
             base_url=self.base_url,
-            token="dummy-token",
             httpx_client=httpx.Client(),
         )
 
@@ -55,9 +56,8 @@ class AsyncWireTestBase(_WireTestCommon):
         self.base_url = base_url
         self.client = await self._create_client()
 
-    async def _create_client(self) -> AsyncSeedApi:
-        return AsyncSeedApi(
+    async def _create_client(self) -> AsyncSeedUnions:
+        return AsyncSeedUnions(
             base_url=self.base_url,
-            token="dummy-token",
             httpx_client=httpx.AsyncClient(),
         )
