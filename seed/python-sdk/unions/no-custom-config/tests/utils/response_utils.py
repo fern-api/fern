@@ -1,8 +1,11 @@
 import difflib
 import json
 
+from typing import Any, Union
 
-def assert_json_eq(expected: str, actual: str) -> None:
+from seed.core.pydantic_utilities import UniversalBaseModel
+
+def _assert_json_eq(expected: str, actual: str) -> None:
     """Compare two JSON strings for equality, ignoring key order."""
 
     # for ordering invariance and ease of diffing, re-serialize as sorted JSON
@@ -23,3 +26,10 @@ def assert_json_eq(expected: str, actual: str) -> None:
             )
         )
         raise AssertionError(f"JSON mismatch:\n\n{diff}")
+
+# TODO(rmehndiratta): We should extend this to non-JSON response types down the line.
+def assert_response_matches(expected: dict[str, Any], actual: dict[str, Any]):
+    _assert_json_eq(json.dumps(expected), json.dumps(actual))
+
+def assert_response_matches_model(expected: dict[str, Any], actual: UniversalBaseModel):
+    _assert_json_eq(json.dumps(expected), actual.model_dump_json())

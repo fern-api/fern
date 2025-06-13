@@ -12,7 +12,7 @@ import pytest
 from seed.union import Circle, Square
 from seed.core.api_error import ApiError
 
-from tests.utils.json_utils import assert_json_eq
+from tests.utils.response_utils import assert_response_matches, assert_response_matches_model
 from tests.utils.wire.mock_server import MockResponse
 from tests.utils.wire.wire_test_base import WireTestBase, AsyncWireTestBase
 
@@ -38,11 +38,7 @@ class TestGetShape(WireTestBase):
         )
 
         shape = self.client.union.get(id=shape_id)
-
-        expected_response = json.dumps(shape_data)
-        actual_response = shape.model_dump_json()
-
-        assert_json_eq(expected_response, actual_response)
+        assert_response_matches_model(shape_data, shape)
 
     def test_get_shape_not_found(self):
         shape_id = "shape-123"
@@ -84,10 +80,7 @@ class TestGetShape(WireTestBase):
             self.client.union.get(id=shape_id)
         assert exc_info.value.status_code == 500
 
-        expected_response = json.dumps(error_response)
-        actual_response = json.dumps(exc_info.value.body)
-
-        assert_json_eq(expected_response, actual_response)
+        assert_response_matches(error_response, exc_info.value.body)
 
 
 class TestUpdateShape(WireTestBase):
@@ -112,6 +105,7 @@ class TestUpdateShape(WireTestBase):
 
     def test_update_shape_validation_error(self):
         shape = Square(id="square-123", length=-1.0)  # Invalid length
+        error_response = {"error": "Length must be positive"}
 
         self.expect_request(
             uri="/",
@@ -120,7 +114,7 @@ class TestUpdateShape(WireTestBase):
             json_body=shape.model_dump(),
             response=MockResponse(
                 status_code=400,
-                body={"error": "Length must be positive"},
+                body=error_response,
                 headers={"Content-Type": "application/json"},
             ),
         )
@@ -129,13 +123,11 @@ class TestUpdateShape(WireTestBase):
             self.client.union.update(request=shape)
         assert exc_info.value.status_code == 400
 
-        expected_response = json.dumps({"error": "Length must be positive"})
-        actual_response = json.dumps(exc_info.value.body)
-
-        assert_json_eq(expected_response, actual_response)
+        assert_response_matches(error_response, exc_info.value.body)
 
     def test_update_shape_server_error(self):
         shape = Circle(id="circle-123", radius=1.1)
+        error_response = {"error": "Internal server error"}
 
         self.expect_request(
             uri="/",
@@ -144,7 +136,7 @@ class TestUpdateShape(WireTestBase):
             json_body=shape.model_dump(),
             response=MockResponse(
                 status_code=500,
-                body={"error": "Internal server error"},
+                body=error_response,
                 headers={"Content-Type": "application/json"},
             ),
         )
@@ -153,10 +145,7 @@ class TestUpdateShape(WireTestBase):
             self.client.union.update(request=shape)
         assert exc_info.value.status_code == 500
 
-        expected_response = json.dumps({"error": "Internal server error"})
-        actual_response = json.dumps(exc_info.value.body)
-
-        assert_json_eq(expected_response, actual_response)
+        assert_response_matches(error_response, exc_info.value.body)
 
 
 class TestAsyncGetShape(AsyncWireTestBase):
@@ -181,11 +170,7 @@ class TestAsyncGetShape(AsyncWireTestBase):
         )
 
         shape = await self.client.union.get(id=shape_id)
-
-        expected_response = json.dumps(shape_data)
-        actual_response = shape.model_dump_json()
-
-        assert_json_eq(expected_response, actual_response)
+        assert_response_matches_model(shape_data, shape)
 
     @pytest.mark.asyncio
     async def test_get_shape_not_found(self):
@@ -229,10 +214,7 @@ class TestAsyncGetShape(AsyncWireTestBase):
             await self.client.union.get(id=shape_id)
         assert exc_info.value.status_code == 500
 
-        expected_response = json.dumps(error_response)
-        actual_response = json.dumps(exc_info.value.body)
-
-        assert_json_eq(expected_response, actual_response)
+        assert_response_matches(error_response, exc_info.value.body)
 
 
 class TestAsyncUpdateShape(AsyncWireTestBase):
@@ -259,6 +241,7 @@ class TestAsyncUpdateShape(AsyncWireTestBase):
     @pytest.mark.asyncio
     async def test_update_shape_validation_error(self):
         shape = Square(id="square-123", length=-1.0)  # Invalid length
+        error_response = {"error": "Length must be positive"}
 
         self.expect_request(
             uri="/",
@@ -267,7 +250,7 @@ class TestAsyncUpdateShape(AsyncWireTestBase):
             json_body=shape.model_dump(),
             response=MockResponse(
                 status_code=400,
-                body={"error": "Length must be positive"},
+                body=error_response,
                 headers={"Content-Type": "application/json"},
             ),
         )
@@ -276,14 +259,12 @@ class TestAsyncUpdateShape(AsyncWireTestBase):
             await self.client.union.update(request=shape)
         assert exc_info.value.status_code == 400
 
-        expected_response = json.dumps({"error": "Length must be positive"})
-        actual_response = json.dumps(exc_info.value.body)
-
-        assert_json_eq(expected_response, actual_response)
+        assert_response_matches(error_response, exc_info.value.body)
 
     @pytest.mark.asyncio
     async def test_update_shape_server_error(self):
         shape = Circle(id="circle-123", radius=1.1)
+        error_response = {"error": "Internal server error"}
 
         self.expect_request(
             uri="/",
@@ -292,7 +273,7 @@ class TestAsyncUpdateShape(AsyncWireTestBase):
             json_body=shape.model_dump(),
             response=MockResponse(
                 status_code=500,
-                body={"error": "Internal server error"},
+                body=error_response,
                 headers={"Content-Type": "application/json"},
             ),
         )
@@ -301,7 +282,4 @@ class TestAsyncUpdateShape(AsyncWireTestBase):
             await self.client.union.update(request=shape)
         assert exc_info.value.status_code == 500
 
-        expected_response = json.dumps({"error": "Internal server error"})
-        actual_response = json.dumps(exc_info.value.body)
-
-        assert_json_eq(expected_response, actual_response)
+        assert_response_matches(error_response, exc_info.value.body)

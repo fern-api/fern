@@ -30,7 +30,6 @@ class _WireTestCommon:
             response=response,
         )
 
-
 class WireTestBase(_WireTestCommon):
     """Base class for sync SDK wire compatibility testing."""
 
