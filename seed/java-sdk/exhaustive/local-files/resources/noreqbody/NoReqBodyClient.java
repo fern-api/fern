@@ -41,4 +41,12 @@ public class NoReqBodyClient {
   public String postWithNoRequestBody(RequestOptions requestOptions) {
     return this.rawClient.postWithNoRequestBody(requestOptions).body();
   }
+
+  public String putWithNoRequestBody() {
+    return this.rawClient.putWithNoRequestBody().body();
+  }
+
+  public String putWithNoRequestBody(RequestOptions requestOptions) {
+    return this.rawClient.putWithNoRequestBody(requestOptions).body();
+  }
 }

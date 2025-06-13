@@ -40,4 +40,12 @@ public class AsyncNoReqBodyClient {
     public CompletableFuture<String> postWithNoRequestBody(RequestOptions requestOptions) {
         return this.rawClient.postWithNoRequestBody(requestOptions).thenApply(response -> response.body());
     }
+
+    public CompletableFuture<String> putWithNoRequestBody() {
+        return this.rawClient.putWithNoRequestBody().thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<String> putWithNoRequestBody(RequestOptions requestOptions) {
+        return this.rawClient.putWithNoRequestBody(requestOptions).thenApply(response -> response.body());
+    }
 }

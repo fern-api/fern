@@ -10804,6 +10804,107 @@
             },
             "examples": null
         },
+        "endpoint_no-req-body.putWithNoRequestBody": {
+            "auth": {
+                "type": "bearer",
+                "token": {
+                    "originalName": "token",
+                    "camelCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TOKEN",
+                        "safeName": "TOKEN"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Token",
+                        "safeName": "Token"
+                    }
+                }
+            },
+            "declaration": {
+                "name": {
+                    "originalName": "putWithNoRequestBody",
+                    "camelCase": {
+                        "unsafeName": "putWithNoRequestBody",
+                        "safeName": "putWithNoRequestBody"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "put_with_no_request_body",
+                        "safeName": "put_with_no_request_body"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "PUT_WITH_NO_REQUEST_BODY",
+                        "safeName": "PUT_WITH_NO_REQUEST_BODY"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "PutWithNoRequestBody",
+                        "safeName": "PutWithNoRequestBody"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "no-req-body",
+                            "camelCase": {
+                                "unsafeName": "noReqBody",
+                                "safeName": "noReqBody"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "no_req_body",
+                                "safeName": "no_req_body"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "NO_REQ_BODY",
+                                "safeName": "NO_REQ_BODY"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "NoReqBody",
+                                "safeName": "NoReqBody"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "no-req-body",
+                        "camelCase": {
+                            "unsafeName": "noReqBody",
+                            "safeName": "noReqBody"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "no_req_body",
+                            "safeName": "no_req_body"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "NO_REQ_BODY",
+                            "safeName": "NO_REQ_BODY"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "NoReqBody",
+                            "safeName": "NoReqBody"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "PUT",
+                "path": "/no-req-body"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": null
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
         "endpoint_req-with-headers.getWithCustomHeader": {
             "auth": {
                 "type": "bearer",

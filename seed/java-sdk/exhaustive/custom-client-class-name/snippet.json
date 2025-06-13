@@ -573,6 +573,19 @@
             }
         },
         {
+            "example_identifier": "34d92e75",
+            "id": {
+                "method": "PUT",
+                "path": "/no-req-body",
+                "identifier_override": "endpoint_no-req-body.putWithNoRequestBody"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.exhaustive.Best;\n\npublic class Example {\n    public static void main(String[] args) {\n        Best client = Best\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.noReqBody().putWithNoRequestBody();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.exhaustive.Best;\n\npublic class Example {\n    public static void main(String[] args) {\n        Best client = Best\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.noReqBody().putWithNoRequestBody();\n    }\n}\n"
+            }
+        },
+        {
             "example_identifier": "1167f09a",
             "id": {
                 "method": "POST",
