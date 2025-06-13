@@ -226,18 +226,18 @@ public class RawServiceClient {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "maybeString", request.getMaybeString().get(), false);
         }
-        QueryStringMapper.addQueryParameter(httpUrl, "integer", Integer.toString(request.getInteger()), false);
+        QueryStringMapper.addQueryParameter(httpUrl, "integer", request.getInteger(), false);
         if (request.getMaybeInteger().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "maybeInteger", request.getMaybeInteger().get().toString(), false);
+                    httpUrl, "maybeInteger", request.getMaybeInteger().get(), false);
         }
-        QueryStringMapper.addQueryParameter(httpUrl, "listOfStrings", request.getListOfStrings(), false);
+        QueryStringMapper.addQueryParameter(httpUrl, "listOfStrings", request.getListOfStrings(), true);
         if (request.getOptionalListOfStrings().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl,
                     "optionalListOfStrings",
-                    request.getOptionalListOfStrings().get().toString(),
-                    false);
+                    request.getOptionalListOfStrings().get(),
+                    true);
         }
         MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
         try {

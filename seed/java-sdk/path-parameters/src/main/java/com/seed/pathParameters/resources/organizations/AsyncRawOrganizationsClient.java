@@ -173,7 +173,7 @@ public class AsyncRawOrganizationsClient {
                 .addPathSegments("search");
         if (request.getLimit().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "limit", request.getLimit().get().toString(), false);
+                    httpUrl, "limit", request.getLimit().get(), false);
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
