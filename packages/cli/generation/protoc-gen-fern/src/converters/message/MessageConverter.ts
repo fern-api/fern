@@ -29,7 +29,7 @@ export class MessageConverter extends AbstractConverter<ProtofileConverterContex
     public convert(): MessageConverter.Output | undefined {
         // TODO: convert message (i.e. convert schema)
 
-        const inlinedTypes: Record<FernIr.TypeId, EnumOrMessageConverter.ConvertedSchema> = {};
+        let inlinedTypes: Record<FernIr.TypeId, EnumOrMessageConverter.ConvertedSchema> = {};
 
         // Step 1: Convert all fields
         const { convertedFields, referencedTypes, propertiesByAudience } = convertFields({
@@ -40,7 +40,6 @@ export class MessageConverter extends AbstractConverter<ProtofileConverterContex
 
         // Step 2: Convert all nested messages and enums
         for (const nestedEnumOrMessage of [...this.message.nestedType, ...this.message.enumType]) {
-            this.context.logger.info("Converting nested enum/message", JSON.stringify(nestedEnumOrMessage, null, 2));
             const enumOrMessageConverter = new EnumOrMessageConverter({
                 context: this.context,
                 breadcrumbs: this.breadcrumbs,
@@ -48,16 +47,15 @@ export class MessageConverter extends AbstractConverter<ProtofileConverterContex
             });
             const convertedNestedEnumOrMessage = enumOrMessageConverter.convert();
             if (convertedNestedEnumOrMessage != null) {
-                // TODO: add it as an inlined type with "{ParentMessageName}.{NestedMessageName}"
-                this.context.logger.info(
-                    "Converted nested message\n",
-                    JSON.stringify(convertedNestedEnumOrMessage, null, 2)
-                );
+                inlinedTypes = {
+                    ...inlinedTypes,
+                    [`${this.message.name}.${nestedEnumOrMessage.name}`]: convertedNestedEnumOrMessage.convertedSchema
+                };
             }
         }
         // Step 3: Convert all oneofs
         for (const oneof of this.message.oneofDecl) {
-            this.context.logger.info("Oneof", oneof.name);
+            // TODO: convert oneofs
         }
 
         return {

@@ -2,36 +2,19 @@ syntax = "proto3";
 
 package user.v1;
 
-// message User {
-//   string name = 1;
-//   repeated int32 age = 2;
-//   enum Status {
-//     STATUS_UNSPECIFIED = 0;
-//     STATUS_ACTIVE = 1;
-//     STATUS_INACTIVE = 2;
-//     STATUS_SUSPENDED = 3;
-//   }
-//   message SubUser {
-//     string subname = 4;
-//   }
-// }
-
-// enum Role {
-//   ROLE_UNSPECIFIED = 0;
-//   ROLE_ADMIN = 1;
-//   ROLE_USER = 2;
-//   ROLE_GUEST = 3;
-// }
-
-// enum Role2 {
-//   ROLE_UNSPECIFIED2 = 0;
-//   ROLE_ADMIN2 = 1;
-//   ROLE_USER2 = 2;
-//   ROLE_GUEST2 = 3;
-// }
-
 message User {
   message Contact {
     string phone = 1;
   }
+  Contact contact = 1;
+  string address = 2;
+  enum Status {
+    STATUS_UNSPECIFIED = 0;
+    STATUS_ACTIVE = 1;
+    STATUS_INACTIVE = 2;
+  }
+}
+
+message Organization {
+  User.Contact contact = 1;
 }
