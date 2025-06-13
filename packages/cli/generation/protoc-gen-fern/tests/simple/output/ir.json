@@ -5,30 +5,30 @@
   },
   "selfHosted": false,
   "types": {
-    "User.Contact": {
+    "Outer.Middle.Inner": {
       "name": {
-        "typeId": "Contact",
+        "typeId": "Outer.Middle.Inner",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
         },
         "name": {
-          "originalName": "Contact",
+          "originalName": "Inner",
           "camelCase": {
-            "unsafeName": "contact",
-            "safeName": "contact"
+            "unsafeName": "inner",
+            "safeName": "inner"
           },
           "snakeCase": {
-            "unsafeName": "contact",
-            "safeName": "contact"
+            "unsafeName": "inner",
+            "safeName": "inner"
           },
           "screamingSnakeCase": {
-            "unsafeName": "CONTACT",
-            "safeName": "CONTACT"
+            "unsafeName": "INNER",
+            "safeName": "INNER"
           },
           "pascalCase": {
-            "unsafeName": "Contact",
-            "safeName": "Contact"
+            "unsafeName": "Inner",
+            "safeName": "Inner"
           }
         }
       },
@@ -37,25 +37,25 @@
           {
             "name": {
               "name": {
-                "originalName": "phone",
+                "originalName": "data",
                 "camelCase": {
-                  "unsafeName": "phone",
-                  "safeName": "phone"
+                  "unsafeName": "data",
+                  "safeName": "data"
                 },
                 "snakeCase": {
-                  "unsafeName": "phone",
-                  "safeName": "phone"
+                  "unsafeName": "data",
+                  "safeName": "data"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "PHONE",
-                  "safeName": "PHONE"
+                  "unsafeName": "DATA",
+                  "safeName": "DATA"
                 },
                 "pascalCase": {
-                  "unsafeName": "Phone",
-                  "safeName": "Phone"
+                  "unsafeName": "Data",
+                  "safeName": "Data"
                 }
               },
-              "wireValue": "phone"
+              "wireValue": "data"
             },
             "valueType": {
               "primitive": {
@@ -79,138 +79,30 @@
       "referencedTypes": {},
       "inline": false
     },
-    "User.Status": {
+    "Outer.Middle": {
       "name": {
-        "typeId": "Status",
+        "typeId": "Outer.Middle",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
         },
         "name": {
-          "originalName": "Status",
+          "originalName": "Middle",
           "camelCase": {
-            "unsafeName": "status",
-            "safeName": "status"
+            "unsafeName": "middle",
+            "safeName": "middle"
           },
           "snakeCase": {
-            "unsafeName": "status",
-            "safeName": "status"
+            "unsafeName": "middle",
+            "safeName": "middle"
           },
           "screamingSnakeCase": {
-            "unsafeName": "STATUS",
-            "safeName": "STATUS"
+            "unsafeName": "MIDDLE",
+            "safeName": "MIDDLE"
           },
           "pascalCase": {
-            "unsafeName": "Status",
-            "safeName": "Status"
-          }
-        }
-      },
-      "shape": {
-        "values": [
-          {
-            "name": {
-              "name": {
-                "originalName": "STATUS_UNSPECIFIED",
-                "camelCase": {
-                  "unsafeName": "statusUnspecified",
-                  "safeName": "statusUnspecified"
-                },
-                "snakeCase": {
-                  "unsafeName": "status_unspecified",
-                  "safeName": "status_unspecified"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "STATUS_UNSPECIFIED",
-                  "safeName": "STATUS_UNSPECIFIED"
-                },
-                "pascalCase": {
-                  "unsafeName": "StatusUnspecified",
-                  "safeName": "StatusUnspecified"
-                }
-              },
-              "wireValue": "[object Object]"
-            }
-          },
-          {
-            "name": {
-              "name": {
-                "originalName": "STATUS_ACTIVE",
-                "camelCase": {
-                  "unsafeName": "statusActive",
-                  "safeName": "statusActive"
-                },
-                "snakeCase": {
-                  "unsafeName": "status_active",
-                  "safeName": "status_active"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "STATUS_ACTIVE",
-                  "safeName": "STATUS_ACTIVE"
-                },
-                "pascalCase": {
-                  "unsafeName": "StatusActive",
-                  "safeName": "StatusActive"
-                }
-              },
-              "wireValue": "[object Object]"
-            }
-          },
-          {
-            "name": {
-              "name": {
-                "originalName": "STATUS_INACTIVE",
-                "camelCase": {
-                  "unsafeName": "statusInactive",
-                  "safeName": "statusInactive"
-                },
-                "snakeCase": {
-                  "unsafeName": "status_inactive",
-                  "safeName": "status_inactive"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "STATUS_INACTIVE",
-                  "safeName": "STATUS_INACTIVE"
-                },
-                "pascalCase": {
-                  "unsafeName": "StatusInactive",
-                  "safeName": "StatusInactive"
-                }
-              },
-              "wireValue": "[object Object]"
-            }
-          }
-        ],
-        "type": "enum"
-      },
-      "autogeneratedExamples": [],
-      "userProvidedExamples": [],
-      "referencedTypes": {}
-    },
-    "User": {
-      "name": {
-        "typeId": "User",
-        "fernFilepath": {
-          "allParts": [],
-          "packagePath": []
-        },
-        "name": {
-          "originalName": "User",
-          "camelCase": {
-            "unsafeName": "user",
-            "safeName": "user"
-          },
-          "snakeCase": {
-            "unsafeName": "user",
-            "safeName": "user"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "USER",
-            "safeName": "USER"
-          },
-          "pascalCase": {
-            "unsafeName": "User",
-            "safeName": "User"
+            "unsafeName": "Middle",
+            "safeName": "Middle"
           }
         }
       },
@@ -219,25 +111,25 @@
           {
             "name": {
               "name": {
-                "originalName": "contact",
+                "originalName": "inner_message",
                 "camelCase": {
-                  "unsafeName": "contact",
-                  "safeName": "contact"
+                  "unsafeName": "innerMessage",
+                  "safeName": "innerMessage"
                 },
                 "snakeCase": {
-                  "unsafeName": "contact",
-                  "safeName": "contact"
+                  "unsafeName": "inner_message",
+                  "safeName": "inner_message"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "CONTACT",
-                  "safeName": "CONTACT"
+                  "unsafeName": "INNER_MESSAGE",
+                  "safeName": "INNER_MESSAGE"
                 },
                 "pascalCase": {
-                  "unsafeName": "Contact",
-                  "safeName": "Contact"
+                  "unsafeName": "InnerMessage",
+                  "safeName": "InnerMessage"
                 }
               },
-              "wireValue": "contact"
+              "wireValue": "inner_message"
             },
             "valueType": {
               "fernFilepath": {
@@ -245,62 +137,28 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "User.Contact",
+                "originalName": "Outer.Middle.Inner",
                 "camelCase": {
-                  "unsafeName": "userContact",
-                  "safeName": "userContact"
+                  "unsafeName": "outerMiddleInner",
+                  "safeName": "outerMiddleInner"
                 },
                 "snakeCase": {
-                  "unsafeName": "user_contact",
-                  "safeName": "user_contact"
+                  "unsafeName": "outer_middle_inner",
+                  "safeName": "outer_middle_inner"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "USER_CONTACT",
-                  "safeName": "USER_CONTACT"
+                  "unsafeName": "OUTER_MIDDLE_INNER",
+                  "safeName": "OUTER_MIDDLE_INNER"
                 },
                 "pascalCase": {
-                  "unsafeName": "UserContact",
-                  "safeName": "UserContact"
+                  "unsafeName": "OuterMiddleInner",
+                  "safeName": "OuterMiddleInner"
                 }
               },
-              "typeId": "User.Contact",
+              "typeId": "Outer.Middle.Inner",
               "inline": false,
               "type": "named"
             }
-          },
-          {
-            "name": {
-              "name": {
-                "originalName": "address",
-                "camelCase": {
-                  "unsafeName": "address",
-                  "safeName": "address"
-                },
-                "snakeCase": {
-                  "unsafeName": "address",
-                  "safeName": "address"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "ADDRESS",
-                  "safeName": "ADDRESS"
-                },
-                "pascalCase": {
-                  "unsafeName": "Address",
-                  "safeName": "Address"
-                }
-              },
-              "wireValue": "address"
-            },
-            "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "default": "",
-                  "type": "string"
-                }
-              },
-              "type": "primitive"
-            }
           }
         ],
         "extends": [],
@@ -313,30 +171,30 @@
       "referencedTypes": {},
       "inline": false
     },
-    "Organization": {
+    "Outer": {
       "name": {
-        "typeId": "Organization",
+        "typeId": "Outer",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
         },
         "name": {
-          "originalName": "Organization",
+          "originalName": "Outer",
           "camelCase": {
-            "unsafeName": "organization",
-            "safeName": "organization"
+            "unsafeName": "outer",
+            "safeName": "outer"
           },
           "snakeCase": {
-            "unsafeName": "organization",
-            "safeName": "organization"
+            "unsafeName": "outer",
+            "safeName": "outer"
           },
           "screamingSnakeCase": {
-            "unsafeName": "ORGANIZATION",
-            "safeName": "ORGANIZATION"
+            "unsafeName": "OUTER",
+            "safeName": "OUTER"
           },
           "pascalCase": {
-            "unsafeName": "Organization",
-            "safeName": "Organization"
+            "unsafeName": "Outer",
+            "safeName": "Outer"
           }
         }
       },
@@ -345,25 +203,25 @@
           {
             "name": {
               "name": {
-                "originalName": "contact",
+                "originalName": "middle_message",
                 "camelCase": {
-                  "unsafeName": "contact",
-                  "safeName": "contact"
+                  "unsafeName": "middleMessage",
+                  "safeName": "middleMessage"
                 },
                 "snakeCase": {
-                  "unsafeName": "contact",
-                  "safeName": "contact"
+                  "unsafeName": "middle_message",
+                  "safeName": "middle_message"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "CONTACT",
-                  "safeName": "CONTACT"
+                  "unsafeName": "MIDDLE_MESSAGE",
+                  "safeName": "MIDDLE_MESSAGE"
                 },
                 "pascalCase": {
-                  "unsafeName": "Contact",
-                  "safeName": "Contact"
+                  "unsafeName": "MiddleMessage",
+                  "safeName": "MiddleMessage"
                 }
               },
-              "wireValue": "contact"
+              "wireValue": "middle_message"
             },
             "valueType": {
               "fernFilepath": {
@@ -371,25 +229,25 @@
                 "packagePath": []
               },
               "name": {
-                "originalName": "User.Contact",
+                "originalName": "Outer.Middle",
                 "camelCase": {
-                  "unsafeName": "userContact",
-                  "safeName": "userContact"
+                  "unsafeName": "outerMiddle",
+                  "safeName": "outerMiddle"
                 },
                 "snakeCase": {
-                  "unsafeName": "user_contact",
-                  "safeName": "user_contact"
+                  "unsafeName": "outer_middle",
+                  "safeName": "outer_middle"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "USER_CONTACT",
-                  "safeName": "USER_CONTACT"
+                  "unsafeName": "OUTER_MIDDLE",
+                  "safeName": "OUTER_MIDDLE"
                 },
                 "pascalCase": {
-                  "unsafeName": "UserContact",
-                  "safeName": "UserContact"
+                  "unsafeName": "OuterMiddle",
+                  "safeName": "OuterMiddle"
                 }
               },
-              "typeId": "User.Contact",
+              "typeId": "Outer.Middle",
               "inline": false,
               "type": "named"
             }

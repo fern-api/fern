@@ -2,19 +2,12 @@ syntax = "proto3";
 
 package user.v1;
 
-message User {
-  message Contact {
-    string phone = 1;
+message Outer {
+  message Middle {
+    message Inner {
+      string data = 1;
+    }
+    Inner inner_message = 1;
   }
-  Contact contact = 1;
-  string address = 2;
-  enum Status {
-    STATUS_UNSPECIFIED = 0;
-    STATUS_ACTIVE = 1;
-    STATUS_INACTIVE = 2;
-  }
-}
-
-message Organization {
-  User.Contact contact = 1;
+  Middle middle_message = 1;
 }

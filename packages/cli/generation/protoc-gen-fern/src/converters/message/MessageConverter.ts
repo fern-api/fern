@@ -49,7 +49,16 @@ export class MessageConverter extends AbstractConverter<ProtofileConverterContex
             if (convertedNestedEnumOrMessage != null) {
                 inlinedTypes = {
                     ...inlinedTypes,
-                    [`${this.message.name}.${nestedEnumOrMessage.name}`]: convertedNestedEnumOrMessage.convertedSchema
+                    ...Object.fromEntries(
+                        Object.entries(convertedNestedEnumOrMessage.inlinedTypes).map(([key, value]) => [
+                            this.prependParentMessageName(key),
+                            this.context.updateTypeId(value, this.prependParentMessageName(key))
+                        ])
+                    ),
+                    [this.prependParentMessageName(nestedEnumOrMessage.name)]: this.context.updateTypeId(
+                        convertedNestedEnumOrMessage.convertedSchema,
+                        this.prependParentMessageName(nestedEnumOrMessage.name)
+                    )
                 };
             }
         }
@@ -107,5 +116,9 @@ export class MessageConverter extends AbstractConverter<ProtofileConverterContex
             name: this.context.casingsGenerator.generateName(this.message.name),
             displayName: undefined
         };
+    }
+
+    private prependParentMessageName(name: string): string {
+        return `${this.message.name}.${name}`;
     }
 }

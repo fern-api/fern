@@ -55,4 +55,20 @@ export class ProtofileConverterContext extends AbstractConverterContext<FileDesc
 
         return typeParts.join(".");
     }
+
+    public updateTypeId(
+        type: EnumOrMessageConverter.ConvertedSchema,
+        newTypeId: string
+    ): EnumOrMessageConverter.ConvertedSchema {
+        return {
+            ...type,
+            typeDeclaration: {
+                ...type.typeDeclaration,
+                name: {
+                    ...type.typeDeclaration.name,
+                    typeId: newTypeId
+                }
+            }
+        };
+    }
 }
