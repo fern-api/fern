@@ -18,10 +18,26 @@ from tests.utils.wire.wire_test_base import WireTestBase, AsyncWireTestBase
 
 
 class TestGetMovie(WireTestBase):
-    # TODO(rmehndiratta): Use the examples from types.yml
     def test_get_movie_success(self):
-        movie_id = "tt0482571"
-        movie_data = {"id": movie_id, "title": "The Prestige", "rating": 8.5}
+        # NB: this is from the examples service.yml / types.yml, not the imdb test
+        # definition; but included here as an example of what a custom example should
+        # look like threaded through into the wire tests
+        movie_id = "movie-c06a4ad7"
+        movie_data = {
+            "id": movie_id,
+            "prequel": "movie-cv9b914f",
+            "title": "The Boy and the Heron",
+            "from": "Hayao Miyazaki",
+            "rating": 8.0,
+            "type": "movie",
+            "tag": "tag-12efs9dv",
+            "metadata": {
+                "actors": ["Christian Bale", "Florence Pugh", "Willem Dafoe"],
+                "releaseDate": "2023-12-08",
+                "ratings": {"rottenTomatoes": 97, "imdb": 7.6},
+            },
+            "revenue": 1000000,
+        }
 
         self.expect_request(
             uri=f"/movies/{movie_id}",
@@ -40,7 +56,7 @@ class TestGetMovie(WireTestBase):
         assert_json_eq(expected_response, actual_response)
 
     def test_get_movie_not_found(self):
-        movie_id = "tt0000000"
+        movie_id = "movie-c06a4ad7"
 
         self.expect_request(
             uri=f"/movies/{movie_id}",
@@ -58,7 +74,7 @@ class TestGetMovie(WireTestBase):
         assert exc_info.value.body == movie_id
 
     def test_get_movie_server_error(self):
-        movie_id = "tt0482571"
+        movie_id = "movie-c06a4ad7"
         error_response = {"error": "Internal server error"}
 
         self.expect_request(
@@ -82,10 +98,10 @@ class TestGetMovie(WireTestBase):
 
 class TestCreateMovie(WireTestBase):
     def test_create_movie_success(self):
-        movie_id = "tt0482571"
+        movie_id = "movie-c06a4ad7"
         movie_data = {
-            "title": "The Prestige",
-            "rating": 8.5,
+            "title": "The Boy and the Heron",
+            "rating": 8.0,
         }
 
         self.expect_request(
@@ -108,7 +124,7 @@ class TestCreateMovie(WireTestBase):
 
     def test_create_movie_validation_error(self):
         movie_data = {
-            "title": "The Prestige",
+            "title": "The Boy and the Heron",
             "rating": 11.0,  # Invalid rating > 10
         }
         error_response = {"error": "Rating must be between 0 and 10"}
@@ -138,8 +154,8 @@ class TestCreateMovie(WireTestBase):
 
     def test_create_movie_server_error(self):
         movie_data = {
-            "title": "The Prestige",
-            "rating": 8.5,
+            "title": "The Boy and the Heron",
+            "rating": 8.0,
         }
         error_response = {"error": "Internal server error"}
 
@@ -170,8 +186,22 @@ class TestCreateMovie(WireTestBase):
 class TestAsyncGetMovie(AsyncWireTestBase):
     @pytest.mark.asyncio
     async def test_get_movie_success(self):
-        movie_id = "tt0482571"
-        movie_data = {"id": movie_id, "title": "The Prestige", "rating": 8.5}
+        movie_id = "movie-c06a4ad7"
+        movie_data = {
+            "id": movie_id,
+            "prequel": "movie-cv9b914f",
+            "title": "The Boy and the Heron",
+            "from": "Hayao Miyazaki",
+            "rating": 8.0,
+            "type": "movie",
+            "tag": "tag-12efs9dv",
+            "metadata": {
+                "actors": ["Christian Bale", "Florence Pugh", "Willem Dafoe"],
+                "releaseDate": "2023-12-08",
+                "ratings": {"rottenTomatoes": 97, "imdb": 7.6},
+            },
+            "revenue": 1000000,
+        }
 
         self.expect_request(
             uri=f"/movies/{movie_id}",
@@ -191,7 +221,7 @@ class TestAsyncGetMovie(AsyncWireTestBase):
 
     @pytest.mark.asyncio
     async def test_get_movie_not_found(self):
-        movie_id = "tt0000000"
+        movie_id = "movie-c06a4ad7"
 
         self.expect_request(
             uri=f"/movies/{movie_id}",
@@ -209,7 +239,7 @@ class TestAsyncGetMovie(AsyncWireTestBase):
 
     @pytest.mark.asyncio
     async def test_get_movie_server_error(self):
-        movie_id = "tt0482571"
+        movie_id = "movie-c06a4ad7"
         error_response = {"error": "Internal server error"}
 
         self.expect_request(
@@ -234,10 +264,10 @@ class TestAsyncGetMovie(AsyncWireTestBase):
 class TestAsyncCreateMovie(AsyncWireTestBase):
     @pytest.mark.asyncio
     async def test_create_movie_success(self):
-        movie_id = "tt0482571"
+        movie_id = "movie-c06a4ad7"
         movie_data = {
-            "title": "The Prestige",
-            "rating": 8.5,
+            "title": "The Boy and the Heron",
+            "rating": 8.0,
         }
 
         self.expect_request(
@@ -261,7 +291,7 @@ class TestAsyncCreateMovie(AsyncWireTestBase):
     @pytest.mark.asyncio
     async def test_create_movie_validation_error(self):
         movie_data = {
-            "title": "The Prestige",
+            "title": "The Boy and the Heron",
             "rating": 11.0,  # Invalid rating > 10
         }
         error_response = {"error": "Rating must be between 0 and 10"}
@@ -292,8 +322,8 @@ class TestAsyncCreateMovie(AsyncWireTestBase):
     @pytest.mark.asyncio
     async def test_create_movie_server_error(self):
         movie_data = {
-            "title": "The Prestige",
-            "rating": 8.5,
+            "title": "The Boy and the Heron",
+            "rating": 8.0,
         }
         error_response = {"error": "Internal server error"}
 
