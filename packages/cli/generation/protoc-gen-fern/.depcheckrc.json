@@ -1,11 +1,4 @@
 {
-    "ignores": [
-        "globals",
-        "@trivago/prettier-plugin-sort-imports",
-        "@types/jest",
-        "@types/node"
-    ],
-    "ignore-patterns": [
-        "lib"
-    ]
+  "ignores": ["globals", "@trivago/prettier-plugin-sort-imports", "@types/jest", "@types/node"],
+  "ignore-patterns": ["lib"]
 }
