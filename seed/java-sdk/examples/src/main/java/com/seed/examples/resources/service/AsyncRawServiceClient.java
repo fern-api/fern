@@ -156,11 +156,10 @@ public class AsyncRawServiceClient {
                 .addPathSegments("metadata");
         if (request.getShallow().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "shallow", request.getShallow().get().toString(), false);
+                    httpUrl, "shallow", request.getShallow().get(), false);
         }
         if (request.getTag().isPresent()) {
-            QueryStringMapper.addQueryParameter(
-                    httpUrl, "tag", request.getTag().get().toString(), false);
+            QueryStringMapper.addQueryParameter(httpUrl, "tag", request.getTag().get(), true);
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
