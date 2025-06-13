@@ -12,7 +12,10 @@ class AwaitExpression(Expression):
         self,
         expression: Union[Expression, AstNode, Reference, str],
     ):
-        self.expression = Expression(expression) if isinstance(expression, (AstNode, Reference, str)) else expression
+        self.expression: Expression = (
+            expression if isinstance(expression, Expression)
+            else Expression(expression)
+        )
 
     def get_metadata(self) -> AstNodeMetadata:
         return self.expression.get_metadata()
