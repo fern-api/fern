@@ -10,13 +10,6 @@ def mock_server() -> MockServer:
     """
     with HTTPServer() as server:
         yield MockServer(server)
-    """
-    server = HTTPServer()
-    server.start()
-    mock_server = MockServer(server)
-    yield mock_server
-    server.stop()
-    """
 
 
 @pytest.fixture
