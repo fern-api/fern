@@ -1,17 +1,17 @@
-import { Name, ObjectProperty, ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
+import { ObjectProperty, ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 
 import { RelativeFilePath } from "../../../../packages/commons/fs-utils/src";
 import { BaseRubyCustomConfigSchema, ruby } from "../../ast/src";
 import { Field } from "../../ast/src/ast";
 import { FileGenerator, RubyFile } from "../../base/src";
-import { SdkGeneratorContext } from "../../sdk/src/SdkGeneratorContext";
+import { ModelGeneratorContext } from "./ModelGeneratorContext";
 
-export class ObjectGenerator extends FileGenerator<RubyFile, BaseRubyCustomConfigSchema, SdkGeneratorContext> {
-    private readonly context: SdkGeneratorContext;
+export class ObjectGenerator extends FileGenerator<RubyFile, BaseRubyCustomConfigSchema, ModelGeneratorContext> {
+    protected readonly context: ModelGeneratorContext;
     private readonly td: TypeDeclaration;
     private readonly otd: ObjectTypeDeclaration;
 
-    constructor(context: SdkGeneratorContext, td: TypeDeclaration, otd: ObjectTypeDeclaration) {
+    constructor(context: ModelGeneratorContext, td: TypeDeclaration, otd: ObjectTypeDeclaration) {
         super(context);
         this.context = context;
         this.td = td;
@@ -20,7 +20,7 @@ export class ObjectGenerator extends FileGenerator<RubyFile, BaseRubyCustomConfi
 
     public doGenerate(): RubyFile {
         const klass = ruby.object_({
-            ...this.td.name,
+            name: this.td.name.name.pascalCase.safeName,
             fields: []
         });
 
@@ -37,11 +37,10 @@ export class ObjectGenerator extends FileGenerator<RubyFile, BaseRubyCustomConfi
         });
     }
 
-    private toField({ property, optional }: { property: ObjectProperty; optional?: boolean }): Field {
+    private toField({ property }: { property: ObjectProperty }): Field {
         return ruby.field({
-            name: property.name.name,
-            type: property.valueType,
-            optional
+            name: property.name.name.snakeCase.safeName,
+            type: property.valueType
         });
     }
 

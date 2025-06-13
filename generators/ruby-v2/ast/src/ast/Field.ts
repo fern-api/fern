@@ -1,3 +1,4 @@
+import { KeywordParameter } from "./KeywordParameter";
 import { Type } from "./Type";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
@@ -6,21 +7,21 @@ export declare namespace Field {
     interface Args {
         name: string;
         type: Type;
-        optional?: boolean;
+        kwargs: Array<KeywordParameter>;
     }
 }
 
 export class Field extends AstNode {
     public readonly name: string;
     public readonly type: Type;
-    public readonly optional: boolean;
+    public readonly kwargs: Array<KeywordParameter>;
 
-    constructor({ name, type, optional }: Field.Args) {
+    constructor({ name, type, kwargs }: Field.Args) {
         super();
 
         this.name = name;
         this.type = type;
-        this.optional = optional || false;
+        this.kwargs = kwargs;
     }
 
     public write(writer: Writer): void {
@@ -28,9 +29,12 @@ export class Field extends AstNode {
         writer.write(", ");
         this.type.writeTypeDefinition(writer);
 
-        if (this.optional) {
-            writer.write(", optional: true");
-        }
+        this.kwargs.forEach((kwarg, index) => {
+            if (index < this.kwargs.length - 1) {
+                writer.write(", ");
+            }
+            kwarg.write(writer);
+        });
     }
 
     public writeTypeDefinition(writer: Writer): void {

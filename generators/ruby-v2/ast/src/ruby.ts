@@ -15,7 +15,7 @@ import {
 import { TypeParameter } from "./ast/TypeParameter";
 
 export { AstNode } from "./ast/core/AstNode";
-export { CodeBlock, Parameter, Method } from "./ast";
+export { CodeBlock, Parameter, Method, Type } from "./ast";
 
 export function codeblock(arg: CodeBlock.Arg): CodeBlock {
     return new CodeBlock(arg);

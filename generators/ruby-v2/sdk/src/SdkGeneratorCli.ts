@@ -6,7 +6,6 @@ import { AbstractRubyGeneratorCli, RubyFile } from "@fern-api/ruby-base";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
-import { ModelGeneratorContext } from "../../model/src/ModelGeneratorContext";
 import { ObjectGenerator } from "../../model/src/ObjectGenerator";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
