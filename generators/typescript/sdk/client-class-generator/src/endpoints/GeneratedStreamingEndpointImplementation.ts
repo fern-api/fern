@@ -70,7 +70,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         this.omitUndefined = omitUndefined;
         this.streamType = streamType;
     }
-    
+
     public isPaginated(context: SdkContext): boolean {
         return false;
     }
