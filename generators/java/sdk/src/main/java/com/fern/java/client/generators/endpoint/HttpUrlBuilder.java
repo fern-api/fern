@@ -152,13 +152,13 @@ public final class HttpUrlBuilder {
                         "if ($L.$N().isPresent())", requestName, queryParamProperty.getterProperty());
             }
             codeBlock.addStatement(
-                    "$T.addQueryParameter($L, $S, $L, $F)",
+                    "$T.addQueryParameter($L, $S, $L, $L)",
                     context.getPoetClassNameFactory().getQueryStringMapperClassName(),
                     httpUrlname,
                     queryParamProperty.wireKey().get(),
                     CodeBlock.of(
                             "$L.$N()" + (isOptional ? ".get()" : ""), requestName, queryParamProperty.getterProperty()),
-                    queryParamProperty.allowMultiple() ? "true" : "false");
+                    queryParamProperty.allowMultiple());
             if (isOptional) {
                 codeBlock.endControlFlow();
             }
