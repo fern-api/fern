@@ -1171,6 +1171,7 @@
                             {
                                 "type": "bodyProperty",
                                 "style": null,
+                                "explodeParts": true,
                                 "name": {
                                     "name": {
                                         "originalName": "maybe_string",
@@ -1221,6 +1222,7 @@
                             {
                                 "type": "bodyProperty",
                                 "style": null,
+                                "explodeParts": true,
                                 "name": {
                                     "name": {
                                         "originalName": "integer",
@@ -1389,6 +1391,7 @@
                             {
                                 "type": "bodyProperty",
                                 "style": null,
+                                "explodeParts": true,
                                 "name": {
                                     "name": {
                                         "originalName": "maybe_integer",
@@ -1439,6 +1442,7 @@
                             {
                                 "type": "bodyProperty",
                                 "style": null,
+                                "explodeParts": true,
                                 "name": {
                                     "name": {
                                         "originalName": "optional_list_of_strings",
@@ -1495,6 +1499,7 @@
                             {
                                 "type": "bodyProperty",
                                 "style": null,
+                                "explodeParts": true,
                                 "name": {
                                     "name": {
                                         "originalName": "list_of_objects",
@@ -1603,6 +1608,7 @@
                             {
                                 "type": "bodyProperty",
                                 "style": null,
+                                "explodeParts": true,
                                 "name": {
                                     "name": {
                                         "originalName": "optional_metadata",
@@ -1645,6 +1651,7 @@
                             {
                                 "type": "bodyProperty",
                                 "style": null,
+                                "explodeParts": true,
                                 "name": {
                                     "name": {
                                         "originalName": "optional_object_type",
@@ -1753,6 +1760,7 @@
                             {
                                 "type": "bodyProperty",
                                 "style": null,
+                                "explodeParts": true,
                                 "name": {
                                     "name": {
                                         "originalName": "optional_id",
@@ -1861,6 +1869,7 @@
                             {
                                 "type": "bodyProperty",
                                 "style": null,
+                                "explodeParts": true,
                                 "name": {
                                     "name": {
                                         "originalName": "alias_object",
@@ -1963,6 +1972,7 @@
                             {
                                 "type": "bodyProperty",
                                 "style": null,
+                                "explodeParts": true,
                                 "name": {
                                     "name": {
                                         "originalName": "list_of_alias_object",
@@ -2071,6 +2081,7 @@
                             {
                                 "type": "bodyProperty",
                                 "style": null,
+                                "explodeParts": true,
                                 "name": {
                                     "name": {
                                         "originalName": "alias_list_of_object",
@@ -2933,6 +2944,7 @@
                             {
                                 "type": "bodyProperty",
                                 "style": null,
+                                "explodeParts": true,
                                 "name": {
                                     "name": {
                                         "originalName": "foo",
@@ -2977,6 +2989,7 @@
                             {
                                 "type": "bodyProperty",
                                 "style": null,
+                                "explodeParts": true,
                                 "name": {
                                     "name": {
                                         "originalName": "bar",
@@ -3079,6 +3092,7 @@
                             {
                                 "type": "bodyProperty",
                                 "style": null,
+                                "explodeParts": true,
                                 "name": {
                                     "name": {
                                         "originalName": "foo_bar",
@@ -3364,6 +3378,7 @@
                             {
                                 "type": "bodyProperty",
                                 "style": "form",
+                                "explodeParts": true,
                                 "name": {
                                     "name": {
                                         "originalName": "foo",
@@ -3408,6 +3423,7 @@
                             {
                                 "type": "bodyProperty",
                                 "style": "form",
+                                "explodeParts": true,
                                 "name": {
                                     "name": {
                                         "originalName": "bar",
@@ -3656,6 +3672,7 @@
                             {
                                 "type": "bodyProperty",
                                 "style": "form",
+                                "explodeParts": true,
                                 "name": {
                                     "name": {
                                         "originalName": "maybe_string",
@@ -3706,6 +3723,7 @@
                             {
                                 "type": "bodyProperty",
                                 "style": "form",
+                                "explodeParts": true,
                                 "name": {
                                     "name": {
                                         "originalName": "integer",
@@ -3874,6 +3892,7 @@
                             {
                                 "type": "bodyProperty",
                                 "style": "form",
+                                "explodeParts": true,
                                 "name": {
                                     "name": {
                                         "originalName": "maybe_integer",
@@ -3924,6 +3943,7 @@
                             {
                                 "type": "bodyProperty",
                                 "style": "form",
+                                "explodeParts": true,
                                 "name": {
                                     "name": {
                                         "originalName": "optional_list_of_strings",
@@ -3980,6 +4000,7 @@
                             {
                                 "type": "bodyProperty",
                                 "style": "form",
+                                "explodeParts": true,
                                 "name": {
                                     "name": {
                                         "originalName": "list_of_objects",
@@ -4087,7 +4108,117 @@
                             },
                             {
                                 "type": "bodyProperty",
+                                "style": "json",
+                                "explodeParts": false,
+                                "name": {
+                                    "name": {
+                                        "originalName": "list_of_objects_not_exploded",
+                                        "camelCase": {
+                                            "unsafeName": "listOfObjectsNotExploded",
+                                            "safeName": "listOfObjectsNotExploded"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "list_of_objects_not_exploded",
+                                            "safeName": "list_of_objects_not_exploded"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "LIST_OF_OBJECTS_NOT_EXPLODED",
+                                            "safeName": "LIST_OF_OBJECTS_NOT_EXPLODED"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "ListOfObjectsNotExploded",
+                                            "safeName": "ListOfObjectsNotExploded"
+                                        }
+                                    },
+                                    "wireValue": "list_of_objects_not_exploded"
+                                },
+                                "valueType": {
+                                    "_type": "container",
+                                    "container": {
+                                        "_type": "list",
+                                        "list": {
+                                            "_type": "named",
+                                            "name": {
+                                                "originalName": "MyObject",
+                                                "camelCase": {
+                                                    "unsafeName": "myObject",
+                                                    "safeName": "myObject"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "my_object",
+                                                    "safeName": "my_object"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "MY_OBJECT",
+                                                    "safeName": "MY_OBJECT"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "MyObject",
+                                                    "safeName": "MyObject"
+                                                }
+                                            },
+                                            "fernFilepath": {
+                                                "allParts": [
+                                                    {
+                                                        "originalName": "service",
+                                                        "camelCase": {
+                                                            "unsafeName": "service",
+                                                            "safeName": "service"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "service",
+                                                            "safeName": "service"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "SERVICE",
+                                                            "safeName": "SERVICE"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "Service",
+                                                            "safeName": "Service"
+                                                        }
+                                                    }
+                                                ],
+                                                "packagePath": [],
+                                                "file": {
+                                                    "originalName": "service",
+                                                    "camelCase": {
+                                                        "unsafeName": "service",
+                                                        "safeName": "service"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "service",
+                                                        "safeName": "service"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "SERVICE",
+                                                        "safeName": "SERVICE"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Service",
+                                                        "safeName": "Service"
+                                                    }
+                                                }
+                                            },
+                                            "displayName": null,
+                                            "typeId": "type_service:MyObject",
+                                            "default": null,
+                                            "inline": null
+                                        }
+                                    }
+                                },
+                                "v2Examples": {
+                                    "userSpecifiedExamples": {},
+                                    "autogeneratedExamples": {}
+                                },
+                                "availability": null,
+                                "docs": null,
+                                "contentType": null
+                            },
+                            {
+                                "type": "bodyProperty",
                                 "style": "form",
+                                "explodeParts": true,
                                 "name": {
                                     "name": {
                                         "originalName": "optional_metadata",
@@ -4130,6 +4261,7 @@
                             {
                                 "type": "bodyProperty",
                                 "style": "form",
+                                "explodeParts": true,
                                 "name": {
                                     "name": {
                                         "originalName": "optional_object_type",
@@ -4238,6 +4370,7 @@
                             {
                                 "type": "bodyProperty",
                                 "style": "form",
+                                "explodeParts": true,
                                 "name": {
                                     "name": {
                                         "originalName": "optional_id",
@@ -4346,6 +4479,7 @@
                             {
                                 "type": "bodyProperty",
                                 "style": "form",
+                                "explodeParts": true,
                                 "name": {
                                     "name": {
                                         "originalName": "list_of_objects_with_optionals",
@@ -4454,6 +4588,7 @@
                             {
                                 "type": "bodyProperty",
                                 "style": "form",
+                                "explodeParts": true,
                                 "name": {
                                     "name": {
                                         "originalName": "alias_object",
@@ -4556,6 +4691,7 @@
                             {
                                 "type": "bodyProperty",
                                 "style": "form",
+                                "explodeParts": true,
                                 "name": {
                                     "name": {
                                         "originalName": "list_of_alias_object",
@@ -4664,6 +4800,7 @@
                             {
                                 "type": "bodyProperty",
                                 "style": "form",
+                                "explodeParts": true,
                                 "name": {
                                     "name": {
                                         "originalName": "alias_list_of_object",
@@ -4943,6 +5080,7 @@
                             {
                                 "type": "bodyProperty",
                                 "style": null,
+                                "explodeParts": true,
                                 "name": {
                                     "name": {
                                         "originalName": "request",
@@ -7686,6 +7824,38 @@
                                         }
                                     },
                                     "wireValue": "list_of_objects"
+                                },
+                                "typeReference": {
+                                    "type": "list",
+                                    "value": {
+                                        "type": "named",
+                                        "value": "type_service:MyObject"
+                                    }
+                                }
+                            },
+                            {
+                                "type": "bodyProperty",
+                                "name": {
+                                    "name": {
+                                        "originalName": "list_of_objects_not_exploded",
+                                        "camelCase": {
+                                            "unsafeName": "listOfObjectsNotExploded",
+                                            "safeName": "listOfObjectsNotExploded"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "list_of_objects_not_exploded",
+                                            "safeName": "list_of_objects_not_exploded"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "LIST_OF_OBJECTS_NOT_EXPLODED",
+                                            "safeName": "LIST_OF_OBJECTS_NOT_EXPLODED"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "ListOfObjectsNotExploded",
+                                            "safeName": "ListOfObjectsNotExploded"
+                                        }
+                                    },
+                                    "wireValue": "list_of_objects_not_exploded"
                                 },
                                 "typeReference": {
                                     "type": "list",

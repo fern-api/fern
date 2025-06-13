@@ -469,7 +469,14 @@ export const FernOpenAPIExtension = {
      *   grpc:
      *     service-name: UserService
      */
-    TRANSPORT: "x-fern-transport"
+    TRANSPORT: "x-fern-transport",
+
+    /**
+     * Allows users to specify that a property should be exploded into multiple multipart form parts.
+     * This is currently only supported on JSON arrays. Each item in the array will be
+     * converted into a separate part in the multipart form data.
+     */
+    EXPLODE_PARTS: "x-fern-explode-parts"
 } as const;
 
 export type FernOpenAPIExtension = Values<typeof FernOpenAPIExtension>;

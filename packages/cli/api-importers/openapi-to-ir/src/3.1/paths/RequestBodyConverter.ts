@@ -257,7 +257,8 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
             ...property,
             contentType,
             style: undefined,
-            name: property.name
+            name: property.name,
+            explodeParts: true // TODO: implement explode parts for JSON
         });
     }
 

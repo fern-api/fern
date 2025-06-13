@@ -182,6 +182,7 @@ types:
       - commons.WithContentType
     properties:
       style: optional<FileUploadBodyPropertyEncoding>
+      explodeParts: boolean
 
   FileUploadBodyPropertyEncoding:
     enum:

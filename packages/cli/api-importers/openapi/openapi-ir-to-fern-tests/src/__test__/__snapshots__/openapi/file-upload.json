@@ -98,6 +98,11 @@
                       "style": "exploded",
                       "type": "optional<UploadWithContentTypeRequestData>",
                     },
+                    "data-list": "optional<list<UploadWithContentTypeRequestDataListItem>>",
+                    "data-list-not-exploded": {
+                      "explodeParts": false,
+                      "type": "optional<list<UploadWithContentTypeRequestDataListNotExplodedItem>>",
+                    },
                     "file": {
                       "content-type": "application/octet-stream",
                       "docs": "The file to upload",
@@ -131,6 +136,26 @@
         },
         "types": {
           "UploadWithContentTypeRequestData": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "datum": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "UploadWithContentTypeRequestDataListItem": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "datum": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "UploadWithContentTypeRequestDataListNotExplodedItem": {
             "docs": undefined,
             "inline": true,
             "properties": {
@@ -211,6 +236,11 @@
             data:
               type: optional<UploadWithContentTypeRequestData>
               style: exploded
+            data-list: optional<list<UploadWithContentTypeRequestDataListItem>>
+            data-list-not-exploded:
+              type: >-
+                optional<list<UploadWithContentTypeRequestDataListNotExplodedItem>>
+              explodeParts: false
         content-type: multipart/form-data
       examples:
         - request: {}
@@ -218,6 +248,18 @@
     openapi: ../openapi.yml
 types:
   UploadWithContentTypeRequestData:
+    properties:
+      datum: optional<string>
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  UploadWithContentTypeRequestDataListItem:
+    properties:
+      datum: optional<string>
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  UploadWithContentTypeRequestDataListNotExplodedItem:
     properties:
       datum: optional<string>
     source:

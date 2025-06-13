@@ -710,6 +710,18 @@
                   },
                   {
                     "type": "bodyProperty",
+                    "key": "list_of_objects_not_exploded",
+                    "valueType": {
+                      "type": "list",
+                      "itemType": {
+                        "type": "id",
+                        "value": "type_service:MyObject"
+                      }
+                    },
+                    "exploded": false
+                  },
+                  {
+                    "type": "bodyProperty",
                     "key": "optional_metadata",
                     "valueType": {
                       "type": "optional",

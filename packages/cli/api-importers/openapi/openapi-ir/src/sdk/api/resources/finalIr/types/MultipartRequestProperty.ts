@@ -10,4 +10,5 @@ export interface MultipartRequestProperty extends FernOpenapiIr.WithDescription 
     contentType: string | undefined;
     exploded: boolean | undefined;
     encoding: FernOpenapiIr.MultipartRequestPropertyEncoding | undefined;
+    explodeParts: boolean | undefined;
 }

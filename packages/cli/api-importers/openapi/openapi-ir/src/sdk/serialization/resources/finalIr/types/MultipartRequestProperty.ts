@@ -19,6 +19,7 @@ export const MultipartRequestProperty: core.serialization.ObjectSchema<
         contentType: core.serialization.string().optional(),
         exploded: core.serialization.boolean().optional(),
         encoding: MultipartRequestPropertyEncoding.optional(),
+        explodeParts: core.serialization.boolean().optional(),
     })
     .extend(WithDescription);
 
@@ -29,5 +30,6 @@ export declare namespace MultipartRequestProperty {
         contentType?: string | null;
         exploded?: boolean | null;
         encoding?: MultipartRequestPropertyEncoding.Raw | null;
+        explodeParts?: boolean | null;
     }
 }

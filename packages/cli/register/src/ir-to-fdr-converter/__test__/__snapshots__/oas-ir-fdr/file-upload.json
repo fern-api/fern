@@ -29,6 +29,48 @@
           }
         ]
       }
+    },
+    "UploadWithContentTypePostRequestBodyContentMultipartFormDataSchemaDataListItems": {
+      "name": "UploadWithContentTypePostRequestBodyContentMultipartFormDataSchemaDataListItems",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "datum",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "UploadWithContentTypePostRequestBodyContentMultipartFormDataSchemaDataListNotExplodedItems": {
+      "name": "UploadWithContentTypePostRequestBodyContentMultipartFormDataSchemaDataListNotExplodedItems",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "datum",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
     }
   },
   "subpackages": {},
@@ -275,6 +317,38 @@
                   },
                   "contentType": "multipart/form-data",
                   "exploded": false
+                },
+                {
+                  "type": "bodyProperty",
+                  "key": "data-list",
+                  "valueType": {
+                    "type": "optional",
+                    "itemType": {
+                      "type": "list",
+                      "itemType": {
+                        "type": "id",
+                        "value": "UploadWithContentTypePostRequestBodyContentMultipartFormDataSchemaDataListItems"
+                      }
+                    }
+                  },
+                  "contentType": "multipart/form-data",
+                  "exploded": false
+                },
+                {
+                  "type": "bodyProperty",
+                  "key": "data-list-not-exploded",
+                  "valueType": {
+                    "type": "optional",
+                    "itemType": {
+                      "type": "list",
+                      "itemType": {
+                        "type": "id",
+                        "value": "UploadWithContentTypePostRequestBodyContentMultipartFormDataSchemaDataListNotExplodedItems"
+                      }
+                    }
+                  },
+                  "contentType": "multipart/form-data",
+                  "exploded": false
                 }
               ]
             },
@@ -307,6 +381,12 @@
                   "type": "json"
                 },
                 "data": {
+                  "type": "json"
+                },
+                "data-list": {
+                  "type": "json"
+                },
+                "data-list-not-exploded": {
                   "type": "json"
                 }
               }

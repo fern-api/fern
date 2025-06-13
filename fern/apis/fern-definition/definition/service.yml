@@ -124,6 +124,7 @@ types:
       style: 
         type: optional<FormDataBodyEncodingStyle>
         docs: Defaults to json encoding
+      explodeParts: optional<boolean>
       content-type: optional<string>
   
   FormDataBodyEncodingStyle: 

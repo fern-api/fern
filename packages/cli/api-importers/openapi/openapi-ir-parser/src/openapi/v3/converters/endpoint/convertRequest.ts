@@ -14,6 +14,7 @@ import { isAdditionalPropertiesAny } from "../../../../schema/convertAdditionalP
 import { SCHEMA_REFERENCE_PREFIX, convertSchema, getSchemaIdFromReference } from "../../../../schema/convertSchemas";
 import { isReferenceObject } from "../../../../schema/utils/isReferenceObject";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
+import { getFernExplodePartsExtension } from "../../extensions/getFernExplodePartsExtension";
 import { getApplicationJsonSchemaMediaObject, getExamples } from "./getApplicationJsonSchema";
 
 function getApplicationUrlFormEncodedRequest(
@@ -146,17 +147,20 @@ export function convertRequest({
                         description,
                         contentType,
                         exploded: false,
-                        encoding: contentType == null ? context.options.defaultFormParameterEncoding : undefined
+                        encoding: contentType == null ? context.options.defaultFormParameterEncoding : undefined,
+                        explodeParts: undefined
                     });
                 } else {
                     const contentType = getContentType(property.key, multipartEncoding);
+                    const explodeParts = getShouldExplodeParts(property.key, multipartEncoding, context);
                     properties.push({
                         key: property.key,
                         schema: MultipartSchema.json(property.schema),
                         description: undefined,
                         contentType,
                         exploded: multipartEncoding != null ? multipartEncoding[property.key]?.explode : undefined,
-                        encoding: contentType == null ? context.options.defaultFormParameterEncoding : undefined
+                        encoding: contentType == null ? context.options.defaultFormParameterEncoding : undefined,
+                        explodeParts
                     });
                 }
             }
@@ -315,4 +319,20 @@ function checkSchemaWithExampleIsArray(schema: SchemaWithExample): schema is Sch
 
 function getContentType(key: string, multipartEncoding: Record<string, OpenAPIV3.EncodingObject> | undefined) {
     return multipartEncoding != null ? multipartEncoding[key]?.contentType : undefined;
+}
+
+function getShouldExplodeParts(
+    key: string,
+    multipartEncoding: Record<string, OpenAPIV3.EncodingObject> | undefined,
+    context: AbstractOpenAPIV3ParserContext
+): boolean | undefined {
+    if (multipartEncoding == null) {
+        return undefined;
+    }
+    const encoding = multipartEncoding[key];
+    if (!encoding) {
+        return undefined;
+    }
+    const extensionValue = getFernExplodePartsExtension(encoding, context);
+    return extensionValue;
 }

@@ -90,7 +90,8 @@ export function convertHttpRequestBody({
                             file
                         }),
                         style: property.style,
-                        contentType: property.contentType
+                        contentType: property.contentType,
+                        explodeParts: property.explodeParts ?? true
                     });
                 }
             }),

@@ -30,6 +30,7 @@ export declare namespace RawFileUploadRequest {
     export interface InlinedRequestBodyProperty extends BaseProperty {
         isFile: false;
         propertyType: ObjectPropertySchema;
+        explodeParts: boolean | undefined;
     }
 
     export interface BaseProperty {
@@ -88,6 +89,7 @@ function createRawFileUploadRequest(
             const docs = typeof propertyType !== "string" ? propertyType.docs : undefined;
             const contentType = typeof propertyType !== "string" ? propertyType["content-type"] : undefined;
             const style = typeof propertyType !== "string" ? propertyType.style : undefined;
+            const explodeParts = typeof propertyType !== "string" ? propertyType.explodeParts : undefined;
             const maybeParsedFileType = parseRawFileType(
                 typeof propertyType === "string" ? propertyType : propertyType.type
             );
@@ -102,7 +104,15 @@ function createRawFileUploadRequest(
                     style
                 });
             } else {
-                acc.push({ isFile: false, key, propertyType, docs, contentType, style });
+                acc.push({
+                    isFile: false,
+                    key,
+                    propertyType,
+                    docs,
+                    contentType,
+                    style,
+                    explodeParts
+                });
             }
             return acc;
         },

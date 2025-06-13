@@ -8694,6 +8694,7 @@
                   }
                 },
                 "contentType": "multipart/form-data",
+                "explodeParts": true,
                 "type": "bodyProperty"
               },
               {
@@ -8768,6 +8769,7 @@
                   }
                 },
                 "contentType": "multipart/form-data",
+                "explodeParts": true,
                 "type": "bodyProperty"
               }
             ],

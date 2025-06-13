@@ -1876,6 +1876,16 @@
             }
           ]
         },
+        "explodeParts": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "content-type": {
           "oneOf": [
             {

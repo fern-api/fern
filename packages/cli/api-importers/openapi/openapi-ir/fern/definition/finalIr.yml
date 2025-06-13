@@ -456,6 +456,7 @@ types:
       contentType: optional<string>
       exploded: optional<boolean>
       encoding: optional<MultipartRequestPropertyEncoding>
+      explodeParts: optional<boolean>
 
   MultipartRequestPropertyEncoding:
     enum:

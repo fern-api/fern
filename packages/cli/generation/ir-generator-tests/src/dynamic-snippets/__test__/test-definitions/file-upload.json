@@ -2561,6 +2561,38 @@
                             "type": "bodyProperty",
                             "name": {
                                 "name": {
+                                    "originalName": "list_of_objects_not_exploded",
+                                    "camelCase": {
+                                        "unsafeName": "listOfObjectsNotExploded",
+                                        "safeName": "listOfObjectsNotExploded"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "list_of_objects_not_exploded",
+                                        "safeName": "list_of_objects_not_exploded"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "LIST_OF_OBJECTS_NOT_EXPLODED",
+                                        "safeName": "LIST_OF_OBJECTS_NOT_EXPLODED"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "ListOfObjectsNotExploded",
+                                        "safeName": "ListOfObjectsNotExploded"
+                                    }
+                                },
+                                "wireValue": "list_of_objects_not_exploded"
+                            },
+                            "typeReference": {
+                                "type": "list",
+                                "value": {
+                                    "type": "named",
+                                    "value": "type_service:MyObject"
+                                }
+                            }
+                        },
+                        {
+                            "type": "bodyProperty",
+                            "name": {
+                                "name": {
                                     "originalName": "optional_metadata",
                                     "camelCase": {
                                         "unsafeName": "optionalMetadata",

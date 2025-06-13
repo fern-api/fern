@@ -242,6 +242,107 @@
               "type": "json"
             },
             "exploded": true
+          },
+          {
+            "key": "data-list",
+            "schema": {
+              "value": {
+                "generatedName": "uploadWithContentTypeRequestDataList",
+                "value": {
+                  "generatedName": "UploadWithContentTypeRequestDataList",
+                  "value": {
+                    "properties": [
+                      {
+                        "key": "datum",
+                        "schema": {
+                          "generatedName": "uploadWithContentTypeRequestDataListItemDatum",
+                          "value": {
+                            "generatedName": "UploadWithContentTypeRequestDataListItemDatum",
+                            "schema": {
+                              "type": "string"
+                            },
+                            "groupName": [],
+                            "type": "primitive"
+                          },
+                          "groupName": [],
+                          "type": "optional"
+                        },
+                        "audiences": [],
+                        "conflict": {},
+                        "generatedName": "uploadWithContentTypeRequestDataListItemDatum"
+                      }
+                    ],
+                    "generatedName": "UploadWithContentTypeRequestDataListItem",
+                    "allOf": [],
+                    "allOfPropertyConflicts": [],
+                    "groupName": [],
+                    "fullExamples": [],
+                    "additionalProperties": false,
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "object"
+                  },
+                  "groupName": [],
+                  "type": "array"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "type": "json"
+            }
+          },
+          {
+            "key": "data-list-not-exploded",
+            "schema": {
+              "value": {
+                "generatedName": "uploadWithContentTypeRequestDataListNotExploded",
+                "value": {
+                  "generatedName": "UploadWithContentTypeRequestDataListNotExploded",
+                  "value": {
+                    "properties": [
+                      {
+                        "key": "datum",
+                        "schema": {
+                          "generatedName": "uploadWithContentTypeRequestDataListNotExplodedItemDatum",
+                          "value": {
+                            "generatedName": "UploadWithContentTypeRequestDataListNotExplodedItemDatum",
+                            "schema": {
+                              "type": "string"
+                            },
+                            "groupName": [],
+                            "type": "primitive"
+                          },
+                          "groupName": [],
+                          "type": "optional"
+                        },
+                        "audiences": [],
+                        "conflict": {},
+                        "generatedName": "uploadWithContentTypeRequestDataListNotExplodedItemDatum"
+                      }
+                    ],
+                    "generatedName": "UploadWithContentTypeRequestDataListNotExplodedItem",
+                    "allOf": [],
+                    "allOfPropertyConflicts": [],
+                    "groupName": [],
+                    "fullExamples": [],
+                    "additionalProperties": false,
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "object"
+                  },
+                  "groupName": [],
+                  "type": "array"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "type": "json"
+            },
+            "explodeParts": false
           }
         ],
         "source": {

@@ -71,6 +71,20 @@ paths:
                   properties: 
                     datum:
                       type: string
+                data-list:
+                  type: array
+                  items: 
+                    type: object
+                    properties:
+                      datum:
+                        type: string
+                data-list-not-exploded:
+                  type: array
+                  items: 
+                    type: object
+                    properties:
+                      datum:
+                        type: string
               required: [file]                                
             encoding: 
               file:   
@@ -79,4 +93,6 @@ paths:
                 contentType: "application/json"
               data: 
                 explode: true
+              data-list-not-exploded:
+                x-fern-explode-parts: false
               

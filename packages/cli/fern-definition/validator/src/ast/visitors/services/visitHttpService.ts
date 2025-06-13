@@ -210,7 +210,8 @@ function visitEndpoint({
                                             audiences: noop,
                                             encoding: noop,
                                             default: noop,
-                                            validation: noop
+                                            validation: noop,
+                                            explodeParts: noop
                                         });
                                     }
                                 }

@@ -122,6 +122,10 @@ service:
             list_of_objects: 
               type: list<MyObject>
               style: form
+            list_of_objects_not_exploded: 
+              type: list<MyObject>
+              style: json
+              explodeParts: false
             optional_metadata: 
               type: optional<unknown>
               style: form

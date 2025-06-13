@@ -7,5 +7,6 @@ import * as FernDefinition from "../../../index";
 export interface HttpInlineFileRequestBodyPropertySchema extends FernDefinition.TypeReferenceDeclarationWithName {
     /** Defaults to json encoding */
     style?: FernDefinition.FormDataBodyEncodingStyle;
+    explodeParts?: boolean;
     "content-type"?: string;
 }

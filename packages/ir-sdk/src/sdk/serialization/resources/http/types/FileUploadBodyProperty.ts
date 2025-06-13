@@ -15,6 +15,7 @@ export const FileUploadBodyProperty: core.serialization.ObjectSchema<
 > = core.serialization
     .objectWithoutOptionalProperties({
         style: FileUploadBodyPropertyEncoding.optional(),
+        explodeParts: core.serialization.boolean(),
     })
     .extend(InlinedRequestBodyProperty)
     .extend(WithContentType);
@@ -22,5 +23,6 @@ export const FileUploadBodyProperty: core.serialization.ObjectSchema<
 export declare namespace FileUploadBodyProperty {
     export interface Raw extends InlinedRequestBodyProperty.Raw, WithContentType.Raw {
         style?: FileUploadBodyPropertyEncoding.Raw | null;
+        explodeParts: boolean;
     }
 }
