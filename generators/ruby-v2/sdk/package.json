@@ -26,7 +26,7 @@
     "depcheck": "depcheck",
     "dist:cli": "pnpm compile && tsup ./src/cli.ts --format cjs",
     "publish:cli": "pnpm dist:cli && cd dist && yarn npm publish",
-    "dockerTagLatest": "pnpm dist:cli && docker build -f ./Dockerfile -t fernapi/fern-go-sdk:latest ../../.."
+    "dockerTagLatest": "pnpm dist:cli && docker build -f ./Dockerfile -t fernapi/fern-ruby-sdk-v2:latest ../../.."
   },
   "devDependencies": {
     "@fern-api/ruby-ast": "workspace:*",

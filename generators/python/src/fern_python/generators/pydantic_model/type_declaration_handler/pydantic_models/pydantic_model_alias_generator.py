@@ -1,5 +1,6 @@
 from typing import Optional
 
+from fern_python.external_dependencies import PydanticVersionCompatibility
 from ....context.pydantic_generator_context import PydanticGeneratorContext
 from ...custom_config import PydanticModelCustomConfig
 from ..alias_generator import AbstractAliasGenerator, AbstractAliasSnippetGenerator
@@ -49,8 +50,8 @@ class PydanticModelAliasGenerator(AbstractAliasGenerator):
                 should_export=True,
             )
         else:
-            # NOTE: We validate the config to ensure wrapped aliases are only available for Pydantic V1 users.
-            # As such, we force the root field to be __root__ as opposed to conditional based on the Pydantic version.
+            is_pydantic_v2 = self._custom_config.version == PydanticVersionCompatibility.V2
+            root_name = "root" if is_pydantic_v2 else "__root__"
             BUILDER_PARAMETER_NAME = "value"
             with FernAwarePydanticModel(
                 class_name=self._context.get_class_name_for_type_id(self._name.type_id, as_request=False),
@@ -61,18 +62,18 @@ class PydanticModelAliasGenerator(AbstractAliasGenerator):
                 docstring=self._docs,
                 snippet=self._snippet,
             ) as pydantic_model:
-                pydantic_model.set_root_type_v1_only(self._alias.alias_of)
+                pydantic_model.set_root_type_v1_or_v2_only(self._alias.alias_of)
                 pydantic_model.add_method(
                     name=self._get_getter_name(self._alias.alias_of),
                     parameters=[],
                     return_type=self._alias.alias_of,
-                    body=AST.CodeWriter("return self.__root__"),
+                    body=AST.CodeWriter(f"return self.{root_name}"),
                 )
                 pydantic_model.add_method(
                     name=self._get_builder_name(self._alias.alias_of),
                     parameters=[(BUILDER_PARAMETER_NAME, self._alias.alias_of)],
                     return_type=ir_types.TypeReference.factory.named(declared_type_name_to_named_type(self._name)),
-                    body=AST.CodeWriter(f"return {pydantic_model.get_class_name()}(__root__={BUILDER_PARAMETER_NAME})"),
+                    body=AST.CodeWriter(f"return {pydantic_model.get_class_name()}({root_name}={BUILDER_PARAMETER_NAME})"),
                     decorator=AST.ClassMethodDecorator.STATIC,
                 )
 

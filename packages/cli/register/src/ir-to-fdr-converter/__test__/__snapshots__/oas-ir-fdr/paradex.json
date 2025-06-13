@@ -21736,6 +21736,7 @@
           "path": {
             "pathParameters": [
               {
+                "description": "Rate of sending updates",
                 "key": "refresh_rate",
                 "type": {
                   "type": "id",
