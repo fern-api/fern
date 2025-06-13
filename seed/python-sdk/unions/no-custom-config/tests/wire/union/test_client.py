@@ -28,6 +28,8 @@ class TestGetShape(WireTestBase):
 
         self.expect_request(
             uri=f"/{shape_id}",
+            method="GET",
+            headers=dict(),
             response=MockResponse(
                 status_code=200,
                 body=shape_data,
@@ -48,6 +50,8 @@ class TestGetShape(WireTestBase):
 
         self.expect_request(
             uri=f"/{shape_id}",
+            method="GET",
+            headers=dict(),
             response=MockResponse(
                 status_code=404,
                 body=error_response,
@@ -67,6 +71,8 @@ class TestGetShape(WireTestBase):
 
         self.expect_request(
             uri=f"/{shape_id}",
+            method="GET",
+            headers=dict(),
             response=MockResponse(
                 status_code=500,
                 body=error_response,
@@ -91,6 +97,7 @@ class TestUpdateShape(WireTestBase):
         self.expect_request(
             uri="/",
             method="PATCH",
+            headers=dict(),
             json_body=shape.model_dump(),
             response=MockResponse(
                 status_code=200,
@@ -109,6 +116,7 @@ class TestUpdateShape(WireTestBase):
         self.expect_request(
             uri="/",
             method="PATCH",
+            headers=dict(),
             json_body=shape.model_dump(),
             response=MockResponse(
                 status_code=400,
@@ -132,6 +140,7 @@ class TestUpdateShape(WireTestBase):
         self.expect_request(
             uri="/",
             method="PATCH",
+            headers=dict(),
             json_body=shape.model_dump(),
             response=MockResponse(
                 status_code=500,
@@ -162,6 +171,8 @@ class TestAsyncGetShape(AsyncWireTestBase):
 
         self.expect_request(
             uri=f"/{shape_id}",
+            method="GET",
+            headers=dict(),
             response=MockResponse(
                 status_code=200,
                 body=shape_data,
@@ -183,6 +194,8 @@ class TestAsyncGetShape(AsyncWireTestBase):
 
         self.expect_request(
             uri=f"/{shape_id}",
+            method="GET",
+            headers=dict(),
             response=MockResponse(
                 status_code=404,
                 body=error_response,
@@ -203,6 +216,8 @@ class TestAsyncGetShape(AsyncWireTestBase):
 
         self.expect_request(
             uri=f"/{shape_id}",
+            method="GET",
+            headers=dict(),
             response=MockResponse(
                 status_code=500,
                 body=error_response,
@@ -228,6 +243,7 @@ class TestAsyncUpdateShape(AsyncWireTestBase):
         self.expect_request(
             uri="/",
             method="PATCH",
+            headers=dict(),
             json_body=shape.model_dump(),
             response=MockResponse(
                 status_code=200,
@@ -247,6 +263,7 @@ class TestAsyncUpdateShape(AsyncWireTestBase):
         self.expect_request(
             uri="/",
             method="PATCH",
+            headers=dict(),
             json_body=shape.model_dump(),
             response=MockResponse(
                 status_code=400,
@@ -271,6 +288,7 @@ class TestAsyncUpdateShape(AsyncWireTestBase):
         self.expect_request(
             uri="/",
             method="PATCH",
+            headers=dict(),
             json_body=shape.model_dump(),
             response=MockResponse(
                 status_code=500,

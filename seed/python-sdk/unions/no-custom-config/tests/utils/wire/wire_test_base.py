@@ -17,8 +17,8 @@ class _WireTestCommon:
     def expect_request(
         self,
         uri: str,
-        method: str = "GET",
-        headers: dict | None = None,
+        method: str,
+        headers: dict[str, str],
         json_body: Optional[dict] = None,
         response: Optional[MockResponse] = None,
     ) -> None:
