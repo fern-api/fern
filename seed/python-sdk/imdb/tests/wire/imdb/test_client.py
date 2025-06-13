@@ -31,6 +31,15 @@ class TestGetMovie(WireTestBase):
             ),
         )
 
+        # nb rmehndiratta: One thing I want to call out is that just "getting"
+        # the client instantiated magically for us by WireTestBase makes it slightly
+        # harder for our clients' customers to read the tests as living docs.
+        # We may want to, at the cost of code duplication, add a setup to each test
+        # class in files like this, just showing how to create the client properly.
+        #
+        # I think this won't be contract-losing in an irreversible way, and it's a bit
+        # tricky since our test client setup isn't quite the same as how SDK users would
+        # be instantiating the client, so leaving it for further discussion.
         movie = self.client.imdb.get_movie(movie_id=movie_id)
 
         expected_response = json.dumps(movie_data)
