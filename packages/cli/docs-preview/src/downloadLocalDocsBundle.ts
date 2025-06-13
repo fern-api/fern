@@ -77,7 +77,7 @@ export async function downloadBundle({
             type: "failure"
         };
     }
-    const body = response.text();
+    const body = await response.text();
     const parser = new xml2js.Parser();
     const parsedResponse = await parser.parseStringPromise(body);
     const eTag = parsedResponse?.ListBucketResult?.Contents?.[0]?.ETag?.[0];
