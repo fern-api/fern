@@ -62,9 +62,6 @@ function getDocsConfig(organization: string): docsYml.RawSchemas.DocsConfigurati
         colors: {
             accentPrimary: "#ffffff",
             background: "#000000"
-        },
-        experimental: {
-            openapiParserV3: true
         }
     };
 }
