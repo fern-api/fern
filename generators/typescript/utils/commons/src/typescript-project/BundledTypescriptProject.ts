@@ -67,7 +67,7 @@ async function bundle({ platform, target, format, outdir }) {
         platform,
         target,
         format,
-        entryPoint: "./${TypescriptProject.SRC_DIRECTORY}/index.ts",
+        entryPoint: "./${this.packagePath}/index.ts",
         outfile: \`./${TypescriptProject.DIST_DIRECTORY}/\${outdir}/${BundledTypescriptProject.API_BUNDLE_FILENAME}\`,
     });
     ${this.getFoldersForExports()
@@ -76,7 +76,7 @@ async function bundle({ platform, target, format, outdir }) {
         platform,
         target,
         format,
-        entryPoint: "./${BundledTypescriptProject.SRC_DIRECTORY}/${folder}/index.ts",
+        entryPoint: "./${this.packagePath}/${folder}/index.ts",
         outfile: \`./${BundledTypescriptProject.DIST_DIRECTORY}/\${outdir}/${this.getBundleForNonExportedFolder(
             folder
         )}\`,
@@ -166,8 +166,8 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
             emitDeclarationOnly: true,
             sourceMap: true,
             outDir: BundledTypescriptProject.TYPES_DIRECTORY,
-            rootDir: BundledTypescriptProject.SRC_DIRECTORY,
-            baseUrl: BundledTypescriptProject.SRC_DIRECTORY
+            rootDir: this.packagePath,
+            baseUrl: this.packagePath
         };
 
         await this.writeFileToVolume(
@@ -175,7 +175,7 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
             JSON.stringify(
                 {
                     compilerOptions,
-                    include: [BundledTypescriptProject.SRC_DIRECTORY],
+                    include: [this.packagePath],
                     exclude: []
                 },
                 undefined,

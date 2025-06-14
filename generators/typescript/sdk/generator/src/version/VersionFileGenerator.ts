@@ -28,6 +28,6 @@ export class VersionFileGenerator {
                 name: "SDK_VERSION"
             })
         );
-        this.rootDirectory.createSourceFile("src/version.ts", writer.toString());
+        this.rootDirectory.createSourceFile("version.ts", writer.toString());
     }
 }
