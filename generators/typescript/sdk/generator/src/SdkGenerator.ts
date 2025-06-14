@@ -869,20 +869,41 @@ export class SdkGenerator {
                 }
             });
 
-            if (package_.hasEndpointsInTree && !packageId.isRoot) {
-                this.context.logger.debug(`Generating utilities for package: ${packageId.subpackageId}`);
-                const filePaths = this.utilsDeclarationReferencer.getAllExportedFilepaths(packageId.subpackageId);
+            if (!packageId.isRoot) {
+                const hasWebSocket = package_.websocket != null;
+                const hasEndpoints = package_.hasEndpointsInTree;
 
-                // Generate each utils file cleanly
-                for (const [filename, filepath] of Object.entries(filePaths)) {
-                    this.context.logger.debug(`Generating utils file: ${filename}`);
-                    this.withSourceFile({
-                        filepath,
-                        run: ({ sourceFile, importsManager }) => {
-                            const context = this.generateSdkContext({ sourceFile, importsManager });
-                            context.sdkClientUtils.getGeneratedUtilsFile(packageId, filename).writeToFile(context);
+                if (hasEndpoints || hasWebSocket) {
+                    this.context.logger.debug(`Generating utilities for package: ${packageId.subpackageId}`);
+                    const filePaths = this.utilsDeclarationReferencer.getAllExportedFilepaths(packageId.subpackageId);
+
+                    // generate each util file
+                    for (const [filename, filepath] of Object.entries(filePaths)) {
+                        const isWebSocketUtility = this.isWebSocketUtilityFile(filename);
+
+                        // skip generating WA utils if channels aren't defined
+                        if (isWebSocketUtility && !hasWebSocket) {
+                            this.context.logger.debug(
+                                `Skipping WebSocket utility file: ${filename} (no WebSocket channels defined)`
+                            );
+                            continue;
                         }
-                    });
+
+                        // skip generating other utils if endpoints aren't defined
+                        if (!isWebSocketUtility && !hasEndpoints) {
+                            this.context.logger.debug(`Skipping utility file: ${filename} (no endpoints defined)`);
+                            continue;
+                        }
+
+                        this.context.logger.debug(`Generating utils file: ${filename}`);
+                        this.withSourceFile({
+                            filepath,
+                            run: ({ sourceFile, importsManager }) => {
+                                const context = this.generateSdkContext({ sourceFile, importsManager });
+                                context.sdkClientUtils.getGeneratedUtilsFile(packageId, filename).writeToFile(context);
+                            }
+                        });
+                    }
                 }
             }
         }
@@ -1406,6 +1427,18 @@ export class SdkGenerator {
                 run(service, packageId);
             }
         }
+    }
+
+    private isWebSocketUtilityFile(filename: string): boolean {
+        const websocketUtilityFiles = [
+            "createWebSocket.ts",
+            "getAuthHeaders.ts",
+            "getAuthProtocols.ts",
+            // it's possible this won't be websocket specific when we merge recent changes on main
+            // if not entire redundant anyway
+            "getHeaders.ts"
+        ];
+        return websocketUtilityFiles.includes(filename);
     }
 
     private generateSdkContext(
