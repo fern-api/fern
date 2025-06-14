@@ -41,6 +41,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     public buildReadmeSnippets(): Record<FernGeneratorCli.FeatureId, string[]> {
         const snippets: Record<FernGeneratorCli.FeatureId, string[]> = {};
         snippets[FernGeneratorCli.StructuredFeatureId.Usage] = this.buildUsageSnippets();
+        snippets[ReadmeSnippetBuilder.EXCEPTION_HANDLING_FEATURE_ID] = this.buildExceptionHandlingSnippets();
         return snippets;
     }
 
@@ -50,6 +51,27 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             return usageEndpointIds.map((endpointId) => this.getSnippetForEndpointId(endpointId));
         }
         return [this.getSnippetForEndpointId(this.defaultEndpointId)];
+    }
+
+    private buildExceptionHandlingSnippets(): string[] {
+        const exceptionHandlingEndpoints = this.getEndpointsForFeature(
+            ReadmeSnippetBuilder.EXCEPTION_HANDLING_FEATURE_ID
+        );
+        return exceptionHandlingEndpoints.map((exceptionHandlingEndpoint) =>
+            this.writeCode(`
+use ${this.context.getRootNamespace()}\\Exceptions\\${this.context.getBaseApiExceptionClassReference().name};
+use ${this.context.getRootNamespace()}\\Exceptions\\${this.context.getBaseExceptionClassReference().name};
+
+try {
+    $response = ${this.getMethodCall(exceptionHandlingEndpoint)}(...);
+} catch (${this.context.getBaseApiExceptionClassReference().name} $e) {
+    echo 'API Exception occurred: ' . $e->getMessage() . "\\n";
+    echo 'Status Code: ' . $e->getCode() . "\\n"; 
+    echo 'Response Body: ' . $e->getBody() . "\\n";
+    // Optionally, rethrow the exception or handle accordingly.
+}
+`)
+        );
     }
 
     private buildPaginationSnippets(): string[] {
@@ -151,5 +173,15 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             throw new Error(`Internal error; expected csharp snippet but got: ${endpoint.snippet.type}`);
         }
         return endpoint.snippet.syncClient;
+    }
+
+    private getMethodCall(endpoint: EndpointWithFilepath): string {
+        return `${this.context.getAccessFromRootClient(endpoint.fernFilepath)}->${this.context.getEndpointMethodName(
+            endpoint.endpoint
+        )}`;
+    }
+    
+    private writeCode(s: string): string {
+        return s.trim() + "\n";
     }
 }

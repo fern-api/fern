@@ -5,8 +5,7 @@ features:
 
   - id: EXCEPTION_HANDLING
     description: |
-      When the API returns a non-success status code (4xx or 5xx response), a subclass of the following error
-      will be thrown.
+      When the API returns a non-success status code (4xx or 5xx response), an exception will be thrown.
 
   - id: PAGINATION
     description: |

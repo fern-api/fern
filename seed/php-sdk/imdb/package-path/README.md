@@ -5,6 +5,10 @@
 
 The Seed PHP library provides convenient access to the Seed API from PHP.
 
+## Requirements
+
+This SDK requires PHP ^8.1.
+
 ## Installation
 
 ```sh
@@ -33,6 +37,24 @@ $client->imdb->createMovie(
     ]),
 );
 
+```
+
+## Exception Handling
+
+When the API returns a non-success status code (4xx or 5xx response), an exception will be thrown.
+
+```php
+use Custom\Package\Path\Exceptions\SeedApiException;
+use Custom\Package\Path\Exceptions\SeedException;
+
+try {
+    $response = $client->imdb->createMovie(...);
+} catch (SeedApiException $e) {
+    echo 'API Exception occurred: ' . $e->getMessage() . "\n";
+    echo 'Status Code: ' . $e->getCode() . "\n"; 
+    echo 'Response Body: ' . $e->getBody() . "\n";
+    // Optionally, rethrow the exception or handle accordingly.
+}
 ```
 
 ## Contributing

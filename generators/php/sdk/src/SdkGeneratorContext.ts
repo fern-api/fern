@@ -7,6 +7,7 @@ import { php } from "@fern-api/php-codegen";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import {
+    FernFilepath,
     HttpEndpoint,
     HttpMethod,
     HttpService,
@@ -499,6 +500,18 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         }
         const wrapperShouldIncludePathParameters = wrapper.includePathParameters ?? false;
         return endpoint.allPathParameters.length > 0 && inlinePathParameters && wrapperShouldIncludePathParameters;
+    }
+
+    public getAccessFromRootClient(fernFilepath: FernFilepath): string {
+        const clientVariableName = this.getClientVariableName();
+        const clientAccessParts = fernFilepath.allParts.map((part) => part.camelCase.safeName);
+        return clientAccessParts.length > 0
+            ? `${clientVariableName}->${clientAccessParts.join("->")}`
+            : clientVariableName;
+    }
+
+    public getClientVariableName(): string {
+        return "$client";
     }
 
     public getRawAsIsFiles(): string[] {
