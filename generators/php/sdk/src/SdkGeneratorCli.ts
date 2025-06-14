@@ -1,8 +1,11 @@
 import { File, GeneratorNotificationService } from "@fern-api/base-generator";
+import { RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractPhpGeneratorCli } from "@fern-api/php-base";
+import { DynamicSnippetsGenerator } from "@fern-api/php-dynamic-snippets";
 import { generateModels, generateTraits } from "@fern-api/php-model";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
+import { Endpoint } from "@fern-fern/generator-exec-sdk/api";
 import { HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
@@ -13,9 +16,6 @@ import { BaseApiExceptionGenerator } from "./error/BaseApiExceptionGenerator";
 import { BaseExceptionGenerator } from "./error/BaseExceptionGenerator";
 import { RootClientGenerator } from "./root-client/RootClientGenerator";
 import { SubPackageClientGenerator } from "./subpackage-client/SubPackageClientGenerator";
-import { RelativeFilePath } from "@fern-api/fs-utils";
-import { Endpoint } from "@fern-fern/generator-exec-sdk/api";
-import { DynamicSnippetsGenerator } from "@fern-api/php-dynamic-snippets";
 import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest";
 import { convertIr } from "./utils/convertIr";
 
@@ -68,10 +68,12 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
             try {
                 await this.generateReadme({
                     context,
-                    endpointSnippets: snippets,
+                    endpointSnippets: snippets
                 });
             } catch (e) {
-                context.logger.warn(`Failed to generate README.md: ${e instanceof Error ? e.message : 'Unknown error'}. This is non-critical and generation will continue.`);
+                context.logger.warn(
+                    `Failed to generate README.md: ${e instanceof Error ? e.message : "Unknown error"}. This is non-critical and generation will continue.`
+                );
             }
         }
 

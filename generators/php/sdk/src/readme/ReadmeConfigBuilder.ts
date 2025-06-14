@@ -9,7 +9,6 @@ export interface Snippet {
     snippet: string;
 }
 
-
 export class ReadmeConfigBuilder {
     public build({
         context,
