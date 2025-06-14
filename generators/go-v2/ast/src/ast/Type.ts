@@ -18,7 +18,8 @@ type InternalType =
     | Reference
     | Slice
     | String_
-    | Uuid;
+    | Uuid
+    | Variadic;
 
 interface Any_ {
     type: "any";
@@ -81,6 +82,11 @@ interface Uuid {
     type: "uuid";
 }
 
+interface Variadic {
+    type: "variadic";
+    value: Type;
+}
+
 const NILABLE_TYPES = new Set<string>(["any", "bytes", "map", "slice"]);
 
 export class Type extends AstNode {
@@ -136,6 +142,10 @@ export class Type extends AstNode {
                 break;
             case "uuid":
                 writer.writeNode(UuidTypeReference);
+                break;
+            case "variadic":
+                writer.write("...");
+                this.internalType.value.write(writer);
                 break;
             default:
                 assertNever(this.internalType);
@@ -204,8 +214,8 @@ export class Type extends AstNode {
     }
 
     public static optional(value: Type): Type {
-        // Avoids double optional.
         if (this.isAlreadyOptional(value)) {
+            // Avoids double optional.
             return value;
         }
         return new this({
@@ -245,8 +255,23 @@ export class Type extends AstNode {
         });
     }
 
+    public static variadic(value: Type): Type {
+        if (this.isAlreadyVariadic(value)) {
+            // Avoids double variadic.
+            return value;
+        }
+        return new this({
+            type: "variadic",
+            value
+        });
+    }
+
     private static isAlreadyOptional(value: Type) {
         return value.internalType.type === "optional" || NILABLE_TYPES.has(value.internalType.type);
+    }
+
+    private static isAlreadyVariadic(value: Type) {
+        return value.internalType.type === "variadic";
     }
 }
 
@@ -258,4 +283,9 @@ export const TimeTypeReference = new GoTypeReference({
 export const UuidTypeReference = new GoTypeReference({
     importPath: "github.com/google/uuid",
     name: "UUID"
+});
+
+export const IoReaderTypeReference = new GoTypeReference({
+    importPath: "io",
+    name: "Reader"
 });
