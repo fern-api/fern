@@ -34,6 +34,7 @@ import com.fern.java.output.GeneratedObjectMapper;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
+
 import okhttp3.Headers;
 import okhttp3.MediaType;
 import okhttp3.Request;
@@ -185,7 +186,9 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                             clientOptionsMember.name,
                             ClientOptionsGenerator.HEADERS_METHOD_NAME,
                             AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME);
-            builder.add(".addHeader($S, $S)\n", AbstractEndpointWriter.CONTENT_TYPE_HEADER, contentType);
+            if (sendContentType) {
+                builder.add(".addHeader($S, $S)\n", AbstractEndpointWriter.CONTENT_TYPE_HEADER, contentType);
+            }
             AbstractEndpointWriter.maybeAcceptsHeader(httpEndpoint)
                     .ifPresent(acceptsHeader -> builder.add(acceptsHeader).add("\n"));
             return builder.add(".build();\n").unindent().build();
