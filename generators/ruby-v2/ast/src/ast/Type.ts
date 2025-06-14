@@ -48,6 +48,10 @@ interface Integer {
     type: "integer";
 }
 
+interface Float {
+    type: "float";
+}
+
 interface Union {
     type: "union";
     elems: Type[];
@@ -91,7 +95,7 @@ interface Generic {
 }
 
 export type BaseType = Self | Class_ | Instance | Boolean_ | Nil | Top | Bot | Void;
-export type SingleType = Boolish | String_ | Integer | Union | Intersection | Singleton | Object_ | Generic;
+export type SingleType = Boolish | String_ | Integer | Float | Union | Intersection | Singleton | Object_ | Generic;
 export type CollectionType = Array_ | Hash | Tuple;
 
 type InternalType = BaseType | SingleType | CollectionType;
@@ -143,6 +147,9 @@ export class Type extends AstNode {
                     break;
                 case "integer":
                     writer.write("Integer");
+                    break;
+                case "float":
+                    writer.write("Float");
                     break;
                 case "union":
                     writer.delimit({
@@ -270,6 +277,12 @@ export class Type extends AstNode {
     public static integer(): Type {
         return new this({
             type: "integer"
+        });
+    }
+
+    public static float(): Type {
+        return new this({
+            type: "float"
         });
     }
 
