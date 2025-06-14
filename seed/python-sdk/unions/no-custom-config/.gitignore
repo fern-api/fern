@@ -3,3 +3,8 @@
 __pycache__/
 dist/
 poetry.toml
+
+# TODO: run tests properly and remove these artifacts of my workflow
+bin/
+lib/
+pyvenv.cfg
