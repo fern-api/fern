@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.16.1
+  changelogEntry:
+    - summary: Add exception handling documentation to README with examples of catching and handling API exceptions
+      type: feat
+  createdAt: '2025-06-03'
+  irVersion: 58
+
 - version: 1.16.0
   changelogEntry:
     - summary: Introduce initial version of README generation for the PHP SDK with Installation, Usage, and Contributing sections.

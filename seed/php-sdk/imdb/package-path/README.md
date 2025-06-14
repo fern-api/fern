@@ -35,6 +35,24 @@ $client->imdb->createMovie(
 
 ```
 
+## Exception Handling
+
+When the API returns a non-success status code (4xx or 5xx response), an exception will be thrown.
+
+```php
+use Custom\Package\Path\Exceptions\SeedApiException;
+use Custom\Package\Path\Exceptions\SeedException;
+
+try {
+    $response = $client->imdb.createMovie(...);
+} catch (SeedApiException $e) {
+    echo 'API Exception occurred: ' . $e->getMessage() . "\n";
+    echo 'Status Code: ' . $e->getCode() . "\n"; 
+    echo 'Response Body: ' . $e->getBody() . "\n";
+    // Optionally, rethrow the exception or handle accordingly.
+}
+```
+
 ## Contributing
 
 While we value open-source contributions to this SDK, this library is generated programmatically.
