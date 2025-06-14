@@ -98,40 +98,4 @@ public class RawNoReqBodyClient {
             throw new BestException("Network error executing HTTP request", e);
         }
     }
-
-    public BestHttpResponse<String> putWithNoRequestBody() {
-        return putWithNoRequestBody(null);
-    }
-
-    public BestHttpResponse<String> putWithNoRequestBody(RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("no-req-body")
-                .build();
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("PUT", RequestBody.create("", null))
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Accept", "application/json")
-                .build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return new BestHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class), response);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new BestApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
-        } catch (IOException e) {
-            throw new BestException("Network error executing HTTP request", e);
-        }
-    }
 }

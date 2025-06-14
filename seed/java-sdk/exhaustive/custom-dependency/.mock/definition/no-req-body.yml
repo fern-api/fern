@@ -14,8 +14,3 @@ service:
       path: ""
       method: POST
       response: string
-
-    putWithNoRequestBody:
-      path: ""
-      method: PUT
-      response: string
