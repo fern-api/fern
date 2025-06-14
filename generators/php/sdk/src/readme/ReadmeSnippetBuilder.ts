@@ -41,12 +41,6 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     public buildReadmeSnippets(): Record<FernGeneratorCli.FeatureId, string[]> {
         const snippets: Record<FernGeneratorCli.FeatureId, string[]> = {};
         snippets[FernGeneratorCli.StructuredFeatureId.Usage] = this.buildUsageSnippets();
-        // snippets[FernGeneratorCli.StructuredFeatureId.Retries] = this.buildRetrySnippets();
-        // snippets[FernGeneratorCli.StructuredFeatureId.Timeouts] = this.buildTimeoutSnippets();
-        // snippets[ReadmeSnippetBuilder.EXCEPTION_HANDLING_FEATURE_ID] = this.buildExceptionHandlingSnippets();
-        if (this.isPaginationEnabled) {
-            snippets[FernGeneratorCli.StructuredFeatureId.Pagination] = this.buildPaginationSnippets();
-        }
         return snippets;
     }
 
@@ -57,52 +51,6 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         }
         return [this.getSnippetForEndpointId(this.defaultEndpointId)];
     }
-
-//     private buildRetrySnippets(): string[] {
-//         const retryEndpoints = this.getEndpointsForFeature(FernGeneratorCli.StructuredFeatureId.Retries);
-//         return retryEndpoints.map((retryEndpoint) =>
-//             this.writeCode(`
-// var response = await ${this.getMethodCall(retryEndpoint)}(
-//     ...,
-//     new ${this.requestOptionsName} {
-//         MaxRetries: 0 // Override MaxRetries at the request level
-//     }
-// );
-// `)
-//         );
-//     }
-
-//     private buildTimeoutSnippets(): string[] {
-//         const timeoutEndpoints = this.getEndpointsForFeature(FernGeneratorCli.StructuredFeatureId.Timeouts);
-//         return timeoutEndpoints.map((timeoutEndpoint) =>
-//             this.writeCode(`
-// var response = await ${this.getMethodCall(timeoutEndpoint)}(
-//     ...,
-//     new ${this.requestOptionsName} {
-//         Timeout: TimeSpan.FromSeconds(3) // Override timeout to 3s
-//     }
-// );
-// `)
-//         );
-//     }
-
-//     private buildExceptionHandlingSnippets(): string[] {
-//         const exceptionHandlingEndpoints = this.getEndpointsForFeature(
-//             ReadmeSnippetBuilder.EXCEPTION_HANDLING_FEATURE_ID
-//         );
-//         return exceptionHandlingEndpoints.map((exceptionHandlingEndpoint) =>
-//             this.writeCode(`
-// using ${this.context.getNamespace()};
-
-// try {
-//     var response = await ${this.getMethodCall(exceptionHandlingEndpoint)}(...);
-// } catch (${this.context.getBaseApiExceptionClassReference().name} e) {
-//     System.Console.WriteLine(e.Body);
-//     System.Console.WriteLine(e.StatusCode);
-// }
-// `)
-//         );
-//     }
 
     private buildPaginationSnippets(): string[] {
         const explicitlyConfigured = this.getExplicitlyConfiguredSnippets(
@@ -198,19 +146,10 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }
 
     private getEndpointSnippetString(endpoint: FernGeneratorExec.Endpoint): string {
-        if (endpoint.snippet.type !== "csharp") {
+        // Note: this is a shim since php snippets are not supported yet in FernGeneratorExec
+        if (endpoint.snippet.type !== "java") {
             throw new Error(`Internal error; expected csharp snippet but got: ${endpoint.snippet.type}`);
         }
-        return endpoint.snippet.client;
-    }
-
-    // private getMethodCall(endpoint: EndpointWithFilepath): string {
-    //     return `${this.context.getAccessFromRootClient(endpoint.fernFilepath)}.${this.context.getEndpointMethodName(
-    //         endpoint.endpoint
-    //     )}`;
-    // }
-
-    private writeCode(s: string): string {
-        return s.trim() + "\n";
+        return endpoint.snippet.syncClient;
     }
 }

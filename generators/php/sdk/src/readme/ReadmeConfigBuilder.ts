@@ -4,6 +4,12 @@ import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { ReadmeSnippetBuilder } from "./ReadmeSnippetBuilder";
 
+export interface Snippet {
+    id: string;
+    snippet: string;
+}
+
+
 export class ReadmeConfigBuilder {
     public build({
         context,

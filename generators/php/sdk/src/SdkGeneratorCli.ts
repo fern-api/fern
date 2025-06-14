@@ -71,7 +71,7 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
                     endpointSnippets: snippets,
                 });
             } catch (e) {
-                context.logger.warn("Failed to generate README.md, this is OK.");
+                context.logger.warn(`Failed to generate README.md: ${e instanceof Error ? e.message : 'Unknown error'}. This is non-critical and generation will continue.`);
             }
         }
 
@@ -167,7 +167,6 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
         }
 
         const dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
-            // NOTE: This will eventually become a shared library. See the generators/go-v2/sdk/src/SdkGeneratorCli.ts
             ir: convertIr(dynamicIr),
             config: context.config
         });
@@ -181,8 +180,8 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
                     convertDynamicEndpointSnippetRequest(endpointExample)
                 );
 
+                // TODO: We are shimming the PHP snippet into Java Generator Exec snippet as a short term hack
                 const syncClient = generatedSnippet.snippet + "\n";
-                // TODO: Properly generate async client; this is a placeholder for now.
                 const asyncClient = generatedSnippet.snippet + "\n";
 
                 endpointSnippets.push({
