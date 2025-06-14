@@ -170,8 +170,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/commons/logging-execa
       '@fern-fern/generator-cli-sdk':
-        specifier: 0.0.23
-        version: 0.0.23(encoding@0.1.13)
+        specifier: 0.0.28
+        version: 0.0.28(encoding@0.1.13)
       js-yaml:
         specifier: ^4.1.0
         version: 4.1.0
@@ -564,8 +564,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/cli/logger
       '@fern-fern/generator-cli-sdk':
-        specifier: 0.0.23
-        version: 0.0.23(encoding@0.1.13)
+        specifier: 0.0.28
+        version: 0.0.28(encoding@0.1.13)
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1045
         version: 0.0.1045(encoding@0.1.13)
@@ -878,8 +878,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/path-utils
       '@fern-fern/generator-cli-sdk':
-        specifier: 0.0.23
-        version: 0.0.23(encoding@0.1.13)
+        specifier: 0.0.28
+        version: 0.0.28(encoding@0.1.13)
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1045
         version: 0.0.1045(encoding@0.1.13)
@@ -1098,8 +1098,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/cli/logger
       '@fern-fern/generator-cli-sdk':
-        specifier: 0.0.23
-        version: 0.0.23(encoding@0.1.13)
+        specifier: 0.0.28
+        version: 0.0.28(encoding@0.1.13)
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1045
         version: 0.0.1045(encoding@0.1.13)
@@ -1436,15 +1436,24 @@ importers:
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/fs-utils
+      '@fern-api/logger':
+        specifier: workspace:*
+        version: link:../../../packages/cli/logger
       '@fern-api/php-base':
         specifier: workspace:*
         version: link:../base
       '@fern-api/php-codegen':
         specifier: workspace:*
         version: link:../codegen
+      '@fern-api/php-dynamic-snippets':
+        specifier: workspace:*
+        version: link:../dynamic-snippets
       '@fern-api/php-model':
         specifier: workspace:*
         version: link:../model
+      '@fern-fern/generator-cli-sdk':
+        specifier: 0.0.28
+        version: 0.0.28(encoding@0.1.13)
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1045
         version: 0.0.1045(encoding@0.1.13)
@@ -1894,8 +1903,8 @@ importers:
         specifier: workspace:*
         version: link:../base
       '@fern-fern/generator-cli-sdk':
-        specifier: 0.0.23
-        version: 0.0.23(encoding@0.1.13)
+        specifier: 0.0.28
+        version: 0.0.28(encoding@0.1.13)
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1045
         version: 0.0.1045(encoding@0.1.13)
@@ -3977,8 +3986,8 @@ importers:
         specifier: workspace:*
         version: link:../../../typescript-v2/ast
       '@fern-fern/generator-cli-sdk':
-        specifier: 0.0.23
-        version: 0.0.23(encoding@0.1.13)
+        specifier: 0.0.28
+        version: 0.0.28(encoding@0.1.13)
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1045
         version: 0.0.1045(encoding@0.1.13)
@@ -7695,64 +7704,6 @@ importers:
 
   packages/cli/generation/protoc-gen-fern/bin: {}
 
-  packages/cli/generation/protoc-gen-fern/dist/cjs:
-    dependencies:
-      '@bufbuild/protobuf':
-        specifier: ^2.2.5
-        version: 2.2.5
-      '@bufbuild/protoplugin':
-        specifier: 2.2.5
-        version: 2.2.5
-      '@fern-api/casings-generator':
-        specifier: workspace:*
-        version: link:../../../../../commons/casings-generator
-      '@fern-api/configs':
-        specifier: workspace:*
-        version: link:../../../../../configs
-      '@fern-api/configuration':
-        specifier: workspace:*
-        version: link:../../../../configuration
-      '@fern-api/ir-sdk':
-        specifier: workspace:*
-        version: link:../../../../../ir-sdk
-      '@fern-api/ir-utils':
-        specifier: workspace:*
-        version: link:../../../../../commons/ir-utils
-      '@fern-api/logger':
-        specifier: workspace:*
-        version: link:../../../../logger
-      '@fern-api/v2-importer-commons':
-        specifier: workspace:*
-        version: link:../../../../api-importers/v2-importer-commons
-      openapi-types:
-        specifier: ^12.1.3
-        version: 12.1.3
-    devDependencies:
-      '@trivago/prettier-plugin-sort-imports':
-        specifier: ^5.2.1
-        version: 5.2.2(@vue/compiler-sfc@3.5.13)(prettier@3.5.3)
-      '@types/jest':
-        specifier: ^29.5.14
-        version: 29.5.14
-      '@types/node':
-        specifier: 18.15.3
-        version: 18.15.3
-      depcheck:
-        specifier: ^1.4.7
-        version: 1.4.7
-      eslint:
-        specifier: ^8.56.0
-        version: 8.57.1
-      prettier:
-        specifier: ^3.4.2
-        version: 3.5.3
-      typescript:
-        specifier: 5.7.2
-        version: 5.7.2
-      vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(msw@2.8.4(@types/node@18.15.3)(typescript@5.7.2))(sass@1.72.0)(terser@5.31.5)
-
   packages/cli/generation/remote-generation/remote-workspace-runner:
     dependencies:
       '@fern-api/auth':
@@ -11126,8 +11077,8 @@ packages:
   '@fern-fern/fiddle-sdk@0.0.584':
     resolution: {integrity: sha512-92z/Pwo7EDV7PCLwNdxtZiTQpaUpbeXCqKWSLUQwTwFAQEAp+8QKYAA6VJXVQtHLrZg0NqPTXEnE5XF8NbluYA==}
 
-  '@fern-fern/generator-cli-sdk@0.0.23':
-    resolution: {integrity: sha512-UGJWwnN1h4fcuRiu5XREE3vHiyuSgob6/4Sr6PNODFNC1wHczF2/2eqEWejC6mzmBdcDziPhk0ecZqZDuLkXVg==}
+  '@fern-fern/generator-cli-sdk@0.0.28':
+    resolution: {integrity: sha512-KNf9vBkFAV8oEmD/U4ss75d3JIm50fpa+Pq5cVs0fr/e8m1xWVuG189gzfQ9wrkH3Z85B2U/Pxl3cb7KPB4qrw==}
 
   '@fern-fern/generator-exec-sdk@0.0.1045':
     resolution: {integrity: sha512-V9SXkuyY/LdrwBYh9MYNny4CaAc8o9i7DgYYiL2yzoMA/FR9AUcBOl1I/ykJH1CRs0oGycp5zBZrO0qmLHpPVA==}
@@ -19466,7 +19417,7 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  '@fern-fern/generator-cli-sdk@0.0.23(encoding@0.1.13)':
+  '@fern-fern/generator-cli-sdk@0.0.28(encoding@0.1.13)':
     dependencies:
       form-data: 4.0.1
       formdata-node: 6.0.3

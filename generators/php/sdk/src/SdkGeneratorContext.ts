@@ -26,11 +26,15 @@ import { EXCEPTIONS_DIRECTORY, REQUESTS_DIRECTORY, RESERVED_METHOD_NAMES, TYPES_
 import { RawClient } from "./core/RawClient";
 import { EndpointGenerator } from "./endpoint/EndpointGenerator";
 import { GuzzleClient } from "./external/GuzzleClient";
+import { PhpGeneratorAgent } from "./PhpGeneratorAgent";
+import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder";
 
 export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomConfigSchema> {
     public endpointGenerator: EndpointGenerator;
     public guzzleClient: GuzzleClient;
     public rawClient: RawClient;
+    public generatorAgent: PhpGeneratorAgent;
+    
     public constructor(
         public readonly ir: IntermediateRepresentation,
         public readonly config: FernGeneratorExec.config.GeneratorConfig,
@@ -41,6 +45,12 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         this.endpointGenerator = new EndpointGenerator(this);
         this.guzzleClient = new GuzzleClient(this);
         this.rawClient = new RawClient(this);
+        this.generatorAgent = new PhpGeneratorAgent({
+            logger: this.logger,
+            config: this.config,
+            readmeConfigBuilder: new ReadmeConfigBuilder(),
+            ir: this.ir
+        });
     }
 
     public shouldGenerateSubpackageClient(subpackage: Subpackage): boolean {
