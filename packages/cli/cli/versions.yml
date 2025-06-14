@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Support hot-reloading for changes to OpenRPC specs in local development mode.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-06-14"
+  version: 0.64.8
+
+- changelogEntry:
+    - summary: |
         Further support for docs with multiple custom subpaths
       type: fix
   irVersion: 58
