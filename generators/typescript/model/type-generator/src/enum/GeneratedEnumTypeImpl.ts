@@ -49,6 +49,11 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
     }
 
     private generateEnumType(context: Context): TypeAliasDeclarationStructure {
+        const allValuesAreIntegers = this.shape.values.every((value) => {
+            const num = Number(value.name.wireValue);
+            return Number.isInteger(num) && !Number.isNaN(num);
+        });
+
         const type: TypeAliasDeclarationStructure = {
             kind: StructureKind.TypeAlias,
             name: this.typeName,
@@ -56,7 +61,9 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
             type: getWriterForMultiLineUnionType(
                 this.shape.values.map((value) => ({
                     docs: value.docs,
-                    node: ts.factory.createStringLiteral(value.name.wireValue)
+                    node: allValuesAreIntegers
+                        ? ts.factory.createNumericLiteral(Number(value.name.wireValue))
+                        : ts.factory.createStringLiteral(value.name.wireValue)
                 }))
             )
         };
@@ -66,10 +73,19 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
     }
 
     public generateForInlineUnion(context: Context): ts.TypeNode {
+        const allValuesAreIntegers = this.shape.values.every((value) => {
+            const num = Number(value.name.wireValue);
+            return Number.isInteger(num) && !Number.isNaN(num);
+        });
+
         return ts.factory.createParenthesizedType(
             ts.factory.createUnionTypeNode(
                 this.shape.values.map((value) =>
-                    ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(value.name.wireValue))
+                    ts.factory.createLiteralTypeNode(
+                        allValuesAreIntegers
+                            ? ts.factory.createNumericLiteral(Number(value.name.wireValue))
+                            : ts.factory.createStringLiteral(value.name.wireValue)
+                    )
                 )
             )
         );
@@ -90,10 +106,17 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
     }
 
     private generateConst(context: Context): VariableStatementStructure {
+        const allValuesAreIntegers = this.shape.values.every((value) => {
+            const num = Number(value.name.wireValue);
+            return Number.isInteger(num) && !Number.isNaN(num);
+        });
+
         const constProperties = this.shape.values.map((value) =>
             ts.factory.createPropertyAssignment(
                 ts.factory.createIdentifier(getPropertyKey(this.getEnumValueName(value))),
-                ts.factory.createStringLiteral(value.name.wireValue)
+                allValuesAreIntegers
+                    ? ts.factory.createNumericLiteral(Number(value.name.wireValue))
+                    : ts.factory.createStringLiteral(value.name.wireValue)
             )
         );
         if (this.includeEnumUtils) {

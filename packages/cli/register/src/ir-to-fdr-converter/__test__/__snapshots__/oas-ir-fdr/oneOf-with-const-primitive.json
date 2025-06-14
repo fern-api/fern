@@ -1,0 +1,61 @@
+{
+  "types": {
+    "ActivityLevelOneOf": {
+      "description": "Intensity of the user's activity at an instant in time",
+      "name": "ActivityLevelOneOf",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "description": "Activity level is unknown or could not be determined.",
+            "type": {
+              "type": "unknown"
+            }
+          },
+          {
+            "description": "User is at rest, with minimal to no physical activity.",
+            "type": {
+              "type": "unknown"
+            }
+          },
+          {
+            "description": "User is awake but inactive or sedentary.",
+            "type": {
+              "type": "unknown"
+            }
+          },
+          {
+            "description": "User is engaged in light physical activity such as casual walking.",
+            "type": {
+              "type": "unknown"
+            }
+          },
+          {
+            "description": "User is engaged in moderate physical activity such as brisk walking or light exercise.",
+            "type": {
+              "type": "unknown"
+            }
+          },
+          {
+            "description": "User is engaged in vigorous physical activity such as running or intense exercise.",
+            "type": {
+              "type": "unknown"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "subpackages": {},
+  "rootPackage": {
+    "endpoints": [],
+    "webhooks": [],
+    "websockets": [],
+    "types": [
+      "ActivityLevelOneOf"
+    ],
+    "subpackages": []
+  },
+  "snippetsConfiguration": {},
+  "globalHeaders": []
+}

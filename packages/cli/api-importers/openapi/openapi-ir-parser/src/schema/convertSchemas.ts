@@ -256,7 +256,7 @@ export function convertSchemaObject(
         schema.enum != null &&
         (schema.type === "string" || schema.type == null || (schema.type as string) === "enum")
     ) {
-        if (!isListOfStrings(schema.enum)) {
+        if (!isListOfStrings(schema.enum) && !isListOfNumbers(schema.enum)) {
             // If enum is not a list of strings, just type as a string.
             // TODO(dsinghvi): Emit a warning we are doing this.
             return wrapPrimitive({
@@ -301,7 +301,7 @@ export function convertSchemaObject(
             title,
             fernEnum,
             enumVarNames: getExtension<string[]>(schema, [OpenAPIExtension.ENUM_VAR_NAMES]),
-            enumValues: schema.enum,
+            enumValues: schema.enum.map(String),
             _default: schema.default,
             description,
             availability,
@@ -1009,6 +1009,10 @@ function hasNoProperties(schema: OpenAPIV3.SchemaObject): boolean {
 
 function isListOfStrings(x: unknown): x is string[] {
     return Array.isArray(x) && x.every((item) => typeof item === "string");
+}
+
+function isListOfNumbers(x: unknown): x is number[] {
+    return Array.isArray(x) && x.every((item) => typeof item === "number");
 }
 
 function maybeInjectDescriptionOrGroupName(
