@@ -31,7 +31,7 @@
     "@fern-api/typescript-ast": "workspace:*",
     "@fern-api/base-generator": "workspace:*",
     "@fern-api/logger": "workspace:*",
-    "@fern-fern/generator-cli-sdk": "0.0.23",
+    "@fern-fern/generator-cli-sdk": "0.0.28",
     "@fern-fern/generator-exec-sdk": "^0.0.1045",
     "@fern-fern/ir-sdk": "58.2.0",
     "@fern-fern/snippet-sdk": "^0.0.6434",
