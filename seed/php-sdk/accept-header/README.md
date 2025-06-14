@@ -5,6 +5,10 @@
 
 The Seed PHP library provides convenient access to the Seed API from PHP.
 
+## Requirements
+
+This SDK requires PHP ^8.1.
+
 ## Installation
 
 ```sh
@@ -27,6 +31,24 @@ $client = new SeedClient(
 );
 $client->service->endpoint();
 
+```
+
+## Exception Handling
+
+When the API returns a non-success status code (4xx or 5xx response), an exception will be thrown.
+
+```php
+use Seed\Exceptions\SeedApiException;
+use Seed\Exceptions\SeedException;
+
+try {
+    $response = $client->service->endpoint(...);
+} catch (SeedApiException $e) {
+    echo 'API Exception occurred: ' . $e->getMessage() . "\n";
+    echo 'Status Code: ' . $e->getCode() . "\n"; 
+    echo 'Response Body: ' . $e->getBody() . "\n";
+    // Optionally, rethrow the exception or handle accordingly.
+}
 ```
 
 ## Contributing
