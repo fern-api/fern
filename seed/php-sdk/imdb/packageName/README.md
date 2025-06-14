@@ -5,6 +5,10 @@
 
 The Seed PHP library provides convenient access to the Seed API from PHP.
 
+## Requirements
+
+This SDK requires PHP ^8.1.
+
 ## Installation
 
 ```sh
