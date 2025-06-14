@@ -41,6 +41,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     public buildReadmeSnippets(): Record<FernGeneratorCli.FeatureId, string[]> {
         const snippets: Record<FernGeneratorCli.FeatureId, string[]> = {};
         snippets[FernGeneratorCli.StructuredFeatureId.Usage] = this.buildUsageSnippets();
+        snippets[FernGeneratorCli.StructuredFeatureId.Retries] = this.buildRetrySnippets();
+        snippets[FernGeneratorCli.StructuredFeatureId.Timeouts] = this.buildTimeoutSnippets();
         snippets[ReadmeSnippetBuilder.EXCEPTION_HANDLING_FEATURE_ID] = this.buildExceptionHandlingSnippets();
         return snippets;
     }
@@ -70,6 +72,34 @@ try {
     echo 'Response Body: ' . $e->getBody() . "\\n";
     // Optionally, rethrow the exception or handle accordingly.
 }
+`)
+        );
+    }
+
+    private buildRetrySnippets(): string[] {
+        const retryEndpoints = this.getEndpointsForFeature(FernGeneratorCli.StructuredFeatureId.Retries);
+        return retryEndpoints.map((retryEndpoint) =>
+            this.writeCode(`
+$response = ${this.getMethodCall(retryEndpoint)}(
+    ...,
+    options: [
+        'maxRetries' => 0 // Override maxRetries at the request level
+    ]
+);
+`)
+        );
+    }
+
+    private buildTimeoutSnippets(): string[] {
+        const timeoutEndpoints = this.getEndpointsForFeature(FernGeneratorCli.StructuredFeatureId.Timeouts);
+        return timeoutEndpoints.map((timeoutEndpoint) =>
+            this.writeCode(`
+$response = ${this.getMethodCall(timeoutEndpoint)}(
+    ...,
+    options: [
+        'timeout' => 3.0 // Override timeout to 3 seconds
+    ]
+);
 `)
         );
     }
