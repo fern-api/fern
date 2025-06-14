@@ -180,7 +180,7 @@ try {
             endpoint.endpoint
         )}`;
     }
-    
+
     private writeCode(s: string): string {
         return s.trim() + "\n";
     }
