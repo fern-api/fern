@@ -1,31 +1,36 @@
-import { FieldDescriptorProto_Type, OneofDescriptorProto } from "@bufbuild/protobuf/wkt";
+import { FieldDescriptorProto } from "@bufbuild/protobuf/wkt";
 
-import { Type, TypeReference, UndiscriminatedUnionMember } from "@fern-api/ir-sdk";
+import { Type, TypeReference, UndiscriminatedUnionMember, TypeId, ObjectProperty } from "@fern-api/ir-sdk";
 import { AbstractConverter } from "@fern-api/v2-importer-commons";
 
 import { ProtofileConverterContext } from "../ProtofileConverterContext";
-
+import { EnumOrMessageConverter } from "./EnumOrMessageConverter";
+import { UndiscriminatedUnionType } from "@fern-api/ir-sdk/lib/sdk/api/resources/dynamic/resources/types/types";
 export declare namespace OneOfFieldConverter {
     export interface Args extends AbstractConverter.Args<ProtofileConverterContext> {
-        oneOfFieldProperties: TypeReference[];
+        oneOfFields: FieldDescriptorProto[];
+    }
+
+    export interface Output {
+        type: Type;
+        referencedTypes: Set<string>;
+        inlinedTypes: Record<TypeId, EnumOrMessageConverter.ConvertedSchema>;
     }
 }
 
-export class OneOfFieldConverter extends AbstractConverter<ProtofileConverterContext, TypeReference> {
-    private readonly oneOfFieldProperties: TypeReference[];
+export class OneOfFieldConverter extends AbstractConverter<ProtofileConverterContext, OneOfFieldConverter.Output> {
+    private readonly oneOfFields: FieldDescriptorProto[];
 
-    constructor({ context, breadcrumbs, oneOfFieldProperties }: OneOfFieldConverter.Args) {
+    constructor({ context, breadcrumbs, oneOfFields }: OneOfFieldConverter.Args) {
         super({ context, breadcrumbs });
-        this.oneOfFieldProperties = oneOfFieldProperties;
+        this.oneOfFields = oneOfFields;
     }
 
-    public convert(): TypeReference | undefined {
-        const referencedTypes: Set<string> = new Set();
+    public convert(): OneOfFieldConverter.Output | undefined {
 
-        const unionTypes: UndiscriminatedUnionMember[] = this.oneOfFieldProperties.map((oneOfFieldTypeReference) => ({
-            type: oneOfFieldTypeReference,
-            docs: undefined
-        }));
+
+        const unionTypes: UndiscriminatedUnionType[] = []
+
 
         return undefined;
     }
