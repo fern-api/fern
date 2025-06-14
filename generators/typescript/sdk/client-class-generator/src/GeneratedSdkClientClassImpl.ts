@@ -777,6 +777,11 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         }
 
         if (this.generatedWebsocketImplementation != null) {
+            // we need to import the factory for the client
+            this.importsManager.addImport("../utils/createWebSocket.js", {
+                namedImports: ["createWebSocket"]
+            });
+
             const signature = this.generatedWebsocketImplementation.getSignature(context);
             const classStatements = this.generatedWebsocketImplementation.getClassStatements(context);
 

@@ -32,7 +32,6 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
     private static readonly CONNECT_ARGS_PRIVATE_MEMBER = "args";
     private static readonly DEBUG_PROPERTY_NAME = "debug";
     private static readonly HEADERS_PROPERTY_NAME = "headers";
-    private static readonly HEADERS_VARIABLE_NAME = "websocketHeaders";
 
     private static readonly RECONNECT_ATTEMPTS_PROPERTY_NAME = "reconnectAttempts";
     private static readonly GENERATED_VERSION_PROPERTY_NAME = "fernSdkVersion";
@@ -230,97 +229,47 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                     )
                 )
             ),
+
             ts.factory.createVariableStatement(
                 undefined,
                 ts.factory.createVariableDeclarationList(
                     [
                         ts.factory.createVariableDeclaration(
-                            ts.factory.createIdentifier(GeneratedDefaultWebsocketImplementation.HEADERS_VARIABLE_NAME),
+                            ts.factory.createIdentifier("clientOptions"),
                             undefined,
-                            ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Record"), [
-                                ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
-                                ts.factory.createKeywordTypeNode(ts.SyntaxKind.UnknownKeyword)
-                            ]),
-                            ts.factory.createObjectLiteralExpression()
+                            undefined,
+                            this.createClientOptionsExpression()
                         )
                     ],
-                    ts.NodeFlags.Let
+                    ts.NodeFlags.Const
                 )
             ),
-            ...(this.generatedSdkClientClass.shouldGenerateCustomAuthorizationHeaderHelperMethod()
-                ? [
-                      ts.factory.createExpressionStatement(
-                          ts.factory.createBinaryExpression(
-                              ts.factory.createIdentifier(
-                                  GeneratedDefaultWebsocketImplementation.HEADERS_VARIABLE_NAME
-                              ),
-                              ts.factory.createToken(ts.SyntaxKind.EqualsToken),
-                              ts.factory.createObjectLiteralExpression(
-                                  [
-                                      ts.factory.createSpreadAssignment(
-                                          ts.factory.createIdentifier(
-                                              GeneratedDefaultWebsocketImplementation.HEADERS_VARIABLE_NAME
-                                          )
-                                      ),
-                                      ts.factory.createSpreadAssignment(
-                                          ts.factory.createAwaitExpression(
-                                              ts.factory.createCallExpression(
-                                                  ts.factory.createPropertyAccessExpression(
-                                                      ts.factory.createThis(),
-                                                      GeneratedSdkClientClassImpl.CUSTOM_AUTHORIZATION_HEADER_HELPER_METHOD_NAME
-                                                  ),
-                                                  undefined,
-                                                  []
-                                              )
-                                          )
-                                      )
-                                  ],
-                                  true
-                              )
-                          )
-                      )
-                  ]
-                : []),
-            ...(this.channel.headers ?? []).map((header) => {
-                return ts.factory.createIfStatement(
-                    ts.factory.createBinaryExpression(
-                        this.getReferenceToArg(header.name.wireValue),
-                        ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
-                        ts.factory.createNull()
-                    ),
-                    ts.factory.createBlock([
-                        ts.factory.createExpressionStatement(
-                            ts.factory.createBinaryExpression(
-                                ts.factory.createElementAccessExpression(
-                                    ts.factory.createIdentifier(
-                                        GeneratedDefaultWebsocketImplementation.HEADERS_VARIABLE_NAME
-                                    ),
-                                    ts.factory.createStringLiteral(header.name.wireValue)
-                                ),
-                                ts.factory.createToken(ts.SyntaxKind.EqualsToken),
-                                this.getReferenceToArg(header.name.wireValue)
-                            )
+            ts.factory.createVariableStatement(
+                undefined,
+                ts.factory.createVariableDeclarationList(
+                    [
+                        ts.factory.createVariableDeclaration(
+                            ts.factory.createIdentifier("url"),
+                            undefined,
+                            undefined,
+                            this.buildFullUrl(this.getBaseUrl(this.channel, context), this.channel, context)
                         )
-                    ])
-                );
-            }),
-            ts.factory.createExpressionStatement(
-                ts.factory.createBinaryExpression(
-                    ts.factory.createIdentifier(GeneratedDefaultWebsocketImplementation.HEADERS_VARIABLE_NAME),
-                    ts.factory.createToken(ts.SyntaxKind.EqualsToken),
-                    ts.factory.createObjectLiteralExpression(
-                        [
-                            ts.factory.createSpreadAssignment(
-                                ts.factory.createIdentifier(
-                                    GeneratedDefaultWebsocketImplementation.HEADERS_VARIABLE_NAME
-                                )
-                            ),
-                            ts.factory.createSpreadAssignment(
-                                this.getReferenceToArg(GeneratedDefaultWebsocketImplementation.HEADERS_PROPERTY_NAME)
-                            )
-                        ],
-                        true
-                    )
+                    ],
+                    ts.NodeFlags.Const
+                )
+            ),
+            ts.factory.createVariableStatement(
+                undefined,
+                ts.factory.createVariableDeclarationList(
+                    [
+                        ts.factory.createVariableDeclaration(
+                            ts.factory.createIdentifier("reconnectingOptions"),
+                            undefined,
+                            undefined,
+                            this.createReconnectingOptionsExpression()
+                        )
+                    ],
+                    ts.NodeFlags.Const
                 )
             ),
             ts.factory.createVariableStatement(
@@ -331,7 +280,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                             ts.factory.createIdentifier("socket"),
                             undefined,
                             undefined,
-                            this.getReferenceToWebsocket(context)
+                            this.createReconnectingWebSocketExpression()
                         )
                     ],
                     ts.NodeFlags.Const
@@ -347,34 +296,96 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
         ];
     }
 
-    private getReferenceToWebsocket(context: SdkContext): ts.Expression {
-        return context.coreUtilities.websocket.ReconnectingWebSocket._connect({
-            url: this.buildFullUrl(this.getBaseUrl(this.channel, context), this.channel, context),
-            protocols: ts.factory.createArrayLiteralExpression([]),
-            options: ts.factory.createObjectLiteralExpression([
-                ts.factory.createPropertyAssignment(
-                    "debug",
-                    ts.factory.createBinaryExpression(
-                        this.getReferenceToArg(GeneratedDefaultWebsocketImplementation.DEBUG_PROPERTY_NAME),
-                        ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                        ts.factory.createFalse()
-                    )
-                ),
-                ts.factory.createPropertyAssignment(
-                    "maxRetries",
-                    ts.factory.createBinaryExpression(
-                        this.getReferenceToArg(
-                            GeneratedDefaultWebsocketImplementation.RECONNECT_ATTEMPTS_PROPERTY_NAME
-                        ),
-                        ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                        ts.factory.createNumericLiteral(
-                            GeneratedDefaultWebsocketImplementation.DEFAULT_NUM_RECONNECT_ATTEMPTS
-                        )
+    private createClientOptionsExpression(): ts.Expression {
+        return ts.factory.createObjectLiteralExpression([
+            ts.factory.createPropertyAssignment(
+                "debug",
+                ts.factory.createBinaryExpression(
+                    this.getReferenceToArg(GeneratedDefaultWebsocketImplementation.DEBUG_PROPERTY_NAME),
+                    ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                    ts.factory.createFalse()
+                )
+            ),
+            ts.factory.createSpreadAssignment(
+                ts.factory.createPropertyAccessExpression(
+                    ts.factory.createThis(),
+                    GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER
+                )
+            ),
+            ts.factory.createPropertyAssignment("headers", this.createHeadersObjectExpression())
+        ]);
+    }
+
+    private createHeadersObjectExpression(): ts.Expression {
+        const headerProperties: ts.ObjectLiteralElementLike[] = [];
+
+        // Add args.headers spread
+        headerProperties.push(
+            ts.factory.createSpreadAssignment(
+                this.getReferenceToArg(GeneratedDefaultWebsocketImplementation.HEADERS_PROPERTY_NAME)
+            )
+        );
+
+        // Add Authorization header if provided: ...(args.Authorization ? { Authorization: args.Authorization } : {})
+        headerProperties.push(
+            ts.factory.createSpreadAssignment(
+                ts.factory.createParenthesizedExpression(
+                    ts.factory.createConditionalExpression(
+                        this.getReferenceToArg("Authorization"),
+                        ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+                        ts.factory.createObjectLiteralExpression([
+                            ts.factory.createPropertyAssignment(
+                                "Authorization",
+                                this.getReferenceToArg("Authorization")
+                            )
+                        ]),
+                        ts.factory.createToken(ts.SyntaxKind.ColonToken),
+                        ts.factory.createObjectLiteralExpression()
                     )
                 )
-            ]),
-            headers: ts.factory.createIdentifier(GeneratedDefaultWebsocketImplementation.HEADERS_VARIABLE_NAME)
-        });
+            )
+        );
+
+        return ts.factory.createObjectLiteralExpression(headerProperties, true);
+    }
+
+    private createReconnectingOptionsExpression(): ts.Expression {
+        return ts.factory.createObjectLiteralExpression([
+            ts.factory.createPropertyAssignment(
+                "debug",
+                ts.factory.createBinaryExpression(
+                    this.getReferenceToArg(GeneratedDefaultWebsocketImplementation.DEBUG_PROPERTY_NAME),
+                    ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                    ts.factory.createFalse()
+                )
+            ),
+            ts.factory.createPropertyAssignment(
+                "maxRetries",
+                ts.factory.createBinaryExpression(
+                    this.getReferenceToArg(GeneratedDefaultWebsocketImplementation.RECONNECT_ATTEMPTS_PROPERTY_NAME),
+                    ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                    ts.factory.createNumericLiteral(
+                        GeneratedDefaultWebsocketImplementation.DEFAULT_NUM_RECONNECT_ATTEMPTS
+                    )
+                )
+            )
+        ]);
+    }
+
+    private createReconnectingWebSocketExpression(): ts.Expression {
+        return ts.factory.createNewExpression(
+            ts.factory.createPropertyAccessExpression(
+                ts.factory.createIdentifier("core"),
+                ts.factory.createIdentifier("ReconnectingWebSocket")
+            ),
+            undefined,
+            [
+                ts.factory.createIdentifier("createWebSocket"), // websocketFactory
+                ts.factory.createIdentifier("url"), // url variable
+                ts.factory.createIdentifier("clientOptions"), // clientOptions variable
+                ts.factory.createIdentifier("reconnectingOptions") // reconnectingOptions variable
+            ]
+        );
     }
 
     private buildFullUrl(url: ts.Expression, channel: WebSocketChannel, context: SdkContext): ts.Expression {
