@@ -48,7 +48,7 @@ export class ReadmeConfigBuilder {
             bannerLink: context.ir.readmeConfig?.bannerLink,
             introduction: context.ir.readmeConfig?.introduction,
             features,
-            requirements: ["PHP ^8.1"],
+            requirements: ["PHP ^8.1"]
         };
     }
 
