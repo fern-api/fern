@@ -176,7 +176,7 @@ try {
     }
 
     private getMethodCall(endpoint: EndpointWithFilepath): string {
-        return `${this.context.getAccessFromRootClient(endpoint.fernFilepath)}.${this.context.getEndpointMethodName(
+        return `${this.context.getAccessFromRootClient(endpoint.fernFilepath)}->${this.context.getEndpointMethodName(
             endpoint.endpoint
         )}`;
     }
