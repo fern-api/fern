@@ -134,8 +134,9 @@ export class JestTestGenerator {
     }
 
     public get extraFiles(): Record<string, string> {
+        const testDirWithoutLeadingSlash = this.rootDirectory.getPath().replace(/^\//, "");
         return {
-            "tests/tsconfig.json": `{
+            [path.join(testDirWithoutLeadingSlash, "tsconfig.json")]: `{
     "extends": "../tsconfig.base.json",
     "compilerOptions": {
         "outDir": null,
@@ -145,7 +146,7 @@ export class JestTestGenerator {
     "include": ["../src", "../tests"],
     "exclude": []
 }`,
-            "tests/custom.test.ts": `
+            [path.join(testDirWithoutLeadingSlash, "custom.test.ts")]: `
 /**
 * This is a custom test file, if you wish to add more tests
 * to your SDK.

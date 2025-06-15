@@ -23,6 +23,11 @@ type PathToDirectory = string;
 
 export class ExportsManager {
     private exports: Record<PathToDirectory, Record<ModuleSpecifier, CombinedExportDeclarations>> = {};
+    private packagePath: string;
+
+    constructor(packagePath: string = "/src") {
+        this.packagePath = packagePath;
+    }
 
     public addExport(
         from: SourceFile | string,
@@ -57,7 +62,7 @@ export class ExportsManager {
     }
 
     public addExportsForDirectories(directories: ExportedDirectory[], addExportTypeModifier?: boolean): void {
-        let directoryFilepath = "/src";
+        let directoryFilepath = this.packagePath;
         for (const part of directories) {
             const nextDirectoryPath = path.join(directoryFilepath, part.nameOnDisk);
             this.addExportDeclarationForDirectory({
