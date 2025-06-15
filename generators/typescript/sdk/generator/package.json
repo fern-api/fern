@@ -47,6 +47,7 @@
     "@fern-typescript/sdk-error-generator": "workspace:*",
     "@fern-typescript/sdk-error-schema-generator": "workspace:*",
     "@fern-typescript/sdk-inlined-request-schema-generator": "workspace:*",
+    "@fern-typescript/sdk-client-utils-generator": "workspace:*",
     "@fern-typescript/websocket-type-schema-generator": "workspace:*",
     "@fern-typescript/type-generator": "workspace:*",
     "@fern-typescript/type-reference-converters": "workspace:*",
