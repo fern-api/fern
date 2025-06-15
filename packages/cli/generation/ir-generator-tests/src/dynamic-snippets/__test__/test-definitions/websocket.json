@@ -127,6 +127,132 @@
             ],
             "additionalProperties": false
         },
+        "type_realtime:send_snake_case": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "send_snake_case",
+                    "camelCase": {
+                        "unsafeName": "sendSnakeCase",
+                        "safeName": "sendSnakeCase"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "send_snake_case",
+                        "safeName": "send_snake_case"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "SEND_SNAKE_CASE",
+                        "safeName": "SEND_SNAKE_CASE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "SendSnakeCase",
+                        "safeName": "SendSnakeCase"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "realtime",
+                            "camelCase": {
+                                "unsafeName": "realtime",
+                                "safeName": "realtime"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "realtime",
+                                "safeName": "realtime"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "REALTIME",
+                                "safeName": "REALTIME"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Realtime",
+                                "safeName": "Realtime"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "realtime",
+                        "camelCase": {
+                            "unsafeName": "realtime",
+                            "safeName": "realtime"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "realtime",
+                            "safeName": "realtime"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "REALTIME",
+                            "safeName": "REALTIME"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Realtime",
+                            "safeName": "Realtime"
+                        }
+                    }
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "send_text",
+                            "camelCase": {
+                                "unsafeName": "sendText",
+                                "safeName": "sendText"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "send_text",
+                                "safeName": "send_text"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SEND_TEXT",
+                                "safeName": "SEND_TEXT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "SendText",
+                                "safeName": "SendText"
+                            }
+                        },
+                        "wireValue": "send_text"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    }
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "send_param",
+                            "camelCase": {
+                                "unsafeName": "sendParam",
+                                "safeName": "sendParam"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "send_param",
+                                "safeName": "send_param"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SEND_PARAM",
+                                "safeName": "SEND_PARAM"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "SendParam",
+                                "safeName": "SendParam"
+                            }
+                        },
+                        "wireValue": "send_param"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "INTEGER"
+                    }
+                }
+            ],
+            "additionalProperties": false
+        },
         "type_realtime:ReceiveEvent": {
             "type": "object",
             "declaration": {
@@ -244,6 +370,132 @@
                             }
                         },
                         "wireValue": "beta"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "INTEGER"
+                    }
+                }
+            ],
+            "additionalProperties": false
+        },
+        "type_realtime:receive_snake_case": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "receive_snake_case",
+                    "camelCase": {
+                        "unsafeName": "receiveSnakeCase",
+                        "safeName": "receiveSnakeCase"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "receive_snake_case",
+                        "safeName": "receive_snake_case"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "RECEIVE_SNAKE_CASE",
+                        "safeName": "RECEIVE_SNAKE_CASE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "ReceiveSnakeCase",
+                        "safeName": "ReceiveSnakeCase"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "realtime",
+                            "camelCase": {
+                                "unsafeName": "realtime",
+                                "safeName": "realtime"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "realtime",
+                                "safeName": "realtime"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "REALTIME",
+                                "safeName": "REALTIME"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Realtime",
+                                "safeName": "Realtime"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "realtime",
+                        "camelCase": {
+                            "unsafeName": "realtime",
+                            "safeName": "realtime"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "realtime",
+                            "safeName": "realtime"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "REALTIME",
+                            "safeName": "REALTIME"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Realtime",
+                            "safeName": "Realtime"
+                        }
+                    }
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "receive_text",
+                            "camelCase": {
+                                "unsafeName": "receiveText",
+                                "safeName": "receiveText"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "receive_text",
+                                "safeName": "receive_text"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "RECEIVE_TEXT",
+                                "safeName": "RECEIVE_TEXT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "ReceiveText",
+                                "safeName": "ReceiveText"
+                            }
+                        },
+                        "wireValue": "receive_text"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    }
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "receive_int",
+                            "camelCase": {
+                                "unsafeName": "receiveInt",
+                                "safeName": "receiveInt"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "receive_int",
+                                "safeName": "receive_int"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "RECEIVE_INT",
+                                "safeName": "RECEIVE_INT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "ReceiveInt",
+                                "safeName": "ReceiveInt"
+                            }
+                        },
+                        "wireValue": "receive_int"
                     },
                     "typeReference": {
                         "type": "primitive",
