@@ -64,67 +64,14 @@ type CallParams struct {
 	ErrorDecoder       ErrorDecoder
 }
 
+// CallResponse is a parsed HTTP response from an API call.
+type CallResponse struct {
+	StatusCode int
+	Header     http.Header
+}
+
 // Call issues an API call according to the given call parameters.
-func (c *Caller) Call(ctx context.Context, params *CallParams) error {
-	resp, err := c.CallRaw(
-		ctx,
-		&CallRawParams{
-			URL:             params.URL,
-			Method:          params.Method,
-			MaxAttempts:     params.MaxAttempts,
-			Headers:         params.Headers,
-			BodyProperties:  params.BodyProperties,
-			QueryParameters: params.QueryParameters,
-			Client:          params.Client,
-			Request:         params.Request,
-			ErrorDecoder:    params.ErrorDecoder,
-		},
-	)
-	if err != nil {
-		return err
-	}
-
-	// Close the response body after we're done.
-	defer resp.Body.Close()
-
-	if params.Response != nil {
-		if writer, ok := params.Response.(io.Writer); ok {
-			_, err = io.Copy(writer, resp.Body)
-		} else {
-			err = json.NewDecoder(resp.Body).Decode(params.Response)
-		}
-		if err != nil {
-			if err == io.EOF {
-				if params.ResponseIsOptional {
-					// The response is optional, so we should ignore the
-					// io.EOF error
-					return nil
-				}
-				return fmt.Errorf("expected a %T response, but the server responded with nothing", params.Response)
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-// CallRawParams represents the parameters used to issue an API call.
-type CallRawParams struct {
-	URL             string
-	Method          string
-	MaxAttempts     uint
-	Headers         http.Header
-	BodyProperties  map[string]interface{}
-	QueryParameters url.Values
-	Client          core.HTTPClient
-	Request         interface{}
-	ErrorDecoder    ErrorDecoder
-}
-
-// CallRaw issues an API call according to the given call parameters and returns the raw HTTP response.
-// The caller is responsible for closing the response body.
-func (c *Caller) CallRaw(ctx context.Context, params *CallRawParams) (*http.Response, error) {
+func (c *Caller) Call(ctx context.Context, params *CallParams) (*CallResponse, error) {
 	url := buildURL(params.URL, params.QueryParameters)
 	req, err := newRequest(
 		ctx,
@@ -145,6 +92,7 @@ func (c *Caller) CallRaw(ctx context.Context, params *CallRawParams) (*http.Resp
 
 	client := c.client
 	if params.Client != nil {
+		// Use the HTTP client scoped to the request.
 		client = params.Client
 	}
 
@@ -163,19 +111,46 @@ func (c *Caller) CallRaw(ctx context.Context, params *CallRawParams) (*http.Resp
 		return nil, err
 	}
 
+	// Close the response body after we're done.
+	defer resp.Body.Close()
+
 	// Check if the call was cancelled before we return the error
 	// associated with the call and/or unmarshal the response data.
 	if err := ctx.Err(); err != nil {
-		defer resp.Body.Close()
 		return nil, err
 	}
 
 	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
-		defer resp.Body.Close()
 		return nil, decodeError(resp, params.ErrorDecoder)
 	}
 
-	return resp, nil
+	// Mutate the response parameter in-place.
+	if params.Response != nil {
+		if writer, ok := params.Response.(io.Writer); ok {
+			_, err = io.Copy(writer, resp.Body)
+		} else {
+			err = json.NewDecoder(resp.Body).Decode(params.Response)
+		}
+		if err != nil {
+			if err == io.EOF {
+				if params.ResponseIsOptional {
+					// The response is optional, so we should ignore the
+					// io.EOF error
+					return &CallResponse{
+						StatusCode: resp.StatusCode,
+						Header:     resp.Header,
+					}, nil
+				}
+				return nil, fmt.Errorf("expected a %T response, but the server responded with nothing", params.Response)
+			}
+			return nil, err
+		}
+	}
+
+	return &CallResponse{
+		StatusCode: resp.StatusCode,
+		Header:     resp.Header,
+	}, nil
 }
 
 // buildURL constructs the final URL by appending the given query parameters (if any).
@@ -250,7 +225,7 @@ func decodeError(response *http.Response, errorDecoder ErrorDecoder) error {
 		// This endpoint has custom errors, so we'll
 		// attempt to unmarshal the error into a structured
 		// type based on the status code.
-		return errorDecoder(response.StatusCode, response.Body)
+		return errorDecoder(response.StatusCode, response.Header, response.Body)
 	}
 	// This endpoint doesn't have any custom error
 	// types, so we just read the body as-is, and
@@ -263,9 +238,9 @@ func decodeError(response *http.Response, errorDecoder ErrorDecoder) error {
 		// The error didn't have a response body,
 		// so all we can do is return an error
 		// with the status code.
-		return core.NewAPIError(response.StatusCode, nil)
+		return core.NewAPIError(response.StatusCode, response.Header, nil)
 	}
-	return core.NewAPIError(response.StatusCode, errors.New(string(bytes)))
+	return core.NewAPIError(response.StatusCode, response.Header, errors.New(string(bytes)))
 }
 
 // isNil is used to determine if the request value is equal to nil (i.e. an interface

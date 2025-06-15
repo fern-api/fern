@@ -22,7 +22,7 @@ import {
 } from "@fern-fern/ir-sdk/api";
 
 import { go } from "..";
-import { TimeTypeReference, UuidTypeReference } from "../ast/Type";
+import { IoReaderTypeReference, TimeTypeReference, UuidTypeReference } from "../ast/Type";
 import { BaseGoCustomConfigSchema } from "../custom-config/BaseGoCustomConfigSchema";
 import { resolveRootImportPath } from "../custom-config/resolveRootImportPath";
 import { GoTypeMapper } from "./GoTypeMapper";
@@ -80,12 +80,31 @@ export abstract class AbstractGoGeneratorContext<
         return `${this.rootImportPath}/core`;
     }
 
+    public getInternalImportPath(): string {
+        return `${this.rootImportPath}/internal`;
+    }
+
+    public getOptionImportPath(): string {
+        return `${this.rootImportPath}/option`;
+    }
+
     public getFieldName(name: Name): string {
         return name.pascalCase.unsafeName;
     }
 
+    public getParameterName(name: Name): string {
+        return name.camelCase.safeName;
+    }
+
     public getLiteralAsString(literal: Literal): string {
         return literal.type === "string" ? `'${literal.string}'` : literal.boolean ? "'true'" : "'false'";
+    }
+
+    public getContextTypeReference(): go.TypeReference {
+        return go.typeReference({
+            name: "Context",
+            importPath: "context"
+        });
     }
 
     public getUuidTypeReference(): go.TypeReference {
@@ -94,6 +113,10 @@ export abstract class AbstractGoGeneratorContext<
 
     public getTimeTypeReference(): go.TypeReference {
         return TimeTypeReference;
+    }
+
+    public getIoReaderTypeReference(): go.TypeReference {
+        return IoReaderTypeReference;
     }
 
     public isOptional(typeReference: TypeReference): boolean {
