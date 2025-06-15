@@ -25,11 +25,15 @@ export function generateIr({ req, options }: { req: CodeGeneratorRequest; option
             settings: undefined,
             errorCollector: new ErrorCollector({
                 logger: {
-                    log: (level, ...args) => {}
+                    log: (level, ...args) => {
+                        // do nothing.
+                    }
                 },
                 relativeFilepathToSpec: undefined
             }),
-            logger: createLogger((level, ...args) => {}),
+            logger: createLogger((level, ...args) => {
+                // do nothing.
+            }),
             generationLanguage: undefined,
             smartCasing: false,
             exampleGenerationArgs: {

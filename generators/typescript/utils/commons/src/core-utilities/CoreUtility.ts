@@ -1,5 +1,3 @@
-import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
-
 import { DependencyManager } from "../dependency-manager/DependencyManager";
 import { ExportedDirectory } from "../exports-manager";
 import { Reference } from "../referencing";
@@ -7,28 +5,22 @@ import { Reference } from "../referencing";
 export type CoreUtilityName = string;
 
 export declare namespace CoreUtility {
+    export interface Options {
+        streamType: "wrapper" | "web";
+    }
     export interface Init {
         getReferenceToExport: (args: { manifest: CoreUtility.Manifest; exportedName: string }) => Reference;
     }
 
     export interface Manifest {
         name: CoreUtilityName;
-        repoInfoForTesting: {
-            path: RelativeFilePath;
-            ignoreGlob?: string;
-        };
-        unitTests?: {
-            fromDirectory: RelativeFilePath;
-            /**
-             * Import strings that we want to find + replace
-             */
-            findAndReplace: Record<string, string>;
-        };
-        originalPathOnDocker: AbsoluteFilePath;
-        pathInCoreUtilities: ExportedDirectory[];
-        addDependencies?: (dependencyManager: DependencyManager) => void;
-        writeConditionalFiles?: (pathToSrc: AbsoluteFilePath) => Promise<void>;
+        pathInCoreUtilities: ExportedDirectory;
+        addDependencies?: (dependencyManager: DependencyManager, options: Options) => void;
         dependsOn?: CoreUtility.Manifest[];
+        getFilesPatterns: (options: Options) => {
+            patterns: string | string[];
+            ignore?: string | string[];
+        };
     }
 }
 

@@ -1,11 +1,9 @@
 #!/usr/bin/env node
-import { RUNTIME } from "@fern-typescript/fetcher";
 import getPort from "get-port";
 import { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
 
-import { BaseOpenAPIWorkspace } from "@fern-api/api-workspace-commons";
 import {
     GENERATORS_CONFIGURATION_FILENAME,
     PROJECT_CONFIG_FILENAME,
@@ -16,7 +14,6 @@ import {
 import { ContainerRunner } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, doesPathExist, isURL, resolve } from "@fern-api/fs-utils";
 import { initializeAPI, initializeDocs, initializeWithMintlify, initializeWithReadme } from "@fern-api/init";
-import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
 import { askToLogin, login } from "@fern-api/login";
 import { FernCliError, LoggableFernCliError } from "@fern-api/task-context";
@@ -52,6 +49,7 @@ import { writeDefinitionForWorkspaces } from "./commands/write-definition/writeD
 import { writeDocsDefinitionForProject } from "./commands/write-docs-definition/writeDocsDefinitionForProject";
 import { FERN_CWD_ENV_VAR } from "./cwd";
 import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion";
+import { RUNTIME } from "./runtime";
 
 void runCli();
 

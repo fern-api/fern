@@ -120,7 +120,9 @@ export class ExpressGenerator {
         this.config = config;
 
         this.exportsManager = new ExportsManager();
-        this.coreUtilitiesManager = new CoreUtilitiesManager();
+        this.coreUtilitiesManager = new CoreUtilitiesManager({
+            streamType: "wrapper"
+        });
 
         this.project = new Project({
             useInMemoryFileSystem: true
@@ -289,7 +291,10 @@ export class ExpressGenerator {
         pathToSrc: AbsoluteFilePath;
         pathToRoot: AbsoluteFilePath;
     }): Promise<void> {
-        await this.coreUtilitiesManager.copyCoreUtilities({ pathToSrc, pathToRoot });
+        await this.coreUtilitiesManager.copyCoreUtilities({
+            pathToSrc,
+            pathToRoot
+        });
     }
 
     private getTypesToGenerate(): Record<TypeId, TypeDeclaration> {
