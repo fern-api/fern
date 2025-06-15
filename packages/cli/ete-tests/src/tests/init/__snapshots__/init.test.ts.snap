@@ -93,8 +93,6 @@ navigation:
 colors:
   accentPrimary: '#ffffff'
   background: '#000000'
-experimental:
-  openapiParserV3: true
 ",
         "name": "docs.yml",
         "type": "file",
