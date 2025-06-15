@@ -6,6 +6,7 @@ import {
 
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
+import { RelativeFilePath } from "../../../../../packages/commons/fs-utils/src";
 import { BaseRubyCustomConfigSchema } from "../custom-config/BaseRubyCustomConfigSchema";
 
 export abstract class AbstractRubyGeneratorContext<
@@ -19,4 +20,9 @@ export abstract class AbstractRubyGeneratorContext<
     ) {
         super(config, generatorNotificationService);
     }
+}
+
+export interface FileLocation {
+    namespace: string;
+    directory: RelativeFilePath;
 }

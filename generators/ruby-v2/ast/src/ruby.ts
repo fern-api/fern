@@ -2,10 +2,12 @@ import {
     Class_,
     CodeBlock,
     Comment,
+    Field,
     KeywordParameter,
     KeywordSplatParameter,
     Method,
     Module,
+    Object_,
     PositionalParameter,
     PositionalSplatParameter,
     YieldParameter
@@ -13,7 +15,7 @@ import {
 import { TypeParameter } from "./ast/TypeParameter";
 
 export { AstNode } from "./ast/core/AstNode";
-export { CodeBlock, Parameter, Method } from "./ast";
+export { CodeBlock, Parameter, Method, Type } from "./ast";
 
 export function codeblock(arg: CodeBlock.Arg): CodeBlock {
     return new CodeBlock(arg);
@@ -55,6 +57,14 @@ export function method(args: Method.Args): Method {
 
 export function comment(args: Comment.Args): Comment {
     return new Comment(args);
+}
+
+export function object_(args: Object_.Args): Object_ {
+    return new Object_(args);
+}
+
+export function field(args: Field.Args): Field {
+    return new Field(args);
 }
 
 export function typeParameter(args: TypeParameter.Args): TypeParameter {
