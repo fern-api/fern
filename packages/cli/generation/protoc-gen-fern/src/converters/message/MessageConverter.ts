@@ -67,14 +67,28 @@ export class MessageConverter extends AbstractConverter<ProtofileConverterContex
         for (const [index, oneof] of this.message.oneofDecl.entries()) {
             // TODO: convert oneofs
 
-            this.context.logger.info("oneof\n", JSON.stringify(oneOfFields[index] ?? [], null, 2));
-
             const oneOfFieldConverter = new OneOfFieldConverter({
                 context: this.context,
                 breadcrumbs: this.breadcrumbs,
-                oneOfVariantConvertedSchema
+                oneOfFields: oneOfFields[index] ?? []
             });
             const convertedOneOfField = oneOfFieldConverter.convert();
+            if (convertedOneOfField != null) {
+                const converted = {
+                    convertedSchema: {
+                        typeDeclaration: this.createTypeDeclaration({
+                            shape: convertedOneOfField.type,
+                            referencedTypes: convertedOneOfField.referencedTypes,
+                            typeName: this.prependParentMessageName(oneof.name)
+                        }),
+                        audiences: [],
+                        propertiesByAudience: {}
+                    },
+                    inlinedTypes: convertedOneOfField.inlinedTypes
+                };
+                this.context.logger.info("convertedOneOfField\n", JSON.stringify(converted, null, 2));
+            }
+
             // if (convertedOneOfField != null) {
             //     // populate referenced types with what is referenced if applicable
 

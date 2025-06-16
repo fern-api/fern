@@ -7652,6 +7652,9 @@ importers:
       '@fern-api/configuration':
         specifier: workspace:*
         version: link:../../configuration
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../../commons/core-utils
       '@fern-api/ir-sdk':
         specifier: workspace:*
         version: link:../../../ir-sdk
@@ -7694,64 +7697,6 @@ importers:
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(msw@2.8.4(@types/node@18.15.3)(typescript@5.7.2))(sass@1.72.0)(terser@5.31.5)
 
   packages/cli/generation/protoc-gen-fern/bin: {}
-
-  packages/cli/generation/protoc-gen-fern/dist/cjs:
-    dependencies:
-      '@bufbuild/protobuf':
-        specifier: ^2.2.5
-        version: 2.2.5
-      '@bufbuild/protoplugin':
-        specifier: 2.2.5
-        version: 2.2.5
-      '@fern-api/casings-generator':
-        specifier: workspace:*
-        version: link:../../../../../commons/casings-generator
-      '@fern-api/configs':
-        specifier: workspace:*
-        version: link:../../../../../configs
-      '@fern-api/configuration':
-        specifier: workspace:*
-        version: link:../../../../configuration
-      '@fern-api/ir-sdk':
-        specifier: workspace:*
-        version: link:../../../../../ir-sdk
-      '@fern-api/ir-utils':
-        specifier: workspace:*
-        version: link:../../../../../commons/ir-utils
-      '@fern-api/logger':
-        specifier: workspace:*
-        version: link:../../../../logger
-      '@fern-api/v2-importer-commons':
-        specifier: workspace:*
-        version: link:../../../../api-importers/v2-importer-commons
-      openapi-types:
-        specifier: ^12.1.3
-        version: 12.1.3
-    devDependencies:
-      '@trivago/prettier-plugin-sort-imports':
-        specifier: ^5.2.1
-        version: 5.2.2(@vue/compiler-sfc@3.5.13)(prettier@3.5.3)
-      '@types/jest':
-        specifier: ^29.5.14
-        version: 29.5.14
-      '@types/node':
-        specifier: 18.15.3
-        version: 18.15.3
-      depcheck:
-        specifier: ^1.4.7
-        version: 1.4.7
-      eslint:
-        specifier: ^8.56.0
-        version: 8.57.1
-      prettier:
-        specifier: ^3.4.2
-        version: 3.5.3
-      typescript:
-        specifier: 5.7.2
-        version: 5.7.2
-      vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(msw@2.8.4(@types/node@18.15.3)(typescript@5.7.2))(sass@1.72.0)(terser@5.31.5)
 
   packages/cli/generation/remote-generation/remote-workspace-runner:
     dependencies:

@@ -28,7 +28,7 @@ export function generateIr({ req, options }: { req: CodeGeneratorRequest; option
         const protoFileConverter = new ProtofileConverter({
             context: new ProtofileConverterContext({
                 spec: protoFile,
-                settings: undefined,
+                settings: {} as any,
                 errorCollector: new ErrorCollector({
                     logger: {
                         log: (level, ...args) => {}
