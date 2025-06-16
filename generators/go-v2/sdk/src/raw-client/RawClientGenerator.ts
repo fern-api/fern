@@ -10,16 +10,16 @@ import { SdkGeneratorContext } from "../SdkGeneratorContext";
 export declare namespace RawClientGenerator {
     interface Args {
         context: SdkGeneratorContext;
-        subpackage: Subpackage | undefined;
-        serviceId?: ServiceId;
-        service?: HttpService;
+        subpackage: Subpackage;
+        serviceId: ServiceId;
+        service: HttpService;
     }
 }
 
 export class RawClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema, SdkGeneratorContext> {
     private subpackage: Subpackage | undefined;
-    private serviceId: ServiceId | undefined;
-    private service: HttpService | undefined;
+    private serviceId: ServiceId;
+    private service: HttpService;
 
     constructor({ subpackage, context, serviceId, service }: RawClientGenerator.Args) {
         super(context);
@@ -47,21 +47,19 @@ export class RawClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSch
             })
         );
 
-        if (this.service != null && this.serviceId != null) {
-            for (const endpoint of this.service.endpoints) {
-                const methods = this.context.endpointGenerator.generateRaw({
-                    serviceId: this.serviceId,
-                    service: this.service,
-                    endpoint
-                });
-                struct.addMethod(...methods);
-            }
+        for (const endpoint of this.service.endpoints) {
+            const methods = this.context.endpointGenerator.generateRaw({
+                serviceId: this.serviceId,
+                service: this.service,
+                endpoint
+            });
+            struct.addMethod(...methods);
         }
 
         return new GoFile({
             node: struct,
             rootImportPath: this.context.getRootImportPath(),
-            packageName: this.context.getClientPackageName(),
+            packageName: this.getPackageName(),
             importPath: this.getImportPath(),
             directory: this.getDirectory(),
             filename: this.context.getRawClientFilename(),
@@ -115,7 +113,7 @@ export class RawClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSch
                                                 selector: go.codeblock("MaxAttempts")
                                             })
                                         )
-                                    }),
+                                    })
                                 )
                             },
                             {
@@ -138,6 +136,12 @@ export class RawClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSch
         return this.subpackage != null
             ? this.context.getSubpackageRawClientClassReference(this.subpackage)
             : this.context.getRootRawClientClassReference();
+    }
+
+    private getPackageName(): string {
+        return this.subpackage != null
+            ? this.context.getSubpackageClientPackageName(this.subpackage)
+            : this.context.getClientPackageName();
     }
 
     private getDirectory(): RelativeFilePath {

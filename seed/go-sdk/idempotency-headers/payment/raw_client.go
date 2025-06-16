@@ -1,4 +1,4 @@
-package client
+package payment
 
 import (
     internal "github.com/idempotency-headers/fern/internal"

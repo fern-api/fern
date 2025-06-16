@@ -9,10 +9,10 @@ import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
+import { RawClientGenerator } from "./raw-client/RawClientGenerator";
 import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest";
 import { convertIr } from "./utils/convertIr";
 import { WireTestGenerator } from "./wiretest/WireTestGenerator";
-import { RawClientGenerator } from "./raw-client/RawClientGenerator";
 
 export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     protected constructContext({
@@ -69,18 +69,17 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
 
     private generateRawClients(context: SdkGeneratorContext) {
         for (const subpackage of Object.values(context.ir.subpackages)) {
-            if (!context.shouldGenerateSubpackageClient(subpackage)) {
+            if (subpackage.service == null) {
                 continue;
             }
-
-            const service = subpackage.service != null ? context.getHttpServiceOrThrow(subpackage.service) : undefined;
-            const subClient = new RawClientGenerator({
+            const rawClient = new RawClientGenerator({
                 context,
                 subpackage,
                 serviceId: subpackage.service,
-                service
+                service: context.getHttpServiceOrThrow(subpackage.service)
             });
-            context.project.addGoFiles(subClient.generate());
+
+            context.project.addGoFiles(rawClient.generate());
         }
     }
 

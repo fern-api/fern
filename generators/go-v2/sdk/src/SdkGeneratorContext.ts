@@ -101,8 +101,13 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         });
     }
 
+    public getSubpackageClientPackageName(subpackage: Subpackage): string {
+        return this.getFileLocation(subpackage.fernFilepath).importPath.split("/").pop() ?? "";
+    }
+
     public getSubpackageClientFileLocation(subpackage: Subpackage): FileLocation {
-        return this.getFileLocation(subpackage.fernFilepath, this.getClientPackageName());
+        // TODO: Add support for conditionally including the nested 'client' package element.
+        return this.getFileLocation(subpackage.fernFilepath);
     }
 
     public getSubpackageClientField(subpackage: Subpackage): go.Field {

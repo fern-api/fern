@@ -268,7 +268,7 @@ export abstract class AbstractGoGeneratorContext<
     }
 
     protected getFileLocation(filepath: FernFilepath, suffix?: string): FileLocation {
-        let parts = filepath.packagePath.map((path) => path.pascalCase.safeName.toLowerCase());
+        let parts = filepath.allParts.map((path) => path.pascalCase.safeName.toLowerCase());
         parts = suffix != null ? [...parts, suffix] : parts;
         return {
             importPath: [this.getRootImportPath(), ...parts].join("/"),
