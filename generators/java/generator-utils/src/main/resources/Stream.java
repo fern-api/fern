@@ -1,5 +1,3 @@
-package com.cohere.api.core;
-
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Reader;
