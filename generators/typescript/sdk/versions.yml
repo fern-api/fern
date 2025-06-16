@@ -2,7 +2,18 @@
 
 - version: 1.6.0
   changelogEntry:
-    - summary: Allow users to specify the path they'd like to generate the SDK to
+    - summary: |
+        Allow users to specify the path they'd like to generate the SDK to.
+
+        ```yml
+        # In generators.yml
+        groups:
+          ts-sdk:
+            generators:
+              - name: fernapi/fern-typescript-node-sdk
+                config:
+                  packagePath: src/package-path
+        ```
       type: feat
   createdAt: '2025-06-16'
   irVersion: 58
