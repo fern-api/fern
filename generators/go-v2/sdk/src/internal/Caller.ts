@@ -21,6 +21,8 @@ export declare namespace Caller {
 export class Caller {
     public static TYPE_NAME = "Caller";
     public static FIELD_NAME = "caller";
+    public static CONSTRUCTOR_FUNC_NAME = "NewCaller";
+    public static CALLER_PARAMS_TYPE_NAME = "CallerParams";
     public static CALL_PARAMS_TYPE_NAME = "CallParams";
     public static CALL_METHOD_NAME = "Call";
 
@@ -33,6 +35,20 @@ export class Caller {
     public getTypeReference(): go.TypeReference {
         return go.typeReference({
             name: Caller.TYPE_NAME,
+            importPath: this.context.getInternalImportPath()
+        });
+    }
+
+    public getConstructorTypeReference(): go.TypeReference {
+        return go.typeReference({
+            name: Caller.CONSTRUCTOR_FUNC_NAME,
+            importPath: this.context.getInternalImportPath()
+        });
+    }
+
+    public getCallerParamsTypeReference(): go.TypeReference {
+        return go.typeReference({
+            name: Caller.CALLER_PARAMS_TYPE_NAME,
             importPath: this.context.getInternalImportPath()
         });
     }
@@ -55,10 +71,24 @@ export class Caller {
         });
     }
 
-    public instantiate({ fields }: { fields: go.StructField[] }): go.AstNode {
-        return go.TypeInstantiation.structPointer({
-            typeReference: this.getTypeReference(),
-            fields
+    public instantiate({ client, maxAttempts }: { client: go.AstNode; maxAttempts: go.AstNode }): go.AstNode {
+        return go.invokeFunc({
+            func: this.getConstructorTypeReference(),
+            arguments_: [
+                go.TypeInstantiation.structPointer({
+                    typeReference: this.getCallerParamsTypeReference(),
+                    fields: [
+                        {
+                            name: "Client",
+                            value: go.TypeInstantiation.reference(client)
+                        },
+                        {
+                            name: "MaxAttempts",
+                            value: go.TypeInstantiation.reference(maxAttempts)
+                        }
+                    ]
+                })
+            ]
         });
     }
 

@@ -89,7 +89,23 @@ export class RawClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSch
                     go.TypeInstantiation.structPointer({
                         typeReference: this.getClassReference(),
                         fields: [
-                            /* TODO: Add fields */
+                            {
+                                name: "baseURL",
+                                value: go.TypeInstantiation.string("options.BaseURL")
+                            },
+                            {
+                                name: "caller",
+                                value: go.TypeInstantiation.reference(
+                                    this.context.caller.instantiate({
+                                        client: go.TypeInstantiation.string("options.HTTPClient"),
+                                        maxAttempts: go.TypeInstantiation.string("options.MaxAttempts")
+                                    })
+                                )
+                            },
+                            {
+                                name: "header",
+                                value: go.TypeInstantiation.string("options.ToHeader()")
+                            }
                         ]
                     })
                 );
