@@ -26,7 +26,7 @@ public final class Stream<T> implements Iterable<T> {
      */
     private final Class<T> valueType;
     /**
-     * The {@link Scanner} used for reading from the input stream and blocking when neede during iteration.
+     * The {@link Scanner} used for reading from the input stream and blocking when needed during iteration.
      */
     private final Scanner scanner;
 
