@@ -22,7 +22,8 @@ export function generateIr({ req, options }: { req: CodeGeneratorRequest; option
         breadcrumbs: [],
         context: new ProtobufConverterContext({
             spec: req,
-            settings: undefined,
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            settings: {} as any,
             errorCollector: new ErrorCollector({
                 logger: {
                     log: (level, ...args) => {}
