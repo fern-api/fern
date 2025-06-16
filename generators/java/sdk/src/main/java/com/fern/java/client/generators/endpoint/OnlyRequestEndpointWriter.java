@@ -34,7 +34,6 @@ import com.fern.java.output.GeneratedObjectMapper;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
-
 import okhttp3.Headers;
 import okhttp3.MediaType;
 import okhttp3.Request;
