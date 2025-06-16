@@ -70,6 +70,7 @@ export declare namespace ExpressGenerator {
         requestValidationStatusCode: number;
         useBigInt: boolean;
         noOptionalProperties: boolean;
+        packagePath: string | undefined;
     }
 }
 
@@ -118,7 +119,7 @@ export class ExpressGenerator {
         this.npmPackage = npmPackage;
         this.config = config;
 
-        this.exportsManager = new ExportsManager({});
+        this.exportsManager = new ExportsManager({ packagePath: config.packagePath });
         this.coreUtilitiesManager = new CoreUtilitiesManager({});
 
         this.project = new Project({

@@ -945,7 +945,8 @@ export class SdkGenerator {
                     endpointSnippets: this.endpointSnippets
                 });
                 sourceFile.replaceWithText(readmeContent);
-            }
+            },
+            packagePath: "/"
         });
     }
 
@@ -959,7 +960,8 @@ export class SdkGenerator {
                 const context = this.generateSdkContext({ sourceFile, importsManager });
                 const referenceContent = await this.generatorAgent.generateReference(this.referenceConfigBuilder);
                 sourceFile.replaceWithText(referenceContent);
-            }
+            },
+            packagePath: "/"
         });
     }
 

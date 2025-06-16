@@ -20,6 +20,8 @@ import { assertNever } from "@fern-api/core-utils";
 import * as IR from "@fern-fern/ir-sdk/api";
 import { ExampleRequestBody } from "@fern-fern/ir-sdk/api";
 
+const DEFAULT_PACKAGE_PATH = "src";
+
 export declare namespace JestTestGenerator {
     interface Args {
         ir: IR.IntermediateRepresentation;
@@ -143,15 +145,24 @@ export class JestTestGenerator {
     }
 
     public get extraFiles(): Record<string, string> {
+        const pathToRoot =
+            this.relativePackagePath === DEFAULT_PACKAGE_PATH
+                ? "../"
+                : "../".repeat(this.relativePackagePath.split("/").length + 1);
+
+        const extendsPath = `${pathToRoot}tsconfig.base.json`;
+
+        const includePaths = [`${pathToRoot}${this.relativePackagePath}`, `${pathToRoot}${this.relativeTestPath}`];
+
         return {
             [`${this.relativeTestPath}/tsconfig.json`]: `{
-    "extends": "../tsconfig.base.json",
+    "extends": "${extendsPath}",
     "compilerOptions": {
         "outDir": null,
         "rootDir": "..",
         "baseUrl": ".."
     },
-    "include": ["../${this.relativePackagePath}", "../${this.relativeTestPath}"],
+    "include": ${JSON.stringify(includePaths)},
     "exclude": []
 }`,
             [`${this.relativeTestPath}/custom.test.ts`]: `
