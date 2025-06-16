@@ -5,6 +5,9 @@ import (
     http "net/http"
     option "github.com/idempotency-headers/fern/option"
     core "github.com/idempotency-headers/fern/core"
+    context "context"
+    fern "github.com/idempotency-headers/fern"
+    uuid "github.com/google/uuid"
 )
 
 type RawClient struct {
@@ -28,3 +31,20 @@ func NewRawClient(opts ...option.RequestOption) *RawClient {
         header: options.ToHeader(),
     }
 }
+
+func (r RawClient) Create(
+ctx context.Context,
+request *fern.CreatePaymentRequest,
+opts option.RequestOption,
+)(uuid.UUID, error) {
+    return nil
+}
+
+func (r RawClient) Delete(
+ctx context.Context,
+paymentId string,
+opts option.RequestOption,
+)(error) {
+    return nil
+}
+

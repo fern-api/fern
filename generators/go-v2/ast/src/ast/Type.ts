@@ -11,6 +11,7 @@ type InternalType =
     | Float64
     | Date
     | DateTime
+    | Error_
     | Int
     | Int64
     | Map
@@ -39,6 +40,10 @@ interface Float64 {
 
 interface Date {
     type: "date";
+}
+
+interface Error_ {
+    type: "error";
 }
 
 interface DateTime {
@@ -108,6 +113,9 @@ export class Type extends AstNode {
             case "date":
             case "dateTime":
                 writer.writeNode(TimeTypeReference);
+                break;
+            case "error":
+                writer.write("error");
                 break;
             case "float64":
                 writer.write("float64");
@@ -184,6 +192,12 @@ export class Type extends AstNode {
     public static dateTime(): Type {
         return new this({
             type: "dateTime"
+        });
+    }
+
+    public static error(): Type {
+        return new this({
+            type: "error"
         });
     }
 

@@ -28,15 +28,20 @@ export abstract class AbstractEndpointGenerator {
         const { pathParameters, pathParameterReferences } = this.getAllPathParameters({ serviceId, endpoint });
         const request = getEndpointRequest({ context: this.context, endpoint, serviceId, service });
         const requestParameter = request != null ? this.getRequestParameter({ request }) : undefined;
+        const allParameters = [
+            this.context.getContextParameter(),
+            ...pathParameters,
+            requestParameter,
+            this.context.getVariadicRequestOptionParameter()
+        ].filter((p): p is go.Parameter => p != null);
+        const returnType = getEndpointReturnType({ context: this.context, endpoint });
         return {
-            allParameters: [this.context.getContextTypeReference(), ...pathParameters, requestParameter].filter(
-                (p): p is go.Parameter => p != null
-            ),
+            allParameters,
             pathParameters,
             pathParameterReferences,
             request,
             requestParameter,
-            returnType: getEndpointReturnType({ context: this.context, endpoint })
+            returnType: returnType != null ? [returnType, go.Type.error()] : [go.Type.error()]
         };
     }
 

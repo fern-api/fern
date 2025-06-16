@@ -8,5 +8,5 @@ export interface EndpointSignatureInfo {
     pathParameterReferences: Record<string, string>;
     request: EndpointRequest | undefined;
     requestParameter: go.Parameter | undefined;
-    returnType: go.Type | undefined;
+    returnType: go.Type[];
 }

@@ -10,6 +10,7 @@ import {
     HttpMethod,
     IntermediateRepresentation,
     Name,
+    SdkRequestBodyType,
     SdkRequestWrapper,
     ServiceId,
     Subpackage
@@ -63,6 +64,10 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
 
     public getRawClientFilename(): string {
         return "raw_client.go";
+    }
+
+    public getMethodName(name: Name): string {
+        return name.pascalCase.unsafeName;
     }
 
     public getRootClientDirectory(): RelativeFilePath {
@@ -130,6 +135,20 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         return false;
     }
 
+    public getContextParameter(): go.Parameter {
+        return go.parameter({
+            name: "ctx",
+            type: go.Type.reference(this.getContextTypeReference())
+        });
+    }
+
+    public getVariadicRequestOptionParameter(): go.Parameter {
+        return go.parameter({
+            name: "opts",
+            type: go.Type.reference(this.getRequestOptionTypeReference())
+        });
+    }
+
     public getVariadicRequestOptionType(): go.Type {
         return go.Type.variadic(go.Type.reference(this.getRequestOptionTypeReference()));
     }
@@ -166,9 +185,51 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         });
     }
 
+    public getEndpointRequestType({
+        endpoint,
+        serviceId
+    }: {
+        endpoint: HttpEndpoint;
+        serviceId: ServiceId;
+    }): go.Type | undefined {
+        const sdkRequest = endpoint.sdkRequest;
+        if (sdkRequest == null) {
+            return undefined;
+        }
+        switch (sdkRequest.shape.type) {
+            case "justRequestBody":
+                return this.getEndpointRequestBodyType(sdkRequest.shape.value);
+            case "wrapper": {
+                const location = this.getLocationForWrappedRequest(serviceId);
+                return go.Type.pointer(
+                    go.Type.reference(
+                        go.typeReference({
+                            name: this.getClassName(sdkRequest.shape.wrapperName),
+                            importPath: location.importPath
+                        })
+                    )
+                );
+            }
+            default:
+                assertNever(sdkRequest.shape);
+        }
+    }
+
+    private getEndpointRequestBodyType(requestBodyType: SdkRequestBodyType): go.Type {
+        switch (requestBodyType.type) {
+            case "typeReference":
+                return this.goTypeMapper.convert({ reference: requestBodyType.requestBodyType });
+            case "bytes": {
+                return go.Type.reference(this.getIoReaderTypeReference());
+            }
+            default:
+                assertNever(requestBodyType);
+        }
+    }
+
     private getLocationForWrappedRequest(serviceId: ServiceId): FileLocation {
         const httpService = this.getHttpServiceOrThrow(serviceId);
-        return this.getFileLocation(httpService.name.fernFilepath);
+        return this.getPackageLocation(httpService.name.fernFilepath);
     }
 
     public shouldSkipWrappedRequest({

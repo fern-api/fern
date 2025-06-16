@@ -45,6 +45,7 @@ export class SubPackageClientGenerator extends FileGenerator<GoFile, SdkCustomCo
                 const methods = this.context.endpointGenerator.generate({
                     serviceId: this.serviceId,
                     service: this.service,
+                    subpackage: this.subpackage,
                     endpoint
                 });
                 for (const method of methods) {

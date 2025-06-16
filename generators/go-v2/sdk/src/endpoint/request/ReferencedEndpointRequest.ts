@@ -33,7 +33,6 @@ export class ReferencedEndpointRequest extends EndpointRequest {
     }
 
     public getHeaderParameterCodeBlock(): HeaderParameterCodeBlock | undefined {
-        // TODO: Implement this.
         return undefined;
     }
 

@@ -51,6 +51,7 @@ export class RawClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSch
             const methods = this.context.endpointGenerator.generateRaw({
                 serviceId: this.serviceId,
                 service: this.service,
+                subpackage: this.subpackage,
                 endpoint
             });
             struct.addMethod(...methods);

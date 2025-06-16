@@ -268,7 +268,15 @@ export abstract class AbstractGoGeneratorContext<
     }
 
     protected getFileLocation(filepath: FernFilepath, suffix?: string): FileLocation {
-        let parts = filepath.allParts.map((path) => path.pascalCase.safeName.toLowerCase());
+        return this.getLocation(filepath.allParts, suffix);
+    }
+
+    protected getPackageLocation(filepath: FernFilepath, suffix?: string): FileLocation {
+        return this.getLocation(filepath.packagePath, suffix);
+    }
+
+    private getLocation(names: Name[], suffix?: string): FileLocation {
+        let parts = names.map((name) => name.pascalCase.safeName.toLowerCase());
         parts = suffix != null ? [...parts, suffix] : parts;
         return {
             importPath: [this.getRootImportPath(), ...parts].join("/"),
