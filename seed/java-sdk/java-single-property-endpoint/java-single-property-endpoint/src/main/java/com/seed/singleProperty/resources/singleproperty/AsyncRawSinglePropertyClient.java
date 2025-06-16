@@ -47,7 +47,7 @@ public class AsyncRawSinglePropertyClient {
             QueryStringMapper.addQueryParameter(
                     httpUrl,
                     "include-remote-data",
-                    request.getIncludeRemoteData().get().toString(),
+                    request.getIncludeRemoteData().get(),
                     false);
         }
         Request.Builder _requestBuilder = new Request.Builder()

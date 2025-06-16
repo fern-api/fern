@@ -73,15 +73,15 @@ public class RawUsersClient {
                 .addPathSegments("users");
         if (request.getPage().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "page", request.getPage().get().toString(), false);
+                    httpUrl, "page", request.getPage().get(), false);
         }
         if (request.getPerPage().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "per_page", request.getPerPage().get().toString(), false);
+                    httpUrl, "per_page", request.getPerPage().get(), false);
         }
         if (request.getOrder().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "order", request.getOrder().get().toString(), false);
+                    httpUrl, "order", request.getOrder().get(), false);
         }
         if (request.getStartingAfter().isPresent()) {
             QueryStringMapper.addQueryParameter(
@@ -272,15 +272,15 @@ public class RawUsersClient {
                 .addPathSegments("users");
         if (request.getPage().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "page", request.getPage().get().toString(), false);
+                    httpUrl, "page", request.getPage().get(), false);
         }
         if (request.getPerPage().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "per_page", request.getPerPage().get().toString(), false);
+                    httpUrl, "per_page", request.getPerPage().get(), false);
         }
         if (request.getOrder().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "order", request.getOrder().get().toString(), false);
+                    httpUrl, "order", request.getOrder().get(), false);
         }
         if (request.getStartingAfter().isPresent()) {
             QueryStringMapper.addQueryParameter(
@@ -342,15 +342,15 @@ public class RawUsersClient {
                 .addPathSegments("users");
         if (request.getPage().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "page", request.getPage().get().toString(), false);
+                    httpUrl, "page", request.getPage().get(), false);
         }
         if (request.getPerPage().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "per_page", request.getPerPage().get().toString(), false);
+                    httpUrl, "per_page", request.getPerPage().get(), false);
         }
         if (request.getOrder().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "order", request.getOrder().get().toString(), false);
+                    httpUrl, "order", request.getOrder().get(), false);
         }
         if (request.getStartingAfter().isPresent()) {
             QueryStringMapper.addQueryParameter(
@@ -481,15 +481,15 @@ public class RawUsersClient {
                 .addPathSegments("users");
         if (request.getPage().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "page", request.getPage().get().toString(), false);
+                    httpUrl, "page", request.getPage().get(), false);
         }
         if (request.getLimit().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "limit", request.getLimit().get().toString(), false);
+                    httpUrl, "limit", request.getLimit().get(), false);
         }
         if (request.getOrder().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "order", request.getOrder().get().toString(), false);
+                    httpUrl, "order", request.getOrder().get(), false);
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
@@ -547,15 +547,15 @@ public class RawUsersClient {
                 .addPathSegments("users");
         if (request.getPage().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "page", request.getPage().get().toString(), false);
+                    httpUrl, "page", request.getPage().get(), false);
         }
         if (request.getLimit().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "limit", request.getLimit().get().toString(), false);
+                    httpUrl, "limit", request.getLimit().get(), false);
         }
         if (request.getOrder().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "order", request.getOrder().get().toString(), false);
+                    httpUrl, "order", request.getOrder().get(), false);
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
@@ -613,7 +613,7 @@ public class RawUsersClient {
                 .addPathSegments("users");
         if (request.getCursor().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "cursor", request.getCursor().get().toString(), false);
+                    httpUrl, "cursor", request.getCursor().get(), false);
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
@@ -671,7 +671,7 @@ public class RawUsersClient {
                 .addPathSegments("users");
         if (request.getCursor().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "cursor", request.getCursor().get().toString(), false);
+                    httpUrl, "cursor", request.getCursor().get(), false);
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
@@ -785,7 +785,7 @@ public class RawUsersClient {
                 .addPathSegments("users");
         if (request.getOffset().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "offset", request.getOffset().get().toString(), false);
+                    httpUrl, "offset", request.getOffset().get(), false);
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())

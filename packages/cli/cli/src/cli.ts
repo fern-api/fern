@@ -503,6 +503,11 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                         "Throw an error (rather than logging a warning) if there are broken links in the docs.",
                     default: false
                 })
+                .option("disable-snippets", {
+                    boolean: true,
+                    description: "Disable snippets in docs generation.",
+                    default: false
+                })
                 .option("runner", {
                     choices: ["docker", "podman"],
                     description: "Choose the container runtime to use for local generation.",
@@ -553,7 +558,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     instance: argv.instance,
                     preview: argv.preview,
                     brokenLinks: argv.brokenLinks,
-                    strictBrokenLinks: argv.strictBrokenLinks
+                    strictBrokenLinks: argv.strictBrokenLinks,
+                    disableTemplates: argv.disableSnippets
                 });
             }
             // default to loading api workspace to preserve legacy behavior

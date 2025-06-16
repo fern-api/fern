@@ -5,7 +5,7 @@ import { Project } from "@fern-api/project-loader";
 import { CliContext } from "../../cli-context/CliContext";
 import { validateDocsWorkspaceWithoutExiting } from "../validate/validateDocsWorkspaceAndLogIssues";
 
-const legacyPin = ["cohere", "devrev", "deriv"];
+const legacyPin = ["devrev"];
 
 export async function previewDocsWorkspace({
     loadProject,
