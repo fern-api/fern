@@ -36,26 +36,48 @@ export declare namespace CoreUtilitiesManager {
         interface Args {
             sourceFile: SourceFile;
             importsManager: ImportsManager;
+            exportsManager: ExportsManager;
+            relativePackagePath: string;
+            relativeTestPath: string;
         }
     }
 }
 
+const DEFAULT_TEST_PATH = "tests";
+
 export class CoreUtilitiesManager {
     private referencedCoreUtilities: Record<CoreUtilityName, CoreUtility.Manifest> = {};
     private authOverrides: Record<RelativeFilePath, string> = {};
+    private relativeTestPath: string;
 
-    public getCoreUtilities({ sourceFile, importsManager }: CoreUtilitiesManager.getCoreUtilities.Args): CoreUtilities {
-        const getReferenceToExport = this.createGetReferenceToExport({ sourceFile, importsManager });
+    constructor({ relativeTestPath = DEFAULT_TEST_PATH }: { relativeTestPath?: string }) {
+        this.relativeTestPath = relativeTestPath;
+    }
+
+    public getCoreUtilities({
+        sourceFile,
+        importsManager,
+        exportsManager,
+        relativePackagePath,
+        relativeTestPath
+    }: CoreUtilitiesManager.getCoreUtilities.Args): CoreUtilities {
+        const getReferenceToExport = this.createGetReferenceToExport({
+            sourceFile,
+            importsManager,
+            exportsManager,
+            relativePackagePath,
+            relativeTestPath
+        });
         return {
             zurg: new ZurgImpl({ getReferenceToExport }),
-            fetcher: new FetcherImpl({ getReferenceToExport }),
+            fetcher: new FetcherImpl({ getReferenceToExport, packagePath: relativePackagePath }),
             streamUtils: new StreamingUtilsImpl({ getReferenceToExport }),
-            auth: new AuthImpl({ getReferenceToExport }),
+            auth: new AuthImpl({ getReferenceToExport, packagePath: relativePackagePath }),
             base: new BaseCoreUtilitiesImpl({ getReferenceToExport }),
             callbackQueue: new CallbackQueueImpl({ getReferenceToExport }),
             formDataUtils: new FormDataUtilsImpl({ getReferenceToExport }),
             runtime: new RuntimeImpl({ getReferenceToExport }),
-            pagination: new PaginationImpl({ getReferenceToExport }),
+            pagination: new PaginationImpl({ getReferenceToExport, packagePath: relativePackagePath }),
             utils: new UtilsImpl({ getReferenceToExport }),
             websocket: new WebsocketImpl({ getReferenceToExport })
         };
@@ -116,7 +138,7 @@ export class CoreUtilitiesManager {
                 if (utility.unitTests) {
                     const toUnitTestPath = join(
                         pathToRoot,
-                        RelativeFilePath.of("tests/unit"),
+                        RelativeFilePath.of(`${this.relativeTestPath}/unit`),
                         RelativeFilePath.of(utility.name)
                     );
                     await mkdir(toUnitTestPath, { recursive: true });
@@ -174,7 +196,13 @@ export class CoreUtilitiesManager {
         }
     }
 
-    private createGetReferenceToExport({ sourceFile, importsManager }: CoreUtilitiesManager.getCoreUtilities.Args) {
+    private createGetReferenceToExport({
+        sourceFile,
+        importsManager,
+        exportsManager,
+        relativePackagePath,
+        relativeTestPath
+    }: CoreUtilitiesManager.getCoreUtilities.Args) {
         return ({ manifest, exportedName }: { manifest: CoreUtility.Manifest; exportedName: string }) => {
             this.addManifestAndDependencies(manifest);
             return getReferenceToExportViaNamespaceImport({
@@ -183,7 +211,10 @@ export class CoreUtilitiesManager {
                 filepathToNamespaceImport: { directories: this.getCoreUtilitiesFilepath(), file: undefined },
                 namespaceImport: "core",
                 referencedIn: sourceFile,
-                importsManager
+                importsManager,
+                exportsManager,
+                relativePackagePath,
+                relativeTestPath
             });
         };
     }

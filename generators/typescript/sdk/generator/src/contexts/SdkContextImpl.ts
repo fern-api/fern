@@ -1,6 +1,7 @@
 import {
     CoreUtilitiesManager,
     DependencyManager,
+    ExportsManager,
     ExternalDependencies,
     ImportsManager,
     JavaScriptRuntime,
@@ -81,6 +82,7 @@ export declare namespace SdkContextImpl {
         config: FernGeneratorExec.GeneratorConfig;
         sourceFile: SourceFile;
         importsManager: ImportsManager;
+        exportsManager: ExportsManager;
         dependencyManager: DependencyManager;
         coreUtilitiesManager: CoreUtilitiesManager;
         fernConstants: Constants;
@@ -134,6 +136,8 @@ export declare namespace SdkContextImpl {
         allowExtraFields: boolean;
         neverThrowErrors: boolean;
         useBigInt: boolean;
+        relativePackagePath: string;
+        relativeTestPath: string;
     }
 }
 
@@ -177,6 +181,9 @@ export class SdkContextImpl implements SdkContext {
     public readonly omitUndefined: boolean;
     public readonly neverThrowErrors: boolean;
     public readonly importsManager: ImportsManager;
+    public readonly exportsManager: ExportsManager;
+    public readonly relativePackagePath: string;
+    public readonly relativeTestPath: string;
 
     constructor({
         logger,
@@ -223,6 +230,7 @@ export class SdkContextImpl implements SdkContext {
         treatUnknownAsAny,
         sourceFile,
         importsManager,
+        exportsManager,
         dependencyManager,
         coreUtilitiesManager,
         fernConstants,
@@ -236,7 +244,9 @@ export class SdkContextImpl implements SdkContext {
         allowExtraFields,
         useBigInt,
         neverThrowErrors,
-        enableInlineTypes
+        enableInlineTypes,
+        relativePackagePath,
+        relativeTestPath
     }: SdkContextImpl.Init) {
         this.logger = logger;
         this.ir = ir;
@@ -256,13 +266,19 @@ export class SdkContextImpl implements SdkContext {
         this.npmPackage = npmPackage;
         this.neverThrowErrors = neverThrowErrors;
         this.importsManager = importsManager;
+        this.exportsManager = exportsManager;
+        this.relativePackagePath = relativePackagePath;
+        this.relativeTestPath = relativeTestPath;
         this.externalDependencies = createExternalDependencies({
             dependencyManager,
             importsManager
         });
         this.coreUtilities = coreUtilitiesManager.getCoreUtilities({
             sourceFile,
-            importsManager
+            importsManager,
+            exportsManager,
+            relativePackagePath,
+            relativeTestPath
         });
         this.fernConstants = fernConstants;
 
@@ -271,11 +287,13 @@ export class SdkContextImpl implements SdkContext {
             versionGenerator,
             versionDeclarationReferencer,
             importsManager,
+            exportsManager,
             sourceFile
         });
         this.jsonContext = new JsonContextImpl({
             sourceFile,
             importsManager,
+            exportsManager,
             jsonDeclarationReferencer
         });
         this.type = new TypeContextImpl({
@@ -283,6 +301,7 @@ export class SdkContextImpl implements SdkContext {
             isForSnippet,
             sourceFile: this.sourceFile,
             importsManager,
+            exportsManager,
             typeResolver,
             typeDeclarationReferencer,
             typeGenerator,
@@ -300,6 +319,7 @@ export class SdkContextImpl implements SdkContext {
             sourceFile,
             coreUtilities: this.coreUtilities,
             importsManager,
+            exportsManager,
             context: this,
             typeSchemaDeclarationReferencer,
             typeDeclarationReferencer,
@@ -316,6 +336,7 @@ export class SdkContextImpl implements SdkContext {
         this.sdkError = new SdkErrorContextImpl({
             sourceFile,
             importsManager,
+            exportsManager,
             errorDeclarationReferencer,
             sdkErrorGenerator,
             errorResolver
@@ -323,6 +344,7 @@ export class SdkContextImpl implements SdkContext {
         this.sdkErrorSchema = new SdkErrorSchemaContextImpl({
             sourceFile,
             importsManager,
+            exportsManager,
             coreUtilities: this.coreUtilities,
             sdkErrorSchemaDeclarationReferencer,
             errorResolver,
@@ -331,6 +353,7 @@ export class SdkContextImpl implements SdkContext {
         this.endpointErrorUnion = new EndpointErrorUnionContextImpl({
             sourceFile: this.sourceFile,
             importsManager,
+            exportsManager,
             endpointErrorUnionDeclarationReferencer,
             endpointErrorUnionGenerator,
             packageResolver
@@ -341,6 +364,7 @@ export class SdkContextImpl implements SdkContext {
             packageResolver,
             sourceFile: this.sourceFile,
             importsManager,
+            exportsManager,
             includeSerdeLayer,
             retainOriginalCasing,
             inlineFileProperties,
@@ -349,6 +373,7 @@ export class SdkContextImpl implements SdkContext {
         });
         this.sdkInlinedRequestBodySchema = new SdkInlinedRequestBodySchemaContextImpl({
             importsManager,
+            exportsManager,
             packageResolver,
             sourceFile: this.sourceFile,
             sdkInlinedRequestBodySchemaDeclarationReferencer,
@@ -359,11 +384,13 @@ export class SdkContextImpl implements SdkContext {
             sdkEndpointTypeSchemasGenerator,
             sdkEndpointSchemaDeclarationReferencer,
             importsManager,
+            exportsManager,
             sourceFile
         });
         this.sdkClientClass = new SdkClientClassContextImpl({
             sourceFile: this.sourceFile,
             importsManager,
+            exportsManager,
             sdkClientClassDeclarationReferencer,
             sdkClientClassGenerator,
             packageResolver
@@ -371,6 +398,7 @@ export class SdkContextImpl implements SdkContext {
         this.websocketTypeSchema = new WebsocketTypeSchemaContextImpl({
             sourceFile: this.sourceFile,
             importsManager,
+            exportsManager,
             websocketTypeSchemaGenerator,
             packageResolver,
             websocketTypeSchemaDeclarationReferencer
@@ -378,6 +406,7 @@ export class SdkContextImpl implements SdkContext {
         this.websocket = new WebsocketContextImpl({
             sourceFile: this.sourceFile,
             importsManager,
+            exportsManager,
             websocketSocketDeclarationReferencer,
             websocketGenerator,
             includeSerdeLayer,
@@ -386,6 +415,7 @@ export class SdkContextImpl implements SdkContext {
         this.environments = new EnvironmentsContextImpl({
             sourceFile: this.sourceFile,
             importsManager,
+            exportsManager,
             intermediateRepresentation,
             environmentsDeclarationReferencer,
             environmentsGenerator
@@ -393,12 +423,14 @@ export class SdkContextImpl implements SdkContext {
         this.genericAPISdkError = new GenericAPISdkErrorContextImpl({
             sourceFile: this.sourceFile,
             importsManager,
+            exportsManager,
             genericAPISdkErrorDeclarationReferencer,
             genericAPISdkErrorGenerator
         });
         this.timeoutSdkError = new TimeoutSdkErrorContextImpl({
             sourceFile: this.sourceFile,
             importsManager,
+            exportsManager,
             timeoutSdkErrorDeclarationReferencer,
             timeoutSdkErrorGenerator
         });

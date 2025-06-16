@@ -1,3 +1,4 @@
+import { ExportsManager } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
@@ -25,7 +26,8 @@ export function generateHeaders({
     endpoint,
     idempotencyHeaders,
     additionalHeaders = [],
-    additionalSpreadHeaders = []
+    additionalSpreadHeaders = [],
+    exportsManager
 }: {
     context: SdkContext;
     intermediateRepresentation: IntermediateRepresentation;
@@ -36,6 +38,7 @@ export function generateHeaders({
     idempotencyHeaders: HttpHeader[];
     additionalHeaders?: GeneratedHeader[];
     additionalSpreadHeaders?: ts.Expression[];
+    exportsManager: ExportsManager;
 }): ts.Expression {
     const elements: GeneratedHeader[] = [];
 
@@ -86,7 +89,7 @@ export function generateHeaders({
         );
     }
 
-    context.importsManager.addImportFromRoot("src/core/headers.js", {
+    context.importsManager.addImportFromRoot(`${exportsManager.packagePath}/core/headers.js`, {
         namedImports: ["mergeHeaders"]
     });
 
@@ -103,7 +106,7 @@ export function generateHeaders({
         )
     );
     if (onlyDefinedHeaders.length > 0) {
-        context.importsManager.addImportFromRoot("src/core/headers.js", {
+        context.importsManager.addImportFromRoot(`${exportsManager.packagePath}/core/headers.js`, {
             namedImports: ["mergeOnlyDefinedHeaders"]
         });
         mergeHeadersArgs.push(

@@ -3,22 +3,29 @@ import { ts } from "ts-morph";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { CoreUtility } from "../CoreUtility";
-import { MANIFEST as FetcherManifest } from "../fetcher/FetcherImpl";
+import { FetcherImpl } from "../fetcher/FetcherImpl";
 import { Pagination } from "./Pagination";
 
 export class PaginationImpl extends CoreUtility implements Pagination {
-    public readonly MANIFEST = {
-        name: "pagination",
-        repoInfoForTesting: {
-            path: RelativeFilePath.of("generators/typescript/utils/core-utilities/fetcher/src/pagination")
-        },
-        originalPathOnDocker: AbsoluteFilePath.of("/assets/fetcher/pagination"),
-        pathInCoreUtilities: [{ nameOnDisk: "pagination", exportDeclaration: { exportAll: true } }],
-        addDependencies: (): void => {
-            return;
-        },
-        dependsOn: [FetcherManifest]
-    };
+    private readonly fetcherImpl: FetcherImpl;
+    public readonly MANIFEST: CoreUtility.Manifest;
+
+    constructor({ getReferenceToExport, packagePath }: CoreUtility.Init & { packagePath: string }) {
+        super({ getReferenceToExport });
+        this.fetcherImpl = new FetcherImpl({ getReferenceToExport, packagePath });
+        this.MANIFEST = {
+            name: "pagination",
+            repoInfoForTesting: {
+                path: RelativeFilePath.of("generators/typescript/utils/core-utilities/fetcher/src/pagination")
+            },
+            originalPathOnDocker: AbsoluteFilePath.of("/assets/fetcher/pagination"),
+            pathInCoreUtilities: [{ nameOnDisk: "pagination", exportDeclaration: { exportAll: true } }],
+            addDependencies: (): void => {
+                return;
+            },
+            dependsOn: [this.fetcherImpl.MANIFEST]
+        };
+    }
 
     public Page = {
         _getReferenceToType: this.withExportedName(

@@ -1,4 +1,5 @@
 import {
+    ExportsManager,
     Fetcher,
     GetReferenceOpts,
     ImportsManager,
@@ -44,6 +45,7 @@ export declare namespace GeneratedFileUploadEndpointRequest {
         includeSerdeLayer: boolean;
         allowExtraFields: boolean;
         omitUndefined: boolean;
+        exportsManager: ExportsManager;
     }
 }
 
@@ -65,6 +67,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
     private includeSerdeLayer: boolean;
     private allowExtraFields: boolean;
     private omitUndefined: boolean;
+    private exportsManager: ExportsManager;
 
     constructor({
         ir,
@@ -79,7 +82,8 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         importsManager,
         includeSerdeLayer,
         allowExtraFields,
-        omitUndefined
+        omitUndefined,
+        exportsManager
     }: GeneratedFileUploadEndpointRequest.Init) {
         this.ir = ir;
         this.service = service;
@@ -93,6 +97,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         this.includeSerdeLayer = includeSerdeLayer;
         this.allowExtraFields = allowExtraFields;
         this.omitUndefined = omitUndefined;
+        this.exportsManager = exportsManager;
         if (
             this.inlineFileProperties ||
             requestBody.properties.some((property) => property.type === "bodyProperty") ||
@@ -366,7 +371,8 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
                         GeneratedFileUploadEndpointRequest.FORM_DATA_REQUEST_OPTIONS_VARIABLE_NAME
                     )
                 })
-            ]
+            ],
+            exportsManager: this.exportsManager
         });
     }
 

@@ -30,6 +30,8 @@ export declare namespace JestTestGenerator {
         generateWireTests: boolean;
         useBigInt: boolean;
         retainOriginalCasing: boolean;
+        relativePackagePath: string;
+        relativeTestPath: string;
     }
 }
 
@@ -42,6 +44,8 @@ export class JestTestGenerator {
     private readonly generateWireTests: boolean;
     private readonly useBigInt: boolean;
     private readonly retainOriginalCasing: boolean;
+    private readonly relativePackagePath: string;
+    private readonly relativeTestPath: string;
 
     constructor({
         ir,
@@ -51,7 +55,9 @@ export class JestTestGenerator {
         writeUnitTests,
         generateWireTests,
         useBigInt,
-        retainOriginalCasing
+        retainOriginalCasing,
+        relativePackagePath,
+        relativeTestPath
     }: JestTestGenerator.Args) {
         this.ir = ir;
         this.dependencyManager = dependencyManager;
@@ -61,6 +67,8 @@ export class JestTestGenerator {
         this.includeSerdeLayer = includeSerdeLayer;
         this.useBigInt = useBigInt;
         this.retainOriginalCasing = retainOriginalCasing;
+        this.relativePackagePath = relativePackagePath;
+        this.relativeTestPath = relativeTestPath;
     }
 
     private addJestConfig(): void {
@@ -94,12 +102,13 @@ export class JestTestGenerator {
         const filename = `${service.name.fernFilepath.file?.camelCase.unsafeName ?? "main"}.test.ts`;
 
         const filePath = path.join("wire", ...folders, filename);
+
         return {
             directories: [],
             file: {
                 nameOnDisk: filePath
             },
-            rootDir: "tests"
+            rootDir: this.relativeTestPath
         };
     }
 
@@ -135,17 +144,17 @@ export class JestTestGenerator {
 
     public get extraFiles(): Record<string, string> {
         return {
-            "tests/tsconfig.json": `{
+            [`${this.relativeTestPath}/tsconfig.json`]: `{
     "extends": "../tsconfig.base.json",
     "compilerOptions": {
         "outDir": null,
         "rootDir": "..",
         "baseUrl": ".."
     },
-    "include": ["../src", "../tests"],
+    "include": ["../${this.relativePackagePath}", "../${this.relativeTestPath}"],
     "exclude": []
 }`,
-            "tests/custom.test.ts": `
+            [`${this.relativeTestPath}/custom.test.ts`]: `
 /**
 * This is a custom test file, if you wish to add more tests
 * to your SDK.
@@ -169,7 +178,7 @@ describe("test", () => {
         serviceGenerator: GeneratedSdkClientClass,
         context: SdkContext
     ): Code | undefined {
-        context.importsManager.addImportFromRoot("tests/mock-server/MockServerPool.js", {
+        context.importsManager.addImportFromRoot(`${this.relativeTestPath}/mock-server/MockServerPool.js`, {
             namedImports: ["mockServerPool"]
         });
         const importStatement = context.sdkClientClass.getReferenceToClientClass({ isRoot: true });

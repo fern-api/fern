@@ -1,4 +1,4 @@
-import { ImportsManager, NpmPackage, Reference, TypeReferenceNode } from "@fern-typescript/commons";
+import { ExportsManager, ImportsManager, NpmPackage, Reference, TypeReferenceNode } from "@fern-typescript/commons";
 import { BaseContext, GeneratedType, GeneratedTypeReferenceExample, TypeContext } from "@fern-typescript/contexts";
 import { TypeResolver } from "@fern-typescript/resolvers";
 import { TypeGenerator } from "@fern-typescript/type-generator";
@@ -25,6 +25,7 @@ export declare namespace TypeContextImpl {
         isForSnippet: boolean;
         sourceFile: SourceFile;
         importsManager: ImportsManager;
+        exportsManager: ExportsManager;
         typeResolver: TypeResolver;
         typeDeclarationReferencer: TypeDeclarationReferencer;
         typeGenerator: TypeGenerator;
@@ -43,6 +44,7 @@ export declare namespace TypeContextImpl {
 export class TypeContextImpl implements TypeContext {
     private sourceFile: SourceFile;
     private importsManager: ImportsManager;
+    private exportsManager: ExportsManager;
     private typeDeclarationReferencer: TypeDeclarationReferencer;
     private typeReferenceToParsedTypeNodeConverter: TypeReferenceToParsedTypeNodeConverter;
     private typeReferenceToStringExpressionConverter: TypeReferenceToStringExpressionConverter;
@@ -60,6 +62,7 @@ export class TypeContextImpl implements TypeContext {
         isForSnippet,
         sourceFile,
         importsManager,
+        exportsManager,
         typeResolver,
         typeDeclarationReferencer,
         typeGenerator,
@@ -77,6 +80,7 @@ export class TypeContextImpl implements TypeContext {
         this.isForSnippet = isForSnippet;
         this.sourceFile = sourceFile;
         this.importsManager = importsManager;
+        this.exportsManager = exportsManager;
         this.typeResolver = typeResolver;
         this.typeDeclarationReferencer = typeDeclarationReferencer;
         this.typeGenerator = typeGenerator;
@@ -153,14 +157,16 @@ export class TypeContextImpl implements TypeContext {
                     packageName: this.npmPackage?.packageName ?? "api"
                 },
                 referencedIn: this.sourceFile,
-                importsManager: this.importsManager
+                importsManager: this.importsManager,
+                exportsManager: this.exportsManager
             });
         } else {
             return this.typeDeclarationReferencer.getReferenceToType({
                 name: typeName,
                 importStrategy: { type: "fromRoot", namespaceImport: this.typeDeclarationReferencer.namespaceExport },
                 referencedIn: this.sourceFile,
-                importsManager: this.importsManager
+                importsManager: this.importsManager,
+                exportsManager: this.exportsManager
             });
         }
     }

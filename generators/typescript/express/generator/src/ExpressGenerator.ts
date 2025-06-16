@@ -8,8 +8,7 @@ import {
     NpmPackage,
     PackageId,
     SimpleTypescriptProject,
-    TypescriptProject,
-    convertExportedFilePathToFilePath
+    TypescriptProject
 } from "@fern-typescript/commons";
 import { GeneratorContext } from "@fern-typescript/contexts";
 import { ExpressEndpointTypeSchemasGenerator } from "@fern-typescript/express-endpoint-type-schemas-generator";
@@ -119,8 +118,8 @@ export class ExpressGenerator {
         this.npmPackage = npmPackage;
         this.config = config;
 
-        this.exportsManager = new ExportsManager();
-        this.coreUtilitiesManager = new CoreUtilitiesManager();
+        this.exportsManager = new ExportsManager({});
+        this.coreUtilitiesManager = new CoreUtilitiesManager({});
 
         this.project = new Project({
             useInMemoryFileSystem: true
@@ -486,7 +485,7 @@ export class ExpressGenerator {
         run: (args: { sourceFile: SourceFile; importsManager: ImportsManager }) => void;
         filepath: ExportedFilePath;
     }) {
-        const filepathStr = convertExportedFilePathToFilePath(filepath);
+        const filepathStr = this.exportsManager.convertExportedFilePathToFilePath(filepath);
         this.context.logger.debug(`Generating ${filepathStr}`);
 
         const sourceFile = this.rootDirectory.createSourceFile(filepathStr);
@@ -545,6 +544,7 @@ export class ExpressGenerator {
             dependencyManager: this.dependencyManager,
             fernConstants: this.intermediateRepresentation.constants,
             importsManager,
+            exportsManager: this.exportsManager,
             typeResolver: this.typeResolver,
             typeDeclarationReferencer: this.typeDeclarationReferencer,
             typeSchemaDeclarationReferencer: this.typeSchemaDeclarationReferencer,

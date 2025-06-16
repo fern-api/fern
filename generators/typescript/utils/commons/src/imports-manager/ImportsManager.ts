@@ -25,6 +25,9 @@ export class ImportsManager {
     public addImportFromRoot(modulePath: string, importDeclaration: ImportDeclaration): void {
         this.addImport(`@root/${modulePath}`, importDeclaration);
     }
+    public addImportFromSrc(modulePath: string, importDeclaration: ImportDeclaration): void {
+        this.addImport(`@src/${modulePath}`, importDeclaration);
+    }
 
     public addImport(moduleSpecifier: ModuleSpecifier, importDeclaration: ImportDeclaration): void {
         const importsForModuleSpecifier = (this.imports[moduleSpecifier] ??= {

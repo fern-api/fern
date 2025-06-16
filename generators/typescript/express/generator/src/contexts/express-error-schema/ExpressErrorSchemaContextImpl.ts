@@ -1,4 +1,4 @@
-import { ImportsManager, Reference, Zurg } from "@fern-typescript/commons";
+import { ExportsManager, ImportsManager, Reference, Zurg } from "@fern-typescript/commons";
 import { CoreUtilities } from "@fern-typescript/commons/src/core-utilities/CoreUtilities";
 import { ExpressErrorSchemaContext, GeneratedExpressErrorSchema } from "@fern-typescript/contexts";
 import { ExpressErrorSchemaGenerator } from "@fern-typescript/express-error-schema-generator";
@@ -15,6 +15,7 @@ export declare namespace ExpressErrorSchemaContextImpl {
         sourceFile: SourceFile;
         coreUtilities: CoreUtilities;
         importsManager: ImportsManager;
+        exportsManager: ExportsManager;
         expressErrorSchemaDeclarationReferencer: ExpressErrorDeclarationReferencer;
         expressErrorSchemaGenerator: ExpressErrorSchemaGenerator;
         errorResolver: ErrorResolver;
@@ -25,6 +26,7 @@ export class ExpressErrorSchemaContextImpl implements ExpressErrorSchemaContext 
     private sourceFile: SourceFile;
     private coreUtilities: CoreUtilities;
     private importsManager: ImportsManager;
+    private exportsManager: ExportsManager;
     private expressErrorSchemaDeclarationReferencer: ExpressErrorDeclarationReferencer;
     private expressErrorSchemaGenerator: ExpressErrorSchemaGenerator;
     private errorResolver: ErrorResolver;
@@ -33,6 +35,7 @@ export class ExpressErrorSchemaContextImpl implements ExpressErrorSchemaContext 
         sourceFile,
         coreUtilities,
         importsManager,
+        exportsManager,
         expressErrorSchemaDeclarationReferencer,
         expressErrorSchemaGenerator,
         errorResolver
@@ -40,6 +43,7 @@ export class ExpressErrorSchemaContextImpl implements ExpressErrorSchemaContext 
         this.sourceFile = sourceFile;
         this.coreUtilities = coreUtilities;
         this.importsManager = importsManager;
+        this.exportsManager = exportsManager;
         this.expressErrorSchemaDeclarationReferencer = expressErrorSchemaDeclarationReferencer;
         this.expressErrorSchemaGenerator = expressErrorSchemaGenerator;
         this.errorResolver = errorResolver;
@@ -55,6 +59,7 @@ export class ExpressErrorSchemaContextImpl implements ExpressErrorSchemaContext 
                     useDynamicImport: true
                 }),
                 importsManager: this.importsManager,
+                exportsManager: this.exportsManager,
                 referencedIn: this.sourceFile
             })
             .getExpression();
@@ -74,7 +79,8 @@ export class ExpressErrorSchemaContextImpl implements ExpressErrorSchemaContext 
             name: errorName,
             importStrategy: getSchemaImportStrategy({ useDynamicImport: false }),
             referencedIn: this.sourceFile,
-            importsManager: this.importsManager
+            importsManager: this.importsManager,
+            exportsManager: this.exportsManager
         });
     }
 }

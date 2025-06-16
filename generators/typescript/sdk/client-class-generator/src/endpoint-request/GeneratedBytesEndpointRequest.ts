@@ -1,4 +1,5 @@
 import {
+    ExportsManager,
     Fetcher,
     GetReferenceOpts,
     ImportsManager,
@@ -36,6 +37,7 @@ export declare namespace GeneratedBytesEndpointRequest {
         generatedSdkClientClass: GeneratedSdkClientClassImpl;
         targetRuntime: JavaScriptRuntime;
         retainOriginalCasing: boolean;
+        exportsManager: ExportsManager;
     }
 }
 
@@ -51,6 +53,7 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
     private generatedSdkClientClass: GeneratedSdkClientClassImpl;
     private targetRuntime: JavaScriptRuntime;
     private retainOriginalCasing: boolean;
+    private exportsManager: ExportsManager;
 
     constructor({
         ir,
@@ -60,7 +63,8 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
         requestBody,
         generatedSdkClientClass,
         targetRuntime,
-        retainOriginalCasing
+        retainOriginalCasing,
+        exportsManager
     }: GeneratedBytesEndpointRequest.Init) {
         this.ir = ir;
         this.service = service;
@@ -69,6 +73,7 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
         this.generatedSdkClientClass = generatedSdkClientClass;
         this.targetRuntime = targetRuntime;
         this.retainOriginalCasing = retainOriginalCasing;
+        this.exportsManager = exportsManager;
 
         if (this.endpoint.sdkRequest == null) {
             throw new Error("SdkRequest is not defined for bytes endpoint");
@@ -224,7 +229,8 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
             idempotencyHeaders: this.ir.idempotencyHeaders,
             generatedSdkClientClass: this.generatedSdkClientClass,
             service: this.service,
-            endpoint: this.endpoint
+            endpoint: this.endpoint,
+            exportsManager: this.exportsManager
         });
     }
 
