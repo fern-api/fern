@@ -61,15 +61,11 @@ function convertServicesIr(
 function convertServiceIr(service: IrVersions.V59.http.HttpService): IrVersions.V58.http.HttpService {
     return {
         ...service,
-        endpoints: convertEndpointsIr(service.endpoints)
+        endpoints: service.endpoints.map(convertEndpointIr)
     };
 }
 
-function convertEndpointsIr(endpoints: IrVersions.V59.http.HttpEndpoint[]): IrVersions.V58.http.HttpEndpoint[] {
-    return endpoints.map(convertEndpointIr);
-}
-
-function convertEndpointIr(endpoint: IrVersions.V59.http.HttpEndpoint): IrVersions.V58.http.HttpEndpoint | undefined {
+function convertEndpointIr(endpoint: IrVersions.V59.http.HttpEndpoint): IrVersions.V58.http.HttpEndpoint {
     switch (endpoint.requestBody?.type) {
         case "fileUpload": {
             const newEndpoint: IrVersions.V58.http.HttpEndpoint = {
