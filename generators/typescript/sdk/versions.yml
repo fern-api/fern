@@ -5,6 +5,7 @@
     - summary: |
         Allow users to specify the path they'd like to generate the SDK to.
 
+        Here's an example of how to implement this in generators.yml:
         ```yml
         # In generators.yml
         groups:
