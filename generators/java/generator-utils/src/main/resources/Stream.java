@@ -126,7 +126,7 @@ public final class Stream<T> implements Iterable<T> {
                         if (streamType == StreamType.SSE) {
                             String line = scanner.next();
                             while (scanner.hasNext()) {
-                                if (!line.contains(options.prefix)) {
+                                if (!line.startsWith(options.prefix)) {
                                     line = scanner.next();
                                 } else {
                                     break;
