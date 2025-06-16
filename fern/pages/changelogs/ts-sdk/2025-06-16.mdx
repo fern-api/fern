@@ -1,3 +1,14 @@
 ## 1.6.0
-**`(feat):`** Allow users to specify the path they'd like to generate the SDK to
+**`(feat):`** Allow users to specify the path they'd like to generate the SDK to.
+
+```yml
+# In generators.yml
+groups:
+  ts-sdk:
+    generators:
+      - name: fernapi/fern-typescript-node-sdk
+        config:
+          packagePath: src/package-path
+```
+
 
