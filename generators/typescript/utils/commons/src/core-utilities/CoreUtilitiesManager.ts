@@ -31,6 +31,8 @@ export declare namespace CoreUtilitiesManager {
     }
 }
 
+const PATH_ON_CONTAINER = "/assets/core-utilities";
+
 export class CoreUtilitiesManager {
     private referencedCoreUtilities: Record<CoreUtilityName, CoreUtility.Manifest> = {};
     private authOverrides: Record<RelativeFilePath, string> = {};
@@ -80,7 +82,6 @@ export class CoreUtilitiesManager {
         pathToSrc: AbsoluteFilePath;
         pathToRoot: AbsoluteFilePath;
     }): Promise<void> {
-        const pathOnContainer = "/assets/core-utilities";
         const files = new Set(
             await Promise.all(
                 Object.entries(this.referencedCoreUtilities).map(async ([_, utility]) => {
@@ -89,7 +90,7 @@ export class CoreUtilitiesManager {
                     });
                     return await glob(patterns, {
                         ignore,
-                        cwd: pathOnContainer,
+                        cwd: PATH_ON_CONTAINER,
                         nodir: true
                     });
                 })
@@ -99,7 +100,7 @@ export class CoreUtilitiesManager {
         // Copy each file to the destination preserving the directory structure
         await Promise.all(
             Array.from(files).map(async (file) => {
-                const sourcePath = path.join(pathOnContainer, file);
+                const sourcePath = path.join(PATH_ON_CONTAINER, file);
                 const destPath = path.join(pathToRoot, file);
 
                 // Ensure the destination directory exists
