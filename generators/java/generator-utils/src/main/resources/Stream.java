@@ -71,7 +71,7 @@ public final class Stream<T> implements Iterable<T> {
     public Stream(Class<T> valueType, Reader reader, Options options, StreamType streamType) {
         this.streamType = Objects.requireNonNullElse(streamType, StreamType.NEWLINE);
         this.options = Objects.requireNonNullElse(options, new Options(DEFAULT_VALUE_PREFIX, DEFAULT_VALUE_DELIMITER, DEFAULT_VALUE_TERMINATOR));
-        this.scanner = new Scanner(reader).useDelimiter(options.delimiter);
+        this.scanner = new Scanner(reader).useDelimiter(this.options.delimiter);
         this.valueType = valueType;
 
     }
@@ -125,7 +125,7 @@ public final class Stream<T> implements Iterable<T> {
                     try {
                         if (streamType == StreamType.SSE) {
                             String line = scanner.next();
-                            while (true) {
+                            while (scanner.hasNext()) {
                                 if (!line.contains(options.prefix)) {
                                     line = scanner.next();
                                 } else {
