@@ -13,6 +13,7 @@ import { EnvironmentsContext } from "./environments";
 import { GenericAPISdkErrorContext } from "./generic-api-sdk-error";
 import { RequestWrapperContext } from "./request-wrapper";
 import { SdkClientClassContext } from "./sdk-client-class";
+import { SdkClientUtilsContext } from "./sdk-client-utils";
 import { SdkEndpointTypeSchemasContext } from "./sdk-endpoint-type-schemas";
 import { SdkErrorContext } from "./sdk-error";
 import { SdkErrorSchemaContext } from "./sdk-error-schema";
@@ -41,6 +42,7 @@ export interface SdkContext extends BaseContext {
     timeoutSdkError: TimeoutSdkErrorContext;
     requestWrapper: RequestWrapperContext;
     sdkClientClass: SdkClientClassContext;
+    sdkClientUtils: SdkClientUtilsContext;
     websocket: WebsocketClassContext;
     websocketTypeSchema: WebsocketTypeSchemaContext;
     versionContext: VersionContext;

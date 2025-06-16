@@ -3,6 +3,7 @@ export * from "./environments";
 export * from "./generic-api-sdk-error";
 export * from "./request-wrapper";
 export * from "./sdk-client-class";
+export * from "./sdk-client-utils";
 export * from "./sdk-endpoint-type-schemas";
 export * from "./sdk-error";
 export * from "./sdk-error-schema";
