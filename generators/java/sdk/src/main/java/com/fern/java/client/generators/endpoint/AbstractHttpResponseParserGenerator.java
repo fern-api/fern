@@ -616,7 +616,6 @@ public abstract class AbstractHttpResponseParserGenerator {
             String terminator = "[DONE]";
             Object streamType =  streaming.isSse()?0:1;
 
-                // TODO: This is where we construct the Stream class.
             handleSuccessfulResult(
                     httpResponseBuilder,
                     CodeBlock.of(
