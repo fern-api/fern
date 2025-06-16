@@ -12,6 +12,7 @@ import { SdkGeneratorContext } from "./SdkGeneratorContext";
 import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest";
 import { convertIr } from "./utils/convertIr";
 import { WireTestGenerator } from "./wiretest/WireTestGenerator";
+import { RawClientGenerator } from "./raw-client/RawClientGenerator";
 
 export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     protected constructContext({
@@ -49,6 +50,8 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
     }
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
+        this.generateRawClients(context);
+
         if (this.shouldGenerateReadme(context)) {
             try {
                 const endpointSnippets = this.generateSnippets({ context });
@@ -60,7 +63,25 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
                 context.logger.warn("Failed to generate README.md, this is OK.");
             }
         }
+
         await context.project.persist();
+    }
+
+    private generateRawClients(context: SdkGeneratorContext) {
+        for (const subpackage of Object.values(context.ir.subpackages)) {
+            if (!context.shouldGenerateSubpackageClient(subpackage)) {
+                continue;
+            }
+
+            const service = subpackage.service != null ? context.getHttpServiceOrThrow(subpackage.service) : undefined;
+            const subClient = new RawClientGenerator({
+                context,
+                subpackage,
+                serviceId: subpackage.service,
+                service
+            });
+            context.project.addGoFiles(subClient.generate());
+        }
     }
 
     private generateSnippets({ context }: { context: SdkGeneratorContext }): Endpoint[] {

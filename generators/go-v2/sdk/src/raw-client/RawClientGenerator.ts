@@ -82,6 +82,7 @@ export class RawClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSch
                 })
             ],
             body: go.codeblock((writer) => {
+                writer.write("options := ");
                 writer.writeNode(this.context.callNewRequestOptions(go.codeblock("opts...")));
                 writer.newLine();
                 writer.write("return ");
@@ -91,20 +92,40 @@ export class RawClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSch
                         fields: [
                             {
                                 name: "baseURL",
-                                value: go.TypeInstantiation.string("options.BaseURL")
+                                value: go.TypeInstantiation.reference(
+                                    go.selector({
+                                        on: go.codeblock("options"),
+                                        selector: go.codeblock("BaseURL")
+                                    })
+                                )
                             },
                             {
                                 name: "caller",
                                 value: go.TypeInstantiation.reference(
                                     this.context.caller.instantiate({
-                                        client: go.TypeInstantiation.string("options.HTTPClient"),
-                                        maxAttempts: go.TypeInstantiation.string("options.MaxAttempts")
-                                    })
+                                        client: go.TypeInstantiation.reference(
+                                            go.selector({
+                                                on: go.codeblock("options"),
+                                                selector: go.codeblock("HTTPClient")
+                                            })
+                                        ),
+                                        maxAttempts: go.TypeInstantiation.reference(
+                                            go.selector({
+                                                on: go.codeblock("options"),
+                                                selector: go.codeblock("MaxAttempts")
+                                            })
+                                        )
+                                    }),
                                 )
                             },
                             {
                                 name: "header",
-                                value: go.TypeInstantiation.string("options.ToHeader()")
+                                value: go.TypeInstantiation.reference(
+                                    go.selector({
+                                        on: go.codeblock("options"),
+                                        selector: go.codeblock("ToHeader()")
+                                    })
+                                )
                             }
                         ]
                     })
