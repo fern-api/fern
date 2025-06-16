@@ -5,6 +5,7 @@ import { Type } from "@fern-api/ir-sdk";
 import { AbstractConverter } from "@fern-api/v2-importer-commons";
 
 import { ProtofileConverterContext } from "../ProtofileConverterContext";
+import { capitalizeFirstLetter } from "../utils/CapitalizeFirstLetter";
 import { convertFields } from "../utils/ConvertFields";
 import { EnumOrMessageConverter } from "./EnumOrMessageConverter";
 import { OneOfFieldConverter } from "./OneOfFieldConverter";
@@ -52,13 +53,13 @@ export class MessageConverter extends AbstractConverter<ProtofileConverterContex
                     ...inlinedTypes,
                     ...Object.fromEntries(
                         Object.entries(convertedNestedEnumOrMessage.inlinedTypes).map(([key, value]) => [
-                            this.prependParentMessageName(key),
-                            this.context.updateTypeId(value, this.prependParentMessageName(key))
+                            this.prependDelimitedParentMessageName(key),
+                            this.context.updateTypeId(value, this.prependDelimitedParentMessageName(key))
                         ])
                     ),
-                    [this.prependParentMessageName(nestedEnumOrMessage.name)]: this.context.updateTypeId(
+                    [this.prependDelimitedParentMessageName(nestedEnumOrMessage.name)]: this.context.updateTypeId(
                         convertedNestedEnumOrMessage.convertedSchema,
-                        this.prependParentMessageName(nestedEnumOrMessage.name)
+                        this.prependDelimitedParentMessageName(nestedEnumOrMessage.name)
                     )
                 };
             }
@@ -74,25 +75,39 @@ export class MessageConverter extends AbstractConverter<ProtofileConverterContex
             });
             const convertedOneOfField = oneOfFieldConverter.convert();
             if (convertedOneOfField != null) {
-                const converted = {
-                    convertedSchema: {
-                        typeDeclaration: this.createTypeDeclaration({
-                            shape: convertedOneOfField.type,
-                            referencedTypes: convertedOneOfField.referencedTypes,
-                            typeName: this.prependParentMessageName(oneof.name)
-                        }),
-                        audiences: [],
-                        propertiesByAudience: {}
-                    },
-                    inlinedTypes: convertedOneOfField.inlinedTypes
+                const convertedOneOfSchema = {
+                    typeDeclaration: this.createTypeDeclaration({
+                        shape: convertedOneOfField.type,
+                        referencedTypes: convertedOneOfField.referencedTypes,
+                        typeName: this.prependParentMessageName(capitalizeFirstLetter(oneof.name))
+                    }),
+                    audiences: [],
+                    propertiesByAudience: {}
                 };
-                this.context.logger.info("convertedOneOfField\n", JSON.stringify(converted, null, 2));
+
+                const convertedOneOfTypeReference = this.context.convertGrpcReferenceToTypeReference({
+                    typeName: convertedOneOfSchema.typeDeclaration.name.typeId
+                });
+
+                if (convertedOneOfTypeReference.ok === true) {
+                    convertedFields.push({
+                        name: this.context.casingsGenerator.generateNameAndWireValue({
+                            name: oneof.name,
+                            wireValue: oneof.name
+                        }),
+                        valueType: convertedOneOfTypeReference.reference,
+                        docs: undefined,
+                        availability: undefined,
+                        propertyAccess: undefined,
+                        v2Examples: undefined
+                    });
+
+                    inlinedTypes = {
+                        ...inlinedTypes,
+                        [convertedOneOfSchema.typeDeclaration.name.typeId]: convertedOneOfSchema
+                    };
+                }
             }
-
-            // if (convertedOneOfField != null) {
-            //     // populate referenced types with what is referenced if applicable
-
-            // }
         }
 
         return {
@@ -149,7 +164,11 @@ export class MessageConverter extends AbstractConverter<ProtofileConverterContex
         };
     }
 
+    private prependDelimitedParentMessageName(name: string, delimiter: string = "."): string {
+        return `${this.message.name}${delimiter}${name}`;
+    }
+
     private prependParentMessageName(name: string): string {
-        return `${this.message.name}.${name}`;
+        return `${this.message.name}${name}`;
     }
 }

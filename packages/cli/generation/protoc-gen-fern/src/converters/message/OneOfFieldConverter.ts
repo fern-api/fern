@@ -40,7 +40,6 @@ export class OneOfFieldConverter extends AbstractConverter<ProtofileConverterCon
             });
             const field = fieldConverter.convert();
             if (field != null) {
-                this.context.logger.info("field", JSON.stringify(field, null, 2));
                 unionTypes.push({
                     type: field.type,
                     docs: undefined
