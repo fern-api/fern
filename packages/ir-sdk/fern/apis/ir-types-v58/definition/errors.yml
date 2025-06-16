@@ -1,0 +1,37 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: commons.yml
+  types: types.yml
+  examples: examples.yml
+
+types:
+  ErrorDeclaration:
+    extends: commons.WithDocs
+    properties:
+      name: DeclaredErrorName
+      displayName: optional<string>
+      discriminantValue: commons.NameAndWireValue
+      type: optional<types.TypeReference>
+      statusCode: integer
+      examples: list<ExampleError>
+      v2Examples: optional<examples.V2SchemaExamples>
+  ErrorDeclarationDiscriminantValue:
+    union:
+      property: commons.NameAndWireValue
+      statusCode: {}
+  DeclaredErrorName:
+    properties:
+      errorId: commons.ErrorId
+      fernFilepath: commons.FernFilepath
+      name: commons.Name
+  
+  # examples 
+
+  ExampleError:
+    extends:
+      - commons.WithJsonExample
+      - commons.WithDocs
+    properties:
+      name: optional<commons.Name>
+      shape: types.ExampleTypeReference
