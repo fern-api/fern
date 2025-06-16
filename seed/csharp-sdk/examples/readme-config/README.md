@@ -11,6 +11,10 @@ The Seed C# library provides convenient access to the Seed API from C#.
 
 API reference documentation is available [here](https://www.docs.fernapi.com).
 
+## Requirements
+
+This SDK requires:
+
 ## Installation
 
 ```sh

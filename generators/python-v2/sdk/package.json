@@ -35,7 +35,7 @@
     "@fern-fern/generator-exec-sdk": "^0.0.1045",
     "@fern-fern/ir-sdk": "58.2.0",
     "@fern-api/logger": "workspace:*",
-    "@fern-fern/generator-cli-sdk": "0.0.23",
+    "@fern-fern/generator-cli-sdk": "0.0.28",
     "@trivago/prettier-plugin-sort-imports": "^5.2.1",
     "@types/node": "18.15.3",
     "@yarnpkg/esbuild-plugin-pnp": "^3.0.0-rc.14",
