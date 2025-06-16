@@ -48,7 +48,6 @@ public class AsyncRawMigrationClient {
                 .url(httpUrl)
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
                 .addHeader("Accept", "application/json");
         _requestBuilder.addHeader("admin-key-header", request.getAdminKeyHeader());
         Request okhttpRequest = _requestBuilder.build();
