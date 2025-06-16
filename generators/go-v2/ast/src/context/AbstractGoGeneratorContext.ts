@@ -26,6 +26,7 @@ import { IoReaderTypeReference, TimeTypeReference, UuidTypeReference } from "../
 import { BaseGoCustomConfigSchema } from "../custom-config/BaseGoCustomConfigSchema";
 import { resolveRootImportPath } from "../custom-config/resolveRootImportPath";
 import { GoTypeMapper } from "./GoTypeMapper";
+import { GoZeroValueMapper } from "./GoZeroValueMapper";
 
 export interface FileLocation {
     importPath: string;
@@ -37,6 +38,7 @@ export abstract class AbstractGoGeneratorContext<
 > extends AbstractGeneratorContext {
     private rootImportPath: string;
     public readonly goTypeMapper: GoTypeMapper;
+    public readonly goZeroValueMapper: GoZeroValueMapper;
 
     public constructor(
         public readonly ir: IntermediateRepresentation,
@@ -46,6 +48,7 @@ export abstract class AbstractGoGeneratorContext<
     ) {
         super(config, generatorNotificationService);
         this.goTypeMapper = new GoTypeMapper(this);
+        this.goZeroValueMapper = new GoZeroValueMapper(this);
         this.rootImportPath = resolveRootImportPath({
             config: this.config,
             customConfig: this.customConfig
@@ -104,6 +107,20 @@ export abstract class AbstractGoGeneratorContext<
         return go.typeReference({
             name: "Context",
             importPath: "context"
+        });
+    }
+
+    public getZeroTime(): go.TypeInstantiation {
+        return go.TypeInstantiation.struct({
+            typeReference: TimeTypeReference,
+            fields: []
+        });
+    }
+
+    public getZeroUuid(): go.TypeInstantiation {
+        return go.TypeInstantiation.struct({
+            typeReference: UuidTypeReference,
+            fields: []
         });
     }
 
