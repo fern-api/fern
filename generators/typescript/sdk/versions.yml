@@ -1,5 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.6.0
+  changelogEntry:
+    - summary: Allow users to specify the path they'd like to generate the SDK to
+      type: feat
+  createdAt: '2025-06-16'
+  irVersion: 58
+
 - version: 1.5.0
   changelogEntry:
     - summary: Add support for websocket connect methods with path parameters in the TypeScript generator
