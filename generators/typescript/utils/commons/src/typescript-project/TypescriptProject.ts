@@ -31,7 +31,7 @@ export declare namespace TypescriptProject {
 }
 
 export abstract class TypescriptProject {
-    protected static DEFAULT_SRC_DIRECTORY = "test-packagePath" as const;
+    protected static DEFAULT_SRC_DIRECTORY = "src" as const;
     protected static TEST_DIRECTORY = "tests" as const;
     protected static DIST_DIRECTORY = "dist" as const;
     protected static SCRIPTS_DIRECTORY_NAME = "scripts" as const;
