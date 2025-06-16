@@ -70,7 +70,6 @@ public class RawNullableClient {
                 .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
                 .addHeader("Accept", "application/json");
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
