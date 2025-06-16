@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Update CLI for sites pinned to the legacy deployment.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-06-16"
+  version: 0.64.9
+
+- changelogEntry:
+    - summary: |
         Support hot-reloading for changes to OpenRPC specs in local development mode.
       type: fix
   irVersion: 58
