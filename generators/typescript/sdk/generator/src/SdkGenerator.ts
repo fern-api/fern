@@ -141,6 +141,7 @@ export declare namespace SdkGenerator {
         useBigInt: boolean;
         useLegacyExports: boolean;
         generateWireTests: boolean;
+        streamType: "wrapper" | "web";
     }
 }
 
@@ -230,7 +231,9 @@ export class SdkGenerator {
         this.shouldGenerateWebsocketClients = this.config.shouldGenerateWebsocketClients;
 
         this.exportsManager = new ExportsManager();
-        this.coreUtilitiesManager = new CoreUtilitiesManager();
+        this.coreUtilitiesManager = new CoreUtilitiesManager({
+            streamType: this.config.streamType
+        });
 
         this.project = new Project({
             useInMemoryFileSystem: true
@@ -389,7 +392,8 @@ export class SdkGenerator {
             inlineFileProperties: config.inlineFileProperties,
             oauthTokenProviderGenerator: this.oauthTokenProviderGenerator,
             omitUndefined: config.omitUndefined,
-            allowExtraFields: config.allowExtraFields
+            allowExtraFields: config.allowExtraFields,
+            streamType: config.streamType
         });
         this.websocketGenerator = new WebsocketClassGenerator({
             intermediateRepresentation

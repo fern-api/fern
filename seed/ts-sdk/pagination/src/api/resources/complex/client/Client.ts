@@ -38,11 +38,12 @@ export class Complex {
     }
 
     /**
+     * @param {string} index
      * @param {SeedPagination.SearchRequest} request
      * @param {Complex.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.complex.search({
+     *     await client.complex.search("index", {
      *         pagination: {
      *             per_page: 1,
      *             starting_after: "starting_after"
@@ -55,6 +56,7 @@ export class Complex {
      *     })
      */
     public async search(
+        index: string,
         request: SeedPagination.SearchRequest,
         requestOptions?: Complex.RequestOptions,
     ): Promise<core.Page<SeedPagination.Conversation>> {
@@ -66,7 +68,7 @@ export class Complex {
                     url: urlJoin(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
-                        "conversations/search",
+                        `${encodeURIComponent(index)}/conversations/search`,
                     ),
                     method: "POST",
                     headers: mergeHeaders(
@@ -104,7 +106,7 @@ export class Complex {
                         });
                     case "timeout":
                         throw new errors.SeedPaginationTimeoutError(
-                            "Timeout exceeded when calling POST /conversations/search.",
+                            "Timeout exceeded when calling POST /{index}/conversations/search.",
                         );
                     case "unknown":
                         throw new errors.SeedPaginationError({
