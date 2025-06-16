@@ -10,7 +10,6 @@ import { ExportsManager } from "../exports-manager";
 import { ImportsManager } from "../imports-manager";
 import { getReferenceToExportViaNamespaceImport } from "../referencing";
 import { AuthImpl } from "./Auth";
-import { BaseCoreUtilitiesImpl } from "./BaseCoreUtilities";
 import { CallbackQueueImpl } from "./CallbackQueue";
 import { CoreUtilities } from "./CoreUtilities";
 import { CoreUtility, CoreUtilityName } from "./CoreUtility";
@@ -48,7 +47,6 @@ export class CoreUtilitiesManager {
             fetcher: new FetcherImpl({ getReferenceToExport }),
             stream: new StreamImpl({ getReferenceToExport }),
             auth: new AuthImpl({ getReferenceToExport }),
-            baseCoreUtilities: new BaseCoreUtilitiesImpl({ getReferenceToExport }),
             callbackQueue: new CallbackQueueImpl({ getReferenceToExport }),
             formDataUtils: new FormDataUtilsImpl({ getReferenceToExport }),
             runtime: new RuntimeImpl({ getReferenceToExport }),

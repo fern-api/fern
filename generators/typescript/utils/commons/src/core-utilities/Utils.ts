@@ -12,7 +12,7 @@ export const MANIFEST: CoreUtility.Manifest = {
     name: "utils",
     pathInCoreUtilities: { nameOnDisk: "utils", exportDeclaration: { exportAll: true } },
     getFilesPatterns: () => {
-        return { patterns: ["src/core/utils/setObjectProperty.ts", "tests/unit/utils/setObjectProperty.test.ts"] };
+        return { patterns: ["src/core/utils/*.ts", "tests/unit/utils/*.test.ts"] };
     }
 };
 export class UtilsImpl extends CoreUtility implements Utils {

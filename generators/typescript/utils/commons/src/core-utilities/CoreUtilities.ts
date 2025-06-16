@@ -1,5 +1,4 @@
 import { Auth } from "./Auth";
-import { BaseCoreUtilities } from "./BaseCoreUtilities";
 import { CallbackQueue } from "./CallbackQueue";
 import { Fetcher } from "./Fetcher";
 import { FormDataUtils } from "./FormDataUtils";
@@ -16,7 +15,6 @@ export interface CoreUtilities {
     stream: Stream;
     callbackQueue: CallbackQueue;
     auth: Auth;
-    baseCoreUtilities: BaseCoreUtilities;
     formDataUtils: FormDataUtils;
     runtime: Runtime;
     pagination: Pagination;
