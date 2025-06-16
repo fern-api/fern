@@ -1052,14 +1052,18 @@ export class SdkGenerator {
                         useInMemoryFileSystem: true
                     });
                     const sourceFile = project.createSourceFile("snippet-test", undefined, { overwrite: true });
-                    const importsManager = new ImportsManager();
+                    const importsManager = new ImportsManager({
+                        packagePath: this.relativePackagePath
+                    });
                     const endpointContext = this.generateSdkContext(
                         { sourceFile, importsManager },
                         { isForSnippet: true }
                     );
 
                     const clientSourceFile = project.createSourceFile("snippet-client", undefined, { overwrite: true });
-                    const clientImportsManager = new ImportsManager();
+                    const clientImportsManager = new ImportsManager({
+                        packagePath: this.relativePackagePath
+                    });
                     const clientContext = this.generateSdkContext(
                         { sourceFile: clientSourceFile, importsManager: clientImportsManager },
                         { isForSnippet: true }
@@ -1316,7 +1320,9 @@ export class SdkGenerator {
             useInMemoryFileSystem: true
         });
         const sourceFile = project.createSourceFile("snippet");
-        const importsManager = new ImportsManager();
+        const importsManager = new ImportsManager({
+            packagePath: this.relativePackagePath
+        });
         const statements = run({ sourceFile, importsManager });
         if (statements != null) {
             sourceFile.addStatements(statements.map((expression) => getTextOfTsNode(expression)));
@@ -1346,7 +1352,9 @@ export class SdkGenerator {
         this.context.logger.debug(`Generating ${filepathStr}`);
 
         const sourceFile = this.rootDirectory.createSourceFile(filepathStr, undefined, { overwrite });
-        const importsManager = new ImportsManager();
+        const importsManager = new ImportsManager({
+            packagePath: this.relativePackagePath
+        });
 
         run({ sourceFile, importsManager });
 
@@ -1387,7 +1395,9 @@ export class SdkGenerator {
         this.context.logger.debug(`Generating ${filepathStr}`);
         await run({
             sourceFile: this.rootDirectory.createSourceFile(filepathStr, undefined, { overwrite }),
-            importsManager: new ImportsManager()
+            importsManager: new ImportsManager({
+                packagePath: this.relativePackagePath
+            })
         });
         this.context.logger.debug(`Generated ${filepathStr}`);
     }

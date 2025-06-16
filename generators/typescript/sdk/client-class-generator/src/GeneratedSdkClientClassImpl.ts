@@ -221,8 +221,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             inlineFileProperties: this.inlineFileProperties,
                             includeSerdeLayer: this.includeSerdeLayer,
                             allowExtraFields: this.allowExtraFields,
-                            omitUndefined: this.omitUndefined,
-                            exportsManager: this.exportsManager
+                            omitUndefined: this.omitUndefined
                         });
                     } else {
                         return new GeneratedDefaultEndpointRequest({
@@ -869,7 +868,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         const rootHeaders = this.isRoot ? this.getRootHeaders(context) : [];
         const shouldGenerateRootHeaders = this.isRoot && rootHeaders.length > 0;
         if (shouldGenerateRootHeaders) {
-            context.importsManager.addImportFromRoot(`${this.exportsManager.packagePath}/core/headers.js`, {
+            context.importsManager.addImportFromRoot("core/headers.js", {
                 namedImports: ["mergeHeaders"]
             });
             return code`this._options = {

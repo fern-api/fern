@@ -26,8 +26,7 @@ export function generateHeaders({
     endpoint,
     idempotencyHeaders,
     additionalHeaders = [],
-    additionalSpreadHeaders = [],
-    exportsManager
+    additionalSpreadHeaders = []
 }: {
     context: SdkContext;
     intermediateRepresentation: IntermediateRepresentation;
@@ -38,7 +37,6 @@ export function generateHeaders({
     idempotencyHeaders: HttpHeader[];
     additionalHeaders?: GeneratedHeader[];
     additionalSpreadHeaders?: ts.Expression[];
-    exportsManager: ExportsManager;
 }): ts.Expression {
     const elements: GeneratedHeader[] = [];
 
@@ -89,7 +87,7 @@ export function generateHeaders({
         );
     }
 
-    context.importsManager.addImportFromRoot(`${exportsManager.packagePath}/core/headers.js`, {
+    context.importsManager.addImportFromRoot("core/headers.js", {
         namedImports: ["mergeHeaders"]
     });
 
@@ -106,7 +104,7 @@ export function generateHeaders({
         )
     );
     if (onlyDefinedHeaders.length > 0) {
-        context.importsManager.addImportFromRoot(`${exportsManager.packagePath}/core/headers.js`, {
+        context.importsManager.addImportFromRoot("core/headers.js", {
             namedImports: ["mergeOnlyDefinedHeaders"]
         });
         mergeHeadersArgs.push(

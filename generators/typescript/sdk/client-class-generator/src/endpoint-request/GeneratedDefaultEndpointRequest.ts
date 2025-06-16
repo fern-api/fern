@@ -244,8 +244,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
             generatedSdkClientClass: this.generatedSdkClientClass,
             idempotencyHeaders: this.ir.idempotencyHeaders,
             service: this.service,
-            endpoint: this.endpoint,
-            exportsManager: this.exportsManager
+            endpoint: this.endpoint
         });
     }
 

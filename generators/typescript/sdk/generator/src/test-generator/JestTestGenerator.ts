@@ -189,9 +189,13 @@ describe("test", () => {
         serviceGenerator: GeneratedSdkClientClass,
         context: SdkContext
     ): Code | undefined {
-        context.importsManager.addImportFromRoot(`${this.relativeTestPath}/mock-server/MockServerPool.js`, {
-            namedImports: ["mockServerPool"]
-        });
+        context.importsManager.addImportFromRoot(
+            "mock-server/MockServerPool.js",
+            {
+                namedImports: ["mockServerPool"]
+            },
+            this.relativeTestPath
+        );
         const importStatement = context.sdkClientClass.getReferenceToClientClass({ isRoot: true });
 
         const baseOptions: Record<string, Code> = {};
