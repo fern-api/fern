@@ -553,6 +553,10 @@ navigation:
             icon: fa-regular fa-plug
             path: ./pages/docs/api-references/generate-websocket-ref.mdx
             slug: generate-websocket-ref
+          - page: Generate OpenRPC Reference
+            icon: fa-regular fa-diamond
+            path: ./pages/docs/api-references/generate-openrpc-ref.mdx
+            slug: generate-openrpc-ref
 
       - section: Integrations
         slug: integrations
