@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Add configuration option to disable snippets in docs generation, speeding up generation time.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-06-16"
+  version: 0.64.10
+
+- changelogEntry:
+    - summary: |
         Update CLI for sites pinned to the legacy deployment.
       type: fix
   irVersion: 58
