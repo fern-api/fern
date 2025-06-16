@@ -38,7 +38,7 @@ public final class Stream<T> implements Iterable<T> {
      * The type of stream to be interpreted.
      */
     public enum StreamType {
-        SSE, NEWLINE
+        SSE, NDJSON
     }
 
     private String DEFAULT_VALUE_PREFIX = "data: ";
@@ -69,7 +69,7 @@ public final class Stream<T> implements Iterable<T> {
      * @see Options
      */
     public Stream(Class<T> valueType, Reader reader, Options options, StreamType streamType) {
-        this.streamType = Objects.requireNonNullElse(streamType, StreamType.NEWLINE);
+        this.streamType = Objects.requireNonNullElse(streamType, StreamType.NDJSON);
         this.options = Objects.requireNonNullElse(options, new Options(DEFAULT_VALUE_PREFIX, DEFAULT_VALUE_DELIMITER, DEFAULT_VALUE_TERMINATOR));
         this.scanner = new Scanner(reader).useDelimiter(this.options.delimiter);
         this.valueType = valueType;
@@ -132,7 +132,7 @@ public final class Stream<T> implements Iterable<T> {
                                     break;
                                 }
                             }
-                            if (line.contains(options.terminator)) {
+                            if (line.equals(options.terminator)) {
                                 throw new NoSuchElementException();
                             } else {
                                 T parsedResponse = ObjectMappers.JSON_MAPPER.readValue(
