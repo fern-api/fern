@@ -6,7 +6,7 @@ describe("test env compatibility", () => {
             webpack(
                 {
                     mode: "production",
-                    entry: "./../../src/test-packagePath/index.ts",
+                    entry: "./src/test-packagePath/index.ts",
                     module: {
                         rules: [
                             {
