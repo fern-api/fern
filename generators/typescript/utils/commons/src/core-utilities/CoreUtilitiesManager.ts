@@ -1,4 +1,4 @@
-import { cp, mkdir, writeFile, readFile } from "fs/promises";
+import { cp, mkdir, readFile, writeFile } from "fs/promises";
 import { glob } from "glob";
 import path from "path";
 import { SourceFile } from "ts-morph";
@@ -164,10 +164,15 @@ export class CoreUtilitiesManager {
 
                 // Update import paths after copying (customize findAndReplace as needed)
                 if (isCustomPackagePath) {
-                    console.log("Updating import paths for", destPath);
-                    const findAndReplace: Record<string, string> = {
-                        [DEFAULT_PACKAGE_PATH]: this.getPackagePathImport(),
-                        [DEFAULT_TEST_PATH]: this.getTestPathImport()
+                    const findAndReplace: Record<string, { importPath: string; body: string }> = {
+                        [DEFAULT_PACKAGE_PATH]: {
+                            importPath: this.getPackagePathImport(),
+                            body: this.relativePackagePath
+                        },
+                        [DEFAULT_TEST_PATH]: {
+                            importPath: this.getTestPathImport(),
+                            body: this.relativeTestPath
+                        }
                     };
 
                     await this.updateImportPaths(destPath, findAndReplace);
@@ -187,12 +192,34 @@ export class CoreUtilitiesManager {
     }
 
     // Helper to update import paths in a file
-    private async updateImportPaths(filePath: string, findAndReplace: Record<string, string>) {
-        let contents = await readFile(filePath, "utf8");
-        for (const [find, replace] of Object.entries(findAndReplace)) {
-            contents = contents.replaceAll(find, replace);
+    private async updateImportPaths(
+        filePath: string,
+        findAndReplace: Record<string, { importPath: string; body: string }>
+    ) {
+        const contents = await readFile(filePath, "utf8");
+        const lines = contents.split("\n");
+        let hasReplaced = false;
+
+        const updatedLines = lines.map((line) => {
+            let updatedLine = line;
+            for (const [find, { importPath, body }] of Object.entries(findAndReplace)) {
+                if (line.includes(find)) {
+                    if (line.includes("import")) {
+                        updatedLine = updatedLine.replaceAll(find, importPath);
+                        hasReplaced = true;
+                    } else {
+                        updatedLine = updatedLine.replaceAll(find, body);
+                        hasReplaced = true;
+                    }
+                }
+            }
+            return updatedLine;
+        });
+
+        if (hasReplaced) {
+            const updatedContent = updatedLines.join("\n");
+            await writeFile(filePath, updatedContent);
         }
-        await writeFile(filePath, contents);
     }
 
     public addAuthOverride({ filepath, content }: { filepath: RelativeFilePath; content: string }): void {
@@ -211,7 +238,11 @@ export class CoreUtilitiesManager {
         }
     }
 
-    private createGetReferenceToExport({ sourceFile, importsManager, exportsManager }: CoreUtilitiesManager.getCoreUtilities.Args) {
+    private createGetReferenceToExport({
+        sourceFile,
+        importsManager,
+        exportsManager
+    }: CoreUtilitiesManager.getCoreUtilities.Args) {
         return ({ manifest, exportedName }: { manifest: CoreUtility.Manifest; exportedName: string }) => {
             this.addManifestAndDependencies(manifest);
             return getReferenceToExportViaNamespaceImport({
