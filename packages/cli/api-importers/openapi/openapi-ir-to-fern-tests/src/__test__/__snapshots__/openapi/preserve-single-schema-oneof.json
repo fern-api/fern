@@ -1,0 +1,96 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "test": {
+              "auth": false,
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {
+                    "value": "value",
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/test",
+              "request": {
+                "body": "OuterOneOfZero",
+                "content-type": "application/json",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+        "types": {
+          "InnerOneOfValue": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "value": "string",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "OuterOneOfZero": "InnerOneOfValue",
+        },
+      },
+      "rawContents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    test:
+      path: /test
+      method: POST
+      auth: false
+      source:
+        openapi: ../openapi.yml
+      request:
+        body: OuterOneOfZero
+        content-type: application/json
+      examples:
+        - request:
+            value: value
+  source:
+    openapi: ../openapi.yml
+types:
+  OuterOneOfZero: InnerOneOfValue
+  InnerOneOfValue:
+    properties:
+      value: string
+    source:
+      openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "Preserve Single Schema OneOf Test",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Preserve Single Schema OneOf Test
+",
+  },
+}
