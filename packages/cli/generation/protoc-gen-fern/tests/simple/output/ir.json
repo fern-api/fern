@@ -159,6 +159,7 @@
               },
               "typeId": "Outer.Inner",
               "inline": false,
+              "displayName": "innermessage",
               "type": "named"
             }
           }

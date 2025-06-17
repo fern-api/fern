@@ -18,7 +18,13 @@ export class ProtofileConverterContext extends AbstractConverterContext<FileDesc
         return { ok: false };
     }
 
-    public convertGrpcReferenceToTypeReference({ typeName }: { typeName: string }):
+    public convertGrpcReferenceToTypeReference({
+        typeName,
+        displayNameOverride
+    }: {
+        typeName: string;
+        displayNameOverride?: string;
+    }):
         | {
               ok: true;
               reference: TypeReference;
@@ -36,7 +42,7 @@ export class ProtofileConverterContext extends AbstractConverterContext<FileDesc
                 typeId: typeName,
                 default: undefined,
                 inline: false,
-                displayName: undefined
+                displayName: displayNameOverride
             })
         };
     }
