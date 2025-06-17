@@ -6,6 +6,7 @@
   irVersion: 58
   createdAt: "2025-06-17"
   version: 0.64.11
+
 - changelogEntry:
     - summary: |
         Add configuration option to disable snippets in docs generation, speeding up generation time.
