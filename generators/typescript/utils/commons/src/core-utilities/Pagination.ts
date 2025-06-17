@@ -1,7 +1,6 @@
 import { ts } from "ts-morph";
 
 import { CoreUtility } from "./CoreUtility";
-
 import { FetcherImpl } from "./Fetcher";
 
 const DEFAULT_PACKAGE_PATH = "src";
@@ -112,12 +111,4 @@ export class PaginationImpl extends CoreUtility implements Pagination {
                 ts.factory.createTypeReferenceNode(APIResponse.getEntityName(), [response, itemType])
         )
     };
-
-    private getRelativePackagePath(packagePath: string): string {
-        if (packagePath === DEFAULT_PACKAGE_PATH) {
-            return DEFAULT_PACKAGE_PATH;
-        }
-
-        return packagePath;
-    }
 }

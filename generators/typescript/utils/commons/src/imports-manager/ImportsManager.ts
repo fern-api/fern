@@ -34,6 +34,7 @@ export class ImportsManager {
         } else {
             packagePath = this.packagePath ? `${this.packagePath}/` : "";
         }
+
         this.addImport(`@root/${packagePath}${modulePath}`, importDeclaration);
     }
     public addImportFromSrc(modulePath: string, importDeclaration: ImportDeclaration, packagePath?: string): void {
@@ -42,6 +43,7 @@ export class ImportsManager {
         } else {
             packagePath = this.packagePath ? `${this.packagePath}/` : "";
         }
+
         this.addImport(`@src/${packagePath}${modulePath}`, importDeclaration);
     }
 

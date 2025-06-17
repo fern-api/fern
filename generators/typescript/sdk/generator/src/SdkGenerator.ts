@@ -254,12 +254,13 @@ export class SdkGenerator {
         this.typeResolver = new TypeResolver(intermediateRepresentation);
         this.errorResolver = new ErrorResolver(intermediateRepresentation);
         this.packageResolver = new PackageResolver(intermediateRepresentation);
-        
+
         this.exportsManager = new ExportsManager({
             packagePath: this.relativePackagePath
         });
         this.coreUtilitiesManager = new CoreUtilitiesManager({
             streamType: this.config.streamType,
+            relativePackagePath: this.relativePackagePath,
             relativeTestPath: this.relativeTestPath
         });
 

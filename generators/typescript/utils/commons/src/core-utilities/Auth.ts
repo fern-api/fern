@@ -41,7 +41,12 @@ export class AuthImpl extends CoreUtility implements Auth {
                 dependencyManager.addDependency("js-base64", "3.7.7");
             },
             getFilesPatterns: () => {
-                return { patterns: [`${this.getRelativePackagePath()}/core/auth/**`, `${this.getRelativeTestPath()}/unit/auth/**`] };
+                return {
+                    patterns: [
+                        `${this.getRelativePackagePath()}/core/auth/**`,
+                        `${this.getRelativeTestPath()}/unit/auth/**`
+                    ]
+                };
             }
         };
     }
@@ -150,5 +155,4 @@ export class AuthImpl extends CoreUtility implements Auth {
 
         return `${this.packagePath}/tests`;
     }
-
 }

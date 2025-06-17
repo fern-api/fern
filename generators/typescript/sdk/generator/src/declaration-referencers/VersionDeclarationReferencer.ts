@@ -115,9 +115,7 @@ export class VersionDeclarationReferencer extends AbstractDeclarationReferencer 
             namespaceImport: "version",
             importsManager,
             exportsManager,
-            referencedIn: sourceFile,
-            relativePackagePath: this.relativePackagePath,
-            relativeTestPath: this.relativeTestPath
+            referencedIn: sourceFile
         });
     }
 

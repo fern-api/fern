@@ -36,6 +36,7 @@ export declare namespace CoreUtilitiesManager {
 
 const PATH_ON_CONTAINER = "/assets/core-utilities";
 
+const DEFAULT_PACKAGE_PATH = "src";
 const DEFAULT_TEST_PATH = "tests";
 
 export class CoreUtilitiesManager {
@@ -43,10 +44,20 @@ export class CoreUtilitiesManager {
     private authOverrides: Record<RelativeFilePath, string> = {};
     private streamType: "wrapper" | "web";
 
+    private relativePackagePath: string;
     private relativeTestPath: string;
 
-    constructor({ streamType, relativeTestPath = DEFAULT_TEST_PATH }: { streamType: "wrapper" | "web"; relativeTestPath?: string }) {
+    constructor({
+        streamType,
+        relativePackagePath = DEFAULT_PACKAGE_PATH,
+        relativeTestPath = DEFAULT_TEST_PATH
+    }: {
+        streamType: "wrapper" | "web";
+        relativePackagePath?: string;
+        relativeTestPath?: string;
+    }) {
         this.streamType = streamType;
+        this.relativePackagePath = relativePackagePath;
         this.relativeTestPath = relativeTestPath;
     }
 
@@ -105,15 +116,17 @@ export class CoreUtilitiesManager {
     }): Promise<void> {
         const files = new Set(
             await Promise.all(
-                Object.entries(this.referencedCoreUtilities).map(async ([_, utility]) => {
+                Object.entries(this.referencedCoreUtilities).map(async ([name, utility]) => {
                     const { patterns, ignore } = utility.getFilesPatterns({
                         streamType: this.streamType
                     });
-                    return await glob(patterns, {
+
+                    const foundFiles = await glob(patterns, {
                         ignore,
                         cwd: PATH_ON_CONTAINER,
                         nodir: true
                     });
+                    return foundFiles;
                 })
             ).then((results) => results.flat())
         );
@@ -121,8 +134,26 @@ export class CoreUtilitiesManager {
         // Copy each file to the destination preserving the directory structure
         await Promise.all(
             Array.from(files).map(async (file) => {
+                // If the client specified a package path, we need to copy the file to the correct location
+                let destinationFile = file;
+                const isCustomPackagePath = this.relativePackagePath !== DEFAULT_PACKAGE_PATH;
+
+                if (isCustomPackagePath) {
+                    const isPathAlreadyUpdated = file.includes(this.relativePackagePath);
+                    if (!isPathAlreadyUpdated) {
+                        const isTestFile = file.includes(DEFAULT_TEST_PATH);
+                        const isSourceFile = file.includes(DEFAULT_PACKAGE_PATH);
+
+                        if (isTestFile) {
+                            destinationFile = file.replace(DEFAULT_TEST_PATH, this.relativeTestPath);
+                        } else if (isSourceFile) {
+                            destinationFile = file.replace(DEFAULT_PACKAGE_PATH, this.relativePackagePath);
+                        }
+                    }
+                }
+
                 const sourcePath = path.join(PATH_ON_CONTAINER, file);
-                const destPath = path.join(pathToRoot, file);
+                const destPath = path.join(pathToRoot, destinationFile);
 
                 // Ensure the destination directory exists
                 const destDir = path.dirname(destPath);
@@ -183,9 +214,7 @@ export class CoreUtilitiesManager {
                 namespaceImport: "core",
                 referencedIn: sourceFile,
                 importsManager,
-                exportsManager,
-                relativePackagePath,
-                relativeTestPath
+                exportsManager
             });
         };
     }

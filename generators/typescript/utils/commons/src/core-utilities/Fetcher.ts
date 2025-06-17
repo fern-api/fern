@@ -4,9 +4,6 @@ import { DependencyManager, DependencyType } from "../dependency-manager/Depende
 import { CoreUtility } from "./CoreUtility";
 import { MANIFEST as RuntimeManifest } from "./Runtime";
 
-const DEFAULT_PACKAGE_PATH = "src";
-const DEFAULT_TEST_PATH = "tests";
-
 export interface Fetcher {
     readonly Fetcher: {
         Args: {
@@ -175,10 +172,16 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
             dependsOn: [RuntimeManifest],
             getFilesPatterns: (options) => {
                 return {
-                    patterns: [`${this.getRelativePackagePath(packagePath)}/core/fetcher/**`, `${this.getRelativeTestPath(packagePath)}/unit/fetcher/**`],
+                    patterns: [
+                        `${this.getRelativePackagePath(packagePath)}/core/fetcher/**`,
+                        `${this.getRelativeTestPath(packagePath)}/unit/fetcher/**`
+                    ],
                     ignore:
                         options.streamType !== "wrapper"
-                            ? [`${this.getRelativePackagePath(packagePath)}/core/fetcher/stream-wrappers/**`, `${this.getRelativeTestPath(packagePath)}/unit/fetcher/stream-wrappers/**`]
+                            ? [
+                                  `${this.getRelativePackagePath(packagePath)}/core/fetcher/stream-wrappers/**`,
+                                  `${this.getRelativeTestPath(packagePath)}/unit/fetcher/stream-wrappers/**`
+                              ]
                             : undefined
                 };
             }
@@ -496,20 +499,4 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
             )();
         }
     };
-
-    private getRelativePackagePath(packagePath: string): string {
-        if (packagePath === DEFAULT_PACKAGE_PATH) {
-            return DEFAULT_PACKAGE_PATH;
-        }
-
-        return packagePath;
-    }
-
-    private getRelativeTestPath(packagePath: string): string {
-        if (packagePath === DEFAULT_PACKAGE_PATH) {
-            return DEFAULT_TEST_PATH;
-        }
-
-        return `${packagePath}/tests`;
-    }
 }
