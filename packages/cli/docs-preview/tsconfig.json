@@ -9,7 +9,6 @@
     { "path": "../logger" },
     { "path": "../project-loader" },
     { "path": "../register" },
-    { "path": "../task-context" },
-    { "path": "../../../generators/typescript/utils/core-utilities/fetcher"}
+    { "path": "../task-context" }
   ]
 }

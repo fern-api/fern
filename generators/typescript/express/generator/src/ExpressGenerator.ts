@@ -80,6 +80,9 @@ export class ExpressGenerator {
     private npmPackage: NpmPackage;
     private config: ExpressGenerator.Config;
 
+    private defaultSrcDirectory: string;
+    private defaultTestDirectory: string;
+
     private project: Project;
     private rootDirectory: Directory;
     private exportsManager: ExportsManager;
@@ -119,8 +122,14 @@ export class ExpressGenerator {
         this.npmPackage = npmPackage;
         this.config = config;
 
+        this.defaultSrcDirectory = "src";
+        this.defaultTestDirectory = "tests";
+
         this.exportsManager = new ExportsManager({ packagePath: config.packagePath });
-        this.coreUtilitiesManager = new CoreUtilitiesManager({});
+        this.coreUtilitiesManager = new CoreUtilitiesManager({
+            streamType: "wrapper",
+            relativeTestPath: this.getRelativeTestPath()
+        });
 
         this.project = new Project({
             useInMemoryFileSystem: true
@@ -289,7 +298,10 @@ export class ExpressGenerator {
         pathToSrc: AbsoluteFilePath;
         pathToRoot: AbsoluteFilePath;
     }): Promise<void> {
-        await this.coreUtilitiesManager.copyCoreUtilities({ pathToSrc, pathToRoot });
+        await this.coreUtilitiesManager.copyCoreUtilities({
+            pathToSrc,
+            pathToRoot
+        });
     }
 
     private getTypesToGenerate(): Record<TypeId, TypeDeclaration> {
@@ -577,7 +589,37 @@ export class ExpressGenerator {
             useBigInt: this.config.useBigInt,
             enableInlineTypes: false,
             allowExtraFields: this.config.allowExtraFields,
-            omitUndefined: false
+            omitUndefined: false,
+            relativePackagePath: this.getRelativePackagePath(),
+            relativeTestPath: this.getRelativeTestPath()
         });
+    }
+
+    private getRelativePackagePath(): string {
+        if (!this.config.packagePath) {
+            return this.defaultSrcDirectory;
+        }
+
+        let packagePath = this.config.packagePath;
+
+        if (packagePath.startsWith("/")) {
+            packagePath = packagePath.slice(1);
+        }
+
+        if (packagePath.endsWith("/")) {
+            packagePath = packagePath.slice(0, -1);
+        }
+
+        return packagePath;
+    }
+
+    private getRelativeTestPath(): string {
+        const packagePath = this.getRelativePackagePath();
+
+        if (packagePath === this.defaultSrcDirectory) {
+            return this.defaultTestDirectory;
+        }
+
+        return packagePath + "/" + this.defaultTestDirectory;
     }
 }

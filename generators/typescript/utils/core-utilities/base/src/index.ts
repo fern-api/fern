@@ -1,1 +1,0 @@
-export { addNonEnumerableProperty } from "./addNonEnumerableProperty";

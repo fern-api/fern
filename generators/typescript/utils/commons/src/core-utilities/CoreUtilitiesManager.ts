@@ -1,35 +1,26 @@
-import { cp, mkdir, rm, writeFile } from "fs/promises";
+import { cp, mkdir, writeFile } from "fs/promises";
 import { glob } from "glob";
 import path from "path";
 import { SourceFile } from "ts-morph";
 
-import {
-    AbsoluteFilePath,
-    File,
-    FileOrDirectory,
-    RelativeFilePath,
-    dirname,
-    getDirectoryContents,
-    join
-} from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { DependencyManager } from "../dependency-manager/DependencyManager";
-import { ExportedDirectory, ExportsManager } from "../exports-manager";
+import { ExportsManager } from "../exports-manager";
 import { ImportsManager } from "../imports-manager";
 import { getReferenceToExportViaNamespaceImport } from "../referencing";
+import { AuthImpl } from "./Auth";
+import { CallbackQueueImpl } from "./CallbackQueue";
 import { CoreUtilities } from "./CoreUtilities";
 import { CoreUtility, CoreUtilityName } from "./CoreUtility";
-import { AuthImpl } from "./auth/AuthImpl";
-import { BaseCoreUtilitiesImpl } from "./base/BaseCoreUtilitiesImpl";
-import { CallbackQueueImpl } from "./callback-queue/CallbackQueueImpl";
-import { FetcherImpl } from "./fetcher/FetcherImpl";
-import { FormDataUtilsImpl } from "./form-data-utils/FormDataUtilsImpl";
-import { PaginationImpl } from "./pagination/PaginationImpl";
-import { RuntimeImpl } from "./runtime/RuntimeImpl";
-import { StreamingUtilsImpl } from "./stream-utils/StreamUtilsImpl";
-import { UtilsImpl } from "./utils/UtilsImpl";
-import { WebsocketImpl } from "./websocket/WebsocketImpl";
-import { ZurgImpl } from "./zurg/ZurgImpl";
+import { FetcherImpl } from "./Fetcher";
+import { FormDataUtilsImpl } from "./FormDataUtils";
+import { PaginationImpl } from "./Pagination";
+import { RuntimeImpl } from "./Runtime";
+import { StreamImpl } from "./Stream";
+import { UtilsImpl } from "./Utils";
+import { WebsocketImpl } from "./Websocket";
+import { ZurgImpl } from "./Zurg";
 
 export declare namespace CoreUtilitiesManager {
     namespace getCoreUtilities {
@@ -43,14 +34,18 @@ export declare namespace CoreUtilitiesManager {
     }
 }
 
+const PATH_ON_CONTAINER = "/assets/core-utilities";
+
 const DEFAULT_TEST_PATH = "tests";
 
 export class CoreUtilitiesManager {
     private referencedCoreUtilities: Record<CoreUtilityName, CoreUtility.Manifest> = {};
     private authOverrides: Record<RelativeFilePath, string> = {};
+    private streamType: "wrapper" | "web";
     private relativeTestPath: string;
 
-    constructor({ relativeTestPath = DEFAULT_TEST_PATH }: { relativeTestPath?: string }) {
+    constructor({ streamType, relativeTestPath = DEFAULT_TEST_PATH }: { streamType: "wrapper" | "web"; relativeTestPath?: string }) {
+        this.streamType = streamType;
         this.relativeTestPath = relativeTestPath;
     }
 
@@ -68,12 +63,12 @@ export class CoreUtilitiesManager {
             relativePackagePath,
             relativeTestPath
         });
+
         return {
             zurg: new ZurgImpl({ getReferenceToExport }),
             fetcher: new FetcherImpl({ getReferenceToExport, packagePath: relativePackagePath }),
-            streamUtils: new StreamingUtilsImpl({ getReferenceToExport }),
+            stream: new StreamImpl({ getReferenceToExport }),
             auth: new AuthImpl({ getReferenceToExport, packagePath: relativePackagePath }),
-            base: new BaseCoreUtilitiesImpl({ getReferenceToExport }),
             callbackQueue: new CallbackQueueImpl({ getReferenceToExport }),
             formDataUtils: new FormDataUtilsImpl({ getReferenceToExport }),
             runtime: new RuntimeImpl({ getReferenceToExport }),
@@ -85,8 +80,18 @@ export class CoreUtilitiesManager {
 
     public finalize(exportsManager: ExportsManager, dependencyManager: DependencyManager): void {
         for (const utility of Object.values(this.referencedCoreUtilities)) {
-            exportsManager.addExportsForDirectories(this.getPathToUtility(utility));
-            utility.addDependencies?.(dependencyManager);
+            exportsManager.addExportsForDirectories(
+                [
+                    {
+                        nameOnDisk: "core"
+                    },
+                    utility.pathInCoreUtilities
+                ],
+                true
+            );
+            utility.addDependencies?.(dependencyManager, {
+                streamType: this.streamType
+            });
         }
     }
 
@@ -97,86 +102,44 @@ export class CoreUtilitiesManager {
         pathToSrc: AbsoluteFilePath;
         pathToRoot: AbsoluteFilePath;
     }): Promise<void> {
-        await Promise.all(
-            [...Object.entries(this.referencedCoreUtilities)].map(async ([utilityName, utility]) => {
-                const fromPath =
-                    process.env.NODE_ENV === "test"
-                        ? path.join(__dirname, "../../../../..", utility.repoInfoForTesting.path)
-                        : utility.originalPathOnDocker;
-                const toPath = join(
-                    pathToSrc,
-                    ...this.getPathToUtility(utility).map((directory) => RelativeFilePath.of(directory.nameOnDisk))
-                );
-                await cp(fromPath, toPath, {
-                    recursive: true,
-                    filter: (source) => {
-                        if (source.includes("__test__")) {
-                            return false;
-                        }
-                        return true;
-                    }
-                });
-                if (utilityName === "auth") {
-                    // TODO(amckinney): Find a better way to add utility-scoped overrides. The way we designed the
-                    // core utilities manifest is not flexible enough.
-                    for (const [filepath, content] of Object.entries(this.authOverrides)) {
-                        await writeFile(path.join(toPath, filepath), content);
-                    }
-                }
-                if (utility.writeConditionalFiles != null) {
-                    await utility.writeConditionalFiles(toPath);
-                }
-                if (utility.repoInfoForTesting.ignoreGlob != null && process.env.NODE_ENV === "test") {
-                    const filesToDelete = await glob(utility.repoInfoForTesting.ignoreGlob, {
-                        cwd: toPath,
-                        absolute: true
+        const files = new Set(
+            await Promise.all(
+                Object.entries(this.referencedCoreUtilities).map(async ([_, utility]) => {
+                    const { patterns, ignore } = utility.getFilesPatterns({
+                        streamType: this.streamType
                     });
-                    await Promise.all(filesToDelete.map((filepath) => rm(filepath, { recursive: true })));
-                }
+                    return await glob(patterns, {
+                        ignore,
+                        cwd: PATH_ON_CONTAINER,
+                        nodir: true
+                    });
+                })
+            ).then((results) => results.flat())
+        );
 
-                // Copy over unit tests
-                if (utility.unitTests) {
-                    const toUnitTestPath = join(
-                        pathToRoot,
-                        RelativeFilePath.of(`${this.relativeTestPath}/unit`),
-                        RelativeFilePath.of(utility.name)
-                    );
-                    await mkdir(toUnitTestPath, { recursive: true });
+        // Copy each file to the destination preserving the directory structure
+        await Promise.all(
+            Array.from(files).map(async (file) => {
+                const sourcePath = path.join(PATH_ON_CONTAINER, file);
+                const destPath = path.join(pathToRoot, file);
 
-                    const fromUnitTestPath = join(utility.originalPathOnDocker, utility.unitTests.fromDirectory);
-                    const files: { path: AbsoluteFilePath; file: File }[] = [];
-                    const contents = await getDirectoryContents(fromUnitTestPath);
-                    for (const fileOrDirectory of contents) {
-                        this.getAllFiles(fileOrDirectory, toUnitTestPath, files);
-                    }
+                // Ensure the destination directory exists
+                const destDir = path.dirname(destPath);
+                await mkdir(destDir, { recursive: true });
 
-                    for (const file of files) {
-                        await mkdir(dirname(file.path), { recursive: true });
-                        let contents = file.file.contents;
-                        for (const [find, replace] of Object.entries(utility.unitTests.findAndReplace)) {
-                            contents = contents.replaceAll(find, replace);
-                        }
-                        await writeFile(file.path, contents);
-                    }
-                }
+                // Copy the file
+                await cp(sourcePath, destPath);
             })
         );
-    }
 
-    private getAllFiles(
-        fileOrDirectory: FileOrDirectory,
-        absoluteFilePath: AbsoluteFilePath,
-        files: { path: AbsoluteFilePath; file: File }[]
-    ): void {
-        if (fileOrDirectory.type === "directory") {
-            for (const content of fileOrDirectory.contents) {
-                this.getAllFiles(content, join(absoluteFilePath, RelativeFilePath.of(fileOrDirectory.name)), files);
-            }
-        } else {
-            files.push({
-                file: fileOrDirectory,
-                path: join(absoluteFilePath, RelativeFilePath.of(fileOrDirectory.name))
-            });
+        // Handle auth overrides
+        if (this.referencedCoreUtilities["auth"] != null) {
+            await Promise.all(
+                Object.entries(this.authOverrides).map(async ([filepath, content]) => {
+                    const destPath = path.join(pathToSrc, "core", "auth", filepath);
+                    await writeFile(destPath, content);
+                })
+            );
         }
     }
 
@@ -207,8 +170,15 @@ export class CoreUtilitiesManager {
             this.addManifestAndDependencies(manifest);
             return getReferenceToExportViaNamespaceImport({
                 exportedName,
-                filepathInsideNamespaceImport: manifest.pathInCoreUtilities,
-                filepathToNamespaceImport: { directories: this.getCoreUtilitiesFilepath(), file: undefined },
+                filepathInsideNamespaceImport: [manifest.pathInCoreUtilities],
+                filepathToNamespaceImport: {
+                    directories: [
+                        {
+                            nameOnDisk: "core"
+                        }
+                    ],
+                    file: undefined
+                },
                 namespaceImport: "core",
                 referencedIn: sourceFile,
                 importsManager,
@@ -217,17 +187,5 @@ export class CoreUtilitiesManager {
                 relativeTestPath
             });
         };
-    }
-
-    private getPathToUtility(utility: CoreUtility.Manifest): ExportedDirectory[] {
-        return [...this.getCoreUtilitiesFilepath(), ...utility.pathInCoreUtilities];
-    }
-
-    private getCoreUtilitiesFilepath(): ExportedDirectory[] {
-        return [
-            {
-                nameOnDisk: "core"
-            }
-        ];
     }
 }

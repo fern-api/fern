@@ -140,6 +140,7 @@ export declare namespace SdkGenerator {
         useBigInt: boolean;
         useLegacyExports: boolean;
         generateWireTests: boolean;
+        streamType: "wrapper" | "web";
         packagePath: string | undefined;
     }
 }
@@ -253,11 +254,13 @@ export class SdkGenerator {
         this.typeResolver = new TypeResolver(intermediateRepresentation);
         this.errorResolver = new ErrorResolver(intermediateRepresentation);
         this.packageResolver = new PackageResolver(intermediateRepresentation);
-
-        this.coreUtilitiesManager = new CoreUtilitiesManager({ relativeTestPath: this.relativeTestPath });
-
+        
         this.exportsManager = new ExportsManager({
             packagePath: this.relativePackagePath
+        });
+        this.coreUtilitiesManager = new CoreUtilitiesManager({
+            streamType: this.config.streamType,
+            relativeTestPath: this.relativeTestPath
         });
 
         const apiDirectory: ExportedDirectory[] = [
@@ -414,6 +417,7 @@ export class SdkGenerator {
             oauthTokenProviderGenerator: this.oauthTokenProviderGenerator,
             omitUndefined: config.omitUndefined,
             allowExtraFields: config.allowExtraFields,
+            streamType: config.streamType,
             exportsManager: this.exportsManager
         });
         this.websocketGenerator = new WebsocketClassGenerator({

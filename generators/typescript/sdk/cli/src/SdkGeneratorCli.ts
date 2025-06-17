@@ -1,5 +1,11 @@
 import { AbstractGeneratorCli } from "@fern-typescript/abstract-generator-cli";
-import { JavaScriptRuntime, NpmPackage, PersistedTypescriptProject, fixImportsForEsm } from "@fern-typescript/commons";
+import {
+    JavaScriptRuntime,
+    NpmPackage,
+    PersistedTypescriptProject,
+    fixImportsForEsm,
+    writeTemplateFiles
+} from "@fern-typescript/commons";
 import { GeneratorContext } from "@fern-typescript/contexts";
 import { SdkGenerator } from "@fern-typescript/sdk-generator";
 
@@ -70,6 +76,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             noScripts: parsed?.noScripts ?? false,
             useBigInt: parsed?.useBigInt ?? false,
             useLegacyExports: parsed?.useLegacyExports ?? false,
+            streamType: parsed?.streamType ?? "wrapper",
             packagePath: parsed?.packagePath
         };
     }
@@ -155,19 +162,27 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 enableInlineTypes: customConfig.enableInlineTypes ?? true,
                 useLegacyExports,
                 generateWireTests: customConfig.generateWireTests ?? false,
+                streamType: customConfig.streamType ?? "wrapper",
                 packagePath: customConfig.packagePath
             }
         });
         const typescriptProject = await sdkGenerator.generate();
         const persistedTypescriptProject = await typescriptProject.persist();
+        const rootDirectory = persistedTypescriptProject.getRootDirectory();
         await sdkGenerator.copyCoreUtilities({
             pathToSrc: persistedTypescriptProject.getSrcDirectory(),
-            pathToRoot: persistedTypescriptProject.getRootDirectory()
+            pathToRoot: rootDirectory
         });
-
+        await writeTemplateFiles(rootDirectory, this.getTemplateVariables(customConfig));
         await this.postProcess(persistedTypescriptProject, customConfig);
 
         return persistedTypescriptProject;
+    }
+
+    private getTemplateVariables(customConfig: SdkCustomConfig): Record<string, unknown> {
+        return {
+            streamType: customConfig.streamType
+        };
     }
 
     private async postProcess(

@@ -76,10 +76,10 @@ export class JestTestGenerator {
     private addJestConfig(): void {
         const setupFilesAfterEnv = [];
         if (this.useBigInt) {
-            setupFilesAfterEnv.push("<rootDir>/tests/bigint.setup.ts");
+            setupFilesAfterEnv.push(`<rootDir>/${this.relativeTestPath}/bigint.setup.ts`);
         }
         if (this.generateWireTests) {
-            setupFilesAfterEnv.push("<rootDir>/tests/mock-server/setup.ts");
+            setupFilesAfterEnv.push(`<rootDir>/${this.relativeTestPath}/mock-server/setup.ts`);
         }
         const jestConfig = this.rootDirectory.createSourceFile(
             "jest.config.mjs",

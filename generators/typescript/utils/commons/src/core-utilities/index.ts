@@ -1,7 +1,6 @@
-export { type Auth } from "./auth/Auth";
-export { type BaseCoreUtilities } from "./base/BaseCoreUtilities";
-export { type CallbackQueue } from "./callback-queue/CallbackQueue";
+export { type Auth } from "./Auth";
+export { type CallbackQueue } from "./CallbackQueue";
 export { CoreUtilitiesManager } from "./CoreUtilitiesManager";
-export { type Fetcher } from "./fetcher/Fetcher";
-export { type StreamUtils, type StreamingFetcher } from "./stream-utils/StreamUtils";
-export { type Zurg } from "./zurg/Zurg";
+export { type Fetcher } from "./Fetcher";
+export { type Stream } from "./Stream";
+export { type Zurg } from "./Zurg";

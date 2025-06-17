@@ -28,15 +28,9 @@ RUN yarn add \
   webpack@^5.97.1 \
   fetch-mock-jest@^1.5.1
 
-COPY generators/typescript/asIs/ /assets/asIs
-COPY generators/typescript/utils/core-utilities/fetcher/src/ /assets/fetcher
-COPY generators/typescript/utils/core-utilities/callback-queue/src/ /assets/callback-queue
-COPY generators/typescript/utils/core-utilities/auth/src/ /assets/auth
-COPY generators/typescript/utils/core-utilities/zurg/src/ /assets/zurg
-COPY generators/typescript/utils/core-utilities/base/src/ /assets/base-core-utilities
-COPY generators/typescript/utils/core-utilities/utils/src/ /assets/utils
 COPY generators/typescript/sdk/features.yml /assets/features.yml
-
+COPY generators/typescript/asIs/ /assets/asIs
+COPY generators/typescript/utils/core-utilities/ /assets/core-utilities
 COPY generators/typescript/sdk/cli/node-docker/dist/nodeCli.cjs /nodeCli.cjs
 
 RUN npm install -f -g @fern-api/generator-cli

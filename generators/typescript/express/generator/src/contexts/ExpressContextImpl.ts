@@ -92,6 +92,8 @@ export declare namespace ExpressContextImpl {
         enableInlineTypes: boolean;
         allowExtraFields: boolean;
         omitUndefined: boolean;
+        relativePackagePath: string;
+        relativeTestPath: string;
     }
 }
 
@@ -154,7 +156,9 @@ export class ExpressContextImpl implements ExpressContext {
         enableInlineTypes,
         allowExtraFields,
         omitUndefined,
-        useBigInt
+        useBigInt,
+        relativePackagePath,
+        relativeTestPath
     }: ExpressContextImpl.Init) {
         this.logger = logger;
         this.includeSerdeLayer = includeSerdeLayer;
@@ -167,8 +171,8 @@ export class ExpressContextImpl implements ExpressContext {
             sourceFile,
             importsManager,
             exportsManager,
-            relativePackagePath: "testing",
-            relativeTestPath: "testing"
+            relativePackagePath,
+            relativeTestPath
         });
         this.fernConstants = fernConstants;
 

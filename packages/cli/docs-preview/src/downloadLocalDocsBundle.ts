@@ -1,4 +1,3 @@
-import { fetcher } from "@fern-typescript/fetcher";
 import decompress from "decompress";
 import { mkdir, readFile, rm, writeFile } from "fs/promises";
 import { homedir } from "os";
@@ -72,18 +71,13 @@ export async function downloadBundle({
     tryTar?: boolean;
 }): Promise<DownloadLocalBundle.Result> {
     logger.debug("Setting up docs preview bundle...");
-    const response = await fetcher<string>({
-        url: bucketUrl,
-        method: "GET",
-        responseType: "text",
-        duplex: "half"
-    });
+    const response = await fetch(bucketUrl);
     if (!response.ok) {
         return {
             type: "failure"
         };
     }
-    const body = response.body;
+    const body = await response.text();
     const parser = new xml2js.Parser();
     const parsedResponse = await parser.parseStringPromise(body);
     const eTag = parsedResponse?.ListBucketResult?.Contents?.[0]?.ETag?.[0];
@@ -121,134 +115,128 @@ export async function downloadBundle({
     const docsBundleUrl = new URL(key, bucketUrl).href;
     logger.debug(`Downloading docs preview bundle from ${docsBundleUrl}`);
     // download docs bundle
-    const docsBundleZipResponse = await fetcher<unknown>({
-        url: docsBundleUrl,
-        method: "GET",
-        responseType: "arrayBuffer",
-        duplex: "half"
-    });
-
-    if (!docsBundleZipResponse.ok) {
-        let errorMessage: string;
-        if (docsBundleZipResponse.error.reason === "status-code") {
-            errorMessage = `Failed to download docs preview bundle. Status code: ${docsBundleZipResponse.error.statusCode}`;
-        } else if (docsBundleZipResponse.error.reason === "unknown") {
-            errorMessage = `Failed to download docs preview bundle. Error: ${docsBundleZipResponse.error.errorMessage}`;
-        } else {
-            errorMessage = `Failed to download docs preview bundle. Error: ${docsBundleZipResponse.error.reason}`;
+    try {
+        const docsBundleZipResponse = await fetch(docsBundleUrl);
+        if (!docsBundleZipResponse.ok) {
+            logger.error(`Failed to download docs preview bundle. Status code: ${docsBundleZipResponse.status}`);
+            return {
+                type: "failure"
+            };
         }
-        logger.error(errorMessage);
+        const outputZipPath = join(
+            absoluteDirectoryToTmpDir,
+            RelativeFilePath.of(tryTar ? "output.tar.gz" : "output.zip")
+        );
+
+        if (docsBundleZipResponse.body == null) {
+            return {
+                type: "failure"
+            };
+        }
+
+        const nodeBuffer = Buffer.from(await docsBundleZipResponse.arrayBuffer());
+        await writeFile(outputZipPath, new Uint8Array(nodeBuffer));
+        logger.debug(`Wrote ${tryTar ? "output.tar.gz" : "output.zip"} to ${outputZipPath}`);
+
+        const absolutePathToPreviewFolder = getPathToPreviewFolder({ app });
+        if (await doesPathExist(absolutePathToPreviewFolder)) {
+            await rm(absolutePathToPreviewFolder, { recursive: true });
+        }
+        await mkdir(absolutePathToPreviewFolder, { recursive: true });
+        logger.debug(`rm -rf ${absolutePathToPreviewFolder}`);
+
+        const absolutePathToBundleFolder = getPathToBundleFolder({ app });
+        await mkdir(absolutePathToBundleFolder, { recursive: true });
+        await decompress(outputZipPath, absolutePathToBundleFolder);
+
+        // write etag
+        await writeFile(eTagFilepath, eTag);
+        logger.debug(`Downloaded bundle to ${absolutePathToBundleFolder}`);
+
+        if (app) {
+            // check if pnpm exists
+            logger.debug("Checking if pnpm is installed");
+            try {
+                await loggingExeca(logger, process.platform === "win32" ? "where" : "which", ["pnpm"], {
+                    cwd: absolutePathToBundleFolder,
+                    doNotPipeOutput: true
+                });
+            } catch (error) {
+                logger.debug("pnpm not found, installing pnpm");
+                await loggingExeca(logger, "npm", ["install", "-g", "pnpm"], {
+                    doNotPipeOutput: true
+                });
+            }
+
+            // if pnpm still hasn't been installed, user should install themselves
+            try {
+                await loggingExeca(logger, process.platform === "win32" ? "where" : "which", ["pnpm"], {
+                    cwd: absolutePathToBundleFolder,
+                    doNotPipeOutput: true
+                });
+            } catch (error) {
+                logger.error(
+                    "Requires [pnpm] to run local development. Please run: npm install -g pnpm, and then: fern docs dev"
+                );
+
+                // remove incomplete bundle
+                if (await doesPathExist(absolutePathToPreviewFolder)) {
+                    await rm(absolutePathToPreviewFolder, { recursive: true });
+                }
+                logger.debug(`rm -rf ${absolutePathToPreviewFolder}`);
+                return {
+                    type: "failure"
+                };
+            }
+
+            try {
+                // install esbuild
+                logger.debug("Installing esbuild");
+                await loggingExeca(logger, "pnpm", ["i", "esbuild"], {
+                    cwd: absolutePathToBundleFolder,
+                    doNotPipeOutput: true
+                });
+            } catch (error) {
+                logger.error("Failed to install required package. Please reach out to support@buildwithfern.com.");
+
+                // remove incomplete bundle
+                if (await doesPathExist(absolutePathToPreviewFolder)) {
+                    await rm(absolutePathToPreviewFolder, { recursive: true });
+                }
+                logger.debug(`rm -rf ${absolutePathToPreviewFolder}`);
+                return {
+                    type: "failure"
+                };
+            }
+
+            try {
+                // resolve imports
+                logger.debug("Resolve esbuild imports");
+                await loggingExeca(logger, "node", ["install-esbuild.js"], {
+                    cwd: absolutePathToBundleFolder,
+                    doNotPipeOutput: true
+                });
+            } catch (error) {
+                logger.error("Failed to resolve imports. Please reach out to support@buildwithfern.com.");
+
+                // remove incomplete bundle
+                if (await doesPathExist(absolutePathToPreviewFolder)) {
+                    await rm(absolutePathToPreviewFolder, { recursive: true });
+                }
+                logger.debug(`rm -rf ${absolutePathToPreviewFolder}`);
+                return {
+                    type: "failure"
+                };
+            }
+        }
+
+        return {
+            type: "success"
+        };
+    } catch (error) {
+        logger.error(`Failed to download docs preview bundle. Error: ${error}`);
         return {
             type: "failure"
         };
     }
-    const outputZipPath = join(absoluteDirectoryToTmpDir, RelativeFilePath.of(tryTar ? "output.tar.gz" : "output.zip"));
-
-    const contents = docsBundleZipResponse.body;
-    if (contents == null) {
-        return {
-            type: "failure"
-        };
-    }
-
-    // eslint-disable-next-line  @typescript-eslint/no-explicit-any
-    const nodeBuffer = Buffer.from(contents as any);
-    await writeFile(outputZipPath, new Uint8Array(nodeBuffer));
-    logger.debug(`Wrote ${tryTar ? "output.tar.gz" : "output.zip"} to ${outputZipPath}`);
-
-    const absolutePathToPreviewFolder = getPathToPreviewFolder({ app });
-    if (await doesPathExist(absolutePathToPreviewFolder)) {
-        await rm(absolutePathToPreviewFolder, { recursive: true });
-    }
-    await mkdir(absolutePathToPreviewFolder, { recursive: true });
-    logger.debug(`rm -rf ${absolutePathToPreviewFolder}`);
-
-    const absolutePathToBundleFolder = getPathToBundleFolder({ app });
-    await mkdir(absolutePathToBundleFolder, { recursive: true });
-    await decompress(outputZipPath, absolutePathToBundleFolder);
-
-    // write etag
-    await writeFile(eTagFilepath, eTag);
-    logger.debug(`Downloaded bundle to ${absolutePathToBundleFolder}`);
-
-    if (app) {
-        // check if pnpm exists
-        logger.debug("Checking if pnpm is installed");
-        try {
-            await loggingExeca(logger, process.platform === "win32" ? "where" : "which", ["pnpm"], {
-                cwd: absolutePathToBundleFolder,
-                doNotPipeOutput: true
-            });
-        } catch (error) {
-            logger.debug("pnpm not found, installing pnpm");
-            await loggingExeca(logger, "npm", ["install", "-g", "pnpm"], {
-                doNotPipeOutput: true
-            });
-        }
-
-        // if pnpm still hasn't been installed, user should install themselves
-        try {
-            await loggingExeca(logger, process.platform === "win32" ? "where" : "which", ["pnpm"], {
-                cwd: absolutePathToBundleFolder,
-                doNotPipeOutput: true
-            });
-        } catch (error) {
-            logger.error(
-                "Requires [pnpm] to run local development. Please run: npm install -g pnpm, and then: fern docs dev"
-            );
-
-            // remove incomplete bundle
-            if (await doesPathExist(absolutePathToPreviewFolder)) {
-                await rm(absolutePathToPreviewFolder, { recursive: true });
-            }
-            logger.debug(`rm -rf ${absolutePathToPreviewFolder}`);
-            return {
-                type: "failure"
-            };
-        }
-
-        try {
-            // install esbuild
-            logger.debug("Installing esbuild");
-            await loggingExeca(logger, "pnpm", ["i", "esbuild"], {
-                cwd: absolutePathToBundleFolder,
-                doNotPipeOutput: true
-            });
-        } catch (error) {
-            logger.error("Failed to install required package. Please reach out to support@buildwithfern.com.");
-
-            // remove incomplete bundle
-            if (await doesPathExist(absolutePathToPreviewFolder)) {
-                await rm(absolutePathToPreviewFolder, { recursive: true });
-            }
-            logger.debug(`rm -rf ${absolutePathToPreviewFolder}`);
-            return {
-                type: "failure"
-            };
-        }
-
-        try {
-            // resolve imports
-            logger.debug("Resolve esbuild imports");
-            await loggingExeca(logger, "node", ["install-esbuild.js"], {
-                cwd: absolutePathToBundleFolder,
-                doNotPipeOutput: true
-            });
-        } catch (error) {
-            logger.error("Failed to resolve imports. Please reach out to support@buildwithfern.com.");
-
-            // remove incomplete bundle
-            if (await doesPathExist(absolutePathToPreviewFolder)) {
-                await rm(absolutePathToPreviewFolder, { recursive: true });
-            }
-            logger.debug(`rm -rf ${absolutePathToPreviewFolder}`);
-            return {
-                type: "failure"
-            };
-        }
-    }
-
-    return {
-        type: "success"
-    };
 }
