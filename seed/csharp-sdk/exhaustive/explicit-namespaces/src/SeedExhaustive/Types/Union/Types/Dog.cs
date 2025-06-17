@@ -4,6 +4,7 @@ using SeedExhaustive.Core;
 
 namespace SeedExhaustive.Types.Union;
 
+[Serializable]
 public record Dog
 {
     [JsonPropertyName("name")]

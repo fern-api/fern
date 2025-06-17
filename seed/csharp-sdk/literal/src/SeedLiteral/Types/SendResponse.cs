@@ -4,6 +4,7 @@ using SeedLiteral.Core;
 
 namespace SeedLiteral;
 
+[Serializable]
 public record SendResponse
 {
     [JsonPropertyName("message")]

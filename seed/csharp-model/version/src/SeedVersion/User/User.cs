@@ -4,6 +4,7 @@ using SeedVersion.Core;
 
 namespace SeedVersion;
 
+[Serializable]
 public record User
 {
     [JsonPropertyName("id")]

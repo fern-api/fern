@@ -7,6 +7,7 @@ namespace SeedObject;
 /// <summary>
 /// Exercises all of the built-in types.
 /// </summary>
+[Serializable]
 public record Type
 {
     [JsonPropertyName("one")]

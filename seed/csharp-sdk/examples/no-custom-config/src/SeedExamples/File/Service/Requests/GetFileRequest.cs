@@ -3,6 +3,7 @@ using SeedExamples.Core;
 
 namespace SeedExamples.File;
 
+[Serializable]
 public record GetFileRequest
 {
     [JsonIgnore]

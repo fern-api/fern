@@ -7,6 +7,14 @@
 #         The C# SDK now uses forward-compatible enums which are not compatible with the previously generated enums.
 #         Set `enable-forward-compatible-enums` to `false` in the configuration to generate the old enums.
 #   irVersion: 53
+- version: 1.18.1
+  changelogEntry:
+    - summary: |
+        Add `[Serializable]` attribute to generated schema, request, and error classes.
+        This will make it easier for instances of these classes to be stored in places like `Exception.Data`.
+      type: fix
+  createdAt: '2025-06-17'
+  irVersion: 58
 - version: 1.18.0
   changelogEntry:
     - summary: Add support for HTTP HEAD method

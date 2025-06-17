@@ -4,6 +4,7 @@ using SeedServerSentEvents.Core;
 
 namespace SeedServerSentEvents;
 
+[Serializable]
 public record StreamedCompletion
 {
     [JsonPropertyName("delta")]

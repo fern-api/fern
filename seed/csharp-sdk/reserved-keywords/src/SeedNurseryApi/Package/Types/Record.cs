@@ -4,6 +4,7 @@ using SeedNurseryApi.Core;
 
 namespace SeedNurseryApi;
 
+[Serializable]
 public record Record
 {
     [JsonPropertyName("foo")]

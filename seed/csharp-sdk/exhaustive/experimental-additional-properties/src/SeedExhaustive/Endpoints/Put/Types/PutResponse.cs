@@ -5,6 +5,7 @@ using SeedExhaustive.Core;
 
 namespace SeedExhaustive.Endpoints;
 
+[Serializable]
 public record PutResponse : IJsonOnDeserialized
 {
     [JsonExtensionData]

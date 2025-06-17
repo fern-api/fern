@@ -5,6 +5,7 @@ using SeedPagination.Core;
 
 namespace SeedPagination;
 
+[Serializable]
 public record SearchRequest
 {
     [JsonPropertyName("pagination")]

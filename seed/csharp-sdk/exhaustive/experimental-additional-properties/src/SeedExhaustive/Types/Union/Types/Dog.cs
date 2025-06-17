@@ -5,6 +5,7 @@ using SeedExhaustive.Core;
 
 namespace SeedExhaustive.Types;
 
+[Serializable]
 public record Dog : IJsonOnDeserialized
 {
     [JsonExtensionData]

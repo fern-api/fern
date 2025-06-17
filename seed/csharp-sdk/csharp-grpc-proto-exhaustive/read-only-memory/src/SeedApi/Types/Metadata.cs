@@ -3,6 +3,7 @@ using WellKnownProto = Google.Protobuf.WellKnownTypes;
 
 namespace SeedApi;
 
+[Serializable]
 public sealed class Metadata : Dictionary<string, MetadataValue?>
 {
     public Metadata() { }

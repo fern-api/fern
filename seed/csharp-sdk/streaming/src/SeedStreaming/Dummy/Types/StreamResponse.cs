@@ -4,6 +4,7 @@ using SeedStreaming.Core;
 
 namespace SeedStreaming;
 
+[Serializable]
 public record StreamResponse
 {
     [JsonPropertyName("id")]

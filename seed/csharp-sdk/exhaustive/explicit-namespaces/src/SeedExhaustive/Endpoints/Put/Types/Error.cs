@@ -4,6 +4,7 @@ using SeedExhaustive.Core;
 
 namespace SeedExhaustive.Endpoints.Put;
 
+[Serializable]
 public record Error
 {
     [JsonPropertyName("category")]

@@ -4,6 +4,7 @@ using SeedExhaustive.Core;
 
 namespace SeedExhaustive;
 
+[Serializable]
 public record BadObjectRequestInfo : IJsonOnDeserialized
 {
     [JsonExtensionData]

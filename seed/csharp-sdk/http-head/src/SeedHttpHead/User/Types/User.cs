@@ -4,6 +4,7 @@ using SeedHttpHead.Core;
 
 namespace SeedHttpHead;
 
+[Serializable]
 public record User
 {
     [JsonPropertyName("name")]

@@ -4,6 +4,7 @@ using SeedPagination.Core;
 
 namespace SeedPagination;
 
+[Serializable]
 public record UsernamePage
 {
     [JsonPropertyName("after")]

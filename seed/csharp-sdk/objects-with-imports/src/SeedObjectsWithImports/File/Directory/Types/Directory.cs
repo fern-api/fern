@@ -4,6 +4,7 @@ using SeedObjectsWithImports.Core;
 
 namespace SeedObjectsWithImports.File;
 
+[Serializable]
 public record Directory
 {
     [JsonPropertyName("name")]

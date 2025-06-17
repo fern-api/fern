@@ -12,6 +12,7 @@ namespace SeedUnions;
 /// This is a simple union.
 /// </summary>
 [JsonConverter(typeof(Union.JsonConverter))]
+[Serializable]
 public record Union
 {
     internal Union(string type, object? value)
@@ -141,6 +142,7 @@ public record Union
 
     public static implicit operator Union(Union.Bar value) => new(value);
 
+    [Serializable]
     internal sealed class JsonConverter : JsonConverter<Union>
     {
         public override bool CanConvert(global::System.Type typeToConvert) =>
@@ -211,6 +213,7 @@ public record Union
     /// <summary>
     /// Discriminated union type for foo
     /// </summary>
+    [Serializable]
     public struct Foo
     {
         public Foo(SeedUnions.Foo value)
@@ -228,6 +231,7 @@ public record Union
     /// <summary>
     /// Discriminated union type for bar
     /// </summary>
+    [Serializable]
     public struct Bar
     {
         public Bar(SeedUnions.Bar value)

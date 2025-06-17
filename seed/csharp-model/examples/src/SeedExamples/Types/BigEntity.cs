@@ -5,6 +5,7 @@ using SeedExamples.Core;
 
 namespace SeedExamples;
 
+[Serializable]
 public record BigEntity
 {
     [JsonPropertyName("castMember")]

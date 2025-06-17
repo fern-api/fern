@@ -4,6 +4,7 @@ using SeedCsharpNamespaceConflict.Core;
 
 namespace SeedCsharpNamespaceConflict;
 
+[Serializable]
 public record Task
 {
     [JsonPropertyName("id")]

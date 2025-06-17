@@ -4,6 +4,7 @@ using SeedExamples.Core;
 
 namespace SeedExamples;
 
+[Serializable]
 public record Actress
 {
     [JsonPropertyName("name")]

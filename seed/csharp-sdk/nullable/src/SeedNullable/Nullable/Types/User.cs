@@ -5,6 +5,7 @@ using SeedNullable.Core;
 
 namespace SeedNullable;
 
+[Serializable]
 public record User
 {
     [JsonPropertyName("name")]
