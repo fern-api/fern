@@ -60,8 +60,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         return new go.Method({
             name: this.context.getMethodName(endpoint.name),
             parameters: signature.allParameters,
-            return_: signature.returnType,
-            body: this.getRawUnaryEndpointBody(endpoint),
+            return_: signature.returnTypes,
+            body: this.getRawUnaryEndpointBody({ endpoint, returnZeroValues: signature.returnZeroValues }),
             typeReference: this.getRawClientTypeReference({ subpackage })
         });
     }
@@ -73,7 +73,25 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         return this.context.getSubpackageRawClientClassReference(subpackage);
     }
 
-    private getRawUnaryEndpointBody(endpoint: HttpEndpoint): go.CodeBlock {
-        return go.codeblock("return nil");
+    private getRawUnaryEndpointBody({
+        endpoint,
+        returnZeroValues
+    }: {
+        endpoint: HttpEndpoint;
+        returnZeroValues: go.TypeInstantiation[];
+    }): go.CodeBlock {
+        return this.writeReturnZeroValues({ returnZeroValues });
+    }
+
+    private writeReturnZeroValues({ returnZeroValues }: { returnZeroValues: go.TypeInstantiation[] }): go.CodeBlock {
+        return go.codeblock((writer) => {
+            writer.write(`return `);
+            returnZeroValues.forEach((zeroValue, index) => {
+                if (index > 0) {
+                    writer.write(", ");
+                }
+                writer.writeNode(zeroValue);
+            });
+        });
     }
 }

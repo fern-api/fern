@@ -7,7 +7,8 @@ import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { EndpointSignatureInfo } from "./EndpointSignatureInfo";
 import { EndpointRequest } from "./request/EndpointRequest";
 import { getEndpointRequest } from "./utils/getEndpointRequest";
-import { getEndpointReturnType } from "./utils/getEndpointReturnType";
+import { getEndpointReturnTypes } from "./utils/getEndpointReturnTypes";
+import { getEndpointReturnZeroValues } from "./utils/getEndpointReturnZeroValue";
 
 export abstract class AbstractEndpointGenerator {
     protected readonly context: SdkGeneratorContext;
@@ -34,14 +35,16 @@ export abstract class AbstractEndpointGenerator {
             requestParameter,
             this.context.getVariadicRequestOptionParameter()
         ].filter((p): p is go.Parameter => p != null);
-        const returnType = getEndpointReturnType({ context: this.context, endpoint });
+        const returnTypes = getEndpointReturnTypes({ context: this.context, endpoint });
+        const returnZeroValues = getEndpointReturnZeroValues({ context: this.context, endpoint });
         return {
             allParameters,
             pathParameters,
             pathParameterReferences,
             request,
             requestParameter,
-            returnType: returnType != null ? [returnType, go.Type.error()] : [go.Type.error()]
+            returnTypes,
+            returnZeroValues
         };
     }
 
