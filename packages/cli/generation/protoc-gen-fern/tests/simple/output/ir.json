@@ -58,14 +58,20 @@
               "wireValue": "type3"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "default": "",
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "default": "",
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           }
         ],
@@ -110,57 +116,75 @@
         "members": [
           {
             "type": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "default": "",
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "default": "",
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
             "type": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "default": "",
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "default": "",
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
             "type": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
+              "container": {
+                "optional": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "Outer.Inner",
+                    "camelCase": {
+                      "unsafeName": "outerInner",
+                      "safeName": "outerInner"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "outer_inner",
+                      "safeName": "outer_inner"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "OUTER_INNER",
+                      "safeName": "OUTER_INNER"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "OuterInner",
+                      "safeName": "OuterInner"
+                    }
+                  },
+                  "typeId": "Outer.Inner",
+                  "inline": false,
+                  "displayName": "innermessage",
+                  "type": "named"
+                },
+                "type": "optional"
               },
-              "name": {
-                "originalName": "Outer.Inner",
-                "camelCase": {
-                  "unsafeName": "outerInner",
-                  "safeName": "outerInner"
-                },
-                "snakeCase": {
-                  "unsafeName": "outer_inner",
-                  "safeName": "outer_inner"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "OUTER_INNER",
-                  "safeName": "OUTER_INNER"
-                },
-                "pascalCase": {
-                  "unsafeName": "OuterInner",
-                  "safeName": "OuterInner"
-                }
-              },
-              "typeId": "Outer.Inner",
-              "inline": false,
-              "displayName": "innermessage",
-              "type": "named"
+              "type": "container"
             }
           }
         ],
@@ -224,14 +248,20 @@
               "wireValue": "type4"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "default": "",
-                  "type": "string"
-                }
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "default": "",
+                      "type": "string"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             }
           },
           {
