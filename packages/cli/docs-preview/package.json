@@ -36,7 +36,6 @@
     "@fern-api/project-loader": "workspace:*",
     "@fern-api/register": "workspace:*",
     "@fern-api/task-context": "workspace:*",
-    "@fern-typescript/fetcher": "workspace:*",
     "chalk": "^5.3.0",
     "cors": "^2.8.5",
     "decompress": "^4.2.1",

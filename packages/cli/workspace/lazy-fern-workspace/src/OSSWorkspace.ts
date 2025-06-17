@@ -314,7 +314,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
     public getAbsoluteFilePaths(): AbsoluteFilePath[] {
         return [
             this.absoluteFilePath,
-            ...this.specs
+            ...this.allSpecs
                 .flatMap((spec) => [
                     spec.type === "protobuf" ? spec.absoluteFilepathToProtobufTarget : spec.absoluteFilepath,
                     spec.absoluteFilepathToOverrides

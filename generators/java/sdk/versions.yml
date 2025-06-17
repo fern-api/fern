@@ -1,4 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.37.1-rc1
+  changelogEntry:
+    - summary: |
+        Remove Content-Type from headers when request has no body
+      type: fix
+  createdAt: '2025-06-16'
+  irVersion: 58
+- version: 2.37.1-rc0
+  changelogEntry:
+    - summary: |
+        Fix array query params are treated as exploded: true
+      type: fix
+  createdAt: '2025-06-13'
+  irVersion: 58
 - version: 2.37.0
   changelogEntry:
     - summary: |

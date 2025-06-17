@@ -4,7 +4,6 @@
   "include": ["./src/**/*"],
   "exclude": ["./src/**/__test__/**/generated"],
   "references": [
-    { "path": "../../../generators/typescript/utils/core-utilities/fetcher" },
     { "path": "../../commons/fs-utils" },
     { "path": "../../commons/logging-execa" },
     { "path": "../configuration" }

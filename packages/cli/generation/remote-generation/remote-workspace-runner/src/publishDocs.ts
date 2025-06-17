@@ -40,7 +40,8 @@ export async function publishDocs({
     context,
     preview,
     editThisPage,
-    isPrivate = false
+    isPrivate = false,
+    disableTemplates = false
 }: {
     token: FernToken;
     organization: string;
@@ -53,6 +54,7 @@ export async function publishDocs({
     preview: boolean;
     editThisPage: docsYml.RawSchemas.FernDocsConfig.EditThisPageConfig | undefined;
     isPrivate: boolean | undefined;
+    disableTemplates: boolean | undefined;
 }): Promise<void> {
     const fdr = createFdrService({ token: token.value });
     const authConfig: CjsFdrSdk.docs.v2.write.AuthConfig = isPrivate
@@ -163,7 +165,10 @@ export async function publishDocs({
             const response = await fdr.api.v1.register.registerApiDefinition({
                 orgId: CjsFdrSdk.OrgId(organization),
                 apiId: CjsFdrSdk.ApiId(ir.apiName.originalName),
-                definition: apiDefinition,
+                definition: {
+                    ...apiDefinition,
+                    snippetsConfiguration: preview ? undefined : apiDefinition.snippetsConfiguration
+                },
                 definitionV2: undefined
             });
 
@@ -197,7 +202,10 @@ export async function publishDocs({
                 orgId: CjsFdrSdk.OrgId(organization),
                 apiId: CjsFdrSdk.ApiId(apiName ?? api.id),
                 definition: undefined,
-                definitionV2: api
+                definitionV2: {
+                    ...api,
+                    snippetsConfiguration: preview ? undefined : api.snippetsConfiguration
+                }
             });
 
             if (response.ok) {

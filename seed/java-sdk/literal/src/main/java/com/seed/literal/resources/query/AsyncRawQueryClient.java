@@ -55,29 +55,23 @@ public class AsyncRawQueryClient {
                     false);
         }
         QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery(), false);
-        QueryStringMapper.addQueryParameter(
-                httpUrl, "stream", request.getStream().toString(), false);
+        QueryStringMapper.addQueryParameter(httpUrl, "stream", request.getStream(), false);
         if (request.getOptionalStream().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl,
-                    "optional_stream",
-                    request.getOptionalStream().get().toString(),
-                    false);
+                    httpUrl, "optional_stream", request.getOptionalStream().get(), false);
         }
-        QueryStringMapper.addQueryParameter(
-                httpUrl, "alias_stream", request.getAliasStream().toString(), false);
+        QueryStringMapper.addQueryParameter(httpUrl, "alias_stream", request.getAliasStream(), false);
         if (request.getAliasOptionalStream().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl,
                     "alias_optional_stream",
-                    request.getAliasOptionalStream().get().toString(),
+                    request.getAliasOptionalStream().get(),
                     false);
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("POST", RequestBody.create("", null))
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
                 .addHeader("Accept", "application/json");
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();

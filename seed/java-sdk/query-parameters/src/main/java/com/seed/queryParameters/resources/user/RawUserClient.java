@@ -35,41 +35,33 @@ public class RawUserClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("user");
-        QueryStringMapper.addQueryParameter(httpUrl, "limit", Integer.toString(request.getLimit()), false);
-        QueryStringMapper.addQueryParameter(httpUrl, "id", request.getId().toString(), false);
+        QueryStringMapper.addQueryParameter(httpUrl, "limit", request.getLimit(), false);
+        QueryStringMapper.addQueryParameter(httpUrl, "id", request.getId(), false);
         QueryStringMapper.addQueryParameter(httpUrl, "date", request.getDate(), false);
-        QueryStringMapper.addQueryParameter(
-                httpUrl, "deadline", request.getDeadline().toString(), false);
-        QueryStringMapper.addQueryParameter(httpUrl, "bytes", request.getBytes().toString(), false);
-        QueryStringMapper.addQueryParameter(httpUrl, "user", request.getUser().toString(), false);
-        QueryStringMapper.addQueryParameter(
-                httpUrl, "userList", request.getUserList().toString(), false);
+        QueryStringMapper.addQueryParameter(httpUrl, "deadline", request.getDeadline(), false);
+        QueryStringMapper.addQueryParameter(httpUrl, "bytes", request.getBytes(), false);
+        QueryStringMapper.addQueryParameter(httpUrl, "user", request.getUser(), false);
+        QueryStringMapper.addQueryParameter(httpUrl, "userList", request.getUserList(), false);
         if (request.getOptionalDeadline().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl,
-                    "optionalDeadline",
-                    request.getOptionalDeadline().get().toString(),
-                    false);
+                    httpUrl, "optionalDeadline", request.getOptionalDeadline().get(), false);
         }
         QueryStringMapper.addQueryParameter(httpUrl, "keyValue", request.getKeyValue(), false);
         if (request.getOptionalString().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "optionalString", request.getOptionalString().get(), false);
         }
-        QueryStringMapper.addQueryParameter(
-                httpUrl, "nestedUser", request.getNestedUser().toString(), false);
+        QueryStringMapper.addQueryParameter(httpUrl, "nestedUser", request.getNestedUser(), false);
         if (request.getOptionalUser().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "optionalUser", request.getOptionalUser().get().toString(), false);
+                    httpUrl, "optionalUser", request.getOptionalUser().get(), false);
         }
-        QueryStringMapper.addQueryParameter(
-                httpUrl, "excludeUser", request.getExcludeUser().toString(), false);
-        QueryStringMapper.addQueryParameter(httpUrl, "filter", request.getFilter(), false);
+        QueryStringMapper.addQueryParameter(httpUrl, "excludeUser", request.getExcludeUser(), true);
+        QueryStringMapper.addQueryParameter(httpUrl, "filter", request.getFilter(), true);
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
                 .addHeader("Accept", "application/json");
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
