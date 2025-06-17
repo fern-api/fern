@@ -160,6 +160,15 @@ export abstract class AbstractCsharpGeneratorContext<
         return csharp.Type.reference(this.getReadOnlyAdditionalPropertiesClassReference(genericType));
     }
 
+    public getSerializableAttribute(): csharp.Annotation {
+        return csharp.annotation({
+            reference: csharp.classReference({
+                name: "Serializable",
+                namespace: "System"
+            })
+        });
+    }
+
     public getValueConvertReference(): csharp.ClassReference {
         return csharp.classReference({
             name: VALUE_CONVERT_CLASS_NAME,

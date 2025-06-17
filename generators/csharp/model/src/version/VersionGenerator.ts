@@ -19,7 +19,8 @@ export class VersionGenerator extends FileGenerator<CSharpFile, ModelCustomConfi
         const class_ = csharp.class_({
             ...this.classReference,
             partial: false,
-            access: csharp.Access.Internal
+            access: csharp.Access.Internal,
+            annotations: [this.context.getSerializableAttribute()]
         });
 
         class_.addField(

@@ -57,7 +57,8 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
                         writer.write(".JsonConverter");
                         writer.write(")");
                     })
-                })
+                }),
+                this.context.getSerializableAttribute()
             ],
             summary: this.typeDeclaration.docs,
             access: csharp.Access.Public,
@@ -109,7 +110,8 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
                 access: csharp.Access.Internal,
                 type: csharp.Class.ClassType.Record,
                 isNestedClass: true,
-                namespace: this.classReference.namespace
+                namespace: this.classReference.namespace,
+                annotations: [this.context.getSerializableAttribute()]
             });
             basePropertiesClass.addFields(baseProperties);
             class_.addNestedClass(basePropertiesClass);
@@ -417,7 +419,8 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
                     namespace: this.classReference.namespace,
                     access: csharp.Access.Public,
                     isNestedClass: true,
-                    type: memberType.isReferenceType() ? csharp.Class.ClassType.Record : csharp.Class.ClassType.Struct
+                    type: memberType.isReferenceType() ? csharp.Class.ClassType.Record : csharp.Class.ClassType.Struct,
+                    annotations: [this.context.getSerializableAttribute()]
                 });
                 if (isNoProperties) {
                     unionTypeClass.addField(
@@ -539,7 +542,8 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
             namespace: this.classReference.namespace,
             isNestedClass: true,
             sealed: true,
-            parentClassReference: this.context.getJsonConverterClassReference(unionReference)
+            parentClassReference: this.context.getJsonConverterClassReference(unionReference),
+            annotations: [this.context.getSerializableAttribute()]
         });
 
         class_.addMethod(

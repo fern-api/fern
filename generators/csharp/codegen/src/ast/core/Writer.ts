@@ -132,6 +132,7 @@ ${this.buffer}`;
         let result = referenceKeys
             // Filter out the current namespace.
             .filter((referenceNamespace) => referenceNamespace !== this.namespace)
+            .filter((referenceNamespace) => referenceNamespace !== "System") // System is implicitly imported
             .map((ref) => `using ${ref};`)
             .join("\n");
 
