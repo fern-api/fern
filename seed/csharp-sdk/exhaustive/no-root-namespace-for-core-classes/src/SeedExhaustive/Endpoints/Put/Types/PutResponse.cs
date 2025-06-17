@@ -4,6 +4,7 @@ using SeedExhaustive.Core;
 
 namespace SeedExhaustive.Endpoints;
 
+[Serializable]
 public record PutResponse
 {
     [JsonPropertyName("errors")]

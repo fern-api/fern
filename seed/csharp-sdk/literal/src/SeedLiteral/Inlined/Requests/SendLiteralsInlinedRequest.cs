@@ -3,6 +3,7 @@ using SeedLiteral.Core;
 
 namespace SeedLiteral;
 
+[Serializable]
 public record SendLiteralsInlinedRequest
 {
     [JsonPropertyName("prompt")]

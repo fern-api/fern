@@ -4,6 +4,7 @@ using SeedNullable.Core;
 
 namespace SeedNullable;
 
+[Serializable]
 public record Metadata
 {
     [JsonPropertyName("createdAt")]

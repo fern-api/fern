@@ -3,6 +3,7 @@ using SeedMultiLineDocs.Core;
 
 namespace SeedMultiLineDocs;
 
+[Serializable]
 public record CreateUserRequest
 {
     /// <summary>

@@ -3,6 +3,7 @@ using SeedMultiUrlEnvironment.Core;
 
 namespace SeedMultiUrlEnvironment;
 
+[Serializable]
 public record BootInstanceRequest
 {
     [JsonPropertyName("size")]

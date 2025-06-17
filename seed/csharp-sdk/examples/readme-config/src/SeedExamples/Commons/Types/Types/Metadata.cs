@@ -4,6 +4,7 @@ using SeedExamples.Core;
 
 namespace SeedExamples.Commons;
 
+[Serializable]
 public record Metadata
 {
     [JsonPropertyName("id")]

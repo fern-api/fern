@@ -4,6 +4,7 @@ using SeedEnum.Core;
 namespace SeedEnum;
 
 [JsonConverter(typeof(StringEnumSerializer<EnumWithCustom>))]
+[Serializable]
 public readonly record struct EnumWithCustom : IStringEnum
 {
     public static readonly EnumWithCustom Safe = new(Values.Safe);
@@ -54,6 +55,7 @@ public readonly record struct EnumWithCustom : IStringEnum
     /// <summary>
     /// Constant strings for enum values
     /// </summary>
+    [Serializable]
     public static class Values
     {
         public const string Safe = "safe";

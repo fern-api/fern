@@ -2,6 +2,7 @@ using SeedFileUpload.Core;
 
 namespace SeedFileUpload;
 
+[Serializable]
 public record WithContentTypeRequest
 {
     public required FileParameter File { get; set; }

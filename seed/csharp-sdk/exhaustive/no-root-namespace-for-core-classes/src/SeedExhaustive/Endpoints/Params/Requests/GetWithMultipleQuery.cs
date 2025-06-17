@@ -3,6 +3,7 @@ using SeedExhaustive.Core;
 
 namespace SeedExhaustive.Endpoints;
 
+[Serializable]
 public record GetWithMultipleQuery
 {
     [JsonIgnore]

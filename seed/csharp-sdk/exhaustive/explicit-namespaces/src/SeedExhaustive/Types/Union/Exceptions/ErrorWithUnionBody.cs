@@ -5,6 +5,7 @@ namespace SeedExhaustive.Types.Union;
 /// <summary>
 /// This exception type will be thrown for any non-2XX API responses.
 /// </summary>
+[Serializable]
 public class ErrorWithUnionBody(object body)
     : SeedExhaustiveApiException("ErrorWithUnionBody", 400, body)
 {

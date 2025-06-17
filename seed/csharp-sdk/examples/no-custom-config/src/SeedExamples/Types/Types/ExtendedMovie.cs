@@ -4,6 +4,7 @@ using SeedExamples.Core;
 
 namespace SeedExamples;
 
+[Serializable]
 public record ExtendedMovie
 {
     [JsonPropertyName("cast")]

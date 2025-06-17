@@ -4,6 +4,7 @@ using SeedApi.Core;
 
 namespace SeedApi;
 
+[Serializable]
 public record ObjectValue
 {
     /// <summary>

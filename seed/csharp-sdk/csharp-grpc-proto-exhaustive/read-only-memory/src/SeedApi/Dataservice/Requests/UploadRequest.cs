@@ -4,6 +4,7 @@ using Proto = Data.V1.Grpc;
 
 namespace SeedApi;
 
+[Serializable]
 public record UploadRequest
 {
     [JsonPropertyName("columns")]

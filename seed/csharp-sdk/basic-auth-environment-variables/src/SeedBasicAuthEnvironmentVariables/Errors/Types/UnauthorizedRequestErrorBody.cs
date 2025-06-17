@@ -4,6 +4,7 @@ using SeedBasicAuthEnvironmentVariables.Core;
 
 namespace SeedBasicAuthEnvironmentVariables;
 
+[Serializable]
 public record UnauthorizedRequestErrorBody
 {
     [JsonPropertyName("message")]

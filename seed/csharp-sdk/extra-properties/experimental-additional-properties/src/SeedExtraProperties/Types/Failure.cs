@@ -3,6 +3,7 @@ using SeedExtraProperties.Core;
 
 namespace SeedExtraProperties;
 
+[Serializable]
 public record Failure : IJsonOnDeserialized, IJsonOnSerializing
 {
     [JsonExtensionData]

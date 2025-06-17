@@ -14,7 +14,7 @@ import { Options } from "./parseOptions";
 
 export function generateIr({ req, options }: { req: CodeGeneratorRequest; options: Options }): FileInfo {
     let mergedIr: IntermediateRepresentation | undefined;
-
+  
     const casingsGenerator = constructCasingsGenerator({
         generationLanguage: undefined,
         keywords: undefined,

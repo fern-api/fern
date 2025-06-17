@@ -9,6 +9,7 @@ using SeedUnions.Core;
 namespace SeedUnions;
 
 [JsonConverter(typeof(UnionWithoutKey.JsonConverter))]
+[Serializable]
 public record UnionWithoutKey
 {
     internal UnionWithoutKey(string type, object? value)
@@ -138,6 +139,7 @@ public record UnionWithoutKey
 
     public static implicit operator UnionWithoutKey(UnionWithoutKey.Bar value) => new(value);
 
+    [Serializable]
     internal sealed class JsonConverter : JsonConverter<UnionWithoutKey>
     {
         public override bool CanConvert(global::System.Type typeToConvert) =>
@@ -202,6 +204,7 @@ public record UnionWithoutKey
     /// <summary>
     /// Discriminated union type for foo
     /// </summary>
+    [Serializable]
     public struct Foo
     {
         public Foo(SeedUnions.Foo value)
@@ -219,6 +222,7 @@ public record UnionWithoutKey
     /// <summary>
     /// Discriminated union type for bar
     /// </summary>
+    [Serializable]
     public struct Bar
     {
         public Bar(SeedUnions.Bar value)

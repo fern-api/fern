@@ -3,6 +3,7 @@ using SeedMultiUrlEnvironment.Core;
 
 namespace SeedMultiUrlEnvironment;
 
+[Serializable]
 public record GetPresignedUrlRequest
 {
     [JsonPropertyName("s3Key")]

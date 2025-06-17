@@ -4,6 +4,7 @@ using SeedQueryParameters.Core;
 
 namespace SeedQueryParameters;
 
+[Serializable]
 public record User
 {
     [JsonPropertyName("name")]

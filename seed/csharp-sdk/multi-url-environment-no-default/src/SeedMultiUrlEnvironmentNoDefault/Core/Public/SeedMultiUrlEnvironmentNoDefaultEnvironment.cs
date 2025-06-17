@@ -1,5 +1,6 @@
 namespace SeedMultiUrlEnvironmentNoDefault;
 
+[Serializable]
 public class SeedMultiUrlEnvironmentNoDefaultEnvironment
 {
     public static readonly SeedMultiUrlEnvironmentNoDefaultEnvironment Production =

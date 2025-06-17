@@ -4,6 +4,7 @@ using SeedUnions.Core;
 
 namespace SeedUnions;
 
+[Serializable]
 public record PrimaryBlock
 {
     [JsonPropertyName("value")]

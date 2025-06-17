@@ -4,6 +4,7 @@ using SeedObjectsWithImports.Core;
 
 namespace SeedObjectsWithImports.Commons;
 
+[Serializable]
 public record Metadata
 {
     [JsonPropertyName("id")]
