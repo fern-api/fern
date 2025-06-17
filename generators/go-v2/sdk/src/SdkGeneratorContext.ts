@@ -5,6 +5,7 @@ import { AbstractGoGeneratorContext, FileLocation, go } from "@fern-api/go-ast";
 import { GoProject } from "@fern-api/go-base";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
+import { GithubOutputMode, OutputMode } from "@fern-fern/generator-exec-sdk/api";
 import {
     HttpEndpoint,
     HttpMethod,
@@ -20,6 +21,7 @@ import { GoGeneratorAgent } from "./GoGeneratorAgent";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { EndpointGenerator } from "./endpoint/EndpointGenerator";
 import { Caller } from "./internal/Caller";
+import { ModuleConfig } from "./module/ModuleConfig";
 import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder";
 
 export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomConfigSchema> {
@@ -68,6 +70,42 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
 
     public getMethodName(name: Name): string {
         return name.pascalCase.unsafeName;
+    }
+
+    public getModuleConfig({ outputMode }: { outputMode: OutputMode }): ModuleConfig | undefined {
+        const githubConfig = this.getGithubOutputMode({ outputMode });
+        if (githubConfig == null && this.customConfig.module == null) {
+            return undefined;
+        }
+        if (githubConfig == null) {
+            return this.customConfig.module;
+        }
+        if (this.customConfig.module == null) {
+            // A GitHub configuration was provided, so the module config should use
+            // the GitHub configuration's repository url.
+            const modulePath = githubConfig.repoUrl.replace("https://", "");
+            return {
+                ...ModuleConfig.DEFAULT,
+                path: modulePath
+            };
+        }
+        return {
+            path: this.customConfig.module.path,
+            version: this.customConfig.module.version,
+            imports: this.customConfig.module.imports ?? ModuleConfig.DEFAULT.imports
+        };
+    }
+
+    private getGithubOutputMode({ outputMode }: { outputMode: OutputMode }): GithubOutputMode | undefined {
+        switch (outputMode.type) {
+            case "github":
+                return outputMode;
+            case "publish":
+            case "downloadFiles":
+                return undefined;
+            default:
+                assertNever(outputMode);
+        }
     }
 
     public getRootClientDirectory(): RelativeFilePath {

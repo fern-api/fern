@@ -9,6 +9,7 @@ import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
+import { ModuleConfigWriter } from "./module/ModuleConfigWriter";
 import { RawClientGenerator } from "./raw-client/RawClientGenerator";
 import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest";
 import { convertIr } from "./utils/convertIr";
@@ -50,6 +51,7 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
     }
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
+        this.writeGoMod(context);
         this.generateRawClients(context);
 
         if (this.shouldGenerateReadme(context)) {
@@ -65,6 +67,17 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
         }
 
         await context.project.persist();
+    }
+
+    private writeGoMod(context: SdkGeneratorContext) {
+        const moduleConfig = context.getModuleConfig({ outputMode: context.config.output.mode });
+        if (moduleConfig == null) {
+            return;
+        }
+        const moduleConfigWriter = new ModuleConfigWriter({ context, moduleConfig });
+
+        // We write the go.mod file to disk upfront so that 'go fmt' can be run on the project.
+        context.project.writeRawFile(moduleConfigWriter.generate());
     }
 
     private generateRawClients(context: SdkGeneratorContext) {
