@@ -308,6 +308,7 @@
     "useBytesForBinaryResponse": false,
     "respectForwardCompatibleEnums": false,
     "additionalPropertiesDefaultsTo": false,
-    "typeDatesAsStrings": true
+    "typeDatesAsStrings": true,
+    "preserveSingleSchemaOneOf": false
   }
 }

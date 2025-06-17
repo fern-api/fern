@@ -23,7 +23,7 @@
               "pagination": undefined,
               "path": "/test",
               "request": {
-                "body": "OuterOneOfZero",
+                "body": "OuterOneOf",
                 "content-type": "application/json",
               },
               "source": {
@@ -36,9 +36,21 @@
           },
         },
         "types": {
+          "InnerOneOf": {
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              "InnerOneOfValue",
+            ],
+          },
           "InnerOneOfValue": {
             "docs": undefined,
-            "inline": undefined,
+            "inline": true,
             "properties": {
               "value": "string",
             },
@@ -46,7 +58,18 @@
               "openapi": "../openapi.yml",
             },
           },
-          "OuterOneOfZero": "InnerOneOfValue",
+          "OuterOneOf": {
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              "InnerOneOf",
+            ],
+          },
         },
       },
       "rawContents": "service:
@@ -60,7 +83,7 @@
       source:
         openapi: ../openapi.yml
       request:
-        body: OuterOneOfZero
+        body: OuterOneOf
         content-type: application/json
       examples:
         - request:
@@ -68,10 +91,22 @@
   source:
     openapi: ../openapi.yml
 types:
-  OuterOneOfZero: InnerOneOfValue
+  OuterOneOf:
+    discriminated: false
+    union:
+      - InnerOneOf
+    source:
+      openapi: ../openapi.yml
   InnerOneOfValue:
     properties:
       value: string
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  InnerOneOf:
+    discriminated: false
+    union:
+      - InnerOneOfValue
     source:
       openapi: ../openapi.yml
 ",

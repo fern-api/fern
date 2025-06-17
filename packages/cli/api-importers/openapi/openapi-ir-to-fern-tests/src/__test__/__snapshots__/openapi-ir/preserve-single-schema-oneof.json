@@ -71,41 +71,69 @@
   "groupedSchemas": {
     "rootSchemas": {
       "OuterOneOf": {
-        "generatedName": "OuterOneOfZero",
-        "schema": "InnerOneOf",
-        "source": {
-          "file": "../openapi.yml",
-          "type": "openapi"
+        "value": {
+          "generatedName": "OuterOneOf",
+          "schemas": [
+            {
+              "generatedName": "OuterOneOfZero",
+              "schema": "InnerOneOf",
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            }
+          ],
+          "groupName": [],
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "undiscriminated"
         },
-        "type": "reference"
+        "type": "oneOf"
       },
       "InnerOneOf": {
-        "allOf": [],
-        "properties": [
-          {
-            "conflict": {},
-            "generatedName": "innerOneOfValueValue",
-            "key": "value",
-            "schema": {
-              "schema": {
-                "type": "string"
-              },
-              "generatedName": "InnerOneOfValueValue",
+        "value": {
+          "generatedName": "InnerOneOf",
+          "schemas": [
+            {
+              "allOf": [],
+              "properties": [
+                {
+                  "conflict": {},
+                  "generatedName": "innerOneOfValueValue",
+                  "key": "value",
+                  "schema": {
+                    "schema": {
+                      "type": "string"
+                    },
+                    "generatedName": "InnerOneOfValueValue",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "audiences": []
+                }
+              ],
+              "allOfPropertyConflicts": [],
+              "generatedName": "InnerOneOfValue",
               "groupName": [],
-              "type": "primitive"
-            },
-            "audiences": []
-          }
-        ],
-        "allOfPropertyConflicts": [],
-        "generatedName": "InnerOneOfValue",
-        "groupName": [],
-        "additionalProperties": false,
-        "source": {
-          "file": "../openapi.yml",
-          "type": "openapi"
+              "additionalProperties": false,
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "object"
+            }
+          ],
+          "groupName": [],
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "undiscriminated"
         },
-        "type": "object"
+        "type": "oneOf"
       }
     },
     "namespacedSchemas": {}
