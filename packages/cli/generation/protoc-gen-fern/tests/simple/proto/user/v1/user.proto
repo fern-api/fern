@@ -11,4 +11,5 @@ message Outer {
     string type2 = 2;
     Inner innermessage = 3;
   }
+  string type4 = 4;
 }

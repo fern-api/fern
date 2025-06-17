@@ -203,6 +203,40 @@
           {
             "name": {
               "name": {
+                "originalName": "type4",
+                "camelCase": {
+                  "unsafeName": "type4",
+                  "safeName": "type4"
+                },
+                "snakeCase": {
+                  "unsafeName": "type_4",
+                  "safeName": "type_4"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TYPE_4",
+                  "safeName": "TYPE_4"
+                },
+                "pascalCase": {
+                  "unsafeName": "Type4",
+                  "safeName": "Type4"
+                }
+              },
+              "wireValue": "type4"
+            },
+            "valueType": {
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "default": "",
+                  "type": "string"
+                }
+              },
+              "type": "primitive"
+            }
+          },
+          {
+            "name": {
+              "name": {
                 "originalName": "message",
                 "camelCase": {
                   "unsafeName": "message",
