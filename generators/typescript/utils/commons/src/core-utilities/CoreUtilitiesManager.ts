@@ -42,6 +42,7 @@ export class CoreUtilitiesManager {
     private referencedCoreUtilities: Record<CoreUtilityName, CoreUtility.Manifest> = {};
     private authOverrides: Record<RelativeFilePath, string> = {};
     private streamType: "wrapper" | "web";
+
     private relativeTestPath: string;
 
     constructor({ streamType, relativeTestPath = DEFAULT_TEST_PATH }: { streamType: "wrapper" | "web"; relativeTestPath?: string }) {

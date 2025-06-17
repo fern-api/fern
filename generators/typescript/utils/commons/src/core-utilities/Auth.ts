@@ -150,4 +150,5 @@ export class AuthImpl extends CoreUtility implements Auth {
 
         return `${this.packagePath}/tests`;
     }
+
 }

@@ -1,6 +1,7 @@
 import { ts } from "ts-morph";
 
 import { CoreUtility } from "./CoreUtility";
+
 import { FetcherImpl } from "./Fetcher";
 
 const DEFAULT_PACKAGE_PATH = "src";
@@ -43,7 +44,7 @@ export class PaginationImpl extends CoreUtility implements Pagination {
             }
         };
     }
-    
+
     public Page = {
         _getReferenceToType: this.withExportedName(
             "Page",
