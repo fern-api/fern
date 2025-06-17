@@ -4,6 +4,8 @@ import com.fern.ir.model.ir.IntermediateRepresentation;
 import com.fern.ir.model.types.DeclaredTypeName;
 import com.fern.java.utils.KeyWordUtils;
 import com.squareup.javapoet.ClassName;
+import com.squareup.javapoet.TypeVariableName;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -67,6 +69,14 @@ public abstract class AbstractPoetClassNameFactory {
 
     public final ClassName getStreamClassName() {
         return ClassName.get(getCorePackage(), "Stream");
+    }
+
+    public final ClassName getStreamOptionsClassName() {
+        return ClassName.get(getCorePackage(), "Stream.Options");
+    }
+
+    public final ClassName getStreamTypeClassName() {
+        return ClassName.get(getCorePackage(), "Stream.StreamType");
     }
 
     public final ClassName getQueryStringMapperClassName() {

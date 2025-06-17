@@ -610,8 +610,11 @@ public abstract class AbstractHttpResponseParserGenerator {
                     clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, bodyType);
             endpointMethodBuilder.returns(ParameterizedTypeName.get(ClassName.get(Iterable.class), bodyTypeName));
 
-            String terminator =
+            String delimiter =
                     streaming.visit(new GetStreamingResponseTerminator()).orElse("\n");
+            String prefix = ":data ";
+            String terminator = "[DONE]";
+            Object streamType =  streaming.isSse()?0:1;
 
             handleSuccessfulResult(
                     httpResponseBuilder,
@@ -622,8 +625,9 @@ public abstract class AbstractHttpResponseParserGenerator {
                             bodyTypeName,
                             clientGeneratorContext.getPoetClassNameFactory().getResponseBodyReaderClassName(),
                             variables.getResponseName(),
-                            terminator));
-
+                            clientGeneratorContext.getPoetClassNameFactory().getStreamOptionsClassName(),
+                            prefix,delimiter,terminator, streamType
+                            ));
             return null;
         }
 
