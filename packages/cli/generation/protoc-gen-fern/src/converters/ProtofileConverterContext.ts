@@ -59,6 +59,10 @@ export class ProtofileConverterContext extends AbstractConverterContext<FileDesc
             packageParts.shift();
         }
 
+        if (typeParts.length === 0) {
+            return typeName;
+        }
+
         return typeParts.join(".");
     }
 
