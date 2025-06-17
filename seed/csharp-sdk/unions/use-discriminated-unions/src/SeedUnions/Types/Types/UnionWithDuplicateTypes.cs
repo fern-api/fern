@@ -9,6 +9,7 @@ using SeedUnions.Core;
 namespace SeedUnions;
 
 [JsonConverter(typeof(UnionWithDuplicateTypes.JsonConverter))]
+[Serializable]
 public record UnionWithDuplicateTypes
 {
     internal UnionWithDuplicateTypes(string type, object? value)
@@ -144,6 +145,7 @@ public record UnionWithDuplicateTypes
     public static implicit operator UnionWithDuplicateTypes(UnionWithDuplicateTypes.Foo2 value) =>
         new(value);
 
+    [Serializable]
     internal sealed class JsonConverter : JsonConverter<UnionWithDuplicateTypes>
     {
         public override bool CanConvert(global::System.Type typeToConvert) =>
@@ -208,6 +210,7 @@ public record UnionWithDuplicateTypes
     /// <summary>
     /// Discriminated union type for foo1
     /// </summary>
+    [Serializable]
     public struct Foo1
     {
         public Foo1(SeedUnions.Foo value)
@@ -225,6 +228,7 @@ public record UnionWithDuplicateTypes
     /// <summary>
     /// Discriminated union type for foo2
     /// </summary>
+    [Serializable]
     public struct Foo2
     {
         public Foo2(SeedUnions.Foo value)

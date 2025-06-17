@@ -7,6 +7,7 @@ namespace SeedLicense;
 /// <summary>
 /// A simple type with just a name.
 /// </summary>
+[Serializable]
 public record Type
 {
     [JsonPropertyName("name")]

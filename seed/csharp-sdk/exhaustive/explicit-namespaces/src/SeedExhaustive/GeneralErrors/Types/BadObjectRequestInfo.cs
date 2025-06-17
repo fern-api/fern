@@ -4,6 +4,7 @@ using SeedExhaustive.Core;
 
 namespace SeedExhaustive.GeneralErrors;
 
+[Serializable]
 public record BadObjectRequestInfo
 {
     [JsonPropertyName("message")]

@@ -4,6 +4,7 @@ using SeedErrorProperty.Core;
 
 namespace SeedErrorProperty;
 
+[Serializable]
 public record PropertyBasedErrorTestBody
 {
     [JsonPropertyName("message")]

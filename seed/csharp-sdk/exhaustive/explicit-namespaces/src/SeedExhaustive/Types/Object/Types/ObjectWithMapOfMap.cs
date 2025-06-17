@@ -4,6 +4,7 @@ using SeedExhaustive.Core;
 
 namespace SeedExhaustive.Types.Object;
 
+[Serializable]
 public record ObjectWithMapOfMap
 {
     [JsonPropertyName("map")]

@@ -1,10 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using SeedSingleUrlEnvironmentDefault.Core;
 
 namespace SeedSingleUrlEnvironmentDefault;
 
+[Serializable]
 public partial class ClientOptions
 {
     /// <summary>

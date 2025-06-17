@@ -4,6 +4,7 @@ using SeedCrossPackageTypeNames.Core;
 
 namespace SeedCrossPackageTypeNames.FolderD;
 
+[Serializable]
 public record Response
 {
     [JsonPropertyName("foo")]

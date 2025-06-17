@@ -4,6 +4,7 @@ using SeedFileUpload.Core;
 
 namespace SeedFileUpload;
 
+[Serializable]
 public record MyObject
 {
     [JsonPropertyName("foo")]

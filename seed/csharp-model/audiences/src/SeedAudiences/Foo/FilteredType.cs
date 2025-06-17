@@ -4,6 +4,7 @@ using SeedAudiences.Core;
 
 namespace SeedAudiences;
 
+[Serializable]
 public record FilteredType
 {
     [JsonPropertyName("public_property")]

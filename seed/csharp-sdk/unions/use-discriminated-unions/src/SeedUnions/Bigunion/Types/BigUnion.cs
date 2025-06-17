@@ -9,6 +9,7 @@ using SeedUnions.Core;
 namespace SeedUnions;
 
 [JsonConverter(typeof(BigUnion.JsonConverter))]
+[Serializable]
 public record BigUnion
 {
     internal BigUnion(string type, object? value)
@@ -1311,6 +1312,7 @@ public record BigUnion
     /// <summary>
     /// Base properties for the discriminated union
     /// </summary>
+    [Serializable]
     internal record BaseProperties
     {
         [JsonPropertyName("id")]
@@ -1323,6 +1325,7 @@ public record BigUnion
         public DateTime? ArchivedAt { get; set; }
     }
 
+    [Serializable]
     internal sealed class JsonConverter : JsonConverter<BigUnion>
     {
         public override bool CanConvert(global::System.Type typeToConvert) =>
@@ -1494,6 +1497,7 @@ public record BigUnion
     /// <summary>
     /// Discriminated union type for normalSweet
     /// </summary>
+    [Serializable]
     public struct NormalSweet
     {
         public NormalSweet(SeedUnions.NormalSweet value)
@@ -1511,6 +1515,7 @@ public record BigUnion
     /// <summary>
     /// Discriminated union type for thankfulFactor
     /// </summary>
+    [Serializable]
     public struct ThankfulFactor
     {
         public ThankfulFactor(SeedUnions.ThankfulFactor value)
@@ -1529,6 +1534,7 @@ public record BigUnion
     /// <summary>
     /// Discriminated union type for jumboEnd
     /// </summary>
+    [Serializable]
     public struct JumboEnd
     {
         public JumboEnd(SeedUnions.JumboEnd value)
@@ -1546,6 +1552,7 @@ public record BigUnion
     /// <summary>
     /// Discriminated union type for hastyPain
     /// </summary>
+    [Serializable]
     public struct HastyPain
     {
         public HastyPain(SeedUnions.HastyPain value)
@@ -1563,6 +1570,7 @@ public record BigUnion
     /// <summary>
     /// Discriminated union type for mistySnow
     /// </summary>
+    [Serializable]
     public struct MistySnow
     {
         public MistySnow(SeedUnions.MistySnow value)
@@ -1580,6 +1588,7 @@ public record BigUnion
     /// <summary>
     /// Discriminated union type for distinctFailure
     /// </summary>
+    [Serializable]
     public struct DistinctFailure
     {
         public DistinctFailure(SeedUnions.DistinctFailure value)
@@ -1598,6 +1607,7 @@ public record BigUnion
     /// <summary>
     /// Discriminated union type for practicalPrinciple
     /// </summary>
+    [Serializable]
     public struct PracticalPrinciple
     {
         public PracticalPrinciple(SeedUnions.PracticalPrinciple value)
@@ -1616,6 +1626,7 @@ public record BigUnion
     /// <summary>
     /// Discriminated union type for limpingStep
     /// </summary>
+    [Serializable]
     public struct LimpingStep
     {
         public LimpingStep(SeedUnions.LimpingStep value)
@@ -1633,6 +1644,7 @@ public record BigUnion
     /// <summary>
     /// Discriminated union type for vibrantExcitement
     /// </summary>
+    [Serializable]
     public struct VibrantExcitement
     {
         public VibrantExcitement(SeedUnions.VibrantExcitement value)
@@ -1651,6 +1663,7 @@ public record BigUnion
     /// <summary>
     /// Discriminated union type for activeDiamond
     /// </summary>
+    [Serializable]
     public struct ActiveDiamond
     {
         public ActiveDiamond(SeedUnions.ActiveDiamond value)
@@ -1668,6 +1681,7 @@ public record BigUnion
     /// <summary>
     /// Discriminated union type for popularLimit
     /// </summary>
+    [Serializable]
     public struct PopularLimit
     {
         public PopularLimit(SeedUnions.PopularLimit value)
@@ -1685,6 +1699,7 @@ public record BigUnion
     /// <summary>
     /// Discriminated union type for falseMirror
     /// </summary>
+    [Serializable]
     public struct FalseMirror
     {
         public FalseMirror(SeedUnions.FalseMirror value)
@@ -1702,6 +1717,7 @@ public record BigUnion
     /// <summary>
     /// Discriminated union type for primaryBlock
     /// </summary>
+    [Serializable]
     public struct PrimaryBlock
     {
         public PrimaryBlock(SeedUnions.PrimaryBlock value)
@@ -1719,6 +1735,7 @@ public record BigUnion
     /// <summary>
     /// Discriminated union type for rotatingRatio
     /// </summary>
+    [Serializable]
     public struct RotatingRatio
     {
         public RotatingRatio(SeedUnions.RotatingRatio value)
@@ -1736,6 +1753,7 @@ public record BigUnion
     /// <summary>
     /// Discriminated union type for colorfulCover
     /// </summary>
+    [Serializable]
     public struct ColorfulCover
     {
         public ColorfulCover(SeedUnions.ColorfulCover value)
@@ -1753,6 +1771,7 @@ public record BigUnion
     /// <summary>
     /// Discriminated union type for disloyalValue
     /// </summary>
+    [Serializable]
     public struct DisloyalValue
     {
         public DisloyalValue(SeedUnions.DisloyalValue value)
@@ -1770,6 +1789,7 @@ public record BigUnion
     /// <summary>
     /// Discriminated union type for gruesomeCoach
     /// </summary>
+    [Serializable]
     public struct GruesomeCoach
     {
         public GruesomeCoach(SeedUnions.GruesomeCoach value)
@@ -1787,6 +1807,7 @@ public record BigUnion
     /// <summary>
     /// Discriminated union type for totalWork
     /// </summary>
+    [Serializable]
     public struct TotalWork
     {
         public TotalWork(SeedUnions.TotalWork value)
@@ -1804,6 +1825,7 @@ public record BigUnion
     /// <summary>
     /// Discriminated union type for harmoniousPlay
     /// </summary>
+    [Serializable]
     public struct HarmoniousPlay
     {
         public HarmoniousPlay(SeedUnions.HarmoniousPlay value)
@@ -1822,6 +1844,7 @@ public record BigUnion
     /// <summary>
     /// Discriminated union type for uniqueStress
     /// </summary>
+    [Serializable]
     public struct UniqueStress
     {
         public UniqueStress(SeedUnions.UniqueStress value)
@@ -1839,6 +1862,7 @@ public record BigUnion
     /// <summary>
     /// Discriminated union type for unwillingSmoke
     /// </summary>
+    [Serializable]
     public struct UnwillingSmoke
     {
         public UnwillingSmoke(SeedUnions.UnwillingSmoke value)
@@ -1857,6 +1881,7 @@ public record BigUnion
     /// <summary>
     /// Discriminated union type for frozenSleep
     /// </summary>
+    [Serializable]
     public struct FrozenSleep
     {
         public FrozenSleep(SeedUnions.FrozenSleep value)
@@ -1874,6 +1899,7 @@ public record BigUnion
     /// <summary>
     /// Discriminated union type for diligentDeal
     /// </summary>
+    [Serializable]
     public struct DiligentDeal
     {
         public DiligentDeal(SeedUnions.DiligentDeal value)
@@ -1891,6 +1917,7 @@ public record BigUnion
     /// <summary>
     /// Discriminated union type for attractiveScript
     /// </summary>
+    [Serializable]
     public struct AttractiveScript
     {
         public AttractiveScript(SeedUnions.AttractiveScript value)
@@ -1909,6 +1936,7 @@ public record BigUnion
     /// <summary>
     /// Discriminated union type for hoarseMouse
     /// </summary>
+    [Serializable]
     public struct HoarseMouse
     {
         public HoarseMouse(SeedUnions.HoarseMouse value)
@@ -1926,6 +1954,7 @@ public record BigUnion
     /// <summary>
     /// Discriminated union type for circularCard
     /// </summary>
+    [Serializable]
     public struct CircularCard
     {
         public CircularCard(SeedUnions.CircularCard value)
@@ -1943,6 +1972,7 @@ public record BigUnion
     /// <summary>
     /// Discriminated union type for potableBad
     /// </summary>
+    [Serializable]
     public struct PotableBad
     {
         public PotableBad(SeedUnions.PotableBad value)
@@ -1960,6 +1990,7 @@ public record BigUnion
     /// <summary>
     /// Discriminated union type for triangularRepair
     /// </summary>
+    [Serializable]
     public struct TriangularRepair
     {
         public TriangularRepair(SeedUnions.TriangularRepair value)
@@ -1978,6 +2009,7 @@ public record BigUnion
     /// <summary>
     /// Discriminated union type for gaseousRoad
     /// </summary>
+    [Serializable]
     public struct GaseousRoad
     {
         public GaseousRoad(SeedUnions.GaseousRoad value)

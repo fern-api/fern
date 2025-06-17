@@ -9,6 +9,7 @@ namespace SeedMultiLineDocs;
 ///   - createUser
 ///   - getUser
 /// </summary>
+[Serializable]
 public record User
 {
     [JsonPropertyName("id")]

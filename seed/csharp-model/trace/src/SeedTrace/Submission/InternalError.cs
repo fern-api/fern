@@ -4,6 +4,7 @@ using SeedTrace.Core;
 
 namespace SeedTrace;
 
+[Serializable]
 public record InternalError
 {
     [JsonPropertyName("exceptionInfo")]

@@ -5,6 +5,7 @@ using SeedPagination.Core;
 
 namespace SeedPagination;
 
+[Serializable]
 public record MultipleFilterSearchRequest
 {
     [JsonPropertyName("operator")]

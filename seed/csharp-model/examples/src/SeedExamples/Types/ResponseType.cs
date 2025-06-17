@@ -5,6 +5,7 @@ using SeedExamples.Core;
 
 namespace SeedExamples;
 
+[Serializable]
 public record ResponseType
 {
     [JsonPropertyName("type")]

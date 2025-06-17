@@ -4,6 +4,7 @@ using SeedExtraProperties.Core;
 
 namespace SeedExtraProperties;
 
+[Serializable]
 public record Failure
 {
     [JsonPropertyName("status")]

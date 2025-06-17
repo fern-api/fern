@@ -9,6 +9,7 @@ using SeedUnions.Core;
 namespace SeedUnions;
 
 [JsonConverter(typeof(UnionWithTime.JsonConverter))]
+[Serializable]
 public record UnionWithTime
 {
     internal UnionWithTime(string type, object? value)
@@ -181,6 +182,7 @@ public record UnionWithTime
 
     public static implicit operator UnionWithTime(UnionWithTime.Datetime value) => new(value);
 
+    [Serializable]
     internal sealed class JsonConverter : JsonConverter<UnionWithTime>
     {
         public override bool CanConvert(global::System.Type typeToConvert) =>
@@ -254,6 +256,7 @@ public record UnionWithTime
     /// <summary>
     /// Discriminated union type for value
     /// </summary>
+    [Serializable]
     public struct ValueInner
     {
         public ValueInner(int value)
@@ -271,6 +274,7 @@ public record UnionWithTime
     /// <summary>
     /// Discriminated union type for date
     /// </summary>
+    [Serializable]
     public struct Date
     {
         public Date(DateOnly value)
@@ -288,6 +292,7 @@ public record UnionWithTime
     /// <summary>
     /// Discriminated union type for datetime
     /// </summary>
+    [Serializable]
     public struct Datetime
     {
         public Datetime(DateTime value)

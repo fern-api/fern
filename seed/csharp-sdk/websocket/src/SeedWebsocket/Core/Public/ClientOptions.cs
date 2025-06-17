@@ -1,10 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using SeedWebsocket.Core;
 
 namespace SeedWebsocket;
 
+[Serializable]
 public partial class ClientOptions
 {
     /// <summary>

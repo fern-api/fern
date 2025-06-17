@@ -2,6 +2,7 @@ using SeedExhaustive.Core;
 
 namespace SeedExhaustive.Endpoints;
 
+[Serializable]
 public record GetWithInlinePath
 {
     /// <inheritdoc />

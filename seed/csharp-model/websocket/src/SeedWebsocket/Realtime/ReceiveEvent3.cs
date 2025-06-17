@@ -4,6 +4,7 @@ using SeedWebsocket.Core;
 
 namespace SeedWebsocket;
 
+[Serializable]
 public record ReceiveEvent3
 {
     [JsonPropertyName("receiveText3")]

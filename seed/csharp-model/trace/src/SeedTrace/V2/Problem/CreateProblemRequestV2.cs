@@ -5,6 +5,7 @@ using SeedTrace.Core;
 
 namespace SeedTrace.V2;
 
+[Serializable]
 public record CreateProblemRequestV2
 {
     [JsonPropertyName("problemName")]

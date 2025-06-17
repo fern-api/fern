@@ -7,6 +7,7 @@ namespace SeedValidation;
 /// <summary>
 /// Defines properties with default values and validation rules.
 /// </summary>
+[Serializable]
 public record Type
 {
     [JsonPropertyName("decimal")]

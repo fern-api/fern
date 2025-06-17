@@ -3,6 +3,7 @@ using SeedOauthClientCredentialsEnvironmentVariables.Core;
 
 namespace SeedOauthClientCredentialsEnvironmentVariables;
 
+[Serializable]
 public record RefreshTokenRequest
 {
     [JsonPropertyName("client_id")]

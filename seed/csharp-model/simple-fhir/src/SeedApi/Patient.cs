@@ -5,6 +5,7 @@ using SeedApi.Core;
 
 namespace SeedApi;
 
+[Serializable]
 public record Patient
 {
     [JsonPropertyName("resource_type")]

@@ -1,10 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using SeedObjectsWithImports.Core;
 
 namespace SeedObjectsWithImports;
 
+[Serializable]
 public partial class ClientOptions
 {
     /// <summary>

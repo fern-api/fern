@@ -4,6 +4,7 @@ using SeedTrace.Core;
 
 namespace SeedTrace.V2.V3;
 
+[Serializable]
 public record LightweightProblemInfoV2
 {
     [JsonPropertyName("problemId")]

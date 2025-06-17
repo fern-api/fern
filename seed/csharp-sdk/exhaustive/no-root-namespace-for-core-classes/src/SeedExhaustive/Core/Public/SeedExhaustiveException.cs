@@ -1,5 +1,3 @@
-using System;
-
 namespace SeedExhaustive.Core;
 
 /// <summary>
