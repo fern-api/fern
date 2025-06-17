@@ -1,6 +1,6 @@
 import { FieldDescriptorProto } from "@bufbuild/protobuf/wkt";
 
-import { ObjectProperty, Type, TypeId, TypeReference } from "@fern-api/ir-sdk";
+import { ObjectProperty } from "@fern-api/ir-sdk";
 
 import { ProtofileConverterContext } from "../ProtofileConverterContext";
 import { FieldConverter } from "../message/FieldConverter";
@@ -32,7 +32,6 @@ export function convertFields({
         });
         const convertedField = fieldConverter.convert();
         if (convertedField != null) {
-
             const convertedFieldObjectProperty: ObjectProperty = {
                 name: context.casingsGenerator.generateNameAndWireValue({
                     name: field.name,
@@ -43,7 +42,7 @@ export function convertFields({
                 availability: undefined,
                 propertyAccess: undefined,
                 v2Examples: undefined
-            }
+            };
 
             // Check if oneofIndex is actually set vs default value of 0
             const hasOneofIndex = Object.prototype.hasOwnProperty.call(field, "oneofIndex");
@@ -51,6 +50,7 @@ export function convertFields({
                 if (oneOfFields[field.oneofIndex] == null) {
                     oneOfFields[field.oneofIndex] = [];
                 }
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                 oneOfFields[field.oneofIndex]!.push(field);
                 continue;
             }

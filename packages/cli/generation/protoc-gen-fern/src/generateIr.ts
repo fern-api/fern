@@ -25,9 +25,11 @@ export function generateIr({ req, options }: { req: CodeGeneratorRequest; option
         const protoFileConverter = new ProtofileConverter({
             context: new ProtofileConverterContext({
                 spec: protoFile,
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 settings: {} as any,
                 errorCollector: new ErrorCollector({
                     logger: {
+                        // eslint-disable-next-line @typescript-eslint/no-empty-function
                         log: (level, ...args) => {}
                     },
                     relativeFilepathToSpec: undefined

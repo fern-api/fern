@@ -66,8 +66,6 @@ export class MessageConverter extends AbstractConverter<ProtofileConverterContex
         }
         // Step 3: Convert all oneofs
         for (const [index, oneof] of this.message.oneofDecl.entries()) {
-            // TODO: convert oneofs
-
             const oneOfFieldConverter = new OneOfFieldConverter({
                 context: this.context,
                 breadcrumbs: this.breadcrumbs,

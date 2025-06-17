@@ -1,7 +1,7 @@
 import { EnumDescriptorProto } from "@bufbuild/protobuf/wkt";
 
 import { Type } from "@fern-api/ir-sdk";
-import { AbstractConverter, AbstractConverterContext } from "@fern-api/v2-importer-commons";
+import { AbstractConverter } from "@fern-api/v2-importer-commons";
 
 import { ProtofileConverterContext } from "../ProtofileConverterContext";
 
@@ -25,13 +25,11 @@ export class EnumConverter extends AbstractConverter<ProtofileConverterContext, 
 
     public convert(): EnumConverter.Output | undefined {
         const values = this.enum.value.map((value) => {
-            const stringValue = value.toString();
             const name = value.name;
-
             return {
                 name: this.context.casingsGenerator.generateNameAndWireValue({
                     name,
-                    wireValue: stringValue
+                    wireValue: name
                 }),
                 docs: undefined,
                 availability: undefined,
