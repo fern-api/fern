@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix handling of legacy webhook examples snippets.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-06-17"
+  version: 0.64.11
+
+- changelogEntry:
+    - summary: |
         Add configuration option to disable snippets in docs generation, speeding up generation time.
       type: feat
   irVersion: 58
