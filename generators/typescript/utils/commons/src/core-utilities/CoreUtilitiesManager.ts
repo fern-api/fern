@@ -1,4 +1,4 @@
-import { cp, mkdir, writeFile } from "fs/promises";
+import { cp, mkdir, writeFile, readFile } from "fs/promises";
 import { glob } from "glob";
 import path from "path";
 import { SourceFile } from "ts-morph";
@@ -78,13 +78,13 @@ export class CoreUtilitiesManager {
 
         return {
             zurg: new ZurgImpl({ getReferenceToExport }),
-            fetcher: new FetcherImpl({ getReferenceToExport, packagePath: relativePackagePath }),
+            fetcher: new FetcherImpl({ getReferenceToExport }),
             stream: new StreamImpl({ getReferenceToExport }),
-            auth: new AuthImpl({ getReferenceToExport, packagePath: relativePackagePath }),
+            auth: new AuthImpl({ getReferenceToExport }),
             callbackQueue: new CallbackQueueImpl({ getReferenceToExport }),
             formDataUtils: new FormDataUtilsImpl({ getReferenceToExport }),
             runtime: new RuntimeImpl({ getReferenceToExport }),
-            pagination: new PaginationImpl({ getReferenceToExport, packagePath: relativePackagePath }),
+            pagination: new PaginationImpl({ getReferenceToExport }),
             utils: new UtilsImpl({ getReferenceToExport }),
             websocket: new WebsocketImpl({ getReferenceToExport })
         };
@@ -161,6 +161,17 @@ export class CoreUtilitiesManager {
 
                 // Copy the file
                 await cp(sourcePath, destPath);
+
+                // Update import paths after copying (customize findAndReplace as needed)
+                if (isCustomPackagePath) {
+                    console.log("Updating import paths for", destPath);
+                    const findAndReplace: Record<string, string> = {
+                        [DEFAULT_PACKAGE_PATH]: this.getPackagePathImport(),
+                        [DEFAULT_TEST_PATH]: this.getTestPathImport()
+                    };
+
+                    await this.updateImportPaths(destPath, findAndReplace);
+                }
             })
         );
 
@@ -173,6 +184,15 @@ export class CoreUtilitiesManager {
                 })
             );
         }
+    }
+
+    // Helper to update import paths in a file
+    private async updateImportPaths(filePath: string, findAndReplace: Record<string, string>) {
+        let contents = await readFile(filePath, "utf8");
+        for (const [find, replace] of Object.entries(findAndReplace)) {
+            contents = contents.replaceAll(find, replace);
+        }
+        await writeFile(filePath, contents);
     }
 
     public addAuthOverride({ filepath, content }: { filepath: RelativeFilePath; content: string }): void {
@@ -191,13 +211,7 @@ export class CoreUtilitiesManager {
         }
     }
 
-    private createGetReferenceToExport({
-        sourceFile,
-        importsManager,
-        exportsManager,
-        relativePackagePath,
-        relativeTestPath
-    }: CoreUtilitiesManager.getCoreUtilities.Args) {
+    private createGetReferenceToExport({ sourceFile, importsManager, exportsManager }: CoreUtilitiesManager.getCoreUtilities.Args) {
         return ({ manifest, exportedName }: { manifest: CoreUtility.Manifest; exportedName: string }) => {
             this.addManifestAndDependencies(manifest);
             return getReferenceToExportViaNamespaceImport({
@@ -217,5 +231,27 @@ export class CoreUtilitiesManager {
                 exportsManager
             });
         };
+    }
+
+    private getPackagePathImport(): string {
+        if (this.relativePackagePath === DEFAULT_PACKAGE_PATH) {
+            return DEFAULT_PACKAGE_PATH;
+        }
+
+        const levelsOfNesting = this.relativePackagePath.split("/").length;
+        const path = "../".repeat(levelsOfNesting);
+
+        return `${path}${this.relativePackagePath}`;
+    }
+
+    private getTestPathImport(): string {
+        if (this.relativeTestPath === DEFAULT_TEST_PATH) {
+            return DEFAULT_TEST_PATH;
+        }
+
+        const levelsOfNesting = this.relativeTestPath.split("/").length + 1;
+        const path = "../".repeat(levelsOfNesting);
+
+        return `${path}${this.relativeTestPath}`;
     }
 }

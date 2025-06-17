@@ -66,6 +66,7 @@ fixtures:
   exhaustive:
     - customConfig:
         packagePath: src/test-packagePath
+    # - customConfig: null
       outputFolder: package-path
     - customConfig: null
       outputFolder: no-custom-config

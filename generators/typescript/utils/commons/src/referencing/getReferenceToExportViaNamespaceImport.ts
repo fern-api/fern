@@ -15,9 +15,7 @@ export function getReferenceToExportViaNamespaceImport({
     importsManager,
     exportsManager,
     referencedIn,
-    subImport = [],
-    relativePackagePath,
-    relativeTestPath
+    subImport = []
 }: {
     exportedName: string;
     filepathToNamespaceImport: ExportedFilePath;
@@ -27,8 +25,6 @@ export function getReferenceToExportViaNamespaceImport({
     exportsManager: ExportsManager;
     referencedIn: SourceFile;
     subImport?: string[];
-    relativePackagePath: string;
-    relativeTestPath: string;
 }): Reference {
     const addImport = () => {
         importsManager.addImport(

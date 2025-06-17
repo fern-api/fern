@@ -133,12 +133,12 @@ export class JestTestGenerator {
     public get scripts(): Record<string, string> {
         const scripts: Record<string, string> = {};
         if (this.writeUnitTests) {
-            scripts.test = "jest tests/unit --passWithNoTests";
+            scripts.test = `jest ${this.relativeTestPath}/unit --passWithNoTests`;
         } else {
             scripts.test = "jest --passWithNoTests";
         }
         if (this.generateWireTests) {
-            scripts["test:wire"] = "jest tests/wire --passWithNoTests";
+            scripts["test:wire"] = `jest ${this.relativeTestPath}/wire --passWithNoTests`;
             scripts["wire:test"] = "yarn test:wire";
         }
         return scripts;

@@ -133,61 +133,49 @@ export declare namespace Fetcher {
     }
 }
 
-export class FetcherImpl extends CoreUtility implements Fetcher {
-    private readonly packagePath: string;
-    public readonly MANIFEST: CoreUtility.Manifest;
-
-    constructor({ getReferenceToExport, packagePath }: CoreUtility.Init & { packagePath: string }) {
-        super({ getReferenceToExport });
-        this.packagePath = packagePath;
-        this.MANIFEST = {
-            name: "fetcher",
-            pathInCoreUtilities: { nameOnDisk: "fetcher", exportDeclaration: { exportAll: true } },
-            addDependencies: (dependencyManager: DependencyManager, options): void => {
-                dependencyManager.addDependency("form-data", "^4.0.0");
-                dependencyManager.addDependency("formdata-node", "^6.0.3");
-                dependencyManager.addDependency("node-fetch", "^2.7.0");
-                dependencyManager.addDependency("qs", "^6.13.1");
-                if (options.streamType === "wrapper") {
-                    dependencyManager.addDependency("readable-stream", "^4.5.2");
-                }
-                dependencyManager.addDependency("@types/qs", "^6.9.17", {
-                    type: DependencyType.DEV
-                });
-                dependencyManager.addDependency("@types/node-fetch", "^2.6.12", {
-                    type: DependencyType.DEV
-                });
-                if (options.streamType === "wrapper") {
-                    dependencyManager.addDependency("@types/readable-stream", "^4.0.18", {
-                        type: DependencyType.DEV
-                    });
-                }
-                dependencyManager.addDependency("webpack", "^5.97.1", {
-                    type: DependencyType.DEV
-                });
-                dependencyManager.addDependency("ts-loader", "^9.5.1", {
-                    type: DependencyType.DEV
-                });
-            },
-            dependsOn: [RuntimeManifest],
-            getFilesPatterns: (options) => {
-                return {
-                    patterns: [
-                        `${this.getRelativePackagePath(packagePath)}/core/fetcher/**`,
-                        `${this.getRelativeTestPath(packagePath)}/unit/fetcher/**`
-                    ],
-                    ignore:
-                        options.streamType !== "wrapper"
-                            ? [
-                                  `${this.getRelativePackagePath(packagePath)}/core/fetcher/stream-wrappers/**`,
-                                  `${this.getRelativeTestPath(packagePath)}/unit/fetcher/stream-wrappers/**`
-                              ]
-                            : undefined
-                };
-            }
+export const MANIFEST: CoreUtility.Manifest = {
+    name: "fetcher",
+    pathInCoreUtilities: { nameOnDisk: "fetcher", exportDeclaration: { exportAll: true } },
+    addDependencies: (dependencyManager: DependencyManager, options): void => {
+        dependencyManager.addDependency("form-data", "^4.0.0");
+        dependencyManager.addDependency("formdata-node", "^6.0.3");
+        dependencyManager.addDependency("node-fetch", "^2.7.0");
+        dependencyManager.addDependency("qs", "^6.13.1");
+        if (options.streamType === "wrapper") {
+            dependencyManager.addDependency("readable-stream", "^4.5.2");
+        }
+        dependencyManager.addDependency("@types/qs", "^6.9.17", {
+            type: DependencyType.DEV
+        });
+        dependencyManager.addDependency("@types/node-fetch", "^2.6.12", {
+            type: DependencyType.DEV
+        });
+        if (options.streamType === "wrapper") {
+            dependencyManager.addDependency("@types/readable-stream", "^4.0.18", {
+                type: DependencyType.DEV
+            });
+        }
+        dependencyManager.addDependency("webpack", "^5.97.1", {
+            type: DependencyType.DEV
+        });
+        dependencyManager.addDependency("ts-loader", "^9.5.1", {
+            type: DependencyType.DEV
+        });
+    },
+    dependsOn: [RuntimeManifest],
+    getFilesPatterns: (options) => {
+        return {
+            patterns: ["src/core/fetcher/**", "tests/unit/fetcher/**"],
+            ignore:
+                options.streamType !== "wrapper"
+                    ? ["src/core/fetcher/stream-wrappers/**", "tests/unit/fetcher/stream-wrappers/**"]
+                    : undefined
         };
     }
+};
 
+export class FetcherImpl extends CoreUtility implements Fetcher {
+    public readonly MANIFEST = MANIFEST;
     public readonly Fetcher: Fetcher["Fetcher"] = {
         Args: {
             properties: {

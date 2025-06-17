@@ -24,32 +24,19 @@ export interface Auth {
     };
 }
 
-const DEFAULT_PACKAGE_PATH = "src";
-const DEFAULT_TEST_PATH = "tests";
+export const MANIFEST: CoreUtility.Manifest = {
+    name: "auth",
+    pathInCoreUtilities: { nameOnDisk: "auth", exportDeclaration: { exportAll: true } },
+    addDependencies: (dependencyManager: DependencyManager): void => {
+        dependencyManager.addDependency("js-base64", "3.7.7");
+    },
+    getFilesPatterns: () => {
+        return { patterns: ["src/core/auth/**", "tests/unit/auth/**"] };
+    }
+};
 
 export class AuthImpl extends CoreUtility implements Auth {
-    private packagePath: string;
-    public readonly MANIFEST: CoreUtility.Manifest;
-
-    constructor({ getReferenceToExport, packagePath }: CoreUtility.Init & { packagePath: string }) {
-        super({ getReferenceToExport });
-        this.packagePath = packagePath;
-        this.MANIFEST = {
-            name: "auth",
-            pathInCoreUtilities: { nameOnDisk: "auth", exportDeclaration: { exportAll: true } },
-            addDependencies: (dependencyManager: DependencyManager): void => {
-                dependencyManager.addDependency("js-base64", "3.7.7");
-            },
-            getFilesPatterns: () => {
-                return {
-                    patterns: [
-                        `${this.getRelativePackagePath()}/core/auth/**`,
-                        `${this.getRelativeTestPath()}/unit/auth/**`
-                    ]
-                };
-            }
-        };
-    }
+    public readonly MANIFEST = MANIFEST;
 
     public readonly BearerToken = {
         _getReferenceToType: this.withExportedName("BearerToken", (BearerToken) => () => BearerToken.getTypeNode()),
@@ -139,20 +126,4 @@ export class AuthImpl extends CoreUtility implements Auth {
             (OAuthTokenProvider) => () => OAuthTokenProvider.getTypeNode()
         )
     };
-
-    private getRelativePackagePath(): string {
-        if (this.packagePath === DEFAULT_PACKAGE_PATH) {
-            return DEFAULT_PACKAGE_PATH;
-        }
-
-        return this.packagePath;
-    }
-
-    private getRelativeTestPath(): string {
-        if (this.packagePath === DEFAULT_PACKAGE_PATH) {
-            return DEFAULT_TEST_PATH;
-        }
-
-        return `${this.packagePath}/tests`;
-    }
 }

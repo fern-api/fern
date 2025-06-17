@@ -132,8 +132,6 @@ export class EnvironmentsDeclarationReferencer extends AbstractDeclarationRefere
             importsManager,
             exportsManager,
             referencedIn: sourceFile,
-            relativePackagePath: this.relativePackagePath,
-            relativeTestPath: this.relativeTestPath
         });
     }
 
@@ -194,8 +192,6 @@ export class EnvironmentsDeclarationReferencer extends AbstractDeclarationRefere
             importsManager,
             exportsManager,
             referencedIn: sourceFile,
-            relativePackagePath: this.relativePackagePath,
-            relativeTestPath: this.relativeTestPath
         });
     }
 
