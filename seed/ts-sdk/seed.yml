@@ -64,6 +64,9 @@ fixtures:
         - partner
       outputFolder: with-partner-audience
   exhaustive:
+    - customConfig:
+        packagePath: src/test-packagePath
+      outputFolder: package-path
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig: null

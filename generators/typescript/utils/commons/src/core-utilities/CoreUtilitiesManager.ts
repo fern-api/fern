@@ -1,4 +1,4 @@
-import { cp, mkdir, writeFile } from "fs/promises";
+import { cp, mkdir, readFile, writeFile } from "fs/promises";
 import { glob } from "glob";
 import path from "path";
 import { SourceFile } from "ts-morph";
@@ -27,23 +27,55 @@ export declare namespace CoreUtilitiesManager {
         interface Args {
             sourceFile: SourceFile;
             importsManager: ImportsManager;
+            exportsManager: ExportsManager;
+            relativePackagePath: string;
+            relativeTestPath: string;
         }
     }
 }
 
 const PATH_ON_CONTAINER = "/assets/core-utilities";
 
+const DEFAULT_PACKAGE_PATH = "src";
+const DEFAULT_TEST_PATH = "tests";
+
 export class CoreUtilitiesManager {
     private referencedCoreUtilities: Record<CoreUtilityName, CoreUtility.Manifest> = {};
     private authOverrides: Record<RelativeFilePath, string> = {};
     private streamType: "wrapper" | "web";
 
-    constructor({ streamType }: { streamType: "wrapper" | "web" }) {
+    private relativePackagePath: string;
+    private relativeTestPath: string;
+
+    constructor({
+        streamType,
+        relativePackagePath = DEFAULT_PACKAGE_PATH,
+        relativeTestPath = DEFAULT_TEST_PATH
+    }: {
+        streamType: "wrapper" | "web";
+        relativePackagePath?: string;
+        relativeTestPath?: string;
+    }) {
         this.streamType = streamType;
+        this.relativePackagePath = relativePackagePath;
+        this.relativeTestPath = relativeTestPath;
     }
 
-    public getCoreUtilities({ sourceFile, importsManager }: CoreUtilitiesManager.getCoreUtilities.Args): CoreUtilities {
-        const getReferenceToExport = this.createGetReferenceToExport({ sourceFile, importsManager });
+    public getCoreUtilities({
+        sourceFile,
+        importsManager,
+        exportsManager,
+        relativePackagePath,
+        relativeTestPath
+    }: CoreUtilitiesManager.getCoreUtilities.Args): CoreUtilities {
+        const getReferenceToExport = this.createGetReferenceToExport({
+            sourceFile,
+            importsManager,
+            exportsManager,
+            relativePackagePath,
+            relativeTestPath
+        });
+
         return {
             zurg: new ZurgImpl({ getReferenceToExport }),
             fetcher: new FetcherImpl({ getReferenceToExport }),
@@ -84,15 +116,17 @@ export class CoreUtilitiesManager {
     }): Promise<void> {
         const files = new Set(
             await Promise.all(
-                Object.entries(this.referencedCoreUtilities).map(async ([_, utility]) => {
+                Object.entries(this.referencedCoreUtilities).map(async ([name, utility]) => {
                     const { patterns, ignore } = utility.getFilesPatterns({
                         streamType: this.streamType
                     });
-                    return await glob(patterns, {
+
+                    const foundFiles = await glob(patterns, {
                         ignore,
                         cwd: PATH_ON_CONTAINER,
                         nodir: true
                     });
+                    return foundFiles;
                 })
             ).then((results) => results.flat())
         );
@@ -100,8 +134,26 @@ export class CoreUtilitiesManager {
         // Copy each file to the destination preserving the directory structure
         await Promise.all(
             Array.from(files).map(async (file) => {
+                // If the client specified a package path, we need to copy the file to the correct location
+                let destinationFile = file;
+                const isCustomPackagePath = this.relativePackagePath !== DEFAULT_PACKAGE_PATH;
+
+                if (isCustomPackagePath) {
+                    const isPathAlreadyUpdated = file.includes(this.relativePackagePath);
+                    if (!isPathAlreadyUpdated) {
+                        const isTestFile = file.includes(DEFAULT_TEST_PATH);
+                        const isSourceFile = file.includes(DEFAULT_PACKAGE_PATH);
+
+                        if (isTestFile) {
+                            destinationFile = file.replace(DEFAULT_TEST_PATH, this.relativeTestPath);
+                        } else if (isSourceFile) {
+                            destinationFile = file.replace(DEFAULT_PACKAGE_PATH, this.relativePackagePath);
+                        }
+                    }
+                }
+
                 const sourcePath = path.join(PATH_ON_CONTAINER, file);
-                const destPath = path.join(pathToRoot, file);
+                const destPath = path.join(pathToRoot, destinationFile);
 
                 // Ensure the destination directory exists
                 const destDir = path.dirname(destPath);
@@ -109,6 +161,22 @@ export class CoreUtilitiesManager {
 
                 // Copy the file
                 await cp(sourcePath, destPath);
+
+                // Update import paths after copying (customize findAndReplace as needed)
+                if (isCustomPackagePath) {
+                    const findAndReplace: Record<string, { importPath: string; body: string }> = {
+                        [DEFAULT_PACKAGE_PATH]: {
+                            importPath: this.getPackagePathImport(),
+                            body: this.relativePackagePath
+                        },
+                        [DEFAULT_TEST_PATH]: {
+                            importPath: this.getTestPathImport(),
+                            body: this.relativeTestPath
+                        }
+                    };
+
+                    await this.updateImportPaths(destPath, findAndReplace);
+                }
             })
         );
 
@@ -120,6 +188,37 @@ export class CoreUtilitiesManager {
                     await writeFile(destPath, content);
                 })
             );
+        }
+    }
+
+    // Helper to update import paths in a file
+    private async updateImportPaths(
+        filePath: string,
+        findAndReplace: Record<string, { importPath: string; body: string }>
+    ) {
+        const contents = await readFile(filePath, "utf8");
+        const lines = contents.split("\n");
+        let hasReplaced = false;
+
+        const updatedLines = lines.map((line) => {
+            let updatedLine = line;
+            for (const [find, { importPath, body }] of Object.entries(findAndReplace)) {
+                if (line.includes(find)) {
+                    if (line.includes("import")) {
+                        updatedLine = updatedLine.replaceAll(find, importPath);
+                        hasReplaced = true;
+                    } else {
+                        updatedLine = updatedLine.replaceAll(find, body);
+                        hasReplaced = true;
+                    }
+                }
+            }
+            return updatedLine;
+        });
+
+        if (hasReplaced) {
+            const updatedContent = updatedLines.join("\n");
+            await writeFile(filePath, updatedContent);
         }
     }
 
@@ -139,7 +238,11 @@ export class CoreUtilitiesManager {
         }
     }
 
-    private createGetReferenceToExport({ sourceFile, importsManager }: CoreUtilitiesManager.getCoreUtilities.Args) {
+    private createGetReferenceToExport({
+        sourceFile,
+        importsManager,
+        exportsManager
+    }: CoreUtilitiesManager.getCoreUtilities.Args) {
         return ({ manifest, exportedName }: { manifest: CoreUtility.Manifest; exportedName: string }) => {
             this.addManifestAndDependencies(manifest);
             return getReferenceToExportViaNamespaceImport({
@@ -155,8 +258,31 @@ export class CoreUtilitiesManager {
                 },
                 namespaceImport: "core",
                 referencedIn: sourceFile,
-                importsManager
+                importsManager,
+                exportsManager
             });
         };
+    }
+
+    private getPackagePathImport(): string {
+        if (this.relativePackagePath === DEFAULT_PACKAGE_PATH) {
+            return DEFAULT_PACKAGE_PATH;
+        }
+
+        const levelsOfNesting = this.relativePackagePath.split("/").length;
+        const path = "../".repeat(levelsOfNesting);
+
+        return `${path}${this.relativePackagePath}`;
+    }
+
+    private getTestPathImport(): string {
+        if (this.relativeTestPath === DEFAULT_TEST_PATH) {
+            return DEFAULT_TEST_PATH;
+        }
+
+        const levelsOfNesting = this.relativeTestPath.split("/").length + 1;
+        const path = "../".repeat(levelsOfNesting);
+
+        return `${path}${this.relativeTestPath}`;
     }
 }
