@@ -31,7 +31,7 @@
         "build": "yarn build:cjs && yarn build:esm",
         "build:cjs": "tsc --project ./tsconfig.cjs.json",
         "build:esm": "tsc --project ./tsconfig.esm.json && node scripts/rename-to-esm-files.js dist/esm",
-        "test": "jest tests/unit --passWithNoTests",
+        "test": "jest /Users/niels/fern/seed/ts-sdk/file-download/no-custom-config/tests/custom.test.ts --passWithNoTests",
         "test:wire": "jest tests/wire --passWithNoTests",
         "wire:test": "yarn test:wire"
     },
