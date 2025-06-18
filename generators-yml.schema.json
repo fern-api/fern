@@ -1532,6 +1532,16 @@
               "type": "null"
             }
           ]
+        },
+        "preserve-single-schema-oneof": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false

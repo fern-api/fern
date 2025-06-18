@@ -33,4 +33,10 @@ export interface OpenApiSettingsSchema extends FernDefinition.BaseApiSettingsSch
      * Defaults to true.
      */
     "type-dates-as-strings"?: boolean;
+    /**
+     * If true, preserve oneOf structures with a single schema.
+     * If false, unwrap oneOf structures with a single schema.
+     * Defaults to false.
+     */
+    "preserve-single-schema-oneof"?: boolean;
 }

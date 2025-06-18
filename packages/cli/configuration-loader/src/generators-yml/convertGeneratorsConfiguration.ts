@@ -28,7 +28,8 @@ const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     exampleGeneration: undefined,
     defaultFormParameterEncoding: undefined,
     additionalPropertiesDefaultsTo: undefined,
-    typeDatesAsStrings: undefined
+    typeDatesAsStrings: undefined,
+    preserveSingleSchemaOneOf: undefined
 };
 
 export async function convertGeneratorsConfiguration({
@@ -85,7 +86,8 @@ function parseDeprecatedApiDefinitionSettingsSchema(
         respectNullableSchemas: settings?.["respect-nullable-schemas"],
         onlyIncludeReferencedSchemas: settings?.["only-include-referenced-schemas"],
         inlinePathParameters: settings?.["inline-path-parameters"],
-        shouldUseIdiomaticRequestNames: settings?.["idiomatic-request-names"]
+        shouldUseIdiomaticRequestNames: settings?.["idiomatic-request-names"],
+        preserveSingleSchemaOneOf: settings?.["preserve-single-schema-oneof"]
     };
 }
 
@@ -105,7 +107,8 @@ function parseOpenApiDefinitionSettingsSchema(
         useBytesForBinaryResponse: settings?.["use-bytes-for-binary-response"],
         respectForwardCompatibleEnums: settings?.["respect-forward-compatible-enums"],
         additionalPropertiesDefaultsTo: settings?.["additional-properties-defaults-to"],
-        typeDatesAsStrings: settings?.["type-dates-as-strings"]
+        typeDatesAsStrings: settings?.["type-dates-as-strings"],
+        preserveSingleSchemaOneOf: settings?.["preserve-single-schema-oneof"]
     };
 }
 

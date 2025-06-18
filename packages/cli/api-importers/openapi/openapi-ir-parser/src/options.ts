@@ -58,6 +58,11 @@ export interface ParseOpenAPIOptions {
      * If false, convert strings with format date to dates.
      */
     typeDatesAsStrings: boolean;
+
+    /**
+     * If true, preserve the oneOf structure when there is only one schema in the oneOf array.
+     */
+    preserveSingleSchemaOneOf: boolean;
 }
 
 export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
@@ -82,7 +87,8 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     useBytesForBinaryResponse: false,
     respectForwardCompatibleEnums: false,
     additionalPropertiesDefaultsTo: false,
-    typeDatesAsStrings: true
+    typeDatesAsStrings: true,
+    preserveSingleSchemaOneOf: false
 };
 
 export function getParseOptions({
@@ -159,6 +165,10 @@ export function getParseOptions({
         typeDatesAsStrings:
             overrides?.typeDatesAsStrings ??
             options?.typeDatesAsStrings ??
-            DEFAULT_PARSE_OPENAPI_SETTINGS.typeDatesAsStrings
+            DEFAULT_PARSE_OPENAPI_SETTINGS.typeDatesAsStrings,
+        preserveSingleSchemaOneOf:
+            overrides?.preserveSingleSchemaOneOf ??
+            options?.preserveSingleSchemaOneOf ??
+            DEFAULT_PARSE_OPENAPI_SETTINGS.preserveSingleSchemaOneOf
     };
 }
