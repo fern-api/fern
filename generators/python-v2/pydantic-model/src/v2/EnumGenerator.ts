@@ -26,6 +26,7 @@ export class EnumGenerator {
         const path = this.context.getModulePathForId(this.typeId);
         const filename = this.context.getSnakeCaseSafeName(this.typeDeclaration.name.name);
         const file = python.file({ path });
+        file.addReference(python.reference({ name: "TypeVar", modulePath: ["typing"] }));
         file.addStatement(enum_);
 
         return new WriteablePythonFile({

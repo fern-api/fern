@@ -41,5 +41,29 @@ export class Enum extends AstNode {
             writer.newLine();
         });
         writer.dedent();
+
+        writer.write("def visit(");
+        writer.newLine();
+        writer.indent();
+        writer.write("self,");
+        writer.newLine();
+        this.values.forEach((value, index) => {
+            writer.write(`${value}: typing.Callable[[], T_Result]${index < this.values.length - 1 ? "," : ""}`);
+            writer.newLine();
+        });
+        writer.write(") -> T_Result:");
+        writer.newLine();
+        writer.dedent();
+        writer.indent();
+        this.values.forEach((value) => {
+            writer.write(`if self is ${this.name}.${value}:`);
+            writer.newLine();
+            writer.indent();
+            writer.write(`return ${value}()`);
+            writer.newLine();
+            writer.dedent();
+        });
+        writer.dedent();
+        writer.dedent();
     }
 }
