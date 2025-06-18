@@ -1,14 +1,17 @@
-from typing import Union
-from typing_extensions import Literal
+from typing import Union, Literal
+from .dog import Dog
+from .cat import Cat
 
-class name:
+class Animal_Dog(Dog):
+    animal: Literal["dog"]
     class Config:
-        pass
+        allow_population_by_field_name = True
 
 
-class name:
+class Animal_Cat(Cat):
+    animal: Literal["cat"]
     class Config:
-        pass
+        allow_population_by_field_name = True
 
 
-Animal = Union[name, name]
+Animal = Union[Animal_Dog, Animal_Cat]
