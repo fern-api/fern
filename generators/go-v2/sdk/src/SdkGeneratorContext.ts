@@ -256,13 +256,11 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
     }
 
     public callResolveBaseURL(arguments_: go.AstNode[]): go.FuncInvocation {
-        return go.invokeFunc({
-            func: go.typeReference({
-                name: "ResolveBaseURL",
-                importPath: this.getInternalImportPath()
-            }),
-            arguments_
-        });
+        return this.callInternalFunc("ResolveBaseURL", arguments_);
+    }
+
+    public callQueryValues(arguments_: go.AstNode[]): go.FuncInvocation {
+        return this.callInternalFunc("QueryValues", arguments_);
     }
 
     public getRawResponseTypeReference(valueType: go.Type): go.TypeReference {
@@ -330,23 +328,6 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         }
     }
 
-    private getEndpointRequestBodyType(requestBodyType: SdkRequestBodyType): go.Type {
-        switch (requestBodyType.type) {
-            case "typeReference":
-                return this.goTypeMapper.convert({ reference: requestBodyType.requestBodyType });
-            case "bytes": {
-                return go.Type.reference(this.getIoReaderTypeReference());
-            }
-            default:
-                assertNever(requestBodyType);
-        }
-    }
-
-    private getLocationForWrappedRequest(serviceId: ServiceId): FileLocation {
-        const httpService = this.getHttpServiceOrThrow(serviceId);
-        return this.getPackageLocation(httpService.name.fernFilepath);
-    }
-
     public shouldSkipWrappedRequest({
         endpoint,
         wrapper
@@ -399,6 +380,28 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         });
     }
 
+    private getEndpointRequestBodyType(requestBodyType: SdkRequestBodyType): go.Type {
+        switch (requestBodyType.type) {
+            case "typeReference":
+                return this.goTypeMapper.convert({ reference: requestBodyType.requestBodyType });
+            case "bytes": {
+                return go.Type.reference(this.getIoReaderTypeReference());
+            }
+            default:
+                assertNever(requestBodyType);
+        }
+    }
+
+    private callInternalFunc(name: string, arguments_: go.AstNode[]): go.FuncInvocation {
+        return go.invokeFunc({
+            func: go.typeReference({
+                name,
+                importPath: this.getInternalImportPath()
+            }),
+            arguments_
+        });
+    }
+
     private getNetHttpMethodTypeReferenceName(method: HttpMethod): string {
         switch (method) {
             case "GET":
@@ -416,5 +419,10 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
             default:
                 assertNever(method);
         }
+    }
+
+    private getLocationForWrappedRequest(serviceId: ServiceId): FileLocation {
+        const httpService = this.getHttpServiceOrThrow(serviceId);
+        return this.getPackageLocation(httpService.name.fernFilepath);
     }
 }

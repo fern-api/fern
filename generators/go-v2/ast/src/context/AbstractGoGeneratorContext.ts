@@ -99,6 +99,13 @@ export abstract class AbstractGoGeneratorContext<
         return name.camelCase.safeName;
     }
 
+    public maybeGetLiteral(typeReference: TypeReference): Literal | undefined {
+        if (typeReference.type === "container" && typeReference.container.type === "literal") {
+            return typeReference.container.literal;
+        }
+        return undefined;
+    }
+
     public getLiteralAsString(literal: Literal): string {
         return literal.type === "string" ? `'${literal.string}'` : literal.boolean ? "'true'" : "'false'";
     }

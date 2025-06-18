@@ -6,6 +6,10 @@ import { HttpEndpoint, HttpService, ServiceId, Subpackage } from "@fern-fern/ir-
 
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator";
+import { EndpointSignatureInfo } from "../EndpointSignatureInfo";
+import { EndpointRequest } from "../request/EndpointRequest";
+import { getEndpointRequest } from "../utils/getEndpointRequest";
+import { assertNever } from "@fern-api/core-utils";
 
 export declare namespace EndpointGenerator {
     export interface Args {
@@ -44,35 +48,38 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         subpackage: Subpackage | undefined;
         endpoint: HttpEndpoint;
     }): go.Method[] {
-        return [this.generateRawUnaryEndpoint({ serviceId, service, subpackage, endpoint })];
+        const endpointRequest = getEndpointRequest({ context: this.context, endpoint, serviceId, service });
+        return [this.generateRawUnaryEndpoint({ serviceId, service, endpoint, subpackage, endpointRequest })];
     }
 
     private generateRawUnaryEndpoint({
         serviceId,
         service,
+        endpoint,
         subpackage,
-        endpoint
+        endpointRequest
     }: {
         serviceId: ServiceId;
         service: HttpService;
-        subpackage: Subpackage | undefined;
         endpoint: HttpEndpoint;
+        subpackage: Subpackage | undefined;
+        endpointRequest: EndpointRequest | undefined;
     }): go.Method {
         const signature = this.getEndpointSignatureInfo({ serviceId, service, endpoint });
         return new go.Method({
             name: this.context.getMethodName(endpoint.name),
             parameters: signature.allParameters,
-            return_: this.getReturnSignature({ returnType: signature.returnType }),
-            body: this.getRawUnaryEndpointBody({ endpoint, returnZeroValue: signature.returnZeroValue }),
+            return_: this.getReturnSignature({ signature }),
+            body: this.getRawUnaryEndpointBody({ signature, endpoint, endpointRequest }),
             typeReference: this.getRawClientTypeReference({ subpackage })
         });
     }
 
-    private getReturnSignature({ returnType }: { returnType?: go.Type }): go.Type[] {
-        if (returnType == null) {
+    private getReturnSignature({ signature }: { signature: EndpointSignatureInfo }): go.Type[] {
+        if (signature.returnType == null) {
             return [go.Type.error()];
         }
-        return [returnType, go.Type.error()];
+        return [signature.returnType, go.Type.error()];
     }
 
     private getRawClientTypeReference({ subpackage }: { subpackage: Subpackage | undefined }): go.TypeReference {
@@ -83,16 +90,26 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     }
 
     private getRawUnaryEndpointBody({
+        signature,
         endpoint,
-        returnZeroValue
+        endpointRequest
     }: {
+        signature: EndpointSignatureInfo;
         endpoint: HttpEndpoint;
-        returnZeroValue: go.TypeInstantiation | undefined;
+        endpointRequest: EndpointRequest | undefined;
     }): go.CodeBlock {
         return go.codeblock((writer) => {
             writer.writeNode(this.buildRequestOptions());
             writer.newLine();
             writer.writeNode(this.buildBaseUrl({ endpoint }));
+            writer.newLine();
+            writer.writeNode(this.buildEndpointUrl({ endpoint }));
+
+            const buildQueryParameters = this.buildQueryParameters({ signature, endpoint, endpointRequest });
+            if (buildQueryParameters != null) {
+                writer.newLine();
+                writer.writeNode(buildQueryParameters);
+            }
         });
     }
 
@@ -120,6 +137,62 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 ])
             );
         });
+    }
+
+    private buildEndpointUrl({ endpoint }: { endpoint: HttpEndpoint }): go.CodeBlock {
+        return go.codeblock((writer) => {
+            writer.write("endpointURL := baseURL");
+            const pathSuffix = this.getPathSuffix({ endpoint });
+            if (pathSuffix !== "") {
+                writer.write(` + "/${pathSuffix}"`);
+            }
+        });
+    }
+
+    private buildQueryParameters({
+        signature,
+        endpoint,
+        endpointRequest
+    }: {
+        signature: EndpointSignatureInfo;
+        endpoint: HttpEndpoint;
+        endpointRequest: EndpointRequest | undefined;
+    }): go.CodeBlock | undefined {
+        if (endpointRequest == null || endpoint.queryParameters.length === 0) {
+            return undefined;
+        }
+        return go.codeblock((writer) => {
+            writer.write("queryParams, err := ");
+            writer.writeNode(this.context.callQueryValues([go.codeblock(endpointRequest.getRequestParameterName())]));
+            writer.write("if err != nil {");
+            writer.indent();
+            writer.writeNode(this.writeReturnZeroValueWithError({ zeroValue: signature.returnZeroValue }));
+            writer.dedent();
+            writer.write("}");
+            for (const queryParameter of endpoint.queryParameters) {
+                const literal = this.context.maybeGetLiteral(queryParameter.valueType);
+                if (literal != null) {
+                    writer.write(`queryParams.Add("${queryParameter.name}", ${this.context.getLiteralAsString(literal)})`);
+                    continue;
+                }
+            }
+            writer.write("if len(queryParams) > 0 {");
+            writer.indent();
+            writer.write(`endpointURL += "?" + queryParams.Encode()`);
+            writer.dedent();
+            writer.write("}");
+        });
+    }
+
+    private getPathSuffix({ endpoint }: { endpoint: HttpEndpoint }): string {
+        let pathSuffix = endpoint.fullPath.head === "/" ? "" : endpoint.fullPath.head;
+        for (const part of endpoint.fullPath.parts) {
+            if (part.pathParameter) {
+                pathSuffix += "%v";
+            }
+            pathSuffix += part.tail;
+        }
+        return pathSuffix.replace(/^\/+/, "");
     }
 
     private writeReturnZeroValueWithError({ zeroValue }: { zeroValue?: go.TypeInstantiation }): go.CodeBlock {

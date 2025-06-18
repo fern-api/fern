@@ -45,6 +45,7 @@ func (r RawClient) Create(
 		r.baseURL,
 		"",
 	)
+	endpointURL := baseURL + "/payment"
 }
 
 func (r RawClient) Delete(
@@ -60,4 +61,5 @@ func (r RawClient) Delete(
 		r.baseURL,
 		"",
 	)
+	endpointURL := baseURL + "/payment/%v"
 }
