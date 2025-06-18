@@ -6,6 +6,7 @@ import { ClassInstantiation } from "./ClassInstantiation";
 import { CodeBlock } from "./CodeBlock";
 import { Comment } from "./Comment";
 import { Decorator } from "./Decorator";
+import { Enum } from "./Enum";
 import { Field } from "./Field";
 import { Lambda } from "./Lambda";
 import { LambdaParameter } from "./LambdaParameter";
@@ -37,6 +38,7 @@ export { Operator } from "./Operator";
 export { Reference } from "./Reference";
 export { StarImport } from "./StarImport";
 export { Type } from "./Type";
+export { Enum } from "./Enum";
 export { type NamedValue, TypeInstantiation } from "./TypeInstantiation";
 
 export function accessAttribute(args: AccessAttribute.Args): AccessAttribute {
@@ -113,4 +115,14 @@ export function methodArgument(args: MethodArgument.Args): MethodArgument {
 
 export function operator(args: Operator.Args): Operator {
     return new Operator(args);
+}
+
+export function enum_(args: {
+    name: string;
+    values: Array<{
+        name: string;
+        value: string | number;
+    }>;
+}): Enum {
+    return new Enum(args.name, args.values);
 }
