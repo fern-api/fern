@@ -263,6 +263,10 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         return this.callInternalFunc("QueryValues", arguments_);
     }
 
+    public callMergeHeaders(arguments_: go.AstNode[]): go.FuncInvocation {
+        return this.callInternalFunc("MergeHeaders", arguments_);
+    }
+
     public getRawResponseTypeReference(valueType: go.Type): go.TypeReference {
         return go.typeReference({
             name: "Response",

@@ -46,6 +46,10 @@ func (r RawClient) Create(
 		"",
 	)
 	endpointURL := baseURL + "/payment"
+	headers := internal.MergeHeaders(
+		r.header.Clone(),
+		options.ToHeader(),
+	)
 }
 
 func (r RawClient) Delete(
@@ -62,4 +66,8 @@ func (r RawClient) Delete(
 		"",
 	)
 	endpointURL := baseURL + "/payment/%v"
+	headers := internal.MergeHeaders(
+		r.header.Clone(),
+		options.ToHeader(),
+	)
 }

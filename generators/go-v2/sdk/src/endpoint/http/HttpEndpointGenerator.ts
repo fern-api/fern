@@ -1,5 +1,6 @@
 import { write } from "fs";
 
+import { assertNever } from "@fern-api/core-utils";
 import { go } from "@fern-api/go-ast";
 
 import { HttpEndpoint, HttpService, ServiceId, Subpackage } from "@fern-fern/ir-sdk/api";
@@ -9,7 +10,6 @@ import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator";
 import { EndpointSignatureInfo } from "../EndpointSignatureInfo";
 import { EndpointRequest } from "../request/EndpointRequest";
 import { getEndpointRequest } from "../utils/getEndpointRequest";
-import { assertNever } from "@fern-api/core-utils";
 
 export declare namespace EndpointGenerator {
     export interface Args {
@@ -110,6 +110,10 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 writer.newLine();
                 writer.writeNode(buildQueryParameters);
             }
+
+            const buildHeaders = this.buildHeaders({ endpoint });
+            writer.newLine();
+            writer.writeNode(buildHeaders);
         });
     }
 
@@ -130,7 +134,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         selector: go.codeblock("BaseURL")
                     }),
                     go.selector({
-                        on: this.getRawClientReceiver(),
+                        on: this.getRawClientReceiverCodeBlock(),
                         selector: go.codeblock("baseURL")
                     }),
                     this.context.getDefaultBaseUrlTypeInstantiation(endpoint)
@@ -172,7 +176,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             for (const queryParameter of endpoint.queryParameters) {
                 const literal = this.context.maybeGetLiteral(queryParameter.valueType);
                 if (literal != null) {
-                    writer.write(`queryParams.Add("${queryParameter.name}", ${this.context.getLiteralAsString(literal)})`);
+                    writer.write(
+                        `queryParams.Add("${queryParameter.name}", ${this.context.getLiteralAsString(literal)})`
+                    );
                     continue;
                 }
             }
@@ -181,6 +187,32 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             writer.write(`endpointURL += "?" + queryParams.Encode()`);
             writer.dedent();
             writer.write("}");
+        });
+    }
+
+    private buildHeaders({ endpoint }: { endpoint: HttpEndpoint }): go.CodeBlock {
+        return go.codeblock((writer) => {
+            writer.write("headers := ");
+            writer.writeNode(
+                this.context.callMergeHeaders([
+                    go.codeblock(`${this.getRawClientReceiver()}.header.Clone()`),
+                    go.codeblock("options.ToHeader()")
+                ])
+            );
+            if (endpoint.headers.length > 0) {
+                writer.newLine();
+            }
+            for (const header of endpoint.headers) {
+                const literal = this.context.maybeGetLiteral(header.valueType);
+                if (literal != null) {
+                    writer.write(
+                        `headers.Add("${header.name.wireValue}", ${this.context.getLiteralAsString(literal)})`
+                    );
+                    continue;
+                }
+                // TODO: Handle optionals.
+                // TOOD: Handle formatting.
+            }
         });
     }
 
@@ -217,7 +249,11 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         });
     }
 
-    private getRawClientReceiver(): go.AstNode {
-        return go.codeblock("r");
+    private getRawClientReceiverCodeBlock(): go.AstNode {
+        return go.codeblock(this.getRawClientReceiver());
+    }
+
+    private getRawClientReceiver(): string {
+        return "r";
     }
 }
