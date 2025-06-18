@@ -1,12 +1,14 @@
 from pydantic import RootModel
 from typing import Dict
-from resources.union.types.key import Key
+from .key import Key
+from uuid import UUID
 from dt import datetime
 from core.datetime_utils import serialize_datetime
+
 class Metadata(RootModel[Dict[Key, str]]):
-"""Undiscriminated unions can act as a map key
-as long as all of their values are valid keys
-(i.e. do they have a valid string representation)."""
+    """Undiscriminated unions can act as a map key
+    as long as all of their values are valid keys
+    (i.e. do they have a valid string representation)."""
     root: Dict[Key, str]
     def get_as_map() -> UUID:
         return self.root
