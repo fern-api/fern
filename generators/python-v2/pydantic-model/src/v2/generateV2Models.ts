@@ -2,6 +2,7 @@ import { WriteablePythonFile } from "@fern-api/python-base";
 
 import { PydanticModelGeneratorContext } from "../ModelGeneratorContext";
 import { ObjectGenerator } from "./ObjectGenerator";
+import { UnionGenerator } from "./UnionGenerator";
 import { WrappedAliasGenerator } from "./WrappedAliasGenerator";
 
 export function generateV2Models({ context }: { context: PydanticModelGeneratorContext }): WriteablePythonFile[] {
@@ -16,7 +17,9 @@ export function generateV2Models({ context }: { context: PydanticModelGeneratorC
                 return new ObjectGenerator(typeId, context, typeDeclaration, objectTypDeclaration).doGenerate();
             },
             undiscriminatedUnion: () => undefined,
-            union: () => undefined,
+            union: (unionTypeDeclaration) => {
+                return new UnionGenerator(typeId, context, typeDeclaration, unionTypeDeclaration).doGenerate();
+            },
             _other: () => undefined
         });
         if (file != null) {
