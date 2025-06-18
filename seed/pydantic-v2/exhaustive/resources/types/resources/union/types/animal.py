@@ -1,4 +1,5 @@
 from typing import Union, Literal
+from typing_extensions import Literal as TypingExtensionsLiteral
 from .dog import Dog
 from .cat import Cat
 

@@ -21,7 +21,6 @@ export class UnionGenerator {
 
         // Add imports
         file.addReference(python.reference({ name: "Union", modulePath: ["typing"] }));
-        //file.addReference(python.reference({ name: "Literal", modulePath: ["typing_extensions"] }));
 
         // Generate variant classes
         this.unionDeclaration.types.forEach((variant: SingleUnionType) => {
