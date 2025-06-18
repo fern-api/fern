@@ -20,43 +20,25 @@ export class UnionGenerator {
         const file = python.file({ path });
 
         // Add imports
-        file.addStatement(python.starImport({ modulePath: "typing", names: ["Union"] }));
-        file.addStatement(python.starImport({ modulePath: "typing_extensions", names: ["Literal"] }));
+        file.addReference(python.reference({ name: "Union", modulePath: ["typing"] }));
+        file.addReference(python.reference({ name: "Literal", modulePath: ["typing_extensions"] }));
 
         // Generate variant classes
         this.unionDeclaration.types.forEach((variant: SingleUnionType) => {
             const variantClass = python.class_({
-                name: `${this.context.getPascalCaseSafeName(this.typeDeclaration.name.name)}_${this.context.getPascalCaseSafeName(variant.name.name)}`,
+                name: "name",
                 extends_: [
                     ...this.unionDeclaration.extends.map((type) =>
                         this.context.pythonTypeMapper.convertToClassReference(type)
-                    ),
-                    this.context.pythonTypeMapper.convertToClassReference(variant.type)
-                ],
-                fields: [
-                    python.field({
-                        name: this.unionDeclaration.discriminant.name,
-                        type: python.typeHint.literal(variant.name.wireValue)
-                    }),
-                    ...this.unionDeclaration.baseProperties.map((prop) =>
-                        python.field({
-                            name: prop.name.name,
-                            type: this.context.pythonTypeMapper.convertToTypeHint(prop.valueType)
-                        })
                     )
+                    //this.context.pythonTypeMapper.convertToClassReference(variant.type)
                 ]
             });
 
             // Add Config class
             variantClass.add(
                 python.class_({
-                    name: "Config",
-                    fields: [
-                        python.field({
-                            name: "allow_population_by_field_name",
-                            initializer: python.TypeInstantiation.bool(true)
-                        })
-                    ]
+                    name: "Config"
                 })
             );
 
@@ -71,9 +53,7 @@ export class UnionGenerator {
                     if (index > 0) {
                         writer.write(", ");
                     }
-                    writer.write(
-                        `${this.context.getPascalCaseSafeName(this.typeDeclaration.name.name)}_${this.context.getPascalCaseSafeName(variant.name.name)}`
-                    );
+                    writer.write("name");
                 });
                 writer.write("]");
             })
