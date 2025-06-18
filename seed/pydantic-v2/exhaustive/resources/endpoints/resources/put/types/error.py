@@ -1,12 +1,15 @@
 from pydantic import BaseModel
+from .error_category import ErrorCategory
+from .error_code import ErrorCode
 from typing import Optional
-from .object_with_optional_field import ObjectWithOptionalField
 from dt import datetime
 from core.datetime_utils import serialize_datetime
 
-class NestedObjectWithOptionalField(BaseModel):
-    string: Optional[str] = None
-    nested_object: Optional[ObjectWithOptionalField]
+class Error(BaseModel):
+    category: ErrorCategory
+    code: ErrorCode
+    detail: Optional[str] = None
+    field: Optional[str] = None
     class Config:
         frozen = True
         smart_union = True
