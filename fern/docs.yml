@@ -821,3 +821,6 @@ redirects:
   - source: /learn/docs/getting-started/changelog/2025/5/23
     destination: /learn/docs/getting-started/changelog/2025/6/5
     permanent: true
+
+ai-chat:
+  model: claude-4
