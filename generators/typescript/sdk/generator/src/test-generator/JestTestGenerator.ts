@@ -89,7 +89,7 @@ export class JestTestGenerator {
                 preset: "ts-jest",
                 testEnvironment: "node",
                 moduleNameMapper: {
-                    "(.+)\\.js$": "$1",
+                    "^(\\.{1,2}/.*)\\.js$": "$1"
                 },
                 setupFilesAfterEnv: ${arrayOf(...setupFilesAfterEnv)},
                 ${this.useBigInt ? code`workerThreads: true,` : code``}
