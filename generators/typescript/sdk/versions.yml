@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.7.1
+  changelogEntry:
+    - summary: |
+        __jest.config.mjs__ now only maps relative path modules that end on `.js` to their `.ts` equivalent.
+      type: fix
+  createdAt: '2025-06-18'
+  irVersion: 58
 - version: 1.6.0
   changelogEntry:
     - summary: |
