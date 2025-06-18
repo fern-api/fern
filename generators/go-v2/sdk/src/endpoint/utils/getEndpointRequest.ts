@@ -1,6 +1,9 @@
+import { assertNever } from "@fern-api/core-utils";
+
 import { HttpEndpoint, HttpService, SdkRequest, ServiceId } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
+import { BytesRequest } from "../request/BytesRequest";
 import { EndpointRequest } from "../request/EndpointRequest";
 import { ReferencedEndpointRequest } from "../request/ReferencedEndpointRequest";
 import { WrappedEndpointRequest } from "../request/WrappedEndpointRequest";
@@ -46,26 +49,28 @@ function createEndpointRequest({
     service: HttpService;
     serviceId: ServiceId;
 }): EndpointRequest | undefined {
-    return sdkRequest.shape._visit<EndpointRequest | undefined>({
-        wrapper: (wrapper) => {
+    switch (sdkRequest.shape.type) {
+        case "wrapper":
             return new WrappedEndpointRequest({
                 context,
                 serviceId,
                 sdkRequest,
-                wrapper,
+                wrapper: sdkRequest.shape,
                 service,
                 endpoint
             });
-        },
-        justRequestBody: (value) => {
-            if (value.type === "bytes") {
-                // TODO: Implement this.
-                return undefined;
+        case "justRequestBody":
+            if (sdkRequest.shape.value.type === "bytes") {
+                return new BytesRequest(context, sdkRequest, service, endpoint);
             }
-            return new ReferencedEndpointRequest(context, sdkRequest, service, endpoint, value.requestBodyType);
-        },
-        _other: () => {
-            throw new Error("Internal error; received unexpected request shape");
-        }
-    });
+            return new ReferencedEndpointRequest(
+                context,
+                sdkRequest,
+                service,
+                endpoint,
+                sdkRequest.shape.value.requestBodyType
+            );
+        default:
+            assertNever(sdkRequest.shape);
+    }
 }

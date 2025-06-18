@@ -32,13 +32,11 @@ export declare namespace WrappedEndpointRequest {
 export class WrappedEndpointRequest extends EndpointRequest {
     private serviceId: ServiceId;
     private wrapper: SdkRequestWrapper;
-    private requestParameterName: Name;
 
     public constructor({ context, sdkRequest, serviceId, wrapper, service, endpoint }: WrappedEndpointRequest.Args) {
         super(context, sdkRequest, service, endpoint);
         this.serviceId = serviceId;
         this.wrapper = wrapper;
-        this.requestParameterName = sdkRequest.requestParameterName;
     }
 
     public getRequestParameterType(): go.Type {
