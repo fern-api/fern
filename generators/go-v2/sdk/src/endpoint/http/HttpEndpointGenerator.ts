@@ -1,3 +1,5 @@
+import { write } from "fs";
+
 import { go } from "@fern-api/go-ast";
 
 import { HttpEndpoint, HttpService, ServiceId, Subpackage } from "@fern-fern/ir-sdk/api";
@@ -87,7 +89,37 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         endpoint: HttpEndpoint;
         returnZeroValue: go.TypeInstantiation | undefined;
     }): go.CodeBlock {
-        return this.writeReturnZeroValue({ zeroValue: returnZeroValue });
+        return go.codeblock((writer) => {
+            writer.writeNode(this.buildRequestOptions());
+            writer.newLine();
+            writer.writeNode(this.buildBaseUrl({ endpoint }));
+        });
+    }
+
+    private buildRequestOptions(): go.CodeBlock {
+        return go.codeblock((writer) => {
+            writer.write("options := ");
+            writer.writeNode(this.context.callNewRequestOptions(go.codeblock("opts...")));
+        });
+    }
+
+    private buildBaseUrl({ endpoint }: { endpoint: HttpEndpoint }): go.CodeBlock {
+        return go.codeblock((writer) => {
+            writer.write("baseURL := ");
+            writer.writeNode(
+                this.context.callResolveBaseURL([
+                    go.selector({
+                        on: go.codeblock("options"),
+                        selector: go.codeblock("BaseURL")
+                    }),
+                    go.selector({
+                        on: this.getRawClientReceiver(),
+                        selector: go.codeblock("baseURL")
+                    }),
+                    this.context.getDefaultBaseUrlTypeInstantiation(endpoint)
+                ])
+            );
+        });
     }
 
     private writeReturnZeroValueWithError({ zeroValue }: { zeroValue?: go.TypeInstantiation }): go.CodeBlock {
@@ -110,5 +142,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             }
             writer.write("nil");
         });
+    }
+
+    private getRawClientReceiver(): go.AstNode {
+        return go.codeblock("r");
     }
 }

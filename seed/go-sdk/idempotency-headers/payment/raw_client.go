@@ -35,15 +35,29 @@ func NewRawClient(opts ...option.RequestOption) *RawClient {
 func (r RawClient) Create(
 	ctx context.Context,
 	request *fern.CreatePaymentRequest,
-	opts option.RequestOption,
+	opts ...option.RequestOption,
 ) (uuid.UUID, error) {
-	return uuid.UUID{}, nil
+	options := core.NewRequestOptions(
+		opts...,
+	)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		r.baseURL,
+		"",
+	)
 }
 
 func (r RawClient) Delete(
 	ctx context.Context,
 	paymentId string,
-	opts option.RequestOption,
+	opts ...option.RequestOption,
 ) error {
-	return nil
+	options := core.NewRequestOptions(
+		opts...,
+	)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		r.baseURL,
+		"",
+	)
 }

@@ -7,6 +7,8 @@ import { GoProject } from "@fern-api/go-base";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { GithubOutputMode, OutputMode } from "@fern-fern/generator-exec-sdk/api";
 import {
+    EnvironmentId,
+    EnvironmentUrl,
     HttpEndpoint,
     HttpMethod,
     IntermediateRepresentation,
@@ -71,6 +73,50 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
 
     public getMethodName(name: Name): string {
         return name.pascalCase.unsafeName;
+    }
+
+    public getReceiverName(name: Name): string {
+        return name.camelCase.unsafeName.charAt(0);
+    }
+
+    public getDefaultBaseUrlTypeInstantiation(endpoint: HttpEndpoint): go.TypeInstantiation {
+        const defaultBaseUrl = this.getDefaultBaseUrl(endpoint);
+        if (defaultBaseUrl == null) {
+            return go.TypeInstantiation.string("");
+        }
+        return go.TypeInstantiation.string(defaultBaseUrl);
+    }
+
+    public getDefaultBaseUrl(endpoint: HttpEndpoint): EnvironmentUrl | undefined {
+        if (endpoint.baseUrl != null) {
+            return this.getEnvironmnetUrlFromId(endpoint.baseUrl);
+        }
+        if (this.ir.environments?.defaultEnvironment != null) {
+            return this.getEnvironmnetUrlFromId(this.ir.environments.defaultEnvironment);
+        }
+        return undefined;
+    }
+
+    public getEnvironmnetUrlFromId(id: EnvironmentId): EnvironmentUrl | undefined {
+        if (this.ir.environments == null) {
+            return undefined;
+        }
+        const environments = this.ir.environments.environments;
+        switch (environments.type) {
+            case "singleBaseUrl":
+                return environments.environments.find((environment) => environment.id === id)?.url;
+            case "multipleBaseUrls": {
+                for (const environment of environments.environments) {
+                    const url = environment.urls[id];
+                    if (url != null) {
+                        return url;
+                    }
+                }
+                return undefined;
+            }
+            default:
+                assertNever(environments);
+        }
     }
 
     public getModuleConfig({ outputMode }: { outputMode: OutputMode }): ModuleConfig | undefined {
@@ -184,7 +230,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
     public getVariadicRequestOptionParameter(): go.Parameter {
         return go.parameter({
             name: "opts",
-            type: go.Type.reference(this.getRequestOptionTypeReference())
+            type: this.getVariadicRequestOptionType()
         });
     }
 
@@ -206,6 +252,16 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
                 importPath: this.getCoreImportPath()
             }),
             arguments_: [argument]
+        });
+    }
+
+    public callResolveBaseURL(arguments_: go.AstNode[]): go.FuncInvocation {
+        return go.invokeFunc({
+            func: go.typeReference({
+                name: "ResolveBaseURL",
+                importPath: this.getInternalImportPath()
+            }),
+            arguments_
         });
     }
 
