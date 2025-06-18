@@ -1,3 +1,3 @@
-from typing import Union, str, List[str], int, List[int], List[List[int]], Set[str]
+import typing
 
-MyUnion = Union[str, List[str], int, List[int], List[List[int]], Set[str]]
+MyUnion = typing.Union[str, typing.List[str], int, typing.List[int], typing.List[typing.List[int]], typing.Set[str]]

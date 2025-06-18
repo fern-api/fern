@@ -1,3 +1,3 @@
-from typing import Union, KeyType, str
+import typing
 
-Key = Union[KeyType, str]
+Key = typing.Union[typing.KeyType, str]

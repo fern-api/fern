@@ -1,3 +1,3 @@
-from typing import Union, Optional[Dict[str, Any]], NamedMetadata
+import typing
 
-MetadataUnion = Union[Optional[Dict[str, Any]], NamedMetadata]
+MetadataUnion = typing.Union[typing.Optional[Dict[str, Any]], typing.NamedMetadata]

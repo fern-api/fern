@@ -24,7 +24,11 @@ export class UndiscriminatedUnionGenerator {
         const pythonPrimitives = ["str", "int", "float", "bool", "list", "dict", "set", "tuple", "None"];
 
         // Add imports
-        file.addReference(python.reference({ name: "Union", modulePath: ["typing"] }));
+        file.addStatement(
+            python.codeBlock((writer) => {
+                writer.write("import typing");
+            })
+        );
 
         this.undiscriminatedUnionDeclaration.members.forEach((member, index) => {
             const typeString = this.context.pythonTypeMapper.convert({ reference: member.type }).toString();
@@ -33,22 +37,21 @@ export class UndiscriminatedUnionGenerator {
             }
         });
 
-        // Add imports for non-primitive types
-        nonPrimitiveTypes.forEach((typeName) => {
-            file.addReference(python.reference({ name: typeName, modulePath: ["typing"] }));
-        });
-
         // Add union type
         file.addStatement(
             python.codeBlock((writer) => {
                 writer.write(`${this.context.getPascalCaseSafeName(this.typeDeclaration.name.name)} = `);
-                writer.write("Union[");
+                writer.write("typing.Union[");
                 this.undiscriminatedUnionDeclaration.members.forEach((member, index) => {
                     if (index > 0) {
                         writer.write(", ");
                     }
-
-                    writer.write(this.context.pythonTypeMapper.convert({ reference: member.type }).toString());
+                    const memberType = this.context.pythonTypeMapper.convert({ reference: member.type }).toString();
+                    if (pythonPrimitives.includes(memberType)) {
+                        writer.write(memberType);
+                    } else {
+                        writer.write(`typing.${memberType}`);
+                    }
                 });
                 writer.write("]");
             })
