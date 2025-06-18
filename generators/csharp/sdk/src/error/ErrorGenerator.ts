@@ -35,7 +35,8 @@ export class ErrorGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSch
                     csharp.codeblock("body")
                 ]
             },
-            summary: "This exception type will be thrown for any non-2XX API responses."
+            summary: "This exception type will be thrown for any non-2XX API responses.",
+            annotations: [this.context.getSerializableAttribute()]
         });
         if (this.errorDeclaration.type != null) {
             class_.addField(

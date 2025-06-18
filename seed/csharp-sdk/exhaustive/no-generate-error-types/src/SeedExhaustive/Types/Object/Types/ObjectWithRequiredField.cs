@@ -4,6 +4,7 @@ using SeedExhaustive.Core;
 
 namespace SeedExhaustive.Types;
 
+[Serializable]
 public record ObjectWithRequiredField
 {
     [JsonPropertyName("string")]

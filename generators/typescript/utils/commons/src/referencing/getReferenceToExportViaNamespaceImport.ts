@@ -1,10 +1,6 @@
 import { SourceFile, ts } from "ts-morph";
 
-import {
-    ExportedDirectory,
-    ExportedFilePath,
-    convertExportedFilePathToFilePath
-} from "../exports-manager/ExportedFilePath";
+import { ExportedDirectory, ExportedFilePath, ExportsManager } from "../exports-manager";
 import { ImportsManager } from "../imports-manager/ImportsManager";
 import { GetReferenceOpts, Reference } from "./Reference";
 import { getEntityNameOfDirectory } from "./getEntityNameOfDirectory";
@@ -17,6 +13,7 @@ export function getReferenceToExportViaNamespaceImport({
     filepathInsideNamespaceImport,
     namespaceImport,
     importsManager,
+    exportsManager,
     referencedIn,
     subImport = []
 }: {
@@ -25,6 +22,7 @@ export function getReferenceToExportViaNamespaceImport({
     filepathInsideNamespaceImport: ExportedDirectory[] | ExportedFilePath | undefined;
     namespaceImport: string;
     importsManager: ImportsManager;
+    exportsManager: ExportsManager;
     referencedIn: SourceFile;
     subImport?: string[];
 }): Reference {
@@ -32,7 +30,7 @@ export function getReferenceToExportViaNamespaceImport({
         importsManager.addImport(
             getRelativePathAsModuleSpecifierTo({
                 from: referencedIn,
-                to: convertExportedFilePathToFilePath(filepathToNamespaceImport)
+                to: exportsManager.convertExportedFilePathToFilePath(filepathToNamespaceImport)
             }),
             { namespaceImport }
         );
@@ -49,7 +47,8 @@ export function getReferenceToExportViaNamespaceImport({
         (acc, part) => ts.factory.createQualifiedName(acc, part),
         getEntityNameOfDirectory({
             pathToDirectory: pathToDirectoryInsideNamespaceImport,
-            prefix: ts.factory.createIdentifier(namespaceImport)
+            prefix: ts.factory.createIdentifier(namespaceImport),
+            exportsManager
         })
     );
 
@@ -57,7 +56,8 @@ export function getReferenceToExportViaNamespaceImport({
         (acc, part) => ts.factory.createPropertyAccessExpression(acc, part),
         getExpressionToDirectory({
             pathToDirectory: pathToDirectoryInsideNamespaceImport,
-            prefix: ts.factory.createIdentifier(namespaceImport)
+            prefix: ts.factory.createIdentifier(namespaceImport),
+            exportsManager
         })
     );
 

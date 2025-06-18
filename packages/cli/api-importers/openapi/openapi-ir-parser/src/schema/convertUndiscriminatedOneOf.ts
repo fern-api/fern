@@ -239,7 +239,7 @@ function processSubtypes({
         });
     }
 
-    if (uniqueSubtypes.length === 1 && uniqueSubtypes[0] != null) {
+    if (uniqueSubtypes.length === 1 && uniqueSubtypes[0] != null && !context.options.preserveSingleSchemaOneOf) {
         return uniqueSubtypes[0];
     }
 
@@ -376,7 +376,7 @@ export function convertUndiscriminatedOneOfWithDiscriminant({
         });
     }
 
-    if (uniqueSubtypes.length === 1 && uniqueSubtypes[0] != null) {
+    if (uniqueSubtypes.length === 1 && uniqueSubtypes[0] != null && !context.options.preserveSingleSchemaOneOf) {
         return uniqueSubtypes[0];
     }
 

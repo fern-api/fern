@@ -6,6 +6,7 @@ using WellKnownProto = Google.Protobuf.WellKnownTypes;
 
 namespace SeedApi;
 
+[Serializable]
 public record UpdateResponse
 {
     [JsonPropertyName("updatedAt")]

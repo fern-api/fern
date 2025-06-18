@@ -4,6 +4,7 @@ using SeedObject.Core;
 
 namespace SeedObject;
 
+[Serializable]
 public record Name
 {
     [JsonPropertyName("id")]

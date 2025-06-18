@@ -1,0 +1,47 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+webhooks:
+  webhookWithLegacyExamples:
+    docs: |
+      This is a webhook with legacy example snippets structure used to test the
+      output of snippets.
+    audiences:
+      - public
+    method: POST
+    payload: WebhookWithLegacyExamplesPayload
+    examples:
+      - payload: $WebhookWithLegacyExamplesPayload.JohnExample
+      - payload: $WebhookWithLegacyExamplesPayload.JaneExample
+
+
+types:
+
+  Person:
+    properties:
+      firstName: string
+      middleInitial: string
+      lastName: string
+
+  WebhookWithLegacyExamplesPayload:
+    properties:
+      person: Person
+    examples:
+      - name: JohnExample
+        value:
+          {
+            person: {
+              firstName: "John",
+              middleInitial: "Q",
+              lastName: "Sample"
+            }
+          }
+      - name: JaneExample
+        value:
+          {
+            person: {
+              firstName: "Jane",
+              middleInitial: "Q",
+              lastName: "Sample"
+            }
+          }
+

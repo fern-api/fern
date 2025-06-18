@@ -61,7 +61,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
             RelativeFilePath.of(TypescriptProject.NPM_IGNORE_FILENAME),
             [
                 "node_modules",
-                SimpleTypescriptProject.SRC_DIRECTORY,
+                this.packagePath,
                 SimpleTypescriptProject.TEST_DIRECTORY,
                 SimpleTypescriptProject.GIT_IGNORE_FILENAME,
                 ".github",
@@ -93,8 +93,8 @@ export class SimpleTypescriptProject extends TypescriptProject {
             skipLibCheck: true,
             declaration: true,
             outDir: SimpleTypescriptProject.DIST_DIRECTORY,
-            rootDir: SimpleTypescriptProject.SRC_DIRECTORY,
-            baseUrl: SimpleTypescriptProject.SRC_DIRECTORY
+            rootDir: this.packagePath,
+            baseUrl: this.packagePath
         };
 
         if (this.useLegacyExports) {
@@ -107,7 +107,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
                             module: (this.outputEsm ? "esnext" : "CommonJS") as unknown as ModuleKind,
                             outDir: SimpleTypescriptProject.DIST_DIRECTORY
                         },
-                        include: [SimpleTypescriptProject.SRC_DIRECTORY],
+                        include: [this.packagePath],
                         exclude: []
                     },
                     undefined,
@@ -123,7 +123,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
             JSON.stringify(
                 {
                     compilerOptions,
-                    include: [SimpleTypescriptProject.SRC_DIRECTORY],
+                    include: [this.packagePath],
                     exclude: []
                 },
                 undefined,
@@ -142,7 +142,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
                 {
                     extends: `./${baseTsConfigPath}`,
                     compilerOptions: cjsCompilerOptions,
-                    include: [SimpleTypescriptProject.SRC_DIRECTORY],
+                    include: [this.packagePath],
                     exclude: []
                 },
                 undefined,
@@ -161,7 +161,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
                 {
                     extends: `./${baseTsConfigPath}`,
                     compilerOptions: esmCompilerOptions,
-                    include: [SimpleTypescriptProject.SRC_DIRECTORY],
+                    include: [this.packagePath],
                     exclude: []
                 },
                 undefined,

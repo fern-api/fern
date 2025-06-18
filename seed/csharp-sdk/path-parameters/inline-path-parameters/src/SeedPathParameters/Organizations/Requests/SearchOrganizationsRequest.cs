@@ -3,6 +3,7 @@ using SeedPathParameters.Core;
 
 namespace SeedPathParameters;
 
+[Serializable]
 public record SearchOrganizationsRequest
 {
     [JsonIgnore]

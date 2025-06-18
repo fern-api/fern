@@ -4,6 +4,7 @@ using SeedMixedCase.Core;
 
 namespace SeedMixedCase;
 
+[Serializable]
 public record NestedUser
 {
     [JsonPropertyName("Name")]

@@ -4,6 +4,7 @@ using SeedCsharpNamespaceConflict.Core;
 
 namespace SeedCsharpNamespaceConflict.B;
 
+[Serializable]
 public record TestType
 {
     [JsonPropertyName("a")]

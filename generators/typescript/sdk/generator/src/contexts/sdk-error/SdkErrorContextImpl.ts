@@ -1,4 +1,4 @@
-import { ImportsManager, Reference } from "@fern-typescript/commons";
+import { ExportsManager, ImportsManager, Reference } from "@fern-typescript/commons";
 import { GeneratedSdkError, SdkErrorContext } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { SdkErrorGenerator } from "@fern-typescript/sdk-error-generator";
@@ -12,6 +12,7 @@ export declare namespace SdkErrorContextImpl {
     export interface Init {
         sourceFile: SourceFile;
         importsManager: ImportsManager;
+        exportsManager: ExportsManager;
         errorDeclarationReferencer: SdkErrorDeclarationReferencer;
         sdkErrorGenerator: SdkErrorGenerator;
         errorResolver: ErrorResolver;
@@ -21,6 +22,7 @@ export declare namespace SdkErrorContextImpl {
 export class SdkErrorContextImpl implements SdkErrorContext {
     private sourceFile: SourceFile;
     private importsManager: ImportsManager;
+    private exportsManager: ExportsManager;
     private errorDeclarationReferencer: SdkErrorDeclarationReferencer;
     private sdkErrorGenerator: SdkErrorGenerator;
     private errorResolver: ErrorResolver;
@@ -28,12 +30,14 @@ export class SdkErrorContextImpl implements SdkErrorContext {
     constructor({
         sourceFile,
         importsManager,
+        exportsManager,
         errorDeclarationReferencer,
         sdkErrorGenerator,
         errorResolver
     }: SdkErrorContextImpl.Init) {
         this.sourceFile = sourceFile;
         this.importsManager = importsManager;
+        this.exportsManager = exportsManager;
         this.errorDeclarationReferencer = errorDeclarationReferencer;
         this.sdkErrorGenerator = sdkErrorGenerator;
         this.errorResolver = errorResolver;
@@ -44,7 +48,8 @@ export class SdkErrorContextImpl implements SdkErrorContext {
             name: errorName,
             importStrategy: { type: "fromRoot", namespaceImport: this.errorDeclarationReferencer.namespaceExport },
             referencedIn: this.sourceFile,
-            importsManager: this.importsManager
+            importsManager: this.importsManager,
+            exportsManager: this.exportsManager
         });
     }
 

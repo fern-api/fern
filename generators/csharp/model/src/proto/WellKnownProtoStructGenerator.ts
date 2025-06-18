@@ -47,7 +47,8 @@ export class WellKnownProtoStructGenerator extends FileGenerator<
                 csharp.Type.string(),
                 csharp.Type.optional(csharp.Type.reference(this.protoValueClassReference))
             ),
-            summary: this.typeDeclaration.docs
+            summary: this.typeDeclaration.docs,
+            annotations: [this.context.getSerializableAttribute()]
         });
 
         class_.addConstructor(this.getDefaultConstructor());

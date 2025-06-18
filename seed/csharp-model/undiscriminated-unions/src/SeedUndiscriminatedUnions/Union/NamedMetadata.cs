@@ -4,6 +4,7 @@ using SeedUndiscriminatedUnions.Core;
 
 namespace SeedUndiscriminatedUnions;
 
+[Serializable]
 public record NamedMetadata
 {
     [JsonPropertyName("name")]

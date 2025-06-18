@@ -4,6 +4,7 @@ using SeedCsharpNamespaceConflict.Core;
 
 namespace SeedCsharpNamespaceConflict.A.Aa;
 
+[Serializable]
 public record A
 {
     /// <summary>

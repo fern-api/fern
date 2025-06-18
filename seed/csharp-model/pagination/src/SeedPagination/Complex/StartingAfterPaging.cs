@@ -4,6 +4,7 @@ using SeedPagination.Core;
 
 namespace SeedPagination;
 
+[Serializable]
 public record StartingAfterPaging
 {
     [JsonPropertyName("per_page")]

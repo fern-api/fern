@@ -4,6 +4,7 @@ using SeedCustomAuth.Core;
 
 namespace SeedCustomAuth;
 
+[Serializable]
 public record UnauthorizedRequestErrorBody
 {
     [JsonPropertyName("message")]

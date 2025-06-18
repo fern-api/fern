@@ -4,6 +4,7 @@ using SeedEnum.Core;
 
 namespace SeedEnum;
 
+[Serializable]
 public record SendEnumListAsQueryParamRequest
 {
     [JsonIgnore]

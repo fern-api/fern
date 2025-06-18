@@ -4,6 +4,7 @@ using SeedAnyAuth.Core;
 
 namespace SeedAnyAuth;
 
+[Serializable]
 public record User
 {
     [JsonPropertyName("id")]

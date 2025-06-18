@@ -4,6 +4,7 @@ using SeedPackageYml.Core;
 
 namespace SeedPackageYml;
 
+[Serializable]
 public record EchoRequest
 {
     [JsonPropertyName("name")]

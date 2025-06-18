@@ -5,6 +5,7 @@ using SeedTrace.Core;
 
 namespace SeedTrace.V2;
 
+[Serializable]
 public record BasicCustomFiles
 {
     [JsonPropertyName("methodName")]

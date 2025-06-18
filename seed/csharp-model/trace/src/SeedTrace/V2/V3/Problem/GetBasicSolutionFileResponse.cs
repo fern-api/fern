@@ -5,6 +5,7 @@ using SeedTrace.Core;
 
 namespace SeedTrace.V2.V3;
 
+[Serializable]
 public record GetBasicSolutionFileResponse
 {
     [JsonPropertyName("solutionFileByLanguage")]

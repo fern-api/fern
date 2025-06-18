@@ -1,4 +1,5 @@
 import {
+    ExportsManager,
     Fetcher,
     GetReferenceOpts,
     ImportsManager,
@@ -36,6 +37,7 @@ export declare namespace GeneratedBytesEndpointRequest {
         generatedSdkClientClass: GeneratedSdkClientClassImpl;
         targetRuntime: JavaScriptRuntime;
         retainOriginalCasing: boolean;
+        exportsManager: ExportsManager;
     }
 }
 

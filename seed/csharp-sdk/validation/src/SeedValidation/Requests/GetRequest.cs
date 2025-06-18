@@ -3,6 +3,7 @@ using SeedValidation.Core;
 
 namespace SeedValidation;
 
+[Serializable]
 public record GetRequest
 {
     [JsonIgnore]

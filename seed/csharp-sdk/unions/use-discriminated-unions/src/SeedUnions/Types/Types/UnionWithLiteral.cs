@@ -9,6 +9,7 @@ using SeedUnions.Core;
 namespace SeedUnions;
 
 [JsonConverter(typeof(UnionWithLiteral.JsonConverter))]
+[Serializable]
 public record UnionWithLiteral
 {
     internal UnionWithLiteral(string type, object? value)
@@ -93,12 +94,14 @@ public record UnionWithLiteral
     /// <summary>
     /// Base properties for the discriminated union
     /// </summary>
+    [Serializable]
     internal record BaseProperties
     {
         [JsonPropertyName("base")]
         public string Base { get; set; } = "base";
     }
 
+    [Serializable]
     internal sealed class JsonConverter : JsonConverter<UnionWithLiteral>
     {
         public override bool CanConvert(global::System.Type typeToConvert) =>
@@ -175,6 +178,7 @@ public record UnionWithLiteral
     /// <summary>
     /// Discriminated union type for fern
     /// </summary>
+    [Serializable]
     public record Fern
     {
         public Fern(string value)
