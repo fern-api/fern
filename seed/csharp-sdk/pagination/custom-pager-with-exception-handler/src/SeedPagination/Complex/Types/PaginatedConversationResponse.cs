@@ -4,6 +4,7 @@ using SeedPagination.Core;
 
 namespace SeedPagination;
 
+[Serializable]
 public record PaginatedConversationResponse
 {
     [JsonPropertyName("conversations")]

@@ -4,6 +4,7 @@ using SeedCrossPackageTypeNames.Core;
 
 namespace SeedCrossPackageTypeNames;
 
+[Serializable]
 public record ImportingType
 {
     [JsonPropertyName("imported")]

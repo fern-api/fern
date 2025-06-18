@@ -3,6 +3,7 @@ using SeedTrace.Core;
 
 namespace SeedTrace;
 
+[Serializable]
 public record GetAttemptedMigrationsRequest
 {
     [JsonIgnore]

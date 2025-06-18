@@ -5,6 +5,7 @@ using SeedAudiences.FolderB;
 
 namespace SeedAudiences.FolderA;
 
+[Serializable]
 public record Response
 {
     [JsonPropertyName("foo")]

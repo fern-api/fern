@@ -4,6 +4,7 @@ using SeedPathParameters.Core;
 
 namespace SeedPathParameters;
 
+[Serializable]
 public record Organization
 {
     [JsonPropertyName("name")]

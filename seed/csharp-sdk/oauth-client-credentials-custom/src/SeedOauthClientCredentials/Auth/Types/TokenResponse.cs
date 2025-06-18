@@ -7,6 +7,7 @@ namespace SeedOauthClientCredentials;
 /// <summary>
 /// An OAuth token response.
 /// </summary>
+[Serializable]
 public record TokenResponse
 {
     [JsonPropertyName("access_token")]

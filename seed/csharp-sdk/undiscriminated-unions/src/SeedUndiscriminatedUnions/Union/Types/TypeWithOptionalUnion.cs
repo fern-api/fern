@@ -5,6 +5,7 @@ using SeedUndiscriminatedUnions.Core;
 
 namespace SeedUndiscriminatedUnions;
 
+[Serializable]
 public record TypeWithOptionalUnion
 {
     [JsonPropertyName("myUnion")]

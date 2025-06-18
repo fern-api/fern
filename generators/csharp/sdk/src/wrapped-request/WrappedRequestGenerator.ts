@@ -46,7 +46,8 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
             ...this.classReference,
             partial: false,
             access: csharp.Access.Public,
-            type: csharp.Class.ClassType.Record
+            type: csharp.Class.ClassType.Record,
+            annotations: [this.context.getSerializableAttribute()]
         });
 
         const service = this.context.getHttpServiceOrThrow(this.serviceId);

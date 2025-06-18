@@ -7,6 +7,7 @@ namespace SeedTrace.V2.V3;
 /// <summary>
 /// The generated signature will include an additional param, actualResult
 /// </summary>
+[Serializable]
 public record VoidFunctionDefinitionThatTakesActualResult
 {
     [JsonPropertyName("additionalParameters")]

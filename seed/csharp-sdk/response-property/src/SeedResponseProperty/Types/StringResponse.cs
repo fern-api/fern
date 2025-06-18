@@ -4,6 +4,7 @@ using SeedResponseProperty.Core;
 
 namespace SeedResponseProperty;
 
+[Serializable]
 public record StringResponse
 {
     [JsonPropertyName("data")]

@@ -5,6 +5,7 @@ using SeedObjectsWithImports.Core;
 
 namespace SeedObjectsWithImports;
 
+[Serializable]
 public record Node
 {
     [JsonPropertyName("id")]

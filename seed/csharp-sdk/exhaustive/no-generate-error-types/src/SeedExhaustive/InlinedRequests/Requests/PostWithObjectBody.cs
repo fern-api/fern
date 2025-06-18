@@ -4,6 +4,7 @@ using SeedExhaustive.Types;
 
 namespace SeedExhaustive;
 
+[Serializable]
 public record PostWithObjectBody
 {
     [JsonPropertyName("string")]

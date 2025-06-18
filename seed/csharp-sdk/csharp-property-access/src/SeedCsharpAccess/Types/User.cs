@@ -4,6 +4,7 @@ using SeedCsharpAccess.Core;
 
 namespace SeedCsharpAccess;
 
+[Serializable]
 public record User
 {
     [JsonAccess(JsonAccessType.ReadOnly)]

@@ -30,7 +30,8 @@ export class SingleUrlEnvironmentGenerator extends FileGenerator<
         const class_ = csharp.class_({
             ...this.context.getEnvironmentsClassReference(),
             partial: false,
-            access: csharp.Access.Public
+            access: csharp.Access.Public,
+            annotations: [this.context.getSerializableAttribute()]
         });
 
         for (const environment of this.singleUrlEnvironments.environments) {

@@ -6,6 +6,12 @@ import { BaseCsharpCustomConfigSchema } from "../../custom-config";
 type Alias = string;
 type Namespace = string;
 
+const IMPLICIT_NAMESPACES = new Set(["System"]);
+
+function isNamespaceImplicit(namespace: string): boolean {
+    return IMPLICIT_NAMESPACES.has(namespace);
+}
+
 export declare namespace Writer {
     interface Args {
         /* The namespace that is being written to */
@@ -131,7 +137,8 @@ ${this.buffer}`;
 
         let result = referenceKeys
             // Filter out the current namespace.
-            .filter((referenceNamespace) => referenceNamespace !== this.namespace)
+            .filter((ns) => !this.isCurrentNamespace(ns))
+            .filter((ns) => !isNamespaceImplicit(ns)) // System is implicitly imported
             .map((ref) => `using ${ref};`)
             .join("\n");
 
@@ -144,5 +151,9 @@ ${this.buffer}`;
         }
 
         return result;
+    }
+
+    private isCurrentNamespace(namespace: string): boolean {
+        return namespace === this.namespace;
     }
 }

@@ -4,6 +4,7 @@ using SeedUnknownAsAny.Core;
 
 namespace SeedUnknownAsAny;
 
+[Serializable]
 public record MyObject
 {
     [JsonPropertyName("unknown")]

@@ -4,6 +4,7 @@ using SeedMixedFileDirectory.Core;
 
 namespace SeedMixedFileDirectory;
 
+[Serializable]
 public record User
 {
     [JsonPropertyName("id")]

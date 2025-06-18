@@ -1,10 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using SeedUnions.Core;
 
 namespace SeedUnions;
 
+[Serializable]
 public partial class ClientOptions
 {
     /// <summary>

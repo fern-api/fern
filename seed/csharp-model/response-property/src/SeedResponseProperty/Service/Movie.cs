@@ -4,6 +4,7 @@ using SeedResponseProperty.Core;
 
 namespace SeedResponseProperty;
 
+[Serializable]
 public record Movie
 {
     [JsonPropertyName("id")]

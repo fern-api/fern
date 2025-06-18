@@ -9,6 +9,7 @@ using SeedUnions.Core;
 namespace SeedUnions;
 
 [JsonConverter(typeof(Shape.JsonConverter))]
+[Serializable]
 public record Shape
 {
     internal Shape(string type, object? value)
@@ -140,12 +141,14 @@ public record Shape
     /// <summary>
     /// Base properties for the discriminated union
     /// </summary>
+    [Serializable]
     internal record BaseProperties
     {
         [JsonPropertyName("id")]
         public required string Id { get; set; }
     }
 
+    [Serializable]
     internal sealed class JsonConverter : JsonConverter<Shape>
     {
         public override bool CanConvert(global::System.Type typeToConvert) =>
@@ -220,6 +223,7 @@ public record Shape
     /// <summary>
     /// Discriminated union type for circle
     /// </summary>
+    [Serializable]
     public struct Circle
     {
         public Circle(SeedUnions.Circle value)
@@ -237,6 +241,7 @@ public record Shape
     /// <summary>
     /// Discriminated union type for square
     /// </summary>
+    [Serializable]
     public struct Square
     {
         public Square(SeedUnions.Square value)

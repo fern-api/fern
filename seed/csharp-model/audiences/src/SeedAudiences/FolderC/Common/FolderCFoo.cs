@@ -4,6 +4,7 @@ using SeedAudiences.Core;
 
 namespace SeedAudiences.FolderC;
 
+[Serializable]
 public record FolderCFoo
 {
     [JsonPropertyName("bar_property")]

@@ -4,6 +4,7 @@ using SeedAliasExtends.Core;
 
 namespace SeedAliasExtends;
 
+[Serializable]
 public record Parent
 {
     [JsonPropertyName("parent")]

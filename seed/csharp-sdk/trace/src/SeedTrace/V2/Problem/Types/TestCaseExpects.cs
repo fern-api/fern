@@ -4,6 +4,7 @@ using SeedTrace.Core;
 
 namespace SeedTrace.V2;
 
+[Serializable]
 public record TestCaseExpects
 {
     [JsonPropertyName("expectedStdout")]

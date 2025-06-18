@@ -5,6 +5,7 @@ using SeedApi.Core;
 
 namespace SeedApi;
 
+[Serializable]
 public record Account
 {
     [JsonPropertyName("resource_type")]

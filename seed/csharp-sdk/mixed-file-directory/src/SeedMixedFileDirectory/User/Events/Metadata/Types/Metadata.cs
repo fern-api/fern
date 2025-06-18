@@ -4,6 +4,7 @@ using SeedMixedFileDirectory.Core;
 
 namespace SeedMixedFileDirectory.User.Events;
 
+[Serializable]
 public record Metadata
 {
     [JsonPropertyName("id")]
