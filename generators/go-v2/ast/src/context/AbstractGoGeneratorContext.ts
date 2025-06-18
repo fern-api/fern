@@ -99,11 +99,103 @@ export abstract class AbstractGoGeneratorContext<
         return name.camelCase.safeName;
     }
 
-    public maybeGetLiteral(typeReference: TypeReference): Literal | undefined {
-        if (typeReference.type === "container" && typeReference.container.type === "literal") {
-            return typeReference.container.literal;
+    public maybeUnwrapIterable(typeReference: TypeReference): TypeReference | undefined {
+        switch (typeReference.type) {
+            case "container":
+                const container = typeReference.container;
+                switch (container.type) {
+                    case "list":
+                        return container.list;
+                    case "set":
+                        return container.set;
+                    case "optional":
+                        return this.maybeUnwrapIterable(container.optional);
+                    case "nullable":
+                        return this.maybeUnwrapIterable(container.nullable);
+                    case "literal":
+                    case "map":
+                        return undefined;
+                    default:
+                        assertNever(container);
+                }
+            case "named":
+                const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId).shape;
+                switch (typeDeclaration.type) {
+                    case "alias":
+                        return this.maybeUnwrapIterable(typeDeclaration.aliasOf);
+                    case "enum":
+                    case "object":
+                    case "union":
+                    case "undiscriminatedUnion":
+                        return undefined;
+                    default:
+                        assertNever(typeDeclaration);
+                }
+            case "primitive":
+            case "unknown":
+                return undefined;
+            default:
+                assertNever(typeReference);
         }
-        return undefined;
+    }
+
+    public maybeUnwrapOptionalOrNullable(typeReference: TypeReference): TypeReference | undefined {
+        switch (typeReference.type) {
+            case "container":
+                const container = typeReference.container;
+                switch (container.type) {
+                    case "optional":
+                        return container.optional;
+                    case "nullable":
+                        return container.nullable;
+                    case "list":
+                    case "set":
+                    case "literal":
+                    case "map":
+                        return undefined;
+                    default:
+                        assertNever(container);
+                }
+            case "named":
+            case "primitive":
+            case "unknown":
+                return undefined;
+            default:
+                assertNever(typeReference);
+        }
+    }
+
+    /**
+     * Returns true if the type reference needs to be dereferenced to get the
+     * underlying type.
+     *
+     * Container types like lists, maps, and sets are already nil-able, so they
+     * don't require a dereference prefix.
+     */
+    public needsOptionalDereference(typeReference: TypeReference): boolean {
+        switch (typeReference.type) {
+            case "named":
+                const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId).shape;
+                switch (typeDeclaration.type) {
+                    case "alias":
+                        return this.needsOptionalDereference(typeDeclaration.aliasOf);
+                    case "enum":
+                        return true;
+                    case "object":
+                    case "union":
+                    case "undiscriminatedUnion":
+                        return false;
+                    default:
+                        assertNever(typeDeclaration);
+                }
+            case "primitive":
+                return true;
+            case "container":
+            case "unknown":
+                return false;
+            default:
+                assertNever(typeReference);
+        }
     }
 
     public getLiteralAsString(literal: Literal): string {
@@ -235,32 +327,40 @@ export abstract class AbstractGoGeneratorContext<
         primitive
     }: {
         typeReference: TypeReference;
-        primitive?: PrimitiveTypeV1;
+        primitive: PrimitiveTypeV1;
     }): boolean {
+        return this.maybePrimitive(typeReference) === primitive;
+    }
+
+    public maybePrimitive(typeReference: TypeReference): PrimitiveTypeV1 | undefined {
         switch (typeReference.type) {
             case "container":
-                switch (typeReference.container.type) {
+                const container = typeReference.container;
+                switch (container.type) {
                     case "optional":
-                        return this.isPrimitive({ typeReference: typeReference.container.optional, primitive });
+                        return this.maybePrimitive(container.optional);
                     case "nullable":
-                        return this.isPrimitive({ typeReference: typeReference.container.nullable, primitive });
+                        return this.maybePrimitive(container.nullable);
+                    case "list":
+                    case "set":
+                    case "literal":
+                    case "map":
+                        return undefined;
+                    default:
+                        assertNever(container);
                 }
-                return false;
             case "named": {
                 const declaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
                 if (declaration.shape.type === "alias") {
-                    return this.isPrimitive({ typeReference: declaration.shape.aliasOf, primitive });
+                    return this.maybePrimitive(declaration.shape.aliasOf);
                 }
-                return false;
+                return undefined;
             }
             case "primitive": {
-                if (primitive == null) {
-                    return true;
-                }
-                return typeReference.primitive.v1 === primitive;
+                return typeReference.primitive.v1;
             }
             case "unknown": {
-                return false;
+                return undefined;
             }
             default:
                 assertNever(typeReference);

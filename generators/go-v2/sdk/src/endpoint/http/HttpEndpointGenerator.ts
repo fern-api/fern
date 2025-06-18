@@ -174,7 +174,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             writer.dedent();
             writer.write("}");
             for (const queryParameter of endpoint.queryParameters) {
-                const literal = this.context.maybeGetLiteral(queryParameter.valueType);
+                const literal = this.context.maybeLiteral(queryParameter.valueType);
                 if (literal != null) {
                     writer.write(
                         `queryParams.Add("${queryParameter.name}", ${this.context.getLiteralAsString(literal)})`
@@ -203,7 +203,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 writer.newLine();
             }
             for (const header of endpoint.headers) {
-                const literal = this.context.maybeGetLiteral(header.valueType);
+                const literal = this.context.maybeLiteral(header.valueType);
                 if (literal != null) {
                     writer.write(
                         `headers.Add("${header.name.wireValue}", ${this.context.getLiteralAsString(literal)})`
