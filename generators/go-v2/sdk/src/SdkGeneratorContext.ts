@@ -14,6 +14,7 @@ import {
     SdkRequestBodyType,
     SdkRequestWrapper,
     ServiceId,
+    StreamingResponse,
     Subpackage
 } from "@fern-fern/ir-sdk/api";
 
@@ -214,6 +215,26 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
             importPath: this.getCoreImportPath(),
             generics: [valueType]
         });
+    }
+
+    public getStreamTypeReference(valueType: go.Type): go.TypeReference {
+        return go.typeReference({
+            name: "Stream",
+            importPath: this.getCoreImportPath(),
+            generics: [valueType]
+        });
+    }
+
+    public getStreamPayload(streamingResponse: StreamingResponse): go.Type {
+        switch (streamingResponse.type) {
+            case "json":
+            case "sse":
+                return this.goTypeMapper.convert({ reference: streamingResponse.payload });
+            case "text":
+                return go.Type.string();
+            default:
+                assertNever(streamingResponse);
+        }
     }
 
     public getRequestWrapperTypeReference(serviceId: ServiceId, requestName: Name): go.TypeReference {

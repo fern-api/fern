@@ -21,7 +21,8 @@ export function getEndpointReturnTypes({
         json: (reference) => {
             return context.goTypeMapper.convert({ reference: reference.responseBodyType });
         },
-        streaming: () => go.Type.any(), // TODO: Return core.Stream[Type] here.
+        streaming: (reference) =>
+            go.Type.reference(context.getStreamTypeReference(context.getStreamPayload(reference))),
         text: () => go.Type.string(),
         _other: () => go.Type.any()
     });

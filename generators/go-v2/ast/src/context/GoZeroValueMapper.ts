@@ -1,12 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 
-import {
-    ContainerType,
-    Literal,
-    PrimitiveType,
-    PrimitiveTypeV1,
-    TypeReference
-} from "@fern-fern/ir-sdk/api";
+import { ContainerType, Literal, PrimitiveType, PrimitiveTypeV1, TypeReference } from "@fern-fern/ir-sdk/api";
 
 import { go } from "../";
 import { TypeInstantiation } from "../ast";
