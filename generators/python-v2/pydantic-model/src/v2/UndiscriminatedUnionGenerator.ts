@@ -19,18 +19,35 @@ export class UndiscriminatedUnionGenerator {
         const filename = this.context.getSnakeCaseSafeName(this.typeDeclaration.name.name);
         const file = python.file({ path });
 
+        // Track non-primitive types for imports
+        const nonPrimitiveTypes: string[] = [];
+        const pythonPrimitives = ["str", "int", "float", "bool", "list", "dict", "set", "tuple", "None"];
+
         // Add imports
         file.addReference(python.reference({ name: "Union", modulePath: ["typing"] }));
+
+        this.undiscriminatedUnionDeclaration.members.forEach((member, index) => {
+            const typeString = this.context.pythonTypeMapper.convert({ reference: member.type }).toString();
+            if (!nonPrimitiveTypes.includes(typeString)) {
+                nonPrimitiveTypes.push(typeString);
+            }
+        });
+
+        // Add imports for non-primitive types
+        nonPrimitiveTypes.forEach((typeName) => {
+            file.addReference(python.reference({ name: typeName, modulePath: ["typing"] }));
+        });
 
         // Add union type
         file.addStatement(
             python.codeBlock((writer) => {
                 writer.write(`${this.context.getPascalCaseSafeName(this.typeDeclaration.name.name)} = `);
-                writer.write("[");
+                writer.write("Union[");
                 this.undiscriminatedUnionDeclaration.members.forEach((member, index) => {
                     if (index > 0) {
                         writer.write(", ");
                     }
+
                     writer.write(this.context.pythonTypeMapper.convert({ reference: member.type }).toString());
                 });
                 writer.write("]");
