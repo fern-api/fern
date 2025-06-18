@@ -1,3 +1,4 @@
+import { assertNever } from "@fern-api/core-utils";
 import { go } from "@fern-api/go-ast";
 
 import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
@@ -10,30 +11,37 @@ export function getRawEndpointReturnTypes({
 }: {
     context: SdkGeneratorContext;
     endpoint: HttpEndpoint;
-}): go.Type[] {
-    if (endpoint.response?.body == null) {
-        return [go.Type.error()];
+}): go.Type | undefined {
+    const response = endpoint.response;
+    if (response?.body == null) {
+        return undefined;
     }
-    const returnType = endpoint.response?.body._visit({
-        bytes: () => wrapWithRawResponseType({ context, returnType: go.Type.bytes() }),
-        fileDownload: () =>
-            wrapWithRawResponseType({
-                context,
-                returnType: go.Type.reference(context.getIoReaderTypeReference())
-            }),
-        json: (reference) => {
+    const body = response.body;
+    switch (body.type) {
+        case "bytes":
+            return wrapWithRawResponseType({ context, returnType: go.Type.bytes() });
+        case "fileDownload":
             return wrapWithRawResponseType({
                 context,
-                returnType: context.goTypeMapper.convert({ reference: reference.responseBodyType })
+                returnType: go.Type.reference(context.getIoReaderTypeReference())
             });
-        },
-        text: () => wrapWithRawResponseType({ context, returnType: go.Type.string() }),
-        streaming: (reference) =>
-            go.Type.reference(context.getStreamTypeReference(context.getStreamPayload(reference))),
-        streamParameter: () => go.Type.any(),
-        _other: () => go.Type.any()
-    });
-    return [returnType, go.Type.error()];
+        case "json":
+            return wrapWithRawResponseType({
+                context,
+                returnType: context.goTypeMapper.convert({ reference: body.value.responseBodyType })
+            });
+        case "streaming":
+            return wrapWithRawResponseType({
+                context,
+                returnType: go.Type.reference(context.getStreamTypeReference(context.getStreamPayload(body.value)))
+            });
+        case "streamParameter":
+            return go.Type.any();
+        case "text":
+            return wrapWithRawResponseType({ context, returnType: go.Type.string() });
+        default:
+            assertNever(body);
+    }
 }
 
 function wrapWithRawResponseType({

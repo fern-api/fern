@@ -8,6 +8,10 @@ export interface EndpointSignatureInfo {
     pathParameterReferences: Record<string, string>;
     request: EndpointRequest | undefined;
     requestParameter: go.Parameter | undefined;
-    returnTypes: go.Type[];
-    returnZeroValues: go.TypeInstantiation[];
+
+    // All endpoints return an error by default; these fields are only set
+    // if the endpoint returns a non-error value.
+    returnType: go.Type | undefined;
+    rawReturnType: go.Type | undefined;
+    returnZeroValue: go.TypeInstantiation | undefined;
 }

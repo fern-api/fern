@@ -60,10 +60,17 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         return new go.Method({
             name: this.context.getMethodName(endpoint.name),
             parameters: signature.allParameters,
-            return_: signature.returnTypes,
-            body: this.getRawUnaryEndpointBody({ endpoint, returnZeroValues: signature.returnZeroValues }),
+            return_: this.getReturnSignature({ returnType: signature.returnType }),
+            body: this.getRawUnaryEndpointBody({ endpoint, returnZeroValue: signature.returnZeroValue }),
             typeReference: this.getRawClientTypeReference({ subpackage })
         });
+    }
+
+    private getReturnSignature({ returnType }: { returnType?: go.Type }): go.Type[] {
+        if (returnType == null) {
+            return [go.Type.error()];
+        }
+        return [returnType, go.Type.error()];
     }
 
     private getRawClientTypeReference({ subpackage }: { subpackage: Subpackage | undefined }): go.TypeReference {
@@ -75,23 +82,33 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
 
     private getRawUnaryEndpointBody({
         endpoint,
-        returnZeroValues
+        returnZeroValue
     }: {
         endpoint: HttpEndpoint;
-        returnZeroValues: go.TypeInstantiation[];
+        returnZeroValue: go.TypeInstantiation | undefined;
     }): go.CodeBlock {
-        return this.writeReturnZeroValues({ returnZeroValues });
+        return this.writeReturnZeroValue({ zeroValue: returnZeroValue });
     }
 
-    private writeReturnZeroValues({ returnZeroValues }: { returnZeroValues: go.TypeInstantiation[] }): go.CodeBlock {
+    private writeReturnZeroValueWithError({ zeroValue }: { zeroValue?: go.TypeInstantiation }): go.CodeBlock {
         return go.codeblock((writer) => {
             writer.write(`return `);
-            returnZeroValues.forEach((zeroValue, index) => {
-                if (index > 0) {
-                    writer.write(", ");
-                }
+            if (zeroValue != null) {
                 writer.writeNode(zeroValue);
-            });
+                writer.write(", ");
+            }
+            writer.write("err");
+        });
+    }
+
+    private writeReturnZeroValue({ zeroValue }: { zeroValue?: go.TypeInstantiation }): go.CodeBlock {
+        return go.codeblock((writer) => {
+            writer.write(`return `);
+            if (zeroValue != null) {
+                writer.writeNode(zeroValue);
+                writer.write(", ");
+            }
+            writer.write("nil");
         });
     }
 }

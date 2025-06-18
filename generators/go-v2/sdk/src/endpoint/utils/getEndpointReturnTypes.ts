@@ -1,3 +1,4 @@
+import { assertNever } from "@fern-api/core-utils";
 import { go } from "@fern-api/go-ast";
 
 import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
@@ -10,21 +11,26 @@ export function getEndpointReturnTypes({
 }: {
     context: SdkGeneratorContext;
     endpoint: HttpEndpoint;
-}): go.Type[] {
-    if (endpoint.response?.body == null) {
-        return [go.Type.error()];
+}): go.Type | undefined {
+    const response = endpoint.response;
+    if (response?.body == null) {
+        return undefined;
     }
-    const returnType = endpoint.response?.body._visit({
-        bytes: () => go.Type.bytes(),
-        streamParameter: () => go.Type.any(),
-        fileDownload: () => go.Type.reference(context.getIoReaderTypeReference()),
-        json: (reference) => {
-            return context.goTypeMapper.convert({ reference: reference.responseBodyType });
-        },
-        streaming: (reference) =>
-            go.Type.reference(context.getStreamTypeReference(context.getStreamPayload(reference))),
-        text: () => go.Type.string(),
-        _other: () => go.Type.any()
-    });
-    return [returnType, go.Type.error()];
+    const body = response.body;
+    switch (body.type) {
+        case "bytes":
+            return go.Type.bytes();
+        case "streamParameter":
+            return go.Type.any();
+        case "fileDownload":
+            return go.Type.reference(context.getIoReaderTypeReference());
+        case "json":
+            return context.goTypeMapper.convert({ reference: body.value.responseBodyType });
+        case "streaming":
+            return go.Type.reference(context.getStreamTypeReference(context.getStreamPayload(body.value)));
+        case "text":
+            return go.Type.string();
+        default:
+            assertNever(body);
+    }
 }
