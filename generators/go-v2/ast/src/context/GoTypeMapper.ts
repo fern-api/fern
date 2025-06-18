@@ -79,8 +79,8 @@ export class GoTypeMapper {
         return PrimitiveTypeV1._visit<go.Type>(primitive.v1, {
             integer: () => go.Type.int(),
             long: () => go.Type.int64(),
-            uint: () => go.Type.int(), // TODO: Add support for uint types in the Go generator.
-            uint64: () => go.Type.int64(), // TODO: Add support for uint64 types in the Go generator.
+            uint: () => go.Type.int(),
+            uint64: () => go.Type.int64(),
             float: () => go.Type.float64(),
             double: () => go.Type.float64(),
             boolean: () => go.Type.bool(),
@@ -106,6 +106,6 @@ export class GoTypeMapper {
     }
 
     private convertNamed({ named }: { named: DeclaredTypeName }): Type {
-        return go.Type.reference(this.convertToTypeReference(named));
+        return go.Type.pointer(go.Type.reference(this.convertToTypeReference(named)));
     }
 }

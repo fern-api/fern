@@ -2,17 +2,14 @@ import { assertNever } from "@fern-api/core-utils";
 
 import {
     ContainerType,
-    DeclaredTypeName,
     Literal,
-    Name,
     PrimitiveType,
     PrimitiveTypeV1,
-    TypeId,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
 
 import { go } from "../";
-import { GoTypeReference, Type, TypeInstantiation } from "../ast";
+import { TypeInstantiation } from "../ast";
 import { BaseGoCustomConfigSchema } from "../custom-config/BaseGoCustomConfigSchema";
 import { AbstractGoGeneratorContext } from "./AbstractGoGeneratorContext";
 
