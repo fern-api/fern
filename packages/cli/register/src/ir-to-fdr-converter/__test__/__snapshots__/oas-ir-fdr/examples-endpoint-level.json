@@ -214,6 +214,7 @@
                   "longitude": -74.006
                 },
                 "id": "123e4567-e89b-12d3-a456-426614174000",
+                "age": 50,
                 "plantedDate": "2020-01-01T00:00:00Z"
               },
               {
@@ -224,6 +225,7 @@
                   "longitude": -71.0589
                 },
                 "id": "987fcdeb-51a2-43d7-9012-345678901234",
+                "age": 35,
                 "plantedDate": "2018-03-15T00:00:00Z"
               }
             ],
@@ -238,6 +240,7 @@
                     "longitude": -74.006
                   },
                   "id": "123e4567-e89b-12d3-a456-426614174000",
+                  "age": 50,
                   "plantedDate": "2020-01-01T00:00:00Z"
                 },
                 {
@@ -248,6 +251,7 @@
                     "longitude": -71.0589
                   },
                   "id": "987fcdeb-51a2-43d7-9012-345678901234",
+                  "age": 35,
                   "plantedDate": "2018-03-15T00:00:00Z"
                 }
               ]
@@ -318,7 +322,8 @@
               "location": {
                 "latitude": 40.7128,
                 "longitude": -74.006
-              }
+              },
+              "age": 50
             },
             "requestBodyV3": {
               "type": "json",
@@ -328,7 +333,8 @@
                 "location": {
                   "latitude": 40.7128,
                   "longitude": -74.006
-                }
+                },
+                "age": 50
               }
             },
             "responseStatusCode": 201,
@@ -340,6 +346,7 @@
                 "longitude": -74.006
               },
               "id": "123e4567-e89b-12d3-a456-426614174000",
+              "age": 50,
               "plantedDate": "2020-01-01T00:00:00Z"
             },
             "responseBodyV3": {
@@ -352,6 +359,7 @@
                   "longitude": -74.006
                 },
                 "id": "123e4567-e89b-12d3-a456-426614174000",
+                "age": 50,
                 "plantedDate": "2020-01-01T00:00:00Z"
               }
             }
@@ -369,7 +377,8 @@
               "location": {
                 "latitude": 40.7128,
                 "longitude": -74.006
-              }
+              },
+              "age": 50
             },
             "requestBodyV3": {
               "type": "json",
@@ -379,7 +388,8 @@
                 "location": {
                   "latitude": 40.7128,
                   "longitude": -74.006
-                }
+                },
+                "age": 50
               }
             },
             "responseStatusCode": 201,
@@ -391,6 +401,7 @@
                 "longitude": -71.0589
               },
               "id": "987fcdeb-51a2-43d7-9012-345678901234",
+              "age": 35,
               "plantedDate": "2018-03-15T00:00:00Z"
             },
             "responseBodyV3": {
@@ -403,6 +414,7 @@
                   "longitude": -71.0589
                 },
                 "id": "987fcdeb-51a2-43d7-9012-345678901234",
+                "age": 35,
                 "plantedDate": "2018-03-15T00:00:00Z"
               }
             }
@@ -482,6 +494,7 @@
                 "longitude": -74.006
               },
               "id": "123e4567-e89b-12d3-a456-426614174000",
+              "age": 50,
               "plantedDate": "2020-01-01T00:00:00Z"
             },
             "responseBodyV3": {
@@ -494,6 +507,7 @@
                   "longitude": -74.006
                 },
                 "id": "123e4567-e89b-12d3-a456-426614174000",
+                "age": 50,
                 "plantedDate": "2020-01-01T00:00:00Z"
               }
             }

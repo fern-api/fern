@@ -77,7 +77,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             useBigInt: parsed?.useBigInt ?? false,
             useLegacyExports: parsed?.useLegacyExports ?? false,
             streamType: parsed?.streamType ?? "wrapper",
-            fileResponseType: parsed?.fileResponseType ?? "stream"
+            fileResponseType: parsed?.fileResponseType ?? "stream",
+            packagePath: parsed?.packagePath
         };
     }
 
@@ -163,7 +164,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 useLegacyExports,
                 generateWireTests: customConfig.generateWireTests ?? false,
                 streamType: customConfig.streamType ?? "wrapper",
-                fileResponseType: customConfig.fileResponseType ?? "stream"
+                fileResponseType: customConfig.fileResponseType ?? "stream",
+                packagePath: customConfig.packagePath
             }
         });
         const typescriptProject = await sdkGenerator.generate();
@@ -182,7 +184,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
     private getTemplateVariables(customConfig: SdkCustomConfig): Record<string, unknown> {
         return {
             streamType: customConfig.streamType,
-            fileResponseType: customConfig.fileResponseType,
+            fileResponseType: customConfig.fileResponseType
         };
     }
 

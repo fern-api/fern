@@ -83,7 +83,7 @@ function getFileType({
     fileResponseType: "stream" | "binary-response";
 }): ts.TypeNode {
     const fileType = visitJavaScriptRuntime(targetRuntime, {
-        browser: () =>  ts.factory.createTypeReferenceNode("Blob"),
+        browser: () => ts.factory.createTypeReferenceNode("Blob"),
         node: () => {
             switch (fileResponseType) {
                 case "stream":

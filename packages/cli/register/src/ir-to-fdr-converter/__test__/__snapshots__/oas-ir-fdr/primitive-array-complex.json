@@ -65,7 +65,7 @@
             "shape": {
               "type": "reference",
               "value": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "list",
                   "itemType": {
@@ -149,7 +149,7 @@
             "shape": {
               "type": "reference",
               "value": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "SearchWithObjectUnionGetRequestBodyContentApplicationJsonSchema"

@@ -19651,7 +19651,8 @@
                             null
                           ]
                         ],
-                        "rowsAffected": 0
+                        "rowsAffected": 0,
+                        "lastInsertRowid": {}
                       }
                     ]
                   },
@@ -19699,7 +19700,8 @@
                             null
                           ]
                         ],
-                        "rowsAffected": 0
+                        "rowsAffected": 0,
+                        "lastInsertRowid": {}
                       }
                     ],
                     "type": "json"

@@ -40,4 +40,5 @@ export interface SdkCustomConfig {
     useLegacyExports: boolean | undefined;
     streamType: "wrapper" | "web";
     fileResponseType: "stream" | "binary-response";
+    packagePath: string | undefined;
 }

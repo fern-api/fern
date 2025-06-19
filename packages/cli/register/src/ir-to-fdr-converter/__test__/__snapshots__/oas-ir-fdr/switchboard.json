@@ -87,7 +87,7 @@
           {
             "key": "errors",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "list",
                 "itemType": {
@@ -106,7 +106,7 @@
           {
             "key": "warnings",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "list",
                 "itemType": {
@@ -228,7 +228,7 @@
           {
             "key": "errors",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "list",
                 "itemType": {
@@ -248,7 +248,7 @@
           {
             "key": "warnings",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "list",
                 "itemType": {
@@ -383,7 +383,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -399,7 +399,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "map",
                   "keyType": {
@@ -437,7 +437,7 @@
           {
             "key": "data",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "list",
                 "itemType": {
@@ -450,7 +450,7 @@
           {
             "key": "errors",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "list",
                 "itemType": {
@@ -470,7 +470,7 @@
           {
             "key": "warnings",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "list",
                 "itemType": {
@@ -492,7 +492,7 @@
           {
             "key": "data",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "list",
                 "itemType": {
@@ -505,7 +505,7 @@
           {
             "key": "errors",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "list",
                 "itemType": {
@@ -525,7 +525,7 @@
           {
             "key": "warnings",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "list",
                 "itemType": {
@@ -604,7 +604,7 @@
           {
             "key": "errors",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "list",
                 "itemType": {
@@ -624,7 +624,7 @@
           {
             "key": "warnings",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "list",
                 "itemType": {
@@ -742,7 +742,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "list",
                   "itemType": {
@@ -793,7 +793,7 @@
             "description": "a comma separated list of tags for this profile",
             "key": "tags",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "list",
                 "itemType": {
@@ -838,7 +838,7 @@
           {
             "key": "errors",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "list",
                 "itemType": {
@@ -858,7 +858,7 @@
           {
             "key": "warnings",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "list",
                 "itemType": {
@@ -972,7 +972,7 @@
           {
             "key": "errors",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "list",
                 "itemType": {
@@ -992,7 +992,7 @@
           {
             "key": "warnings",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "list",
                 "itemType": {
@@ -1112,7 +1112,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "list",
                   "itemType": {
@@ -1195,7 +1195,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "list",
                   "itemType": {
@@ -1418,7 +1418,7 @@
           {
             "key": "errors",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "list",
                 "itemType": {
@@ -1438,7 +1438,7 @@
           {
             "key": "warnings",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "list",
                 "itemType": {
@@ -1469,7 +1469,7 @@
             "description": "List of sessions",
             "key": "sessions",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "list",
                 "itemType": {
@@ -1498,7 +1498,7 @@
           {
             "key": "errors",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "list",
                 "itemType": {
@@ -1518,7 +1518,7 @@
           {
             "key": "warnings",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "list",
                 "itemType": {
@@ -1712,7 +1712,7 @@
           {
             "key": "errors",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "list",
                 "itemType": {
@@ -1732,7 +1732,7 @@
           {
             "key": "warnings",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "list",
                 "itemType": {

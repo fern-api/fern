@@ -1,4 +1,5 @@
 import { ImportsManager, JavaScriptRuntime, NpmPackage, PackageId } from "@fern-typescript/commons";
+import { ExportsManager } from "@fern-typescript/commons";
 import { GeneratedSdkClientClass } from "@fern-typescript/contexts";
 import { ErrorResolver, PackageResolver } from "@fern-typescript/resolvers";
 
@@ -29,6 +30,7 @@ export declare namespace SdkClientClassGenerator {
         oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
         streamType: "wrapper" | "web";
         fileResponseType: "stream" | "binary-response";
+        exportsManager: ExportsManager;
     }
 
     export namespace generateService {
@@ -62,6 +64,7 @@ export class SdkClientClassGenerator {
     private oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
     private streamType: "wrapper" | "web";
     private readonly fileResponseType: "stream" | "binary-response";
+    private exportsManager: ExportsManager;
 
     constructor({
         intermediateRepresentation,
@@ -83,7 +86,8 @@ export class SdkClientClassGenerator {
         omitUndefined,
         allowExtraFields,
         streamType,
-        fileResponseType
+        fileResponseType,
+        exportsManager
     }: SdkClientClassGenerator.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.errorResolver = errorResolver;
@@ -105,6 +109,7 @@ export class SdkClientClassGenerator {
         this.allowExtraFields = allowExtraFields;
         this.streamType = streamType;
         this.fileResponseType = fileResponseType;
+        this.exportsManager = exportsManager;
     }
 
     public generateService({
@@ -116,6 +121,7 @@ export class SdkClientClassGenerator {
         return new GeneratedSdkClientClassImpl({
             isRoot,
             importsManager,
+            exportsManager: this.exportsManager,
             intermediateRepresentation: this.intermediateRepresentation,
             packageId,
             packageResolver: this.packageResolver,

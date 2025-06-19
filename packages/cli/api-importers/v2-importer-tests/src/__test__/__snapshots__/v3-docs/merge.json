@@ -87754,6 +87754,13 @@
                         }
                       ]
                     }
+                  ],
+                  "linked_account_conditons": [
+                    {
+                      "condition_schema_id": "123e4567-e89b-12d3-a456-426655440000",
+                      "operator": "GREATER_THAN_OR_EQUAL",
+                      "value": "2022-01-01T00:00:00Z"
+                    }
                   ]
                 }
               },
@@ -87850,6 +87857,13 @@
                             "value": null
                           }
                         ]
+                      }
+                    ],
+                    "linked_account_conditons": [
+                      {
+                        "condition_schema_id": "123e4567-e89b-12d3-a456-426655440000",
+                        "operator": "GREATER_THAN_OR_EQUAL",
+                        "value": "2022-01-01T00:00:00Z"
                       }
                     ]
                   }

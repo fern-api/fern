@@ -1,4 +1,4 @@
-import { ImportsManager, PackageId, Reference } from "@fern-typescript/commons";
+import { ExportsManager, ImportsManager, PackageId, Reference } from "@fern-typescript/commons";
 import {
     ExpressInlinedRequestBodySchemaContext,
     GeneratedExpressInlinedRequestBodySchema
@@ -19,6 +19,7 @@ export declare namespace ExpressInlinedRequestBodySchemaContextImpl {
         packageResolver: PackageResolver;
         sourceFile: SourceFile;
         importsManager: ImportsManager;
+        exportsManager: ExportsManager;
     }
 }
 
@@ -28,9 +29,10 @@ export class ExpressInlinedRequestBodySchemaContextImpl implements ExpressInline
     private packageResolver: PackageResolver;
     private sourceFile: SourceFile;
     private importsManager: ImportsManager;
-
+    private exportsManager: ExportsManager;
     constructor({
         importsManager,
+        exportsManager,
         packageResolver,
         sourceFile,
         expressInlinedRequestBodySchemaDeclarationReferencer,
@@ -41,6 +43,7 @@ export class ExpressInlinedRequestBodySchemaContextImpl implements ExpressInline
             expressInlinedRequestBodySchemaDeclarationReferencer;
         this.sourceFile = sourceFile;
         this.importsManager = importsManager;
+        this.exportsManager = exportsManager;
         this.packageResolver = packageResolver;
     }
 
@@ -77,6 +80,7 @@ export class ExpressInlinedRequestBodySchemaContextImpl implements ExpressInline
             name: { packageId, endpoint },
             referencedIn: this.sourceFile,
             importsManager: this.importsManager,
+            exportsManager: this.exportsManager,
             importStrategy: getSchemaImportStrategy({ useDynamicImport: false })
         });
     }

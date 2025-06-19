@@ -1,4 +1,5 @@
 import {
+    ExportsManager,
     ImportsManager,
     JavaScriptRuntime,
     NpmPackage,
@@ -68,6 +69,7 @@ export declare namespace GeneratedSdkClientClassImpl {
     export interface Init {
         isRoot: boolean;
         importsManager: ImportsManager;
+        exportsManager: ExportsManager;
         intermediateRepresentation: IntermediateRepresentation;
         packageId: PackageId;
         serviceClassName: string;
@@ -127,6 +129,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private readonly omitUndefined: boolean;
     private readonly allowExtraFields: boolean;
     private readonly importsManager: ImportsManager;
+    private readonly exportsManager: ExportsManager;
     private readonly oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
     private oauthAuthScheme: OAuthScheme | undefined;
     private bearerAuthScheme: BearerAuthScheme | undefined;
@@ -157,6 +160,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         allowExtraFields,
         importsManager,
         oauthTokenProviderGenerator,
+        exportsManager,
         streamType,
         fileResponseType
     }: GeneratedSdkClientClassImpl.Init) {
@@ -176,6 +180,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         this.omitUndefined = omitUndefined;
         this.allowExtraFields = allowExtraFields;
         this.importsManager = importsManager;
+        this.exportsManager = exportsManager;
         this.oauthTokenProviderGenerator = oauthTokenProviderGenerator;
 
         const package_ = packageResolver.resolvePackage(packageId);
@@ -202,7 +207,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             requestBody,
                             generatedSdkClientClass: this,
                             targetRuntime: this.targetRuntime,
-                            retainOriginalCasing: this.retainOriginalCasing
+                            retainOriginalCasing: this.retainOriginalCasing,
+                            exportsManager: this.exportsManager
                         });
                     }
                     if (requestBody?.type === "fileUpload") {
@@ -230,7 +236,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             endpoint,
                             requestBody,
                             generatedSdkClientClass: this,
-                            retainOriginalCasing: this.retainOriginalCasing
+                            retainOriginalCasing: this.retainOriginalCasing,
+                            exportsManager: this.exportsManager
                         });
                     }
                 };
@@ -873,7 +880,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         const rootHeaders = this.isRoot ? this.getRootHeaders(context) : [];
         const shouldGenerateRootHeaders = this.isRoot && rootHeaders.length > 0;
         if (shouldGenerateRootHeaders) {
-            context.importsManager.addImportFromRoot("src/core/headers.js", {
+            context.importsManager.addImportFromRoot("core/headers.js", {
                 namedImports: ["mergeHeaders"]
             });
             return code`this._options = {

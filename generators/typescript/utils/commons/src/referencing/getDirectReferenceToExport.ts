@@ -1,6 +1,6 @@
 import { SourceFile, ts } from "ts-morph";
 
-import { ExportedFilePath, convertExportedFilePathToFilePath } from "../exports-manager/ExportedFilePath";
+import { ExportedFilePath, ExportsManager } from "../exports-manager";
 import { ImportsManager } from "../imports-manager/ImportsManager";
 import { GetReferenceOpts, Reference } from "./Reference";
 import { getRelativePathAsModuleSpecifierTo } from "./getRelativePathAsModuleSpecifierTo";
@@ -9,6 +9,7 @@ export function getDirectReferenceToExport({
     exportedName,
     exportedFromPath,
     importsManager,
+    exportsManager,
     referencedIn,
     importAlias,
     subImport = []
@@ -16,13 +17,14 @@ export function getDirectReferenceToExport({
     exportedName: string;
     exportedFromPath: ExportedFilePath;
     importsManager: ImportsManager;
+    exportsManager: ExportsManager;
     referencedIn: SourceFile;
     importAlias: string | undefined;
     subImport?: string[];
 }): Reference {
     const moduleSpecifier = getRelativePathAsModuleSpecifierTo({
         from: referencedIn,
-        to: convertExportedFilePathToFilePath(exportedFromPath)
+        to: exportsManager.convertExportedFilePathToFilePath(exportedFromPath)
     });
 
     const addImport = () => {

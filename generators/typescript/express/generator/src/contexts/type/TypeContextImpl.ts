@@ -1,4 +1,5 @@
 import { ImportsManager, Reference, TypeReferenceNode } from "@fern-typescript/commons";
+import { ExportsManager } from "@fern-typescript/commons";
 import {
     BaseContext,
     GeneratedType,
@@ -29,6 +30,7 @@ export declare namespace TypeContextImpl {
     export interface Init {
         sourceFile: SourceFile;
         importsManager: ImportsManager;
+        exportsManager: ExportsManager;
         typeResolver: TypeResolver;
         typeDeclarationReferencer: TypeDeclarationReferencer;
         typeGenerator: TypeGenerator;
@@ -47,6 +49,7 @@ export declare namespace TypeContextImpl {
 export class TypeContextImpl implements TypeContext {
     private sourceFile: SourceFile;
     private importsManager: ImportsManager;
+    private exportsManager: ExportsManager;
     private typeDeclarationReferencer: TypeDeclarationReferencer;
     private typeReferenceToParsedTypeNodeConverter: TypeReferenceToParsedTypeNodeConverter;
     private typeReferenceToStringExpressionConverter: TypeReferenceToStringExpressionConverter;
@@ -60,6 +63,7 @@ export class TypeContextImpl implements TypeContext {
     constructor({
         sourceFile,
         importsManager,
+        exportsManager,
         typeResolver,
         typeDeclarationReferencer,
         typeGenerator,
@@ -75,6 +79,7 @@ export class TypeContextImpl implements TypeContext {
     }: TypeContextImpl.Init) {
         this.sourceFile = sourceFile;
         this.importsManager = importsManager;
+        this.exportsManager = exportsManager;
         this.typeResolver = typeResolver;
         this.typeDeclarationReferencer = typeDeclarationReferencer;
         this.typeGenerator = typeGenerator;
@@ -151,7 +156,8 @@ export class TypeContextImpl implements TypeContext {
             name: typeName,
             importStrategy: { type: "fromRoot", namespaceImport: this.typeDeclarationReferencer.namespaceExport },
             referencedIn: this.sourceFile,
-            importsManager: this.importsManager
+            importsManager: this.importsManager,
+            exportsManager: this.exportsManager
         });
     }
 

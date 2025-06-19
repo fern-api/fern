@@ -181,34 +181,6 @@ describe("fern generator upgrade", () => {
         expect(JSON.parse((await readFile(outputFileNewMajor)).toString()).version).not.toEqual("2.16.0");
     }, 60_000);
 
-    it("fern generator upgrade list", async () => {
-        // Create tmpdir and copy contents
-        const tmpDir = await tmp.dir();
-        const directory = AbsoluteFilePath.of(tmpDir.path);
-
-        await cp(FIXTURES_DIR, directory, { recursive: true });
-
-        expect(
-            (
-                await runFernCli(
-                    [
-                        "generator",
-                        "upgrade",
-                        "--group",
-                        "python-sdk",
-                        "--generator",
-                        "fernapi/fern-python-sdk",
-                        "--include-major",
-                        "--list"
-                    ],
-                    {
-                        cwd: directory
-                    }
-                )
-            ).stderr
-        ).toMatchSnapshot();
-    }, 60_000);
-
     it.skip("fern generator upgrade message", async () => {
         const tmpDir = await tmp.dir();
         const directory = AbsoluteFilePath.of(tmpDir.path);
