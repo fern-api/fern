@@ -74722,8 +74722,18 @@
                             "contractDeployer": "0x9c78DDec1F16685ee6E58637a640514A1eD87BC4",
                             "deployedBlockNumber": 13736379,
                             "spamClassifications": [],
-                            "openSeaMetadata": "foo",
-                            "isSpam": "foo"
+                            "openSeaMetadata": {
+                              "floorPrice": 0.0582,
+                              "collectionName": "DuskBreakers",
+                              "safelistRequestStatus": "verified",
+                              "imageUrl": "https://i.seadn.io/gae/LGbFRVdClz6-HDd-7WZKONJ5Ody0sBXTvFOQL71BYo3j2iU2wWCX_zlk-Zs0KEhq1qgXViF-6aG_0WS2MdIVNJx2GRSIIYTiciuf-A?w=500&auto=format",
+                              "description": "Being a DuskBreaker means joining a select squad of 10,000 recruits who spend their days exploring a mysterious alien spaceship filled with friends, foes, and otherworldly technology. You will be part of a community that directly influences the development of upcoming interactive media and gaming experiences within the DuskBreakers universe. Each of you will play an important role in building out this world. You break it, you take it! \r\n\r\nVisit [DuskBreakers](https://duskbreakers.gg) to learn more.",
+                              "externalUrl": "http://duskbreakers.gg",
+                              "twitterUsername": "duskbreakers",
+                              "discordUrl": "https://discord.gg/duskbreakers",
+                              "lastIngestedAt": "2023-04-19T17:25:59.000Z"
+                            },
+                            "isSpam": {}
                           },
                           "tokenId": "28",
                           "tokenType": "ERC721",
@@ -74787,7 +74797,7 @@
                               ],
                               "external_url": "https://duskbreakers.gg/"
                             },
-                            "error": "foo"
+                            "error": {}
                           },
                           "tokenUri": "https://api.duskbreakers.gg/metadata/duskbreakers/28",
                           "timeLastUpdated": "2023-04-19T21:25:39.563Z",
@@ -74803,8 +74813,18 @@
                             "contractDeployer": "0x9c78DDec1F16685ee6E58637a640514A1eD87BC4",
                             "deployedBlockNumber": 13736379,
                             "spamClassifications": [],
-                            "openSeaMetadata": "foo",
-                            "isSpam": "foo"
+                            "openSeaMetadata": {
+                              "floorPrice": 0.0582,
+                              "collectionName": "DuskBreakers",
+                              "safelistRequestStatus": "verified",
+                              "imageUrl": "https://i.seadn.io/gae/LGbFRVdClz6-HDd-7WZKONJ5Ody0sBXTvFOQL71BYo3j2iU2wWCX_zlk-Zs0KEhq1qgXViF-6aG_0WS2MdIVNJx2GRSIIYTiciuf-A?w=500&auto=format",
+                              "description": "Being a DuskBreaker means joining a select squad of 10,000 recruits who spend their days exploring a mysterious alien spaceship filled with friends, foes, and otherworldly technology. You will be part of a community that directly influences the development of upcoming interactive media and gaming experiences within the DuskBreakers universe. Each of you will play an important role in building out this world. You break it, you take it! \r\n\r\nVisit [DuskBreakers](https://duskbreakers.gg) to learn more.",
+                              "externalUrl": "http://duskbreakers.gg",
+                              "twitterUsername": "duskbreakers",
+                              "discordUrl": "https://discord.gg/duskbreakers",
+                              "lastIngestedAt": "2023-04-19T17:25:59.000Z"
+                            },
+                            "isSpam": {}
                           },
                           "tokenId": "29",
                           "tokenType": "ERC721",
@@ -74868,7 +74888,7 @@
                               ],
                               "external_url": "https://duskbreakers.gg/"
                             },
-                            "error": "foo"
+                            "error": {}
                           },
                           "tokenUri": "https://api.duskbreakers.gg/metadata/duskbreakers/29",
                           "timeLastUpdated": "2023-04-19T21:25:39.704Z",
@@ -74883,29 +74903,39 @@
                             "contractDeployer": "0xA92520aFF50c5A1a4d25FCF90c972AA49EbE5299",
                             "deployedBlockNumber": 14847327,
                             "spamClassifications": [],
-                            "totalSupply": "foo",
-                            "openSeaMetadata": "foo",
-                            "isSpam": "foo"
+                            "totalSupply": {},
+                            "openSeaMetadata": {
+                              "floorPrice": null,
+                              "collectionName": "Knight of Chains Genesis.",
+                              "safelistRequestStatus": "not_requested",
+                              "imageUrl": "https://i.seadn.io/gae/eRhkkVikIOW_-lDc1moMrZlTcd5DPygPRmTJ69Anb-CfG_RMAxIsichM5kDvfdnXc6gfnKuGZOFCbP_58pUvz57TyUeNbFMKGydHoac?w=500&auto=format",
+                              "description": "[The KnightsOfChain] (https://knightsofchain.link) is an exclusive community that can only be entered by owning a Knight.\n\nVisit [Website](https://knightsofchain.link) and get your benefits.\n\n(Genesis Knights #1-#31 were pre-minted by the team, and are held by high ranking community members. OG Knights #32-#231 have special benefits.)",
+                              "externalUrl": "https://knightsofchain.link",
+                              "twitterUsername": null,
+                              "discordUrl": null,
+                              "lastIngestedAt": "2023-03-20T03:52:07.000Z"
+                            },
+                            "isSpam": {}
                           },
                           "tokenId": "97",
                           "tokenType": "ERC1155",
                           "image": {
-                            "cachedUrl": "foo",
-                            "thumbnailUrl": "foo",
-                            "pngUrl": "foo",
-                            "contentType": "foo",
-                            "size": "foo",
-                            "originalUrl": "foo"
+                            "cachedUrl": {},
+                            "thumbnailUrl": {},
+                            "pngUrl": {},
+                            "contentType": {},
+                            "size": {},
+                            "originalUrl": {}
                           },
                           "raw": {
                             "tokenUri": "https://knightsofchain.link/ipfs/97",
                             "metadata": {},
-                            "error": "foo"
+                            "error": {}
                           },
                           "tokenUri": "https://knightsofchain.link/ipfs/97",
                           "timeLastUpdated": "2023-04-20T15:44:29.965Z",
-                          "name": "foo",
-                          "description": "foo",
+                          "name": {},
+                          "description": {},
                           "balance": "1"
                         }
                       ],
@@ -74915,7 +74945,7 @@
                         "blockHash": "0x2a34a65c4e0cd7fdf187d6a497214ad2bee255d2d3501868a6b8c09b4d1261bd",
                         "blockTimestamp": "2023-04-21T01:25:59Z"
                       },
-                      "pageKey": "foo"
+                      "pageKey": {}
                     },
                     "Response (withMetadata = false)": {
                       "ownedNfts": [
@@ -74936,7 +74966,7 @@
                         "blockHash": "0x2a34a65c4e0cd7fdf187d6a497214ad2bee255d2d3501868a6b8c09b4d1261bd",
                         "blockTimestamp": "2023-04-21T01:25:59Z"
                       },
-                      "pageKey": "foo"
+                      "pageKey": {}
                     },
                     "Response (with contract filtering)": {
                       "ownedNfts": [
@@ -74957,7 +74987,7 @@
                         "blockHash": "0x2a34a65c4e0cd7fdf187d6a497214ad2bee255d2d3501868a6b8c09b4d1261bd",
                         "blockTimestamp": "2023-04-21T01:25:59Z"
                       },
-                      "pageKey": "foo"
+                      "pageKey": {}
                     },
                     "Response (with pagination)": {
                       "ownedNfts": [
@@ -75022,8 +75052,18 @@
                             "contractDeployer": "0x9c78DDec1F16685ee6E58637a640514A1eD87BC4",
                             "deployedBlockNumber": 13736379,
                             "spamClassifications": [],
-                            "openSeaMetadata": "foo",
-                            "isSpam": "foo"
+                            "openSeaMetadata": {
+                              "floorPrice": 0.0582,
+                              "collectionName": "DuskBreakers",
+                              "safelistRequestStatus": "verified",
+                              "imageUrl": "https://i.seadn.io/gae/LGbFRVdClz6-HDd-7WZKONJ5Ody0sBXTvFOQL71BYo3j2iU2wWCX_zlk-Zs0KEhq1qgXViF-6aG_0WS2MdIVNJx2GRSIIYTiciuf-A?w=500&auto=format",
+                              "description": "Being a DuskBreaker means joining a select squad of 10,000 recruits who spend their days exploring a mysterious alien spaceship filled with friends, foes, and otherworldly technology. You will be part of a community that directly influences the development of upcoming interactive media and gaming experiences within the DuskBreakers universe. Each of you will play an important role in building out this world. You break it, you take it! \r\n\r\nVisit [DuskBreakers](https://duskbreakers.gg) to learn more.",
+                              "externalUrl": "http://duskbreakers.gg",
+                              "twitterUsername": "duskbreakers",
+                              "discordUrl": "https://discord.gg/duskbreakers",
+                              "lastIngestedAt": "2023-04-19T17:25:59.000Z"
+                            },
+                            "isSpam": {}
                           },
                           "tokenId": "28",
                           "tokenType": "ERC721",
@@ -75087,7 +75127,7 @@
                               ],
                               "external_url": "https://duskbreakers.gg/"
                             },
-                            "error": "foo"
+                            "error": {}
                           },
                           "tokenUri": "https://api.duskbreakers.gg/metadata/duskbreakers/28",
                           "timeLastUpdated": "2023-04-19T21:25:39.563Z",
@@ -75103,8 +75143,18 @@
                             "contractDeployer": "0x9c78DDec1F16685ee6E58637a640514A1eD87BC4",
                             "deployedBlockNumber": 13736379,
                             "spamClassifications": [],
-                            "openSeaMetadata": "foo",
-                            "isSpam": "foo"
+                            "openSeaMetadata": {
+                              "floorPrice": 0.0582,
+                              "collectionName": "DuskBreakers",
+                              "safelistRequestStatus": "verified",
+                              "imageUrl": "https://i.seadn.io/gae/LGbFRVdClz6-HDd-7WZKONJ5Ody0sBXTvFOQL71BYo3j2iU2wWCX_zlk-Zs0KEhq1qgXViF-6aG_0WS2MdIVNJx2GRSIIYTiciuf-A?w=500&auto=format",
+                              "description": "Being a DuskBreaker means joining a select squad of 10,000 recruits who spend their days exploring a mysterious alien spaceship filled with friends, foes, and otherworldly technology. You will be part of a community that directly influences the development of upcoming interactive media and gaming experiences within the DuskBreakers universe. Each of you will play an important role in building out this world. You break it, you take it! \r\n\r\nVisit [DuskBreakers](https://duskbreakers.gg) to learn more.",
+                              "externalUrl": "http://duskbreakers.gg",
+                              "twitterUsername": "duskbreakers",
+                              "discordUrl": "https://discord.gg/duskbreakers",
+                              "lastIngestedAt": "2023-04-19T17:25:59.000Z"
+                            },
+                            "isSpam": {}
                           },
                           "tokenId": "29",
                           "tokenType": "ERC721",
@@ -75168,7 +75218,7 @@
                               ],
                               "external_url": "https://duskbreakers.gg/"
                             },
-                            "error": "foo"
+                            "error": {}
                           },
                           "tokenUri": "https://api.duskbreakers.gg/metadata/duskbreakers/29",
                           "timeLastUpdated": "2023-04-19T21:25:39.704Z",
@@ -75183,29 +75233,39 @@
                             "contractDeployer": "0xA92520aFF50c5A1a4d25FCF90c972AA49EbE5299",
                             "deployedBlockNumber": 14847327,
                             "spamClassifications": [],
-                            "totalSupply": "foo",
-                            "openSeaMetadata": "foo",
-                            "isSpam": "foo"
+                            "totalSupply": {},
+                            "openSeaMetadata": {
+                              "floorPrice": null,
+                              "collectionName": "Knight of Chains Genesis.",
+                              "safelistRequestStatus": "not_requested",
+                              "imageUrl": "https://i.seadn.io/gae/eRhkkVikIOW_-lDc1moMrZlTcd5DPygPRmTJ69Anb-CfG_RMAxIsichM5kDvfdnXc6gfnKuGZOFCbP_58pUvz57TyUeNbFMKGydHoac?w=500&auto=format",
+                              "description": "[The KnightsOfChain] (https://knightsofchain.link) is an exclusive community that can only be entered by owning a Knight.\n\nVisit [Website](https://knightsofchain.link) and get your benefits.\n\n(Genesis Knights #1-#31 were pre-minted by the team, and are held by high ranking community members. OG Knights #32-#231 have special benefits.)",
+                              "externalUrl": "https://knightsofchain.link",
+                              "twitterUsername": null,
+                              "discordUrl": null,
+                              "lastIngestedAt": "2023-03-20T03:52:07.000Z"
+                            },
+                            "isSpam": {}
                           },
                           "tokenId": "97",
                           "tokenType": "ERC1155",
                           "image": {
-                            "cachedUrl": "foo",
-                            "thumbnailUrl": "foo",
-                            "pngUrl": "foo",
-                            "contentType": "foo",
-                            "size": "foo",
-                            "originalUrl": "foo"
+                            "cachedUrl": {},
+                            "thumbnailUrl": {},
+                            "pngUrl": {},
+                            "contentType": {},
+                            "size": {},
+                            "originalUrl": {}
                           },
                           "raw": {
                             "tokenUri": "https://knightsofchain.link/ipfs/97",
                             "metadata": {},
-                            "error": "foo"
+                            "error": {}
                           },
                           "tokenUri": "https://knightsofchain.link/ipfs/97",
                           "timeLastUpdated": "2023-04-20T15:44:29.965Z",
-                          "name": "foo",
-                          "description": "foo",
+                          "name": {},
+                          "description": {},
                           "balance": "1"
                         }
                       ],
@@ -75215,7 +75275,7 @@
                         "blockHash": "0x2a34a65c4e0cd7fdf187d6a497214ad2bee255d2d3501868a6b8c09b4d1261bd",
                         "blockTimestamp": "2023-04-21T01:25:59Z"
                       },
-                      "pageKey": "foo"
+                      "pageKey": {}
                     },
                     "type": "json"
                   }
@@ -75258,7 +75318,7 @@
                         "blockHash": "0x2a34a65c4e0cd7fdf187d6a497214ad2bee255d2d3501868a6b8c09b4d1261bd",
                         "blockTimestamp": "2023-04-21T01:25:59Z"
                       },
-                      "pageKey": "foo"
+                      "pageKey": {}
                     },
                     "type": "json"
                   }
@@ -75301,7 +75361,7 @@
                         "blockHash": "0x2a34a65c4e0cd7fdf187d6a497214ad2bee255d2d3501868a6b8c09b4d1261bd",
                         "blockTimestamp": "2023-04-21T01:25:59Z"
                       },
-                      "pageKey": "foo"
+                      "pageKey": {}
                     },
                     "type": "json"
                   }
@@ -75613,7 +75673,7 @@
                       "owners": [
                         "0x9f4F78A6c4a5E6F8AFA81631b9120ae3C831b494"
                       ],
-                      "pageKey": "foo"
+                      "pageKey": {}
                     }
                   },
                   "autogeneratedExamples": {}
@@ -75650,7 +75710,7 @@
                       "owners": [
                         "0x9f4F78A6c4a5E6F8AFA81631b9120ae3C831b494"
                       ],
-                      "pageKey": "foo"
+                      "pageKey": {}
                     },
                     "type": "json"
                   }
@@ -77010,7 +77070,7 @@
                           "isSpam": true,
                           "displayNft": {
                             "tokenId": "233",
-                            "name": "foo"
+                            "name": {}
                           },
                           "image": {
                             "cachedUrl": "https://nft-cdn.alchemy.com/eth-mainnet/d08d0d0fac8edf36ea09eae34b332814",
@@ -77020,8 +77080,18 @@
                             "size": 36190302,
                             "originalUrl": "https://ipfs.io/ipfs/QmX2mM8r33W7KUBQSWXFAKNC2t654EXmWiX9vkrfrEaEnS"
                           },
-                          "totalSupply": "foo",
-                          "openSeaMetadata": "foo"
+                          "totalSupply": {},
+                          "openSeaMetadata": {
+                            "floorPrice": null,
+                            "collectionName": "The Wonderful Husl Founder Cards",
+                            "safelistRequestStatus": "not_requested",
+                            "imageUrl": "https://i.seadn.io/gcs/files/754e38769c80c9d6188444dddb10ec80.png?w=500&auto=format",
+                            "description": "[Husl](https://www.huslnft.xyz) is building the bridge between business and NFTs. Husl Founders are the driven, the passionate and the focused members of the community ready to change their future. Owning a Founders Card gets you exclusive perks, early access to business management, and discounts on managed services for your business as NFT. [Learn More](https://www.huslnft.xyz)",
+                            "externalUrl": "https://www.huslnft.xyz",
+                            "twitterUsername": null,
+                            "discordUrl": null,
+                            "lastIngestedAt": "2023-03-20T01:36:19.000Z"
+                          }
                         }
                       ],
                       "pageKey": "03949322-9b2c-4fdd-aab6-1369e29fa5b2",
@@ -77120,7 +77190,7 @@
                           "isSpam": true,
                           "displayNft": {
                             "tokenId": "233",
-                            "name": "foo"
+                            "name": {}
                           },
                           "image": {
                             "cachedUrl": "https://nft-cdn.alchemy.com/eth-mainnet/d08d0d0fac8edf36ea09eae34b332814",
@@ -77130,8 +77200,18 @@
                             "size": 36190302,
                             "originalUrl": "https://ipfs.io/ipfs/QmX2mM8r33W7KUBQSWXFAKNC2t654EXmWiX9vkrfrEaEnS"
                           },
-                          "totalSupply": "foo",
-                          "openSeaMetadata": "foo"
+                          "totalSupply": {},
+                          "openSeaMetadata": {
+                            "floorPrice": null,
+                            "collectionName": "The Wonderful Husl Founder Cards",
+                            "safelistRequestStatus": "not_requested",
+                            "imageUrl": "https://i.seadn.io/gcs/files/754e38769c80c9d6188444dddb10ec80.png?w=500&auto=format",
+                            "description": "[Husl](https://www.huslnft.xyz) is building the bridge between business and NFTs. Husl Founders are the driven, the passionate and the focused members of the community ready to change their future. Owning a Founders Card gets you exclusive perks, early access to business management, and discounts on managed services for your business as NFT. [Learn More](https://www.huslnft.xyz)",
+                            "externalUrl": "https://www.huslnft.xyz",
+                            "twitterUsername": null,
+                            "discordUrl": null,
+                            "lastIngestedAt": "2023-03-20T01:36:19.000Z"
+                          }
                         }
                       ],
                       "pageKey": "03949322-9b2c-4fdd-aab6-1369e29fa5b2",
@@ -86183,7 +86263,10 @@
                             "gateway": "https://duskbreakers.gg/api/breakers/28"
                           },
                           "media": {
-                            "0": "foo"
+                            "0": {
+                              "raw": "https://duskbreakers.gg/breaker_images/28.png",
+                              "gateway": "https://duskbreakers.gg/breaker_images/28.png"
+                            }
                           },
                           "metadata": {
                             "image": "https://duskbreakers.gg/breaker_images/28.png",
@@ -86230,7 +86313,10 @@
                             "gateway": "https://api.chainrunners.xyz/tokens/metadata/5527?dna=73247164192459371523281785218958151913554625578441142916970699984935810987041"
                           },
                           "media": {
-                            "0": "foo"
+                            "0": {
+                              "raw": "https://img.chainrunners.xyz/api/v1/tokens/png/5527",
+                              "gateway": "https://img.chainrunners.xyz/api/v1/tokens/png/5527"
+                            }
                           },
                           "metadata": {
                             "image": "https://img.chainrunners.xyz/api/v1/tokens/png/5527",
@@ -86445,7 +86531,10 @@
                             "gateway": "https://duskbreakers.gg/api/breakers/28"
                           },
                           "media": {
-                            "0": "foo"
+                            "0": {
+                              "raw": "https://duskbreakers.gg/breaker_images/28.png",
+                              "gateway": "https://duskbreakers.gg/breaker_images/28.png"
+                            }
                           },
                           "metadata": {
                             "image": "https://duskbreakers.gg/breaker_images/28.png",
@@ -86492,7 +86581,10 @@
                             "gateway": "https://api.chainrunners.xyz/tokens/metadata/5527?dna=73247164192459371523281785218958151913554625578441142916970699984935810987041"
                           },
                           "media": {
-                            "0": "foo"
+                            "0": {
+                              "raw": "https://img.chainrunners.xyz/api/v1/tokens/png/5527",
+                              "gateway": "https://img.chainrunners.xyz/api/v1/tokens/png/5527"
+                            }
                           },
                           "metadata": {
                             "image": "https://img.chainrunners.xyz/api/v1/tokens/png/5527",
@@ -93182,7 +93274,11 @@
                         }
                       ],
                       "pageKey": "MTUwMDAwNzgsODcsMA",
-                      "validAt": "foo"
+                      "validAt": {
+                        "blockNumber": 17091500,
+                        "blockHash": "0x2a34a65c4e0cd7fdf187d6a497214ad2bee255d2d3501868a6b8c09b4d1261bd",
+                        "blockTimestamp": "2023-04-21T01:25:59Z"
+                      }
                     }
                   },
                   "autogeneratedExamples": {}
@@ -93272,7 +93368,11 @@
                         }
                       ],
                       "pageKey": "MTUwMDAwNzgsODcsMA",
-                      "validAt": "foo"
+                      "validAt": {
+                        "blockNumber": 17091500,
+                        "blockHash": "0x2a34a65c4e0cd7fdf187d6a497214ad2bee255d2d3501868a6b8c09b4d1261bd",
+                        "blockTimestamp": "2023-04-21T01:25:59Z"
+                      }
                     },
                     "type": "json"
                   }
@@ -93958,10 +94058,30 @@
                           "tokenType": "ERC1155",
                           "contractDeployer": "0x0bdD0AEC835F92a465290cdd57b27FBd00376F53",
                           "deployedBlockNumber": 15664554,
-                          "totalSupply": "foo",
-                          "openSeaMetadata": "foo",
-                          "displayNft": "foo",
-                          "image": "foo"
+                          "totalSupply": {},
+                          "openSeaMetadata": {
+                            "floorPrice": null,
+                            "collectionName": "The Wonderful Husl Founder Cards",
+                            "safelistRequestStatus": "not_requested",
+                            "imageUrl": "https://i.seadn.io/gcs/files/754e38769c80c9d6188444dddb10ec80.png?w=500&auto=format",
+                            "description": "[Husl](https://www.huslnft.xyz) is building the bridge between business and NFTs. Husl Founders are the driven, the passionate and the focused members of the community ready to change their future. Owning a Founders Card gets you exclusive perks, early access to business management, and discounts on managed services for your business as NFT. [Learn More](https://www.huslnft.xyz)",
+                            "externalUrl": "https://www.huslnft.xyz",
+                            "twitterUsername": null,
+                            "discordUrl": null,
+                            "lastIngestedAt": "2023-03-20T01:36:19.000Z"
+                          },
+                          "displayNft": {
+                            "tokenId": "233",
+                            "name": null
+                          },
+                          "image": {
+                            "cachedUrl": "https://nft-cdn.alchemy.com/eth-mainnet/d08d0d0fac8edf36ea09eae34b332814",
+                            "thumbnailUrl": "https://res.cloudinary.com/alchemyapi/image/upload/thumbnailv2/eth-mainnet/d08d0d0fac8edf36ea09eae34b332814",
+                            "pngUrl": "https://res.cloudinary.com/alchemyapi/image/upload/convert-png/eth-mainnet/d08d0d0fac8edf36ea09eae34b332814",
+                            "contentType": "video/mp4",
+                            "size": 36190302,
+                            "originalUrl": "https://ipfs.io/ipfs/QmX2mM8r33W7KUBQSWXFAKNC2t654EXmWiX9vkrfrEaEnS"
+                          }
                         }
                       ],
                       "pageKey": "03949322-9b2c-4fdd-aab6-1369e29fa5b2",
@@ -94058,10 +94178,30 @@
                           "tokenType": "ERC1155",
                           "contractDeployer": "0x0bdD0AEC835F92a465290cdd57b27FBd00376F53",
                           "deployedBlockNumber": 15664554,
-                          "totalSupply": "foo",
-                          "openSeaMetadata": "foo",
-                          "displayNft": "foo",
-                          "image": "foo"
+                          "totalSupply": {},
+                          "openSeaMetadata": {
+                            "floorPrice": null,
+                            "collectionName": "The Wonderful Husl Founder Cards",
+                            "safelistRequestStatus": "not_requested",
+                            "imageUrl": "https://i.seadn.io/gcs/files/754e38769c80c9d6188444dddb10ec80.png?w=500&auto=format",
+                            "description": "[Husl](https://www.huslnft.xyz) is building the bridge between business and NFTs. Husl Founders are the driven, the passionate and the focused members of the community ready to change their future. Owning a Founders Card gets you exclusive perks, early access to business management, and discounts on managed services for your business as NFT. [Learn More](https://www.huslnft.xyz)",
+                            "externalUrl": "https://www.huslnft.xyz",
+                            "twitterUsername": null,
+                            "discordUrl": null,
+                            "lastIngestedAt": "2023-03-20T01:36:19.000Z"
+                          },
+                          "displayNft": {
+                            "tokenId": "233",
+                            "name": null
+                          },
+                          "image": {
+                            "cachedUrl": "https://nft-cdn.alchemy.com/eth-mainnet/d08d0d0fac8edf36ea09eae34b332814",
+                            "thumbnailUrl": "https://res.cloudinary.com/alchemyapi/image/upload/thumbnailv2/eth-mainnet/d08d0d0fac8edf36ea09eae34b332814",
+                            "pngUrl": "https://res.cloudinary.com/alchemyapi/image/upload/convert-png/eth-mainnet/d08d0d0fac8edf36ea09eae34b332814",
+                            "contentType": "video/mp4",
+                            "size": 36190302,
+                            "originalUrl": "https://ipfs.io/ipfs/QmX2mM8r33W7KUBQSWXFAKNC2t654EXmWiX9vkrfrEaEnS"
+                          }
                         }
                       ],
                       "pageKey": "03949322-9b2c-4fdd-aab6-1369e29fa5b2",

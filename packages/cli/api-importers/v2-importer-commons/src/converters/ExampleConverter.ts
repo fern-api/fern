@@ -640,7 +640,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         if (resolvedSchema.additionalProperties !== false) {
             const additionalPropertiesSchema: OpenAPIV3_1.SchemaObject = typeof resolvedSchema.additionalProperties === "object" 
                 ? resolvedSchema.additionalProperties 
-                : { type: "string" };
+                : { oneOf: [{ type: "string" }, { type: "number" }, { type: "boolean" }, { type: "object" }, { type: "array" }] } as any;
             
             // Find properties in the example that are not defined in the schema
             const definedPropertyKeys = new Set(Object.keys(example ?? {}));
