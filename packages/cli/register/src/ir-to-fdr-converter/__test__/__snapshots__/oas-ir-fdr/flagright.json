@@ -7299,7 +7299,7 @@
             "description": "PublishedAt is the time at which the Thing was published.\n",
             "key": "publishedAt",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {

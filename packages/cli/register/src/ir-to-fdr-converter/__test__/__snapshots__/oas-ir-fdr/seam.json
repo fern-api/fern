@@ -49,7 +49,7 @@
             "description": "Unique identifier for a group of access codes that share the same code.",
             "key": "common_code_key",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -118,7 +118,7 @@
             "description": "Name of the access code. Enables administrators and users to identify the access code easily, especially when there are numerous access codes.",
             "key": "name",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -131,7 +131,7 @@
             "description": "Code used for access. Typically, a numeric or alphanumeric string.",
             "key": "code",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -157,7 +157,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "unknown"
                 }
@@ -170,7 +170,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "unknown"
                 }
@@ -193,7 +193,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -210,7 +210,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -258,7 +258,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -368,7 +368,7 @@
             "description": "Name of the access code. Enables administrators and users to identify the access code easily, especially when there are numerous access codes.",
             "key": "name",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -381,7 +381,7 @@
             "description": "Code used for access. Typically, a numeric or alphanumeric string.",
             "key": "code",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -407,7 +407,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "unknown"
                 }
@@ -420,7 +420,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "unknown"
                 }
@@ -442,7 +442,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -459,7 +459,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -530,7 +530,7 @@
           {
             "key": "result",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -543,7 +543,7 @@
           {
             "key": "error",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -621,7 +621,7 @@
           {
             "key": "error",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -725,7 +725,7 @@
           {
             "key": "result",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -802,7 +802,7 @@
           {
             "key": "result",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -815,7 +815,7 @@
           {
             "key": "error",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -893,7 +893,7 @@
           {
             "key": "error",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -997,7 +997,7 @@
           {
             "key": "result",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -1074,7 +1074,7 @@
           {
             "key": "result",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -1087,7 +1087,7 @@
           {
             "key": "error",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -1165,7 +1165,7 @@
           {
             "key": "error",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -1269,7 +1269,7 @@
           {
             "key": "result",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -1346,7 +1346,7 @@
           {
             "key": "result",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -1359,7 +1359,7 @@
           {
             "key": "error",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -1437,7 +1437,7 @@
           {
             "key": "error",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -1541,7 +1541,7 @@
           {
             "key": "result",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -1618,7 +1618,7 @@
           {
             "key": "result",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -1631,7 +1631,7 @@
           {
             "key": "error",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -1709,7 +1709,7 @@
           {
             "key": "error",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -1813,7 +1813,7 @@
           {
             "key": "result",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -1890,7 +1890,7 @@
           {
             "key": "result",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -1903,7 +1903,7 @@
           {
             "key": "error",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -1981,7 +1981,7 @@
           {
             "key": "error",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -2085,7 +2085,7 @@
           {
             "key": "result",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -2162,7 +2162,7 @@
           {
             "key": "result",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -2175,7 +2175,7 @@
           {
             "key": "error",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -2253,7 +2253,7 @@
           {
             "key": "error",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -2357,7 +2357,7 @@
           {
             "key": "result",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -2434,7 +2434,7 @@
           {
             "key": "result",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -2447,7 +2447,7 @@
           {
             "key": "error",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -2525,7 +2525,7 @@
           {
             "key": "error",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -2629,7 +2629,7 @@
           {
             "key": "result",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -2705,7 +2705,7 @@
           {
             "key": "result",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -2718,7 +2718,7 @@
           {
             "key": "error",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -2787,7 +2787,7 @@
           {
             "key": "error",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -2809,7 +2809,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "unknown"
                 }
@@ -2895,7 +2895,7 @@
           {
             "key": "result",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -2971,7 +2971,7 @@
           {
             "key": "result",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -2984,7 +2984,7 @@
           {
             "key": "error",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -3053,7 +3053,7 @@
           {
             "key": "error",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -3075,7 +3075,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "unknown"
                 }
@@ -3161,7 +3161,7 @@
           {
             "key": "result",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -3237,7 +3237,7 @@
           {
             "key": "result",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -3250,7 +3250,7 @@
           {
             "key": "error",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -3319,7 +3319,7 @@
           {
             "key": "error",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -3341,7 +3341,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "unknown"
                 }
@@ -3427,7 +3427,7 @@
           {
             "key": "result",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -3503,7 +3503,7 @@
           {
             "key": "result",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -3516,7 +3516,7 @@
           {
             "key": "error",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -3585,7 +3585,7 @@
           {
             "key": "error",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -3607,7 +3607,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "unknown"
                 }
@@ -3693,7 +3693,7 @@
           {
             "key": "result",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -3769,7 +3769,7 @@
           {
             "key": "result",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -3782,7 +3782,7 @@
           {
             "key": "error",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -3851,7 +3851,7 @@
           {
             "key": "error",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -3873,7 +3873,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "unknown"
                 }
@@ -3959,7 +3959,7 @@
           {
             "key": "result",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -4035,7 +4035,7 @@
           {
             "key": "result",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -4048,7 +4048,7 @@
           {
             "key": "error",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -4117,7 +4117,7 @@
           {
             "key": "error",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -4139,7 +4139,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "unknown"
                 }
@@ -4225,7 +4225,7 @@
           {
             "key": "result",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -4301,7 +4301,7 @@
           {
             "key": "result",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -4314,7 +4314,7 @@
           {
             "key": "error",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -4383,7 +4383,7 @@
           {
             "key": "error",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -4405,7 +4405,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "unknown"
                 }
@@ -4491,7 +4491,7 @@
           {
             "key": "result",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -4913,7 +4913,7 @@
           {
             "key": "user_identifier_key",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -5083,7 +5083,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "unknown"
                 }
@@ -5284,7 +5284,7 @@
           {
             "key": "connected_account_id",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -5374,7 +5374,7 @@
           {
             "key": "custom_redirect_url",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -5387,7 +5387,7 @@
           {
             "key": "custom_redirect_failure_url",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -5434,7 +5434,7 @@
           {
             "key": "authorized_at",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -5447,7 +5447,7 @@
           {
             "key": "selected_provider",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -5620,7 +5620,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "unknown"
                 }
@@ -5632,7 +5632,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "unknown"
                 }
@@ -6041,7 +6041,7 @@
           {
             "key": "access_code_length",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -6773,7 +6773,7 @@
           {
             "key": "relay_name",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -7925,7 +7925,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "unknown"
                 }
@@ -8910,7 +8910,7 @@
           {
             "key": "access_code_length",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -9642,7 +9642,7 @@
           {
             "key": "relay_name",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -10794,7 +10794,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "unknown"
                 }
@@ -11707,7 +11707,7 @@
           {
             "key": "access_code_length",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -12439,7 +12439,7 @@
           {
             "key": "relay_name",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -13591,7 +13591,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "unknown"
                 }
@@ -14538,7 +14538,7 @@
             "description": "Location information for the device.",
             "key": "location",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "id",
                 "value": "DeviceLocation"
@@ -16052,7 +16052,7 @@
             "description": "\n    ---\n    deprecated: use company_name\n    ---\n  ",
             "key": "connect_partner_name",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -16764,7 +16764,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -16779,7 +16779,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -16794,7 +16794,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -16848,7 +16848,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -17508,7 +17508,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -18017,7 +18017,7 @@
             "description": "Location information for the device.",
             "key": "location",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "id",
                 "value": "PhoneLocation"
@@ -18200,7 +18200,7 @@
           {
             "key": "user_identity_key",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -18213,7 +18213,7 @@
           {
             "key": "email_address",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -18226,7 +18226,7 @@
           {
             "key": "phone_number",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -18248,7 +18248,7 @@
           {
             "key": "full_name",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -20049,7 +20049,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -27723,7 +27723,7 @@
                     "valueType": {
                       "type": "optional",
                       "itemType": {
-                        "type": "optional",
+                        "type": "nullable",
                         "itemType": {
                           "type": "primitive",
                           "value": {
@@ -28218,7 +28218,7 @@
                     "valueType": {
                       "type": "optional",
                       "itemType": {
-                        "type": "optional",
+                        "type": "nullable",
                         "itemType": {
                           "type": "primitive",
                           "value": {
@@ -29490,7 +29490,7 @@
                     "valueType": {
                       "type": "optional",
                       "itemType": {
-                        "type": "optional",
+                        "type": "nullable",
                         "itemType": {
                           "type": "primitive",
                           "value": {
@@ -30725,7 +30725,7 @@
                     "valueType": {
                       "type": "optional",
                       "itemType": {
-                        "type": "optional",
+                        "type": "nullable",
                         "itemType": {
                           "type": "primitive",
                           "value": {
@@ -30741,7 +30741,7 @@
                     "valueType": {
                       "type": "optional",
                       "itemType": {
-                        "type": "optional",
+                        "type": "nullable",
                         "itemType": {
                           "type": "primitive",
                           "value": {
@@ -31154,7 +31154,7 @@
                     "valueType": {
                       "type": "optional",
                       "itemType": {
-                        "type": "optional",
+                        "type": "nullable",
                         "itemType": {
                           "type": "primitive",
                           "value": {
@@ -31615,7 +31615,7 @@
                     "valueType": {
                       "type": "optional",
                       "itemType": {
-                        "type": "optional",
+                        "type": "nullable",
                         "itemType": {
                           "type": "primitive",
                           "value": {
@@ -32152,7 +32152,7 @@
                     "valueType": {
                       "type": "optional",
                       "itemType": {
-                        "type": "optional",
+                        "type": "nullable",
                         "itemType": {
                           "type": "primitive",
                           "value": {
@@ -32168,7 +32168,7 @@
                     "valueType": {
                       "type": "optional",
                       "itemType": {
-                        "type": "optional",
+                        "type": "nullable",
                         "itemType": {
                           "type": "primitive",
                           "value": {
@@ -34247,7 +34247,7 @@
                     "valueType": {
                       "type": "optional",
                       "itemType": {
-                        "type": "optional",
+                        "type": "nullable",
                         "itemType": {
                           "type": "primitive",
                           "value": {
@@ -34263,7 +34263,7 @@
                     "valueType": {
                       "type": "optional",
                       "itemType": {
-                        "type": "optional",
+                        "type": "nullable",
                         "itemType": {
                           "type": "primitive",
                           "value": {
@@ -35104,7 +35104,7 @@
                     "valueType": {
                       "type": "optional",
                       "itemType": {
-                        "type": "optional",
+                        "type": "nullable",
                         "itemType": {
                           "type": "primitive",
                           "value": {
@@ -35120,7 +35120,7 @@
                     "valueType": {
                       "type": "optional",
                       "itemType": {
-                        "type": "optional",
+                        "type": "nullable",
                         "itemType": {
                           "type": "primitive",
                           "value": {
@@ -35136,7 +35136,7 @@
                     "valueType": {
                       "type": "optional",
                       "itemType": {
-                        "type": "optional",
+                        "type": "nullable",
                         "itemType": {
                           "type": "primitive",
                           "value": {
@@ -35151,7 +35151,7 @@
                     "valueType": {
                       "type": "optional",
                       "itemType": {
-                        "type": "optional",
+                        "type": "nullable",
                         "itemType": {
                           "type": "primitive",
                           "value": {
@@ -36715,7 +36715,7 @@
                     "valueType": {
                       "type": "optional",
                       "itemType": {
-                        "type": "optional",
+                        "type": "nullable",
                         "itemType": {
                           "type": "primitive",
                           "value": {
@@ -36731,7 +36731,7 @@
                     "valueType": {
                       "type": "optional",
                       "itemType": {
-                        "type": "optional",
+                        "type": "nullable",
                         "itemType": {
                           "type": "primitive",
                           "value": {
@@ -36747,7 +36747,7 @@
                     "valueType": {
                       "type": "optional",
                       "itemType": {
-                        "type": "optional",
+                        "type": "nullable",
                         "itemType": {
                           "type": "primitive",
                           "value": {
@@ -36762,7 +36762,7 @@
                     "valueType": {
                       "type": "optional",
                       "itemType": {
-                        "type": "optional",
+                        "type": "nullable",
                         "itemType": {
                           "type": "primitive",
                           "value": {
@@ -37577,7 +37577,7 @@
                     "valueType": {
                       "type": "optional",
                       "itemType": {
-                        "type": "optional",
+                        "type": "nullable",
                         "itemType": {
                           "type": "primitive",
                           "value": {
@@ -43345,7 +43345,7 @@
                     "valueType": {
                       "type": "optional",
                       "itemType": {
-                        "type": "optional",
+                        "type": "nullable",
                         "itemType": {
                           "type": "primitive",
                           "value": {
@@ -43825,7 +43825,7 @@
                     "valueType": {
                       "type": "optional",
                       "itemType": {
-                        "type": "optional",
+                        "type": "nullable",
                         "itemType": {
                           "type": "primitive",
                           "value": {
@@ -44733,7 +44733,7 @@
                     "valueType": {
                       "type": "optional",
                       "itemType": {
-                        "type": "optional",
+                        "type": "nullable",
                         "itemType": {
                           "type": "primitive",
                           "value": {
@@ -45600,7 +45600,7 @@
                     "valueType": {
                       "type": "optional",
                       "itemType": {
-                        "type": "optional",
+                        "type": "nullable",
                         "itemType": {
                           "type": "primitive",
                           "value": {
@@ -45616,7 +45616,7 @@
                     "valueType": {
                       "type": "optional",
                       "itemType": {
-                        "type": "optional",
+                        "type": "nullable",
                         "itemType": {
                           "type": "primitive",
                           "value": {

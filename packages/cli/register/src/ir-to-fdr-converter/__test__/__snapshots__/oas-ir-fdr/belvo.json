@@ -110,7 +110,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -141,7 +141,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -228,7 +228,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -244,7 +244,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -723,7 +723,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1589,7 +1589,7 @@
             "description": "The current balance is calculated differently according to the type of account.\n\n- **💰 Checking and saving accounts**:\n\nThe user's account balance at the `collected_at` timestamp.\n- **💳 Credit cards**:\n\nThe amount the user has spent in the current card billing period (see `credit_data.cutting_date` for information on when the current billing period finishes).\n- **🏡 Loan accounts**:\n\nThe amount remaining to pay on the users's loan (same as `loan_data.outstanding_balance`).",
             "key": "current",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -1604,7 +1604,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1628,7 +1628,7 @@
             "description": "The maximum amount of credit the owner can receive.",
             "key": "credit_limit",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -1641,7 +1641,7 @@
             "description": "The ISO-8601 timestamp when the data point was collected.",
             "key": "collected_at",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -1655,7 +1655,7 @@
             "description": "The closing date of the credit period.",
             "key": "cutting_date",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -1668,7 +1668,7 @@
             "description": "The due date for the next payment (`YYYY-MM-DD`).",
             "key": "next_payment_date",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -1681,7 +1681,7 @@
             "description": "The minimum amount to be paid on the `next_payment_date`.",
             "key": "minimum_payment",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -1694,7 +1694,7 @@
             "description": "The minimum amount required to pay to avoid generating interest.",
             "key": "no_interest_payment",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -1707,7 +1707,7 @@
             "description": "The annualized interest rate of the credit.",
             "key": "interest_rate",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -1722,7 +1722,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1739,7 +1739,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1756,7 +1756,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1796,7 +1796,7 @@
             "description": "The name of the type of interest rate applied to the loan.",
             "key": "name",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -1816,7 +1816,7 @@
             "description": "The interest rate (in percent or currency value).",
             "key": "value",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -1897,7 +1897,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1911,7 +1911,7 @@
             "description": "Total amount of the loan (the amount the user receives).",
             "key": "principal",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -1926,7 +1926,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1942,7 +1942,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1958,7 +1958,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1972,7 +1972,7 @@
             "description": "The amount remaining to pay in total, including interest.",
             "key": "outstanding_balance",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -1985,7 +1985,7 @@
             "description": "The recurrent monthly payment, if applicable.",
             "key": "monthly_payment",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -1998,7 +1998,7 @@
             "description": "Breakdown of the interest applied to the loan.",
             "key": "interest_rates",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "list",
                 "itemType": {
@@ -2014,7 +2014,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "list",
                   "itemType": {
@@ -2031,7 +2031,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -2047,7 +2047,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -2063,7 +2063,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -2094,7 +2094,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -2110,7 +2110,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -2127,7 +2127,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -2144,7 +2144,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -2161,7 +2161,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -2178,7 +2178,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -2195,7 +2195,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -2212,7 +2212,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -2229,7 +2229,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -2263,7 +2263,7 @@
             "description": "The fund's identification number.",
             "key": "value",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -2301,7 +2301,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -2317,7 +2317,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -2333,7 +2333,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "list",
                   "itemType": {
@@ -2350,7 +2350,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -2366,7 +2366,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -2390,7 +2390,7 @@
             "description": "The total sum of all receivables (`available` + `anticipated`)",
             "key": "current",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -2403,7 +2403,7 @@
             "description": "The amount that the owner of the account will receive according to an established date.",
             "key": "available",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -2416,7 +2416,7 @@
             "description": "The amount that the owner of the account received earlier than contracted.",
             "key": "anticipated",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -2466,7 +2466,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -2522,7 +2522,7 @@
             "description": "Indicates whether this account is either an `ASSET` or a `LIABILITY`. You can consider the balance of an `ASSET` as being positive, while the balance of a `LIABILITY` as negative.\n",
             "key": "balance_type",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -2535,7 +2535,7 @@
             "description": "The account type, as designated by the institution.",
             "key": "type",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -2548,7 +2548,7 @@
             "description": "The account name, as given by the institution.",
             "key": "name",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -2561,7 +2561,7 @@
             "description": "The account number, as designated by the institution.",
             "key": "number",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -2581,7 +2581,7 @@
             "description": "The currency of the account. For example:\n- 🇧🇷 BRL (Brazilian Real)\n- 🇨🇴 COP (Colombian Peso)\n- 🇲🇽 MXN (Mexican Peso)\n\n Please note that other currencies other than in the list above may be returned.",
             "key": "currency",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -2594,7 +2594,7 @@
             "description": "The public name for the type of identification. For example: `\"CLABE\"`.\n\nℹ️ For 🇧🇷 Brazilian savings and checking accounts, this field will be `AGENCY/ACCOUNT`.\n",
             "key": "public_identification_name",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -2607,7 +2607,7 @@
             "description": "The value for the `public_identification_name`.\n\nℹ️ For 🇧🇷 Brazilian savings and checking accounts, this field will be the agency and bank account number, separated by a slash.\nFor example: `0444/45722-0`.\n",
             "key": "public_identification_value",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -2620,7 +2620,7 @@
             "description": "The ISO-8601 timestamp of Belvo's most recent successful access to the institution for the given link.",
             "key": "last_accessed_at",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -2650,7 +2650,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "list",
                   "itemType": {
@@ -2677,7 +2677,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -2694,7 +2694,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -2733,7 +2733,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -2749,7 +2749,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -2945,7 +2945,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -2961,7 +2961,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -3351,7 +3351,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -3368,7 +3368,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -3394,7 +3394,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -3410,7 +3410,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -3449,7 +3449,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -3473,7 +3473,7 @@
             "description": "The ISO-8601 timestamp when the data point was collected.",
             "key": "collected_at",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -3501,7 +3501,7 @@
             "description": "The date when the transaction occurred, in `YYYY-MM-DD` format.",
             "key": "value_date",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -3516,7 +3516,7 @@
             "description": "The ISO timestamp when the transaction was processed and accounted for by the institution.",
             "key": "accounting_date",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -3530,7 +3530,7 @@
             "description": "The transaction amount.\nℹ️ The amount displayed is always positive as we indicate the direction of the transaction in the `type` parameter.\n",
             "key": "amount",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -3543,7 +3543,7 @@
             "description": "The balance at the end of the transaction.",
             "key": "balance",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -3556,7 +3556,7 @@
             "description": "The three-letter currency code (ISO-4217).\n",
             "key": "currency",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -3571,7 +3571,7 @@
             "description": "The description of transaction provided by the institution. Usually this is the text that the end user sees in the online platform.",
             "key": "description",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -3584,7 +3584,7 @@
             "description": "Additional observations provided by the institution on the transaction.",
             "key": "observations",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -3621,7 +3621,7 @@
             "description": "The reference number of the transaction, provided by the bank.",
             "key": "reference",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -3683,7 +3683,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -3699,7 +3699,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -3894,7 +3894,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -3911,7 +3911,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -3928,7 +3928,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -3968,7 +3968,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -3984,7 +3984,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -4382,7 +4382,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -4440,7 +4440,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -4456,7 +4456,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -4472,7 +4472,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -4573,7 +4573,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -4589,7 +4589,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -4627,7 +4627,7 @@
             "description": "The type of document the owner provided to the institution to open the account. Common document types are:\n\n🇧🇷 Brazil\n- `CPF` (*Cadastro de Pessoas Físicas*)\n- `CNPJ`(*Cadastro Nacional de Pessoas Jurídicas*)\n\n🇨🇴 Colombia\n- `CC`(*Cédula de Ciudadanía*)\n- `NIT` (*Número de Identificación Tributaria*)\n\n🇲🇽 Mexico\n- `CURP` (*Clave Única de Registro de Población*)\n- `NISS` (*Número de Seguridad Social*)\n",
             "key": "document_type",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -4640,7 +4640,7 @@
             "description": "The document's identification number.",
             "key": "document_number",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -4690,7 +4690,7 @@
             "description": "The institution's internal identifier for the owner.",
             "key": "internal_identification",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -4703,7 +4703,7 @@
             "description": "The ISO-8601 timestamp when the data point was collected.",
             "key": "collected_at",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -4731,7 +4731,7 @@
             "description": "The full name of the owner, as provided by the bank.",
             "key": "display_name",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -4745,7 +4745,7 @@
             "description": "The account owner's registered email address.",
             "key": "email",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -4760,7 +4760,7 @@
             "description": "The account owner's registered phone number.",
             "key": "phone_number",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -4773,7 +4773,7 @@
             "description": "The accounts owners registered address.",
             "key": "address",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -4798,7 +4798,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -4815,7 +4815,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -4832,7 +4832,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -4871,7 +4871,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -4887,7 +4887,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -4983,7 +4983,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -5000,7 +5000,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -5014,7 +5014,7 @@
             "description": "The type of retained tax (for example, ISR, IVA or IEPS).",
             "key": "tax",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -5027,7 +5027,7 @@
             "description": "The percentage of tax retained.",
             "key": "tax_percentage",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -5040,7 +5040,7 @@
             "description": "The amount of retained tax.",
             "key": "retained_tax_amount",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -5062,7 +5062,7 @@
             "description": "The description of the invoice item (an invoice can have one or more items).",
             "key": "description",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -5075,7 +5075,7 @@
             "description": "The identification code of the product or the service, as defined by the legal entity in the country.\n- 🇲🇽 [Mexico](http://200.57.3.89/Pys/catPyS.aspx)\n",
             "key": "product_identification",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -5088,7 +5088,7 @@
             "description": "The quantity of this invoice item.",
             "key": "quantity",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -5101,7 +5101,7 @@
             "description": "The unit of measure, as defined by the legal entity in the country. \n- 🇲🇽 Mexico [SAT catalog reference](https://developers.belvo.com/docs/sat-catalogs#unit-code)\n",
             "key": "unit_code",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -5114,7 +5114,7 @@
             "description": "The description of the item, as defined by the legal entity in the country.\n- 🇲🇽 Mexico [SAT catalog reference](https://developers.belvo.com/docs/sat-catalogs#unit-code)\n",
             "key": "unit_description",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -5127,7 +5127,7 @@
             "description": "The price of one a singular item.",
             "key": "unit_amount",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -5142,7 +5142,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -5156,7 +5156,7 @@
             "description": "The total price for this item before tax is applied (`quantity` x `unit_amount`).",
             "key": "pre_tax_amount",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -5169,7 +5169,7 @@
             "description": "The tax percentage to apply.",
             "key": "tax_percentage",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -5182,7 +5182,7 @@
             "description": "The amount of tax for this invoice item (`pre_tax_amount` x `tax_percentage`).",
             "key": "tax_amount",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -5195,7 +5195,7 @@
             "description": "The total price for this invoice item (`pre_tax_amount` + `tax_amount`).",
             "key": "total_amount",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -5224,7 +5224,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -5249,7 +5249,7 @@
             "description": "The fiscal institution's unique ID for the related deferred invoice.\n",
             "key": "invoice_identification",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -5262,7 +5262,7 @@
             "description": "The currency of the related invoice. For example:\n    \n- 🇧🇷 BRL (Brazilian Real)\n- 🇨🇴 COP (Colombian Peso)\n- 🇲🇽 MXN (Mexican Peso)\n  \n  Please note that other currencies other than in the list above may be returned.\n",
             "key": "currency",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -5275,7 +5275,7 @@
             "description": "The payment method of the related invoice.\n",
             "key": "payment_method",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -5301,7 +5301,7 @@
             "description": "The invoice amount before the payment.\n",
             "key": "previous_balance",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -5314,7 +5314,7 @@
             "description": "The amount paid in this installment.\n",
             "key": "amount_paid",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -5327,7 +5327,7 @@
             "description": "The amount remaining to be paid.\n",
             "key": "outstanding_balance",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -5349,7 +5349,7 @@
             "description": "ISO-8601 timestamp when the payment was made.\n",
             "key": "date",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -5363,7 +5363,7 @@
             "description": "Payment type code used for this invoice, as defined by the country's legal entity.\n\n- 🇲🇽 Mexico [SAT catalog reference article](https://developers.belvo.com/docs/sat-catalogs#payment-type)\n",
             "key": "payment_type",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -5376,7 +5376,7 @@
             "description": "The currency of the payment. For example:\n\n- 🇧🇷 BRL (Brazilian Real)\n- 🇨🇴 COP (Colombian Peso)\n- 🇲🇽 MXN (Mexican Peso)\n\nPlease note that other currencies other than in the list above may be returned.\n",
             "key": "currency",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -5389,7 +5389,7 @@
             "description": "The `currency` to MXN currency exchange rate when the payment was made.\n",
             "key": "exchange_rate",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -5402,7 +5402,7 @@
             "description": "The invoice amount, in the currency of the original invoice.\n",
             "key": "amount",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -5415,7 +5415,7 @@
             "description": "The fiscal institution's internal identifier for the operation.\n",
             "key": "operation_number",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -5430,7 +5430,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -5444,7 +5444,7 @@
             "description": "The bank account number of the payment beneficiary.\n",
             "key": "beneficiary_account_number",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -5457,7 +5457,7 @@
             "description": "The fiscal ID of the payment issuer.\n",
             "key": "payer_rfc",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -5470,7 +5470,7 @@
             "description": "The bank account number of the payment issuer.\n",
             "key": "payer_account_number",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -5483,7 +5483,7 @@
             "description": "The banking institution that was used by the payment issuer.\n",
             "key": "payer_bank_name",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -5517,7 +5517,7 @@
             "description": "The number of days covered by the payment.\n",
             "key": "days",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -5530,7 +5530,7 @@
             "description": "The payroll type, as defined by the legal entity of the country.\n\n- 🇲🇽 Mexico [SAT catalog reference article](https://developers.belvo.com/docs/sat-catalogs#payroll-type)\n",
             "key": "type",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -5563,7 +5563,7 @@
             "description": "The start date of the payment period.\n",
             "key": "date_from",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -5577,7 +5577,7 @@
             "description": "The end date of the payment period.\n",
             "key": "date_to",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -5593,7 +5593,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -5629,7 +5629,7 @@
             "description": "The warning code.\n",
             "key": "code",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -5642,7 +5642,7 @@
             "description": "The description of the warning.\n",
             "key": "message",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -5691,7 +5691,7 @@
             "description": "The ISO-8601 timestamp when the data point was collected.",
             "key": "collected_at",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -5719,7 +5719,7 @@
             "description": "The fiscal institution's unique ID for the invoice.",
             "key": "invoice_identification",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -5732,7 +5732,7 @@
             "description": "The date of the invoice.",
             "key": "invoice_date",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -5746,7 +5746,7 @@
             "description": "The status of the invoice. Can be either *Vigente* (valid) or *Cancelado* (cancelled).",
             "key": "status",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -5773,7 +5773,7 @@
             "description": "The fiscal ID of the invoice sender",
             "key": "sender_id",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -5786,7 +5786,7 @@
             "description": "The name of the invoice sender.",
             "key": "sender_name",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -5801,7 +5801,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -5815,7 +5815,7 @@
             "description": "The fiscal ID of the invoice receiver.",
             "key": "receiver_id",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -5828,7 +5828,7 @@
             "description": "The name of the invoice receiver.",
             "key": "receiver_name",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -5843,7 +5843,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -5857,7 +5857,7 @@
             "description": "If the invoice is cancelled, this field indicates the status of the cancellation.",
             "key": "cancelation_status",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -5870,7 +5870,7 @@
             "description": "The date of the invoice cancelation.\n",
             "key": "cancelation_update_date",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -5884,7 +5884,7 @@
             "description": "The date of the fiscal certification.\n",
             "key": "certification_date",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -5898,7 +5898,7 @@
             "description": "The fiscal ID of the certification provider.\n",
             "key": "certification_authority",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -5911,7 +5911,7 @@
             "description": "The payment type code used for this invoice, as defined by the country legal entity.\n\n- 🇲🇽 Mexico [SAT catalog reference article](https://developers.belvo.com/docs/sat-catalogs#payment-type)\n",
             "key": "payment_type",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -5924,7 +5924,7 @@
             "description": "*This field has been deprecated.*\n",
             "key": "payment_type_description",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -5950,7 +5950,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -5967,7 +5967,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -5983,7 +5983,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -5999,7 +5999,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -6024,7 +6024,7 @@
             "description": "The currency of the invoice. For example:\n \n - 🇧🇷 BRL (Brazilian Real)\n - 🇨🇴 COP (Colombian Peso)\n - 🇲🇽 MXN (Mexican Peso)\n - 🇺🇸 USD (United States Dollar)\n",
             "key": "currency",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -6037,7 +6037,7 @@
             "description": "The pretax amount of this invoice (sum of each item's `pre_tax_amount`).\n",
             "key": "subtotal_amount",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -6050,7 +6050,7 @@
             "description": "The exchange rate used in this invoice for the currency.\n",
             "key": "exchange_rate",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -6063,7 +6063,7 @@
             "description": "The amount of tax for this invoice (sum of each item's `tax_amount`).\n",
             "key": "tax_amount",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -6076,7 +6076,7 @@
             "description": "The total amount discounted in this invoice.\n",
             "key": "discount_amount",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -6089,7 +6089,7 @@
             "description": "The total amount of the invoice (`subtotal_amount` + `tax_amount` - `discount_amount`)",
             "key": "total_amount",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -6122,7 +6122,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -6138,7 +6138,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -6164,7 +6164,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -6181,7 +6181,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -6220,7 +6220,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -6237,7 +6237,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -6253,7 +6253,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -6269,7 +6269,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -6285,7 +6285,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -6301,7 +6301,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -6317,7 +6317,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -6333,7 +6333,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -6359,7 +6359,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -6376,7 +6376,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -6392,7 +6392,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -6408,7 +6408,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -6424,7 +6424,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -6440,7 +6440,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -6456,7 +6456,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -6472,7 +6472,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -6510,7 +6510,7 @@
             "description": "The description of the invoice item (an invoice can have one or more items).",
             "key": "description",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -6523,7 +6523,7 @@
             "description": "The identification code of the product or the service, as defined by the legal entity in the country.\n",
             "key": "product_identification",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -6536,7 +6536,7 @@
             "description": "The quantity of this invoice item.",
             "key": "quantity",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -6549,7 +6549,7 @@
             "description": "The unit of measure, as defined by the legal entity in the country.\n",
             "key": "unit_code",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -6562,7 +6562,7 @@
             "description": "The description of the item, as defined by the legal entity in the country.\n",
             "key": "unit_description",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -6575,7 +6575,7 @@
             "description": "The price of one singular item.",
             "key": "unit_amount",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -6590,7 +6590,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -6604,7 +6604,7 @@
             "description": "The total price for this item before tax is applied (`quantity` x `unit_amount`).",
             "key": "pre_tax_amount",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -6617,7 +6617,7 @@
             "description": "The tax percentage to apply.",
             "key": "tax_percentage",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -6630,7 +6630,7 @@
             "description": "The amount of tax for this invoice item (`pre_tax_amount` x `tax_percentage`).",
             "key": "tax_amount",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -6643,7 +6643,7 @@
             "description": "The total price for this invoice item (`pre_tax_amount` + `tax_amount`).",
             "key": "total_amount",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -6658,7 +6658,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -6683,7 +6683,7 @@
             "description": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.\n",
             "key": "invoice_identification",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -6696,7 +6696,7 @@
             "description": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.\n",
             "key": "currency",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -6709,7 +6709,7 @@
             "description": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.\n",
             "key": "payment_method",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -6724,7 +6724,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -6738,7 +6738,7 @@
             "description": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.\n",
             "key": "previous_balance",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -6751,7 +6751,7 @@
             "description": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.\n",
             "key": "amount_paid",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -6764,7 +6764,7 @@
             "description": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.\n",
             "key": "outstanding_balance",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -6786,7 +6786,7 @@
             "description": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.\n",
             "key": "date",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -6800,7 +6800,7 @@
             "description": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.\n",
             "key": "payment_type",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -6813,7 +6813,7 @@
             "description": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.\n",
             "key": "currency",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -6826,7 +6826,7 @@
             "description": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.\n",
             "key": "exchange_rate",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -6839,7 +6839,7 @@
             "description": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.\n",
             "key": "amount",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -6852,7 +6852,7 @@
             "description": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.\n",
             "key": "operation_number",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -6867,7 +6867,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -6881,7 +6881,7 @@
             "description": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.\n",
             "key": "beneficiary_account_number",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -6894,7 +6894,7 @@
             "description": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.\n",
             "key": "payer_rfc",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -6907,7 +6907,7 @@
             "description": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.\n",
             "key": "payer_account_number",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -6920,7 +6920,7 @@
             "description": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.\n",
             "key": "payer_bank_name",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -6954,7 +6954,7 @@
             "description": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.\n",
             "key": "days",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -6967,7 +6967,7 @@
             "description": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.\n",
             "key": "type",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -6980,7 +6980,7 @@
             "description": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.\n",
             "key": "amount",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -6993,7 +6993,7 @@
             "description": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.\n",
             "key": "version",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -7006,7 +7006,7 @@
             "description": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.\n",
             "key": "date_from",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -7020,7 +7020,7 @@
             "description": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.\n",
             "key": "date_to",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -7036,7 +7036,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -7051,7 +7051,7 @@
             "description": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.\n",
             "key": "payment_date",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -7075,7 +7075,7 @@
             "description": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.\n",
             "key": "code",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -7088,7 +7088,7 @@
             "description": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.\n",
             "key": "message",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -7137,7 +7137,7 @@
             "description": "The ISO-8601 timestamp when the data point was collected.",
             "key": "collected_at",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -7165,7 +7165,7 @@
             "description": "The fiscal institution's unique ID for the invoice.",
             "key": "invoice_identification",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -7178,7 +7178,7 @@
             "description": "The date of the invoice.",
             "key": "invoice_date",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -7192,7 +7192,7 @@
             "description": "The status of the invoice. Can be one of:\n\n  - *Vigente* (valid)\n  - *Cancelado* (cancelled)\n  - *Aprobado* (approved)",
             "key": "status",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -7207,7 +7207,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -7236,7 +7236,7 @@
             "description": "The fiscal ID of the invoice sender.",
             "key": "sender_id",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -7249,7 +7249,7 @@
             "description": "The name of the invoice sender.",
             "key": "sender_name",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -7274,7 +7274,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -7288,7 +7288,7 @@
             "description": "The fiscal ID of the invoice receiver.",
             "key": "receiver_id",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -7301,7 +7301,7 @@
             "description": "The name of the invoice receiver.",
             "key": "receiver_name",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -7326,7 +7326,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -7340,7 +7340,7 @@
             "description": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.",
             "key": "cancelation_status",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -7353,7 +7353,7 @@
             "description": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.\n",
             "key": "cancelation_update_date",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -7367,7 +7367,7 @@
             "description": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.\n",
             "key": "certification_date",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -7381,7 +7381,7 @@
             "description": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.\n",
             "key": "certification_authority",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -7394,7 +7394,7 @@
             "description": "The payment type code used for this invoice, as defined by the country legal entity.\n\nFor detailed information regarding DIAN's payment types, please see their [official PDF](https://www.dian.gov.co/impuestos/factura-electronica/Documents/Anexo_tecnico_factura_electronica_vr_1_7_2020.pdf).\n",
             "key": "payment_type",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -7407,7 +7407,7 @@
             "description": "The description of the payment method used for this invoice.\n",
             "key": "payment_type_description",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -7432,7 +7432,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -7449,7 +7449,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -7465,7 +7465,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -7481,7 +7481,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -7506,7 +7506,7 @@
             "description": "The currency of the invoice. For example:\n \n - 🇧🇷 BRL (Brazilian Real)\n - 🇨🇴 COP (Colombian Peso)\n - 🇲🇽 MXN (Mexican Peso)\n - 🇺🇸 USD (United States Dollar)\n",
             "key": "currency",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -7519,7 +7519,7 @@
             "description": "The pretax amount of this invoice (sum of each item's `pre_tax_amount`).\n",
             "key": "subtotal_amount",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -7532,7 +7532,7 @@
             "description": "The exchange rate used in this invoice for the currency.\n",
             "key": "exchange_rate",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -7545,7 +7545,7 @@
             "description": "The amount of tax for this invoice (sum of each item's `tax_amount`).\n",
             "key": "tax_amount",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -7558,7 +7558,7 @@
             "description": "The total amount discounted in this invoice.\n",
             "key": "discount_amount",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -7571,7 +7571,7 @@
             "description": "The total amount of the invoice (`subtotal_amount` + `tax_amount` - `discount_amount`)",
             "key": "total_amount",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -7604,7 +7604,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -7620,7 +7620,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -7692,7 +7692,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -7708,7 +7708,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -7922,7 +7922,7 @@
             "description": "The ISO-8601 timestamp when the data point was collected.",
             "key": "collected_at",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -7950,7 +7950,7 @@
             "description": "General information on the tax return (year, RFC, return type, person/company name, and so on).",
             "key": "informacion_general",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "id",
                 "value": "TaxReturnPersonalInformacionGeneral"
@@ -7961,7 +7961,7 @@
             "description": "Details regarding the income information together combined with withheld taxes.",
             "key": "sueldos_salarios",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "id",
                 "value": "TaxReturnPersonalSueldosSalarios"
@@ -7972,7 +7972,7 @@
             "description": "Details regarding the income and tax information from professional services provided.",
             "key": "servicios_profesionales",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "id",
                 "value": "TaxReturnPersonalServiciosProfesionales"
@@ -7983,7 +7983,7 @@
             "description": "List of all personal tax deductions.",
             "key": "deducciones_personales",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "id",
                 "value": "TaxReturnPersonalDeduccionesPersonales"
@@ -7994,7 +7994,7 @@
             "description": "Details regarding the final tax return.",
             "key": "determinacion_impuesto",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "id",
                 "value": "TaxReturnPersonalDeterminacionImpuesto"
@@ -8005,7 +8005,7 @@
             "description": "Details on the already withheld taxes.",
             "key": "retenciones",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "id",
                 "value": "TaxReturnPersonalRetenciones"
@@ -8016,7 +8016,7 @@
             "description": "Details regarding dividends.",
             "key": "dividendos",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "id",
                 "value": "TaxReturnPersonalDividendos"
@@ -8029,7 +8029,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "TaxReturnPersonalDatosInformativos"
@@ -8041,7 +8041,7 @@
             "description": "Tax return PDF as a binary.",
             "key": "pdf",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -8055,7 +8055,7 @@
             "description": "The acknowledgement receipt from the fiscal institution confirming that they received the tax return.",
             "key": "receipt_pdf",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -8096,7 +8096,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -8112,7 +8112,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -8193,7 +8193,7 @@
             "description": "The ISO-8601 timestamp when the data point was collected.",
             "key": "collected_at",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -8221,7 +8221,7 @@
             "description": "General information regarding the tax return (year, RFC, return type, person/company name, and so on).",
             "key": "informacion_general",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "id",
                 "value": "TaxReturnPersonalMonthlyInformacionGeneral"
@@ -8232,7 +8232,7 @@
             "description": "Information used to calculate the monthly provisional payments of the income tax.",
             "key": "isr",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "id",
                 "value": "TaxReturnPersonalMonthlyIsr"
@@ -8243,7 +8243,7 @@
             "description": "Information used to calculate the monthly provisional payments of the VAT tax.",
             "key": "iva",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "id",
                 "value": "TaxReturnPersonalMonthlyIva"
@@ -8254,7 +8254,7 @@
             "description": "Tax return PDF as a binary.",
             "key": "pdf",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -8270,7 +8270,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -8322,7 +8322,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -8338,7 +8338,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -8482,7 +8482,7 @@
             "description": "The ISO-8601 timestamp when the data point was collected.",
             "key": "collected_at",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -8510,7 +8510,7 @@
             "description": "General information regarding the tax return (year, RFC, return type, person/company name, and so on).",
             "key": "informacion_general",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "id",
                 "value": "TaxReturnBusinessInformacionGeneral"
@@ -8523,7 +8523,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "TaxReturnBusinessDatosAdicionales"
@@ -8535,7 +8535,7 @@
             "description": "Detailed information about the legal entity's yearly profit and loss.",
             "key": "estado_resultados",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "id",
                 "value": "TaxReturnBusinessEstadoResultados"
@@ -8546,7 +8546,7 @@
             "description": "Details regarding balance sheet of the legal entity.",
             "key": "estado_posicion_financiera_balance",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "id",
                 "value": "TaxReturnBusinessEstadoPosicionFinancieraBalance"
@@ -8557,7 +8557,7 @@
             "description": "Details regarding the accounting reconciliation.",
             "key": "conciliacion_entre_resultado_contable_fiscal",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "id",
                 "value": "TaxReturnBusinessConciliacionEntreResultadoContableFiscal"
@@ -8570,7 +8570,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "TaxReturnBusinessDeduccionesAutorizadas"
@@ -8582,7 +8582,7 @@
             "description": "Details regarding key numbers at the end of the fiscal exercise.",
             "key": "cifras_cierre_ejercicio",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "id",
                 "value": "TaxReturnBusinessCifrasCierreEjercicio"
@@ -8593,7 +8593,7 @@
             "description": "Details regarding the final tax return.",
             "key": "determinacion_del_impuesto_sobre_la_renta",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "id",
                 "value": "TaxReturnBusinessDeterminacionDelImpuestoSobreLaRenta"
@@ -8606,7 +8606,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "TaxReturnBusinessDividendosOUtilidadesDistribuidos"
@@ -8618,7 +8618,7 @@
             "description": "Details of the tax payment.",
             "key": "detalle_pago_r1_isr_personas_morales",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "id",
                 "value": "TaxReturnBusinessDetallePagoR1IsrPersonasMorales"
@@ -8629,7 +8629,7 @@
             "description": "Tax return PDF as a binary.",
             "key": "pdf",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -8643,7 +8643,7 @@
             "description": "The acknowledgement receipt from the fiscal institution confirming that they received the tax return.",
             "key": "receipt_pdf",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -8684,7 +8684,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -8700,7 +8700,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -8799,7 +8799,7 @@
             "description": "The ISO-8601 timestamp when the data point was collected.",
             "key": "collected_at",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -8827,7 +8827,7 @@
             "description": "General information regarding the tax return (year, RFC, return type, person/company name, and so on).",
             "key": "informacion_general",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "id",
                 "value": "TaxReturnBusinessMonthlyInformacionGeneral"
@@ -8838,7 +8838,7 @@
             "description": "Information used to calculate the provisional income tax for the period.",
             "key": "determinacion_isr",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "id",
                 "value": "TaxReturnBusinessMonthlyDeterminacionIsr"
@@ -8849,7 +8849,7 @@
             "description": "Information on the monthly provisional payments for the income tax.",
             "key": "detalle_pago_isr",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "id",
                 "value": "TaxReturnBusinessMonthlyDetallePagoIsr"
@@ -8860,7 +8860,7 @@
             "description": "Information used to calculate the provisional VAT tax for the period.",
             "key": "determinacion_iva",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "id",
                 "value": "TaxReturnBusinessMonthlyDeterminacionIva"
@@ -8871,7 +8871,7 @@
             "description": "Information on the monthly provisional payments for the VAT tax.",
             "key": "detalle_pago_iva",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "id",
                 "value": "TaxReturnBusinessMonthlyDetallePagoIva"
@@ -8882,7 +8882,7 @@
             "description": "Tax return PDF as a binary.",
             "key": "pdf",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -8898,7 +8898,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -8913,7 +8913,7 @@
             "description": "The type of tax return. Can be either monthly or annual.",
             "key": "type",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -8953,7 +8953,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -8969,7 +8969,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -9170,7 +9170,7 @@
             "description": "The tax payers's identification number (For Mexico, this is the RFC).\n",
             "key": "rfc",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -9185,7 +9185,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -9201,7 +9201,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -9217,7 +9217,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -9233,7 +9233,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -9247,7 +9247,7 @@
             "description": "Date when the tax payer commenced taxable commercial activities.\n",
             "key": "start_operations_date",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -9261,7 +9261,7 @@
             "description": "Status of the taxpayer in the Federal Register of Taxpayers (RFC). Can be `ACTIVO` or `INACTIVO`.",
             "key": "status_padron",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -9274,7 +9274,7 @@
             "description": "Date when `status_padron` was most recently updated.\n",
             "key": "last_status_change_date",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -9290,7 +9290,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -9306,7 +9306,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -9322,7 +9322,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -9338,7 +9338,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -9363,7 +9363,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -9379,7 +9379,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -9403,7 +9403,7 @@
             "description": "The postcode of the address.\n",
             "key": "postal_code",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -9418,7 +9418,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -9434,7 +9434,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -9450,7 +9450,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -9466,7 +9466,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -9482,7 +9482,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -9498,7 +9498,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -9514,7 +9514,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -9530,7 +9530,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -9546,7 +9546,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "list",
                   "itemType": {
@@ -9572,7 +9572,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -9588,7 +9588,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -9605,7 +9605,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -9622,7 +9622,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -9638,7 +9638,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -9661,7 +9661,7 @@
             "description": "The end date of the regimen.\n",
             "key": "end_date",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -9675,7 +9675,7 @@
             "description": "The start date of the regimen.\n",
             "key": "initial_date",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -9689,7 +9689,7 @@
             "description": "The description of the regimen.",
             "key": "regimen",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -9714,7 +9714,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -9730,7 +9730,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -9746,7 +9746,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -9763,7 +9763,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -9809,7 +9809,7 @@
             "description": "The ISO-8601 timestamp when the data point was collected.",
             "key": "collected_at",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -9834,7 +9834,7 @@
             "description": "The place and date of that the tax status was issued.",
             "key": "place_and_date_of_issuance",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -9847,7 +9847,7 @@
             "description": "The name of the person or business.",
             "key": "official_name",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -9860,7 +9860,7 @@
             "description": "The taxpayer's *Cédula de Identificación Fiscal* (CIF) ID.\n",
             "key": "id_cif",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -9887,7 +9887,7 @@
             "description": "A list of economic activity objects.\n",
             "key": "economic_activity",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "list",
                 "itemType": {
@@ -9901,7 +9901,7 @@
             "description": "A list of regimen objects.\n",
             "key": "regimes",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "list",
                 "itemType": {
@@ -9915,7 +9915,7 @@
             "description": "Details regarding a business's obligations.\n\nℹ️ For non-business accounts, this field will return empty.\n",
             "key": "obligations",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "list",
                 "itemType": {
@@ -9929,7 +9929,7 @@
             "description": "The validation certificate of the document.",
             "key": "digital_stamp",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -9942,7 +9942,7 @@
             "description": "A data chain containing the basic structure of a fiscal digital check. For Mexico, this is the *Comprobante Fiscal Digital por Internet* (CFDI).\n",
             "key": "digital_stamp_chain",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -9955,7 +9955,7 @@
             "description": "Tax status PDF as a binary string.",
             "key": "pdf",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -9979,7 +9979,7 @@
             "description": "The tax payers's identification number (NIT).\n",
             "key": "rfc",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -9994,7 +9994,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -10010,7 +10010,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -10026,7 +10026,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -10042,7 +10042,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -10056,7 +10056,7 @@
             "description": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.\n",
             "key": "start_operations_date",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -10070,7 +10070,7 @@
             "description": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.",
             "key": "status_padron",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -10083,7 +10083,7 @@
             "description": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.\n",
             "key": "last_status_change_date",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -10099,7 +10099,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -10115,7 +10115,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -10131,7 +10131,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -10147,7 +10147,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -10172,7 +10172,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -10188,7 +10188,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -10212,7 +10212,7 @@
             "description": "The postcode of the address.\n",
             "key": "postal_code",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -10227,7 +10227,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -10243,7 +10243,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -10259,7 +10259,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -10275,7 +10275,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -10291,7 +10291,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -10307,7 +10307,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -10323,7 +10323,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -10339,7 +10339,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -10355,7 +10355,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "list",
                   "itemType": {
@@ -10381,7 +10381,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -10397,7 +10397,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -10414,7 +10414,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -10431,7 +10431,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -10447,7 +10447,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -10470,7 +10470,7 @@
             "description": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.\n",
             "key": "end_date",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -10484,7 +10484,7 @@
             "description": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.\n",
             "key": "initial_date",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -10498,7 +10498,7 @@
             "description": "The description of the regimen.",
             "key": "regimen",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -10523,7 +10523,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -10539,7 +10539,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -10555,7 +10555,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -10572,7 +10572,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -10618,7 +10618,7 @@
             "description": "The ISO-8601 timestamp when the data point was collected.",
             "key": "collected_at",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -10643,7 +10643,7 @@
             "description": "The date when the tax status was issued. For example, `2020-08-05/18:55:16`.",
             "key": "place_and_date_of_issuance",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -10656,7 +10656,7 @@
             "description": "The name of the business.\n\nNote: For individuals in Colombia, this field will return `null`.\n",
             "key": "official_name",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -10669,7 +10669,7 @@
             "description": "The taxpayer's *Cédula de ciudadanía* (CC) ID. Only applicable for individuals.\n",
             "key": "id_cif",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -10696,7 +10696,7 @@
             "description": "A list of economic activity objects.\n",
             "key": "economic_activity",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "list",
                 "itemType": {
@@ -10710,7 +10710,7 @@
             "description": "A list of regimen objects.\n",
             "key": "regimes",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "list",
                 "itemType": {
@@ -10724,7 +10724,7 @@
             "description": "Details regarding a business's obligations.\n\nℹ️ For non-business accounts, this field will return empty.\n",
             "key": "obligations",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "list",
                 "itemType": {
@@ -10738,7 +10738,7 @@
             "description": "The validation certificate of the document.",
             "key": "digital_stamp",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -10751,7 +10751,7 @@
             "description": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.\n",
             "key": "digital_stamp_chain",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -10764,7 +10764,7 @@
             "description": "Tax status PDF as a binary string.",
             "key": "pdf",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -10826,7 +10826,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -10842,7 +10842,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -10959,7 +10959,7 @@
             "description": "The ISO-8601 timestamp when the data point was collected.",
             "key": "collected_at",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -10989,7 +10989,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -11003,7 +11003,7 @@
             "description": "Tax compliance status PDF as a binary.",
             "key": "pdf",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -11019,7 +11019,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -11067,7 +11067,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -11083,7 +11083,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -11332,7 +11332,7 @@
             "description": "The stability of the income based on its amount, with a range from 0 to 1, where 1 represents perfect stability.\n\n**Note:** For transactions with `frequency`=`SINGLE`, this value returns `null`.\n",
             "key": "stability",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -11345,7 +11345,7 @@
             "description": "The regularity of the income basde in its frequency, with a range from 0 to 1, where 1 represents perfect regularity.\n\n**Note:** For transactions with `frequency`=`SINGLE`, this value returns `null`.\n",
             "key": "regularity",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -11358,7 +11358,7 @@
             "description": "The income trend during a period of time calculated between last income and first income received, where:\n  - a negative float means that the income trend is decreasing during the time period.\n  - a positive float means that the income trend is increasing during the time period.\n\n**Note:** For transactions with `frequency`=`SINGLE`, this value returns `null`.\n",
             "key": "trend",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -11491,7 +11491,7 @@
             "description": "The date when the first transaction occurred, in `YYYY-MM-DD` format.\n",
             "key": "first_transaction_date",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -11673,7 +11673,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -11689,7 +11689,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -11942,7 +11942,7 @@
             "description": "The description of the transaction provided by the institution. Usually, this is the text that the end user would see in the bank statement. The description can be an empty string.",
             "key": "description",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -12052,7 +12052,7 @@
             "description": "The name for the recurring expense.\n\nℹ️ **Note**: This information is taken from the description section of a transaction and then normalized to provide you with an easy-to-read name. As such, sometimes the name will reflect the merchant the payment is made to (for example, Netflix.com), while for other recurring expenses, this could be something like \"Monthly payment to John\".\n",
             "key": "name",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -12151,7 +12151,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -12167,7 +12167,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -12438,7 +12438,7 @@
             "description": "If applicable, the index type that the `interest_rates.value` is calculated against.",
             "key": "index",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -12474,7 +12474,7 @@
             "description": "The public identifiers for the instrument.",
             "key": "public_id",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "list",
                 "itemType": {
@@ -12495,7 +12495,7 @@
             "description": "The subtype for the instrument, as given by the institution.",
             "key": "subtype",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -12528,7 +12528,7 @@
             "description": "The current price of one share in the instrument.",
             "key": "price",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -12541,7 +12541,7 @@
             "description": "The total amount of shares owned in the instrument.",
             "key": "quantity",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -12554,7 +12554,7 @@
             "description": "The total gross value of the instrument (including taxes).",
             "key": "balance_gross",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -12567,7 +12567,7 @@
             "description": "The total net value of the instrument (excluding taxes).",
             "key": "balance_net",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -12580,7 +12580,7 @@
             "description": "The average price of each share acquired in the instrument.",
             "key": "average_acquisition_price",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -12593,7 +12593,7 @@
             "description": "The current profit earned in the instrument.",
             "key": "profit",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -12606,7 +12606,7 @@
             "description": "The start date of the instrument. Only applicable for instruments of type `bond` or `savings`.",
             "key": "open_date",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -12620,7 +12620,7 @@
             "description": "An array of conditions that apply to the instrument in order to retrieve the final value.\n\nFor example, the due date, the liquidity date, the previdencia type, and so on.\n",
             "key": "redemption_conditions",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "list",
                 "itemType": {
@@ -12634,7 +12634,7 @@
             "description": "An array of fees that apply to the instrument.",
             "key": "fees",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "list",
                 "itemType": {
@@ -12648,7 +12648,7 @@
             "description": "An array of interest rates that apply to the instrument.",
             "key": "interest_rates",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "list",
                 "itemType": {
@@ -12704,7 +12704,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -12718,7 +12718,7 @@
             "description": "The current gross total value of the entire portfolio and all its underlying instruments, as given by the institution.\n",
             "key": "balance_gross",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -12731,7 +12731,7 @@
             "description": "The total current value of the entire portfolio and all its underlying instruments, as given by the institution.\n\nℹ️ **Note:** In Brazil, this is usually calculated based on the net value (that is, not including tax).\n",
             "key": "balance_net",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -12756,7 +12756,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "list",
                   "itemType": {
@@ -12795,7 +12795,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -12811,7 +12811,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -12964,7 +12964,7 @@
             "description": "The number of payments already made to pay the cost of the transaction.",
             "key": "paid",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -12977,7 +12977,7 @@
             "description": "The number of payments required to pay the cost of the transaction.",
             "key": "total",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -13088,7 +13088,7 @@
             "description": "The total gross amount of the transaction.",
             "key": "gross_amount",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -13101,7 +13101,7 @@
             "description": "The net amount of the transaction.",
             "key": "net_amount",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -13162,7 +13162,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -13178,7 +13178,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -13384,7 +13384,7 @@
             "description": "The total sum of all inflow transactions for the last week.\n",
             "key": "sum_incoming_amount_1w",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -13397,7 +13397,7 @@
             "description": "The total sum of all inflow transactions for the last month.\n",
             "key": "sum_incoming_amount_1m",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -13410,7 +13410,7 @@
             "description": "The total sum of all inflow transactions for the last three months.\n",
             "key": "sum_incoming_amount_3m",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -13423,7 +13423,7 @@
             "description": "The total sum of all outflow transactions for the last week.\n",
             "key": "sum_outgoing_amount_1w",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -13436,7 +13436,7 @@
             "description": "The total sum of all outflow transactions for the last month.\n",
             "key": "sum_outgoing_amount_1m",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -13449,7 +13449,7 @@
             "description": "The total sum of all outflow transactions for the last three months.\n",
             "key": "sum_outgoing_amount_3m",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -13462,7 +13462,7 @@
             "description": "The highest value inflow transaction in the last week.\n",
             "key": "max_incoming_amount_1w",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -13475,7 +13475,7 @@
             "description": "The highest value inflow transaction in the last month.\n",
             "key": "max_incoming_amount_1m",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -13488,7 +13488,7 @@
             "description": "The highest value inflow transaction in the last three months.\n",
             "key": "max_incoming_amount_3m",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -13501,7 +13501,7 @@
             "description": "The highest value outflow transaction in the last week.\n",
             "key": "max_outgoing_amount_1w",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -13514,7 +13514,7 @@
             "description": "The highest value outflow transaction in the last month.\n",
             "key": "max_outgoing_amount_1m",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -13527,7 +13527,7 @@
             "description": "The highest value outflow transaction in the last three months.\n",
             "key": "max_outgoing_amount_3m",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -13540,7 +13540,7 @@
             "description": "The mean incoming value of all transactions in the last week.\n",
             "key": "mean_incoming_amount_1w",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -13553,7 +13553,7 @@
             "description": "The mean incoming value of all transactions in the last month.\n",
             "key": "mean_incoming_amount_1m",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -13566,7 +13566,7 @@
             "description": "The mean incoming value of all transactions in the last three months.\n",
             "key": "mean_incoming_amount_3m",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -13579,7 +13579,7 @@
             "description": "The mean outgoing value of all transaction in the last week.\n",
             "key": "mean_outgoing_amount_1w",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -13592,7 +13592,7 @@
             "description": "The mean outgoing value of all transaction in the last month.\n",
             "key": "mean_outgoing_amount_1m",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -13605,7 +13605,7 @@
             "description": "The mean outgoing value of all transaction in the last three months.\n",
             "key": "mean_outgoing_amount_3m",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -13628,7 +13628,7 @@
             "description": "The minimum balance in the period (one week).\n",
             "key": "min_balance_1w",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -13641,7 +13641,7 @@
             "description": "The minimum balance in the period (one month).\n",
             "key": "min_balance_1m",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -13654,7 +13654,7 @@
             "description": "The minimum balance in the period (three months).\n",
             "key": "min_balance_3m",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -13667,7 +13667,7 @@
             "description": "The maximum balance in the period (one week).\n",
             "key": "max_balance_1w",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -13680,7 +13680,7 @@
             "description": "The maximum balance in the period (one month).\n",
             "key": "max_balance_1m",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -13693,7 +13693,7 @@
             "description": "The maximum balance in the period (three months).\n",
             "key": "max_balance_3m",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -13706,7 +13706,7 @@
             "description": "The balance of all the accounts at the `collected_at` time.\n",
             "key": "closing_balance",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -13719,7 +13719,7 @@
             "description": "The number of days that the total balance of the account is less than or equal to 0 in the last week.\n",
             "key": "days_balance_below_0_1w",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -13732,7 +13732,7 @@
             "description": "The number of days that the total balance of the account is less than or equal to 0 in the last month.\n",
             "key": "days_balance_below_0_1m",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -13745,7 +13745,7 @@
             "description": "The number of days that the total balance of the account is less than or equal to 0 in the last three months.\n",
             "key": "days_balance_below_0_3m",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -13758,7 +13758,7 @@
             "description": "The number of days that the total balance of the account is less than or equal to the amount specified in `balance_threshold_x` in the last week.\n",
             "key": "days_balance_below_x_1w",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -13771,7 +13771,7 @@
             "description": "The number of days that the total balance of the account is less than or equal to the amount specified in `balance_threshold_x` in the last month.\n",
             "key": "days_balance_below_x_1m",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -13784,7 +13784,7 @@
             "description": "The number of days that the total balance of the account is less than or equal to the amount specified in `balance_threshold_x` in the last three months.\n",
             "key": "days_balance_below_x_3m",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -13817,7 +13817,7 @@
             "description": "Sum total of all transactions leading to a positive cashflow in the last week (counted from the time of the request).\n",
             "key": "sum_positive_1w",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -13830,7 +13830,7 @@
             "description": "Sum total of all transactions leading to a positive cashflow in the last month (counted from the time of the request).\n",
             "key": "sum_positive_1m",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -13843,7 +13843,7 @@
             "description": "Sum total of all transactions leading to a positive cashflow in the last three months (counted from the time of the request).\n",
             "key": "sum_positive_3m",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -13856,7 +13856,7 @@
             "description": "Sum total of all transactions leading to a negative cashflow in the last week (counted from the time of the request).\n",
             "key": "sum_negative_1w",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -13869,7 +13869,7 @@
             "description": "Sum total of all transactions leading to a negative cashflow in the last month (counted from the time of the request).\n",
             "key": "sum_negative_1m",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -13882,7 +13882,7 @@
             "description": "Sum total of all transactions leading to a negative cashflow in the last three months (counted from the time of the request).\n",
             "key": "sum_negative_3m",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -13895,7 +13895,7 @@
             "description": "The ratio between sum_positive / sum_negative  in the last week (counted from the time of the request).\n\nℹ️ If the ratio is greater than `1`, it means that the user has more income than outgoing, indicating that they spend less than they earn.\n\n**Note**: In the case that there have been no outgoing transactions, the value will be `null`.\n",
             "key": "positive_to_negative_ratio_1w",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -13908,7 +13908,7 @@
             "description": "The ratio between sum_positive / sum_negative  in the last month (counted from the time of the request).\n\nℹ️ If the ratio is greater than `1`, it means that the user has more income than outgoing, indicating that they spend less than they earn.\n",
             "key": "positive_to_negative_ratio_1m",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -13921,7 +13921,7 @@
             "description": "The ratio between sum_positive / sum_negative  in the last three months (counted from the time of the request).\n\nℹ️ If the ratio is greater than `1`, it means that the user has more income than outgoing, indicating that they spend less than they earn.\n",
             "key": "positive_to_negative_ratio_3m",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -13955,7 +13955,7 @@
             "description": "Sum total of all credit cards' limits.\n",
             "key": "sum_credit_limit",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -13968,7 +13968,7 @@
             "description": "Sum total of all credit used.\n",
             "key": "sum_credit_used",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -14001,7 +14001,7 @@
             "description": "Sum total of the principal for all of the link's loan accounts.\n",
             "key": "sum_loans_principal",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -14014,7 +14014,7 @@
             "description": "Sum total of the outstanding principal for all the link's loan accounts.\n",
             "key": "sum_loans_outstanding_principal",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -14027,7 +14027,7 @@
             "description": "Sum total of the monthly payments for all the link's loan accounts.\n",
             "key": "sum_loans_monthly_payment",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -14071,7 +14071,7 @@
             "description": "An array of Belvo-generated account numbers (UUIDs) that were used during the risk insights analysis. If no accounts were found, we return an empty array.",
             "key": "accounts",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "list",
                 "itemType": {
@@ -14158,7 +14158,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -14174,7 +14174,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -14242,7 +14242,7 @@
             "description": "The base amount that was used to calculate the tax retention.\n",
             "key": "base_amount",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -14255,7 +14255,7 @@
             "description": "Optional attribute to indicate the type of tax withheld for the period or year according to the [SAT catalog](https://developers.belvo.com/docs/sat-catalogs#retention-code).\n",
             "key": "tax_type",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -14268,7 +14268,7 @@
             "description": "The amount retained.\n",
             "key": "retained_amount",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -14325,7 +14325,7 @@
             "description": "The ISO-8601 timestamp of when the data point was collected.\n",
             "key": "collected_at",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -14353,7 +14353,7 @@
             "description": "The fiscal institution's unique ID for the invoice that the tax retention relates to.\n",
             "key": "invoice_identification",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -14367,7 +14367,7 @@
             "description": "The CFDI version of the tax retentions.\n",
             "key": "version",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -14380,7 +14380,7 @@
             "description": "The tax retention code. For more information, see our [SAT Catalogs DevPortal article](https://developers.belvo.com/docs/sat-catalogs#retention-code).\n",
             "key": "code",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -14393,7 +14393,7 @@
             "description": "The ISO-8601 timestamp of when the tax retention was issued.\n",
             "key": "issued_at",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -14407,7 +14407,7 @@
             "description": "The ISO-8601 timestamp of when the tax retention was certified.\n",
             "key": "certified_at",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -14421,7 +14421,7 @@
             "description": "The ISO-8601 timestamp of when the tax retention was canceled (if applicable).\n",
             "key": "cancelled_at",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -14435,7 +14435,7 @@
             "description": "The fiscal ID of the invoice sender.\n",
             "key": "sender_id",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -14448,7 +14448,7 @@
             "description": "The name of the invoice sender.\n",
             "key": "sender_name",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -14468,7 +14468,7 @@
             "description": "The fiscal ID of the invoice receiver.\n",
             "key": "receiver_id",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -14481,7 +14481,7 @@
             "description": "The name of the invoice receiver.\n",
             "key": "receiver_name",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -14494,7 +14494,7 @@
             "description": "The total amount of the invoice that the tax retention relates to.\n",
             "key": "total_invoice_amount",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -14507,7 +14507,7 @@
             "description": "Total amount that is exempt from taxation.\n",
             "key": "total_exempt_amount",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -14520,7 +14520,7 @@
             "description": "Total tax retained.\n",
             "key": "total_retained_amount",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -14533,7 +14533,7 @@
             "description": "The total amount that can be taxed. Calculated as `total_invoice_amount` - `total_exempt_amount`.\n",
             "key": "total_taxable_amount",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -14546,7 +14546,7 @@
             "description": "A breakdown of the retained taxes.",
             "key": "retention_breakdown",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "list",
                 "itemType": {
@@ -14560,7 +14560,7 @@
             "description": "The tax retention document in XML form.\n",
             "key": "xml",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -14597,7 +14597,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -14613,7 +14613,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -14773,7 +14773,7 @@
             "description": "The year of this tax declaration.\n",
             "key": "year",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -15434,7 +15434,7 @@
             "description": "The PDF of the tax declaration, as a binary string.",
             "key": "pdf",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -15471,7 +15471,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -15487,7 +15487,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -15555,7 +15555,7 @@
             "description": "The year of this tax declaration.\n",
             "key": "year",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -15608,7 +15608,7 @@
             "description": "The tax payer's first last name.",
             "key": "first_last_name",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -15621,7 +15621,7 @@
             "description": "The tax payer's second last name.",
             "key": "second_last_name",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -15634,7 +15634,7 @@
             "description": "The tax payer's first name.",
             "key": "first_name",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -15647,7 +15647,7 @@
             "description": "Additional names of the tax payer.",
             "key": "other_names",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -16120,7 +16120,7 @@
             "description": "The PDF of the tax declaration, as a binary string.",
             "key": "pdf",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -16157,7 +16157,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -16173,7 +16173,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -16323,7 +16323,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -16385,7 +16385,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -16411,7 +16411,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -16427,7 +16427,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -16443,7 +16443,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -16459,7 +16459,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -16475,7 +16475,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -16526,7 +16526,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -16542,7 +16542,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -16558,7 +16558,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -17004,7 +17004,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -17020,7 +17020,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -17542,7 +17542,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -17895,7 +17895,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -17911,7 +17911,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -18051,7 +18051,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -18188,7 +18188,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -18204,7 +18204,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -18341,7 +18341,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -18357,7 +18357,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -18646,7 +18646,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -18772,7 +18772,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -18788,7 +18788,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -18943,7 +18943,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -18961,7 +18961,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -19096,7 +19096,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -19114,7 +19114,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -19176,7 +19176,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -19192,7 +19192,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -19286,7 +19286,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -19302,7 +19302,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -19382,7 +19382,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -19398,7 +19398,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -19710,7 +19710,7 @@
             "description": "Belvo's unique ID for the customer associated with the bank account.\nFor `BUSINESS` bank accounts, this field is `null`.",
             "key": "customer",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -19724,7 +19724,7 @@
             "description": "Belvo's unique ID for the institution that the bank account is created in.\nFor `BUSINESS` bank accounts that Belvo creates for organizations, this field is `null`.",
             "key": "institution",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -19871,7 +19871,7 @@
             "description": "Belvo's unique ID for the customer associated with the bank account.\nFor `BUSINESS` bank accounts, this field is `null`.",
             "key": "customer",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -19885,7 +19885,7 @@
             "description": "Belvo's unique ID for the institution that the bank account is created in.\nFor `BUSINESS` bank accounts that Belvo creates for organizations, this field is `null`.",
             "key": "institution",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -19999,7 +19999,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -20015,7 +20015,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -20572,7 +20572,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -20704,7 +20704,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -20796,7 +20796,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -20812,7 +20812,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -22087,7 +22087,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -22160,7 +22160,7 @@
             "description": "The customer's CPF number. Only required when the `customer_type` is `BUSINESS`.\n\n**Note:** This value is obfuscated.",
             "key": "cpf",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -22202,7 +22202,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -22218,7 +22218,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -22234,7 +22234,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -22396,7 +22396,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -22412,7 +22412,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -22428,7 +22428,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -22444,7 +22444,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -22867,7 +22867,7 @@
             "description": "Error code that explains the reason behind a payment being unsuccessful (if applicable).\n",
             "key": "failure_code",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -22880,7 +22880,7 @@
             "description": "Further information regarding the `failure_code`.\n",
             "key": "failure_message",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -22901,7 +22901,7 @@
             "description": "The amount of the charge.\n",
             "key": "amount",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -23015,7 +23015,7 @@
             "description": "The ISO-8601 timestamp of when the status of the charge was last updated.\n",
             "key": "updated_at",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -23251,7 +23251,7 @@
             "description": "Error code that explains the reason behind a payment being unsuccessful (if applicable).\n",
             "key": "failure_code",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -23264,7 +23264,7 @@
             "description": "Further information regarding the `failure_code`.\n",
             "key": "failure_message",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -23352,7 +23352,7 @@
             "description": "The ISO-8601 timestamp of when the payment intent was last updated.\n",
             "key": "updated_at",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -23450,7 +23450,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -24132,7 +24132,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -24149,7 +24149,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -24867,7 +24867,7 @@
             "description": "Error code that explains the reason behind a payment being unsuccessful (if applicable).\n",
             "key": "failure_code",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -24880,7 +24880,7 @@
             "description": "Further information regarding the `failure_code`.\n",
             "key": "failure_message",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -24968,7 +24968,7 @@
             "description": "The ISO-8601 timestamp of when the payment intent was last updated.\n",
             "key": "updated_at",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -25066,7 +25066,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -25150,7 +25150,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -25166,7 +25166,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -25530,7 +25530,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -25546,7 +25546,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
