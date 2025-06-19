@@ -181,8 +181,7 @@ class EnumGenerator(AbstractTypeGenerator):
             ),
             body=[
                 AST.ReturnStatement(
-                    expression="f\"{qualification}{self.value}\""
-                )
+                    f"f\"{qualification}{{self.value}}\""
                 )
             ]
         )
