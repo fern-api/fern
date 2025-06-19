@@ -20,7 +20,7 @@ export function getSuccessReturnType(
     opts: {
         includeContentHeadersOnResponse: boolean;
         streamType: "wrapper" | "web";
-        fileResponseType: "stream" | "file-response-body";
+        fileResponseType: "stream" | "binary-response";
     }
 ): ts.TypeNode {
     if (response == null) {
@@ -80,7 +80,7 @@ function getFileType({
     context: SdkContext;
     includeContentHeadersOnResponse: boolean;
     streamType: "wrapper" | "web";
-    fileResponseType: "stream" | "file-response-body";
+    fileResponseType: "stream" | "binary-response";
 }): ts.TypeNode {
     const fileType = visitJavaScriptRuntime(targetRuntime, {
         browser: () =>  ts.factory.createTypeReferenceNode("Blob"),
@@ -92,8 +92,8 @@ function getFileType({
                         context,
                         streamType
                     });
-                case "file-response-body":
-                    return context.coreUtilities.fetcher.FileResponseBody._getReferenceToType();
+                case "binary-response":
+                    return context.coreUtilities.fetcher.BinaryResponse._getReferenceToType();
                 default:
                     assertNever(fileResponseType);
             }

@@ -46,7 +46,7 @@ export declare namespace GeneratedThrowingEndpointResponse {
         includeContentHeadersOnResponse: boolean;
         clientClass: GeneratedSdkClientClassImpl;
         streamType: "wrapper" | "web";
-        fileResponseType: "stream" | "file-response-body";
+        fileResponseType: "stream" | "binary-response";
     }
 }
 
@@ -66,7 +66,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
     private includeContentHeadersOnResponse: boolean;
     private clientClass: GeneratedSdkClientClassImpl;
     private streamType: "wrapper" | "web";
-    private readonly fileResponseType: "stream" | "file-response-body";
+    private readonly fileResponseType: "stream" | "binary-response";
 
     constructor({
         packageId,

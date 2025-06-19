@@ -34,20 +34,20 @@ export class Service {
         this._options = _options;
     }
 
-    public downloadFile(requestOptions?: Service.RequestOptions): core.HttpResponsePromise<core.FileResponseBody> {
+    public downloadFile(requestOptions?: Service.RequestOptions): core.HttpResponsePromise<core.BinaryResponse> {
         return core.HttpResponsePromise.fromPromise(this.__downloadFile(requestOptions));
     }
 
     private async __downloadFile(
         requestOptions?: Service.RequestOptions,
-    ): Promise<core.WithRawResponse<core.FileResponseBody>> {
-        const _response = await core.fetcher<core.FileResponseBody>({
+    ): Promise<core.WithRawResponse<core.BinaryResponse>> {
+        const _response = await core.fetcher<core.BinaryResponse>({
             url:
                 (await core.Supplier.get(this._options.baseUrl)) ??
                 (await core.Supplier.get(this._options.environment)),
             method: "POST",
             headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
-            responseType: "file-response-body",
+            responseType: "binary-response",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

@@ -28,7 +28,7 @@ export declare namespace SdkClientClassGenerator {
         allowExtraFields: boolean;
         oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
         streamType: "wrapper" | "web";
-        fileResponseType: "stream" | "file-response-body";
+        fileResponseType: "stream" | "binary-response";
     }
 
     export namespace generateService {
@@ -61,7 +61,7 @@ export class SdkClientClassGenerator {
     private allowExtraFields: boolean;
     private oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
     private streamType: "wrapper" | "web";
-    private readonly fileResponseType: "stream" | "file-response-body";
+    private readonly fileResponseType: "stream" | "binary-response";
 
     constructor({
         intermediateRepresentation,

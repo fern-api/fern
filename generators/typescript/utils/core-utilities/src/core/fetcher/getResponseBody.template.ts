@@ -1,4 +1,4 @@
-import { getFileResponseBody } from "./FileResponseBody";
+import { getBinaryResponse } from "./BinaryResponse";
 import { isResponseWithBody } from "./ResponseWithBody";
 <% if (streamType === "wrapper") { %>
 import { chooseStreamWrapper } from "./stream-wrappers/chooseStreamWrapper";
@@ -9,8 +9,8 @@ export async function getResponseBody(response: Response, responseType?: string)
         return undefined;
     }
     switch (responseType) {
-        case "file-response-body":
-            return getFileResponseBody(response);
+        case "binary-response":
+            return getBinaryResponse(response);
         case "blob":
             return await response.blob();
         case "arrayBuffer":

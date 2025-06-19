@@ -89,7 +89,7 @@ export declare namespace GeneratedSdkClientClassImpl {
         allowExtraFields: boolean;
         oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
         streamType: "wrapper" | "web";
-        fileResponseType: "stream" | "file-response-body";
+        fileResponseType: "stream" | "binary-response";
     }
 }
 

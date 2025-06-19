@@ -1,11 +1,11 @@
 import { ResponseWithBody } from "./ResponseWithBody.js";
 
-export interface FileResponseBody {
+export interface BinaryResponse {
     /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Request/bodyUsed) */
     bodyUsed: boolean;
-    /**
+    /** 
      * Returns a ReadableStream of the response body.
-     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Request/body)
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Request/body) 
      */
     stream: () => ReadableStream<Uint8Array>;
     /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Request/arrayBuffer) */
@@ -16,7 +16,7 @@ export interface FileResponseBody {
     bytes(): Promise<Uint8Array>;
 }
 
-export function getFileResponseBody(response: ResponseWithBody): FileResponseBody {
+export function getBinaryResponse(response: ResponseWithBody): BinaryResponse {
     return {
         get bodyUsed() {
             return response.bodyUsed;

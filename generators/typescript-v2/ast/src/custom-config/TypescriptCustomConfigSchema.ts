@@ -23,7 +23,7 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     omitUndefined: z.optional(z.boolean()),
     useLegacyExports: z.optional(z.boolean()),
     streamType: z.optional(z.enum(["wrapper", "web"])),
-    fileResponseType: z.optional(z.enum(["stream", "file-response-body"])),
+    fileResponseType: z.optional(z.enum(["stream", "binary-response"])),
 
     // relevant to dynamic snippets
     allowExtraFields: z.optional(z.boolean()),

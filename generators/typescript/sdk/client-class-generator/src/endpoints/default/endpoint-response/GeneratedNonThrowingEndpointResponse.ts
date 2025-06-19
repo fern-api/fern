@@ -27,7 +27,7 @@ export declare namespace GeneratedNonThrowingEndpointResponse {
         errorResolver: ErrorResolver;
         includeSerdeLayer: boolean;
         streamType: "wrapper" | "web";
-        fileResponseType: "stream" | "file-response-body";
+        fileResponseType: "stream" | "binary-response";
     }
 }
 
@@ -46,7 +46,7 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
     private errorResolver: ErrorResolver;
     private includeSerdeLayer: boolean;
     private streamType: "wrapper" | "web";
-    private readonly fileResponseType: "stream" | "file-response-body";
+    private readonly fileResponseType: "stream" | "binary-response";
 
     constructor({
         packageId,

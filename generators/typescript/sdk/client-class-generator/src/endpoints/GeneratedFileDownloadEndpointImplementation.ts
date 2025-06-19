@@ -30,7 +30,7 @@ export declare namespace GeneratedFileDownloadEndpointImplementation {
         retainOriginalCasing: boolean;
         omitUndefined: boolean;
         streamType: "wrapper" | "web";
-        fileResponseType: "stream" | "file-response-body";
+        fileResponseType: "stream" | "binary-response";
     }
 }
 
@@ -45,7 +45,7 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
     private retainOriginalCasing: boolean;
     private omitUndefined: boolean;
     private streamType: "wrapper" | "web";
-    private readonly fileResponseType: "stream" | "file-response-body";
+    private readonly fileResponseType: "stream" | "binary-response";
 
     constructor({
         endpoint,
@@ -208,8 +208,8 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
                     switch (this.fileResponseType) {
                         case "stream":
                             return "streaming";
-                        case "file-response-body":
-                            return "file-response-body";
+                        case "binary-response":
+                            return "binary-response";
                         default:
                             assertNever(this.fileResponseType);
                     }
@@ -238,8 +238,8 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
                                                     context,
                                                     streamType: this.streamType
                                                 });
-                                            case "file-response-body":
-                                                return context.coreUtilities.fetcher.FileResponseBody._getReferenceToType();
+                                            case "binary-response":
+                                                return context.coreUtilities.fetcher.BinaryResponse._getReferenceToType();
                                             default:
                                                 assertNever(this.fileResponseType);
                                         }

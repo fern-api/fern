@@ -163,8 +163,8 @@ fixtures:
       customConfig:
         streamType: "web"
     - customConfig:
-        fileResponseType: "file-response-body"
-      outputFolder: file-response-body
+        fileResponseType: "binary-response"
+      outputFolder: binary-response
   file-upload:
     - customConfig: null
       outputFolder: no-custom-config

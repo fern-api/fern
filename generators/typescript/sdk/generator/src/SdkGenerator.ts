@@ -142,7 +142,7 @@ export declare namespace SdkGenerator {
         useLegacyExports: boolean;
         generateWireTests: boolean;
         streamType: "wrapper" | "web";
-        fileResponseType: "stream" | "file-response-body";
+        fileResponseType: "stream" | "binary-response";
     }
 }
 

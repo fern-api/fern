@@ -3,7 +3,7 @@ import stream from "stream";
 import { join } from "path";
 
 import { Fetcher, fetcherImpl } from "../../../src/core/fetcher/Fetcher";
-import { FileResponseBody } from "../../../src/core";
+import { BinaryResponse } from "../../../src/core";
 
 describe("Test fetcherImpl", () => {
     it("should handle successful request", async () => {
@@ -81,7 +81,7 @@ describe("Test fetcherImpl", () => {
             url,
             method: "GET",
             headers: { "X-Test": "x-test-header" },
-            responseType: "file-response-body",
+            responseType: "binary-response",
         };
 
         global.fetch = jest.fn().mockResolvedValue(
@@ -105,7 +105,7 @@ describe("Test fetcherImpl", () => {
         );
         expect(result.ok).toBe(true);
         if (result.ok) {
-            const body = result.body as FileResponseBody;
+            const body = result.body as BinaryResponse;
             expect(body).toBeDefined();
             expect(body.bodyUsed).toBe(false);
             expect(typeof body.stream).toBe("function");
@@ -126,7 +126,7 @@ describe("Test fetcherImpl", () => {
             url,
             method: "GET",
             headers: { "X-Test": "x-test-header" },
-            responseType: "file-response-body",
+            responseType: "binary-response",
         };
 
         global.fetch = jest.fn().mockResolvedValue(
@@ -150,7 +150,7 @@ describe("Test fetcherImpl", () => {
         );
         expect(result.ok).toBe(true);
         if (result.ok) {
-            const body = result.body as FileResponseBody;
+            const body = result.body as BinaryResponse;
             expect(body).toBeDefined();
             expect(body.bodyUsed).toBe(false);
             expect(typeof body.blob).toBe("function");
@@ -171,7 +171,7 @@ describe("Test fetcherImpl", () => {
             url,
             method: "GET",
             headers: { "X-Test": "x-test-header" },
-            responseType: "file-response-body",
+            responseType: "binary-response",
         };
 
         global.fetch = jest.fn().mockResolvedValue(
@@ -195,7 +195,7 @@ describe("Test fetcherImpl", () => {
         );
         expect(result.ok).toBe(true);
         if (result.ok) {
-            const body = result.body as FileResponseBody;
+            const body = result.body as BinaryResponse;
             expect(body).toBeDefined();
             expect(body.bodyUsed).toBe(false);
             expect(typeof body.arrayBuffer).toBe("function");
@@ -214,7 +214,7 @@ describe("Test fetcherImpl", () => {
             url,
             method: "GET",
             headers: { "X-Test": "x-test-header" },
-            responseType: "file-response-body",
+            responseType: "binary-response",
         };
 
         global.fetch = jest.fn().mockResolvedValue(
@@ -238,7 +238,7 @@ describe("Test fetcherImpl", () => {
         );
         expect(result.ok).toBe(true);
         if (result.ok) {
-            const body = result.body as FileResponseBody;
+            const body = result.body as BinaryResponse;
             expect(body).toBeDefined();
             expect(body.bodyUsed).toBe(false);
             expect(typeof body.bytes).toBe("function");

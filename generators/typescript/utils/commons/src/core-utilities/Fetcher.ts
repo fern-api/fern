@@ -83,9 +83,9 @@ export interface Fetcher {
         };
     };
 
-    readonly FileResponseBody: {
+    readonly BinaryResponse: {
         _getReferenceToType: () => ts.TypeNode;
-        getFileResponseBody: (response: ts.Expression) => ts.Expression;
+        getBinaryResponse: (response: ts.Expression) => ts.Expression;
     };
 
     readonly Supplier: {
@@ -133,7 +133,7 @@ export declare namespace Fetcher {
         timeoutInSeconds: ts.Expression;
         maxRetries?: ts.Expression;
         requestType?: "json" | "file" | "bytes" | "other";
-        responseType?: "json" | "blob" | "sse" | "streaming" | "text" | "file-response-body";
+        responseType?: "json" | "blob" | "sse" | "streaming" | "text" | "binary-response";
         duplex?: ts.Expression;
     }
 }
@@ -367,15 +367,15 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
         }
     };
 
-    public readonly FileResponseBody = {
+    public readonly BinaryResponse = {
         _getReferenceToType: this.withExportedName(
-            "FileResponseBody",
-            (FileResponseBody) => () => FileResponseBody.getTypeNode()
+            "BinaryResponse",
+            (BinaryResponse) => () => BinaryResponse.getTypeNode()
         ),
-        getFileResponseBody: this.withExportedName(
-            "getFileResponseBody",
-            (getFileResponseBody) => (response: ts.Expression) =>
-                ts.factory.createCallExpression(getFileResponseBody.getExpression(), undefined, [response])
+        getBinaryResponse: this.withExportedName(
+            "getBinaryResponse",
+            (getBinaryResponse) => (response: ts.Expression) =>
+                ts.factory.createCallExpression(getBinaryResponse.getExpression(), undefined, [response])
         )
     };
 
