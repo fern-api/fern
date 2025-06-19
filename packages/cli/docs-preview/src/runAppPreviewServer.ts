@@ -45,11 +45,6 @@ const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
         css: undefined,
         js: undefined
     },
-    search: {
-        type: "legacyMultiAlgoliaIndex",
-        algoliaIndex: undefined
-    },
-    algoliaSearchIndex: undefined,
     jsFiles: undefined,
     id: undefined
 };

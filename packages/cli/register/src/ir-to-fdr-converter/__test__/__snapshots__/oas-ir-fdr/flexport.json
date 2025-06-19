@@ -953,7 +953,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -980,7 +980,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1019,7 +1019,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1058,7 +1058,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1096,7 +1096,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -2517,7 +2517,7 @@
       "shape": {
         "type": "alias",
         "value": {
-          "type": "optional",
+          "type": "nullable",
           "itemType": {
             "type": "id",
             "value": "Place"
@@ -2645,7 +2645,7 @@
       "shape": {
         "type": "alias",
         "value": {
-          "type": "optional",
+          "type": "nullable",
           "itemType": {
             "type": "id",
             "value": "OceanBookingDetail"
@@ -2702,7 +2702,7 @@
       "shape": {
         "type": "alias",
         "value": {
-          "type": "optional",
+          "type": "nullable",
           "itemType": {
             "type": "id",
             "value": "AirBookingDetail"
@@ -2729,7 +2729,7 @@
       "shape": {
         "type": "alias",
         "value": {
-          "type": "optional",
+          "type": "nullable",
           "itemType": {
             "type": "id",
             "value": "TruckingBookingDetail"
@@ -2950,7 +2950,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -3662,7 +3662,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -4434,7 +4434,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -5814,7 +5814,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -5844,7 +5844,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -6164,7 +6164,7 @@
       "shape": {
         "type": "alias",
         "value": {
-          "type": "optional",
+          "type": "nullable",
           "itemType": {
             "type": "id",
             "value": "OceanShipmentDetail"
@@ -6177,7 +6177,7 @@
       "shape": {
         "type": "alias",
         "value": {
-          "type": "optional",
+          "type": "nullable",
           "itemType": {
             "type": "id",
             "value": "AirShipmentDetail"
@@ -6435,7 +6435,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -7682,7 +7682,7 @@
       "shape": {
         "type": "alias",
         "value": {
-          "type": "optional",
+          "type": "nullable",
           "itemType": {
             "type": "id",
             "value": "Terminal"
@@ -7752,7 +7752,7 @@
       "shape": {
         "type": "alias",
         "value": {
-          "type": "optional",
+          "type": "nullable",
           "itemType": {
             "type": "id",
             "value": "AirShipmentLeg"
@@ -7913,7 +7913,7 @@
       "shape": {
         "type": "alias",
         "value": {
-          "type": "optional",
+          "type": "nullable",
           "itemType": {
             "type": "id",
             "value": "TruckingShipmentLeg"
@@ -7926,7 +7926,7 @@
       "shape": {
         "type": "alias",
         "value": {
-          "type": "optional",
+          "type": "nullable",
           "itemType": {
             "type": "id",
             "value": "RailShipmentLeg"
@@ -8033,7 +8033,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -8474,7 +8474,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -8489,7 +8489,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -8504,7 +8504,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -8520,7 +8520,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -8536,7 +8536,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -8552,7 +8552,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -8568,7 +8568,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -8584,7 +8584,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -8600,7 +8600,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -8616,7 +8616,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -8632,7 +8632,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -8648,7 +8648,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -8663,7 +8663,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -8679,7 +8679,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -8695,7 +8695,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -8711,7 +8711,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -15857,7 +15857,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -15872,7 +15872,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {

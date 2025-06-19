@@ -727,7 +727,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -791,7 +791,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -900,7 +900,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -944,7 +944,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "GetBlockResultTransactionsItemsMetaErr"
@@ -1003,7 +1003,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "list",
                   "itemType": {
@@ -1020,7 +1020,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "list",
                   "itemType": {
@@ -1037,7 +1037,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "list",
                   "itemType": {
@@ -1054,7 +1054,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "list",
                   "itemType": {
@@ -1073,7 +1073,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "list",
                   "itemType": {
@@ -1090,7 +1090,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "GetBlockResultTransactionsItemsMetaLoadedAddresses"
@@ -1104,7 +1104,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "GetBlockResultTransactionsItemsMetaReturnData"
@@ -1118,7 +1118,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1167,7 +1167,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1183,7 +1183,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "GetBlockResultTransactionsItemsMeta"
@@ -1197,7 +1197,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1293,7 +1293,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1698,7 +1698,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "list",
                   "itemType": {
@@ -1751,7 +1751,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "list",
                   "itemType": {
@@ -2281,7 +2281,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -2297,7 +2297,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -2313,7 +2313,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -2329,7 +2329,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -2345,7 +2345,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -2361,7 +2361,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -2465,7 +2465,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -2606,7 +2606,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -2970,7 +2970,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -3008,7 +3008,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -3450,7 +3450,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -4648,7 +4648,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "GetSignaturesForAddressResultItemsErr"
@@ -4662,7 +4662,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -4678,7 +4678,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -4694,7 +4694,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -4867,7 +4867,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -4883,7 +4883,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "GetSignatureStatusesResultItemsErr"
@@ -4897,7 +4897,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -5355,7 +5355,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -5470,7 +5470,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -5845,7 +5845,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -5960,7 +5960,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -6089,7 +6089,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -6105,7 +6105,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "GetTransactionResultMeta"
@@ -6119,7 +6119,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "GetTransactionResultVersion"
@@ -6261,7 +6261,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -6277,7 +6277,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "GetTransactionResultMeta"
@@ -6291,7 +6291,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "GetTransactionResultVersion"
@@ -7218,7 +7218,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -7234,7 +7234,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "list",
                   "itemType": {
@@ -7253,7 +7253,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "list",
                   "itemType": {
@@ -7282,7 +7282,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "SimulateTransactionResultReturnData"
@@ -7296,7 +7296,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "SimulateTransactionResultInnerInstructions"
@@ -7520,7 +7520,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -7536,7 +7536,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "list",
                   "itemType": {
@@ -7555,7 +7555,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "list",
                   "itemType": {
@@ -7584,7 +7584,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "SimulateTransactionResultReturnData"
@@ -7598,7 +7598,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "SimulateTransactionResultInnerInstructions"

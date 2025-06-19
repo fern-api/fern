@@ -13,7 +13,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -49,7 +49,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -96,7 +96,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -172,7 +172,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -220,7 +220,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -317,7 +317,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -331,7 +331,7 @@
             "description": "ID of the initiating request.",
             "key": "request_id",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -377,7 +377,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -403,7 +403,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -450,7 +450,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -490,7 +490,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -538,7 +538,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "AudioConfiguration"
@@ -552,7 +552,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "list",
                   "itemType": {
@@ -569,7 +569,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "Context"
@@ -583,7 +583,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -599,7 +599,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -615,7 +615,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -630,7 +630,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "SessionSettingsMetadata"
@@ -644,7 +644,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -660,7 +660,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "list",
                   "itemType": {
@@ -688,7 +688,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "map",
                   "keyType": {
@@ -723,7 +723,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -811,7 +811,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -827,7 +827,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -843,7 +843,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -869,7 +869,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "ErrorLevel"
@@ -893,7 +893,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "ToolType"
@@ -941,7 +941,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -966,7 +966,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -981,7 +981,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "ToolType"
@@ -1019,7 +1019,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1066,7 +1066,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1113,7 +1113,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1243,7 +1243,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1300,7 +1300,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1324,7 +1324,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "ToolCallMessage"
@@ -1338,7 +1338,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "ChatMessageToolResult"
@@ -1869,7 +1869,7 @@
             "description": "Prosody model inference results.\n\nEVI uses the prosody model to measure 48 emotions related to speech and vocal characteristics within a given expression.",
             "key": "prosody",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "id",
                 "value": "ProsodyInference"
@@ -1971,7 +1971,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1987,7 +1987,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
