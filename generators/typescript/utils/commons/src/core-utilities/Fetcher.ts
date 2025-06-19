@@ -83,6 +83,11 @@ export interface Fetcher {
         };
     };
 
+    readonly FileResponseBody: {
+        _getReferenceToType: () => ts.TypeNode;
+        getFileResponseBody: (response: ts.Expression) => ts.Expression;
+    };
+
     readonly Supplier: {
         _getReferenceToType: (suppliedType: ts.TypeNode) => ts.TypeNode;
         get: (supplier: ts.Expression) => ts.Expression;
@@ -128,7 +133,7 @@ export declare namespace Fetcher {
         timeoutInSeconds: ts.Expression;
         maxRetries?: ts.Expression;
         requestType?: "json" | "file" | "bytes" | "other";
-        responseType?: "json" | "blob" | "sse" | "streaming" | "text";
+        responseType?: "json" | "blob" | "sse" | "streaming" | "text" | "file-response-body";
         duplex?: ts.Expression;
     }
 }
@@ -360,6 +365,18 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
             error: "error",
             rawResponse: "rawResponse"
         }
+    };
+
+    public readonly FileResponseBody = {
+        _getReferenceToType: this.withExportedName(
+            "FileResponseBody",
+            (FileResponseBody) => () => FileResponseBody.getTypeNode()
+        ),
+        getFileResponseBody: this.withExportedName(
+            "getFileResponseBody",
+            (getFileResponseBody) => (response: ts.Expression) =>
+                ts.factory.createCallExpression(getFileResponseBody.getExpression(), undefined, [response])
+        )
     };
 
     public Supplier = {

@@ -28,6 +28,7 @@ export declare namespace SdkClientClassGenerator {
         allowExtraFields: boolean;
         oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
         streamType: "wrapper" | "web";
+        fileResponseType: "stream" | "file-response-body";
     }
 
     export namespace generateService {
@@ -60,6 +61,7 @@ export class SdkClientClassGenerator {
     private allowExtraFields: boolean;
     private oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
     private streamType: "wrapper" | "web";
+    private readonly fileResponseType: "stream" | "file-response-body";
 
     constructor({
         intermediateRepresentation,
@@ -80,7 +82,8 @@ export class SdkClientClassGenerator {
         oauthTokenProviderGenerator,
         omitUndefined,
         allowExtraFields,
-        streamType
+        streamType,
+        fileResponseType
     }: SdkClientClassGenerator.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.errorResolver = errorResolver;
@@ -101,6 +104,7 @@ export class SdkClientClassGenerator {
         this.omitUndefined = omitUndefined;
         this.allowExtraFields = allowExtraFields;
         this.streamType = streamType;
+        this.fileResponseType = fileResponseType;
     }
 
     public generateService({
@@ -132,7 +136,8 @@ export class SdkClientClassGenerator {
             oauthTokenProviderGenerator: this.oauthTokenProviderGenerator,
             omitUndefined: this.omitUndefined,
             allowExtraFields: this.allowExtraFields,
-            streamType: this.streamType
+            streamType: this.streamType,
+            fileResponseType: this.fileResponseType
         });
     }
 }

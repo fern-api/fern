@@ -3,10 +3,9 @@
  */
 
 import * as core from "../../../../core/index.js";
+import * as stream from "stream";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as errors from "../../../../errors/index.js";
-import { writeFile } from "fs/promises";
-import { Readable } from "stream";
 
 export declare namespace Service {
     export interface Options {
@@ -36,20 +35,20 @@ export class Service {
         this._options = _options;
     }
 
-    public downloadFile(requestOptions?: Service.RequestOptions): core.HttpResponsePromise<core.FileResponseBody> {
+    public downloadFile(requestOptions?: Service.RequestOptions): core.HttpResponsePromise<stream.Readable> {
         return core.HttpResponsePromise.fromPromise(this.__downloadFile(requestOptions));
     }
 
     private async __downloadFile(
         requestOptions?: Service.RequestOptions,
-    ): Promise<core.WithRawResponse<core.FileResponseBody>> {
-        const _response = await core.fetcher<core.FileResponseBody>({
+    ): Promise<core.WithRawResponse<stream.Readable>> {
+        const _response = await core.fetcher<stream.Readable>({
             url:
                 (await core.Supplier.get(this._options.baseUrl)) ??
                 (await core.Supplier.get(this._options.environment)),
             method: "POST",
             headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
-            responseType: "file-response-body",
+            responseType: "streaming",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

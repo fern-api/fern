@@ -1,8 +1,10 @@
-import { getFileResponseBody } from "./FileResponseBody";
-import { isReponseWithBody } from "./ReponseWithBody";
+import { getFileResponseBody } from "./FileResponseBody.js";
+import { isResponseWithBody } from "./ResponseWithBody.js";
+
+import { chooseStreamWrapper } from "./stream-wrappers/chooseStreamWrapper.js";
 
 export async function getResponseBody(response: Response, responseType?: string): Promise<unknown> {
-    if (!isReponseWithBody(response)) {
+    if (!isResponseWithBody(response)) {
         return undefined;
     }
     switch (responseType) {
@@ -15,11 +17,13 @@ export async function getResponseBody(response: Response, responseType?: string)
         case "sse":
             return response.body;
         case "streaming":
-            return response.body;
+            return chooseStreamWrapper(response.body);
+
         case "text":
             return await response.text();
     }
 
+    // if responseType is "json" or not specified, try to parse as JSON
     const text = await response.text();
     if (text.length > 0) {
         try {

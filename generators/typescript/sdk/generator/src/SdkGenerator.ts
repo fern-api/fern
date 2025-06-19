@@ -142,6 +142,7 @@ export declare namespace SdkGenerator {
         useLegacyExports: boolean;
         generateWireTests: boolean;
         streamType: "wrapper" | "web";
+        fileResponseType: "stream" | "file-response-body";
     }
 }
 
@@ -393,7 +394,8 @@ export class SdkGenerator {
             oauthTokenProviderGenerator: this.oauthTokenProviderGenerator,
             omitUndefined: config.omitUndefined,
             allowExtraFields: config.allowExtraFields,
-            streamType: config.streamType
+            streamType: config.streamType,
+            fileResponseType: config.fileResponseType
         });
         this.websocketGenerator = new WebsocketClassGenerator({
             intermediateRepresentation

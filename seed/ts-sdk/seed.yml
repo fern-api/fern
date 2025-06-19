@@ -162,6 +162,9 @@ fixtures:
     - outputFolder: web-stream-wrapper
       customConfig:
         streamType: "web"
+    - customConfig:
+        fileResponseType: "file-response-body"
+      outputFolder: file-response-body
   file-upload:
     - customConfig: null
       outputFolder: no-custom-config

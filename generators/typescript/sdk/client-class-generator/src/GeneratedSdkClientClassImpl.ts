@@ -89,6 +89,7 @@ export declare namespace GeneratedSdkClientClassImpl {
         allowExtraFields: boolean;
         oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
         streamType: "wrapper" | "web";
+        fileResponseType: "stream" | "file-response-body";
     }
 }
 
@@ -156,7 +157,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         allowExtraFields,
         importsManager,
         oauthTokenProviderGenerator,
-        streamType
+        streamType,
+        fileResponseType
     }: GeneratedSdkClientClassImpl.Init) {
         this.isRoot = isRoot;
         this.intermediateRepresentation = intermediateRepresentation;
@@ -251,7 +253,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             errorResolver,
                             response,
                             includeSerdeLayer,
-                            streamType
+                            streamType,
+                            fileResponseType
                         });
                     } else {
                         return new GeneratedThrowingEndpointResponse({
@@ -262,7 +265,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             response,
                             includeContentHeadersOnResponse: includeContentHeadersOnFileDownloadResponse,
                             clientClass: this,
-                            streamType
+                            streamType,
+                            fileResponseType
                         });
                     }
                 };
@@ -303,7 +307,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             includeSerdeLayer,
                             retainOriginalCasing: this.retainOriginalCasing,
                             omitUndefined: this.omitUndefined,
-                            streamType
+                            streamType,
+                            fileResponseType
                         }),
                     json: (jsonResponse) =>
                         getDefaultEndpointImplementation({
