@@ -2,20 +2,14 @@ syntax = "proto3";
 
 package user.v1;
 
-message User {
-  string name = 1;
-  string email = 2;
-}
-
-message GetUserRequest {
-  string name = 1;
-}
-
-message GetUserResponse {
-  User user = 1;
-}
-
-service UserService {
-  rpc GetUser(GetUserRequest) returns (GetUserResponse);
-  rpc GetUser2(GetUserRequest) returns (GetUserResponse);
+message Outer {
+  message Inner {
+    string type3 = 3;
+  }
+  oneof message {
+    string type1 = 1;
+    string type2 = 2;
+    Inner innermessage = 3;
+  }
+  string type4 = 4;
 }

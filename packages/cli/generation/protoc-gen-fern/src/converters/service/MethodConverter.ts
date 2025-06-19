@@ -3,12 +3,12 @@ import { MethodDescriptorProto } from "@bufbuild/protobuf/wkt";
 import { HttpEndpoint } from "@fern-api/ir-sdk";
 import { AbstractConverter } from "@fern-api/v2-importer-commons";
 
-import { ProtobufConverterContext } from "../ProtobufConverterContext";
+import { ProtofileConverterContext } from "../ProtofileConverterContext";
 
 export type gRPCMethodType = "UNARY" | "CLIENT_STREAM" | "SERVER_STREAM" | "BIDI_STREAM";
 
 export declare namespace MethodConverter {
-    export interface Args extends AbstractConverter.Args<ProtobufConverterContext> {
+    export interface Args extends AbstractConverter.Args<ProtofileConverterContext> {
         operation: MethodDescriptorProto;
         method: gRPCMethodType;
     }
@@ -18,7 +18,7 @@ export declare namespace MethodConverter {
     }
 }
 
-export class MethodConverter extends AbstractConverter<ProtobufConverterContext, MethodConverter.Output> {
+export class MethodConverter extends AbstractConverter<ProtofileConverterContext, MethodConverter.Output> {
     private readonly operation: MethodDescriptorProto;
     private readonly method: gRPCMethodType;
 

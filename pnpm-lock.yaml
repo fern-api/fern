@@ -7377,6 +7377,9 @@ importers:
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../../configs
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../../commons/core-utils
       '@fern-api/ir-sdk':
         specifier: workspace:*
         version: link:../../../ir-sdk
