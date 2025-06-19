@@ -1356,7 +1356,7 @@ export class SdkGenerator {
         const filepathStr = this.exportsManager.convertExportedFilePathToFilePath(filepath);
         this.context.logger.debug(`Generating ${filepathStr}`);
 
-        const sourceFile = this.rootDirectory.createSourceFile(filepathStr, undefined, { overwrite });
+        const sourceFile = this.rootDirectory.createSourceFile(filepathStr, undefined, { overwrite: true });
         const importsManager = new ImportsManager({
             packagePath: this.relativePackagePath
         });
@@ -1399,7 +1399,7 @@ export class SdkGenerator {
         const filepathStr = this.exportsManager.convertExportedFilePathToFilePath(filepath);
         this.context.logger.debug(`Generating ${filepathStr}`);
         await run({
-            sourceFile: this.rootDirectory.createSourceFile(filepathStr, undefined, { overwrite }),
+            sourceFile: this.rootDirectory.createSourceFile(filepathStr, undefined, { overwrite: true }),
             importsManager: new ImportsManager({
                 packagePath: this.relativePackagePath
             })
