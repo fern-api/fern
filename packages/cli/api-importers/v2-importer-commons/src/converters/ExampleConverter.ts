@@ -624,6 +624,16 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                 .map(({ key, result }) => [key, result.validExample])
                 .filter(([_, value]) => value !== undefined)
         );
+        
+        for (const result of allOfResults) {
+            if (typeof result.validExample === "object" && result.validExample !== null) {
+                const validExampleObj = result.validExample as Record<string, unknown>;
+                example = {
+                    ...example,
+                    ...Object.fromEntries(Object.entries(validExampleObj).filter(([_, value]) => value !== undefined))
+                };
+            }
+        }
 
         // Handle additional properties
         const additionalPropertiesResults: Array<{ key: string; result: ExampleConverter.Output }> = [];
@@ -656,16 +666,6 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         for (const { key, result } of additionalPropertiesResults) {
             if (result.validExample !== undefined && example[key] === undefined) {
                 example[key] = result.validExample;
-            }
-        }
-
-        for (const result of allOfResults) {
-            if (typeof result.validExample === "object" && result.validExample !== null) {
-                const validExampleObj = result.validExample as Record<string, unknown>;
-                example = {
-                    ...example,
-                    ...Object.fromEntries(Object.entries(validExampleObj).filter(([_, value]) => value !== undefined))
-                };
             }
         }
 

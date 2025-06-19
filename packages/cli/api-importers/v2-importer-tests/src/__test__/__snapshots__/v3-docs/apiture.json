@@ -1071,10 +1071,10 @@
             "product": "foo",
             "location": "internal",
             "allows": {
-              "transferFrom": "false",
-              "transferTo": "true",
               "billPay": "false",
               "mobileCheckDeposit": "true",
+              "transferFrom": "false",
+              "transferTo": "true",
               "view": "true",
               "viewCards": "true",
               "manageCards": "false",
@@ -2532,15 +2532,15 @@
             "items": [
               {
                 "id": "bf23bc970b78d27691e8",
-                "nickname": "Payroll Checking",
                 "label": "Payroll Checking *1008",
+                "nickname": "Payroll Checking",
+                "maskedNumber": "*1008",
                 "product": {
                   "type": "checking",
                   "code": "DDA",
                   "label": "Business Checking",
                   "description": "Basic business checking accounts"
                 },
-                "maskedNumber": "*1008",
                 "location": "internal",
                 "allows": {
                   "billPay": false,
@@ -2554,15 +2554,15 @@
               },
               {
                 "id": "b78d27691e8bf23bc970",
-                "nickname": "College CD",
                 "label": "College CD *2017",
+                "nickname": "College CD",
+                "maskedNumber": "*2017",
                 "product": {
                   "type": "cd",
                   "code": "CDA",
                   "label": "24 Month CD",
                   "description": "24 Month certificate of deposit"
                 },
-                "maskedNumber": "*2017",
                 "location": "internal",
                 "allows": {
                   "billPay": false,
@@ -3576,16 +3576,16 @@
         "userSpecifiedExamples": {
           "accountItem_example_0": {
             "id": "bf23bc970b78d27691e8",
-            "location": "internal",
-            "nickname": "Payroll Checking",
             "label": "Payroll Checking *1008",
+            "nickname": "Payroll Checking",
+            "maskedNumber": "*1008",
             "product": {
               "type": "checking",
               "code": "DDA",
               "label": "Business Checking",
               "description": "Basic business checking account"
             },
-            "maskedNumber": "*1008",
+            "location": "internal",
             "allows": {
               "billPay": false,
               "mobileCheckDeposit": true,
@@ -6112,8 +6112,8 @@
             "address": {
               "address1": "239 West Princess Ave.",
               "locality": "Andalasia",
-              "regionCode": "NC",
               "countryCode": "US",
+              "regionCode": "NC",
               "postalCode": "28407"
             },
             "locator": "503000196",
@@ -6688,8 +6688,8 @@
               "address": {
                 "address1": "239 West Princess Ave.",
                 "locality": "Andalasia",
-                "regionCode": "NC",
                 "countryCode": "US",
+                "regionCode": "NC",
                 "postalCode": "28407"
               },
               "locator": "503000196",
@@ -11833,15 +11833,15 @@
         "userSpecifiedExamples": {
           "transferItemSchedule_example_0": {
             "scheduledOn": "2026-06-28",
+            "frequency": "once",
             "creditsOn": "2026-06-26",
-            "debitsOn": "2026-06-24",
-            "frequency": "once"
+            "debitsOn": "2026-06-24"
           },
           "transferItemSchedule_example_1": {
             "scheduledOn": "2023-08-01",
             "frequency": "monthly",
-            "recurreneType": "fixed",
             "count": "9",
+            "recurreneType": "fixed",
             "creditsOn": "2023-08-01",
             "debitsOn": "2026-08-01"
           }
@@ -13855,12 +13855,12 @@
             "nextPage_url": "https://production.api.apiture.com/transfers/transfers?start=6117a4dcefb841cab7316cef1ac8b58c&limit=10",
             "items": [
               {
-                "id": "0399abed-fd3d",
                 "amount": "275.00",
-                "memo": "Cover check for car repair",
-                "state": "processed",
                 "sourceAccount": "foo",
                 "targetAccount": "foo",
+                "memo": "Cover check for car repair",
+                "id": "0399abed-fd3d",
+                "state": "processed",
                 "schedule": {
                   "scheduledOn": "2026-06-28",
                   "frequency": "once",
@@ -13870,17 +13870,17 @@
                 "processedAt": "2022-06-28T021:00:00.000Z"
               },
               {
-                "id": "d62c0701-0d74",
                 "amount": "100.00",
-                "state": "scheduled",
-                "memo": "school expenses",
                 "sourceAccount": "foo",
                 "targetAccount": "foo",
+                "memo": "school expenses",
+                "id": "d62c0701-0d74",
+                "state": "scheduled",
                 "schedule": {
                   "scheduledOn": "2023-08-01",
                   "frequency": "monthly",
-                  "recurreneType": "fixed",
                   "count": "9",
+                  "recurreneType": "fixed",
                   "creditsOn": "2023-08-01",
                   "debitsOn": "2026-08-01"
                 }
@@ -15811,15 +15811,15 @@
             "address1": "1805 Tiburon Dr.",
             "address2": "Building 14, Suite 1500",
             "locality": "Wilmington",
-            "regionName": "North Carolina",
             "countryCode": "US",
+            "regionName": "North Carolina",
             "postalCode": "28412"
           },
           "address_example_1": {
             "address1": "999 Canada Place",
             "locality": "Vancouver",
-            "regionName": "British Columbia",
             "countryCode": "CA",
+            "regionName": "British Columbia",
             "postalCode": "V6C 3T4"
           }
         },
@@ -19255,15 +19255,15 @@
                       "items": [
                         {
                           "id": "bf23bc970b78d27691e8",
-                          "nickname": "Payroll Checking",
                           "label": "Payroll Checking *1008",
+                          "nickname": "Payroll Checking",
+                          "maskedNumber": "*1008",
                           "product": {
                             "type": "checking",
                             "code": "DDA",
                             "label": "Business Checking",
                             "description": "Basic business checking accounts"
                           },
-                          "maskedNumber": "*1008",
                           "location": "internal",
                           "allows": {
                             "billPay": false,
@@ -19277,15 +19277,15 @@
                         },
                         {
                           "id": "b78d27691e8bf23bc970",
-                          "nickname": "College CD",
                           "label": "College CD *2017",
+                          "nickname": "College CD",
+                          "maskedNumber": "*2017",
                           "product": {
                             "type": "cd",
                             "code": "CDA",
                             "label": "24 Month CD",
                             "description": "24 Month certificate of deposit"
                           },
-                          "maskedNumber": "*2017",
                           "location": "internal",
                           "allows": {
                             "billPay": false,
@@ -19330,15 +19330,15 @@
                       "items": [
                         {
                           "id": "bf23bc970b78d27691e8",
-                          "nickname": "Payroll Checking",
                           "label": "Payroll Checking *1008",
+                          "nickname": "Payroll Checking",
+                          "maskedNumber": "*1008",
                           "product": {
                             "type": "checking",
                             "code": "DDA",
                             "label": "Business Checking",
                             "description": "Basic business checking accounts"
                           },
-                          "maskedNumber": "*1008",
                           "location": "internal",
                           "allows": {
                             "billPay": false,
@@ -19352,15 +19352,15 @@
                         },
                         {
                           "id": "b78d27691e8bf23bc970",
-                          "nickname": "College CD",
                           "label": "College CD *2017",
+                          "nickname": "College CD",
+                          "maskedNumber": "*2017",
                           "product": {
                             "type": "cd",
                             "code": "CDA",
                             "label": "24 Month CD",
                             "description": "24 Month certificate of deposit"
                           },
-                          "maskedNumber": "*2017",
                           "location": "internal",
                           "allows": {
                             "billPay": false,
@@ -19645,10 +19645,10 @@
                       "product": "foo",
                       "location": "internal",
                       "allows": {
-                        "transferFrom": "false",
-                        "transferTo": "true",
                         "billPay": "false",
                         "mobileCheckDeposit": "true",
+                        "transferFrom": "false",
+                        "transferTo": "true",
                         "view": "true",
                         "viewCards": "true",
                         "manageCards": "false",
@@ -19691,10 +19691,10 @@
                       "product": "foo",
                       "location": "internal",
                       "allows": {
-                        "transferFrom": "false",
-                        "transferTo": "true",
                         "billPay": "false",
                         "mobileCheckDeposit": "true",
+                        "transferFrom": "false",
+                        "transferTo": "true",
                         "view": "true",
                         "viewCards": "true",
                         "manageCards": "false",
@@ -20630,15 +20630,15 @@
                       "items": [
                         {
                           "id": "bf23bc970b78d27691e8",
-                          "nickname": "Payroll Checking",
                           "label": "Payroll Checking *1008",
+                          "nickname": "Payroll Checking",
+                          "maskedNumber": "*1008",
                           "product": {
                             "type": "checking",
                             "code": "DDA",
                             "label": "Business Checking",
                             "description": "Basic business checking accounts"
                           },
-                          "maskedNumber": "*1008",
                           "location": "internal",
                           "allows": {
                             "billPay": false,
@@ -20652,15 +20652,15 @@
                         },
                         {
                           "id": "b78d27691e8bf23bc970",
-                          "nickname": "College CD",
                           "label": "College CD *2017",
+                          "nickname": "College CD",
+                          "maskedNumber": "*2017",
                           "product": {
                             "type": "cd",
                             "code": "CDA",
                             "label": "24 Month CD",
                             "description": "24 Month certificate of deposit"
                           },
-                          "maskedNumber": "*2017",
                           "location": "internal",
                           "allows": {
                             "billPay": false,
@@ -20710,15 +20710,15 @@
                       "items": [
                         {
                           "id": "bf23bc970b78d27691e8",
-                          "nickname": "Payroll Checking",
                           "label": "Payroll Checking *1008",
+                          "nickname": "Payroll Checking",
+                          "maskedNumber": "*1008",
                           "product": {
                             "type": "checking",
                             "code": "DDA",
                             "label": "Business Checking",
                             "description": "Basic business checking accounts"
                           },
-                          "maskedNumber": "*1008",
                           "location": "internal",
                           "allows": {
                             "billPay": false,
@@ -20732,15 +20732,15 @@
                         },
                         {
                           "id": "b78d27691e8bf23bc970",
-                          "nickname": "College CD",
                           "label": "College CD *2017",
+                          "nickname": "College CD",
+                          "maskedNumber": "*2017",
                           "product": {
                             "type": "cd",
                             "code": "CDA",
                             "label": "24 Month CD",
                             "description": "24 Month certificate of deposit"
                           },
-                          "maskedNumber": "*2017",
                           "location": "internal",
                           "allows": {
                             "billPay": false,
@@ -23300,8 +23300,8 @@
                         "address": {
                           "address1": "239 West Princess Ave.",
                           "locality": "Andalasia",
-                          "regionCode": "NC",
                           "countryCode": "US",
+                          "regionCode": "NC",
                           "postalCode": "28407"
                         },
                         "locator": "503000196",
@@ -23343,8 +23343,8 @@
                         "address": {
                           "address1": "239 West Princess Ave.",
                           "locality": "Andalasia",
-                          "regionCode": "NC",
                           "countryCode": "US",
+                          "regionCode": "NC",
                           "postalCode": "28407"
                         },
                         "locator": "503000196",
@@ -27670,12 +27670,12 @@
                       "nextPage_url": "https://production.api.apiture.com/transfers/transfers?start=6117a4dcefb841cab7316cef1ac8b58c&limit=10",
                       "items": [
                         {
-                          "id": "0399abed-fd3d",
                           "amount": "275.00",
-                          "memo": "Cover check for car repair",
-                          "state": "processed",
                           "sourceAccount": "foo",
                           "targetAccount": "foo",
+                          "memo": "Cover check for car repair",
+                          "id": "0399abed-fd3d",
+                          "state": "processed",
                           "schedule": {
                             "scheduledOn": "2026-06-28",
                             "frequency": "once",
@@ -27685,17 +27685,17 @@
                           "processedAt": "2022-06-28T021:00:00.000Z"
                         },
                         {
-                          "id": "d62c0701-0d74",
                           "amount": "100.00",
-                          "state": "scheduled",
-                          "memo": "school expenses",
                           "sourceAccount": "foo",
                           "targetAccount": "foo",
+                          "memo": "school expenses",
+                          "id": "d62c0701-0d74",
+                          "state": "scheduled",
                           "schedule": {
                             "scheduledOn": "2023-08-01",
                             "frequency": "monthly",
-                            "recurreneType": "fixed",
                             "count": "9",
+                            "recurreneType": "fixed",
                             "creditsOn": "2023-08-01",
                             "debitsOn": "2026-08-01"
                           }
@@ -27732,12 +27732,12 @@
                       "nextPage_url": "https://production.api.apiture.com/transfers/transfers?start=6117a4dcefb841cab7316cef1ac8b58c&limit=10",
                       "items": [
                         {
-                          "id": "0399abed-fd3d",
                           "amount": "275.00",
-                          "memo": "Cover check for car repair",
-                          "state": "processed",
                           "sourceAccount": "foo",
                           "targetAccount": "foo",
+                          "memo": "Cover check for car repair",
+                          "id": "0399abed-fd3d",
+                          "state": "processed",
                           "schedule": {
                             "scheduledOn": "2026-06-28",
                             "frequency": "once",
@@ -27747,17 +27747,17 @@
                           "processedAt": "2022-06-28T021:00:00.000Z"
                         },
                         {
-                          "id": "d62c0701-0d74",
                           "amount": "100.00",
-                          "state": "scheduled",
-                          "memo": "school expenses",
                           "sourceAccount": "foo",
                           "targetAccount": "foo",
+                          "memo": "school expenses",
+                          "id": "d62c0701-0d74",
+                          "state": "scheduled",
                           "schedule": {
                             "scheduledOn": "2023-08-01",
                             "frequency": "monthly",
-                            "recurreneType": "fixed",
                             "count": "9",
+                            "recurreneType": "fixed",
                             "creditsOn": "2023-08-01",
                             "debitsOn": "2026-08-01"
                           }

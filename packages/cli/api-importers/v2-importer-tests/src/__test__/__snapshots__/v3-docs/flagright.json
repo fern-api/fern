@@ -1619,9 +1619,9 @@
       "v2Examples": {
         "userSpecifiedExamples": {
           "User_example_0": {
-            "createdTimestamp": "1641654664000",
             "userId": "96647cfd9e8fe66ee0f3362e011e34e8",
             "userDetails": "foo",
+            "createdTimestamp": "1641654664000",
             "legalDocuments": [
               {
                 "documentType": "passport",
@@ -4716,12 +4716,12 @@
         "userSpecifiedExamples": {
           "TransactionWithRulesResult_example_0": {
             "transactionId": "7b80a539eea6e78acbd6d458e5971482",
+            "timestamp": "1641654664",
             "originUserId": "8650a2611d0771cba03310f74bf6",
             "destinationUserId": "9350a2611e0771cba03310f74bf6",
             "originAmountDetails": "foo",
             "destinationAmountDetails": "foo",
             "promotionCodeUsed": "true",
-            "timestamp": "1641654664",
             "originPaymentDetails": "foo",
             "destinationPaymentDetails": "foo",
             "reference": "loan repayment",
@@ -42863,6 +42863,7 @@
               "userSpecifiedExamples": {
                 "example-1": {
                   "transactionId": "7b80a539eea6e78acbd6d458e5971482",
+                  "timestamp": "1641654664000",
                   "originUserId": "8650a2611d0771cba03310f74bf6",
                   "destinationUserId": "9350a2611e0771cba03310f74bf6",
                   "originAmountDetails": {
@@ -42876,7 +42877,6 @@
                     "country": "IN"
                   },
                   "promotionCodeUsed": true,
-                  "timestamp": "1641654664000",
                   "originPaymentDetails": {
                     "method": "CARD",
                     "cardFingerprint": "20ac00fed8ef913aefb17cfae1097cce",
@@ -42981,6 +42981,7 @@
                   "headers": {},
                   "requestBody": {
                     "transactionId": "7b80a539eea6e78acbd6d458e5971482",
+                    "timestamp": "1641654664000",
                     "originUserId": "8650a2611d0771cba03310f74bf6",
                     "destinationUserId": "9350a2611e0771cba03310f74bf6",
                     "originAmountDetails": {
@@ -42994,7 +42995,6 @@
                       "country": "IN"
                     },
                     "promotionCodeUsed": true,
-                    "timestamp": "1641654664000",
                     "originPaymentDetails": {
                       "method": "CARD",
                       "cardFingerprint": "20ac00fed8ef913aefb17cfae1097cce",
@@ -43217,12 +43217,12 @@
                   "userSpecifiedExamples": {
                     "example-1": {
                       "transactionId": "7b80a539eea6e78acbd6d458e5971482",
+                      "timestamp": "1641654664000",
                       "originUserId": "8650a2611d0771cba03310f74bf6",
                       "destinationUserId": "9350a2611e0771cba03310f74bf6",
                       "originAmountDetails": "foo",
                       "destinationAmountDetails": "foo",
                       "promotionCodeUsed": "true",
-                      "timestamp": "1641654664000",
                       "originPaymentDetails": "foo",
                       "destinationPaymentDetails": "foo",
                       "reference": "loan repayment",
@@ -43278,12 +43278,12 @@
                   "body": {
                     "value": {
                       "transactionId": "7b80a539eea6e78acbd6d458e5971482",
+                      "timestamp": "1641654664000",
                       "originUserId": "8650a2611d0771cba03310f74bf6",
                       "destinationUserId": "9350a2611e0771cba03310f74bf6",
                       "originAmountDetails": "foo",
                       "destinationAmountDetails": "foo",
                       "promotionCodeUsed": "true",
-                      "timestamp": "1641654664000",
                       "originPaymentDetails": "foo",
                       "destinationPaymentDetails": "foo",
                       "reference": "loan repayment",
@@ -43663,9 +43663,9 @@
             "v2Examples": {
               "userSpecifiedExamples": {
                 "example-1": {
-                  "createdTimestamp": "1641654664000",
                   "userId": "96647cfd9e8fe66ee0f3362e011e34e8",
                   "userDetails": "foo",
+                  "createdTimestamp": "1641654664000",
                   "legalDocuments": [
                     {
                       "documentType": "passport",
@@ -43801,9 +43801,9 @@
                   "queryParameters": {},
                   "headers": {},
                   "requestBody": {
-                    "createdTimestamp": "1641654664000",
                     "userId": "96647cfd9e8fe66ee0f3362e011e34e8",
                     "userDetails": "foo",
+                    "createdTimestamp": "1641654664000",
                     "legalDocuments": [
                       {
                         "documentType": "passport",
@@ -44057,9 +44057,9 @@
                 "v2Examples": {
                   "userSpecifiedExamples": {
                     "example-1": {
-                      "createdTimestamp": "1641654664000",
                       "userId": "96647cfd9e8fe66ee0f3362e011e34e8",
                       "userDetails": "foo",
+                      "createdTimestamp": "1641654664000",
                       "legalDocuments": [
                         {
                           "documentType": "passport",
@@ -44139,9 +44139,9 @@
                   "statusCode": 200,
                   "body": {
                     "value": {
-                      "createdTimestamp": "1641654664000",
                       "userId": "96647cfd9e8fe66ee0f3362e011e34e8",
                       "userDetails": "foo",
+                      "createdTimestamp": "1641654664000",
                       "legalDocuments": [
                         {
                           "documentType": "passport",
@@ -44601,8 +44601,8 @@
                 "v2Examples": {
                   "userSpecifiedExamples": {
                     "example-2": {
-                      "createdTimestamp": "1641654664000",
                       "userId": "96647cfd9e8fe66ee0f3362e011e34e8",
+                      "createdTimestamp": "1641654664000",
                       "legalEntity": {
                         "companyGeneralDetails": {
                           "legalName": "Ozkan Hazelnut Export JSC",
@@ -44812,8 +44812,8 @@
                   "statusCode": 200,
                   "body": {
                     "value": {
-                      "createdTimestamp": "1641654664000",
                       "userId": "96647cfd9e8fe66ee0f3362e011e34e8",
+                      "createdTimestamp": "1641654664000",
                       "legalEntity": {
                         "companyGeneralDetails": {
                           "legalName": "Ozkan Hazelnut Export JSC",
