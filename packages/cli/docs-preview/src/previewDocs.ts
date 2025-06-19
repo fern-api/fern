@@ -149,8 +149,6 @@ export async function getPreviewDocsDefinition({
         files: {},
         filesV2,
         pages: dbDocsDefinition.pages,
-        search: { type: "legacyMultiAlgoliaIndex", algoliaIndex: undefined },
-        algoliaSearchIndex: undefined,
         jsFiles: dbDocsDefinition.jsFiles,
         id: undefined
     };

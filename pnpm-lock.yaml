@@ -6296,8 +6296,8 @@ importers:
         specifier: workspace:*
         version: link:../docs-resolver
       '@fern-api/fdr-sdk':
-        specifier: 0.138.1-9a1be9c78
-        version: 0.138.1-9a1be9c78(typescript@5.7.2)
+        specifier: 0.138.1-818bc4be9
+        version: 0.138.1-818bc4be9(typescript@5.7.2)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
@@ -10590,6 +10590,9 @@ packages:
   '@fern-api/dynamic-ir-sdk@58.2.0':
     resolution: {integrity: sha512-b5uJwu4nbQ+Jj8DoRMJNyI7A8oureAj0I7n55DS78HPadK0AxQnINboGBfhvwE365mkvwu6KM2FrQIZ3RQdI7A==}
 
+  '@fern-api/fdr-sdk@0.138.1-818bc4be9':
+    resolution: {integrity: sha512-mhKmsv5MRWU039NObpAQCN/Z5HZTABCpMAtnWG5ycZo80NdmMrc0XX7hIEKqwREigLDlxQbx0Zq0IjXoEzgmqQ==}
+
   '@fern-api/fdr-sdk@0.138.1-9a1be9c78':
     resolution: {integrity: sha512-9P0ewdJTWVGLtWlKmsMNxxCwgKphfPniicY7NXyU33+ColrHu8mrVK0RdzMgncUFYpCS8u/liaLwL9mxPHswkg==}
 
@@ -10607,6 +10610,9 @@ packages:
 
   '@fern-api/ui-core-utils@0.129.4-b6c699ad2':
     resolution: {integrity: sha512-V1jfV4u5fhpWEoLqCIA1QtRGpRR0NXyk68VGEHmEsezwA/gNF4587MJp5FWN59YsZmRt2hozODnp/umJ/iwkPg==}
+
+  '@fern-api/ui-core-utils@0.138.1-818bc4be9':
+    resolution: {integrity: sha512-B+/cAvyS5FsWYxloKLzS7ZShZVKnAse1PRetBLJC97x4WcSwD23JZVng4lYI1v+97w2vStNyBvoUtqcTg16wNw==}
 
   '@fern-api/ui-core-utils@0.138.1-9a1be9c78':
     resolution: {integrity: sha512-UTqnQzaxBMFz+hdpmOC3GICVQyhX3YPN1Vvb+GlxNbs8l9EuHqG5VH7V0aNlrECEL3UdFbr4b+S6SEN6uMEriQ==}
@@ -18475,6 +18481,26 @@ snapshots:
 
   '@fern-api/dynamic-ir-sdk@58.2.0': {}
 
+  '@fern-api/fdr-sdk@0.138.1-818bc4be9(typescript@5.7.2)':
+    dependencies:
+      '@fern-api/ui-core-utils': 0.138.1-818bc4be9
+      '@ungap/structured-clone': 1.3.0
+      dayjs: 1.11.13
+      es-toolkit: 1.39.3
+      escape-string-regexp: 5.0.0
+      fast-deep-equal: 3.1.3
+      form-data: 4.0.0
+      httpsnippet-lite: 3.0.5
+      js-base64: 3.7.7
+      node-fetch: 2.7.0
+      qs: 6.12.0
+      tinycolor2: 1.6.0
+      ts-essentials: 10.1.1(typescript@5.7.2)
+      url-join: 5.0.0
+    transitivePeerDependencies:
+      - encoding
+      - typescript
+
   '@fern-api/fdr-sdk@0.138.1-9a1be9c78(typescript@5.7.2)':
     dependencies:
       '@fern-api/ui-core-utils': 0.138.1-9a1be9c78
@@ -18523,6 +18549,14 @@ snapshots:
       ua-parser-js: 1.0.40
 
   '@fern-api/ui-core-utils@0.129.4-b6c699ad2':
+    dependencies:
+      date-fns: 4.1.0
+      date-fns-tz: 3.2.0(date-fns@4.1.0)
+      strip-ansi: 7.1.0
+      title: 3.5.3
+      ua-parser-js: 1.0.40
+
+  '@fern-api/ui-core-utils@0.138.1-818bc4be9':
     dependencies:
       date-fns: 4.1.0
       date-fns-tz: 3.2.0(date-fns@4.1.0)
