@@ -6504,7 +6504,8 @@
                       "instruction_query_text_type": "plain_text"
                     }
                   }
-                }
+                },
+                "copy_documents_from_index_id": {}
               },
               "requestBodyV3": {
                 "type": "json",
@@ -6527,7 +6528,8 @@
                         "instruction_query_text_type": "plain_text"
                       }
                     }
-                  }
+                  },
+                  "copy_documents_from_index_id": {}
                 }
               },
               "responseStatusCode": 201,
@@ -6575,7 +6577,8 @@
                     "model_name": "sentence-transformers/multi-qa-mpnet-base-dot-v1",
                     "config": {}
                   }
-                }
+                },
+                "copy_documents_from_index_id": {}
               },
               "requestBodyV3": {
                 "type": "json",
@@ -6594,7 +6597,8 @@
                       "model_name": "sentence-transformers/multi-qa-mpnet-base-dot-v1",
                       "config": {}
                     }
-                  }
+                  },
+                  "copy_documents_from_index_id": {}
                 }
               },
               "responseStatusCode": 201,
@@ -6644,7 +6648,8 @@
                       "add_openai_api_key": true
                     }
                   }
-                }
+                },
+                "copy_documents_from_index_id": {}
               },
               "requestBodyV3": {
                 "type": "json",
@@ -6665,7 +6670,8 @@
                         "add_openai_api_key": true
                       }
                     }
-                  }
+                  },
+                  "copy_documents_from_index_id": {}
                 }
               },
               "responseStatusCode": 201,
@@ -7644,7 +7650,8 @@
                 ],
                 "metric_input_params": {
                   "params": {}
-                }
+                },
+                "id": "3ee58bf2-1e5c-415e-8b6c-02ca8b77f29d"
               },
               "requestBodyV3": {
                 "type": "json",
@@ -7664,7 +7671,8 @@
                   ],
                   "metric_input_params": {
                     "params": {}
-                  }
+                  },
+                  "id": "3ee58bf2-1e5c-415e-8b6c-02ca8b77f29d"
                 }
               },
               "responseStatusCode": 200,
@@ -7745,7 +7753,8 @@
                 ],
                 "metric_input_params": {
                   "params": {}
-                }
+                },
+                "id": "50c55d1d-4c37-4c83-afc1-9d895f286320"
               },
               "requestBodyV3": {
                 "type": "json",
@@ -7769,7 +7778,8 @@
                   ],
                   "metric_input_params": {
                     "params": {}
-                  }
+                  },
+                  "id": "50c55d1d-4c37-4c83-afc1-9d895f286320"
                 }
               },
               "responseStatusCode": 200,

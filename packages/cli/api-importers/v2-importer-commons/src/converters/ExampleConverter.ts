@@ -624,7 +624,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                 .map(({ key, result }) => [key, result.validExample])
                 .filter(([_, value]) => value !== undefined)
         );
-        
+
         for (const result of allOfResults) {
             if (typeof result.validExample === "object" && result.validExample !== null) {
                 const validExampleObj = result.validExample as Record<string, unknown>;
@@ -638,15 +638,24 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         // Handle additional properties
         const additionalPropertiesResults: Array<{ key: string; result: ExampleConverter.Output }> = [];
         if (resolvedSchema.additionalProperties !== false) {
-            const additionalPropertiesSchema: OpenAPIV3_1.SchemaObject = typeof resolvedSchema.additionalProperties === "object" 
-                ? resolvedSchema.additionalProperties 
-                : { oneOf: [{ type: "string" }, { type: "number" }, { type: "boolean" }, { type: "object" }, { type: "array" }] } as any;
-            
+            const additionalPropertiesSchema: OpenAPIV3_1.SchemaObject =
+                typeof resolvedSchema.additionalProperties === "object"
+                    ? resolvedSchema.additionalProperties
+                    : ({
+                          oneOf: [
+                              { type: "string" },
+                              { type: "number" },
+                              { type: "boolean" },
+                              { type: "object" },
+                              { type: "array" }
+                          ]
+                      } as any);
+
             // Find properties in the example that are not defined in the schema
             const definedPropertyKeys = new Set(Object.keys(example ?? {}));
-            const additionalPropertyKeys = Object.keys(exampleObj).filter(key => !definedPropertyKeys.has(key));
-            
-            additionalPropertyKeys.forEach(key => {
+            const additionalPropertyKeys = Object.keys(exampleObj).filter((key) => !definedPropertyKeys.has(key));
+
+            additionalPropertyKeys.forEach((key) => {
                 const exampleConverter = new ExampleConverter({
                     breadcrumbs: [...this.breadcrumbs, key],
                     context: this.context,

@@ -131,7 +131,7 @@ export class EnvironmentsDeclarationReferencer extends AbstractDeclarationRefere
             namespaceImport: "environments",
             importsManager,
             exportsManager,
-            referencedIn: sourceFile,
+            referencedIn: sourceFile
         });
     }
 
@@ -191,7 +191,7 @@ export class EnvironmentsDeclarationReferencer extends AbstractDeclarationRefere
             namespaceImport: "environments",
             importsManager,
             exportsManager,
-            referencedIn: sourceFile,
+            referencedIn: sourceFile
         });
     }
 

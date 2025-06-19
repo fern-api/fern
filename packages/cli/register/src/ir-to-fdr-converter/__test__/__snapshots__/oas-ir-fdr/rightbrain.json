@@ -37444,7 +37444,11 @@
                 "image_required": false,
                 "name": "Fintech Pre-Triage",
                 "description": "A task to pre-triage user onboarding before IDV.",
-                "enabled": true
+                "enabled": true,
+                "created": "2024-06-13T14:01:03.021673",
+                "id": "019011e6-e530-3aca-6cf7-2973387c255d",
+                "modified": "2024-06-13T14:01:03.021673",
+                "project_id": "019010a2-8327-2607-11d7-41bb0a8936d4"
               },
               "requestBodyV3": {
                 "type": "json",
@@ -37466,7 +37470,11 @@
                   "image_required": false,
                   "name": "Fintech Pre-Triage",
                   "description": "A task to pre-triage user onboarding before IDV.",
-                  "enabled": true
+                  "enabled": true,
+                  "created": "2024-06-13T14:01:03.021673",
+                  "id": "019011e6-e530-3aca-6cf7-2973387c255d",
+                  "modified": "2024-06-13T14:01:03.021673",
+                  "project_id": "019010a2-8327-2607-11d7-41bb0a8936d4"
                 }
               },
               "responseStatusCode": 200,
@@ -39845,7 +39853,9 @@
                 },
                 "config_sensitive": {
                   "signing_key": "sdkjhsfd2sdfkj3223.23rh"
-                }
+                },
+                "id": "019011e6-e530-3aca-6cf7-2973387c255d",
+                "project_id": "019010a2-8327-2607-11d7-41bb0a8936d4"
               },
               "requestBodyV3": {
                 "type": "json",
@@ -39857,7 +39867,9 @@
                   },
                   "config_sensitive": {
                     "signing_key": "sdkjhsfd2sdfkj3223.23rh"
-                  }
+                  },
+                  "id": "019011e6-e530-3aca-6cf7-2973387c255d",
+                  "project_id": "019010a2-8327-2607-11d7-41bb0a8936d4"
                 }
               },
               "responseStatusCode": 200,
