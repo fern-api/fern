@@ -426,7 +426,8 @@ export class SdkGenerator {
             logger: this.context.logger,
             config: this.rawConfig,
             readmeConfigBuilder: new ReadmeConfigBuilder({
-                endpointSnippets: this.endpointSnippets
+                endpointSnippets: this.endpointSnippets,
+                fileResponseType: this.config.fileResponseType
             }),
             ir: intermediateRepresentation
         });

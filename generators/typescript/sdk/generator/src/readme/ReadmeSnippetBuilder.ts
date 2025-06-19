@@ -28,6 +28,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static PAGINATION_FEATURE_ID: FernGeneratorCli.FeatureId = "PAGINATION";
     private static RAW_RESPONSES_FEATURE_ID: FernGeneratorCli.FeatureId = "ACCESS_RAW_RESPONSE_DATA";
     private static ADDITIONAL_HEADERS_FEATURE_ID: FernGeneratorCli.FeatureId = "ADDITIONAL_HEADERS";
+    private static BINARY_RESPONSE_FEATURE_ID: FernGeneratorCli.FeatureId = "BINARY_RESPONSE";
 
     private readonly context: SdkContext;
     private readonly isPaginationEnabled: boolean;
@@ -38,16 +39,20 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private readonly rootClientConstructorName: string;
     private readonly clientVariableName: string;
     private readonly genericAPISdkErrorName: string;
+    private readonly fileResponseType: "stream" | "binary-response";
 
     constructor({
         context,
-        endpointSnippets
+        endpointSnippets,
+        fileResponseType
     }: {
         context: SdkContext;
         endpointSnippets: FernGeneratorExec.Endpoint[];
+        fileResponseType: "stream" | "binary-response";
     }) {
         super({ endpointSnippets });
         this.context = context;
+        this.fileResponseType = fileResponseType;
         this.isPaginationEnabled = context.config.generatePaginatedClients ?? false;
 
         this.endpoints = this.buildEndpoints();
@@ -72,6 +77,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         snippets[ReadmeSnippetBuilder.EXCEPTION_HANDLING_FEATURE_ID] = this.buildExceptionHandlingSnippets();
         snippets[ReadmeSnippetBuilder.RUNTIME_COMPATIBILITY_FEATURE_ID] = this.buildRuntimeCompatibilitySnippets();
         snippets[ReadmeSnippetBuilder.STREAMING_FEATURE_ID] = this.buildStreamingSnippets();
+        snippets[ReadmeSnippetBuilder.BINARY_RESPONSE_FEATURE_ID] = this.buildBinaryResponseSnippet();
         snippets[ReadmeSnippetBuilder.RAW_RESPONSES_FEATURE_ID] = this.buildRawResponseSnippets();
         snippets[ReadmeSnippetBuilder.ADDITIONAL_HEADERS_FEATURE_ID] = this.buildAdditionalHeadersSnippets();
 
@@ -205,6 +211,36 @@ const response = await ${this.getMethodCall(headerEndpoint)}(..., {
 `
             )
         );
+    }
+
+    private buildBinaryResponseSnippet(): string[] {
+        if (this.fileResponseType !== "binary-response") {
+            return [];
+        }
+
+        const binaryResponseEndpoints = Object.values(this.context.ir.services).flatMap((service) =>
+            service.endpoints
+                .filter((endpoint) => endpoint.response?.body?.type === "fileDownload")
+                .map((endpoint) => ({
+                    endpoint,
+                    fernFilepath: service.name.fernFilepath
+                }))
+        );
+        if (binaryResponseEndpoints.length === 0) {
+            return [];
+        }
+        const binaryResponseEndpoint = binaryResponseEndpoints[0] as EndpointWithFilepath;
+        return [
+            this.writeCode(
+                code`
+const response = await ${this.getMethodCall(binaryResponseEndpoint)}(...);
+const stream: ReadableStream<Uint8Array> = response.stream();
+// const arrayBuffer: ArrayBuffer = await response.arrayBuffer();
+// const blob: Blob = response.blob();
+// const stream: Uint8Array = response.bytes();
+`
+            )
+        ];
     }
 
     private buildRetrySnippets(): string[] {
