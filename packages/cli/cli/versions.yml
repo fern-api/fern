@@ -1,6 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Respect additional properties in docs example generation by preserving them in generated examples instead of 
+        stripping unknown properties.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-06-19"
+  version: 0.64.13
+
+- changelogEntry:
+    - summary: |
         Add configuration option to preserve oneOfs with a single schema.
       type: feat
   irVersion: 58
