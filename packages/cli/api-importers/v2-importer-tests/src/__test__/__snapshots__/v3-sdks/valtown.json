@@ -41330,7 +41330,8 @@
                             null
                           ]
                         ],
-                        "rowsAffected": 0
+                        "rowsAffected": 0,
+                        "lastInsertRowid": "foo"
                       }
                     ]
                   },
@@ -41378,7 +41379,8 @@
                             null
                           ]
                         ],
-                        "rowsAffected": 0
+                        "rowsAffected": 0,
+                        "lastInsertRowid": "foo"
                       }
                     ],
                     "type": "json"
