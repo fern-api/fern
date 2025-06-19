@@ -602,6 +602,33 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             }
         });
 
+        // Handle additional properties
+        const additionalPropertiesResults: Array<{ key: string; result: ExampleConverter.Output }> = [];
+        if (resolvedSchema.additionalProperties !== false) {
+            const additionalPropertiesSchema: OpenAPIV3_1.SchemaObject = typeof resolvedSchema.additionalProperties === "object" 
+                ? resolvedSchema.additionalProperties 
+                : { type: "string" };
+            
+            // Find properties in the example that are not defined in the schema
+            const definedPropertyKeys = new Set(Object.keys(resolvedSchema.properties ?? {}));
+            const additionalPropertyKeys = Object.keys(exampleObj).filter(key => !definedPropertyKeys.has(key));
+            
+            additionalPropertyKeys.forEach(key => {
+                const exampleConverter = new ExampleConverter({
+                    breadcrumbs: [...this.breadcrumbs, key],
+                    context: this.context,
+                    schema: additionalPropertiesSchema,
+                    example: exampleObj[key],
+                    depth: this.depth + 1,
+                    generateOptionalProperties: this.generateOptionalProperties,
+                    exampleGenerationStrategy: this.exampleGenerationStrategy,
+                    seenRefs: this.getMaybeUpdatedSeenRefs()
+                });
+                const result = exampleConverter.convert();
+                additionalPropertiesResults.push({ key, result });
+            });
+        }
+
         const allOfResults = (resolvedSchema.allOf ?? []).map((subSchema, index) => {
             const exampleConverter = new ExampleConverter({
                 breadcrumbs: [...this.breadcrumbs, `allOf[${index}]`],
@@ -624,6 +651,13 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                 .map(({ key, result }) => [key, result.validExample])
                 .filter(([_, value]) => value !== undefined)
         );
+
+        // Add additional properties to the example
+        for (const { key, result } of additionalPropertiesResults) {
+            if (result.validExample !== undefined) {
+                example[key] = result.validExample;
+            }
+        }
 
         for (const result of allOfResults) {
             if (typeof result.validExample === "object" && result.validExample !== null) {

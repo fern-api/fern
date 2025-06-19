@@ -74721,7 +74721,8 @@
                             "tokenType": "ERC721",
                             "contractDeployer": "0x9c78DDec1F16685ee6E58637a640514A1eD87BC4",
                             "deployedBlockNumber": 13736379,
-                            "spamClassifications": []
+                            "spamClassifications": [],
+                            "openSeaMetadata": "foo"
                           },
                           "tokenId": "28",
                           "tokenType": "ERC721",
@@ -74782,11 +74783,13 @@
                                   "value": "Facepaint (Stripe)",
                                   "trait_type": "Face Augments"
                                 }
-                              ]
+                              ],
+                              "external_url": "https://duskbreakers.gg/"
                             }
                           },
                           "tokenUri": "https://api.duskbreakers.gg/metadata/duskbreakers/28",
-                          "timeLastUpdated": "2023-04-19T21:25:39.563Z"
+                          "timeLastUpdated": "2023-04-19T21:25:39.563Z",
+                          "balance": "1"
                         },
                         {
                           "contract": {
@@ -74797,7 +74800,8 @@
                             "tokenType": "ERC721",
                             "contractDeployer": "0x9c78DDec1F16685ee6E58637a640514A1eD87BC4",
                             "deployedBlockNumber": 13736379,
-                            "spamClassifications": []
+                            "spamClassifications": [],
+                            "openSeaMetadata": "foo"
                           },
                           "tokenId": "29",
                           "tokenType": "ERC721",
@@ -74858,11 +74862,13 @@
                                   "value": "Purple",
                                   "trait_type": "Background"
                                 }
-                              ]
+                              ],
+                              "external_url": "https://duskbreakers.gg/"
                             }
                           },
                           "tokenUri": "https://api.duskbreakers.gg/metadata/duskbreakers/29",
-                          "timeLastUpdated": "2023-04-19T21:25:39.704Z"
+                          "timeLastUpdated": "2023-04-19T21:25:39.704Z",
+                          "balance": "1"
                         },
                         {
                           "contract": {
@@ -74872,7 +74878,8 @@
                             "tokenType": "ERC1155",
                             "contractDeployer": "0xA92520aFF50c5A1a4d25FCF90c972AA49EbE5299",
                             "deployedBlockNumber": 14847327,
-                            "spamClassifications": []
+                            "spamClassifications": [],
+                            "openSeaMetadata": "foo"
                           },
                           "tokenId": "97",
                           "tokenType": "ERC1155",
@@ -74882,7 +74889,8 @@
                             "metadata": {}
                           },
                           "tokenUri": "https://knightsofchain.link/ipfs/97",
-                          "timeLastUpdated": "2023-04-20T15:44:29.965Z"
+                          "timeLastUpdated": "2023-04-20T15:44:29.965Z",
+                          "balance": "1"
                         }
                       ],
                       "totalCount": 3,
@@ -74895,10 +74903,14 @@
                     "Response (withMetadata = false)": {
                       "ownedNfts": [
                         {
-                          "tokenId": "28"
+                          "tokenId": "28",
+                          "contractAddress": "0x0bEed7099AF7514cCEDF642CfEA435731176Fb02",
+                          "balance": "1"
                         },
                         {
-                          "tokenId": "29"
+                          "tokenId": "29",
+                          "contractAddress": "0x0bEed7099AF7514cCEDF642CfEA435731176Fb02",
+                          "balance": "1"
                         }
                       ],
                       "totalCount": 2,
@@ -74911,10 +74923,14 @@
                     "Response (with contract filtering)": {
                       "ownedNfts": [
                         {
-                          "tokenId": "28"
+                          "tokenId": "28",
+                          "contractAddress": "0x0bEed7099AF7514cCEDF642CfEA435731176Fb02",
+                          "balance": "1"
                         },
                         {
-                          "tokenId": "29"
+                          "tokenId": "29",
+                          "contractAddress": "0x0bEed7099AF7514cCEDF642CfEA435731176Fb02",
+                          "balance": "1"
                         }
                       ],
                       "totalCount": 2,
@@ -74927,10 +74943,14 @@
                     "Response (with pagination)": {
                       "ownedNfts": [
                         {
-                          "tokenId": "28"
+                          "tokenId": "28",
+                          "contractAddress": "0x0bEed7099AF7514cCEDF642CfEA435731176Fb02",
+                          "balance": "1"
                         },
                         {
-                          "tokenId": "29"
+                          "tokenId": "29",
+                          "contractAddress": "0x0bEed7099AF7514cCEDF642CfEA435731176Fb02",
+                          "balance": "1"
                         }
                       ],
                       "totalCount": 2,
@@ -74982,7 +75002,8 @@
                             "tokenType": "ERC721",
                             "contractDeployer": "0x9c78DDec1F16685ee6E58637a640514A1eD87BC4",
                             "deployedBlockNumber": 13736379,
-                            "spamClassifications": []
+                            "spamClassifications": [],
+                            "openSeaMetadata": "foo"
                           },
                           "tokenId": "28",
                           "tokenType": "ERC721",
@@ -75043,11 +75064,13 @@
                                   "value": "Facepaint (Stripe)",
                                   "trait_type": "Face Augments"
                                 }
-                              ]
+                              ],
+                              "external_url": "https://duskbreakers.gg/"
                             }
                           },
                           "tokenUri": "https://api.duskbreakers.gg/metadata/duskbreakers/28",
-                          "timeLastUpdated": "2023-04-19T21:25:39.563Z"
+                          "timeLastUpdated": "2023-04-19T21:25:39.563Z",
+                          "balance": "1"
                         },
                         {
                           "contract": {
@@ -75058,7 +75081,8 @@
                             "tokenType": "ERC721",
                             "contractDeployer": "0x9c78DDec1F16685ee6E58637a640514A1eD87BC4",
                             "deployedBlockNumber": 13736379,
-                            "spamClassifications": []
+                            "spamClassifications": [],
+                            "openSeaMetadata": "foo"
                           },
                           "tokenId": "29",
                           "tokenType": "ERC721",
@@ -75119,11 +75143,13 @@
                                   "value": "Purple",
                                   "trait_type": "Background"
                                 }
-                              ]
+                              ],
+                              "external_url": "https://duskbreakers.gg/"
                             }
                           },
                           "tokenUri": "https://api.duskbreakers.gg/metadata/duskbreakers/29",
-                          "timeLastUpdated": "2023-04-19T21:25:39.704Z"
+                          "timeLastUpdated": "2023-04-19T21:25:39.704Z",
+                          "balance": "1"
                         },
                         {
                           "contract": {
@@ -75133,7 +75159,8 @@
                             "tokenType": "ERC1155",
                             "contractDeployer": "0xA92520aFF50c5A1a4d25FCF90c972AA49EbE5299",
                             "deployedBlockNumber": 14847327,
-                            "spamClassifications": []
+                            "spamClassifications": [],
+                            "openSeaMetadata": "foo"
                           },
                           "tokenId": "97",
                           "tokenType": "ERC1155",
@@ -75143,7 +75170,8 @@
                             "metadata": {}
                           },
                           "tokenUri": "https://knightsofchain.link/ipfs/97",
-                          "timeLastUpdated": "2023-04-20T15:44:29.965Z"
+                          "timeLastUpdated": "2023-04-20T15:44:29.965Z",
+                          "balance": "1"
                         }
                       ],
                       "totalCount": 3,
@@ -75178,10 +75206,14 @@
                     "value": {
                       "ownedNfts": [
                         {
-                          "tokenId": "28"
+                          "tokenId": "28",
+                          "contractAddress": "0x0bEed7099AF7514cCEDF642CfEA435731176Fb02",
+                          "balance": "1"
                         },
                         {
-                          "tokenId": "29"
+                          "tokenId": "29",
+                          "contractAddress": "0x0bEed7099AF7514cCEDF642CfEA435731176Fb02",
+                          "balance": "1"
                         }
                       ],
                       "totalCount": 2,
@@ -75216,10 +75248,14 @@
                     "value": {
                       "ownedNfts": [
                         {
-                          "tokenId": "28"
+                          "tokenId": "28",
+                          "contractAddress": "0x0bEed7099AF7514cCEDF642CfEA435731176Fb02",
+                          "balance": "1"
                         },
                         {
-                          "tokenId": "29"
+                          "tokenId": "29",
+                          "contractAddress": "0x0bEed7099AF7514cCEDF642CfEA435731176Fb02",
+                          "balance": "1"
                         }
                       ],
                       "totalCount": 2,
@@ -75254,10 +75290,14 @@
                     "value": {
                       "ownedNfts": [
                         {
-                          "tokenId": "28"
+                          "tokenId": "28",
+                          "contractAddress": "0x0bEed7099AF7514cCEDF642CfEA435731176Fb02",
+                          "balance": "1"
                         },
                         {
-                          "tokenId": "29"
+                          "tokenId": "29",
+                          "contractAddress": "0x0bEed7099AF7514cCEDF642CfEA435731176Fb02",
+                          "balance": "1"
                         }
                       ],
                       "totalCount": 2,
@@ -76895,19 +76935,22 @@
                           "address": "0x000386e3f7559d9b6a2f5c46b4ad1a9587d59dc3",
                           "totalBalance": 912,
                           "numDistinctTokensOwned": 80,
-                          "isSpam": true
+                          "isSpam": true,
+                          "tokenId": "0x0000000000000000000000000000000000000000000000000000000000000001"
                         },
                         {
                           "address": "0x0015f391949f25c3211063104ad4afc99210f85c",
                           "totalBalance": 17,
                           "numDistinctTokensOwned": 6,
-                          "isSpam": true
+                          "isSpam": true,
+                          "tokenId": "0x0000000000000000000000000000000000000000000000000000000000000002"
                         },
                         {
                           "address": "0x005b92d71a934dbe48e985b6469881cf4b0308fc",
                           "totalBalance": 1,
                           "numDistinctTokensOwned": 1,
-                          "isSpam": true
+                          "isSpam": true,
+                          "tokenId": "0x0000000000000000000000000000000000000000000000000000000000000003"
                         }
                       ],
                       "pageKey": "20ef9df5-0d81-42e5-b741-140f595a407b",
@@ -76935,7 +76978,8 @@
                             "contentType": "video/mp4",
                             "size": 36190302,
                             "originalUrl": "https://ipfs.io/ipfs/QmX2mM8r33W7KUBQSWXFAKNC2t654EXmWiX9vkrfrEaEnS"
-                          }
+                          },
+                          "openSeaMetadata": "foo"
                         }
                       ],
                       "pageKey": "03949322-9b2c-4fdd-aab6-1369e29fa5b2",
@@ -76977,19 +77021,22 @@
                           "address": "0x000386e3f7559d9b6a2f5c46b4ad1a9587d59dc3",
                           "totalBalance": 912,
                           "numDistinctTokensOwned": 80,
-                          "isSpam": true
+                          "isSpam": true,
+                          "tokenId": "0x0000000000000000000000000000000000000000000000000000000000000001"
                         },
                         {
                           "address": "0x0015f391949f25c3211063104ad4afc99210f85c",
                           "totalBalance": 17,
                           "numDistinctTokensOwned": 6,
-                          "isSpam": true
+                          "isSpam": true,
+                          "tokenId": "0x0000000000000000000000000000000000000000000000000000000000000002"
                         },
                         {
                           "address": "0x005b92d71a934dbe48e985b6469881cf4b0308fc",
                           "totalBalance": 1,
                           "numDistinctTokensOwned": 1,
-                          "isSpam": true
+                          "isSpam": true,
+                          "tokenId": "0x0000000000000000000000000000000000000000000000000000000000000003"
                         }
                       ],
                       "pageKey": "20ef9df5-0d81-42e5-b741-140f595a407b",
@@ -77039,7 +77086,8 @@
                             "contentType": "video/mp4",
                             "size": 36190302,
                             "originalUrl": "https://ipfs.io/ipfs/QmX2mM8r33W7KUBQSWXFAKNC2t654EXmWiX9vkrfrEaEnS"
-                          }
+                          },
+                          "openSeaMetadata": "foo"
                         }
                       ],
                       "pageKey": "03949322-9b2c-4fdd-aab6-1369e29fa5b2",
@@ -77565,7 +77613,8 @@
                           "slug": "thehumanoids",
                           "totalBalance": 1,
                           "numDistinctTokensOwned": 1,
-                          "isSpam": "false"
+                          "isSpam": "false",
+                          "address": "0x3a5051566b2241285BE871f650C445A88A970edd"
                         }
                       ],
                       "pageKey": "20ef9df5-0d81-42e5-b741-140f595a407b",
@@ -77650,7 +77699,8 @@
                           "slug": "thehumanoids",
                           "totalBalance": 1,
                           "numDistinctTokensOwned": 1,
-                          "isSpam": "false"
+                          "isSpam": "false",
+                          "address": "0x3a5051566b2241285BE871f650C445A88A970edd"
                         }
                       ],
                       "pageKey": "20ef9df5-0d81-42e5-b741-140f595a407b",
@@ -86088,7 +86138,9 @@
                             "raw": "https://duskbreakers.gg/api/breakers/28",
                             "gateway": "https://duskbreakers.gg/api/breakers/28"
                           },
-                          "media": {},
+                          "media": {
+                            "0": "foo"
+                          },
                           "metadata": {
                             "image": "https://duskbreakers.gg/breaker_images/28.png",
                             "external_url": "https://duskbreakers.gg",
@@ -86133,7 +86185,9 @@
                             "raw": "https://api.chainrunners.xyz/tokens/metadata/5527?dna=73247164192459371523281785218958151913554625578441142916970699984935810987041",
                             "gateway": "https://api.chainrunners.xyz/tokens/metadata/5527?dna=73247164192459371523281785218958151913554625578441142916970699984935810987041"
                           },
-                          "media": {},
+                          "media": {
+                            "0": "foo"
+                          },
                           "metadata": {
                             "image": "https://img.chainrunners.xyz/api/v1/tokens/png/5527",
                             "name": "Runner #5527",
@@ -86346,7 +86400,9 @@
                             "raw": "https://duskbreakers.gg/api/breakers/28",
                             "gateway": "https://duskbreakers.gg/api/breakers/28"
                           },
-                          "media": {},
+                          "media": {
+                            "0": "foo"
+                          },
                           "metadata": {
                             "image": "https://duskbreakers.gg/breaker_images/28.png",
                             "external_url": "https://duskbreakers.gg",
@@ -86391,7 +86447,9 @@
                             "raw": "https://api.chainrunners.xyz/tokens/metadata/5527?dna=73247164192459371523281785218958151913554625578441142916970699984935810987041",
                             "gateway": "https://api.chainrunners.xyz/tokens/metadata/5527?dna=73247164192459371523281785218958151913554625578441142916970699984935810987041"
                           },
-                          "media": {},
+                          "media": {
+                            "0": "foo"
+                          },
                           "metadata": {
                             "image": "https://img.chainrunners.xyz/api/v1/tokens/png/5527",
                             "name": "Runner #5527",
@@ -93079,7 +93137,8 @@
                           "transactionHash": "0x4c23163e4f855e143e573776bc6129bee370dff6ce760e71553fc93201b292e2"
                         }
                       ],
-                      "pageKey": "MTUwMDAwNzgsODcsMA"
+                      "pageKey": "MTUwMDAwNzgsODcsMA",
+                      "validAt": "foo"
                     }
                   },
                   "autogeneratedExamples": {}
@@ -93168,7 +93227,8 @@
                           "transactionHash": "0x4c23163e4f855e143e573776bc6129bee370dff6ce760e71553fc93201b292e2"
                         }
                       ],
-                      "pageKey": "MTUwMDAwNzgsODcsMA"
+                      "pageKey": "MTUwMDAwNzgsODcsMA",
+                      "validAt": "foo"
                     },
                     "type": "json"
                   }
@@ -93853,7 +93913,11 @@
                           "symbol": "The Wonderful Husl Founder Cards",
                           "tokenType": "ERC1155",
                           "contractDeployer": "0x0bdD0AEC835F92a465290cdd57b27FBd00376F53",
-                          "deployedBlockNumber": 15664554
+                          "deployedBlockNumber": 15664554,
+                          "totalSupply": "foo",
+                          "openSeaMetadata": "foo",
+                          "displayNft": "foo",
+                          "image": "foo"
                         }
                       ],
                       "pageKey": "03949322-9b2c-4fdd-aab6-1369e29fa5b2",
@@ -93949,7 +94013,11 @@
                           "symbol": "The Wonderful Husl Founder Cards",
                           "tokenType": "ERC1155",
                           "contractDeployer": "0x0bdD0AEC835F92a465290cdd57b27FBd00376F53",
-                          "deployedBlockNumber": 15664554
+                          "deployedBlockNumber": 15664554,
+                          "totalSupply": "foo",
+                          "openSeaMetadata": "foo",
+                          "displayNft": "foo",
+                          "image": "foo"
                         }
                       ],
                       "pageKey": "03949322-9b2c-4fdd-aab6-1369e29fa5b2",
