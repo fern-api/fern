@@ -5090,7 +5090,8 @@
                       null
                     ]
                   ],
-                  "rowsAffected": 0
+                  "rowsAffected": 0,
+                  "lastInsertRowid": {}
                 }
               ],
               "responseBodyV3": {
@@ -5108,7 +5109,8 @@
                         null
                       ]
                     ],
-                    "rowsAffected": 0
+                    "rowsAffected": 0,
+                    "lastInsertRowid": {}
                   }
                 ]
               }

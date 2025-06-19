@@ -25,3 +25,4 @@ generators/typescript/asIs/**
 generators/typescript-mcp/base/src/asIs/**
 seed/**
 docker/seed/**
+generators/typescript/utils/**

@@ -17942,7 +17942,9 @@
                 ],
                 "tags": [
                   "tag-1"
-                ]
+                ],
+                "comments": "a comment",
+                "expiration_date": "2024-05-01T00:00:00.000000Z"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -17954,7 +17956,9 @@
                   ],
                   "tags": [
                     "tag-1"
-                  ]
+                  ],
+                  "comments": "a comment",
+                  "expiration_date": "2024-05-01T00:00:00.000000Z"
                 }
               }
             }

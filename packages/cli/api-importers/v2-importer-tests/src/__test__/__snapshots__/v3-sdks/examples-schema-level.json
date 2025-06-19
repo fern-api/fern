@@ -3383,6 +3383,7 @@
                     "createTreeExample": {
                       "species": "Ferntacular",
                       "height": 25.4,
+                      "$ref": "#/components/examples/oakTree",
                       "id": "foo"
                     }
                   }
@@ -3419,6 +3420,7 @@
                     "value": {
                       "species": "Ferntacular",
                       "height": 25.4,
+                      "$ref": "#/components/examples/oakTree",
                       "id": "foo"
                     },
                     "type": "json"
@@ -4337,6 +4339,7 @@
                     "getTreeExample": {
                       "species": "Ferntacular",
                       "height": 25.4,
+                      "$ref": "#/components/examples/oakTree",
                       "id": "foo"
                     }
                   }
@@ -4366,6 +4369,7 @@
                     "value": {
                       "species": "Ferntacular",
                       "height": 25.4,
+                      "$ref": "#/components/examples/oakTree",
                       "id": "foo"
                     },
                     "type": "json"
