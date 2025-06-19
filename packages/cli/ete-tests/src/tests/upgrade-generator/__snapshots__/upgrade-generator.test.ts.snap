@@ -41,7 +41,8 @@ Options:
 `;
 
 exports[`fern generator upgrade > fern generator upgrade list 1`] = `
-"         ╭────────────────────────────────────────────────────────────╮
+"The 'spec' field is deprecated. Use struct instead. 
+         ╭────────────────────────────────────────────────────────────╮
          │                                                            │
          │                     Upgrades available                     │
          │                                                            │

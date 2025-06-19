@@ -1,7 +1,8 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`help > no arguments 1`] = `
-"fern-dev
+"The 'spec' field is deprecated. Use struct instead. 
+fern-dev
 
 Commands:
   fern-dev diff                         Diff two versions of an API
