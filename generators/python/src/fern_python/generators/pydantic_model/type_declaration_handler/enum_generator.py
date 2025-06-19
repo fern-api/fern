@@ -33,8 +33,10 @@ class EnumGenerator(AbstractTypeGenerator):
         self._enum_type = custom_config.enum_type
         self._use_str_enums = custom_config.use_str_enums or self._enum_type == "literals"
         self._class_name = context.get_class_name_for_type_id(name.type_id, as_request=False)
+        self._compat = custom_config.use_str_enums
         self._name = name
         self._enum = enum
+        self._generate_enum_format_str_methods = custom_config.generate_enum_format_str_methods
 
     def generate(self) -> None:
         if self._use_str_enums:
@@ -133,6 +135,23 @@ class EnumGenerator(AbstractTypeGenerator):
                     ),
                 )
 
+            if self._generate_enum_format_str_methods:
+                enum_class.add_method(
+                    self._get_str_or_format_method(
+                        method_name="__str__",
+                        # Only StrEnum is consistent by making str unqualified
+                        qualified=self._generate_enum_format_str_methods != "like_strenum"
+                    ),
+                )
+
+                enum_class.add_method(
+                    self._get_str_or_format_method(
+                        method_name="__format__",
+                        # Only 311 is consistent by making format qualified
+                        qualified=self._generate_enum_format_str_methods == "like_311"
+                    ),
+                )
+
             enum_class.add_method(
                 get_visit_method(
                     items=[
@@ -151,6 +170,21 @@ class EnumGenerator(AbstractTypeGenerator):
 
     def _get_visitor_parameter_name_for_enum_value(self, enum_value: ir_types.EnumValue) -> str:
         return enum_value.name.name.snake_case.safe_name
+
+    def _get_str_or_format_method(self, method_name: str, qualified: bool) -> AST.FunctionDeclaration:
+        qualification = "{self.__class__.__name__}." if qualified else ""
+        return AST.FunctionDeclaration(
+            name=method_name,
+            signature=AST.FunctionSignature(
+                parameters=[],
+                return_type=AST.TypeHint.str_(),
+            ),
+            body=[
+                AST.ReturnStatement(
+                    f"return f\"{qualification}{{self.value}}\""
+                )
+            ]
+        )
 
 
 class EnumSnippetGenerator(AbstractTypeSnippetGenerator):

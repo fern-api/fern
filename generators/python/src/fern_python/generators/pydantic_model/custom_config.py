@@ -50,6 +50,17 @@ class BasePydanticModelCustomConfig(pydantic.BaseModel):
 
     use_pydantic_field_aliases: bool = True
 
+    generate_enum_format_str_methods: Literal[False, "like_pre_311", "like_311", "like_strenum"] = False
+    """
+    Where to override __format__ and __str__ methods of enums in order to ensure consistent behavior
+    in the face of python3.11 changes to Enums with str mixins.
+    
+    False        = no override, behavior depends on environment
+    like_pre_311 = __str__ returns unqualified form, __format__ returns qualified form
+    like_311     = both return qualified form
+    like_strenum = both return unqualified form
+    """
+
     @pydantic.model_validator(mode="after")
     def check_wrapped_aliases_v1_or_v2_only(self) -> Self:
         version_compat = self.version
