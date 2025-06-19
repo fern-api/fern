@@ -2,7 +2,7 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { python } from "@fern-api/python-ast";
 import { WriteablePythonFile } from "@fern-api/python-base";
 
-import { Literal, SingleUnionType, TypeDeclaration, TypeId, UnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
+import { SingleUnionType, TypeDeclaration, TypeId, UnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
 
 import { PydanticModelGeneratorContext } from "../ModelGeneratorContext";
 
