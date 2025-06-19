@@ -3,6 +3,86 @@
     "types": {},
     "headers": [],
     "endpoints": {
+        "endpoint_service.simple": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "simple",
+                    "camelCase": {
+                        "unsafeName": "simple",
+                        "safeName": "simple"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "simple",
+                        "safeName": "simple"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "SIMPLE",
+                        "safeName": "SIMPLE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Simple",
+                        "safeName": "Simple"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "service",
+                        "camelCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SERVICE",
+                            "safeName": "SERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Service",
+                            "safeName": "Service"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/snippet"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": null
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
         "endpoint_service.downloadFile": {
             "auth": null,
             "declaration": {
