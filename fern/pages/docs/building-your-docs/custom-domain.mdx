@@ -167,7 +167,7 @@ Once you've configured your custom domain, you can redirect your old docs site t
 
     ```js
       const OLD_DOCS_SITE = "yourcompany.docs.buildwithfern.com";
-      const NEW_DOCS_SITE = "docs.yourcompany.com";
+      const NEW_DOCS_SITE = "https://docs.yourcompany.com";
       if (window.location.host === OLD_DOCS_SITE) {
         window.location.href = new URL(
           window.location.pathname,
@@ -180,7 +180,7 @@ Once you've configured your custom domain, you can redirect your old docs site t
 
     ```js {5}
       const OLD_DOCS_SITE = "yourcompany.docs.buildwithfern.com";
-      const NEW_DOCS_SITE = "docs.yourcompany.com";
+      const NEW_DOCS_SITE = "https://docs.yourcompany.com";
       if (window.location.host === OLD_DOCS_SITE) {
         window.location.href = new URL(
           "/docs" + window.location.pathname,
