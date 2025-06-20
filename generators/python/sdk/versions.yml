@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.22.1
+  changelogEntry:
+    - summary: |
+        Lazily validate model serialization.
+      type: feat
+  createdAt: '2025-06-20'
+  irVersion: 58
+
 - version: 4.22.0
   changelogEntry:
     - summary: |
