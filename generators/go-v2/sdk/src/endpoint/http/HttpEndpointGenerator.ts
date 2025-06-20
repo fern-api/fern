@@ -6,6 +6,7 @@ import { go } from "@fern-api/go-ast";
 import {
     HttpEndpoint,
     HttpRequestBody,
+    HttpResponseBody,
     HttpService,
     JsonResponse,
     SdkRequestBodyType,
@@ -81,17 +82,20 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         return new go.Method({
             name: this.context.getMethodName(endpoint.name),
             parameters: signature.allParameters,
-            return_: this.getReturnSignature({ signature }),
+            return_: this.getRawReturnSignature({ signature }),
             body: this.getRawUnaryEndpointBody({ signature, endpoint, endpointRequest }),
             typeReference: this.getRawClientTypeReference({ subpackage })
         });
     }
 
-    private getReturnSignature({ signature }: { signature: EndpointSignatureInfo }): go.Type[] {
+    private getRawReturnSignature({ signature }: { signature: EndpointSignatureInfo }): go.Type[] {
         if (signature.returnType == null) {
             return [go.Type.error()];
         }
-        return [signature.returnType, go.Type.error()];
+        return [
+            go.Type.pointer(go.Type.reference(this.context.getRawResponseTypeReference(signature.returnType))),
+            go.Type.error()
+        ];
     }
 
     private getRawClientTypeReference({ subpackage }: { subpackage: Subpackage | undefined }): go.TypeReference {
@@ -139,7 +143,12 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 writer.writeNode(responseInitialization);
             }
 
-            writer.write("raw, err := ");
+            writer.newLine();
+            if (signature.returnType != null) {
+                writer.write("raw, err := ");
+            } else {
+                writer.write("_, err := ");
+            }
             writer.writeNode(
                 this.context.caller.call({
                     endpoint,
@@ -150,11 +159,15 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     response: this.getResponseParameterReference({ endpoint })
                 })
             );
+            writer.newLine();
+            writer.writeLine("if err != nil {");
+            writer.indent();
+            writer.writeNode(this.writeReturnZeroValueWithError({ zeroValue: signature.returnZeroValue }));
+            writer.newLine();
+            writer.dedent();
+            writer.writeLine("}");
 
-            const responseReturnStatement = this.getResponseReturnStatement({ endpoint });
-            if (responseReturnStatement != null) {
-                writer.writeNode(responseReturnStatement);
-            }
+            writer.writeNode(this.getRawResponseReturnStatement({ endpoint, signature }));
         });
     }
 
@@ -382,41 +395,93 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         }
     }
 
-    private getResponseReturnStatement({ endpoint }: { endpoint: HttpEndpoint }): go.CodeBlock | undefined {
+    private getRawResponseReturnStatement({
+        endpoint,
+        signature
+    }: {
+        endpoint: HttpEndpoint;
+        signature: EndpointSignatureInfo;
+    }): go.CodeBlock {
         const responseBody = endpoint.response?.body;
         if (responseBody == null) {
             return go.codeblock("return nil");
         }
+        const responseBodyReference = this.getResponseBodyReference({ responseBody });
+        return go.codeblock((writer) => {
+            writer.write("return ");
+            if (signature.returnType != null) {
+                writer.writeNode(
+                    this.wrapWithRawResponseType({
+                        context: this.context,
+                        returnType: signature.returnType,
+                        responseBodyReference
+                    })
+                );
+                writer.write(", ");
+            }
+            writer.write("nil");
+        });
+    }
+
+    private getResponseBodyReference({ responseBody }: { responseBody: HttpResponseBody }): go.CodeBlock {
         switch (responseBody.type) {
             case "json":
-                return this.getResponseReturnStatementForJson({ jsonResponse: responseBody.value });
+                return this.getResponseBodyReferenceForJson({ jsonResponse: responseBody.value });
             case "bytes":
             case "fileDownload":
-                return go.codeblock("return response, nil");
+                return go.codeblock("response");
             case "text":
-                return go.codeblock("return response.String(), nil");
+                return go.codeblock("response.String()");
             case "streaming":
             case "streamParameter":
                 // TODO: Implement stream responses.
-                return go.codeblock("return nil");
+                return go.codeblock("nil");
             default:
                 assertNever(responseBody);
         }
     }
 
-    private getResponseReturnStatementForJson({ jsonResponse }: { jsonResponse: JsonResponse }): go.CodeBlock {
+    private getResponseBodyReferenceForJson({ jsonResponse }: { jsonResponse: JsonResponse }): go.CodeBlock {
         switch (jsonResponse.type) {
             case "response":
-                return go.codeblock("return response, nil");
+                return go.codeblock("response");
             case "nestedPropertyAsResponse":
                 const responseProperty = jsonResponse.responseProperty;
                 if (responseProperty == null) {
-                    return go.codeblock("return response, nil");
+                    return go.codeblock("response");
                 }
-                return go.codeblock(`return response.${this.context.getFieldName(responseProperty.name.name)}, nil`);
+                return go.codeblock(`response.${this.context.getFieldName(responseProperty.name.name)}`);
             default:
                 assertNever(jsonResponse);
         }
+    }
+
+    private wrapWithRawResponseType({
+        context,
+        returnType,
+        responseBodyReference
+    }: {
+        context: SdkGeneratorContext;
+        returnType: go.Type;
+        responseBodyReference: go.AstNode;
+    }): go.TypeInstantiation {
+        return go.TypeInstantiation.structPointer({
+            typeReference: context.getRawResponseTypeReference(returnType),
+            fields: [
+                {
+                    name: "StatusCode",
+                    value: go.TypeInstantiation.reference(go.codeblock("raw.StatusCode"))
+                },
+                {
+                    name: "Header",
+                    value: go.TypeInstantiation.reference(go.codeblock("raw.Header"))
+                },
+                {
+                    name: "Body",
+                    value: go.TypeInstantiation.reference(responseBodyReference)
+                }
+            ]
+        });
     }
 
     private getPathSuffix({ endpoint }: { endpoint: HttpEndpoint }): string {

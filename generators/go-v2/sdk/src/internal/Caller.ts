@@ -104,14 +104,14 @@ export class Caller {
             },
             {
                 name: "Headers",
-                value: go.TypeInstantiation.string("headers")
+                value: go.TypeInstantiation.reference(go.codeblock("headers"))
             },
             {
                 name: "MaxAttempts",
                 value: go.TypeInstantiation.reference(
                     go.selector({
                         on: args.optionsReference,
-                        selector: go.TypeInstantiation.string("MaxAttempts")
+                        selector: go.codeblock("MaxAttempts")
                     })
                 )
             },
@@ -120,7 +120,7 @@ export class Caller {
                 value: go.TypeInstantiation.reference(
                     go.selector({
                         on: args.optionsReference,
-                        selector: go.TypeInstantiation.string("BodyProperties")
+                        selector: go.codeblock("BodyProperties")
                     })
                 )
             },
@@ -129,7 +129,7 @@ export class Caller {
                 value: go.TypeInstantiation.reference(
                     go.selector({
                         on: args.optionsReference,
-                        selector: go.TypeInstantiation.string("QueryParameters")
+                        selector: go.codeblock("QueryParameters")
                     })
                 )
             },
@@ -138,7 +138,7 @@ export class Caller {
                 value: go.TypeInstantiation.reference(
                     go.selector({
                         on: args.optionsReference,
-                        selector: go.TypeInstantiation.string("HTTPClient")
+                        selector: go.codeblock("HTTPClient")
                     })
                 )
             }

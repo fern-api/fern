@@ -36,7 +36,7 @@ func (r RawClient) Create(
 	ctx context.Context,
 	request *fern.CreatePaymentRequest,
 	opts ...option.IdempotentRequestOption,
-) (uuid.UUID, error) {
+) (*core.Response[uuid.UUID], error) {
 	options := core.NewRequestOptions(
 		opts...,
 	)
@@ -50,6 +50,28 @@ func (r RawClient) Create(
 		r.header.Clone(),
 		options.ToHeader(),
 	)
+	var response uuid.UUID
+	raw, err := r.caller.Call(
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         request,
+			Response:        &response,
+		},
+	)
+	if err != nil {
+		return uuid.UUID{}, err
+	}
+	return &core.Response[uuid.UUID]{
+		StatusCode: raw.StatusCode,
+		Header:     raw.Header,
+		Body:       response,
+	}, nil
 }
 
 func (r RawClient) Delete(
@@ -70,4 +92,19 @@ func (r RawClient) Delete(
 		r.header.Clone(),
 		options.ToHeader(),
 	)
+	_, err := r.caller.Call(
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodDelete,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+		},
+	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
