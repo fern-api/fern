@@ -28,6 +28,7 @@ export abstract class EndpointRequest {
     ) {}
 
     public abstract getRequestParameterType(): go.Type;
+    public abstract getRequestReference(): go.AstNode;
     public abstract getQueryParameterCodeBlock(): QueryParameterCodeBlock | undefined;
     public abstract getHeaderParameterCodeBlock(): HeaderParameterCodeBlock | undefined;
     public abstract getRequestBodyCodeBlock(): RequestBodyCodeBlock | undefined;

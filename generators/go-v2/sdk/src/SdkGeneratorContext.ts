@@ -277,6 +277,13 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         });
     }
 
+    public callBytesNewBuffer(): go.FuncInvocation {
+        return go.invokeFunc({
+            func: go.typeReference({ name: "NewBuffer", importPath: "bytes" }),
+            arguments_: [go.codeblock("nil")]
+        });
+    }
+
     public callNewRequestOptions(argument: go.AstNode): go.FuncInvocation {
         return go.invokeFunc({
             func: go.typeReference({

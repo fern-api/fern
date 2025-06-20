@@ -45,6 +45,10 @@ export class WrappedEndpointRequest extends EndpointRequest {
         );
     }
 
+    public getRequestReference(): go.AstNode {
+        return go.codeblock(this.getRequestParameterName());
+    }
+
     public getQueryParameterCodeBlock(): QueryParameterCodeBlock | undefined {
         // TODO: Implement this.
         return undefined;

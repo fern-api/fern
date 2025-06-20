@@ -24,6 +24,10 @@ export class BytesRequest extends EndpointRequest {
         return go.Type.bytes();
     }
 
+    public getRequestReference(): go.AstNode {
+        return go.codeblock("requestBuffer");
+    }
+
     public getQueryParameterCodeBlock(): QueryParameterCodeBlock | undefined {
         return undefined;
     }

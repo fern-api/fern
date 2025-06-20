@@ -7,6 +7,7 @@ import {
     HttpEndpoint,
     HttpRequestBody,
     HttpService,
+    JsonResponse,
     SdkRequestBodyType,
     SdkRequestWrapper,
     ServiceId,
@@ -130,6 +131,29 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             if (buildErrorDecoder != null) {
                 writer.newLine();
                 writer.writeNode(buildErrorDecoder);
+            }
+
+            const responseInitialization = this.getResponseInitialization({ endpoint });
+            if (responseInitialization != null) {
+                writer.newLine();
+                writer.writeNode(responseInitialization);
+            }
+
+            writer.write("raw, err := ");
+            writer.writeNode(
+                this.context.caller.call({
+                    endpoint,
+                    clientReference: this.getCallerFieldReference(),
+                    optionsReference: go.codeblock("options"),
+                    url: go.codeblock("endpointURL"),
+                    request: endpointRequest?.getRequestReference(),
+                    response: this.getResponseParameterReference({ endpoint })
+                })
+            );
+
+            const responseReturnStatement = this.getResponseReturnStatement({ endpoint });
+            if (responseReturnStatement != null) {
+                writer.writeNode(responseReturnStatement);
             }
         });
     }
@@ -309,6 +333,92 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         });
     }
 
+    private getResponseInitialization({ endpoint }: { endpoint: HttpEndpoint }): go.CodeBlock | undefined {
+        const responseBody = endpoint.response?.body;
+        if (responseBody == null) {
+            return undefined;
+        }
+        switch (responseBody.type) {
+            case "json":
+                return go.codeblock((writer) => {
+                    writer.write("var response ");
+                    writer.writeNode(
+                        this.context.goTypeMapper.convert({ reference: responseBody.value.responseBodyType })
+                    );
+                });
+            case "fileDownload":
+            case "text":
+                return go.codeblock((writer) => {
+                    writer.write("response := ");
+                    writer.writeNode(this.context.callBytesNewBuffer());
+                });
+            case "streaming":
+            case "streamParameter":
+                // TODO: Implement stream responses.
+                return undefined;
+            case "bytes":
+                return undefined;
+            default:
+                assertNever(responseBody);
+        }
+    }
+
+    private getResponseParameterReference({ endpoint }: { endpoint: HttpEndpoint }): go.CodeBlock | undefined {
+        const responseBody = endpoint.response?.body;
+        if (responseBody == null) {
+            return undefined;
+        }
+        switch (responseBody.type) {
+            case "json":
+                return go.codeblock("&response");
+            case "bytes":
+            case "fileDownload":
+            case "text":
+            case "streaming":
+            case "streamParameter":
+                return go.codeblock("response");
+            default:
+                assertNever(responseBody);
+        }
+    }
+
+    private getResponseReturnStatement({ endpoint }: { endpoint: HttpEndpoint }): go.CodeBlock | undefined {
+        const responseBody = endpoint.response?.body;
+        if (responseBody == null) {
+            return go.codeblock("return nil");
+        }
+        switch (responseBody.type) {
+            case "json":
+                return this.getResponseReturnStatementForJson({ jsonResponse: responseBody.value });
+            case "bytes":
+            case "fileDownload":
+                return go.codeblock("return response, nil");
+            case "text":
+                return go.codeblock("return response.String(), nil");
+            case "streaming":
+            case "streamParameter":
+                // TODO: Implement stream responses.
+                return go.codeblock("return nil");
+            default:
+                assertNever(responseBody);
+        }
+    }
+
+    private getResponseReturnStatementForJson({ jsonResponse }: { jsonResponse: JsonResponse }): go.CodeBlock {
+        switch (jsonResponse.type) {
+            case "response":
+                return go.codeblock("return response, nil");
+            case "nestedPropertyAsResponse":
+                const responseProperty = jsonResponse.responseProperty;
+                if (responseProperty == null) {
+                    return go.codeblock("return response, nil");
+                }
+                return go.codeblock(`return response.${this.context.getFieldName(responseProperty.name.name)}, nil`);
+            default:
+                assertNever(jsonResponse);
+        }
+    }
+
     private getPathSuffix({ endpoint }: { endpoint: HttpEndpoint }): string {
         let pathSuffix = endpoint.fullPath.head === "/" ? "" : endpoint.fullPath.head;
         for (const part of endpoint.fullPath.parts) {
@@ -428,19 +538,15 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         });
     }
 
-    private writeReturnZeroValue({ zeroValue }: { zeroValue?: go.TypeInstantiation }): go.CodeBlock {
-        return go.codeblock((writer) => {
-            writer.write(`return `);
-            if (zeroValue != null) {
-                writer.writeNode(zeroValue);
-                writer.write(", ");
-            }
-            writer.write("nil");
-        });
-    }
-
     private getRawClientReceiverCodeBlock(): go.AstNode {
         return go.codeblock(this.getRawClientReceiver());
+    }
+
+    private getCallerFieldReference(): go.AstNode {
+        return go.selector({
+            on: this.getRawClientReceiverCodeBlock(),
+            selector: go.codeblock("caller")
+        });
     }
 
     private getRequestParameterName({ endpoint }: { endpoint: HttpEndpoint }): string {

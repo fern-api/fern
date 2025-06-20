@@ -28,6 +28,10 @@ export class ReferencedEndpointRequest extends EndpointRequest {
         return this.context.goTypeMapper.convert({ reference: this.requestBodyShape });
     }
 
+    public getRequestReference(): go.AstNode {
+        return go.codeblock(this.getRequestParameterName());
+    }
+
     public getQueryParameterCodeBlock(): QueryParameterCodeBlock | undefined {
         return undefined;
     }
