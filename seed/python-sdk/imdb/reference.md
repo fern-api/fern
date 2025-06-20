@@ -31,6 +31,7 @@ from seed import SeedApi
 
 client = SeedApi(
     token="YOUR_TOKEN",
+    headers=None,
     base_url="https://yourhost.com/path/to/api",
 )
 client.imdb.create_movie(
@@ -97,6 +98,7 @@ from seed import SeedApi
 
 client = SeedApi(
     token="YOUR_TOKEN",
+    headers=None,
     base_url="https://yourhost.com/path/to/api",
 )
 client.imdb.get_movie(

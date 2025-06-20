@@ -44,6 +44,10 @@ class RootClientGenerator(BaseWrappedClientGenerator):
     )
     FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_NAME = "follow_redirects"
 
+    HEADERS_CONSTRUCTOR_PARAMETER_NAME = "headers"
+    HEADERS_CONSTRUCTOR_PARAMETER_DOCS = "Additional headers to send with every request."
+    HEADERS_MEMBER_NAME = "_headers"
+
     ENVIRONMENT_CONSTRUCTOR_PARAMETER_NAME = "environment"
     ENVIRONMENT_MEMBER_NAME = "_environment"
     ENVIRONMENT_CONSTRUCTOR_PARAMETER_DOCS = "The environment to use for requests from the client."
@@ -305,6 +309,12 @@ class RootClientGenerator(BaseWrappedClientGenerator):
                             )
                         ),
                         docs="The environment to be used as the base url, can be used in lieu of 'base_url'.",
+                    ),
+                    AST.NamedFunctionParameter(
+                        name=RootClientGenerator.HEADERS_CONSTRUCTOR_PARAMETER_NAME,
+                        type_hint=AST.TypeHint.optional(AST.TypeHint.dict(AST.TypeHint.str_(), AST.TypeHint.str_())),
+                        docs=RootClientGenerator.HEADERS_CONSTRUCTOR_PARAMETER_DOCS,
+                        initializer=AST.Expression("None"),
                     ),
                 ],
                 return_type=AST.TypeHint.str_(),

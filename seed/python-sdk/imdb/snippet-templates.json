@@ -16,7 +16,7 @@
                     "from seed import SeedApi"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedApi(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
+                "templateString": "client = SeedApi(headers=None, base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -88,7 +88,7 @@
                         "from seed import AsyncSeedApi"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedApi(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
+                    "templateString": "client = AsyncSeedApi(headers=None, base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -172,7 +172,7 @@
                     "from seed import SeedApi"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedApi(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
+                "templateString": "client = SeedApi(headers=None, base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -228,7 +228,7 @@
                         "from seed import AsyncSeedApi"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedApi(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
+                    "templateString": "client = AsyncSeedApi(headers=None, base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
                     "templateInputs": [
                         {
                             "type": "template",

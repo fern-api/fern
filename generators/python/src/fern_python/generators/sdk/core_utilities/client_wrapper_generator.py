@@ -364,6 +364,7 @@ class ClientWrapperGenerator:
                 writer.write_line(
                     f'"{self._context.ir.sdk_config.platform_headers.sdk_version}": "{project._project_config.package_version}",'
                 )
+            writer.write_line("**self.get_custom_headers(),")
             writer.write_line("}")
             writer.write_newline_if_last_line_not()
             basic_auth_scheme = self._get_basic_auth_scheme()
@@ -694,6 +695,22 @@ class ClientWrapperGenerator:
                     password_constructor_parameter,
                 ]
             )
+        
+        # Add generic headers parameter
+        headers_constructor_parameter = ConstructorParameter(
+            constructor_parameter_name="headers",
+            type_hint=AST.TypeHint.optional(AST.TypeHint.dict(AST.TypeHint.str_(), AST.TypeHint.str_())),
+            private_member_name="_headers",
+            instantiation=AST.Expression("headers=None"),
+            getter_method=AST.FunctionDeclaration(
+                name="get_custom_headers",
+                signature=AST.FunctionSignature(
+                    return_type=AST.TypeHint.optional(AST.TypeHint.dict(AST.TypeHint.str_(), AST.TypeHint.str_()))
+                ),
+                body=AST.CodeWriter("return self._headers"),
+            ),
+        )
+        parameters.append(headers_constructor_parameter)
 
         return ConstructorInfo(
             constructor_parameters=parameters,
