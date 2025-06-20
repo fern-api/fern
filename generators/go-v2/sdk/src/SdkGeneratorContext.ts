@@ -234,13 +234,31 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         });
     }
 
+    public getVariadicIdempotentRequestOptionParameter(): go.Parameter {
+        return go.parameter({
+            name: "opts",
+            type: this.getVariadicIdempotentRequestOptionType()
+        });
+    }
+
     public getVariadicRequestOptionType(): go.Type {
         return go.Type.variadic(go.Type.reference(this.getRequestOptionTypeReference()));
+    }
+
+    public getVariadicIdempotentRequestOptionType(): go.Type {
+        return go.Type.variadic(go.Type.reference(this.getIdempotentRequestOptionTypeReference()));
     }
 
     public getRequestOptionTypeReference(): go.TypeReference {
         return go.typeReference({
             name: "RequestOption",
+            importPath: this.getOptionImportPath()
+        });
+    }
+
+    public getIdempotentRequestOptionTypeReference(): go.TypeReference {
+        return go.typeReference({
+            name: "IdempotentRequestOption",
             importPath: this.getOptionImportPath()
         });
     }

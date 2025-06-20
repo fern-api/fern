@@ -35,7 +35,7 @@ func NewRawClient(opts ...option.RequestOption) *RawClient {
 func (r RawClient) Create(
 	ctx context.Context,
 	request *fern.CreatePaymentRequest,
-	opts ...option.RequestOption,
+	opts ...option.IdempotentRequestOption,
 ) (uuid.UUID, error) {
 	options := core.NewRequestOptions(
 		opts...,

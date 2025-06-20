@@ -34,7 +34,9 @@ export abstract class AbstractEndpointGenerator {
             this.context.getContextParameter(),
             ...pathParameters,
             requestParameter,
-            this.context.getVariadicRequestOptionParameter()
+            endpoint.idempotent
+                ? this.context.getVariadicIdempotentRequestOptionParameter()
+                : this.context.getVariadicRequestOptionParameter()
         ].filter((p): p is go.Parameter => p != null);
         const returnType = getEndpointReturnTypes({ context: this.context, endpoint });
         const rawReturnType = getRawEndpointReturnTypes({ context: this.context, endpoint });
