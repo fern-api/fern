@@ -56,14 +56,17 @@ const stream: ReadableStream<Uint8Array> = response.stream();
 // const arrayBuffer: ArrayBuffer = await response.arrayBuffer();
 // const blob: Blob = response.blob();
 // const stream: Uint8Array = response.bytes();
+const bodyUsed = response.bodyUsed;
 ```
 
 <details>
 <summary>Save binary response to a file</summary>
 
+<blockquote>
 <details>
 <summary>Node.js</summary>
 
+<blockquote>
 <details>
 <summary>ReadableStream (most-efficient)</summary>
 
@@ -82,7 +85,9 @@ await pipeline(nodeStream, writeStream);
 ```
 
 </details>
+</blockquote>
 
+<blockquote>
 <details>
 <summary>ArrayBuffer</summary>
 
@@ -96,7 +101,9 @@ await writeFile('path/to/file', Buffer.from(arrayBuffer));
 ```
 
 </details>
+</blockquote>
 
+<blockquote>
 <details>
 <summary>Blob</summary>
 
@@ -111,7 +118,9 @@ await writeFile('output.bin', Buffer.from(arrayBuffer));
 ```
 
 </details>
+</blockquote>
 
+<blockquote>
 <details>
 <summary>Bytes (UIntArray8)</summary>
 
@@ -125,12 +134,16 @@ await writeFile('path/to/file', bytes);
 ```
 
 </details>
+</blockquote>
 
 </details>
+</blockquote>
 
+<blockquote>
 <details>
 <summary>Bun</summary>
 
+<blockquote>
 <details>
 <summary>ReadableStream (most-efficient)</summary>
 
@@ -142,7 +155,9 @@ await Bun.write('path/to/file', stream);
 ```
 
 </details>
+</blockquote>
 
+<blockquote>
 <details>
 <summary>ArrayBuffer</summary>
 
@@ -154,7 +169,9 @@ await Bun.write('path/to/file', arrayBuffer);
 ```
 
 </details>
+</blockquote>
 
+<blockquote>
 <details>
 <summary>Blob</summary>
 
@@ -166,7 +183,9 @@ await Bun.write('path/to/file', blob);
 ```
 
 </details>
+</blockquote>
 
+<blockquote>
 <details>
 <summary>Bytes (UIntArray8)</summary>
 
@@ -178,12 +197,16 @@ await Bun.write('path/to/file', bytes);
 ```
 
 </details>
+</blockquote>
 
 </details>
+</blockquote>
 
+<blockquote>
 <details>
 <summary>Deno</summary>
 
+<blockquote>
 <details>
 <summary>ReadableStream (most-efficient)</summary>
 
@@ -196,7 +219,9 @@ await stream.pipeTo(file.writable);
 ```
 
 </details>
+</blockquote>
 
+<blockquote>
 <details>
 <summary>ArrayBuffer</summary>
 
@@ -208,7 +233,9 @@ await Deno.writeFile('path/to/file', new Uint8Array(arrayBuffer));
 ```
 
 </details>
+</blockquote>
 
+<blockquote>
 <details>
 <summary>Blob</summary>
 
@@ -221,7 +248,9 @@ await Deno.writeFile('path/to/file', new Uint8Array(arrayBuffer));
 ```
 
 </details>
+</blockquote>
 
+<blockquote>
 <details>
 <summary>Bytes (UIntArray8)</summary>
 
@@ -233,12 +262,16 @@ await Deno.writeFile('path/to/file', bytes);
 ```
 
 </details>
+</blockquote>
 
 </details>
+</blockquote>
 
+<blockquote>
 <details>
 <summary>Browser</summary>
 
+<blockquote>
 <details>
 <summary>Blob (most-efficient)</summary>
 
@@ -257,7 +290,9 @@ URL.revokeObjectURL(url);
 ```
 
 </details>
+</blockquote>
 
+<blockquote>
 <details>
 <summary>ReadableStream</summary>
 
@@ -286,7 +321,9 @@ URL.revokeObjectURL(url);
 ```
 
 </details>
+</blockquote>
 
+<blockquote>
 <details>
 <summary>ArrayBuffer</summary>
 
@@ -306,7 +343,9 @@ URL.revokeObjectURL(url);
 ```
 
 </details>
+</blockquote>
 
+<blockquote>
 <details>
 <summary>Bytes (UIntArray8)</summary>
 
@@ -326,14 +365,18 @@ URL.revokeObjectURL(url);
 ```
 
 </details>
+</blockquote>
 
 </details>
+</blockquote>
 
 </details>
+</blockquote>
 
 <details>
 <summary>Convert binary response to text</summary>
 
+<blockquote>
 <details>
 <summary>ReadableStream</summary>
 
@@ -345,7 +388,9 @@ const text = await new Response(stream).text();
 ```
 
 </details>
+</blockquote>
 
+<blockquote>
 <details>
 <summary>ArrayBuffer</summary>
 
@@ -357,7 +402,9 @@ const text = new TextDecoder().decode(arrayBuffer);
 ```
 
 </details>
+</blockquote>
 
+<blockquote>
 <details>
 <summary>Blob</summary>
 
@@ -369,7 +416,9 @@ const text = await blob.text();
 ```
 
 </details>
+</blockquote>
 
+<blockquote>
 <details>
 <summary>Bytes (UIntArray8)</summary>
 
@@ -381,6 +430,7 @@ const text = new TextDecoder().decode(bytes);
 ```
 
 </details>
+</blockquote>
 
 </details>
 
