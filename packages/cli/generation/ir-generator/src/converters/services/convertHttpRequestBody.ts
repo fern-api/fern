@@ -7,6 +7,7 @@ import {
 import {
     Availability,
     FileProperty,
+    FileUploadBodyPropertyEncoding,
     FileUploadRequestProperty,
     HttpRequestBody,
     HttpRequestBodyReference,
@@ -89,7 +90,7 @@ export function convertHttpRequestBody({
                             availability: convertAvailability(property.availability),
                             file
                         }),
-                        style: property.style,
+                        style: property.style ?? getMultipartPartEncodingFromContentType(property.contentType),
                         contentType: property.contentType
                     });
                 }
@@ -139,6 +140,19 @@ export function convertHttpRequestBody({
             contentType: request["content-type"]
         })
     );
+}
+
+const CONTENT_TYPE_TO_ENCODING_MAP: Record<string, FileUploadBodyPropertyEncoding> = {
+    "application/json": "json"
+};
+function getMultipartPartEncodingFromContentType(
+    contentType: string | undefined
+): FileUploadBodyPropertyEncoding | undefined {
+    if (!contentType) {
+        return undefined;
+    }
+    const encoding = CONTENT_TYPE_TO_ENCODING_MAP[contentType];
+    return encoding;
 }
 
 export function convertReferenceHttpRequestBody({

@@ -18,6 +18,9 @@ export declare namespace SchemaOrReferenceConverter {
         schema?: SchemaConverter.ConvertedSchema;
         inlinedTypes: Record<string, SchemaConverter.ConvertedSchema>;
         availability?: Availability;
+        encoding?: {
+            [media: string]: OpenAPIV3_1.EncodingObject;
+        };
     }
 }
 

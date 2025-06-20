@@ -195,7 +195,8 @@
               },
               "type": "json"
             },
-            "contentType": "application/json"
+            "contentType": "application/json",
+            "encoding": "json"
           },
           {
             "key": "data",
