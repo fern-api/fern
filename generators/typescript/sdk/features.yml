@@ -13,6 +13,10 @@ features:
       When the API returns a non-success status code (4xx or 5xx response), a subclass of the following error
       will be thrown.
 
+  - id: BINARY_RESPONSE
+    description: |
+      You can consume binary data from endpoints using the `BinaryResponse` type which lets you choose how to consume the data:
+
   - id: PAGINATION
     description: |
       List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items:

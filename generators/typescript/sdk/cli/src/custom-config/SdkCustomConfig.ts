@@ -39,5 +39,6 @@ export interface SdkCustomConfig {
     useBigInt: boolean | undefined;
     useLegacyExports: boolean | undefined;
     streamType: "wrapper" | "web";
+    fileResponseType: "stream" | "binary-response";
     packagePath: string | undefined;
 }
