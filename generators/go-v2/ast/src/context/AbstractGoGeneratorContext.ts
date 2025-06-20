@@ -26,6 +26,7 @@ import { IoReaderTypeReference, TimeTypeReference, UuidTypeReference } from "../
 import { BaseGoCustomConfigSchema } from "../custom-config/BaseGoCustomConfigSchema";
 import { resolveRootImportPath } from "../custom-config/resolveRootImportPath";
 import { GoTypeMapper } from "./GoTypeMapper";
+import { GoValueFormatter } from "./GoValueFormatter";
 import { GoZeroValueMapper } from "./GoZeroValueMapper";
 
 export interface FileLocation {
@@ -38,6 +39,7 @@ export abstract class AbstractGoGeneratorContext<
 > extends AbstractGeneratorContext {
     private rootImportPath: string;
     public readonly goTypeMapper: GoTypeMapper;
+    public readonly goValueFormatter: GoValueFormatter;
     public readonly goZeroValueMapper: GoZeroValueMapper;
 
     public constructor(
@@ -48,6 +50,7 @@ export abstract class AbstractGoGeneratorContext<
     ) {
         super(config, generatorNotificationService);
         this.goTypeMapper = new GoTypeMapper(this);
+        this.goValueFormatter = new GoValueFormatter(this);
         this.goZeroValueMapper = new GoZeroValueMapper(this);
         this.rootImportPath = resolveRootImportPath({
             config: this.config,

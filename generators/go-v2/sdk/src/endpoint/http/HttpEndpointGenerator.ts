@@ -3,7 +3,16 @@ import { write } from "fs";
 import { assertNever } from "@fern-api/core-utils";
 import { go } from "@fern-api/go-ast";
 
-import { HttpEndpoint, HttpService, ServiceId, Subpackage } from "@fern-fern/ir-sdk/api";
+import {
+    HttpEndpoint,
+    HttpRequestBody,
+    HttpService,
+    SdkRequestBodyType,
+    SdkRequestWrapper,
+    ServiceId,
+    StreamingResponse,
+    Subpackage
+} from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator";
@@ -12,6 +21,8 @@ import { EndpointRequest } from "../request/EndpointRequest";
 import { getEndpointRequest } from "../utils/getEndpointRequest";
 
 export declare namespace EndpointGenerator {
+    const OCTET_STREAM_CONTENT_TYPE = "application/octet-stream";
+
     export interface Args {
         endpoint: HttpEndpoint;
     }
@@ -205,13 +216,42 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             for (const header of endpoint.headers) {
                 const literal = this.context.maybeLiteral(header.valueType);
                 if (literal != null) {
-                    writer.write(
-                        `headers.Add("${header.name.wireValue}", ${this.context.getLiteralAsString(literal)})`
+                    writer.writeNode(
+                        this.addHeaderValue({
+                            wireValue: header.name.wireValue,
+                            value: go.codeblock(this.context.getLiteralAsString(literal))
+                        })
                     );
                     continue;
                 }
-                // TODO: Handle optionals.
-                // TOOD: Handle formatting.
+                const headerField = go.codeblock(
+                    `${this.getRequestParameterName({ endpoint })}.${this.context.getFieldName(header.name.name)}`
+                );
+                const format = this.context.goValueFormatter.convert({
+                    reference: header.valueType,
+                    value: headerField
+                });
+                if (format.isOptional) {
+                    writer.write(`if ${headerField} != nil {`);
+                    writer.indent();
+                    writer.writeNode(
+                        this.addHeaderValue({ wireValue: header.name.wireValue, value: format.formatted })
+                    );
+                    writer.dedent();
+                    writer.write("}");
+                    continue;
+                }
+                writer.writeNode(
+                    this.addHeaderValue({ wireValue: header.name.wireValue, value: format.formatted })
+                );
+            }
+            const acceptHeader = this.getAcceptHeaderValue({ endpoint });
+            if (acceptHeader != null) {
+                writer.writeNode(this.setHeaderValue({ wireValue: "Accept", value: acceptHeader }));
+            }
+            const contentTypeHeader = this.getContentTypeHeaderValue({ endpoint });
+            if (contentTypeHeader != null) {
+                writer.writeNode(this.setHeaderValue({ wireValue: "Content-Type", value: contentTypeHeader }));
             }
         });
     }
@@ -225,6 +265,103 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             pathSuffix += part.tail;
         }
         return pathSuffix.replace(/^\/+/, "");
+    }
+
+    private getAcceptHeaderValue({ endpoint }: { endpoint: HttpEndpoint }): string | undefined {
+        const responseBody = endpoint.response?.body;
+        if (responseBody == null) {
+            return undefined;
+        }
+        switch (responseBody.type) {
+            case "streaming":
+                return this.getAcceptHeaderValueForStreaming({ streamingResponse: responseBody.value });
+            case "bytes":
+            case "fileDownload":
+            case "json":
+            case "streamParameter":
+            case "text":
+                return undefined;
+            default:
+                assertNever(responseBody);
+        }
+    }
+
+    private getAcceptHeaderValueForStreaming({
+        streamingResponse
+    }: {
+        streamingResponse: StreamingResponse;
+    }): string | undefined {
+        switch (streamingResponse.type) {
+            case "sse":
+                return "text/event-stream";
+            case "json":
+            case "text":
+                return undefined;
+            default:
+                assertNever(streamingResponse);
+        }
+    }
+
+    private getContentTypeHeaderValue({ endpoint }: { endpoint: HttpEndpoint }): string | undefined {
+        const sdkRequest = endpoint.sdkRequest;
+        if (sdkRequest == null) {
+            return undefined;
+        }
+        switch (sdkRequest.shape.type) {
+            case "justRequestBody":
+                return this.getContentTypeHeaderValueForJustRequestBody({ justRequestBody: sdkRequest.shape.value });
+            case "wrapper": {
+                const requestBody = endpoint.requestBody;
+                if (requestBody == null) {
+                    return undefined;
+                }
+                return this.getContentTypeHeaderValueForWrapper({ wrapper: sdkRequest.shape, requestBody });
+            }
+            default:
+                assertNever(sdkRequest.shape);
+        }
+    }
+
+    private getContentTypeHeaderValueForJustRequestBody({
+        justRequestBody
+    }: {
+        justRequestBody: SdkRequestBodyType;
+    }): string | undefined {
+        switch (justRequestBody.type) {
+            case "bytes":
+                return justRequestBody.contentType ?? EndpointGenerator.OCTET_STREAM_CONTENT_TYPE;
+            case "typeReference":
+                return justRequestBody.contentType;
+            default:
+                assertNever(justRequestBody);
+        }
+    }
+
+    private getContentTypeHeaderValueForWrapper({
+        wrapper,
+        requestBody
+    }: {
+        wrapper: SdkRequestWrapper;
+        requestBody: HttpRequestBody;
+    }): string | undefined {
+        switch (requestBody.type) {
+            case "bytes":
+                return requestBody.contentType ?? EndpointGenerator.OCTET_STREAM_CONTENT_TYPE;
+            case "fileUpload":
+            case "inlinedRequestBody":
+            case "reference":
+                return requestBody.contentType;
+            default:
+                assertNever(requestBody);
+        }
+    }
+
+    private addHeaderValue({ wireValue, value }: { wireValue: string; value: go.AstNode }): go.CodeBlock {
+        return go.codeblock(`headers.Add("${wireValue}", fmt.Sprintf("%v", ${value}))`);
+    }
+
+    private setHeaderValue({ wireValue, value }: { wireValue: string; value: string }): go.CodeBlock {
+        return go.codeblock(`headers.Add("${wireValue}", "${value}")`);
     }
 
     private writeReturnZeroValueWithError({ zeroValue }: { zeroValue?: go.TypeInstantiation }): go.CodeBlock {
@@ -251,6 +388,14 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
 
     private getRawClientReceiverCodeBlock(): go.AstNode {
         return go.codeblock(this.getRawClientReceiver());
+    }
+
+    private getRequestParameterName({ endpoint }: { endpoint: HttpEndpoint }): string {
+        const requestParameterName = endpoint.sdkRequest?.requestParameterName;
+        if (requestParameterName == null) {
+            return "request";
+        }
+        return this.context.getParameterName(requestParameterName);
     }
 
     private getRawClientReceiver(): string {
