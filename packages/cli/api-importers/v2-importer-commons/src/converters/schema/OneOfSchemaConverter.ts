@@ -176,7 +176,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
                     name: this.schema.discriminator.propertyName,
                     wireValue: this.schema.discriminator.propertyName
                 }),
-                extends: extends_,
+                extends: [],
                 types: unionTypes
             }),
             referencedTypes,
