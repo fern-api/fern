@@ -227,6 +227,20 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         });
     }
 
+    public getErrorCodesTypeReference(): go.TypeReference {
+        return go.typeReference({
+            name: "ErrorCodes",
+            importPath: this.getInternalImportPath()
+        });
+    }
+
+    public getCoreApiErrorTypeReference(): go.TypeReference {
+        return go.typeReference({
+            name: "APIError",
+            importPath: this.getCoreImportPath()
+        });
+    }
+
     public getVariadicRequestOptionParameter(): go.Parameter {
         return go.parameter({
             name: "opts",

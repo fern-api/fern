@@ -17,16 +17,16 @@ export class Func extends AstNode {
         this.func = new Method({ name, parameters, return_, body, docs });
     }
 
-    public get name(): string {
-        return this.func.name;
-    }
-
     public get parameters(): Parameter[] {
         return this.func.parameters;
     }
 
     public get return_(): Type[] {
         return this.func.return_;
+    }
+
+    public get name(): string | undefined {
+        return this.func.name;
     }
 
     public get body(): CodeBlock | undefined {

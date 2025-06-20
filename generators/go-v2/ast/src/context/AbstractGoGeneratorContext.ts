@@ -7,6 +7,8 @@ import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/path-utils";
 
 import {
+    ErrorDeclaration,
+    ErrorId,
     FernFilepath,
     HttpService,
     IntermediateRepresentation,
@@ -72,6 +74,14 @@ export abstract class AbstractGoGeneratorContext<
             throw new Error(`Subpackage with id ${subpackageId} not found`);
         }
         return subpackage;
+    }
+
+    public getErrorDeclarationOrThrow(errorId: ErrorId): ErrorDeclaration {
+        const errorDeclaration = this.ir.errors[errorId];
+        if (errorDeclaration == null) {
+            throw new Error(`Error declaration with id ${errorId} not found`);
+        }
+        return errorDeclaration;
     }
 
     public getClassName(name: Name): string {

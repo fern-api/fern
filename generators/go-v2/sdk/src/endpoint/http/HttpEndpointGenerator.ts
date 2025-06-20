@@ -125,6 +125,12 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             const buildHeaders = this.buildHeaders({ endpoint });
             writer.newLine();
             writer.writeNode(buildHeaders);
+
+            const buildErrorDecoder = this.buildErrorDecoder({ endpoint });
+            if (buildErrorDecoder != null) {
+                writer.newLine();
+                writer.writeNode(buildErrorDecoder);
+            }
         });
     }
 
@@ -241,9 +247,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     writer.write("}");
                     continue;
                 }
-                writer.writeNode(
-                    this.addHeaderValue({ wireValue: header.name.wireValue, value: format.formatted })
-                );
+                writer.writeNode(this.addHeaderValue({ wireValue: header.name.wireValue, value: format.formatted }));
             }
             const acceptHeader = this.getAcceptHeaderValue({ endpoint });
             if (acceptHeader != null) {
@@ -253,6 +257,55 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             if (contentTypeHeader != null) {
                 writer.writeNode(this.setHeaderValue({ wireValue: "Content-Type", value: contentTypeHeader }));
             }
+        });
+    }
+
+    private buildErrorDecoder({ endpoint }: { endpoint: HttpEndpoint }): go.CodeBlock | undefined {
+        if (endpoint.errors.length === 0) {
+            return undefined;
+        }
+        return go.codeblock((writer) => {
+            writer.write("errorCodes := ");
+            writer.writeNode(
+                go.TypeInstantiation.struct({
+                    typeReference: this.context.getErrorCodesTypeReference(),
+                    fields: endpoint.errors.map((error) => {
+                        const errorDeclaration = this.context.getErrorDeclarationOrThrow(error.error.errorId);
+                        const errorTypeReference = go.typeReference({
+                            name: this.context.getClassName(errorDeclaration.name.name),
+                            importPath: this.context.getLocationForTypeId(errorDeclaration.name.errorId).importPath
+                        });
+                        return {
+                            name: errorDeclaration.statusCode.toString(),
+                            value: go.TypeInstantiation.reference(
+                                go.func({
+                                    parameters: [
+                                        go.parameter({
+                                            name: "apiError",
+                                            type: go.Type.reference(this.context.getCoreApiErrorTypeReference())
+                                        })
+                                    ],
+                                    return_: [go.Type.reference(errorTypeReference)],
+                                    body: go.codeblock((writer) => {
+                                        writer.write("return ");
+                                        writer.writeNode(
+                                            go.TypeInstantiation.structPointer({
+                                                typeReference: this.context.getCoreApiErrorTypeReference(),
+                                                fields: [
+                                                    {
+                                                        name: "APIError",
+                                                        value: go.TypeInstantiation.reference(go.codeblock("apiError"))
+                                                    }
+                                                ]
+                                            })
+                                        );
+                                    })
+                                })
+                            )
+                        };
+                    })
+                })
+            );
         });
     }
 
