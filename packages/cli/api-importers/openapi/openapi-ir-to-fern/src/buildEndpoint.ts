@@ -632,7 +632,7 @@ function getRequest({
                         declarationDepth: 1 // 1 level deep for request body properties
                     });
 
-                    if (property.contentType != null || property.exploded || property.encoding === "form") {
+                    if (property.contentType || property.exploded || property.encoding) {
                         const propertySchema: RawSchemas.HttpInlineRequestBodyPropertySchema =
                             typeof propertyTypeReference === "string"
                                 ? { type: propertyTypeReference }
@@ -644,6 +644,8 @@ function getRequest({
 
                         if (property.encoding === "form") {
                             propertySchema.style = "form";
+                        } else if (property.encoding === "json") {
+                            propertySchema.style = "json";
                         } else if (property.exploded) {
                             propertySchema.style = "exploded";
                         }
