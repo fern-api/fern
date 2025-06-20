@@ -25,19 +25,9 @@ Instantiate and use the client with the following:
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\User\Types\User;
 
 $client = new SeedClient();
-$client->user->createUser(
-    'tenant_id',
-    new User([
-        'name' => 'name',
-        'tags' => [
-            'tags',
-            'tags',
-        ],
-    ]),
-);
+$client->service->simple();
 
 ```
 
@@ -50,7 +40,7 @@ use Seed\Exceptions\SeedApiException;
 use Seed\Exceptions\SeedException;
 
 try {
-    $response = $client->user->createUser(...);
+    $response = $client->service->simple(...);
 } catch (SeedApiException $e) {
     echo 'API Exception occurred: ' . $e->getMessage() . "\n";
     echo 'Status Code: ' . $e->getCode() . "\n"; 
@@ -76,7 +66,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```php
-$response = $client->user->createUser(
+$response = $client->service->simple(
     ...,
     options: [
         'maxRetries' => 0 // Override maxRetries at the request level
@@ -89,7 +79,7 @@ $response = $client->user->createUser(
 The SDK defaults to a 30 second timeout. Use the `timeout` option to configure this behavior.
 
 ```php
-$response = $client->user->createUser(
+$response = $client->service->simple(
     ...,
     options: [
         'timeout' => 3.0 // Override timeout to 3 seconds
