@@ -113,6 +113,7 @@ interface Struct {
     type: "struct";
     typeReference: GoTypeReference;
     fields: StructField[];
+    generics?: Type[];
 }
 
 export interface StructField {
@@ -340,17 +341,20 @@ export class TypeInstantiation extends AstNode {
 
     public static structPointer({
         typeReference,
-        fields
+        fields,
+        generics
     }: {
         typeReference: GoTypeReference;
         fields: StructField[];
+        generics?: Type[];
     }): TypeInstantiation {
         return new this({
             type: "optional",
             value: new this({
                 type: "struct",
                 typeReference,
-                fields
+                fields,
+                generics
             })
         });
     }
@@ -509,6 +513,17 @@ export class TypeInstantiation extends AstNode {
 
     private writeStruct({ writer, struct }: { writer: Writer; struct: Struct }): void {
         writer.writeNode(struct.typeReference);
+
+        if (struct.generics != null) {
+            writer.write("[");
+            struct.generics.forEach((generic, index) => {
+                if (index > 0) {
+                    writer.write(", ");
+                }
+                writer.writeNode(generic);
+            });
+            writer.write("]");
+        }
 
         const fields = filterNopStructFields({ fields: struct.fields });
         if (fields.length === 0) {
