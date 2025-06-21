@@ -9,6 +9,8 @@ import {
     Method,
     MethodInvocation,
     Parameter,
+    Pointer,
+    Selector,
     Struct
 } from "./ast";
 
@@ -48,6 +50,14 @@ export function parameter(args: Parameter.Args): Parameter {
     return new Parameter(args);
 }
 
+export function pointer(args: Pointer.Args): Pointer {
+    return new Pointer(args);
+}
+
+export function selector(args: Selector.Args): Selector {
+    return new Selector(args);
+}
+
 export function struct(args: Struct.Args): Struct {
     return new Struct(args);
 }
@@ -68,6 +78,8 @@ export {
     Method,
     MethodInvocation,
     Parameter,
+    Pointer,
+    Selector,
     Struct,
     Type,
     TypeInstantiation,

@@ -8,12 +8,12 @@ import { Writer } from "./core/Writer";
 
 export declare namespace Method {
     interface Args {
-        /* The name of the method */
-        name: string;
         /* The parameters of the method */
         parameters: Parameter[];
         /* The return type of the method */
         return_: Type[];
+        /* The name of the method */
+        name?: string;
         /* The body of the method */
         body?: CodeBlock;
         /* Documentation for the method */
@@ -24,9 +24,9 @@ export declare namespace Method {
 }
 
 export class Method extends AstNode {
-    public readonly name: string;
     public readonly parameters: Parameter[];
     public readonly return_: Type[];
+    public readonly name: string | undefined;
     public readonly body: CodeBlock | undefined;
     public readonly docs: string | undefined;
     public readonly typeReference: GoTypeReference | undefined;
@@ -43,11 +43,13 @@ export class Method extends AstNode {
 
     public write(writer: Writer): void {
         writer.writeNode(new Comment({ docs: this.docs }));
-        writer.write("func ");
+        writer.write("func");
         if (this.typeReference != null) {
             this.writeReceiver({ writer, typeReference: this.typeReference });
         }
-        writer.write(`${this.name}`);
+        if (this.name != null) {
+            writer.write(` ${this.name}`);
+        }
         if (this.parameters.length === 0) {
             writer.write("() ");
         } else {
