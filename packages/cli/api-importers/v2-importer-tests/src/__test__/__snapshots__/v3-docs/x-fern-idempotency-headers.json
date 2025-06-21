@@ -42,6 +42,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.send",
           "name": {
             "originalName": "send",

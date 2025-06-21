@@ -965,6 +965,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.getAuthUser",
           "name": {
             "originalName": "getAuthUser",

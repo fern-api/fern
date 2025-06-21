@@ -905,6 +905,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_user.get_stream",
           "name": {
             "originalName": "get_stream",
@@ -1636,6 +1637,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_user.get",
           "name": {
             "originalName": "get",

@@ -595,6 +595,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.create_stream",
           "name": {
             "originalName": "create_stream",
@@ -1049,6 +1050,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.create",
           "name": {
             "originalName": "create",
