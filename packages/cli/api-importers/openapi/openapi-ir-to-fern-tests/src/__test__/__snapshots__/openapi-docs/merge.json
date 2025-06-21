@@ -11884,7 +11884,6 @@ service:
                         "groups": [
                           "21a54124-397f-494d-985e-3c5b330b8a68",
                         ],
-                        "hire_date": "2020-10-10T00:00:00Z",
                         "home_location": "d2f972d0-2526-434b-9409-4c3b468e08f0",
                         "id": "0958cbc6-6040-430a-848e-aafacbadf4ae",
                         "last_name": "Hirsch",
@@ -12043,7 +12042,6 @@ service:
                           "groups": [
                             "21a54124-397f-494d-985e-3c5b330b8a68",
                           ],
-                          "hire_date": "2020-10-10T00:00:00Z",
                           "home_location": "d2f972d0-2526-434b-9409-4c3b468e08f0",
                           "id": "0958cbc6-6040-430a-848e-aafacbadf4ae",
                           "last_name": "Hirsch",
@@ -12299,7 +12297,6 @@ service:
                       "groups": [
                         "21a54124-397f-494d-985e-3c5b330b8a68",
                       ],
-                      "hire_date": "2020-10-10T00:00:00Z",
                       "home_location": "d2f972d0-2526-434b-9409-4c3b468e08f0",
                       "id": "0958cbc6-6040-430a-848e-aafacbadf4ae",
                       "last_name": "Hirsch",
@@ -15942,7 +15939,6 @@ service:
                   ethnicity: AMERICAN_INDIAN_OR_ALASKA_NATIVE
                   marital_status: SINGLE
                   date_of_birth: '1990-11-10T00:00:00Z'
-                  hire_date: '2020-10-10T00:00:00Z'
                   start_date: '2020-10-11T00:00:00Z'
                   remote_created_at: '2020-10-11T00:00:00Z'
                   employment_status: ACTIVE
@@ -16019,7 +16015,6 @@ service:
                 ethnicity: AMERICAN_INDIAN_OR_ALASKA_NATIVE
                 marital_status: SINGLE
                 date_of_birth: '1990-11-10T00:00:00Z'
-                hire_date: '2020-10-10T00:00:00Z'
                 start_date: '2020-10-11T00:00:00Z'
                 remote_created_at: '2020-10-11T00:00:00Z'
                 employment_status: ACTIVE
@@ -16126,7 +16121,6 @@ service:
               ethnicity: AMERICAN_INDIAN_OR_ALASKA_NATIVE
               marital_status: SINGLE
               date_of_birth: '1990-11-10T00:00:00Z'
-              hire_date: '2020-10-10T00:00:00Z'
               start_date: '2020-10-11T00:00:00Z'
               remote_created_at: '2020-10-11T00:00:00Z'
               employment_status: ACTIVE
