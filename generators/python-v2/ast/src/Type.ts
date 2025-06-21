@@ -22,7 +22,9 @@ type InternalType =
     | Any
     | ReferenceType
     | Datetime
-    | Literal;
+    | Literal
+    | Enum
+    | TypeVariable;
 
 interface Int {
     type: "int";
@@ -99,6 +101,20 @@ interface ReferenceType {
 interface Literal {
     type: "literal";
     value: string | number | boolean;
+}
+
+interface Enum {
+    type: "enum";
+    name: string;
+    values: Array<{
+        name: string;
+        value: string | number;
+    }>;
+}
+
+interface TypeVariable {
+    type: "typeVariable";
+    name: string;
 }
 
 export class Type extends AstNode {
@@ -189,6 +205,12 @@ export class Type extends AstNode {
                 } else {
                     writer.write(`Literal[${this.internalType.value}]`);
                 }
+                break;
+            case "enum":
+                writer.write(this.internalType.name);
+                break;
+            case "typeVariable":
+                writer.write(this.internalType.name);
                 break;
             default:
                 assertNever(this.internalType);
@@ -294,6 +316,18 @@ export class Type extends AstNode {
         const literalType = new this({ type: "literal", value });
         literalType.addReference(python.reference({ name: "Literal", modulePath: ["typing"] }));
         return literalType;
+    }
+
+    public static enum(name: string, values: Array<{ name: string; value: string | number }>): Type {
+        const enumType = new this({ type: "enum", name, values });
+        enumType.addReference(python.reference({ name: "Enum", modulePath: ["enum"] }));
+        return enumType;
+    }
+
+    public static typeVariable(name: string): Type {
+        const typeVariableType = new this({ type: "typeVariable", name });
+        typeVariableType.addReference(python.reference({ name: "TypeVariable", modulePath: ["typing"] }));
+        return typeVariableType;
     }
 
     private static isAlreadyOptional(value: Type): boolean {
