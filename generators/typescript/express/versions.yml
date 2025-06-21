@@ -1,3 +1,42 @@
+# yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- changelogEntry:
+  - summary: |
+      Invert condition for running `next` in the generated service.
+    type: fix
+  irVersion: 58
+  createdAt: '2025-06-06'
+  version: 0.18.4
+
+- changelogEntry:
+  - summary: Update the IR to v58.
+    type: internal
+  irVersion: 58
+  createdAt: '2025-06-03'
+  version: 0.18.1
+
+- changelogEntry:
+  - summary: | 
+      Re-release `0.18.0-rc1`
+    type: fix
+  irVersion: 55
+  createdAt: '2025-05-22'
+  version: 0.18.0-rc2
+
+- changelogEntry:
+  - summary: | 
+      Re-release `0.18.0-rc1`
+    type: fix
+  irVersion: 55
+  createdAt: '2025-05-22'
+  version: 0.18.0-rc1
+
+- changelogEntry:
+  - summary: | 
+      Remove extraneous `next` in the generated service.
+    type: fix
+  irVersion: 55
+  version: 0.18.0-rc0
+
 - changelogEntry:
   - summary: Upgrade to IRv55.
     type: internal

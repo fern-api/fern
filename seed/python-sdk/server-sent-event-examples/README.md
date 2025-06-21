@@ -28,7 +28,7 @@ client = SeedServerSentEvents(
 response = client.completions.stream(
     query="foo",
 )
-for chunk in response:
+for chunk in response.data:
     yield chunk
 ```
 
@@ -50,7 +50,7 @@ async def main() -> None:
     response = await client.completions.stream(
         query="foo",
     )
-    async for chunk in response:
+    async for chunk in response.data:
         yield chunk
 
 
@@ -85,11 +85,28 @@ client = SeedServerSentEvents(
 response = client.completions.stream(
     query="foo",
 )
-for chunk in response:
+for chunk in response.data:
     yield chunk
 ```
 
 ## Advanced
+
+### Access Raw Response Data
+
+The SDK provides access to raw response data, including headers, through the `.with_raw_response` property.
+The `.with_raw_response` property returns a "raw" client that can be used to access the `.headers` and `.data` attributes.
+
+```python
+from seed import SeedServerSentEvents
+
+client = SeedServerSentEvents(
+    ...,
+)
+with client.completions.with_raw_response.stream() as response:
+    print(response.headers)  # access the response headers
+    for chunk in response.data:
+        print(chunk)  # access the underlying object(s)
+```
 
 ### Retries
 
@@ -135,6 +152,7 @@ client.completions.stream(request_options={
 
 You can override the `httpx` client to customize it for your use-case. Some common use-cases include support for proxies
 and transports.
+
 ```python
 import httpx
 from seed import SeedServerSentEvents

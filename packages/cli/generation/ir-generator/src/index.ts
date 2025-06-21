@@ -18,10 +18,8 @@ export { getEnumName } from "./converters/type-declarations/convertEnumTypeDecla
 export { getPropertyName } from "./converters/type-declarations/convertObjectTypeDeclaration";
 export { convertIrToDynamicSnippetsIr } from "./dynamic-snippets/convertIrToDynamicSnippetsIr";
 export * as ExampleValidators from "./examples";
-export { generateEndpointExample } from "./examples/generator/generateSuccessEndpointExample";
 export { constructFernFileContext, constructRootApiFileContext, type FernFileContext } from "./FernFileContext";
 export { generateIntermediateRepresentation } from "./generateIntermediateRepresentation";
-export { IdGenerator } from "./IdGenerator";
 export { EndpointResolverImpl, type EndpointResolver } from "./resolvers/EndpointResolver";
 export { ErrorResolverImpl, type ErrorResolver } from "./resolvers/ErrorResolver";
 export { ExampleResolverImpl, type ExampleResolver } from "./resolvers/ExampleResolver";
@@ -38,7 +36,6 @@ export {
 } from "./utils/getAllPropertiesForObject";
 export { getEndpointPathParameters } from "./utils/getEndpointPathParameters";
 export { getResolvedPathOfImportedFile } from "./utils/getResolvedPathOfImportedFile";
-export { hashJSON } from "./utils/hashJSON";
 export { parseInlineType } from "./utils/parseInlineType";
 export { parseReferenceToEndpointName, type ReferenceToEndpointName } from "./utils/parseReferenceToEndpointName";
 export { parseReferenceToTypeName, type ReferenceToTypeName } from "./utils/parseReferenceToTypeName";

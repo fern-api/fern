@@ -16,7 +16,12 @@
 
 package com.fern.java.client.generators.endpoint;
 
-import com.fern.ir.model.http.*;
+import com.fern.ir.model.http.HttpEndpoint;
+import com.fern.ir.model.http.HttpPath;
+import com.fern.ir.model.http.HttpPathPart;
+import com.fern.ir.model.http.HttpService;
+import com.fern.ir.model.http.PathParameter;
+import com.fern.ir.model.http.PathParameterLocation;
 import com.fern.ir.model.variables.VariableId;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
@@ -147,17 +152,13 @@ public final class HttpUrlBuilder {
                         "if ($L.$N().isPresent())", requestName, queryParamProperty.getterProperty());
             }
             codeBlock.addStatement(
-                    "$T.addQueryParameter($L, $S, $L, false)",
+                    "$T.addQueryParameter($L, $S, $L, $L)",
                     context.getPoetClassNameFactory().getQueryStringMapperClassName(),
                     httpUrlname,
                     queryParamProperty.wireKey().get(),
-                    PoetTypeNameStringifier.stringify(
-                            CodeBlock.of(
-                                            "$L.$N()" + (isOptional ? ".get()" : ""),
-                                            requestName,
-                                            queryParamProperty.getterProperty())
-                                    .toString(),
-                            queryParamProperty.poetTypeName()));
+                    CodeBlock.of(
+                            "$L.$N()" + (isOptional ? ".get()" : ""), requestName, queryParamProperty.getterProperty()),
+                    queryParamProperty.allowMultiple());
             if (isOptional) {
                 codeBlock.endControlFlow();
             }

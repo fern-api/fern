@@ -23,6 +23,11 @@ public final class SpringGeneratorContext
     }
 
     @Override
+    public GeneratorType getType() {
+        return GeneratorType.SPRING;
+    }
+
+    @Override
     public boolean deserializeWithAdditionalProperties() {
         return false;
     }

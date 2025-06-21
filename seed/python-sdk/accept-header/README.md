@@ -68,6 +68,22 @@ except ApiError as e:
 
 ## Advanced
 
+### Access Raw Response Data
+
+The SDK provides access to raw response data, including headers, through the `.with_raw_response` property.
+The `.with_raw_response` property returns a "raw" client that can be used to access the `.headers` and `.data` attributes.
+
+```python
+from seed import SeedAccept
+
+client = SeedAccept(
+    ...,
+)
+response = client.service.with_raw_response.endpoint()
+print(response.headers)  # access the response headers
+print(response.data)  # access the underlying object
+```
+
 ### Retries
 
 The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long
@@ -112,6 +128,7 @@ client.service.endpoint(request_options={
 
 You can override the `httpx` client to customize it for your use-case. Some common use-cases include support for proxies
 and transports.
+
 ```python
 import httpx
 from seed import SeedAccept

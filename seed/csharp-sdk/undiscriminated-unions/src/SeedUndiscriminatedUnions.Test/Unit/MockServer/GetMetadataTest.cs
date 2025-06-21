@@ -1,7 +1,7 @@
-using FluentAssertions.Json;
 using global::System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using OneOf;
+using SeedUndiscriminatedUnions;
 using SeedUndiscriminatedUnions.Core;
 
 namespace SeedUndiscriminatedUnions.Test.Unit.MockServer;
@@ -27,11 +27,14 @@ public class GetMetadataTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Union.GetMetadataAsync(RequestOptions);
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        var response = await Client.Union.GetMetadataAsync();
+        Assert.That(
+            response,
+            Is.EqualTo(
+                    JsonUtils.Deserialize<Dictionary<OneOf<KeyType, string>, string>>(mockResponse)
+                )
+                .UsingDefaults()
+        );
     }
 
     [Test]
@@ -54,10 +57,13 @@ public class GetMetadataTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Union.GetMetadataAsync(RequestOptions);
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        var response = await Client.Union.GetMetadataAsync();
+        Assert.That(
+            response,
+            Is.EqualTo(
+                    JsonUtils.Deserialize<Dictionary<OneOf<KeyType, string>, string>>(mockResponse)
+                )
+                .UsingDefaults()
+        );
     }
 }

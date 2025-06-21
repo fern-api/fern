@@ -26,6 +26,85 @@ components:
       properties: {}
       allOf:
         - $ref: '#/components/schemas/RootType'
+    Animal:
+      title: Animal
+      oneOf:
+        - $ref: '#/components/schemas/Cat'
+        - $ref: '#/components/schemas/Dog'
+    Fruit:
+      title: Fruit
+      oneOf:
+        - $ref: '#/components/schemas/Acai'
+        - $ref: '#/components/schemas/Fig'
+    Node:
+      title: Node
+      oneOf:
+        - $ref: '#/components/schemas/BranchNode'
+        - $ref: '#/components/schemas/LeafNode'
+    Cat:
+      title: Cat
+      type: object
+      properties:
+        fruit:
+          $ref: '#/components/schemas/Fruit'
+      required:
+        - fruit
+    Dog:
+      title: Dog
+      type: object
+      properties:
+        fruit:
+          $ref: '#/components/schemas/Fruit'
+      required:
+        - fruit
+    Acai:
+      title: Acai
+      type: object
+      properties: {}
+      allOf:
+        - $ref: '#/components/schemas/Berry'
+    Fig:
+      title: Fig
+      type: object
+      properties:
+        animal:
+          $ref: '#/components/schemas/Animal'
+      required:
+        - animal
+    Berry:
+      title: Berry
+      type: object
+      properties:
+        animal:
+          $ref: '#/components/schemas/Animal'
+      required:
+        - animal
+    BranchNode:
+      title: BranchNode
+      type: object
+      properties:
+        children:
+          type: array
+          items:
+            $ref: '#/components/schemas/Node'
+      required:
+        - children
+    LeafNode:
+      title: LeafNode
+      type: object
+      properties: {}
+    NodesWrapper:
+      title: NodesWrapper
+      type: object
+      properties:
+        nodes:
+          type: array
+          items:
+            type: array
+            items:
+              $ref: '#/components/schemas/Node'
+      required:
+        - nodes
     ContainerValue:
       title: ContainerValue
       oneOf:

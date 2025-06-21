@@ -11,8 +11,8 @@ public class ExtendedInlineRequestBodyTest : BaseMockServerTest
     {
         const string requestJson = """
             {
-              "docs": "docs",
               "name": "name",
+              "docs": "docs",
               "unique": "unique"
             }
             """;
@@ -27,12 +27,15 @@ public class ExtendedInlineRequestBodyTest : BaseMockServerTest
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        Assert.DoesNotThrowAsync(
-            async () =>
-                await Client.ExtendedInlineRequestBodyAsync(
-                    new Inlined { Unique = "unique" },
-                    RequestOptions
-                )
+        Assert.DoesNotThrowAsync(async () =>
+            await Client.ExtendedInlineRequestBodyAsync(
+                new Inlined
+                {
+                    Unique = "unique",
+                    Name = "name",
+                    Docs = "docs",
+                }
+            )
         );
     }
 }

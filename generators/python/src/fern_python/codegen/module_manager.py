@@ -5,7 +5,6 @@ from functools import cmp_to_key
 from typing import DefaultDict, List, Optional, Sequence, Set, Tuple
 
 import pydantic
-
 from . import AST
 from .filepath import ExportStrategy, Filepath
 from .writer_impl import WriterImpl
@@ -100,6 +99,7 @@ class ModuleManager:
                 # controlled to avoid issues with circular imports
                 should_sort_imports=False,
             )
+
             all_exports: Set[str] = set()
             for module_exports_line in self._build_sorted_exports(module_info):
                 if len(module_exports_line.exports) > 0:

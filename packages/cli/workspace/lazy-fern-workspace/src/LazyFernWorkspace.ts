@@ -26,6 +26,7 @@ export declare namespace LazyFernWorkspace {
 }
 
 export class LazyFernWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
+    public type: string = "fern";
     private context: TaskContext;
     private fernWorkspaces: Record<string, FernWorkspace> = {};
     private loadAPIWorkspace?: LoadAPIWorkspace;
@@ -88,18 +89,32 @@ export class LazyFernWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Setting
                 return defaultedContext.failAndThrow();
             }
 
+            let definition = {
+                absoluteFilePath: absolutePathToDefinition,
+                rootApiFile: structuralValidationResult.rootApiFile,
+                namedDefinitionFiles: structuralValidationResult.namedDefinitionFiles,
+                packageMarkers: processPackageMarkersResult.packageMarkers,
+                importedDefinitions: processPackageMarkersResult.importedDefinitions
+            };
+            if (settings?.auth != null) {
+                definition = {
+                    ...definition,
+                    rootApiFile: {
+                        ...definition.rootApiFile,
+                        contents: {
+                            ...definition.rootApiFile.contents,
+                            auth: settings?.auth
+                        }
+                    }
+                };
+            }
+
             workspace = new FernWorkspace({
                 absoluteFilePath: this.absoluteFilePath,
                 generatorsConfiguration: this.generatorsConfiguration,
                 dependenciesConfiguration,
                 workspaceName: this.workspaceName,
-                definition: {
-                    absoluteFilePath: absolutePathToDefinition,
-                    rootApiFile: structuralValidationResult.rootApiFile,
-                    namedDefinitionFiles: structuralValidationResult.namedDefinitionFiles,
-                    packageMarkers: processPackageMarkersResult.packageMarkers,
-                    importedDefinitions: processPackageMarkersResult.importedDefinitions
-                },
+                definition,
                 cliVersion: this.cliVersion,
                 sources: []
             });

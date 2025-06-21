@@ -1,4 +1,5 @@
-import { CSharpFile, FileGenerator, csharp } from "@fern-api/csharp-codegen";
+import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
+import { csharp } from "@fern-api/csharp-codegen";
 import { RelativeFilePath, join } from "@fern-api/fs-utils";
 
 import { ModelCustomConfigSchema } from "../ModelCustomConfig";
@@ -18,7 +19,8 @@ export class VersionGenerator extends FileGenerator<CSharpFile, ModelCustomConfi
         const class_ = csharp.class_({
             ...this.classReference,
             partial: false,
-            access: csharp.Access.Internal
+            access: csharp.Access.Internal,
+            annotations: [this.context.getSerializableAttribute()]
         });
 
         class_.addField(

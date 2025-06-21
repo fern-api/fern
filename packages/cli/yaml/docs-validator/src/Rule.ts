@@ -1,6 +1,7 @@
+import { RelativeFilePath } from "@fern-api/fs-utils";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { Logger } from "@fern-api/logger";
-import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
+import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 
 import { DocsConfigFileAstNodeTypes } from "./docsAst/DocsConfigFileAstVisitor";
 
@@ -15,7 +16,7 @@ export type RuleVisitor<AstNodeTypes> = {
 
 export interface RuleContext {
     workspace: DocsWorkspace;
-    fernWorkspaces: FernWorkspace[];
+    apiWorkspaces: AbstractAPIWorkspace<unknown>[];
     ossWorkspaces: OSSWorkspace[];
     logger: Logger;
 }
@@ -24,6 +25,7 @@ export interface RuleViolation {
     name?: string;
     severity: "fatal" | "error" | "warning";
     message: string;
+    relativeFilepath?: RelativeFilePath;
 }
 
 export type MaybePromise<T> = T | Promise<T>;

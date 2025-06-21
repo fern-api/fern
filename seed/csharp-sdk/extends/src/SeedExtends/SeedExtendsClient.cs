@@ -31,11 +31,16 @@ public partial class SeedExtendsClient
         _client = new RawClient(clientOptions);
     }
 
-    /// <example>
-    /// <code>
-    /// await client.ExtendedInlineRequestBodyAsync(new Inlined { Unique = "unique" });
-    /// </code>
-    /// </example>
+    /// <example><code>
+    /// await client.ExtendedInlineRequestBodyAsync(
+    ///     new Inlined
+    ///     {
+    ///         Unique = "unique",
+    ///         Name = "name",
+    ///         Docs = "docs",
+    ///     }
+    /// );
+    /// </code></example>
     public async global::System.Threading.Tasks.Task ExtendedInlineRequestBodyAsync(
         Inlined request,
         RequestOptions? options = null,
@@ -43,8 +48,8 @@ public partial class SeedExtendsClient
     )
     {
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
@@ -59,11 +64,13 @@ public partial class SeedExtendsClient
         {
             return;
         }
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        throw new SeedExtendsApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedExtendsApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

@@ -1,6 +1,4 @@
-using FluentAssertions.Json;
 using global::System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedExhaustive.Core;
 using SeedExhaustive.Types.Union;
@@ -45,12 +43,11 @@ public class GetAndReturnUnionTest : BaseMockServerTest
             );
 
         var response = await Client.Endpoints.Union.GetAndReturnUnionAsync(
-            new Dog { Name = "name", LikesToWoof = true },
-            RequestOptions
+            new Dog { Name = "name", LikesToWoof = true }
         );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        Assert.That(
+            response,
+            Is.EqualTo(JsonUtils.Deserialize<object>(mockResponse)).UsingDefaults()
+        );
     }
 }

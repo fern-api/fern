@@ -13,15 +13,16 @@ ordered-set = "^4.1.0"
 pydantic-core = "^2.18.2"
 fern-fern-fdr-sdk = { version = "0.98.20", source = "fern-prod" }
 fern-fern-generator-cli-sdk = { version = "0.0.18", source = "fern-prod" }
-fern_fern_ir_v53 = "53.12.0"
+fern_fern_ir_v58 = "58.1.0"
+black = "^25.1.0"
+isort = "^6.0.1"
 
-[tool.poetry.dev-dependencies]
-pytest = "^7.4.2"
-mypy = "^1.13.0"
-black = "^24.3.0"
-flake8 = "^5.0.4"
-isort = "^5.10.1"
+[tool.poetry.group.dev.dependencies]
+mypy = "==1.13.0"
 pre-commit = "^2.20.0"
+pytest = "^7.4.2"
+pytest-only = "^2.0.0"
+ruff = "==0.11.5"
 snapshottest = "^0.6.0"
 
 [[tool.poetry.source]]
@@ -29,22 +30,35 @@ name = "fern-prod"
 url = "https://pypi.buildwithfern.com/"
 priority = "supplemental"
 
-[tool.poetry.group.dev.dependencies]
-pytest-only = "^2.0.0"
-ruff = "^0.5.6"
-
-[tool.black]
-line-length = 120
-target-version = ['py38']
-include = '\.pyi?$'
-
-
-[tool.isort]
-profile = "black"
-
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "--ignore-glob=tests/**/generated --ignore-glob=tests/**/snapshots"
+
+[tool.ruff]
+line-length = 120
+target-version = "py38"
+include = ["*.py", "*.pyi"]
+
+[tool.ruff.lint]
+select = [
+    "E",  # pycodestyle errors
+    "F",  # pyflakes
+    "I",  # isort
+]
+ignore = [
+    "E402",  # Module level import not at top of file
+    "E501",  # Line too long
+    "E711",  # Comparison to `None` should be `cond is not None`
+    "E712",  # Avoid equality comparisons to `True`; use `if ...:` checks
+    "E721",  # Use `is` and `is not` for type comparisons, or `isinstance()` for insinstance checks
+    "E722",  # Do not use bare `except`
+    "E731",  # Do not assign a `lambda` expression, use a `def`
+    "F821",  # Undefined name
+    "F841"   # Local variable ... is assigned to but never used
+]
+
+[tool.ruff.lint.isort]
+section-order = ["future", "standard-library", "third-party", "first-party"]
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

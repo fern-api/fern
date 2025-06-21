@@ -1,6 +1,4 @@
-using FluentAssertions.Json;
 using global::System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedUnknownAsAny.Core;
 
@@ -45,12 +43,11 @@ public class PostTest : BaseMockServerTest
             );
 
         var response = await Client.Unknown.PostAsync(
-            new Dictionary<object, object?>() { { "key", "value" } },
-            RequestOptions
+            new Dictionary<object, object?>() { { "key", "value" } }
         );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        Assert.That(
+            response,
+            Is.EqualTo(JsonUtils.Deserialize<IEnumerable<object>>(mockResponse)).UsingDefaults()
+        );
     }
 }

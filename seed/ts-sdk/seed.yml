@@ -1,14 +1,13 @@
-irVersion: v55
+irVersion: v58
 displayName: TypeScript SDK
 image: fernapi/fern-typescript-node-sdk
+changelogLocation: ../../generators/typescript/sdk/versions.yml
 publish:
   workingDirectory: generators/typescript
-  versionSubstitution: "$VERSION"
+  versionSubstitution: $VERSION
   command:
-    - pnpm --filter @fern-typescript/sdk-generator-cli dockerTagVersion:browser "$VERSION"
-    - docker push fernapi/fern-typescript-browser-sdk:"$VERSION"
-    - pnpm --filter @fern-typescript/sdk-generator-cli dockerTagVersion:node "$VERSION"
-    - docker push fernapi/fern-typescript-node-sdk:"$VERSION"
+    - pnpm --filter @fern-typescript/sdk-generator-cli dockerTagVersion:node $VERSION
+    - docker push fernapi/fern-typescript-node-sdk:$VERSION
 test:
   docker:
     image: fernapi/fern-typescript-node-sdk:local
@@ -40,7 +39,7 @@ fixtures:
     - customConfig:
         noScripts: true
         extraDependencies:
-          dummy: "dummy"
+          lodash: 4.17.21
       outputFolder: noScripts
     - customConfig:
         useBrandedStringAliases: true
@@ -54,6 +53,9 @@ fixtures:
         allowCustomFetcher: true
         timeoutInSeconds: 2
       outputFolder: allow-custom-fetcher
+    - outputFolder: web-stream-wrapper
+      customConfig:
+        streamType: "web"
   audiences:
     - customConfig: null
       outputFolder: no-custom-config
@@ -62,6 +64,9 @@ fixtures:
         - partner
       outputFolder: with-partner-audience
   exhaustive:
+    - customConfig:
+        packagePath: src/test-packagePath
+      outputFolder: package-path
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig: null
@@ -70,8 +75,8 @@ fixtures:
         - audience2
       outputFolder: with-audiences
     - customConfig:
-        noSerdeLayer: true
-      outputFolder: no-serde-layer
+        noSerdeLayer: false
+      outputFolder: serde-layer
     - customConfig:
         useBrandedStringAliases: true
         neverThrowErrors: true
@@ -132,10 +137,13 @@ fixtures:
     - outputFolder: bigint
       customConfig:
         useBigInt: true
-    - outputFolder: bigint-no-serde-layer
+    - outputFolder: bigint-serde-layer
       customConfig:
         useBigInt: true
-        noSerdeLayer: true
+        noSerdeLayer: false
+    - outputFolder: web-stream-wrapper
+      customConfig:
+        streamType: "web"
   error-property:
     - customConfig:
         private: true
@@ -154,6 +162,16 @@ fixtures:
     - customConfig:
         includeContentHeadersOnFileDownloadResponse: true
       outputFolder: file-download-response-headers
+    - outputFolder: web-stream-wrapper
+      customConfig:
+        streamType: "web"
+    - customConfig:
+        fileResponseType: "binary-response"
+      outputFolder: binary-response
+    - customConfig:
+        streamType: "web"
+        fileResponseType: "binary-response"
+      outputFolder: binary-response-web-stream-wrapper
   file-upload:
     - customConfig: null
       outputFolder: no-custom-config
@@ -162,8 +180,11 @@ fixtures:
         inlinePathParameters: true
       outputFolder: inline
     - customConfig:
-        noSerdeLayer: true
-      outputFolder: no-serde
+        noSerdeLayer: false
+      outputFolder: serde
+    - outputFolder: web-stream-wrapper
+      customConfig:
+        streamType: "web"
   unknown:
     - customConfig: null
       outputFolder: no-custom-config
@@ -174,18 +195,18 @@ fixtures:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
-        noSerdeLayer: true
-      outputFolder: no-serde-layer-query
+        noSerdeLayer: false
+      outputFolder: serde-layer-query
   trace:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
-        noSerdeLayer: true
-      outputFolder: no-zurg-trace
+        noSerdeLayer: false
+      outputFolder: serde-trace
     - customConfig:
-        noSerdeLayer: true
+        noSerdeLayer: false
         neverThrowErrors: true
-      outputFolder: no-zurg-no-throwing
+      outputFolder: serde-no-throwing
     - customConfig:
         useBrandedStringAliases: true
         neverThrowErrors: true
@@ -224,11 +245,9 @@ fixtures:
       outputFolder: retain-original-casing
   ts-inline-types:
     - customConfig:
-        noSerdeLayer: true
         enableInlineTypes: true
       outputFolder: inline
     - customConfig:
-        noSerdeLayer: true
         enableInlineTypes: false
       outputFolder: no-inline
   path-parameters:
@@ -241,44 +260,40 @@ fixtures:
       outputFolder: inline-path-parameters
     - customConfig:
         inlinePathParameters: true
-        noSerdeLayer: true
-      outputFolder: inline-path-parameters-no-serde
+        noSerdeLayer: false
+      outputFolder: inline-path-parameters-serde
     - customConfig:
         inlinePathParameters: true
         retainOriginalCasing: true
       outputFolder: inline-path-parameters-retain-original-casing
+  websocket:
+    - outputFolder: websocket-base
+    - customConfig:
+        noSerdeLayer: false
+        shouldGenerateWebsocketClients: true
+      outputFolder: websocket-serde
+    - customConfig:
+        shouldGenerateWebsocketClients: true
+      outputFolder: websocket-with-serde
 scripts:
   - docker: fernapi/ts-seed
     commands:
       - mkdir cache
       - yarn install --cache-folder ./cache
       - yarn build
-      - if grep -q '"test"' package.json && grep -q 'exhaustive' package.json; then yarn test --passWithNoTests --testPathPattern='exhaustive.*\.test\.ts$'; fi
+      - if grep -q '"test"' package.json; then yarn test --passWithNoTests; fi
+      - if grep -q '"test:wire"' package.json; then yarn test:wire --passWithNoTests; fi
 allowedFailures:
-  - response-property
-  - plain-text
-  - alias
-  - api-wide-base-path
-  - cross-package-type-names
-  - exhaustive:bundle
-  - exhaustive:dev-dependencies
-  - audiences:no-custom-config
-  - enum # throws b/c of undiscriminated union examples
-  - streaming-parameter
-  - imdb:noScripts
+  - bytes
   - circular-references
+  - cross-package-type-names
+  - idempotency-headers
+  - imdb:noScripts
+  - nullable
   - oauth-client-credentials-custom
+  - response-property
+  - streaming-parameter
+
   # the below are likely related to changes made to example generation
-  - multi-url-environment-no-default
-  - objects-with-imports
-  - reserved-keywords
   - examples:examples-with-api-reference
   - examples:retain-original-casing
-  # on 12/16/2024 noticed 5 failures related to fixtures below
-  - exhaustive:custom-package-json
-  - idempotency-headers
-  - oauth-client-credentials-nested-root:never-throw-errors
-  - trace:no-zurg-no-throwing
-  - trace:exhaustive
-  # Dynamic snippets
-  - unions # Required base properties need to be included in the example generator.

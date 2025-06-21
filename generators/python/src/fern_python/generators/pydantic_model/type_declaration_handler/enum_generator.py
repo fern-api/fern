@@ -1,18 +1,16 @@
-import enum
 from typing import Optional, Union
 
-import fern.ir.resources as ir_types
-
+from ...context.pydantic_generator_context import PydanticGeneratorContext
+from ..custom_config import PydanticModelCustomConfig
+from .abc.abstract_type_generator import AbstractTypeGenerator
+from .get_visit_method import VisitableItem, VisitorArgument, get_visit_method
 from fern_python.codegen import AST, SourceFile
 from fern_python.generators.pydantic_model.type_declaration_handler.abc.abstract_type_snippet_generator import (
     AbstractTypeSnippetGenerator,
 )
 from fern_python.snippet import SnippetWriter
 
-from ...context import PydanticGeneratorContext
-from ..custom_config import PydanticModelCustomConfig
-from .abc.abstract_type_generator import AbstractTypeGenerator
-from .get_visit_method import VisitableItem, VisitorArgument, get_visit_method
+import fern.ir.resources as ir_types
 
 
 # Note enums are the same for both pydantic models and typeddicts os the generator is not multiplexed
@@ -40,16 +38,28 @@ class EnumGenerator(AbstractTypeGenerator):
 
     def generate(self) -> None:
         if self._use_str_enums:
-            self._source_file.add_declaration(
-                AST.TypeAliasDeclaration(
-                    type_hint=AST.TypeHint.union(
-                        AST.TypeHint.literal(
-                            AST.Expression(", ".join(map(lambda v: f'"{v.name.wire_value}"', self._enum.values)))
-                        ),
-                        AST.TypeHint.any(),
-                    ),
-                    name=self._class_name,
+            # Create a list of string literals for enum values
+            enum_literals = []
+            for v in self._enum.values:
+                if '"' not in v.name.wire_value:
+                    enum_literals.append(f'"{v.name.wire_value}"')
+                else:
+                    enum_literals.append(f"'{v.name.wire_value}'")
+
+            # Join the literals with commas
+            literals_expression = AST.Expression(", ".join(enum_literals))
+
+            # Create the type alias declaration
+            type_alias = AST.TypeAliasDeclaration(
+                type_hint=AST.TypeHint.union(
+                    AST.TypeHint.literal(literals_expression),
+                    AST.TypeHint.any(),
                 ),
+                name=self._class_name,
+            )
+
+            self._source_file.add_declaration(
+                type_alias,
                 should_export=True,
             )
         else:

@@ -590,7 +590,6 @@ Perform a search against a document index.
                       "results": [
                         {
                           "document": {
-                            "id": "id",
                             "label": "label",
                           },
                           "keywords": [
@@ -844,8 +843,14 @@ Used to submit feedback regarding the quality of previously generated completion
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "active_model_version_ids": "list<string>",
-              "created": "datetime",
+              "active_model_version_ids": {
+                "access": "read-only",
+                "type": "optional<list<string>>",
+              },
+              "created": {
+                "access": "read-only",
+                "type": "optional<datetime>",
+              },
               "environment": {
                 "docs": "The environment this deployment is used in
 
@@ -855,7 +860,8 @@ Used to submit feedback regarding the quality of previously generated completion
                 "type": "optional<EnvironmentEnum>",
               },
               "id": {
-                "type": "string",
+                "access": "read-only",
+                "type": "optional<string>",
                 "validation": {
                   "format": "uuid",
                   "maxLength": undefined,
@@ -933,8 +939,9 @@ Used to submit feedback regarding the quality of previously generated completion
                 },
               },
               "id": {
+                "access": "read-only",
                 "docs": "The ID of the document.",
-                "type": "string",
+                "type": "optional<string>",
                 "validation": {
                   "format": "uuid",
                   "maxLength": undefined,
@@ -962,8 +969,9 @@ Used to submit feedback regarding the quality of previously generated completion
             "inline": undefined,
             "properties": {
               "document_index_id": {
+                "access": "read-only",
                 "docs": "Vellum-generated ID that uniquely identifies the index this document is included in.",
-                "type": "string",
+                "type": "optional<string>",
                 "validation": {
                   "format": "uuid",
                   "maxLength": undefined,
@@ -972,8 +980,9 @@ Used to submit feedback regarding the quality of previously generated completion
                 },
               },
               "id": {
+                "access": "read-only",
                 "docs": "Vellum-generated ID that uniquely identifies this link.",
-                "type": "string",
+                "type": "optional<string>",
                 "validation": {
                   "format": "uuid",
                   "maxLength": undefined,
@@ -1000,7 +1009,10 @@ Used to submit feedback regarding the quality of previously generated completion
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "created": "datetime",
+              "created": {
+                "access": "read-only",
+                "type": "optional<datetime>",
+              },
               "environment": {
                 "docs": "The environment this document index is used in
 
@@ -1010,7 +1022,8 @@ Used to submit feedback regarding the quality of previously generated completion
                 "type": "optional<EnvironmentEnum>",
               },
               "id": {
-                "type": "string",
+                "access": "read-only",
+                "type": "optional<string>",
                 "validation": {
                   "format": "uuid",
                   "maxLength": undefined,
@@ -1448,8 +1461,9 @@ Used to submit feedback regarding the quality of previously generated completion
                 "type": "ModelVersionBuildConfig",
               },
               "created": {
+                "access": "read-only",
                 "docs": "Timestamp of when this model version was created.",
-                "type": "datetime",
+                "type": "optional<datetime>",
               },
               "exec_config": {
                 "docs": "Configuration used to execute this model version.",
@@ -1466,8 +1480,9 @@ Used to submit feedback regarding the quality of previously generated completion
                 },
               },
               "id": {
+                "access": "read-only",
                 "docs": "Vellum-generated ID that uniquely identifies this model version.",
-                "type": "string",
+                "type": "optional<string>",
                 "validation": {
                   "format": "uuid",
                   "maxLength": undefined,
@@ -1550,7 +1565,10 @@ Used to submit feedback regarding the quality of previously generated completion
                   "multipleOf": undefined,
                 },
               },
-              "sandbox_id": "optional<string>",
+              "sandbox_id": {
+                "access": "read-only",
+                "type": "optional<string>",
+              },
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -2244,8 +2262,9 @@ Used to submit feedback regarding the quality of previously generated completion
                 },
               },
               "id": {
+                "access": "read-only",
                 "docs": "Vellum-generated ID that uniquely identifies this document.",
-                "type": "string",
+                "type": "optional<string>",
                 "validation": {
                   "format": "uuid",
                   "maxLength": undefined,
@@ -2696,6 +2715,7 @@ Used to submit feedback regarding the quality of previously generated completion
             "inline": undefined,
             "properties": {
               "delta": {
+                "access": "read-only",
                 "docs": "The newly output string value. Only relevant for string outputs with a state of STREAMING.",
                 "type": "optional<string>",
               },
@@ -2713,6 +2733,7 @@ Used to submit feedback regarding the quality of previously generated completion
             "inline": undefined,
             "properties": {
               "delta": {
+                "access": "read-only",
                 "docs": "The newly output string value. Only relevant for string outputs with a state of STREAMING.",
                 "type": "optional<string>",
               },
@@ -3037,7 +3058,6 @@ Used to submit feedback regarding the quality of previously generated completion
             body:
               results:
                 - document:
-                    id: id
                     label: label
                   text: text
                   keywords:
@@ -3294,10 +3314,13 @@ types:
   DeploymentRead:
     properties:
       id:
-        type: string
+        type: optional<string>
         validation:
           format: uuid
-      created: datetime
+        access: read-only
+      created:
+        type: optional<datetime>
+        access: read-only
       label:
         type: string
         docs: A human-readable label for the deployment
@@ -3331,7 +3354,9 @@ types:
 
           * `GENERATE` - Generate
           * `CLASSIFY` - Classify
-      active_model_version_ids: list<string>
+      active_model_version_ids:
+        type: optional<list<string>>
+        access: read-only
       last_deployed_on: datetime
     source:
       openapi: ../openapi.yml
@@ -3349,10 +3374,11 @@ types:
   Document:
     properties:
       id:
-        type: string
+        type: optional<string>
         docs: The ID of the document.
         validation:
           format: uuid
+        access: read-only
       label:
         type: string
         docs: The human-readable name for the document.
@@ -3370,17 +3396,19 @@ types:
   DocumentDocumentToDocumentIndex:
     properties:
       id:
-        type: string
+        type: optional<string>
         docs: Vellum-generated ID that uniquely identifies this link.
         validation:
           format: uuid
+        access: read-only
       document_index_id:
-        type: string
+        type: optional<string>
         docs: >-
           Vellum-generated ID that uniquely identifies the index this document
           is included in.
         validation:
           format: uuid
+        access: read-only
       indexing_state:
         type: optional<IndexingStateEnum>
         docs: >-
@@ -3402,10 +3430,13 @@ types:
   DocumentIndexRead:
     properties:
       id:
-        type: string
+        type: optional<string>
         validation:
           format: uuid
-      created: datetime
+        access: read-only
+      created:
+        type: optional<datetime>
+        access: read-only
       label:
         type: string
         docs: A human-readable label for the document index
@@ -3713,13 +3744,15 @@ types:
   ModelVersionRead:
     properties:
       id:
-        type: string
+        type: optional<string>
         docs: Vellum-generated ID that uniquely identifies this model version.
         validation:
           format: uuid
+        access: read-only
       created:
-        type: datetime
+        type: optional<datetime>
         docs: Timestamp of when this model version was created.
+        access: read-only
       label:
         type: string
         docs: Human-friendly name for this model version.
@@ -3787,7 +3820,9 @@ types:
       prompt_id:
         type: optional<string>
         docs: The id of the prompt in the sandbox snapshot.
-      sandbox_id: optional<string>
+      sandbox_id:
+        type: optional<string>
+        access: read-only
     source:
       openapi: ../openapi.yml
   NormalizedLogProbs:
@@ -4195,10 +4230,11 @@ types:
   SlimDocument:
     properties:
       id:
-        type: string
+        type: optional<string>
         docs: Vellum-generated ID that uniquely identifies this document.
         validation:
           format: uuid
+        access: read-only
       external_id:
         type: optional<string>
         docs: >-
@@ -4504,6 +4540,7 @@ types:
         docs: >-
           The newly output string value. Only relevant for string outputs with a
           state of STREAMING.
+        access: read-only
       value: optional<list<ChatMessage>>
     source:
       openapi: ../openapi.yml
@@ -4517,6 +4554,7 @@ types:
         docs: >-
           The newly output string value. Only relevant for string outputs with a
           state of STREAMING.
+        access: read-only
       value: optional<map<string, unknown>>
     source:
       openapi: ../openapi.yml
@@ -5026,10 +5064,7 @@ Used to list documents. Optionally filter on supported fields.
                       "results": [
                         {
                           "document_to_document_indexes": [
-                            {
-                              "document_index_id": "document_index_id",
-                              "id": "id",
-                            },
+                            {},
                           ],
                           "external_id": "external_id",
                           "id": "id",
@@ -5232,8 +5267,7 @@ service:
                   keywords:
                     - keywords
                   document_to_document_indexes:
-                    - id: id
-                      document_index_id: document_index_id
+                    - {}
     upload:
       path: /v1/upload-document
       method: POST

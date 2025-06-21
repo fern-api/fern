@@ -34,6 +34,10 @@ export interface ParseOpenAPIOptions {
     shouldUseIdiomaticRequestNames: boolean;
     /* What the default encoding should be for form data parameters. */
     defaultFormParameterEncoding: "form" | "json" | undefined;
+    /* Whether or not to use the `bytes` type for binary responses. */
+    useBytesForBinaryResponse: boolean;
+    /* Whether or not to respect forward compatible enums in OpenAPI specifications. */
+    respectForwardCompatibleEnums: boolean;
 
     /* The filter to apply to the OpenAPI document. */
     filter: generatorsYml.OpenApiFilterSchema | undefined;
@@ -43,6 +47,22 @@ export interface ParseOpenAPIOptions {
     asyncApiNaming: "v1" | "v2";
 
     exampleGeneration: generatorsYml.OpenApiExampleGenerationSchema | undefined;
+
+    /**
+     * Configure what `additionalProperties` should default to when not explicitly defined on a schema. Defaults to `false`.
+     */
+    additionalPropertiesDefaultsTo: boolean;
+
+    /**
+     * If true, convert strings with format date to strings.
+     * If false, convert strings with format date to dates.
+     */
+    typeDatesAsStrings: boolean;
+
+    /**
+     * If true, preserve the oneOf structure when there is only one schema in the oneOf array.
+     */
+    preserveSingleSchemaOneOf: boolean;
 }
 
 export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
@@ -63,14 +83,19 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     filter: undefined,
     asyncApiNaming: "v1",
     exampleGeneration: undefined,
-    defaultFormParameterEncoding: "json"
+    defaultFormParameterEncoding: "json",
+    useBytesForBinaryResponse: false,
+    respectForwardCompatibleEnums: false,
+    additionalPropertiesDefaultsTo: false,
+    typeDatesAsStrings: true,
+    preserveSingleSchemaOneOf: false
 };
 
 export function getParseOptions({
     options,
     overrides
 }: {
-    options?: ParseOpenAPIOptions;
+    options?: Partial<ParseOpenAPIOptions>;
     overrides?: Partial<ParseOpenAPIOptions>;
 }): ParseOpenAPIOptions {
     return {
@@ -122,8 +147,28 @@ export function getParseOptions({
         filter: overrides?.filter ?? options?.filter ?? DEFAULT_PARSE_OPENAPI_SETTINGS.filter,
         asyncApiNaming:
             overrides?.asyncApiNaming ?? options?.asyncApiNaming ?? DEFAULT_PARSE_OPENAPI_SETTINGS.asyncApiNaming,
+        useBytesForBinaryResponse:
+            overrides?.useBytesForBinaryResponse ??
+            options?.useBytesForBinaryResponse ??
+            DEFAULT_PARSE_OPENAPI_SETTINGS.useBytesForBinaryResponse,
         exampleGeneration: overrides?.exampleGeneration ?? options?.exampleGeneration ?? undefined,
         defaultFormParameterEncoding:
-            overrides?.defaultFormParameterEncoding ?? options?.defaultFormParameterEncoding ?? undefined
+            overrides?.defaultFormParameterEncoding ?? options?.defaultFormParameterEncoding ?? undefined,
+        respectForwardCompatibleEnums:
+            overrides?.respectForwardCompatibleEnums ??
+            options?.respectForwardCompatibleEnums ??
+            DEFAULT_PARSE_OPENAPI_SETTINGS.respectForwardCompatibleEnums,
+        additionalPropertiesDefaultsTo:
+            overrides?.additionalPropertiesDefaultsTo ??
+            options?.additionalPropertiesDefaultsTo ??
+            DEFAULT_PARSE_OPENAPI_SETTINGS.additionalPropertiesDefaultsTo,
+        typeDatesAsStrings:
+            overrides?.typeDatesAsStrings ??
+            options?.typeDatesAsStrings ??
+            DEFAULT_PARSE_OPENAPI_SETTINGS.typeDatesAsStrings,
+        preserveSingleSchemaOneOf:
+            overrides?.preserveSingleSchemaOneOf ??
+            options?.preserveSingleSchemaOneOf ??
+            DEFAULT_PARSE_OPENAPI_SETTINGS.preserveSingleSchemaOneOf
     };
 }

@@ -2,4 +2,11 @@
 
 import typing
 
-UndiscriminatedLiteral = typing.Union[str, typing.Literal["$ending"]]
+UndiscriminatedLiteral = typing.Union[
+    str,
+    typing.Literal["$ending"],
+    typing.Literal["10 non-alphanumeric string literals you're going to love & why (number 8 will surprise you)"],
+    typing.Literal[True],
+    typing.Literal[False],
+    bool,
+]

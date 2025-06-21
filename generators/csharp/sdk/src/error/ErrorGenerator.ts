@@ -1,4 +1,5 @@
-import { CSharpFile, FileGenerator, csharp } from "@fern-api/csharp-codegen";
+import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
+import { csharp } from "@fern-api/csharp-codegen";
 import { RelativeFilePath, join } from "@fern-api/fs-utils";
 
 import { ErrorDeclaration } from "@fern-fern/ir-sdk/api";
@@ -34,7 +35,8 @@ export class ErrorGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSch
                     csharp.codeblock("body")
                 ]
             },
-            summary: "This exception type will be thrown for any non-2XX API responses."
+            summary: "This exception type will be thrown for any non-2XX API responses.",
+            annotations: [this.context.getSerializableAttribute()]
         });
         if (this.errorDeclaration.type != null) {
             class_.addField(

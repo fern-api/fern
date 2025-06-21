@@ -1,4 +1,5 @@
 import { ImportsManager, JavaScriptRuntime, NpmPackage, PackageId } from "@fern-typescript/commons";
+import { ExportsManager } from "@fern-typescript/commons";
 import { GeneratedSdkClientClass } from "@fern-typescript/contexts";
 import { ErrorResolver, PackageResolver } from "@fern-typescript/resolvers";
 
@@ -15,6 +16,7 @@ export declare namespace SdkClientClassGenerator {
         neverThrowErrors: boolean;
         includeCredentialsOnCrossOriginRequests: boolean;
         allowCustomFetcher: boolean;
+        shouldGenerateWebsocketClients: boolean;
         requireDefaultEnvironment: boolean;
         defaultTimeoutInSeconds: number | "infinity" | undefined;
         npmPackage: NpmPackage | undefined;
@@ -26,6 +28,9 @@ export declare namespace SdkClientClassGenerator {
         omitUndefined: boolean;
         allowExtraFields: boolean;
         oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
+        streamType: "wrapper" | "web";
+        fileResponseType: "stream" | "binary-response";
+        exportsManager: ExportsManager;
     }
 
     export namespace generateService {
@@ -45,6 +50,7 @@ export class SdkClientClassGenerator {
     private neverThrowErrors: boolean;
     private includeCredentialsOnCrossOriginRequests: boolean;
     private allowCustomFetcher: boolean;
+    private shouldGenerateWebsocketClients: boolean;
     private requireDefaultEnvironment: boolean;
     private defaultTimeoutInSeconds: number | "infinity" | undefined;
     private npmPackage: NpmPackage | undefined;
@@ -56,6 +62,9 @@ export class SdkClientClassGenerator {
     private omitUndefined: boolean;
     private allowExtraFields: boolean;
     private oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
+    private streamType: "wrapper" | "web";
+    private readonly fileResponseType: "stream" | "binary-response";
+    private exportsManager: ExportsManager;
 
     constructor({
         intermediateRepresentation,
@@ -64,6 +73,7 @@ export class SdkClientClassGenerator {
         neverThrowErrors,
         includeCredentialsOnCrossOriginRequests,
         allowCustomFetcher,
+        shouldGenerateWebsocketClients,
         requireDefaultEnvironment,
         defaultTimeoutInSeconds,
         npmPackage,
@@ -74,7 +84,10 @@ export class SdkClientClassGenerator {
         inlineFileProperties,
         oauthTokenProviderGenerator,
         omitUndefined,
-        allowExtraFields
+        allowExtraFields,
+        streamType,
+        fileResponseType,
+        exportsManager
     }: SdkClientClassGenerator.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.errorResolver = errorResolver;
@@ -82,6 +95,7 @@ export class SdkClientClassGenerator {
         this.neverThrowErrors = neverThrowErrors;
         this.includeCredentialsOnCrossOriginRequests = includeCredentialsOnCrossOriginRequests;
         this.allowCustomFetcher = allowCustomFetcher;
+        this.shouldGenerateWebsocketClients = shouldGenerateWebsocketClients;
         this.requireDefaultEnvironment = requireDefaultEnvironment;
         this.defaultTimeoutInSeconds = defaultTimeoutInSeconds;
         this.npmPackage = npmPackage;
@@ -93,6 +107,9 @@ export class SdkClientClassGenerator {
         this.oauthTokenProviderGenerator = oauthTokenProviderGenerator;
         this.omitUndefined = omitUndefined;
         this.allowExtraFields = allowExtraFields;
+        this.streamType = streamType;
+        this.fileResponseType = fileResponseType;
+        this.exportsManager = exportsManager;
     }
 
     public generateService({
@@ -104,6 +121,7 @@ export class SdkClientClassGenerator {
         return new GeneratedSdkClientClassImpl({
             isRoot,
             importsManager,
+            exportsManager: this.exportsManager,
             intermediateRepresentation: this.intermediateRepresentation,
             packageId,
             packageResolver: this.packageResolver,
@@ -112,6 +130,7 @@ export class SdkClientClassGenerator {
             neverThrowErrors: this.neverThrowErrors,
             includeCredentialsOnCrossOriginRequests: this.includeCredentialsOnCrossOriginRequests,
             allowCustomFetcher: this.allowCustomFetcher,
+            shouldGenerateWebsocketClients: this.shouldGenerateWebsocketClients,
             requireDefaultEnvironment: this.requireDefaultEnvironment,
             defaultTimeoutInSeconds: this.defaultTimeoutInSeconds,
             npmPackage: this.npmPackage,
@@ -122,7 +141,9 @@ export class SdkClientClassGenerator {
             inlineFileProperties: this.inlineFileProperties,
             oauthTokenProviderGenerator: this.oauthTokenProviderGenerator,
             omitUndefined: this.omitUndefined,
-            allowExtraFields: this.allowExtraFields
+            allowExtraFields: this.allowExtraFields,
+            streamType: this.streamType,
+            fileResponseType: this.fileResponseType
         });
     }
 }

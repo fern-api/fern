@@ -11,6 +11,7 @@ import {
     GeneratorInvocationSchema,
     GeneratorsConfigurationSchema,
     OpenApiFilterSchema,
+    OpenRpcSpecSchema,
     ReadmeSchema
 } from "./schemas";
 
@@ -64,9 +65,14 @@ export interface APIDefinitionSettings {
     respectNullableSchemas: boolean | undefined;
     onlyIncludeReferencedSchemas: boolean | undefined;
     inlinePathParameters: boolean | undefined;
+    useBytesForBinaryResponse: boolean | undefined;
+    respectForwardCompatibleEnums: boolean | undefined;
     filter: OpenApiFilterSchema | undefined;
     defaultFormParameterEncoding: "form" | "json" | undefined;
     exampleGeneration: generatorsYml.OpenApiExampleGenerationSchema | undefined;
+    additionalPropertiesDefaultsTo: boolean | undefined;
+    typeDatesAsStrings: boolean | undefined;
+    preserveSingleSchemaOneOf: boolean | undefined;
 }
 
 export interface APIDefinitionLocation {
@@ -77,7 +83,7 @@ export interface APIDefinitionLocation {
     settings: APIDefinitionSettings | undefined;
 }
 
-export type APIDefinitionSchema = ProtoAPIDefinitionSchema | OSSAPIDefinitionSchema;
+export type APIDefinitionSchema = ProtoAPIDefinitionSchema | OSSAPIDefinitionSchema | OpenRPCDefinitionSchema;
 
 export interface ProtoAPIDefinitionSchema {
     type: "protobuf";
@@ -88,6 +94,11 @@ export interface ProtoAPIDefinitionSchema {
 
 export interface OSSAPIDefinitionSchema {
     type: "oss";
+    path: string;
+}
+
+export interface OpenRPCDefinitionSchema {
+    type: "openrpc";
     path: string;
 }
 

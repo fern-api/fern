@@ -5,7 +5,7 @@ namespace SeedTrace.Test.Unit.MockServer;
 [TestFixture]
 public class UpdateWorkspaceSubmissionStatusTest : BaseMockServerTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public void MockServerTest()
     {
         const string requestJson = """
@@ -26,13 +26,11 @@ public class UpdateWorkspaceSubmissionStatusTest : BaseMockServerTest
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        Assert.DoesNotThrowAsync(
-            async () =>
-                await Client.Admin.UpdateWorkspaceSubmissionStatusAsync(
-                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                    "no-properties-union",
-                    RequestOptions
-                )
+        Assert.DoesNotThrowAsync(async () =>
+            await Client.Admin.UpdateWorkspaceSubmissionStatusAsync(
+                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                "no-properties-union"
+            )
         );
     }
 }

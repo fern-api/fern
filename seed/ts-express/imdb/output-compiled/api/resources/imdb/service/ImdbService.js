@@ -76,7 +76,9 @@ class ImdbService {
                         cookie: res.cookie.bind(res),
                         locals: res.locals,
                     }, next);
-                    next();
+                    if (!res.writableEnded) {
+                        next();
+                    }
                 }
                 catch (error) {
                     if (error instanceof errors.SeedApiError) {
@@ -107,7 +109,9 @@ class ImdbService {
                     cookie: res.cookie.bind(res),
                     locals: res.locals,
                 }, next);
-                next();
+                if (!res.writableEnded) {
+                    next();
+                }
             }
             catch (error) {
                 if (error instanceof errors.SeedApiError) {

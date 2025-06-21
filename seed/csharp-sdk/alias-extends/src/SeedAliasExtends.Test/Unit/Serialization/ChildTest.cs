@@ -1,9 +1,7 @@
 using System.Text.Json;
-using System.Text.Json.Serialization;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedAliasExtends;
+using SeedAliasExtends.Core;
 
 namespace SeedAliasExtends.Test;
 
@@ -11,25 +9,39 @@ namespace SeedAliasExtends.Test;
 public class ChildTest
 {
     [Test]
+    public void TestDeserialization()
+    {
+        var json = """
+            {
+              "parent": "Property from the parent",
+              "child": "Property from the child"
+            }
+            """;
+        var expectedObject = new Child
+        {
+            Parent = "Property from the parent",
+            Child_ = "Property from the child",
+        };
+        var deserializedObject = JsonUtils.Deserialize<Child>(json);
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
+    }
+
+    [Test]
     public void TestSerialization()
     {
-        var inputJson =
-            @"
+        var expectedJson = """
+            {
+              "parent": "Property from the parent",
+              "child": "Property from the child"
+            }
+            """;
+        var actualObj = new Child
         {
-          ""parent"": ""Property from the parent"",
-          ""child"": ""Property from the child""
-        }
-        ";
-
-        var serializerOptions = new JsonSerializerOptions
-        {
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+            Parent = "Property from the parent",
+            Child_ = "Property from the child",
         };
-
-        var deserializedObject = JsonSerializer.Deserialize<Child>(inputJson, serializerOptions);
-
-        var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
-
-        JToken.Parse(inputJson).Should().BeEquivalentTo(JToken.Parse(serializedJson));
+        var actualElement = JsonUtils.SerializeToElement(actualObj);
+        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
+        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
     }
 }

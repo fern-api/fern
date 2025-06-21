@@ -18,6 +18,7 @@ export interface DocsConfiguration {
     roles?: FernDocsConfig.RoleId[];
     tabs?: Record<FernDocsConfig.TabId, FernDocsConfig.TabConfig>;
     versions?: FernDocsConfig.VersionConfig[];
+    products?: FernDocsConfig.ProductConfig[];
     landingPage?: FernDocsConfig.PageConfiguration;
     /** The navigation config is skipped when multiple versions are present. */
     navigation?: FernDocsConfig.NavigationConfig;
@@ -25,6 +26,8 @@ export interface DocsConfiguration {
     footerLinks?: FernDocsConfig.FooterLinksConfig;
     experimental?: FernDocsConfig.ExperimentalConfig;
     defaultLanguage?: FernDocsConfig.ProgrammingLanguage;
+    aiChat?: FernDocsConfig.AiChatConfig;
+    aiSearch?: FernDocsConfig.AiChatConfig;
     metadata?: FernDocsConfig.MetadataConfig;
     redirects?: FernDocsConfig.RedirectConfig[];
     logo?: FernDocsConfig.LogoConfiguration;

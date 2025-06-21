@@ -6,7 +6,6 @@ import com.fern.generator.exec.model.config.GithubOutputMode;
 import com.fern.generator.exec.model.config.MavenCentralSignature;
 import com.fern.generator.exec.model.config.MavenGithubPublishInfo;
 import com.fern.generator.exec.model.config.MavenRegistryConfigV2;
-import com.fern.generator.exec.model.config.OutputMode.Visitor;
 import com.fern.generator.exec.model.logging.ErrorExitStatusUpdate;
 import com.fern.generator.exec.model.logging.ExitStatusUpdate;
 import com.fern.generator.exec.model.logging.GeneratorUpdate;
@@ -15,6 +14,9 @@ import com.fern.generator.exec.model.logging.PackageCoordinate;
 import com.fern.generator.exec.model.logging.SuccessfulStatusUpdate;
 import com.fern.ir.core.ObjectMappers;
 import com.fern.ir.model.ir.IntermediateRepresentation;
+import com.fern.ir.model.publish.DirectPublish;
+import com.fern.ir.model.publish.Filesystem;
+import com.fern.ir.model.publish.GithubPublish;
 import com.fern.java.MavenCoordinateParser.MavenArtifactAndGroup;
 import com.fern.java.generators.GithubWorkflowGenerator;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
@@ -118,34 +120,38 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
         try {
             IntermediateRepresentation ir = getIr(generatorConfig);
             this.outputDirectory = Paths.get(generatorConfig.getOutput().getPath());
-            generatorConfig.getOutput().getMode().visit(new Visitor<Void>() {
+            generatorConfig
+                    .getOutput()
+                    .getMode()
+                    .visit(new com.fern.generator.exec.model.config.OutputMode.Visitor<Void>() {
 
-                @Override
-                public Void visitPublish(GeneratorPublishConfig value) {
-                    T customConfig = getCustomConfig(generatorConfig);
-                    runInPublishMode(generatorExecClient, generatorConfig, ir, customConfig, value);
-                    return null;
-                }
+                        @Override
+                        public Void visitPublish(GeneratorPublishConfig value) {
+                            T customConfig = getCustomConfig(generatorConfig);
+                            runInPublishMode(generatorExecClient, generatorConfig, ir, customConfig, value);
+                            return null;
+                        }
 
-                @Override
-                public Void visitDownloadFiles() {
-                    K customConfig = getDownloadFilesCustomConfig(generatorConfig);
-                    runInDownloadFilesMode(generatorExecClient, generatorConfig, ir, customConfig);
-                    return null;
-                }
+                        @Override
+                        public Void visitDownloadFiles() {
+                            K customConfig = getDownloadFilesCustomConfig(generatorConfig);
+                            runInDownloadFilesMode(generatorExecClient, generatorConfig, ir, customConfig);
+                            return null;
+                        }
 
-                @Override
-                public Void visitGithub(GithubOutputMode value) {
-                    T customConfig = getCustomConfig(generatorConfig);
-                    runInGithubMode(generatorExecClient, generatorConfig, ir, customConfig, value);
-                    return null;
-                }
+                        @Override
+                        public Void visitGithub(GithubOutputMode value) {
+                            T customConfig = getCustomConfig(generatorConfig);
+                            runInGithubMode(generatorExecClient, generatorConfig, ir, customConfig, value);
+                            return null;
+                        }
 
-                @Override
-                public Void visitUnknown(String unknownType) {
-                    throw new RuntimeException("Encountered unknown output mode: " + unknownType);
-                }
-            });
+                        @Override
+                        public Void visitUnknown(String unknownType) {
+                            throw new RuntimeException("Encountered unknown output mode: " + unknownType);
+                        }
+                    });
+            runV2Generator(generatorExecClient, args);
             generatorExecClient.sendUpdate(GeneratorUpdate.exitStatusUpdate(
                     ExitStatusUpdate.successful(SuccessfulStatusUpdate.builder().build())));
         } catch (Exception e) {
@@ -156,14 +162,47 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
         }
     }
 
+    public abstract void runV2Generator(DefaultGeneratorExecClient defaultGeneratorExecClient, String[] args);
+
     public final void runInDownloadFilesMode(
             DefaultGeneratorExecClient generatorExecClient,
             GeneratorConfig generatorConfig,
             IntermediateRepresentation ir,
             K customConfig) {
         runInDownloadFilesModeHook(generatorExecClient, generatorConfig, ir, customConfig);
+        Boolean generateFullProject = ir.getPublishConfig()
+                .map(publishConfig ->
+                        publishConfig.visit(new com.fern.ir.model.publish.PublishingConfig.Visitor<Boolean>() {
+                            @Override
+                            public Boolean visitDirect(DirectPublish value) {
+                                return false;
+                            }
+
+                            @Override
+                            public Boolean visitGithub(GithubPublish value) {
+                                return false;
+                            }
+
+                            @Override
+                            public Boolean visitFilesystem(Filesystem value) {
+                                return value.getGenerateFullProject();
+                            }
+
+                            @Override
+                            public Boolean _visitUnknown(Object value) {
+                                throw new RuntimeException("Encountered unknown publish config: " + value);
+                            }
+                        }))
+                .orElse(false);
+        if (generateFullProject) {
+            addRootProjectFiles(Optional.empty(), true, false, generatorConfig);
+        }
         generatedFiles.forEach(
                 generatedFile -> generatedFile.write(outputDirectory, true, customConfig.packagePrefix()));
+        if (generateFullProject) {
+            runCommandBlocking(new String[] {"gradle", "wrapper"}, outputDirectory, Collections.emptyMap());
+            runCommandBlocking(new String[] {"gradle", "spotlessApply"}, outputDirectory, Collections.emptyMap());
+        }
     }
 
     public abstract void runInDownloadFilesModeHook(

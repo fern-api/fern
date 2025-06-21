@@ -5,7 +5,7 @@
 /**
  * @example
  *     {
- *         for: "for"
+ *         "for": "for"
  *     }
  */
 export interface TestRequest {

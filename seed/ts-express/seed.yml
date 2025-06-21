@@ -1,4 +1,4 @@
-irVersion: v53
+irVersion: v58
 displayName: TypeScript Express
 changelogLocation: ../../generators/typescript/express/versions.yml
 image: fernapi/fern-typescript-express
@@ -12,10 +12,10 @@ buildScripts:
       - yarn build
 
 publish:
-  versionSubstitution: "$VERSION"
+  versionSubstitution: $VERSION
   command:
-    - pnpm --filter @fern-typescript/express-generator-cli dockerTagVersion "$VERSION"
-    - docker push fernapi/fern-typescript-express:"$VERSION"
+    - pnpm --filter @fern-typescript/express-generator-cli dockerTagVersion $VERSION
+    - docker push fernapi/fern-typescript-express:$VERSION
 test:
   docker:
     image: fernapi/fern-typescript-express:local
@@ -63,6 +63,9 @@ fixtures:
         requestValidationStatusCode: 400
       outputFolder: validation-status-code
   exhaustive:
+    - customConfig:
+        packagePath: src/test-packagePath
+      outputFolder: test-package-path
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
@@ -87,10 +90,11 @@ fixtures:
       outputFolder: retain-original-casing
 allowedFailures:
   - bytes
-  - enum
   - file-download
   - file-upload
+  - imdb:skip-request-validation
   - plain-text
+  - public-object
   - streaming
   - streaming-parameter
   - server-sent-events

@@ -36,7 +36,7 @@ groups:
       - external
     generators:
       - name: fernapi/fern-java-sdk
-        version: 0.8.7-rc2
+        version: 0.10.1
         output:
           location: maven
           coordinate: com.fern.api:fern-java-sdk

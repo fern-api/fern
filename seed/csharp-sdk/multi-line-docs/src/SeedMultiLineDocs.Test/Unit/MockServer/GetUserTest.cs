@@ -12,8 +12,6 @@ public class GetUserTest : BaseMockServerTest
             .Given(WireMock.RequestBuilders.Request.Create().WithPath("/users/userId").UsingGet())
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        Assert.DoesNotThrowAsync(
-            async () => await Client.User.GetUserAsync("userId", RequestOptions)
-        );
+        Assert.DoesNotThrowAsync(async () => await Client.User.GetUserAsync("userId"));
     }
 }

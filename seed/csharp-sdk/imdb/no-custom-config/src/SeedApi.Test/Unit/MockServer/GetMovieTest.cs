@@ -1,7 +1,6 @@
-using FluentAssertions.Json;
 using global::System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using SeedApi;
 using SeedApi.Core;
 
 namespace SeedApi.Test.Unit.MockServer;
@@ -29,10 +28,10 @@ public class GetMovieTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Imdb.GetMovieAsync("movieId", RequestOptions);
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        var response = await Client.Imdb.GetMovieAsync("movieId");
+        Assert.That(
+            response,
+            Is.EqualTo(JsonUtils.Deserialize<Movie>(mockResponse)).UsingDefaults()
+        );
     }
 }

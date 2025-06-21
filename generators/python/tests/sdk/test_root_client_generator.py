@@ -1,3 +1,5 @@
+import textwrap
+
 from fern_python.codegen import AST
 from fern_python.generators.sdk.client_generator.root_client_generator import (
     RootClientGenerator,
@@ -52,28 +54,28 @@ def test_generated_root_client_builder() -> None:
 
     snippet = SourceFileFactory(should_format=True).create_snippet()
     snippet.add_expression(generated_root_client.sync_instantiation)
-    assert (
-        snippet.to_str()
-        == """from acme.client import Acme
-from acme.environments import AcmeEnvironments
+    assert snippet.to_str() == textwrap.dedent(
+        """\
+        from acme.client import Acme
+        from acme.environments import AcmeEnvironments
 
-client = Acme(
-    base_url="acme.io",
-    environment=AcmeEnvironments.PRODUCTION,
-)
-"""
+        client = Acme(
+            base_url="acme.io",
+            environment=AcmeEnvironments.PRODUCTION,
+        )
+        """
     )
 
     async_snippet = SourceFileFactory(should_format=True).create_snippet()
     async_snippet.add_expression(generated_root_client.async_instantiation)
-    assert (
-        async_snippet.to_str()
-        == """from acme.client import AcmeAsync
-from acme.environments import AcmeEnvironments
+    assert async_snippet.to_str() == textwrap.dedent(
+        """\
+        from acme.client import AcmeAsync
+        from acme.environments import AcmeEnvironments
 
-client = AcmeAsync(
-    base_url="acme.io",
-    environment=AcmeEnvironments.PRODUCTION,
-)
-"""
+        client = AcmeAsync(
+            base_url="acme.io",
+            environment=AcmeEnvironments.PRODUCTION,
+        )
+        """
     )

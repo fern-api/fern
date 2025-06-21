@@ -1,6 +1,7 @@
-irVersion: v53
+irVersion: v57
 displayName: Pydantic Model
 image: fernapi/fern-pydantic-model-v2
+changelogLocation: ../../generators/python/pydantic/versions.yml
 test:
   docker:
     image: fernapi/fern-pydantic-model-v2:latest
@@ -9,3 +10,5 @@ test:
 language: python
 generatorType: Model
 defaultOutputMode: local_files
+allowedFailures:
+  - version

@@ -1,4 +1,4 @@
-import { JavaScriptRuntime, NpmPackage } from "@fern-typescript/commons";
+import { ExportsManager, ImportsManager, JavaScriptRuntime, NpmPackage } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
 
 import { GeneratorNotificationService } from "@fern-api/base-generator";
@@ -19,6 +19,8 @@ import { SdkErrorSchemaContext } from "./sdk-error-schema";
 import { SdkInlinedRequestBodySchemaContext } from "./sdk-inlined-request-body-schema";
 import { TimeoutSdkErrorContext } from "./timeout-sdk-error";
 import { VersionContext } from "./version";
+import { WebsocketClassContext } from "./websocket-class";
+import { WebsocketTypeSchemaContext } from "./websocket-type-schema";
 
 export interface SdkContext extends BaseContext {
     logger: Logger;
@@ -39,6 +41,8 @@ export interface SdkContext extends BaseContext {
     timeoutSdkError: TimeoutSdkErrorContext;
     requestWrapper: RequestWrapperContext;
     sdkClientClass: SdkClientClassContext;
+    websocket: WebsocketClassContext;
+    websocketTypeSchema: WebsocketTypeSchemaContext;
     versionContext: VersionContext;
     targetRuntime: JavaScriptRuntime;
     includeSerdeLayer: boolean;
@@ -47,4 +51,6 @@ export interface SdkContext extends BaseContext {
     inlineFileProperties: boolean;
     omitUndefined: boolean;
     neverThrowErrors: boolean;
+    importsManager: ImportsManager;
+    exportsManager: ExportsManager;
 }

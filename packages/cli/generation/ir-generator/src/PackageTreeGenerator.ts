@@ -15,9 +15,7 @@ import {
     WebSocketChannelId,
     WebhookGroupId
 } from "@fern-api/ir-sdk";
-
-import { IdGenerator } from "./IdGenerator";
-import { FilteredIr } from "./filtered-ir/FilteredIr";
+import { FilteredIr, IdGenerator } from "@fern-api/ir-utils";
 
 type UnprocessedPackage = Omit<Package, "hasEndpointsInTree">;
 type UnprocessedSubpackage = Omit<Subpackage, "hasEndpointsInTree">;
@@ -109,6 +107,12 @@ export class PackageTreeGenerator {
                             subpackage.service != null
                                 ? filteredIr.hasServiceId(subpackage.service)
                                     ? subpackage.service
+                                    : undefined
+                                : undefined,
+                        websocket:
+                            subpackage.websocket != null
+                                ? filteredIr.hasChannel(subpackage.websocket)
+                                    ? subpackage.websocket
                                     : undefined
                                 : undefined,
                         subpackages: subpackage.subpackages.filter((subpackageId) =>

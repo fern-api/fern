@@ -5,10 +5,14 @@
 
 The Seed C# library provides convenient access to the Seed API from C#.
 
+## Requirements
+
+This SDK requires:
+
 ## Installation
 
 ```sh
-nuget install SeedBearerTokenEnvironmentVariable
+dotnet add package SeedBearerTokenEnvironmentVariable
 ```
 
 ## Usage

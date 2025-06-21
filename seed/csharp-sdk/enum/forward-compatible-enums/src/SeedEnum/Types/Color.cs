@@ -4,8 +4,13 @@ using SeedEnum.Core;
 namespace SeedEnum;
 
 [JsonConverter(typeof(StringEnumSerializer<Color>))]
+[Serializable]
 public readonly record struct Color : IStringEnum
 {
+    public static readonly Color Red = new(Values.Red);
+
+    public static readonly Color Blue = new(Values.Blue);
+
     public Color(string value)
     {
         Value = value;
@@ -16,26 +21,17 @@ public readonly record struct Color : IStringEnum
     /// </summary>
     public string Value { get; }
 
-    public static readonly Color Red = Custom(Values.Red);
-
-    public static readonly Color Blue = Custom(Values.Blue);
-
-    /// <summary>
-    /// Constant strings for enum values
-    /// </summary>
-    public static class Values
-    {
-        public const string Red = "red";
-
-        public const string Blue = "blue";
-    }
-
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static Color Custom(string value)
+    public static Color FromCustom(string value)
     {
         return new Color(value);
+    }
+
+    public bool Equals(string? other)
+    {
+        return Value.Equals(other);
     }
 
     /// <summary>
@@ -46,12 +42,22 @@ public readonly record struct Color : IStringEnum
         return Value;
     }
 
-    public bool Equals(string? other)
-    {
-        return Value.Equals(other);
-    }
-
     public static bool operator ==(Color value1, string value2) => value1.Value.Equals(value2);
 
     public static bool operator !=(Color value1, string value2) => !value1.Value.Equals(value2);
+
+    public static explicit operator string(Color value) => value.Value;
+
+    public static explicit operator Color(string value) => new(value);
+
+    /// <summary>
+    /// Constant strings for enum values
+    /// </summary>
+    [Serializable]
+    public static class Values
+    {
+        public const string Red = "red";
+
+        public const string Blue = "blue";
+    }
 }

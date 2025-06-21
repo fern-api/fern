@@ -286,7 +286,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:DeleteResponse": {
             "type": "object",
@@ -316,7 +317,8 @@
                     "file": null
                 }
             },
-            "properties": []
+            "properties": [],
+            "additionalProperties": false
         },
         "type_:DescribeResponse": {
             "type": "object",
@@ -478,7 +480,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:FetchResponse": {
             "type": "object",
@@ -609,7 +612,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:FieldBehavior": {
             "type": "enum",
@@ -931,7 +935,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:ListElement": {
             "type": "object",
@@ -993,7 +998,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:ListResponse": {
             "type": "object",
@@ -1151,7 +1157,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:NamespaceSummary": {
             "type": "object",
@@ -1213,7 +1220,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:Pagination": {
             "type": "object",
@@ -1275,7 +1283,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:QueryColumn": {
             "type": "object",
@@ -1461,7 +1470,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:QueryResponse": {
             "type": "object",
@@ -1622,7 +1632,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:QueryResult": {
             "type": "object",
@@ -1718,7 +1729,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:ScoredColumn": {
             "type": "object",
@@ -1904,7 +1916,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:UpdateResponse": {
             "type": "object",
@@ -2062,7 +2075,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:UploadResponse": {
             "type": "object",
@@ -2124,7 +2138,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:Usage": {
             "type": "object",
@@ -2186,7 +2201,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:Any": {
             "type": "alias",
@@ -4451,6 +4467,7 @@
             "examples": null
         }
     },
+    "pathParameters": [],
     "environments": {
         "defaultEnvironment": "Default",
         "environments": {
@@ -4482,5 +4499,6 @@
                 }
             ]
         }
-    }
+    },
+    "generatorConfig": null
 }

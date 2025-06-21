@@ -18,4 +18,5 @@ export interface ExpressCustomConfig {
     useBigInt: boolean;
     noOptionalProperties: boolean;
     enableInlineTypes: boolean;
+    packagePath: string | undefined;
 }

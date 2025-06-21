@@ -4492,7 +4492,15 @@ types:
               "request": {
                 "name": "GetRecentChatsForUserChatRecentGetRequest",
                 "query-parameters": {
-                  "project_id": "optional<string>",
+                  "project_id": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                 },
               },
               "response": {
@@ -5034,7 +5042,10 @@ service:
       request:
         name: GetRecentChatsForUserChatRecentGetRequest
         query-parameters:
-          project_id: optional<string>
+          project_id:
+            type: optional<string>
+            validation:
+              format: uuid
       response:
         docs: Successful Response
         type: list<root.Chat>
@@ -6229,8 +6240,19 @@ This may be combined with `remove_all` to replace the member's entire role list.
               "request": {
                 "name": "ListChatsOrgOrgIdProjectProjectIdCollectionCollectionIdChatGetRequest",
                 "query-parameters": {
-                  "cursor": "optional<string>",
-                  "page_limit": "optional<integer>",
+                  "cursor": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                  "page_limit": {
+                    "default": 100,
+                    "type": "optional<integer>",
+                  },
                   "show": "optional<root.CollectionChatShow>",
                 },
               },
@@ -6296,8 +6318,19 @@ This may be combined with `remove_all` to replace the member's entire role list.
               "request": {
                 "name": "ListCollectionsOrgOrgIdProjectProjectIdCollectionGetRequest",
                 "query-parameters": {
-                  "cursor": "optional<string>",
-                  "page_limit": "optional<integer>",
+                  "cursor": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                  "page_limit": {
+                    "default": 100,
+                    "type": "optional<integer>",
+                  },
                   "title": "optional<string>",
                 },
               },
@@ -6491,8 +6524,13 @@ service:
         name: ListCollectionsOrgOrgIdProjectProjectIdCollectionGetRequest
         query-parameters:
           title: optional<string>
-          cursor: optional<string>
-          page_limit: optional<integer>
+          cursor:
+            type: optional<string>
+            validation:
+              format: uuid
+          page_limit:
+            type: optional<integer>
+            default: 100
       response:
         docs: Successful Response
         type: root.PaginatedResultSetCollection
@@ -6698,8 +6736,13 @@ service:
         name: ListChatsOrgOrgIdProjectProjectIdCollectionCollectionIdChatGetRequest
         query-parameters:
           show: optional<root.CollectionChatShow>
-          cursor: optional<string>
-          page_limit: optional<integer>
+          cursor:
+            type: optional<string>
+            validation:
+              format: uuid
+          page_limit:
+            type: optional<integer>
+            default: 100
       response:
         docs: Successful Response
         type: root.PaginatedResultSetChat
@@ -8004,7 +8047,10 @@ service:
               "request": {
                 "name": "ListFilesOrgOrgIdProjectProjectIdDatasourceBoxConnectionIdListFilesGetRequest",
                 "query-parameters": {
-                  "parent_id": "optional<string>",
+                  "parent_id": {
+                    "default": "",
+                    "type": "optional<string>",
+                  },
                 },
               },
               "response": {
@@ -8070,7 +8116,10 @@ service:
                 "name": "ListRunsOrgOrgIdProjectProjectIdDatasourceBoxConnectionIdRunsGetRequest",
                 "query-parameters": {
                   "cursor": "optional<string>",
-                  "page_limit": "optional<integer>",
+                  "page_limit": {
+                    "default": 25,
+                    "type": "optional<integer>",
+                  },
                 },
               },
               "response": {
@@ -8160,7 +8209,9 @@ service:
         name: >-
           ListFilesOrgOrgIdProjectProjectIdDatasourceBoxConnectionIdListFilesGetRequest
         query-parameters:
-          parent_id: optional<string>
+          parent_id:
+            type: optional<string>
+            default: ''
       response:
         docs: Successful Response
         type: root.ObjectList
@@ -8300,7 +8351,9 @@ service:
           ListRunsOrgOrgIdProjectProjectIdDatasourceBoxConnectionIdRunsGetRequest
         query-parameters:
           cursor: optional<string>
-          page_limit: optional<integer>
+          page_limit:
+            type: optional<integer>
+            default: 25
       response:
         docs: Successful Response
         type: root.PaginatedResultSetDatasourceSyncRun
@@ -8808,7 +8861,10 @@ service:
               "request": {
                 "name": "ListFilesOrgOrgIdProjectProjectIdDatasourceConfluenceConnectionIdListFilesGetRequest",
                 "query-parameters": {
-                  "parent_id": "optional<string>",
+                  "parent_id": {
+                    "default": "",
+                    "type": "optional<string>",
+                  },
                 },
               },
               "response": {
@@ -8874,7 +8930,10 @@ service:
                 "name": "ListRunsOrgOrgIdProjectProjectIdDatasourceConfluenceConnectionIdRunsGetRequest",
                 "query-parameters": {
                   "cursor": "optional<string>",
-                  "page_limit": "optional<integer>",
+                  "page_limit": {
+                    "default": 25,
+                    "type": "optional<integer>",
+                  },
                 },
               },
               "response": {
@@ -8964,7 +9023,9 @@ service:
         name: >-
           ListFilesOrgOrgIdProjectProjectIdDatasourceConfluenceConnectionIdListFilesGetRequest
         query-parameters:
-          parent_id: optional<string>
+          parent_id:
+            type: optional<string>
+            default: ''
       response:
         docs: Successful Response
         type: root.ObjectList
@@ -9106,7 +9167,9 @@ service:
           ListRunsOrgOrgIdProjectProjectIdDatasourceConfluenceConnectionIdRunsGetRequest
         query-parameters:
           cursor: optional<string>
-          page_limit: optional<integer>
+          page_limit:
+            type: optional<integer>
+            default: 25
       response:
         docs: Successful Response
         type: root.PaginatedResultSetDatasourceSyncRun
@@ -9617,7 +9680,10 @@ service:
               "request": {
                 "name": "ListFilesOrgOrgIdProjectProjectIdDatasourceDropboxConnectionIdListFilesGetRequest",
                 "query-parameters": {
-                  "parent_id": "optional<string>",
+                  "parent_id": {
+                    "default": "",
+                    "type": "optional<string>",
+                  },
                 },
               },
               "response": {
@@ -9683,7 +9749,10 @@ service:
                 "name": "ListRunsOrgOrgIdProjectProjectIdDatasourceDropboxConnectionIdRunsGetRequest",
                 "query-parameters": {
                   "cursor": "optional<string>",
-                  "page_limit": "optional<integer>",
+                  "page_limit": {
+                    "default": 25,
+                    "type": "optional<integer>",
+                  },
                 },
               },
               "response": {
@@ -9773,7 +9842,9 @@ service:
         name: >-
           ListFilesOrgOrgIdProjectProjectIdDatasourceDropboxConnectionIdListFilesGetRequest
         query-parameters:
-          parent_id: optional<string>
+          parent_id:
+            type: optional<string>
+            default: ''
       response:
         docs: Successful Response
         type: root.ObjectList
@@ -9915,7 +9986,9 @@ service:
           ListRunsOrgOrgIdProjectProjectIdDatasourceDropboxConnectionIdRunsGetRequest
         query-parameters:
           cursor: optional<string>
-          page_limit: optional<integer>
+          page_limit:
+            type: optional<integer>
+            default: 25
       response:
         docs: Successful Response
         type: root.PaginatedResultSetDatasourceSyncRun
@@ -10426,7 +10499,10 @@ service:
               "request": {
                 "name": "ListFilesOrgOrgIdProjectProjectIdDatasourceGdriveConnectionIdListFilesGetRequest",
                 "query-parameters": {
-                  "parent_id": "optional<string>",
+                  "parent_id": {
+                    "default": "",
+                    "type": "optional<string>",
+                  },
                 },
               },
               "response": {
@@ -10492,7 +10568,10 @@ service:
                 "name": "ListRunsOrgOrgIdProjectProjectIdDatasourceGdriveConnectionIdRunsGetRequest",
                 "query-parameters": {
                   "cursor": "optional<string>",
-                  "page_limit": "optional<integer>",
+                  "page_limit": {
+                    "default": 25,
+                    "type": "optional<integer>",
+                  },
                 },
               },
               "response": {
@@ -10582,7 +10661,9 @@ service:
         name: >-
           ListFilesOrgOrgIdProjectProjectIdDatasourceGdriveConnectionIdListFilesGetRequest
         query-parameters:
-          parent_id: optional<string>
+          parent_id:
+            type: optional<string>
+            default: ''
       response:
         docs: Successful Response
         type: root.ObjectList
@@ -10724,7 +10805,9 @@ service:
           ListRunsOrgOrgIdProjectProjectIdDatasourceGdriveConnectionIdRunsGetRequest
         query-parameters:
           cursor: optional<string>
-          page_limit: optional<integer>
+          page_limit:
+            type: optional<integer>
+            default: 25
       response:
         docs: Successful Response
         type: root.PaginatedResultSetDatasourceSyncRun
@@ -11234,7 +11317,10 @@ service:
               "request": {
                 "name": "ListFilesOrgOrgIdProjectProjectIdDatasourceNotionConnectionIdListFilesGetRequest",
                 "query-parameters": {
-                  "parent_id": "optional<string>",
+                  "parent_id": {
+                    "default": "",
+                    "type": "optional<string>",
+                  },
                 },
               },
               "response": {
@@ -11300,7 +11386,10 @@ service:
                 "name": "ListRunsOrgOrgIdProjectProjectIdDatasourceNotionConnectionIdRunsGetRequest",
                 "query-parameters": {
                   "cursor": "optional<string>",
-                  "page_limit": "optional<integer>",
+                  "page_limit": {
+                    "default": 25,
+                    "type": "optional<integer>",
+                  },
                 },
               },
               "response": {
@@ -11390,7 +11479,9 @@ service:
         name: >-
           ListFilesOrgOrgIdProjectProjectIdDatasourceNotionConnectionIdListFilesGetRequest
         query-parameters:
-          parent_id: optional<string>
+          parent_id:
+            type: optional<string>
+            default: ''
       response:
         docs: Successful Response
         type: root.ObjectList
@@ -11532,7 +11623,9 @@ service:
           ListRunsOrgOrgIdProjectProjectIdDatasourceNotionConnectionIdRunsGetRequest
         query-parameters:
           cursor: optional<string>
-          page_limit: optional<integer>
+          page_limit:
+            type: optional<integer>
+            default: 25
       response:
         docs: Successful Response
         type: root.PaginatedResultSetDatasourceSyncRun
@@ -12042,7 +12135,10 @@ service:
               "request": {
                 "name": "ListFilesOrgOrgIdProjectProjectIdDatasourceOnedriveConnectionIdListFilesGetRequest",
                 "query-parameters": {
-                  "parent_id": "optional<string>",
+                  "parent_id": {
+                    "default": "",
+                    "type": "optional<string>",
+                  },
                 },
               },
               "response": {
@@ -12108,7 +12204,10 @@ service:
                 "name": "ListRunsOrgOrgIdProjectProjectIdDatasourceOnedriveConnectionIdRunsGetRequest",
                 "query-parameters": {
                   "cursor": "optional<string>",
-                  "page_limit": "optional<integer>",
+                  "page_limit": {
+                    "default": 25,
+                    "type": "optional<integer>",
+                  },
                 },
               },
               "response": {
@@ -12198,7 +12297,9 @@ service:
         name: >-
           ListFilesOrgOrgIdProjectProjectIdDatasourceOnedriveConnectionIdListFilesGetRequest
         query-parameters:
-          parent_id: optional<string>
+          parent_id:
+            type: optional<string>
+            default: ''
       response:
         docs: Successful Response
         type: root.ObjectList
@@ -12340,7 +12441,9 @@ service:
           ListRunsOrgOrgIdProjectProjectIdDatasourceOnedriveConnectionIdRunsGetRequest
         query-parameters:
           cursor: optional<string>
-          page_limit: optional<integer>
+          page_limit:
+            type: optional<integer>
+            default: 25
       response:
         docs: Successful Response
         type: root.PaginatedResultSetDatasourceSyncRun
@@ -12851,7 +12954,10 @@ service:
               "request": {
                 "name": "ListFilesOrgOrgIdProjectProjectIdDatasourceSharepointConnectionIdListFilesGetRequest",
                 "query-parameters": {
-                  "parent_id": "optional<string>",
+                  "parent_id": {
+                    "default": "",
+                    "type": "optional<string>",
+                  },
                 },
               },
               "response": {
@@ -12917,7 +13023,10 @@ service:
                 "name": "ListRunsOrgOrgIdProjectProjectIdDatasourceSharepointConnectionIdRunsGetRequest",
                 "query-parameters": {
                   "cursor": "optional<string>",
-                  "page_limit": "optional<integer>",
+                  "page_limit": {
+                    "default": 25,
+                    "type": "optional<integer>",
+                  },
                 },
               },
               "response": {
@@ -13007,7 +13116,9 @@ service:
         name: >-
           ListFilesOrgOrgIdProjectProjectIdDatasourceSharepointConnectionIdListFilesGetRequest
         query-parameters:
-          parent_id: optional<string>
+          parent_id:
+            type: optional<string>
+            default: ''
       response:
         docs: Successful Response
         type: root.ObjectList
@@ -13149,7 +13260,9 @@ service:
           ListRunsOrgOrgIdProjectProjectIdDatasourceSharepointConnectionIdRunsGetRequest
         query-parameters:
           cursor: optional<string>
-          page_limit: optional<integer>
+          page_limit:
+            type: optional<integer>
+            default: 25
       response:
         docs: Successful Response
         type: root.PaginatedResultSetDatasourceSyncRun
@@ -13519,8 +13632,19 @@ service:
               "request": {
                 "name": "DocumentEmbeddingQueryOrgOrgIdProjectProjectIdDocumentDocumentIdEmbeddingsGetRequest",
                 "query-parameters": {
-                  "cursor": "optional<string>",
-                  "page_limit": "optional<integer>",
+                  "cursor": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                  "page_limit": {
+                    "default": 25,
+                    "type": "optional<integer>",
+                  },
                 },
               },
               "response": {
@@ -13652,10 +13776,37 @@ service:
               "request": {
                 "name": "DocumentListOrgOrgIdProjectProjectIdDocumentGetRequest",
                 "query-parameters": {
-                  "collection_id": "optional<string>",
-                  "connection_id": "optional<string>",
-                  "cursor": "optional<string>",
-                  "page_limit": "optional<integer>",
+                  "collection_id": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                  "connection_id": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                  "cursor": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                  "page_limit": {
+                    "default": 25,
+                    "type": "optional<integer>",
+                  },
                   "source": "optional<DocumentListOrgOrgIdProjectProjectIdDocumentGetRequestSource>",
                   "strategy": "optional<string>",
                   "title": "optional<string>",
@@ -14327,11 +14478,22 @@ service:
       request:
         name: DocumentListOrgOrgIdProjectProjectIdDocumentGetRequest
         query-parameters:
-          connection_id: optional<string>
+          connection_id:
+            type: optional<string>
+            validation:
+              format: uuid
           title: optional<string>
-          cursor: optional<string>
-          collection_id: optional<string>
-          page_limit: optional<integer>
+          cursor:
+            type: optional<string>
+            validation:
+              format: uuid
+          collection_id:
+            type: optional<string>
+            validation:
+              format: uuid
+          page_limit:
+            type: optional<integer>
+            default: 25
           source: >-
             optional<DocumentListOrgOrgIdProjectProjectIdDocumentGetRequestSource>
           strategy: optional<string>
@@ -14665,8 +14827,13 @@ service:
         name: >-
           DocumentEmbeddingQueryOrgOrgIdProjectProjectIdDocumentDocumentIdEmbeddingsGetRequest
         query-parameters:
-          cursor: optional<string>
-          page_limit: optional<integer>
+          cursor:
+            type: optional<string>
+            validation:
+              format: uuid
+          page_limit:
+            type: optional<integer>
+            default: 25
       response:
         docs: Successful Response
         type: root.PaginatedResultSetChatDocumentEmbeddingRecord
@@ -16013,8 +16180,19 @@ service:
               "request": {
                 "name": "OrgInvitesListOrgOrgIdInviteGetRequest",
                 "query-parameters": {
-                  "cursor": "optional<string>",
-                  "page_limit": "optional<integer>",
+                  "cursor": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                  "page_limit": {
+                    "default": 100,
+                    "type": "optional<integer>",
+                  },
                   "show": "optional<root.OrgInviteShow>",
                 },
               },
@@ -16091,9 +16269,20 @@ service:
               "request": {
                 "name": "OrgListOrgGetRequest",
                 "query-parameters": {
-                  "cursor": "optional<string>",
+                  "cursor": {
+                    "type": "optional<string>",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "membership": "optional<root.OrgMembership>",
-                  "page_limit": "optional<integer>",
+                  "page_limit": {
+                    "default": 100,
+                    "type": "optional<integer>",
+                  },
                 },
               },
               "response": {
@@ -16742,8 +16931,13 @@ service:
         name: OrgListOrgGetRequest
         query-parameters:
           membership: optional<root.OrgMembership>
-          cursor: optional<string>
-          page_limit: optional<integer>
+          cursor:
+            type: optional<string>
+            validation:
+              format: uuid
+          page_limit:
+            type: optional<integer>
+            default: 100
       response:
         docs: Successful Response
         type: unknown
@@ -16890,8 +17084,13 @@ service:
         name: OrgInvitesListOrgOrgIdInviteGetRequest
         query-parameters:
           show: optional<root.OrgInviteShow>
-          cursor: optional<string>
-          page_limit: optional<integer>
+          cursor:
+            type: optional<string>
+            validation:
+              format: uuid
+          page_limit:
+            type: optional<integer>
+            default: 100
       response:
         docs: Successful Response
         type: root.PaginatedResultSetOrganizationInvite
@@ -17566,7 +17765,10 @@ This may be combined with `remove_all` to replace the member's entire role list.
                 "name": "ListProjectOrgOrgIdProjectGetRequest",
                 "query-parameters": {
                   "cursor": "optional<string>",
-                  "page_limit": "optional<integer>",
+                  "page_limit": {
+                    "default": 100,
+                    "type": "optional<integer>",
+                  },
                 },
               },
               "response": {
@@ -17949,7 +18151,9 @@ service:
         name: ListProjectOrgOrgIdProjectGetRequest
         query-parameters:
           cursor: optional<string>
-          page_limit: optional<integer>
+          page_limit:
+            type: optional<integer>
+            default: 100
       response:
         docs: Successful Response
         type: root.PaginatedResultSetProject
@@ -18735,7 +18939,10 @@ types:
                 "name": "ListRunsOrgOrgIdProjectProjectIdScrapeRunsGetRequest",
                 "query-parameters": {
                   "cursor": "optional<string>",
-                  "page_limit": "optional<integer>",
+                  "page_limit": {
+                    "default": 25,
+                    "type": "optional<integer>",
+                  },
                 },
               },
               "response": {
@@ -18889,7 +19096,9 @@ service:
         name: ListRunsOrgOrgIdProjectProjectIdScrapeRunsGetRequest
         query-parameters:
           cursor: optional<string>
-          page_limit: optional<integer>
+          page_limit:
+            type: optional<integer>
+            default: 25
       response:
         docs: Successful Response
         type: root.PaginatedResultSetDatasourceSyncRun
@@ -20329,7 +20538,10 @@ service:
               "request": {
                 "body": {
                   "properties": {
-                    "task_file": "optional<file>",
+                    "task_file": {
+                      "docs": "Image file to be provided to the LLM, only required when `image_required` is set to `true`.",
+                      "type": "optional<file>",
+                    },
                     "task_input": {
                       "docs": "The data input to the Task. This should be relevant to the `user_prompt` and cover any dynamic `{...}` parameters that are referenced in the prompt. Not required if `image_required` is set to `true` and there are no dynamic parameters in the prompt.",
                       "type": "map<string, unknown>",
@@ -21394,7 +21606,11 @@ service:
                 `user_prompt` and cover any dynamic `{...}` parameters that are
                 referenced in the prompt. Not required if `image_required` is
                 set to `true` and there are no dynamic parameters in the prompt.
-            task_file: optional<file>
+            task_file:
+              type: optional<file>
+              docs: >-
+                Image file to be provided to the LLM, only required when
+                `image_required` is set to `true`.
         content-type: multipart/form-data
       response:
         docs: Successful Response

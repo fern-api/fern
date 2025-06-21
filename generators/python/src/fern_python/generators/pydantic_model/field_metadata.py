@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from typing import Optional
 
 from fern_python.codegen import AST
@@ -12,7 +14,7 @@ class FieldMetadata:
     def __init__(self, *, reference: AST.ClassReference) -> None:
         self.reference = reference
 
-    def get_instance(self) -> "FieldMetadataInstance":
+    def get_instance(self) -> FieldMetadataInstance:
         return FieldMetadata.FieldMetadataInstance(self.reference)
 
     class FieldMetadataInstance:

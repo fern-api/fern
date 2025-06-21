@@ -17,11 +17,9 @@ public partial class OrganizationClient
     /// <summary>
     /// Create a new organization.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Organization.CreateAsync(new CreateOrganizationRequest { Name = "name" });
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<Organization> CreateAsync(
         CreateOrganizationRequest request,
         RequestOptions? options = null,
@@ -29,8 +27,8 @@ public partial class OrganizationClient
     )
     {
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
@@ -41,9 +39,9 @@ public partial class OrganizationClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<Organization>(responseBody)!;
@@ -54,10 +52,13 @@ public partial class OrganizationClient
             }
         }
 
-        throw new SeedMixedFileDirectoryApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedMixedFileDirectoryApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

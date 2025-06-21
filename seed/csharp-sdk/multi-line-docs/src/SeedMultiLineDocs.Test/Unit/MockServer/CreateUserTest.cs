@@ -1,6 +1,4 @@
-using FluentAssertions.Json;
 using global::System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedMultiLineDocs;
 using SeedMultiLineDocs.Core;
@@ -44,12 +42,11 @@ public class CreateUserTest : BaseMockServerTest
             );
 
         var response = await Client.User.CreateUserAsync(
-            new CreateUserRequest { Name = "name", Age = 1 },
-            RequestOptions
+            new CreateUserRequest { Name = "name", Age = 1 }
         );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        Assert.That(
+            response,
+            Is.EqualTo(JsonUtils.Deserialize<User>(mockResponse)).UsingDefaults()
+        );
     }
 }

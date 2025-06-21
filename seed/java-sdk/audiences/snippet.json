@@ -1,0 +1,44 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "13d09c93",
+            "id": {
+                "method": "GET",
+                "path": "/",
+                "identifier_override": "endpoint_folder-a/service.getDirectThread"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.audiences.SeedAudiencesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedAudiencesClient client = SeedAudiencesClient\n            .builder()\n            .build();\n\n        client.folderA().service().getDirectThread();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.audiences.SeedAudiencesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedAudiencesClient client = SeedAudiencesClient\n            .builder()\n            .build();\n\n        client.folderA().service().getDirectThread();\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "f06e1d0b",
+            "id": {
+                "method": "GET",
+                "path": "/partner-path",
+                "identifier_override": "endpoint_folder-d/service.getDirectThread"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.audiences.SeedAudiencesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedAudiencesClient client = SeedAudiencesClient\n            .builder()\n            .build();\n\n        client.folderD().service().getDirectThread();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.audiences.SeedAudiencesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedAudiencesClient client = SeedAudiencesClient\n            .builder()\n            .build();\n\n        client.folderD().service().getDirectThread();\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "f5d902ec",
+            "id": {
+                "method": "POST",
+                "path": "/",
+                "identifier_override": "endpoint_foo.find"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.audiences.SeedAudiencesClient;\nimport com.seed.audiences.resources.foo.requests.FindRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedAudiencesClient client = SeedAudiencesClient\n            .builder()\n            .build();\n\n        client.foo().find(\n            FindRequest\n                .builder()\n                .optionalString(\"optionalString\")\n                .publicProperty(\"publicProperty\")\n                .privateProperty(1)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.audiences.SeedAudiencesClient;\nimport com.seed.audiences.resources.foo.requests.FindRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedAudiencesClient client = SeedAudiencesClient\n            .builder()\n            .build();\n\n        client.foo().find(\n            FindRequest\n                .builder()\n                .optionalString(\"optionalString\")\n                .publicProperty(\"publicProperty\")\n                .privateProperty(1)\n                .build()\n        );\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

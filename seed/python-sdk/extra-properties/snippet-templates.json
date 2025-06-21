@@ -16,7 +16,7 @@
                     "from seed import SeedExtraProperties"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedExtraProperties(base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateString": "client = SeedExtraProperties(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -55,7 +55,7 @@
                         "from seed import AsyncSeedExtraProperties"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedExtraProperties(base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateString": "client = AsyncSeedExtraProperties(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"

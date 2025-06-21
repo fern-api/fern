@@ -1,0 +1,100 @@
+{
+  "types": {},
+  "subpackages": {
+    "subpackage_service": {
+      "subpackageId": "subpackage_service",
+      "name": "service",
+      "endpoints": [
+        {
+          "auth": false,
+          "method": "PATCH",
+          "id": "patch",
+          "originalEndpointId": "endpoint_service.patch",
+          "name": "Patch",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "type": "json",
+              "contentType": "application/merge-patch+json",
+              "shape": {
+                "type": "object",
+                "extends": [],
+                "properties": [
+                  {
+                    "key": "application",
+                    "valueType": {
+                      "type": "nullable",
+                      "itemType": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "key": "require_auth",
+                    "valueType": {
+                      "type": "nullable",
+                      "itemType": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "boolean"
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {},
+              "requestBodyV3": {
+                "type": "json",
+                "value": {}
+              },
+              "responseStatusCode": 204,
+              "codeSamples": []
+            }
+          ]
+        }
+      ],
+      "webhooks": [],
+      "websockets": [],
+      "types": [],
+      "subpackages": []
+    }
+  },
+  "rootPackage": {
+    "endpoints": [],
+    "webhooks": [],
+    "websockets": [],
+    "types": [],
+    "subpackages": [
+      "subpackage_service"
+    ]
+  },
+  "snippetsConfiguration": {},
+  "globalHeaders": []
+}

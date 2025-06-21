@@ -6,9 +6,10 @@ import { noop, visitObjectAsync } from "@fern-api/core-utils";
 import { NodePath } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath, dirname, doesPathExist, resolve } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { FernWorkspace } from "@fern-api/workspace-loader";
+import { AbstractAPIWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 
 import { DocsConfigFileAstVisitor } from "./DocsConfigFileAstVisitor";
+import { validateProductConfigFileSchema } from "./validateProductConfig";
 import { validateVersionConfigFileSchema } from "./validateVersionConfig";
 import { visitFilepath } from "./visitFilepath";
 import { visitNavigationAst } from "./visitNavigationAst";
@@ -20,7 +21,7 @@ export declare namespace visitDocsConfigFileYamlAst {
         absoluteFilepathToConfiguration: AbsoluteFilePath;
         absolutePathToFernFolder: AbsoluteFilePath;
         context: TaskContext;
-        fernWorkspaces: FernWorkspace[];
+        apiWorkspaces: AbstractAPIWorkspace<unknown>[];
     }
 }
 
@@ -29,7 +30,7 @@ export async function visitDocsConfigFileYamlAst({
     visitor,
     absoluteFilepathToConfiguration,
     context,
-    fernWorkspaces,
+    apiWorkspaces,
     absolutePathToFernFolder
 }: visitDocsConfigFileYamlAst.Args): Promise<void> {
     await visitor.file?.(
@@ -41,6 +42,8 @@ export async function visitDocsConfigFileYamlAst({
     await visitObjectAsync(contents, {
         instances: noop,
         analytics: noop,
+        aiChat: noop,
+        aiSearch: noop,
         announcement: noop,
         backgroundImage: async (background) => {
             if (background == null) {
@@ -172,9 +175,49 @@ export async function visitDocsConfigFileYamlAst({
                 visitor,
                 nodePath: ["navigation"],
                 absoluteFilepathToConfiguration,
-                fernWorkspaces,
+                apiWorkspaces,
                 context
             });
+        },
+        products: async (products) => {
+            if (products == null) {
+                return;
+            }
+
+            await Promise.all(
+                products.map(async (product, idx) => {
+                    await visitFilepath({
+                        absoluteFilepathToConfiguration,
+                        rawUnresolvedFilepath: product.path,
+                        visitor,
+                        nodePath: ["products", `${idx}`],
+                        willBeUploaded: false
+                    });
+                    const absoluteFilepath = resolve(dirname(absoluteFilepathToConfiguration), product.path);
+                    const content = yaml.load((await readFile(absoluteFilepath)).toString());
+                    if (await doesPathExist(absoluteFilepath)) {
+                        await visitor.productFile?.(
+                            {
+                                path: product.path,
+                                content
+                            },
+                            [product.path]
+                        );
+                    }
+                    const parsedProductFile = await validateProductConfigFileSchema({ value: content });
+                    if (parsedProductFile.type === "success") {
+                        await visitNavigationAst({
+                            absolutePathToFernFolder,
+                            navigation: parsedProductFile.contents.navigation,
+                            visitor,
+                            nodePath: ["navigation"],
+                            absoluteFilepathToConfiguration: absoluteFilepath,
+                            apiWorkspaces,
+                            context
+                        });
+                    }
+                })
+            );
         },
         redirects: noop,
         tabs: noop,
@@ -252,7 +295,7 @@ export async function visitDocsConfigFileYamlAst({
                             visitor,
                             nodePath: ["navigation"],
                             absoluteFilepathToConfiguration: absoluteFilepath,
-                            fernWorkspaces,
+                            apiWorkspaces,
                             context
                         });
                     }

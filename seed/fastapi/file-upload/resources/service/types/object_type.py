@@ -10,9 +10,7 @@ class ObjectType(str, enum.Enum):
     FOO = "FOO"
     BAR = "BAR"
 
-    def visit(
-        self, foo: typing.Callable[[], T_Result], bar: typing.Callable[[], T_Result]
-    ) -> T_Result:
+    def visit(self, foo: typing.Callable[[], T_Result], bar: typing.Callable[[], T_Result]) -> T_Result:
         if self is ObjectType.FOO:
             return foo()
         if self is ObjectType.BAR:

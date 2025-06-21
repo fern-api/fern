@@ -1,6 +1,4 @@
-using FluentAssertions.Json;
 using global::System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedNullable;
 using SeedNullable.Core;
@@ -17,6 +15,7 @@ public class GetUsersTest : BaseMockServerTest
             [
               {
                 "name": "name",
+                "id": "id",
                 "tags": [
                   "tags",
                   "tags"
@@ -25,11 +24,29 @@ public class GetUsersTest : BaseMockServerTest
                   "createdAt": "2024-01-15T09:30:00.000Z",
                   "updatedAt": "2024-01-15T09:30:00.000Z",
                   "avatar": "avatar",
-                  "activated": true
+                  "activated": true,
+                  "status": {
+                    "type": "active"
+                  },
+                  "values": {
+                    "values": "values"
+                  }
+                },
+                "email": "email",
+                "favorite-number": 1,
+                "numbers": [
+                  1,
+                  1
+                ],
+                "strings": {
+                  "strings": {
+                    "key": "value"
+                  }
                 }
               },
               {
                 "name": "name",
+                "id": "id",
                 "tags": [
                   "tags",
                   "tags"
@@ -38,7 +55,24 @@ public class GetUsersTest : BaseMockServerTest
                   "createdAt": "2024-01-15T09:30:00.000Z",
                   "updatedAt": "2024-01-15T09:30:00.000Z",
                   "avatar": "avatar",
-                  "activated": true
+                  "activated": true,
+                  "status": {
+                    "type": "active"
+                  },
+                  "values": {
+                    "values": "values"
+                  }
+                },
+                "email": "email",
+                "favorite-number": 1,
+                "numbers": [
+                  1,
+                  1
+                ],
+                "strings": {
+                  "strings": {
+                    "key": "value"
+                  }
                 }
               }
             ]
@@ -69,12 +103,11 @@ public class GetUsersTest : BaseMockServerTest
                 Activated = [true],
                 Tags = ["tags"],
                 Extra = true,
-            },
-            RequestOptions
+            }
         );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        Assert.That(
+            response,
+            Is.EqualTo(JsonUtils.Deserialize<IEnumerable<User>>(mockResponse)).UsingDefaults()
+        );
     }
 }

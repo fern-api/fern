@@ -12,21 +12,21 @@ describe("Reference", () => {
         it("returns the fully qualified name", async () => {
             const reference = python.reference({ name: "MyClass", modulePath: ["module", "submodule"] });
             reference.write(writer);
-            expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(writer.toString()).toMatchSnapshot();
             expect(reference.getReferences().length).toBe(1);
         });
 
         it("handles single-level module path", async () => {
             const reference = python.reference({ name: "SimpleClass", modulePath: ["simple"] });
             reference.write(writer);
-            expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(writer.toString()).toMatchSnapshot();
             expect(reference.getReferences().length).toBe(1);
         });
 
         it("handles class without module path", async () => {
             const reference = python.reference({ name: "StandaloneClass", modulePath: [] });
             reference.write(writer);
-            expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(writer.toString()).toMatchSnapshot();
             expect(reference.getReferences().length).toBe(1);
         });
 
@@ -36,7 +36,7 @@ describe("Reference", () => {
                 modulePath: ["very", "deep", "nested", "module"]
             });
             reference.write(writer);
-            expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(writer.toString()).toMatchSnapshot();
             expect(reference.getReferences().length).toBe(1);
         });
 
@@ -47,7 +47,7 @@ describe("Reference", () => {
                 genericTypes: [python.Type.str()]
             });
             reference.write(writer);
-            expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(writer.toString()).toMatchSnapshot();
             expect(reference.getReferences().length).toBe(1);
         });
 
@@ -58,7 +58,7 @@ describe("Reference", () => {
                 genericTypes: [python.Type.str(), python.Type.int()]
             });
             reference.write(writer);
-            expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(writer.toString()).toMatchSnapshot();
             expect(reference.getReferences().length).toBe(1);
         });
 
@@ -80,7 +80,7 @@ describe("Reference", () => {
                 ]
             });
             reference.write(writer);
-            expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(writer.toString()).toMatchSnapshot();
             expect(reference.getReferences().length).toBe(2);
         });
 
@@ -91,7 +91,7 @@ describe("Reference", () => {
                 alias: "Alias"
             });
             reference.write(writer);
-            expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(writer.toString()).toMatchSnapshot();
             expect(reference.getReferences().length).toBe(1);
         });
 
@@ -102,7 +102,7 @@ describe("Reference", () => {
             });
             const listType = python.Type.list(python.Type.reference(innerReference));
             listType.write(writer);
-            expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(writer.toString()).toMatchSnapshot();
             expect(listType.getReferences().length).toBe(2);
         });
 
@@ -113,7 +113,7 @@ describe("Reference", () => {
             });
             const tupleType = python.Type.tuple([python.Type.reference(innerReference), python.Type.str()]);
             tupleType.write(writer);
-            expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(writer.toString()).toMatchSnapshot();
             expect(tupleType.getReferences().length).toBe(2);
         });
 
@@ -124,7 +124,7 @@ describe("Reference", () => {
             });
             const setType = python.Type.set(python.Type.reference(innerReference));
             setType.write(writer);
-            expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(writer.toString()).toMatchSnapshot();
             expect(setType.getReferences().length).toBe(2);
         });
 
@@ -135,7 +135,7 @@ describe("Reference", () => {
             });
             const unionType = python.Type.union([python.Type.reference(innerReference), python.Type.str()]);
             unionType.write(writer);
-            expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(writer.toString()).toMatchSnapshot();
             expect(unionType.getReferences().length).toBe(2);
         });
 
@@ -151,7 +151,7 @@ describe("Reference", () => {
                 genericTypes: [dictType]
             });
             reference.write(writer);
-            expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(writer.toString()).toMatchSnapshot();
             expect(reference.getReferences().length).toBe(3);
         });
 
@@ -162,7 +162,7 @@ describe("Reference", () => {
                 attribute: ["attr1", "attr2"]
             });
             reference.write(writer);
-            expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(writer.toString()).toMatchSnapshot();
         });
     });
 });

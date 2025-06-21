@@ -6,6 +6,8 @@ import {
     HttpEndpoint,
     HttpService,
     IntermediateRepresentation,
+    Name,
+    NameAndWireValue,
     OAuthAccessTokenRequestProperties,
     OAuthAccessTokenResponseProperties,
     OAuthClientCredentials,
@@ -14,26 +16,30 @@ import {
 } from "@fern-fern/ir-sdk/api";
 
 export class OAuthTokenProviderGenerator {
-    public static OAUTH_TOKEN_PROVIDER_CLASS_NAME = "OAuthTokenProvider";
-    public static OAUTH_TOKEN_PROVIDER_PROPERTY_NAME = "_oauthTokenProvider";
-    public static OAUTH_TOKEN_PROPERTY_NAME = "token";
-    public static OAUTH_GET_TOKEN_METHOD_NAME = "getToken";
-    public static OAUTH_CLIENT_ID_PROPERTY_NAME = "clientId";
-    public static OAUTH_CLIENT_SECRET_PROPERTY_NAME = "clientSecret";
-    public static OAUTH_AUTH_CLIENT_PROPERTY_NAME = "authClient";
+    public static readonly OAUTH_TOKEN_PROVIDER_CLASS_NAME = "OAuthTokenProvider";
+    public static readonly OAUTH_TOKEN_PROVIDER_PROPERTY_NAME = "_oauthTokenProvider";
+    public static readonly OAUTH_TOKEN_PROPERTY_NAME = "token";
+    public static readonly OAUTH_GET_TOKEN_METHOD_NAME = "getToken";
+    public static readonly OAUTH_CLIENT_ID_PROPERTY_NAME = "clientId";
+    public static readonly OAUTH_CLIENT_SECRET_PROPERTY_NAME = "clientSecret";
+    public static readonly OAUTH_AUTH_CLIENT_PROPERTY_NAME = "authClient";
 
     private ir: IntermediateRepresentation;
     private neverThrowErrors: boolean;
+    private includeSerdeLayer: boolean;
 
     constructor({
         intermediateRepresentation,
-        neverThrowErrors
+        neverThrowErrors,
+        includeSerdeLayer
     }: {
         intermediateRepresentation: IntermediateRepresentation;
         neverThrowErrors: boolean;
+        includeSerdeLayer: boolean;
     }) {
         this.ir = intermediateRepresentation;
         this.neverThrowErrors = neverThrowErrors;
+        this.includeSerdeLayer = includeSerdeLayer;
     }
 
     public getExportedFilePath(): ExportedFilePath {
@@ -251,8 +257,8 @@ export class OAuthTokenProviderGenerator {
         requestProperties: OAuthAccessTokenRequestProperties;
         responseProperties: OAuthAccessTokenResponseProperties;
     }): Code {
-        const clientIdProperty = requestProperties.clientId.property.name.name.camelCase.unsafeName;
-        const clientSecretProperty = requestProperties.clientSecret.property.name.name.camelCase.unsafeName;
+        const clientIdProperty = this.getName(requestProperties.clientId.property.name);
+        const clientSecretProperty = this.getName(requestProperties.clientSecret.property.name);
         const accessTokenProperty = this.responsePropertyToDotDelimitedAccessor({
             responseProperty: responseProperties.accessToken
         });
@@ -263,7 +269,7 @@ export class OAuthTokenProviderGenerator {
             });
             return code`
                 private async refresh(): Promise<string> {
-                    const tokenResponse = await this._authClient.${getTokenEndpoint.name.camelCase.unsafeName}({
+                    const tokenResponse = await this._authClient.${this.getName(getTokenEndpoint.name)}({
                         ${clientIdProperty}: await core.Supplier.get(this._clientId),
                         ${clientSecretProperty}: await core.Supplier.get(this._clientSecret),
                     });
@@ -276,7 +282,7 @@ export class OAuthTokenProviderGenerator {
         }
         return code`
             private async _getToken(): Promise<string> {
-                const tokenResponse = await this._authClient.${getTokenEndpoint.name.camelCase.unsafeName}({
+                const tokenResponse = await this._authClient.${this.getName(getTokenEndpoint.name)}({
                     ${clientIdProperty}: await core.Supplier.get(this._clientId),
                     ${clientSecretProperty}: await core.Supplier.get(this._clientSecret),
                 });
@@ -321,13 +327,25 @@ export class OAuthTokenProviderGenerator {
         const prefix = this.neverThrowErrors ? "body." : "";
         const propertyPath = responseProperty.propertyPath;
         if (propertyPath == null || propertyPath.length === 0) {
-            return prefix + responseProperty.property.name.name.camelCase.unsafeName;
+            return prefix + this.getName(responseProperty.property.name);
         }
         return (
             prefix +
-            propertyPath.map((name) => name.camelCase.unsafeName).join(".") +
+            propertyPath.map((name) => this.getName(name)).join(".") +
             "." +
-            responseProperty.property.name.name.camelCase.unsafeName
+            this.getName(responseProperty.property.name)
         );
+    }
+    private getName(name: Name | NameAndWireValue): string {
+        if (this.includeSerdeLayer) {
+            if ("name" in name) {
+                return name.name.camelCase.unsafeName;
+            }
+            return name.camelCase.unsafeName;
+        }
+        if ("name" in name) {
+            return name.name.originalName;
+        }
+        return name.originalName;
     }
 }

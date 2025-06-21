@@ -1,6 +1,4 @@
-using FluentAssertions.Json;
 using global::System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedStreaming;
 using SeedStreaming.Core;
@@ -43,13 +41,12 @@ public class GenerateTest : BaseMockServerTest
             );
 
         var response = await Client.Dummy.GenerateAsync(
-            new Generateequest { Stream = false, NumEvents = 1 },
-            RequestOptions
+            new Generateequest { Stream = false, NumEvents = 1 }
         );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        Assert.That(
+            response,
+            Is.EqualTo(JsonUtils.Deserialize<StreamResponse>(mockResponse)).UsingDefaults()
+        );
     }
 
     [Test]
@@ -85,12 +82,11 @@ public class GenerateTest : BaseMockServerTest
             );
 
         var response = await Client.Dummy.GenerateAsync(
-            new Generateequest { Stream = false, NumEvents = 5 },
-            RequestOptions
+            new Generateequest { Stream = false, NumEvents = 5 }
         );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        Assert.That(
+            response,
+            Is.EqualTo(JsonUtils.Deserialize<StreamResponse>(mockResponse)).UsingDefaults()
+        );
     }
 }

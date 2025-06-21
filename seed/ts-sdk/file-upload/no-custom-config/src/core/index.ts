@@ -1,4 +1,3 @@
-export * from "./fetcher";
-export * from "./form-data-utils";
-export * from "./runtime";
-export * as serialization from "./schemas";
+export * from "./fetcher/index.js";
+export * from "./runtime/index.js";
+export * from "./form-data-utils/index.js";

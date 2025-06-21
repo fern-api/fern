@@ -34,4 +34,4 @@ def test_query_encoding_deep_object_arrays() -> None:
 
 def test_encode_query_with_none() -> None:
     encoded = encode_query(None)
-    assert encoded == None
+    assert encoded is None

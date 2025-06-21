@@ -1457,7 +1457,8 @@
         "POST",
         "PUT",
         "PATCH",
-        "DELETE"
+        "DELETE",
+        "HEAD"
       ]
     },
     "variables.VariableReferenceSchema": {
@@ -2561,6 +2562,22 @@
       ],
       "additionalProperties": false
     },
+    "pagination.CustomPaginationSchema": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "custom"
+        },
+        "results": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "results"
+      ],
+      "additionalProperties": false
+    },
     "pagination.PaginationSchema": {
       "anyOf": [
         {
@@ -2568,6 +2585,9 @@
         },
         {
           "$ref": "#/definitions/pagination.OffsetPaginationSchema"
+        },
+        {
+          "$ref": "#/definitions/pagination.CustomPaginationSchema"
         }
       ]
     },

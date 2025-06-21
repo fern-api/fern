@@ -1,7 +1,9 @@
 import { camelCase, upperFirst } from "lodash-es";
 
-import { GeneratorNotificationService } from "@fern-api/base-generator";
-import { AbstractCsharpGeneratorContext, AsIsFiles, csharp } from "@fern-api/csharp-codegen";
+import { AbstractFormatter, GeneratorNotificationService, NopFormatter } from "@fern-api/base-generator";
+import { AbstractCsharpGeneratorContext, AsIsFiles } from "@fern-api/csharp-base";
+import { csharp } from "@fern-api/csharp-codegen";
+import { CsharpFormatter } from "@fern-api/csharp-formatter";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
@@ -17,6 +19,7 @@ import {
     NameAndWireValue,
     OAuthScheme,
     ProtobufService,
+    SdkRequestWrapper,
     ServiceId,
     Subpackage,
     SubpackageId,
@@ -48,6 +51,8 @@ export const MOCK_SERVER_TEST_FOLDER = RelativeFilePath.of("Unit/MockServer");
 const CANCELLATION_TOKEN_PARAMETER_NAME = "cancellationToken";
 
 export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCustomConfigSchema> {
+    public readonly formatter: AbstractFormatter;
+    public readonly nopFormatter: AbstractFormatter;
     public readonly endpointGenerator: EndpointGenerator;
     public readonly generatorAgent: CsharpGeneratorAgent;
     public readonly snippetGenerator: EndpointSnippetsGenerator;
@@ -58,13 +63,31 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         public readonly generatorNotificationService: GeneratorNotificationService
     ) {
         super(ir, config, customConfig, generatorNotificationService);
+        this.formatter = new CsharpFormatter();
+        this.nopFormatter = new NopFormatter();
         this.endpointGenerator = new EndpointGenerator({ context: this });
         this.generatorAgent = new CsharpGeneratorAgent({
             logger: this.logger,
             config: this.config,
-            readmeConfigBuilder: new ReadmeConfigBuilder()
+            readmeConfigBuilder: new ReadmeConfigBuilder(),
+            ir: this.ir
         });
         this.snippetGenerator = new EndpointSnippetsGenerator({ context: this });
+    }
+
+    public getAdditionalQueryParametersType(): csharp.Type {
+        return csharp.Type.list(
+            csharp.Type.reference(
+                this.getKeyValuePairsClassReference({
+                    key: csharp.Type.string(),
+                    value: csharp.Type.string()
+                })
+            )
+        );
+    }
+
+    public getAdditionalBodyPropertiesType(): csharp.Type {
+        return csharp.Type.optional(csharp.Type.object());
     }
 
     /**
@@ -132,24 +155,66 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         return EndpointSnippetsGenerator.CLIENT_VARIABLE_NAME;
     }
 
+    public includePathParametersInWrappedRequest({
+        endpoint,
+        wrapper
+    }: {
+        endpoint: HttpEndpoint;
+        wrapper: SdkRequestWrapper;
+    }): boolean {
+        const inlinePathParameters = this.customConfig["inline-path-parameters"];
+        if (inlinePathParameters == null) {
+            return false;
+        }
+        const wrapperShouldIncludePathParameters = wrapper.includePathParameters ?? false;
+        return endpoint.allPathParameters.length > 0 && inlinePathParameters && wrapperShouldIncludePathParameters;
+    }
+
+    public includeExceptionHandler(): boolean {
+        return this.customConfig["include-exception-handler"] ?? false;
+    }
+
     public getRawAsIsFiles(): string[] {
-        return [AsIsFiles.GitIgnore];
+        return [AsIsFiles.EditorConfig, AsIsFiles.GitIgnore];
     }
 
     public getCoreAsIsFiles(): string[] {
-        const files = [
-            AsIsFiles.Constants,
-            AsIsFiles.Extensions,
-            AsIsFiles.Headers,
-            AsIsFiles.HeaderValue,
-            AsIsFiles.HttpMethodExtensions,
-            AsIsFiles.Json.CollectionItemSerializer,
-            AsIsFiles.Json.DateOnlyConverter,
-            AsIsFiles.Json.DateTimeSerializer,
-            AsIsFiles.Json.JsonConfiguration,
-            AsIsFiles.Json.OneOfSerializer,
-            AsIsFiles.RawClient
-        ];
+        const files = [AsIsFiles.Constants, AsIsFiles.Extensions, AsIsFiles.ValueConvert];
+        // JSON stuff
+        files.push(
+            ...[
+                AsIsFiles.Json.CollectionItemSerializer,
+                AsIsFiles.Json.DateOnlyConverter,
+                AsIsFiles.Json.DateTimeSerializer,
+                AsIsFiles.Json.JsonAccessAttribute,
+                AsIsFiles.Json.JsonConfiguration,
+                AsIsFiles.Json.OneOfSerializer
+            ]
+        );
+        // HTTP stuff
+        files.push(
+            ...[
+                AsIsFiles.ApiResponse,
+                AsIsFiles.BaseRequest,
+                AsIsFiles.EmptyRequest,
+                AsIsFiles.EncodingCache,
+                AsIsFiles.FormUrlEncoder,
+                AsIsFiles.Headers,
+                AsIsFiles.HeaderValue,
+                AsIsFiles.HttpMethodExtensions,
+                AsIsFiles.IIsRetryableContent,
+                AsIsFiles.JsonRequest,
+                AsIsFiles.MultipartFormRequest,
+                // AsIsFiles.NdJsonContent,
+                // AsIsFiles.NdJsonRequest,
+                AsIsFiles.QueryStringConverter,
+                AsIsFiles.RawClient,
+                AsIsFiles.StreamRequest
+            ]
+        );
+        if (this.includeExceptionHandler()) {
+            files.push(AsIsFiles.ExceptionHandler);
+        }
         if (this.hasGrpcEndpoints()) {
             files.push(AsIsFiles.RawGrpcClient);
         }
@@ -157,14 +222,13 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
             files.push(AsIsFiles.Page);
             files.push(AsIsFiles.Pager);
         }
-        if (this.customConfig["experimental-enable-forward-compatible-enums"] ?? false) {
+        if (this.isForwardCompatibleEnumsEnabled()) {
             files.push(AsIsFiles.StringEnum);
             files.push(AsIsFiles.StringEnumExtensions);
             files.push(AsIsFiles.Json.StringEnumSerializer);
         } else {
             files.push(AsIsFiles.Json.EnumSerializer);
         }
-
         const resolvedProtoAnyType = this.protobufResolver.resolveWellKnownProtobufType(WellKnownProtobufType.any());
         if (resolvedProtoAnyType != null) {
             files.push(AsIsFiles.ProtoAnyMapper);
@@ -178,12 +242,20 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
 
     public getCoreTestAsIsFiles(): string[] {
         const files = [
-            AsIsFiles.Test.Json.DateTimeJsonTests,
             AsIsFiles.Test.Json.DateOnlyJsonTests,
+            AsIsFiles.Test.Json.DateTimeJsonTests,
+            AsIsFiles.Test.Json.JsonAccessAttributeTests,
             AsIsFiles.Test.Json.OneOfSerializerTests,
-            AsIsFiles.Test.RawClientTests
+            AsIsFiles.Test.QueryStringConverterTests,
+            AsIsFiles.Test.RawClientTests.AdditionalHeadersTests,
+            AsIsFiles.Test.RawClientTests.AdditionalParametersTests,
+            AsIsFiles.Test.RawClientTests.MultipartFormTests,
+            AsIsFiles.Test.RawClientTests.RetriesTests
         ];
-        if (this.customConfig["experimental-enable-forward-compatible-enums"] ?? false) {
+        if (this.generateNewAdditionalProperties()) {
+            files.push(AsIsFiles.Test.Json.AdditionalPropertiesTests);
+        }
+        if (this.isForwardCompatibleEnumsEnabled()) {
             files.push(AsIsFiles.Test.Json.StringEnumSerializerTests);
         } else {
             files.push(AsIsFiles.Test.Json.EnumSerializerTests);
@@ -196,10 +268,14 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
     }
 
     public getPublicCoreAsIsFiles(): string[] {
-        if (this.hasGrpcEndpoints()) {
-            return [AsIsFiles.GrpcRequestOptions];
+        const files = [AsIsFiles.FileParameter];
+        if (this.generateNewAdditionalProperties()) {
+            files.push(AsIsFiles.Json.AdditionalProperties);
         }
-        return [];
+        if (this.hasGrpcEndpoints()) {
+            files.push(AsIsFiles.GrpcRequestOptions);
+        }
+        return files;
     }
 
     public getPublicCoreTestAsIsFiles(): string[] {
@@ -207,7 +283,7 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
     }
 
     public getAsIsTestUtils(): string[] {
-        return [];
+        return Object.values(AsIsFiles.Test.Utils);
     }
 
     public getExampleEndpointCallOrThrow(endpoint: HttpEndpoint): ExampleEndpointCall {
@@ -249,6 +325,27 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         });
     }
 
+    public getHttpResponseHeadersReference(): csharp.ClassReference {
+        return csharp.classReference({
+            namespace: "System.Net.Http.Headers",
+            name: "HttpResponseHeaders"
+        });
+    }
+
+    public getExceptionHandlerClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: "ExceptionHandler",
+            namespace: this.getCoreNamespace()
+        });
+    }
+
+    public getExceptionInterceptorClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: "IExceptionInterceptor",
+            namespace: this.getCoreNamespace()
+        });
+    }
+
     public getSubpackageClassReference(subpackage: Subpackage): csharp.ClassReference {
         return csharp.classReference({
             name: `${subpackage.name.pascalCase.unsafeName}Client`,
@@ -278,10 +375,11 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
     }
 
     public getRootClientClassName(): string {
-        if (this.customConfig["client-class-name"] != null) {
-            return this.customConfig["client-class-name"];
-        }
-        return `${this.getComputedClientName()}Client`;
+        return this.customConfig["client-class-name"] ?? `${this.getComputedClientName()}Client`;
+    }
+
+    public getRootClientAccess(): csharp.Access {
+        return this.customConfig["root-client-class-access"] ?? csharp.Access.Public;
     }
 
     public getRootClientClassNameForSnippets(): string {
@@ -306,17 +404,15 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
     }
 
     public getBaseExceptionClassReference(): csharp.ClassReference {
-        const maybeOverrideName = this.customConfig["base-exception-class-name"];
         return csharp.classReference({
-            name: maybeOverrideName ?? this.getExceptionPrefix() + "Exception",
+            name: this.customConfig["base-exception-class-name"] ?? `${this.getClientPrefix()}Exception`,
             namespace: this.getNamespaceForPublicCoreClasses()
         });
     }
 
     public getBaseApiExceptionClassReference(): csharp.ClassReference {
-        const maybeOverrideName = this.customConfig["base-api-exception-class-name"];
         return csharp.classReference({
-            name: maybeOverrideName ?? this.getExceptionPrefix() + "ApiException",
+            name: this.customConfig["base-api-exception-class-name"] ?? `${this.getClientPrefix()}ApiException`,
             namespace: this.getNamespaceForPublicCoreClasses()
         });
     }
@@ -326,10 +422,6 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
             name: this.getPascalCaseSafeName(declaredErrorName.name),
             namespace: this.getNamespaceFromFernFilepath(declaredErrorName.fernFilepath)
         });
-    }
-
-    private getExceptionPrefix() {
-        return this.customConfig["client-class-name"] ?? this.getComputedClientName();
     }
 
     public getHeadersClassReference(): csharp.ClassReference {
@@ -425,15 +517,21 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         };
     }
 
+    private getClientPrefix(): string {
+        return (
+            this.customConfig["exported-client-class-name"] ??
+            this.customConfig["client-class-name"] ??
+            this.getComputedClientName()
+        );
+    }
+
+    private getEnvironmentClassName(): string {
+        return this.customConfig["environment-class-name"] ?? `${this.getClientPrefix()}Environment`;
+    }
+
     public getEnvironmentsClassReference(): csharp.ClassReference {
-        let environmentsClassName: string;
-        if (this.customConfig["client-class-name"] != null) {
-            environmentsClassName = `${this.customConfig["client-class-name"]}Environment`;
-        } else {
-            environmentsClassName = `${this.getComputedClientName()}Environment`;
-        }
         return csharp.classReference({
-            name: environmentsClassName,
+            name: this.getEnvironmentClassName(),
             namespace: this.getNamespaceForPublicCoreClasses()
         });
     }
@@ -549,12 +647,12 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         stepType,
         itemType
     }: {
-        requestType: csharp.Type;
-        requestOptionsType: csharp.Type;
-        responseType: csharp.Type;
-        offsetType: csharp.Type;
-        stepType: csharp.Type;
-        itemType: csharp.Type;
+        requestType: csharp.Type | csharp.TypeParameter;
+        requestOptionsType: csharp.Type | csharp.TypeParameter;
+        responseType: csharp.Type | csharp.TypeParameter;
+        offsetType: csharp.Type | csharp.TypeParameter;
+        stepType: csharp.Type | csharp.TypeParameter;
+        itemType: csharp.Type | csharp.TypeParameter;
     }): csharp.ClassReference {
         return csharp.classReference({
             namespace: this.getCoreNamespace(),
@@ -570,11 +668,11 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         cursorType,
         itemType
     }: {
-        requestType: csharp.Type;
-        requestOptionsType: csharp.Type;
-        responseType: csharp.Type;
-        cursorType: csharp.Type;
-        itemType: csharp.Type;
+        requestType: csharp.Type | csharp.TypeParameter;
+        requestOptionsType: csharp.Type | csharp.TypeParameter;
+        responseType: csharp.Type | csharp.TypeParameter;
+        cursorType: csharp.Type | csharp.TypeParameter;
+        itemType: csharp.Type | csharp.TypeParameter;
     }): csharp.ClassReference {
         return csharp.classReference({
             namespace: this.getCoreNamespace(),
@@ -591,6 +689,10 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         return httpEndpoint;
     }
 
+    public isSelfHosted(): boolean {
+        return this.ir.selfHosted ?? false;
+    }
+
     public getNameForField(name: NameAndWireValue): string {
         return name.name.pascalCase.safeName;
     }
@@ -601,6 +703,17 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
 
     private getGrpcClientServiceName(protobufService: ProtobufService): string {
         return protobufService.name.originalName;
+    }
+
+    #doesIrHaveCustomPagination: boolean | undefined;
+
+    public shouldCreateCustomPagination(): boolean {
+        if (this.#doesIrHaveCustomPagination === undefined) {
+            this.#doesIrHaveCustomPagination = Object.values(this.ir.services).some((service) =>
+                service.endpoints.some((endpoint) => endpoint.pagination?.type === "custom")
+            );
+        }
+        return this.#doesIrHaveCustomPagination;
     }
 
     override getChildNamespaceSegments(fernFilepath: FernFilepath): string[] {

@@ -5,6 +5,7 @@ package com.seed.errorProperty.resources.errors.errors;
 
 import com.seed.errorProperty.core.SeedErrorPropertyApiException;
 import com.seed.errorProperty.resources.errors.types.PropertyBasedErrorTestBody;
+import okhttp3.Response;
 
 public final class PropertyBasedErrorTest extends SeedErrorPropertyApiException {
     /**
@@ -14,6 +15,11 @@ public final class PropertyBasedErrorTest extends SeedErrorPropertyApiException 
 
     public PropertyBasedErrorTest(PropertyBasedErrorTestBody body) {
         super("PropertyBasedErrorTest", 400, body);
+        this.body = body;
+    }
+
+    public PropertyBasedErrorTest(PropertyBasedErrorTestBody body, Response rawResponse) {
+        super("PropertyBasedErrorTest", 400, body, rawResponse);
         this.body = body;
     }
 

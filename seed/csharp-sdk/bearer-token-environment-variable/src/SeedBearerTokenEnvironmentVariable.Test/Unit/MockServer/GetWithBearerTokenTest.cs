@@ -1,6 +1,4 @@
-using FluentAssertions.Json;
 using global::System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedBearerTokenEnvironmentVariable.Core;
 
@@ -25,10 +23,7 @@ public class GetWithBearerTokenTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Service.GetWithBearerTokenAsync(RequestOptions);
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        var response = await Client.Service.GetWithBearerTokenAsync();
+        Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<string>(mockResponse)));
     }
 }

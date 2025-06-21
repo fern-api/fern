@@ -3,6 +3,7 @@ using SeedOauthClientCredentialsDefault.Core;
 
 namespace SeedOauthClientCredentialsDefault;
 
+[Serializable]
 public record GetTokenRequest
 {
     [JsonPropertyName("client_id")]
@@ -14,6 +15,7 @@ public record GetTokenRequest
     [JsonPropertyName("grant_type")]
     public string GrantType { get; set; } = "client_credentials";
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

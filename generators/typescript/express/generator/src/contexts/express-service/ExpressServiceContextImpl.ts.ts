@@ -1,4 +1,4 @@
-import { ImportsManager, PackageId, Reference } from "@fern-typescript/commons";
+import { ExportsManager, ImportsManager, PackageId, Reference } from "@fern-typescript/commons";
 import { ExpressServiceContext, GeneratedExpressService } from "@fern-typescript/contexts";
 import { ExpressServiceGenerator } from "@fern-typescript/express-service-generator";
 import { PackageResolver } from "@fern-typescript/resolvers";
@@ -12,6 +12,7 @@ export declare namespace ExpressServiceContextImpl {
         expressServiceDeclarationReferencer: ExpressServiceDeclarationReferencer;
         packageResolver: PackageResolver;
         importsManager: ImportsManager;
+        exportsManager: ExportsManager;
         sourceFile: SourceFile;
     }
 }
@@ -21,6 +22,7 @@ export class ExpressServiceContextImpl implements ExpressServiceContext {
     private expressServiceDeclarationReferencer: ExpressServiceDeclarationReferencer;
     private packageResolver: PackageResolver;
     private importsManager: ImportsManager;
+    private exportsManager: ExportsManager;
     private sourceFile: SourceFile;
 
     constructor({
@@ -28,12 +30,14 @@ export class ExpressServiceContextImpl implements ExpressServiceContext {
         expressServiceDeclarationReferencer,
         packageResolver,
         importsManager,
+        exportsManager,
         sourceFile
     }: ExpressServiceContextImpl.Init) {
         this.expressServiceGenerator = expressServiceGenerator;
         this.expressServiceDeclarationReferencer = expressServiceDeclarationReferencer;
         this.packageResolver = packageResolver;
         this.importsManager = importsManager;
+        this.exportsManager = exportsManager;
         this.sourceFile = sourceFile;
     }
 
@@ -50,6 +54,7 @@ export class ExpressServiceContextImpl implements ExpressServiceContext {
         return this.expressServiceDeclarationReferencer.getReferenceToService({
             name: packageId,
             importsManager: this.importsManager,
+            exportsManager: this.exportsManager,
             importStrategy: { type: "direct", alias: importAlias },
             referencedIn: this.sourceFile
         });

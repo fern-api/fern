@@ -1,11 +1,12 @@
 import { Fetcher, GetReferenceOpts, PackageId } from "@fern-typescript/commons";
-import { EndpointSignature, GeneratedEndpointImplementation, SdkContext } from "@fern-typescript/contexts";
+import { GeneratedEndpointImplementation, SdkContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
 
 import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api";
 
 import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
 import { GeneratedEndpointRequest } from "../endpoint-request/GeneratedEndpointRequest";
+import { getReadableTypeNode } from "../getReadableTypeNode";
 import { GeneratedEndpointResponse } from "./default/endpoint-response/GeneratedEndpointResponse";
 import { buildUrl } from "./utils/buildUrl";
 import {
@@ -27,6 +28,7 @@ export declare namespace GeneratedStreamingEndpointImplementation {
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
         omitUndefined: boolean;
+        streamType: "wrapper" | "web";
     }
 }
 
@@ -43,6 +45,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
     private includeSerdeLayer: boolean;
     private retainOriginalCasing: boolean;
     private omitUndefined: boolean;
+    private streamType: "wrapper" | "web";
 
     constructor({
         endpoint,
@@ -53,7 +56,8 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         request,
         includeSerdeLayer,
         retainOriginalCasing,
-        omitUndefined
+        omitUndefined,
+        streamType
     }: GeneratedStreamingEndpointImplementation.Init) {
         this.endpoint = endpoint;
         this.generatedSdkClientClass = generatedSdkClientClass;
@@ -64,7 +68,9 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         this.includeSerdeLayer = includeSerdeLayer;
         this.retainOriginalCasing = retainOriginalCasing;
         this.omitUndefined = omitUndefined;
+        this.streamType = streamType;
     }
+
     public isPaginated(context: SdkContext): boolean {
         return false;
     }
@@ -154,14 +160,15 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         ];
     }
 
-    public getOverloads(): EndpointSignature[] {
+    public getOverloads(): GeneratedEndpointImplementation.EndpointSignature[] {
         return [];
     }
 
-    public getSignature(context: SdkContext): EndpointSignature {
+    public getSignature(context: SdkContext): GeneratedEndpointImplementation.EndpointSignature {
+        const returnType = this.response.getReturnType(context);
         return {
             parameters: this.getEndpointParameters(context),
-            returnTypeWithoutPromise: this.response.getReturnType(context)
+            returnTypeWithoutPromise: returnType
         };
     }
 
@@ -175,7 +182,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
     }
 
     public getDocs(): string | undefined {
-        return this.endpoint.docs ?? undefined;
+        return this.endpoint.docs;
     }
 
     public getStatements(context: SdkContext): ts.Statement[] {
@@ -246,7 +253,11 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
                             undefined,
                             context.coreUtilities.fetcher.fetcher._invoke(fetcherArgs, {
                                 referenceToFetcher: this.generatedSdkClientClass.getReferenceToFetcher(context),
-                                cast: context.externalDependencies.stream.Readable._getReferenceToType()
+                                cast: getReadableTypeNode({
+                                    typeArgument: undefined,
+                                    context,
+                                    streamType: this.streamType
+                                })
                             })
                         )
                     ],

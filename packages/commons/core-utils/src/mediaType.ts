@@ -95,7 +95,7 @@ export class MediaType {
     /** Application */
 
     public isJSON(): boolean {
-        return this.isApplication() && this.subtype === "json";
+        return this.isApplication() && this.subtype.includes("json");
     }
 
     public isURLEncoded(): boolean {

@@ -1,0 +1,12 @@
+service:
+  auth: false
+  base-path: "/{serviceParam}"
+  path-parameters:
+    serviceParam: string
+  endpoints:
+    post:
+      path: "/{endpointParam}/{resourceParam}"
+      path-parameters:
+        resourceParam: string
+        endpointParam: integer
+      method: POST

@@ -1,1 +1,1 @@
-export { type GetEventMetadataRequest } from "./GetEventMetadataRequest";
+export { type GetEventMetadataRequest } from "./GetEventMetadataRequest.js";

@@ -13,13 +13,15 @@ module SeedBearerTokenEnvironmentVariableClient
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
     # @param api_key [String]
+    # @param version [String]
     # @return [SeedBearerTokenEnvironmentVariableClient::Client]
-    def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil, api_key: ENV["COURIER_API_KEY"])
+    def initialize(version:, base_url: nil, max_retries: nil, timeout_in_seconds: nil, api_key: ENV["COURIER_API_KEY"])
       @request_client = SeedBearerTokenEnvironmentVariableClient::RequestClient.new(
         base_url: base_url,
         max_retries: max_retries,
         timeout_in_seconds: timeout_in_seconds,
-        api_key: api_key
+        api_key: api_key,
+        version: version
       )
       @service = SeedBearerTokenEnvironmentVariableClient::ServiceClient.new(request_client: @request_client)
     end
@@ -33,13 +35,15 @@ module SeedBearerTokenEnvironmentVariableClient
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
     # @param api_key [String]
+    # @param version [String]
     # @return [SeedBearerTokenEnvironmentVariableClient::AsyncClient]
-    def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil, api_key: ENV["COURIER_API_KEY"])
+    def initialize(version:, base_url: nil, max_retries: nil, timeout_in_seconds: nil, api_key: ENV["COURIER_API_KEY"])
       @async_request_client = SeedBearerTokenEnvironmentVariableClient::AsyncRequestClient.new(
         base_url: base_url,
         max_retries: max_retries,
         timeout_in_seconds: timeout_in_seconds,
-        api_key: api_key
+        api_key: api_key,
+        version: version
       )
       @service = SeedBearerTokenEnvironmentVariableClient::AsyncServiceClient.new(request_client: @async_request_client)
     end

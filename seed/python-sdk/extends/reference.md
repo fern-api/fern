@@ -19,6 +19,8 @@ client = SeedExtends(
 )
 client.extended_inline_request_body(
     unique="unique",
+    name="name",
+    docs="docs",
 )
 
 ```

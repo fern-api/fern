@@ -1,0 +1,96 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "5478a7f5",
+            "id": {
+                "method": "GET",
+                "path": "/{tenant_id}/organizations/{organization_id}/",
+                "identifier_override": "endpoint_organizations.getOrganization"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.pathParameters.SeedPathParametersClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPathParametersClient client = SeedPathParametersClient\n            .builder()\n            .build();\n\n        client.organizations().getOrganization(\"tenant_id\", \"organization_id\");\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.pathParameters.SeedPathParametersClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPathParametersClient client = SeedPathParametersClient\n            .builder()\n            .build();\n\n        client.organizations().getOrganization(\"tenant_id\", \"organization_id\");\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "3a4762b7",
+            "id": {
+                "method": "GET",
+                "path": "/{tenant_id}/organizations/{organization_id}/users/{user_id}",
+                "identifier_override": "endpoint_organizations.getOrganizationUser"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.pathParameters.SeedPathParametersClient;\nimport com.seed.pathParameters.resources.organizations.requests.GetOrganizationUserRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPathParametersClient client = SeedPathParametersClient\n            .builder()\n            .build();\n\n        client.organizations().getOrganizationUser(\n            \"organization_id\",\n            \"user_id\",\n            GetOrganizationUserRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.pathParameters.SeedPathParametersClient;\nimport com.seed.pathParameters.resources.organizations.requests.GetOrganizationUserRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPathParametersClient client = SeedPathParametersClient\n            .builder()\n            .build();\n\n        client.organizations().getOrganizationUser(\n            \"organization_id\",\n            \"user_id\",\n            GetOrganizationUserRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "3921c65b",
+            "id": {
+                "method": "GET",
+                "path": "/{tenant_id}/organizations/{organization_id}/search",
+                "identifier_override": "endpoint_organizations.searchOrganizations"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.pathParameters.SeedPathParametersClient;\nimport com.seed.pathParameters.resources.organizations.requests.SearchOrganizationsRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPathParametersClient client = SeedPathParametersClient\n            .builder()\n            .build();\n\n        client.organizations().searchOrganizations(\n            \"organization_id\",\n            SearchOrganizationsRequest\n                .builder()\n                .limit(1)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.pathParameters.SeedPathParametersClient;\nimport com.seed.pathParameters.resources.organizations.requests.SearchOrganizationsRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPathParametersClient client = SeedPathParametersClient\n            .builder()\n            .build();\n\n        client.organizations().searchOrganizations(\n            \"organization_id\",\n            SearchOrganizationsRequest\n                .builder()\n                .limit(1)\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "fea6ebe6",
+            "id": {
+                "method": "GET",
+                "path": "/{tenant_id}/user/{user_id}",
+                "identifier_override": "endpoint_user.getUser"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.pathParameters.SeedPathParametersClient;\nimport com.seed.pathParameters.resources.user.requests.GetUsersRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPathParametersClient client = SeedPathParametersClient\n            .builder()\n            .build();\n\n        client.user().getUser(\n            \"user_id\",\n            GetUsersRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.pathParameters.SeedPathParametersClient;\nimport com.seed.pathParameters.resources.user.requests.GetUsersRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPathParametersClient client = SeedPathParametersClient\n            .builder()\n            .build();\n\n        client.user().getUser(\n            \"user_id\",\n            GetUsersRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "1d700091",
+            "id": {
+                "method": "POST",
+                "path": "/{tenant_id}/user/",
+                "identifier_override": "endpoint_user.createUser"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.pathParameters.SeedPathParametersClient;\nimport com.seed.pathParameters.resources.user.types.User;\nimport java.util.ArrayList;\nimport java.util.Arrays;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPathParametersClient client = SeedPathParametersClient\n            .builder()\n            .build();\n\n        client.user().createUser(\n            \"tenant_id\",\n            User\n                .builder()\n                .name(\"name\")\n                .tags(\n                    new ArrayList<String>(\n                        Arrays.asList(\"tags\", \"tags\")\n                    )\n                )\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.pathParameters.SeedPathParametersClient;\nimport com.seed.pathParameters.resources.user.types.User;\nimport java.util.ArrayList;\nimport java.util.Arrays;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPathParametersClient client = SeedPathParametersClient\n            .builder()\n            .build();\n\n        client.user().createUser(\n            \"tenant_id\",\n            User\n                .builder()\n                .name(\"name\")\n                .tags(\n                    new ArrayList<String>(\n                        Arrays.asList(\"tags\", \"tags\")\n                    )\n                )\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "ba9ca168",
+            "id": {
+                "method": "PATCH",
+                "path": "/{tenant_id}/user/{user_id}",
+                "identifier_override": "endpoint_user.updateUser"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.pathParameters.SeedPathParametersClient;\nimport com.seed.pathParameters.resources.user.requests.UpdateUserRequest;\nimport com.seed.pathParameters.resources.user.types.User;\nimport java.util.ArrayList;\nimport java.util.Arrays;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPathParametersClient client = SeedPathParametersClient\n            .builder()\n            .build();\n\n        client.user().updateUser(\n            \"user_id\",\n            UpdateUserRequest\n                .builder()\n                .body(\n                    User\n                        .builder()\n                        .name(\"name\")\n                        .tags(\n                            new ArrayList<String>(\n                                Arrays.asList(\"tags\", \"tags\")\n                            )\n                        )\n                        .build()\n                )\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.pathParameters.SeedPathParametersClient;\nimport com.seed.pathParameters.resources.user.requests.UpdateUserRequest;\nimport com.seed.pathParameters.resources.user.types.User;\nimport java.util.ArrayList;\nimport java.util.Arrays;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPathParametersClient client = SeedPathParametersClient\n            .builder()\n            .build();\n\n        client.user().updateUser(\n            \"user_id\",\n            UpdateUserRequest\n                .builder()\n                .body(\n                    User\n                        .builder()\n                        .name(\"name\")\n                        .tags(\n                            new ArrayList<String>(\n                                Arrays.asList(\"tags\", \"tags\")\n                            )\n                        )\n                        .build()\n                )\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "d07f01ba",
+            "id": {
+                "method": "GET",
+                "path": "/{tenant_id}/user/{user_id}/search",
+                "identifier_override": "endpoint_user.searchUsers"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.pathParameters.SeedPathParametersClient;\nimport com.seed.pathParameters.resources.user.requests.SearchUsersRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPathParametersClient client = SeedPathParametersClient\n            .builder()\n            .build();\n\n        client.user().searchUsers(\n            \"user_id\",\n            SearchUsersRequest\n                .builder()\n                .limit(1)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.pathParameters.SeedPathParametersClient;\nimport com.seed.pathParameters.resources.user.requests.SearchUsersRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPathParametersClient client = SeedPathParametersClient\n            .builder()\n            .build();\n\n        client.user().searchUsers(\n            \"user_id\",\n            SearchUsersRequest\n                .builder()\n                .limit(1)\n                .build()\n        );\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

@@ -31,11 +31,9 @@ public partial class SeedAliasClient
         _client = new RawClient(clientOptions);
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.GetAsync("typeId");
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async global::System.Threading.Tasks.Task GetAsync(
         string typeId,
         RequestOptions? options = null,
@@ -43,12 +41,12 @@ public partial class SeedAliasClient
     )
     {
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = $"/{JsonUtils.SerializeAsString(typeId)}",
+                    Path = string.Format("/{0}", ValueConvert.ToPathParameterString(typeId)),
                     Options = options,
                 },
                 cancellationToken
@@ -58,11 +56,13 @@ public partial class SeedAliasClient
         {
             return;
         }
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        throw new SeedAliasApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedAliasApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

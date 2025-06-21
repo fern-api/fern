@@ -1,26 +1,33 @@
-from typing import Literal, Tuple
+from __future__ import annotations
 
-import fern.ir.resources as ir_types
-from fern.generator_exec.config import GeneratorConfig
+from typing import TYPE_CHECKING, Literal, Tuple
 
-from fern_python.cli.abstract_generator import AbstractGenerator
-from fern_python.codegen import Project
-from fern_python.generator_exec_wrapper import GeneratorExecWrapper
-from fern_python.generators.pydantic_model.model_utilities import can_be_fern_model
-from fern_python.snippet import SnippetRegistry, SnippetWriter
+if TYPE_CHECKING:
+    from ..context.pydantic_generator_context import PydanticGeneratorContext
 
-from ..context import PydanticGeneratorContext, PydanticGeneratorContextImpl
+from ..context.pydantic_generator_context_impl import PydanticGeneratorContextImpl
 from .custom_config import PydanticModelCustomConfig
 from .type_declaration_handler import (
     TypeDeclarationHandler,
     TypeDeclarationSnippetGeneratorBuilder,
 )
 from .type_declaration_referencer import TypeDeclarationReferencer
+from fern_python.cli.abstract_generator import AbstractGenerator
+from fern_python.codegen import Project
+from fern_python.generator_exec_wrapper import GeneratorExecWrapper
+from fern_python.generators.pydantic_model.model_utilities import can_be_fern_model
+from fern_python.snippet import SnippetRegistry, SnippetWriter
+
+import fern.ir.resources as ir_types
+from fern.generator_exec.config import GeneratorConfig
 
 
 class PydanticModelGenerator(AbstractGenerator):
     def project_type(self) -> Literal["sdk", "pydantic", "fastapi"]:
         return "pydantic"
+
+    def should_fix_files(self) -> bool:
+        return True
 
     def should_format_files(
         self,
@@ -89,6 +96,9 @@ class PydanticModelGenerator(AbstractGenerator):
         )
         context.core_utilities.copy_to_project(project=project)
 
+    def postrun(self, *, generator_exec_wrapper: GeneratorExecWrapper) -> None:
+        pass
+
     def generate_types(
         self,
         *,
@@ -96,7 +106,7 @@ class PydanticModelGenerator(AbstractGenerator):
         ir: ir_types.IntermediateRepresentation,
         custom_config: PydanticModelCustomConfig,
         project: Project,
-        context: PydanticGeneratorContext,
+        context: "PydanticGeneratorContext",
         snippet_registry: SnippetRegistry,
         snippet_writer: SnippetWriter,
     ) -> None:
@@ -111,7 +121,7 @@ class PydanticModelGenerator(AbstractGenerator):
                 snippet_writer=snippet_writer,
             )
 
-    def _should_generate_typedict(self, context: PydanticGeneratorContext, type_: ir_types.Type) -> bool:
+    def _should_generate_typedict(self, context: "PydanticGeneratorContext", type_: ir_types.Type) -> bool:
         return context.use_typeddict_requests and can_be_fern_model(type_, context.ir.types)
 
     def _generate_type(
@@ -120,7 +130,7 @@ class PydanticModelGenerator(AbstractGenerator):
         type: ir_types.TypeDeclaration,
         generator_exec_wrapper: GeneratorExecWrapper,
         custom_config: PydanticModelCustomConfig,
-        context: PydanticGeneratorContext,
+        context: "PydanticGeneratorContext",
         snippet_registry: SnippetRegistry,
         snippet_writer: SnippetWriter,
     ) -> None:
@@ -179,7 +189,7 @@ class PydanticModelGenerator(AbstractGenerator):
         return False
 
     def _build_snippet_writer(
-        self, context: PydanticGeneratorContext, improved_imports: bool = False, use_str_enums: bool = False
+        self, context: "PydanticGeneratorContext", improved_imports: bool = False, use_str_enums: bool = False
     ) -> SnippetWriter:
         """
         Note that this function is a copy of the function with the same name in

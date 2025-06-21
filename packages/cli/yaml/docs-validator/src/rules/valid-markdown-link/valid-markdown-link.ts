@@ -1,10 +1,11 @@
 import chalk from "chalk";
 import { randomUUID } from "crypto";
+import path from "path";
 
 import { noop } from "@fern-api/core-utils";
 import { DocsDefinitionResolver, convertIrToApiDefinition } from "@fern-api/docs-resolver";
 import { APIV1Read, ApiDefinition, FernNavigation } from "@fern-api/fdr-sdk";
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath, join, relative } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { createLogger } from "@fern-api/logger";
 import { createMockTaskContext } from "@fern-api/task-context";
@@ -13,22 +14,23 @@ import { SourceResolverImpl } from "../../../../../cli-source-resolver/src/Sourc
 import { Rule, RuleViolation } from "../../Rule";
 import { checkIfPathnameExists } from "./check-if-pathname-exists";
 import { PathnameToCheck, collectPathnamesToCheck } from "./collect-pathnames";
-import { getInstanceUrls, toBaseUrl } from "./url-utils";
+import { getInstanceUrls, removeLeadingSlash, toBaseUrl } from "./url-utils";
 
 const NOOP_CONTEXT = createMockTaskContext({ logger: createLogger(noop) });
 
 export const ValidMarkdownLinks: Rule = {
     name: "valid-markdown-links",
-    create: async ({ workspace, fernWorkspaces, ossWorkspaces }) => {
+    create: async ({ workspace, apiWorkspaces, ossWorkspaces }) => {
         const instanceUrls = getInstanceUrls(workspace);
 
         const url = instanceUrls[0] ?? "http://localhost";
+        const baseUrl = toBaseUrl(instanceUrls[0] ?? "http://localhost");
 
         const docsDefinitionResolver = new DocsDefinitionResolver(
             url,
             workspace,
             ossWorkspaces,
-            fernWorkspaces,
+            apiWorkspaces,
             NOOP_CONTEXT
         );
 
@@ -71,6 +73,15 @@ export const ValidMarkdownLinks: Rule = {
             absoluteFilePathsToSlugs.set(absoluteFilePath, slugs);
         });
 
+        const specialDocPages = ["/llms-full.txt", "/llms.txt"];
+
+        for (const specialPage of specialDocPages) {
+            const pageWithBasePath = baseUrl.basePath
+                ? `${removeLeadingSlash(baseUrl.basePath)}${specialPage}`
+                : removeLeadingSlash(specialPage);
+            visitableSlugs.add(pageWithBasePath);
+        }
+
         return {
             markdownPage: async ({ content, absoluteFilepath }) => {
                 const slugs = absoluteFilePathsToSlugs.get(absoluteFilepath);
@@ -79,14 +90,6 @@ export const ValidMarkdownLinks: Rule = {
                 // most likely due to a slug collision. This should be handled in a different rule.
                 if (!slugs || slugs.length === 0) {
                     return [];
-                }
-
-                let violationSeverity: "fatal" | "error" | "warning" = "error";
-
-                // If this file cannot be indexed (noindex=true, or hidden=true), then we report violations as less serious warnings
-                // since the broken links will not hurt SEO.
-                if (slugs.every((slug) => !collector.indexablePageSlugs.includes(slug))) {
-                    violationSeverity = "warning";
                 }
 
                 // Find all matches in the Markdown text
@@ -105,7 +108,7 @@ export const ValidMarkdownLinks: Rule = {
                             pageSlugs: visitableSlugs,
                             absoluteFilePathsToSlugs,
                             redirects: workspace.config.redirects,
-                            baseUrl: toBaseUrl(instanceUrls[0] ?? "http://localhost")
+                            baseUrl
                         });
 
                         if (exists === true) {
@@ -113,11 +116,16 @@ export const ValidMarkdownLinks: Rule = {
                         }
 
                         return exists.map((brokenPathname) => {
-                            const message = createLinkViolationMessage(pathnameToCheck, brokenPathname);
+                            const [message, relFilePath] = createLinkViolationMessage({
+                                pathnameToCheck,
+                                targetPathname: brokenPathname,
+                                absoluteFilepathToWorkspace: workspace.absoluteFilePath
+                            });
                             return {
                                 name: ValidMarkdownLinks.name,
-                                severity: violationSeverity,
-                                message
+                                severity: "error" as const,
+                                message,
+                                relativeFilepath: relFilePath
                             };
                         });
                     })
@@ -168,22 +176,24 @@ export const ValidMarkdownLinks: Rule = {
                                     pageSlugs: visitableSlugs,
                                     absoluteFilePathsToSlugs,
                                     redirects: workspace.config.redirects,
-                                    baseUrl: toBaseUrl(instanceUrls[0] ?? "http://localhost")
+                                    baseUrl
                                 });
 
                                 if (exists === true) {
                                     return [];
                                 }
 
-                                // TODO: we don't have the position of the description, so we can't create a useful message
-                                // that points to the endpoint definition file and line number.
-                                // We could potentially add this information in the future, but it's not a huge deal right now.
                                 return exists.map((brokenPathname) => {
-                                    const message = createLinkViolationMessage(pathnameToCheck, brokenPathname);
+                                    const [message, relFilePath] = createLinkViolationMessage({
+                                        pathnameToCheck,
+                                        targetPathname: brokenPathname,
+                                        absoluteFilepathToWorkspace: workspace.absoluteFilePath
+                                    });
                                     return {
                                         name: ValidMarkdownLinks.name,
                                         severity: "error" as const,
-                                        message
+                                        message,
+                                        relFilepath: relFilePath
                                     };
                                 });
                             })
@@ -199,18 +209,29 @@ export const ValidMarkdownLinks: Rule = {
     }
 };
 
-function createLinkViolationMessage(pathnameToCheck: PathnameToCheck, targetPathname: string): string {
-    return `${getPositionMessage(pathnameToCheck)}Page (${targetPathname}) contains a link to ${chalk.bold(
-        pathnameToCheck.pathname
-    )} that does not exist.`;
-}
-
-function getPositionMessage(pathnameToCheck: PathnameToCheck): string {
+function createLinkViolationMessage({
+    pathnameToCheck,
+    targetPathname,
+    absoluteFilepathToWorkspace
+}: {
+    pathnameToCheck: PathnameToCheck;
+    targetPathname: string;
+    absoluteFilepathToWorkspace: AbsoluteFilePath;
+}): [msg: string, relFilePath: RelativeFilePath] {
+    let msg = `${targetPathname} links to non-existent page ${chalk.bold(pathnameToCheck.pathname)}`;
     const { position, sourceFilepath } = pathnameToCheck;
     if (sourceFilepath == null || position == null) {
-        return "";
+        return [msg, RelativeFilePath.of("")];
     }
-    return `[${sourceFilepath.toString()}:${position.start.line}:${position.start.column}] `;
+
+    msg = `broken link to ${chalk.bold(pathnameToCheck.pathname)}`;
+    if (pathnameToCheck.pathname.length > 0 && !path.isAbsolute(pathnameToCheck.pathname)) {
+        // for relative paths, print out the resolved path that is broken
+        msg += ` (resolved path: ${path.join(targetPathname, pathnameToCheck.pathname)})`;
+    }
+    const relativeFilepath = relative(absoluteFilepathToWorkspace, sourceFilepath);
+    msg += `\n\tfix here: ${relativeFilepath}:${position.start.line}:${position.start.column}`;
+    return [msg, relativeFilepath];
 }
 
 function toLatest(apiDefinition: APIV1Read.ApiDefinition) {

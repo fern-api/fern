@@ -3916,6 +3916,7 @@ types:
       "contents": {
         "channel": {
           "auth": false,
+          "docs": "Chat with Empathic Voice Interface (EVI)",
           "examples": [
             {
               "messages": [
@@ -4082,6 +4083,7 @@ There are three ways to obtain the Chat Group ID:
   path: /chat
   url: prod
   auth: false
+  docs: Chat with Empathic Voice Interface (EVI)
   query-parameters:
     config_id:
       type: optional<string>
@@ -4178,12 +4180,12 @@ There are three ways to obtain the Chat Group ID:
         For more details, refer to the [Authentication Strategies
         Guide](/docs/introduction/api-key#authentication-strategies).
   messages:
-    subscribe:
-      origin: server
-      body: SubscribeEvent
     publish:
       origin: client
       body: PublishEvent
+    subscribe:
+      origin: server
+      body: SubscribeEvent
   examples:
     - messages:
         - type: publish
@@ -4196,6 +4198,19 @@ There are three ways to obtain the Chat Group ID:
 imports:
   root: __package__.yml
 types:
+  PublishEvent:
+    discriminated: false
+    union:
+      - type: root.AudioInput
+      - type: root.SessionSettings
+      - type: root.UserInput
+      - type: root.AssistantInput
+      - type: root.ToolResponseMessage
+      - type: root.ToolErrorMessage
+      - type: root.PauseAssistantMessage
+      - type: root.ResumeAssistantMessage
+    source:
+      openapi: ../asyncapi.json
   SubscribeEvent:
     discriminated: false
     union:
@@ -4209,19 +4224,6 @@ types:
       - type: root.ToolCallMessage
       - type: root.ToolResponseMessage
       - type: root.ToolErrorMessage
-    source:
-      openapi: ../asyncapi.json
-  PublishEvent:
-    discriminated: false
-    union:
-      - type: root.AudioInput
-      - type: root.SessionSettings
-      - type: root.UserInput
-      - type: root.AssistantInput
-      - type: root.ToolResponseMessage
-      - type: root.ToolErrorMessage
-      - type: root.PauseAssistantMessage
-      - type: root.ResumeAssistantMessage
     source:
       openapi: ../asyncapi.json
 ",

@@ -1,5 +1,7 @@
 import { dependenciesYml } from "@fern-api/configuration";
+import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath } from "@fern-api/path-utils";
+import { TaskContext } from "@fern-api/task-context";
 
 import { AbstractAPIWorkspace, FernDefinition } from "./AbstractAPIWorkspace";
 import { IdentifiableSource } from "./Source";
@@ -15,6 +17,8 @@ export declare namespace FernWorkspace {
 export class FernWorkspace extends AbstractAPIWorkspace<void> {
     public definition: FernDefinition;
     public sources: IdentifiableSource[];
+
+    public type: string = "fern";
 
     constructor({ definition, sources, ...superArgs }: FernWorkspace.Args) {
         super(superArgs);

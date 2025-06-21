@@ -11,6 +11,7 @@ import {
     Source
 } from "@fern-api/openapi-ir";
 
+import { ParseOpenAPIOptions } from "../options";
 import { SchemaParserContext } from "./SchemaParserContext";
 import { convertSchema } from "./convertSchemas";
 import { isReferenceObject } from "./utils/isReferenceObject";
@@ -25,28 +26,32 @@ export function convertAdditionalProperties({
     availability,
     wrapAsNullable,
     context,
+    namespace,
     groupName,
     example,
     encoding,
-    source,
-    namespace
+    source
 }: {
     nameOverride: string | undefined;
     generatedName: string;
     title: string | undefined;
     breadcrumbs: string[];
-    additionalProperties: boolean | OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
+    additionalProperties: undefined | boolean | OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
     description: string | undefined;
     availability: Availability | undefined;
     wrapAsNullable: boolean;
     context: SchemaParserContext;
+    namespace: string | undefined;
     groupName: SdkGroupName | undefined;
     example: unknown | undefined;
     encoding: Encoding | undefined;
     source: Source;
-    namespace: string | undefined;
 }): SchemaWithExample {
-    if (typeof additionalProperties === "boolean" || isAdditionalPropertiesAny(additionalProperties)) {
+    if (additionalProperties === undefined) {
+        additionalProperties = context.options.additionalPropertiesDefaultsTo;
+    }
+
+    if (typeof additionalProperties === "boolean" || isAdditionalPropertiesAny(additionalProperties, context.options)) {
         return wrapMap({
             nameOverride,
             generatedName,
@@ -68,6 +73,7 @@ export function convertAdditionalProperties({
                     maxLength: undefined,
                     example: undefined
                 }),
+                namespace: undefined,
                 groupName: undefined
             },
             valueSchema: SchemaWithExample.unknown({
@@ -77,8 +83,10 @@ export function convertAdditionalProperties({
                 description: undefined,
                 availability: undefined,
                 example: undefined,
+                namespace: undefined,
                 groupName: undefined
             }),
+            namespace,
             groupName,
             example,
             encoding
@@ -105,6 +113,7 @@ export function convertAdditionalProperties({
                 maxLength: undefined,
                 example: undefined
             }),
+            namespace: undefined,
             groupName: undefined
         },
         // Whether a type is inline is usually determined later by checking if a declaration is nested within another declaration,
@@ -123,6 +132,7 @@ export function convertAdditionalProperties({
                 undefined
             )
         ),
+        namespace,
         groupName,
         example,
         encoding
@@ -166,6 +176,7 @@ export function wrapMap({
     wrapAsNullable,
     description,
     availability,
+    namespace,
     groupName,
     example,
     encoding
@@ -178,6 +189,7 @@ export function wrapMap({
     wrapAsNullable: boolean;
     description: string | undefined;
     availability: Availability | undefined;
+    namespace: string | undefined;
     groupName: SdkGroupName | undefined;
     example: unknown | undefined;
     encoding: Encoding | undefined;
@@ -195,6 +207,7 @@ export function wrapMap({
                 availability: keySchema.availability,
                 key: keySchema,
                 value: valueSchema,
+                namespace,
                 groupName,
                 encoding,
                 example,
@@ -202,6 +215,7 @@ export function wrapMap({
             }),
             description,
             availability,
+            namespace,
             groupName,
             inline: undefined
         });
@@ -214,6 +228,7 @@ export function wrapMap({
         availability,
         key: keySchema,
         value: valueSchema,
+        namespace,
         groupName,
         encoding,
         example,
@@ -222,10 +237,11 @@ export function wrapMap({
 }
 
 export function isAdditionalPropertiesAny(
-    additionalProperties: boolean | OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | undefined
+    additionalProperties: boolean | OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | undefined,
+    options: ParseOpenAPIOptions
 ): boolean {
     if (additionalProperties == null) {
-        return false;
+        return options.additionalPropertiesDefaultsTo;
     }
     if (typeof additionalProperties === "boolean") {
         return additionalProperties;

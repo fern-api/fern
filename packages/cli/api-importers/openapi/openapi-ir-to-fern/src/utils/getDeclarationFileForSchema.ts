@@ -12,25 +12,23 @@ const PACKAGE_MARKER_RELATIVE_FILEPATH = RelativeFilePath.of(FERN_PACKAGE_MARKER
 export function getDeclarationFileForSchema(schema: Schema): RelativeFilePath {
     switch (schema.type) {
         case "object":
-            return getDeclarationFileFromGroupName(schema.groupName);
-        case "enum":
-            return getDeclarationFileFromGroupName(schema.groupName);
-        case "oneOf":
-            return getDeclarationFileFromGroupName(schema.value.groupName);
-        case "array":
-            return getDeclarationFileFromGroupName(schema.groupName);
-        case "map":
-            return getDeclarationFileFromGroupName(schema.groupName);
-        case "reference":
-            return getDeclarationFileFromGroupName(schema.groupName);
-        case "literal":
-            return getDeclarationFileFromGroupName(schema.groupName);
-        case "optional":
-            return getDeclarationFileFromGroupName(schema.groupName);
-        case "nullable":
-            return getDeclarationFileFromGroupName(schema.groupName);
         case "primitive":
-            return getDeclarationFileFromGroupName(schema.groupName);
+        case "enum":
+        case "array":
+        case "map":
+        case "reference":
+        case "literal":
+        case "optional":
+        case "nullable":
+            return getDeclarationFileFromGroupName({
+                namespace: schema.namespace,
+                groupName: schema.groupName
+            });
+        case "oneOf":
+            return getDeclarationFileFromGroupName({
+                namespace: schema.value.namespace,
+                groupName: schema.value.groupName
+            });
         case "unknown":
             return PACKAGE_MARKER_RELATIVE_FILEPATH;
         default:
@@ -44,6 +42,29 @@ export function getDeclarationFileForSchema(schema: Schema): RelativeFilePath {
  * If the group name is a string, the group name will be camel cased and a .yml extension will be added.
  * If the group name is an array, we create a directory with the group name and add a file with the group name camel cased and a .yml extension.
  */
-function getDeclarationFileFromGroupName(groupName: SdkGroupName | undefined): RelativeFilePath {
+function getDeclarationFileFromGroupName({
+    namespace,
+    groupName
+}: {
+    namespace: string | undefined;
+    groupName: SdkGroupName | undefined;
+}): RelativeFilePath {
+    if (namespace != null && groupName != null) {
+        return convertSdkGroupNameToFile([
+            {
+                type: "namespace",
+                name: namespace
+            },
+            ...groupName
+        ]);
+    }
+    if (namespace != null) {
+        return convertSdkGroupNameToFile([
+            {
+                type: "namespace",
+                name: namespace
+            }
+        ]);
+    }
     return convertSdkGroupNameToFile(groupName);
 }

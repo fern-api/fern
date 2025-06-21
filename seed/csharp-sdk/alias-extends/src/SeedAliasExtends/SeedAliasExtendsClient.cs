@@ -31,11 +31,11 @@ public partial class SeedAliasExtendsClient
         _client = new RawClient(clientOptions);
     }
 
-    /// <example>
-    /// <code>
-    /// await client.ExtendedInlineRequestBodyAsync(new InlinedChildRequest { Child = "child" });
-    /// </code>
-    /// </example>
+    /// <example><code>
+    /// await client.ExtendedInlineRequestBodyAsync(
+    ///     new InlinedChildRequest { Child = "child", Parent = "parent" }
+    /// );
+    /// </code></example>
     public async global::System.Threading.Tasks.Task ExtendedInlineRequestBodyAsync(
         InlinedChildRequest request,
         RequestOptions? options = null,
@@ -43,8 +43,8 @@ public partial class SeedAliasExtendsClient
     )
     {
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
@@ -59,11 +59,13 @@ public partial class SeedAliasExtendsClient
         {
             return;
         }
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        throw new SeedAliasExtendsApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedAliasExtendsApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

@@ -8,19 +8,4 @@
 export type SubmissionTypeEnum = "TEST";
 export const SubmissionTypeEnum = {
     Test: "TEST",
-    _visit: <R>(value: SubmissionTypeEnum, visitor: SubmissionTypeEnum.Visitor<R>) => {
-        switch (value) {
-            case SubmissionTypeEnum.Test:
-                return visitor.test();
-            default:
-                return visitor._other();
-        }
-    },
 } as const;
-
-export namespace SubmissionTypeEnum {
-    export interface Visitor<R> {
-        test: () => R;
-        _other: () => R;
-    }
-}

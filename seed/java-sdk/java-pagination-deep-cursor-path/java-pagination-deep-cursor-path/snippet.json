@@ -1,0 +1,44 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "30404845",
+            "id": {
+                "method": "POST",
+                "path": "/",
+                "identifier_override": "endpoint_deep-cursor-path.do-thing"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.deepCursorPath.SeedDeepCursorPathClient;\nimport com.seed.deepCursorPath.resources.deepcursorpath.types.A;\nimport com.seed.deepCursorPath.resources.deepcursorpath.types.B;\nimport com.seed.deepCursorPath.resources.deepcursorpath.types.C;\nimport com.seed.deepCursorPath.resources.deepcursorpath.types.D;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedDeepCursorPathClient client = SeedDeepCursorPathClient\n            .builder()\n            .build();\n\n        client.deepCursorPath().doThing(\n            A\n                .builder()\n                .b(\n                    B\n                        .builder()\n                        .c(\n                            C\n                                .builder()\n                                .d(\n                                    D\n                                        .builder()\n                                        .startingAfter(\"starting_after\")\n                                        .build()\n                                )\n                                .build()\n                        )\n                        .build()\n                )\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.deepCursorPath.SeedDeepCursorPathClient;\nimport com.seed.deepCursorPath.resources.deepcursorpath.types.A;\nimport com.seed.deepCursorPath.resources.deepcursorpath.types.B;\nimport com.seed.deepCursorPath.resources.deepcursorpath.types.C;\nimport com.seed.deepCursorPath.resources.deepcursorpath.types.D;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedDeepCursorPathClient client = SeedDeepCursorPathClient\n            .builder()\n            .build();\n\n        client.deepCursorPath().doThing(\n            A\n                .builder()\n                .b(\n                    B\n                        .builder()\n                        .c(\n                            C\n                                .builder()\n                                .d(\n                                    D\n                                        .builder()\n                                        .startingAfter(\"starting_after\")\n                                        .build()\n                                )\n                                .build()\n                        )\n                        .build()\n                )\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "6f9b1777",
+            "id": {
+                "method": "POST",
+                "path": "/",
+                "identifier_override": "endpoint_deep-cursor-path.do-thing-required"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.deepCursorPath.SeedDeepCursorPathClient;\nimport com.seed.deepCursorPath.resources.deepcursorpath.types.IndirectionRequired;\nimport com.seed.deepCursorPath.resources.deepcursorpath.types.MainRequired;\nimport java.util.ArrayList;\nimport java.util.Arrays;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedDeepCursorPathClient client = SeedDeepCursorPathClient\n            .builder()\n            .build();\n\n        client.deepCursorPath().doThingRequired(\n            MainRequired\n                .builder()\n                .indirection(\n                    IndirectionRequired\n                        .builder()\n                        .results(\n                            new ArrayList<String>(\n                                Arrays.asList(\"results\", \"results\")\n                            )\n                        )\n                        .startingAfter(\"starting_after\")\n                        .build()\n                )\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.deepCursorPath.SeedDeepCursorPathClient;\nimport com.seed.deepCursorPath.resources.deepcursorpath.types.IndirectionRequired;\nimport com.seed.deepCursorPath.resources.deepcursorpath.types.MainRequired;\nimport java.util.ArrayList;\nimport java.util.Arrays;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedDeepCursorPathClient client = SeedDeepCursorPathClient\n            .builder()\n            .build();\n\n        client.deepCursorPath().doThingRequired(\n            MainRequired\n                .builder()\n                .indirection(\n                    IndirectionRequired\n                        .builder()\n                        .results(\n                            new ArrayList<String>(\n                                Arrays.asList(\"results\", \"results\")\n                            )\n                        )\n                        .startingAfter(\"starting_after\")\n                        .build()\n                )\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "727551e1",
+            "id": {
+                "method": "POST",
+                "path": "/",
+                "identifier_override": "endpoint_deep-cursor-path.do-thing-inline"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.deepCursorPath.SeedDeepCursorPathClient;\nimport com.seed.deepCursorPath.resources.deepcursorpath.types.InlineA;\nimport com.seed.deepCursorPath.resources.deepcursorpath.types.InlineB;\nimport com.seed.deepCursorPath.resources.deepcursorpath.types.InlineC;\nimport com.seed.deepCursorPath.resources.deepcursorpath.types.InlineD;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedDeepCursorPathClient client = SeedDeepCursorPathClient\n            .builder()\n            .build();\n\n        client.deepCursorPath().doThingInline(\n            InlineA\n                .builder()\n                .b(\n                    InlineB\n                        .builder()\n                        .c(\n                            InlineC\n                                .builder()\n                                .b(\n                                    InlineD\n                                        .builder()\n                                        .startingAfter(\"starting_after\")\n                                        .build()\n                                )\n                                .build()\n                        )\n                        .build()\n                )\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.deepCursorPath.SeedDeepCursorPathClient;\nimport com.seed.deepCursorPath.resources.deepcursorpath.types.InlineA;\nimport com.seed.deepCursorPath.resources.deepcursorpath.types.InlineB;\nimport com.seed.deepCursorPath.resources.deepcursorpath.types.InlineC;\nimport com.seed.deepCursorPath.resources.deepcursorpath.types.InlineD;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedDeepCursorPathClient client = SeedDeepCursorPathClient\n            .builder()\n            .build();\n\n        client.deepCursorPath().doThingInline(\n            InlineA\n                .builder()\n                .b(\n                    InlineB\n                        .builder()\n                        .c(\n                            InlineC\n                                .builder()\n                                .b(\n                                    InlineD\n                                        .builder()\n                                        .startingAfter(\"starting_after\")\n                                        .build()\n                                )\n                                .build()\n                        )\n                        .build()\n                )\n                .build()\n        );\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

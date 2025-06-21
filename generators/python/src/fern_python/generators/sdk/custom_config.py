@@ -1,9 +1,8 @@
 from typing import Any, Dict, List, Literal, Optional, Union
 
 import pydantic
-from fern_python.codegen import pyproject_toml
 from fern_python.codegen.module_manager import ModuleExport
-from fern_python.generators.pydantic_model import PydanticModelCustomConfig
+from fern_python.generators.pydantic_model.custom_config import PydanticModelCustomConfig
 
 
 class SdkPydanticModelCustomConfig(PydanticModelCustomConfig):
@@ -52,6 +51,7 @@ class SDKCustomConfig(pydantic.BaseModel):
     flat_layout: bool = False
     pydantic_config: SdkPydanticModelCustomConfig = SdkPydanticModelCustomConfig()
     additional_init_exports: Optional[List[ModuleExport]] = None
+    exclude_types_from_init_exports: Optional[bool] = False
     # Feature flag that improves imports in the
     # Python SDK by removing nested `resources` directory
     improved_imports: bool = True
@@ -61,6 +61,12 @@ class SDKCustomConfig(pydantic.BaseModel):
     # Feature flag that removes the usage of request objects, and instead
     # parameters in function signatures where possible.
     inline_request_params: bool = True
+
+    # If true, treats path parameters as named parameters in endpoint functions
+    inline_path_params: bool = False
+
+    # Feature flag that enables generation of Python websocket clients
+    should_generate_websocket_clients: bool = False
 
     # deprecated, use client config instead
     client_class_name: Optional[str] = None
@@ -76,11 +82,27 @@ class SDKCustomConfig(pydantic.BaseModel):
     # Models for request objects.
     use_typeddict_requests: bool = False
 
+    # Whether or not to generate TypedDicts instead of Pydantic
+    # Models for file upload request objects.
+    #
+    # Note that this flag was only introduced due to an oversight in
+    # the `use_typeddict_requests` flag implementation; it should be
+    # removed in the future.
+    use_typeddict_requests_for_file_upload: bool = False
+
+    use_inheritance_for_extended_models: bool = True
+    """
+    Whether to generate Pydantic models that implement inheritance when a model utilizes the Fern `extends` keyword.
+    """
+
     pyproject_toml: Optional[str] = None
 
     # The chunk size to use (if any) when processing a response bytes stream within `iter_bytes` or `aiter_bytes`
     # results in: `for _chunk in _response.iter_bytes(chunk_size=<default_bytes_stream_chunk_size>):`
     default_bytes_stream_chunk_size: Optional[int] = None
+
+    # Whether or not to include legacy wire tests in the generated SDK.
+    include_legacy_wire_tests: bool = False
 
     class Config:
         extra = pydantic.Extra.forbid
@@ -94,3 +116,8 @@ class SDKCustomConfig(pydantic.BaseModel):
         obj.pydantic_config.use_typeddict_requests = use_typeddict_requests
 
         return obj
+
+    @pydantic.model_validator(mode="after")
+    def propagate_use_inheritance_for_extended_models(self) -> "SDKCustomConfig":
+        self.pydantic_config.use_inheritance_for_extended_models = self.use_inheritance_for_extended_models
+        return self

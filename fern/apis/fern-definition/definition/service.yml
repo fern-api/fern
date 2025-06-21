@@ -61,6 +61,7 @@ types:
       - PUT
       - PATCH
       - DELETE
+      - HEAD
 
   HttpRequest:
     discriminated: false

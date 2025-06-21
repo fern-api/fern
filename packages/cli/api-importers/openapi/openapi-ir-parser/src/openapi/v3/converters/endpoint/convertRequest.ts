@@ -6,6 +6,7 @@ import {
     MultipartSchema,
     NamedFullExample,
     RequestWithExample,
+    SchemaWithExample,
     Source
 } from "@fern-api/openapi-ir";
 
@@ -134,88 +135,30 @@ export function convertRequest({
         const properties: MultipartRequestProperty[] = [];
         if (convertedMultipartSchema.type === "object") {
             for (const property of convertedMultipartSchema.properties) {
-                if (
-                    property.schema.type === "primitive" &&
-                    property.schema.schema.type === "string" &&
-                    property.schema.schema.format === "binary"
-                ) {
-                    properties.push({
-                        key: property.key,
-                        schema: MultipartSchema.file({ isOptional: false, isArray: false }),
-                        description: property.schema.description,
-                        contentType:
-                            multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined,
-                        exploded: false,
-                        encoding: undefined
-                    });
-                    continue;
-                }
-
-                if (
-                    property.schema.type === "optional" &&
-                    property.schema.value.type === "primitive" &&
-                    property.schema.value.schema.type === "string" &&
-                    property.schema.value.schema.format === "binary"
-                ) {
-                    properties.push({
-                        key: property.key,
-                        schema: MultipartSchema.file({ isOptional: true, isArray: false }),
-                        description: property.schema.description,
-                        contentType:
-                            multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined,
-                        exploded: false,
-                        encoding: undefined
-                    });
-                    continue;
-                }
-
-                if (
-                    property.schema.type === "array" &&
-                    property.schema.value.type === "primitive" &&
-                    property.schema.value.schema.type === "string" &&
-                    property.schema.value.schema.format === "binary"
-                ) {
-                    properties.push({
-                        key: property.key,
-                        schema: MultipartSchema.file({ isOptional: false, isArray: true }),
-                        description: property.schema.description,
-                        contentType:
-                            multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined,
-                        exploded: false,
-                        encoding: undefined
-                    });
-                    continue;
-                }
-
-                if (
-                    property.schema.type === "optional" &&
-                    property.schema.value.type === "array" &&
-                    property.schema.value.value.type === "primitive" &&
-                    property.schema.value.value.schema.type === "string" &&
-                    property.schema.value.value.schema.format === "binary"
-                ) {
-                    properties.push({
-                        key: property.key,
-                        schema: MultipartSchema.file({ isOptional: true, isArray: true }),
-                        description: property.schema.description,
-                        contentType:
-                            multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined,
-                        exploded: false,
-                        encoding: undefined
-                    });
-                    continue;
-                }
-
-                const contentType =
-                    multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined;
-                properties.push({
-                    key: property.key,
-                    schema: MultipartSchema.json(property.schema),
-                    description: undefined,
-                    contentType: multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined,
-                    exploded: multipartEncoding != null ? multipartEncoding[property.key]?.explode : undefined,
-                    encoding: contentType == null ? context.options.defaultFormParameterEncoding : undefined
+                const { isFile, isOptional, isArray, description } = recursivelyCheckSchemaWithExampleIsFile({
+                    schema: property.schema
                 });
+                if (isFile) {
+                    const contentType = getContentType(property.key, multipartEncoding);
+                    properties.push({
+                        key: property.key,
+                        schema: MultipartSchema.file({ isOptional, isArray, description }),
+                        description,
+                        contentType,
+                        exploded: false,
+                        encoding: contentType == null ? context.options.defaultFormParameterEncoding : undefined
+                    });
+                } else {
+                    const contentType = getContentType(property.key, multipartEncoding);
+                    properties.push({
+                        key: property.key,
+                        schema: MultipartSchema.json(property.schema),
+                        description: undefined,
+                        contentType,
+                        exploded: multipartEncoding != null ? multipartEncoding[property.key]?.explode : undefined,
+                        encoding: contentType == null ? context.options.defaultFormParameterEncoding : undefined
+                    });
+                }
             }
         }
 
@@ -248,7 +191,7 @@ export function convertRequest({
             fullExamples: jsonMediaObject.examples,
             additionalProperties:
                 !isReferenceObject(jsonMediaObject.schema) &&
-                isAdditionalPropertiesAny(jsonMediaObject.schema.additionalProperties),
+                isAdditionalPropertiesAny(jsonMediaObject.schema.additionalProperties, context.options),
             source
         });
     }
@@ -300,4 +243,76 @@ function resolveSchema(schema: OpenAPIV3.ReferenceObject, document: OpenAPIV3.Do
         id: schemaId,
         schema: resolvedSchema
     };
+}
+
+function recursivelyCheckSchemaWithExampleIsFile({
+    schema,
+    isOptional,
+    isArray,
+    description
+}: {
+    schema: SchemaWithExample;
+    isOptional?: boolean;
+    isArray?: boolean;
+    description?: string;
+}): { isFile: boolean; isOptional: boolean; isArray: boolean; description: string | undefined } {
+    if (checkSchemaWithExampleIsOptional(schema)) {
+        return recursivelyCheckSchemaWithExampleIsFile({
+            schema: schema.value,
+            isOptional: true,
+            isArray,
+            description: schema.description
+        });
+    }
+    if (checkSchemaWithExampleIsNullable(schema)) {
+        return recursivelyCheckSchemaWithExampleIsFile({
+            schema: schema.value,
+            isOptional,
+            isArray,
+            description: schema.description
+        });
+    }
+    if (checkSchemaWithExampleIsArray(schema)) {
+        return recursivelyCheckSchemaWithExampleIsFile({
+            schema: schema.value,
+            isOptional,
+            isArray: true,
+            description: schema.description
+        });
+    }
+    if (checkSchemaWithExampleIsFile(schema)) {
+        return {
+            isFile: true,
+            isOptional: isOptional ?? false,
+            isArray: isArray ?? false,
+            description: description ?? schema.description
+        };
+    } else {
+        return {
+            isFile: false,
+            isOptional: isOptional ?? false,
+            isArray: isArray ?? false,
+            description: undefined
+        };
+    }
+}
+
+function checkSchemaWithExampleIsFile(schema: SchemaWithExample): schema is SchemaWithExample.Primitive {
+    return schema.type === "primitive" && schema.schema.type === "string" && schema.schema.format === "binary";
+}
+
+function checkSchemaWithExampleIsOptional(schema: SchemaWithExample): schema is SchemaWithExample.Optional {
+    return schema.type === "optional";
+}
+
+function checkSchemaWithExampleIsNullable(schema: SchemaWithExample): schema is SchemaWithExample.Nullable {
+    return schema.type === "nullable";
+}
+
+function checkSchemaWithExampleIsArray(schema: SchemaWithExample): schema is SchemaWithExample.Array {
+    return schema.type === "array";
+}
+
+function getContentType(key: string, multipartEncoding: Record<string, OpenAPIV3.EncodingObject> | undefined) {
+    return multipartEncoding != null ? multipartEncoding[key]?.contentType : undefined;
 }

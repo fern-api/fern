@@ -1,6 +1,4 @@
-using FluentAssertions.Json;
 using global::System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedExhaustive.Core;
 
@@ -40,12 +38,12 @@ public class GetAndReturnMapPrimToPrimTest : BaseMockServerTest
             );
 
         var response = await Client.Endpoints.Container.GetAndReturnMapPrimToPrimAsync(
-            new Dictionary<string, string>() { { "string", "string" } },
-            RequestOptions
+            new Dictionary<string, string>() { { "string", "string" } }
         );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        Assert.That(
+            response,
+            Is.EqualTo(JsonUtils.Deserialize<Dictionary<string, string>>(mockResponse))
+                .UsingDefaults()
+        );
     }
 }

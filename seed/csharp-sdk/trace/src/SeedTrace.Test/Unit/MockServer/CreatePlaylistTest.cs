@@ -1,7 +1,5 @@
 using System.Globalization;
-using FluentAssertions.Json;
 using global::System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedTrace;
 using SeedTrace.Core;
@@ -11,7 +9,7 @@ namespace SeedTrace.Test.Unit.MockServer;
 [TestFixture]
 public class CreatePlaylistTest : BaseMockServerTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string requestJson = """
@@ -26,13 +24,13 @@ public class CreatePlaylistTest : BaseMockServerTest
 
         const string mockResponse = """
             {
+              "playlist_id": "playlist_id",
+              "owner-id": "owner-id",
               "name": "name",
               "problems": [
                 "problems",
                 "problems"
-              ],
-              "playlist_id": "playlist_id",
-              "owner-id": "owner-id"
+              ]
             }
             """;
 
@@ -72,12 +70,11 @@ public class CreatePlaylistTest : BaseMockServerTest
                     Name = "name",
                     Problems = new List<string>() { "problems", "problems" },
                 },
-            },
-            RequestOptions
+            }
         );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        Assert.That(
+            response,
+            Is.EqualTo(JsonUtils.Deserialize<Playlist>(mockResponse)).UsingDefaults()
+        );
     }
 }

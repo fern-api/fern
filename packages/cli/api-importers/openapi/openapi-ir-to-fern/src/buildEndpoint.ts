@@ -77,19 +77,30 @@ export function buildEndpoint({
 
     let pagination: RawSchemas.PaginationSchema | undefined = undefined;
     if (endpoint.pagination != null) {
-        if (endpoint.pagination.type === "cursor") {
-            pagination = {
-                cursor: endpoint.pagination.cursor,
-                next_cursor: endpoint.pagination.nextCursor,
-                results: endpoint.pagination.results
-            };
-        } else {
-            pagination = {
-                offset: endpoint.pagination.offset,
-                step: endpoint.pagination.step,
-                results: endpoint.pagination.results,
-                "has-next-page": endpoint.pagination.hasNextPage
-            };
+        switch (endpoint.pagination.type) {
+            case "cursor":
+                pagination = {
+                    cursor: endpoint.pagination.cursor,
+                    next_cursor: endpoint.pagination.nextCursor,
+                    results: endpoint.pagination.results
+                };
+                break;
+            case "offset":
+                pagination = {
+                    offset: endpoint.pagination.offset,
+                    step: endpoint.pagination.step,
+                    results: endpoint.pagination.results,
+                    "has-next-page": endpoint.pagination.hasNextPage
+                };
+                break;
+            case "custom":
+                pagination = {
+                    type: "custom",
+                    results: endpoint.pagination.results
+                };
+                break;
+            default:
+                assertNever(endpoint.pagination);
         }
     }
 
@@ -114,9 +125,13 @@ export function buildEndpoint({
     }
 
     const headers: Record<string, RawSchemas.HttpHeaderSchema> = {};
-    const globalHeaderNames = context.builder.getGlobalHeaderNames();
+    const alreadyUsedHeaders = context.builder.getGlobalHeaderNames();
+    const authHeaderName = context.builder.getAuthHeaderName();
+    if (authHeaderName != null) {
+        alreadyUsedHeaders.add(authHeaderName);
+    }
     const endpointSpecificHeaders = endpoint.headers.filter((header) => {
-        return !globalHeaderNames.has(header.name);
+        return !alreadyUsedHeaders.has(header.name);
     });
     for (const header of endpointSpecificHeaders) {
         const headerSchema = buildHeader({
@@ -228,6 +243,13 @@ export function buildEndpoint({
                     docs: fileResponse.description ?? undefined,
                     type: "file",
                     "status-code": fileResponse.statusCode
+                };
+            },
+            bytes: (bytesResponse) => {
+                convertedEndpoint.response = {
+                    docs: bytesResponse.description ?? undefined,
+                    type: "bytes",
+                    "status-code": bytesResponse.statusCode
                 };
             },
             streamingText: (textResponse) => {
@@ -531,16 +553,19 @@ function getRequest({
                     return [property.key, typeReference];
                 })
         );
-        const extendedSchemas: string[] = resolvedSchema.allOf.map((referencedSchema) => {
-            const allOfTypeReference = buildTypeReference({
-                schema: Schema.reference(referencedSchema),
-                fileContainingReference: declarationFile,
-                context,
-                namespace,
-                declarationDepth: 0
-            });
-            return getTypeFromTypeReference(allOfTypeReference);
-        });
+        const extendedSchemas: string[] = resolvedSchema.allOf
+            .map((referencedSchema) => {
+                const allOfTypeReference = buildTypeReference({
+                    schema: Schema.reference(referencedSchema),
+                    fileContainingReference: declarationFile,
+                    context,
+                    namespace,
+                    declarationDepth: 0
+                });
+                return getTypeFromTypeReference(allOfTypeReference);
+            })
+            .filter((schema) => schema !== "unknown");
+
         const requestBodySchema: RawSchemas.HttpRequestBodySchema = {
             properties
         };

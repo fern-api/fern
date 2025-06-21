@@ -14,11 +14,9 @@ public partial class ServiceClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Service.PostAsync("pathParam", "serviceParam", "resourceParam", 1);
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async global::System.Threading.Tasks.Task PostAsync(
         string pathParam,
         string serviceParam,
@@ -29,13 +27,18 @@ public partial class ServiceClient
     )
     {
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
-                    Path =
-                        $"/test/{JsonUtils.SerializeAsString(pathParam)}/{JsonUtils.SerializeAsString(serviceParam)}/{JsonUtils.SerializeAsString(endpointParam)}/{JsonUtils.SerializeAsString(resourceParam)}",
+                    Path = string.Format(
+                        "/test/{0}/{1}/{2}/{3}",
+                        ValueConvert.ToPathParameterString(pathParam),
+                        ValueConvert.ToPathParameterString(serviceParam),
+                        ValueConvert.ToPathParameterString(endpointParam),
+                        ValueConvert.ToPathParameterString(resourceParam)
+                    ),
                     Options = options,
                 },
                 cancellationToken
@@ -45,11 +48,13 @@ public partial class ServiceClient
         {
             return;
         }
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        throw new SeedApiWideBasePathApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedApiWideBasePathApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

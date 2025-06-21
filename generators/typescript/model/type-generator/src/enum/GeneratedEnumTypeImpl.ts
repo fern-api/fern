@@ -1,5 +1,6 @@
 import {
     GetReferenceOpts,
+    getPropertyKey,
     getTextOfTsNode,
     getWriterForMultiLineUnionType,
     maybeAddDocsStructure
@@ -15,7 +16,6 @@ import {
     VariableDeclarationKind,
     VariableStatementStructure,
     WriterFunction,
-    WriterFunctionOrValue,
     ts
 } from "ts-morph";
 
@@ -33,12 +33,12 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
     extends AbstractGeneratedType<EnumTypeDeclaration, Context>
     implements GeneratedEnumType<Context>
 {
-    private static VISITOR_INTERFACE_NAME = "Visitor";
-    private static OTHER_VISITOR_METHOD_NAME = "_other";
-    private static VISITOR_RETURN_TYPE_PARAMETER = "R";
-    private static VISIT_PROPERTTY_NAME = "_visit";
-    private static VISIT_VALUE_PARAMETER_NAME = "value";
-    private static VISITOR_PARAMETER_NAME = "visitor";
+    private static readonly VISITOR_INTERFACE_NAME = "Visitor";
+    private static readonly OTHER_VISITOR_METHOD_NAME = "_other";
+    private static readonly VISITOR_RETURN_TYPE_PARAMETER = "R";
+    private static readonly VISIT_PROPERTTY_NAME = "_visit";
+    private static readonly VISIT_VALUE_PARAMETER_NAME = "value";
+    private static readonly VISITOR_PARAMETER_NAME = "visitor";
 
     public readonly type = "enum";
     private includeEnumUtils: boolean;
@@ -92,7 +92,7 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
     private generateConst(context: Context): VariableStatementStructure {
         const constProperties = this.shape.values.map((value) =>
             ts.factory.createPropertyAssignment(
-                ts.factory.createIdentifier(this.getEnumValueName(value)),
+                ts.factory.createIdentifier(getPropertyKey(this.getEnumValueName(value))),
                 ts.factory.createStringLiteral(value.name.wireValue)
             )
         );
@@ -226,7 +226,7 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
                     properties: [
                         ...this.shape.values.map(
                             (enumValue): OptionalKind<PropertySignatureStructure> => ({
-                                name: this.getEnumValueVisitPropertyName(enumValue),
+                                name: getPropertyKey(this.getEnumValueVisitPropertyName(enumValue)),
                                 type: getTextOfTsNode(
                                     ts.factory.createFunctionTypeNode(
                                         undefined,

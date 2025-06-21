@@ -1,4 +1,4 @@
-import { getTextOfTsNode } from "@fern-typescript/commons";
+import { getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { SingleUnionTypeGenerator } from "@fern-typescript/union-generator";
 import { ModuleDeclarationStructure, OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
@@ -10,8 +10,8 @@ export declare namespace UnknownErrorSingleUnionTypeGenerator {
 }
 
 export class UnknownErrorSingleUnionTypeGenerator implements SingleUnionTypeGenerator<SdkContext> {
-    private static CONTENT_PROPERTY_NAME = "content";
-    private static BUILDER_PARAMETER_NAME = "fetcherError";
+    private static readonly CONTENT_PROPERTY_NAME = "content";
+    private static readonly BUILDER_PARAMETER_NAME = "fetcherError";
 
     private discriminant: string;
 
@@ -45,7 +45,7 @@ export class UnknownErrorSingleUnionTypeGenerator implements SingleUnionTypeGene
     public getNonDiscriminantPropertiesForInterface(context: SdkContext): OptionalKind<PropertySignatureStructure>[] {
         return [
             {
-                name: UnknownErrorSingleUnionTypeGenerator.CONTENT_PROPERTY_NAME,
+                name: getPropertyKey(UnknownErrorSingleUnionTypeGenerator.CONTENT_PROPERTY_NAME),
                 type: getTextOfTsNode(context.coreUtilities.fetcher.Fetcher.Error._getReferenceToType())
             }
         ];
@@ -82,7 +82,10 @@ export class UnknownErrorSingleUnionTypeGenerator implements SingleUnionTypeGene
 
     public getNonDiscriminantPropertiesForBuilder(): ts.ObjectLiteralElementLike[] {
         return [
-            ts.factory.createPropertyAssignment(this.discriminant, ts.factory.createIdentifier("undefined")),
+            ts.factory.createPropertyAssignment(
+                getPropertyKey(this.discriminant),
+                ts.factory.createIdentifier("undefined")
+            ),
             ts.factory.createPropertyAssignment(
                 UnknownErrorSingleUnionTypeGenerator.CONTENT_PROPERTY_NAME,
                 ts.factory.createIdentifier(UnknownErrorSingleUnionTypeGenerator.BUILDER_PARAMETER_NAME)

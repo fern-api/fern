@@ -1,7 +1,6 @@
-export * as SeedOauthClientCredentialsEnvironmentVariables from "./api";
-export { SeedOauthClientCredentialsEnvironmentVariablesClient } from "./Client";
+export * as SeedOauthClientCredentialsEnvironmentVariables from "./api/index.js";
 export {
     SeedOauthClientCredentialsEnvironmentVariablesError,
     SeedOauthClientCredentialsEnvironmentVariablesTimeoutError,
-} from "./errors";
-export * as serialization from "./serialization";
+} from "./errors/index.js";
+export { SeedOauthClientCredentialsEnvironmentVariablesClient } from "./Client.js";

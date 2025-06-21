@@ -1,11 +1,24 @@
-import { AbstractCsharpGeneratorContext, AsIsFiles } from "@fern-api/csharp-codegen";
+import { AbstractFormatter, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
+import { AbstractCsharpGeneratorContext, AsIsFiles } from "@fern-api/csharp-base";
+import { CsharpFormatter } from "@fern-api/csharp-formatter";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 
-import { FernFilepath, TypeId, WellKnownProtobufType } from "@fern-fern/ir-sdk/api";
+import { FernFilepath, IntermediateRepresentation, TypeId, WellKnownProtobufType } from "@fern-fern/ir-sdk/api";
 
 import { ModelCustomConfigSchema } from "./ModelCustomConfig";
 
 export class ModelGeneratorContext extends AbstractCsharpGeneratorContext<ModelCustomConfigSchema> {
+    public readonly formatter: AbstractFormatter;
+    public constructor(
+        ir: IntermediateRepresentation,
+        config: FernGeneratorExec.config.GeneratorConfig,
+        customConfig: ModelCustomConfigSchema,
+        generatorNotificationService: GeneratorNotificationService
+    ) {
+        super(ir, config, customConfig, generatorNotificationService);
+        this.formatter = new CsharpFormatter();
+    }
+
     /**
      * __package__.yml types are stored at the top level
      * __{{file}}__.yml types are stored in a directory with the same name as the file
@@ -29,19 +42,25 @@ export class ModelGeneratorContext extends AbstractCsharpGeneratorContext<ModelC
     }
 
     public getRawAsIsFiles(): string[] {
-        return [AsIsFiles.GitIgnore];
+        return [AsIsFiles.EditorConfig, AsIsFiles.GitIgnore];
     }
 
     public getCoreAsIsFiles(): string[] {
-        const files = [
-            AsIsFiles.Constants,
-            AsIsFiles.Json.CollectionItemSerializer,
-            AsIsFiles.Json.DateOnlyConverter,
-            AsIsFiles.Json.DateTimeSerializer,
-            AsIsFiles.Json.JsonConfiguration,
-            AsIsFiles.Json.OneOfSerializer
-        ];
-        if (this.customConfig["experimental-enable-forward-compatible-enums"] ?? false) {
+        const files = [AsIsFiles.Constants];
+
+        // JSON stuff
+        files.push(
+            ...[
+                AsIsFiles.Json.CollectionItemSerializer,
+                AsIsFiles.Json.DateOnlyConverter,
+                AsIsFiles.Json.DateTimeSerializer,
+                AsIsFiles.Json.JsonAccessAttribute,
+                AsIsFiles.Json.JsonConfiguration,
+                AsIsFiles.Json.OneOfSerializer
+            ]
+        );
+
+        if (this.isForwardCompatibleEnumsEnabled()) {
             files.push(AsIsFiles.Json.StringEnumSerializer);
             files.push(AsIsFiles.StringEnum);
             files.push(AsIsFiles.StringEnumExtensions);
@@ -58,11 +77,15 @@ export class ModelGeneratorContext extends AbstractCsharpGeneratorContext<ModelC
 
     public getCoreTestAsIsFiles(): string[] {
         const files = [
-            AsIsFiles.Test.Json.DateTimeJsonTests,
             AsIsFiles.Test.Json.DateOnlyJsonTests,
+            AsIsFiles.Test.Json.DateTimeJsonTests,
+            AsIsFiles.Test.Json.JsonAccessAttributeTests,
             AsIsFiles.Test.Json.OneOfSerializerTests
         ];
-        if (this.customConfig["experimental-enable-forward-compatible-enums"] ?? false) {
+        if (this.generateNewAdditionalProperties()) {
+            files.push(AsIsFiles.Test.Json.AdditionalPropertiesTests);
+        }
+        if (this.isForwardCompatibleEnumsEnabled()) {
             files.push(AsIsFiles.Test.Json.StringEnumSerializerTests);
         } else {
             files.push(AsIsFiles.Test.Json.EnumSerializerTests);
@@ -72,7 +95,11 @@ export class ModelGeneratorContext extends AbstractCsharpGeneratorContext<ModelC
     }
 
     public getPublicCoreAsIsFiles(): string[] {
-        return [];
+        const files = [AsIsFiles.FileParameter];
+        if (this.generateNewAdditionalProperties()) {
+            files.push(AsIsFiles.Json.AdditionalProperties);
+        }
+        return files;
     }
 
     public getPublicCoreTestAsIsFiles(): string[] {
@@ -80,7 +107,7 @@ export class ModelGeneratorContext extends AbstractCsharpGeneratorContext<ModelC
     }
 
     public getAsIsTestUtils(): string[] {
-        return [];
+        return Object.values(AsIsFiles.Test.Utils);
     }
 
     public getExtraDependencies(): Record<string, string> {
@@ -89,5 +116,9 @@ export class ModelGeneratorContext extends AbstractCsharpGeneratorContext<ModelC
 
     override getChildNamespaceSegments(fernFilepath: FernFilepath): string[] {
         return fernFilepath.packagePath.map((segmentName) => segmentName.pascalCase.safeName);
+    }
+
+    public shouldCreateCustomPagination(): boolean {
+        return false;
     }
 }

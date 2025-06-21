@@ -11,7 +11,10 @@ export interface GeneratedSdkErrorType extends BaseGeneratedSdkError {
 
 export interface GeneratedSdkErrorClass extends BaseGeneratedSdkError {
     type: "class";
-    build: (context: SdkContext, args: { referenceToBody: ts.Expression | undefined }) => ts.NewExpression;
+    build: (
+        context: SdkContext,
+        args: { referenceToBody: ts.Expression | undefined; referenceToRawResponse: ts.Expression | undefined }
+    ) => ts.NewExpression;
 }
 
 export interface BaseGeneratedSdkError extends GeneratedFile<SdkContext> {}

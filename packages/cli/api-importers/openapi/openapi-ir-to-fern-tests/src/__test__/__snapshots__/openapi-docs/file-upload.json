@@ -28,7 +28,10 @@
                       "docs": "The file to upload",
                       "type": "file",
                     },
-                    "maybe_file": "optional<file>",
+                    "maybe_file": {
+                      "docs": "An optional file to upload",
+                      "type": "optional<file>",
+                    },
                   },
                 },
                 "content-type": "multipart/form-data",
@@ -56,8 +59,14 @@
               "request": {
                 "body": {
                   "properties": {
-                    "list_file": "list<file>",
-                    "maybe_list_file": "optional<list<file>>",
+                    "list_file": {
+                      "docs": "A list of files to upload",
+                      "type": "list<file>",
+                    },
+                    "maybe_list_file": {
+                      "docs": "An optional list of files to upload",
+                      "type": "optional<list<file>>",
+                    },
                   },
                 },
                 "content-type": "multipart/form-data",
@@ -94,7 +103,10 @@
                       "docs": "The file to upload",
                       "type": "file",
                     },
-                    "maybe_file": "optional<file>",
+                    "maybe_file": {
+                      "docs": "An optional file to upload",
+                      "type": "optional<file>",
+                    },
                     "metadata": {
                       "content-type": "application/json",
                       "docs": "This is a metadata field",
@@ -148,7 +160,9 @@
             file:
               type: file
               docs: The file to upload
-            maybe_file: optional<file>
+            maybe_file:
+              type: optional<file>
+              docs: An optional file to upload
         content-type: multipart/form-data
       examples:
         - request: {}
@@ -163,8 +177,12 @@
         name: UploadListRequest
         body:
           properties:
-            list_file: list<file>
-            maybe_list_file: optional<list<file>>
+            list_file:
+              type: list<file>
+              docs: A list of files to upload
+            maybe_list_file:
+              type: optional<list<file>>
+              docs: An optional list of files to upload
         content-type: multipart/form-data
       examples:
         - request: {}
@@ -183,7 +201,9 @@
               type: file
               docs: The file to upload
               content-type: application/octet-stream
-            maybe_file: optional<file>
+            maybe_file:
+              type: optional<file>
+              docs: An optional file to upload
             metadata:
               type: optional<map<string, unknown>>
               docs: This is a metadata field

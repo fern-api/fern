@@ -390,7 +390,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
         return php.codeblock(`"JSON data is missing property '${propertyName.wireValue}'"`);
     }
 
-    private getDeserliazationTypeCheckErrorMessage(propertyName: NameAndWireValue, type: php.Type): php.CodeBlock {
+    private getDeserializationTypeCheckErrorMessage(propertyName: NameAndWireValue, type: php.Type): php.CodeBlock {
         return php.codeblock((writer) => {
             if (type.internalType.type === "literal") {
                 writer.write(
@@ -1070,7 +1070,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                     php.codeblock((_writer) => {
                         _writer.controlFlow("if", isNotType);
                         _writer.writeNodeStatement(
-                            this.getErrorThrow(this.getDeserliazationTypeCheckErrorMessage(property.name, type))
+                            this.getErrorThrow(this.getDeserializationTypeCheckErrorMessage(property.name, type))
                         );
                         _writer.endControlFlow();
                     })
@@ -1122,7 +1122,9 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                 php.codeblock((_writer) => {
                     _writer.controlFlow("if", isNotType);
                     _writer.writeNodeStatement(
-                        this.getErrorThrow(this.getDeserliazationTypeCheckErrorMessage(discriminant, php.Type.string()))
+                        this.getErrorThrow(
+                            this.getDeserializationTypeCheckErrorMessage(discriminant, php.Type.string())
+                        )
                     );
                     _writer.endControlFlow();
                 })
@@ -1217,7 +1219,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                             _writer.controlFlow("if", isNotType);
                             _writer.writeNodeStatement(
                                 this.getErrorThrow(
-                                    this.getDeserliazationTypeCheckErrorMessage(
+                                    this.getDeserializationTypeCheckErrorMessage(
                                         variant.discriminantValue,
                                         php.Type.array(php.Type.mixed())
                                     )

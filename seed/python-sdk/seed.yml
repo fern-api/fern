@@ -1,4 +1,4 @@
-irVersion: v53
+irVersion: v58
 displayName: Python SDK
 image: fernapi/fern-python-sdk
 changelogLocation: ../../generators/python/sdk/versions.yml
@@ -10,28 +10,22 @@ buildScripts:
   compileScript:
     commands:
       - poetry run mypy .
-  testScript:
-    # TODO: we need to actually run the mock server tests as well
-    # Note: not all versions of the generator have this test directory which brings in the unit tests we write
-    # as a result, the script here only runs pytest if the directory exists, and exits 0 if it does not (e.g. just passes)
-    commands:
-      - export PYTHON_TEST_DIR="./tests/utils"
-      - if [ -d "$PYTHON_TEST_DIR" ]; then poetry run pytest -rP "$PYTHON_TEST_DIR"; else echo "Test directory not found. Skipping tests."; fi
 
 publish:
   workingDirectory: generators/python
   preBuildCommands:
+    - pnpm --filter @fern-api/python-sdk dist:cli
     - pip install poetry
     - poetry config virtualenvs.in-project true
     - poetry install
   docker:
     file: ./generators/python/sdk/Dockerfile
     image: fernapi/fern-python-sdk
-    context: ./generators/python
+    context: .
 test:
   docker:
     image: fernapi/fern-python-sdk:latest
-    command: docker build -f ./generators/python/sdk/Dockerfile -t fernapi/fern-python-sdk:latest ./generators/python
+    command: pnpm --filter @fern-api/python-sdk dist:cli && docker build -f ./generators/python/sdk/Dockerfile -t fernapi/fern-python-sdk:latest .
   local:
     workingDirectory: generators/python
     buildCommand:
@@ -51,32 +45,59 @@ customFixtureConfig:
     use_typeddict_requests: true
   outputFolder: client-filename
 fixtures:
-  file-download:
+  alias-extends:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
+        use_inheritance_for_extended_models: false
+      outputFolder: no-inheritance-for-extended-models
+  circular-references:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        use_inheritance_for_extended_models: false
+      outputFolder: no-inheritance-for-extended-models
+  circular-references-advanced:
+    - customConfig:
+        use_inheritance_for_extended_models: false
+      outputFolder: no-inheritance-for-extended-models
+  file-download:
+    - customConfig:
+        use_inheritance_for_extended_models: false
+      outputFolder: no-custom-config
+    - customConfig:
         default_bytes_stream_chunk_size: 1024
+        use_inheritance_for_extended_models: false
       outputFolder: default-chunk-size
   examples:
     - customConfig: null
       outputFolder: no-custom-config
+    - customConfig:
+        include_legacy_wire_tests: true
+        use_inheritance_for_extended_models: false
+      outputFolder: legacy-wire-tests
     - customConfig:
         client:
           filename: base_client.py
           class_name: BaseSeedExhaustive
           exported_filename: client.py
           exported_class_name: SeedExhaustive
+        use_inheritance_for_extended_models: false
       outputFolder: client-filename
     - customConfig: null
       readmeConfig:
         bannerLink: https://www.fernapi.com
         apiReferenceLink: https://www.docs.fernapi.com
         defaultEndpoint: POST /movie
+        introduction: |
+          This is a test introduction
+          split across multiple lines.
         features:
           asyncClient:
             - GET /movie/{movieId}
             - method: POST
               path: /movie
+        use_inheritance_for_extended_models: false
       outputFolder: readme
   enum:
     - customConfig: null
@@ -97,6 +118,9 @@ fixtures:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
+        inline_path_params: true
+      outputFolder: inline-path-params
+    - customConfig:
         timeout_in_seconds: infinity
       outputFolder: infinite-timeout
     - customConfig:
@@ -115,6 +139,11 @@ fixtures:
           version: v1
           wrapped_aliases: True
       outputFolder: pydantic-v1-wrapped
+    - customConfig:
+        pydantic_config:
+          version: v2
+          wrapped_aliases: True
+      outputFolder: pydantic-v2-wrapped
     - customConfig:
         pydantic_config:
           version: v1
@@ -196,17 +225,16 @@ fixtures:
         pydantic_config:
           use_pydantic_field_aliases: true
       outputFolder: aliases_with_validation
-  unions:
+  file-upload:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
-        pydantic_config:
-          include_union_utils: true
-      outputFolder: union-utils
+        use_typeddict_requests: true
+        use_typeddict_requests_for_file_upload: true
+      outputFolder: use_typeddict_requests
     - customConfig:
-        pydantic_config:
-          union_naming: v1
-      outputFolder: union-naming-v1
+        exclude_types_from_init_exports: true
+      outputFolder: exclude_types_from_init_exports
   validation:
     - customConfig: null
       outputFolder: no-custom-config
@@ -220,6 +248,23 @@ fixtures:
     - customConfig:
         use_typeddict_requests: true
       outputFolder: use_typeddict_requests
+  mixed-file-directory:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        exclude_types_from_init_exports: true
+        use_typeddict_requests: true
+      outputFolder: exclude_types_from_init_exports
+  pagination:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        use_inheritance_for_extended_models: false
+      outputFolder: no-inheritance-for-extended-models
+  simple-fhir:
+    - customConfig:
+        use_inheritance_for_extended_models: false
+      outputFolder: no-inheritance-for-extended-models
   streaming:
     - customConfig: null
       outputFolder: no-custom-config
@@ -227,6 +272,29 @@ fixtures:
         pydantic_config:
           skip_validation: true
       outputFolder: skip-pydantic-validation
+  unions:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        pydantic_config:
+          include_union_utils: true
+        use_inheritance_for_extended_models: false
+      outputFolder: union-utils
+    - customConfig:
+        pydantic_config:
+          union_naming: v1
+        use_inheritance_for_extended_models: false
+      outputFolder: union-naming-v1
+  websocket:
+    - outputFolder: websocket-base
+    - customConfig:
+        should_generate_websocket_clients: true
+      outputFolder: websocket-with_generated_clients
+  nullable:
+    - outputFolder: no-custom-config
+    - customConfig:
+        use_typeddict_requests: true
+      outputFolder: use-typeddict-requests
 scripts:
   # Test Pydantic V2
   - docker: fernapi/python-seed
@@ -239,7 +307,7 @@ scripts:
       - poetry lock
       - poetry install
       - poetry run mypy ./src ./tests
-      - FERN_NO_VERSION_REDIRECTION=true node /fern/cli.cjs test --command "poetry run pytest -rP ."
+      - poetry run pytest -rP .
   # Test Pydantic V1
   - docker: fernapi/python-seed
     commands:
@@ -250,50 +318,19 @@ scripts:
       - poetry lock
       - poetry install
       - poetry run mypy ./src ./tests
-      - FERN_NO_VERSION_REDIRECTION=true node /fern/cli.cjs test --command "poetry run pytest -rP ."
+      - poetry run pytest -rP .
 allowedFailures:
-  # This is the only one that should always fail
+  - any-auth
+  - examples:client-filename
+  - examples:legacy-wire-tests
   - exhaustive:additional_init_exports
-  # This should only succeed in Pydantic V1 tests
   - exhaustive:pydantic-v1-wrapped
   - exhaustive:pydantic-v1-with-utils
-
-  # TODO(FER-1837): Address this list
-  - websocket
-  - exhaustive:union-utils
-  - extra-properties
-  - trace
-
-  # Remove the following fixtures soon as a CLI is released with
-  # default enum value support, the latest primitive types, and gRPC
-  # configuration. This otherwise causes a 'fern check' issue when
-  # 'fern test' is run.
-  - grpc-proto-exhaustive
-  - grpc-proto
-  - object
-  - validation:no-custom-config
-  - validation:with-defaults
-  # === Allowed failures due to unit testing ===
-  - pagination
-  # ===========================================
-  # We are not currently generating the examples correctly,
-  # so the mock server and the expectations in the unit
-  # tests are not correct (`status` on `Resource_User`).
-  - mixed-case
-  # We are not generating the correct snippets for union-utils
-  # types (e.g. we generate `Shape_Square` instead of Shape.factory.square())
-  - unions:union-utils
-
-  # Complex circular refs
+  - oauth-client-credentials-custom
+  - pagination-custom
+  - public-object
+  - response-property
   - simple-fhir
-
-  # TODO(FER-2946): Support deep object query parameter arrays in the mock
-  # server the mock server today doesn't take into account the shape of the
-  # request from the IR and so doesn't know the shape to explicitly coerce
-  # the query string into
-  - query-parameters
-
-  - any-auth
-
-  - cross-package-type-names
-  - audiences
+  - streaming-parameter
+  - trace
+  - websocket:websocket-with_generated_clients

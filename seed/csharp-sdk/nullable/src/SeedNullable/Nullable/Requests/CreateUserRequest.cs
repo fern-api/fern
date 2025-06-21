@@ -3,6 +3,7 @@ using SeedNullable.Core;
 
 namespace SeedNullable;
 
+[Serializable]
 public record CreateUserRequest
 {
     [JsonPropertyName("username")]
@@ -17,6 +18,7 @@ public record CreateUserRequest
     [JsonPropertyName("avatar")]
     public string? Avatar { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

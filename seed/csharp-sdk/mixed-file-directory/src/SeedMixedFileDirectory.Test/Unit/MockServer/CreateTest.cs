@@ -1,6 +1,4 @@
-using FluentAssertions.Json;
 using global::System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedMixedFileDirectory;
 using SeedMixedFileDirectory.Core;
@@ -54,12 +52,11 @@ public class CreateTest : BaseMockServerTest
             );
 
         var response = await Client.Organization.CreateAsync(
-            new CreateOrganizationRequest { Name = "name" },
-            RequestOptions
+            new CreateOrganizationRequest { Name = "name" }
         );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        Assert.That(
+            response,
+            Is.EqualTo(JsonUtils.Deserialize<Organization>(mockResponse)).UsingDefaults()
+        );
     }
 }

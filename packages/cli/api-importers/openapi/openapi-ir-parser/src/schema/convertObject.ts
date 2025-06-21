@@ -43,13 +43,12 @@ export function convertObject({
     allOf,
     context,
     propertiesToExclude,
+    namespace,
     groupName,
     fullExamples,
     additionalProperties,
     availability,
-    encoding,
-    source,
-    namespace
+    source
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -62,13 +61,13 @@ export function convertObject({
     allOf: (OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject)[];
     context: SchemaParserContext;
     propertiesToExclude: Set<string>;
+    namespace: string | undefined;
     groupName: SdkGroupName | undefined;
     fullExamples: undefined | NamedFullExample[];
     additionalProperties: boolean | OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | undefined;
     availability: Availability | undefined;
     encoding: Encoding | undefined;
     source: Source;
-    namespace: string | undefined;
 }): SchemaWithExample {
     const allRequired = [...(required ?? [])];
     const propertiesToConvert = { ...properties };
@@ -110,6 +109,7 @@ export function convertObject({
                                             value: property.schema,
                                             description: undefined,
                                             availability: property.availability,
+                                            namespace: undefined,
                                             groupName: undefined,
                                             inline: undefined
                                         })
@@ -177,11 +177,13 @@ export function convertObject({
 
     const convertedProperties: ObjectPropertyWithExample[] = Object.entries(propertiesToConvert).map(
         ([propertyName, propertySchema]) => {
-            const isRequired = allRequired.includes(propertyName);
             const audiences = getExtension<string[]>(propertySchema, FernOpenAPIExtension.AUDIENCES) ?? [];
             const availability = convertAvailability(propertySchema);
 
             const readonly = isReferenceObject(propertySchema) ? false : propertySchema.readOnly;
+            const writeonly = isReferenceObject(propertySchema) ? false : propertySchema.writeOnly;
+
+            const isRequired = allRequired.includes(propertyName) && !readonly;
 
             const propertyNameOverride = getExtension<string | undefined>(
                 propertySchema,
@@ -198,6 +200,7 @@ export function convertObject({
                       description: undefined,
                       availability,
                       value: convertSchema(propertySchema, false, context, propertyBreadcrumbs, source, namespace),
+                      namespace,
                       groupName,
                       inline: undefined
                   });
@@ -220,7 +223,8 @@ export function convertObject({
                 conflict: conflicts,
                 generatedName: getGeneratedPropertyName([...breadcrumbs, propertyName]),
                 availability,
-                readonly
+                readonly,
+                writeonly
             };
         }
     );
@@ -254,11 +258,13 @@ export function convertObject({
         description,
         allOf: parents.map((parent) => parent.convertedSchema),
         allOfPropertyConflicts,
+        namespace,
         groupName,
         fullExamples,
         additionalProperties,
         availability,
-        source
+        source,
+        context
     });
 }
 
@@ -271,11 +277,13 @@ export function wrapObject({
     description,
     allOf,
     allOfPropertyConflicts,
+    namespace,
     groupName,
     fullExamples,
     additionalProperties,
     availability,
-    source
+    source,
+    context
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -285,11 +293,13 @@ export function wrapObject({
     description: string | undefined;
     allOf: ReferencedSchema[];
     allOfPropertyConflicts: AllOfPropertyConflict[];
+    namespace: string | undefined;
     groupName: SdkGroupName | undefined;
     fullExamples: undefined | NamedFullExample[];
     additionalProperties: boolean | OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | undefined;
     availability: Availability | undefined;
     source: Source;
+    context: SchemaParserContext;
 }): SchemaWithExample {
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
@@ -304,15 +314,17 @@ export function wrapObject({
                 title,
                 allOf,
                 allOfPropertyConflicts,
+                namespace,
                 groupName,
                 fullExamples,
-                additionalProperties: isAdditionalPropertiesAny(additionalProperties),
+                additionalProperties: isAdditionalPropertiesAny(additionalProperties, context.options),
                 availability: undefined,
                 source,
                 inline: undefined
             }),
             description,
             availability,
+            namespace,
             groupName,
             inline: undefined
         });
@@ -325,9 +337,10 @@ export function wrapObject({
         title,
         allOf,
         allOfPropertyConflicts,
+        namespace,
         groupName,
         fullExamples,
-        additionalProperties: isAdditionalPropertiesAny(additionalProperties),
+        additionalProperties: isAdditionalPropertiesAny(additionalProperties, context.options),
         availability,
         source,
         inline: undefined

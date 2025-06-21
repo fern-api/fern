@@ -491,6 +491,7 @@ export class ExampleTypeFactory {
                                     description: undefined,
                                     generatedName: "",
                                     nameOverride: undefined,
+                                    namespace: undefined,
                                     groupName: undefined
                                 }),
                                 exampleId,

@@ -18,6 +18,7 @@ export declare namespace ConjureWorkspace {
 }
 
 export class ConjureWorkspace extends AbstractAPIWorkspace<ConjureWorkspace.Settings> {
+    public type: string = "conjure";
     private absolutePathToConjureFolder: AbsoluteFilePath;
 
     constructor({ relativePathToConjureDirectory, ...superArgs }: ConjureWorkspace.Args) {

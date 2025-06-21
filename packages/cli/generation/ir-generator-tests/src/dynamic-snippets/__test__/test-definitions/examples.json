@@ -153,7 +153,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:BasicType": {
             "type": "enum",
@@ -640,7 +641,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_commons/types:EventInfo": {
             "type": "discriminatedUnion",
@@ -1562,7 +1564,8 @@
                         "value": "LONG"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_types:CastMember": {
             "type": "undiscriminatedUnion",
@@ -1768,7 +1771,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_types:Actress": {
             "type": "object",
@@ -1893,7 +1897,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_types:StuntDouble": {
             "type": "object",
@@ -2018,7 +2023,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_types:ExtendedMovie": {
             "type": "object",
@@ -2413,7 +2419,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_types:Moment": {
             "type": "object",
@@ -2566,7 +2573,8 @@
                         "value": "DATE_TIME"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_types:File": {
             "type": "object",
@@ -2691,7 +2699,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_types:Directory": {
             "type": "object",
@@ -2856,7 +2865,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_types:Node": {
             "type": "object",
@@ -3021,7 +3031,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_types:Tree": {
             "type": "object",
@@ -3124,7 +3135,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_types:Metadata": {
             "type": "discriminatedUnion",
@@ -3706,7 +3718,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_types:MigrationStatus": {
             "type": "enum",
@@ -3966,7 +3979,8 @@
                         "value": "type_types:MigrationStatus"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_types:Request": {
             "type": "object",
@@ -4062,7 +4076,8 @@
                         "type": "unknown"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_types:Response": {
             "type": "object",
@@ -4189,7 +4204,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_types:ResponseType": {
             "type": "object",
@@ -4286,7 +4302,8 @@
                         "value": "type_:Type"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_types:Test": {
             "type": "discriminatedUnion",
@@ -4562,7 +4579,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_types:BigEntity": {
             "type": "object",
@@ -5034,7 +5052,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         }
     },
     "headers": [],
@@ -6611,6 +6630,7 @@
             "examples": null
         }
     },
+    "pathParameters": [],
     "environments": {
         "defaultEnvironment": null,
         "environments": {
@@ -6666,5 +6686,6 @@
                 }
             ]
         }
-    }
+    },
+    "generatorConfig": null
 }

@@ -1,4 +1,500 @@
+# yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.22.1-rc0
+  changelogEntry:
+    - summary: |
+        Lazily validate model serialization to reduce memory consumption. Pydantic 2.11.0 introduced an issue where the model_serializer 
+        decorator set to wrap mode forced it to eagerly do schema validation at import time. Because we had this decorator on the UniversalBaseModel,
+        it would try to validate the schemas of all the Model types at import time. This caused massive memory spikes for more complex SDKs, upto 2.6GB
+        in some cases. This change essentially accomplishes the same logic of wrapping the serialization process and modifying the serialization
+        structure of datetime fields. The difference is that we manually wrap, so we're able to defer model validation until runtime, drastically
+        reducing our memory consumption.
+      type: feat
+  createdAt: '2025-06-20'
+  irVersion: 58
+
+- version: 4.22.0
+  changelogEntry:
+    - summary: |
+        Support wrapped aliases in python for pydantic v2.
+      type: feat
+  createdAt: '2025-06-11'
+  irVersion: 58
+
+- version: 4.21.5
+  changelogEntry:
+    - summary: |
+        Generate README for github output mode.
+      type: fix
+  createdAt: '2025-06-11'
+  irVersion: 58
+
+- version: 4.21.4
+  changelogEntry:
+    - summary: |
+        Add support for HEAD HTTP method in the generated client.
+      type: feat
+  createdAt: '2025-06-05'
+  irVersion: 58
+
+- version: 4.21.3
+  changelogEntry:
+    - summary: |
+        Fix an issue where the websocket connect method did not correctly yield the websocket client.
+      type: fix
+  createdAt: '2025-06-04'
+  irVersion: 58
+
+- version: 4.21.2
+  changelogEntry:
+    - summary: |
+        Handle HEAD HTTP method gracefully by treating it as a POST method when constructing the snippet registry, rather than failing.
+      type: chore
+  createdAt: '2025-05-27'
+  irVersion: 58
+
+- version: 4.21.1
+  changelogEntry:
+    - summary: |
+        Make sure to generate README and Reference even when generating in local mode (if self hosting is enabled).
+      type: chore
+  createdAt: '2025-05-27'
+  irVersion: 58
+
+- version: 4.21.0
+  changelogEntry:
+    - summary: |
+        Bump to v58 of IR.
+      type: chore
+  createdAt: '2025-05-27'
+  irVersion: 58
+
+- version: 4.20.3
+  changelogEntry:
+    - summary: |
+        Fix handling of optional and unknown response types by not throwing errors when the response is empty.
+      type: fix
+  createdAt: '2025-05-20'
+  irVersion: 57
+
+- version: 4.20.2
+  changelogEntry:
+    - summary: |
+        Support formatting the generated README.md and python code snippets.
+      type: fix
+  createdAt: '2025-05-13'
+  irVersion: 57
+
+- version: 4.20.1
+  changelogEntry:
+    - summary: |
+        Add support for the custom introduction setting in the generated README.md.
+      type: fix
+  createdAt: '2025-05-13'
+  irVersion: 57
+
+- version: 4.20.0
+  changelogEntry:
+    - summary: |
+        Generate standalone Pydantic models for each class definition for models that utilize the Fern `extends` keyword,
+        as opposed to generating Pydantic models that implement inheritance.
+      type: feat
+  createdAt: '2025-05-13'
+  irVersion: 57
+
+- version: 4.19.7
+  changelogEntry:
+    - summary: |
+        Fix mypy errors related to type-shadowing `data` variables in generated streaming endpoints.
+      type: fix
+  createdAt: '2025-05-13'
+  irVersion: 57
+
+- version: 4.19.6
+  changelogEntry:
+    - summary: |
+        Fix mypy errors related to automatic pagination in the python client.
+      type: fix
+  createdAt: '2025-05-11'
+  irVersion: 57
+
+- version: 4.19.5
+  changelogEntry:
+    - summary: |
+        Fix naming conflicts in streaming endpoints by renaming the stream method to _stream in raw clients, 
+        preventing collisions with endpoint parameters that might also be named "stream", 
+        while maintaining proper functionality for streaming responses.
+      type: fix
+  createdAt: '2025-05-11'
+  irVersion: 57
+
+- version: 4.19.4
+  changelogEntry:
+    - summary: |
+        Fix handling of optional file parameters in multipart form data requests with httpx by properly checking 
+        for None values before attempting to include them in the request, preventing errors when optional file parameters are not provided.
+      type: feat
+  createdAt: '2025-05-11'
+  irVersion: 57
+
+- version: 4.19.3
+  changelogEntry:
+    - summary: |
+        Fix pagination support in raw clients by properly indexing into response data, ensuring that raw client endpoints with pagination correctly iterate through paginated results.
+      type: fix
+  createdAt: '2025-05-09'
+  irVersion: 57
+
+- version: 4.19.2
+  changelogEntry:
+    - summary: |
+        Fix SSE streaming response handling by adding proper type casting to sse.data, ensuring correct data type conversion during stream processing.
+      type: fix
+  createdAt: '2025-05-09'
+  irVersion: 57
+
+- version: 4.19.1
+  changelogEntry:
+    - summary: |
+        Fix a mypy error in pydantic_utilities.py by properly handling type annotations for Pydantic v1 and v2 compatibility, ensuring type checking passes correctly across different Pydantic versions.
+      type: fix
+  createdAt: '2025-05-09'
+  irVersion: 57
+
+- version: 4.19.0
+  changelogEntry:
+    - summary: |
+        Add support for generating proper Pydantic models that contain forward references wrapped in containers (e.g. list, optional, etc.)
+      type: feat
+  createdAt: '2025-05-09'
+  irVersion: 57
+
+- version: 4.18.6
+  changelogEntry:
+    - summary: |
+        Fix string enum generation to properly handle enum values containing quotes by automatically escaping them, 
+        ensuring valid Python syntax for both single and double quoted string literals.
+      type: fix
+  createdAt: '2025-05-08'
+  irVersion: 57
+
+- version: 4.18.5
+  changelogEntry:
+    - summary: |
+        Support application/x-www-form-urlencoded content type for requests, allowing proper encoding of form data in API calls.
+      type: fix
+  createdAt: '2025-05-08'
+  irVersion: 57
+
+- version: 4.18.4
+  changelogEntry:
+    - summary: |
+        Fix requirements.txt generation to properly handle dependency version constraints, ensuring compatibility markers are correctly formatted.
+      type: fix
+  createdAt: '2025-05-08'
+  irVersion: 57
+
+- version: 4.18.3
+  changelogEntry:
+    - summary: |
+        Install the generator-cli at build time as a fallback if runtime installation fails. 
+      type: fix
+  createdAt: '2025-05-01'
+  irVersion: 57
+
+- version: 4.18.2
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix README g
+
+- version: 4.18.1
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: |
+        Update python-v2 generator invocation so that all relevant files like pyproject.toml and poetry.lock are pushed
+        to the GitHub repository.
+
+- version: 4.18.0
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: |
+        Update python-v2 generator invocation so that all relevant files like pyproject.toml and poetry.lock are pushed
+        to the GitHub repository.
+
+- version: 4.18.0
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: |
+        Add support for self-hosted mode, allowing users to push generated SDKs to their own GitHub repositories.
+        This feature enables organizations to maintain private SDK repositories with custom configurations.
+
+- version: 4.17.1
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix an issue where response `headers` were not available in the strongly typed error classes.
+
+- version: 4.17.0
+  irVersion: 57
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add support for retrieving response headers for each page of paginated responses, instead of just the first page.
+
+- version: 4.16.2
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fixed an issue introduced in 4.14.0, where `bytes` and `text` responses were not handled correctly.
+
+- version: 4.16.1
+  irVersion: 57
+  changelogEntry:
+    - type: internal
+      summary: |
+        Fixes an internal release issue in `4.16.0`.
+
+- version: 4.16.0
+  irVersion: 57
+  changelogEntry:
+    - type: feat
+      summary: |
+         Add support for retrieving response headers from the generated `ApiError` class.
+
+- version: 4.15.0
+  irVersion: 57
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add support for offset step pagination, where the offset position represents the element's index rather
+        than the page number.
+    - type: fix
+      summary: |
+        Fixed an issue introduced in 4.14.0, where paginated endpoints were not returning the underlying data.
+
+- version: 4.14.6
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fixed an issue where multipart/form-data content types are now explicitly sent when configured in the API definition.
+
+- version: 4.14.5
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fixed an issue introduced in 4.14.0, where SSE streaming responses were not yielded correctly.
+
+- version: 4.14.4
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fixed an issue where filename and plain text content-type parameters were being incorrectly serialized.
+
+- version: 4.14.3
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: |
+        Add support for receiving raw responses from pagination endpoints.
+
+- version: 4.14.2
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix an issue where TypedDicts with circular references were not correctly serialized.
+        This issue only affected users that enabled `use_typeddict_requests`.
+
+- version: 4.14.1
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: |
+        The generated GitHub workflow now uses `ubuntu-latest` instead of `ubuntu-20.04`
+
+- version: 4.14.0
+  irVersion: 57
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add support for receiving raw responses from streaming endpoints.
+    - type: feat
+      summary: |
+        Add support for excluding types from the generated `__init__.py` files.
+
+        ```yaml
+        config:
+          exclude_types_from_init_exports: true
+        ```
+
+- version: 4.13.0
+  irVersion: 57
+  changelogEntry:
+    - type: feat
+      summary: |
+        Adds support for overriding literal global headers in the client constructor (e.g. `version`).
+
+        ```python
+        client = Acme(
+          ...
+          version="1.0.0",
+        )
+        ```
+
+- version: 4.12.1
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fixes an issue where dictionary types defined within TypedDicts incorrectly used the
+        `typing_extensions.NotRequired` type.
+    - type: fix
+      summary: |
+        Fixes an issue where optional `core.File` parameters would cause `mypy` failures.
+    - type: fix
+      summary: |
+        Fixes a regression introduced in 4.12.0, where the non raw response client endpoints
+        did not respect the allowed method keywords (e.g. `list` was generated as `list_`).
+
+- version: 4.12.0
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: |
+        Resolve issues with paginated endpoints generating incorrect endpoint return types.
+
+- version: 4.11.0
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: |
+        Always represent nullable as Optional rather than NotRequired, only use
+        NotRequired for optional in typeddicts.
+
+- version: 4.10.0
+  irVersion: 57
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add support for using TypedDicts for file upload request parameters. This flag should
+        be used in conjunction with the `use_typeddict_requests` flag like so:
+
+        ```yaml
+        config:
+          use_typeddict_requests: true
+          use_typeddict_requests_for_file_upload: true
+        ```
+
+- version: 4.9.0
+  irVersion: 57
+  changelogEntry:
+    - type: feat
+      summary: |
+        Implement raw client support for accessing response headers and data in unary endpoints.
+
+- version: 4.8.0
+  irVersion: 57
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add support for inlining path parameters
+
+- version: 4.7.0
+  irVersion: 57
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add support for user-agent header
+
+- version: 4.6.0
+  irVersion: 57
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add support for generating legacy wire tests, and disable them by default. These tests will be restored and improved in the future.
+        Users can opt-in to generating legacy wire tests by setting the `include_legacy_wire_tests` flag to `true` in their configuration.
+
+        ```yaml
+        config:
+          include_legacy_wire_tests: true
+        ```
+
+- version: 4.5.0
+  irVersion: 57
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add support for websocket code generation. 
+
+- version: 4.4.0
+  irVersion: 57
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add support for raw bytes responses.
+
+- version: 4.3.21
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix an issue where the default `timeout` was not being respected when a custom `httpx_client` was provided.
+
+- version: 4.3.20
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: |
+        Update formatting across all generated files. There are no behavioral changes, but large diffs are expected.
+
+- version: 4.3.19
+  irVersion: 57
+  changelogEntry:
+    - type: internal
+      summary: |
+        Update the IR to v57.
+
+- version: 4.3.18
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix an issue where the `request_options` parameter name is now properly respected when it's 
+        renamed due to conflicts with other parameter names. Previously, the code would still reference the 
+        original parameter name internally, causing errors.
+
+- version: 4.3.17
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix an issue where parameter names that conflict with the `request_options` parameter are now properly deconflicted by 
+        prepending an underscore to the `request_options` parameter name.
+
+- version: 4.3.16
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix an issue where GeneratorExit was unintentionally being swallowed by code blocks within the HttpClient.stream() contextmanager.
+
+- version: 4.3.15
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix an issue where extraneous NameError-causing update_forward_refs invocations were being emitted.
+
 - version: 4.3.14
   irVersion: 53
   changelogEntry:

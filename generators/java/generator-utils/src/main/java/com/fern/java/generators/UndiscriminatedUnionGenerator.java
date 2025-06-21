@@ -26,7 +26,11 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fern.ir.model.commons.Name;
 import com.fern.ir.model.commons.SafeAndUnsafeString;
 import com.fern.ir.model.commons.TypeId;
+import com.fern.ir.model.types.ContainerType;
 import com.fern.ir.model.types.DeclaredTypeName;
+import com.fern.ir.model.types.Literal;
+import com.fern.ir.model.types.PrimitiveType;
+import com.fern.ir.model.types.PrimitiveTypeV1;
 import com.fern.ir.model.types.TypeDeclaration;
 import com.fern.ir.model.types.UndiscriminatedUnionMember;
 import com.fern.ir.model.types.UndiscriminatedUnionTypeDeclaration;
@@ -42,6 +46,7 @@ import com.fern.java.utils.TypeReferenceUtils.TypeReferenceToName;
 import com.google.common.collect.ImmutableSet;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
+import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
@@ -56,6 +61,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
@@ -75,6 +81,7 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
 
     private final UndiscriminatedUnionTypeDeclaration undiscriminatedUnion;
     private final Map<UndiscriminatedUnionMember, TypeName> memberTypeNames;
+    private final List<UndiscriminatedUnionMember> membersWithoutLiterals;
     /**
      * The outer container types that are present in more than one member. For example, if we have two member types with
      * a container type of List, ContainerTypeEnum.LIST will be present here. These require special method naming to
@@ -96,6 +103,7 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
             String undiscriminatedUnionPrefix) {
         super(className, generatorContext, reservedTypeNames, isTopLevelClass);
         this.undiscriminatedUnion = undiscriminatedUnion;
+
         Map<UndiscriminatedUnionMember, TypeName> typeNames = new HashMap<>(undiscriminatedUnion.getMembers().stream()
                 .collect(Collectors.toMap(
                         Function.identity(),
@@ -105,6 +113,61 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
                     className, generatorContext, undiscriminatedUnion, reservedTypeNames, undiscriminatedUnionPrefix));
         }
         this.memberTypeNames = typeNames;
+        List<UndiscriminatedUnionMember> membersWithoutLiterals = new ArrayList<>();
+
+        for (int i = 0; i < undiscriminatedUnion.getMembers().size(); ++i) {
+            AtomicReference<UndiscriminatedUnionMember> member =
+                    new AtomicReference<>(undiscriminatedUnion.getMembers().get(i));
+
+            if (isLiteral(member.get())) {
+                Literal literal =
+                        member.get().getType().getContainer().get().getLiteral().get();
+                boolean shouldInclude = literal.visit(new Literal.Visitor<Boolean>() {
+                    @Override
+                    public Boolean visitString(String s) {
+                        if (!hasString()) {
+                            member.set(UndiscriminatedUnionMember.builder()
+                                    .from(member.get())
+                                    .type(com.fern.ir.model.types.TypeReference.primitive(PrimitiveType.builder()
+                                            .v1(PrimitiveTypeV1.STRING)
+                                            .build()))
+                                    .build());
+                            memberTypeNames.put(member.get(), ClassName.get(String.class));
+                            return true;
+                        }
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitBoolean(boolean b) {
+                        if (!hasBoolean()) {
+                            member.set(UndiscriminatedUnionMember.builder()
+                                    .from(member.get())
+                                    .type(com.fern.ir.model.types.TypeReference.primitive(PrimitiveType.builder()
+                                            .v1(PrimitiveTypeV1.BOOLEAN)
+                                            .build()))
+                                    .build());
+                            memberTypeNames.put(member.get(), ClassName.get(String.class));
+                            return true;
+                        }
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean _visitUnknown(Object o) {
+                        throw new RuntimeException("Got unknown literal type " + o);
+                    }
+                });
+                if (!shouldInclude) {
+                    continue;
+                }
+            }
+
+            membersWithoutLiterals.add(member.get());
+        }
+
+        this.membersWithoutLiterals = membersWithoutLiterals;
+
         this.duplicatedOuterContainerTypes = getDuplicatedOuterContainerTypes(undiscriminatedUnion);
         this.visitorName = visitorName(
                 // We need to take into consideration all ancestor types as well as all sibling types so that
@@ -155,6 +218,51 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
                         reservedTypeNames,
                         undiscriminatedUnionPrefix)
                 .values());
+    }
+
+    private boolean hasString() {
+        return this.undiscriminatedUnion.getMembers().stream()
+                .map(UndiscriminatedUnionMember::getType)
+                .anyMatch(TypeReferenceUtils::isString);
+    }
+
+    private boolean hasBoolean() {
+        return this.undiscriminatedUnion.getMembers().stream()
+                .map(UndiscriminatedUnionMember::getType)
+                .anyMatch(TypeReferenceUtils::isBoolean);
+    }
+
+    private Optional<CodeBlock> getStringLiteralJavadoc() {
+        List<String> literalStringMembers = this.undiscriminatedUnion.getMembers().stream()
+                .map(UndiscriminatedUnionMember::getType)
+                .map(com.fern.ir.model.types.TypeReference::getContainer)
+                .flatMap(Optional::stream)
+                .map(ContainerType::getLiteral)
+                .flatMap(Optional::stream)
+                .map(Literal::getString)
+                .flatMap(Optional::stream)
+                .collect(Collectors.toList());
+
+        if (literalStringMembers.isEmpty()) {
+            return Optional.empty();
+        }
+
+        StringBuilder result = new StringBuilder("@param value must be one of the following:\n");
+        result.append("<ul>\n");
+        for (String _member : literalStringMembers) {
+            result.append("<li>$S</li>\n");
+        }
+        result.append("</ul>");
+
+        if (hasString()) {
+            result.append("\nOr an arbitrary string.");
+        }
+
+        return Optional.of(CodeBlock.of(result.toString(), literalStringMembers.toArray()));
+    }
+
+    private static boolean isLiteral(UndiscriminatedUnionMember member) {
+        return member.getType().getContainer().map(ContainerType::isLiteral).orElse(false);
     }
 
     private static Map<TypeId, TypeDeclaration> overriddenTypeDeclarations(
@@ -290,13 +398,16 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
 
     private MethodSpec getVisitMethod() {
         MethodSpec.Builder visitMethod = MethodSpec.methodBuilder(VISIT_METHOD_NAME)
+                .addAnnotation(AnnotationSpec.builder(SuppressWarnings.class)
+                        .addMember("value", "$S", "unchecked")
+                        .build())
                 .addModifiers(Modifier.PUBLIC)
                 .addParameter(ParameterizedTypeName.get(visitorClassName, VISITOR_RETURN_TYPE), "visitor")
                 .addTypeVariable(VISITOR_RETURN_TYPE)
                 .returns(VISITOR_RETURN_TYPE);
-        for (int i = 0; i < undiscriminatedUnion.getMembers().size(); ++i) {
-            UndiscriminatedUnionMember member =
-                    undiscriminatedUnion.getMembers().get(i);
+        for (int i = 0; i < membersWithoutLiterals.size(); ++i) {
+            UndiscriminatedUnionMember member = membersWithoutLiterals.get(i);
+
             if (i == 0) {
                 visitMethod.beginControlFlow("if(this.$L == $L)", TYPE_FIELD_NAME, i);
             } else {
@@ -334,13 +445,23 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
     }
 
     private TypeSpec getVisitor() {
-        List<MethodSpec> visitMethods = undiscriminatedUnion.getMembers().stream()
-                .map(member -> MethodSpec.methodBuilder(getDeConflictedMemberName(member, VISIT_METHOD_NAME))
-                        .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
-                        .returns(VISITOR_RETURN_TYPE)
-                        .addParameter(memberTypeNames.get(member), VALUE_FIELD_SPEC.name)
-                        .build())
-                .collect(Collectors.toList());
+        List<MethodSpec> visitMethods = new ArrayList<>();
+
+        for (int i = 0; i < membersWithoutLiterals.size(); ++i) {
+            UndiscriminatedUnionMember member = membersWithoutLiterals.get(i);
+
+            MethodSpec.Builder builder = MethodSpec.methodBuilder(getDeConflictedMemberName(member, VISIT_METHOD_NAME))
+                    .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
+                    .returns(VISITOR_RETURN_TYPE)
+                    .addParameter(memberTypeNames.get(member), VALUE_FIELD_SPEC.name);
+
+            if (TypeReferenceUtils.isString(member.getType())) {
+                getStringLiteralJavadoc().ifPresent(builder::addJavadoc);
+            }
+
+            visitMethods.add(builder.build());
+        }
+
         return TypeSpec.interfaceBuilder(visitorClassName)
                 .addModifiers(Modifier.PUBLIC)
                 .addTypeVariable(VISITOR_RETURN_TYPE)
@@ -350,15 +471,21 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
 
     private List<MethodSpec> getStaticFactories() {
         List<MethodSpec> staticFactories = new ArrayList<>();
-        for (int i = 0; i < undiscriminatedUnion.getMembers().size(); ++i) {
-            UndiscriminatedUnionMember member =
-                    undiscriminatedUnion.getMembers().get(i);
-            staticFactories.add(MethodSpec.methodBuilder(getDeConflictedMemberName(member, STATIC_FACTORY_METHOD_NAME))
+        for (int i = 0; i < membersWithoutLiterals.size(); ++i) {
+            UndiscriminatedUnionMember member = membersWithoutLiterals.get(i);
+
+            MethodSpec.Builder builder = MethodSpec.methodBuilder(
+                            getDeConflictedMemberName(member, STATIC_FACTORY_METHOD_NAME))
                     .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                     .addParameter(memberTypeNames.get(member), VALUE_FIELD_SPEC.name)
                     .addStatement("return new $T($L, $L)", className, VALUE_FIELD_SPEC.name, i)
-                    .returns(className)
-                    .build());
+                    .returns(className);
+
+            if (TypeReferenceUtils.isString(member.getType())) {
+                getStringLiteralJavadoc().ifPresent(builder::addJavadoc);
+            }
+
+            staticFactories.add(builder.build());
         }
         return staticFactories;
     }
@@ -387,7 +514,9 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
                 .addAnnotation(ClassName.get("", "java.lang.Override"))
                 .addStatement(
                         "$T $L = $L.readValueAs($T.class)", Object.class, VALUE_FIELD_SPEC.name, "p", Object.class);
-        for (UndiscriminatedUnionMember member : undiscriminatedUnion.getMembers()) {
+        for (int i = 0; i < membersWithoutLiterals.size(); ++i) {
+            UndiscriminatedUnionMember member = membersWithoutLiterals.get(i);
+
             TypeName typeName = memberTypeNames.get(member);
             if (typeName.isPrimitive() || typeName.isBoxedPrimitive()) {
                 deserializeMethod

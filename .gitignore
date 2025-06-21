@@ -35,6 +35,7 @@ next-env.d.ts
 
 # misc
 .DS_Store
+*.swp
 
 # logs
 npm-debug.log*
@@ -67,3 +68,6 @@ packages/**/generated
 seed/python-sdk/trace/snippet-templates.json
 seed/python-sdk/**/output.prof
 .php-cs-fixer.cache
+
+# Cursor
+.cursor

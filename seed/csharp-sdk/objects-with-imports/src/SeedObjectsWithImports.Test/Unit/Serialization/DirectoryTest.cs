@@ -1,8 +1,7 @@
 using System.Text.Json;
-using System.Text.Json.Serialization;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using SeedObjectsWithImports;
+using SeedObjectsWithImports.Core;
 using SeedObjectsWithImports.File;
 
 namespace SeedObjectsWithImports.Test;
@@ -11,46 +10,123 @@ namespace SeedObjectsWithImports.Test;
 public class DirectoryTest
 {
     [Test]
-    public void TestSerialization()
+    public void TestDeserialization()
     {
-        var inputJson =
-            @"
-        {
-          ""name"": ""root"",
-          ""files"": [
+        var json = """
             {
-              ""name"": ""file.txt"",
-              ""contents"": ""..."",
-              ""info"": ""REGULAR""
-            }
-          ],
-          ""directories"": [
-            {
-              ""name"": ""tmp"",
-              ""files"": [
+              "name": "root",
+              "files": [
                 {
-                  ""name"": ""another_file.txt"",
-                  ""contents"": ""..."",
-                  ""info"": ""REGULAR""
+                  "name": "file.txt",
+                  "contents": "...",
+                  "info": "REGULAR"
+                }
+              ],
+              "directories": [
+                {
+                  "name": "tmp",
+                  "files": [
+                    {
+                      "name": "another_file.txt",
+                      "contents": "...",
+                      "info": "REGULAR"
+                    }
+                  ]
                 }
               ]
             }
-          ]
-        }
-        ";
-
-        var serializerOptions = new JsonSerializerOptions
+            """;
+        var expectedObject = new Directory
         {
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+            Name = "root",
+            Files = new List<File>()
+            {
+                new File
+                {
+                    Name = "file.txt",
+                    Contents = "...",
+                    Info = FileInfo.Regular,
+                },
+            },
+            Directories = new List<Directory>()
+            {
+                new Directory
+                {
+                    Name = "tmp",
+                    Files = new List<File>()
+                    {
+                        new File
+                        {
+                            Name = "another_file.txt",
+                            Contents = "...",
+                            Info = FileInfo.Regular,
+                        },
+                    },
+                },
+            },
         };
+        var deserializedObject = JsonUtils.Deserialize<Directory>(json);
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
+    }
 
-        var deserializedObject = JsonSerializer.Deserialize<Directory>(
-            inputJson,
-            serializerOptions
-        );
-
-        var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
-
-        JToken.Parse(inputJson).Should().BeEquivalentTo(JToken.Parse(serializedJson));
+    [Test]
+    public void TestSerialization()
+    {
+        var expectedJson = """
+            {
+              "name": "root",
+              "files": [
+                {
+                  "name": "file.txt",
+                  "contents": "...",
+                  "info": "REGULAR"
+                }
+              ],
+              "directories": [
+                {
+                  "name": "tmp",
+                  "files": [
+                    {
+                      "name": "another_file.txt",
+                      "contents": "...",
+                      "info": "REGULAR"
+                    }
+                  ]
+                }
+              ]
+            }
+            """;
+        var actualObj = new Directory
+        {
+            Name = "root",
+            Files = new List<File>()
+            {
+                new File
+                {
+                    Name = "file.txt",
+                    Contents = "...",
+                    Info = FileInfo.Regular,
+                },
+            },
+            Directories = new List<Directory>()
+            {
+                new Directory
+                {
+                    Name = "tmp",
+                    Files = new List<File>()
+                    {
+                        new File
+                        {
+                            Name = "another_file.txt",
+                            Contents = "...",
+                            Info = FileInfo.Regular,
+                        },
+                    },
+                },
+            },
+        };
+        var actualElement = JsonUtils.SerializeToElement(actualObj);
+        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
+        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
     }
 }

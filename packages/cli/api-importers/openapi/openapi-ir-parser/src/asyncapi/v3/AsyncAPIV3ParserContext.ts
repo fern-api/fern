@@ -9,7 +9,28 @@ export class AsyncAPIV3ParserContext extends AbstractAsyncAPIParserContext<Async
         return `#/channels/${message.channelId}/messages/${message.messageId}`;
     }
 
-    public resolveMessageReference(message: OpenAPIV3.ReferenceObject): AsyncAPIV3.MessageV3 {
+    public resolveParameterReference(parameter: OpenAPIV3.ReferenceObject): AsyncAPIV3.ChannelParameter {
+        const PARAMETER_REFERENCE_PREFIX = "#/components/parameters/";
+
+        if (
+            this.document.components == null ||
+            this.document.components.parameters == null ||
+            !parameter.$ref.startsWith(PARAMETER_REFERENCE_PREFIX)
+        ) {
+            throw new Error(`Failed to resolve ${parameter.$ref}`);
+        }
+        const parameterKey = parameter.$ref.substring(PARAMETER_REFERENCE_PREFIX.length);
+        const resolvedParameter = this.document.components.parameters[parameterKey];
+        if (resolvedParameter == null) {
+            throw new Error(`${parameter.$ref} is undefined`);
+        }
+        if ("$ref" in resolvedParameter) {
+            return this.resolveParameterReference(resolvedParameter as OpenAPIV3.ReferenceObject);
+        }
+        return resolvedParameter as AsyncAPIV3.ChannelParameter;
+    }
+
+    public resolveMessageReference(message: OpenAPIV3.ReferenceObject): AsyncAPIV3.ChannelMessage {
         const CHANNELS_PATH_PART = "#/channels/";
         const MESSAGE_REFERENCE_PREFIX = "#/components/messages/";
 
@@ -27,10 +48,14 @@ export class AsyncAPIV3ParserContext extends AbstractAsyncAPIParserContext<Async
             if (resolvedInChannel == null) {
                 throw new Error(`${message.$ref} is undefined`);
             }
-            return {
-                name: messageKey,
-                ...resolvedInChannel
-            };
+            if ("$ref" in resolvedInChannel) {
+                return this.resolveMessageReference(resolvedInChannel as OpenAPIV3.ReferenceObject);
+            } else {
+                return {
+                    name: messageKey,
+                    ...resolvedInChannel
+                };
+            }
         }
 
         const components = this.document.components;
@@ -48,5 +73,13 @@ export class AsyncAPIV3ParserContext extends AbstractAsyncAPIParserContext<Async
             name: messageKey,
             ...resolvedInComponents
         };
+    }
+
+    public isMessageWithPayload(msg: unknown): msg is AsyncAPIV3.ChannelMessage {
+        return msg != null && typeof msg === "object" && "payload" in msg;
+    }
+
+    public isReferenceObject(msg: unknown): msg is OpenAPIV3.ReferenceObject {
+        return msg != null && typeof msg === "object" && "$ref" in msg;
     }
 }

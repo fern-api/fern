@@ -29,6 +29,7 @@ export async function parseDocsConfiguration({
 
         /* navigation */
         tabs,
+        products,
         versions,
         navigation: rawNavigation,
         navbarLinks,
@@ -54,6 +55,9 @@ export async function parseDocsConfiguration({
         css: rawCssConfig,
         js: rawJsConfig,
 
+        aiChat,
+        aiSearch,
+
         experimental
     } = rawDocsConfiguration;
 
@@ -61,6 +65,7 @@ export async function parseDocsConfiguration({
 
     const convertedNavigationPromise = getNavigationConfiguration({
         tabs,
+        products,
         versions,
         navigation: rawNavigation,
         absolutePathToFernFolder,
@@ -175,6 +180,8 @@ export async function parseDocsConfiguration({
         /* scripts */
         css,
         js,
+
+        aiChatConfig: aiSearch ?? aiChat,
 
         experimental
     };
@@ -337,8 +344,48 @@ function parseSizeConfig(sizeAsString: string | undefined): CjsFdrSdk.docs.v1.co
     return undefined;
 }
 
+async function getVersionedNavigationConfiguration({
+    versions,
+    absolutePathToFernFolder,
+    context
+}: {
+    versions: docsYml.RawSchemas.VersionConfig[];
+    absolutePathToFernFolder: AbsoluteFilePath;
+    context: TaskContext;
+    parentSlug?: string;
+}): Promise<docsYml.VersionedDocsNavigation> {
+    const versionedNavbars: docsYml.VersionInfo[] = [];
+    for (const version of versions) {
+        const absoluteFilepathToVersionFile = resolve(absolutePathToFernFolder, version.path);
+        const versionContent = yaml.load((await readFile(absoluteFilepathToVersionFile)).toString());
+        const versionResult = docsYml.RawSchemas.Serializer.VersionFileConfig.parseOrThrow(versionContent);
+        const versionNavigation = await convertNavigationConfiguration({
+            tabs: versionResult.tabs,
+            rawNavigationConfig: versionResult.navigation,
+            absolutePathToFernFolder,
+            absolutePathToConfig: absoluteFilepathToVersionFile,
+            context
+        });
+        versionedNavbars.push({
+            landingPage: parsePageConfig(versionResult.landingPage, absoluteFilepathToVersionFile),
+            version: version.displayName,
+            navigation: versionNavigation,
+            availability: version.availability,
+            slug: version.slug,
+            viewers: parseRoles(version.viewers),
+            orphaned: version.orphaned,
+            featureFlags: convertFeatureFlag(version.featureFlag)
+        });
+    }
+    return {
+        type: "versioned",
+        versions: versionedNavbars
+    };
+}
+
 async function getNavigationConfiguration({
     tabs,
+    products,
     versions,
     navigation,
     absolutePathToFernFolder,
@@ -346,6 +393,7 @@ async function getNavigationConfiguration({
     context
 }: {
     tabs?: Record<string, docsYml.RawSchemas.TabConfig>;
+    products?: docsYml.RawSchemas.ProductConfig[];
     versions?: docsYml.RawSchemas.VersionConfig[];
     navigation?: docsYml.RawSchemas.NavigationConfig;
     absolutePathToFernFolder: AbsoluteFilePath;
@@ -360,34 +408,51 @@ async function getNavigationConfiguration({
             absolutePathToConfig,
             context
         });
-    } else if (versions != null) {
-        const versionedNavbars: docsYml.VersionInfo[] = [];
-        for (const version of versions) {
-            const absoluteFilepathToVersionFile = resolve(absolutePathToFernFolder, version.path);
-            const content = yaml.load((await readFile(absoluteFilepathToVersionFile)).toString());
-            const result = await docsYml.RawSchemas.Serializer.VersionFileConfig.parseOrThrow(content);
-            const navigation = await convertNavigationConfiguration({
-                tabs: result.tabs,
-                rawNavigationConfig: result.navigation,
-                absolutePathToFernFolder,
-                absolutePathToConfig: absoluteFilepathToVersionFile,
-                context
-            });
-            versionedNavbars.push({
-                landingPage: parsePageConfig(result.landingPage, absoluteFilepathToVersionFile),
-                version: version.displayName,
+    } else if (products != null) {
+        const productNavbars: docsYml.ProductInfo[] = [];
+        for (const product of products) {
+            const absoluteFilepathToProductFile = resolve(absolutePathToFernFolder, product.path);
+            const productImageFile =
+                product.image != null ? resolve(absolutePathToFernFolder, product.image) : undefined;
+            const content = yaml.load((await readFile(absoluteFilepathToProductFile)).toString());
+            const result = docsYml.RawSchemas.Serializer.ProductFileConfig.parseOrThrow(content);
+
+            let navigation: docsYml.DocsNavigationConfiguration;
+
+            // If the product has versions defined, process them
+            if (product.versions != null && product.versions.length > 0) {
+                navigation = await getVersionedNavigationConfiguration({
+                    versions: product.versions,
+                    absolutePathToFernFolder,
+                    context
+                });
+            } else {
+                // Process as a regular navigation if no versions
+                navigation = await convertNavigationConfiguration({
+                    tabs: result.tabs,
+                    rawNavigationConfig: result.navigation,
+                    absolutePathToFernFolder,
+                    absolutePathToConfig: absoluteFilepathToProductFile,
+                    context
+                });
+            }
+
+            productNavbars.push({
+                landingPage: parsePageConfig(result.landingPage, absoluteFilepathToProductFile),
+                product: product.displayName,
                 navigation,
-                availability: version.availability,
-                slug: version.slug,
-                viewers: parseRoles(version.viewers),
-                orphaned: version.orphaned,
-                featureFlags: convertFeatureFlag(version.featureFlag)
+                slug: product.slug,
+                subtitle: product.subtitle,
+                icon: product.icon || "fa-solid fa-code",
+                image: productImageFile
             });
         }
         return {
-            type: "versioned",
-            versions: versionedNavbars
+            type: "productgroup",
+            products: productNavbars
         };
+    } else if (versions != null) {
+        return await getVersionedNavigationConfiguration({ versions, absolutePathToFernFolder, context });
     }
     throw new Error("Unexpected. Docs have neither navigation or versions defined.");
 }

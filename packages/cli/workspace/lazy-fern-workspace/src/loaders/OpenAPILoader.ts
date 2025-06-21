@@ -3,7 +3,7 @@ import { readFile } from "fs/promises";
 import { OpenAPISpec, isOpenAPIV2, isOpenAPIV3 } from "@fern-api/api-workspace-commons";
 import { AbsoluteFilePath, join, relative } from "@fern-api/fs-utils";
 import { Source as OpenApiIrSource } from "@fern-api/openapi-ir";
-import { Document } from "@fern-api/openapi-ir-parser";
+import { Document, getParseOptions } from "@fern-api/openapi-ir-parser";
 import { TaskContext } from "@fern-api/task-context";
 
 import { convertOpenAPIV2ToV3 } from "../utils/convertOpenAPIV2ToV3";
@@ -43,8 +43,9 @@ export class OpenAPILoader {
                         value: openAPI,
                         source,
                         namespace: spec.namespace,
-                        settings: spec.settings
+                        settings: getParseOptions({ options: spec.settings })
                     });
+                    continue;
                 } else if (isOpenAPIV2(openAPI)) {
                     const convertedOpenAPI = await convertOpenAPIV2ToV3(openAPI);
                     documents.push({
@@ -52,10 +53,12 @@ export class OpenAPILoader {
                         value: convertedOpenAPI,
                         source,
                         namespace: spec.namespace,
-                        settings: spec.settings
+                        settings: getParseOptions({ options: spec.settings })
                     });
+                    continue;
                 }
-            } else if (contents.includes("asyncapi")) {
+            }
+            if (contents.includes("asyncapi")) {
                 const asyncAPI = await loadAsyncAPI({
                     context,
                     absoluteFilePath: spec.absoluteFilepath,
@@ -66,11 +69,26 @@ export class OpenAPILoader {
                     value: asyncAPI,
                     source,
                     namespace: spec.namespace,
-                    settings: spec.settings
+                    settings: getParseOptions({ options: spec.settings })
                 });
-            } else {
-                context.failAndThrow(`${spec.absoluteFilepath} is not a valid OpenAPI or AsyncAPI file`);
+                continue;
             }
+            if (contents.includes("openrpc")) {
+                const asyncAPI = await loadAsyncAPI({
+                    context,
+                    absoluteFilePath: spec.absoluteFilepath,
+                    absoluteFilePathToOverrides: spec.absoluteFilepathToOverrides
+                });
+                documents.push({
+                    type: "asyncapi",
+                    value: asyncAPI,
+                    source,
+                    namespace: spec.namespace,
+                    settings: getParseOptions({ options: spec.settings })
+                });
+                continue;
+            }
+            context.failAndThrow(`${spec.absoluteFilepath} is not a valid OpenAPI or AsyncAPI file`);
         }
         return documents;
     }

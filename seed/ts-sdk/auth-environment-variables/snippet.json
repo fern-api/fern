@@ -19,7 +19,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedAuthEnvironmentVariablesClient } from \"@fern/auth-environment-variables\";\n\nconst client = new SeedAuthEnvironmentVariablesClient({ environment: \"YOUR_BASE_URL\", apiKey: \"YOUR_API_KEY\", xAnotherHeader: \"YOUR_X_ANOTHER_HEADER\" });\nawait client.service.getWithHeader({\n    xEndpointHeader: \"X-Endpoint-Header\"\n});\n"
+                "client": "import { SeedAuthEnvironmentVariablesClient } from \"@fern/auth-environment-variables\";\n\nconst client = new SeedAuthEnvironmentVariablesClient({ environment: \"YOUR_BASE_URL\", apiKey: \"YOUR_API_KEY\", xAnotherHeader: \"YOUR_X_ANOTHER_HEADER\" });\nawait client.service.getWithHeader({\n    \"X-Endpoint-Header\": \"X-Endpoint-Header\"\n});\n"
             }
         }
     ],

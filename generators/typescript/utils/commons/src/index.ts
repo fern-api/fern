@@ -10,10 +10,11 @@ export {
     getParameterNameForPositionalPathParameter,
     getParameterNameForPropertyPathParameter,
     getParameterNameForPropertyPathParameterName,
-    getParameterNameForRootPathParameter
+    getParameterNameForRootPathParameter,
+    getParameterNameForRootExamplePathParameter
 } from "./codegen-utils/getParameterNameForPathParameter";
 export * from "./core-utilities";
-export { type Zurg } from "./core-utilities/zurg/Zurg";
+export { type Zurg } from "./core-utilities/Zurg";
 export { DependencyManager, DependencyType, type PackageDependencies } from "./dependency-manager/DependencyManager";
 export * from "./exports-manager";
 export * from "./express";
@@ -29,5 +30,5 @@ export * from "./typescript-project";
 export { FernWriters, ObjectWriter } from "./writers";
 export { getWriterForMultiLineUnionType } from "./writers/getWriterForMultiLineUnionType";
 export * from "@fern-api/typescript-base";
-export { ScriptsManager } from "./scripts";
 export { fixImportsForEsm } from "./typescript-project/fixImportsForEsm";
+export { writeTemplateFiles } from "./writeTemplateFiles";

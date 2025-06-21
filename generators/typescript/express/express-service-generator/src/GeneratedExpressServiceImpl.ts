@@ -1,4 +1,10 @@
-import { PackageId, convertHttpPathToExpressRoute, getTextOfTsNode, maybeAddDocsNode } from "@fern-typescript/commons";
+import {
+    PackageId,
+    convertHttpPathToExpressRoute,
+    getPropertyKey,
+    getTextOfTsNode,
+    maybeAddDocsNode
+} from "@fern-typescript/commons";
 import { ExpressContext, GeneratedExpressService } from "@fern-typescript/contexts";
 import { ClassDeclaration, InterfaceDeclaration, Scope, ts } from "ts-morph";
 
@@ -28,15 +34,15 @@ export declare namespace GeneratedExpressServiceImpl {
 }
 
 export class GeneratedExpressServiceImpl implements GeneratedExpressService {
-    private static ROUTER_PROPERTY_NAME = "router";
-    private static METHODS_PROPERTY_NAME = "methods";
-    private static ADD_MIDDLEWARE_METHOD_NAME = "addMiddleware";
-    private static TO_ROUTER_METHOD_NAME = "toRouter";
-    private static CATCH_BLOCK_ERROR_VARIABLE_NAME = "error";
-    private static SEND_RESPONSE_PROPERTY_NAME = "send";
-    private static SEND_COOKIE_RESPONSE_PROPERTY_NAME = "cookie";
-    private static RESPONSE_BODY_PARAMETER_NAME = "responseBody";
-    private static LOCALS_PROPERTY_NAME = "locals";
+    private static readonly ROUTER_PROPERTY_NAME = "router";
+    private static readonly METHODS_PROPERTY_NAME = "methods";
+    private static readonly ADD_MIDDLEWARE_METHOD_NAME = "addMiddleware";
+    private static readonly TO_ROUTER_METHOD_NAME = "toRouter";
+    private static readonly CATCH_BLOCK_ERROR_VARIABLE_NAME = "error";
+    private static readonly SEND_RESPONSE_PROPERTY_NAME = "send";
+    private static readonly SEND_COOKIE_RESPONSE_PROPERTY_NAME = "cookie";
+    private static readonly RESPONSE_BODY_PARAMETER_NAME = "responseBody";
+    private static readonly LOCALS_PROPERTY_NAME = "locals";
 
     private doNotHandleUnrecognizedErrors: boolean;
     private serviceClassName: string;
@@ -198,7 +204,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                                                   : context.type.getReferenceToType(pathParameter.valueType);
                                               return ts.factory.createPropertySignature(
                                                   undefined,
-                                                  this.getPathParameterName(pathParameter),
+                                                  getPropertyKey(this.getPathParameterName(pathParameter)),
                                                   type.isOptional
                                                       ? ts.factory.createToken(ts.SyntaxKind.QuestionToken)
                                                       : undefined,
@@ -214,7 +220,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                                               const type = context.type.getReferenceToType(queryParameter.valueType);
                                               return ts.factory.createPropertySignature(
                                                   undefined,
-                                                  ts.factory.createStringLiteral(queryParameter.name.wireValue),
+                                                  getPropertyKey(queryParameter.name.wireValue),
                                                   type.isOptional
                                                       ? ts.factory.createToken(ts.SyntaxKind.QuestionToken)
                                                       : undefined,
@@ -365,12 +371,13 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
     private addRouteToRouter(endpoint: HttpEndpoint, context: ExpressContext): ts.Statement {
         return context.externalDependencies.express.Router._addRoute({
             referenceToRouter: this.getReferenceToRouter(),
-            method: HttpMethod._visit<"get" | "post" | "put" | "patch" | "delete">(endpoint.method, {
+            method: HttpMethod._visit<"get" | "post" | "put" | "patch" | "delete" | "head">(endpoint.method, {
                 get: () => "get",
                 post: () => "post",
                 put: () => "put",
                 patch: () => "patch",
                 delete: () => "delete",
+                head: () => "head",
                 _other: () => {
                     throw new Error("Unknown ");
                 }
@@ -692,9 +699,17 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
             )
         );
 
-        // call next()
         statements.push(
-            ts.factory.createExpressionStatement(ts.factory.createCallExpression(next, undefined, undefined))
+            ts.factory.createIfStatement(
+                ts.factory.createPrefixUnaryExpression(
+                    ts.SyntaxKind.ExclamationToken,
+                    ts.factory.createPropertyAccessExpression(expressResponse, "writableEnded")
+                ),
+                ts.factory.createBlock(
+                    [ts.factory.createExpressionStatement(ts.factory.createCallExpression(next, undefined, undefined))],
+                    true
+                )
+            )
         );
 
         return statements;

@@ -3,6 +3,7 @@ using SeedOauthClientCredentialsEnvironmentVariables.Core;
 
 namespace SeedOauthClientCredentialsEnvironmentVariables;
 
+[Serializable]
 public record RefreshTokenRequest
 {
     [JsonPropertyName("client_id")]
@@ -23,6 +24,7 @@ public record RefreshTokenRequest
     [JsonPropertyName("scope")]
     public string? Scope { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

@@ -13,7 +13,7 @@ import { DocsDefinitionResolver, UploadedFile, wrapWithHttps } from "@fern-api/d
 import { AbsoluteFilePath, RelativeFilePath, convertToFernHostRelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { convertIrToFdrApi } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";
-import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
+import { AbstractAPIWorkspace, DocsWorkspace } from "@fern-api/workspace-loader";
 
 import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
 
@@ -35,24 +35,26 @@ export async function publishDocs({
     docsWorkspace,
     domain,
     customDomains,
-    fernWorkspaces,
+    apiWorkspaces,
     ossWorkspaces,
     context,
     preview,
     editThisPage,
-    isPrivate = false
+    isPrivate = false,
+    disableTemplates = false
 }: {
     token: FernToken;
     organization: string;
     docsWorkspace: DocsWorkspace;
     domain: string;
     customDomains: string[];
-    fernWorkspaces: FernWorkspace[];
+    apiWorkspaces: AbstractAPIWorkspace<unknown>[];
     ossWorkspaces: OSSWorkspace[];
     context: TaskContext;
     preview: boolean;
     editThisPage: docsYml.RawSchemas.FernDocsConfig.EditThisPageConfig | undefined;
     isPrivate: boolean | undefined;
+    disableTemplates: boolean | undefined;
 }): Promise<void> {
     const fdr = createFdrService({ token: token.value });
     const authConfig: CjsFdrSdk.docs.v2.write.AuthConfig = isPrivate
@@ -66,7 +68,7 @@ export async function publishDocs({
         domain,
         docsWorkspace,
         ossWorkspaces,
-        fernWorkspaces,
+        apiWorkspaces,
         context,
         editThisPage,
         async (files) => {
@@ -163,7 +165,10 @@ export async function publishDocs({
             const response = await fdr.api.v1.register.registerApiDefinition({
                 orgId: CjsFdrSdk.OrgId(organization),
                 apiId: CjsFdrSdk.ApiId(ir.apiName.originalName),
-                definition: apiDefinition,
+                definition: {
+                    ...apiDefinition,
+                    snippetsConfiguration: preview ? undefined : apiDefinition.snippetsConfiguration
+                },
                 definitionV2: undefined
             });
 
@@ -181,11 +186,11 @@ export async function publishDocs({
                     default:
                         if (apiName != null) {
                             return context.failAndThrow(
-                                `Failed to publish docs because API definition (${apiName}) could not be uploaded. Please contact support@buildwithfern.com\n ${response.error}`
+                                `Failed to publish docs because API definition (${apiName}) could not be uploaded. Please contact support@buildwithfern.com\n ${JSON.stringify(response.error)}`
                             );
                         } else {
                             return context.failAndThrow(
-                                `Failed to publish docs because API definition could not be uploaded. Please contact support@buildwithfern.com\n ${response.error}`
+                                `Failed to publish docs because API definition could not be uploaded. Please contact support@buildwithfern.com\n ${JSON.stringify(response.error)}`
                             );
                         }
                 }
@@ -197,7 +202,10 @@ export async function publishDocs({
                 orgId: CjsFdrSdk.OrgId(organization),
                 apiId: CjsFdrSdk.ApiId(apiName ?? api.id),
                 definition: undefined,
-                definitionV2: api
+                definitionV2: {
+                    ...api,
+                    snippetsConfiguration: preview ? undefined : api.snippetsConfiguration
+                }
             });
 
             if (response.ok) {

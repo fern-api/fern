@@ -19,13 +19,11 @@ public class GetWithPathAndQueryTest : BaseMockServerTest
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        Assert.DoesNotThrowAsync(
-            async () =>
-                await Client.Endpoints.Params.GetWithPathAndQueryAsync(
-                    "param",
-                    new GetWithPathAndQuery { Query = "query" },
-                    RequestOptions
-                )
+        Assert.DoesNotThrowAsync(async () =>
+            await Client.Endpoints.Params.GetWithPathAndQueryAsync(
+                "param",
+                new GetWithPathAndQuery { Query = "query" }
+            )
         );
     }
 }

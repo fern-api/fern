@@ -151,7 +151,7 @@ components:
         - '='
         - less_than
       description: |-
-        Tests enum name and value can be 
+        Tests enum name and value can be
         different.
     Color:
       title: Color
@@ -164,4 +164,16 @@ components:
       oneOf:
         - $ref: '#/components/schemas/Color'
         - $ref: '#/components/schemas/Operand'
+    EnumWithCustom:
+      title: EnumWithCustom
+      type: string
+      enum:
+        - safe
+        - Custom
+    Status:
+      title: Status
+      type: string
+      enum:
+        - Known
+        - Unknown
   securitySchemes: {}

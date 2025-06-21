@@ -5,7 +5,7 @@ namespace SeedTrace.Test.Unit.MockServer;
 [TestFixture]
 public class DeletePlaylistTest : BaseMockServerTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public void MockServerTest()
     {
         Server
@@ -17,8 +17,8 @@ public class DeletePlaylistTest : BaseMockServerTest
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        Assert.DoesNotThrowAsync(
-            async () => await Client.Playlist.DeletePlaylistAsync(1, "playlist_id", RequestOptions)
+        Assert.DoesNotThrowAsync(async () =>
+            await Client.Playlist.DeletePlaylistAsync(1, "playlist_id")
         );
     }
 }

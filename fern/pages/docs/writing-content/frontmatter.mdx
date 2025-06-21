@@ -4,7 +4,7 @@ subtitle: Set titles, add meta descriptions, and more
 description: Use frontmatter to set a variety of page properties and metadata.
 ---
 
-You can optionally use frontmatter to set each page's title, full slug override, meta description, a URL to suggest edits to the page, and its OpenGraph image. You can also use frontmatter to disable certain page element like the table of contents and on-page feedback. 
+You can optionally use frontmatter to set each page's title, full slug override, meta description, a URL to suggest edits to the page, and its OpenGraph image. You can also use frontmatter to disable certain page elements like the table of contents and on-page feedback. 
 
 Frontmatter must be added to the top of a `.md` or `.mdx` file, before the rest of the content. Use sets of three dashes to indicate the beginning and end of your frontmatter, as shown:
 
@@ -124,7 +124,7 @@ edit-this-page-url: https://github.com/your-org/docs/blob/main/content/api-refer
 </CodeBlock>
 
 <Frame>
-  <img src="../building-your-docs/edit-this-page.png" alt="Edit this page feature" />
+  <img src="./edit-this-page.png" alt="Edit this page feature" />
 </Frame>
 
 ## Meta image
@@ -134,6 +134,7 @@ edit-this-page-url: https://github.com/your-org/docs/blob/main/content/api-refer
 </ParamField>
 
 ## Table of contents
+### Hide table of contents
 <ParamField path="hide-toc" type="boolean" required={false} default={false}>
   Controls the conditional rendering of the table of contents feature on the right-side of the page. Set to `true` to disable this feature.
 </ParamField>
@@ -152,6 +153,24 @@ hide-toc: true
 </Frame>
 
 When the table of contents is hidden, Fern will center the contents of the page by default. To control the layout of the page, see the [layout documentation](#layout).
+
+### Max depth
+<ParamField path="max-toc-depth" type="number" required={false}>
+  Sets the maximum depth of the table of contents. For example, a value of `3` will only show `<h1>`, `<h2>`, and `<h3>` headings in the table of contents.
+</ParamField>
+
+<CodeBlock title="Example max-toc-depth">
+```mdx
+---
+title: Sample Page
+max-toc-depth: 3
+---
+```
+</CodeBlock>
+
+<Frame>
+  <img src="./max-toc.png" alt="Table of contents max depth" />
+</Frame>
 
 ## Navigation links
 <ParamField path="hide-nav-links" type="boolean" required={false} default={false}>
@@ -186,7 +205,7 @@ hide-feedback: true
 </CodeBlock>
 
 <Frame>
-  <img src="./nav-link.png" alt="Navigation links feature" />
+  <img src="./on-page-feedback.png" alt="Leave feedback feature" />
 </Frame>
 
 ## Page logo
@@ -255,7 +274,7 @@ nofollow: false
 </ParamField>
 
 <ParamField path="canonical-url" type="string" required={false}>
-  Overrides the canonical url for this page. Must be a full URL including the protocol (i.e. `https://buildwithfern.com/learn/docs/content/frontmatter`)
+  Overrides the canonical URL for this page. Must be a full URL including the protocol (i.e. `https://buildwithfern.com/learn/docs/content/frontmatter`)
 </ParamField>
 
 ### OpenGraph Properties

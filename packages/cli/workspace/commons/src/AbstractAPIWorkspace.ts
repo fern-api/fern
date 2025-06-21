@@ -32,8 +32,6 @@ export declare namespace AbstractAPIWorkspace {
         absoluteFilePath: AbsoluteFilePath;
         changelog?: APIChangelog;
     }
-
-    export const Type = "api";
 }
 
 /**
@@ -50,7 +48,7 @@ export abstract class AbstractAPIWorkspace<Settings> {
     public absoluteFilePath: AbsoluteFilePath;
     public changelog: APIChangelog | undefined;
 
-    public type = AbstractAPIWorkspace.Type;
+    public abstract type: string;
 
     public constructor({
         generatorsConfiguration,
@@ -90,7 +88,7 @@ export abstract class AbstractAPIWorkspaceSync<Settings> {
     public absoluteFilePath: AbsoluteFilePath;
     public changelog: APIChangelog | undefined;
 
-    public type = AbstractAPIWorkspace.Type;
+    public abstract type: string;
 
     public constructor({
         generatorsConfiguration,

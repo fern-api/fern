@@ -3,6 +3,7 @@ using SeedExtends.Core;
 
 namespace SeedExtends;
 
+[Serializable]
 public record Inlined
 {
     [JsonPropertyName("unique")]
@@ -14,6 +15,7 @@ public record Inlined
     [JsonPropertyName("docs")]
     public required string Docs { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

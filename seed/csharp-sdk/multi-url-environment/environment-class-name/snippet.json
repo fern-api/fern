@@ -1,0 +1,29 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/ec2/boot",
+                "method": "POST",
+                "identifier_override": "endpoint_ec2.bootInstance"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedMultiUrlEnvironment;\n\nvar client = new SeedMultiUrlEnvironmentClient(\"TOKEN\");\nawait client.Ec2.BootInstanceAsync(new BootInstanceRequest { Size = \"size\" });\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/s3/presigned-url",
+                "method": "POST",
+                "identifier_override": "endpoint_s3.getPresignedUrl"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedMultiUrlEnvironment;\n\nvar client = new SeedMultiUrlEnvironmentClient(\"TOKEN\");\nawait client.S3.GetPresignedUrlAsync(new GetPresignedUrlRequest { S3Key = \"s3Key\" });\n"
+            }
+        }
+    ]
+}

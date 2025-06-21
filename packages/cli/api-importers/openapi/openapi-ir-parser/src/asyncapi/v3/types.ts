@@ -10,7 +10,8 @@ export interface DocumentV3 {
     operations?: Record<string, Operation>;
     components?: {
         schemas?: Record<string, OpenAPIV3.SchemaObject>;
-        messages?: Record<string, MessageV3>;
+        messages?: Record<string, ChannelMessage>;
+        parameters?: Record<string, ChannelParameter>;
     };
 }
 
@@ -28,10 +29,10 @@ export interface ServerV3 {
 export interface ChannelV3 {
     address?: string;
     bindings?: Bindings;
-    messages?: Record<string, MessageV3>;
+    messages?: Record<string, ChannelMessage>;
     servers?: OpenAPIV3.ReferenceObject[];
-    // TODO: Add support for reference objects
-    parameters?: Record<string, ChannelParameter>;
+    parameters?: Record<string, OpenAPIV3.ReferenceObject | ChannelParameter>;
+    description?: string;
 }
 
 export interface Operation {
@@ -43,7 +44,7 @@ export interface Operation {
 
 export type ChannelParameter = OpenAPIV3.ParameterObject & {
     description?: string;
-    location: string;
+    location?: string;
     enum?: string[];
     default?: string;
     examples?: string[];
@@ -58,7 +59,9 @@ export interface Bindings {
     ws?: WebSocketBindings;
 }
 
-export interface MessageV3 {
+export type MessageV3 = ChannelMessage | OpenAPIV3.ReferenceObject;
+
+export interface ChannelMessage {
     name?: string;
     description?: string;
     payload: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;

@@ -1,2 +1,2 @@
-export { type SendEnumAsQueryParamRequest } from "./SendEnumAsQueryParamRequest";
-export { type SendEnumListAsQueryParamRequest } from "./SendEnumListAsQueryParamRequest";
+export { type SendEnumAsQueryParamRequest } from "./SendEnumAsQueryParamRequest.js";
+export { type SendEnumListAsQueryParamRequest } from "./SendEnumListAsQueryParamRequest.js";

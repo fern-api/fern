@@ -1,4 +1,4 @@
-irVersion: v53
+irVersion: v58
 displayName: C# Model
 image: fernapi/fern-csharp-model
 changelogLocation: ../../generators/csharp/model/versions.yml
@@ -52,3 +52,4 @@ scripts:
 allowedFailures:
   - mixed-file-directory
   - objects-with-imports
+  - pagination-custom

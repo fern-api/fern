@@ -55,7 +55,7 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up node
         uses: actions/setup-node@v3
@@ -76,7 +76,7 @@ ${getTestJob({ config })}`;
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Set up node
         uses: actions/setup-node@v3
       - name: Install dependencies
@@ -110,7 +110,7 @@ ${getTestJob({ config })}`;
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       
       - name: Set up node
         uses: actions/setup-node@v3
@@ -136,7 +136,7 @@ function getTestJob({ config }: { config: FernGeneratorExec.GeneratorConfig }): 
 
     //     steps:
     //       - name: Checkout repo
-    //         uses: actions/checkout@v3
+    //         uses: actions/checkout@v4
 
     //       - name: Set up node
     //         uses: actions/setup-node@v3
@@ -154,7 +154,7 @@ function getTestJob({ config }: { config: FernGeneratorExec.GeneratorConfig }): 
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up node
         uses: actions/setup-node@v3

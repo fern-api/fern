@@ -1189,7 +1189,10 @@ func (f *fileWriter) WriteClient(
 		}
 
 		if endpoint.RequestIsBytes {
-			if endpoint.RequestIsOptional {
+			if f.useReaderForBytesRequest {
+				// The io.Reader is already specified by the caller, so we don't need to
+				// do anything.
+			} else if endpoint.RequestIsOptional {
 				f.P("var requestBuffer io.Reader")
 				f.P("if ", endpoint.RequestBytesParameterName, " != nil {")
 				f.P("requestBuffer = bytes.NewBuffer(", endpoint.RequestBytesParameterName, ")")
@@ -1286,6 +1289,38 @@ func (f *fileWriter) WriteClient(
 			f.P("return ", endpoint.ErrorReturnValues)
 			f.P("}")
 			f.P(headersParameter, `.Set("Content-Type", writer.ContentType())`)
+		}
+
+		if endpoint.Method == "http.MethodHead" {
+			// HEAD requests don't have a response body, so we can simply return the raw
+			// response headers.
+			f.P("response, err := ", receiver, ".caller.CallRaw(")
+			f.P("ctx,")
+			f.P("&internal.CallRawParams{")
+			f.P("URL: endpointURL, ")
+			f.P("Method:", endpoint.Method, ",")
+			f.P("Headers:", headersParameter, ",")
+			f.P("MaxAttempts: options.MaxAttempts,")
+			f.P("BodyProperties: options.BodyProperties,")
+			f.P("QueryParameters: options.QueryParameters,")
+			f.P("Client: options.HTTPClient,")
+			if endpoint.RequestValueName != "" {
+				f.P("Request: ", endpoint.RequestValueName, ",")
+			}
+			if endpoint.ErrorDecoderParameterName != "" {
+				f.P("ErrorDecoder:", endpoint.ErrorDecoderParameterName, ",")
+			}
+			f.P("},")
+			f.P(")")
+			f.P("if err != nil {")
+			f.P("return ", endpoint.ErrorReturnValues)
+			f.P("}")
+			f.P("defer response.Body.Close()")
+			f.P("return response.Header, nil")
+			f.P("}")
+			f.P()
+
+			continue
 		}
 
 		f.P()
@@ -1592,8 +1627,8 @@ func (f *fileWriter) getPaginationInfo(
 		var (
 			valueType            = valueTypeFromRequestPropertyValue(pagination.Cursor.Page.Property)
 			nameAndWireValue     = nameAndWireValueFromRequestPropertyValue(pagination.Cursor.Page.Property)
-			pageIsOptional       = valueType.Container != nil && valueType.Container.Optional != nil
-			nextCursorIsOptional = pagination.Cursor.Next.Property.ValueType.Container != nil && pagination.Cursor.Next.Property.ValueType.Container.Optional != nil
+			pageIsOptional       = getOptionalOrNullableContainer(valueType) != nil
+			nextCursorIsOptional = getOptionalOrNullableContainer(pagination.Cursor.Next.Property.ValueType) != nil
 			valueTypeFormat      = formatForValueType(valueType, f.types)
 			value                = valueTypeFormat.Prefix + "pageRequest.Cursor" + valueTypeFormat.Suffix
 			wireValue            = nameAndWireValue.WireValue
@@ -1630,7 +1665,7 @@ func (f *fileWriter) getPaginationInfo(
 		var (
 			valueType        = valueTypeFromRequestPropertyValue(pagination.Offset.Page.Property)
 			nameAndWireValue = nameAndWireValueFromRequestPropertyValue(pagination.Offset.Page.Property)
-			pageIsOptional   = valueType.Container != nil && valueType.Container.Optional != nil
+			pageIsOptional   = getOptionalOrNullableContainer(valueType) != nil
 			valueTypeFormat  = formatForValueType(valueType, f.types)
 			value            = valueTypeFormat.Prefix + "pageRequest.Cursor" + valueTypeFormat.Suffix
 			wireValue        = nameAndWireValue.WireValue
@@ -1692,8 +1727,9 @@ func singleTypeReferenceFromResponseProperty(responseProperty *ir.ResponseProper
 	property := responseProperty.Property
 	if property != nil && property.ValueType != nil {
 		valueType := property.ValueType
-		if property.ValueType.Container != nil && property.ValueType.Container.Optional != nil {
-			valueType = property.ValueType.Container.Optional
+		optionalOrNullableContainer := getOptionalOrNullableContainer(property.ValueType)
+		if optionalOrNullableContainer != nil {
+			valueType = optionalOrNullableContainer
 		}
 		switch valueType.Type {
 		case "container":
@@ -2358,9 +2394,13 @@ func (f *fileWriter) endpointFromIR(
 				case "typeReference":
 					requestType = typeReferenceToGoType(requestBody.TypeReference.RequestBodyType, f.types, scope, f.baseImportPath, "" /* The type is always imported */, false, f.packageLayout)
 				case "bytes":
-					contentType = "application/octet-stream"
 					requestType = "[]byte"
 					requestValueName = "requestBuffer"
+					if f.useReaderForBytesRequest {
+						requestType = "io.Reader"
+						requestValueName = requestParameterName
+					}
+					contentType = "application/octet-stream"
 					requestIsBytes = true
 					requestIsOptional = requestBody.Bytes.IsOptional
 					requestBytesParameterName = requestParameterName
@@ -2376,8 +2416,11 @@ func (f *fileWriter) endpointFromIR(
 					requestType = fmt.Sprintf("*%s.%s", scope.AddImport(requestImportPath), irEndpoint.SdkRequest.Shape.Wrapper.WrapperName.PascalCase.UnsafeName)
 				}
 				if irEndpoint.RequestBody != nil && irEndpoint.RequestBody.Bytes != nil {
-					contentType = "application/octet-stream"
 					requestValueName = "requestBuffer"
+					if f.useReaderForBytesRequest {
+						requestValueName = requestParameterName
+					}
+					contentType = "application/octet-stream"
 					requestIsBytes = true
 					requestIsOptional = irEndpoint.RequestBody.Bytes.IsOptional
 					requestBytesParameterName = fmt.Sprintf(
@@ -2447,7 +2490,7 @@ func (f *fileWriter) endpointFromIR(
 			}
 			responseType = typeReferenceToGoType(typeReference, f.types, scope, f.baseImportPath, "" /* The type is always imported */, false, f.packageLayout)
 			responseInitializerFormat = "var response %s"
-			responseIsOptionalParameter = typeReference.Container != nil && typeReference.Container.Optional != nil
+			responseIsOptionalParameter = getOptionalOrNullableContainer(typeReference) != nil
 			responseParameterName = "&response"
 			signatureReturnValues = fmt.Sprintf("(%s, error)", responseType)
 			successfulReturnValues = "response, nil"
@@ -2494,6 +2537,11 @@ func (f *fileWriter) endpointFromIR(
 		default:
 			return nil, fmt.Errorf("%s requests are not supported yet", irEndpoint.Response.Body.Type)
 		}
+	} else if irEndpoint.Method == "HEAD" {
+		responseParameterName = "response"
+		signatureReturnValues = "(http.Header, error)"
+		successfulReturnValues = "response, nil"
+		errorReturnValues = "nil, err"
 	} else {
 		responseParameterName = ""
 		signatureReturnValues = "error"
@@ -2652,7 +2700,7 @@ func (f *fileWriter) WriteError(errorDeclaration *ir.ErrorDeclaration) error {
 	f.P()
 
 	// Implement the json.Unmarshaler.
-	isOptional := errorDeclaration.Type.Container != nil && errorDeclaration.Type.Container.Optional != nil
+	isOptional := getOptionalOrNullableContainer(errorDeclaration.Type) != nil
 	f.P("func (", receiver, "*", typeName, ") UnmarshalJSON(data []byte) error {")
 	if isOptional {
 		f.P("if len(data) == 0 {")
@@ -3278,6 +3326,8 @@ func irMethodToMethodEnum(method ir.HttpMethod) string {
 		return "http.MethodPatch"
 	case ir.HttpMethodDelete:
 		return "http.MethodDelete"
+	case ir.HttpMethodHead:
+		return "http.MethodHead"
 	}
 	return ""
 }
@@ -3310,9 +3360,10 @@ func formatForValueType(typeReference *ir.TypeReference, types map[ir.TypeId]*ir
 			IsIterable:  true,
 		}
 	}
-	if typeReference.Container != nil && typeReference.Container.Optional != nil {
+	optionalOrNullableContainer := getOptionalOrNullableContainer(typeReference)
+	if optionalOrNullableContainer != nil {
 		isOptional = true
-		if needsOptionalDereference(typeReference.Container.Optional, types) {
+		if needsOptionalDereference(optionalOrNullableContainer, types) {
 			prefix = "*"
 		}
 	}
@@ -3465,8 +3516,9 @@ func maybePrimitive(typeReference *ir.TypeReference) *ir.PrimitiveType {
 	if typeReference.Primitive != nil {
 		return typeReference.Primitive
 	}
-	if typeReference.Container != nil && typeReference.Container.Optional != nil {
-		return maybePrimitive(typeReference.Container.Optional)
+	optionalOrNullableContainer := getOptionalOrNullableContainer(typeReference)
+	if optionalOrNullableContainer != nil {
+		return maybePrimitive(optionalOrNullableContainer)
 	}
 	return nil
 }
@@ -3486,8 +3538,9 @@ func maybeLiteral(typeReference *ir.TypeReference, types map[ir.TypeId]*ir.TypeD
 		}
 		return nil
 	}
-	if typeReference.Container != nil && typeReference.Container.Optional != nil {
-		return maybeLiteral(typeReference.Container.Optional, types)
+	optionalOrNullableContainer := getOptionalOrNullableContainer(typeReference)
+	if optionalOrNullableContainer != nil {
+		return maybeLiteral(optionalOrNullableContainer, types)
 	}
 	if typeReference.Container != nil && typeReference.Container.Literal != nil {
 		return typeReference.Container.Literal
@@ -3501,10 +3554,23 @@ func isLiteralType(typeReference *ir.TypeReference, types map[ir.TypeId]*ir.Type
 		typeDeclaration := types[typeReference.Named.TypeId]
 		return typeDeclaration.Shape.Alias != nil && isLiteralType(typeDeclaration.Shape.Alias.AliasOf, types)
 	}
-	if typeReference.Container != nil && typeReference.Container.Optional != nil {
-		return isLiteralType(typeReference.Container.Optional, types)
+	optionalOrNullableContainer := getOptionalOrNullableContainer(typeReference)
+	if optionalOrNullableContainer != nil {
+		return isLiteralType(optionalOrNullableContainer, types)
 	}
 	return typeReference.Container != nil && typeReference.Container.Literal != nil
+}
+
+func getOptionalOrNullableContainer(valueType *ir.TypeReference) *ir.TypeReference {
+	if valueType != nil && valueType.Container != nil {
+		if valueType.Container.Optional != nil {
+			return valueType.Container.Optional
+		}
+		if valueType.Container.Nullable != nil {
+			return valueType.Container.Nullable
+		}
+	}
+	return nil
 }
 
 // isOptionalType returns true if the given type reference is an optional.
@@ -3513,7 +3579,7 @@ func isOptionalType(typeReference *ir.TypeReference, types map[ir.TypeId]*ir.Typ
 		typeDeclaration := types[typeReference.Named.TypeId]
 		return typeDeclaration.Shape.Alias != nil && isOptionalType(typeDeclaration.Shape.Alias.AliasOf, types)
 	}
-	return typeReference.Container != nil && typeReference.Container.Optional != nil
+	return getOptionalOrNullableContainer(typeReference) != nil
 }
 
 // maybeIterableType returns the given type reference's iterable type, if any.
@@ -3526,8 +3592,9 @@ func maybeIterableType(typeReference *ir.TypeReference, types map[ir.TypeId]*ir.
 		return nil
 	}
 	if typeReference.Container != nil {
-		if typeReference.Container.Optional != nil {
-			return maybeIterableType(typeReference.Container.Optional, types)
+		optionalOrNullableContainer := getOptionalOrNullableContainer(typeReference)
+		if optionalOrNullableContainer != nil {
+			return maybeIterableType(optionalOrNullableContainer, types)
 		}
 		if typeReference.Container.List != nil {
 			return typeReference.Container.List

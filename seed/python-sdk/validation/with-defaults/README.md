@@ -28,7 +28,7 @@ client = SeedValidation(
 client.create(
     decimal=2.2,
     even=100,
-    name="foo",
+    name="fern",
     shape="SQUARE",
 )
 ```
@@ -51,7 +51,7 @@ async def main() -> None:
     await client.create(
         decimal=2.2,
         even=100,
-        name="foo",
+        name="fern",
         shape="SQUARE",
     )
 
@@ -75,6 +75,22 @@ except ApiError as e:
 ```
 
 ## Advanced
+
+### Access Raw Response Data
+
+The SDK provides access to raw response data, including headers, through the `.with_raw_response` property.
+The `.with_raw_response` property returns a "raw" client that can be used to access the `.headers` and `.data` attributes.
+
+```python
+from seed import SeedValidation
+
+client = SeedValidation(
+    ...,
+)
+response = client.with_raw_response.create(...)
+print(response.headers)  # access the response headers
+print(response.data)  # access the underlying object
+```
 
 ### Retries
 
@@ -120,6 +136,7 @@ client.create(..., request_options={
 
 You can override the `httpx` client to customize it for your use-case. Some common use-cases include support for proxies
 and transports.
+
 ```python
 import httpx
 from seed import SeedValidation

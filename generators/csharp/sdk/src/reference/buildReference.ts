@@ -1,6 +1,7 @@
 import path from "path";
 
 import { ReferenceConfigBuilder } from "@fern-api/base-generator";
+import { csharp } from "@fern-api/csharp-codegen";
 
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { HttpEndpoint, HttpService, ServiceId } from "@fern-fern/ir-sdk/api";
@@ -11,7 +12,9 @@ import { SingleEndpointSnippet } from "../endpoint/snippets/EndpointSnippetsGene
 
 export function buildReference({ context }: { context: SdkGeneratorContext }): ReferenceConfigBuilder {
     const builder = new ReferenceConfigBuilder();
-    for (const [serviceId, service] of Object.entries(context.ir.services)) {
+    const serviceEntries = Object.entries(context.ir.services);
+
+    serviceEntries.forEach(([serviceId, service]) => {
         const section = isRootServiceId({ context, serviceId })
             ? builder.addRootSection()
             : builder.addSection({ title: getSectionTitle({ service }) });
@@ -19,7 +22,8 @@ export function buildReference({ context }: { context: SdkGeneratorContext }): R
         for (const endpoint of endpoints) {
             section.addEndpoint(endpoint);
         }
-    }
+    });
+
     return builder;
 }
 
@@ -32,31 +36,29 @@ function getEndpointReferencesForService({
     serviceId: ServiceId;
     service: HttpService;
 }): FernGeneratorCli.EndpointReference[] {
-    const result: FernGeneratorCli.EndpointReference[] = [];
-    for (const endpoint of service.endpoints) {
-        const singleEndpointSnippet = context.snippetGenerator.generateSingleEndpointSnippet({
-            serviceId,
-            endpoint,
-            example: context.getExampleEndpointCallOrThrow(endpoint)
-        });
-        if (singleEndpointSnippet != null) {
+    return service.endpoints
+        .map((endpoint) => {
+            const singleEndpointSnippet = context.snippetGenerator.getSingleEndpointSnippet({
+                endpoint,
+                example: context.getExampleEndpointCallOrThrow(endpoint)
+            });
+            if (!singleEndpointSnippet) {
+                return undefined;
+            }
             const endpointSignatureInfo = context.endpointGenerator.getEndpointSignatureInfo({
                 serviceId,
                 endpoint
             });
-            result.push(
-                getEndpointReference({
-                    context,
-                    serviceId,
-                    service,
-                    endpoint,
-                    endpointSignatureInfo,
-                    singleEndpointSnippet
-                })
-            );
-        }
-    }
-    return result;
+            return getEndpointReference({
+                context,
+                serviceId,
+                service,
+                endpoint,
+                endpointSignatureInfo,
+                singleEndpointSnippet
+            });
+        })
+        .filter((endpoint): endpoint is FernGeneratorCli.EndpointReference => !!endpoint);
 }
 
 function getEndpointReference({
@@ -102,11 +104,12 @@ function getEndpointReference({
         description: endpoint.docs,
         snippet: singleEndpointSnippet.endpointCall.trim(),
         parameters: endpointSignatureInfo.baseParameters.map((parameter) => {
+            const required = parameter.type instanceof csharp.Type ? !parameter.type.isOptional() : true;
             return {
                 name: parameter.name,
                 type: context.printType(parameter.type),
                 description: parameter.docs,
-                required: !parameter.type.isOptional()
+                required
             };
         })
     };

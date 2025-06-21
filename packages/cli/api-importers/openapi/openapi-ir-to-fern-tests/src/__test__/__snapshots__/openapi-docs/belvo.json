@@ -13442,8 +13442,9 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
                 "type": "optional<float>",
               },
               "id": {
+                "access": "read-only",
                 "docs": "Belvo's unique ID for the current receivable transaction.",
-                "type": "string",
+                "type": "optional<string>",
                 "validation": {
                   "format": "uuid",
                   "maxLength": undefined,
@@ -24683,10 +24684,11 @@ types:
   ReceivablesTransaction:
     properties:
       id:
-        type: string
+        type: optional<string>
         docs: Belvo's unique ID for the current receivable transaction.
         validation:
           format: uuid
+        access: read-only
       account: ReceivablesTransactionAccount
       created_at:
         type: datetime

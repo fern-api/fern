@@ -381,6 +381,8 @@ typography:
 <ParamField path="weight" type="string | number" required={false}>
   The weight of the font. Can be a number (400, 700) or a range for variable fonts (400 700). 
   Common values: 400 (normal), 700 (bold).
+
+  <Info>Defining a weight for your headingsFont paths is recommended.</Info>
 </ParamField>
 
 <ParamField path="style" type="string" required={false}>
@@ -423,7 +425,7 @@ layout:
 </ParamField>
 
 <ParamField path="layout.searchbar-placement" type="string" required={false}>
-  Sets the placement of the searchbar. Can be one of `header`, `sidebar` or `header_tabs` (places the searchbar in the header but on the tabs row). 
+  Sets the placement of the searchbar. Can be one of `header`, `sidebar` or `header-tabs` (places the searchbar in the header but on the tabs row). 
   Defaults to `sidebar`. 
 
   <Note>This setting is ignored when `disable-header` is set to true.</Note>
@@ -514,7 +516,7 @@ landing-page:
   Relative filepath to the desired landing page Markdown file. 
 </ParamField>
 
-See [Vapi's landing page live](https://docs.vapi.ai/) and the associated [Markdown file](https://github.com/VapiAI/docs/blob/main/fern/welcome.mdx?plain=1).
+See [Vapi's landing page live](https://docs.vapi.ai/) and the associated [Markdown file](https://github.com/VapiAI/docs/blob/main/fern/quickstart/introduction.mdx?plain=1).
 
 ## Metadata configuration
 

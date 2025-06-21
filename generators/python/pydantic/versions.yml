@@ -1,5 +1,23 @@
+# yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 1.5.0
+  changelogEntry:
+    - summary: |
+        Bump to v58 of IR.
+      type: chore
+  createdAt: '2025-05-27'
+  irVersion: 58
+
+- version: 1.4.8
+  createdAt: "2025-05-07"
+  irVersion: 57
+  changelogEntry:
+    - type: internal
+      summary: |
+        Update the IR to v57.
+
 - version: 1.4.7
+  createdAt: "2024-10-11"
   irVersion: 53
   changelogEntry:
     - type: fix
@@ -7,6 +25,7 @@
         The snippet writer now correctly handles base64 strings.
 
 - version: 1.4.7-rc1
+  createdAt: "2024-09-26"
   irVersion: 53
   changelogEntry:
     - type: fix
@@ -15,6 +34,7 @@
         Effectively, `deep_union_pydantic_objects` now handles lists of objects and merges them appropriately.
 
 - version: 1.4.7-rc0
+  createdAt: "2024-09-23"
   irVersion: 53
   changelogEntry:
     - type: fix
@@ -24,12 +44,14 @@
         changes to improve circular reference handling in Pydantic models.
 
 - version: 1.4.6
+  createdAt: "2024-09-09"
   irVersion: 53
   changelogEntry:
     - type: fix
       summary: Default new pydantic alias flag to true as it is a breaking change.
 
 - version: 1.4.5
+  createdAt: "2024-09-06"
   irVersion: 53
   changelogEntry:
     - type: chore
@@ -66,6 +88,7 @@
           It is expected that performance will not be degraded given the Rust-based serializers have optimized performance, compared to the Pydantic V1 .dict approach.
 
 - version: 1.4.4
+  createdAt: "2024-08-28"
   irVersion: 53
   changelogEntry:
     - type: fix

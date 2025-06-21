@@ -5,10 +5,14 @@
 
 The Seed C# library provides convenient access to the Seed API from C#.
 
+## Requirements
+
+This SDK requires:
+
 ## Installation
 
 ```sh
-nuget install SeedApi
+dotnet add package SeedApi
 ```
 
 ## Usage
@@ -32,7 +36,7 @@ using SeedApi;
 
 try {
     var response = await client.Imdb.CreateMovieAsync(...);
-} catch (BaseClientApiException e) {
+} catch (CustomClientApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
 }

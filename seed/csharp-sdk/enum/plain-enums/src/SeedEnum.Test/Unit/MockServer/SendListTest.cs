@@ -22,18 +22,16 @@ public class SendListTest : BaseMockServerTest
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        Assert.DoesNotThrowAsync(
-            async () =>
-                await Client.QueryParam.SendListAsync(
-                    new SendEnumListAsQueryParamRequest
-                    {
-                        Operand = [Operand.GreaterThan],
-                        MaybeOperand = [Operand.GreaterThan],
-                        OperandOrColor = [Color.Red],
-                        MaybeOperandOrColor = [Color.Red],
-                    },
-                    RequestOptions
-                )
+        Assert.DoesNotThrowAsync(async () =>
+            await Client.QueryParam.SendListAsync(
+                new SendEnumListAsQueryParamRequest
+                {
+                    Operand = [Operand.GreaterThan],
+                    MaybeOperand = [Operand.GreaterThan],
+                    OperandOrColor = [Color.Red],
+                    MaybeOperandOrColor = [Color.Red],
+                }
+            )
         );
     }
 }

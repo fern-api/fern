@@ -42,9 +42,9 @@ public partial class SeedBasicAuthEnvironmentVariablesClient
         Errors = new ErrorsClient(_client);
     }
 
-    public BasicAuthClient BasicAuth { get; init; }
+    public BasicAuthClient BasicAuth { get; }
 
-    public ErrorsClient Errors { get; init; }
+    public ErrorsClient Errors { get; }
 
     private static string GetFromEnvironmentOrThrow(string env, string message)
     {

@@ -3,19 +3,18 @@ from __future__ import annotations
 from types import TracebackType
 from typing import List, Optional, Sequence, Tuple, Type
 
-import fern.ir.resources as ir_types
-
-from fern_python.codegen import AST, LocalClassReference, SourceFile
-from fern_python.external_dependencies.pydantic import PydanticVersionCompatibility
-from fern_python.pydantic_codegen import PydanticField, PydanticModel
-
-from ..context import PydanticGeneratorContext
+from ..context.pydantic_generator_context import PydanticGeneratorContext
 from .custom_config import PydanticModelCustomConfig
 from .validators import (
     PydanticV1CustomRootTypeValidatorsGenerator,
     PydanticValidatorsGenerator,
     ValidatorsGenerator,
 )
+from fern_python.codegen import AST, LocalClassReference, SourceFile
+from fern_python.external_dependencies.pydantic import PydanticVersionCompatibility
+from fern_python.pydantic_codegen import PydanticField, PydanticModel
+
+import fern.ir.resources as ir_types
 
 
 class FernAwarePydanticModel:
@@ -137,11 +136,11 @@ class FernAwarePydanticModel:
         type_ids = self._context.maybe_get_type_ids_for_type_reference(type_reference)
         if type_ids is not None:
             for type_id in type_ids:
-                self._add_update_forward_ref_for_transitive_circular_dependencies(type_id)
+                self._add_ghost_references_for_transitive_circular_dependencies(type_id)
 
         return field
 
-    def _add_update_forward_ref_for_transitive_circular_dependencies(self, type_id: ir_types.TypeId) -> None:
+    def _add_ghost_references_for_transitive_circular_dependencies(self, type_id: ir_types.TypeId) -> None:
         if self._custom_config.include_union_utils:
             # If you're using union utils, then your unions should be objects, and so these changes should not be necessary it is possible
             # that we must call update_forward_refs on the union utils class itself, but we'll cross that bridge when we get there
@@ -155,21 +154,10 @@ class FernAwarePydanticModel:
         if type_id in self_referencing_dependencies_from_non_union_types:
             self_referencing_dependencies = self_referencing_dependencies_from_non_union_types[type_id]
             for dependency in self_referencing_dependencies:
-                # We update the current model's forward refs independently
                 if (
-                    self._type_name and dependency == self._type_name.type_id
-                ) or dependency in self._forward_referenced_models:
-                    continue
-                class_reference = self._context.get_class_reference_for_type_id(
-                    dependency, as_request=False, must_import_after_current_declaration=lambda _: False
-                )
-                # We already know we should do this import at the bottom since the update_forward_refs call will be at the bottom
-                # We add a ghost reference here so that we're not string referencing this class reference, e.g.
-                # 1. create the class reference as if it's a normal import (non-string reference) with must_import_after_current_declaration=lambda _: False
-                # 2. add the ghost reference to the pydantic model to move the import to the bottom of the file
-                self.add_ghost_reference(dependency)
-                self._pydantic_model.update_forward_refs_for_given_model(class_reference)
-                self._forward_referenced_models.add(dependency)
+                    not self._type_name or self._type_name.type_id != dependency
+                ) and dependency not in self._forward_referenced_models:
+                    self.add_ghost_reference(dependency)
 
     def add_private_instance_field_unsafe(
         self, name: str, type_hint: AST.TypeHint, default_factory: AST.Expression
@@ -213,16 +201,16 @@ class FernAwarePydanticModel:
 
     def _must_import_after_current_declaration(self, type_name: ir_types.DeclaredTypeName) -> bool:
         type_id_to_reference = self._type_id_for_forward_ref()
-        should_import_after = False
-        if type_id_to_reference is not None:
-            should_import_after = self._context.does_type_reference_other_type(
-                type_id=type_name.type_id, other_type_id=type_id_to_reference
-            )
+        if type_id_to_reference is None:
+            return False
 
-        if should_import_after:
+        if self._context.does_type_reference_other_type(type_name.type_id, type_id_to_reference) or (
+            self._context.does_circularly_reference_itself(type_name.type_id)
+        ):
             self._model_contains_forward_refs = True
+            return True
 
-        return should_import_after
+        return False
 
     def add_method(
         self,
@@ -262,24 +250,24 @@ class FernAwarePydanticModel:
     ) -> AST.FunctionDeclaration:
         return self._pydantic_model.add_method(declaration=declaration, decorator=decorator)
 
-    def set_root_type_v1_only(
+    def set_root_type_v1_or_v2_only(
         self,
         root_type: ir_types.TypeReference,
         annotation: Optional[AST.Expression] = None,
         is_forward_ref: bool = False,
     ) -> None:
-        self.set_root_type_unsafe_v1_only(
+        self.set_root_type_unsafe_v1_or_v2_only(
             root_type=self.get_type_hint_for_type_reference(root_type),
             annotation=annotation,
             is_forward_ref=is_forward_ref,
         )
 
-    def set_root_type_unsafe_v1_only(
+    def set_root_type_unsafe_v1_or_v2_only(
         self, root_type: AST.TypeHint, annotation: Optional[AST.Expression] = None, is_forward_ref: bool = False
     ) -> None:
-        if self._custom_config.version not in [PydanticVersionCompatibility.V1, PydanticVersionCompatibility.V1_ON_V2]:
-            raise RuntimeError("Overriding root types is only available in Pydantic v1 or v1_on_v2 mode")
-        self._pydantic_model.set_root_type_unsafe_v1_only(root_type=root_type, annotation=annotation)
+        if self._custom_config.version not in [PydanticVersionCompatibility.V1, PydanticVersionCompatibility.V1_ON_V2, PydanticVersionCompatibility.V2]:
+            raise RuntimeError("Overriding root types is only available in Pydantic v1, v2 or v1_on_v2 mode")
+        self._pydantic_model.set_root_type_unsafe_v1_or_v2_only(root_type=root_type, annotation=annotation)
 
     def add_ghost_reference(self, type_id: ir_types.TypeId) -> None:
         self._pydantic_model.add_ghost_reference(
@@ -288,9 +276,10 @@ class FernAwarePydanticModel:
 
     def finish(self) -> None:
         if self._custom_config.include_validators:
-            if self._pydantic_model._v1_root_type is None and self._custom_config.version in (
+            if self._pydantic_model._v1_or_v2_root_type is None and self._custom_config.version in (
                 PydanticVersionCompatibility.V1,
                 PydanticVersionCompatibility.V1_ON_V2,
+                PydanticVersionCompatibility.V2,
             ):
                 self._pydantic_model.add_partial_class()
             self._get_validators_generator().add_validators()
@@ -306,19 +295,20 @@ class FernAwarePydanticModel:
                 # While we don't want to string reference the extended model, we still want to rebuild the model
                 self._model_contains_forward_refs = True
                 break
-            self._add_update_forward_ref_for_transitive_circular_dependencies(extended_type.type_id)
+            self._add_ghost_references_for_transitive_circular_dependencies(extended_type.type_id)
 
         self._pydantic_model.finish()
 
     def _get_validators_generator(self) -> ValidatorsGenerator:
-        v1_root_type = self._pydantic_model.get_root_type_unsafe_v1_only()
-        if v1_root_type is not None and self._custom_config.version in (
+        v1_or_v2_root_type = self._pydantic_model.get_root_type_unsafe_v1_or_v2_only()
+        if v1_or_v2_root_type is not None and self._custom_config.version in (
             PydanticVersionCompatibility.V1,
             PydanticVersionCompatibility.V1_ON_V2,
+            PydanticVersionCompatibility.V2,
         ):
             return PydanticV1CustomRootTypeValidatorsGenerator(
                 model=self._pydantic_model,
-                root_type=v1_root_type,
+                root_type=v1_or_v2_root_type,
             )
         else:
             unique_name = []

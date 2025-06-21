@@ -3,8 +3,17 @@ import os from "os";
 import path from "path";
 import tmp from "tmp-promise";
 
+import { FernToken } from "@fern-api/auth";
+import { getAccessToken } from "@fern-api/auth";
+import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
+import { createVenusService } from "@fern-api/core";
+import { ContainerRunner, replaceEnvVariables } from "@fern-api/core-utils";
+import { RelativeFilePath, join } from "@fern-api/fs-utils";
+import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
+import { FernIr } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
+import { FernVenusApi } from "@fern-api/venus-api-sdk";
 import {
     AbstractAPIWorkspace,
     getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation
@@ -13,55 +22,118 @@ import {
 import { writeFilesToDiskAndRunGenerator } from "./runGenerator";
 
 export async function runLocalGenerationForWorkspace({
+    token,
     projectConfig,
     workspace,
     generatorGroup,
     keepDocker,
-    context
+    context,
+    runner
 }: {
+    token: FernToken | undefined;
     projectConfig: fernConfigJson.ProjectConfig;
     workspace: AbstractAPIWorkspace<unknown>;
     generatorGroup: generatorsYml.GeneratorGroup;
     keepDocker: boolean;
     context: TaskContext;
+    runner: ContainerRunner | undefined;
 }): Promise<void> {
     const workspaceTempDir = await getWorkspaceTempDir();
 
     const results = await Promise.all(
         generatorGroup.generators.map(async (generatorInvocation) => {
             return context.runInteractiveTask({ name: generatorInvocation.name }, async (interactiveTaskContext) => {
+                const substituteEnvVars = <T>(stringOrObject: T) =>
+                    replaceEnvVariables(stringOrObject, { onError: (e) => interactiveTaskContext.failAndThrow(e) });
+
+                generatorInvocation = substituteEnvVars(generatorInvocation);
+
+                const fernWorkspace = await workspace.toFernWorkspace(
+                    { context },
+                    getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(generatorInvocation)
+                );
+
+                const intermediateRepresentation = generateIntermediateRepresentation({
+                    workspace: fernWorkspace,
+                    audiences: generatorGroup.audiences,
+                    generationLanguage: generatorInvocation.language,
+                    keywords: generatorInvocation.keywords,
+                    smartCasing: generatorInvocation.smartCasing,
+                    exampleGeneration: {
+                        includeOptionalRequestPropertyExamples: false,
+                        disabled: generatorInvocation.disableExamples
+                    },
+                    readme: generatorInvocation.readme,
+                    version: undefined,
+                    packageName: generatorsYml.getPackageName({ generatorInvocation }),
+                    context,
+                    sourceResolver: new SourceResolverImpl(context, fernWorkspace)
+                });
+
+                const venus = createVenusService({ token: token?.value });
+
                 if (generatorInvocation.absolutePathToLocalOutput == null) {
+                    token = await getAccessToken();
+                    if (token == null) {
+                        interactiveTaskContext.failWithoutThrowing("Please provide a FERN_TOKEN in your environment.");
+                        return;
+                    }
+                }
+
+                const organization = await venus.organization.get(
+                    FernVenusApi.OrganizationId(projectConfig.organization)
+                );
+
+                if (generatorInvocation.absolutePathToLocalOutput == null && !organization.ok) {
                     interactiveTaskContext.failWithoutThrowing(
-                        "Cannot generate because output location is not local-file-system"
+                        `Failed to load details for organization ${projectConfig.organization}.`
                     );
-                } else {
-                    const fernWorkspace = await workspace.toFernWorkspace(
-                        { context },
-                        getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(generatorInvocation)
+                    return;
+                }
+
+                if (organization.ok && organization.body.selfHostedSdKs) {
+                    intermediateRepresentation.selfHosted = true;
+                }
+
+                // Set the publish config on the intermediateRepresentation if available
+                const publishConfig = getPublishConfig({
+                    generatorInvocation,
+                    org: organization.ok ? organization.body : undefined
+                });
+                if (publishConfig != null) {
+                    intermediateRepresentation.publishConfig = publishConfig;
+                }
+
+                const absolutePathToLocalOutput =
+                    generatorInvocation.absolutePathToLocalOutput ??
+                    join(
+                        workspace.absoluteFilePath,
+                        RelativeFilePath.of("sdks"),
+                        RelativeFilePath.of(generatorInvocation.language ?? generatorInvocation.name)
                     );
 
-                    await writeFilesToDiskAndRunGenerator({
-                        organization: projectConfig.organization,
-                        absolutePathToFernConfig: projectConfig._absolutePath,
-                        workspace: fernWorkspace,
-                        generatorInvocation,
-                        absolutePathToLocalOutput: generatorInvocation.absolutePathToLocalOutput,
-                        absolutePathToLocalSnippetJSON: undefined,
-                        absolutePathToLocalSnippetTemplateJSON: undefined,
-                        audiences: generatorGroup.audiences,
-                        workspaceTempDir,
-                        keepDocker,
-                        context: interactiveTaskContext,
-                        irVersionOverride: generatorInvocation.irVersionOverride,
-                        outputVersionOverride: undefined,
-                        writeUnitTests: false,
-                        generateOauthClients: false,
-                        generatePaginatedClients: false
-                    });
-                    interactiveTaskContext.logger.info(
-                        chalk.green("Wrote files to " + generatorInvocation.absolutePathToLocalOutput)
-                    );
-                }
+                await writeFilesToDiskAndRunGenerator({
+                    organization: projectConfig.organization,
+                    absolutePathToFernConfig: projectConfig._absolutePath,
+                    workspace: fernWorkspace,
+                    generatorInvocation,
+                    absolutePathToLocalOutput,
+                    absolutePathToLocalSnippetJSON: undefined,
+                    absolutePathToLocalSnippetTemplateJSON: undefined,
+                    audiences: generatorGroup.audiences,
+                    workspaceTempDir,
+                    keepDocker,
+                    context: interactiveTaskContext,
+                    irVersionOverride: generatorInvocation.irVersionOverride,
+                    outputVersionOverride: undefined,
+                    writeUnitTests: organization.ok ? (organization?.body.snippetUnitTestsEnabled ?? false) : false,
+                    generateOauthClients: organization.ok ? (organization?.body.oauthClientEnabled ?? false) : false,
+                    generatePaginatedClients: organization.ok ? (organization?.body.paginationEnabled ?? false) : false,
+                    ir: intermediateRepresentation,
+                    runner
+                });
+
+                interactiveTaskContext.logger.info(chalk.green("Wrote files to " + absolutePathToLocalOutput));
             });
         })
     );
@@ -78,4 +150,53 @@ export async function getWorkspaceTempDir(): Promise<tmp.DirectoryResult> {
         tmpdir: os.platform() === "darwin" ? path.join("/private", os.tmpdir()) : undefined,
         prefix: "fern"
     });
+}
+
+function getPublishConfig({
+    generatorInvocation,
+    org
+}: {
+    generatorInvocation: generatorsYml.GeneratorInvocation;
+    org?: FernVenusApi.Organization;
+}): FernIr.PublishingConfig | undefined {
+    if (generatorInvocation.raw?.github != null && isGithubSelfhosted(generatorInvocation.raw.github)) {
+        return FernIr.PublishingConfig.github({
+            owner: "",
+            repo: "",
+            uri: generatorInvocation.raw.github.uri,
+            token: generatorInvocation.raw.github.token,
+            target: FernIr.PublishTarget.postman({
+                apiKey: "",
+                workspaceId: "",
+                collectionId: undefined
+            })
+        });
+    }
+
+    if (generatorInvocation.raw?.output?.location === "local-file-system") {
+        return FernIr.PublishingConfig.filesystem({
+            generateFullProject: org?.selfHostedSdKs ?? false
+        });
+    }
+
+    return generatorInvocation.outputMode._visit({
+        downloadFiles: () => undefined,
+        github: () => undefined,
+        githubV2: () => undefined,
+        publish: () => undefined,
+        publishV2: () => undefined,
+        _other: () => undefined
+    });
+}
+
+/**
+ * Type guard to check if a GitHub configuration is a self-hosted configuration
+ */
+function isGithubSelfhosted(
+    github: generatorsYml.GithubConfigurationSchema | undefined
+): github is generatorsYml.GithubSelfhostedSchema {
+    if (github == null) {
+        return false;
+    }
+    return "uri" in github && "token" in github;
 }

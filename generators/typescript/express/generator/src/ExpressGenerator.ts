@@ -8,8 +8,7 @@ import {
     NpmPackage,
     PackageId,
     SimpleTypescriptProject,
-    TypescriptProject,
-    convertExportedFilePathToFilePath
+    TypescriptProject
 } from "@fern-typescript/commons";
 import { GeneratorContext } from "@fern-typescript/contexts";
 import { ExpressEndpointTypeSchemasGenerator } from "@fern-typescript/express-endpoint-type-schemas-generator";
@@ -71,6 +70,7 @@ export declare namespace ExpressGenerator {
         requestValidationStatusCode: number;
         useBigInt: boolean;
         noOptionalProperties: boolean;
+        packagePath: string | undefined;
     }
 }
 
@@ -79,6 +79,9 @@ export class ExpressGenerator {
     private intermediateRepresentation: IntermediateRepresentation;
     private npmPackage: NpmPackage;
     private config: ExpressGenerator.Config;
+
+    private defaultSrcDirectory: string;
+    private defaultTestDirectory: string;
 
     private project: Project;
     private rootDirectory: Directory;
@@ -119,8 +122,15 @@ export class ExpressGenerator {
         this.npmPackage = npmPackage;
         this.config = config;
 
-        this.exportsManager = new ExportsManager();
-        this.coreUtilitiesManager = new CoreUtilitiesManager();
+        this.defaultSrcDirectory = "src";
+        this.defaultTestDirectory = "tests";
+
+        this.exportsManager = new ExportsManager({ packagePath: config.packagePath });
+        this.coreUtilitiesManager = new CoreUtilitiesManager({
+            streamType: "wrapper",
+            relativePackagePath: this.getRelativePackagePath(),
+            relativeTestPath: this.getRelativeTestPath()
+        });
 
         this.project = new Project({
             useInMemoryFileSystem: true
@@ -289,7 +299,10 @@ export class ExpressGenerator {
         pathToSrc: AbsoluteFilePath;
         pathToRoot: AbsoluteFilePath;
     }): Promise<void> {
-        await this.coreUtilitiesManager.copyCoreUtilities({ pathToSrc, pathToRoot });
+        await this.coreUtilitiesManager.copyCoreUtilities({
+            pathToSrc,
+            pathToRoot
+        });
     }
 
     private getTypesToGenerate(): Record<TypeId, TypeDeclaration> {
@@ -486,11 +499,11 @@ export class ExpressGenerator {
         run: (args: { sourceFile: SourceFile; importsManager: ImportsManager }) => void;
         filepath: ExportedFilePath;
     }) {
-        const filepathStr = convertExportedFilePathToFilePath(filepath);
+        const filepathStr = this.exportsManager.convertExportedFilePathToFilePath(filepath);
         this.context.logger.debug(`Generating ${filepathStr}`);
 
         const sourceFile = this.rootDirectory.createSourceFile(filepathStr);
-        const importsManager = new ImportsManager();
+        const importsManager = new ImportsManager({ packagePath: this.config.packagePath });
 
         run({ sourceFile, importsManager });
 
@@ -545,6 +558,7 @@ export class ExpressGenerator {
             dependencyManager: this.dependencyManager,
             fernConstants: this.intermediateRepresentation.constants,
             importsManager,
+            exportsManager: this.exportsManager,
             typeResolver: this.typeResolver,
             typeDeclarationReferencer: this.typeDeclarationReferencer,
             typeSchemaDeclarationReferencer: this.typeSchemaDeclarationReferencer,
@@ -576,7 +590,37 @@ export class ExpressGenerator {
             useBigInt: this.config.useBigInt,
             enableInlineTypes: false,
             allowExtraFields: this.config.allowExtraFields,
-            omitUndefined: false
+            omitUndefined: false,
+            relativePackagePath: this.getRelativePackagePath(),
+            relativeTestPath: this.getRelativeTestPath()
         });
+    }
+
+    private getRelativePackagePath(): string {
+        if (!this.config.packagePath) {
+            return this.defaultSrcDirectory;
+        }
+
+        let packagePath = this.config.packagePath;
+
+        if (packagePath.startsWith("/")) {
+            packagePath = packagePath.slice(1);
+        }
+
+        if (packagePath.endsWith("/")) {
+            packagePath = packagePath.slice(0, -1);
+        }
+
+        return packagePath;
+    }
+
+    private getRelativeTestPath(): string {
+        const packagePath = this.getRelativePackagePath();
+
+        if (packagePath === this.defaultSrcDirectory) {
+            return this.defaultTestDirectory;
+        }
+
+        return packagePath + "/" + this.defaultTestDirectory;
     }
 }

@@ -8,4 +8,5 @@ export interface HttpHeader extends FernIr.Declaration {
     name: FernIr.NameAndWireValue;
     valueType: FernIr.TypeReference;
     env: string | undefined;
+    v2Examples: FernIr.V2SchemaExamples | undefined;
 }

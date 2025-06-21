@@ -1,0 +1,18 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "82444d62",
+            "id": {
+                "method": "DELETE",
+                "path": "/container/",
+                "identifier_override": "endpoint_service.endpoint"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.accept.SeedAcceptClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedAcceptClient client = SeedAcceptClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.service().endpoint();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.accept.SeedAcceptClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedAcceptClient client = SeedAcceptClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.service().endpoint();\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

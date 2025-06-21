@@ -54,10 +54,9 @@ fixtures:
 allowedFailures:
   - any-auth
   - circular-references
+  - literal
   - mixed-file-directory
   - objects-with-imports
-  - streaming
-  - trace
 features:
   requestOptions: true
   idempotency: false

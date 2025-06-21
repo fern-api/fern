@@ -16,4 +16,5 @@ export interface WebSocketChannel extends FernIr.Declaration {
     /** The messages that can be sent and received on this channel */
     messages: FernIr.WebSocketMessage[];
     examples: FernIr.ExampleWebSocketSession[];
+    v2Examples: FernIr.V2WebSocketSessionExamples | undefined;
 }

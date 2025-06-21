@@ -22,9 +22,14 @@ const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     respectReadonlySchemas: undefined,
     respectNullableSchemas: undefined,
     inlinePathParameters: undefined,
+    useBytesForBinaryResponse: undefined,
+    respectForwardCompatibleEnums: undefined,
     filter: undefined,
     exampleGeneration: undefined,
-    defaultFormParameterEncoding: undefined
+    defaultFormParameterEncoding: undefined,
+    additionalPropertiesDefaultsTo: undefined,
+    typeDatesAsStrings: undefined,
+    preserveSingleSchemaOneOf: undefined
 };
 
 export async function convertGeneratorsConfiguration({
@@ -81,7 +86,8 @@ function parseDeprecatedApiDefinitionSettingsSchema(
         respectNullableSchemas: settings?.["respect-nullable-schemas"],
         onlyIncludeReferencedSchemas: settings?.["only-include-referenced-schemas"],
         inlinePathParameters: settings?.["inline-path-parameters"],
-        shouldUseIdiomaticRequestNames: settings?.["idiomatic-request-names"]
+        shouldUseIdiomaticRequestNames: settings?.["idiomatic-request-names"],
+        preserveSingleSchemaOneOf: settings?.["preserve-single-schema-oneof"]
     };
 }
 
@@ -97,7 +103,12 @@ function parseOpenApiDefinitionSettingsSchema(
         inlinePathParameters: settings?.["inline-path-parameters"],
         filter: settings?.filter,
         exampleGeneration: settings?.["example-generation"],
-        defaultFormParameterEncoding: settings?.["default-form-parameter-encoding"]
+        defaultFormParameterEncoding: settings?.["default-form-parameter-encoding"],
+        useBytesForBinaryResponse: settings?.["use-bytes-for-binary-response"],
+        respectForwardCompatibleEnums: settings?.["respect-forward-compatible-enums"],
+        additionalPropertiesDefaultsTo: settings?.["additional-properties-defaults-to"],
+        typeDatesAsStrings: settings?.["type-dates-as-strings"],
+        preserveSingleSchemaOneOf: settings?.["preserve-single-schema-oneof"]
     };
 }
 
@@ -328,6 +339,17 @@ async function parseApiConfigurationV2Schema({
                 },
                 origin: undefined,
                 overrides: spec.proto.overrides,
+                audiences: [],
+                settings: { ...UNDEFINED_API_DEFINITION_SETTINGS }
+            };
+        } else if (generatorsYml.isOpenRpcSpecSchema(spec)) {
+            definitionLocation = {
+                schema: {
+                    type: "openrpc",
+                    path: spec.openrpc
+                },
+                origin: undefined,
+                overrides: spec.overrides,
                 audiences: [],
                 settings: { ...UNDEFINED_API_DEFINITION_SETTINGS }
             };
@@ -576,7 +598,7 @@ async function convertOutputMode({
     maybeTopLevelReviewers: generatorsYml.ReviewersSchema | undefined;
 }): Promise<FernFiddle.OutputMode> {
     const downloadSnippets = generator.snippets != null && generator.snippets.path !== "";
-    if (generator.github != null) {
+    if (generator.github != null && !isGithubSelfhosted(generator.github)) {
         const indexOfFirstSlash = generator.github.repository.indexOf("/");
         const owner = generator.github.repository.slice(0, indexOfFirstSlash);
         const repo = generator.github.repository.slice(indexOfFirstSlash + 1);
@@ -870,6 +892,8 @@ function getGithubLicenseSchema(
         return generator["publish-metadata"].license;
     } else if (generator.metadata?.license != null) {
         return generator.metadata.license;
+    } else if (isGithubSelfhosted(generator.github)) {
+        return undefined;
     }
     return generator.github?.license;
 }
@@ -943,4 +967,16 @@ function warnForDeprecatedConfiguration(context: TaskContext, config: generators
         context.logger.warn("Warnings for generators.yml:");
         context.logger.warn("\t" + warnings.join("\n\t"));
     }
+}
+
+/**
+ * Type guard to check if a GitHub configuration is a self-hosted configuration
+ */
+export function isGithubSelfhosted(
+    github: generatorsYml.GithubConfigurationSchema | undefined
+): github is generatorsYml.GithubSelfhostedSchema {
+    if (github == null) {
+        return false;
+    }
+    return "uri" in github && "token" in github;
 }

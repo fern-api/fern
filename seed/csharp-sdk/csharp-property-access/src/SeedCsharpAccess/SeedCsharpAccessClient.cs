@@ -31,8 +31,7 @@ public partial class SeedCsharpAccessClient
         _client = new RawClient(clientOptions);
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.CreateUserAsync(
     ///     new User
     ///     {
@@ -42,8 +41,7 @@ public partial class SeedCsharpAccessClient
     ///         Password = "password",
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<User> CreateUserAsync(
         User request,
         RequestOptions? options = null,
@@ -51,8 +49,8 @@ public partial class SeedCsharpAccessClient
     )
     {
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
@@ -63,9 +61,9 @@ public partial class SeedCsharpAccessClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<User>(responseBody)!;
@@ -76,10 +74,13 @@ public partial class SeedCsharpAccessClient
             }
         }
 
-        throw new SeedCsharpAccessApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedCsharpAccessApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

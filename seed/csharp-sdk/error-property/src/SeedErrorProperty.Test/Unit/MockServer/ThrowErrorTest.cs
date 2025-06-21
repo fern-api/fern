@@ -1,6 +1,4 @@
-using FluentAssertions.Json;
 using global::System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedErrorProperty.Core;
 
@@ -30,10 +28,7 @@ public class ThrowErrorTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.PropertyBasedError.ThrowErrorAsync(RequestOptions);
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        var response = await Client.PropertyBasedError.ThrowErrorAsync();
+        Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<string>(mockResponse)));
     }
 }

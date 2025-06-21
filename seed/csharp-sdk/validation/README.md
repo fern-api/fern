@@ -5,10 +5,14 @@
 
 The Seed C# library provides convenient access to the Seed API from C#.
 
+## Requirements
+
+This SDK requires:
+
 ## Installation
 
 ```sh
-nuget install SeedValidation
+dotnet add package SeedValidation
 ```
 
 ## Usage
@@ -24,7 +28,7 @@ await client.CreateAsync(
     {
         Decimal = 2.2,
         Even = 100,
-        Name = "foo",
+        Name = "fern",
         Shape = Shape.Square,
     }
 );

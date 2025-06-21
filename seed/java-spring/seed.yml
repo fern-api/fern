@@ -1,4 +1,4 @@
-irVersion: v55
+irVersion: v58
 displayName: Java Spring
 changelogLocation: ../../generators/java/spring/versions.yml
 image: fernapi/fern-java-spring
@@ -50,3 +50,5 @@ allowedFailures:
   - alias-extends
   - any-auth
   - streaming-parameter
+  # public-object requires file download
+  - public-object

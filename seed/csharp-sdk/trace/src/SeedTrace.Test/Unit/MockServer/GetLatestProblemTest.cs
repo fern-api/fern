@@ -1,6 +1,4 @@
-using FluentAssertions.Json;
 using global::System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedTrace.Core;
 
@@ -9,7 +7,7 @@ namespace SeedTrace.Test.Unit.MockServer;
 [TestFixture]
 public class GetLatestProblemTest : BaseMockServerTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string mockResponse = """
@@ -322,13 +320,10 @@ public class GetLatestProblemTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.V2.V3.Problem.GetLatestProblemAsync(
-            "problemId",
-            RequestOptions
+        var response = await Client.V2.V3.Problem.GetLatestProblemAsync("problemId");
+        Assert.That(
+            response,
+            Is.EqualTo(JsonUtils.Deserialize<V2.V3.ProblemInfoV2>(mockResponse)).UsingDefaults()
         );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
 }

@@ -1,5 +1,12 @@
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
-import { PackageId, Reference, Zurg, getSchemaOptions, getTextOfTsNode } from "@fern-typescript/commons";
+import {
+    PackageId,
+    Reference,
+    Zurg,
+    getPropertyKey,
+    getSchemaOptions,
+    getTextOfTsNode
+} from "@fern-typescript/commons";
 import { GeneratedSdkInlinedRequestBodySchema, SdkContext } from "@fern-typescript/contexts";
 import { ModuleDeclaration, ts } from "ts-morph";
 
@@ -75,7 +82,7 @@ export class GeneratedSdkInlinedRequestBodySchemaImpl
             properties: nonLiteralProperties.map((property) => {
                 const type = context.typeSchema.getReferenceToRawType(property.valueType);
                 return {
-                    name: `"${property.name.wireValue}"`,
+                    name: getPropertyKey(property.name.wireValue),
                     type: getTextOfTsNode(type.typeNodeWithoutUndefined),
                     hasQuestionToken: type.isOptional
                 };

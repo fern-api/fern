@@ -17,11 +17,9 @@ public partial class ImdbClient
     /// <summary>
     /// Add a movie to the database using the movies/* /... path.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Imdb.CreateMovieAsync(new CreateMovieRequest { Title = "title", Rating = 1.1 });
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<string> CreateMovieAsync(
         CreateMovieRequest request,
         RequestOptions? options = null,
@@ -29,8 +27,8 @@ public partial class ImdbClient
     )
     {
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
@@ -41,31 +39,32 @@ public partial class ImdbClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<string>(responseBody)!;
             }
             catch (JsonException e)
             {
-                throw new BaseClientException("Failed to deserialize response", e);
+                throw new CustomClientException("Failed to deserialize response", e);
             }
         }
 
-        throw new BaseClientApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new CustomClientApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Imdb.GetMovieAsync("movieId");
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<Movie> GetMovieAsync(
         string movieId,
         RequestOptions? options = null,
@@ -73,46 +72,54 @@ public partial class ImdbClient
     )
     {
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = $"/movies/{JsonUtils.SerializeAsString(movieId)}",
+                    Path = string.Format(
+                        "/movies/{0}",
+                        ValueConvert.ToPathParameterString(movieId)
+                    ),
                     Options = options,
                 },
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<Movie>(responseBody)!;
             }
             catch (JsonException e)
             {
-                throw new BaseClientException("Failed to deserialize response", e);
+                throw new CustomClientException("Failed to deserialize response", e);
             }
         }
 
-        try
         {
-            switch (response.StatusCode)
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            try
             {
-                case 404:
-                    throw new MovieDoesNotExistError(JsonUtils.Deserialize<string>(responseBody));
+                switch (response.StatusCode)
+                {
+                    case 404:
+                        throw new MovieDoesNotExistError(
+                            JsonUtils.Deserialize<string>(responseBody)
+                        );
+                }
             }
+            catch (JsonException)
+            {
+                // unable to map error response, throwing generic error
+            }
+            throw new CustomClientApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
         }
-        catch (JsonException)
-        {
-            // unable to map error response, throwing generic error
-        }
-        throw new BaseClientApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
     }
 }

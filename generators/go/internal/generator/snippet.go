@@ -275,6 +275,14 @@ func (s *SnippetWriter) getSnippetForContainer(
 		return s.getSnippetForListOrSet(exampleContainer.List.List)
 	case "set":
 		return s.getSnippetForListOrSet(exampleContainer.Set.Set)
+	case "nullable":
+		if exampleContainer.Nullable == nil || exampleContainer.Nullable.Nullable == nil {
+			return nil
+		}
+		if primitive := maybePrimitiveExampleTypeReferenceShape(exampleContainer.Nullable.Nullable.Shape); primitive != nil {
+			return s.getSnippetForOptionalPrimitive(primitive)
+		}
+		return s.GetSnippetForExampleTypeReference(exampleContainer.Nullable.Nullable)
 	case "optional":
 		if exampleContainer.Optional == nil || exampleContainer.Optional.Optional == nil {
 			return nil
@@ -623,6 +631,12 @@ func maybePrimitiveExampleTypeReferenceShape(
 	case "primitive":
 		return exampleTypeReferenceShape.Primitive
 	case "container":
+		if exampleTypeReferenceShape.Container.Nullable != nil {
+			if exampleTypeReferenceShape.Container.Nullable.Nullable != nil {
+				return maybePrimitiveExampleTypeReferenceShape(exampleTypeReferenceShape.Container.Nullable.Nullable.Shape)
+			}
+			return nil
+		}
 		if exampleTypeReferenceShape.Container.Optional != nil {
 			if exampleTypeReferenceShape.Container.Optional.Optional != nil {
 				return maybePrimitiveExampleTypeReferenceShape(exampleTypeReferenceShape.Container.Optional.Optional.Shape)
@@ -677,6 +691,9 @@ func examplePrimitiveToPointerConstructorName(
 
 func isTypeReferenceLiteral(typeReference *ir.TypeReference) bool {
 	if typeReference.Container != nil {
+		if typeReference.Container.Nullable != nil {
+			return isTypeReferenceLiteral(typeReference.Container.Nullable)
+		}
 		if typeReference.Container.Optional != nil {
 			return isTypeReferenceLiteral(typeReference.Container.Optional)
 		}
@@ -865,13 +882,38 @@ func (e *exampleContainerVisitor) VisitMap(mapContainer *ir.ExampleMapContainer)
 	return nil
 }
 
+func (e *exampleContainerVisitor) VisitNullable(nullable *ir.ExampleNullableContainer) error {
+	if nullable == nil || nullable.Nullable == nil {
+		return nil
+	}
+	// Collapse nullable inside optional and treat as an optional
+	shape := nullable.Nullable.Shape
+	if nullable.Nullable.Shape.Container != nil && nullable.Nullable.Shape.Container.Optional != nil {
+		shape = nullable.Nullable.Shape.Container.Optional.Optional.Shape
+	}
+
+	e.value = &ast.Optional{
+		Expr: exampleTypeReferenceShapeToGoType(
+			shape,
+			e.types,
+			e.baseImportPath,
+		),
+	}
+	return nil
+}
+
 func (e *exampleContainerVisitor) VisitOptional(optional *ir.ExampleOptionalContainer) error {
 	if optional == nil || optional.Optional == nil {
 		return nil
 	}
+	// Collapse optional inside nullable and treat as an optional
+	shape := optional.Optional.Shape
+	if optional.Optional.Shape.Container != nil && optional.Optional.Shape.Container.Nullable != nil {
+		shape = optional.Optional.Shape.Container.Nullable.Nullable.Shape
+	}
 	e.value = &ast.Optional{
 		Expr: exampleTypeReferenceShapeToGoType(
-			optional.Optional.Shape,
+			shape,
 			e.types,
 			e.baseImportPath,
 		),

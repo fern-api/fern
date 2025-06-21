@@ -3,6 +3,7 @@ using SeedAnyAuth.Core;
 
 namespace SeedAnyAuth;
 
+[Serializable]
 public record GetTokenRequest
 {
     [JsonPropertyName("client_id")]
@@ -20,6 +21,7 @@ public record GetTokenRequest
     [JsonPropertyName("scope")]
     public string? Scope { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

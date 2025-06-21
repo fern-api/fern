@@ -1,5 +1,4 @@
 import typer
-
 from fern_python.cli.generator_cli import GeneratorCli
 from fern_python.generators.sdk.sdk_generator import SdkGenerator
 

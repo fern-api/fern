@@ -16,7 +16,7 @@
                     "from seed import SeedOauthClientCredentials"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedOauthClientCredentials(base_url=\"https://yourhost.com/path/to/api\", client_id=\"YOUR_CLIENT_ID\", client_secret=\"YOUR_CLIENT_SECRET\", )",
+                "templateString": "client = SeedOauthClientCredentials(\n    base_url=\"https://yourhost.com/path/to/api\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -87,7 +87,7 @@
                         "from seed import AsyncSeedOauthClientCredentials"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedOauthClientCredentials(base_url=\"https://yourhost.com/path/to/api\", client_id=\"YOUR_CLIENT_ID\", client_secret=\"YOUR_CLIENT_SECRET\", )",
+                    "templateString": "client = AsyncSeedOauthClientCredentials(\n    base_url=\"https://yourhost.com/path/to/api\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"

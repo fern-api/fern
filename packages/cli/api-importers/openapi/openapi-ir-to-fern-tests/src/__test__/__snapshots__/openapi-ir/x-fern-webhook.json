@@ -1,0 +1,257 @@
+{
+  "apiVersion": {
+    "header": "X-API-Version",
+    "default": "2.0.0",
+    "values": [
+      "1.0.0",
+      "2.0.0",
+      "Latest"
+    ]
+  },
+  "title": "Test extension `x-fern-webhook`.",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [],
+  "webhooks": [
+    {
+      "audiences": [],
+      "sdkName": {
+        "groupName": [
+          "status"
+        ],
+        "methodName": "update"
+      },
+      "method": "POST",
+      "operationId": "update-status",
+      "tags": [],
+      "headers": [],
+      "generatedPayloadName": "StatusUpdatePayload",
+      "payload": {
+        "generatedName": "StatusUpdatePayload",
+        "schema": "Update",
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "reference"
+      },
+      "examples": [
+        {
+          "payload": {
+            "properties": {
+              "message": {
+                "value": {
+                  "value": "message",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          }
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "sdkName": {
+        "groupName": [
+          "status"
+        ],
+        "methodName": "updateInlined"
+      },
+      "method": "POST",
+      "operationId": "update-status-inlined",
+      "tags": [],
+      "headers": [],
+      "generatedPayloadName": "StatusUpdateInlinedPayload",
+      "payload": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "statusUpdateInlinedPayloadStreamInlined",
+            "key": "stream-inlined",
+            "schema": {
+              "generatedName": "statusUpdateInlinedPayloadStreamInlined",
+              "value": {
+                "schema": {
+                  "type": "boolean"
+                },
+                "generatedName": "StatusUpdateInlinedPayloadStreamInlined",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "statusUpdateInlinedPayloadMessageInlined",
+            "key": "message-inlined",
+            "schema": {
+              "generatedName": "statusUpdateInlinedPayloadMessageInlined",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "StatusUpdateInlinedPayloadMessageInlined",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "StatusUpdateInlinedPayload",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "examples": [
+        {
+          "payload": {
+            "properties": {},
+            "type": "object"
+          }
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [
+        "private"
+      ],
+      "sdkName": {
+        "groupName": [
+          "status2"
+        ],
+        "methodName": "update"
+      },
+      "method": "POST",
+      "operationId": "update-status2",
+      "tags": [],
+      "headers": [],
+      "generatedPayloadName": "Status2UpdatePayload",
+      "payload": {
+        "generatedName": "Status2UpdatePayload",
+        "schema": "Update",
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "reference"
+      },
+      "examples": [
+        {
+          "payload": {
+            "properties": {
+              "message": {
+                "value": {
+                  "value": "message",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          }
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "Update": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "updateStream",
+            "key": "stream",
+            "schema": {
+              "generatedName": "updateStream",
+              "value": {
+                "schema": {
+                  "type": "boolean"
+                },
+                "generatedName": "UpdateStream",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "updateMessage",
+            "key": "message",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "UpdateMessage",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Update",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {
+    "api_key": {
+      "type": "bearer"
+    },
+    "custom_header": {
+      "headerName": "X-API-Key",
+      "type": "header"
+    },
+    "access_token": {
+      "type": "bearer"
+    }
+  },
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

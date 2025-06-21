@@ -35,13 +35,19 @@ export class FernDefinitionConverter {
                     onlyIncludeReferencedSchemas:
                         settings?.onlyIncludeReferencedSchemas ?? this.args.onlyIncludeReferencedSchemas,
                     inlinePathParameters: settings?.inlinePathParameters ?? this.args.inlinePathParameters,
-                    objectQueryParameters: settings?.objectQueryParameters ?? this.args.objectQueryParameters
+                    objectQueryParameters: settings?.objectQueryParameters ?? this.args.objectQueryParameters,
+                    useBytesForBinaryResponse:
+                        settings?.useBytesForBinaryResponse ?? this.args.useBytesForBinaryResponse,
+                    respectForwardCompatibleEnums:
+                        settings?.respectForwardCompatibleEnums ?? this.args.respectForwardCompatibleEnums
                 }
             }),
             authOverrides:
-                this.args.generatorsConfiguration?.api?.auth != null
-                    ? { ...this.args.generatorsConfiguration?.api }
-                    : undefined,
+                settings?.auth != null
+                    ? { auth: settings.auth }
+                    : this.args.generatorsConfiguration?.api?.auth != null
+                      ? { ...this.args.generatorsConfiguration.api }
+                      : undefined,
             environmentOverrides:
                 this.args.generatorsConfiguration?.api?.environments != null
                     ? { ...this.args.generatorsConfiguration?.api }

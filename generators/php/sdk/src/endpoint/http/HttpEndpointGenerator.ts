@@ -280,6 +280,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                             unpagedEndpointMethodName
                         });
                         break;
+                    case "custom":
+                        throw new Error("Custom pagination is not supported yet");
                     default:
                         assertNever(endpoint.pagination);
                 }
@@ -530,6 +532,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     case "offset":
                         return endpoint.pagination.results.property.valueType;
                     case "cursor":
+                        return endpoint.pagination.results.property.valueType;
+                    case "custom":
                         return endpoint.pagination.results.property.valueType;
                     default:
                         assertNever(endpoint.pagination);

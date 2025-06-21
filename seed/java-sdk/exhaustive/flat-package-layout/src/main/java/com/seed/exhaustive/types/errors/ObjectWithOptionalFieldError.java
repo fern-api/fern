@@ -5,6 +5,7 @@ package com.seed.exhaustive.types.errors;
 
 import com.seed.exhaustive.core.SeedExhaustiveApiException;
 import com.seed.exhaustive.types.types.ObjectWithOptionalField;
+import okhttp3.Response;
 
 public final class ObjectWithOptionalFieldError extends SeedExhaustiveApiException {
     /**
@@ -14,6 +15,11 @@ public final class ObjectWithOptionalFieldError extends SeedExhaustiveApiExcepti
 
     public ObjectWithOptionalFieldError(ObjectWithOptionalField body) {
         super("ObjectWithOptionalFieldError", 400, body);
+        this.body = body;
+    }
+
+    public ObjectWithOptionalFieldError(ObjectWithOptionalField body, Response rawResponse) {
+        super("ObjectWithOptionalFieldError", 400, body, rawResponse);
         this.body = body;
     }
 

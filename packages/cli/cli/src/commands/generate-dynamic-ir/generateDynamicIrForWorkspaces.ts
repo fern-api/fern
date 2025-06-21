@@ -1,7 +1,7 @@
 import path from "path";
 
 import { Audiences, generatorsYml } from "@fern-api/configuration-loader";
-import { AbsoluteFilePath, streamObjectToFile, stringifyLargeObject } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, streamObjectToFile } from "@fern-api/fs-utils";
 import { Project } from "@fern-api/project-loader";
 
 import { CliContext } from "../../cli-context/CliContext";
@@ -16,7 +16,7 @@ export async function generateDynamicIrForWorkspaces({
     version,
     keywords,
     smartCasing,
-    includeDynamicExamples
+    disableDynamicExamples
 }: {
     project: Project;
     irFilepath: AbsoluteFilePath;
@@ -26,7 +26,7 @@ export async function generateDynamicIrForWorkspaces({
     version: string | undefined;
     keywords: string[] | undefined;
     smartCasing: boolean;
-    includeDynamicExamples: boolean;
+    disableDynamicExamples: boolean;
 }): Promise<void> {
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
@@ -43,7 +43,7 @@ export async function generateDynamicIrForWorkspaces({
                     disableExamples: false,
                     audiences,
                     readme: undefined,
-                    includeDynamicExamples
+                    disableDynamicExamples
                 });
 
                 if (intermediateRepresentation.dynamic == null) {

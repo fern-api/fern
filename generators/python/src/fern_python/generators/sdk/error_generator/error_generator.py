@@ -1,12 +1,12 @@
-import fern.ir.resources as ir_types
-
+from ..context.sdk_generator_context import SdkGeneratorContext
 from fern_python.codegen import AST, SourceFile
 
-from ..context.sdk_generator_context import SdkGeneratorContext
+import fern.ir.resources as ir_types
 
 
 class ErrorGenerator:
     _BODY_PARAMETER_NAME = "body"
+    _HEADERS_PARAMETER_NAME = "headers"
 
     def __init__(self, context: SdkGeneratorContext, error: ir_types.ErrorDeclaration):
         self._context = context
@@ -29,9 +29,24 @@ class ErrorGenerator:
                                     self._error.type
                                 ),
                             ),
+                            AST.FunctionParameter(
+                                name=ErrorGenerator._HEADERS_PARAMETER_NAME,
+                                type_hint=AST.TypeHint.optional(
+                                    AST.TypeHint.dict(AST.TypeHint.str_(), AST.TypeHint.str_())
+                                ),
+                                initializer=AST.Expression(AST.TypeHint.none()),
+                            ),
                         ]
                         if self._error.type is not None
-                        else [],
+                        else [
+                            AST.FunctionParameter(
+                                name=ErrorGenerator._HEADERS_PARAMETER_NAME,
+                                type_hint=AST.TypeHint.optional(
+                                    AST.TypeHint.dict(AST.TypeHint.str_(), AST.TypeHint.str_())
+                                ),
+                                initializer=AST.Expression(AST.TypeHint.none()),
+                            ),
+                        ],
                     ),
                     body=AST.CodeWriter(self._write_constructor_body),
                 ),
@@ -43,5 +58,6 @@ class ErrorGenerator:
             self._context.core_utilities.instantiate_api_error_from_subclass(
                 status_code=AST.Expression(f"{self._error.status_code}"),
                 body=AST.Expression(ErrorGenerator._BODY_PARAMETER_NAME) if self._error.type is not None else None,
+                headers=AST.Expression(ErrorGenerator._HEADERS_PARAMETER_NAME),
             )
         )

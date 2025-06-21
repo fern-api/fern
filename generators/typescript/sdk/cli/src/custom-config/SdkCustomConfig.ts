@@ -10,6 +10,7 @@ export interface SdkCustomConfig {
     includeCredentialsOnCrossOriginRequests: boolean;
     shouldBundle: boolean;
     allowCustomFetcher: boolean;
+    shouldGenerateWebsocketClients: boolean;
     includeUtilsOnUnionMembers: boolean;
     includeOtherInUnionTypes: boolean;
     requireDefaultEnvironment: boolean;
@@ -37,4 +38,7 @@ export interface SdkCustomConfig {
     noScripts: boolean | undefined;
     useBigInt: boolean | undefined;
     useLegacyExports: boolean | undefined;
+    streamType: "wrapper" | "web";
+    fileResponseType: "stream" | "binary-response";
+    packagePath: string | undefined;
 }

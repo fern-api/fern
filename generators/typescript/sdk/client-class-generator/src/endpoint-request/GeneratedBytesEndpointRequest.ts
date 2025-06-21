@@ -1,4 +1,5 @@
 import {
+    ExportsManager,
     Fetcher,
     GetReferenceOpts,
     ImportsManager,
@@ -36,6 +37,7 @@ export declare namespace GeneratedBytesEndpointRequest {
         generatedSdkClientClass: GeneratedSdkClientClassImpl;
         targetRuntime: JavaScriptRuntime;
         retainOriginalCasing: boolean;
+        exportsManager: ExportsManager;
     }
 }
 
@@ -216,9 +218,10 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
         };
     }
 
-    private getHeaders(context: SdkContext): ts.ObjectLiteralElementLike[] {
+    private getHeaders(context: SdkContext): ts.Expression {
         return generateHeaders({
             context,
+            intermediateRepresentation: this.ir,
             requestParameter: this.requestParameter,
             idempotencyHeaders: this.ir.idempotencyHeaders,
             generatedSdkClientClass: this.generatedSdkClientClass,

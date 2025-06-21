@@ -14,11 +14,9 @@ public partial class Ec2Client
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Ec2.BootInstanceAsync(new BootInstanceRequest { Size = "size" });
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async global::System.Threading.Tasks.Task BootInstanceAsync(
         BootInstanceRequest request,
         RequestOptions? options = null,
@@ -26,8 +24,8 @@ public partial class Ec2Client
     )
     {
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.Environment.Ec2,
                     Method = HttpMethod.Post,
@@ -42,11 +40,13 @@ public partial class Ec2Client
         {
             return;
         }
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        throw new SeedMultiUrlEnvironmentNoDefaultApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedMultiUrlEnvironmentNoDefaultApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

@@ -22,11 +22,9 @@ public partial class EventsClient
     /// <summary>
     /// List all user events.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.User.Events.ListEventsAsync(new ListUserEventsRequest { Limit = 1 });
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<IEnumerable<Event>> ListEventsAsync(
         ListUserEventsRequest request,
         RequestOptions? options = null,
@@ -39,8 +37,8 @@ public partial class EventsClient
             _query["limit"] = request.Limit.Value.ToString();
         }
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
@@ -51,9 +49,9 @@ public partial class EventsClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<IEnumerable<Event>>(responseBody)!;
@@ -64,10 +62,13 @@ public partial class EventsClient
             }
         }
 
-        throw new SeedMixedFileDirectoryApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedMixedFileDirectoryApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

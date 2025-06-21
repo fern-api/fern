@@ -1,6 +1,4 @@
-using FluentAssertions.Json;
 using global::System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedMixedFileDirectory.Core;
 using SeedMixedFileDirectory.User;
@@ -42,12 +40,11 @@ public class ListEventsTest : BaseMockServerTest
             );
 
         var response = await Client.User.Events.ListEventsAsync(
-            new ListUserEventsRequest { Limit = 1 },
-            RequestOptions
+            new ListUserEventsRequest { Limit = 1 }
         );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        Assert.That(
+            response,
+            Is.EqualTo(JsonUtils.Deserialize<IEnumerable<Event>>(mockResponse)).UsingDefaults()
+        );
     }
 }

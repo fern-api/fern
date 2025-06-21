@@ -12,6 +12,7 @@ import com.fern.ir.model.types.UnionTypeDeclaration;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.output.GeneratedJavaInterface;
 import com.squareup.javapoet.ClassName;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -76,7 +77,9 @@ public final class SingleTypeGenerator implements Type.Visitor<Optional<Abstract
                 allGeneratedInterfaces,
                 className,
                 reservedTypeNamesInScope,
-                isTopLevelClass);
+                isTopLevelClass,
+                Collections.emptyList(),
+                Collections.emptyList());
         return Optional.of(objectGenerator);
     }
 

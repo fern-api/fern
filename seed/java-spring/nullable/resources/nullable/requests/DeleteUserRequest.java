@@ -73,6 +73,9 @@ public final class DeleteUserRequest {
       return this;
     }
 
+    /**
+     * <p>The user to delete.</p>
+     */
     @JsonSetter(
         value = "username",
         nulls = Nulls.SKIP

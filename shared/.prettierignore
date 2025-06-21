@@ -7,6 +7,7 @@
 ../packages/cli/openapi-ir-sdk/**
 ../packages/seed/src/config/**
 ../generators/csharp/codegen/src/asIs/**/*.Template.*
+../generators/typescript/**/*.template.*
 ../seed/**/*
 ../docker/seed/**
 

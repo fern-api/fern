@@ -21,6 +21,9 @@ service:
             optional_metadata: optional<unknown>
             optional_object_type: optional<ObjectType>
             optional_id: optional<Id>
+            alias_object: MyAliasObject
+            list_of_alias_object: list<MyAliasObject>
+            alias_list_of_object: MyCollectionAliasObject
 
     justFile:
       path: /just-file
@@ -131,6 +134,33 @@ service:
             list_of_objects_with_optionals:
               type: list<MyObjectWithOptional>
               style: form
+            alias_object: 
+              type: MyAliasObject
+              style: form
+            list_of_alias_object: 
+              type: list<MyAliasObject>
+              style: form
+            alias_list_of_object: 
+              type: MyCollectionAliasObject
+              style: form
+
+    optionalArgs:
+      path: /optional-args
+      method: POST
+      request:
+        body:
+          properties:
+            image_file:
+              content-type: image/jpeg
+              type: optional<file>
+            request:
+              content-type: application/json; charset=utf-8
+              type: optional<unknown>
+        content-type: multipart/form-data
+        name: OptionalArgsRequest
+      response:
+        status-code: 200
+        type: string
 
 types:
   Id: string
@@ -139,6 +169,10 @@ types:
     properties:
       prop: string
       optionalProp: optional<string>
+
+  MyAliasObject: MyObject
+
+  MyCollectionAliasObject: list<MyObject>
 
   MyObject:
     properties:

@@ -1,10 +1,6 @@
-import { TypeReferenceNode, getTextOfTsNode } from "@fern-typescript/commons";
+import { TypeReferenceNode, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
 import { ModelContext } from "@fern-typescript/contexts";
 import { ModuleDeclarationStructure, OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
-
-import { assertNever } from "@fern-api/core-utils";
-
-import { NamedType, ObjectProperty, SingleUnionTypeProperty, TypeReference } from "@fern-fern/ir-sdk/api";
 
 import { SingleUnionTypeGenerator } from "../SingleUnionTypeGenerator";
 
@@ -46,7 +42,7 @@ export class SinglePropertySingleUnionTypeGenerator<Context extends ModelContext
         return ts.factory.createTypeLiteralNode([
             ts.factory.createPropertySignature(
                 undefined,
-                this.propertyName,
+                getPropertyKey(this.propertyName),
                 hasOptionalToken ? ts.factory.createToken(ts.SyntaxKind.QuestionToken) : undefined,
                 this.noOptionalProperties ? typeReference.typeNode : typeReference.typeNodeWithoutUndefined
             )
@@ -69,7 +65,7 @@ export class SinglePropertySingleUnionTypeGenerator<Context extends ModelContext
         const type = this.getReferenceToPropertyType(context);
         return [
             {
-                name: this.propertyName,
+                name: getPropertyKey(this.propertyName),
                 type: getTextOfTsNode(this.noOptionalProperties ? type.typeNode : type.typeNodeWithoutUndefined),
                 hasQuestionToken: !this.noOptionalProperties && type.isOptional
             }
@@ -93,7 +89,7 @@ export class SinglePropertySingleUnionTypeGenerator<Context extends ModelContext
     public getNonDiscriminantPropertiesForBuilder(): ts.ObjectLiteralElementLike[] {
         return [
             ts.factory.createPropertyAssignment(
-                this.propertyName,
+                getPropertyKey(this.propertyName),
                 ts.factory.createIdentifier(SinglePropertySingleUnionTypeGenerator.BUILDER_PARAMETER_NAME)
             )
         ];

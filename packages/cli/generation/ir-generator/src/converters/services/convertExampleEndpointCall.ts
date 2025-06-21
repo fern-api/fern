@@ -20,6 +20,7 @@ import {
     ExampleResponse,
     Name
 } from "@fern-api/ir-sdk";
+import { hashJSON } from "@fern-api/ir-utils";
 
 import { FernFileContext } from "../../FernFileContext";
 import { ErrorResolver } from "../../resolvers/ErrorResolver";
@@ -27,7 +28,6 @@ import { ExampleResolver } from "../../resolvers/ExampleResolver";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 import { VariableResolver } from "../../resolvers/VariableResolver";
 import { getEndpointPathParameters } from "../../utils/getEndpointPathParameters";
-import { hashJSON } from "../../utils/hashJSON";
 import { parseErrorName } from "../../utils/parseErrorName";
 import {
     convertTypeReferenceExample,
@@ -579,8 +579,10 @@ function buildUrl({
             ...pathParams.servicePathParameters,
             ...pathParams.rootPathParameters
         ]) {
-            // TODO: should we URL encode the value?
-            url = url.replaceAll(`{${parameter.name.originalName}}`, `${parameter.value.jsonExample}`);
+            url = url.replaceAll(
+                `{${parameter.name.originalName}}`,
+                encodeURIComponent(`${parameter.value.jsonExample}`)
+            );
         }
     }
     // urlJoin has some bugs where it may miss forward slash concatting https://github.com/jfromaniello/url-join/issues/42

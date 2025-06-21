@@ -5,6 +5,7 @@ package com.seed.exhaustive.resources.types.object.errors;
 
 import com.seed.exhaustive.core.CustomApiException;
 import com.seed.exhaustive.resources.types.object.types.NestedObjectWithOptionalField;
+import okhttp3.Response;
 
 public final class NestedObjectWithOptionalFieldError extends CustomApiException {
     /**
@@ -14,6 +15,11 @@ public final class NestedObjectWithOptionalFieldError extends CustomApiException
 
     public NestedObjectWithOptionalFieldError(NestedObjectWithOptionalField body) {
         super("NestedObjectWithOptionalFieldError", 400, body);
+        this.body = body;
+    }
+
+    public NestedObjectWithOptionalFieldError(NestedObjectWithOptionalField body, Response rawResponse) {
+        super("NestedObjectWithOptionalFieldError", 400, body, rawResponse);
         this.body = body;
     }
 

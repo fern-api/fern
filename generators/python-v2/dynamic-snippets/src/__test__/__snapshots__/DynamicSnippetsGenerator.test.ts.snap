@@ -1,0 +1,467 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`snippets > examples > 'GET /metadata (allow-multiple)' 1`] = `
+"from acme import Acme
+
+client = Acme(
+    token="<YOUR_API_KEY>"
+)
+
+client.service.get_metadata(
+    shallow=False,
+    tag=[
+        "development",
+        "public"
+    ],
+    x_api_version="0.0.1"
+)
+"
+`;
+
+exports[`snippets > examples > 'GET /metadata (simple)' 1`] = `
+"from acme import Acme
+
+client = Acme(
+    token="<YOUR_API_KEY>"
+)
+
+client.service.get_metadata(
+    shallow=False,
+    tag=[
+        "development"
+    ],
+    x_api_version="0.0.1"
+)
+"
+`;
+
+exports[`snippets > examples > 'POST /big-entity (simple)' 1`] = `
+"from acme import Acme
+
+client = Acme(
+    token="<YOUR_API_KEY>"
+)
+
+client.service.create_big_entity(
+    cast_member={
+        "id": "john.doe",
+        "name": "John Doe"
+    },
+    extended_movie={
+        "cast": [
+            "John Travolta",
+            "Samuel L. Jackson",
+            "Uma Thurman",
+            "Bruce Willis"
+        ],
+        "id": "movie-sda231x",
+        "title": "Pulp Fiction",
+        "from": "Quentin Tarantino",
+        "rating": 8.5,
+        "type": "movie",
+        "tag": "tag-12efs9dv",
+        "metadata": {
+            "academyAward": True,
+            "releaseDate": "2023-12-08",
+            "ratings": {
+                "rottenTomatoes": 97,
+                "imdb": 7.6,
+            }
+        },
+        "revenue": 1000000
+    }
+)
+"
+`;
+
+exports[`snippets > examples > 'POST /movie (invalid request body)' 1`] = `
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody"
+    ],
+    "message": "Expected string, got number"
+  }
+]"
+`;
+
+exports[`snippets > examples > 'POST /movie (simple)' 1`] = `
+"from acme import Acme
+
+client = Acme(
+    token="<YOUR_API_KEY>"
+)
+
+client.service.create_movie(
+    id="movie-c06a4ad7",
+    prequel="movie-cv9b914f",
+    title="The Boy and the Heron",
+    from="Hayao Miyazaki",
+    rating=8,
+    type="movie",
+    tag="development",
+    metadata={
+        "actors": [
+            "Christian Bale",
+            "Florence Pugh",
+            "Willem Dafoe",
+        ],
+        "releaseDate": "2023-12-08",
+        "ratings": {
+            "rottenTomatoes": 97,
+            "imdb": 7.6,
+        }
+    },
+    revenue=1000000
+)
+"
+`;
+
+exports[`snippets > exhaustive > 'GET /object/get-and-return-with-optio…' 1`] = `
+"from acme import Acme
+from datetime import datetime, date
+from uuid import UUID
+
+client = Acme(
+    token="<YOUR_API_KEY>"
+)
+
+client.endpoints.object.get_and_return_with_optional_field(
+    string="string",
+    integer=1,
+    long=1000000,
+    double=1.1,
+    bool=True,
+    datetime=datetime.fromisoformat("2024-01-15T09:30:00Z"),
+    date=date.fromisoformat("2023-01-15"),
+    uuid=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+    base64="SGVsbG8gd29ybGQh",
+    list=[
+        "list",
+        "list"
+    ],
+    set={
+        "set"
+    },
+    map={
+        1: "map"
+    },
+    bigint="1000000"
+)
+"
+`;
+
+exports[`snippets > exhaustive > 'POST /container/list-of-objects (inva…' 1`] = `
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody[0]",
+      "string"
+    ],
+    "message": "Expected string, got boolean"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody[1]",
+      "invalid"
+    ],
+    "message": "\\"invalid\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody[2]",
+      "string"
+    ],
+    "message": "Expected string, got number"
+  }
+]"
+`;
+
+exports[`snippets > exhaustive > 'POST /container/list-of-objects (simp…' 1`] = `
+"from acme import Acme
+
+client = Acme(
+    token="<YOUR_API_KEY>"
+)
+
+client.endpoints.container.get_and_return_list_of_objects(
+    request=[
+        {
+            "string": "one"
+        },
+        {
+            "string": "two"
+        },
+        {
+            "string": "three"
+        }
+    ]
+)
+"
+`;
+
+exports[`snippets > exhaustive > 'POST /container/list-of-primitives (s…' 1`] = `
+"from acme import Acme
+
+client = Acme(
+    token="<YOUR_API_KEY>"
+)
+
+client.endpoints.container.get_and_return_list_of_primitives(
+    request=[
+        "one",
+        "two",
+        "three"
+    ]
+)
+"
+`;
+
+exports[`snippets > file-upload > 'POST /' 1`] = `
+"from acme import Acme
+
+client = Acme()
+
+client.service.post(
+    file="Hello, world!",
+    file_list=["First", "Second"]
+)
+"
+`;
+
+exports[`snippets > file-upload > 'POST /just-file' 1`] = `
+"from acme import Acme
+
+client = Acme()
+
+client.service.just_file(
+    file="Hello, world!"
+)
+"
+`;
+
+exports[`snippets > file-upload > 'POST /just-file-with-query-params' 1`] = `
+"from acme import Acme
+
+client = Acme()
+
+client.service.just_file_with_query_params(
+    integer=42,
+    maybe_string="exists",
+    file="Hello, world!"
+)
+"
+`;
+
+exports[`snippets > imdb > 'GET /movies/{movieId} (simple)' 1`] = `
+"from acme import Acme
+
+client = Acme(
+    token="<YOUR_API_KEY>"
+)
+
+client.imdb.get_movie(
+    movie_id="movie_xyz"
+)
+"
+`;
+
+exports[`snippets > imdb > 'POST /movies/create-movie (simple)' 1`] = `
+"from acme import Acme
+
+client = Acme(
+    token="<YOUR_API_KEY>"
+)
+
+client.imdb.create_movie(
+    title="The Matrix",
+    rating=8.2
+)
+"
+`;
+
+exports[`snippets > multi-url-environment > 'Custom environment' 1`] = `
+"from acme import Acme
+from acme.environment import AcmeEnvironment
+
+client = Acme(
+    environment=AcmeEnvironment(
+        ec2="https://custom.ec2.aws.com",
+        s3="https://custom.s3.aws.com"
+    ),
+    token="<YOUR_API_KEY>"
+)
+
+client.s3.get_presigned_url(
+    s3key="xyz"
+)
+"
+`;
+
+exports[`snippets > multi-url-environment > 'Invalid multi url environment' 1`] = `
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [],
+    "message": "The provided environments are invalid; got: [ec2], expected: [ec2, s3]"
+  }
+]"
+`;
+
+exports[`snippets > multi-url-environment > 'Production environment' 1`] = `
+"from acme import Acme
+from acme.environment import AcmeEnvironment
+
+client = Acme(
+    environment=AcmeEnvironment.PRODUCTION,
+    token="<YOUR_API_KEY>"
+)
+
+client.s3.get_presigned_url(
+    s3key="xyz"
+)
+"
+`;
+
+exports[`snippets > multi-url-environment > 'Staging environment' 1`] = `
+"from acme import Acme
+from acme.environment import AcmeEnvironment
+
+client = Acme(
+    environment=AcmeEnvironment.STAGING,
+    token="<YOUR_API_KEY>"
+)
+
+client.s3.get_presigned_url(
+    s3key="xyz"
+)
+"
+`;
+
+exports[`snippets > multi-url-environment > 'Unrecognized environment' 1`] = `
+"[
+  {
+    "severity": "WARNING",
+    "path": [],
+    "message": "Environment \\"Unrecognized\\" was not found"
+  }
+]"
+`;
+
+exports[`snippets > nullable > 'Body properties' 1`] = `
+"from acme import Acme
+from datetime import datetime
+
+client = Acme(
+    base_url="https://api.example.com"
+)
+
+client.nullable.create_user(
+    username="john.doe",
+    tags=[
+        "admin"
+    ],
+    metadata={
+        "created_at": datetime.fromisoformat("1980-01-01T00:00:00Z"),
+        "updated_at": datetime.fromisoformat("1980-01-01T00:00:00Z"),
+        "avatar": None,
+        "activated": None
+    },
+    avatar=None
+)
+"
+`;
+
+exports[`snippets > nullable > 'Invalid null value' 1`] = `
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody"
+    ],
+    "message": "Expected non-null value, but got null"
+  }
+]"
+`;
+
+exports[`snippets > nullable > 'Query parameters' 1`] = `
+"from acme import Acme
+
+client = Acme(
+    base_url="https://api.example.com"
+)
+
+client.nullable.get_users(
+    usernames=[
+        "john.doe",
+        "jane.doe"
+    ],
+    tags=[
+        None
+    ],
+    extra=None
+)
+"
+`;
+
+exports[`snippets > single-url-environment-default > 'Production environment' 1`] = `
+"from acme import Acme
+from acme.environment import AcmeEnvironment
+
+client = Acme(
+    environment=AcmeEnvironment.PRODUCTION,
+    token="<YOUR_API_KEY>"
+)
+
+client.dummy.get_dummy()
+"
+`;
+
+exports[`snippets > single-url-environment-default > 'Staging environment' 1`] = `
+"from acme import Acme
+from acme.environment import AcmeEnvironment
+
+client = Acme(
+    environment=AcmeEnvironment.STAGING,
+    token="<YOUR_API_KEY>"
+)
+
+client.dummy.get_dummy()
+"
+`;
+
+exports[`snippets > single-url-environment-default > 'custom baseURL' 1`] = `
+"from acme import Acme
+
+client = Acme(
+    base_url="http://localhost:8080",
+    token="<YOUR_API_KEY>"
+)
+
+client.dummy.get_dummy()
+"
+`;
+
+exports[`snippets > single-url-environment-default > 'invalid baseURL and environment' 1`] = `
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [],
+    "message": "Cannot specify both baseUrl and environment options"
+  }
+]"
+`;
+
+exports[`snippets > single-url-environment-default > 'invalid environment' 1`] = `
+"[
+  {
+    "severity": "WARNING",
+    "path": [],
+    "message": "Environment \\"Unrecognized\\" was not found"
+  }
+]"
+`;

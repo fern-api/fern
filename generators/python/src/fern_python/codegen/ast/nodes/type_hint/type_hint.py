@@ -2,12 +2,11 @@ from __future__ import annotations
 
 from typing import Optional, Sequence, Union
 
-from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriter
-
 from ...ast_node import AstNode, AstNodeMetadata, GenericTypeVar, NodeWriter
 from ...references import ClassReference, Module, Reference, ReferenceImport
 from ..expressions import Expression
 from .type_parameter import TypeParameter
+from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriter
 
 TYPING_REFERENCE_IMPORT = ReferenceImport(
     module=Module.built_in(("typing",)),

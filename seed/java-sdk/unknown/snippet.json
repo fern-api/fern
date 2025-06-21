@@ -1,0 +1,31 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "469a0f5a",
+            "id": {
+                "method": "POST",
+                "path": "/",
+                "identifier_override": "endpoint_unknown.post"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.unknownAsAny.SeedUnknownAsAnyClient;\nimport java.util.HashMap;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedUnknownAsAnyClient client = SeedUnknownAsAnyClient\n            .builder()\n            .build();\n\n        client.unknown().post(new \n        HashMap<String, Object>() {{put(\"key\", \"value\");\n        }});\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.unknownAsAny.SeedUnknownAsAnyClient;\nimport java.util.HashMap;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedUnknownAsAnyClient client = SeedUnknownAsAnyClient\n            .builder()\n            .build();\n\n        client.unknown().post(new \n        HashMap<String, Object>() {{put(\"key\", \"value\");\n        }});\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "78cac72c",
+            "id": {
+                "method": "POST",
+                "path": "/with-object",
+                "identifier_override": "endpoint_unknown.postObject"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.unknownAsAny.SeedUnknownAsAnyClient;\nimport com.seed.unknownAsAny.resources.unknown.types.MyObject;\nimport java.util.HashMap;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedUnknownAsAnyClient client = SeedUnknownAsAnyClient\n            .builder()\n            .build();\n\n        client.unknown().postObject(\n            MyObject\n                .builder()\n                .unknown(new \n                    HashMap<String, Object>() {{put(\"key\", \"value\");\n                    }})\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.unknownAsAny.SeedUnknownAsAnyClient;\nimport com.seed.unknownAsAny.resources.unknown.types.MyObject;\nimport java.util.HashMap;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedUnknownAsAnyClient client = SeedUnknownAsAnyClient\n            .builder()\n            .build();\n\n        client.unknown().postObject(\n            MyObject\n                .builder()\n                .unknown(new \n                    HashMap<String, Object>() {{put(\"key\", \"value\");\n                    }})\n                .build()\n        );\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

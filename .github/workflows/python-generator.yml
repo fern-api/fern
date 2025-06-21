@@ -26,7 +26,7 @@ jobs:
 
       - name: Type check
         working-directory: ./generators/python
-        run: poetry run mypy
+        run: poetry run mypy --show-traceback
 
       - name: pre-commit
         working-directory: ./generators/python

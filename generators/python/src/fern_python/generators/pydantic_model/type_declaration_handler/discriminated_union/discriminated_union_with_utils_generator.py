@@ -1,8 +1,10 @@
 from typing import Callable, List, Optional, Sequence, Set
 
-import fern.ir.resources as ir_types
-from typing_extensions import Never
-
+from ....context.pydantic_generator_context import PydanticGeneratorContext
+from ...custom_config import PydanticModelCustomConfig
+from ...fern_aware_pydantic_model import FernAwarePydanticModel
+from ..abc.abstract_type_generator import AbstractTypeGenerator
+from ..get_visit_method import VisitableItem, VisitorArgument, get_visit_method
 from fern_python.codegen import AST, LocalClassReference, SourceFile
 from fern_python.codegen.ast.nodes.declarations.class_.class_declaration import (
     ClassDeclaration,
@@ -13,12 +15,9 @@ from fern_python.generators.pydantic_model.type_declaration_handler.type_utiliti
     declared_type_name_to_named_type,
 )
 from fern_python.pydantic_codegen import PydanticField, PydanticModel
+from typing_extensions import Never
 
-from ....context import PydanticGeneratorContext
-from ...custom_config import PydanticModelCustomConfig
-from ...fern_aware_pydantic_model import FernAwarePydanticModel
-from ..abc.abstract_type_generator import AbstractTypeGenerator
-from ..get_visit_method import VisitableItem, VisitorArgument, get_visit_method
+import fern.ir.resources as ir_types
 
 VISITOR_RETURN_TYPE = AST.GenericTypeVar(name="T_Result")
 BUILDER_ARGUMENT_NAME = "value"
@@ -363,7 +362,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
             )
 
             if self._custom_config.version in (PydanticVersionCompatibility.V1, PydanticVersionCompatibility.V1_ON_V2):
-                external_pydantic_model.set_root_type_unsafe_v1_only(
+                external_pydantic_model.set_root_type_unsafe_v1_or_v2_only(
                     is_forward_ref=True,
                     root_type=root_type,
                     annotation=AST.Expression(
@@ -381,7 +380,8 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                     )
                     # can't use discriminator without single variant pydantic models
                     # https://github.com/pydantic/pydantic/pull/3639
-                    if len(internal_single_union_types) != 1 else None,
+                    if len(internal_single_union_types) != 1
+                    else None,
                 )
 
     def _create_body_writer(

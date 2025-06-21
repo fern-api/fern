@@ -1,4 +1,3 @@
-export * as SeedValidation from "./api";
-export { SeedValidationClient } from "./Client";
-export { SeedValidationError, SeedValidationTimeoutError } from "./errors";
-export * as serialization from "./serialization";
+export * as SeedValidation from "./api/index.js";
+export { SeedValidationError, SeedValidationTimeoutError } from "./errors/index.js";
+export { SeedValidationClient } from "./Client.js";

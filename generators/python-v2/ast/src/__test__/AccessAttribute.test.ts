@@ -17,7 +17,7 @@ describe("AccessAttribute", () => {
         const writer = new Writer();
         attribute.write(writer);
 
-        expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(writer.toString()).toMatchSnapshot();
         expect(attribute.getReferences().length).toBe(2);
     });
 });

@@ -1,6 +1,4 @@
-using FluentAssertions.Json;
 using global::System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedValidation;
 using SeedValidation.Core;
@@ -17,7 +15,7 @@ public class GetTest : BaseMockServerTest
             {
               "decimal": 2.2,
               "even": 100,
-              "name": "foo",
+              "name": "fern",
               "shape": "SQUARE"
             }
             """;
@@ -29,7 +27,7 @@ public class GetTest : BaseMockServerTest
                     .WithPath("/")
                     .WithParam("decimal", "2.2")
                     .WithParam("even", "100")
-                    .WithParam("name", "foo")
+                    .WithParam("name", "fern")
                     .UsingGet()
             )
             .RespondWith(
@@ -44,13 +42,12 @@ public class GetTest : BaseMockServerTest
             {
                 Decimal = 2.2,
                 Even = 100,
-                Name = "foo",
-            },
-            RequestOptions
+                Name = "fern",
+            }
         );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        Assert.That(
+            response,
+            Is.EqualTo(JsonUtils.Deserialize<Type>(mockResponse)).UsingDefaults()
+        );
     }
 }

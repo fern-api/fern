@@ -1,0 +1,97 @@
+{
+  "types": {},
+  "subpackages": {},
+  "rootPackage": {
+    "endpoints": [
+      {
+        "auth": false,
+        "method": "POST",
+        "id": "send",
+        "originalEndpointId": "endpoint_.send",
+        "name": "Send",
+        "path": {
+          "pathParameters": [],
+          "parts": [
+            {
+              "type": "literal",
+              "value": ""
+            },
+            {
+              "type": "literal",
+              "value": "/send"
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "request": {
+          "type": {
+            "type": "json",
+            "contentType": "application/json",
+            "shape": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "send",
+                  "valueType": {
+                    "type": "optional",
+                    "itemType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "boolean"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "response": {
+          "type": {
+            "type": "reference",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          "statusCode": 200,
+          "description": "Success!"
+        },
+        "errorsV2": [],
+        "examples": [
+          {
+            "description": "",
+            "path": "/send",
+            "pathParameters": {},
+            "queryParameters": {},
+            "headers": {},
+            "requestBody": {},
+            "requestBodyV3": {
+              "type": "json",
+              "value": {}
+            },
+            "responseStatusCode": 200,
+            "responseBody": "foo",
+            "responseBodyV3": {
+              "type": "json",
+              "value": "foo"
+            }
+          }
+        ],
+        "protocol": {
+          "type": "rest"
+        }
+      }
+    ],
+    "webhooks": [],
+    "websockets": [],
+    "types": [],
+    "subpackages": []
+  },
+  "snippetsConfiguration": {},
+  "globalHeaders": []
+}

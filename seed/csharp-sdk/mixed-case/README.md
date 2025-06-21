@@ -5,10 +5,14 @@
 
 The Seed C# library provides convenient access to the Seed API from C#.
 
+## Requirements
+
+This SDK requires:
+
 ## Installation
 
 ```sh
-nuget install SeedMixedCase
+dotnet add package SeedMixedCase
 ```
 
 ## Usage

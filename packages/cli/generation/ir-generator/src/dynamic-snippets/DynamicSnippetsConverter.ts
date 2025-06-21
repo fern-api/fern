@@ -1,6 +1,8 @@
 import urlJoin from "url-join";
 import { v4 as uuidv4 } from "uuid";
 
+import { CasingsGenerator, constructCasingsGenerator } from "@fern-api/casings-generator";
+import { generatorsYml } from "@fern-api/configuration";
 import { assertNever } from "@fern-api/core-utils";
 import {
     AliasTypeDeclaration,
@@ -34,12 +36,14 @@ import {
     TypeId,
     TypeReference,
     UndiscriminatedUnionTypeDeclaration,
-    UnionTypeDeclaration
+    UnionTypeDeclaration,
+    dynamic
 } from "@fern-api/ir-sdk";
 
 import { Version } from "./version";
 
 interface EndpointWithFilepath extends HttpEndpoint {
+    servicePathParameters: PathParameter[];
     serviceHeaders: HttpHeader[];
     fernFilepath: FernFilepath;
 }
@@ -47,30 +51,44 @@ interface EndpointWithFilepath extends HttpEndpoint {
 export declare namespace DynamicSnippetsConverter {
     interface Args {
         ir: IntermediateRepresentation;
-        includeExamples?: boolean;
+        generationLanguage?: generatorsYml.GenerationLanguage;
+        smartCasing?: boolean;
+        generatorConfig?: dynamic.GeneratorConfig;
     }
 }
 
 export class DynamicSnippetsConverter {
+    private readonly ir: IntermediateRepresentation;
+    private readonly casingsGenerator: CasingsGenerator;
     private readonly auth: DynamicSnippets.Auth | undefined;
     private readonly authValues: DynamicSnippets.AuthValues | undefined;
+    private readonly generatorConfig: dynamic.GeneratorConfig | undefined;
 
-    constructor(private readonly ir: IntermediateRepresentation) {
-        this.auth = this.convertAuth(ir.auth);
-        this.authValues = this.getAuthValues(ir.auth);
+    constructor(args: DynamicSnippetsConverter.Args) {
+        this.ir = args.ir;
+        this.generatorConfig = args.generatorConfig;
+        this.casingsGenerator = constructCasingsGenerator({
+            generationLanguage: args.generationLanguage,
+            smartCasing: args.smartCasing ?? false,
+            keywords: undefined
+        });
+        this.auth = this.convertAuth(this.ir.auth);
+        this.authValues = this.getAuthValues(this.ir.auth);
     }
 
     public convert({
-        includeExamples
+        disableExamples
     }: {
-        includeExamples?: boolean;
+        disableExamples?: boolean;
     }): DynamicSnippets.DynamicIntermediateRepresentation {
         return {
             version: Version,
             types: this.convertNamedTypes(),
             headers: this.convertHeaders(),
-            endpoints: this.convertEndpoints({ includeExamples }),
-            environments: this.ir.environments
+            endpoints: this.convertEndpoints({ disableExamples }),
+            pathParameters: this.convertPathParameters({ pathParameters: this.ir.pathParameters }),
+            environments: this.ir.environments,
+            generatorConfig: this.generatorConfig
         };
     }
 
@@ -88,22 +106,22 @@ export class DynamicSnippetsConverter {
     }
 
     private convertEndpoints({
-        includeExamples
+        disableExamples
     }: {
-        includeExamples?: boolean;
+        disableExamples?: boolean;
     }): Record<EndpointId, DynamicSnippets.Endpoint> {
         const endpoints = this.getAllHttpEndpoints();
         return Object.fromEntries(
-            endpoints.map((endpoint) => [endpoint.id, this.convertEndpoint({ endpoint, includeExamples })])
+            endpoints.map((endpoint) => [endpoint.id, this.convertEndpoint({ endpoint, disableExamples })])
         );
     }
 
     private convertEndpoint({
         endpoint,
-        includeExamples
+        disableExamples
     }: {
         endpoint: EndpointWithFilepath;
-        includeExamples?: boolean;
+        disableExamples?: boolean;
     }): DynamicSnippets.Endpoint {
         const location = this.convertEndpointLocation({ endpoint });
         return {
@@ -112,12 +130,14 @@ export class DynamicSnippetsConverter {
             location,
             request: this.convertRequest({ endpoint }),
             response: DynamicSnippets.Response.json(),
-            examples: includeExamples ? this.getEndpointSnippetRequests({ endpoint, location }) : undefined
+            examples: !disableExamples ? this.getEndpointSnippetRequests({ endpoint, location }) : undefined
         };
     }
 
     private convertRequest({ endpoint }: { endpoint: EndpointWithFilepath }): DynamicSnippets.Request {
-        const pathParameters = this.convertPathParameters({ pathParameters: endpoint.allPathParameters });
+        const pathParameters = this.convertPathParameters({
+            pathParameters: [...endpoint.servicePathParameters, ...endpoint.pathParameters]
+        });
         if (endpoint.sdkRequest == null && endpoint.requestBody == null) {
             return DynamicSnippets.Request.body({ pathParameters, body: undefined });
         }
@@ -422,20 +442,24 @@ export class DynamicSnippetsConverter {
         const properties = [...(object.extendedProperties ?? []), ...object.properties];
         return this.convertObjectProperties({
             declaration,
-            properties
+            properties,
+            additionalProperties: object.extraProperties
         });
     }
 
     private convertObjectProperties({
         declaration,
-        properties
+        properties,
+        additionalProperties
     }: {
         declaration: DynamicSnippets.Declaration;
         properties: ObjectProperty[];
+        additionalProperties: boolean;
     }): DynamicSnippets.NamedType {
         return DynamicSnippets.NamedType.object({
             declaration,
-            properties: this.convertWireValueParameters({ wireValueParameters: properties })
+            properties: this.convertWireValueParameters({ wireValueParameters: properties }),
+            additionalProperties
         });
     }
 
@@ -596,8 +620,10 @@ export class DynamicSnippetsConverter {
                     }
                 });
             case "oauth":
-                // TODO: Support OAuth.
-                return undefined;
+                return DynamicSnippets.Auth.oauth({
+                    clientId: this.casingsGenerator.generateName("clientId"),
+                    clientSecret: this.casingsGenerator.generateName("clientSecret")
+                });
             default:
                 assertNever(scheme);
         }
@@ -623,8 +649,10 @@ export class DynamicSnippetsConverter {
                     value: "<value>"
                 });
             case "oauth":
-                // TODO: Implement OAuth.
-                return undefined;
+                return DynamicSnippets.AuthValues.oauth({
+                    clientId: "<clientId>",
+                    clientSecret: "<clientSecret>"
+                });
             default:
                 assertNever(scheme);
         }
@@ -654,6 +682,7 @@ export class DynamicSnippetsConverter {
         return Object.values(this.ir.services).flatMap((service) =>
             service.endpoints.map((endpoint) => ({
                 ...endpoint,
+                servicePathParameters: service.pathParameters,
                 serviceHeaders: service.headers,
                 fernFilepath: service.name.fernFilepath
             }))

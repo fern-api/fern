@@ -1,7 +1,9 @@
 ```python
 
 
-client = SeedResponseProperty(base_url="https://yourhost.com/path/to/api", )        
+client = SeedResponseProperty(
+    base_url="https://yourhost.com/path/to/api",
+)        
 client.service.get_movie(
 	request="string"
 )
@@ -12,7 +14,9 @@ client.service.get_movie(
 ```python
 
 
-client = SeedResponseProperty(base_url="https://yourhost.com/path/to/api", )        
+client = SeedResponseProperty(
+    base_url="https://yourhost.com/path/to/api",
+)        
 client.service.get_movie_docs(
 	request="string"
 )
@@ -23,7 +27,9 @@ client.service.get_movie_docs(
 ```python
 
 
-client = SeedResponseProperty(base_url="https://yourhost.com/path/to/api", )        
+client = SeedResponseProperty(
+    base_url="https://yourhost.com/path/to/api",
+)        
 client.service.get_movie_name(
 	request="string"
 )
@@ -34,7 +40,9 @@ client.service.get_movie_name(
 ```python
 
 
-client = SeedResponseProperty(base_url="https://yourhost.com/path/to/api", )        
+client = SeedResponseProperty(
+    base_url="https://yourhost.com/path/to/api",
+)        
 client.service.get_movie_metadata(
 	request="string"
 )
@@ -45,7 +53,9 @@ client.service.get_movie_metadata(
 ```python
 
 
-client = SeedResponseProperty(base_url="https://yourhost.com/path/to/api", )        
+client = SeedResponseProperty(
+    base_url="https://yourhost.com/path/to/api",
+)        
 client.service.get_optional_movie(
 	request="string"
 )
@@ -56,7 +66,9 @@ client.service.get_optional_movie(
 ```python
 
 
-client = SeedResponseProperty(base_url="https://yourhost.com/path/to/api", )        
+client = SeedResponseProperty(
+    base_url="https://yourhost.com/path/to/api",
+)        
 client.service.get_optional_movie_docs(
 	request="string"
 )
@@ -67,7 +79,9 @@ client.service.get_optional_movie_docs(
 ```python
 
 
-client = SeedResponseProperty(base_url="https://yourhost.com/path/to/api", )        
+client = SeedResponseProperty(
+    base_url="https://yourhost.com/path/to/api",
+)        
 client.service.get_optional_movie_name(
 	request="string"
 )

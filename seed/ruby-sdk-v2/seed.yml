@@ -1,0 +1,37 @@
+irVersion: v58
+displayName: Ruby SDK
+language: ruby
+generatorType: SDK
+defaultOutputMode: github
+image: fernapi/fern-ruby-sdk-v2
+changelogLocation: ../../generators/ruby-v2/sdk/versions.yml
+
+buildScripts:
+  installScript:
+    commands:
+      - bundle install
+  testScript:
+    commands:
+      - bundle exec rake test
+
+test:
+  docker:
+    image: fernapi/fern-ruby-sdk-v2:latest
+    command: pnpm --filter @fern-api/ruby-sdk dockerTagLatest
+
+publish:
+  preBuildCommands:
+    - pnpm --filter @fern-api/ruby-sdk dist:cli
+  docker:
+    file: ./generators/ruby-v2/sdk/Dockerfile
+    image: fernapi/fern-ruby-sdk-v2
+    context: .
+
+scripts:
+  - docker: ruby:2.7
+    commands:
+      - bundle install
+      - bundle exec rake test
+
+fixtures: {}
+allowedFailures: []

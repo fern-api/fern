@@ -4,13 +4,24 @@ using WellKnownProto = Google.Protobuf.WellKnownTypes;
 
 namespace SeedApi;
 
+[Serializable]
 public sealed class MetadataValue(
     OneOf<string, double, bool, IEnumerable<MetadataValue?>, Metadata> value
 ) : OneOfBase<string, double, bool, IEnumerable<MetadataValue?>, Metadata>(value)
 {
-    public override string ToString()
+    internal static MetadataValue? FromProto(WellKnownProto.Value value)
     {
-        return JsonUtils.Serialize(this);
+        return value.KindCase switch
+        {
+            WellKnownProto.Value.KindOneofCase.StringValue => value.StringValue,
+            WellKnownProto.Value.KindOneofCase.NumberValue => value.NumberValue,
+            WellKnownProto.Value.KindOneofCase.BoolValue => value.BoolValue,
+            WellKnownProto.Value.KindOneofCase.ListValue => value
+                .ListValue.Values.Select(FromProto)
+                .ToList(),
+            WellKnownProto.Value.KindOneofCase.StructValue => Metadata.FromProto(value.StructValue),
+            _ => null,
+        };
     }
 
     internal WellKnownProto.Value ToProto()
@@ -30,19 +41,10 @@ public sealed class MetadataValue(
         );
     }
 
-    internal static MetadataValue? FromProto(WellKnownProto.Value value)
+    /// <inheritdoc />
+    public override string ToString()
     {
-        return value.KindCase switch
-        {
-            WellKnownProto.Value.KindOneofCase.StringValue => value.StringValue,
-            WellKnownProto.Value.KindOneofCase.NumberValue => value.NumberValue,
-            WellKnownProto.Value.KindOneofCase.BoolValue => value.BoolValue,
-            WellKnownProto.Value.KindOneofCase.ListValue => value
-                .ListValue.Values.Select(FromProto)
-                .ToList(),
-            WellKnownProto.Value.KindOneofCase.StructValue => Metadata.FromProto(value.StructValue),
-            _ => null,
-        };
+        return JsonUtils.Serialize(this);
     }
 
     public static implicit operator MetadataValue(string value) => new(value);

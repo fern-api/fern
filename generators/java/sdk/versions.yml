@@ -1,3 +1,344 @@
+# yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.37.1-rc1
+  changelogEntry:
+    - summary: |
+        Remove Content-Type from headers when request has no body
+      type: fix
+  createdAt: '2025-06-16'
+  irVersion: 58
+- version: 2.37.1-rc0
+  changelogEntry:
+    - summary: |
+        Fix array query params are treated as exploded: true
+      type: fix
+  createdAt: '2025-06-13'
+  irVersion: 58
+- version: 2.37.0
+  changelogEntry:
+    - summary: |
+        Add support for generating a full project in filesystem mode.
+      type: feat
+  createdAt: '2025-06-04'
+  irVersion: 58
+- version: 2.36.5
+  changelogEntry:
+    - summary: Update the IR to v58.
+      type: internal
+  createdAt: '2025-06-03'
+  irVersion: 58
+- changelogEntry:
+    - summary: |
+        Generates docs for method types.
+      type: fix
+  createdAt: '2025-05-21'
+  irVersion: 57
+  version: 2.36.4
+- changelogEntry:
+    - summary: |
+        Updates the generator to always commit changes, even if there are none, in self-hosted mode. This 
+        allows users to make sure that the generator actually ran and attempted to make a commit.
+      type: fix
+  createdAt: '2025-05-20'
+  irVersion: 57
+  version: 2.36.3
+- changelogEntry:
+    - summary: |
+        Fix the generated README.md for the `maxRetries` configuration option, which is now
+        shown on the client constructor.
+      type: fix
+  createdAt: '2025-05-15'
+  irVersion: 57
+  version: 2.36.2
+- changelogEntry:
+    - summary: |
+        Add support for the custom introduction setting in the generated README.md.
+      type: fix
+  createdAt: '2025-05-13'
+  irVersion: 57
+  version: 2.36.1
+- changelogEntry:
+    - summary: |
+        Support sending requests with content type application/x-www-form-urlencoded.
+      type: feat
+  createdAt: '2025-05-11'
+  irVersion: 57
+  version: 2.36.0
+- changelogEntry:
+    - summary: |
+        Rerelease with the latest generator-cli. 
+      type: fix
+  createdAt: '2025-05-01'
+  irVersion: 57
+  version: 2.35.3
+- changelogEntry:
+    - summary: |
+        Install the generator-cli at build time as a fallback if runtime installation fails. 
+      type: fix
+  createdAt: '2025-05-01'
+  irVersion: 57
+  version: 2.35.2
+- changelogEntry:
+    - summary: |
+        Self hosted github user defaults to `fern-api[bot]`.
+      type: fix
+  createdAt: '2025-05-01'
+  irVersion: 57
+  version: 2.35.1
+- changelogEntry:
+    - summary: |
+        Support pushing to GitHub enterprise.
+      type: fix
+  createdAt: '2025-05-01'
+  irVersion: 57
+  version: 2.35.0
+- changelogEntry:
+    - summary: |
+        Upgrade to irV57
+      type: fix
+  createdAt: '2025-05-01'
+  irVersion: 57
+  version: 2.34.0
+- changelogEntry:
+    - summary: |
+        (Corrected from 2.33.2) Use non-deprecated method to create request body
+      type: fix
+  createdAt: '2025-04-28'
+  irVersion: 55
+  version: 2.33.4
+- changelogEntry:
+    - summary: |
+        Suppress unchecked cast warning for undiscriminated union visitor
+      type: fix
+  createdAt: '2025-04-28'
+  irVersion: 55
+  version: 2.33.3
+- changelogEntry:
+    - summary: |
+        Use non-deprecated method to create request body
+      type: fix
+  createdAt: '2025-04-25'
+  irVersion: 55
+  version: 2.33.2
+- changelogEntry:
+    - summary: |
+        Fix inline overrides undoing allow-multiple parameterization
+      type: fix
+  createdAt: '2025-04-24'
+  irVersion: 55
+  version: 2.33.1
+- changelogEntry:
+    - summary: |
+        Support for literals in union types
+      type: fix
+  createdAt: '2025-04-23'
+  irVersion: 55
+  version: 2.33.0
+- changelogEntry:
+    - summary: |
+        Auth header prefix should prepend with a concatenation operator
+      type: fix
+  createdAt: '2025-04-21'
+  irVersion: 55
+  version: 2.32.9
+- changelogEntry:
+    - summary: |
+        Use safe name for version enum
+      type: fix
+  createdAt: '2025-04-09'
+  irVersion: 55
+  version: 2.32.8
+- changelogEntry:
+    - summary: |
+        Run v2 generation for SDK generator only
+      type: fix
+  createdAt: '2025-04-09'
+  irVersion: 55
+  version: 2.32.7
+- changelogEntry:
+    - summary: |
+        Fix getting the default version of an api versions enum to not require the `CURRENT` entry
+      type: fix
+  createdAt: '2025-04-09'
+  irVersion: 55
+  version: 2.32.6
+- changelogEntry:
+    - summary: |
+        Fix inlining forward-compatible enums
+      type: fix
+  createdAt: '2025-04-08'
+  irVersion: 55
+  version: 2.32.5
+- changelogEntry:
+    - summary: |
+        Fix typos in README generator
+      type: fix
+  createdAt: '2025-04-01'
+  irVersion: 55
+  version: 2.32.4
+- changelogEntry:
+    - summary: |
+        Add logging for Java v2 generator call
+      type: fix
+  createdAt: '2025-04-01'
+  irVersion: 55
+  version: 2.32.3
+- changelogEntry:
+    - summary: |
+        Add fallback snippet renderer for readme generation
+      type: fix
+  createdAt: '2025-04-01'
+  irVersion: 55
+  version: 2.32.2
+- changelogEntry:
+    - summary: |
+        Fix pagination in raw clients
+      type: fix
+  createdAt: '2025-03-31'
+  irVersion: 55
+  version: 2.32.1
+- changelogEntry:
+    - summary: |
+        Generate snippet.json
+      type: feat
+  createdAt: '2025-03-29'
+  irVersion: 55
+  version: 2.32.0
+- changelogEntry:
+    - summary: |
+        Apply content type to request body creation
+      type: fix
+  createdAt: '2025-03-27'
+  irVersion: 55
+  version: 2.31.0
+- changelogEntry:
+    - summary: |
+        Include response headers in API exceptions
+      type: feat
+  createdAt: '2025-03-27'
+  irVersion: 55
+  version: 2.30.0
+- changelogEntry:
+    - summary: |
+        Query params respect allow-multiple
+      type: fix
+  createdAt: '2025-03-27'
+  irVersion: 55
+  version: 2.29.0
+- changelogEntry:
+    - summary: |
+        Expose response headers
+      type: feat
+  createdAt: '2025-03-26'
+  irVersion: 55
+  version: 2.28.0
+- changelogEntry:
+    - summary: |
+        Change method to `public static void main(String[] args)` in snippet generation
+      type: fix
+  createdAt: '2025-03-24'
+  irVersion: 55
+  version: 2.27.1
+- changelogEntry:
+    - summary: |
+        Support automatic README.md generation
+      type: feat
+  createdAt: '2025-03-21'
+  irVersion: 55
+  version: 2.27.0
+- changelogEntry:
+    - summary: |
+        Expose max retries for clients
+      type: feat
+  createdAt: '2025-03-13'
+  irVersion: 55
+  version: 2.26.0
+- changelogEntry:
+    - summary: |
+        Add config to inline file properties
+      type: feat
+  createdAt: '2025-03-13'
+  irVersion: 55
+  version: 2.25.0
+- changelogEntry:
+    - summary: |
+        Prevent put requests from generating without a request body
+      type: fix
+  createdAt: '2025-03-12'
+  irVersion: 55
+  version: 2.24.4
+- changelogEntry:
+    - summary: |
+        Fix double unknown in forward-compatible enums
+      type: fix
+    - summary: |
+        Prevent enum keyword use in package paths
+      type: fix
+  createdAt: '2025-03-12'
+  irVersion: 55
+  version: 2.24.3
+- changelogEntry:
+    - summary: |
+        Remove 'object' from Java reserved strings list
+      type: fix
+  createdAt: '2025-03-12'
+  irVersion: 55
+  version: 2.24.2
+- changelogEntry:
+    - summary: |
+        Add @JsonIgnore to non-serialization getters for nullables
+      type: fix
+  createdAt: '2025-03-11'
+  irVersion: 55
+  version: 2.24.1
+- changelogEntry:
+    - summary: |
+        Fix wrapped request paths in flat mode
+      type: fix
+  createdAt: '2025-03-11'
+  irVersion: 55
+  version: 2.24.0
+- changelogEntry:
+    - summary: |
+        Fix async client builder generation
+      type: fix
+  createdAt: '2025-03-07'
+  irVersion: 55
+  version: 2.23.1
+- changelogEntry:
+    - summary: |
+        Represent protobuf uint as int rather than long
+      type: fix
+  createdAt: '2025-03-06'
+  irVersion: 55
+  version: 2.23.0
+- changelogEntry:
+    - summary: |
+        Add support for explicit nulls in serialization
+      type: feat
+  createdAt: '2025-03-05'
+  irVersion: 55
+  version: 2.22.0
+- changelogEntry:
+    - summary: |
+        Add async clients
+      type: feat
+  createdAt: '2025-03-04'
+  irVersion: 55
+  version: 2.21.0
+- changelogEntry:
+    - summary: |
+        Fix type reference syntax in readValue calls
+      type: fix
+  createdAt: '2025-03-02'
+  irVersion: 55
+  version: 2.20.1
+- changelogEntry:
+    - summary: |
+        Fix collection serialization in multipart form body without form encoding
+      type: fix
+  createdAt: '2025-02-27'
+  irVersion: 55
+  version: 2.20.0
 - changelogEntry:
     - summary: |
         Enable overriding literal headers
@@ -75,21 +416,21 @@
     - summary: |
         Don't add a semicolon twice when rendering accept header
       type: fix
-  createdAt: '2025-2-4'
+  createdAt: '2025-02-04'
   irVersion: 53
   version: 2.11.3
 - changelogEntry:
     - summary: |
         Add accept header if endpoint has errors
       type: fix
-  createdAt: '2025-2-3'
+  createdAt: '2025-02-03'
   irVersion: 53
   version: 2.11.2
 - changelogEntry:
     - summary: |
         Send only request body reference for body-only wrapped request
       type: fix
-  createdAt: '2025-2-3'
+  createdAt: '2025-02-03'
   irVersion: 53
   version: 2.11.1
 - changelogEntry:

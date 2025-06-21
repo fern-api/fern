@@ -4,4 +4,4 @@
 
 import * as FernIr from "../../../index";
 
-export interface BytesResponse extends FernIr.WithDocs {}
+export interface BytesResponse extends FernIr.WithDocs, FernIr.WithV2Examples {}

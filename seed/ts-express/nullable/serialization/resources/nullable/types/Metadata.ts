@@ -10,15 +10,21 @@ export const Metadata: core.serialization.ObjectSchema<serializers.Metadata.Raw,
     core.serialization.object({
         createdAt: core.serialization.date(),
         updatedAt: core.serialization.date(),
-        avatar: core.serialization.string().optional(),
-        activated: core.serialization.boolean().optional(),
+        avatar: core.serialization.string().nullable(),
+        activated: core.serialization.boolean().optionalNullable(),
+        status: core.serialization.lazy(() => serializers.Status),
+        values: core.serialization
+            .record(core.serialization.string(), core.serialization.string().optionalNullable())
+            .optional(),
     });
 
 export declare namespace Metadata {
     export interface Raw {
         createdAt: string;
         updatedAt: string;
-        avatar?: string | null;
-        activated?: boolean | null;
+        avatar: string | null;
+        activated?: (boolean | null) | null;
+        status: serializers.Status.Raw;
+        values?: Record<string, (string | null) | null | undefined> | null;
     }
 }

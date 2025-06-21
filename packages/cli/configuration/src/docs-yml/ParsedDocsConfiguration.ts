@@ -3,7 +3,7 @@ import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/path-utils";
 import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
 
 import { Audiences } from "../commons";
-import { DocsInstance, ExperimentalConfig, PlaygroundSettings, VersionAvailability } from "./schemas";
+import { AiChatConfig, DocsInstance, ExperimentalConfig, PlaygroundSettings, VersionAvailability } from "./schemas";
 // TODO: Update this import
 import { AnnouncementConfig } from "./schemas/sdk/api/resources/docs/types/AnnouncementConfig";
 
@@ -44,6 +44,8 @@ export interface ParsedDocsConfiguration {
     /* scripts */
     css: CjsFdrSdk.docs.v1.commons.CssConfig | undefined;
     js: JavascriptConfig | undefined;
+
+    aiChatConfig: AiChatConfig | undefined;
 
     experimental: ExperimentalConfig | undefined;
 }
@@ -141,6 +143,11 @@ export interface VersionedDocsNavigation {
     versions: VersionInfo[];
 }
 
+export interface ProductGroupDocsNavigation {
+    type: "productgroup";
+    products: ProductInfo[];
+}
+
 export interface VersionInfo
     extends CjsFdrSdk.navigation.v1.WithPermissions,
         CjsFdrSdk.navigation.latest.WithFeatureFlags {
@@ -151,7 +158,21 @@ export interface VersionInfo
     slug: string | undefined;
 }
 
-export type DocsNavigationConfiguration = UntabbedDocsNavigation | TabbedDocsNavigation | VersionedDocsNavigation;
+export interface ProductInfo {
+    landingPage: DocsNavigationItem.Page | undefined;
+    subtitle: string | undefined;
+    product: string;
+    navigation: UnversionedNavigationConfiguration | VersionedDocsNavigation;
+    slug: string | undefined;
+    icon: string;
+    image: AbsoluteFilePath | undefined;
+}
+
+export type DocsNavigationConfiguration =
+    | UntabbedDocsNavigation
+    | TabbedDocsNavigation
+    | VersionedDocsNavigation
+    | ProductGroupDocsNavigation;
 
 export type UnversionedNavigationConfiguration = UntabbedDocsNavigation | TabbedDocsNavigation;
 

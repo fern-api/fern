@@ -1,13 +1,16 @@
-import { AbstractWriter } from "@fern-api/base-generator";
+import { AbstractWriter } from "@fern-api/browser-compatible-base-generator";
 
 import { ClassReference } from "..";
-import { csharp } from "../..";
 import { BaseCsharpCustomConfigSchema } from "../../custom-config";
-import { AstNode } from "./AstNode";
-import { DocXmlWriter } from "./DocXmlWriter";
 
 type Alias = string;
 type Namespace = string;
+
+const IMPLICIT_NAMESPACES = new Set(["System"]);
+
+function isNamespaceImplicit(namespace: string): boolean {
+    return IMPLICIT_NAMESPACES.has(namespace);
+}
 
 export declare namespace Writer {
     interface Args {
@@ -106,7 +109,7 @@ export class Writer extends AbstractWriter {
             const imports = this.stringifyImports();
             if (imports.length > 0) {
                 return `${imports}
-    ${this.buffer}`;
+${this.buffer}`;
             }
         }
         return this.buffer;
@@ -134,7 +137,8 @@ export class Writer extends AbstractWriter {
 
         let result = referenceKeys
             // Filter out the current namespace.
-            .filter((referenceNamespace) => referenceNamespace !== this.namespace)
+            .filter((ns) => !this.isCurrentNamespace(ns))
+            .filter((ns) => !isNamespaceImplicit(ns)) // System is implicitly imported
             .map((ref) => `using ${ref};`)
             .join("\n");
 
@@ -147,5 +151,9 @@ export class Writer extends AbstractWriter {
         }
 
         return result;
+    }
+
+    private isCurrentNamespace(namespace: string): boolean {
+        return namespace === this.namespace;
     }
 }

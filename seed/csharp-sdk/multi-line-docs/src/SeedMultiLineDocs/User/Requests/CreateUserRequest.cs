@@ -3,6 +3,7 @@ using SeedMultiLineDocs.Core;
 
 namespace SeedMultiLineDocs;
 
+[Serializable]
 public record CreateUserRequest
 {
     /// <summary>
@@ -19,6 +20,7 @@ public record CreateUserRequest
     [JsonPropertyName("age")]
     public int? Age { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

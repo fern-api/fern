@@ -64,7 +64,7 @@ await client.service.getResource("rsc-xyz");
 
 ```typescript
 await client.service.listResources({
-    pageLimit: 10,
+    page_limit: 10,
     beforeDate: "2023-01-01",
 });
 ```

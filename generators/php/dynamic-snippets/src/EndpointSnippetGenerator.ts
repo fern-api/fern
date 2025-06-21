@@ -180,6 +180,19 @@ export class EndpointSnippetGenerator {
                     return [];
                 }
                 return this.getConstructorHeaderAuthArgs({ auth, values });
+            case "oauth":
+                if (values.type !== "oauth") {
+                    this.context.errors.add({
+                        severity: Severity.Critical,
+                        message: this.context.newAuthMismatchError({ auth, values }).message
+                    });
+                    return [];
+                }
+                this.context.errors.add({
+                    severity: Severity.Warning,
+                    message: "The PHP SDK doesn't support OAuth client credentials yet"
+                });
+                return [];
             default:
                 assertNever(auth);
         }
@@ -367,9 +380,11 @@ export class EndpointSnippetGenerator {
         const args: php.TypeLiteral[] = [];
 
         this.context.errors.scope(Scope.PathParameters);
-        if (request.pathParameters != null) {
-            const pathParameterFields = this.getPathParameters({ namedParameters: request.pathParameters, snippet });
-            args.push(...pathParameterFields.map((field) => field.value));
+        const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])];
+        if (pathParameters.length > 0) {
+            args.push(
+                ...this.getPathParameters({ namedParameters: pathParameters, snippet }).map((field) => field.value)
+            );
         }
         this.context.errors.unscope();
 
@@ -421,8 +436,9 @@ export class EndpointSnippetGenerator {
 
         this.context.errors.scope(Scope.PathParameters);
         const pathParameterFields: php.ConstructorField[] = [];
-        if (request.pathParameters != null) {
-            pathParameterFields.push(...this.getPathParameters({ namedParameters: request.pathParameters, snippet }));
+        const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])];
+        if (pathParameters.length > 0) {
+            pathParameterFields.push(...this.getPathParameters({ namedParameters: pathParameters, snippet }));
         }
         this.context.errors.unscope();
 

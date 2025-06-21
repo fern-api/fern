@@ -131,7 +131,7 @@ This endpoint returns a file by its name.
 
 ```typescript
 await client.file.service.getFile("file.txt", {
-    xFileApiVersion: "0.0.2",
+    "X-File-API-Version": "0.0.2",
 });
 ```
 
@@ -424,7 +424,7 @@ await client.service.createMovie({
 
 ```typescript
 await client.service.getMetadata({
-    xApiVersion: "0.0.1",
+    "X-API-Version": "0.0.1",
     shallow: false,
     tag: "development",
 });
@@ -481,6 +481,7 @@ await client.service.createBigEntity({
         id: "id",
     },
     extendedMovie: {
+        cast: ["cast", "cast"],
         id: "id",
         prequel: "prequel",
         title: "title",
@@ -495,7 +496,6 @@ await client.service.createBigEntity({
             },
         },
         revenue: 1000000,
-        cast: ["cast", "cast"],
     },
     entity: {
         type: "primitive",

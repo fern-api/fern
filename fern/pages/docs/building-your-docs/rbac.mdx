@@ -4,7 +4,7 @@ subtitle: Control who can view your documentation
 description: Learn how to restrict access to your documentation using role-based access control (RBAC)
 ---
 
-<Note>Configuring RBAC is part of the pro plan.</Note>
+<Note>RBAC is part of the pro plan.</Note>
 
 Fern allows you to restrict parts of your navigation to individuals with specific roles. Below, we walk through each of the steps
 required to configure RBAC.
@@ -12,7 +12,7 @@ required to configure RBAC.
 <Steps>
 ### Define all the `roles` in your docs.yml
 
-Start by defining all the different roles in your `docs.yml`. You can simply specify thise under a `roles` key:
+Start by defining all the different roles in your `docs.yml`. You can simply specify this under a `roles` key:
 
 ```yml docs.yml
 roles:
@@ -29,7 +29,7 @@ roles:
 Every navigation item (`sections`, `pages`, `api references`) can have a set of designated viewers. If you don't
 specify viewers, then it defaults to `everyone` and the page is public.
 
-```yml docs.yml {7-8} {14-16}
+```yml docs.yml {7-8,14-16}
 navigation:
   - tab: Documentation
     layout:
@@ -51,10 +51,10 @@ navigation:
 The viewers are inherited by nested pieces of content. For example, if a section can only be viewed by `admins`, then all its
 pages and nested sections can also only be viewed by admins.
 
-### Configure authentication via a `FERN_TOKEN`
+### Configure authentication via a `fern_token`
 
 In this step, we will configure authentication so that Fern can understand what roles a particular user has. Fern expects the user's
-browser session to have a cookie called `FERN_TOKEN`. If the cookie is not present, the user will be redirected to your company's
+browser session to have a cookie called `fern_token`. If the cookie is not present, the user will be redirected to your company's
 login page.
 
 Upon login, you must set a JWT for the user using a secret key that we will provide you with. The JWT must have a `fern` claim

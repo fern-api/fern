@@ -27,6 +27,8 @@ client = SeedExtends(
 )
 client.extended_inline_request_body(
     unique="unique",
+    name="name",
+    docs="docs",
 )
 ```
 
@@ -47,6 +49,8 @@ client = AsyncSeedExtends(
 async def main() -> None:
     await client.extended_inline_request_body(
         unique="unique",
+        name="name",
+        docs="docs",
     )
 
 
@@ -69,6 +73,22 @@ except ApiError as e:
 ```
 
 ## Advanced
+
+### Access Raw Response Data
+
+The SDK provides access to raw response data, including headers, through the `.with_raw_response` property.
+The `.with_raw_response` property returns a "raw" client that can be used to access the `.headers` and `.data` attributes.
+
+```python
+from seed import SeedExtends
+
+client = SeedExtends(
+    ...,
+)
+response = client.with_raw_response.extended_inline_request_body()
+print(response.headers)  # access the response headers
+print(response.data)  # access the underlying object
+```
 
 ### Retries
 
@@ -114,6 +134,7 @@ client.extended_inline_request_body(request_options={
 
 You can override the `httpx` client to customize it for your use-case. Some common use-cases include support for proxies
 and transports.
+
 ```python
 import httpx
 from seed import SeedExtends

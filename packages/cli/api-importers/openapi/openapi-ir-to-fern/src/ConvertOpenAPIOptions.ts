@@ -1,3 +1,5 @@
+import { RawSchemas } from "@fern-api/fern-definition-schema";
+
 export interface ConvertOpenAPIOptions {
     /**
      * If true, each error will be made unique per endpoint. This is the preferred behavior for Docs.
@@ -35,6 +37,21 @@ export interface ConvertOpenAPIOptions {
      * If true, the converter will include path parameters in the in-lined request.
      */
     inlinePathParameters: boolean;
+
+    /**
+     * If true, the converter will use the `bytes` type for binary responses.
+     */
+    useBytesForBinaryResponse: boolean;
+
+    /**
+     * If true, the converter will respect forward compatible enums during generation.
+     */
+    respectForwardCompatibleEnums: boolean;
+
+    /**
+     * Overrides the auth schema that would be detected from the OpenAPI spec.
+     */
+    auth?: RawSchemas.ApiAuthSchema;
 }
 
 export const DEFAULT_CONVERT_OPENAPI_OPTIONS: ConvertOpenAPIOptions = {
@@ -44,14 +61,16 @@ export const DEFAULT_CONVERT_OPENAPI_OPTIONS: ConvertOpenAPIOptions = {
     respectReadonlySchemas: false,
     respectNullableSchemas: false,
     onlyIncludeReferencedSchemas: false,
-    inlinePathParameters: false
+    inlinePathParameters: false,
+    useBytesForBinaryResponse: false,
+    respectForwardCompatibleEnums: false
 };
 
 export function getConvertOptions({
     options,
     overrides
 }: {
-    options?: ConvertOpenAPIOptions;
+    options?: Partial<ConvertOpenAPIOptions>;
     overrides?: Partial<ConvertOpenAPIOptions>;
 }): ConvertOpenAPIOptions {
     return {
@@ -82,6 +101,14 @@ export function getConvertOptions({
         inlinePathParameters:
             overrides?.inlinePathParameters ??
             options?.inlinePathParameters ??
-            DEFAULT_CONVERT_OPENAPI_OPTIONS.inlinePathParameters
+            DEFAULT_CONVERT_OPENAPI_OPTIONS.inlinePathParameters,
+        useBytesForBinaryResponse:
+            overrides?.useBytesForBinaryResponse ??
+            options?.useBytesForBinaryResponse ??
+            DEFAULT_CONVERT_OPENAPI_OPTIONS.useBytesForBinaryResponse,
+        respectForwardCompatibleEnums:
+            overrides?.respectForwardCompatibleEnums ??
+            options?.respectForwardCompatibleEnums ??
+            DEFAULT_CONVERT_OPENAPI_OPTIONS.respectForwardCompatibleEnums
     };
 }

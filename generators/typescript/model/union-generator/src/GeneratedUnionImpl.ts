@@ -2,6 +2,7 @@ import {
     FernWriters,
     ObjectWriter,
     Reference,
+    getPropertyKey,
     getTextOfTsNode,
     getWriterForMultiLineUnionType,
     maybeAddDocsStructure
@@ -164,7 +165,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
             return ts.factory.createObjectLiteralExpression(
                 [
                     ts.factory.createPropertyAssignment(
-                        ts.factory.createIdentifier(this.discriminant),
+                        ts.factory.createIdentifier(getPropertyKey(this.discriminant)),
                         singleUnionType.getDiscriminantValueAsExpression()
                     ),
                     ...nonDiscriminantProperties
@@ -381,7 +382,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
             properties: this.baseProperties.map((property) => {
                 const type = context.type.getReferenceToType(property.valueType);
                 return {
-                    name: this._getBasePropertyKey(property),
+                    name: getPropertyKey(this._getBasePropertyKey(property)),
                     docs: property.docs != null ? [property.docs] : undefined,
                     type: getTextOfTsNode(this.noOptionalProperties ? type.typeNode : type.typeNodeWithoutUndefined),
                     hasQuestionToken: !this.noOptionalProperties && type.isOptional
@@ -429,7 +430,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
             ],
             properties: this.getAllSingleUnionTypesIncludingUnknown().map<OptionalKind<PropertySignatureStructure>>(
                 (singleUnionType) => ({
-                    name: singleUnionType.getVisitorKey(),
+                    name: getPropertyKey(singleUnionType.getVisitorKey()),
                     type: getTextOfTsNode(singleUnionType.getVisitMethodSignature(context, this))
                 })
             ),

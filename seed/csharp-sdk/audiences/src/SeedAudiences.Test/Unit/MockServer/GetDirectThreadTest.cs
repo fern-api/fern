@@ -1,6 +1,4 @@
-using FluentAssertions.Json;
 using global::System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedAudiences.Core;
 
@@ -27,10 +25,10 @@ public class GetDirectThreadTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.FolderD.Service.GetDirectThreadAsync(RequestOptions);
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        var response = await Client.FolderD.Service.GetDirectThreadAsync();
+        Assert.That(
+            response,
+            Is.EqualTo(JsonUtils.Deserialize<FolderD.Response>(mockResponse)).UsingDefaults()
+        );
     }
 }

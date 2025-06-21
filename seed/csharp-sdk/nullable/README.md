@@ -5,10 +5,14 @@
 
 The Seed C# library provides convenient access to the Seed API from C#.
 
+## Requirements
+
+This SDK requires:
+
 ## Installation
 
 ```sh
-nuget install SeedNullable
+dotnet add package SeedNullable
 ```
 
 ## Usage
@@ -30,6 +34,8 @@ await client.Nullable.CreateUserAsync(
             UpdatedAt = new DateTime(2024, 01, 15, 09, 30, 00, 000),
             Avatar = "avatar",
             Activated = true,
+            Status = "no-properties-union",
+            Values = new Dictionary<string, string?>() { { "values", "values" } },
         },
         Avatar = "avatar",
     }

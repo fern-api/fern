@@ -1,4 +1,3 @@
-export * as SeedNurseryApi from "./api";
-export { SeedNurseryApiClient } from "./Client";
-export { SeedNurseryApiError, SeedNurseryApiTimeoutError } from "./errors";
-export * as serialization from "./serialization";
+export * as SeedNurseryApi from "./api/index.js";
+export { SeedNurseryApiError, SeedNurseryApiTimeoutError } from "./errors/index.js";
+export { SeedNurseryApiClient } from "./Client.js";

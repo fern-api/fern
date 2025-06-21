@@ -1,6 +1,4 @@
-using FluentAssertions.Json;
 using global::System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedIdempotencyHeaders;
 using SeedIdempotencyHeaders.Core;
@@ -40,12 +38,8 @@ public class CreateTest : BaseMockServerTest
             );
 
         var response = await Client.Payment.CreateAsync(
-            new CreatePaymentRequest { Amount = 1, Currency = Currency.Usd },
-            IdempotentRequestOptions
+            new CreatePaymentRequest { Amount = 1, Currency = Currency.Usd }
         );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<string>(mockResponse)));
     }
 }

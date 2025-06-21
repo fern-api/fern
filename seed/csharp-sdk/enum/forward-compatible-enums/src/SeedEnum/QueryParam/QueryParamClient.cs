@@ -14,13 +14,11 @@ public partial class QueryParamClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.QueryParam.SendAsync(
     ///     new SendEnumAsQueryParamRequest { Operand = Operand.GreaterThan, OperandOrColor = Color.Red }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async global::System.Threading.Tasks.Task SendAsync(
         SendEnumAsQueryParamRequest request,
         RequestOptions? options = null,
@@ -39,8 +37,8 @@ public partial class QueryParamClient
             _query["maybeOperandOrColor"] = JsonUtils.Serialize(request.MaybeOperandOrColor);
         }
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
@@ -55,16 +53,17 @@ public partial class QueryParamClient
         {
             return;
         }
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        throw new SeedEnumApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedEnumApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.QueryParam.SendListAsync(
     ///     new SendEnumListAsQueryParamRequest
     ///     {
@@ -74,8 +73,7 @@ public partial class QueryParamClient
     ///         MaybeOperandOrColor = [Color.Red],
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async global::System.Threading.Tasks.Task SendListAsync(
         SendEnumListAsQueryParamRequest request,
         RequestOptions? options = null,
@@ -92,8 +90,8 @@ public partial class QueryParamClient
             .MaybeOperandOrColor.Select(_value => JsonUtils.Serialize(_value))
             .ToList();
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
@@ -108,11 +106,13 @@ public partial class QueryParamClient
         {
             return;
         }
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        throw new SeedEnumApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedEnumApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

@@ -3,12 +3,12 @@
 exports[`PythonFile > Add a Method 1`] = `
 "def test_method() -> str:
     pass
+
 "
 `;
 
 exports[`PythonFile > Add a class that inherits from a class imported from another file 1`] = `
 "from .base import BaseClass
-
 
 class DerivedClass(BaseClass):
     pass
@@ -18,9 +18,9 @@ class DerivedClass(BaseClass):
 exports[`PythonFile > Add a class with a reference that uses a python standard library reference 1`] = `
 "from itertools import chain
 
-
 class TestClass:
     flat_list = list(itertools.chain([[1, 2], [3, 4]]))
+
 "
 `;
 
@@ -28,10 +28,8 @@ exports[`PythonFile > Add a class with a reference that uses a relative import 1
 "from .level_1 import OtherClass
 from .level_1.level_2 import DeepClass
 
-
 class TestClass(OtherClass):
     pass
-
 
 class DeeplyNestedTestClass(DeepClass):
     pass
@@ -41,18 +39,17 @@ class DeeplyNestedTestClass(DeepClass):
 exports[`PythonFile > Add a class with a reference to itself 1`] = `
 "from parent_module import ParentTestClass
 
-
 class TestClass(ParentTestClass):
     @classmethod
     def from_dict(cls, data: Dict[str, Any]):
         instance = TestClass(data)
         return instance
+
 "
 `;
 
 exports[`PythonFile > Add a class with a relative import and alias 1`] = `
 "from .test.sibling_dir import SiblingClass as AliasedSibling
-
 
 class TestClassWithRelativeAlias(AliasedSibling):
     pass
@@ -61,7 +58,6 @@ class TestClassWithRelativeAlias(AliasedSibling):
 
 exports[`PythonFile > Add a class with an absolute import and alias 1`] = `
 "from external_module.submodule import ExternalClass as AliasedClass
-
 
 class TestClassWithAlias(AliasedClass):
     pass
@@ -75,7 +71,7 @@ exports[`PythonFile > Add a class with no references 1`] = `
 `;
 
 exports[`PythonFile > Add a code block 1`] = `
-"print("Hello, World!")
+"print('Hello, World!')
 "
 `;
 
@@ -135,12 +131,12 @@ from .transportation.vehicles import Car as VehiclesCar
 from .automobiles import Car as AutomobilesCar
 from .vehicles.automobiles import Car as VehiclesAutomobilesCar
 
-
 class Car:
     car = CarsCar()
     car = VehiclesCar()
     automobile = AutomobilesCar()
     vehicle = VehiclesAutomobilesCar()
+
 "
 `;
 

@@ -3,6 +3,7 @@ using SeedLiteral.Core;
 
 namespace SeedLiteral;
 
+[Serializable]
 public record SendLiteralsInlinedRequest
 {
     [JsonPropertyName("prompt")]
@@ -29,6 +30,7 @@ public record SendLiteralsInlinedRequest
     [JsonPropertyName("objectWithLiteral")]
     public required ATopLevelLiteral ObjectWithLiteral { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

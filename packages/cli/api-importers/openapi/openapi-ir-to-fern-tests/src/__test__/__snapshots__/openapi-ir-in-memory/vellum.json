@@ -264,7 +264,7 @@
           "servers": [
             {
               "url": "https://predict.vellum.ai",
-              "x-name": "Predict"
+              "x-fern-server-name": "Predict"
             }
           ]
         }
@@ -346,7 +346,7 @@
           "servers": [
             {
               "url": "https://predict.vellum.ai",
-              "x-name": "Predict"
+              "x-fern-server-name": "Predict"
             }
           ]
         }
@@ -429,7 +429,7 @@
           "servers": [
             {
               "url": "https://predict.vellum.ai",
-              "x-name": "Predict"
+              "x-fern-server-name": "Predict"
             }
           ]
         }
@@ -773,7 +773,7 @@
           "servers": [
             {
               "url": "https://predict.vellum.ai",
-              "x-name": "Predict"
+              "x-fern-server-name": "Predict"
             }
           ]
         }
@@ -838,7 +838,7 @@
           "servers": [
             {
               "url": "https://predict.vellum.ai",
-              "x-name": "Predict"
+              "x-fern-server-name": "Predict"
             }
           ]
         }
@@ -1003,7 +1003,7 @@
           "servers": [
             {
               "url": "https://documents.vellum.ai",
-              "x-name": "Documents"
+              "x-fern-server-name": "Documents"
             }
           ]
         }
@@ -3874,8 +3874,29 @@
       {
         "url": "https://api.vellum.ai",
         "description": "Default Server",
-        "x-name": "Default"
+        "x-fern-server-name": "Default"
       }
     ]
+  },
+  "settings": {
+    "disableExamples": false,
+    "discriminatedUnionV2": false,
+    "useTitlesAsName": true,
+    "optionalAdditionalProperties": true,
+    "coerceEnumsToLiterals": true,
+    "respectReadonlySchemas": false,
+    "respectNullableSchemas": false,
+    "onlyIncludeReferencedSchemas": false,
+    "inlinePathParameters": false,
+    "preserveSchemaIds": false,
+    "shouldUseUndiscriminatedUnionsWithLiterals": false,
+    "shouldUseIdiomaticRequestNames": false,
+    "objectQueryParameters": false,
+    "asyncApiNaming": "v1",
+    "useBytesForBinaryResponse": false,
+    "respectForwardCompatibleEnums": false,
+    "additionalPropertiesDefaultsTo": false,
+    "typeDatesAsStrings": true,
+    "preserveSingleSchemaOneOf": false
   }
 }

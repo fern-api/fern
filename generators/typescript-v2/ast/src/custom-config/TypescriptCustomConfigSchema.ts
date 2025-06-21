@@ -8,6 +8,7 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     includeCredentialsOnCrossOriginRequests: z.optional(z.boolean()),
     bundle: z.optional(z.boolean()),
     allowCustomFetcher: z.optional(z.boolean()),
+    shouldGenerateWebsocketClients: z.optional(z.boolean()),
     defaultTimeoutInSeconds: z.optional(z.union([z.literal("infinity"), z.number()])),
     skipResponseValidation: z.optional(z.boolean()),
     extraDependencies: z.optional(z.record(z.string())),
@@ -21,6 +22,9 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     publishToJsr: z.optional(z.boolean()),
     omitUndefined: z.optional(z.boolean()),
     useLegacyExports: z.optional(z.boolean()),
+    streamType: z.optional(z.enum(["wrapper", "web"])),
+    fileResponseType: z.optional(z.enum(["stream", "binary-response"])),
+    packagePath: z.optional(z.string()),
 
     // relevant to dynamic snippets
     allowExtraFields: z.optional(z.boolean()),

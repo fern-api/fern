@@ -1,6 +1,4 @@
-using FluentAssertions.Json;
 using global::System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedPackageYml;
 using SeedPackageYml.Core;
@@ -39,15 +37,8 @@ public class EchoTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.EchoAsync(
-            "id",
-            new EchoRequest { Name = "name", Size = 1 },
-            RequestOptions
-        );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        var response = await Client.EchoAsync("id", new EchoRequest { Name = "name", Size = 1 });
+        Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<string>(mockResponse)));
     }
 
     [Test]
@@ -81,12 +72,8 @@ public class EchoTest : BaseMockServerTest
 
         var response = await Client.EchoAsync(
             "id-ksfd9c1",
-            new EchoRequest { Name = "Hello world!", Size = 20 },
-            RequestOptions
+            new EchoRequest { Name = "Hello world!", Size = 20 }
         );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<string>(mockResponse)));
     }
 }

@@ -21,13 +21,8 @@ Instantiate and use the client with the following:
 
 ```python
 from seed import SeedApi
-
-client = SeedApi(
-    base_url="https://yourhost.com/path/to/api",
-)
-client.get_account(
-    account_id="account_id",
-)
+client = SeedApi(base_url="https://yourhost.com/path/to/api", )
+client.get_account(account_id='account_id', )
 ```
 
 ## Async Client
@@ -35,21 +30,11 @@ client.get_account(
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
-import asyncio
-
 from seed import AsyncSeedApi
-
-client = AsyncSeedApi(
-    base_url="https://yourhost.com/path/to/api",
-)
-
-
+import asyncio
+client = AsyncSeedApi(base_url="https://yourhost.com/path/to/api", )
 async def main() -> None:
-    await client.get_account(
-        account_id="account_id",
-    )
-
-
+    await client.get_account(account_id='account_id', )
 asyncio.run(main())
 ```
 
@@ -60,7 +45,6 @@ will be thrown.
 
 ```python
 from seed.core.api_error import ApiError
-
 try:
     client.get_account()
 except ApiError as e:
@@ -69,6 +53,19 @@ except ApiError as e:
 ```
 
 ## Advanced
+
+### Access Raw Response Data
+
+The SDK provides access to raw response data, including headers, through the `.with_raw_response` property.
+The `.with_raw_response` property returns a "raw" client that can be used to access the `.headers` and `.data` attributes.
+
+```python
+from seed import SeedApi
+client = SeedApi(..., )
+response = client.with_raw_response.get_account()
+print(response.headers)  # access the response headers
+print(response.data)  # access the underlying object
+```
 
 ### Retries
 
@@ -97,12 +94,7 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 ```python
 
 from seed import SeedApi
-
-client = SeedApi(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedApi(..., timeout=20.0, )
 
 # Override timeout for a specific method
 client.get_account(request_options={
@@ -114,18 +106,11 @@ client.get_account(request_options={
 
 You can override the `httpx` client to customize it for your use-case. Some common use-cases include support for proxies
 and transports.
-```python
-import httpx
-from seed import SeedApi
 
-client = SeedApi(
-    ...,
-    httpx_client=httpx.Client(
-        proxies="http://my.test.proxy.example.com",
-        transport=httpx.HTTPTransport(local_address="0.0.0.0"),
-    ),
-)
-```
+```python
+from seed import SeedApi
+import httpx
+client = SeedApi(..., httpx_client=httpx.Client(proxies="http://my.test.proxy.example.com", transport=httpx.HTTPTransport(local_address="0.0.0.0"), ))```
 
 ## Contributing
 

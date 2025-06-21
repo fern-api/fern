@@ -7722,14 +7722,14 @@
           {
             "name": "Authentication",
             "schema": {
-              "generatedName": "Realtime",
+              "generatedName": "RealtimeAuthentication",
               "description": "Authenticate using your AssemblyAI API key.",
               "value": {
                 "description": "Authenticate using your AssemblyAI API key.",
                 "schema": {
                   "type": "string"
                 },
-                "generatedName": "Realtime",
+                "generatedName": "RealtimeAuthentication",
                 "groupName": [],
                 "type": "primitive"
               },
@@ -7747,14 +7747,14 @@
           {
             "name": "sample_rate",
             "schema": {
-              "generatedName": "Realtime",
+              "generatedName": "RealtimeSampleRate",
               "description": "The sample rate of the streamed audio.",
               "value": {
                 "description": "The sample rate of the streamed audio.",
                 "schema": {
                   "type": "int"
                 },
-                "generatedName": "Realtime",
+                "generatedName": "RealtimeSampleRate",
                 "groupName": [],
                 "type": "primitive"
               },
@@ -7770,14 +7770,14 @@
           {
             "name": "word_boost",
             "schema": {
-              "generatedName": "Realtime",
+              "generatedName": "RealtimeWordBoost",
               "description": "Add up to 2500 characters of custom vocabulary.\nThe parameter should map to a JSON encoded list of strings.\n",
               "value": {
                 "description": "Add up to 2500 characters of custom vocabulary.\nThe parameter should map to a JSON encoded list of strings.\n",
                 "schema": {
                   "type": "string"
                 },
-                "generatedName": "Realtime",
+                "generatedName": "RealtimeWordBoost",
                 "groupName": [],
                 "type": "primitive"
               },
@@ -7793,14 +7793,14 @@
           {
             "name": "token",
             "schema": {
-              "generatedName": "Realtime",
+              "generatedName": "RealtimeToken",
               "description": "Authenticate using a [generated temporary token](https://www.assemblyai.com/docs/Guides/real-time_streaming_transcription#creating-temporary-authentication-tokens)",
               "value": {
                 "description": "Authenticate using a [generated temporary token](https://www.assemblyai.com/docs/Guides/real-time_streaming_transcription#creating-temporary-authentication-tokens)",
                 "schema": {
                   "type": "string"
                 },
-                "generatedName": "Realtime",
+                "generatedName": "RealtimeToken",
                 "groupName": [],
                 "type": "primitive"
               },
@@ -7836,99 +7836,109 @@
       "groupName": [
         "/{userId}"
       ],
-      "publish": {
-        "value": {
-          "description": "Send messages to the WebSocket",
-          "generatedName": "sendMessage",
-          "nameOverride": "sendMessage",
-          "schemas": [
-            {
-              "generatedName": "RealtimeZero",
-              "schema": "AudioData",
+      "messages": [
+        {
+          "origin": "client",
+          "name": "publish",
+          "body": {
+            "value": {
+              "description": "Send messages to the WebSocket",
+              "generatedName": "sendMessage",
+              "nameOverride": "sendMessage",
+              "schemas": [
+                {
+                  "generatedName": "RealtimeZero",
+                  "schema": "AudioData",
+                  "source": {
+                    "file": "../asyncapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                {
+                  "generatedName": "RealtimeOne",
+                  "schema": "TerminateSession",
+                  "source": {
+                    "file": "../asyncapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                }
+              ],
               "source": {
                 "file": "../asyncapi.yml",
                 "type": "openapi"
               },
-              "type": "reference"
+              "type": "undiscriminated"
             },
-            {
-              "generatedName": "RealtimeOne",
-              "schema": "TerminateSession",
-              "source": {
-                "file": "../asyncapi.yml",
-                "type": "openapi"
-              },
-              "type": "reference"
-            }
-          ],
-          "source": {
-            "file": "../asyncapi.yml",
-            "type": "openapi"
-          },
-          "type": "undiscriminated"
+            "type": "oneOf"
+          }
         },
-        "type": "oneOf"
-      },
-      "subscribe": {
-        "value": {
-          "description": "Receive messages from the WebSocket",
-          "generatedName": "receiveMessage",
-          "nameOverride": "receiveMessage",
-          "schemas": [
-            {
-              "generatedName": "RealtimeZero",
-              "schema": "SessionBegins",
+        {
+          "origin": "server",
+          "name": "subscribe",
+          "body": {
+            "value": {
+              "description": "Receive messages from the WebSocket",
+              "generatedName": "receiveMessage",
+              "nameOverride": "receiveMessage",
+              "schemas": [
+                {
+                  "generatedName": "RealtimeZero",
+                  "schema": "SessionBegins",
+                  "source": {
+                    "file": "../asyncapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                {
+                  "generatedName": "RealtimeOne",
+                  "schema": "PartialTranscript",
+                  "source": {
+                    "file": "../asyncapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                {
+                  "generatedName": "RealtimeTwo",
+                  "schema": "FinalTranscript",
+                  "source": {
+                    "file": "../asyncapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                {
+                  "generatedName": "RealtimeThree",
+                  "schema": "SessionTerminated",
+                  "source": {
+                    "file": "../asyncapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                {
+                  "generatedName": "RealtimeFour",
+                  "schema": "RealtimeError",
+                  "source": {
+                    "file": "../asyncapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                }
+              ],
               "source": {
                 "file": "../asyncapi.yml",
                 "type": "openapi"
               },
-              "type": "reference"
+              "type": "undiscriminated"
             },
-            {
-              "generatedName": "RealtimeOne",
-              "schema": "PartialTranscript",
-              "source": {
-                "file": "../asyncapi.yml",
-                "type": "openapi"
-              },
-              "type": "reference"
-            },
-            {
-              "generatedName": "RealtimeTwo",
-              "schema": "FinalTranscript",
-              "source": {
-                "file": "../asyncapi.yml",
-                "type": "openapi"
-              },
-              "type": "reference"
-            },
-            {
-              "generatedName": "RealtimeThree",
-              "schema": "SessionTerminated",
-              "source": {
-                "file": "../asyncapi.yml",
-                "type": "openapi"
-              },
-              "type": "reference"
-            },
-            {
-              "generatedName": "RealtimeFour",
-              "schema": "RealtimeError",
-              "source": {
-                "file": "../asyncapi.yml",
-                "type": "openapi"
-              },
-              "type": "reference"
-            }
-          ],
-          "source": {
-            "file": "../asyncapi.yml",
-            "type": "openapi"
-          },
-          "type": "undiscriminated"
-        },
-        "type": "oneOf"
-      },
+            "type": "oneOf"
+          }
+        }
+      ],
       "servers": [
         {
           "name": "API",
@@ -8004,7 +8014,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -8296,7 +8307,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -8535,7 +8547,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -8664,7 +8677,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -8945,7 +8959,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -8967,7 +8982,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -9724,7 +9740,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -9746,7 +9763,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -10143,7 +10161,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -10393,7 +10412,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -10500,7 +10520,8 @@
                         "type": "reference"
                       },
                       "audiences": [],
-                      "readonly": false
+                      "readonly": false,
+                      "writeonly": false
                     },
                     {
                       "conflict": {},
@@ -10595,7 +10616,8 @@
                         "type": "reference"
                       },
                       "audiences": [],
-                      "readonly": false
+                      "readonly": false,
+                      "writeonly": false
                     },
                     {
                       "conflict": {},
@@ -11262,7 +11284,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -11570,7 +11593,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -11752,7 +11776,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -11913,7 +11938,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -12744,7 +12770,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -12883,7 +12910,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -12958,7 +12986,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -13489,7 +13518,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -13893,7 +13923,8 @@
             "audiences": [],
             "conflict": {},
             "generatedName": "realtimeBaseMessageMessageType",
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "generatedName": "RealtimeBaseMessage",

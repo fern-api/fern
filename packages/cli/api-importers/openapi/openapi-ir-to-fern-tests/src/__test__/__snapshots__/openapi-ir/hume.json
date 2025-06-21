@@ -871,7 +871,7 @@
           {
             "name": "config_id",
             "schema": {
-              "generatedName": "Websocket",
+              "generatedName": "WebsocketConfigId",
               "title": "Config Id",
               "description": "The unique identifier for an EVI configuration.\n\nInclude this ID in your connection request to equip EVI with the Prompt, Language Model, Voice, and Tools associated with the specified configuration. If omitted, EVI will apply [default configuration settings](/docs/empathic-voice-interface-evi/configuration#default-configuration).\n\nFor help obtaining this ID, see our [Configuration Guide](/docs/empathic-voice-interface-evi/configuration).",
               "value": {
@@ -879,7 +879,7 @@
                 "schema": {
                   "type": "string"
                 },
-                "generatedName": "Websocket",
+                "generatedName": "WebsocketConfigId",
                 "title": "Config Id",
                 "groupName": [],
                 "type": "primitive"
@@ -896,7 +896,7 @@
           {
             "name": "config_version",
             "schema": {
-              "generatedName": "Websocket",
+              "generatedName": "WebsocketConfigVersion",
               "title": "Config Version",
               "description": "The version number of the EVI configuration specified by the `config_id`.\n\nConfigs, as well as Prompts and Tools, are versioned. This versioning system supports iterative development, allowing you to progressively refine configurations and revert to previous versions if needed.\n\nInclude this parameter to apply a specific version of an EVI configuration. If omitted, the latest version will be applied.",
               "value": {
@@ -904,7 +904,7 @@
                 "schema": {
                   "type": "int"
                 },
-                "generatedName": "Websocket",
+                "generatedName": "WebsocketConfigVersion",
                 "title": "Config Version",
                 "groupName": [],
                 "type": "primitive"
@@ -921,7 +921,7 @@
           {
             "name": "resumed_chat_group_id",
             "schema": {
-              "generatedName": "Websocket",
+              "generatedName": "WebsocketResumedChatGroupId",
               "title": "Resumed Chat Group Id",
               "description": "The unique identifier for a Chat Group. Use this field to preserve context from a previous Chat session.\n\nA Chat represents a single session from opening to closing a WebSocket connection. In contrast, a Chat Group is a series of resumed Chats that collectively represent a single conversation spanning multiple sessions. Each Chat includes a Chat Group ID, which is used to preserve the context of previous Chat sessions when starting a new one.\n\nIncluding the Chat Group ID in the `resumed_chat_group_id` query parameter is useful for seamlessly resuming a Chat after unexpected network disconnections and for picking up conversations exactly where you left off at a later time. This ensures preserved context across multiple sessions.\n\nThere are three ways to obtain the Chat Group ID:\n\n- [Chat Metadata](/reference/empathic-voice-interface-evi/chat/chat#receive.Chat%20Metadata.type): Upon establishing a WebSocket connection with EVI, the user receives a Chat Metadata message. This message contains a `chat_group_id`, which can be used to resume conversations within this chat group in future sessions.\n\n- [List Chats endpoint](/reference/empathic-voice-interface-evi/chats/list-chats): Use the GET `/v0/evi/chats` endpoint to obtain the Chat Group ID of individual Chat sessions. This endpoint lists all available Chat sessions and their associated Chat Group ID.\n\n- [List Chat Groups endpoint](/reference/empathic-voice-interface-evi/chat-groups/list-chat-groups): Use the GET `/v0/evi/chat_groups` endpoint to obtain the Chat Group IDs of all Chat Groups associated with an API key. This endpoint returns a list of all available chat groups.",
               "value": {
@@ -929,7 +929,7 @@
                 "schema": {
                   "type": "string"
                 },
-                "generatedName": "Websocket",
+                "generatedName": "WebsocketResumedChatGroupId",
                 "title": "Resumed Chat Group Id",
                 "groupName": [],
                 "type": "primitive"
@@ -946,7 +946,7 @@
           {
             "name": "verbose_transcription",
             "schema": {
-              "generatedName": "Websocket",
+              "generatedName": "WebsocketVerboseTranscription",
               "title": "Verbose Transcription",
               "description": "A flag to enable verbose transcription. Set this query parameter to `\"true\"` to have unfinalized user transcripts be sent to the client as interim `UserMessage` messages.",
               "value": {
@@ -955,7 +955,7 @@
                   "default": false,
                   "type": "boolean"
                 },
-                "generatedName": "Websocket",
+                "generatedName": "WebsocketVerboseTranscription",
                 "title": "Verbose Transcription",
                 "groupName": [],
                 "type": "primitive"
@@ -972,7 +972,7 @@
           {
             "name": "access_token",
             "schema": {
-              "generatedName": "Websocket",
+              "generatedName": "WebsocketAccessToken",
               "title": "Access Token",
               "description": "Access token used for authenticating the client. If not provided, an `api_key` must be provided to authenticate.\n\nThe access token is generated using both an API key and a Secret key, which provides an additional layer of security compared to using just an API key.\n\nFor more details, refer to the [Authentication Strategies Guide](/docs/introduction/api-key#authentication-strategies).",
               "value": {
@@ -981,7 +981,7 @@
                   "default": "",
                   "type": "string"
                 },
-                "generatedName": "Websocket",
+                "generatedName": "WebsocketAccessToken",
                 "title": "Access Token",
                 "groupName": [],
                 "type": "primitive"
@@ -1001,194 +1001,204 @@
       "groupName": [
         "/chat"
       ],
-      "publish": {
-        "value": {
-          "generatedName": "PublishEvent",
-          "schemas": [
-            {
-              "generatedName": "WebsocketZero",
-              "schema": "AudioInput",
+      "messages": [
+        {
+          "origin": "client",
+          "name": "publish",
+          "body": {
+            "value": {
+              "generatedName": "PublishEvent",
+              "schemas": [
+                {
+                  "generatedName": "WebsocketZero",
+                  "schema": "AudioInput",
+                  "source": {
+                    "file": "../asyncapi.json",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                {
+                  "generatedName": "WebsocketOne",
+                  "schema": "SessionSettings",
+                  "source": {
+                    "file": "../asyncapi.json",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                {
+                  "generatedName": "WebsocketTwo",
+                  "schema": "UserInput",
+                  "source": {
+                    "file": "../asyncapi.json",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                {
+                  "generatedName": "WebsocketThree",
+                  "schema": "AssistantInput",
+                  "source": {
+                    "file": "../asyncapi.json",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                {
+                  "generatedName": "WebsocketFour",
+                  "schema": "ToolResponseMessage",
+                  "source": {
+                    "file": "../asyncapi.json",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                {
+                  "generatedName": "WebsocketFive",
+                  "schema": "ToolErrorMessage",
+                  "source": {
+                    "file": "../asyncapi.json",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                {
+                  "generatedName": "WebsocketSix",
+                  "schema": "PauseAssistantMessage",
+                  "source": {
+                    "file": "../asyncapi.json",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                {
+                  "generatedName": "WebsocketSeven",
+                  "schema": "ResumeAssistantMessage",
+                  "source": {
+                    "file": "../asyncapi.json",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                }
+              ],
               "source": {
                 "file": "../asyncapi.json",
                 "type": "openapi"
               },
-              "type": "reference"
+              "type": "undiscriminated"
             },
-            {
-              "generatedName": "WebsocketOne",
-              "schema": "SessionSettings",
-              "source": {
-                "file": "../asyncapi.json",
-                "type": "openapi"
-              },
-              "type": "reference"
-            },
-            {
-              "generatedName": "WebsocketTwo",
-              "schema": "UserInput",
-              "source": {
-                "file": "../asyncapi.json",
-                "type": "openapi"
-              },
-              "type": "reference"
-            },
-            {
-              "generatedName": "WebsocketThree",
-              "schema": "AssistantInput",
-              "source": {
-                "file": "../asyncapi.json",
-                "type": "openapi"
-              },
-              "type": "reference"
-            },
-            {
-              "generatedName": "WebsocketFour",
-              "schema": "ToolResponseMessage",
-              "source": {
-                "file": "../asyncapi.json",
-                "type": "openapi"
-              },
-              "type": "reference"
-            },
-            {
-              "generatedName": "WebsocketFive",
-              "schema": "ToolErrorMessage",
-              "source": {
-                "file": "../asyncapi.json",
-                "type": "openapi"
-              },
-              "type": "reference"
-            },
-            {
-              "generatedName": "WebsocketSix",
-              "schema": "PauseAssistantMessage",
-              "source": {
-                "file": "../asyncapi.json",
-                "type": "openapi"
-              },
-              "type": "reference"
-            },
-            {
-              "generatedName": "WebsocketSeven",
-              "schema": "ResumeAssistantMessage",
-              "source": {
-                "file": "../asyncapi.json",
-                "type": "openapi"
-              },
-              "type": "reference"
-            }
-          ],
-          "source": {
-            "file": "../asyncapi.json",
-            "type": "openapi"
-          },
-          "type": "undiscriminated"
+            "type": "oneOf"
+          }
         },
-        "type": "oneOf"
-      },
-      "subscribe": {
-        "value": {
-          "generatedName": "SubscribeEvent",
-          "schemas": [
-            {
-              "generatedName": "WebsocketZero",
-              "schema": "AssistantEnd",
+        {
+          "origin": "server",
+          "name": "subscribe",
+          "body": {
+            "value": {
+              "generatedName": "SubscribeEvent",
+              "schemas": [
+                {
+                  "generatedName": "WebsocketZero",
+                  "schema": "AssistantEnd",
+                  "source": {
+                    "file": "../asyncapi.json",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                {
+                  "generatedName": "WebsocketOne",
+                  "schema": "AssistantMessage",
+                  "source": {
+                    "file": "../asyncapi.json",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                {
+                  "generatedName": "WebsocketTwo",
+                  "schema": "AudioOutput",
+                  "source": {
+                    "file": "../asyncapi.json",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                {
+                  "generatedName": "WebsocketThree",
+                  "schema": "ChatMetadata",
+                  "source": {
+                    "file": "../asyncapi.json",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                {
+                  "generatedName": "WebsocketFour",
+                  "schema": "Error",
+                  "source": {
+                    "file": "../asyncapi.json",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                {
+                  "generatedName": "WebsocketFive",
+                  "schema": "UserInterruption",
+                  "source": {
+                    "file": "../asyncapi.json",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                {
+                  "generatedName": "WebsocketSix",
+                  "schema": "UserMessage",
+                  "source": {
+                    "file": "../asyncapi.json",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                {
+                  "generatedName": "WebsocketSeven",
+                  "schema": "ToolCallMessage",
+                  "source": {
+                    "file": "../asyncapi.json",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                {
+                  "generatedName": "WebsocketEight",
+                  "schema": "ToolResponseMessage",
+                  "source": {
+                    "file": "../asyncapi.json",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                {
+                  "generatedName": "WebsocketNine",
+                  "schema": "ToolErrorMessage",
+                  "source": {
+                    "file": "../asyncapi.json",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                }
+              ],
               "source": {
                 "file": "../asyncapi.json",
                 "type": "openapi"
               },
-              "type": "reference"
+              "type": "undiscriminated"
             },
-            {
-              "generatedName": "WebsocketOne",
-              "schema": "AssistantMessage",
-              "source": {
-                "file": "../asyncapi.json",
-                "type": "openapi"
-              },
-              "type": "reference"
-            },
-            {
-              "generatedName": "WebsocketTwo",
-              "schema": "AudioOutput",
-              "source": {
-                "file": "../asyncapi.json",
-                "type": "openapi"
-              },
-              "type": "reference"
-            },
-            {
-              "generatedName": "WebsocketThree",
-              "schema": "ChatMetadata",
-              "source": {
-                "file": "../asyncapi.json",
-                "type": "openapi"
-              },
-              "type": "reference"
-            },
-            {
-              "generatedName": "WebsocketFour",
-              "schema": "Error",
-              "source": {
-                "file": "../asyncapi.json",
-                "type": "openapi"
-              },
-              "type": "reference"
-            },
-            {
-              "generatedName": "WebsocketFive",
-              "schema": "UserInterruption",
-              "source": {
-                "file": "../asyncapi.json",
-                "type": "openapi"
-              },
-              "type": "reference"
-            },
-            {
-              "generatedName": "WebsocketSix",
-              "schema": "UserMessage",
-              "source": {
-                "file": "../asyncapi.json",
-                "type": "openapi"
-              },
-              "type": "reference"
-            },
-            {
-              "generatedName": "WebsocketSeven",
-              "schema": "ToolCallMessage",
-              "source": {
-                "file": "../asyncapi.json",
-                "type": "openapi"
-              },
-              "type": "reference"
-            },
-            {
-              "generatedName": "WebsocketEight",
-              "schema": "ToolResponseMessage",
-              "source": {
-                "file": "../asyncapi.json",
-                "type": "openapi"
-              },
-              "type": "reference"
-            },
-            {
-              "generatedName": "WebsocketNine",
-              "schema": "ToolErrorMessage",
-              "source": {
-                "file": "../asyncapi.json",
-                "type": "openapi"
-              },
-              "type": "reference"
-            }
-          ],
-          "source": {
-            "file": "../asyncapi.json",
-            "type": "openapi"
-          },
-          "type": "undiscriminated"
-        },
-        "type": "oneOf"
-      },
+            "type": "oneOf"
+          }
+        }
+      ],
       "servers": [
         {
           "name": "prod",
@@ -1196,6 +1206,7 @@
         }
       ],
       "path": "/chat",
+      "description": "Chat with Empathic Voice Interface (EVI)",
       "examples": [
         {
           "queryParameters": [],
@@ -1621,7 +1632,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -2232,7 +2244,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -2964,7 +2977,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -2980,7 +2994,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -3156,7 +3171,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -3177,7 +3193,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -3657,7 +3674,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -3738,7 +3756,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -3913,7 +3932,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -3948,7 +3968,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -4003,7 +4024,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -4058,7 +4080,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -4113,7 +4136,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -4168,7 +4192,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -4223,7 +4248,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -4374,7 +4400,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -4800,7 +4827,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -4821,7 +4849,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -5455,7 +5484,8 @@
             "audiences": [],
             "conflict": {},
             "generatedName": "audioConfigurationEncoding",
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "key": "channels",
@@ -5625,7 +5655,8 @@
             "audiences": [],
             "conflict": {},
             "generatedName": "builtinToolConfigName",
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "key": "fallback_content",
@@ -5693,7 +5724,8 @@
             "audiences": [],
             "conflict": {},
             "generatedName": "contextType",
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "key": "text",
@@ -6252,7 +6284,8 @@
             "audiences": [],
             "conflict": {},
             "generatedName": "toolType",
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "key": "name",
@@ -6979,7 +7012,8 @@
             "audiences": [],
             "conflict": {},
             "generatedName": "assistantMessageMessage",
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "key": "models",
@@ -6996,7 +7030,8 @@
             "audiences": [],
             "conflict": {},
             "generatedName": "assistantMessageModels",
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "key": "from_text",
@@ -7176,7 +7211,8 @@
             "audiences": [],
             "conflict": {},
             "generatedName": "chatMessageRole",
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "key": "content",
@@ -8304,7 +8340,8 @@
             "audiences": [],
             "conflict": {},
             "generatedName": "prosodyInferenceScores",
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "nameOverride": "ProsodyInference",
@@ -8479,7 +8516,8 @@
             "audiences": [],
             "conflict": {},
             "generatedName": "toolCallMessageToolType",
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "key": "response_required",
@@ -8654,7 +8692,8 @@
             "audiences": [],
             "conflict": {},
             "generatedName": "userMessageMessage",
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "key": "models",
@@ -8671,7 +8710,8 @@
             "audiences": [],
             "conflict": {},
             "generatedName": "userMessageModels",
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "key": "time",
@@ -8688,7 +8728,8 @@
             "audiences": [],
             "conflict": {},
             "generatedName": "userMessageTime",
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "key": "from_text",

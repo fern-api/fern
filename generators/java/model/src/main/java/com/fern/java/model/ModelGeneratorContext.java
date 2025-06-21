@@ -21,6 +21,11 @@ public class ModelGeneratorContext extends AbstractGeneratorContext<ModelPoetCla
     }
 
     @Override
+    public GeneratorType getType() {
+        return GeneratorType.MODEL;
+    }
+
+    @Override
     public final boolean deserializeWithAdditionalProperties() {
         return false;
     }
