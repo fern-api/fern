@@ -739,6 +739,7 @@
                     "transport": null,
                     "v2Examples": null,
                     "source": null,
+                    "audiences": null,
                     "availability": null,
                     "docs": "Retrieve a user.\nThis endpoint is used to retrieve a user."
                 },
@@ -1568,10 +1569,12 @@
                     "transport": null,
                     "v2Examples": null,
                     "source": null,
+                    "audiences": null,
                     "availability": null,
                     "docs": "Create a new user.\nThis endpoint is used to create a new user."
                 }
-            ]
+            ],
+            "audiences": null
         }
     },
     "constants": {
@@ -2207,6 +2210,7 @@
         "environments": null,
         "generatorConfig": null
     },
+    "audiences": null,
     "subpackages": {
         "subpackage_user": {
             "name": {

@@ -3189,10 +3189,12 @@
                     "transport": null,
                     "v2Examples": null,
                     "source": null,
+                    "audiences": null,
                     "availability": null,
                     "docs": "Create a new organization."
                 }
-            ]
+            ],
+            "audiences": null
         },
         "service_user": {
             "availability": null,
@@ -4461,10 +4463,12 @@
                     "transport": null,
                     "v2Examples": null,
                     "source": null,
+                    "audiences": null,
                     "availability": null,
                     "docs": "List all users."
                 }
-            ]
+            ],
+            "audiences": null
         },
         "service_user/events": {
             "availability": null,
@@ -5880,10 +5884,12 @@
                     "transport": null,
                     "v2Examples": null,
                     "source": null,
+                    "audiences": null,
                     "availability": null,
                     "docs": "List all user events."
                 }
-            ]
+            ],
+            "audiences": null
         },
         "service_user/events/metadata": {
             "availability": null,
@@ -7009,10 +7015,12 @@
                     "transport": null,
                     "v2Examples": null,
                     "source": null,
+                    "audiences": null,
                     "availability": null,
                     "docs": "Get event metadata."
                 }
-            ]
+            ],
+            "audiences": null
         }
     },
     "constants": {
@@ -8750,6 +8758,7 @@
         "environments": null,
         "generatorConfig": null
     },
+    "audiences": null,
     "subpackages": {
         "subpackage_organization": {
             "name": {
