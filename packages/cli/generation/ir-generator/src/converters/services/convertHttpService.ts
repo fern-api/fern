@@ -187,11 +187,13 @@ export function convertHttpService({
                     sourceResolver
                 }),
                 v2Examples: undefined,
-                source: undefined
+                source: undefined,
+                audiences: endpoint.audiences
             };
             httpEndpoint.id = IdGenerator.generateEndpointId(serviceName, httpEndpoint);
             return httpEndpoint;
-        })
+        }),
+        audiences: serviceDefinition.audiences
     };
     return service;
 }
