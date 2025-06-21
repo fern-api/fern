@@ -7312,13 +7312,6 @@
                           },
                           "type": "primitive"
                         },
-                        "hire_date": {
-                          "value": {
-                            "value": "2020-10-10T00:00:00Z",
-                            "type": "datetime"
-                          },
-                          "type": "primitive"
-                        },
                         "start_date": {
                           "value": {
                             "value": "2020-10-11T00:00:00Z",
@@ -7805,13 +7798,6 @@
                     "date_of_birth": {
                       "value": {
                         "value": "1990-11-10T00:00:00Z",
-                        "type": "datetime"
-                      },
-                      "type": "primitive"
-                    },
-                    "hire_date": {
-                      "value": {
-                        "value": "2020-10-10T00:00:00Z",
                         "type": "datetime"
                       },
                       "type": "primitive"
@@ -9930,13 +9916,6 @@
                 "date_of_birth": {
                   "value": {
                     "value": "1990-11-10T00:00:00Z",
-                    "type": "datetime"
-                  },
-                  "type": "primitive"
-                },
-                "hire_date": {
-                  "value": {
-                    "value": "2020-10-10T00:00:00Z",
                     "type": "datetime"
                   },
                   "type": "primitive"
