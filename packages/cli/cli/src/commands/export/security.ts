@@ -20,7 +20,7 @@ export function constructEndpointSecurity(apiAuth: ApiAuth): OpenAPIV3.SecurityR
                 [getNameForAuthScheme(scheme)]: []
             })),
         _other: () => {
-            throw new Error("Unknown auth scheme requiremen: " + apiAuth.requirement);
+            throw new Error("Unknown auth scheme requirement: " + apiAuth.requirement);
         }
     });
 }
