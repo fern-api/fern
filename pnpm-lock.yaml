@@ -5566,6 +5566,9 @@ importers:
       '@fern-api/oss-validator':
         specifier: workspace:*
         version: link:../workspace/oss-validator
+      '@fern-api/path-utils':
+        specifier: workspace:*
+        version: link:../../commons/path-utils
       '@fern-api/posthog-manager':
         specifier: workspace:*
         version: link:../posthog-manager
@@ -5635,6 +5638,9 @@ importers:
       '@types/tar':
         specifier: ^6.1.11
         version: 6.1.13
+      '@types/url-join':
+        specifier: 4.0.1
+        version: 4.0.1
       '@types/validate-npm-package-name':
         specifier: ^4.0.0
         version: 4.0.2
@@ -5680,6 +5686,9 @@ importers:
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
+      openapi-types:
+        specifier: ^12.1.3
+        version: 12.1.3
       ora:
         specifier: ^7.0.1
         version: 7.0.1
@@ -5704,6 +5713,9 @@ importers:
       undici:
         specifier: ^6.21.1
         version: 6.21.3
+      url-join:
+        specifier: ^5.0.0
+        version: 5.0.0
       validate-npm-package-name:
         specifier: ^5.0.1
         version: 5.0.1
