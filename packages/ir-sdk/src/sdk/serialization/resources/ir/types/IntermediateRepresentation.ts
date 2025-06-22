@@ -34,6 +34,7 @@ import { ReadmeConfig } from "./ReadmeConfig";
 import { SourceConfig } from "./SourceConfig";
 import { PublishingConfig } from "../../publish/types/PublishingConfig";
 import { DynamicIntermediateRepresentation } from "../../dynamic/resources/ir/types/DynamicIntermediateRepresentation";
+import { AudienceDefinition } from "../../audience/types/AudienceDefinition";
 import { Webhook } from "../../webhooks/types/Webhook";
 
 export const IntermediateRepresentation: core.serialization.ObjectSchema<
@@ -68,6 +69,7 @@ export const IntermediateRepresentation: core.serialization.ObjectSchema<
     publishConfig: PublishingConfig.optional(),
     dynamic: DynamicIntermediateRepresentation.optional(),
     selfHosted: core.serialization.boolean().optional(),
+    audiences: core.serialization.list(AudienceDefinition).optional(),
 });
 
 export declare namespace IntermediateRepresentation {
@@ -100,5 +102,6 @@ export declare namespace IntermediateRepresentation {
         publishConfig?: PublishingConfig.Raw | null;
         dynamic?: DynamicIntermediateRepresentation.Raw | null;
         selfHosted?: boolean | null;
+        audiences?: AudienceDefinition.Raw[] | null;
     }
 }

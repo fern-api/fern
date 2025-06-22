@@ -376,6 +376,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_alpha.getAlpha",
           "name": {
             "originalName": "getAlpha",
@@ -556,6 +557,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_beta.getBeta",
           "name": {
             "originalName": "getBeta",
@@ -736,6 +738,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_gamma.getGamma",
           "name": {
             "originalName": "getGamma",
@@ -916,6 +919,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_delta.getDelta",
           "name": {
             "originalName": "getDelta",
@@ -1096,6 +1100,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_mu.getMu",
           "name": {
             "originalName": "getMu",
@@ -1276,6 +1281,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_omega.getOmega",
           "name": {
             "originalName": "getOmega",
@@ -1456,6 +1462,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_zeta.getZeta",
           "name": {
             "originalName": "getZeta",
@@ -1636,6 +1643,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_eta.getEta",
           "name": {
             "originalName": "getEta",
@@ -2305,5 +2313,6 @@
       "sdkName": "",
       "sdkVersion": ""
     }
-  }
+  },
+  "audiences": []
 }

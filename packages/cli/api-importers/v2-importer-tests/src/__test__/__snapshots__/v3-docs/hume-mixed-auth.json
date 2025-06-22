@@ -10421,6 +10421,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.language_models_v0_evi_language_models_get",
           "name": {
             "originalName": "language_models_v0_evi_language_models_get",
@@ -10628,6 +10629,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.tts_v0_evi_tts_post",
           "name": {
             "originalName": "tts_v0_evi_tts_post",
@@ -10845,6 +10847,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.twilio_webhook_v0_evi_twilio_post",
           "name": {
             "originalName": "twilio_webhook_v0_evi_twilio_post",
@@ -11024,6 +11027,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.voice_v0_evi_voice_post",
           "name": {
             "originalName": "voice_v0_evi_voice_post",
@@ -11150,6 +11154,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.voice_names_v0_evi_voice_names_get",
           "name": {
             "originalName": "voice_names_v0_evi_voice_names_get",
@@ -11530,6 +11535,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_tools.getReturnToolsForUser",
           "name": {
             "originalName": "getReturnToolsForUser",
@@ -11615,6 +11621,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_tools.createNewTool",
           "name": {
             "originalName": "createNewTool",
@@ -11947,6 +11954,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_tools.getReturnToolByToolId",
           "name": {
             "originalName": "getReturnToolByToolId",
@@ -12128,6 +12136,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_tools.addNewToolVersion",
           "name": {
             "originalName": "addNewToolVersion",
@@ -12320,6 +12329,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_tools.deleteToolVersion",
           "name": {
             "originalName": "deleteToolVersion",
@@ -12479,6 +12489,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_tools.updateToolName",
           "name": {
             "originalName": "updateToolName",
@@ -12735,6 +12746,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_tools.getReturnToolByVersionNumber",
           "name": {
             "originalName": "getReturnToolByVersionNumber",
@@ -13003,6 +13015,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_tools.deleteToolVersion_1",
           "name": {
             "originalName": "deleteToolVersion_1",
@@ -13249,6 +13262,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_tools.updateToolVersionDescription",
           "name": {
             "originalName": "updateToolVersionDescription",
@@ -13642,6 +13656,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_prompts.getReturnPromptsForUser",
           "name": {
             "originalName": "getReturnPromptsForUser",
@@ -13727,6 +13742,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_prompts.createNewPrompt",
           "name": {
             "originalName": "createNewPrompt",
@@ -14059,6 +14075,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_prompts.getReturnPromptByPromptId",
           "name": {
             "originalName": "getReturnPromptByPromptId",
@@ -14240,6 +14257,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_prompts.addNewPromptVersion",
           "name": {
             "originalName": "addNewPromptVersion",
@@ -14432,6 +14450,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_prompts.deletePromptVersion",
           "name": {
             "originalName": "deletePromptVersion",
@@ -14591,6 +14610,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_prompts.updatePromptName",
           "name": {
             "originalName": "updatePromptName",
@@ -14847,6 +14867,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_prompts.getReturnPromptByVersionNumber",
           "name": {
             "originalName": "getReturnPromptByVersionNumber",
@@ -15115,6 +15136,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_prompts.deletePromptVersion_1",
           "name": {
             "originalName": "deletePromptVersion_1",
@@ -15361,6 +15383,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_prompts.updatePromptVersionDescription",
           "name": {
             "originalName": "updatePromptVersionDescription",
@@ -15707,6 +15730,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_customVoices.getReturnCustomVoicesForUser",
           "name": {
             "originalName": "getReturnCustomVoicesForUser",
@@ -15792,6 +15816,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_customVoices.createNewCustomVoice",
           "name": {
             "originalName": "createNewCustomVoice",
@@ -15982,6 +16007,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_customVoices.getReturnCustomVoiceByCustomVoiceId",
           "name": {
             "originalName": "getReturnCustomVoiceByCustomVoiceId",
@@ -16163,6 +16189,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_customVoices.addNewCustomVoiceVersion",
           "name": {
             "originalName": "addNewCustomVoiceVersion",
@@ -16355,6 +16382,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_customVoices.deleteCustomVoice",
           "name": {
             "originalName": "deleteCustomVoice",
@@ -16514,6 +16542,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_customVoices.updateCustomVoiceName",
           "name": {
             "originalName": "updateCustomVoiceName",
@@ -16884,6 +16913,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_configs.getReturnConfigsForUser",
           "name": {
             "originalName": "getReturnConfigsForUser",
@@ -16969,6 +16999,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_configs.createNewConfig",
           "name": {
             "originalName": "createNewConfig",
@@ -17303,6 +17334,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_configs.getReturnConfigByVersionId",
           "name": {
             "originalName": "getReturnConfigByVersionId",
@@ -17484,6 +17516,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_configs.addNewConfigVersion",
           "name": {
             "originalName": "addNewConfigVersion",
@@ -17676,6 +17709,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_configs.deleteConfig",
           "name": {
             "originalName": "deleteConfig",
@@ -17835,6 +17869,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_configs.updateConfigName",
           "name": {
             "originalName": "updateConfigName",
@@ -18091,6 +18126,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_configs.getReturnPromptByRevisionId",
           "name": {
             "originalName": "getReturnPromptByRevisionId",
@@ -18359,6 +18395,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_configs.deleteConfigVersion",
           "name": {
             "originalName": "deleteConfigVersion",
@@ -18605,6 +18642,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_configs.updateConfigVersionDescription",
           "name": {
             "originalName": "updateConfigVersionDescription",
@@ -18953,6 +18991,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_chats.getReturnChatsForUser",
           "name": {
             "originalName": "getReturnChatsForUser",
@@ -19276,6 +19315,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_chats.getChatByChatId",
           "name": {
             "originalName": "getChatByChatId",
@@ -19457,6 +19497,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_chats.getReconstructionByChatId",
           "name": {
             "originalName": "getReconstructionByChatId",
@@ -19793,6 +19834,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_chatGroups.getReturnChatGroupsForUser",
           "name": {
             "originalName": "getReturnChatGroupsForUser",
@@ -20116,6 +20158,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_chatGroups.getChatsByChatGroupId",
           "name": {
             "originalName": "getChatsByChatGroupId",
@@ -20441,6 +20484,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_chatGroups.getChatEventsByChatGroupId",
           "name": {
             "originalName": "getChatEventsByChatGroupId",
@@ -20766,6 +20810,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_chatGroups.getReconstructionByChatGroupId",
           "name": {
             "originalName": "getReconstructionByChatGroupId",
@@ -22523,5 +22568,6 @@
       "sdkName": "",
       "sdkVersion": ""
     }
-  }
+  },
+  "audiences": []
 }

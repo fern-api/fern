@@ -1545,6 +1545,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.getCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParam",
           "name": {
             "originalName": "getCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParam",
@@ -1972,6 +1973,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.postSuccessRef",
           "name": {
             "originalName": "postSuccessRef",
@@ -2349,6 +2351,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.postSuccessInlinePropertyDeprecation",
           "name": {
             "originalName": "postSuccessInlinePropertyDeprecation",
@@ -2777,6 +2780,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.postSuccessInlineObjectDeprecation",
           "name": {
             "originalName": "postSuccessInlineObjectDeprecation",
@@ -3157,6 +3161,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.postSuccessInlineBetaBody",
           "name": {
             "originalName": "postSuccessInlineBetaBody",

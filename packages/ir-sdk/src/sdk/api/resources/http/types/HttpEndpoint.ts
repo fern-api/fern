@@ -31,4 +31,5 @@ export interface HttpEndpoint extends FernIr.Declaration {
     v2Examples: FernIr.V2HttpEndpointExamples | undefined;
     transport: FernIr.Transport | undefined;
     source: FernIr.HttpEndpointSource | undefined;
+    audiences: FernIr.AudienceReference[] | undefined;
 }

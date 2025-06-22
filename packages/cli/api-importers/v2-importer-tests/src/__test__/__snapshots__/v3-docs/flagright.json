@@ -43084,6 +43084,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.post-consumer-transaction",
           "name": {
             "originalName": "post-consumer-transaction",
@@ -43466,6 +43467,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.get-consumer-transaction",
           "name": {
             "originalName": "get-consumer-transaction",
@@ -43720,6 +43722,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.post-transaction-event",
           "name": {
             "originalName": "post-transaction-event",
@@ -44089,6 +44092,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.post-consumer-user",
           "name": {
             "originalName": "post-consumer-user",
@@ -44499,6 +44503,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.get-consumer-user",
           "name": {
             "originalName": "get-consumer-user",
@@ -44769,6 +44774,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.post-business-user",
           "name": {
             "originalName": "post-business-user",
@@ -45061,6 +45067,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.get-business-user-userId",
           "name": {
             "originalName": "get-business-user-userId",
@@ -45571,6 +45578,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.post-user-event",
           "name": {
             "originalName": "post-user-event",
@@ -46911,6 +46919,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.post-business-user-event",
           "name": {
             "originalName": "post-business-user-event",
