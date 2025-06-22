@@ -71,7 +71,6 @@
     "@fern-api/openapi-ir-parser": "workspace:*",
     "@fern-api/openapi-ir-to-fern": "workspace:*",
     "@fern-api/oss-validator": "workspace:*",
-    "@fern-api/path-utils": "workspace:*",
     "@fern-api/posthog-manager": "workspace:*",
     "@fern-api/project-loader": "workspace:*",
     "@fern-api/register": "workspace:*",

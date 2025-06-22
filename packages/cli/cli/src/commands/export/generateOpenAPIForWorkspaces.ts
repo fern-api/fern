@@ -1,10 +1,8 @@
 import { writeFile } from "fs/promises";
 import yaml from "js-yaml";
 
-import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
-import { basename } from "@fern-api/path-utils";
 import { Project } from "@fern-api/project-loader";
 
 import { CliContext } from "../../cli-context/CliContext";
@@ -42,7 +40,6 @@ export async function generateOpenAPIForWorkspaces({
                     mode: "openapi"
                 });
 
-                const filename: string = basename(outputPath);
                 if (outputPath.endsWith(".json")) {
                     await writeFile(outputPath, JSON.stringify(openapi, undefined, 2));
                 } else {
