@@ -44,7 +44,7 @@ export async function generateOpenAPIForWorkspaces({
 
                 const filename: string = basename(outputPath);
                 if (outputPath.endsWith(".json")) {
-                    await writeFile(filename, JSON.stringify(openapi, undefined, 2));
+                    await writeFile(outputPath, JSON.stringify(openapi, undefined, 2));
                 } else {
                     await writeFile(outputPath, yaml.dump(openapi));
                 }
