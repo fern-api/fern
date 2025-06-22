@@ -21,14 +21,10 @@ export async function generateOpenAPIForWorkspaces({
 }) {
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
-            if (!(workspace instanceof FernWorkspace)) {
-                cliContext.failWithoutThrowing("Only Fern Definition APIs are supported for OpenAPI export.");
-                return;
-            }
-
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
-                const ir = await generateIntermediateRepresentation({
-                    workspace,
+                const fernWorkspace = await workspace.toFernWorkspace({ context });
+                const ir = generateIntermediateRepresentation({
+                    workspace: fernWorkspace,
                     audiences: { type: "all" },
                     generationLanguage: undefined,
                     keywords: undefined,
@@ -38,7 +34,7 @@ export async function generateOpenAPIForWorkspaces({
                     version: undefined,
                     packageName: undefined,
                     context,
-                    sourceResolver: new SourceResolverImpl(context, workspace)
+                    sourceResolver: new SourceResolverImpl(context, fernWorkspace)
                 });
                 const openapi = convertIrToOpenApi({
                     apiName: workspace.workspaceName ?? "api",
