@@ -40,11 +40,10 @@ export async function generateOpenAPIForWorkspaces({
                     mode: "openapi"
                 });
 
-                if (outputPath.endsWith(".json")) {
-                    await writeFile(outputPath, JSON.stringify(openapi, undefined, 2));
-                } else {
-                    await writeFile(outputPath, yaml.dump(openapi));
-                }
+                await writeFile(
+                    outputPath,
+                    outputPath.endsWith(".json") ? JSON.stringify(openapi, undefined, 2) : yaml.dump(openapi)
+                );
             });
         })
     );
