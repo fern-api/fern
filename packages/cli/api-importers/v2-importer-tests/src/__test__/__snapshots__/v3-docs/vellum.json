@@ -30372,6 +30372,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_deployments.retrieve",
           "name": {
             "originalName": "retrieve",
@@ -30650,6 +30651,9 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [
+            "customers"
+          ],
           "id": "endpoint_.execute-prompt-stream",
           "name": {
             "originalName": "execute-prompt-stream",
@@ -30833,6 +30837,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.execute-workflow-stream",
           "name": {
             "originalName": "execute-workflow-stream",
@@ -31163,6 +31168,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.generate",
           "name": {
             "originalName": "generate",
@@ -31509,6 +31515,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.generate-stream",
           "name": {
             "originalName": "generate-stream",
@@ -31824,6 +31831,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.search",
           "name": {
             "originalName": "search",
@@ -32101,6 +32109,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.submit-completion-actuals",
           "name": {
             "originalName": "submit-completion-actuals",
@@ -32267,6 +32276,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_documentIndexes.create",
           "name": {
             "originalName": "create",
@@ -32858,6 +32868,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_documents.list",
           "name": {
             "originalName": "list",
@@ -33112,6 +33123,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_documents.upload",
           "name": {
             "originalName": "upload",
@@ -33424,6 +33436,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_modelVersions.retrieve",
           "name": {
             "originalName": "retrieve",
@@ -33751,6 +33764,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_modelVersions.model_version_compile_prompt",
           "name": {
             "originalName": "model_version_compile_prompt",
@@ -34005,6 +34019,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_registeredPrompts.register_prompt",
           "name": {
             "originalName": "register_prompt",
@@ -34413,6 +34428,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_sandboxes.upsert_sandbox_scenario",
           "name": {
             "originalName": "upsert_sandbox_scenario",
@@ -34913,6 +34929,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_sandboxes.delete_sandbox_scenario",
           "name": {
             "originalName": "delete_sandbox_scenario",
@@ -35129,6 +35146,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_testSuites.upsert_test_suite_test_case",
           "name": {
             "originalName": "upsert_test_suite_test_case",
@@ -35483,6 +35501,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_testSuites.delete_test_suite_test_case",
           "name": {
             "originalName": "delete_test_suite_test_case",

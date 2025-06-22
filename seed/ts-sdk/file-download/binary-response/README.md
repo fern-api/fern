@@ -55,9 +55,7 @@ const response = await client.service.downloadFile(...);
 const stream: ReadableStream<Uint8Array> = response.stream();
 // const arrayBuffer: ArrayBuffer = await response.arrayBuffer();
 // const blob: Blob = response.blob();
-// const bytes: Uint8Array = response.bytes();
-// You can only use the response body once, so you must choose one of the above methods.
-// If you want to check if the response body has been used, you can use the following property.
+// const stream: Uint8Array = response.bytes();
 const bodyUsed = response.bodyUsed;
 ```
 
@@ -80,9 +78,7 @@ import { pipeline } from 'stream/promises';
 const response = await client.service.downloadFile(...);
 
 const stream = response.stream();
-const nodeStream = Readable.fromWeb(
-    stream as import("stream/web").ReadableStream<Uint8Array>
-);
+const nodeStream = Readable.fromWeb(stream);
 const writeStream = createWriteStream('path/to/file');
 
 await pipeline(nodeStream, writeStream);
@@ -118,7 +114,7 @@ const response = await client.service.downloadFile(...);
 
 const blob = await response.blob();
 const arrayBuffer = await blob.arrayBuffer();
-await writeFile('path/to/file', Buffer.from(arrayBuffer));
+await writeFile('output.bin', Buffer.from(arrayBuffer));
 ```
 
 </details>
@@ -155,7 +151,7 @@ await writeFile('path/to/file', bytes);
 const response = await client.service.downloadFile(...);
 
 const stream = response.stream();
-await Bun.write('path/to/file', new Response(stream));
+await Bun.write('path/to/file', stream);
 ```
 
 </details>
@@ -184,6 +180,20 @@ const response = await client.service.downloadFile(...);
 
 const blob = await response.blob();
 await Bun.write('path/to/file', blob);
+```
+
+</details>
+</blockquote>
+
+<blockquote>
+<details>
+<summary>Bytes (UIntArray8)</summary>
+
+```ts
+const response = await client.service.downloadFile(...);
+
+const bytes = await response.bytes();
+await Bun.write('path/to/file', bytes);
 ```
 
 </details>

@@ -125,6 +125,7 @@ exports[`ir > {"name":"auth-header-prefix"} 1`] = `
         "environments": null,
         "generatorConfig": null
     },
+    "audiences": null,
     "subpackages": {},
     "rootPackage": {
         "fernFilepath": {
@@ -1514,6 +1515,7 @@ exports[`ir > {"name":"extended-examples"} 1`] = `
         "environments": null,
         "generatorConfig": null
     },
+    "audiences": null,
     "subpackages": {
         "subpackage_app": {
             "name": {
@@ -2092,10 +2094,12 @@ exports[`ir > {"name":"file-upload"} 1`] = `
                     "transport": null,
                     "v2Examples": null,
                     "source": null,
+                    "audiences": null,
                     "availability": null,
                     "docs": null
                 }
-            ]
+            ],
+            "audiences": null
         }
     },
     "constants": {
@@ -2406,6 +2410,7 @@ exports[`ir > {"name":"file-upload"} 1`] = `
         "environments": null,
         "generatorConfig": null
     },
+    "audiences": null,
     "subpackages": {
         "subpackage_file-upload": {
             "name": {
@@ -9135,6 +9140,7 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
                     "transport": null,
                     "v2Examples": null,
                     "source": null,
+                    "audiences": null,
                     "availability": null,
                     "docs": null
                 },
@@ -9214,10 +9220,12 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
                     "transport": null,
                     "v2Examples": null,
                     "source": null,
+                    "audiences": null,
                     "availability": null,
                     "docs": null
                 }
-            ]
+            ],
+            "audiences": null
         },
         "service_service-url": {
             "availability": null,
@@ -9357,10 +9365,12 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
                     "transport": null,
                     "v2Examples": null,
                     "source": null,
+                    "audiences": null,
                     "availability": null,
                     "docs": null
                 }
-            ]
+            ],
+            "audiences": null
         }
     },
     "constants": {
@@ -9867,6 +9877,7 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
         },
         "generatorConfig": null
     },
+    "audiences": null,
     "subpackages": {
         "subpackage_endpoint-urls": {
             "name": {
@@ -10134,6 +10145,7 @@ exports[`ir > {"name":"navigation-points-to"} 1`] = `
         "environments": null,
         "generatorConfig": null
     },
+    "audiences": null,
     "subpackages": {
         "subpackage_subpackage": {
             "name": {
@@ -12350,10 +12362,12 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                     "transport": null,
                     "v2Examples": null,
                     "source": null,
+                    "audiences": null,
                     "availability": null,
                     "docs": null
                 }
-            ]
+            ],
+            "audiences": null
         }
     },
     "constants": {
@@ -12813,6 +12827,7 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
         "environments": null,
         "generatorConfig": null
     },
+    "audiences": null,
     "subpackages": {
         "subpackage_nested": {
             "name": {
@@ -13635,10 +13650,12 @@ exports[`ir > {"name":"packages"} 1`] = `
                     "transport": null,
                     "v2Examples": null,
                     "source": null,
+                    "audiences": null,
                     "availability": null,
                     "docs": null
                 }
-            ]
+            ],
+            "audiences": null
         },
         "service_package": {
             "availability": null,
@@ -13703,7 +13720,8 @@ exports[`ir > {"name":"packages"} 1`] = `
             "transport": {
                 "type": "http"
             },
-            "endpoints": []
+            "endpoints": [],
+            "audiences": null
         }
     },
     "constants": {
@@ -14146,6 +14164,7 @@ exports[`ir > {"name":"packages"} 1`] = `
         "environments": null,
         "generatorConfig": null
     },
+    "audiences": null,
     "subpackages": {
         "subpackage_package": {
             "name": {
@@ -16000,6 +16019,7 @@ exports[`ir > {"name":"response-property"} 1`] = `
                     "transport": null,
                     "v2Examples": null,
                     "source": null,
+                    "audiences": null,
                     "availability": null,
                     "docs": null
                 },
@@ -16720,10 +16740,12 @@ exports[`ir > {"name":"response-property"} 1`] = `
                     "transport": null,
                     "v2Examples": null,
                     "source": null,
+                    "audiences": null,
                     "availability": null,
                     "docs": null
                 }
-            ]
+            ],
+            "audiences": null
         }
     },
     "constants": {
@@ -17277,6 +17299,7 @@ exports[`ir > {"name":"response-property"} 1`] = `
         "environments": null,
         "generatorConfig": null
     },
+    "audiences": null,
     "subpackages": {
         "subpackage_service": {
             "name": {
@@ -18493,10 +18516,14 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
                     "transport": null,
                     "v2Examples": null,
                     "source": null,
+                    "audiences": [
+                        "internal"
+                    ],
                     "availability": null,
                     "docs": null
                 }
-            ]
+            ],
+            "audiences": null
         }
     },
     "constants": {
@@ -18990,6 +19017,10 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
         "environments": null,
         "generatorConfig": null
     },
+    "audiences": [
+        "internal",
+        "test"
+    ],
     "subpackages": {
         "subpackage_commons": {
             "name": {
@@ -22002,10 +22033,14 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                     "transport": null,
                     "v2Examples": null,
                     "source": null,
+                    "audiences": [
+                        "test"
+                    ],
                     "availability": null,
                     "docs": null
                 }
-            ]
+            ],
+            "audiences": null
         }
     },
     "constants": {
@@ -22603,6 +22638,10 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
         "environments": null,
         "generatorConfig": null
     },
+    "audiences": [
+        "internal",
+        "test"
+    ],
     "subpackages": {
         "subpackage_commons": {
             "name": {
@@ -30722,6 +30761,9 @@ exports[`ir > {"name":"simple"} 1`] = `
                     "transport": null,
                     "v2Examples": null,
                     "source": null,
+                    "audiences": [
+                        "internal"
+                    ],
                     "availability": null,
                     "docs": null
                 },
@@ -32567,6 +32609,9 @@ exports[`ir > {"name":"simple"} 1`] = `
                     "transport": null,
                     "v2Examples": null,
                     "source": null,
+                    "audiences": [
+                        "test"
+                    ],
                     "availability": null,
                     "docs": null
                 },
@@ -34802,6 +34847,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                     "transport": null,
                     "v2Examples": null,
                     "source": null,
+                    "audiences": null,
                     "availability": null,
                     "docs": null
                 },
@@ -35342,10 +35388,12 @@ exports[`ir > {"name":"simple"} 1`] = `
                     "transport": null,
                     "v2Examples": null,
                     "source": null,
+                    "audiences": null,
                     "availability": null,
                     "docs": null
                 }
-            ]
+            ],
+            "audiences": null
         }
     },
     "constants": {
@@ -37822,6 +37870,10 @@ exports[`ir > {"name":"simple"} 1`] = `
         "environments": null,
         "generatorConfig": null
     },
+    "audiences": [
+        "internal",
+        "test"
+    ],
     "subpackages": {
         "subpackage_commons": {
             "name": {
@@ -38308,6 +38360,7 @@ exports[`ir > {"name":"streaming"} 1`] = `
                     "transport": null,
                     "v2Examples": null,
                     "source": null,
+                    "audiences": null,
                     "availability": null,
                     "docs": null
                 },
@@ -38594,10 +38647,12 @@ exports[`ir > {"name":"streaming"} 1`] = `
                     "transport": null,
                     "v2Examples": null,
                     "source": null,
+                    "audiences": null,
                     "availability": null,
                     "docs": null
                 }
-            ]
+            ],
+            "audiences": null
         }
     },
     "constants": {
@@ -38912,6 +38967,7 @@ exports[`ir > {"name":"streaming"} 1`] = `
         "environments": null,
         "generatorConfig": null
     },
+    "audiences": null,
     "subpackages": {
         "subpackage_streaming": {
             "name": {
@@ -39825,10 +39881,12 @@ exports[`ir > {"name":"variables"} 1`] = `
                     "transport": null,
                     "v2Examples": null,
                     "source": null,
+                    "audiences": null,
                     "availability": null,
                     "docs": null
                 }
-            ]
+            ],
+            "audiences": null
         }
     },
     "constants": {
@@ -40294,6 +40352,7 @@ exports[`ir > {"name":"variables"} 1`] = `
         "environments": null,
         "generatorConfig": null
     },
+    "audiences": null,
     "subpackages": {
         "subpackage_commons": {
             "name": {
@@ -40693,6 +40752,7 @@ exports[`ir > {"name":"webhooks"} 1`] = `
         "environments": null,
         "generatorConfig": null
     },
+    "audiences": null,
     "subpackages": {
         "subpackage_webhooks": {
             "name": {

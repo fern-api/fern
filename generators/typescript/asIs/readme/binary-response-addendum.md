@@ -16,9 +16,7 @@ import { pipeline } from 'stream/promises';
 
 <%= snippet %>
 const stream = response.stream();
-const nodeStream = Readable.fromWeb(
-    stream as import("stream/web").ReadableStream<Uint8Array>
-);
+const nodeStream = Readable.fromWeb(stream);
 const writeStream = createWriteStream('path/to/file');
 
 await pipeline(nodeStream, writeStream);
@@ -52,7 +50,7 @@ import { writeFile } from 'fs/promises';
 <%= snippet %>
 const blob = await response.blob();
 const arrayBuffer = await blob.arrayBuffer();
-await writeFile('path/to/file', Buffer.from(arrayBuffer));
+await writeFile('output.bin', Buffer.from(arrayBuffer));
 ```
 
 </details>
@@ -87,7 +85,7 @@ await writeFile('path/to/file', bytes);
 ```ts
 <%= snippet %>
 const stream = response.stream();
-await Bun.write('path/to/file', new Response(stream));
+await Bun.write('path/to/file', stream);
 ```
 
 </details>
@@ -114,6 +112,19 @@ await Bun.write('path/to/file', arrayBuffer);
 <%= snippet %>
 const blob = await response.blob();
 await Bun.write('path/to/file', blob);
+```
+
+</details>
+</blockquote>
+
+<blockquote>
+<details>
+<summary>Bytes (UIntArray8)</summary>
+
+```ts
+<%= snippet %>
+const bytes = await response.bytes();
+await Bun.write('path/to/file', bytes);
 ```
 
 </details>

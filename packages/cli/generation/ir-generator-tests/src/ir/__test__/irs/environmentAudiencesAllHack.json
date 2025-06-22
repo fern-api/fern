@@ -1634,6 +1634,9 @@
                     "transport": null,
                     "v2Examples": null,
                     "source": null,
+                    "audiences": [
+                        "external"
+                    ],
                     "availability": null,
                     "docs": "Add a movie to the database"
                 },
@@ -3504,10 +3507,12 @@
                     "transport": null,
                     "v2Examples": null,
                     "source": null,
+                    "audiences": null,
                     "availability": null,
                     "docs": "Retrieve a movie from the database based on the ID"
                 }
-            ]
+            ],
+            "audiences": null
         }
     },
     "constants": {
@@ -4530,6 +4535,11 @@
         },
         "generatorConfig": null
     },
+    "audiences": [
+        "external",
+        "internal",
+        "development"
+    ],
     "subpackages": {
         "subpackage_imdb": {
             "name": {

@@ -7389,6 +7389,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_audio.ExperimentalStreamCreate",
           "name": {
             "originalName": "ExperimentalStreamCreate",
@@ -8124,6 +8125,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_audio.GetSpeech",
           "name": {
             "originalName": "GetSpeech",
@@ -8914,6 +8916,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_audio.GetStream",
           "name": {
             "originalName": "GetStream",
@@ -9332,6 +9335,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_auth.CreateAccessToken",
           "name": {
             "originalName": "CreateAccessToken",
@@ -9513,6 +9517,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_apikey.ListAPIKeys",
           "name": {
             "originalName": "ListAPIKeys",
@@ -9595,6 +9600,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_apikey.CreateAPIKey",
           "name": {
             "originalName": "CreateAPIKey",
@@ -9801,6 +9807,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_apikey.DeleteAPIKey",
           "name": {
             "originalName": "DeleteAPIKey",
@@ -10022,6 +10029,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_apikey.UpdateApiKey",
           "name": {
             "originalName": "UpdateApiKey",
@@ -10242,6 +10250,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_voices.GetVoices",
           "name": {
             "originalName": "GetVoices",
@@ -10393,6 +10402,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_voices.CreateVoice",
           "name": {
             "originalName": "CreateVoice",
@@ -10844,6 +10854,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_voices.DeleteVoice",
           "name": {
             "originalName": "DeleteVoice",

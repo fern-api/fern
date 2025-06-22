@@ -452,7 +452,28 @@ export class ExampleTypeFactory {
                 const allProperties = this.getAllProperties(schema);
                 const requiredProperties = this.getAllRequiredProperties(schema);
                 for (const [property, schema] of Object.entries(allProperties)) {
-                    if (skipReadonly && schema.readonly) {
+                    // Use the _visit function for type-safe property checks
+                    if (
+                        (skipReadonly && schema.readonly) ||
+                        schema.schema._visit<boolean>({
+                            // ignores a property if it's deprecated and optional
+                            optional: (optionalSchema) =>
+                                typeof optionalSchema.availability === "string" &&
+                                optionalSchema.availability === "Deprecated",
+                            // For all other schema types, do not skip
+                            primitive: () => false,
+                            object: () => false,
+                            array: () => false,
+                            map: () => false,
+                            enum: () => false,
+                            reference: () => false,
+                            literal: () => false,
+                            oneOf: () => false,
+                            nullable: () => false,
+                            unknown: () => false,
+                            _other: () => false
+                        })
+                    ) {
                         continue;
                     }
                     const required = property in requiredProperties;

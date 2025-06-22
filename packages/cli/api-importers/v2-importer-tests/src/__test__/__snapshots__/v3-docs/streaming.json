@@ -924,6 +924,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.user_stream",
           "name": {
             "originalName": "user_stream",
@@ -1024,6 +1025,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.user",
           "name": {
             "originalName": "user",
@@ -1124,6 +1126,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.user_v2_stream",
           "name": {
             "originalName": "user_v2_stream",
@@ -1224,6 +1227,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.user_v2",
           "name": {
             "originalName": "user_v2",
@@ -1324,6 +1328,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.user_v3_stream",
           "name": {
             "originalName": "user_v3_stream",
@@ -1436,6 +1441,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.user_v3",
           "name": {
             "originalName": "user_v3",

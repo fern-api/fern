@@ -348,6 +348,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.listUsers",
           "name": {
             "originalName": "listUsers",
@@ -473,6 +474,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.headMethodsShouldNotDefineAResponseBody",
           "name": {
             "originalName": "headMethodsShouldNotDefineAResponseBody",

@@ -87,7 +87,8 @@ export abstract class AbstractSpecConverter<
                     sdkVersion: "",
                     userAgent: undefined
                 }
-            }
+            },
+            audiences: undefined
         };
     }
 
@@ -146,7 +147,8 @@ export abstract class AbstractSpecConverter<
                     wireValue: "errorInstanceId",
                     name: "errorInstanceId"
                 })
-            }
+            },
+            audiences: this.audiences.type === "select" ? this.audiences.audiences : undefined
         };
 
         if (!this.irGraph.hasNoAudiences()) {
@@ -477,7 +479,8 @@ export abstract class AbstractSpecConverter<
             availability: undefined,
             endpoints: [],
             transport: undefined,
-            encoding: undefined
+            encoding: undefined,
+            audiences: undefined
         };
     }
 

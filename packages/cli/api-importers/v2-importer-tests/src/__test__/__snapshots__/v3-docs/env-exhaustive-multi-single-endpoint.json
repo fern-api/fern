@@ -299,6 +299,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.list",
           "name": {
             "originalName": "list",
@@ -396,6 +397,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.list",
           "name": {
             "originalName": "list",
@@ -469,7 +471,8 @@
         }
       ],
       "pathParameters": [],
-      "headers": []
+      "headers": [],
+      "audiences": []
     }
   },
   "webhookGroups": {},
@@ -506,5 +509,6 @@
       "sdkName": "",
       "sdkVersion": ""
     }
-  }
+  },
+  "audiences": []
 }

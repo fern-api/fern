@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fixed ExampleTypeFactory to ignore generating parameters in example when that parameter is both optional and deprecated
+      type: fix
+  irVersion: 58
+  createdAt: "2025-06-21"
+  version: 0.64.15
+
+- changelogEntry:
+    - summary: |
         Separate nullable and optional property handling in IR conversion.
       type: fix
   irVersion: 58

@@ -225,6 +225,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.upload-file",
           "name": {
             "originalName": "upload-file",
@@ -384,6 +385,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.upload-list",
           "name": {
             "originalName": "upload-list",
@@ -545,6 +547,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.upload-with-content-type",
           "name": {
             "originalName": "upload-with-content-type",
@@ -816,7 +819,8 @@
         }
       ],
       "pathParameters": [],
-      "headers": []
+      "headers": [],
+      "audiences": []
     }
   },
   "webhookGroups": {},
@@ -853,5 +857,6 @@
       "sdkName": "",
       "sdkVersion": ""
     }
-  }
+  },
+  "audiences": []
 }

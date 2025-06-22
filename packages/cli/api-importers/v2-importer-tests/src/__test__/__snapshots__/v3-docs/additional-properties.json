@@ -319,6 +319,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.getObjectWithArrayOfObjects",
           "name": {
             "originalName": "getObjectWithArrayOfObjects",
@@ -471,6 +472,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.getImplicitObjectWithArrayOfObjects",
           "name": {
             "originalName": "getImplicitObjectWithArrayOfObjects",
