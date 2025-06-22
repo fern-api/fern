@@ -1,4 +1,10 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.8.1
+  changelogEntry:
+    - summary: Fix binary response README.md examples
+      type: fix
+  createdAt: '2025-06-22'
+  irVersion: 58
 - version: 1.8.0
   changelogEntry:
     - summary: |
