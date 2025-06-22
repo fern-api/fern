@@ -312,7 +312,7 @@ function convertPrimitiveType(primitiveType: PrimitiveType): OpenAPIV3.NonArrayS
                 },
                 float: () => {
                     return {
-                        type: "integer",
+                        type: "number",
                         format: "float"
                     };
                 },
