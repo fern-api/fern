@@ -1,7 +1,8 @@
-import { writeFile } from "fs/promises";
+import { mkdir, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
+import { AbsoluteFilePath, dirname } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { Project } from "@fern-api/project-loader";
 
@@ -15,7 +16,7 @@ export async function generateOpenAPIForWorkspaces({
 }: {
     project: Project;
     cliContext: CliContext;
-    outputPath: string;
+    outputPath: AbsoluteFilePath;
 }) {
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
@@ -40,6 +41,7 @@ export async function generateOpenAPIForWorkspaces({
                     mode: "openapi"
                 });
 
+                await mkdir(dirname(outputPath), { recursive: true });
                 await writeFile(
                     outputPath,
                     outputPath.endsWith(".json") ? JSON.stringify(openapi, undefined, 2) : yaml.dump(openapi)
