@@ -7,9 +7,6 @@
   createdAt: '2025-06-16'
   irVersion: 58
 - version: 2.37.2
-  changelogEntry:
-    - summary: |
-        Remove Content-Type from headers when request has no body
       type: fix
   createdAt: '2025-06-16'
   irVersion: 58
