@@ -9,7 +9,7 @@ import { EndpointRequest } from "./request/EndpointRequest";
 import { getEndpointRequest } from "./utils/getEndpointRequest";
 import { getEndpointReturnTypes } from "./utils/getEndpointReturnTypes";
 import { getEndpointReturnZeroValues } from "./utils/getEndpointReturnZeroValue";
-import { getRawEndpointReturnTypes } from "./utils/getRawEndpointReturnTypes";
+import { getRawEndpointReturnTypeReference } from "./utils/getRawEndpointReturnTypeReference";
 
 export abstract class AbstractEndpointGenerator {
     protected readonly context: SdkGeneratorContext;
@@ -39,7 +39,7 @@ export abstract class AbstractEndpointGenerator {
                 : this.context.getVariadicRequestOptionParameter()
         ].filter((p): p is go.Parameter => p != null);
         const returnType = getEndpointReturnTypes({ context: this.context, endpoint });
-        const rawReturnType = getRawEndpointReturnTypes({ context: this.context, endpoint });
+        const rawReturnTypeReference = getRawEndpointReturnTypeReference({ context: this.context, endpoint });
         const returnZeroValue = getEndpointReturnZeroValues({ context: this.context, endpoint });
         return {
             allParameters,
@@ -48,7 +48,7 @@ export abstract class AbstractEndpointGenerator {
             request,
             requestParameter,
             returnType,
-            rawReturnType,
+            rawReturnTypeReference,
             returnZeroValue
         };
     }

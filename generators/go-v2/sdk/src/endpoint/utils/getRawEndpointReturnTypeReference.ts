@@ -5,16 +5,16 @@ import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 
-export function getRawEndpointReturnTypes({
+export function getRawEndpointReturnTypeReference({
     context,
     endpoint
 }: {
     context: SdkGeneratorContext;
     endpoint: HttpEndpoint;
-}): go.Type | undefined {
+}): go.TypeReference {
     const response = endpoint.response;
     if (response?.body == null) {
-        return undefined;
+        return wrapWithRawResponseType({ context, returnType: go.Type.any() });
     }
     const body = response.body;
     switch (body.type) {
@@ -36,7 +36,7 @@ export function getRawEndpointReturnTypes({
                 returnType: go.Type.reference(context.getStreamTypeReference(context.getStreamPayload(body.value)))
             });
         case "streamParameter":
-            return go.Type.any();
+            return context.getRawResponseTypeReference(go.Type.any());
         case "text":
             return wrapWithRawResponseType({ context, returnType: go.Type.string() });
         default:
@@ -50,6 +50,6 @@ function wrapWithRawResponseType({
 }: {
     context: SdkGeneratorContext;
     returnType: go.Type;
-}): go.Type {
-    return go.Type.pointer(go.Type.reference(context.getRawResponseTypeReference(returnType)));
+}): go.TypeReference {
+    return context.getRawResponseTypeReference(returnType);
 }

@@ -102,7 +102,7 @@ export class Type extends AstNode {
     public write(writer: Writer, { comment }: { comment?: boolean } = {}): void {
         switch (this.internalType.type) {
             case "any":
-                writer.write("interface{}");
+                writer.write("any");
                 break;
             case "bool":
                 writer.write("bool");

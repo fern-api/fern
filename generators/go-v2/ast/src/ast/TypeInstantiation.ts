@@ -407,7 +407,7 @@ export class TypeInstantiation extends AstNode {
         writer: Writer;
         value: any[]; // eslint-disable-line @typescript-eslint/no-explicit-any
     }): void {
-        writer.write("[]interface{}");
+        writer.write("[]any");
         if (value.length === 0) {
             writer.write("{}");
             return;
@@ -423,7 +423,7 @@ export class TypeInstantiation extends AstNode {
     }
 
     private writeAnyObject({ writer, value }: { writer: Writer; value: object }): void {
-        writer.write("map[string]interface{}");
+        writer.write("map[string]any");
         const entries = Object.entries(value);
         if (entries.length === 0) {
             writer.write("{}");

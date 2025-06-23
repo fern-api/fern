@@ -74,7 +74,7 @@ func (r RawClient) Delete(
 	ctx context.Context,
 	paymentId string,
 	opts ...option.RequestOption,
-) error {
+) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -89,7 +89,7 @@ func (r RawClient) Delete(
 		r.header.Clone(),
 		options.ToHeader(),
 	)
-	_, err := r.caller.Call(
+	raw, err := r.caller.Call(
 		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodDelete,
@@ -103,5 +103,9 @@ func (r RawClient) Delete(
 	if err != nil {
 		return err
 	}
-	return nil
+	return &core.Response[any]{
+		StatusCode: raw.StatusCode,
+		Header:     raw.Header,
+		Body:       nil,
+	}, nil
 }
