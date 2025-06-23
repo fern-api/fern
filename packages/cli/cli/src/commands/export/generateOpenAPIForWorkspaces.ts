@@ -17,7 +17,7 @@ export async function generateOpenAPIForWorkspaces({
     project: Project;
     cliContext: CliContext;
     outputPath: AbsoluteFilePath;
-}) {
+}): Promise<void> {
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
