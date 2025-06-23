@@ -290,10 +290,8 @@ export class ApiReferenceNodeConverter {
                 const subpackageId = subpackage != null ? ApiDefinitionHolder.getSubpackageId(subpackage) : undefined;
                 if (subpackageId === undefined) {
                     this.taskContext.logger.error(
-
                         `Cannot find identifier ${locator} in api definition. ` +
                             `Skipping addition as subsection to section ${section.title}`
-
                     );
                 }
             })
