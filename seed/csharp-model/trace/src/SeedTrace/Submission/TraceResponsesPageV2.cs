@@ -5,8 +5,12 @@ using SeedTrace.Core;
 namespace SeedTrace;
 
 [Serializable]
-public record TraceResponsesPageV2
+public record TraceResponsesPageV2 : IJsonOnDeserialized
 {
+    [JsonExtensionData]
+    private readonly IDictionary<string, JsonElement> _extensionData =
+        new Dictionary<string, JsonElement>();
+
     /// <summary>
     /// If present, use this to load subsequent pages.
     /// The offset is the id of the next trace response to load.
@@ -17,15 +21,11 @@ public record TraceResponsesPageV2
     [JsonPropertyName("traceResponses")]
     public IEnumerable<TraceResponseV2> TraceResponses { get; set; } = new List<TraceResponseV2>();
 
-    /// <summary>
-    /// Additional properties received from the response, if any.
-    /// </summary>
-    /// <remarks>
-    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
-    /// </remarks>
-    [JsonExtensionData]
-    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
-        new Dictionary<string, JsonElement>();
+    [JsonIgnore]
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+
+    void IJsonOnDeserialized.OnDeserialized() =>
+        AdditionalProperties.CopyFromExtensionData(_extensionData);
 
     /// <inheritdoc />
     public override string ToString()

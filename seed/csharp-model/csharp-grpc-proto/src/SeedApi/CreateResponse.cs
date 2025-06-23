@@ -6,20 +6,17 @@ using ProtoUserV1 = User.V1;
 namespace SeedApi;
 
 [Serializable]
-public record CreateResponse
+public record CreateResponse : IJsonOnDeserialized
 {
+    [JsonExtensionData]
+    private readonly IDictionary<string, JsonElement> _extensionData =
+        new Dictionary<string, JsonElement>();
+
     [JsonPropertyName("user")]
     public UserModel? User { get; set; }
 
-    /// <summary>
-    /// Additional properties received from the response, if any.
-    /// </summary>
-    /// <remarks>
-    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
-    /// </remarks>
-    [JsonExtensionData]
-    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
-        new Dictionary<string, JsonElement>();
+    [JsonIgnore]
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
 
     /// <summary>
     /// Returns a new CreateResponse type from its Protobuf-equivalent representation.
@@ -31,6 +28,9 @@ public record CreateResponse
             User = value.User != null ? UserModel.FromProto(value.User) : null,
         };
     }
+
+    void IJsonOnDeserialized.OnDeserialized() =>
+        AdditionalProperties.CopyFromExtensionData(_extensionData);
 
     /// <summary>
     /// Maps the CreateResponse type into its Protobuf-equivalent representation.
