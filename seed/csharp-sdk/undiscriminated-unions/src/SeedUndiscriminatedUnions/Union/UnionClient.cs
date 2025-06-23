@@ -142,7 +142,7 @@ public partial class UnionClient
     /// );
     /// </code></example>
     public async Task<bool> UpdateMetadataAsync(
-        OneOf<object?, NamedMetadata> request,
+        OneOf<Dictionary<string, object?>?, NamedMetadata> request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

@@ -17,7 +17,7 @@ public partial class ServiceClient
     /// <example><code>
     /// await client.Service.GetResourceAsync("rsc-xyz");
     /// </code></example>
-    public async Task<object> GetResourceAsync(
+    public async Task<Resource> GetResourceAsync(
         string resourceId,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -43,7 +43,7 @@ public partial class ServiceClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<object>(responseBody)!;
+                return JsonUtils.Deserialize<Resource>(responseBody)!;
             }
             catch (JsonException e)
             {
@@ -66,7 +66,7 @@ public partial class ServiceClient
     ///     new ListResourcesRequest { PageLimit = 10, BeforeDate = new DateOnly(2023, 1, 1) }
     /// );
     /// </code></example>
-    public async Task<IEnumerable<object>> ListResourcesAsync(
+    public async Task<IEnumerable<Resource>> ListResourcesAsync(
         ListResourcesRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -93,7 +93,7 @@ public partial class ServiceClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<IEnumerable<object>>(responseBody)!;
+                return JsonUtils.Deserialize<IEnumerable<Resource>>(responseBody)!;
             }
             catch (JsonException e)
             {

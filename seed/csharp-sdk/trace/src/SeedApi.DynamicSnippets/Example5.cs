@@ -19,17 +19,14 @@ public class Example5
             new StoreTracedTestCaseRequest{
                 Result = new TestCaseResultWithStdout{
                     Result = new TestCaseResult{
-                        ExpectedResult = new Dictionary<string, object>() {
-                            ["type"] = "integerValue",
-                            ["value"] = 1,
-                        },
-                        ActualResult = new Dictionary<string, object>() {
-                            ["type"] = "value",
-                            ["value"] = new Dictionary<string, object>() {
-                                ["type"] = "integerValue",
-                                ["value"] = 1,
-                            },
-                        },
+                        ExpectedResult = new VariableValue(
+
+                        ),
+                        ActualResult = new ActualResult(
+                            new VariableValue(
+
+                            )
+                        ),
                         Passed = true
                     },
                     Stdout = "stdout"
@@ -38,10 +35,9 @@ public class Example5
                     new TraceResponse{
                         SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                         LineNumber = 1,
-                        ReturnValue = new Dictionary<string, object>() {
-                            ["type"] = "integerValue",
-                            ["value"] = 1,
-                        },
+                        ReturnValue = new DebugVariableValue(
+
+                        ),
                         ExpressionLocation = new ExpressionLocation{
                             Start = 1,
                             Offset = 1
@@ -53,19 +49,17 @@ public class Example5
                                 LineNumber = 1,
                                 Scopes = new List<Scope>(){
                                     new Scope{
-                                        Variables = new Dictionary<string, object>(){
-                                            ["variables"] = new Dictionary<string, object>() {
-                                                ["type"] = "integerValue",
-                                                ["value"] = 1,
-                                            },
+                                        Variables = new Dictionary<string, DebugVariableValue>(){
+                                            ["variables"] = new DebugVariableValue(
+
+                                            ),
                                         }
                                     },
                                     new Scope{
-                                        Variables = new Dictionary<string, object>(){
-                                            ["variables"] = new Dictionary<string, object>() {
-                                                ["type"] = "integerValue",
-                                                ["value"] = 1,
-                                            },
+                                        Variables = new Dictionary<string, DebugVariableValue>(){
+                                            ["variables"] = new DebugVariableValue(
+
+                                            ),
                                         }
                                     },
                                 }
@@ -76,10 +70,9 @@ public class Example5
                     new TraceResponse{
                         SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                         LineNumber = 1,
-                        ReturnValue = new Dictionary<string, object>() {
-                            ["type"] = "integerValue",
-                            ["value"] = 1,
-                        },
+                        ReturnValue = new DebugVariableValue(
+
+                        ),
                         ExpressionLocation = new ExpressionLocation{
                             Start = 1,
                             Offset = 1
@@ -91,19 +84,17 @@ public class Example5
                                 LineNumber = 1,
                                 Scopes = new List<Scope>(){
                                     new Scope{
-                                        Variables = new Dictionary<string, object>(){
-                                            ["variables"] = new Dictionary<string, object>() {
-                                                ["type"] = "integerValue",
-                                                ["value"] = 1,
-                                            },
+                                        Variables = new Dictionary<string, DebugVariableValue>(){
+                                            ["variables"] = new DebugVariableValue(
+
+                                            ),
                                         }
                                     },
                                     new Scope{
-                                        Variables = new Dictionary<string, object>(){
-                                            ["variables"] = new Dictionary<string, object>() {
-                                                ["type"] = "integerValue",
-                                                ["value"] = 1,
-                                            },
+                                        Variables = new Dictionary<string, DebugVariableValue>(){
+                                            ["variables"] = new DebugVariableValue(
+
+                                            ),
                                         }
                                     },
                                 }
