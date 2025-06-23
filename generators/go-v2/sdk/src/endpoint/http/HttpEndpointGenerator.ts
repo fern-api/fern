@@ -115,7 +115,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         endpointRequest: EndpointRequest | undefined;
     }): go.CodeBlock {
         return go.codeblock((writer) => {
-            writer.writeNode(this.buildRequestOptions());
+            writer.writeNode(this.buildRequestOptions({ endpoint }));
             writer.newLine();
             writer.writeNode(this.buildBaseUrl({ endpoint }));
             writer.newLine();
@@ -171,10 +171,14 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         });
     }
 
-    private buildRequestOptions(): go.CodeBlock {
+    private buildRequestOptions({ endpoint }: { endpoint: HttpEndpoint }): go.CodeBlock {
+        const requestOptions = endpoint.idempotent
+            ? this.context.callNewIdempotentRequestOptions(go.codeblock("opts..."))
+            : this.context.callNewRequestOptions(go.codeblock("opts..."));
+
         return go.codeblock((writer) => {
             writer.write("options := ");
-            writer.writeNode(this.context.callNewRequestOptions(go.codeblock("opts...")));
+            writer.writeNode(requestOptions);
         });
     }
 
@@ -205,7 +209,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         signature: EndpointSignatureInfo;
     }): go.CodeBlock {
         const pathSuffix = this.getPathSuffix({ endpoint });
-        const baseUrl = pathSuffix.length === 0 ? "baseURL" : `baseURL + "/${pathSuffix}"`
+        const baseUrl = pathSuffix.length === 0 ? "baseURL" : `baseURL + "/${pathSuffix}"`;
         return go.codeblock((writer) => {
             writer.write("endpointURL := ");
             if (endpoint.allPathParameters.length === 0) {

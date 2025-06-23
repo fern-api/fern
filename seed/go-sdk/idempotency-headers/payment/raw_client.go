@@ -35,7 +35,7 @@ func (r RawClient) Create(
 	request *fern.CreatePaymentRequest,
 	opts ...option.IdempotentRequestOption,
 ) (*core.Response[uuid.UUID], error) {
-	options := core.NewRequestOptions(opts...)
+	options := core.NewIdempotentRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
 		r.baseURL,

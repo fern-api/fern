@@ -296,6 +296,17 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         });
     }
 
+    public callNewIdempotentRequestOptions(argument: go.AstNode): go.FuncInvocation {
+        return go.invokeFunc({
+            func: go.typeReference({
+                name: "NewIdempotentRequestOptions",
+                importPath: this.getCoreImportPath()
+            }),
+            arguments_: [argument],
+            multiline: false
+        });
+    }
+
     public callEncodeUrl(arguments_: go.AstNode[]): go.FuncInvocation {
         return this.callInternalFunc("EncodeURL", arguments_);
     }
