@@ -119,7 +119,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             writer.newLine();
             writer.writeNode(this.buildBaseUrl({ endpoint }));
             writer.newLine();
-            writer.writeNode(this.buildEndpointUrl({ endpoint }));
+            writer.writeNode(this.buildEndpointUrl({ endpoint, signature }));
 
             const buildQueryParameters = this.buildQueryParameters({ signature, endpoint, endpointRequest });
             if (buildQueryParameters != null) {
@@ -197,13 +197,30 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         });
     }
 
-    private buildEndpointUrl({ endpoint }: { endpoint: HttpEndpoint }): go.CodeBlock {
+    private buildEndpointUrl({
+        endpoint,
+        signature
+    }: {
+        endpoint: HttpEndpoint;
+        signature: EndpointSignatureInfo;
+    }): go.CodeBlock {
+        const pathSuffix = this.getPathSuffix({ endpoint });
+        const baseUrl = pathSuffix.length === 0 ? "baseURL" : `baseURL + "/${pathSuffix}"`
         return go.codeblock((writer) => {
-            writer.write("endpointURL := baseURL");
-            const pathSuffix = this.getPathSuffix({ endpoint });
-            if (pathSuffix !== "") {
-                writer.write(` + "/${pathSuffix}"`);
+            writer.write("endpointURL := ");
+            if (endpoint.allPathParameters.length === 0) {
+                writer.write(baseUrl);
+                return;
             }
+            const pathParameterReferences: go.AstNode[] = [];
+            for (const pathParameter of endpoint.allPathParameters) {
+                const pathParameterReference = signature.pathParameterReferences[pathParameter.name.originalName];
+                if (pathParameterReference == null) {
+                    continue;
+                }
+                pathParameterReferences.push(go.codeblock(pathParameterReference));
+            }
+            writer.writeNode(this.context.callEncodeUrl([go.codeblock(baseUrl), ...pathParameterReferences]));
         });
     }
 

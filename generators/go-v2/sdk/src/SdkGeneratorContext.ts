@@ -296,6 +296,10 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         });
     }
 
+    public callEncodeUrl(arguments_: go.AstNode[]): go.FuncInvocation {
+        return this.callInternalFunc("EncodeURL", arguments_);
+    }
+
     public callResolveBaseURL(arguments_: go.AstNode[]): go.FuncInvocation {
         return this.callInternalFunc("ResolveBaseURL", arguments_);
     }

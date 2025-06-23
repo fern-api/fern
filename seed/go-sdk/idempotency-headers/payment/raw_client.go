@@ -81,7 +81,10 @@ func (r RawClient) Delete(
 		r.baseURL,
 		"",
 	)
-	endpointURL := baseURL + "/payment/%v"
+	endpointURL := internal.EncodeURL(
+		baseURL+"/payment/%v",
+		paymentId,
+	)
 	headers := internal.MergeHeaders(
 		r.header.Clone(),
 		options.ToHeader(),
