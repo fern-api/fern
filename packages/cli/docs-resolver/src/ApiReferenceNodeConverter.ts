@@ -287,14 +287,15 @@ export class ApiReferenceNodeConverter {
         const subpackageIds = section.referencedSubpackages
             .map((locator) => {
                 const subpackage = this.#holder.getSubpackageByIdOrLocator(locator);
-                return subpackage != null ? ApiDefinitionHolder.getSubpackageId(subpackage) : undefined;
-            })
-            .filter((subpackageId) => {
-                if (subpackageId == null) {
-                    this.taskContext.logger.error(`Subpackage ${subpackageId} not found in ${this.apiDefinitionId}`);
+                const subpackageId = subpackage != null ? ApiDefinitionHolder.getSubpackageId(subpackage) : undefined;
+                if (subpackageId === undefined) {
+                    this.taskContext.logger.error(
+                        `Cannot find identifier ${locator} in api definition.` +
+                            `Skipping addition as subsection to section ${section.title}`
+                    );
                 }
-                return subpackageId != null;
             })
+            .filter((subpackageId) => subpackageId != undefined)
             .filter(isNonNullish);
 
         this.#nodeIdToSubpackageId.set(nodeId, subpackageIds);
