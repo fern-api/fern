@@ -17,9 +17,7 @@ type RawClient struct {
 }
 
 func NewRawClient(opts ...option.RequestOption) *RawClient {
-	options := core.NewRequestOptions(
-		opts...,
-	)
+	options := core.NewRequestOptions(opts...)
 	return &RawClient{
 		baseURL: options.BaseURL,
 		caller: internal.NewCaller(
@@ -37,9 +35,7 @@ func (r RawClient) Create(
 	request *fern.CreatePaymentRequest,
 	opts ...option.IdempotentRequestOption,
 ) (*core.Response[uuid.UUID], error) {
-	options := core.NewRequestOptions(
-		opts...,
-	)
+	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
 		r.baseURL,
@@ -79,9 +75,7 @@ func (r RawClient) Delete(
 	paymentId string,
 	opts ...option.RequestOption,
 ) error {
-	options := core.NewRequestOptions(
-		opts...,
-	)
+	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
 		r.baseURL,
