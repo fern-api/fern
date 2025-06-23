@@ -124,7 +124,7 @@ export abstract class AbstractCsharpGeneratorContext<
     }
 
     public shouldGenerateDiscriminatedUnions(): boolean {
-        return this.customConfig["use-discriminated-unions"] ?? false;
+        return this.customConfig["use-discriminated-unions"] ?? true;
     }
 
     public getJsonElementClassReference(): csharp.ClassReference {
@@ -184,11 +184,19 @@ export abstract class AbstractCsharpGeneratorContext<
     }
 
     public isForwardCompatibleEnumsEnabled(): boolean {
-        return this.customConfig["experimental-enable-forward-compatible-enums"] ?? false;
+        return (
+            this.customConfig["enable-forward-compatible-enums"] ??
+            this.customConfig["experimental-enable-forward-compatible-enums"] ??
+            true
+        );
     }
 
     public generateNewAdditionalProperties(): boolean {
-        return this.customConfig["experimental-additional-properties"] ?? false;
+        return (
+            this.customConfig["additional-properties"] ??
+            this.customConfig["experimental-additional-properties"] ??
+            true
+        );
     }
 
     public getProtoAnyMapperClassReference(): csharp.ClassReference {

@@ -34,8 +34,7 @@ test:
 language: csharp
 generatorType: SDK
 defaultOutputMode: github
-defaultCustomConfig:
-  generate-mock-server-tests: true
+defaultCustomConfig: {}
 scripts:
   - docker: fernapi/csharp-seed
     commands:
@@ -109,19 +108,18 @@ fixtures:
     - customConfig:
         include-exception-handler: true
       outputFolder: include-exception-handler
-    - customConfig:
-        experimental-additional-properties: true
-      outputFolder: experimental-additional-properties
   optional:
+    - customConfig: null
+      outputFolder: no-custom-config
     - customConfig:
-        simplify-object-dictionaries: false
-      outputFolder: no-simplify-object-dictionaries
+        simplify-object-dictionaries: true
+      outputFolder: simplify-object-dictionaries
   path-parameters:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
-        inline-path-parameters: true
-      outputFolder: inline-path-parameters
+        inline-path-parameters: false
+      outputFolder: no-inline-path-parameters
   csharp-grpc-proto-exhaustive:
     - customConfig: null
       outputFolder: no-custom-config
@@ -142,11 +140,10 @@ fixtures:
         include-exception-handler: true
       outputFolder: include-exception-handler
   enum:
-    - customConfig:
-        experimental-enable-forward-compatible-enums: true
+    - customConfig: null
       outputFolder: forward-compatible-enums
     - customConfig:
-        experimental-enable-forward-compatible-enums: false
+        enable-forward-compatible-enums: false
       outputFolder: plain-enums
   license:
     - license:
@@ -161,14 +158,14 @@ fixtures:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
-        use-discriminated-unions: true
-      outputFolder: use-discriminated-unions
+        use-discriminated-unions: false
+      outputFolder: no-discriminated-unions
   extra-properties:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
-        experimental-additional-properties: true
-      outputFolder: experimental-additional-properties
+        additional-properties: false
+      outputFolder: no-additional-properties
 allowedFailures:
   - http-head
   - imdb:exported-client-class-name

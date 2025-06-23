@@ -1,13 +1,18 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using OneOf;
+using SeedExamples.Commons;
 using SeedExamples.Core;
 
 namespace SeedExamples;
 
 [Serializable]
-public record BigEntity
+public record BigEntity : IJsonOnDeserialized
 {
+    [JsonExtensionData]
+    private readonly IDictionary<string, JsonElement> _extensionData =
+        new Dictionary<string, JsonElement>();
+
     [JsonPropertyName("castMember")]
     public OneOf<Actor, Actress, StuntDouble>? CastMember { get; set; }
 
@@ -18,25 +23,25 @@ public record BigEntity
     public Entity? Entity { get; set; }
 
     [JsonPropertyName("metadata")]
-    public object? Metadata { get; set; }
+    public Metadata? Metadata { get; set; }
 
     [JsonPropertyName("commonMetadata")]
     public Commons.Metadata? CommonMetadata { get; set; }
 
     [JsonPropertyName("eventInfo")]
-    public object? EventInfo { get; set; }
+    public EventInfo? EventInfo { get; set; }
 
     [JsonPropertyName("data")]
-    public object? Data { get; set; }
+    public Data? Data { get; set; }
 
     [JsonPropertyName("migration")]
     public Migration? Migration { get; set; }
 
     [JsonPropertyName("exception")]
-    public object? Exception { get; set; }
+    public Exception? Exception { get; set; }
 
     [JsonPropertyName("test")]
-    public object? Test { get; set; }
+    public Test? Test { get; set; }
 
     [JsonPropertyName("node")]
     public Node? Node { get; set; }
@@ -47,15 +52,11 @@ public record BigEntity
     [JsonPropertyName("moment")]
     public Moment? Moment { get; set; }
 
-    /// <summary>
-    /// Additional properties received from the response, if any.
-    /// </summary>
-    /// <remarks>
-    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
-    /// </remarks>
-    [JsonExtensionData]
-    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
-        new Dictionary<string, JsonElement>();
+    [JsonIgnore]
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+
+    void IJsonOnDeserialized.OnDeserialized() =>
+        AdditionalProperties.CopyFromExtensionData(_extensionData);
 
     /// <inheritdoc />
     public override string ToString()

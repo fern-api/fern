@@ -7,6 +7,9 @@ namespace SeedExhaustive.Endpoints;
 public record ModifyResourceAtInlinedPath
 {
     [JsonIgnore]
+    public required string Param { get; set; }
+
+    [JsonIgnore]
     public required string Body { get; set; }
 
     /// <inheritdoc />

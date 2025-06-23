@@ -5,20 +5,21 @@ using SeedTrace.Core;
 namespace SeedTrace;
 
 [Serializable]
-public record ProblemDescription
+public record ProblemDescription : IJsonOnDeserialized
 {
-    [JsonPropertyName("boards")]
-    public IEnumerable<object> Boards { get; set; } = new List<object>();
-
-    /// <summary>
-    /// Additional properties received from the response, if any.
-    /// </summary>
-    /// <remarks>
-    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
-    /// </remarks>
     [JsonExtensionData]
-    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+    private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
+
+    [JsonPropertyName("boards")]
+    public IEnumerable<ProblemDescriptionBoard> Boards { get; set; } =
+        new List<ProblemDescriptionBoard>();
+
+    [JsonIgnore]
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+
+    void IJsonOnDeserialized.OnDeserialized() =>
+        AdditionalProperties.CopyFromExtensionData(_extensionData);
 
     /// <inheritdoc />
     public override string ToString()

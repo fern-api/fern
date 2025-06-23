@@ -376,10 +376,12 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
             RelativeFilePath.of(""),
             replaceTemplate({
                 contents,
-                grpc: this.context.hasGrpcEndpoints(),
-                idempotencyHeaders: this.context.hasIdempotencyHeaders(),
-                namespace,
-                customConfig: this.context.customConfig
+                variables: getTemplateVariables({
+                    grpc: this.context.hasGrpcEndpoints(),
+                    idempotencyHeaders: this.context.hasIdempotencyHeaders(),
+                    namespace,
+                    additionalProperties: this.context.generateNewAdditionalProperties()
+                })
             })
         );
     }
@@ -391,10 +393,12 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
             RelativeFilePath.of(""),
             replaceTemplate({
                 contents,
-                grpc: this.context.hasGrpcEndpoints(),
-                idempotencyHeaders: this.context.hasIdempotencyHeaders(),
-                namespace,
-                customConfig: this.context.customConfig
+                variables: getTemplateVariables({
+                    grpc: this.context.hasGrpcEndpoints(),
+                    idempotencyHeaders: this.context.hasIdempotencyHeaders(),
+                    namespace,
+                    additionalProperties: this.context.generateNewAdditionalProperties()
+                })
             })
         );
     }
@@ -408,10 +412,12 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
             RelativeFilePath.of(""),
             replaceTemplate({
                 contents,
-                grpc: this.context.hasGrpcEndpoints(),
-                idempotencyHeaders: this.context.hasIdempotencyHeaders(),
-                namespace: this.context.getCoreNamespace(),
-                customConfig: this.context.customConfig
+                variables: getTemplateVariables({
+                    grpc: this.context.hasGrpcEndpoints(),
+                    idempotencyHeaders: this.context.hasIdempotencyHeaders(),
+                    namespace: this.context.getCoreNamespace(),
+                    additionalProperties: this.context.generateNewAdditionalProperties()
+                })
             }).replaceAll("CustomPager", customPagerName)
         );
     }
@@ -423,10 +429,12 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
             RelativeFilePath.of(""),
             replaceTemplate({
                 contents,
-                grpc: this.context.hasGrpcEndpoints(),
-                idempotencyHeaders: this.context.hasIdempotencyHeaders(),
-                namespace: this.context.getTestUtilsNamespace(),
-                customConfig: this.context.customConfig
+                variables: getTemplateVariables({
+                    grpc: this.context.hasGrpcEndpoints(),
+                    idempotencyHeaders: this.context.hasIdempotencyHeaders(),
+                    namespace: this.context.getTestUtilsNamespace(),
+                    additionalProperties: this.context.generateNewAdditionalProperties()
+                })
             })
         );
     }
@@ -445,25 +453,27 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
     }
 }
 
-function replaceTemplate({
-    contents,
+function replaceTemplate({ contents, variables }: { contents: string; variables: Record<string, unknown> }): string {
+    return template(contents)(variables);
+}
+
+function getTemplateVariables({
     grpc,
     idempotencyHeaders,
     namespace,
-    customConfig
+    additionalProperties
 }: {
-    contents: string;
     grpc: boolean;
     idempotencyHeaders: boolean;
     namespace: string;
-    customConfig: Record<string, unknown>;
-}): string {
-    return template(contents)({
+    additionalProperties: boolean;
+}): Record<string, unknown> {
+    return {
         grpc,
         idempotencyHeaders,
         namespace,
-        customConfig
-    });
+        additionalProperties
+    };
 }
 
 function getAsIsFilepath(filename: string): string {

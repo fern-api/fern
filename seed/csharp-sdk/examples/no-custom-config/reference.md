@@ -80,7 +80,7 @@ await client.CreateTypeAsync(BasicType.Primitive);
 </details>
 
 ## File Notification Service
-<details><summary><code>client.File.Notification.Service.<a href="/src/SeedExamples/File/Notification/Service/ServiceClient.cs">GetExceptionAsync</a>(notificationId) -> object</code></summary>
+<details><summary><code>client.File.Notification.Service.<a href="/src/SeedExamples/File/Notification/Service/ServiceClient.cs">GetExceptionAsync</a>(notificationId) -> Exception</code></summary>
 <dl>
 <dd>
 
@@ -385,7 +385,7 @@ await client.Service.CreateMovieAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedExamples/Service/ServiceClient.cs">GetMetadataAsync</a>(GetMetadataRequest { ... }) -> object</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedExamples/Service/ServiceClient.cs">GetMetadataAsync</a>(GetMetadataRequest { ... }) -> Metadata</code></summary>
 <dl>
 <dd>
 
@@ -470,28 +470,36 @@ await client.Service.CreateBigEntityAsync(
             Revenue = 1000000,
         },
         Entity = new Entity { Type = BasicType.Primitive, Name = "name" },
-        Metadata = "metadata",
+        Metadata = new SeedExamples.Metadata(new Metadata.Html("metadata")),
         CommonMetadata = new SeedExamples.Commons.Metadata
         {
             Id = "id",
             Data = new Dictionary<string, string>() { { "data", "data" } },
             JsonString = "jsonString",
         },
-        EventInfo = new SeedExamples.Commons.Metadata
-        {
-            Id = "id",
-            Data = new Dictionary<string, string>() { { "data", "data" } },
-            JsonString = "jsonString",
-        },
-        Data = "data",
+        EventInfo = new EventInfo(
+            new EventInfo.Metadata(
+                new SeedExamples.Commons.Metadata
+                {
+                    Id = "id",
+                    Data = new Dictionary<string, string>() { { "data", "data" } },
+                    JsonString = "jsonString",
+                }
+            )
+        ),
+        Data = new Data(new Data.String("data")),
         Migration = new Migration { Name = "name", Status = MigrationStatus.Running },
-        Exception = new ExceptionInfo
-        {
-            ExceptionType = "exceptionType",
-            ExceptionMessage = "exceptionMessage",
-            ExceptionStacktrace = "exceptionStacktrace",
-        },
-        Test = true,
+        Exception = new Exception(
+            new Exception.Generic(
+                new ExceptionInfo
+                {
+                    ExceptionType = "exceptionType",
+                    ExceptionMessage = "exceptionMessage",
+                    ExceptionStacktrace = "exceptionStacktrace",
+                }
+            )
+        ),
+        Test = new Test(new Test.And(true)),
         Node = new Node
         {
             Name = "name",

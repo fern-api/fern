@@ -22,7 +22,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedPathParameters;\n\nvar client = new SeedPathParametersClient();\nawait client.Organizations.GetOrganizationUserAsync(\n    \"tenant_id\",\n    \"organization_id\",\n    \"user_id\",\n    new GetOrganizationUserRequest()\n);\n"
+                "client": "using SeedPathParameters;\n\nvar client = new SeedPathParametersClient();\nawait client.Organizations.GetOrganizationUserAsync(\n    new GetOrganizationUserRequest\n    {\n        TenantId = \"tenant_id\",\n        OrganizationId = \"organization_id\",\n        UserId = \"user_id\",\n    }\n);\n"
             }
         },
         {
@@ -46,7 +46,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedPathParameters;\n\nvar client = new SeedPathParametersClient();\nawait client.User.GetUserAsync(\"tenant_id\", \"user_id\", new GetUsersRequest());\n"
+                "client": "using SeedPathParameters;\n\nvar client = new SeedPathParametersClient();\nawait client.User.GetUserAsync(new GetUsersRequest { TenantId = \"tenant_id\", UserId = \"user_id\" });\n"
             }
         },
         {
@@ -70,7 +70,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedPathParameters;\n\nvar client = new SeedPathParametersClient();\nawait client.User.UpdateUserAsync(\n    \"tenant_id\",\n    \"user_id\",\n    new UpdateUserRequest\n    {\n        Body = new User\n        {\n            Name = \"name\",\n            Tags = new List<string>() { \"tags\", \"tags\" },\n        },\n    }\n);\n"
+                "client": "using SeedPathParameters;\n\nvar client = new SeedPathParametersClient();\nawait client.User.UpdateUserAsync(\n    new UpdateUserRequest\n    {\n        TenantId = \"tenant_id\",\n        UserId = \"user_id\",\n        Body = new User\n        {\n            Name = \"name\",\n            Tags = new List<string>() { \"tags\", \"tags\" },\n        },\n    }\n);\n"
             }
         },
         {
@@ -82,7 +82,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedPathParameters;\n\nvar client = new SeedPathParametersClient();\nawait client.User.SearchUsersAsync(\"tenant_id\", \"user_id\", new SearchUsersRequest { Limit = 1 });\n"
+                "client": "using SeedPathParameters;\n\nvar client = new SeedPathParametersClient();\nawait client.User.SearchUsersAsync(\n    new SearchUsersRequest\n    {\n        TenantId = \"tenant_id\",\n        UserId = \"user_id\",\n        Limit = 1,\n    }\n);\n"
             }
         }
     ]

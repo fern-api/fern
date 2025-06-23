@@ -69,10 +69,9 @@ public partial class ParamsClient
     /// GET with path param
     /// </summary>
     /// <example><code>
-    /// await client.Endpoints.Params.GetWithInlinePathAsync("param", new GetWithInlinePath());
+    /// await client.Endpoints.Params.GetWithInlinePathAsync(new GetWithInlinePath { Param = "param" });
     /// </code></example>
     public async Task<string> GetWithInlinePathAsync(
-        string param,
         GetWithInlinePath request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -86,7 +85,7 @@ public partial class ParamsClient
                     Method = HttpMethod.Get,
                     Path = string.Format(
                         "/params/path/{0}",
-                        ValueConvert.ToPathParameterString(param)
+                        ValueConvert.ToPathParameterString(request.Param)
                     ),
                     Options = options,
                 },
@@ -255,12 +254,10 @@ public partial class ParamsClient
     /// </summary>
     /// <example><code>
     /// await client.Endpoints.Params.GetWithInlinePathAndQueryAsync(
-    ///     "param",
-    ///     new GetWithInlinePathAndQuery { Query = "query" }
+    ///     new GetWithInlinePathAndQuery { Param = "param", Query = "query" }
     /// );
     /// </code></example>
     public async global::System.Threading.Tasks.Task GetWithInlinePathAndQueryAsync(
-        string param,
         GetWithInlinePathAndQuery request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -276,7 +273,7 @@ public partial class ParamsClient
                     Method = HttpMethod.Get,
                     Path = string.Format(
                         "/params/path-query/{0}",
-                        ValueConvert.ToPathParameterString(param)
+                        ValueConvert.ToPathParameterString(request.Param)
                     ),
                     Query = _query,
                     Options = options,
@@ -355,12 +352,10 @@ public partial class ParamsClient
     /// </summary>
     /// <example><code>
     /// await client.Endpoints.Params.ModifyWithInlinePathAsync(
-    ///     "param",
-    ///     new ModifyResourceAtInlinedPath { Body = "string" }
+    ///     new ModifyResourceAtInlinedPath { Param = "param", Body = "string" }
     /// );
     /// </code></example>
     public async Task<string> ModifyWithInlinePathAsync(
-        string param,
         ModifyResourceAtInlinedPath request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -374,7 +369,7 @@ public partial class ParamsClient
                     Method = HttpMethod.Put,
                     Path = string.Format(
                         "/params/path/{0}",
-                        ValueConvert.ToPathParameterString(param)
+                        ValueConvert.ToPathParameterString(request.Param)
                     ),
                     Body = request.Body,
                     Options = options,

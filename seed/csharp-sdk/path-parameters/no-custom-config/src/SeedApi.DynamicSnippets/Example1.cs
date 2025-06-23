@@ -13,10 +13,11 @@ public class Example1
         );
 
         await client.Organizations.GetOrganizationUserAsync(
-            "tenant_id",
-            "organization_id",
-            "user_id",
-            new GetOrganizationUserRequest()
+            new GetOrganizationUserRequest{
+                TenantId = "tenant_id",
+                OrganizationId = "organization_id",
+                UserId = "user_id"
+            }
         );
     }
 
