@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.37.2
+  changelogEntry:
+    - summary: |
+        No changes. Publishing changes from 2.37.1-rc0 and 2.37.1-rc1 to release track.
+      type: chore
+  createdAt: '2025-06-23'
+  irVersion: 58
+ 
 - version: 2.37.1-rc1
   changelogEntry:
     - summary: |
