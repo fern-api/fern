@@ -1,0 +1,147 @@
+imports:
+  director: director.yml
+types:
+  CurrencyAmount:
+    type: string
+    examples:
+      - value: \$4.50
+  MovieId:
+    type: string
+    examples:
+      - value: id1
+      - value: id2
+  ActorId: string
+  Movie:
+    properties:
+      id: MovieId
+      title: string
+      rating: double
+    examples:
+      - value:
+          id: my-movie-id
+          title: Goodwill Hunting
+          rating: 14.5
+  CreateMovieRequest:
+    properties:
+      title: string
+      ratings: list<double>
+    examples:
+      - name: Example1
+        value:
+          title: Winnie the Pooh
+          ratings: [1, 2, 3]
+  DirectorWrapper:
+    properties:
+      director: director.Director
+    examples:
+      - value:
+          director: $director.Director.GeorgeExample
+  EmptyObject:
+    properties: {}
+  Person:
+    union:
+      actor: ActorId
+      director: director.Director
+      producer: EmptyObject
+      cinematographer:
+        docs: i am docs
+        type: EmptyObject
+    examples:
+      - name: PersonExample1
+        docs: this is a person example
+        value:
+          type: actor
+          value: Matt Damon
+      - value:
+          type: director
+          name: George the Directory
+          age: 100
+      - value:
+          type: producer
+  RecursiveType:
+    extends: CreateMovieRequest
+    properties:
+      selfReferencing: list<RecursiveType>
+    examples:
+      - value:
+          title: The Godfather
+          ratings: [10, 5, 9]
+          selfReferencing:
+            - title: The Godfather II
+              ratings: [10, 11]
+              selfReferencing: []
+            - title: The Godfather III
+              ratings: []
+              selfReferencing: []
+      - value:
+          title: Goodfellas
+          ratings: [1, 2, 3]
+          selfReferencing: []
+errors:
+  NotFoundError:
+    status-code: 404
+    type: string
+service:
+  auth: false
+  base-path: /movies
+  endpoints:
+    createMovie:
+      auth: true
+      method: POST
+      path: ""
+      request: CreateMovieRequest
+      response: MovieId
+      audiences:
+        - test
+      examples:
+        - path-parameters:
+            rootPathParam: root
+          request:
+            title: Shrek
+            ratings: [10, 10, 10, 10]
+          response:
+            body: shrek-123
+        - path-parameters:
+            rootPathParam: root
+          request: $CreateMovieRequest.Example1
+          response:
+            body: shrek-123
+    getMovie:
+      method: GET
+      display-name: "Get Movie by Id"
+      path: /{movieId}
+      path-parameters:
+        movieId: MovieId
+      request:
+        name: GetMovieRequest
+        query-parameters:
+          movieName:
+            type: string
+            allow-multiple: true
+      response: Movie
+      errors:
+        - NotFoundError
+      examples:
+        - path-parameters:
+            rootPathParam: root
+            movieId: id-123
+          query-parameters:
+            movieName: hello
+          response:
+            body:
+              id: id-123
+              title: Shrek
+              rating: 10
+        - path-parameters:
+            rootPathParam: root
+            movieId: id-123
+          query-parameters:
+            movieName: hello
+          response:
+            error: NotFoundError
+            body: id-123
+    delete:
+      method: DELETE
+      path: /{movieId}
+      path-parameters:
+        movieId: MovieId
