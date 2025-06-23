@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Add `fern export` command to export API to an OpenAPI spec.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-06-23"
+  version: 0.64.16
+
+- changelogEntry:
+    - summary: |
         Fixed ExampleTypeFactory to ignore generating parameters in example when that parameter is both optional and deprecated
       type: fix
   irVersion: 58
