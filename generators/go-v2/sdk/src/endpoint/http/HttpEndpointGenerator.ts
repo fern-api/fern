@@ -84,7 +84,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             parameters: signature.allParameters,
             return_: this.getRawReturnSignature({ signature }),
             body: this.getRawUnaryEndpointBody({ signature, endpoint, endpointRequest }),
-            typeReference: this.getRawClientTypeReference({ subpackage })
+            typeReference: this.getRawClientTypeReference({ subpackage }),
+            pointerReceiver: true
         });
     }
 

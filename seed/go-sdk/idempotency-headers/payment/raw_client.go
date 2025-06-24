@@ -30,7 +30,7 @@ func NewRawClient(opts ...option.RequestOption) *RawClient {
 	}
 }
 
-func (r RawClient) Create(
+func (r *RawClient) Create(
 	ctx context.Context,
 	request *fern.CreatePaymentRequest,
 	opts ...option.IdempotentRequestOption,
@@ -71,7 +71,7 @@ func (r RawClient) Create(
 	}, nil
 }
 
-func (r RawClient) Delete(
+func (r *RawClient) Delete(
 	ctx context.Context,
 	paymentId string,
 	opts ...option.RequestOption,

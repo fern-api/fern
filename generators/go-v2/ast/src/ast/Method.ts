@@ -24,6 +24,8 @@ export declare namespace Method {
         typeReference?: GoTypeReference;
         /* Whether to write the invocation on multiple lines */
         multiline?: boolean;
+        /* Whether this method should use a pointer receiver */
+        pointerReceiver?: boolean;
     }
 }
 
@@ -35,8 +37,9 @@ export class Method extends AstNode {
     public readonly docs: string | undefined;
     public readonly typeReference: GoTypeReference | undefined;
     public readonly multiline: boolean | undefined;
+    public readonly pointerReceiver: boolean | undefined;
 
-    constructor({ name, parameters, return_, body, docs, typeReference, multiline }: Method.Args) {
+    constructor({ name, parameters, return_, body, docs, typeReference, multiline, pointerReceiver }: Method.Args) {
         super();
         this.name = name;
         this.parameters = parameters;
@@ -45,6 +48,7 @@ export class Method extends AstNode {
         this.docs = docs;
         this.typeReference = typeReference;
         this.multiline = multiline;
+        this.pointerReceiver = pointerReceiver;
     }
 
     public write(writer: Writer): void {
@@ -86,6 +90,9 @@ export class Method extends AstNode {
 
     private writeReceiver({ writer, typeReference }: { writer: Writer; typeReference: GoTypeReference }): void {
         writer.write(` (${this.getReceiverName(typeReference.name)} `);
+        if (this.pointerReceiver) {
+            writer.write("*");
+        }
         typeReference.write(writer);
         writer.write(")");
     }
