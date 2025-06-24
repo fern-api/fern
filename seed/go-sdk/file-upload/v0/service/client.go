@@ -128,7 +128,7 @@ func (c *Client) Post(
 	}
 	headers.Set("Content-Type", writer.ContentType())
 
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,
@@ -171,7 +171,7 @@ func (c *Client) JustFile(
 	}
 	headers.Set("Content-Type", writer.ContentType())
 
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,
@@ -222,7 +222,7 @@ func (c *Client) JustFileWithQueryParams(
 	}
 	headers.Set("Content-Type", writer.ContentType())
 
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,
@@ -277,7 +277,7 @@ func (c *Client) WithContentType(
 	}
 	headers.Set("Content-Type", writer.ContentType())
 
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,
@@ -327,7 +327,7 @@ func (c *Client) WithFormEncoding(
 	}
 	headers.Set("Content-Type", writer.ContentType())
 
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,
@@ -445,7 +445,7 @@ func (c *Client) WithFormEncodedContainers(
 	}
 	headers.Set("Content-Type", writer.ContentType())
 
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,
@@ -497,7 +497,7 @@ func (c *Client) OptionalArgs(
 	headers.Set("Content-Type", writer.ContentType())
 
 	var response string
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,

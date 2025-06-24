@@ -49,7 +49,7 @@ func (c *Client) Get(
 	)
 
 	var response *fern.MyUnion
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,
@@ -85,7 +85,7 @@ func (c *Client) GetMetadata(
 	)
 
 	var response fern.Metadata
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,
@@ -121,7 +121,7 @@ func (c *Client) UpdateMetadata(
 	)
 
 	var response bool
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,
@@ -158,7 +158,7 @@ func (c *Client) Call(
 	)
 
 	var response bool
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,

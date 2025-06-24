@@ -49,7 +49,7 @@ func (c *Client) Post(
 	)
 
 	var response []interface{}
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,
@@ -86,7 +86,7 @@ func (c *Client) PostObject(
 	)
 
 	var response []interface{}
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,

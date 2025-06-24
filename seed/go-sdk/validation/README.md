@@ -17,7 +17,7 @@ import (
     fern "github.com/validation/fern"
 )
 
-func do() () {
+func do() {
     client := client.NewClient()
     client.Create(
         context.TODO(),

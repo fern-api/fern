@@ -52,7 +52,7 @@ func (c *Client) Get(
 	)
 
 	var response *unionsgo.Shape
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,
@@ -88,7 +88,7 @@ func (c *Client) Update(
 	)
 
 	var response bool
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,

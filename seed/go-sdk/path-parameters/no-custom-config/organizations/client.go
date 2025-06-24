@@ -54,7 +54,7 @@ func (c *Client) GetOrganization(
 	)
 
 	var response *fern.Organization
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,
@@ -95,7 +95,7 @@ func (c *Client) GetOrganizationUser(
 	)
 
 	var response *fern.User
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,
@@ -144,7 +144,7 @@ func (c *Client) SearchOrganizations(
 	)
 
 	var response []*fern.Organization
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,

@@ -7,7 +7,7 @@ import (
     v2 "github.com/fern-api/stream-go/v2"
 )
 
-func do() () {
+func do() {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",

@@ -51,7 +51,7 @@ func (c *Client) CreateMovie(
 	headers.Set("Content-Type", "application/custom+json")
 
 	var response string
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,

@@ -17,7 +17,7 @@ import (
     fern "github.com/multi-line-docs/fern"
 )
 
-func do() () {
+func do() {
     client := client.NewClient()
     client.User.CreateUser(
         context.TODO(),

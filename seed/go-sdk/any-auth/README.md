@@ -18,7 +18,7 @@ import (
     fern "github.com/any-auth/fern"
 )
 
-func do() () {
+func do() {
     client := client.NewClient(
         option.WithToken(
             "<token>",

@@ -61,7 +61,7 @@ func (c *Client) ListEvents(
 	)
 
 	var response []*user.Event
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,

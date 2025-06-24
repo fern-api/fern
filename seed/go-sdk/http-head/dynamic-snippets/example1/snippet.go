@@ -7,7 +7,7 @@ import (
     fern "github.com/http-head/fern"
 )
 
-func do() () {
+func do() {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",

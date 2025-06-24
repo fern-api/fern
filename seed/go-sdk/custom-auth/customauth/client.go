@@ -56,7 +56,7 @@ func (c *Client) GetWithCustomAuth(
 	}
 
 	var response bool
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,
@@ -106,7 +106,7 @@ func (c *Client) PostWithCustomAuth(
 	}
 
 	var response bool
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,

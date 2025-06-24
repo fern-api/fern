@@ -55,7 +55,7 @@ func (c *Client) Send(
 		options.ToHeader(),
 	)
 
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,
@@ -96,7 +96,7 @@ func (c *Client) SendList(
 		options.ToHeader(),
 	)
 
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,

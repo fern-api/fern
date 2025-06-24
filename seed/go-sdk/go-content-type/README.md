@@ -18,7 +18,7 @@ import (
     fern "github.com/go-content-type/fern"
 )
 
-func do() () {
+func do() {
     client := client.NewClient(
         option.WithToken(
             "<token>",

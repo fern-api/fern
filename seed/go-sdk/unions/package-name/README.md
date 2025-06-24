@@ -16,7 +16,7 @@ import (
     context "context"
 )
 
-func do() () {
+func do() {
     client := client.NewClient()
     client.Bigunion.Get(
         context.TODO(),

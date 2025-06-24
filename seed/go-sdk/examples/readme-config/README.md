@@ -26,7 +26,7 @@ import (
     uuid "github.com/google/uuid"
 )
 
-func do() () {
+func do() {
     client := client.New(
         option.WithToken(
             "<token>",
@@ -57,8 +57,8 @@ func do() () {
                 Book: fern.String(
                     "book",
                 ),
-                Metadata: map[string]interface{}{
-                    "metadata": map[string]interface{}{
+                Metadata: map[string]any{
+                    "metadata": map[string]any{
                         "key": "value",
                     },
                 },
@@ -280,7 +280,7 @@ URL, which is particularly useful in test environments.
 
 ```go
 client := client.NewClient(
-    option.WithBaseURL(seed.Environments.Production),
+    option.WithBaseURL(examples.Environments.Production),
 )
 ```
 

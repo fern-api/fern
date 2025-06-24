@@ -17,7 +17,7 @@ import (
     fern "github.com/oauth-client-credentials-custom/fern"
 )
 
-func do() () {
+func do() {
     client := client.NewClient()
     client.Auth.GetTokenWithClientCredentials(
         context.TODO(),

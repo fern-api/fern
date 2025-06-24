@@ -7,7 +7,7 @@ import (
     fern "github.com/multi-url-environment-no-default/fern"
 )
 
-func do() () {
+func do() {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",

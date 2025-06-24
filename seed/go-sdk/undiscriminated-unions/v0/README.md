@@ -17,7 +17,7 @@ import (
     fern "github.com/undiscriminated-unions/fern"
 )
 
-func do() () {
+func do() {
     client := client.NewClient()
     client.Union.Get(
         context.TODO(),

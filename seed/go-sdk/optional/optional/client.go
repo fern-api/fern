@@ -48,7 +48,7 @@ func (c *Client) SendOptionalBody(
 	)
 
 	var response string
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,

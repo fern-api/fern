@@ -61,7 +61,7 @@ func (c *Client) List(
 	)
 
 	var response []*fern.User
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,

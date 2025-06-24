@@ -17,7 +17,7 @@ import (
     fern "github.com/extra-properties/fern"
 )
 
-func do() () {
+func do() {
     client := client.NewClient()
     client.User.CreateUser(
         context.TODO(),

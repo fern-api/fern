@@ -52,7 +52,7 @@ func (c *Client) Check(
 		options.ToHeader(),
 	)
 
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,
@@ -87,7 +87,7 @@ func (c *Client) Ping(
 	)
 
 	var response bool
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,

@@ -16,11 +16,11 @@ import (
     context "context"
 )
 
-func do() () {
+func do() {
     client := client.NewClient()
     client.Unknown.Post(
         context.TODO(),
-        map[string]interface{}{
+        map[string]any{
             "key": "value",
         },
     )

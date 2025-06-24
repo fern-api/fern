@@ -17,7 +17,7 @@ import (
     path "github.com/fern-api/path-parameters-go"
 )
 
-func do() () {
+func do() {
     client := client.NewClient()
     client.User.CreateUser(
         context.TODO(),

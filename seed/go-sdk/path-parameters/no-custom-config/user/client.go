@@ -53,7 +53,7 @@ func (c *Client) GetUser(
 	)
 
 	var response *fern.User
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,
@@ -93,7 +93,7 @@ func (c *Client) CreateUser(
 	)
 
 	var response *fern.User
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,
@@ -134,7 +134,7 @@ func (c *Client) UpdateUser(
 	)
 
 	var response *fern.User
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,
@@ -182,7 +182,7 @@ func (c *Client) SearchUsers(
 	)
 
 	var response []*fern.User
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,

@@ -16,12 +16,12 @@ import (
     context "context"
 )
 
-func do() () {
+func do() {
     client := client.NewClient()
     client.Optional.SendOptionalBody(
         context.TODO(),
-        map[string]interface{}{
-            "string": map[string]interface{}{
+        map[string]any{
+            "string": map[string]any{
                 "key": "value",
             },
         },

@@ -54,7 +54,7 @@ func (c *Client) Search(
 	headers.Set("Content-Type", "application/json")
 
 	var response *fern.PaginatedConversationResponse
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,

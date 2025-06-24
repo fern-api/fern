@@ -56,7 +56,7 @@ func (c *Client) Find(
 	)
 
 	var response *fern.ImportingType
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,

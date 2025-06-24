@@ -17,7 +17,7 @@ import (
     context "context"
 )
 
-func do() () {
+func do() {
     client := client.NewClient(
         option.WithBasicAuth(
             "<username>",
@@ -26,7 +26,7 @@ func do() () {
     )
     client.BasicAuth.PostWithBasicAuth(
         context.TODO(),
-        map[string]interface{}{
+        map[string]any{
             "key": "value",
         },
     )

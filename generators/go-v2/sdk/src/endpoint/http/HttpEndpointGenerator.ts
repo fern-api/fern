@@ -23,7 +23,7 @@ import { EndpointRequest } from "../request/EndpointRequest";
 import { getEndpointRequest } from "../utils/getEndpointRequest";
 
 export declare namespace EndpointGenerator {
-    const OCTET_STREAM_CONTENT_TYPE = "application/octet-stream";
+    export const OCTET_STREAM_CONTENT_TYPE = "application/octet-stream";
 
     export interface Args {
         endpoint: HttpEndpoint;
@@ -256,9 +256,13 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             for (const queryParameter of endpoint.queryParameters) {
                 const literal = this.context.maybeLiteral(queryParameter.valueType);
                 if (literal != null) {
-                    writer.writeLine(
-                        `queryParams.Add("${queryParameter.name}", ${this.context.getLiteralAsString(literal)})`
+                    writer.writeNode(
+                        this.addQueryValue({
+                            wireValue: queryParameter.name.wireValue,
+                            value: this.context.getLiteralAsString(literal)
+                        })
                     );
+                    writer.newLine();
                     continue;
                 }
             }
@@ -613,14 +617,31 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
 
     private addHeaderValue({ wireValue, value }: { wireValue: string; value: go.AstNode }): go.CodeBlock {
         return go.codeblock((writer) => {
-            writer.write(`headers.Add("${wireValue}", fmt.Sprintf("%v", `);
-            writer.writeNode(value);
-            writer.write("))");
+            writer.write(`headers.Add("${wireValue}", `);
+            writer.writeNode(
+                this.context.callSprintf([
+                    go.codeblock(`"%v"`),
+                    value
+                ])
+            );
+            writer.write(")");
+            writer.newLine();
         });
     }
 
+    private addQueryValue({ wireValue, value }: { wireValue: string; value: string }): go.CodeBlock {
+        return go.codeblock((writer) => {
+            writer.write(`queryParams.Add("${wireValue}", "${value}")`);
+            writer.newLine();
+        });
+    }
+
+
     private setHeaderValue({ wireValue, value }: { wireValue: string; value: string }): go.CodeBlock {
-        return go.codeblock(`headers.Add("${wireValue}", "${value}")`);
+        return go.codeblock((writer) => {
+            writer.write(`headers.Add("${wireValue}", "${value}")`);
+            writer.newLine();
+        });
     }
 
     private writeRawReturnZeroValueWithError(): go.CodeBlock {

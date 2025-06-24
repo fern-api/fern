@@ -48,7 +48,7 @@ func (c *Client) GetDirectThread(
 	)
 
 	var response *foldera.Response
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,

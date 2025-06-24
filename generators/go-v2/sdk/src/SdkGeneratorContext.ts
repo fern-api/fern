@@ -346,6 +346,17 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
             multiline: false
         });
     }
+    
+    public callSprintf(arguments_: go.AstNode[]): go.FuncInvocation {
+        return go.invokeFunc({
+            func: go.typeReference({
+                name: "Sprintf",
+                importPath: "fmt"
+            }),
+            arguments_,
+            multiline: false
+        });
+    }
 
     public callEncodeUrl(arguments_: go.AstNode[]): go.FuncInvocation {
         return this.callInternalFunc("EncodeURL", arguments_);

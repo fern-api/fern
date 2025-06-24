@@ -102,6 +102,7 @@ func TestCall(t *testing.T) {
 			wantError: &NotFoundError{
 				APIError: core.NewAPIError(
 					http.StatusNotFound,
+					http.Header{},
 					errors.New(`{"message":"ID \"404\" not found"}`),
 				),
 			},
@@ -115,6 +116,7 @@ func TestCall(t *testing.T) {
 			giveRequest: nil,
 			wantError: core.NewAPIError(
 				http.StatusBadRequest,
+				http.Header{},
 				errors.New("invalid request"),
 			),
 		},
@@ -140,6 +142,7 @@ func TestCall(t *testing.T) {
 			},
 			wantError: core.NewAPIError(
 				http.StatusInternalServerError,
+				http.Header{},
 				errors.New("failed to process request"),
 			),
 		},
@@ -212,7 +215,7 @@ func TestCall(t *testing.T) {
 				},
 			)
 			var response *Response
-			err := caller.Call(
+			_, err := caller.Call(
 				context.Background(),
 				&CallParams{
 					URL:                server.URL + test.givePathSuffix,
@@ -232,67 +235,6 @@ func TestCall(t *testing.T) {
 			}
 			require.NoError(t, err)
 			assert.Equal(t, test.wantResponse, response)
-		})
-	}
-}
-
-func TestCallRaw(t *testing.T) {
-	tests := []*TestCase{
-		{
-			description: "HEAD success",
-			giveMethod:  http.MethodHead,
-			giveHeader: http.Header{
-				"X-API-Status": []string{"success"},
-			},
-			wantHeaders: http.Header{
-				"Content-Length": []string{"250"},
-				"Date":           []string{"1970-01-01"},
-			},
-		},
-	}
-	for _, test := range tests {
-		t.Run(test.description, func(t *testing.T) {
-			server := httptest.NewServer(
-				http.HandlerFunc(
-					func(w http.ResponseWriter, r *http.Request) {
-						assert.Equal(t, test.giveMethod, r.Method)
-						for header, value := range test.giveHeader {
-							assert.Equal(t, value, r.Header.Values(header))
-						}
-						for header, values := range test.wantHeaders {
-							for _, value := range values {
-								w.Header().Add(header, value)
-							}
-						}
-						w.WriteHeader(http.StatusOK)
-					},
-				),
-			)
-			defer server.Close()
-
-			caller := NewCaller(
-				&CallerParams{
-					Client: server.Client(),
-				},
-			)
-			response, err := caller.CallRaw(
-				context.Background(),
-				&CallRawParams{
-					URL:             server.URL + test.givePathSuffix,
-					Method:          test.giveMethod,
-					Headers:         test.giveHeader,
-					BodyProperties:  test.giveBodyProperties,
-					QueryParameters: test.giveQueryParams,
-					Request:         test.giveRequest,
-					ErrorDecoder:    test.giveErrorDecoder,
-				},
-			)
-			if test.wantError != nil {
-				assert.EqualError(t, err, test.wantError.Error())
-				return
-			}
-			require.NoError(t, err)
-			assert.Equal(t, test.wantHeaders, response.Header)
 		})
 	}
 }
@@ -432,13 +374,13 @@ func newTestServer(t *testing.T, tc *TestCase) *httptest.Server {
 }
 
 // newTestErrorDecoder returns an error decoder suitable for tests.
-func newTestErrorDecoder(t *testing.T) func(int, io.Reader) error {
-	return func(statusCode int, body io.Reader) error {
+func newTestErrorDecoder(t *testing.T) func(int, http.Header, io.Reader) error {
+	return func(statusCode int, header http.Header, body io.Reader) error {
 		raw, err := io.ReadAll(body)
 		require.NoError(t, err)
 
 		var (
-			apiError = core.NewAPIError(statusCode, errors.New(string(raw)))
+			apiError = core.NewAPIError(statusCode, header, errors.New(string(raw)))
 			decoder  = json.NewDecoder(bytes.NewReader(raw))
 		)
 		if statusCode == http.StatusNotFound {

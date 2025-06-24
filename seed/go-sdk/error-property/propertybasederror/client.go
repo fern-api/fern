@@ -78,7 +78,7 @@ func (c *Client) ThrowError(
 	}
 
 	var response string
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,

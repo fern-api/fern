@@ -17,7 +17,7 @@ import (
     fern "github.com/enum/fern"
 )
 
-func do() () {
+func do() {
     client := client.NewClient()
     client.InlinedRequest.Send(
         context.TODO(),

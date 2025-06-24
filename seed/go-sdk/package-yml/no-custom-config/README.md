@@ -17,7 +17,7 @@ import (
     fern "github.com/package-yml/fern"
 )
 
-func do() () {
+func do() {
     client := client.NewClient()
     client.Echo(
         context.TODO(),

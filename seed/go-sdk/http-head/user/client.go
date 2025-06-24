@@ -46,9 +46,9 @@ func (c *Client) Head(
 		c.header.Clone(),
 		options.ToHeader(),
 	)
-	response, err := c.caller.CallRaw(
+	response, err := c.caller.Call(
 		ctx,
-		&internal.CallRawParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodHead,
 			Headers:         headers,
@@ -61,7 +61,6 @@ func (c *Client) Head(
 	if err != nil {
 		return nil, err
 	}
-	defer response.Body.Close()
 	return response.Header, nil
 }
 
@@ -90,7 +89,7 @@ func (c *Client) List(
 	)
 
 	var response []*fern.User
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,

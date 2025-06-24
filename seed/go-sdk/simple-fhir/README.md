@@ -16,7 +16,7 @@ import (
     context "context"
 )
 
-func do() () {
+func do() {
     client := client.NewClient()
     client.GetAccount(
         context.TODO(),

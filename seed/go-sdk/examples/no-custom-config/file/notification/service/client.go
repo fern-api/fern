@@ -52,7 +52,7 @@ func (c *Client) GetException(
 	)
 
 	var response *fern.Exception
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,

@@ -17,7 +17,7 @@ import (
     context "context"
 )
 
-func do() () {
+func do() {
     client := client.NewClient(
         option.WithCustomAuthScheme(
             "<value>",
@@ -25,7 +25,7 @@ func do() () {
     )
     client.CustomAuth.PostWithCustomAuth(
         context.TODO(),
-        map[string]interface{}{
+        map[string]any{
             "key": "value",
         },
     )

@@ -7,7 +7,7 @@ import (
     fern "github.com/examples/fern"
 )
 
-func do() () {
+func do() {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -27,14 +27,14 @@ func do() () {
             From: "Hayao Miyazaki",
             Rating: 8,
             Tag: "tag-wf9as23d",
-            Metadata: map[string]interface{}{
-                "actors": []interface{}{
+            Metadata: map[string]any{
+                "actors": []any{
                     "Christian Bale",
                     "Florence Pugh",
                     "Willem Dafoe",
                 },
                 "releaseDate": "2023-12-08",
-                "ratings": map[string]interface{}{
+                "ratings": map[string]any{
                     "rottenTomatoes": 97,
                     "imdb": 7.6,
                 },

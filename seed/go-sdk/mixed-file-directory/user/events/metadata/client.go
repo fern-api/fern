@@ -57,7 +57,7 @@ func (c *Client) GetMetadata(
 	)
 
 	var response *events.Metadata
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,

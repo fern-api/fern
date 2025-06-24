@@ -16,7 +16,7 @@ import (
     context "context"
 )
 
-func do() () {
+func do() {
     client := fern.NewClient()
     client.Echo(
         context.TODO(),

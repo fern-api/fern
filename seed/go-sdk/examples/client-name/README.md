@@ -17,7 +17,7 @@ import (
     context "context"
 )
 
-func do() () {
+func do() {
     client := client.NewAcme(
         option.WithToken(
             "<token>",
@@ -37,7 +37,7 @@ URL, which is particularly useful in test environments.
 
 ```go
 client := client.NewClient(
-    option.WithBaseURL(seed.Environments.Production),
+    option.WithBaseURL(examples.Environments.Production),
 )
 ```
 

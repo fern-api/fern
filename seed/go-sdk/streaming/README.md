@@ -17,7 +17,7 @@ import (
     v2 "github.com/fern-api/stream-go/v2"
 )
 
-func do() () {
+func do() {
     client := client.NewClient()
     client.Dummy.GenerateStream(
         context.TODO(),

@@ -17,7 +17,7 @@ import (
     fern "github.com/cross-package-type-names/fern"
 )
 
-func do() () {
+func do() {
     client := client.NewClient()
     client.Foo.Find(
         context.TODO(),

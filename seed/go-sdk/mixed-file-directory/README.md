@@ -17,7 +17,7 @@ import (
     fern "github.com/mixed-file-directory/fern"
 )
 
-func do() () {
+func do() {
     client := client.NewClient()
     client.Organization.Create(
         context.TODO(),

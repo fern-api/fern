@@ -17,7 +17,7 @@ import (
     context "context"
 )
 
-func do() () {
+func do() {
     client := client.NewClient(
         option.WithToken(
             "<token>",

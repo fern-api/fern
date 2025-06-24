@@ -52,7 +52,7 @@ func (s *ServiceClient) Nop(
 		options.ToHeader(),
 	)
 
-	if err := s.caller.Call(
+	if _, err := s.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,

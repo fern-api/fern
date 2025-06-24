@@ -17,7 +17,7 @@ import (
     fern "github.com/server-sent-event-examples/fern"
 )
 
-func do() () {
+func do() {
     client := client.NewClient()
     client.Completions.Stream(
         context.TODO(),

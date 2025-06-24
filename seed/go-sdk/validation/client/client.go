@@ -49,7 +49,7 @@ func (c *Client) Create(
 	)
 
 	var response *fern.Type
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,
@@ -93,7 +93,7 @@ func (c *Client) Get(
 	)
 
 	var response *fern.Type
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,

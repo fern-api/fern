@@ -8,7 +8,7 @@ import (
     uuid "github.com/google/uuid"
 )
 
-func do() () {
+func do() {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",

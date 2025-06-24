@@ -17,7 +17,7 @@ import (
     fern "github.com/audiences/fern"
 )
 
-func do() () {
+func do() {
     client := client.NewClient()
     client.Foo.Find(
         context.TODO(),
@@ -43,7 +43,7 @@ URL, which is particularly useful in test environments.
 
 ```go
 client := client.NewClient(
-    option.WithBaseURL(seed.Environments.EnvironmentA),
+    option.WithBaseURL(audiences.Environments.EnvironmentA),
 )
 ```
 

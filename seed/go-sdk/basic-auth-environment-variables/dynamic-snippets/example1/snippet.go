@@ -6,7 +6,7 @@ import (
     context "context"
 )
 
-func do() () {
+func do() {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -18,7 +18,7 @@ func do() () {
     )
     client.BasicAuth.PostWithBasicAuth(
         context.TODO(),
-        map[string]interface{}{
+        map[string]any{
             "key": "value",
         },
     )

@@ -17,7 +17,7 @@ import (
     undiscriminated "github.com/fern-api/undiscriminated-go"
 )
 
-func do() () {
+func do() {
     client := client.NewClient()
     client.Union.Get(
         context.TODO(),

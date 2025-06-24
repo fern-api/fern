@@ -7,7 +7,7 @@ import (
     undiscriminated "github.com/fern-api/undiscriminated-go"
 )
 
-func do() () {
+func do() {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -16,8 +16,8 @@ func do() () {
     client.Union.UpdateMetadata(
         context.TODO(),
         &undiscriminated.MetadataUnion{
-            OptionalMetadata: map[string]interface{}{
-                "string": map[string]interface{}{
+            OptionalMetadata: map[string]any{
+                "string": map[string]any{
                     "key": "value",
                 },
             },

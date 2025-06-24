@@ -17,7 +17,7 @@ import (
     fern "github.com/nullable/fern"
 )
 
-func do() () {
+func do() {
     client := client.NewClient()
     client.Nullable.CreateUser(
         context.TODO(),

@@ -7,7 +7,7 @@ import (
     unions "github.com/fern-api/unions-go"
 )
 
-func do() () {
+func do() {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",

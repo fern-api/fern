@@ -17,7 +17,7 @@ import (
     fern "github.com/extends/fern"
 )
 
-func do() () {
+func do() {
     client := client.NewClient()
     client.ExtendedInlineRequestBody(
         context.TODO(),
