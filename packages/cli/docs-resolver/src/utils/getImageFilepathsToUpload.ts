@@ -158,65 +158,75 @@ async function collectIconsFromNavigation({
 
     switch (navigation.type) {
         case "untabbed":
-            for (const item of navigation.items) {
-                await collectIconsFromNavigationItem({
-                    item,
-                    filepaths,
-                    docsWorkspace
-                });
-            }
-            break;
-        case "tabbed":
-            for (const tab of navigation.items) {
-                if (tab.icon != null) {
-                    await addIconToFilepaths({
-                        iconPath: tab.icon,
+            await Promise.all(
+                navigation.items.map((item) =>
+                    collectIconsFromNavigationItem({
+                        item,
                         filepaths,
                         docsWorkspace
-                    });
-                }
-                if (tab.child.type === "layout" && tab.child.layout != null) {
-                    for (const item of tab.child.layout) {
-                        await collectIconsFromNavigationItem({
-                            item,
+                    })
+                )
+            );
+            break;
+        case "tabbed":
+            await Promise.all(
+                navigation.items.map(async (tab) => {
+                    if (tab.icon != null) {
+                        await addIconToFilepaths({
+                            iconPath: tab.icon,
                             filepaths,
                             docsWorkspace
                         });
                     }
-                }
-            }
+                    if (tab.child.type === "layout" && tab.child.layout != null) {
+                        await Promise.all(
+                            tab.child.layout.map((item) =>
+                                collectIconsFromNavigationItem({
+                                    item,
+                                    filepaths,
+                                    docsWorkspace
+                                })
+                            )
+                        );
+                    }
+                })
+            );
             break;
         case "versioned":
-            for (const version of navigation.versions) {
-                if (version.landingPage != null) {
-                    await collectIconsFromNavigationItem({
-                        item: version.landingPage,
-                        filepaths,
+            await Promise.all(
+                navigation.versions.map(async (version) => {
+                    if (version.landingPage != null) {
+                        await collectIconsFromNavigationItem({
+                            item: version.landingPage,
+                            filepaths,
+                            docsWorkspace
+                        });
+                    }
+                    const nestedIcons = await collectIconsFromNavigation({
+                        navigation: version.navigation,
                         docsWorkspace
                     });
-                }
-                const nestedIcons = await collectIconsFromNavigation({
-                    navigation: version.navigation,
-                    docsWorkspace
-                });
-                nestedIcons.forEach((filepath) => filepaths.add(filepath));
-            }
+                    nestedIcons.forEach((filepath) => filepaths.add(filepath));
+                })
+            );
             break;
         case "productgroup":
-            for (const product of navigation.products) {
-                if (product.landingPage != null) {
-                    await collectIconsFromNavigationItem({
-                        item: product.landingPage,
-                        filepaths,
+            await Promise.all(
+                navigation.products.map(async (product) => {
+                    if (product.landingPage != null) {
+                        await collectIconsFromNavigationItem({
+                            item: product.landingPage,
+                            filepaths,
+                            docsWorkspace
+                        });
+                    }
+                    const nestedIcons = await collectIconsFromNavigation({
+                        navigation: product.navigation,
                         docsWorkspace
                     });
-                }
-                const nestedIcons = await collectIconsFromNavigation({
-                    navigation: product.navigation,
-                    docsWorkspace
-                });
-                nestedIcons.forEach((filepath) => filepaths.add(filepath));
-            }
+                    nestedIcons.forEach((filepath) => filepaths.add(filepath));
+                })
+            );
             break;
     }
 
@@ -250,13 +260,15 @@ async function collectIconsFromNavigationItem({
                     docsWorkspace
                 });
             }
-            for (const contentItem of item.contents) {
-                await collectIconsFromNavigationItem({
-                    item: contentItem,
-                    filepaths,
-                    docsWorkspace
-                });
-            }
+            await Promise.all(
+                item.contents.map((contentItem) =>
+                    collectIconsFromNavigationItem({
+                        item: contentItem,
+                        filepaths,
+                        docsWorkspace
+                    })
+                )
+            );
             break;
         case "apiSection":
             if (item.icon != null) {
