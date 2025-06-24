@@ -143,7 +143,7 @@ export class RawClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSch
     private getPackageName(): string {
         return this.subpackage != null
             ? this.context.getSubpackageClientPackageName(this.subpackage)
-            : this.context.getClientPackageName();
+            : this.context.getClientPackageName(); 
     }
 
     private getDirectory(): RelativeFilePath {

@@ -196,11 +196,14 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
     }
 
     public getSubpackageClientPackageName(subpackage: Subpackage): string {
-        return this.getFileLocation(subpackage.fernFilepath).importPath.split("/").pop() ?? "";
+        const fileLocation = this.isFlatPackageLayout() ? this.getPackageLocation(subpackage.fernFilepath) : this.getFileLocation(subpackage.fernFilepath);
+        return fileLocation.importPath.split("/").pop() ?? "";
     }
 
     public getSubpackageClientFileLocation(subpackage: Subpackage): FileLocation {
-        // TODO: Add support for conditionally including the nested 'client' package element.
+        if (this.isFlatPackageLayout()) {
+            return this.getPackageLocation(subpackage.fernFilepath);
+        }
         return this.getFileLocation(subpackage.fernFilepath);
     }
 
@@ -451,6 +454,10 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
             importPath: "net/http"
         });
     }
+    
+    public isFlatPackageLayout(): boolean {
+        return this.customConfig.packageLayout === "flat";
+    }
 
     private getEndpointRequestBodyType(requestBodyType: SdkRequestBodyType): go.Type {
         switch (requestBodyType.type) {
@@ -498,4 +505,5 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         const httpService = this.getHttpServiceOrThrow(serviceId);
         return this.getPackageLocation(httpService.name.fernFilepath);
     }
+
 }

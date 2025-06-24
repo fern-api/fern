@@ -76,7 +76,7 @@ export class Method extends AstNode {
                 writer.write(")");
             }
         }
-        writer.writeLine(" {");
+        writer.writeLine("{");
         writer.indent();
         this.body?.write(writer);
         writer.dedent();
@@ -85,9 +85,9 @@ export class Method extends AstNode {
     }
 
     private writeReceiver({ writer, typeReference }: { writer: Writer; typeReference: GoTypeReference }): void {
-        writer.write(`(${this.getReceiverName(typeReference.name)} `);
+        writer.write(` (${this.getReceiverName(typeReference.name)} `);
         typeReference.write(writer);
-        writer.write(") ");
+        writer.write(")");
     }
 
     private getReceiverName(s: string): string {

@@ -73,8 +73,8 @@ export class Struct extends AstNode {
         }
 
         if (this.methods.length > 0) {
-            writer.newLine();
             for (const method of this.methods) {
+                writer.newLine();
                 writer.writeNode(method);
                 writer.newLine();
             }

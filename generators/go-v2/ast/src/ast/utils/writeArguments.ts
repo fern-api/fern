@@ -1,8 +1,4 @@
-import {
-    Arguments,
-    NamedArgument,
-    UnnamedArgument,
-} from "@fern-api/browser-compatible-base-generator";
+import { UnnamedArgument } from "@fern-api/browser-compatible-base-generator";
 
 import { TypeInstantiation } from "../TypeInstantiation";
 import { Writer } from "../core/Writer";
@@ -32,7 +28,7 @@ function writeMultiline({ writer, arguments_ }: { writer: Writer; arguments_: Un
     writer.writeLine("(");
     writer.indent();
     for (const argument of arguments_) {
-        writeArgument({ writer, argument });
+        argument.write(writer);
         writer.writeLine(",");
     }
     writer.dedent();
@@ -45,13 +41,9 @@ function writeCompact({ writer, arguments_ }: { writer: Writer; arguments_: Unna
         if (index > 0) {
             writer.write(", ");
         }
-        writeArgument({ writer, argument });
+        argument.write(writer);
     });
     writer.write(")");
-}
-
-function writeArgument({ writer, argument }: { writer: Writer; argument: UnnamedArgument }): void {
-    argument.write(writer);
 }
 
 function filterNopArguments(arguments_: UnnamedArgument[]): UnnamedArgument[] {
