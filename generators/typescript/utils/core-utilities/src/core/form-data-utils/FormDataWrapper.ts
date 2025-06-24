@@ -1,5 +1,4 @@
 import { RUNTIME } from "../runtime/index.js";
-import { toReadableStream } from "./toReadableStream.js";
 
 export type MaybePromise<T> = Promise<T> | T;
 
@@ -12,6 +11,7 @@ interface FormDataRequest<Body> {
 function isNamedValue(value: unknown): value is { name: string } {
     return typeof value === "object" && value != null && "name" in value;
 }
+
 function isPathedValue(value: unknown): value is { path: unknown } {
     return typeof value === "object" && value != null && "path" in value;
 }
@@ -35,10 +35,8 @@ export interface CrossPlatformFormData {
 
 export async function newFormData(): Promise<CrossPlatformFormData> {
     let formdata: CrossPlatformFormData;
-    if (RUNTIME.type === "node" && RUNTIME.parsedVersion != null && RUNTIME.parsedVersion >= 18) {
-        formdata = new Node18FormData();
-    } else if (RUNTIME.type === "node") {
-        formdata = new Node16FormData();
+    if (RUNTIME.type === "node" && RUNTIME.parsedVersion != null && RUNTIME.parsedVersion < 18) {
+        formdata = new OldNodeFormData();
     } else {
         formdata = new WebFormData();
     }
@@ -46,67 +44,7 @@ export async function newFormData(): Promise<CrossPlatformFormData> {
     return formdata;
 }
 
-export type Node18FormDataFd =
-    | {
-          append(name: string, value: unknown, fileName?: string): void;
-      }
-    | undefined;
-
-/**
- * Form Data Implementation for Node.js 18+
- */
-export class Node18FormData implements CrossPlatformFormData {
-    private fd: Node18FormDataFd;
-
-    public async setup() {
-        this.fd = new (await import("formdata-node")).FormData();
-    }
-
-    public append(key: string, value: any): void {
-        this.fd?.append(key, value);
-    }
-
-    private getFileName(value: any, filename?: string): string | undefined {
-        if (filename != null) {
-            return filename;
-        }
-        if (isNamedValue(value)) {
-            return value.name;
-        }
-        if (isPathedValue(value) && value.path) {
-            return getLastPathSegment(value.path.toString());
-        }
-        return undefined;
-    }
-
-    public async appendFile(key: string, value: unknown, fileName?: string): Promise<void> {
-        fileName = this.getFileName(value, fileName);
-
-        if (value instanceof Blob) {
-            this.fd?.append(key, value, fileName);
-        } else {
-            this.fd?.append(key, {
-                type: undefined,
-                name: fileName,
-                [Symbol.toStringTag]: "File",
-                stream() {
-                    return value;
-                }
-            });
-        }
-    }
-
-    public async getRequest(): Promise<FormDataRequest<unknown>> {
-        const encoder = new (await import("form-data-encoder")).FormDataEncoder(this.fd as any);
-        return {
-            body: await toReadableStream(encoder),
-            headers: encoder.headers,
-            duplex: "half"
-        };
-    }
-}
-
-export type Node16FormDataFd =
+export type OldNodeFormDataFd =
     | {
           append(
               name: string,
@@ -119,18 +57,16 @@ export type Node16FormDataFd =
                         filename?: string;
                         filepath?: string;
                         contentType?: string;
-                    }
+                    },
           ): void;
-
-          getHeaders(): Record<string, string>;
       }
     | undefined;
 
 /**
  * Form Data Implementation for Node.js 16-18
  */
-export class Node16FormData implements CrossPlatformFormData {
-    private fd: Node16FormDataFd;
+export class OldNodeFormData implements CrossPlatformFormData {
+    private fd: OldNodeFormDataFd;
 
     public async setup(): Promise<void> {
         this.fd = new (await import("form-data")).default();
@@ -158,7 +94,7 @@ export class Node16FormData implements CrossPlatformFormData {
 
         let bufferedValue;
         if (value instanceof Blob) {
-            bufferedValue = Buffer.from(await (value as any).arrayBuffer());
+            bufferedValue = Buffer.from(await value.arrayBuffer());
         } else {
             bufferedValue = value;
         }
@@ -170,10 +106,10 @@ export class Node16FormData implements CrossPlatformFormData {
         }
     }
 
-    public getRequest(): FormDataRequest<Node16FormDataFd> {
+    public getRequest(): FormDataRequest<OldNodeFormDataFd> {
         return {
             body: this.fd,
-            headers: this.fd ? this.fd.getHeaders() : {}
+            headers: {},
         };
     }
 }
@@ -220,7 +156,7 @@ export class WebFormData implements CrossPlatformFormData {
     public getRequest(): FormDataRequest<WebFormDataFd> {
         return {
             body: this.fd,
-            headers: {}
+            headers: {},
         };
     }
 }

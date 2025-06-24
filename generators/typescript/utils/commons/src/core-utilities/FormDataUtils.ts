@@ -36,7 +36,7 @@ export const MANIFEST: CoreUtility.Manifest = {
     },
     dependsOn: [RuntimeManifest],
     getFilesPatterns: () => {
-        return { patterns: ["src/core/form-data-utils/**", "tests/form-data-utils/**"] };
+        return { patterns: ["src/core/form-data-utils/**", "tests/unit/form-data-utils/**"] };
     }
 };
 
