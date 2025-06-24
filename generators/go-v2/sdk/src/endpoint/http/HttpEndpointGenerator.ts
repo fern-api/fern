@@ -61,8 +61,19 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         subpackage: Subpackage | undefined;
         endpoint: HttpEndpoint;
     }): go.Method[] {
+        if (!this.shouldGenerateRawEndpoint({ endpoint })) {
+            return [];
+        }
         const endpointRequest = getEndpointRequest({ context: this.context, endpoint, serviceId, service });
         return [this.generateRawUnaryEndpoint({ serviceId, service, endpoint, subpackage, endpointRequest })];
+    }
+
+    private shouldGenerateRawEndpoint({ endpoint }: { endpoint: HttpEndpoint }): boolean {
+        return (
+            !this.context.isFileUploadEndpoint(endpoint) &&
+            !this.context.isPaginationEndpoint(endpoint) &&
+            !this.context.isStreamingEndpoint(endpoint)
+        );
     }
 
     private generateRawUnaryEndpoint({

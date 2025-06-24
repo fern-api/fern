@@ -171,10 +171,16 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
     }
 
     public getRootClientDirectory(): RelativeFilePath {
+        if (this.isFlatPackageLayout()) {
+            return RelativeFilePath.of(".");
+        }
         return RelativeFilePath.of(this.getClientPackageName());
     }
 
     public getRootClientImportPath(): string {
+        if (this.isFlatPackageLayout()) {
+            return this.getRootImportPath();
+        }
         return `${this.getRootImportPath()}/${this.getClientPackageName()}`;
     }
 
@@ -375,6 +381,46 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
             importPath: this.getCoreImportPath(),
             generics: [valueType]
         });
+    }
+
+    public isFileUploadEndpoint(endpoint: HttpEndpoint): boolean {
+        const requestBody = endpoint.requestBody;
+        if (requestBody == null) {
+            return false;
+        }
+        switch (requestBody.type) {
+            case "inlinedRequestBody":
+            case "reference":
+            case "bytes":
+                return false;
+            case "fileUpload":
+                return true;
+            default:
+                assertNever(requestBody);
+        }
+    }
+
+    public isPaginationEndpoint(endpoint: HttpEndpoint): boolean {
+        return endpoint.pagination != null;
+    }
+
+    public isStreamingEndpoint(endpoint: HttpEndpoint): boolean {
+        const responseBody = endpoint.response?.body;
+        if (responseBody == null) {
+            return false;
+        }
+        switch (responseBody.type) {
+            case "fileDownload":
+            case "json":
+            case "text":
+            case "bytes":
+                return false;
+            case "streaming":
+            case "streamParameter":
+                return true;
+            default:
+                assertNever(responseBody);
+        }
     }
 
     public getStreamPayload(streamingResponse: StreamingResponse): go.Type {
