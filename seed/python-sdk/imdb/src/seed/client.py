@@ -18,6 +18,8 @@ class SeedApi:
 
     token : typing.Optional[typing.Union[str, typing.Callable[[], str]]]
     headers : typing.Optional[typing.Dict[str, str]]
+        Additional headers to send with every request.
+
     timeout : typing.Optional[float]
         The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
 
@@ -33,7 +35,6 @@ class SeedApi:
 
     client = SeedApi(
         token="YOUR_TOKEN",
-        headers=None,
         base_url="https://yourhost.com/path/to/api",
     )
     """
@@ -76,6 +77,8 @@ class AsyncSeedApi:
 
     token : typing.Optional[typing.Union[str, typing.Callable[[], str]]]
     headers : typing.Optional[typing.Dict[str, str]]
+        Additional headers to send with every request.
+
     timeout : typing.Optional[float]
         The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
 
@@ -91,7 +94,6 @@ class AsyncSeedApi:
 
     client = AsyncSeedApi(
         token="YOUR_TOKEN",
-        headers=None,
         base_url="https://yourhost.com/path/to/api",
     )
     """

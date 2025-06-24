@@ -26,7 +26,7 @@ class BaseClientWrapper:
             "X-Fern-Language": "Python",
             "X-Fern-SDK-Name": "fern_imdb",
             "X-Fern-SDK-Version": "0.0.1",
-            **self.get_custom_headers(),
+            **(self.get_custom_headers() or {}),
         }
         token = self._get_token()
         if token is not None:

@@ -99,7 +99,7 @@ class RootClientGenerator(BaseWrappedClientGenerator):
         exclude_auth = self._oauth_scheme is not None
 
         self._constructor_info = client_wrapper_generator._get_constructor_info(exclude_auth=exclude_auth)
-        self._root_client_constructor_params = self._constructor_info.constructor_parameters
+        self._root_client_constructor_params = self._constructor_info.constructor_parameters 
         if self._context.ir.environments is not None and self._context.ir.environments.default_environment is None:
             environment_constructor_parameter = client_wrapper_generator._get_environment_constructor_parameter()
             self._root_client_constructor_params.append(environment_constructor_parameter)
@@ -310,12 +310,6 @@ class RootClientGenerator(BaseWrappedClientGenerator):
                         ),
                         docs="The environment to be used as the base url, can be used in lieu of 'base_url'.",
                     ),
-                    AST.NamedFunctionParameter(
-                        name=RootClientGenerator.HEADERS_CONSTRUCTOR_PARAMETER_NAME,
-                        type_hint=AST.TypeHint.optional(AST.TypeHint.dict(AST.TypeHint.str_(), AST.TypeHint.str_())),
-                        docs=RootClientGenerator.HEADERS_CONSTRUCTOR_PARAMETER_DOCS,
-                        initializer=AST.Expression("None"),
-                    ),
                 ],
                 return_type=AST.TypeHint.str_(),
             ),
@@ -465,6 +459,7 @@ class RootClientGenerator(BaseWrappedClientGenerator):
                         if param.environment_variable is not None
                         else None
                     ),
+                    docs=param.docs,
                     validation_check=(
                         AST.Expression(
                             AST.CodeWriter(
@@ -610,6 +605,7 @@ class RootClientGenerator(BaseWrappedClientGenerator):
             )
         )
         parameters.extend(self._get_literal_header_parameters())
+
         return parameters
 
     def _get_parameter_validation_writer(self, *, param_name: str, environment_variable: str) -> CodeWriterFunction:

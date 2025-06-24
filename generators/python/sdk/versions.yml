@@ -1,5 +1,19 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.23.0
+  changelogEntry:
+    - summary: |
+        Add support for custom headers parameter at the top level of the client constructor.
+
+        ```python
+        client = Client(
+            headers={"X-Custom-Header": "custom-value"}
+        )
+        ```
+      type: feat
+  createdAt: '2025-06-24'
+  irVersion: 58
+
 - version: 4.22.0
   changelogEntry:
     - summary: |

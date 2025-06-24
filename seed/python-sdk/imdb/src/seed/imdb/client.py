@@ -52,7 +52,6 @@ class ImdbClient:
 
         client = SeedApi(
             token="YOUR_TOKEN",
-            headers=None,
             base_url="https://yourhost.com/path/to/api",
         )
         client.imdb.create_movie(
@@ -82,7 +81,6 @@ class ImdbClient:
 
         client = SeedApi(
             token="YOUR_TOKEN",
-            headers=None,
             base_url="https://yourhost.com/path/to/api",
         )
         client.imdb.get_movie(
@@ -135,7 +133,6 @@ class AsyncImdbClient:
 
         client = AsyncSeedApi(
             token="YOUR_TOKEN",
-            headers=None,
             base_url="https://yourhost.com/path/to/api",
         )
 
@@ -173,7 +170,6 @@ class AsyncImdbClient:
 
         client = AsyncSeedApi(
             token="YOUR_TOKEN",
-            headers=None,
             base_url="https://yourhost.com/path/to/api",
         )
 
