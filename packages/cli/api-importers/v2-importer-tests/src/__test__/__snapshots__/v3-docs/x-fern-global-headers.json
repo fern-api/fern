@@ -677,8 +677,8 @@
                   "headers": {
                     "x-api-key": "x-api-key",
                     "my-api-version": "my-api-version",
-                    "": "another_header",
-                    "Square-Version": "version"
+                    "another_header": "another_header",
+                    "version": "version"
                   },
                   "requestBody": {
                     "stream": true
@@ -1033,8 +1033,8 @@
                   "headers": {
                     "x-api-key": "x-api-key",
                     "my-api-version": "my-api-version",
-                    "": "another_header",
-                    "Square-Version": "version"
+                    "another_header": "another_header",
+                    "version": "version"
                   },
                   "requestBody": {
                     "stream": false
