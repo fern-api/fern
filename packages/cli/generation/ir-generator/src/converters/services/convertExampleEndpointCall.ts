@@ -250,6 +250,9 @@ function convertHeaders({
             const endpointHeaderDeclaration =
                 typeof endpoint.request !== "string" ? endpoint.request?.headers?.[wireKey] : undefined;
             const serviceHeaderDeclaration = service.headers?.[wireKey];
+
+            // TODO: add global headers field in ExampleEndpointCall
+            // const globalHeaderDeclaration = workspace.definition.rootApiFile.contents.headers?.[wireKey];
             if (endpointHeaderDeclaration != null) {
                 endpointHeaders.push({
                     name: file.casingsGenerator.generateNameAndWireValue({
@@ -288,9 +291,29 @@ function convertHeaders({
                         workspace
                     })
                 });
-            } else {
-                throw new Error(`Header ${wireKey} does not exist`);
             }
+            // TODO: add global headers field in ExampleEndpointCall
+            // else if (globalHeaderDeclaration != null) {
+            //     // TODO: tweak ExampleEndpointCall to include global headers
+            //     endpointHeaders.push({
+            //         name: file.casingsGenerator.generateNameAndWireValue({
+            //             name: getHeaderName({ headerKey: wireKey, header: globalHeaderDeclaration }).name,
+            //             wireValue: wireKey
+            //         }),
+            //         value: convertTypeReferenceExample({
+            //             example: exampleHeader,
+            //             rawTypeBeingExemplified:
+            //                 typeof globalHeaderDeclaration === "string"
+            //                     ? globalHeaderDeclaration
+            //                     : globalHeaderDeclaration.type,
+            //             typeResolver,
+            //             exampleResolver,
+            //             fileContainingRawTypeReference: file,
+            //             fileContainingExample: file,
+            //             workspace
+            //         })
+            //     });
+            // }
         }
     }
 
