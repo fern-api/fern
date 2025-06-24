@@ -1,5 +1,5 @@
 import { docsYml } from "@fern-api/configuration-loader";
-import { AbsoluteFilePath, RelativeFilePath, doesPathExistSync, resolve } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath, doesPathExist, resolve } from "@fern-api/fs-utils";
 import { DocsWorkspace } from "@fern-api/workspace-loader";
 
 function shouldProcessIconPath(iconPath: string): boolean {
@@ -15,27 +15,27 @@ function isExternalUrl(url: string): boolean {
     return /^(https?:)?\/\//.test(url);
 }
 
-function resolvePath({
+async function resolvePath({
     pathToImage,
     absolutePathToFernFolder
 }: {
     pathToImage: string | undefined;
     absolutePathToFernFolder: AbsoluteFilePath;
-}): AbsoluteFilePath | undefined {
+}): Promise<AbsoluteFilePath | undefined> {
     if (pathToImage == null || isExternalUrl(pathToImage)) {
         return undefined;
     }
 
     const filepath = resolve(absolutePathToFernFolder, RelativeFilePath.of(pathToImage));
 
-    if (doesPathExistSync(filepath)) {
+    if (await doesPathExist(filepath)) {
         return filepath;
     }
 
     return undefined;
 }
 
-function addIconToFilepaths({
+async function addIconToFilepaths({
     iconPath,
     filepaths,
     docsWorkspace
@@ -43,9 +43,9 @@ function addIconToFilepaths({
     iconPath: string;
     filepaths: Set<AbsoluteFilePath>;
     docsWorkspace: DocsWorkspace;
-}): void {
+}): Promise<void> {
     if (shouldProcessIconPath(iconPath)) {
-        const absoluteIconPath = resolvePath({
+        const absoluteIconPath = await resolvePath({
             pathToImage: iconPath,
             absolutePathToFernFolder: docsWorkspace.absoluteFilePath
         });
@@ -54,13 +54,13 @@ function addIconToFilepaths({
     }
 }
 
-export function collectFilesFromDocsConfig({
+export async function collectFilesFromDocsConfig({
     parsedDocsConfig,
     docsWorkspace
 }: {
     parsedDocsConfig: docsYml.ParsedDocsConfiguration;
     docsWorkspace: DocsWorkspace;
-}): Set<AbsoluteFilePath> {
+}): Promise<Set<AbsoluteFilePath>> {
     const filepaths = new Set<AbsoluteFilePath>();
 
     /* branding images */
@@ -129,7 +129,7 @@ export function collectFilesFromDocsConfig({
     }
 
     /* navigation icons */
-    const navigationIcons = collectIconsFromNavigation({
+    const navigationIcons = await collectIconsFromNavigation({
         navigation: parsedDocsConfig.navigation,
         docsWorkspace
     });
@@ -147,83 +147,83 @@ export function collectFilesFromDocsConfig({
     return filepaths;
 }
 
-function collectIconsFromNavigation({
+async function collectIconsFromNavigation({
     navigation,
     docsWorkspace
 }: {
     navigation: docsYml.DocsNavigationConfiguration;
     docsWorkspace: DocsWorkspace;
-}): Set<AbsoluteFilePath> {
+}): Promise<Set<AbsoluteFilePath>> {
     const filepaths = new Set<AbsoluteFilePath>();
 
     switch (navigation.type) {
         case "untabbed":
-            navigation.items.forEach((item) => {
-                collectIconsFromNavigationItem({
+            for (const item of navigation.items) {
+                await collectIconsFromNavigationItem({
                     item,
                     filepaths,
                     docsWorkspace
                 });
-            });
+            }
             break;
         case "tabbed":
-            navigation.items.forEach((tab) => {
+            for (const tab of navigation.items) {
                 if (tab.icon != null) {
-                    addIconToFilepaths({
+                    await addIconToFilepaths({
                         iconPath: tab.icon,
                         filepaths,
                         docsWorkspace
                     });
                 }
                 if (tab.child.type === "layout" && tab.child.layout != null) {
-                    tab.child.layout.forEach((item) => {
-                        collectIconsFromNavigationItem({
+                    for (const item of tab.child.layout) {
+                        await collectIconsFromNavigationItem({
                             item,
                             filepaths,
                             docsWorkspace
                         });
-                    });
+                    }
                 }
-            });
+            }
             break;
         case "versioned":
-            navigation.versions.forEach((version) => {
+            for (const version of navigation.versions) {
                 if (version.landingPage != null) {
-                    collectIconsFromNavigationItem({
+                    await collectIconsFromNavigationItem({
                         item: version.landingPage,
                         filepaths,
                         docsWorkspace
                     });
                 }
-                const nestedIcons = collectIconsFromNavigation({
+                const nestedIcons = await collectIconsFromNavigation({
                     navigation: version.navigation,
                     docsWorkspace
                 });
                 nestedIcons.forEach((filepath) => filepaths.add(filepath));
-            });
+            }
             break;
         case "productgroup":
-            navigation.products.forEach((product) => {
+            for (const product of navigation.products) {
                 if (product.landingPage != null) {
-                    collectIconsFromNavigationItem({
+                    await collectIconsFromNavigationItem({
                         item: product.landingPage,
                         filepaths,
                         docsWorkspace
                     });
                 }
-                const nestedIcons = collectIconsFromNavigation({
+                const nestedIcons = await collectIconsFromNavigation({
                     navigation: product.navigation,
                     docsWorkspace
                 });
                 nestedIcons.forEach((filepath) => filepaths.add(filepath));
-            });
+            }
             break;
     }
 
     return filepaths;
 }
 
-function collectIconsFromNavigationItem({
+async function collectIconsFromNavigationItem({
     item,
     filepaths,
     docsWorkspace
@@ -231,11 +231,11 @@ function collectIconsFromNavigationItem({
     item: docsYml.DocsNavigationItem;
     filepaths: Set<AbsoluteFilePath>;
     docsWorkspace: DocsWorkspace;
-}): void {
+}): Promise<void> {
     switch (item.type) {
         case "page":
             if (item.icon != null) {
-                addIconToFilepaths({
+                await addIconToFilepaths({
                     iconPath: item.icon,
                     filepaths,
                     docsWorkspace
@@ -244,23 +244,23 @@ function collectIconsFromNavigationItem({
             break;
         case "section":
             if (item.icon != null) {
-                addIconToFilepaths({
+                await addIconToFilepaths({
                     iconPath: item.icon,
                     filepaths,
                     docsWorkspace
                 });
             }
-            item.contents.forEach((contentItem) => {
-                collectIconsFromNavigationItem({
+            for (const contentItem of item.contents) {
+                await collectIconsFromNavigationItem({
                     item: contentItem,
                     filepaths,
                     docsWorkspace
                 });
-            });
+            }
             break;
         case "apiSection":
             if (item.icon != null) {
-                addIconToFilepaths({
+                await addIconToFilepaths({
                     iconPath: item.icon,
                     filepaths,
                     docsWorkspace
@@ -269,7 +269,7 @@ function collectIconsFromNavigationItem({
             break;
         case "link":
             if (item.icon != null) {
-                addIconToFilepaths({
+                await addIconToFilepaths({
                     iconPath: item.icon,
                     filepaths,
                     docsWorkspace
@@ -278,7 +278,7 @@ function collectIconsFromNavigationItem({
             break;
         case "changelog":
             if (item.icon != null) {
-                addIconToFilepaths({
+                await addIconToFilepaths({
                     iconPath: item.icon,
                     filepaths,
                     docsWorkspace

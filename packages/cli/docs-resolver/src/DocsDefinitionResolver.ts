@@ -179,7 +179,7 @@ export class DocsDefinitionResolver {
             });
         }
 
-        const filesToUploadSet = collectFilesFromDocsConfig({
+        const filesToUploadSet = await collectFilesFromDocsConfig({
             parsedDocsConfig: this.parsedDocsConfig,
             docsWorkspace: this.docsWorkspace
         });
