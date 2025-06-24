@@ -20,6 +20,7 @@ export function getSuccessReturnType(
     opts: {
         includeContentHeadersOnResponse: boolean;
         streamType: "wrapper" | "web";
+        fileResponseType: "stream" | "binary-response";
     }
 ): ts.TypeNode {
     if (response == null) {
@@ -34,7 +35,8 @@ export function getSuccessReturnType(
                 targetRuntime: context.targetRuntime,
                 context,
                 includeContentHeadersOnResponse: opts.includeContentHeadersOnResponse,
-                streamType: opts.streamType
+                streamType: opts.streamType,
+                fileResponseType: opts.fileResponseType
             });
         }
         case "json":
@@ -71,47 +73,48 @@ function getFileType({
     targetRuntime,
     context,
     includeContentHeadersOnResponse,
-    streamType
+    streamType,
+    fileResponseType
 }: {
     targetRuntime: JavaScriptRuntime;
     context: SdkContext;
     includeContentHeadersOnResponse: boolean;
     streamType: "wrapper" | "web";
+    fileResponseType: "stream" | "binary-response";
 }): ts.TypeNode {
     const fileType = visitJavaScriptRuntime(targetRuntime, {
         browser: () => ts.factory.createTypeReferenceNode("Blob"),
-        node: () =>
-            getReadableTypeNode({
-                typeArgument: ts.factory.createTypeReferenceNode("Uint8Array"),
-                context,
-                streamType
-            })
+        node: () => {
+            switch (fileResponseType) {
+                case "stream":
+                    return getReadableTypeNode({
+                        typeArgument: ts.factory.createTypeReferenceNode("Uint8Array"),
+                        context,
+                        streamType
+                    });
+                case "binary-response":
+                    return context.coreUtilities.fetcher.BinaryResponse._getReferenceToType();
+                default:
+                    assertNever(fileResponseType);
+            }
+        }
     });
-    if (includeContentHeadersOnResponse) {
-        return ts.factory.createTypeLiteralNode([
-            ts.factory.createPropertySignature(
-                undefined,
-                READABLE_RESPONSE_KEY,
-                undefined,
-                getReadableTypeNode({
-                    typeArgument: ts.factory.createTypeReferenceNode("Uint8Array"),
-                    context,
-                    streamType
-                })
-            ),
-            ts.factory.createPropertySignature(
-                undefined,
-                CONTENT_LENGTH_RESPONSE_KEY,
-                ts.factory.createToken(ts.SyntaxKind.QuestionToken),
-                ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword)
-            ),
-            ts.factory.createPropertySignature(
-                undefined,
-                CONTENT_TYPE_RESPONSE_KEY,
-                ts.factory.createToken(ts.SyntaxKind.QuestionToken),
-                ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
-            )
-        ]);
+    if (!includeContentHeadersOnResponse) {
+        return fileType;
     }
-    return fileType;
+    return ts.factory.createTypeLiteralNode([
+        ts.factory.createPropertySignature(undefined, READABLE_RESPONSE_KEY, undefined, fileType),
+        ts.factory.createPropertySignature(
+            undefined,
+            CONTENT_LENGTH_RESPONSE_KEY,
+            ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+            ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword)
+        ),
+        ts.factory.createPropertySignature(
+            undefined,
+            CONTENT_TYPE_RESPONSE_KEY,
+            ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+            ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
+        )
+    ]);
 }

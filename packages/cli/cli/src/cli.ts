@@ -26,6 +26,7 @@ import { addGeneratorCommands, addGetOrganizationCommand } from "./cliV2";
 import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces";
 import { diff } from "./commands/diff/diff";
 import { previewDocsWorkspace } from "./commands/docs-dev/devDocsWorkspace";
+import { generateOpenAPIForWorkspaces } from "./commands/export/generateOpenAPIForWorkspaces";
 import { formatWorkspaces } from "./commands/format/formatWorkspaces";
 import { generateDynamicIrForWorkspaces } from "./commands/generate-dynamic-ir/generateDynamicIrForWorkspaces";
 import { generateFdrApiDefinitionForWorkspaces } from "./commands/generate-fdr/generateFdrApiDefinitionForWorkspaces";
@@ -182,6 +183,7 @@ async function tryRunCli(cliContext: CliContext) {
     });
     addGenerateJsonschemaCommand(cli, cliContext);
     addWriteDocsDefinitionCommand(cli, cliContext);
+    addExportCommand(cli, cliContext);
 
     // CLI V2 Sanctioned Commands
     addGetOrganizationCommand(cli, cliContext);
@@ -1244,7 +1246,7 @@ function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
                 bundlePath,
                 brokenLinks: argv.brokenLinks,
                 appPreview: argv.beta,
-                legacyPreview: argv.legacy,
+                legacyPreview: argv.legacy || process.platform === "win32",
                 backendPort
             });
         }
@@ -1336,6 +1338,41 @@ function addWriteDocsDefinitionCommand(cli: Argv<GlobalCliOptions>, cliContext: 
                 }),
                 outputPath: resolve(cwd(), argv.outputPath),
                 cliContext
+            });
+        }
+    );
+}
+
+function addExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "export <output-path>",
+        "Export your API to an OpenAPI spec",
+        (yargs) =>
+            yargs
+                .positional("output-path", {
+                    type: "string",
+                    description: "Path to write the OpenAPI spec",
+                    demandOption: true
+                })
+                .option("api", {
+                    string: true,
+                    description: "Only run the command on the provided API"
+                }),
+        async (argv) => {
+            await cliContext.instrumentPostHogEvent({
+                command: "fern export",
+                properties: {
+                    outputPath: argv.outputPath
+                }
+            });
+
+            await generateOpenAPIForWorkspaces({
+                project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                    commandLineApiWorkspace: argv.api,
+                    defaultToAllApiWorkspaces: false
+                }),
+                cliContext,
+                outputPath: resolve(cwd(), argv.outputPath)
             });
         }
     );

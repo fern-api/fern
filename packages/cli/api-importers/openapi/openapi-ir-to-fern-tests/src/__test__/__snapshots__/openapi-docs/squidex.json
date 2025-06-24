@@ -20407,7 +20407,6 @@ service:
                   "response": {
                     "body": [
                       {
-                        "contentId": "contentId",
                         "error": {
                           "details": [
                             "details",
@@ -20596,8 +20595,6 @@ service:
                       "metadataText": "metadataText",
                       "mimeType": "mimeType",
                       "parentId": "parentId",
-                      "pixelHeight": 1,
-                      "pixelWidth": 1,
                       "slug": "slug",
                       "tags": [
                         "tags",
@@ -20951,8 +20948,6 @@ service:
                           "metadataText": "metadataText",
                           "mimeType": "mimeType",
                           "parentId": "parentId",
-                          "pixelHeight": 1,
-                          "pixelWidth": 1,
                           "slug": "slug",
                           "tags": [
                             "tags",
@@ -21071,8 +21066,6 @@ service:
                           "metadataText": "metadataText",
                           "mimeType": "mimeType",
                           "parentId": "parentId",
-                          "pixelHeight": 1,
-                          "pixelWidth": 1,
                           "slug": "slug",
                           "tags": [
                             "tags",
@@ -21193,8 +21186,6 @@ service:
                       "metadataText": "metadataText",
                       "mimeType": "mimeType",
                       "parentId": "parentId",
-                      "pixelHeight": 1,
-                      "pixelWidth": 1,
                       "slug": "slug",
                       "tags": [
                         "tags",
@@ -21373,8 +21364,6 @@ service:
                       "metadataText": "metadataText",
                       "mimeType": "mimeType",
                       "parentId": "parentId",
-                      "pixelHeight": 1,
-                      "pixelWidth": 1,
                       "slug": "slug",
                       "tags": [
                         "tags",
@@ -21475,8 +21464,6 @@ service:
                       "metadataText": "metadataText",
                       "mimeType": "mimeType",
                       "parentId": "parentId",
-                      "pixelHeight": 1,
-                      "pixelWidth": 1,
                       "slug": "slug",
                       "tags": [
                         "tags",
@@ -21588,8 +21575,6 @@ service:
                       "metadataText": "metadataText",
                       "mimeType": "mimeType",
                       "parentId": "parentId",
-                      "pixelHeight": 1,
-                      "pixelWidth": 1,
                       "slug": "slug",
                       "tags": [
                         "tags",
@@ -21829,8 +21814,6 @@ service:
                       "metadataText": "metadataText",
                       "mimeType": "mimeType",
                       "parentId": "parentId",
-                      "pixelHeight": 1,
-                      "pixelWidth": 1,
                       "slug": "slug",
                       "tags": [
                         "tags",
@@ -22465,8 +22448,6 @@ service:
                   _meta:
                     isDuplicate: isDuplicate
                   isImage: true
-                  pixelWidth: 1
-                  pixelHeight: 1
     postAsset:
       path: /api/apps/{app}/assets
       method: POST
@@ -22542,8 +22523,6 @@ service:
               _meta:
                 isDuplicate: isDuplicate
               isImage: true
-              pixelWidth: 1
-              pixelHeight: 1
     getAssetsPost:
       path: /api/apps/{app}/assets/query
       method: POST
@@ -22609,8 +22588,6 @@ service:
                   _meta:
                     isDuplicate: isDuplicate
                   isImage: true
-                  pixelWidth: 1
-                  pixelHeight: 1
     getAsset:
       path: /api/apps/{app}/assets/{id}
       method: GET
@@ -22668,8 +22645,6 @@ service:
               _meta:
                 isDuplicate: isDuplicate
               isImage: true
-              pixelWidth: 1
-              pixelHeight: 1
     postUpsertAsset:
       path: /api/apps/{app}/assets/{id}
       method: POST
@@ -22746,8 +22721,6 @@ service:
               _meta:
                 isDuplicate: isDuplicate
               isImage: true
-              pixelWidth: 1
-              pixelHeight: 1
     putAsset:
       path: /api/apps/{app}/assets/{id}
       method: PUT
@@ -22827,8 +22800,6 @@ service:
               _meta:
                 isDuplicate: isDuplicate
               isImage: true
-              pixelWidth: 1
-              pixelHeight: 1
     deleteAsset:
       path: /api/apps/{app}/assets/{id}
       method: DELETE
@@ -22914,7 +22885,6 @@ service:
                   statusCode: 1
                 jobIndex: 1
                 id: id
-                contentId: contentId
     putAssetContent:
       path: /api/apps/{app}/assets/{id}/content
       method: PUT
@@ -22982,8 +22952,6 @@ service:
               _meta:
                 isDuplicate: isDuplicate
               isImage: true
-              pixelWidth: 1
-              pixelHeight: 1
     putAssetParent:
       path: /api/apps/{app}/assets/{id}/parent
       method: PUT
@@ -23051,8 +23019,6 @@ service:
               _meta:
                 isDuplicate: isDuplicate
               isImage: true
-              pixelWidth: 1
-              pixelHeight: 1
   source:
     openapi: ../openapi.json
 ",
@@ -24029,7 +23995,6 @@ service:
                   "response": {
                     "body": [
                       {
-                        "contentId": "contentId",
                         "error": {
                           "details": [
                             "details",
@@ -25571,7 +25536,6 @@ service:
                   "response": {
                     "body": [
                       {
-                        "contentId": "contentId",
                         "error": {
                           "details": [
                             "details",
@@ -27139,7 +27103,6 @@ service:
                   statusCode: 1
                 jobIndex: 1
                 id: id
-                contentId: contentId
     bulkUpdateContents:
       path: /api/content/{app}/{schema}/bulk
       method: POST
@@ -27213,7 +27176,6 @@ service:
                   statusCode: 1
                 jobIndex: 1
                 id: id
-                contentId: contentId
     putContentStatus:
       path: /api/content/{app}/{schema}/{id}/status
       method: PUT
@@ -29361,7 +29323,6 @@ service:
                       "createdBy": "createdBy",
                       "id": "id",
                       "isEnabled": true,
-                      "lastExecuted": "2024-01-15T09:30:00Z",
                       "lastModified": "2024-01-15T09:30:00Z",
                       "lastModifiedBy": "lastModifiedBy",
                       "name": "name",
@@ -29434,7 +29395,6 @@ service:
                       "createdBy": "createdBy",
                       "id": "id",
                       "isEnabled": true,
-                      "lastExecuted": "2024-01-15T09:30:00Z",
                       "lastModified": "2024-01-15T09:30:00Z",
                       "lastModifiedBy": "lastModifiedBy",
                       "name": "name",
@@ -29706,7 +29666,6 @@ service:
                           "createdBy": "createdBy",
                           "id": "id",
                           "isEnabled": true,
-                          "lastExecuted": "2024-01-15T09:30:00Z",
                           "lastModified": "2024-01-15T09:30:00Z",
                           "lastModifiedBy": "lastModifiedBy",
                           "name": "name",
@@ -29789,7 +29748,6 @@ service:
                       "createdBy": "createdBy",
                       "id": "id",
                       "isEnabled": true,
-                      "lastExecuted": "2024-01-15T09:30:00Z",
                       "lastModified": "2024-01-15T09:30:00Z",
                       "lastModifiedBy": "lastModifiedBy",
                       "name": "name",
@@ -29897,7 +29855,6 @@ service:
                       "createdBy": "createdBy",
                       "id": "id",
                       "isEnabled": true,
-                      "lastExecuted": "2024-01-15T09:30:00Z",
                       "lastModified": "2024-01-15T09:30:00Z",
                       "lastModifiedBy": "lastModifiedBy",
                       "name": "name",
@@ -30282,7 +30239,6 @@ service:
                     actionType: Algolia
                   numSucceeded: 1000000
                   numFailed: 1000000
-                  lastExecuted: '2024-01-15T09:30:00Z'
               runningRuleId: runningRuleId
     postRule:
       path: /api/apps/{app}/rules
@@ -30346,7 +30302,6 @@ service:
                 actionType: Algolia
               numSucceeded: 1000000
               numFailed: 1000000
-              lastExecuted: '2024-01-15T09:30:00Z'
     deleteRuleRun:
       path: /api/apps/{app}/rules/run
       method: DELETE
@@ -30435,7 +30390,6 @@ service:
                 actionType: Algolia
               numSucceeded: 1000000
               numFailed: 1000000
-              lastExecuted: '2024-01-15T09:30:00Z'
     deleteRule:
       path: /api/apps/{app}/rules/{id}
       method: DELETE
@@ -30511,7 +30465,6 @@ service:
                 actionType: Algolia
               numSucceeded: 1000000
               numFailed: 1000000
-              lastExecuted: '2024-01-15T09:30:00Z'
     disableRule:
       path: /api/apps/{app}/rules/{id}/disable
       method: PUT
@@ -30565,7 +30518,6 @@ service:
                 actionType: Algolia
               numSucceeded: 1000000
               numFailed: 1000000
-              lastExecuted: '2024-01-15T09:30:00Z'
     triggerRule:
       path: /api/apps/{app}/rules/{id}/trigger
       method: PUT

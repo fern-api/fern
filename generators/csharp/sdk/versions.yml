@@ -1,12 +1,34 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-# - version: 2.0.0
-#   createdAt: '2024-10-09'
-#   changelogEntry:
-#     - type: break
-#       summary: >-
-#         The C# SDK now uses forward-compatible enums which are not compatible with the previously generated enums.
-#         Set `enable-forward-compatible-enums` to `false` in the configuration to generate the old enums.
-#   irVersion: 53
+- version: 2.0.1
+  changelogEntry:
+    - summary: Fix a bug where strings with special characters would not be properly escaped when converted to C# strings.
+      type: fix
+  createdAt: '2025-06-24'
+  irVersion: 58
+- version: 2.0.0
+  changelogEntry:
+    - summary: |
+        The following configuration names have changed, but the old names will continue to work.
+        * `experimental-enable-forward-compatible-enums` is now `enable-forward-compatible-enums`
+        * `experimental-additional-properties` is now `additional-properties`
+      type: chore
+    - summary: |
+        This release changes the defaults for the following custom configuration in _generators.yml_.
+
+        | Option | Before | Now |
+        |--------|--------|-----|
+        | `additional-properties` | `false` | `true` |
+        | `enable-forward-compatible-enums` | `false` | `true` |
+        | `generate-mock-server-tests` | `false` | `true` |
+        | `inline-path-parameters` | `false` | `true` |
+        | `simplify-object-dictionaries` | `true` | `false` |
+        | `use-discriminated-unions` | `false` | `true` |
+
+        To avoid breaking changes, explicitly set the options above with the `Before` values in the `config` of your generator
+        in _generators.yml_.
+      type: feat
+  createdAt: '2025-06-23'
+  irVersion: 58
 - version: 1.18.1
   changelogEntry:
     - summary: |

@@ -17,7 +17,7 @@ public partial class BigunionClient
     /// <example><code>
     /// await client.Bigunion.GetAsync("id");
     /// </code></example>
-    public async Task<object> GetAsync(
+    public async Task<BigUnion> GetAsync(
         string id,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -40,7 +40,7 @@ public partial class BigunionClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<object>(responseBody)!;
+                return JsonUtils.Deserialize<BigUnion>(responseBody)!;
             }
             catch (JsonException e)
             {
@@ -59,10 +59,12 @@ public partial class BigunionClient
     }
 
     /// <example><code>
-    /// await client.Bigunion.UpdateAsync(new NormalSweet { Value = "value" });
+    /// await client.Bigunion.UpdateAsync(
+    ///     new BigUnion(new BigUnion.NormalSweet(new NormalSweet { Value = "value" }))
+    /// );
     /// </code></example>
     public async Task<bool> UpdateAsync(
-        object request,
+        BigUnion request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -105,15 +107,15 @@ public partial class BigunionClient
 
     /// <example><code>
     /// await client.Bigunion.UpdateManyAsync(
-    ///     new List&lt;object&gt;()
+    ///     new List&lt;BigUnion&gt;()
     ///     {
-    ///         new NormalSweet { Value = "value" },
-    ///         new NormalSweet { Value = "value" },
+    ///         new BigUnion(new BigUnion.NormalSweet(new NormalSweet { Value = "value" })),
+    ///         new BigUnion(new BigUnion.NormalSweet(new NormalSweet { Value = "value" })),
     ///     }
     /// );
     /// </code></example>
     public async Task<Dictionary<string, bool>> UpdateManyAsync(
-        IEnumerable<object> request,
+        IEnumerable<BigUnion> request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

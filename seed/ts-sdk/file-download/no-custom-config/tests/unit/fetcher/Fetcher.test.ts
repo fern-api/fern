@@ -1,7 +1,9 @@
 import fs from "fs";
+import stream from "stream";
 import { join } from "path";
 
 import { Fetcher, fetcherImpl } from "../../../src/core/fetcher/Fetcher";
+import { BinaryResponse } from "../../../src/core";
 
 describe("Test fetcherImpl", () => {
     it("should handle successful request", async () => {
@@ -12,14 +14,15 @@ describe("Test fetcherImpl", () => {
             body: { data: "test" },
             contentType: "application/json",
             requestType: "json",
+            responseType: "json",
         };
 
-        global.fetch = jest.fn().mockResolvedValue({
-            ok: true,
-            status: 200,
-            text: () => Promise.resolve(JSON.stringify({ data: "test" })),
-            json: () => ({ data: "test" }),
-        });
+        global.fetch = jest.fn().mockResolvedValue(
+            new Response(JSON.stringify({ data: "test" }), {
+                status: 200,
+                statusText: "OK",
+            }),
+        );
 
         const result = await fetcherImpl(mockArgs);
         expect(result.ok).toBe(true);
@@ -45,16 +48,16 @@ describe("Test fetcherImpl", () => {
             headers: { "X-Test": "x-test-header" },
             contentType: "application/octet-stream",
             requestType: "bytes",
-            duplex: "half",
+            responseType: "json",
             body: fs.createReadStream(join(__dirname, "test-file.txt")),
         };
 
-        global.fetch = jest.fn().mockResolvedValue({
-            ok: true,
-            status: 200,
-            text: () => Promise.resolve(JSON.stringify({ data: "test" })),
-            json: () => Promise.resolve({ data: "test" }),
-        });
+        global.fetch = jest.fn().mockResolvedValue(
+            new Response(JSON.stringify({ data: "test" }), {
+                status: 200,
+                statusText: "OK",
+            }),
+        );
 
         const result = await fetcherImpl(mockArgs);
 

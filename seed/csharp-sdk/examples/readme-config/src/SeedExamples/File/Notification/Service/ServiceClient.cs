@@ -18,7 +18,7 @@ public partial class ServiceClient
     /// <example><code>
     /// await client.File.Notification.Service.GetExceptionAsync("notification-hsy129x");
     /// </code></example>
-    public async Task<object> GetExceptionAsync(
+    public async Task<Exception> GetExceptionAsync(
         string notificationId,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -44,7 +44,7 @@ public partial class ServiceClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<object>(responseBody)!;
+                return JsonUtils.Deserialize<Exception>(responseBody)!;
             }
             catch (JsonException e)
             {

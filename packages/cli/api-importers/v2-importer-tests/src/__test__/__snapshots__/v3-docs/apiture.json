@@ -19270,6 +19270,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_accounts.listAccounts",
           "name": {
             "originalName": "listAccounts",
@@ -19658,6 +19659,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_accounts.getAccount",
           "name": {
             "originalName": "getAccount",
@@ -20088,6 +20090,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_accounts.listAccountBalances",
           "name": {
             "originalName": "listAccountBalances",
@@ -20655,6 +20658,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_accounts.listEligibleAchAccounts",
           "name": {
             "originalName": "listEligibleAchAccounts",
@@ -21132,6 +21136,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_accountJointOwners.listAccountJointOwners",
           "name": {
             "originalName": "listAccountJointOwners",
@@ -21661,6 +21666,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_overdraftProtection.listEligibleOverdraftAccounts",
           "name": {
             "originalName": "listEligibleOverdraftAccounts",
@@ -21961,6 +21967,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_overdraftProtection.getOverdraftProtection",
           "name": {
             "originalName": "getOverdraftProtection",
@@ -22337,6 +22344,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_overdraftProtection.patchOverdraftAccounts",
           "name": {
             "originalName": "patchOverdraftAccounts",
@@ -22834,6 +22842,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_jointOwners.createJointOwnerInvitation",
           "name": {
             "originalName": "createJointOwnerInvitation",
@@ -23390,6 +23399,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_institutions.lookUpInstitutionByLocator",
           "name": {
             "originalName": "lookUpInstitutionByLocator",
@@ -24075,6 +24085,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_institutions.listTransferSchedule",
           "name": {
             "originalName": "listTransferSchedule",
@@ -24667,6 +24678,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_institutions.getCutoffTimes",
           "name": {
             "originalName": "getCutoffTimes",
@@ -25328,6 +25340,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_institutions.getTransferDateRestrictions",
           "name": {
             "originalName": "getTransferDateRestrictions",
@@ -26671,6 +26684,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_transactions.listTransactions",
           "name": {
             "originalName": "listTransactions",
@@ -27089,6 +27103,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_transactionCategories.listTransactionCategories",
           "name": {
             "originalName": "listTransactionCategories",
@@ -27761,6 +27776,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_transfers.listTransfers",
           "name": {
             "originalName": "listTransfers",
@@ -28172,6 +28188,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_transfers.createTransfer",
           "name": {
             "originalName": "createTransfer",
@@ -28576,6 +28593,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_transfers.getTransfer",
           "name": {
             "originalName": "getTransfer",
@@ -28941,6 +28959,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_transfers.deleteTransfer",
           "name": {
             "originalName": "deleteTransfer",
@@ -29305,6 +29324,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_transfers.patchTransfer",
           "name": {
             "originalName": "patchTransfer",

@@ -21689,11 +21689,8 @@ client.connect()
                         "collected_at": "2019-09-27T13:01:41Z",
                         "credit_limit": 192000,
                         "cutting_date": "2019-12-11",
-                        "end_date": "end_date",
                         "interest_rate": 4,
-                        "last_payment_date": "last_payment_date",
                         "minimum_payment": 2400.3,
-                        "monthly_payment": 1.1,
                         "next_payment_date": "2019-12-13",
                         "no_interest_payment": 2690.83,
                       },
@@ -21711,28 +21708,20 @@ client.connect()
                         "contract_end_date": "2027-10-01",
                         "contract_number": "890ASLDJF87SD00",
                         "contract_start_date": "2020-03-01",
-                        "credit_limit": 1.1,
-                        "cutting_date": "cutting_date",
-                        "cutting_day": "cutting_day",
                         "fees": [
                           {
                             "type": "OPERATION_FEE",
                             "value": 5.6,
                           },
                         ],
-                        "interest_rate": 1.1,
                         "interest_rates": [
                           {
                             "name": "jurosEfetivo",
                             "value": 7.85,
                           },
                         ],
-                        "last_payment_date": "last_payment_date",
-                        "last_period_balance": 1.1,
-                        "limit_day": "limit_day",
                         "loan_type": "Consignado",
                         "monthly_payment": 1000,
-                        "no_interest_payment": 1.1,
                         "number_of_installments_outstanding": 48,
                         "number_of_installments_total": 60,
                         "outstanding_balance": 182000,
@@ -21850,7 +21839,6 @@ client.connect()
                         "collected_at": "2022-02-09T08:45:50Z",
                         "credit_limit": 15600,
                         "cutting_date": "2021-04-11",
-                        "end_date": "end_date",
                         "interest_rate": 4,
                         "minimum_payment": 690,
                         "next_payment_date": "2021-03-31",
@@ -21870,28 +21858,20 @@ client.connect()
                         "contract_end_date": "2027-10-01",
                         "contract_number": "890ASLDJF87SD00",
                         "contract_start_date": "2020-03-01",
-                        "credit_limit": 1.1,
-                        "cutting_date": "cutting_date",
-                        "cutting_day": "cutting_day",
                         "fees": [
                           {
                             "type": "OPERATION_FEE",
                             "value": 5.6,
                           },
                         ],
-                        "interest_rate": 1.1,
                         "interest_rates": [
                           {
                             "name": "jurosEfetivo",
                             "value": 7.85,
                           },
                         ],
-                        "last_payment_date": "last_payment_date",
-                        "last_period_balance": 1.1,
-                        "limit_day": "limit_day",
                         "loan_type": "Consignado",
                         "monthly_payment": 1000,
-                        "no_interest_payment": 1.1,
                         "number_of_installments_outstanding": 48,
                         "number_of_installments_total": 60,
                         "outstanding_balance": 182000,
@@ -22009,11 +21989,8 @@ client.connect()
                         "collected_at": "2019-09-27T13:01:41Z",
                         "credit_limit": 192000,
                         "cutting_date": "2019-12-11",
-                        "end_date": "end_date",
                         "interest_rate": 4,
-                        "last_payment_date": "last_payment_date",
                         "minimum_payment": 2400.3,
-                        "monthly_payment": 1.1,
                         "next_payment_date": "2019-12-13",
                         "no_interest_payment": 2690.83,
                       },
@@ -22031,16 +22008,12 @@ client.connect()
                         "contract_end_date": "2027-10-01",
                         "contract_number": "ER8072930097",
                         "contract_start_date": "2018-01-01",
-                        "credit_limit": 1.1,
-                        "cutting_date": "cutting_date",
-                        "cutting_day": "cutting_day",
                         "fees": [
                           {
                             "type": "OPERATION_FEE",
                             "value": 5.6,
                           },
                         ],
-                        "interest_rate": 1.1,
                         "interest_rates": [
                           {
                             "name": "jurosEfetivo",
@@ -22048,12 +22021,8 @@ client.connect()
                             "value": 7.85,
                           },
                         ],
-                        "last_payment_date": "last_payment_date",
-                        "last_period_balance": 1.1,
-                        "limit_day": "limit_day",
                         "loan_type": "SFH",
                         "monthly_payment": 1000,
-                        "no_interest_payment": 1.1,
                         "number_of_installments_outstanding": 41,
                         "number_of_installments_total": 50,
                         "outstanding_balance": 164000,
@@ -22171,11 +22140,8 @@ client.connect()
                         "collected_at": "2019-09-27T13:01:41Z",
                         "credit_limit": 192000,
                         "cutting_date": "2019-12-11",
-                        "end_date": "end_date",
                         "interest_rate": 4,
-                        "last_payment_date": "last_payment_date",
                         "minimum_payment": 2400.3,
-                        "monthly_payment": 1.1,
                         "next_payment_date": "2019-12-13",
                         "no_interest_payment": 2690.83,
                       },
@@ -22229,28 +22195,20 @@ client.connect()
                         "contract_end_date": "2027-10-01",
                         "contract_number": "890ASLDJF87SD00",
                         "contract_start_date": "2020-03-01",
-                        "credit_limit": 1.1,
-                        "cutting_date": "cutting_date",
-                        "cutting_day": "cutting_day",
                         "fees": [
                           {
                             "type": "OPERATION_FEE",
                             "value": 5.6,
                           },
                         ],
-                        "interest_rate": 1.1,
                         "interest_rates": [
                           {
                             "name": "jurosEfetivo",
                             "value": 7.85,
                           },
                         ],
-                        "last_payment_date": "last_payment_date",
-                        "last_period_balance": 1.1,
-                        "limit_day": "limit_day",
                         "loan_type": "Consignado",
                         "monthly_payment": 1000,
-                        "no_interest_payment": 1.1,
                         "number_of_installments_outstanding": 48,
                         "number_of_installments_total": 60,
                         "outstanding_balance": 182000,
@@ -22368,11 +22326,8 @@ client.connect()
                         "collected_at": "2019-09-27T13:01:41Z",
                         "credit_limit": 192000,
                         "cutting_date": "2019-12-11",
-                        "end_date": "end_date",
                         "interest_rate": 4,
-                        "last_payment_date": "last_payment_date",
                         "minimum_payment": 2400.3,
-                        "monthly_payment": 1.1,
                         "next_payment_date": "2019-12-13",
                         "no_interest_payment": 2690.83,
                       },
@@ -22390,28 +22345,20 @@ client.connect()
                         "contract_end_date": "2027-10-01",
                         "contract_number": "890ASLDJF87SD00",
                         "contract_start_date": "2020-03-01",
-                        "credit_limit": 1.1,
-                        "cutting_date": "cutting_date",
-                        "cutting_day": "cutting_day",
                         "fees": [
                           {
                             "type": "OPERATION_FEE",
                             "value": 5.6,
                           },
                         ],
-                        "interest_rate": 1.1,
                         "interest_rates": [
                           {
                             "name": "jurosEfetivo",
                             "value": 7.85,
                           },
                         ],
-                        "last_payment_date": "last_payment_date",
-                        "last_period_balance": 1.1,
-                        "limit_day": "limit_day",
                         "loan_type": "Consignado",
                         "monthly_payment": 1000,
-                        "no_interest_payment": 1.1,
                         "number_of_installments_outstanding": 48,
                         "number_of_installments_total": 60,
                         "outstanding_balance": 182000,
@@ -22600,7 +22547,6 @@ client.connect()
                             "current": 5874.13,
                           },
                           "balance_type": "ASSET",
-                          "bank_product_id": "bank_product_id",
                           "category": "CHECKING_ACCOUNT",
                           "collected_at": "2019-09-27T13:01:41Z",
                           "created_at": "2022-02-09T08:45:50Z",
@@ -22623,7 +22569,6 @@ client.connect()
                           "institution": {
                             "name": "erebor_mx_retail",
                           },
-                          "internal_identification": "internal_identification",
                           "last_accessed_at": "2021-03-09T10:28:40Z",
                           "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                           "loan_data": {
@@ -22980,11 +22925,8 @@ client.connect()
                           "collected_at": "2019-09-27T13:01:41Z",
                           "credit_limit": 192000,
                           "cutting_date": "2019-12-11",
-                          "end_date": "end_date",
                           "interest_rate": 4,
-                          "last_payment_date": "last_payment_date",
                           "minimum_payment": 2400.3,
-                          "monthly_payment": 1.1,
                           "next_payment_date": "2019-12-13",
                           "no_interest_payment": 2690.83,
                         },
@@ -23002,28 +22944,20 @@ client.connect()
                           "contract_end_date": "2027-10-01",
                           "contract_number": "890ASLDJF87SD00",
                           "contract_start_date": "2020-03-01",
-                          "credit_limit": 1.1,
-                          "cutting_date": "cutting_date",
-                          "cutting_day": "cutting_day",
                           "fees": [
                             {
                               "type": "OPERATION_FEE",
                               "value": 5.6,
                             },
                           ],
-                          "interest_rate": 1.1,
                           "interest_rates": [
                             {
                               "name": "jurosEfetivo",
                               "value": 7.85,
                             },
                           ],
-                          "last_payment_date": "last_payment_date",
-                          "last_period_balance": 1.1,
-                          "limit_day": "limit_day",
                           "loan_type": "Consignado",
                           "monthly_payment": 1000,
-                          "no_interest_payment": 1.1,
                           "number_of_installments_outstanding": 48,
                           "number_of_installments_total": 60,
                           "outstanding_balance": 182000,
@@ -23161,7 +23095,6 @@ client.connect()
                           "collected_at": "2022-02-09T08:45:50Z",
                           "credit_limit": 15600,
                           "cutting_date": "2021-04-11",
-                          "end_date": "end_date",
                           "interest_rate": 4,
                           "minimum_payment": 690,
                           "next_payment_date": "2021-03-31",
@@ -23181,28 +23114,20 @@ client.connect()
                           "contract_end_date": "2027-10-01",
                           "contract_number": "890ASLDJF87SD00",
                           "contract_start_date": "2020-03-01",
-                          "credit_limit": 1.1,
-                          "cutting_date": "cutting_date",
-                          "cutting_day": "cutting_day",
                           "fees": [
                             {
                               "type": "OPERATION_FEE",
                               "value": 5.6,
                             },
                           ],
-                          "interest_rate": 1.1,
                           "interest_rates": [
                             {
                               "name": "jurosEfetivo",
                               "value": 7.85,
                             },
                           ],
-                          "last_payment_date": "last_payment_date",
-                          "last_period_balance": 1.1,
-                          "limit_day": "limit_day",
                           "loan_type": "Consignado",
                           "monthly_payment": 1000,
-                          "no_interest_payment": 1.1,
                           "number_of_installments_outstanding": 48,
                           "number_of_installments_total": 60,
                           "outstanding_balance": 182000,
@@ -23340,11 +23265,8 @@ client.connect()
                           "collected_at": "2019-09-27T13:01:41Z",
                           "credit_limit": 192000,
                           "cutting_date": "2019-12-11",
-                          "end_date": "end_date",
                           "interest_rate": 4,
-                          "last_payment_date": "last_payment_date",
                           "minimum_payment": 2400.3,
-                          "monthly_payment": 1.1,
                           "next_payment_date": "2019-12-13",
                           "no_interest_payment": 2690.83,
                         },
@@ -23362,16 +23284,12 @@ client.connect()
                           "contract_end_date": "2027-10-01",
                           "contract_number": "ER8072930097",
                           "contract_start_date": "2018-01-01",
-                          "credit_limit": 1.1,
-                          "cutting_date": "cutting_date",
-                          "cutting_day": "cutting_day",
                           "fees": [
                             {
                               "type": "OPERATION_FEE",
                               "value": 5.6,
                             },
                           ],
-                          "interest_rate": 1.1,
                           "interest_rates": [
                             {
                               "name": "jurosEfetivo",
@@ -23379,12 +23297,8 @@ client.connect()
                               "value": 7.85,
                             },
                           ],
-                          "last_payment_date": "last_payment_date",
-                          "last_period_balance": 1.1,
-                          "limit_day": "limit_day",
                           "loan_type": "SFH",
                           "monthly_payment": 1000,
-                          "no_interest_payment": 1.1,
                           "number_of_installments_outstanding": 41,
                           "number_of_installments_total": 50,
                           "outstanding_balance": 164000,
@@ -23522,11 +23436,8 @@ client.connect()
                           "collected_at": "2019-09-27T13:01:41Z",
                           "credit_limit": 192000,
                           "cutting_date": "2019-12-11",
-                          "end_date": "end_date",
                           "interest_rate": 4,
-                          "last_payment_date": "last_payment_date",
                           "minimum_payment": 2400.3,
-                          "monthly_payment": 1.1,
                           "next_payment_date": "2019-12-13",
                           "no_interest_payment": 2690.83,
                         },
@@ -23580,28 +23491,20 @@ client.connect()
                           "contract_end_date": "2027-10-01",
                           "contract_number": "890ASLDJF87SD00",
                           "contract_start_date": "2020-03-01",
-                          "credit_limit": 1.1,
-                          "cutting_date": "cutting_date",
-                          "cutting_day": "cutting_day",
                           "fees": [
                             {
                               "type": "OPERATION_FEE",
                               "value": 5.6,
                             },
                           ],
-                          "interest_rate": 1.1,
                           "interest_rates": [
                             {
                               "name": "jurosEfetivo",
                               "value": 7.85,
                             },
                           ],
-                          "last_payment_date": "last_payment_date",
-                          "last_period_balance": 1.1,
-                          "limit_day": "limit_day",
                           "loan_type": "Consignado",
                           "monthly_payment": 1000,
-                          "no_interest_payment": 1.1,
                           "number_of_installments_outstanding": 48,
                           "number_of_installments_total": 60,
                           "outstanding_balance": 182000,
@@ -23739,11 +23642,8 @@ client.connect()
                           "collected_at": "2019-09-27T13:01:41Z",
                           "credit_limit": 192000,
                           "cutting_date": "2019-12-11",
-                          "end_date": "end_date",
                           "interest_rate": 4,
-                          "last_payment_date": "last_payment_date",
                           "minimum_payment": 2400.3,
-                          "monthly_payment": 1.1,
                           "next_payment_date": "2019-12-13",
                           "no_interest_payment": 2690.83,
                         },
@@ -23761,28 +23661,20 @@ client.connect()
                           "contract_end_date": "2027-10-01",
                           "contract_number": "890ASLDJF87SD00",
                           "contract_start_date": "2020-03-01",
-                          "credit_limit": 1.1,
-                          "cutting_date": "cutting_date",
-                          "cutting_day": "cutting_day",
                           "fees": [
                             {
                               "type": "OPERATION_FEE",
                               "value": 5.6,
                             },
                           ],
-                          "interest_rate": 1.1,
                           "interest_rates": [
                             {
                               "name": "jurosEfetivo",
                               "value": 7.85,
                             },
                           ],
-                          "last_payment_date": "last_payment_date",
-                          "last_period_balance": 1.1,
-                          "limit_day": "limit_day",
                           "loan_type": "Consignado",
                           "monthly_payment": 1000,
-                          "no_interest_payment": 1.1,
                           "number_of_installments_outstanding": 48,
                           "number_of_installments_total": 60,
                           "outstanding_balance": 182000,
@@ -23965,11 +23857,8 @@ client.connect()
                           "collected_at": "2019-09-27T13:01:41Z",
                           "credit_limit": 192000,
                           "cutting_date": "2019-12-11",
-                          "end_date": "end_date",
                           "interest_rate": 4,
-                          "last_payment_date": "last_payment_date",
                           "minimum_payment": 2400.3,
-                          "monthly_payment": 1.1,
                           "next_payment_date": "2019-12-13",
                           "no_interest_payment": 2690.83,
                         },
@@ -23987,28 +23876,20 @@ client.connect()
                           "contract_end_date": "2027-10-01",
                           "contract_number": "890ASLDJF87SD00",
                           "contract_start_date": "2020-03-01",
-                          "credit_limit": 1.1,
-                          "cutting_date": "cutting_date",
-                          "cutting_day": "cutting_day",
                           "fees": [
                             {
                               "type": "OPERATION_FEE",
                               "value": 5.6,
                             },
                           ],
-                          "interest_rate": 1.1,
                           "interest_rates": [
                             {
                               "name": "jurosEfetivo",
                               "value": 7.85,
                             },
                           ],
-                          "last_payment_date": "last_payment_date",
-                          "last_period_balance": 1.1,
-                          "limit_day": "limit_day",
                           "loan_type": "Consignado",
                           "monthly_payment": 1000,
-                          "no_interest_payment": 1.1,
                           "number_of_installments_outstanding": 48,
                           "number_of_installments_total": 60,
                           "outstanding_balance": 182000,
@@ -24137,7 +24018,6 @@ client.connect()
                           "collected_at": "2022-02-09T08:45:50Z",
                           "credit_limit": 15600,
                           "cutting_date": "2021-04-11",
-                          "end_date": "end_date",
                           "interest_rate": 4,
                           "minimum_payment": 690,
                           "next_payment_date": "2021-03-31",
@@ -24157,28 +24037,20 @@ client.connect()
                           "contract_end_date": "2027-10-01",
                           "contract_number": "890ASLDJF87SD00",
                           "contract_start_date": "2020-03-01",
-                          "credit_limit": 1.1,
-                          "cutting_date": "cutting_date",
-                          "cutting_day": "cutting_day",
                           "fees": [
                             {
                               "type": "OPERATION_FEE",
                               "value": 5.6,
                             },
                           ],
-                          "interest_rate": 1.1,
                           "interest_rates": [
                             {
                               "name": "jurosEfetivo",
                               "value": 7.85,
                             },
                           ],
-                          "last_payment_date": "last_payment_date",
-                          "last_period_balance": 1.1,
-                          "limit_day": "limit_day",
                           "loan_type": "Consignado",
                           "monthly_payment": 1000,
-                          "no_interest_payment": 1.1,
                           "number_of_installments_outstanding": 48,
                           "number_of_installments_total": 60,
                           "outstanding_balance": 182000,
@@ -24307,11 +24179,8 @@ client.connect()
                           "collected_at": "2019-09-27T13:01:41Z",
                           "credit_limit": 192000,
                           "cutting_date": "2019-12-11",
-                          "end_date": "end_date",
                           "interest_rate": 4,
-                          "last_payment_date": "last_payment_date",
                           "minimum_payment": 2400.3,
-                          "monthly_payment": 1.1,
                           "next_payment_date": "2019-12-13",
                           "no_interest_payment": 2690.83,
                         },
@@ -24329,16 +24198,12 @@ client.connect()
                           "contract_end_date": "2027-10-01",
                           "contract_number": "ER8072930097",
                           "contract_start_date": "2018-01-01",
-                          "credit_limit": 1.1,
-                          "cutting_date": "cutting_date",
-                          "cutting_day": "cutting_day",
                           "fees": [
                             {
                               "type": "OPERATION_FEE",
                               "value": 5.6,
                             },
                           ],
-                          "interest_rate": 1.1,
                           "interest_rates": [
                             {
                               "name": "jurosEfetivo",
@@ -24346,12 +24211,8 @@ client.connect()
                               "value": 7.85,
                             },
                           ],
-                          "last_payment_date": "last_payment_date",
-                          "last_period_balance": 1.1,
-                          "limit_day": "limit_day",
                           "loan_type": "SFH",
                           "monthly_payment": 1000,
-                          "no_interest_payment": 1.1,
                           "number_of_installments_outstanding": 41,
                           "number_of_installments_total": 50,
                           "outstanding_balance": 164000,
@@ -24480,11 +24341,8 @@ client.connect()
                           "collected_at": "2019-09-27T13:01:41Z",
                           "credit_limit": 192000,
                           "cutting_date": "2019-12-11",
-                          "end_date": "end_date",
                           "interest_rate": 4,
-                          "last_payment_date": "last_payment_date",
                           "minimum_payment": 2400.3,
-                          "monthly_payment": 1.1,
                           "next_payment_date": "2019-12-13",
                           "no_interest_payment": 2690.83,
                         },
@@ -24538,28 +24396,20 @@ client.connect()
                           "contract_end_date": "2027-10-01",
                           "contract_number": "890ASLDJF87SD00",
                           "contract_start_date": "2020-03-01",
-                          "credit_limit": 1.1,
-                          "cutting_date": "cutting_date",
-                          "cutting_day": "cutting_day",
                           "fees": [
                             {
                               "type": "OPERATION_FEE",
                               "value": 5.6,
                             },
                           ],
-                          "interest_rate": 1.1,
                           "interest_rates": [
                             {
                               "name": "jurosEfetivo",
                               "value": 7.85,
                             },
                           ],
-                          "last_payment_date": "last_payment_date",
-                          "last_period_balance": 1.1,
-                          "limit_day": "limit_day",
                           "loan_type": "Consignado",
                           "monthly_payment": 1000,
-                          "no_interest_payment": 1.1,
                           "number_of_installments_outstanding": 48,
                           "number_of_installments_total": 60,
                           "outstanding_balance": 182000,
@@ -24688,11 +24538,8 @@ client.connect()
                           "collected_at": "2019-09-27T13:01:41Z",
                           "credit_limit": 192000,
                           "cutting_date": "2019-12-11",
-                          "end_date": "end_date",
                           "interest_rate": 4,
-                          "last_payment_date": "last_payment_date",
                           "minimum_payment": 2400.3,
-                          "monthly_payment": 1.1,
                           "next_payment_date": "2019-12-13",
                           "no_interest_payment": 2690.83,
                         },
@@ -24710,28 +24557,20 @@ client.connect()
                           "contract_end_date": "2027-10-01",
                           "contract_number": "890ASLDJF87SD00",
                           "contract_start_date": "2020-03-01",
-                          "credit_limit": 1.1,
-                          "cutting_date": "cutting_date",
-                          "cutting_day": "cutting_day",
                           "fees": [
                             {
                               "type": "OPERATION_FEE",
                               "value": 5.6,
                             },
                           ],
-                          "interest_rate": 1.1,
                           "interest_rates": [
                             {
                               "name": "jurosEfetivo",
                               "value": 7.85,
                             },
                           ],
-                          "last_payment_date": "last_payment_date",
-                          "last_period_balance": 1.1,
-                          "limit_day": "limit_day",
                           "loan_type": "Consignado",
                           "monthly_payment": 1000,
-                          "no_interest_payment": 1.1,
                           "number_of_installments_outstanding": 48,
                           "number_of_installments_total": 60,
                           "outstanding_balance": 182000,
@@ -25100,8 +24939,6 @@ service:
                     available: 800.37
                     anticipated: 1393.46
                     collected_at: '2022-02-09T08:45:50Z'
-                  bank_product_id: bank_product_id
-                  internal_identification: internal_identification
           code-samples:
             - language: cURL
               code: |
@@ -25255,9 +25092,6 @@ service:
                   minimum_payment: 2400.3
                   no_interest_payment: 2690.83
                   interest_rate: 4
-                  end_date: end_date
-                  monthly_payment: 1.1
-                  last_payment_date: last_payment_date
                 loan_data:
                   collected_at: '2022-02-09T08:45:50Z'
                   contract_amount: 202000
@@ -25278,14 +25112,6 @@ service:
                   contract_start_date: '2020-03-01'
                   contract_end_date: '2027-10-01'
                   contract_number: 890ASLDJF87SD00
-                  credit_limit: 1.1
-                  last_period_balance: 1.1
-                  interest_rate: 1.1
-                  limit_day: limit_day
-                  cutting_day: cutting_day
-                  cutting_date: cutting_date
-                  last_payment_date: last_payment_date
-                  no_interest_payment: 1.1
                 receivables_data:
                   current: 2193.83
                   available: 800.37
@@ -25397,7 +25223,6 @@ service:
                   minimum_payment: 690
                   no_interest_payment: 11550.15
                   interest_rate: 4
-                  end_date: end_date
                 loan_data:
                   collected_at: '2022-02-09T08:45:50Z'
                   contract_amount: 202000
@@ -25418,14 +25243,6 @@ service:
                   contract_start_date: '2020-03-01'
                   contract_end_date: '2027-10-01'
                   contract_number: 890ASLDJF87SD00
-                  credit_limit: 1.1
-                  last_period_balance: 1.1
-                  interest_rate: 1.1
-                  limit_day: limit_day
-                  cutting_day: cutting_day
-                  cutting_date: cutting_date
-                  last_payment_date: last_payment_date
-                  no_interest_payment: 1.1
                 receivables_data:
                   current: 2193.83
                   available: 800.37
@@ -25537,9 +25354,6 @@ service:
                   minimum_payment: 2400.3
                   no_interest_payment: 2690.83
                   interest_rate: 4
-                  end_date: end_date
-                  monthly_payment: 1.1
-                  last_payment_date: last_payment_date
                 loan_data:
                   collected_at: '2022-02-09T08:45:50Z'
                   contract_amount: 202000
@@ -25561,14 +25375,6 @@ service:
                   contract_start_date: '2018-01-01'
                   contract_end_date: '2027-10-01'
                   contract_number: ER8072930097
-                  credit_limit: 1.1
-                  last_period_balance: 1.1
-                  interest_rate: 1.1
-                  limit_day: limit_day
-                  cutting_day: cutting_day
-                  cutting_date: cutting_date
-                  last_payment_date: last_payment_date
-                  no_interest_payment: 1.1
                 receivables_data:
                   current: 2193.83
                   available: 800.37
@@ -25680,9 +25486,6 @@ service:
                   minimum_payment: 2400.3
                   no_interest_payment: 2690.83
                   interest_rate: 4
-                  end_date: end_date
-                  monthly_payment: 1.1
-                  last_payment_date: last_payment_date
                 loan_data:
                   collected_at: '2022-02-09T08:45:50Z'
                   contract_amount: 202000
@@ -25703,14 +25506,6 @@ service:
                   contract_start_date: '2020-03-01'
                   contract_end_date: '2027-10-01'
                   contract_number: 890ASLDJF87SD00
-                  credit_limit: 1.1
-                  last_period_balance: 1.1
-                  interest_rate: 1.1
-                  limit_day: limit_day
-                  cutting_day: cutting_day
-                  cutting_date: cutting_date
-                  last_payment_date: last_payment_date
-                  no_interest_payment: 1.1
                 funds_data:
                   - collected_at: '2022-02-09T08:45:50Z'
                     name: CICLO DE VIDA 2040 I
@@ -25843,9 +25638,6 @@ service:
                   minimum_payment: 2400.3
                   no_interest_payment: 2690.83
                   interest_rate: 4
-                  end_date: end_date
-                  monthly_payment: 1.1
-                  last_payment_date: last_payment_date
                 loan_data:
                   collected_at: '2022-02-09T08:45:50Z'
                   contract_amount: 202000
@@ -25866,14 +25658,6 @@ service:
                   contract_start_date: '2020-03-01'
                   contract_end_date: '2027-10-01'
                   contract_number: 890ASLDJF87SD00
-                  credit_limit: 1.1
-                  last_period_balance: 1.1
-                  interest_rate: 1.1
-                  limit_day: limit_day
-                  cutting_day: cutting_day
-                  cutting_date: cutting_date
-                  last_payment_date: last_payment_date
-                  no_interest_payment: 1.1
                 receivables_data:
                   current: 2193.83
                   available: 800.37
@@ -26040,9 +25824,6 @@ service:
                   minimum_payment: 2400.3
                   no_interest_payment: 2690.83
                   interest_rate: 4
-                  end_date: end_date
-                  monthly_payment: 1.1
-                  last_payment_date: last_payment_date
                 loan_data:
                   collected_at: '2022-02-09T08:45:50Z'
                   contract_amount: 202000
@@ -26063,14 +25844,6 @@ service:
                   contract_start_date: '2020-03-01'
                   contract_end_date: '2027-10-01'
                   contract_number: 890ASLDJF87SD00
-                  credit_limit: 1.1
-                  last_period_balance: 1.1
-                  interest_rate: 1.1
-                  limit_day: limit_day
-                  cutting_day: cutting_day
-                  cutting_date: cutting_date
-                  last_payment_date: last_payment_date
-                  no_interest_payment: 1.1
                 receivables_data:
                   current: 2193.83
                   available: 800.37
@@ -26191,7 +25964,6 @@ service:
                   minimum_payment: 690
                   no_interest_payment: 11550.15
                   interest_rate: 4
-                  end_date: end_date
                 loan_data:
                   collected_at: '2022-02-09T08:45:50Z'
                   contract_amount: 202000
@@ -26212,14 +25984,6 @@ service:
                   contract_start_date: '2020-03-01'
                   contract_end_date: '2027-10-01'
                   contract_number: 890ASLDJF87SD00
-                  credit_limit: 1.1
-                  last_period_balance: 1.1
-                  interest_rate: 1.1
-                  limit_day: limit_day
-                  cutting_day: cutting_day
-                  cutting_date: cutting_date
-                  last_payment_date: last_payment_date
-                  no_interest_payment: 1.1
                 receivables_data:
                   current: 2193.83
                   available: 800.37
@@ -26340,9 +26104,6 @@ service:
                   minimum_payment: 2400.3
                   no_interest_payment: 2690.83
                   interest_rate: 4
-                  end_date: end_date
-                  monthly_payment: 1.1
-                  last_payment_date: last_payment_date
                 loan_data:
                   collected_at: '2022-02-09T08:45:50Z'
                   contract_amount: 202000
@@ -26364,14 +26125,6 @@ service:
                   contract_start_date: '2018-01-01'
                   contract_end_date: '2027-10-01'
                   contract_number: ER8072930097
-                  credit_limit: 1.1
-                  last_period_balance: 1.1
-                  interest_rate: 1.1
-                  limit_day: limit_day
-                  cutting_day: cutting_day
-                  cutting_date: cutting_date
-                  last_payment_date: last_payment_date
-                  no_interest_payment: 1.1
                 receivables_data:
                   current: 2193.83
                   available: 800.37
@@ -26492,9 +26245,6 @@ service:
                   minimum_payment: 2400.3
                   no_interest_payment: 2690.83
                   interest_rate: 4
-                  end_date: end_date
-                  monthly_payment: 1.1
-                  last_payment_date: last_payment_date
                 loan_data:
                   collected_at: '2022-02-09T08:45:50Z'
                   contract_amount: 202000
@@ -26515,14 +26265,6 @@ service:
                   contract_start_date: '2020-03-01'
                   contract_end_date: '2027-10-01'
                   contract_number: 890ASLDJF87SD00
-                  credit_limit: 1.1
-                  last_period_balance: 1.1
-                  interest_rate: 1.1
-                  limit_day: limit_day
-                  cutting_day: cutting_day
-                  cutting_date: cutting_date
-                  last_payment_date: last_payment_date
-                  no_interest_payment: 1.1
                 funds_data:
                   - collected_at: '2022-02-09T08:45:50Z'
                     name: CICLO DE VIDA 2040 I
@@ -26664,9 +26406,6 @@ service:
                   minimum_payment: 2400.3
                   no_interest_payment: 2690.83
                   interest_rate: 4
-                  end_date: end_date
-                  monthly_payment: 1.1
-                  last_payment_date: last_payment_date
                 loan_data:
                   collected_at: '2022-02-09T08:45:50Z'
                   contract_amount: 202000
@@ -26687,14 +26426,6 @@ service:
                   contract_start_date: '2020-03-01'
                   contract_end_date: '2027-10-01'
                   contract_number: 890ASLDJF87SD00
-                  credit_limit: 1.1
-                  last_period_balance: 1.1
-                  interest_rate: 1.1
-                  limit_day: limit_day
-                  cutting_day: cutting_day
-                  cutting_date: cutting_date
-                  last_payment_date: last_payment_date
-                  no_interest_payment: 1.1
                 receivables_data:
                   current: 2193.83
                   available: 800.37
@@ -26866,9 +26597,6 @@ service:
                 minimum_payment: 2400.3
                 no_interest_payment: 2690.83
                 interest_rate: 4
-                end_date: end_date
-                monthly_payment: 1.1
-                last_payment_date: last_payment_date
               loan_data:
                 collected_at: '2022-02-09T08:45:50Z'
                 contract_amount: 202000
@@ -26889,14 +26617,6 @@ service:
                 contract_start_date: '2020-03-01'
                 contract_end_date: '2027-10-01'
                 contract_number: 890ASLDJF87SD00
-                credit_limit: 1.1
-                last_period_balance: 1.1
-                interest_rate: 1.1
-                limit_day: limit_day
-                cutting_day: cutting_day
-                cutting_date: cutting_date
-                last_payment_date: last_payment_date
-                no_interest_payment: 1.1
               receivables_data:
                 current: 2193.83
                 available: 800.37
@@ -26999,7 +26719,6 @@ service:
                 minimum_payment: 690
                 no_interest_payment: 11550.15
                 interest_rate: 4
-                end_date: end_date
               loan_data:
                 collected_at: '2022-02-09T08:45:50Z'
                 contract_amount: 202000
@@ -27020,14 +26739,6 @@ service:
                 contract_start_date: '2020-03-01'
                 contract_end_date: '2027-10-01'
                 contract_number: 890ASLDJF87SD00
-                credit_limit: 1.1
-                last_period_balance: 1.1
-                interest_rate: 1.1
-                limit_day: limit_day
-                cutting_day: cutting_day
-                cutting_date: cutting_date
-                last_payment_date: last_payment_date
-                no_interest_payment: 1.1
               receivables_data:
                 current: 2193.83
                 available: 800.37
@@ -27130,9 +26841,6 @@ service:
                 minimum_payment: 2400.3
                 no_interest_payment: 2690.83
                 interest_rate: 4
-                end_date: end_date
-                monthly_payment: 1.1
-                last_payment_date: last_payment_date
               loan_data:
                 collected_at: '2022-02-09T08:45:50Z'
                 contract_amount: 202000
@@ -27154,14 +26862,6 @@ service:
                 contract_start_date: '2018-01-01'
                 contract_end_date: '2027-10-01'
                 contract_number: ER8072930097
-                credit_limit: 1.1
-                last_period_balance: 1.1
-                interest_rate: 1.1
-                limit_day: limit_day
-                cutting_day: cutting_day
-                cutting_date: cutting_date
-                last_payment_date: last_payment_date
-                no_interest_payment: 1.1
               receivables_data:
                 current: 2193.83
                 available: 800.37
@@ -27264,9 +26964,6 @@ service:
                 minimum_payment: 2400.3
                 no_interest_payment: 2690.83
                 interest_rate: 4
-                end_date: end_date
-                monthly_payment: 1.1
-                last_payment_date: last_payment_date
               loan_data:
                 collected_at: '2022-02-09T08:45:50Z'
                 contract_amount: 202000
@@ -27287,14 +26984,6 @@ service:
                 contract_start_date: '2020-03-01'
                 contract_end_date: '2027-10-01'
                 contract_number: 890ASLDJF87SD00
-                credit_limit: 1.1
-                last_period_balance: 1.1
-                interest_rate: 1.1
-                limit_day: limit_day
-                cutting_day: cutting_day
-                cutting_date: cutting_date
-                last_payment_date: last_payment_date
-                no_interest_payment: 1.1
               funds_data:
                 - collected_at: '2022-02-09T08:45:50Z'
                   name: CICLO DE VIDA 2040 I
@@ -27418,9 +27107,6 @@ service:
                 minimum_payment: 2400.3
                 no_interest_payment: 2690.83
                 interest_rate: 4
-                end_date: end_date
-                monthly_payment: 1.1
-                last_payment_date: last_payment_date
               loan_data:
                 collected_at: '2022-02-09T08:45:50Z'
                 contract_amount: 202000
@@ -27441,14 +27127,6 @@ service:
                 contract_start_date: '2020-03-01'
                 contract_end_date: '2027-10-01'
                 contract_number: 890ASLDJF87SD00
-                credit_limit: 1.1
-                last_period_balance: 1.1
-                interest_rate: 1.1
-                limit_day: limit_day
-                cutting_day: cutting_day
-                cutting_date: cutting_date
-                last_payment_date: last_payment_date
-                no_interest_payment: 1.1
               receivables_data:
                 current: 2193.83
                 available: 800.37
@@ -28048,11 +27726,8 @@ client.connect()
                           "collected_at": "2019-09-27T13:01:41Z",
                           "credit_limit": 192000,
                           "cutting_date": "2019-12-11",
-                          "end_date": "end_date",
                           "interest_rate": 4,
-                          "last_payment_date": "last_payment_date",
                           "minimum_payment": 2400.3,
-                          "monthly_payment": 1.1,
                           "next_payment_date": "2019-12-13",
                           "no_interest_payment": 2690.83,
                         },
@@ -28067,7 +27742,6 @@ client.connect()
                           "name": "erebor_br_retail",
                           "type": "bank",
                         },
-                        "internal_identification": "9fa5fab9-e2b7-4bd7-8413-71ed9bb94b4c",
                         "last_accessed_at": "2021-03-09T10:28:40Z",
                         "link": "b834e69b-1aa4-465d-969c-07c886a4fbed",
                         "loan_data": {
@@ -28076,28 +27750,20 @@ client.connect()
                           "contract_end_date": "2027-10-01",
                           "contract_number": "890ASLDJF87SD00",
                           "contract_start_date": "2020-03-01",
-                          "credit_limit": 1.1,
-                          "cutting_date": "cutting_date",
-                          "cutting_day": "cutting_day",
                           "fees": [
                             {
                               "type": "OPERATION_FEE",
                               "value": 5.6,
                             },
                           ],
-                          "interest_rate": 1.1,
                           "interest_rates": [
                             {
                               "name": "jurosEfetivo",
                               "value": 7.85,
                             },
                           ],
-                          "last_payment_date": "last_payment_date",
-                          "last_period_balance": 1.1,
-                          "limit_day": "limit_day",
                           "loan_type": "Consignado",
                           "monthly_payment": 1000,
-                          "no_interest_payment": 1.1,
                           "number_of_installments_outstanding": 48,
                           "number_of_installments_total": 60,
                           "outstanding_balance": 182000,
@@ -28118,8 +27784,6 @@ client.connect()
                         "type": "Cuentas de efectivo",
                       },
                       "balance": 4.25,
-                      "collected_at": "2022-04-06T23:30:51Z",
-                      "current_balance": 4.25,
                       "id": "b834e69b-1aa4-465d-969c-07c886a4fbed",
                       "value_date": "2022-04-04",
                     },
@@ -28293,7 +27957,6 @@ client.connect()
                               "name": "erebor_br_retail",
                               "type": "bank",
                             },
-                            "internal_identification": "9fa5fab9-e2b7-4bd7-8413-71ed9bb94b4c",
                             "last_accessed_at": "2021-03-09T10:28:40Z",
                             "link": "b834e69b-1aa4-465d-969c-07c886a4fbed",
                             "loan_data": {
@@ -28310,8 +27973,6 @@ client.connect()
                             "type": "Cuentas de efectivo",
                           },
                           "balance": 4.25,
-                          "collected_at": "2022-04-06T23:30:51Z",
-                          "current_balance": 4.25,
                           "id": "b834e69b-1aa4-465d-969c-07c886a4fbed",
                           "value_date": "2022-04-04",
                         },
@@ -28622,7 +28283,6 @@ client.connect()
                             "name": "erebor_br_retail",
                             "type": "bank",
                           },
-                          "internal_identification": "9fa5fab9-e2b7-4bd7-8413-71ed9bb94b4c",
                           "last_accessed_at": "2021-03-09T10:28:40Z",
                           "link": "b834e69b-1aa4-465d-969c-07c886a4fbed",
                           "loan_data": {
@@ -28645,8 +28305,6 @@ client.connect()
                           "type": "Cuentas de efectivo",
                         },
                         "balance": 4.25,
-                        "collected_at": "2022-04-06T23:30:51Z",
-                        "current_balance": 4.25,
                         "id": "b834e69b-1aa4-465d-969c-07c886a4fbed",
                         "value_date": "2022-04-04",
                       },
@@ -28827,7 +28485,6 @@ client.connect()
                             "name": "erebor_br_retail",
                             "type": "bank",
                           },
-                          "internal_identification": "9fa5fab9-e2b7-4bd7-8413-71ed9bb94b4c",
                           "last_accessed_at": "2021-03-09T10:28:40Z",
                           "link": "b834e69b-1aa4-465d-969c-07c886a4fbed",
                           "loan_data": {
@@ -28850,8 +28507,6 @@ client.connect()
                           "type": "Cuentas de efectivo",
                         },
                         "balance": 4.25,
-                        "collected_at": "2022-04-06T23:30:51Z",
-                        "current_balance": 4.25,
                         "id": "b834e69b-1aa4-465d-969c-07c886a4fbed",
                         "value_date": "2022-04-04",
                       },
@@ -29180,11 +28835,8 @@ service:
                       outstanding_balance: 182000
                       monthly_payment: 1000
                       contract_end_date: '2027-10-01'
-                    internal_identification: 9fa5fab9-e2b7-4bd7-8413-71ed9bb94b4c
                   value_date: '2022-04-04'
                   balance: 4.25
-                  current_balance: 4.25
-                  collected_at: '2022-04-06T23:30:51Z'
           code-samples:
             - language: cURL
               code: |
@@ -29389,11 +29041,8 @@ service:
                     available: 800.37
                     anticipated: 1393.46
                     collected_at: '2022-02-09T08:45:50Z'
-                  internal_identification: 9fa5fab9-e2b7-4bd7-8413-71ed9bb94b4c
                 value_date: '2022-04-04'
                 balance: 4.25
-                current_balance: 4.25
-                collected_at: '2022-04-06T23:30:51Z'
           code-samples:
             - language: cURL
               code: |
@@ -29565,11 +29214,8 @@ service:
                     available: 800.37
                     anticipated: 1393.46
                     collected_at: '2022-02-09T08:45:50Z'
-                  internal_identification: 9fa5fab9-e2b7-4bd7-8413-71ed9bb94b4c
                 value_date: '2022-04-04'
                 balance: 4.25
-                current_balance: 4.25
-                collected_at: '2022-04-06T23:30:51Z'
           code-samples:
             - language: cURL
               code: |
@@ -29723,9 +29369,6 @@ service:
                   minimum_payment: 2400.3
                   no_interest_payment: 2690.83
                   interest_rate: 4
-                  end_date: end_date
-                  monthly_payment: 1.1
-                  last_payment_date: last_payment_date
                 loan_data:
                   collected_at: '2022-02-09T08:45:50Z'
                   contract_amount: 202000
@@ -29746,14 +29389,6 @@ service:
                   contract_start_date: '2020-03-01'
                   contract_end_date: '2027-10-01'
                   contract_number: 890ASLDJF87SD00
-                  credit_limit: 1.1
-                  last_period_balance: 1.1
-                  interest_rate: 1.1
-                  limit_day: limit_day
-                  cutting_day: cutting_day
-                  cutting_date: cutting_date
-                  last_payment_date: last_payment_date
-                  no_interest_payment: 1.1
                 funds_data:
                   - collected_at: '2020-04-23T21:32:55Z'
                 receivables_data:
@@ -29761,11 +29396,8 @@ service:
                   available: 800.37
                   anticipated: 1393.46
                   collected_at: '2022-02-09T08:45:50Z'
-                internal_identification: 9fa5fab9-e2b7-4bd7-8413-71ed9bb94b4c
               value_date: '2022-04-04'
               balance: 4.25
-              current_balance: 4.25
-              collected_at: '2022-04-06T23:30:51Z'
           code-samples:
             - language: cURL
               code: |
@@ -37744,7 +37376,6 @@ client.connect()
                       "invoice_type": "Ingreso",
                       "link": "1bd948f7-245d-4313-b604-34d1044cb908",
                       "payment_method": "PUE",
-                      "payment_method_description": "payment_method_description",
                       "payment_type": "04",
                       "payment_type_description": "payment_type_description",
                       "payments": [
@@ -37784,11 +37415,9 @@ client.connect()
                         "version": "1.2",
                       },
                       "place_of_issue": "11000",
-                      "receiver_blacklist_status": "receiver_blacklist_status",
                       "receiver_id": "MNMK3203409H1",
                       "receiver_name": "ACNE SA DE CV",
                       "receiver_tax_fraud_status": "NO_TAX_FRAUD_STATUS",
-                      "sender_blacklist_status": "sender_blacklist_status",
                       "sender_id": "GHTF980303F7",
                       "sender_name": "Roberto Martinez Diaz",
                       "sender_tax_fraud_status": "NO_TAX_FRAUD_STATUS",
@@ -37930,7 +37559,6 @@ client.connect()
                       "invoice_identification": "862B9918-3K6H-4E0B-NAI9-2BE2D833B840",
                       "invoice_type": "Pago",
                       "link": "1bd948f7-245d-4313-b604-34d1044cb908",
-                      "payment_method_description": "payment_method_description",
                       "payment_type": "99",
                       "payment_type_description": "payment_type_description",
                       "payments": [
@@ -37970,11 +37598,9 @@ client.connect()
                         "version": "1.2",
                       },
                       "place_of_issue": "11000",
-                      "receiver_blacklist_status": "receiver_blacklist_status",
                       "receiver_id": "MNMK3203409H1",
                       "receiver_name": "ACNE SA DE CV",
                       "receiver_tax_fraud_status": "NO_TAX_FRAUD_STATUS",
-                      "sender_blacklist_status": "sender_blacklist_status",
                       "sender_id": "GHTF980303F7",
                       "sender_name": "Roberto Martinez Diaz",
                       "sender_tax_fraud_status": "NO_TAX_FRAUD_STATUS",
@@ -38117,7 +37743,6 @@ client.connect()
                       "invoice_type": "Nómina",
                       "link": "1bd948f7-245d-4313-b604-34d1044cb908",
                       "payment_method": "PUE",
-                      "payment_method_description": "payment_method_description",
                       "payment_type": "99",
                       "payment_type_description": "payment_type_description",
                       "payments": [
@@ -38157,11 +37782,9 @@ client.connect()
                         "version": "1.2",
                       },
                       "place_of_issue": "11000",
-                      "receiver_blacklist_status": "receiver_blacklist_status",
                       "receiver_id": "MNMK3203409H1",
                       "receiver_name": "Roberto Martinez Diaz",
                       "receiver_tax_fraud_status": "NO_TAX_FRAUD_STATUS",
-                      "sender_blacklist_status": "sender_blacklist_status",
                       "sender_id": "GHTF980303F7",
                       "sender_name": "ACNE SA DE CV",
                       "sender_tax_fraud_status": "NO_TAX_FRAUD_STATUS",
@@ -38304,7 +37927,6 @@ client.connect()
                       "invoice_type": "Egreso",
                       "link": "1bd948f7-245d-4313-b604-34d1044cb908",
                       "payment_method": "PUE",
-                      "payment_method_description": "payment_method_description",
                       "payment_type": "04",
                       "payment_type_description": "payment_type_description",
                       "payments": [
@@ -38344,11 +37966,9 @@ client.connect()
                         "version": "1.2",
                       },
                       "place_of_issue": "11000",
-                      "receiver_blacklist_status": "receiver_blacklist_status",
                       "receiver_id": "MNMK3203409H1",
                       "receiver_name": "ACNE SA DE CV",
                       "receiver_tax_fraud_status": "NO_TAX_FRAUD_STATUS",
-                      "sender_blacklist_status": "sender_blacklist_status",
                       "sender_id": "GHTF980303F7",
                       "sender_name": "Roberto Martinez Diaz",
                       "sender_tax_fraud_status": "NO_TAX_FRAUD_STATUS",
@@ -38490,7 +38110,6 @@ client.connect()
                       "invoice_identification": "862B9918-3K6H-4E0B-NAI9-2BE2D833B840",
                       "invoice_type": "Traslado",
                       "link": "1bd948f7-245d-4313-b604-34d1044cb908",
-                      "payment_method_description": "payment_method_description",
                       "payment_type": "99",
                       "payment_type_description": "payment_type_description",
                       "payments": [
@@ -38530,11 +38149,9 @@ client.connect()
                         "version": "1.2",
                       },
                       "place_of_issue": "11000",
-                      "receiver_blacklist_status": "receiver_blacklist_status",
                       "receiver_id": "MNMK3203409H1",
                       "receiver_name": "CARGOS S.A. DE C.V.",
                       "receiver_tax_fraud_status": "NO_TAX_FRAUD_STATUS",
-                      "sender_blacklist_status": "sender_blacklist_status",
                       "sender_id": "GHTF980303F7",
                       "sender_name": "ACNE SA DE CV",
                       "sender_tax_fraud_status": "NO_TAX_FRAUD_STATUS",
@@ -38747,7 +38364,6 @@ client.connect()
                           "invoice_type": "Ingreso",
                           "link": "1bd948f7-245d-4313-b604-34d1044cb908",
                           "payment_method": "PUE",
-                          "payment_method_description": "payment_method_description",
                           "payment_type": "04",
                           "payment_type_description": "payment_type_description",
                           "payments": [
@@ -38785,11 +38401,9 @@ client.connect()
                             "version": "1.2",
                           },
                           "place_of_issue": "11000",
-                          "receiver_blacklist_status": "receiver_blacklist_status",
                           "receiver_id": "MNMK3203409H1",
                           "receiver_name": "ACNE SA DE CV",
                           "receiver_tax_fraud_status": "NO_TAX_FRAUD_STATUS",
-                          "sender_blacklist_status": "sender_blacklist_status",
                           "sender_id": "GHTF980303F7",
                           "sender_name": "Roberto Martinez Diaz",
                           "sender_tax_fraud_status": "NO_TAX_FRAUD_STATUS",
@@ -38963,7 +38577,6 @@ client.connect()
                           "invoice_identification": "862B9918-3K6H-4E0B-NAI9-2BE2D833B840",
                           "invoice_type": "Pago",
                           "link": "1bd948f7-245d-4313-b604-34d1044cb908",
-                          "payment_method_description": "payment_method_description",
                           "payment_type": "99",
                           "payment_type_description": "payment_type_description",
                           "payments": [
@@ -39002,11 +38615,9 @@ client.connect()
                             "version": "1.2",
                           },
                           "place_of_issue": "11000",
-                          "receiver_blacklist_status": "receiver_blacklist_status",
                           "receiver_id": "MNMK3203409H1",
                           "receiver_name": "ACNE SA DE CV",
                           "receiver_tax_fraud_status": "NO_TAX_FRAUD_STATUS",
-                          "sender_blacklist_status": "sender_blacklist_status",
                           "sender_id": "GHTF980303F7",
                           "sender_name": "Roberto Martinez Diaz",
                           "sender_tax_fraud_status": "NO_TAX_FRAUD_STATUS",
@@ -39181,7 +38792,6 @@ client.connect()
                           "invoice_type": "Nómina",
                           "link": "1bd948f7-245d-4313-b604-34d1044cb908",
                           "payment_method": "PUE",
-                          "payment_method_description": "payment_method_description",
                           "payment_type": "99",
                           "payment_type_description": "payment_type_description",
                           "payments": [
@@ -39220,11 +38830,9 @@ client.connect()
                             "version": "1.2",
                           },
                           "place_of_issue": "11000",
-                          "receiver_blacklist_status": "receiver_blacklist_status",
                           "receiver_id": "MNMK3203409H1",
                           "receiver_name": "Roberto Martinez Diaz",
                           "receiver_tax_fraud_status": "NO_TAX_FRAUD_STATUS",
-                          "sender_blacklist_status": "sender_blacklist_status",
                           "sender_id": "GHTF980303F7",
                           "sender_name": "ACNE SA DE CV",
                           "sender_tax_fraud_status": "NO_TAX_FRAUD_STATUS",
@@ -39399,7 +39007,6 @@ client.connect()
                           "invoice_type": "Egreso",
                           "link": "1bd948f7-245d-4313-b604-34d1044cb908",
                           "payment_method": "PUE",
-                          "payment_method_description": "payment_method_description",
                           "payment_type": "04",
                           "payment_type_description": "payment_type_description",
                           "payments": [
@@ -39437,11 +39044,9 @@ client.connect()
                             "version": "1.2",
                           },
                           "place_of_issue": "11000",
-                          "receiver_blacklist_status": "receiver_blacklist_status",
                           "receiver_id": "MNMK3203409H1",
                           "receiver_name": "ACNE SA DE CV",
                           "receiver_tax_fraud_status": "NO_TAX_FRAUD_STATUS",
-                          "sender_blacklist_status": "sender_blacklist_status",
                           "sender_id": "GHTF980303F7",
                           "sender_name": "Roberto Martinez Diaz",
                           "sender_tax_fraud_status": "NO_TAX_FRAUD_STATUS",
@@ -39615,7 +39220,6 @@ client.connect()
                           "invoice_identification": "862B9918-3K6H-4E0B-NAI9-2BE2D833B840",
                           "invoice_type": "Traslado",
                           "link": "1bd948f7-245d-4313-b604-34d1044cb908",
-                          "payment_method_description": "payment_method_description",
                           "payment_type": "99",
                           "payment_type_description": "payment_type_description",
                           "payments": [
@@ -39653,11 +39257,9 @@ client.connect()
                             "version": "1.2",
                           },
                           "place_of_issue": "11000",
-                          "receiver_blacklist_status": "receiver_blacklist_status",
                           "receiver_id": "MNMK3203409H1",
                           "receiver_name": "CARGOS S.A. DE C.V.",
                           "receiver_tax_fraud_status": "NO_TAX_FRAUD_STATUS",
-                          "sender_blacklist_status": "sender_blacklist_status",
                           "sender_id": "GHTF980303F7",
                           "sender_name": "ACNE SA DE CV",
                           "sender_tax_fraud_status": "NO_TAX_FRAUD_STATUS",
@@ -39984,7 +39586,6 @@ client.connect()
                         "invoice_type": "Egreso",
                         "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                         "payment_method": "PUE",
-                        "payment_method_description": "payment_method_description",
                         "payment_type": "99",
                         "payment_type_description": "payment_type_description",
                         "payments": [
@@ -40023,11 +39624,9 @@ client.connect()
                           "version": "1.2",
                         },
                         "place_of_issue": "01165",
-                        "receiver_blacklist_status": "receiver_blacklist_status",
                         "receiver_id": "BBB222222BB22",
                         "receiver_name": "BELVO CORP",
                         "receiver_tax_fraud_status": "NO_TAX_FRAUD_STATUS",
-                        "sender_blacklist_status": "sender_blacklist_status",
                         "sender_id": "AAA111111AA11",
                         "sender_name": "ACME CORP",
                         "sender_tax_fraud_status": "NO_TAX_FRAUD_STATUS",
@@ -40230,7 +39829,6 @@ client.connect()
                         "invoice_type": "Ingreso",
                         "link": "1bd948f7-245d-4313-b604-34d1044cb908",
                         "payment_method": "PUE",
-                        "payment_method_description": "payment_method_description",
                         "payment_type": "04",
                         "payment_type_description": "payment_type_description",
                         "payments": [
@@ -40269,11 +39867,9 @@ client.connect()
                           "version": "1.2",
                         },
                         "place_of_issue": "11000",
-                        "receiver_blacklist_status": "receiver_blacklist_status",
                         "receiver_id": "MNMK3203409H1",
                         "receiver_name": "ACNE SA DE CV",
                         "receiver_tax_fraud_status": "NO_TAX_FRAUD_STATUS",
-                        "sender_blacklist_status": "sender_blacklist_status",
                         "sender_id": "GHTF980303F7",
                         "sender_name": "Roberto Martinez Diaz",
                         "sender_tax_fraud_status": "NO_TAX_FRAUD_STATUS",
@@ -40434,7 +40030,6 @@ client.connect()
                         "invoice_identification": "862B9918-3K6H-4E0B-NAI9-2BE2D833B840",
                         "invoice_type": "Pago",
                         "link": "1bd948f7-245d-4313-b604-34d1044cb908",
-                        "payment_method_description": "payment_method_description",
                         "payment_type": "99",
                         "payment_type_description": "payment_type_description",
                         "payments": [
@@ -40474,11 +40069,9 @@ client.connect()
                           "version": "1.2",
                         },
                         "place_of_issue": "11000",
-                        "receiver_blacklist_status": "receiver_blacklist_status",
                         "receiver_id": "MNMK3203409H1",
                         "receiver_name": "ACNE SA DE CV",
                         "receiver_tax_fraud_status": "NO_TAX_FRAUD_STATUS",
-                        "sender_blacklist_status": "sender_blacklist_status",
                         "sender_id": "GHTF980303F7",
                         "sender_name": "Roberto Martinez Diaz",
                         "sender_tax_fraud_status": "NO_TAX_FRAUD_STATUS",
@@ -40640,7 +40233,6 @@ client.connect()
                         "invoice_type": "Nómina",
                         "link": "1bd948f7-245d-4313-b604-34d1044cb908",
                         "payment_method": "PUE",
-                        "payment_method_description": "payment_method_description",
                         "payment_type": "99",
                         "payment_type_description": "payment_type_description",
                         "payments": [
@@ -40679,11 +40271,9 @@ client.connect()
                           "version": "1.2",
                         },
                         "place_of_issue": "11000",
-                        "receiver_blacklist_status": "receiver_blacklist_status",
                         "receiver_id": "MNMK3203409H1",
                         "receiver_name": "Roberto Martinez Diaz",
                         "receiver_tax_fraud_status": "NO_TAX_FRAUD_STATUS",
-                        "sender_blacklist_status": "sender_blacklist_status",
                         "sender_id": "GHTF980303F7",
                         "sender_name": "ACNE SA DE CV",
                         "sender_tax_fraud_status": "NO_TAX_FRAUD_STATUS",
@@ -40845,7 +40435,6 @@ client.connect()
                         "invoice_type": "Egreso",
                         "link": "1bd948f7-245d-4313-b604-34d1044cb908",
                         "payment_method": "PUE",
-                        "payment_method_description": "payment_method_description",
                         "payment_type": "04",
                         "payment_type_description": "payment_type_description",
                         "payments": [
@@ -40884,11 +40473,9 @@ client.connect()
                           "version": "1.2",
                         },
                         "place_of_issue": "11000",
-                        "receiver_blacklist_status": "receiver_blacklist_status",
                         "receiver_id": "MNMK3203409H1",
                         "receiver_name": "ACNE SA DE CV",
                         "receiver_tax_fraud_status": "NO_TAX_FRAUD_STATUS",
-                        "sender_blacklist_status": "sender_blacklist_status",
                         "sender_id": "GHTF980303F7",
                         "sender_name": "Roberto Martinez Diaz",
                         "sender_tax_fraud_status": "NO_TAX_FRAUD_STATUS",
@@ -41049,7 +40636,6 @@ client.connect()
                         "invoice_identification": "862B9918-3K6H-4E0B-NAI9-2BE2D833B840",
                         "invoice_type": "Traslado",
                         "link": "1bd948f7-245d-4313-b604-34d1044cb908",
-                        "payment_method_description": "payment_method_description",
                         "payment_type": "99",
                         "payment_type_description": "payment_type_description",
                         "payments": [
@@ -41088,11 +40674,9 @@ client.connect()
                           "version": "1.2",
                         },
                         "place_of_issue": "11000",
-                        "receiver_blacklist_status": "receiver_blacklist_status",
                         "receiver_id": "MNMK3203409H1",
                         "receiver_name": "CARGOS S.A. DE C.V.",
                         "receiver_tax_fraud_status": "NO_TAX_FRAUD_STATUS",
-                        "sender_blacklist_status": "sender_blacklist_status",
                         "sender_id": "GHTF980303F7",
                         "sender_name": "ACNE SA DE CV",
                         "sender_tax_fraud_status": "NO_TAX_FRAUD_STATUS",
@@ -41490,7 +41074,6 @@ service:
                   payment_type: '04'
                   payment_type_description: payment_type_description
                   payment_method: PUE
-                  payment_method_description: payment_method_description
                   usage: G03
                   version: '3.3'
                   place_of_issue: '11000'
@@ -41548,8 +41131,6 @@ service:
                   warnings:
                     code: warning_code
                     message: warning message
-                  sender_blacklist_status: sender_blacklist_status
-                  receiver_blacklist_status: receiver_blacklist_status
           code-samples:
             - language: cURL
               code: |
@@ -41677,7 +41258,6 @@ service:
                   certification_authority: FGV330542BG6
                   payment_type: '99'
                   payment_type_description: payment_type_description
-                  payment_method_description: payment_method_description
                   usage: P01
                   version: '3.3'
                   place_of_issue: '11000'
@@ -41736,8 +41316,6 @@ service:
                   warnings:
                     code: warning_code
                     message: warning message
-                  sender_blacklist_status: sender_blacklist_status
-                  receiver_blacklist_status: receiver_blacklist_status
           code-samples:
             - language: cURL
               code: |
@@ -41866,7 +41444,6 @@ service:
                   payment_type: '99'
                   payment_type_description: payment_type_description
                   payment_method: PUE
-                  payment_method_description: payment_method_description
                   usage: P01
                   version: '3.3'
                   place_of_issue: '11000'
@@ -41925,8 +41502,6 @@ service:
                   warnings:
                     code: warning_code
                     message: warning message
-                  sender_blacklist_status: sender_blacklist_status
-                  receiver_blacklist_status: receiver_blacklist_status
           code-samples:
             - language: cURL
               code: |
@@ -42055,7 +41630,6 @@ service:
                   payment_type: '04'
                   payment_type_description: payment_type_description
                   payment_method: PUE
-                  payment_method_description: payment_method_description
                   usage: G03
                   version: '3.3'
                   place_of_issue: '11000'
@@ -42113,8 +41687,6 @@ service:
                   warnings:
                     code: warning_code
                     message: warning message
-                  sender_blacklist_status: sender_blacklist_status
-                  receiver_blacklist_status: receiver_blacklist_status
           code-samples:
             - language: cURL
               code: |
@@ -42242,7 +41814,6 @@ service:
                   certification_authority: FGV330542BG6
                   payment_type: '99'
                   payment_type_description: payment_type_description
-                  payment_method_description: payment_method_description
                   usage: G03
                   version: '3.3'
                   place_of_issue: '11000'
@@ -42300,8 +41871,6 @@ service:
                   warnings:
                     code: warning_code
                     message: warning message
-                  sender_blacklist_status: sender_blacklist_status
-                  receiver_blacklist_status: receiver_blacklist_status
           code-samples:
             - language: cURL
               code: |
@@ -42491,7 +42060,6 @@ service:
                 payment_type: '04'
                 payment_type_description: payment_type_description
                 payment_method: PUE
-                payment_method_description: payment_method_description
                 usage: G03
                 version: '3.3'
                 place_of_issue: '11000'
@@ -42550,8 +42118,6 @@ service:
                 warnings:
                   code: warning_code
                   message: warning message
-                sender_blacklist_status: sender_blacklist_status
-                receiver_blacklist_status: receiver_blacklist_status
           code-samples:
             - language: cURL
               code: |
@@ -42663,7 +42229,6 @@ service:
                 certification_authority: FGV330542BG6
                 payment_type: '99'
                 payment_type_description: payment_type_description
-                payment_method_description: payment_method_description
                 usage: P01
                 version: '3.3'
                 place_of_issue: '11000'
@@ -42723,8 +42288,6 @@ service:
                 warnings:
                   code: warning_code
                   message: warning message
-                sender_blacklist_status: sender_blacklist_status
-                receiver_blacklist_status: receiver_blacklist_status
           code-samples:
             - language: cURL
               code: |
@@ -42837,7 +42400,6 @@ service:
                 payment_type: '99'
                 payment_type_description: payment_type_description
                 payment_method: PUE
-                payment_method_description: payment_method_description
                 usage: P01
                 version: '3.3'
                 place_of_issue: '11000'
@@ -42896,8 +42458,6 @@ service:
                 warnings:
                   code: warning_code
                   message: warning message
-                sender_blacklist_status: sender_blacklist_status
-                receiver_blacklist_status: receiver_blacklist_status
           code-samples:
             - language: cURL
               code: |
@@ -43010,7 +42570,6 @@ service:
                 payment_type: '04'
                 payment_type_description: payment_type_description
                 payment_method: PUE
-                payment_method_description: payment_method_description
                 usage: G03
                 version: '3.3'
                 place_of_issue: '11000'
@@ -43069,8 +42628,6 @@ service:
                 warnings:
                   code: warning_code
                   message: warning message
-                sender_blacklist_status: sender_blacklist_status
-                receiver_blacklist_status: receiver_blacklist_status
           code-samples:
             - language: cURL
               code: |
@@ -43182,7 +42739,6 @@ service:
                 certification_authority: FGV330542BG6
                 payment_type: '99'
                 payment_type_description: payment_type_description
-                payment_method_description: payment_method_description
                 usage: G03
                 version: '3.3'
                 place_of_issue: '11000'
@@ -43241,8 +42797,6 @@ service:
                 warnings:
                   code: warning_code
                   message: warning message
-                sender_blacklist_status: sender_blacklist_status
-                receiver_blacklist_status: receiver_blacklist_status
           code-samples:
             - language: cURL
               code: |
@@ -43393,7 +42947,6 @@ service:
                 payment_type: '99'
                 payment_type_description: payment_type_description
                 payment_method: PUE
-                payment_method_description: payment_method_description
                 usage: P01
                 version: '3.3'
                 place_of_issue: '01165'
@@ -43451,8 +43004,6 @@ service:
                     this invoice might be missing data. Please check
                     https://tinyurl.com/yydzhy5d for more information on this
                     error.
-                sender_blacklist_status: sender_blacklist_status
-                receiver_blacklist_status: receiver_blacklist_status
           code-samples:
             - language: cURL
               code: |
@@ -43598,7 +43149,6 @@ service:
               payment_type: '04'
               payment_type_description: payment_type_description
               payment_method: PUE
-              payment_method_description: payment_method_description
               usage: G03
               version: '3.3'
               place_of_issue: '11000'
@@ -43659,8 +43209,6 @@ service:
               warnings:
                 code: warning_code
                 message: warning message
-              sender_blacklist_status: sender_blacklist_status
-              receiver_blacklist_status: receiver_blacklist_status
           code-samples:
             - language: cURL
               code: |
@@ -43754,7 +43302,6 @@ service:
               certification_authority: FGV330542BG6
               payment_type: '99'
               payment_type_description: payment_type_description
-              payment_method_description: payment_method_description
               usage: P01
               version: '3.3'
               place_of_issue: '11000'
@@ -43815,8 +43362,6 @@ service:
               warnings:
                 code: warning_code
                 message: warning message
-              sender_blacklist_status: sender_blacklist_status
-              receiver_blacklist_status: receiver_blacklist_status
           code-samples:
             - language: cURL
               code: |
@@ -43911,7 +43456,6 @@ service:
               payment_type: '99'
               payment_type_description: payment_type_description
               payment_method: PUE
-              payment_method_description: payment_method_description
               usage: P01
               version: '3.3'
               place_of_issue: '11000'
@@ -43972,8 +43516,6 @@ service:
               warnings:
                 code: warning_code
                 message: warning message
-              sender_blacklist_status: sender_blacklist_status
-              receiver_blacklist_status: receiver_blacklist_status
           code-samples:
             - language: cURL
               code: |
@@ -44068,7 +43610,6 @@ service:
               payment_type: '04'
               payment_type_description: payment_type_description
               payment_method: PUE
-              payment_method_description: payment_method_description
               usage: G03
               version: '3.3'
               place_of_issue: '11000'
@@ -44129,8 +43670,6 @@ service:
               warnings:
                 code: warning_code
                 message: warning message
-              sender_blacklist_status: sender_blacklist_status
-              receiver_blacklist_status: receiver_blacklist_status
           code-samples:
             - language: cURL
               code: |
@@ -44224,7 +43763,6 @@ service:
               certification_authority: FGV330542BG6
               payment_type: '99'
               payment_type_description: payment_type_description
-              payment_method_description: payment_method_description
               usage: G03
               version: '3.3'
               place_of_issue: '11000'
@@ -44285,8 +43823,6 @@ service:
               warnings:
                 code: warning_code
                 message: warning message
-              sender_blacklist_status: sender_blacklist_status
-              receiver_blacklist_status: receiver_blacklist_status
           code-samples:
             - language: cURL
               code: |
@@ -49208,47 +48744,6 @@ A payment intent captures all payment information (such as the amount to be char
                         "open_finance",
                       ],
                       "amount": "350000.00",
-                      "charges": [
-                        {
-                          "amount": "100.12",
-                          "beneficiary": "58524ccc-89ac-4ab6-b62b-c3da3f19a722",
-                          "created_at": "2022-02-09T08:45:50Z",
-                          "created_by": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
-                          "currency": "BRL",
-                          "customer": "531aa631-70a0-4eeb-ab97-51dea3e90c89",
-                          "description": "Training shoes",
-                          "failure_code": "failure_code",
-                          "failure_message": "failure_message",
-                          "id": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
-                          "metadata": {
-                            "internal_reference_id": "GGq73487w2",
-                          },
-                          "payment_intent": "50c04229-7b1d-4a53-951c-8ad53e10c6ca",
-                          "payment_method_details": {},
-                          "payment_method_information": {},
-                          "payment_method_type": "open_finance",
-                          "provider": "belvo",
-                          "status": "PENDING",
-                          "transactions": [
-                            {
-                              "amount": "1020.00",
-                              "beneficiary": "a80d5a9d-20ae-479a-8dd7-ff3443bcbbfc",
-                              "created_at": "2022-02-09T08:45:50Z",
-                              "created_by": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
-                              "currency": "BRL",
-                              "customer": "9eebd63b-3339-44a9-8a5a-72bb6cb2f310",
-                              "description": "Training shoes",
-                              "id": "fd0f3303-cafb-47ea-9753-21155cb144ab",
-                              "payer": {
-                                "key": "value",
-                              },
-                              "payment_intent": "004a28bb-fac2-4172-884b-5b6ea15314ad",
-                              "transaction_type": "INFLOW",
-                            },
-                          ],
-                          "updated_at": "2022-02-09T08:45:50Z",
-                        },
-                      ],
                       "created_at": "2022-02-09T08:45:50Z",
                       "created_by": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
                       "currency": "BRL",
@@ -49396,47 +48891,6 @@ A payment intent captures all payment information (such as the amount to be char
                         "open_finance",
                       ],
                       "amount": "350000.00",
-                      "charges": [
-                        {
-                          "amount": "100.12",
-                          "beneficiary": "58524ccc-89ac-4ab6-b62b-c3da3f19a722",
-                          "created_at": "2022-02-09T08:45:50Z",
-                          "created_by": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
-                          "currency": "BRL",
-                          "customer": "531aa631-70a0-4eeb-ab97-51dea3e90c89",
-                          "description": "Training shoes",
-                          "failure_code": "failure_code",
-                          "failure_message": "failure_message",
-                          "id": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
-                          "metadata": {
-                            "internal_reference_id": "GGq73487w2",
-                          },
-                          "payment_intent": "50c04229-7b1d-4a53-951c-8ad53e10c6ca",
-                          "payment_method_details": {},
-                          "payment_method_information": {},
-                          "payment_method_type": "open_finance",
-                          "provider": "belvo",
-                          "status": "PENDING",
-                          "transactions": [
-                            {
-                              "amount": "1020.00",
-                              "beneficiary": "a80d5a9d-20ae-479a-8dd7-ff3443bcbbfc",
-                              "created_at": "2022-02-09T08:45:50Z",
-                              "created_by": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
-                              "currency": "BRL",
-                              "customer": "9eebd63b-3339-44a9-8a5a-72bb6cb2f310",
-                              "description": "Training shoes",
-                              "id": "fd0f3303-cafb-47ea-9753-21155cb144ab",
-                              "payer": {
-                                "key": "value",
-                              },
-                              "payment_intent": "004a28bb-fac2-4172-884b-5b6ea15314ad",
-                              "transaction_type": "INFLOW",
-                            },
-                          ],
-                          "updated_at": "2022-02-09T08:45:50Z",
-                        },
-                      ],
                       "created_at": "2022-02-09T08:45:50Z",
                       "created_by": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
                       "currency": "BRL",
@@ -49564,43 +49018,6 @@ A payment intent captures all payment information (such as the amount to be char
                             "open_finance",
                           ],
                           "amount": "350000.00",
-                          "charges": [
-                            {
-                              "amount": "100.12",
-                              "beneficiary": "58524ccc-89ac-4ab6-b62b-c3da3f19a722",
-                              "created_at": "2022-02-09T08:45:50Z",
-                              "created_by": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
-                              "customer": "531aa631-70a0-4eeb-ab97-51dea3e90c89",
-                              "description": "Training shoes",
-                              "id": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
-                              "metadata": {
-                                "internal_reference_id": "GGq73487w2",
-                              },
-                              "payment_intent": "50c04229-7b1d-4a53-951c-8ad53e10c6ca",
-                              "payment_method_details": {},
-                              "payment_method_information": {},
-                              "provider": "belvo",
-                              "status": "PENDING",
-                              "transactions": [
-                                {
-                                  "amount": "1020.00",
-                                  "beneficiary": "a80d5a9d-20ae-479a-8dd7-ff3443bcbbfc",
-                                  "created_at": "2022-02-09T08:45:50Z",
-                                  "created_by": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
-                                  "currency": "BRL",
-                                  "customer": "9eebd63b-3339-44a9-8a5a-72bb6cb2f310",
-                                  "description": "Training shoes",
-                                  "id": "fd0f3303-cafb-47ea-9753-21155cb144ab",
-                                  "payer": {
-                                    "key": "value",
-                                  },
-                                  "payment_intent": "004a28bb-fac2-4172-884b-5b6ea15314ad",
-                                  "transaction_type": "INFLOW",
-                                },
-                              ],
-                              "updated_at": "2022-02-09T08:45:50Z",
-                            },
-                          ],
                           "created_at": "2022-02-09T08:45:50Z",
                           "created_by": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
                           "currency": "BRL",
@@ -49759,47 +49176,6 @@ During the payment intent flow, you need to fill in the payment intent with requ
                         "open_finance",
                       ],
                       "amount": "350000.00",
-                      "charges": [
-                        {
-                          "amount": "100.12",
-                          "beneficiary": "58524ccc-89ac-4ab6-b62b-c3da3f19a722",
-                          "created_at": "2022-02-09T08:45:50Z",
-                          "created_by": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
-                          "currency": "BRL",
-                          "customer": "531aa631-70a0-4eeb-ab97-51dea3e90c89",
-                          "description": "Training shoes",
-                          "failure_code": "failure_code",
-                          "failure_message": "failure_message",
-                          "id": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
-                          "metadata": {
-                            "internal_reference_id": "GGq73487w2",
-                          },
-                          "payment_intent": "50c04229-7b1d-4a53-951c-8ad53e10c6ca",
-                          "payment_method_details": {},
-                          "payment_method_information": {},
-                          "payment_method_type": "open_finance",
-                          "provider": "belvo",
-                          "status": "PENDING",
-                          "transactions": [
-                            {
-                              "amount": "1020.00",
-                              "beneficiary": "a80d5a9d-20ae-479a-8dd7-ff3443bcbbfc",
-                              "created_at": "2022-02-09T08:45:50Z",
-                              "created_by": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
-                              "currency": "BRL",
-                              "customer": "9eebd63b-3339-44a9-8a5a-72bb6cb2f310",
-                              "description": "Training shoes",
-                              "id": "fd0f3303-cafb-47ea-9753-21155cb144ab",
-                              "payer": {
-                                "key": "value",
-                              },
-                              "payment_intent": "004a28bb-fac2-4172-884b-5b6ea15314ad",
-                              "transaction_type": "INFLOW",
-                            },
-                          ],
-                          "updated_at": "2022-02-09T08:45:50Z",
-                        },
-                      ],
                       "created_at": "2022-02-09T08:45:50Z",
                       "created_by": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
                       "currency": "BRL",
@@ -50084,35 +49460,6 @@ service:
                       callback_url: https://www.acmecorp.com/checkout/3487321
                       belvo_flow: true
                   payment_method_information: {}
-                  charges:
-                    - id: 1c83ead8-6665-429c-a17a-ddc76cb3a95e
-                      created_at: '2022-02-09T08:45:50Z'
-                      created_by: 1c83ead8-6665-429c-a17a-ddc76cb3a95e
-                      customer: 531aa631-70a0-4eeb-ab97-51dea3e90c89
-                      status: PENDING
-                      amount: '100.12'
-                      description: Training shoes
-                      metadata:
-                        internal_reference_id: GGq73487w2
-                      beneficiary: 58524ccc-89ac-4ab6-b62b-c3da3f19a722
-                      provider: belvo
-                      payment_method_details: {}
-                      payment_method_information: {}
-                      payment_intent: 50c04229-7b1d-4a53-951c-8ad53e10c6ca
-                      transactions:
-                        - id: fd0f3303-cafb-47ea-9753-21155cb144ab
-                          created_at: '2022-02-09T08:45:50Z'
-                          created_by: 1c83ead8-6665-429c-a17a-ddc76cb3a95e
-                          amount: '1020.00'
-                          currency: BRL
-                          description: Training shoes
-                          transaction_type: INFLOW
-                          beneficiary: a80d5a9d-20ae-479a-8dd7-ff3443bcbbfc
-                          payer:
-                            key: value
-                          payment_intent: 004a28bb-fac2-4172-884b-5b6ea15314ad
-                          customer: 9eebd63b-3339-44a9-8a5a-72bb6cb2f310
-                      updated_at: '2022-02-09T08:45:50Z'
                   provider: belvo
                   selected_payment_method_type: open_finance
                   status: REQUIRES_PAYMENT_METHOD
@@ -50246,39 +49593,6 @@ service:
                   redirect_url: https://wakandanational.com/
                   bank_payment_id: '456213985641233659874512459842'
                   end_to_end_id: '2007300520'
-              charges:
-                - id: 1c83ead8-6665-429c-a17a-ddc76cb3a95e
-                  created_at: '2022-02-09T08:45:50Z'
-                  created_by: 1c83ead8-6665-429c-a17a-ddc76cb3a95e
-                  customer: 531aa631-70a0-4eeb-ab97-51dea3e90c89
-                  failure_code: failure_code
-                  failure_message: failure_message
-                  status: PENDING
-                  amount: '100.12'
-                  currency: BRL
-                  description: Training shoes
-                  metadata:
-                    internal_reference_id: GGq73487w2
-                  beneficiary: 58524ccc-89ac-4ab6-b62b-c3da3f19a722
-                  provider: belvo
-                  payment_method_type: open_finance
-                  payment_method_details: {}
-                  payment_method_information: {}
-                  payment_intent: 50c04229-7b1d-4a53-951c-8ad53e10c6ca
-                  transactions:
-                    - id: fd0f3303-cafb-47ea-9753-21155cb144ab
-                      created_at: '2022-02-09T08:45:50Z'
-                      created_by: 1c83ead8-6665-429c-a17a-ddc76cb3a95e
-                      amount: '1020.00'
-                      currency: BRL
-                      description: Training shoes
-                      transaction_type: INFLOW
-                      beneficiary: a80d5a9d-20ae-479a-8dd7-ff3443bcbbfc
-                      payer:
-                        key: value
-                      payment_intent: 004a28bb-fac2-4172-884b-5b6ea15314ad
-                      customer: 9eebd63b-3339-44a9-8a5a-72bb6cb2f310
-                  updated_at: '2022-02-09T08:45:50Z'
               provider: belvo
               selected_payment_method_type: open_finance
               status: REQUIRES_PAYMENT_METHOD
@@ -50359,39 +49673,6 @@ service:
                   redirect_url: https://wakandanational.com/
                   bank_payment_id: '456213985641233659874512459842'
                   end_to_end_id: '2007300520'
-              charges:
-                - id: 1c83ead8-6665-429c-a17a-ddc76cb3a95e
-                  created_at: '2022-02-09T08:45:50Z'
-                  created_by: 1c83ead8-6665-429c-a17a-ddc76cb3a95e
-                  customer: 531aa631-70a0-4eeb-ab97-51dea3e90c89
-                  failure_code: failure_code
-                  failure_message: failure_message
-                  status: PENDING
-                  amount: '100.12'
-                  currency: BRL
-                  description: Training shoes
-                  metadata:
-                    internal_reference_id: GGq73487w2
-                  beneficiary: 58524ccc-89ac-4ab6-b62b-c3da3f19a722
-                  provider: belvo
-                  payment_method_type: open_finance
-                  payment_method_details: {}
-                  payment_method_information: {}
-                  payment_intent: 50c04229-7b1d-4a53-951c-8ad53e10c6ca
-                  transactions:
-                    - id: fd0f3303-cafb-47ea-9753-21155cb144ab
-                      created_at: '2022-02-09T08:45:50Z'
-                      created_by: 1c83ead8-6665-429c-a17a-ddc76cb3a95e
-                      amount: '1020.00'
-                      currency: BRL
-                      description: Training shoes
-                      transaction_type: INFLOW
-                      beneficiary: a80d5a9d-20ae-479a-8dd7-ff3443bcbbfc
-                      payer:
-                        key: value
-                      payment_intent: 004a28bb-fac2-4172-884b-5b6ea15314ad
-                      customer: 9eebd63b-3339-44a9-8a5a-72bb6cb2f310
-                  updated_at: '2022-02-09T08:45:50Z'
               provider: belvo
               selected_payment_method_type: open_finance
               status: REQUIRES_PAYMENT_METHOD
@@ -50502,39 +49783,6 @@ service:
                   redirect_url: https://wakandanational.com/
                   bank_payment_id: '456213985641233659874512459842'
                   end_to_end_id: '2007300520'
-              charges:
-                - id: 1c83ead8-6665-429c-a17a-ddc76cb3a95e
-                  created_at: '2022-02-09T08:45:50Z'
-                  created_by: 1c83ead8-6665-429c-a17a-ddc76cb3a95e
-                  customer: 531aa631-70a0-4eeb-ab97-51dea3e90c89
-                  failure_code: failure_code
-                  failure_message: failure_message
-                  status: PENDING
-                  amount: '100.12'
-                  currency: BRL
-                  description: Training shoes
-                  metadata:
-                    internal_reference_id: GGq73487w2
-                  beneficiary: 58524ccc-89ac-4ab6-b62b-c3da3f19a722
-                  provider: belvo
-                  payment_method_type: open_finance
-                  payment_method_details: {}
-                  payment_method_information: {}
-                  payment_intent: 50c04229-7b1d-4a53-951c-8ad53e10c6ca
-                  transactions:
-                    - id: fd0f3303-cafb-47ea-9753-21155cb144ab
-                      created_at: '2022-02-09T08:45:50Z'
-                      created_by: 1c83ead8-6665-429c-a17a-ddc76cb3a95e
-                      amount: '1020.00'
-                      currency: BRL
-                      description: Training shoes
-                      transaction_type: INFLOW
-                      beneficiary: a80d5a9d-20ae-479a-8dd7-ff3443bcbbfc
-                      payer:
-                        key: value
-                      payment_intent: 004a28bb-fac2-4172-884b-5b6ea15314ad
-                      customer: 9eebd63b-3339-44a9-8a5a-72bb6cb2f310
-                  updated_at: '2022-02-09T08:45:50Z'
               provider: belvo
               selected_payment_method_type: open_finance
               status: REQUIRES_PAYMENT_METHOD
@@ -50629,43 +49877,6 @@ types:
                           "open_finance",
                         ],
                         "amount": "1234.12",
-                        "charges": [
-                          {
-                            "amount": "100.12",
-                            "beneficiary": "58524ccc-89ac-4ab6-b62b-c3da3f19a722",
-                            "created_at": "2022-02-09T08:45:50Z",
-                            "created_by": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
-                            "customer": "531aa631-70a0-4eeb-ab97-51dea3e90c89",
-                            "description": "Training shoes",
-                            "id": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
-                            "metadata": {
-                              "internal_reference_id": "GGq73487w2",
-                            },
-                            "payment_intent": "50c04229-7b1d-4a53-951c-8ad53e10c6ca",
-                            "payment_method_details": {},
-                            "payment_method_information": {},
-                            "provider": "belvo",
-                            "status": "PENDING",
-                            "transactions": [
-                              {
-                                "amount": "1020.00",
-                                "beneficiary": "a80d5a9d-20ae-479a-8dd7-ff3443bcbbfc",
-                                "created_at": "2022-02-09T08:45:50Z",
-                                "created_by": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
-                                "currency": "BRL",
-                                "customer": "9eebd63b-3339-44a9-8a5a-72bb6cb2f310",
-                                "description": "Training shoes",
-                                "id": "fd0f3303-cafb-47ea-9753-21155cb144ab",
-                                "payer": {
-                                  "key": "value",
-                                },
-                                "payment_intent": "004a28bb-fac2-4172-884b-5b6ea15314ad",
-                                "transaction_type": "INFLOW",
-                              },
-                            ],
-                            "updated_at": "2022-02-09T08:45:50Z",
-                          },
-                        ],
                         "created_at": "2022-02-09T08:45:50Z",
                         "created_by": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
                         "currency": "BRL",
@@ -50751,43 +49962,6 @@ types:
                           "open_finance",
                         ],
                         "amount": "1234.12",
-                        "charges": [
-                          {
-                            "amount": "100.12",
-                            "beneficiary": "58524ccc-89ac-4ab6-b62b-c3da3f19a722",
-                            "created_at": "2022-02-09T08:45:50Z",
-                            "created_by": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
-                            "customer": "531aa631-70a0-4eeb-ab97-51dea3e90c89",
-                            "description": "Training shoes",
-                            "id": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
-                            "metadata": {
-                              "internal_reference_id": "GGq73487w2",
-                            },
-                            "payment_intent": "50c04229-7b1d-4a53-951c-8ad53e10c6ca",
-                            "payment_method_details": {},
-                            "payment_method_information": {},
-                            "provider": "belvo",
-                            "status": "PENDING",
-                            "transactions": [
-                              {
-                                "amount": "1020.00",
-                                "beneficiary": "a80d5a9d-20ae-479a-8dd7-ff3443bcbbfc",
-                                "created_at": "2022-02-09T08:45:50Z",
-                                "created_by": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
-                                "currency": "BRL",
-                                "customer": "9eebd63b-3339-44a9-8a5a-72bb6cb2f310",
-                                "description": "Training shoes",
-                                "id": "fd0f3303-cafb-47ea-9753-21155cb144ab",
-                                "payer": {
-                                  "key": "value",
-                                },
-                                "payment_intent": "004a28bb-fac2-4172-884b-5b6ea15314ad",
-                                "transaction_type": "INFLOW",
-                              },
-                            ],
-                            "updated_at": "2022-02-09T08:45:50Z",
-                          },
-                        ],
                         "created_at": "2022-02-09T08:45:50Z",
                         "created_by": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
                         "currency": "BRL",
@@ -51282,35 +50456,6 @@ service:
                     payer_institution: 600f1b4a-1ef9-4f89-b341-1a35f0c32cc0
                     callback_url: https://www.acmecorp.com/checkout/3487321
                 payment_method_information: {}
-                charges:
-                  - id: 1c83ead8-6665-429c-a17a-ddc76cb3a95e
-                    created_at: '2022-02-09T08:45:50Z'
-                    created_by: 1c83ead8-6665-429c-a17a-ddc76cb3a95e
-                    customer: 531aa631-70a0-4eeb-ab97-51dea3e90c89
-                    status: PENDING
-                    amount: '100.12'
-                    description: Training shoes
-                    metadata:
-                      internal_reference_id: GGq73487w2
-                    beneficiary: 58524ccc-89ac-4ab6-b62b-c3da3f19a722
-                    provider: belvo
-                    payment_method_details: {}
-                    payment_method_information: {}
-                    payment_intent: 50c04229-7b1d-4a53-951c-8ad53e10c6ca
-                    transactions:
-                      - id: fd0f3303-cafb-47ea-9753-21155cb144ab
-                        created_at: '2022-02-09T08:45:50Z'
-                        created_by: 1c83ead8-6665-429c-a17a-ddc76cb3a95e
-                        amount: '1020.00'
-                        currency: BRL
-                        description: Training shoes
-                        transaction_type: INFLOW
-                        beneficiary: a80d5a9d-20ae-479a-8dd7-ff3443bcbbfc
-                        payer:
-                          key: value
-                        payment_intent: 004a28bb-fac2-4172-884b-5b6ea15314ad
-                        customer: 9eebd63b-3339-44a9-8a5a-72bb6cb2f310
-                    updated_at: '2022-02-09T08:45:50Z'
                 provider: belvo
                 selected_payment_method_type: open_finance
                 status: REQUIRES_PAYMENT_METHOD
@@ -51385,35 +50530,6 @@ service:
                     payer_institution: 600f1b4a-1ef9-4f89-b341-1a35f0c32cc0
                     callback_url: https://www.acmecorp.com/checkout/3487321
                 payment_method_information: {}
-                charges:
-                  - id: 1c83ead8-6665-429c-a17a-ddc76cb3a95e
-                    created_at: '2022-02-09T08:45:50Z'
-                    created_by: 1c83ead8-6665-429c-a17a-ddc76cb3a95e
-                    customer: 531aa631-70a0-4eeb-ab97-51dea3e90c89
-                    status: PENDING
-                    amount: '100.12'
-                    description: Training shoes
-                    metadata:
-                      internal_reference_id: GGq73487w2
-                    beneficiary: 58524ccc-89ac-4ab6-b62b-c3da3f19a722
-                    provider: belvo
-                    payment_method_details: {}
-                    payment_method_information: {}
-                    payment_intent: 50c04229-7b1d-4a53-951c-8ad53e10c6ca
-                    transactions:
-                      - id: fd0f3303-cafb-47ea-9753-21155cb144ab
-                        created_at: '2022-02-09T08:45:50Z'
-                        created_by: 1c83ead8-6665-429c-a17a-ddc76cb3a95e
-                        amount: '1020.00'
-                        currency: BRL
-                        description: Training shoes
-                        transaction_type: INFLOW
-                        beneficiary: a80d5a9d-20ae-479a-8dd7-ff3443bcbbfc
-                        payer:
-                          key: value
-                        payment_intent: 004a28bb-fac2-4172-884b-5b6ea15314ad
-                        customer: 9eebd63b-3339-44a9-8a5a-72bb6cb2f310
-                    updated_at: '2022-02-09T08:45:50Z'
                 provider: belvo
                 selected_payment_method_type: open_finance
                 status: REQUIRES_PAYMENT_METHOD
@@ -53330,7 +52446,6 @@ client.connect()
                             "current": 5874.13,
                           },
                           "balance_type": "ASSET",
-                          "bank_product_id": "bank_product_id",
                           "category": "CHECKING_ACCOUNT",
                           "collected_at": "2019-09-27T13:01:41Z",
                           "created_at": "2022-02-09T08:45:50Z",
@@ -53353,7 +52468,6 @@ client.connect()
                           "institution": {
                             "name": "erebor_mx_retail",
                           },
-                          "internal_identification": "internal_identification",
                           "last_accessed_at": "2021-03-09T10:28:40Z",
                           "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                           "loan_data": {
@@ -53755,7 +52869,6 @@ client.connect()
                             "current": 5874.13,
                           },
                           "balance_type": "ASSET",
-                          "bank_product_id": "bank_product_id",
                           "category": "CHECKING_ACCOUNT",
                           "collected_at": "2019-09-27T13:01:41Z",
                           "created_at": "2022-02-09T08:45:50Z",
@@ -53778,7 +52891,6 @@ client.connect()
                           "institution": {
                             "name": "erebor_mx_retail",
                           },
-                          "internal_identification": "internal_identification",
                           "last_accessed_at": "2021-03-09T10:28:40Z",
                           "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                           "loan_data": {
@@ -53943,7 +53055,6 @@ client.connect()
                             "current": 5874.13,
                           },
                           "balance_type": "ASSET",
-                          "bank_product_id": "bank_product_id",
                           "category": "CHECKING_ACCOUNT",
                           "collected_at": "2019-09-27T13:01:41Z",
                           "created_at": "2022-02-09T08:45:50Z",
@@ -53966,7 +53077,6 @@ client.connect()
                           "institution": {
                             "name": "erebor_mx_retail",
                           },
-                          "internal_identification": "internal_identification",
                           "last_accessed_at": "2021-03-09T10:28:40Z",
                           "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                           "loan_data": {
@@ -54433,8 +53543,6 @@ service:
                     available: 800.37
                     anticipated: 1393.46
                     collected_at: '2022-02-09T08:45:50Z'
-                  bank_product_id: bank_product_id
-                  internal_identification: internal_identification
                 name: Netflix
                 transactions:
                   - amount: 2145.45
@@ -54596,8 +53704,6 @@ service:
                     available: 800.37
                     anticipated: 1393.46
                     collected_at: '2022-02-09T08:45:50Z'
-                  bank_product_id: bank_product_id
-                  internal_identification: internal_identification
                 name: Netflix
                 transactions:
                   - amount: 2145.45
@@ -54763,8 +53869,6 @@ service:
                     available: 800.37
                     anticipated: 1393.46
                     collected_at: '2022-02-09T08:45:50Z'
-                  bank_product_id: bank_product_id
-                  internal_identification: internal_identification
                 name: Netflix
                 transactions:
                   - amount: 2145.45
@@ -72674,7 +71778,6 @@ client.connect()
                           "current": 0,
                         },
                         "balance_type": "ASSET",
-                        "bank_product_id": "46",
                         "category": "CHECKING_ACCOUNT",
                         "collected_at": "2022-02-09T08:45:50Z",
                         "created_at": "2022-02-09T08:46:20Z",
@@ -72682,11 +71785,8 @@ client.connect()
                           "collected_at": "2019-09-27T13:01:41Z",
                           "credit_limit": 192000,
                           "cutting_date": "2019-12-11",
-                          "end_date": "end_date",
                           "interest_rate": 4,
-                          "last_payment_date": "last_payment_date",
                           "minimum_payment": 2400.3,
-                          "monthly_payment": 1.1,
                           "next_payment_date": "2019-12-13",
                           "no_interest_payment": 2690.83,
                         },
@@ -72701,7 +71801,6 @@ client.connect()
                           "name": "erebor_mx_retail",
                           "type": "bank",
                         },
-                        "internal_identification": "996685090015",
                         "last_accessed_at": "2021-03-09T10:28:40Z",
                         "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                         "loan_data": {
@@ -72710,28 +71809,20 @@ client.connect()
                           "contract_end_date": "2027-10-01",
                           "contract_number": "890ASLDJF87SD00",
                           "contract_start_date": "2020-03-01",
-                          "credit_limit": 1.1,
-                          "cutting_date": "cutting_date",
-                          "cutting_day": "cutting_day",
                           "fees": [
                             {
                               "type": "OPERATION_FEE",
                               "value": 5.6,
                             },
                           ],
-                          "interest_rate": 1.1,
                           "interest_rates": [
                             {
                               "name": "jurosEfetivo",
                               "value": 7.85,
                             },
                           ],
-                          "last_payment_date": "last_payment_date",
-                          "last_period_balance": 1.1,
-                          "limit_day": "limit_day",
                           "loan_type": "Consignado",
                           "monthly_payment": 1000,
-                          "no_interest_payment": 1.1,
                           "number_of_installments_outstanding": 48,
                           "number_of_installments_total": 60,
                           "outstanding_balance": 182000,
@@ -72879,11 +71970,8 @@ client.connect()
                           "collected_at": "2019-09-27T13:01:41Z",
                           "credit_limit": 192000,
                           "cutting_date": "2019-12-11",
-                          "end_date": "end_date",
                           "interest_rate": 4,
-                          "last_payment_date": "last_payment_date",
                           "minimum_payment": 2400.3,
-                          "monthly_payment": 1.1,
                           "next_payment_date": "2019-12-13",
                           "no_interest_payment": 2690.83,
                         },
@@ -72898,7 +71986,6 @@ client.connect()
                           "name": "erebor_mx_retail",
                           "type": "bank",
                         },
-                        "internal_identification": "996685090015",
                         "last_accessed_at": "2021-03-09T10:28:40Z",
                         "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                         "loan_data": {
@@ -72907,28 +71994,20 @@ client.connect()
                           "contract_end_date": "2027-10-01",
                           "contract_number": "890ASLDJF87SD00",
                           "contract_start_date": "2020-03-01",
-                          "credit_limit": 1.1,
-                          "cutting_date": "cutting_date",
-                          "cutting_day": "cutting_day",
                           "fees": [
                             {
                               "type": "OPERATION_FEE",
                               "value": 5.6,
                             },
                           ],
-                          "interest_rate": 1.1,
                           "interest_rates": [
                             {
                               "name": "jurosEfetivo",
                               "value": 7.85,
                             },
                           ],
-                          "last_payment_date": "last_payment_date",
-                          "last_period_balance": 1.1,
-                          "limit_day": "limit_day",
                           "loan_type": "Consignado",
                           "monthly_payment": 1000,
-                          "no_interest_payment": 1.1,
                           "number_of_installments_outstanding": 48,
                           "number_of_installments_total": 60,
                           "outstanding_balance": 182000,
@@ -73095,28 +72174,20 @@ client.connect()
                           "contract_end_date": "2027-10-01",
                           "contract_number": "890ASLDJF87SD00",
                           "contract_start_date": "2020-03-01",
-                          "credit_limit": 1.1,
-                          "cutting_date": "cutting_date",
-                          "cutting_day": "cutting_day",
                           "fees": [
                             {
                               "type": "OPERATION_FEE",
                               "value": 5.6,
                             },
                           ],
-                          "interest_rate": 1.1,
                           "interest_rates": [
                             {
                               "name": "jurosEfetivo",
                               "value": 7.85,
                             },
                           ],
-                          "last_payment_date": "last_payment_date",
-                          "last_period_balance": 1.1,
-                          "limit_day": "limit_day",
                           "loan_type": "Consignado",
                           "monthly_payment": 1000,
-                          "no_interest_payment": 1.1,
                           "number_of_installments_outstanding": 48,
                           "number_of_installments_total": 60,
                           "outstanding_balance": 182000,
@@ -73356,7 +72427,6 @@ client.connect()
                               "current": 0,
                             },
                             "balance_type": "ASSET",
-                            "bank_product_id": "46",
                             "category": "CHECKING_ACCOUNT",
                             "collected_at": "2022-02-09T08:45:50Z",
                             "created_at": "2022-02-09T08:46:20Z",
@@ -73366,7 +72436,6 @@ client.connect()
                               "name": "erebor_mx_retail",
                               "type": "bank",
                             },
-                            "internal_identification": "996685090015",
                             "last_accessed_at": "2021-03-09T10:28:40Z",
                             "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                             "loan_data": {
@@ -73566,7 +72635,6 @@ client.connect()
                               "name": "erebor_mx_retail",
                               "type": "bank",
                             },
-                            "internal_identification": "996685090015",
                             "last_accessed_at": "2021-03-09T10:28:40Z",
                             "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                             "loan_data": {
@@ -74221,7 +73289,6 @@ client.connect()
                             "current": 0,
                           },
                           "balance_type": "ASSET",
-                          "bank_product_id": "46",
                           "category": "CHECKING_ACCOUNT",
                           "collected_at": "2022-02-09T08:45:50Z",
                           "created_at": "2022-02-09T08:46:20Z",
@@ -74245,7 +73312,6 @@ client.connect()
                             "name": "erebor_mx_retail",
                             "type": "bank",
                           },
-                          "internal_identification": "996685090015",
                           "last_accessed_at": "2021-03-09T10:28:40Z",
                           "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                           "loan_data": {
@@ -74431,7 +73497,6 @@ client.connect()
                             "name": "erebor_mx_retail",
                             "type": "bank",
                           },
-                          "internal_identification": "996685090015",
                           "last_accessed_at": "2021-03-09T10:28:40Z",
                           "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                           "loan_data": {
@@ -74822,7 +73887,6 @@ client.connect()
                             "current": 0,
                           },
                           "balance_type": "ASSET",
-                          "bank_product_id": "46",
                           "category": "CHECKING_ACCOUNT",
                           "collected_at": "2022-02-09T08:45:50Z",
                           "created_at": "2022-02-09T08:46:20Z",
@@ -74846,7 +73910,6 @@ client.connect()
                             "name": "erebor_mx_retail",
                             "type": "bank",
                           },
-                          "internal_identification": "996685090015",
                           "last_accessed_at": "2021-03-09T10:28:40Z",
                           "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                           "loan_data": {
@@ -75037,7 +74100,6 @@ client.connect()
                             "name": "erebor_mx_retail",
                             "type": "bank",
                           },
-                          "internal_identification": "996685090015",
                           "last_accessed_at": "2021-03-09T10:28:40Z",
                           "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                           "loan_data": {
@@ -75885,8 +74947,6 @@ service:
                       outstanding_balance: 182000
                       monthly_payment: 1000
                       contract_end_date: '2027-10-01'
-                    bank_product_id: '46'
-                    internal_identification: '996685090015'
                   collected_at: '2022-07-20T22:09:33Z'
                   created_at: '2022-07-20T22:09:35Z'
                   value_date: '2022-07-11'
@@ -76064,7 +75124,6 @@ service:
                       outstanding_balance: 182000
                       monthly_payment: 1000
                       contract_end_date: '2027-10-01'
-                    internal_identification: '996685090015'
                   collected_at: '2022-07-20T22:09:33Z'
                   created_at: '2022-07-20T22:09:35Z'
                   value_date: '2022-07-11'
@@ -76441,8 +75500,6 @@ service:
                     available: 800.37
                     anticipated: 1393.46
                     collected_at: '2022-02-09T08:45:50Z'
-                  bank_product_id: '46'
-                  internal_identification: '996685090015'
                 collected_at: '2022-07-20T22:09:33Z'
                 created_at: '2022-07-20T22:09:35Z'
                 value_date: '2022-07-11'
@@ -76603,7 +75660,6 @@ service:
                     available: 800.37
                     anticipated: 1393.46
                     collected_at: '2022-02-09T08:45:50Z'
-                  internal_identification: '996685090015'
                 collected_at: '2022-07-20T22:09:33Z'
                 created_at: '2022-07-20T22:09:35Z'
                 value_date: '2022-07-11'
@@ -77111,8 +76167,6 @@ service:
                     available: 800.37
                     anticipated: 1393.46
                     collected_at: '2022-02-09T08:45:50Z'
-                  bank_product_id: '46'
-                  internal_identification: '996685090015'
                 collected_at: '2022-07-20T22:09:33Z'
                 created_at: '2022-07-20T22:09:35Z'
                 value_date: '2022-07-11'
@@ -77268,7 +76322,6 @@ service:
                     available: 800.37
                     anticipated: 1393.46
                     collected_at: '2022-02-09T08:45:50Z'
-                  internal_identification: '996685090015'
                 collected_at: '2022-07-20T22:09:33Z'
                 created_at: '2022-07-20T22:09:35Z'
                 value_date: '2022-07-11'
@@ -77600,9 +76653,6 @@ service:
                   minimum_payment: 2400.3
                   no_interest_payment: 2690.83
                   interest_rate: 4
-                  end_date: end_date
-                  monthly_payment: 1.1
-                  last_payment_date: last_payment_date
                 loan_data:
                   collected_at: '2022-02-09T08:45:50Z'
                   contract_amount: 202000
@@ -77623,14 +76673,6 @@ service:
                   contract_start_date: '2020-03-01'
                   contract_end_date: '2027-10-01'
                   contract_number: 890ASLDJF87SD00
-                  credit_limit: 1.1
-                  last_period_balance: 1.1
-                  interest_rate: 1.1
-                  limit_day: limit_day
-                  cutting_day: cutting_day
-                  cutting_date: cutting_date
-                  last_payment_date: last_payment_date
-                  no_interest_payment: 1.1
                 funds_data:
                   - collected_at: '2020-04-23T21:32:55Z'
                 receivables_data:
@@ -77638,8 +76680,6 @@ service:
                   available: 800.37
                   anticipated: 1393.46
                   collected_at: '2022-02-09T08:45:50Z'
-                bank_product_id: '46'
-                internal_identification: '996685090015'
               collected_at: '2022-07-20T22:09:33Z'
               created_at: '2022-07-20T22:09:35Z'
               value_date: '2022-07-11'
@@ -77764,9 +76804,6 @@ service:
                   minimum_payment: 2400.3
                   no_interest_payment: 2690.83
                   interest_rate: 4
-                  end_date: end_date
-                  monthly_payment: 1.1
-                  last_payment_date: last_payment_date
                 loan_data:
                   collected_at: '2022-02-09T08:45:50Z'
                   contract_amount: 202000
@@ -77787,14 +76824,6 @@ service:
                   contract_start_date: '2020-03-01'
                   contract_end_date: '2027-10-01'
                   contract_number: 890ASLDJF87SD00
-                  credit_limit: 1.1
-                  last_period_balance: 1.1
-                  interest_rate: 1.1
-                  limit_day: limit_day
-                  cutting_day: cutting_day
-                  cutting_date: cutting_date
-                  last_payment_date: last_payment_date
-                  no_interest_payment: 1.1
                 funds_data:
                   - collected_at: '2020-04-23T21:32:55Z'
                 receivables_data:
@@ -77802,7 +76831,6 @@ service:
                   available: 800.37
                   anticipated: 1393.46
                   collected_at: '2022-02-09T08:45:50Z'
-                internal_identification: '996685090015'
               collected_at: '2022-07-20T22:09:33Z'
               created_at: '2022-07-20T22:09:35Z'
               value_date: '2022-07-11'
@@ -77947,14 +76975,6 @@ service:
                   contract_start_date: '2020-03-01'
                   contract_end_date: '2027-10-01'
                   contract_number: 890ASLDJF87SD00
-                  credit_limit: 1.1
-                  last_period_balance: 1.1
-                  interest_rate: 1.1
-                  limit_day: limit_day
-                  cutting_day: cutting_day
-                  cutting_date: cutting_date
-                  last_payment_date: last_payment_date
-                  no_interest_payment: 1.1
                 receivables_data:
                   current: 2193.83
                   available: 800.37

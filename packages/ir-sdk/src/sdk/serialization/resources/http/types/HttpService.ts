@@ -13,6 +13,7 @@ import { HttpHeader } from "./HttpHeader";
 import { PathParameter } from "./PathParameter";
 import { Encoding } from "../../types/types/Encoding";
 import { Transport } from "./Transport";
+import { AudienceReference } from "../../audience/types/AudienceReference";
 
 export const HttpService: core.serialization.ObjectSchema<serializers.HttpService.Raw, FernIr.HttpService> =
     core.serialization.objectWithoutOptionalProperties({
@@ -25,6 +26,7 @@ export const HttpService: core.serialization.ObjectSchema<serializers.HttpServic
         pathParameters: core.serialization.list(PathParameter),
         encoding: Encoding.optional(),
         transport: Transport.optional(),
+        audiences: core.serialization.list(AudienceReference).optional(),
     });
 
 export declare namespace HttpService {
@@ -38,5 +40,6 @@ export declare namespace HttpService {
         pathParameters: PathParameter.Raw[];
         encoding?: Encoding.Raw | null;
         transport?: Transport.Raw | null;
+        audiences?: AudienceReference.Raw[] | null;
     }
 }

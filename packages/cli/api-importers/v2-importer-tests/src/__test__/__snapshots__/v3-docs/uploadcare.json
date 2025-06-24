@@ -12291,6 +12291,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_upload.baseUpload",
           "name": {
             "originalName": "baseUpload",
@@ -12845,6 +12846,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_upload.multipartFileUploadStart",
           "name": {
             "originalName": "multipartFileUploadStart",
@@ -13521,6 +13523,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_upload.multipartFileUploadPart",
           "name": {
             "originalName": "multipartFileUploadPart",
@@ -13596,6 +13599,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_upload.multipartFileUploadComplete",
           "name": {
             "originalName": "multipartFileUploadComplete",
@@ -13967,6 +13971,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_upload.fromURLUpload",
           "name": {
             "originalName": "fromURLUpload",
@@ -14865,6 +14870,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_upload.fromURLUploadStatus",
           "name": {
             "originalName": "fromURLUploadStatus",
@@ -15311,6 +15317,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_upload.fileUploadInfo",
           "name": {
             "originalName": "fileUploadInfo",
@@ -15599,6 +15606,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_groups.createFilesGroup",
           "name": {
             "originalName": "createFilesGroup",
@@ -16116,6 +16124,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_groups.filesGroupInfo",
           "name": {
             "originalName": "filesGroupInfo",

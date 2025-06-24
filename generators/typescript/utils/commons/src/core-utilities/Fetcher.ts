@@ -83,6 +83,11 @@ export interface Fetcher {
         };
     };
 
+    readonly BinaryResponse: {
+        _getReferenceToType: () => ts.TypeNode;
+        getBinaryResponse: (response: ts.Expression) => ts.Expression;
+    };
+
     readonly Supplier: {
         _getReferenceToType: (suppliedType: ts.TypeNode) => ts.TypeNode;
         get: (supplier: ts.Expression) => ts.Expression;
@@ -128,7 +133,7 @@ export declare namespace Fetcher {
         timeoutInSeconds: ts.Expression;
         maxRetries?: ts.Expression;
         requestType?: "json" | "file" | "bytes" | "other";
-        responseType?: "json" | "blob" | "sse" | "streaming" | "text";
+        responseType?: "json" | "blob" | "sse" | "streaming" | "text" | "binary-response";
         duplex?: ts.Expression;
     }
 }
@@ -360,6 +365,18 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
             error: "error",
             rawResponse: "rawResponse"
         }
+    };
+
+    public readonly BinaryResponse = {
+        _getReferenceToType: this.withExportedName(
+            "BinaryResponse",
+            (BinaryResponse) => () => BinaryResponse.getTypeNode()
+        ),
+        getBinaryResponse: this.withExportedName(
+            "getBinaryResponse",
+            (getBinaryResponse) => (response: ts.Expression) =>
+                ts.factory.createCallExpression(getBinaryResponse.getExpression(), undefined, [response])
+        )
     };
 
     public Supplier = {

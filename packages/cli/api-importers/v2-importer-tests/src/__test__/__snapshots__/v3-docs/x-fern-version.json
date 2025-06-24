@@ -484,6 +484,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_chatCompletions.create",
           "name": {
             "originalName": "create",

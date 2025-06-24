@@ -3556,6 +3556,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_endUsers.getEndUserById",
           "name": {
             "originalName": "getEndUserById",
@@ -3995,6 +3996,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_endUsers.updateEndUserById",
           "name": {
             "originalName": "updateEndUserById",
@@ -4449,6 +4451,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_endUsers.getEndUsers",
           "name": {
             "originalName": "getEndUsers",

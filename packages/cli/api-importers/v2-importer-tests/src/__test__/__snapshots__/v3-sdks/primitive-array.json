@@ -227,6 +227,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.getSearch",
           "name": {
             "originalName": "getSearch",
@@ -426,6 +427,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.getSearchWithUnion",
           "name": {
             "originalName": "getSearchWithUnion",
@@ -625,6 +627,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.getSearchWithUnionAndNull",
           "name": {
             "originalName": "getSearchWithUnionAndNull",

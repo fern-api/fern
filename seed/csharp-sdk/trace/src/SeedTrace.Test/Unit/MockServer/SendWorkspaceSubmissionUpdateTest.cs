@@ -42,7 +42,11 @@ public class SendWorkspaceSubmissionUpdateTest : BaseMockServerTest
                         null,
                         DateTimeStyles.AdjustToUniversal
                     ),
-                    UpdateInfo = RunningSubmissionState.QueueingSubmission,
+                    UpdateInfo = new WorkspaceSubmissionUpdateInfo(
+                        new WorkspaceSubmissionUpdateInfo.Running(
+                            RunningSubmissionState.QueueingSubmission
+                        )
+                    ),
                 }
             )
         );

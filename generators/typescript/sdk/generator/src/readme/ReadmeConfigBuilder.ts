@@ -8,9 +8,17 @@ import { ReadmeSnippetBuilder } from "./ReadmeSnippetBuilder";
 
 export class ReadmeConfigBuilder {
     private endpointSnippets: FernGeneratorExec.Endpoint[];
+    private readonly fileResponseType: "stream" | "binary-response";
 
-    constructor({ endpointSnippets }: { endpointSnippets: FernGeneratorExec.Endpoint[] }) {
+    constructor({
+        endpointSnippets,
+        fileResponseType
+    }: {
+        endpointSnippets: FernGeneratorExec.Endpoint[];
+        fileResponseType: "stream" | "binary-response";
+    }) {
         this.endpointSnippets = endpointSnippets;
+        this.fileResponseType = fileResponseType;
     }
 
     public build({
@@ -24,20 +32,27 @@ export class ReadmeConfigBuilder {
     }): FernGeneratorCli.ReadmeConfig {
         const readmeSnippetBuilder = new ReadmeSnippetBuilder({
             context,
-            endpointSnippets: this.endpointSnippets
+            endpointSnippets: this.endpointSnippets,
+            fileResponseType: this.fileResponseType
         });
         const snippets = readmeSnippetBuilder.buildReadmeSnippets();
+        const addendums = readmeSnippetBuilder.buildReadmeAddendums();
         const features: FernGeneratorCli.ReadmeFeature[] = [];
         for (const feature of featureConfig.features) {
             const snippetForFeature = snippets[feature.id];
             if (snippetForFeature == null) {
                 continue;
             }
+            const addendumForFeature = addendums[feature.id];
+            if (addendumForFeature != null) {
+                feature.addendum = addendumForFeature;
+            }
             features.push({
                 id: feature.id,
                 advanced: feature.advanced,
                 description: feature.description,
                 snippets: snippetForFeature,
+                addendum: feature.addendum,
                 snippetsAreOptional: false
             });
         }

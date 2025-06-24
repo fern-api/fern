@@ -76,7 +76,8 @@ export function mergeIntermediateRepresentation(
         sourceConfig: ir1.sourceConfig ?? ir2.sourceConfig,
         publishConfig: ir1.publishConfig ?? ir2.publishConfig,
         dynamic: ir1.dynamic ?? ir2.dynamic,
-        sdkConfig: ir1.sdkConfig ?? ir2.sdkConfig
+        sdkConfig: ir1.sdkConfig ?? ir2.sdkConfig,
+        audiences: [...(ir1.audiences ?? []), ...(ir2.audiences ?? [])]
     };
 }
 
@@ -376,7 +377,8 @@ function mergeServicesAndChannels(
                 ],
                 headers: [...(mergedServices[serviceId].headers ?? []), ...(service.headers ?? [])],
                 encoding: service.encoding,
-                transport: service.transport
+                transport: service.transport,
+                audiences: [...(mergedServices[serviceId].audiences ?? []), ...(service.audiences ?? [])]
             };
         }
     }

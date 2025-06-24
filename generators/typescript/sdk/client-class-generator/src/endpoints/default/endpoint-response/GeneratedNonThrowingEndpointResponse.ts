@@ -27,6 +27,7 @@ export declare namespace GeneratedNonThrowingEndpointResponse {
         errorResolver: ErrorResolver;
         includeSerdeLayer: boolean;
         streamType: "wrapper" | "web";
+        fileResponseType: "stream" | "binary-response";
     }
 }
 
@@ -45,6 +46,7 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
     private errorResolver: ErrorResolver;
     private includeSerdeLayer: boolean;
     private streamType: "wrapper" | "web";
+    private readonly fileResponseType: "stream" | "binary-response";
 
     constructor({
         packageId,
@@ -53,7 +55,8 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
         errorDiscriminationStrategy,
         errorResolver,
         includeSerdeLayer,
-        streamType
+        streamType,
+        fileResponseType
     }: GeneratedNonThrowingEndpointResponse.Init) {
         this.packageId = packageId;
         this.endpoint = endpoint;
@@ -62,6 +65,7 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
         this.errorResolver = errorResolver;
         this.includeSerdeLayer = includeSerdeLayer;
         this.streamType = streamType;
+        this.fileResponseType = fileResponseType;
     }
 
     public getPaginationInfo(): PaginationResponseInfo | undefined {
@@ -80,7 +84,8 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
         return context.coreUtilities.fetcher.APIResponse._getReferenceToType(
             getSuccessReturnType(this.endpoint, this.response, context, {
                 includeContentHeadersOnResponse: false,
-                streamType: this.streamType
+                streamType: this.streamType,
+                fileResponseType: this.fileResponseType
             }),
             context.endpointErrorUnion
                 .getGeneratedEndpointErrorUnion(this.packageId, this.endpoint.name)

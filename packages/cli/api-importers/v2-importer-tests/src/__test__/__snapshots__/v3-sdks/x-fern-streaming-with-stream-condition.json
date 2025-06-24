@@ -785,6 +785,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.chat_stream",
           "name": {
             "originalName": "chat_stream",
@@ -1496,6 +1497,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.chat",
           "name": {
             "originalName": "chat",

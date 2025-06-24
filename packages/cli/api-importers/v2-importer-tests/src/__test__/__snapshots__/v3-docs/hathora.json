@@ -9486,6 +9486,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_appV1.GetApps",
           "name": {
             "originalName": "GetApps",
@@ -9737,6 +9738,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_appV1.CreateApp",
           "name": {
             "originalName": "CreateApp",
@@ -10109,6 +10111,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_appV1.UpdateApp",
           "name": {
             "originalName": "UpdateApp",
@@ -10454,6 +10457,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_appV1.GetAppInfo",
           "name": {
             "originalName": "GetAppInfo",
@@ -10783,6 +10787,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_appV1.DeleteApp",
           "name": {
             "originalName": "DeleteApp",
@@ -11056,6 +11061,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_authV1.LoginAnonymous",
           "name": {
             "originalName": "LoginAnonymous",
@@ -11328,6 +11334,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_authV1.LoginNickname",
           "name": {
             "originalName": "LoginNickname",
@@ -11708,6 +11715,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_authV1.LoginGoogle",
           "name": {
             "originalName": "LoginGoogle",
@@ -12114,6 +12122,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_buildV1.GetBuilds",
           "name": {
             "originalName": "GetBuilds",
@@ -12544,6 +12553,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_buildV1.GetBuildInfo",
           "name": {
             "originalName": "GetBuildInfo",
@@ -12903,6 +12913,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_buildV1.CreateBuild",
           "name": {
             "originalName": "CreateBuild",
@@ -13352,6 +13363,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_buildV1.RunBuild",
           "name": {
             "originalName": "RunBuild",
@@ -13834,6 +13846,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_buildV1.DeleteBuild",
           "name": {
             "originalName": "DeleteBuild",
@@ -14108,6 +14121,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_deploymentV1.GetDeployments",
           "name": {
             "originalName": "GetDeployments",
@@ -14542,6 +14556,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_deploymentV1.GetDeploymentInfo",
           "name": {
             "originalName": "GetDeploymentInfo",
@@ -15025,6 +15040,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_deploymentV1.CreateDeployment",
           "name": {
             "originalName": "CreateDeployment",
@@ -15292,6 +15308,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_discoveryV1.GetPingServiceEndpoints",
           "name": {
             "originalName": "GetPingServiceEndpoints",
@@ -15898,6 +15915,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_lobbyV1.CreatePrivateLobbyDeprecated",
           "name": {
             "originalName": "CreatePrivateLobbyDeprecated",
@@ -16441,6 +16459,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_lobbyV1.CreatePublicLobbyDeprecated",
           "name": {
             "originalName": "CreatePublicLobbyDeprecated",
@@ -16897,6 +16916,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_lobbyV1.ListActivePublicLobbiesDeprecated",
           "name": {
             "originalName": "ListActivePublicLobbiesDeprecated",
@@ -17478,6 +17498,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_lobbyV2.CreatePrivateLobby",
           "name": {
             "originalName": "CreatePrivateLobby",
@@ -18149,6 +18170,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_lobbyV2.CreatePublicLobby",
           "name": {
             "originalName": "CreatePublicLobby",
@@ -18820,6 +18842,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_lobbyV2.CreateLocalLobby",
           "name": {
             "originalName": "CreateLocalLobby",
@@ -19488,6 +19511,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_lobbyV2.CreateLobby",
           "name": {
             "originalName": "CreateLobby",
@@ -20029,6 +20053,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_lobbyV2.ListActivePublicLobbies",
           "name": {
             "originalName": "ListActivePublicLobbies",
@@ -20447,6 +20472,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_lobbyV2.GetLobbyInfo",
           "name": {
             "originalName": "GetLobbyInfo",
@@ -20885,6 +20911,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_lobbyV2.SetLobbyState",
           "name": {
             "originalName": "SetLobbyState",
@@ -21504,6 +21531,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_logV1.GetLogsForApp",
           "name": {
             "originalName": "GetLogsForApp",
@@ -21974,6 +22002,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_logV1.GetLogsForProcess",
           "name": {
             "originalName": "GetLogsForProcess",
@@ -22445,6 +22474,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_logV1.GetLogsForDeployment",
           "name": {
             "originalName": "GetLogsForDeployment",
@@ -23100,6 +23130,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_metricsV1.GetMetrics",
           "name": {
             "originalName": "GetMetrics",
@@ -23540,6 +23571,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_processesV1.GetRunningProcesses",
           "name": {
             "originalName": "GetRunningProcesses",
@@ -23926,6 +23958,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_processesV1.GetStoppedProcesses",
           "name": {
             "originalName": "GetStoppedProcesses",
@@ -24358,6 +24391,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_processesV1.GetProcessInfo",
           "name": {
             "originalName": "GetProcessInfo",
@@ -24745,6 +24779,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_roomV1.CreateRoom",
           "name": {
             "originalName": "CreateRoom",
@@ -25228,6 +25263,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_roomV1.GetRoomInfo",
           "name": {
             "originalName": "GetRoomInfo",
@@ -25653,6 +25689,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_roomV1.GetActiveRoomsForProcess",
           "name": {
             "originalName": "GetActiveRoomsForProcess",
@@ -26052,6 +26089,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_roomV1.GetInactiveRoomsForProcess",
           "name": {
             "originalName": "GetInactiveRoomsForProcess",
@@ -26480,6 +26518,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_roomV1.DestroyRoom",
           "name": {
             "originalName": "DestroyRoom",
@@ -26848,6 +26887,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_roomV1.SuspendRoom",
           "name": {
             "originalName": "SuspendRoom",
@@ -27245,6 +27285,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_roomV1.GetConnectionInfo",
           "name": {
             "originalName": "GetConnectionInfo",

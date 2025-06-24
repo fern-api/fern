@@ -213,6 +213,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.get_user",
           "name": {
             "originalName": "get_user",

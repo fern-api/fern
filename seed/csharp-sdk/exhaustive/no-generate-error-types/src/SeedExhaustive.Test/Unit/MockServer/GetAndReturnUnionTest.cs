@@ -43,11 +43,11 @@ public class GetAndReturnUnionTest : BaseMockServerTest
             );
 
         var response = await Client.Endpoints.Union.GetAndReturnUnionAsync(
-            new Dog { Name = "name", LikesToWoof = true }
+            new Animal(new Animal.Dog(new Dog { Name = "name", LikesToWoof = true }))
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<object>(mockResponse)).UsingDefaults()
+            Is.EqualTo(JsonUtils.Deserialize<Animal>(mockResponse)).UsingDefaults()
         );
     }
 }
