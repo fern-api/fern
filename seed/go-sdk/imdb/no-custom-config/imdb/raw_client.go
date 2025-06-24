@@ -2,6 +2,7 @@ package imdb
 
 import (
 	context "context"
+	fern "github.com/imdb/fern"
 	core "github.com/imdb/fern/core"
 	internal "github.com/imdb/fern/internal"
 	option "github.com/imdb/fern/option"
@@ -30,9 +31,9 @@ func NewRawClient(opts ...option.RequestOption) *RawClient {
 
 func (r RawClient) CreateMovie(
 	ctx context.Context,
-	request *CreateMovieRequest,
+	request *fern.CreateMovieRequest,
 	opts ...option.RequestOption,
-) (*core.Response[*MovieId], error) {
+) (*core.Response[*fern.MovieId], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -44,7 +45,7 @@ func (r RawClient) CreateMovie(
 		r.header.Clone(),
 		options.ToHeader(),
 	)
-	var response *MovieId
+	var response *fern.MovieId
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -62,7 +63,7 @@ func (r RawClient) CreateMovie(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*MovieId]{
+	return &core.Response[*fern.MovieId]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -70,9 +71,9 @@ func (r RawClient) CreateMovie(
 }
 func (r RawClient) GetMovie(
 	ctx context.Context,
-	movieId *MovieId,
+	movieId *fern.MovieId,
 	opts ...option.RequestOption,
-) (*core.Response[*Movie], error) {
+) (*core.Response[*fern.Movie], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -89,12 +90,12 @@ func (r RawClient) GetMovie(
 	)
 	errorCodes := internal.ErrorCodes{
 		404: func(apiError *core.APIError) error {
-			return &MovieDoesNotExistError{
+			return &fern.MovieDoesNotExistError{
 				APIError: apiError,
 			}
 		},
 	}
-	var response *Movie
+	var response *fern.Movie
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -112,7 +113,7 @@ func (r RawClient) GetMovie(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*Movie]{
+	return &core.Response[*fern.Movie]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,

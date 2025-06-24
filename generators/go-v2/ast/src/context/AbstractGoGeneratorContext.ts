@@ -401,12 +401,12 @@ export abstract class AbstractGoGeneratorContext<
 
     public getLocationForTypeId(typeId: TypeId): FileLocation {
         const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
-        return this.getFileLocation(typeDeclaration.name.fernFilepath);
+        return this.getPackageLocation(typeDeclaration.name.fernFilepath);
     }
 
     public getLocationForErrorId(errorId: ErrorId): FileLocation {
         const errorDeclaration = this.getErrorDeclarationOrThrow(errorId);
-        return this.getFileLocation(errorDeclaration.name.fernFilepath);
+        return this.getPackageLocation(errorDeclaration.name.fernFilepath);
     }
 
     protected getFileLocation(filepath: FernFilepath, suffix?: string): FileLocation {
