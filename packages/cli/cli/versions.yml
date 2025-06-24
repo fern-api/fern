@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Pin Windows to legacy preview mode.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-06-24"
+  version: 0.64.17
+
+- changelogEntry:
+    - summary: |
         Add `fern export` command to export API to an OpenAPI spec.
       type: feat
   irVersion: 58
