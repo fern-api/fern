@@ -288,11 +288,6 @@ export class ApiReferenceNodeConverter {
                 const subpackage = this.#holder.getSubpackageByIdOrLocator(locator);
                 const subpackageId = subpackage != null ? ApiDefinitionHolder.getSubpackageId(subpackage) : undefined;
                 if (subpackageId === undefined) {
-                    const nearestMatch = getKLexicallyNearestNeighbors(
-                        locator,
-                        this.#holder.subpackageLocators,
-                        NUM_NEAREST_SUBPACKAGES
-                    );
                     this.taskContext.logger.error(
                         `Unable to add subsection ${locator} to section ${section.title} due to error: ` +
                             this.cannotFindSubpackageByLocatorError(locator)

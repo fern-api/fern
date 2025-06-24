@@ -16,6 +16,7 @@ import { NodeIdGenerator } from "./NodeIdGenerator";
 import { convertPlaygroundSettings } from "./utils/convertPlaygroundSettings";
 import { enrichApiPackageChild } from "./utils/enrichApiPackageChild";
 import { getApiLatestToNavigationNodeUrlSlug } from "./utils/getApiLatestToNavigationNodeUrlSlug";
+import { getKLexicallyNearestNeighbors } from "./utils/getKLexicallyNearestNeighbors";
 import { mergeAndFilterChildren } from "./utils/mergeAndFilterChildren";
 import { mergeEndpointPairs } from "./utils/mergeEndpointPairs";
 import { stringifyEndpointPathParts, stringifyEndpointPathPartsWithMethod } from "./utils/stringifyEndpointPathParts";
@@ -221,9 +222,7 @@ export class ApiReferenceNodeConverterLatest {
             this.#topLevelSubpackages.set(subpackage.id, subpackageNode);
             return subpackageNode;
         } else {
-            this.taskContext.logger.warn(
-                `Subpackage ${pkg.package} not found in ${this.apiDefinitionId}, treating it as a section`
-            );
+            this.taskContext.logger.warn(`Cannot find component ${pkg.title}, treating it as a section`);
             const urlSlug = pkg.slug ?? kebabCase(pkg.package);
             const slug = parentSlug.apply({
                 fullSlug: maybeFullSlug?.split("/"),
@@ -272,29 +271,28 @@ export class ApiReferenceNodeConverterLatest {
 
         const nodeId = this.#idgen.get(overviewPageId ?? maybeFullSlug ?? parentSlug.get());
 
-        const subpackageIds = section.referencedSubpackages
+        const subPackageTuples = section.referencedSubpackages
             .map((locator) => {
                 const subpackage = this.#apiDefinitionHolder.getSubpackageByLocator(locator);
-
-                return subpackage != null ? subpackage.id : undefined;
-            })
-            .filter((subpackageId) => {
-                if (subpackageId == null) {
-                    this.taskContext.logger.error(`Subpackage ${subpackageId} not found in ${this.apiDefinitionId}`);
+                if (subpackage === null || subpackage === undefined) {
+                    this.taskContext.logger.error(
+                        `Unable to add subsection ${locator} to section ${section.title} due to error: ` +
+                            this.cannotFindSubpackageByLocatorError(locator)
+                    );
+                    return undefined;
                 }
-                return subpackageId != null;
+                return { subpackageId: subpackage.id, locator };
             })
+            .filter((subPackageTuple) => subPackageTuple != undefined)
             .filter(isNonNullish);
 
-        this.#nodeIdToSubpackageId.set(nodeId, subpackageIds);
-        subpackageIds.forEach((subpackageId) => {
-            if (this.#visitedSubpackages.has(subpackageId)) {
-                this.taskContext.logger.error(
-                    `Duplicate subpackage found in the API Reference layout: ${subpackageId}`
-                );
+        const subPackageIds = subPackageTuples.map((tuple) => tuple.subpackageId);
+        this.#nodeIdToSubpackageId.set(nodeId, subPackageIds);
+        subPackageTuples.forEach((subPackageTuple) => {
+            if (this.#visitedSubpackages.has(subPackageTuple.subpackageId)) {
+                this.taskContext.logger.error(this.packageReuseError(subPackageTuple.locator));
             }
-
-            this.#visitedSubpackages.add(subpackageId);
+            this.#visitedSubpackages.add(subPackageTuple.subpackageId);
         });
 
         const urlSlug = section.slug ?? kebabCase(section.title);
@@ -324,7 +322,7 @@ export class ApiReferenceNodeConverterLatest {
             featureFlags: section.featureFlags
         };
 
-        subpackageIds.forEach((subpackageId) => {
+        subPackageIds.forEach((subpackageId) => {
             this.#topLevelSubpackages.set(subpackageId, sectionNode);
         });
 
@@ -349,9 +347,7 @@ export class ApiReferenceNodeConverterLatest {
             const subpackageNodeId = this.#idgen.get(`${this.apiDefinitionId}:${subpackageId}`);
 
             if (this.#visitedSubpackages.has(subpackageId)) {
-                this.taskContext.logger.error(
-                    `Duplicate subpackage found in the API Reference layout: ${subpackageId}`
-                );
+                this.taskContext.logger.error(this.packageReuseError(unknownIdentifier));
             }
 
             this.#visitedSubpackages.add(subpackageId);
@@ -806,7 +802,7 @@ export class ApiReferenceNodeConverterLatest {
         const pkg = packageId != null ? this.#resolveSubpackage(packageId) : undefined;
 
         if (pkg == null) {
-            this.taskContext.logger.error(`Subpackage ${packageId} not found in ${this.apiDefinitionId}`);
+            this.taskContext.logger.error(this.cannotFindSubpackageByLocatorError(packageId || "unknown"));
             return [];
         }
 
@@ -829,5 +825,18 @@ export class ApiReferenceNodeConverterLatest {
             disableEndpointPairs: this.disableEndpointPairs,
             apiDefinitionId: this.apiDefinitionId
         });
+    }
+
+    private cannotFindSubpackageByLocatorError(locator: string) {
+        const nearestMatch = getKLexicallyNearestNeighbors(locator, this.#apiDefinitionHolder.subpackageLocators, 1)[0];
+        let msg = `Cannot find identifier ${locator} in api definition.`;
+        if (nearestMatch !== undefined) {
+            msg += ` Did you mean ${nearestMatch}?`;
+        }
+        return msg;
+    }
+
+    private packageReuseError(name: string): string {
+        return `Component ${name} used multiple times in the API Reference layout`;
     }
 }
