@@ -242,3 +242,97 @@ func (s *SendEvent2) String() string {
 	}
 	return fmt.Sprintf("%#v", s)
 }
+
+type ReceiveSnakeCase struct {
+	ReceiveText string `json:"receive_text" url:"receive_text"`
+	ReceiveInt  int    `json:"receive_int" url:"receive_int"`
+
+	extraProperties map[string]interface{}
+}
+
+func (r *ReceiveSnakeCase) GetReceiveText() string {
+	if r == nil {
+		return ""
+	}
+	return r.ReceiveText
+}
+
+func (r *ReceiveSnakeCase) GetReceiveInt() int {
+	if r == nil {
+		return 0
+	}
+	return r.ReceiveInt
+}
+
+func (r *ReceiveSnakeCase) GetExtraProperties() map[string]interface{} {
+	return r.extraProperties
+}
+
+func (r *ReceiveSnakeCase) UnmarshalJSON(data []byte) error {
+	type unmarshaler ReceiveSnakeCase
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*r = ReceiveSnakeCase(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *r)
+	if err != nil {
+		return err
+	}
+	r.extraProperties = extraProperties
+	return nil
+}
+
+func (r *ReceiveSnakeCase) String() string {
+	if value, err := internal.StringifyJSON(r); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", r)
+}
+
+type SendSnakeCase struct {
+	SendText  string `json:"send_text" url:"send_text"`
+	SendParam int    `json:"send_param" url:"send_param"`
+
+	extraProperties map[string]interface{}
+}
+
+func (s *SendSnakeCase) GetSendText() string {
+	if s == nil {
+		return ""
+	}
+	return s.SendText
+}
+
+func (s *SendSnakeCase) GetSendParam() int {
+	if s == nil {
+		return 0
+	}
+	return s.SendParam
+}
+
+func (s *SendSnakeCase) GetExtraProperties() map[string]interface{} {
+	return s.extraProperties
+}
+
+func (s *SendSnakeCase) UnmarshalJSON(data []byte) error {
+	type unmarshaler SendSnakeCase
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*s = SendSnakeCase(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+	return nil
+}
+
+func (s *SendSnakeCase) String() string {
+	if value, err := internal.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
+}
