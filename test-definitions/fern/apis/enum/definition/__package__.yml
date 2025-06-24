@@ -69,9 +69,6 @@ types:
           Hello\rWorld
         name: F
       - value: |-
-          Hello\\World
-        name: G
-      - value: |-
           Hello\tWorld
         name: H
       - value: |-

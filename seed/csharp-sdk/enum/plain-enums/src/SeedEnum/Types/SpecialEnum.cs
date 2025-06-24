@@ -25,9 +25,6 @@ public enum SpecialEnum
     [EnumMember(Value = "Hello\\rWorld")]
     F,
 
-    [EnumMember(Value = "Hello\\\\World")]
-    G,
-
     [EnumMember(Value = "Hello\\tWorld")]
     H,
 

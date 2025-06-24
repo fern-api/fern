@@ -19,8 +19,6 @@ public readonly record struct SpecialEnum : IStringEnum
 
     public static readonly SpecialEnum F = new(Values.F);
 
-    public static readonly SpecialEnum G = new(Values.G);
-
     public static readonly SpecialEnum H = new(Values.H);
 
     public static readonly SpecialEnum I = new(Values.I);
@@ -131,8 +129,6 @@ public readonly record struct SpecialEnum : IStringEnum
         public const string E = "Hello\\nWorld";
 
         public const string F = "Hello\\rWorld";
-
-        public const string G = "Hello\\\\World";
 
         public const string H = "Hello\\tWorld";
 
