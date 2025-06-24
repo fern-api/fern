@@ -129,7 +129,8 @@ function collectIconsFromNavigation(
                 if (version.landingPage != null) {
                     collectIconsFromNavigationItem(version.landingPage, filepaths, docsWorkspace);
                 }
-                collectIconsFromNavigation(version.navigation, docsWorkspace);
+                const nestedIcons = collectIconsFromNavigation(version.navigation, docsWorkspace);
+                nestedIcons.forEach((filepath) => filepaths.add(filepath));
             });
             break;
         case "productgroup":
@@ -137,7 +138,8 @@ function collectIconsFromNavigation(
                 if (product.landingPage != null) {
                     collectIconsFromNavigationItem(product.landingPage, filepaths, docsWorkspace);
                 }
-                collectIconsFromNavigation(product.navigation, docsWorkspace);
+                const nestedIcons = collectIconsFromNavigation(product.navigation, docsWorkspace);
+                nestedIcons.forEach((filepath) => filepaths.add(filepath));
             });
             break;
     }
