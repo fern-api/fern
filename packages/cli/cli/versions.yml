@@ -9,6 +9,14 @@
 
 - changelogEntry:
     - summary: |
+        Upload locally hosted icons to CDN
+      type: feat
+  irVersion: 58
+  createdAt: "2025-06-23"
+  version: 0.64.17-rc0
+
+- changelogEntry:
+    - summary: |
         Add `fern export` command to export API to an OpenAPI spec.
       type: feat
   irVersion: 58
