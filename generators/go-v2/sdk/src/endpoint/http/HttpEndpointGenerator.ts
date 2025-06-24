@@ -321,7 +321,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         const errorDeclaration = this.context.getErrorDeclarationOrThrow(error.error.errorId);
                         const errorTypeReference = go.typeReference({
                             name: this.context.getClassName(errorDeclaration.name.name),
-                            importPath: this.context.getLocationForTypeId(errorDeclaration.name.errorId).importPath
+                            importPath: this.context.getLocationForErrorId(errorDeclaration.name.errorId).importPath
                         });
                         return {
                             name: errorDeclaration.statusCode.toString(),
