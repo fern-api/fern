@@ -93,7 +93,7 @@ func (p *Pager[
 	}
 
 	callParams := p.prepareCall(pageRequest)
-	if err := p.caller.Call(ctx, callParams); err != nil {
+	if _, err := p.caller.Call(ctx, callParams); err != nil {
 		return nil, err
 	}
 
