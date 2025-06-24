@@ -1,12 +1,5 @@
 import { docsYml } from "@fern-api/configuration-loader";
-import {
-    AbsoluteFilePath,
-    RelativeFilePath,
-    dirname,
-    doesPathExist,
-    doesPathExistSync,
-    resolve
-} from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath, doesPathExistSync, resolve } from "@fern-api/fs-utils";
 import { DocsWorkspace } from "@fern-api/workspace-loader";
 
 function shouldProcessIconPath(iconPath: string): boolean {
@@ -22,10 +15,13 @@ function isExternalUrl(url: string): boolean {
     return /^(https?:)?\/\//.test(url);
 }
 
-function resolvePath(
-    pathToImage: string | undefined,
-    absolutePathToFernFolder: AbsoluteFilePath
-): AbsoluteFilePath | undefined {
+function resolvePath({
+    pathToImage,
+    absolutePathToFernFolder
+}: {
+    pathToImage: string | undefined;
+    absolutePathToFernFolder: AbsoluteFilePath;
+}): AbsoluteFilePath | undefined {
     if (pathToImage == null || isExternalUrl(pathToImage)) {
         return undefined;
     }
@@ -39,18 +35,32 @@ function resolvePath(
     return undefined;
 }
 
-function addIconToFilepaths(iconPath: string, filepaths: Set<AbsoluteFilePath>, docsWorkspace: DocsWorkspace): void {
+function addIconToFilepaths({
+    iconPath,
+    filepaths,
+    docsWorkspace
+}: {
+    iconPath: string;
+    filepaths: Set<AbsoluteFilePath>;
+    docsWorkspace: DocsWorkspace;
+}): void {
     if (shouldProcessIconPath(iconPath)) {
-        const absoluteIconPath = resolvePath(iconPath, docsWorkspace.absoluteFilePath);
+        const absoluteIconPath = resolvePath({
+            pathToImage: iconPath,
+            absolutePathToFernFolder: docsWorkspace.absoluteFilePath
+        });
 
         absoluteIconPath && filepaths.add(absoluteIconPath);
     }
 }
 
-export function collectFilesFromDocsConfig(
-    parsedDocsConfig: docsYml.ParsedDocsConfiguration,
-    docsWorkspace: DocsWorkspace
-): Set<AbsoluteFilePath> {
+export function collectFilesFromDocsConfig({
+    parsedDocsConfig,
+    docsWorkspace
+}: {
+    parsedDocsConfig: docsYml.ParsedDocsConfiguration;
+    docsWorkspace: DocsWorkspace;
+}): Set<AbsoluteFilePath> {
     const filepaths = new Set<AbsoluteFilePath>();
 
     /* branding images */
@@ -119,7 +129,10 @@ export function collectFilesFromDocsConfig(
     }
 
     /* navigation icons */
-    const navigationIcons = collectIconsFromNavigation(parsedDocsConfig.navigation, docsWorkspace);
+    const navigationIcons = collectIconsFromNavigation({
+        navigation: parsedDocsConfig.navigation,
+        docsWorkspace
+    });
     navigationIcons.forEach((filepath) => {
         filepaths.add(filepath);
     });
@@ -134,26 +147,41 @@ export function collectFilesFromDocsConfig(
     return filepaths;
 }
 
-function collectIconsFromNavigation(
-    navigation: docsYml.DocsNavigationConfiguration,
-    docsWorkspace: DocsWorkspace
-): Set<AbsoluteFilePath> {
+function collectIconsFromNavigation({
+    navigation,
+    docsWorkspace
+}: {
+    navigation: docsYml.DocsNavigationConfiguration;
+    docsWorkspace: DocsWorkspace;
+}): Set<AbsoluteFilePath> {
     const filepaths = new Set<AbsoluteFilePath>();
 
     switch (navigation.type) {
         case "untabbed":
             navigation.items.forEach((item) => {
-                collectIconsFromNavigationItem(item, filepaths, docsWorkspace);
+                collectIconsFromNavigationItem({
+                    item,
+                    filepaths,
+                    docsWorkspace
+                });
             });
             break;
         case "tabbed":
             navigation.items.forEach((tab) => {
                 if (tab.icon != null) {
-                    addIconToFilepaths(tab.icon, filepaths, docsWorkspace);
+                    addIconToFilepaths({
+                        iconPath: tab.icon,
+                        filepaths,
+                        docsWorkspace
+                    });
                 }
                 if (tab.child.type === "layout" && tab.child.layout != null) {
                     tab.child.layout.forEach((item) => {
-                        collectIconsFromNavigationItem(item, filepaths, docsWorkspace);
+                        collectIconsFromNavigationItem({
+                            item,
+                            filepaths,
+                            docsWorkspace
+                        });
                     });
                 }
             });
@@ -161,18 +189,32 @@ function collectIconsFromNavigation(
         case "versioned":
             navigation.versions.forEach((version) => {
                 if (version.landingPage != null) {
-                    collectIconsFromNavigationItem(version.landingPage, filepaths, docsWorkspace);
+                    collectIconsFromNavigationItem({
+                        item: version.landingPage,
+                        filepaths,
+                        docsWorkspace
+                    });
                 }
-                const nestedIcons = collectIconsFromNavigation(version.navigation, docsWorkspace);
+                const nestedIcons = collectIconsFromNavigation({
+                    navigation: version.navigation,
+                    docsWorkspace
+                });
                 nestedIcons.forEach((filepath) => filepaths.add(filepath));
             });
             break;
         case "productgroup":
             navigation.products.forEach((product) => {
                 if (product.landingPage != null) {
-                    collectIconsFromNavigationItem(product.landingPage, filepaths, docsWorkspace);
+                    collectIconsFromNavigationItem({
+                        item: product.landingPage,
+                        filepaths,
+                        docsWorkspace
+                    });
                 }
-                const nestedIcons = collectIconsFromNavigation(product.navigation, docsWorkspace);
+                const nestedIcons = collectIconsFromNavigation({
+                    navigation: product.navigation,
+                    docsWorkspace
+                });
                 nestedIcons.forEach((filepath) => filepaths.add(filepath));
             });
             break;
@@ -181,38 +223,66 @@ function collectIconsFromNavigation(
     return filepaths;
 }
 
-function collectIconsFromNavigationItem(
-    item: docsYml.DocsNavigationItem,
-    filepaths: Set<AbsoluteFilePath>,
-    docsWorkspace: DocsWorkspace
-): void {
+function collectIconsFromNavigationItem({
+    item,
+    filepaths,
+    docsWorkspace
+}: {
+    item: docsYml.DocsNavigationItem;
+    filepaths: Set<AbsoluteFilePath>;
+    docsWorkspace: DocsWorkspace;
+}): void {
     switch (item.type) {
         case "page":
             if (item.icon != null) {
-                addIconToFilepaths(item.icon, filepaths, docsWorkspace);
+                addIconToFilepaths({
+                    iconPath: item.icon,
+                    filepaths,
+                    docsWorkspace
+                });
             }
             break;
         case "section":
             if (item.icon != null) {
-                addIconToFilepaths(item.icon, filepaths, docsWorkspace);
+                addIconToFilepaths({
+                    iconPath: item.icon,
+                    filepaths,
+                    docsWorkspace
+                });
             }
             item.contents.forEach((contentItem) => {
-                collectIconsFromNavigationItem(contentItem, filepaths, docsWorkspace);
+                collectIconsFromNavigationItem({
+                    item: contentItem,
+                    filepaths,
+                    docsWorkspace
+                });
             });
             break;
         case "apiSection":
             if (item.icon != null) {
-                addIconToFilepaths(item.icon, filepaths, docsWorkspace);
+                addIconToFilepaths({
+                    iconPath: item.icon,
+                    filepaths,
+                    docsWorkspace
+                });
             }
             break;
         case "link":
             if (item.icon != null) {
-                addIconToFilepaths(item.icon, filepaths, docsWorkspace);
+                addIconToFilepaths({
+                    iconPath: item.icon,
+                    filepaths,
+                    docsWorkspace
+                });
             }
             break;
         case "changelog":
             if (item.icon != null) {
-                addIconToFilepaths(item.icon, filepaths, docsWorkspace);
+                addIconToFilepaths({
+                    iconPath: item.icon,
+                    filepaths,
+                    docsWorkspace
+                });
             }
             break;
     }
