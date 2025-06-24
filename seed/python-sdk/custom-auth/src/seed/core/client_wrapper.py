@@ -7,8 +7,16 @@ from .http_client import AsyncHttpClient, HttpClient
 
 
 class BaseClientWrapper:
-    def __init__(self, *, custom_auth_scheme: str, base_url: str, timeout: typing.Optional[float] = None):
+    def __init__(
+        self,
+        *,
+        custom_auth_scheme: str,
+        headers: typing.Optional[typing.Dict[str, str]] = None,
+        base_url: str,
+        timeout: typing.Optional[float] = None,
+    ):
         self.custom_auth_scheme = custom_auth_scheme
+        self._headers = headers
         self._base_url = base_url
         self._timeout = timeout
 
@@ -18,9 +26,13 @@ class BaseClientWrapper:
             "X-Fern-Language": "Python",
             "X-Fern-SDK-Name": "fern_custom-auth",
             "X-Fern-SDK-Version": "0.0.1",
+            **(self.get_custom_headers() or {}),
         }
         headers["X-API-KEY"] = self.custom_auth_scheme
         return headers
+
+    def get_custom_headers(self) -> typing.Optional[typing.Dict[str, str]]:
+        return self._headers
 
     def get_base_url(self) -> str:
         return self._base_url
@@ -34,11 +46,12 @@ class SyncClientWrapper(BaseClientWrapper):
         self,
         *,
         custom_auth_scheme: str,
+        headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,
         httpx_client: httpx.Client,
     ):
-        super().__init__(custom_auth_scheme=custom_auth_scheme, base_url=base_url, timeout=timeout)
+        super().__init__(custom_auth_scheme=custom_auth_scheme, headers=headers, base_url=base_url, timeout=timeout)
         self.httpx_client = HttpClient(
             httpx_client=httpx_client,
             base_headers=self.get_headers,
@@ -52,11 +65,12 @@ class AsyncClientWrapper(BaseClientWrapper):
         self,
         *,
         custom_auth_scheme: str,
+        headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,
         httpx_client: httpx.AsyncClient,
     ):
-        super().__init__(custom_auth_scheme=custom_auth_scheme, base_url=base_url, timeout=timeout)
+        super().__init__(custom_auth_scheme=custom_auth_scheme, headers=headers, base_url=base_url, timeout=timeout)
         self.httpx_client = AsyncHttpClient(
             httpx_client=httpx_client,
             base_headers=self.get_headers,

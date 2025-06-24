@@ -10,10 +10,12 @@ from ..core.pydantic_utilities import parse_obj_as
 from .types.receive_event import ReceiveEvent
 from .types.receive_event_2 import ReceiveEvent2
 from .types.receive_event_3 import ReceiveEvent3
+from .types.receive_snake_case import ReceiveSnakeCase
 from .types.send_event import SendEvent
 from .types.send_event_2 import SendEvent2
+from .types.send_snake_case import SendSnakeCase
 
-RealtimeSocketClientResponse = typing.Union[ReceiveEvent, ReceiveEvent2, ReceiveEvent3]
+RealtimeSocketClientResponse = typing.Union[ReceiveEvent, ReceiveSnakeCase, ReceiveEvent2, ReceiveEvent3]
 
 
 class AsyncRealtimeSocketClient(EventEmitterMixin):
@@ -49,6 +51,13 @@ class AsyncRealtimeSocketClient(EventEmitterMixin):
         """
         Send a message to the websocket connection.
         The message will be sent as a SendEvent.
+        """
+        await self._send_model(message)
+
+    async def send_send_snake_case(self, message: SendSnakeCase) -> None:
+        """
+        Send a message to the websocket connection.
+        The message will be sent as a SendSnakeCase.
         """
         await self._send_model(message)
 
@@ -114,6 +123,13 @@ class RealtimeSocketClient(EventEmitterMixin):
         """
         Send a message to the websocket connection.
         The message will be sent as a SendEvent.
+        """
+        self._send_model(message)
+
+    def send_send_snake_case(self, message: SendSnakeCase) -> None:
+        """
+        Send a message to the websocket connection.
+        The message will be sent as a SendSnakeCase.
         """
         self._send_model(message)
 

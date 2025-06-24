@@ -6,12 +6,32 @@ from .bar import Bar
 from .foo import Foo
 from .foo_extended import FooExtended
 from .union import BarUnion, FooUnion, Union
-from .union_with_base_properties import FooUnionWithBaseProperties, IntegerUnionWithBaseProperties, StringUnionWithBaseProperties, UnionWithBaseProperties
+from .union_with_base_properties import (
+    FooUnionWithBaseProperties,
+    IntegerUnionWithBaseProperties,
+    StringUnionWithBaseProperties,
+    UnionWithBaseProperties,
+)
 from .union_with_discriminant import BarUnionWithDiscriminant, FooUnionWithDiscriminant, UnionWithDiscriminant
-from .union_with_duplicate_primitive import Integer1UnionWithDuplicatePrimitive, Integer2UnionWithDuplicatePrimitive, String1UnionWithDuplicatePrimitive, String2UnionWithDuplicatePrimitive, UnionWithDuplicatePrimitive
-from .union_with_duplicate_types import Foo1UnionWithDuplicateTypes, Foo2UnionWithDuplicateTypes, UnionWithDuplicateTypes
+from .union_with_duplicate_primitive import (
+    Integer1UnionWithDuplicatePrimitive,
+    Integer2UnionWithDuplicatePrimitive,
+    String1UnionWithDuplicatePrimitive,
+    String2UnionWithDuplicatePrimitive,
+    UnionWithDuplicatePrimitive,
+)
+from .union_with_duplicate_types import (
+    Foo1UnionWithDuplicateTypes,
+    Foo2UnionWithDuplicateTypes,
+    UnionWithDuplicateTypes,
+)
 from .union_with_literal import FernUnionWithLiteral, UnionWithLiteral
-from .union_with_multiple_no_properties import Empty1UnionWithMultipleNoProperties, Empty2UnionWithMultipleNoProperties, FooUnionWithMultipleNoProperties, UnionWithMultipleNoProperties
+from .union_with_multiple_no_properties import (
+    Empty1UnionWithMultipleNoProperties,
+    Empty2UnionWithMultipleNoProperties,
+    FooUnionWithMultipleNoProperties,
+    UnionWithMultipleNoProperties,
+)
 from .union_with_no_properties import EmptyUnionWithNoProperties, FooUnionWithNoProperties, UnionWithNoProperties
 from .union_with_optional_time import DateUnionWithOptionalTime, DatetimeUnionWithOptionalTime, UnionWithOptionalTime
 from .union_with_primitive import IntegerUnionWithPrimitive, StringUnionWithPrimitive, UnionWithPrimitive
@@ -19,4 +39,54 @@ from .union_with_single_element import FooUnionWithSingleElement, UnionWithSingl
 from .union_with_sub_types import FooExtendedUnionWithSubTypes, FooUnionWithSubTypes, UnionWithSubTypes
 from .union_with_time import DateUnionWithTime, DatetimeUnionWithTime, UnionWithTime, ValueUnionWithTime
 from .union_without_key import BarUnionWithoutKey, FooUnionWithoutKey, UnionWithoutKey
-__all__ = ["Bar", "BarUnion", "BarUnionWithDiscriminant", "BarUnionWithoutKey", "DateUnionWithOptionalTime", "DateUnionWithTime", "DatetimeUnionWithOptionalTime", "DatetimeUnionWithTime", "Empty1UnionWithMultipleNoProperties", "Empty2UnionWithMultipleNoProperties", "EmptyUnionWithNoProperties", "FernUnionWithLiteral", "Foo", "Foo1UnionWithDuplicateTypes", "Foo2UnionWithDuplicateTypes", "FooExtended", "FooExtendedUnionWithSubTypes", "FooUnion", "FooUnionWithBaseProperties", "FooUnionWithDiscriminant", "FooUnionWithMultipleNoProperties", "FooUnionWithNoProperties", "FooUnionWithSingleElement", "FooUnionWithSubTypes", "FooUnionWithoutKey", "Integer1UnionWithDuplicatePrimitive", "Integer2UnionWithDuplicatePrimitive", "IntegerUnionWithBaseProperties", "IntegerUnionWithPrimitive", "String1UnionWithDuplicatePrimitive", "String2UnionWithDuplicatePrimitive", "StringUnionWithBaseProperties", "StringUnionWithPrimitive", "Union", "UnionWithBaseProperties", "UnionWithDiscriminant", "UnionWithDuplicatePrimitive", "UnionWithDuplicateTypes", "UnionWithLiteral", "UnionWithMultipleNoProperties", "UnionWithNoProperties", "UnionWithOptionalTime", "UnionWithPrimitive", "UnionWithSingleElement", "UnionWithSubTypes", "UnionWithTime", "UnionWithoutKey", "ValueUnionWithTime"]
+
+__all__ = [
+    "Bar",
+    "BarUnion",
+    "BarUnionWithDiscriminant",
+    "BarUnionWithoutKey",
+    "DateUnionWithOptionalTime",
+    "DateUnionWithTime",
+    "DatetimeUnionWithOptionalTime",
+    "DatetimeUnionWithTime",
+    "Empty1UnionWithMultipleNoProperties",
+    "Empty2UnionWithMultipleNoProperties",
+    "EmptyUnionWithNoProperties",
+    "FernUnionWithLiteral",
+    "Foo",
+    "Foo1UnionWithDuplicateTypes",
+    "Foo2UnionWithDuplicateTypes",
+    "FooExtended",
+    "FooExtendedUnionWithSubTypes",
+    "FooUnion",
+    "FooUnionWithBaseProperties",
+    "FooUnionWithDiscriminant",
+    "FooUnionWithMultipleNoProperties",
+    "FooUnionWithNoProperties",
+    "FooUnionWithSingleElement",
+    "FooUnionWithSubTypes",
+    "FooUnionWithoutKey",
+    "Integer1UnionWithDuplicatePrimitive",
+    "Integer2UnionWithDuplicatePrimitive",
+    "IntegerUnionWithBaseProperties",
+    "IntegerUnionWithPrimitive",
+    "String1UnionWithDuplicatePrimitive",
+    "String2UnionWithDuplicatePrimitive",
+    "StringUnionWithBaseProperties",
+    "StringUnionWithPrimitive",
+    "Union",
+    "UnionWithBaseProperties",
+    "UnionWithDiscriminant",
+    "UnionWithDuplicatePrimitive",
+    "UnionWithDuplicateTypes",
+    "UnionWithLiteral",
+    "UnionWithMultipleNoProperties",
+    "UnionWithNoProperties",
+    "UnionWithOptionalTime",
+    "UnionWithPrimitive",
+    "UnionWithSingleElement",
+    "UnionWithSubTypes",
+    "UnionWithTime",
+    "UnionWithoutKey",
+    "ValueUnionWithTime",
+]
