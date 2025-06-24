@@ -331,6 +331,10 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         return this.callInternalFunc("MergeHeaders", arguments_);
     }
 
+    public callNewErrorDecoder(arguments_: go.AstNode[]): go.FuncInvocation {
+        return this.callInternalFunc("NewErrorDecoder", arguments_, false);
+    }
+
     public getRawResponseTypeReference(valueType: go.Type): go.TypeReference {
         return go.typeReference({
             name: "Response",
@@ -460,13 +464,14 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         }
     }
 
-    private callInternalFunc(name: string, arguments_: go.AstNode[]): go.FuncInvocation {
+    private callInternalFunc(name: string, arguments_: go.AstNode[], multiline: boolean = true): go.FuncInvocation {
         return go.invokeFunc({
             func: go.typeReference({
                 name,
                 importPath: this.getInternalImportPath()
             }),
-            arguments_
+            arguments_,
+            multiline
         });
     }
 

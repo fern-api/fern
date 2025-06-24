@@ -12,6 +12,7 @@ export declare namespace Caller {
         url: go.AstNode;
         request?: go.AstNode;
         response?: go.AstNode;
+        errorCodes?: go.AstNode;
     }
 }
 
@@ -153,6 +154,12 @@ export class Caller {
             arguments_.push({
                 name: "Response",
                 value: go.TypeInstantiation.reference(args.response)
+            });
+        }
+        if (args.errorCodes != null) {
+            arguments_.push({
+                name: "ErrorDecoder",
+                value: go.TypeInstantiation.reference(this.context.callNewErrorDecoder([args.errorCodes]))
             });
         }
         return go.codeblock((writer) => {

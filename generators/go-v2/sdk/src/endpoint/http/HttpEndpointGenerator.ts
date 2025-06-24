@@ -146,7 +146,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     optionsReference: go.codeblock("options"),
                     url: go.codeblock("endpointURL"),
                     request: endpointRequest?.getRequestReference(),
-                    response: this.getResponseParameterReference({ endpoint })
+                    response: this.getResponseParameterReference({ endpoint }),
+                    errorCodes: buildErrorDecoder != null ? go.codeblock("errorCodes") : undefined
                 })
             );
             writer.newLine();

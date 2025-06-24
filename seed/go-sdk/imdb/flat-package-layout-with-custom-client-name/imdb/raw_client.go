@@ -106,6 +106,7 @@ func (r RawClient) GetMovie(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        &response,
+			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
 		},
 	)
 	if err != nil {
