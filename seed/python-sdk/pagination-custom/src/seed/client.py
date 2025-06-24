@@ -16,6 +16,9 @@ class SeedPagination:
         The base url to use for requests from the client.
     
     token : typing.Optional[typing.Union[str, typing.Callable[[], str]]]
+    headers : typing.Optional[typing.Dict[str, str]]
+        Additional headers to send with every request.
+    
     timeout : typing.Optional[float]
         The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
     
@@ -34,9 +37,9 @@ class SeedPagination:
         base_url="https://yourhost.com/path/to/api",
     )
     """
-    def __init__(self, *, base_url: str, token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None, timeout: typing.Optional[float] = None, follow_redirects: typing.Optional[bool] = True, httpx_client: typing.Optional[httpx.Client] = None):
+    def __init__(self, *, base_url: str, token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None, headers: typing.Optional[typing.Dict[str, str]] = None, timeout: typing.Optional[float] = None, follow_redirects: typing.Optional[bool] = True, httpx_client: typing.Optional[httpx.Client] = None):
         _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
-        self._client_wrapper = SyncClientWrapper(base_url=base_url, token=token, httpx_client=httpx_client if httpx_client is not None else httpx.Client(timeout=_defaulted_timeout, follow_redirects=follow_redirects) if follow_redirects is not None else httpx.Client(timeout=_defaulted_timeout)
+        self._client_wrapper = SyncClientWrapper(base_url=base_url, token=token, headers=headers, httpx_client=httpx_client if httpx_client is not None else httpx.Client(timeout=_defaulted_timeout, follow_redirects=follow_redirects) if follow_redirects is not None else httpx.Client(timeout=_defaulted_timeout)
         , timeout=_defaulted_timeout)
         self.users = UsersClient(client_wrapper=self._client_wrapper)
 class AsyncSeedPagination:
@@ -49,6 +52,9 @@ class AsyncSeedPagination:
         The base url to use for requests from the client.
     
     token : typing.Optional[typing.Union[str, typing.Callable[[], str]]]
+    headers : typing.Optional[typing.Dict[str, str]]
+        Additional headers to send with every request.
+    
     timeout : typing.Optional[float]
         The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
     
@@ -67,8 +73,8 @@ class AsyncSeedPagination:
         base_url="https://yourhost.com/path/to/api",
     )
     """
-    def __init__(self, *, base_url: str, token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None, timeout: typing.Optional[float] = None, follow_redirects: typing.Optional[bool] = True, httpx_client: typing.Optional[httpx.AsyncClient] = None):
+    def __init__(self, *, base_url: str, token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None, headers: typing.Optional[typing.Dict[str, str]] = None, timeout: typing.Optional[float] = None, follow_redirects: typing.Optional[bool] = True, httpx_client: typing.Optional[httpx.AsyncClient] = None):
         _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
-        self._client_wrapper = AsyncClientWrapper(base_url=base_url, token=token, httpx_client=httpx_client if httpx_client is not None else httpx.AsyncClient(timeout=_defaulted_timeout, follow_redirects=follow_redirects) if follow_redirects is not None else httpx.AsyncClient(timeout=_defaulted_timeout)
+        self._client_wrapper = AsyncClientWrapper(base_url=base_url, token=token, headers=headers, httpx_client=httpx_client if httpx_client is not None else httpx.AsyncClient(timeout=_defaulted_timeout, follow_redirects=follow_redirects) if follow_redirects is not None else httpx.AsyncClient(timeout=_defaulted_timeout)
         , timeout=_defaulted_timeout)
         self.users = AsyncUsersClient(client_wrapper=self._client_wrapper)
