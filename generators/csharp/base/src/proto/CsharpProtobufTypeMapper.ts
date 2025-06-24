@@ -975,7 +975,7 @@ function getValueForLiteral({ literal }: { literal: Literal }): csharp.CodeBlock
     return csharp.codeblock((writer) => {
         switch (literal.type) {
             case "string":
-                return writer.write(`"${literal.string}"`);
+                return writer.writeNode(csharp.string_({ string: literal.string }));
             case "boolean":
                 return writer.write(literal.boolean.toString());
         }
