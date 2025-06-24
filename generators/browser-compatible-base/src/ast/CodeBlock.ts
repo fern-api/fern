@@ -3,7 +3,7 @@ import { AbstractWriter } from "./AbstractWriter";
 
 export declare namespace CodeBlock {
     /* Write arbitrary code */
-    type Arg<T extends AbstractWriter> = string | ((writer: T) => void);
+    type Arg<T extends AbstractWriter> = string | AbstractAstNode | ((writer: T) => void);
 }
 
 export class CodeBlock<T extends AbstractWriter> extends AbstractAstNode {
@@ -17,8 +17,11 @@ export class CodeBlock<T extends AbstractWriter> extends AbstractAstNode {
     public write(writer: T): void {
         if (typeof this.value === "string") {
             writer.write(this.value);
-        } else {
+            // if function
+        } else if (typeof this.value === "function") {
             this.value(writer);
+        } else {
+            this.value.write(writer);
         }
     }
 }

@@ -3,5 +3,4 @@
 # isort: skip_file
 
 from .status import Status
-
 __all__ = ["Status"]

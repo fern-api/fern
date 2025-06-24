@@ -71,6 +71,110 @@
         ]
       }
     },
+    "type_:SpecialEnum": {
+      "name": "SpecialEnum",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": ""
+          },
+          {
+            "value": "Hello \\\"World\\\""
+          },
+          {
+            "value": "Hello 'World'"
+          },
+          {
+            "value": "Hello\\\\World"
+          },
+          {
+            "value": "Hello\\nWorld"
+          },
+          {
+            "value": "Hello\\rWorld"
+          },
+          {
+            "value": "Hello\\tWorld"
+          },
+          {
+            "value": "Hello\\fWorld"
+          },
+          {
+            "value": "Hello\\u0008World"
+          },
+          {
+            "value": "Hello\\vWorld"
+          },
+          {
+            "value": "Hello\\0World"
+          },
+          {
+            "value": "Hello\\u0007World"
+          },
+          {
+            "value": "Hello\\u0001World"
+          },
+          {
+            "value": "Hello\\u0002World"
+          },
+          {
+            "value": "Hello\\u001FWorld"
+          },
+          {
+            "value": "Hello\\u007FWorld"
+          },
+          {
+            "value": "Hello\\u009FWorld"
+          },
+          {
+            "value": "Line 1\\n\"Quote\"\\tTab\\\\Backslash\\r\\nLine 2\\0Null"
+          },
+          {
+            "value": "\\n\\r\\t\\0\\u0008\\f\\v\\u0007"
+          },
+          {
+            "value": "Hello 世界"
+          },
+          {
+            "value": "café"
+          },
+          {
+            "value": "🚀"
+          },
+          {
+            "value": "\\\\n"
+          },
+          {
+            "value": "\\\\"
+          },
+          {
+            "value": "{\"name\": \"John\", \"age\": 30, \"city\": \"New York\"}"
+          },
+          {
+            "value": "SELECT * FROM users WHERE name = 'John O\\\\'Reilly'"
+          },
+          {
+            "value": "C:\\\\Users\\\\John\\\\Documents\\\\file.txt"
+          },
+          {
+            "value": "/usr/local/bin/app"
+          },
+          {
+            "value": "\\\\d{3}-\\\\d{2}-\\\\d{4}"
+          },
+          {
+            "value": "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\\\.[a-zA-Z]{2,}"
+          },
+          {
+            "value": "transcript[transcriptType=\"final\"]"
+          },
+          {
+            "value": "transcript[transcriptType='final']"
+          }
+        ]
+      }
+    },
     "type_unknown:Status": {
       "name": "Status",
       "shape": {
@@ -433,7 +537,8 @@
       "type_:Operand",
       "type_:Color",
       "type_:ColorOrOperand",
-      "type_:EnumWithCustom"
+      "type_:EnumWithCustom",
+      "type_:SpecialEnum"
     ],
     "subpackages": [
       "subpackage_inlined-request",
