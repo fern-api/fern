@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Remove 'fern-check' error for global header examples included with 'x-fern-examples'
+      type: fix
+  irVersion: 58
+  createdAt: "2025-06-24"
+  version: 0.64.20
+
+- changelogEntry:
+    - summary: |
         Pin Windows to legacy preview mode.
       type: fix
   irVersion: 58
