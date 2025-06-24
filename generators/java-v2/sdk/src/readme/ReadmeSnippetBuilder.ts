@@ -282,8 +282,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                 writer.newLine();
                 writer.indent();
                 // visit(UnionSubType1 value)
-                writer.write("@Override");
-                writer.newLine();
+                writer.writeLine("@Override");
                 writer.write("public String visit(");
                 writer.writeNode(unionSubType1ClassReference);
                 writer.write(" value) {");
@@ -297,8 +296,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                 writer.write("}");
                 writer.newLine();
                 // visit(UnionSubType2 value)
-                writer.write("@Override");
-                writer.newLine();
+                writer.writeLine("@Override");
                 writer.write("public String visit(");
                 writer.writeNode(unionSubType2ClassReference);
                 writer.write(" value) {");
@@ -307,6 +305,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                 writer.write("// do something with instance of UnionSubType2");
                 writer.newLine();
                 writer.write('return "Did something with UnionSubType2";');
+                // writer.writeNode(this.visitSubTypeMethod(unionSubType2ClassReference))
                 writer.newLine();
                 writer.dedent();
                 writer.write("}");
@@ -331,6 +330,24 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         });
 
         return this.renderSnippet(snippet);
+    }
+
+    private visitSubTypeMethod(subType: java.ClassReference): java.Method {
+        return java.method({
+            name: "visit",
+            access: java.Access.Public,
+            parameters: [
+                java.parameter({
+                    name: "value",
+                    type: java.Type.reference(subType)
+                })
+            ],
+            return_: java.Type.string(),
+            body: java.codeblock((writer) => {
+                writer.writeLine("// do something with instance of " + subType.name);
+                writer.write('return "Did something with ' + subType.name + '";');
+            })
+        });
     }
 
     private unionTypeFromSubTypeMethod(unionType: java.ClassReference, subType: java.ClassReference): java.Method {
@@ -665,7 +682,9 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
      * Ensures the first character of a string is lowercase
      */
     private firstLower(name: string): string {
-        if (!name) {return name;}
+        if (!name) {
+            return name;
+        }
         return name.charAt(0).toLowerCase() + name.slice(1);
     }
 }
