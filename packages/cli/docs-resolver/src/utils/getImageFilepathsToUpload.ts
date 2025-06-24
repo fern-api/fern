@@ -1,15 +1,49 @@
 import { docsYml } from "@fern-api/configuration-loader";
-import { AbsoluteFilePath, resolve } from "@fern-api/fs-utils";
+import {
+    AbsoluteFilePath,
+    RelativeFilePath,
+    dirname,
+    doesPathExist,
+    doesPathExistSync,
+    resolve
+} from "@fern-api/fs-utils";
 import { DocsWorkspace } from "@fern-api/workspace-loader";
 
 function shouldProcessIconPath(iconPath: string): boolean {
-    return iconPath.startsWith(".") || iconPath.startsWith("/");
+    return (
+        iconPath.startsWith(".") || // check for mac + linux relative paths
+        iconPath.includes("/") ||
+        iconPath.includes("\\") || // check for windows relative paths
+        iconPath.includes(":")
+    );
+}
+
+function isExternalUrl(url: string): boolean {
+    return /^(https?:)?\/\//.test(url);
+}
+
+function resolvePath(
+    pathToImage: string | undefined,
+    absolutePathToFernFolder: AbsoluteFilePath
+): AbsoluteFilePath | undefined {
+    if (pathToImage == null || isExternalUrl(pathToImage)) {
+        return undefined;
+    }
+
+    const filepath = resolve(absolutePathToFernFolder, RelativeFilePath.of(pathToImage));
+
+    if (doesPathExistSync(filepath)) {
+        return filepath;
+    }
+
+    return undefined;
 }
 
 function addIconToFilepaths(iconPath: string, filepaths: Set<AbsoluteFilePath>, docsWorkspace: DocsWorkspace): void {
     if (shouldProcessIconPath(iconPath)) {
-        const absoluteIconPath = resolve(docsWorkspace.absoluteFilePath, iconPath);
-        filepaths.add(absoluteIconPath);
+        const absoluteIconPath = resolvePath(iconPath, docsWorkspace.absoluteFilePath);
+
+        absoluteIconPath && filepaths.add(absoluteIconPath);
     }
 }
 
