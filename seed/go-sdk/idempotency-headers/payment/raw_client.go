@@ -48,6 +48,7 @@ func (r RawClient) Create(
 	)
 	var response uuid.UUID
 	raw, err := r.caller.Call(
+		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
@@ -61,7 +62,7 @@ func (r RawClient) Create(
 		},
 	)
 	if err != nil {
-		return uuid.UUID{}, err
+		return nil, err
 	}
 	return &core.Response[uuid.UUID]{
 		StatusCode: raw.StatusCode,
@@ -90,6 +91,7 @@ func (r RawClient) Delete(
 		options.ToHeader(),
 	)
 	raw, err := r.caller.Call(
+		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodDelete,
@@ -101,7 +103,7 @@ func (r RawClient) Delete(
 		},
 	)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	return &core.Response[any]{
 		StatusCode: raw.StatusCode,

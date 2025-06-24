@@ -89,10 +89,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     }
 
     private getRawReturnSignature({ signature }: { signature: EndpointSignatureInfo }): go.Type[] {
-        return [
-            go.Type.pointer(go.Type.reference(signature.rawReturnTypeReference)),
-            go.Type.error()
-        ];
+        return [go.Type.pointer(go.Type.reference(signature.rawReturnTypeReference)), go.Type.error()];
     }
 
     private getRawClientTypeReference({ subpackage }: { subpackage: Subpackage | undefined }): go.TypeReference {
@@ -155,7 +152,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             writer.newLine();
             writer.writeLine("if err != nil {");
             writer.indent();
-            writer.writeNode(this.writeReturnZeroValueWithError({ zeroValue: signature.returnZeroValue }));
+            writer.writeNode(this.writeRawReturnZeroValueWithError());
             writer.newLine();
             writer.dedent();
             writer.writeLine("}");
@@ -165,7 +162,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     }
 
     private buildRequestOptions({ endpoint }: { endpoint: HttpEndpoint }): go.CodeBlock {
-        const requestOptions = endpoint.idempotent 
+        const requestOptions = endpoint.idempotent
             ? this.context.callNewIdempotentRequestOptions(go.codeblock("opts..."))
             : this.context.callNewRequestOptions(go.codeblock("opts..."));
 
@@ -202,7 +199,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         signature: EndpointSignatureInfo;
     }): go.CodeBlock {
         const pathSuffix = this.getPathSuffix({ endpoint });
-        const baseUrl = pathSuffix.length === 0 ? "baseURL" : `baseURL + "/${pathSuffix}"`
+        const baseUrl = pathSuffix.length === 0 ? "baseURL" : `baseURL + "/${pathSuffix}"`;
         return go.codeblock((writer) => {
             writer.write("endpointURL := ");
             if (endpoint.allPathParameters.length === 0) {
@@ -238,7 +235,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             writer.writeNode(this.context.callQueryValues([go.codeblock(endpointRequest.getRequestParameterName())]));
             writer.write("if err != nil {");
             writer.indent();
-            writer.writeNode(this.writeReturnZeroValueWithError({ zeroValue: signature.returnZeroValue }));
+            writer.writeNode(this.writeRawReturnZeroValueWithError());
             writer.dedent();
             writer.write("}");
             for (const queryParameter of endpoint.queryParameters) {
@@ -417,7 +414,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         signature: EndpointSignatureInfo;
     }): go.CodeBlock {
         const responseBody = endpoint.response?.body;
-        const responseBodyReference = responseBody == null ? go.TypeInstantiation.nil() : this.getResponseBodyReference({ responseBody });
+        const responseBodyReference =
+            responseBody == null ? go.TypeInstantiation.nil() : this.getResponseBodyReference({ responseBody });
         return go.codeblock((writer) => {
             writer.write("return ");
             if (signature.rawReturnTypeReference != null) {
@@ -601,6 +599,10 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
 
     private setHeaderValue({ wireValue, value }: { wireValue: string; value: string }): go.CodeBlock {
         return go.codeblock(`headers.Add("${wireValue}", "${value}")`);
+    }
+
+    private writeRawReturnZeroValueWithError(): go.CodeBlock {
+        return go.codeblock("return nil, err");
     }
 
     private writeReturnZeroValueWithError({ zeroValue }: { zeroValue?: go.TypeInstantiation }): go.CodeBlock {

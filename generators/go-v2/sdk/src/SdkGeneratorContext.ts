@@ -227,6 +227,10 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         });
     }
 
+    public getContextParameterReference(): go.AstNode {
+        return go.codeblock("ctx");
+    }
+
     public getErrorCodesTypeReference(): go.TypeReference {
         return go.typeReference({
             name: "ErrorCodes",

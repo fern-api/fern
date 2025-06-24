@@ -161,6 +161,7 @@ export class Caller {
                     on: args.clientReference,
                     method: Caller.CALL_METHOD_NAME,
                     arguments_: [
+                        this.context.getContextParameterReference(),
                         go.TypeInstantiation.structPointer({
                             typeReference: this.getCallParamsTypeReference(),
                             fields: arguments_
