@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Pin Windows to legacy preview mode.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-06-24"
+  version: 0.64.19
+
+- changelogEntry:
+    - summary: |
       type: fix
   irVersion: 58
   createdAt: "2025-06-24"

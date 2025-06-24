@@ -1246,7 +1246,7 @@ function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
                 bundlePath,
                 brokenLinks: argv.brokenLinks,
                 appPreview: argv.beta,
-                legacyPreview: argv.legacy,
+                legacyPreview: argv.legacy || process.platform === "win32",
                 backendPort
             });
         }
