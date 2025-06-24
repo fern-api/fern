@@ -12,12 +12,14 @@ class BaseClientWrapper:
         *,
         x_another_header: str,
         api_key: str,
+        headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,
         x_api_version: typing.Optional[str] = None,
     ):
         self._x_another_header = x_another_header
         self.api_key = api_key
+        self._headers = headers
         self._base_url = base_url
         self._timeout = timeout
         self._x_api_version = x_api_version
@@ -28,11 +30,15 @@ class BaseClientWrapper:
             "X-Fern-Language": "Python",
             "X-Fern-SDK-Name": "fern_auth-environment-variables",
             "X-Fern-SDK-Version": "0.0.1",
+            **(self.get_custom_headers() or {}),
         }
         headers["X-Another-Header"] = self._x_another_header
         headers["X-FERN-API-KEY"] = self.api_key
         headers["X-API-Version"] = self._x_api_version if self._x_api_version is not None else "01-01-2000"
         return headers
+
+    def get_custom_headers(self) -> typing.Optional[typing.Dict[str, str]]:
+        return self._headers
 
     def get_base_url(self) -> str:
         return self._base_url
@@ -47,6 +53,7 @@ class SyncClientWrapper(BaseClientWrapper):
         *,
         x_another_header: str,
         api_key: str,
+        headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,
         x_api_version: typing.Optional[str] = None,
@@ -55,6 +62,7 @@ class SyncClientWrapper(BaseClientWrapper):
         super().__init__(
             x_another_header=x_another_header,
             api_key=api_key,
+            headers=headers,
             base_url=base_url,
             timeout=timeout,
             x_api_version=x_api_version,
@@ -73,6 +81,7 @@ class AsyncClientWrapper(BaseClientWrapper):
         *,
         x_another_header: str,
         api_key: str,
+        headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,
         x_api_version: typing.Optional[str] = None,
@@ -81,6 +90,7 @@ class AsyncClientWrapper(BaseClientWrapper):
         super().__init__(
             x_another_header=x_another_header,
             api_key=api_key,
+            headers=headers,
             base_url=base_url,
             timeout=timeout,
             x_api_version=x_api_version,
