@@ -610,7 +610,11 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     }
 
     private addHeaderValue({ wireValue, value }: { wireValue: string; value: go.AstNode }): go.CodeBlock {
-        return go.codeblock(`headers.Add("${wireValue}", fmt.Sprintf("%v", ${value}))`);
+        return go.codeblock((writer) => {
+            writer.write(`headers.Add("${wireValue}", fmt.Sprintf("%v", `);
+            writer.writeNode(value);
+            writer.write("))");
+        });
     }
 
     private setHeaderValue({ wireValue, value }: { wireValue: string; value: string }): go.CodeBlock {
