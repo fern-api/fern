@@ -698,7 +698,9 @@ export abstract class AbstractCsharpGeneratorContext<
         const literalValue = this.getLiteralValue(typeReference);
         if (literalValue != null) {
             return csharp.codeblock(
-                typeof literalValue === "boolean" ? `${literalValue.toString().toLowerCase()}` : `"${literalValue}"`
+                typeof literalValue === "boolean"
+                    ? `${literalValue.toString().toLowerCase()}`
+                    : csharp.string_({ string: literalValue })
             );
         }
         return undefined;

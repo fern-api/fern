@@ -102,7 +102,7 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomCo
                     access: csharp.Access.Public,
                     summary: member.docs,
                     const_: true,
-                    initializer: csharp.codeblock(`"${member.name.wireValue}"`)
+                    initializer: csharp.codeblock(csharp.string_({ string: member.name.wireValue }))
                 })
             );
             stringEnum.addField(
