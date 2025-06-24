@@ -132,6 +132,42 @@ client.echo(
 );
 ```
 
+### Union Types
+
+Union types represent values that can be one of several possible types. Use the `visit()` method with a visitor
+pattern to handle different union variants type-safely, or use static factory methods like `Type.of(value)` to
+create union instances.
+
+```java
+import UnionPackage.UnionSubType1;
+import UnionPackage.UnionSubType2;
+import UnionPackage.UnionType;
+
+// Instantiate instance of UnionSubType1
+public UnionType unionTypeFromUnionSubType1(UnionSubType1 unionSubType1) {
+    return UnionType.of(unionSubType1);
+}
+// Instantiate instance of UnionSubType2
+public UnionType unionTypeFromUnionSubType2(UnionSubType2 unionSubType2) {
+    return UnionType.of(unionSubType2);
+}
+// Operate on instance of UnionType
+public String doSomethingWithUnionType(UnionType unionType) {
+    String result = unionType.visit(new UnionType.Visitor<String>() {
+        @Override
+        public String visit(UnionSubType1 value) {
+            // do something with instance of UnionSubType1
+            return "Did something with UnionSubType1";
+        }
+        @Override
+        public String visit(UnionSubType2 value) {
+            // do something with instance of UnionSubType2
+            return "Did something with UnionSubType2";
+        }
+    });
+    return result;
+}```
+
 ## Contributing
 
 While we value open-source contributions to this SDK, this library is generated programmatically.

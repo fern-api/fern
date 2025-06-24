@@ -17,6 +17,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static CLIENT_VARIABLE_NAME = "client";
     private static ENVIRONMENTS_FEATURE_ID: FernGeneratorCli.FeatureId = "ENVIRONMENTS";
     private static EXCEPTION_HANDLING_FEATURE_ID: FernGeneratorCli.FeatureId = "EXCEPTION_HANDLING";
+    private static UNION_TYPES_FEATURE_ID: FernGeneratorCli.FeatureId = "UNION_TYPES";
     private static BASE_URL_FEATURE_ID: FernGeneratorCli.FeatureId = "BASE_URL";
     private static SNIPPET_PACKAGE_NAME = "com.example.usage";
     private static ELLIPSES = java.codeblock("...");
@@ -27,6 +28,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private readonly defaultEndpointId: EndpointId;
     private readonly rootPackageClientName: string;
     private readonly isPaginationEnabled: boolean;
+    private readonly areUnionTypesEnabled: boolean;
 
     constructor({
         context,
@@ -39,6 +41,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         this.context = context;
 
         this.isPaginationEnabled = context.config.generatePaginatedClients ?? false;
+        this.areUnionTypesEnabled = true; // TODO: expose this as a param and detect its presence in the spec
         this.endpointsById = this.buildEndpointsById();
         this.prerenderedSnippetsByEndpointId = this.buildPrerenderedSnippetsByEndpointId(endpointSnippets);
         this.defaultEndpointId = this.getDefaultEndpointIdWithMaybeEmptySnippets(endpointSnippets);
@@ -80,6 +83,14 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             },
             [FernGeneratorCli.StructuredFeatureId.Retries]: { renderer: this.renderRetriesSnippet.bind(this) },
             [FernGeneratorCli.StructuredFeatureId.Timeouts]: { renderer: this.renderTimeoutsSnippet.bind(this) },
+            [ReadmeSnippetBuilder.UNION_TYPES_FEATURE_ID]: { renderer: this.renderUnionTypesSnippet.bind(this) },
+            // ...(this.areUnionTypesEnabled
+            //     ? {
+            //         [FernGeneratorCli.StructuredFeatureId.UnionTypes]: {
+            //             renderer: this.renderUnionTypesSnippet.bind(this),
+            //         }
+            //     }
+            //     : undefined),
             ...(this.isPaginationEnabled
                 ? {
                       [FernGeneratorCli.StructuredFeatureId.Pagination]: {
@@ -231,6 +242,119 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         });
 
         return this.renderSnippet(snippet);
+    }
+
+    private renderUnionTypesSnippet(_endpoint: EndpointWithFilepath): string {
+        const unionTypeClassReference = this.context.getUnionTypeClassReference();
+        const unionSubType1ClassReference = this.context.getUnionSubType1ClassReference();
+        const unionSubType2ClassReference = this.context.getUnionSubType2ClassReference();
+
+        const unionTypeNameLower = this.firstLower(unionTypeClassReference.name);
+        const unionSubType1NameLower = this.firstLower(unionSubType1ClassReference.name);
+        const unionSubType2NameLower = this.firstLower(unionSubType2ClassReference.name);
+
+        // Method: UnionType unionTypeFromUnionSubType1(UnionSubType1 unionSubType1) { return UnionType.of(unionSubType1); }
+        const methodFromSubType1 = this.unionTypeFromSubTypeMethod(
+            unionTypeClassReference,
+            unionSubType1ClassReference
+        );
+        const methodFromSubType2 = this.unionTypeFromSubTypeMethod(
+            unionTypeClassReference,
+            unionSubType2ClassReference
+        );
+
+        // Method: String doSomethingWithUnionType(UnionType unionType) { ... visitor ... }
+        const methodDoSomething = java.method({
+            name: "doSomethingWithUnionType",
+            access: java.Access.Public,
+            parameters: [
+                java.parameter({
+                    name: "unionType",
+                    type: java.Type.reference(unionTypeClassReference)
+                })
+            ],
+            return_: java.Type.string(),
+            body: java.codeblock((writer) => {
+                writer.write("String result = ");
+                writer.write("unionType.visit(new ");
+                writer.writeNode(unionTypeClassReference);
+                writer.write(".Visitor<String>() {");
+                writer.newLine();
+                writer.indent();
+                // visit(UnionSubType1 value)
+                writer.write("@Override");
+                writer.newLine();
+                writer.write("public String visit(");
+                writer.writeNode(unionSubType1ClassReference);
+                writer.write(" value) {");
+                writer.newLine();
+                writer.indent();
+                writer.write("// do something with instance of UnionSubType1");
+                writer.newLine();
+                writer.write('return "Did something with UnionSubType1";');
+                writer.newLine();
+                writer.dedent();
+                writer.write("}");
+                writer.newLine();
+                // visit(UnionSubType2 value)
+                writer.write("@Override");
+                writer.newLine();
+                writer.write("public String visit(");
+                writer.writeNode(unionSubType2ClassReference);
+                writer.write(" value) {");
+                writer.newLine();
+                writer.indent();
+                writer.write("// do something with instance of UnionSubType2");
+                writer.newLine();
+                writer.write('return "Did something with UnionSubType2";');
+                writer.newLine();
+                writer.dedent();
+                writer.write("}");
+                writer.newLine();
+                writer.dedent();
+                writer.write("});");
+                writer.newLine();
+                writer.write("return result;");
+            })
+        });
+
+        // Compose all methods in a codeblock
+        const snippet = java.codeblock((writer) => {
+            writer.writeLine("// Instantiate instance of UnionSubType1");
+            writer.writeNode(methodFromSubType1);
+            writer.newLine();
+            writer.writeLine("// Instantiate instance of UnionSubType2");
+            writer.writeNode(methodFromSubType2);
+            writer.newLine();
+            writer.writeLine("// Operate on instance of UnionType");
+            writer.writeNode(methodDoSomething);
+        });
+
+        return this.renderSnippet(snippet);
+    }
+
+    private unionTypeFromSubTypeMethod(unionType: java.ClassReference, subType: java.ClassReference): java.Method {
+        const unionTypeNameLower = this.firstLower(unionType.name);
+        const subTypeNameLower = this.firstLower(subType.name);
+
+        return java.method({
+            name: unionTypeNameLower + "From" + subType.name,
+            access: java.Access.Public,
+            parameters: [
+                java.parameter({
+                    name: subTypeNameLower,
+                    type: java.Type.reference(subType)
+                })
+            ],
+            return_: java.Type.reference(unionType),
+            body: java.codeblock((writer) => {
+                writer.write("return ");
+                writer.writeNode(unionType);
+                writer.write(".of(");
+                writer.write(subTypeNameLower);
+                writer.write(");");
+            })
+        });
     }
 
     private renderCustomClientSnippet(_endpoint: EndpointWithFilepath): string {
@@ -535,5 +659,13 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         } else {
             return asString.split("\n").slice(2).join("\n");
         }
+    }
+
+    /**
+     * Ensures the first character of a string is lowercase
+     */
+    private firstLower(name: string): string {
+        if (!name) {return name;}
+        return name.charAt(0).toLowerCase() + name.slice(1);
     }
 }

@@ -46,3 +46,9 @@ features:
     description: |
       The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
+  - id: UNION_TYPES
+    advanced: true
+    description: |
+      Union types represent values that can be one of several possible types. Use the `visit()` method with a visitor
+      pattern to handle different union variants type-safely, or use static factory methods like `Type.of(value)` to
+      create union instances.
