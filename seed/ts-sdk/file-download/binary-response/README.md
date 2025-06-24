@@ -55,7 +55,9 @@ const response = await client.service.downloadFile(...);
 const stream: ReadableStream<Uint8Array> = response.stream();
 // const arrayBuffer: ArrayBuffer = await response.arrayBuffer();
 // const blob: Blob = response.blob();
-// const stream: Uint8Array = response.bytes();
+// const bytes: Uint8Array = response.bytes();
+// You can only use the response body once, so you must choose one of the above methods.
+// If you want to check if the response body has been used, you can use the following property.
 const bodyUsed = response.bodyUsed;
 ```
 
