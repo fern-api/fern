@@ -50,7 +50,7 @@ func (c *Client) Create(
 	)
 
 	var response uuid.UUID
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,
@@ -89,7 +89,7 @@ func (c *Client) Delete(
 		options.ToHeader(),
 	)
 
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,
