@@ -1294,9 +1294,9 @@ func (f *fileWriter) WriteClient(
 		if endpoint.Method == "http.MethodHead" {
 			// HEAD requests don't have a response body, so we can simply return the raw
 			// response headers.
-			f.P("response, err := ", receiver, ".caller.CallRaw(")
+			f.P("response, err := ", receiver, ".caller.Call(")
 			f.P("ctx,")
-			f.P("&internal.CallRawParams{")
+			f.P("&internal.CallParams{")
 			f.P("URL: endpointURL, ")
 			f.P("Method:", endpoint.Method, ",")
 			f.P("Headers:", headersParameter, ",")
@@ -1315,7 +1315,6 @@ func (f *fileWriter) WriteClient(
 			f.P("if err != nil {")
 			f.P("return ", endpoint.ErrorReturnValues)
 			f.P("}")
-			f.P("defer response.Body.Close()")
 			f.P("return response.Header, nil")
 			f.P("}")
 			f.P()
@@ -1488,7 +1487,7 @@ func (f *fileWriter) WriteClient(
 			f.P("}")
 			f.P()
 		} else {
-			f.P("if err := ", receiver, ".caller.Call(")
+			f.P("if _, err := ", receiver, ".caller.Call(")
 			f.P("ctx,")
 			f.P("&internal.CallParams{")
 			f.P("URL: endpointURL, ")
