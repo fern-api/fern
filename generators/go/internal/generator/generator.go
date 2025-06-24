@@ -736,8 +736,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 	// The go.sum file will be generated after the
 	// go.mod file is written to disk.
 	if g.config.ModuleConfig != nil {
-		requiresGenerics := g.config.EnableExplicitNull || ir.SdkConfig.HasStreamingEndpoints || generatedPagination
-		file, generatedGoVersion, err := NewModFile(g.coordinator, g.config.ModuleConfig, requiresGenerics)
+		file, generatedGoVersion, err := NewModFile(g.coordinator, g.config.ModuleConfig)
 		if err != nil {
 			return nil, err
 		}
