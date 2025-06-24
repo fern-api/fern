@@ -1,7 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
-        Upload locally hosted icons to CDN
+      type: fix
+  irVersion: 58
+  createdAt: "2025-06-24"
+  version: 0.64.18
+
+- changelogEntry:
+    - summary: |
       type: feat
   irVersion: 58
   createdAt: "2025-06-23"

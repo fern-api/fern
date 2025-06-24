@@ -59,7 +59,7 @@ export function getParameterExamples({
         const { userExample, autoExample } = getFirstExamples(parameter.v2Examples);
 
         if (userExample !== undefined) {
-            result.headers[parameter.name.name.originalName] = userExample;
+            result.headers[parameter.name.wireValue] = userExample;
         } else if (autoExample !== undefined) {
             if (
                 skipOptionalRequestProperties &&
@@ -68,7 +68,7 @@ export function getParameterExamples({
                 continue;
             }
 
-            result.headers[parameter.name.name.originalName] = autoExample;
+            result.headers[parameter.name.wireValue] = autoExample;
         }
     }
 
