@@ -12,9 +12,6 @@ import (
 )
 
 type Client struct {
-	// WithRawResponse can be used to receive raw HTTP response data, such as headers.
-	WithRawResponse *RawClient
-
 	baseURL string
 	caller  *internal.Caller
 	header  http.Header
@@ -23,7 +20,6 @@ type Client struct {
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
-		WithRawResponse: NewRawClient(opts...),
 		baseURL: options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
@@ -41,11 +37,36 @@ func (c *Client) CreateMovie(
 	request *fern.CreateMovieRequest,
 	opts ...option.RequestOption,
 ) (fern.MovieId, error) {
-	response, err := c.WithRawResponse.CreateMovie(ctx, request, opts...)
-	if err != nil {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
+	)
+	endpointURL := baseURL + "/movies/create-movie"
+	headers := internal.MergeHeaders(
+		c.header.Clone(),
+		options.ToHeader(),
+	)
+
+	var response fern.MovieId
+	if _, err := c.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         request,
+			Response:        &response,
+		},
+	); err != nil {
 		return "", err
 	}
-	return response.Body, nil
+	return response, nil
 }
 
 func (c *Client) GetMovie(
@@ -53,9 +74,44 @@ func (c *Client) GetMovie(
 	movieId fern.MovieId,
 	opts ...option.RequestOption,
 ) (*fern.Movie, error) {
-	response, err := c.WithRawResponse.GetMovie(ctx, movieId, opts...)
-	if err != nil {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
+	)
+	endpointURL := internal.EncodeURL(
+		baseURL+"/movies/%v",
+		movieId,
+	)
+	headers := internal.MergeHeaders(
+		c.header.Clone(),
+		options.ToHeader(),
+	)
+	errorCodes := internal.ErrorCodes{
+		404: func(apiError *core.APIError) error {
+			return &fern.MovieDoesNotExistError{
+				APIError: apiError,
+			}
+		},
+	}
+
+	var response *fern.Movie
+	if _, err := c.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodGet,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Response:        &response,
+			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+		},
+	); err != nil {
 		return nil, err
 	}
-	return response.Body, nil
+	return response, nil
 }

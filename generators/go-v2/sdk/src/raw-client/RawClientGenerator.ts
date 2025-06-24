@@ -57,6 +57,7 @@ export class RawClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSch
             struct.addMethod(...methods);
         }
 
+        console.log("Writing to import path", this.getImportPath());
         return new GoFile({
             node: struct,
             rootImportPath: this.context.getRootImportPath(),

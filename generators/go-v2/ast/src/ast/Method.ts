@@ -1,3 +1,4 @@
+import { UnnamedArgument } from "@fern-api/browser-compatible-base-generator";
 import { CodeBlock } from "./CodeBlock";
 import { Comment } from "./Comment";
 import { GoTypeReference } from "./GoTypeReference";
@@ -5,6 +6,7 @@ import { Parameter } from "./Parameter";
 import { Type } from "./Type";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
+import { writeArguments } from "./utils/writeArguments";
 
 export declare namespace Method {
     interface Args {
@@ -20,6 +22,8 @@ export declare namespace Method {
         docs?: string;
         /* The class this method belongs to, if any */
         typeReference?: GoTypeReference;
+        /* Whether to write the invocation on multiple lines */
+        multiline?: boolean;
     }
 }
 
@@ -30,8 +34,9 @@ export class Method extends AstNode {
     public readonly body: CodeBlock | undefined;
     public readonly docs: string | undefined;
     public readonly typeReference: GoTypeReference | undefined;
+    public readonly multiline: boolean | undefined;
 
-    constructor({ name, parameters, return_, body, docs, typeReference }: Method.Args) {
+    constructor({ name, parameters, return_, body, docs, typeReference, multiline }: Method.Args) {
         super();
         this.name = name;
         this.parameters = parameters;
@@ -39,6 +44,7 @@ export class Method extends AstNode {
         this.body = body;
         this.docs = docs;
         this.typeReference = typeReference;
+        this.multiline = multiline;
     }
 
     public write(writer: Writer): void {
@@ -50,32 +56,32 @@ export class Method extends AstNode {
         if (this.name != null) {
             writer.write(` ${this.name}`);
         }
-        if (this.parameters.length === 0) {
-            writer.write("() ");
-        } else {
-            writer.writeLine("(");
-            for (const parameter of this.parameters) {
-                writer.writeNode(parameter);
-                writer.writeLine(",");
-            }
-            writer.write(")");
-        }
+        writeArguments({
+            writer,
+            arguments_: this.parameters,
+            multiline: this.multiline
+        });
         if (this.return_ != null) {
-            writer.write("(");
+            writer.write(" ");
+            if (this.return_.length > 1) {
+                writer.write("(");
+            }
             this.return_.forEach((returnType, index) => {
                 if (index > 0) {
                     writer.write(", ");
                 }
                 writer.writeNode(returnType);
             });
-            writer.write(")");
+            if (this.return_.length > 1) {
+                writer.write(")");
+            }
         }
         writer.writeLine(" {");
         writer.indent();
         this.body?.write(writer);
         writer.dedent();
         writer.writeNewLineIfLastLineNot();
-        writer.writeLine("}");
+        writer.write("}");
     }
 
     private writeReceiver({ writer, typeReference }: { writer: Writer; typeReference: GoTypeReference }): void {

@@ -323,6 +323,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                             name: this.context.getClassName(errorDeclaration.name.name),
                             importPath: this.context.getLocationForErrorId(errorDeclaration.name.errorId).importPath
                         });
+                        console.log("Error declaration exists at import path", errorTypeReference.importPath);
                         return {
                             name: errorDeclaration.statusCode.toString(),
                             value: go.TypeInstantiation.reference(
@@ -330,15 +331,15 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                                     parameters: [
                                         go.parameter({
                                             name: "apiError",
-                                            type: go.Type.reference(this.context.getCoreApiErrorTypeReference())
+                                            type: go.Type.pointer(go.Type.reference(this.context.getCoreApiErrorTypeReference()))
                                         })
                                     ],
-                                    return_: [go.Type.reference(errorTypeReference)],
+                                    return_: [go.Type.error()],
                                     body: go.codeblock((writer) => {
                                         writer.write("return ");
                                         writer.writeNode(
                                             go.TypeInstantiation.structPointer({
-                                                typeReference: this.context.getCoreApiErrorTypeReference(),
+                                                typeReference: errorTypeReference,
                                                 fields: [
                                                     {
                                                         name: "APIError",
@@ -347,7 +348,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                                                 ]
                                             })
                                         );
-                                    })
+                                    }),
+                                    multiline: false
                                 })
                             )
                         };

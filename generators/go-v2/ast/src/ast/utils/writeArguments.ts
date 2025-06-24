@@ -1,9 +1,7 @@
 import {
-    Argument,
     Arguments,
     NamedArgument,
     UnnamedArgument,
-    isNamedArgument
 } from "@fern-api/browser-compatible-base-generator";
 
 import { TypeInstantiation } from "../TypeInstantiation";
@@ -15,11 +13,10 @@ export function writeArguments({
     multiline = true
 }: {
     writer: Writer;
-    arguments_: Arguments;
+    arguments_: UnnamedArgument[];
     multiline?: boolean;
 }): void {
     const filteredArguments = filterNopArguments(arguments_);
-
     if (filteredArguments.length === 0) {
         writer.write("()");
         return;
@@ -31,7 +28,7 @@ export function writeArguments({
     writeCompact({ writer, arguments_: filteredArguments });
 }
 
-function writeMultiline({ writer, arguments_ }: { writer: Writer; arguments_: Arguments }): void {
+function writeMultiline({ writer, arguments_ }: { writer: Writer; arguments_: UnnamedArgument[] }): void {
     writer.writeLine("(");
     writer.indent();
     for (const argument of arguments_) {
@@ -42,7 +39,7 @@ function writeMultiline({ writer, arguments_ }: { writer: Writer; arguments_: Ar
     writer.write(")");
 }
 
-function writeCompact({ writer, arguments_ }: { writer: Writer; arguments_: Arguments }): void {
+function writeCompact({ writer, arguments_ }: { writer: Writer; arguments_: UnnamedArgument[] }): void {
     writer.write("(");
     arguments_.forEach((argument, index) => {
         if (index > 0) {
@@ -53,20 +50,12 @@ function writeCompact({ writer, arguments_ }: { writer: Writer; arguments_: Argu
     writer.write(")");
 }
 
-function writeArgument({ writer, argument }: { writer: Writer; argument: Argument }): void {
-    if (isNamedArgument(argument)) {
-        writer.writeNodeOrString(argument.assignment);
-    } else {
-        argument.write(writer);
-    }
+function writeArgument({ writer, argument }: { writer: Writer; argument: UnnamedArgument }): void {
+    argument.write(writer);
 }
 
-function filterNopArguments(arguments_: Arguments): Arguments {
-    const filtered = arguments_.filter(
+function filterNopArguments(arguments_: UnnamedArgument[]): UnnamedArgument[] {
+    return arguments_.filter(
         (argument) => !(argument instanceof TypeInstantiation && TypeInstantiation.isNop(argument))
     );
-    if (arguments_.length > 0 && arguments_[0] != null && "name" in arguments_[0]) {
-        return filtered as NamedArgument[];
-    }
-    return filtered as UnnamedArgument[];
 }

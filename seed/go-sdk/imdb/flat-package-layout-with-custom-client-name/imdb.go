@@ -51,7 +51,7 @@ func (i *ImdbClient) CreateMovie(
 	)
 
 	var response MovieId
-	if err := i.caller.Call(
+	if _, err := i.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,
@@ -98,7 +98,7 @@ func (i *ImdbClient) GetMovie(
 	}
 
 	var response *Movie
-	if err := i.caller.Call(
+	if _, err := i.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,

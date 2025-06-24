@@ -418,7 +418,7 @@ export abstract class AbstractGoGeneratorContext<
     }
 
     private getLocation(names: Name[], suffix?: string): FileLocation {
-        let parts = names.map((name) => name.pascalCase.safeName.toLowerCase());
+        let parts = names.map((name) => name.camelCase.safeName.toLowerCase());
         parts = suffix != null ? [...parts, suffix] : parts;
         return {
             importPath: [this.getRootImportPath(), ...parts].join("/"),

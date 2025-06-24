@@ -64,10 +64,14 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
     }
 
     public getRawClientClassName(): string {
+        // TODO: If we're in flat package layout, we need to add the `Raw` prefix to the
+        // service name (e.g. RawUserClient).
         return "RawClient";
     }
 
     public getRawClientFilename(): string {
+        // TODO: If we're in flat package layout, we need to add the `raw_` prefix to the
+        // service filename (e.g. raw_user.go).
         return "raw_client.go";
     }
 
