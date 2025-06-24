@@ -246,23 +246,25 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         return go.codeblock((writer) => {
             writer.write("queryParams, err := ");
             writer.writeNode(this.context.callQueryValues([go.codeblock(endpointRequest.getRequestParameterName())]));
-            writer.write("if err != nil {");
+            writer.newLine();
+            writer.writeLine("if err != nil {");
             writer.indent();
             writer.writeNode(this.writeRawReturnZeroValueWithError());
+            writer.newLine();
             writer.dedent();
-            writer.write("}");
+            writer.writeLine("}");
             for (const queryParameter of endpoint.queryParameters) {
                 const literal = this.context.maybeLiteral(queryParameter.valueType);
                 if (literal != null) {
-                    writer.write(
+                    writer.writeLine(
                         `queryParams.Add("${queryParameter.name}", ${this.context.getLiteralAsString(literal)})`
                     );
                     continue;
                 }
             }
-            writer.write("if len(queryParams) > 0 {");
+            writer.writeLine("if len(queryParams) > 0 {");
             writer.indent();
-            writer.write(`endpointURL += "?" + queryParams.Encode()`);
+            writer.writeLine(`endpointURL += "?" + queryParams.Encode()`);
             writer.dedent();
             writer.write("}");
         });

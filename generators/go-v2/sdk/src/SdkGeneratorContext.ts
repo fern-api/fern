@@ -355,16 +355,16 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         return this.callInternalFunc("ResolveBaseURL", arguments_);
     }
 
-    public callQueryValues(arguments_: go.AstNode[]): go.FuncInvocation {
-        return this.callInternalFunc("QueryValues", arguments_);
-    }
-
     public callMergeHeaders(arguments_: go.AstNode[]): go.FuncInvocation {
         return this.callInternalFunc("MergeHeaders", arguments_);
     }
 
     public callNewErrorDecoder(arguments_: go.AstNode[]): go.FuncInvocation {
         return this.callInternalFunc("NewErrorDecoder", arguments_, false);
+    }
+
+    public callQueryValues(arguments_: go.AstNode[]): go.FuncInvocation {
+        return this.callInternalFunc("QueryValues", arguments_, false);
     }
 
     public getRawResponseTypeReference(valueType: go.Type): go.TypeReference {

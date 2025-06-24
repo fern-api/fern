@@ -18,7 +18,7 @@ import (
     uuid "github.com/google/uuid"
 )
 
-func do() () {
+func do() {
     client := client.NewClient()
     client.User.GetUsername(
         context.TODO(),
