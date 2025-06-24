@@ -179,7 +179,7 @@ export class DocsDefinitionResolver {
             });
         }
 
-        const filesToUploadSet = collectFilesFromDocsConfig(this.parsedDocsConfig);
+        const filesToUploadSet = collectFilesFromDocsConfig(this.parsedDocsConfig, this.docsWorkspace);
 
         // preprocess markdown files to extract image paths
         for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
