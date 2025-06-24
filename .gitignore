@@ -73,4 +73,4 @@ seed/python-sdk/**/output.prof
 .cursor
 
 # Preview
-.preview/
+**/.preview/
