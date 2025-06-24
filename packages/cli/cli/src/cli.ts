@@ -1,11 +1,9 @@
 #!/usr/bin/env node
-import { RUNTIME } from "@fern-typescript/fetcher";
 import getPort from "get-port";
 import { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
 
-import { BaseOpenAPIWorkspace } from "@fern-api/api-workspace-commons";
 import {
     GENERATORS_CONFIGURATION_FILENAME,
     PROJECT_CONFIG_FILENAME,
@@ -16,7 +14,6 @@ import {
 import { ContainerRunner } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, doesPathExist, isURL, resolve } from "@fern-api/fs-utils";
 import { initializeAPI, initializeDocs, initializeWithMintlify, initializeWithReadme } from "@fern-api/init";
-import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
 import { askToLogin, login } from "@fern-api/login";
 import { FernCliError, LoggableFernCliError } from "@fern-api/task-context";
@@ -29,6 +26,7 @@ import { addGeneratorCommands, addGetOrganizationCommand } from "./cliV2";
 import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces";
 import { diff } from "./commands/diff/diff";
 import { previewDocsWorkspace } from "./commands/docs-dev/devDocsWorkspace";
+import { generateOpenAPIForWorkspaces } from "./commands/export/generateOpenAPIForWorkspaces";
 import { formatWorkspaces } from "./commands/format/formatWorkspaces";
 import { generateDynamicIrForWorkspaces } from "./commands/generate-dynamic-ir/generateDynamicIrForWorkspaces";
 import { generateFdrApiDefinitionForWorkspaces } from "./commands/generate-fdr/generateFdrApiDefinitionForWorkspaces";
@@ -52,6 +50,7 @@ import { writeDefinitionForWorkspaces } from "./commands/write-definition/writeD
 import { writeDocsDefinitionForProject } from "./commands/write-docs-definition/writeDocsDefinitionForProject";
 import { FERN_CWD_ENV_VAR } from "./cwd";
 import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion";
+import { RUNTIME } from "./runtime";
 
 void runCli();
 
@@ -184,6 +183,7 @@ async function tryRunCli(cliContext: CliContext) {
     });
     addGenerateJsonschemaCommand(cli, cliContext);
     addWriteDocsDefinitionCommand(cli, cliContext);
+    addExportCommand(cli, cliContext);
 
     // CLI V2 Sanctioned Commands
     addGetOrganizationCommand(cli, cliContext);
@@ -505,6 +505,11 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                         "Throw an error (rather than logging a warning) if there are broken links in the docs.",
                     default: false
                 })
+                .option("disable-snippets", {
+                    boolean: true,
+                    description: "Disable snippets in docs generation.",
+                    default: false
+                })
                 .option("runner", {
                     choices: ["docker", "podman"],
                     description: "Choose the container runtime to use for local generation.",
@@ -555,7 +560,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     instance: argv.instance,
                     preview: argv.preview,
                     brokenLinks: argv.brokenLinks,
-                    strictBrokenLinks: argv.strictBrokenLinks
+                    strictBrokenLinks: argv.strictBrokenLinks,
+                    disableTemplates: argv.disableSnippets
                 });
             }
             // default to loading api workspace to preserve legacy behavior
@@ -1240,7 +1246,7 @@ function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
                 bundlePath,
                 brokenLinks: argv.brokenLinks,
                 appPreview: argv.beta,
-                legacyPreview: argv.legacy,
+                legacyPreview: argv.legacy || process.platform === "win32",
                 backendPort
             });
         }
@@ -1332,6 +1338,41 @@ function addWriteDocsDefinitionCommand(cli: Argv<GlobalCliOptions>, cliContext: 
                 }),
                 outputPath: resolve(cwd(), argv.outputPath),
                 cliContext
+            });
+        }
+    );
+}
+
+function addExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "export <output-path>",
+        "Export your API to an OpenAPI spec",
+        (yargs) =>
+            yargs
+                .positional("output-path", {
+                    type: "string",
+                    description: "Path to write the OpenAPI spec",
+                    demandOption: true
+                })
+                .option("api", {
+                    string: true,
+                    description: "Only run the command on the provided API"
+                }),
+        async (argv) => {
+            await cliContext.instrumentPostHogEvent({
+                command: "fern export",
+                properties: {
+                    outputPath: argv.outputPath
+                }
+            });
+
+            await generateOpenAPIForWorkspaces({
+                project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                    commandLineApiWorkspace: argv.api,
+                    defaultToAllApiWorkspaces: false
+                }),
+                cliContext,
+                outputPath: resolve(cwd(), argv.outputPath)
             });
         }
     );

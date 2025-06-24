@@ -1,6 +1,101 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Pin Windows to legacy preview mode.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-06-24"
+  version: 0.64.19
+
+- changelogEntry:
+    - summary: |
+      type: fix
+  irVersion: 58
+  createdAt: "2025-06-24"
+  version: 0.64.18
+
+- changelogEntry:
+    - summary: |
+      type: feat
+  irVersion: 58
+  createdAt: "2025-06-23"
+  version: 0.64.17-rc0
+
+- changelogEntry:
+    - summary: |
+        Add `fern export` command to export API to an OpenAPI spec.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-06-23"
+  version: 0.64.16
+
+- changelogEntry:
+    - summary: |
+        Fixed ExampleTypeFactory to ignore generating parameters in example when that parameter is both optional and deprecated
+      type: fix
+  irVersion: 58
+  createdAt: "2025-06-21"
+  version: 0.64.15
+
+- changelogEntry:
+    - summary: |
+        Separate nullable and optional property handling in IR conversion.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-06-19"
+  version: 0.64.14
+
+- changelogEntry:
+    - summary: |
+        Respect additional properties in docs example generation by preserving them in generated examples instead of 
+        stripping unknown properties.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-06-19"
+  version: 0.64.13
+
+- changelogEntry:
+    - summary: |
+        Add configuration option to preserve oneOfs with a single schema.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-06-18"
+  version: 0.64.12
+
+- changelogEntry:
+    - summary: |
+        Fix handling of legacy webhook examples snippets.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-06-17"
+  version: 0.64.11
+
+- changelogEntry:
+    - summary: |
+        Add configuration option to disable snippets in docs generation, speeding up generation time.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-06-16"
+  version: 0.64.10
+
+- changelogEntry:
+    - summary: |
+        Update CLI for sites pinned to the legacy deployment.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-06-16"
+  version: 0.64.9
+
+- changelogEntry:
+    - summary: |
+        Support hot-reloading for changes to OpenRPC specs in local development mode.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-06-14"
+  version: 0.64.8
+
+- changelogEntry:
+    - summary: |
         Further support for docs with multiple custom subpaths
       type: fix
   irVersion: 58

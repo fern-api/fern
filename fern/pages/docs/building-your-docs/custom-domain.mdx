@@ -1,6 +1,7 @@
 ---
 title: Bring your custom domain
 description: Learn how to set up your Fern-generated documentation site to use a custom subdomain or subpath.
+hide-toc: true
 ---
 
 Bring Fern Docs to your custom domain.
@@ -144,3 +145,59 @@ Once we've completed the setup re-generate your docs by running `fern generate -
 </Steps>
 </Accordion>
 </AccordionGroup>
+
+## Redirect your old site to your new site
+
+Once you've configured your custom domain, you can redirect your old docs site to your new site using [custom JavaScript](/learn/docs/building-and-customizing-your-docs/custom-css-global-js#custom-javascript):
+
+<Steps>
+  <Step title="Add `redirect.js` to your repo">
+    <CodeBlock>
+    ```bash {5}
+      fern/
+      ├─ openapi/
+      ├─ pages/
+      ├─ images/
+      ├─ redirect.js
+      ├─ docs.yml
+      └─ fern.config.json
+    ```
+    </CodeBlock>
+
+    Add the redirect code to `redirect.js`. Make sure to update `OLD_DOCS_SITE` and `NEW_DOCS_SITE`.
+
+    ```js
+      const OLD_DOCS_SITE = "yourcompany.docs.buildwithfern.com";
+      const NEW_DOCS_SITE = "https://docs.yourcompany.com";
+      if (window.location.host === OLD_DOCS_SITE) {
+        window.location.href = new URL(
+          window.location.pathname,
+          NEW_DOCS_SITE
+        );
+      }
+    ```
+
+    If your new docs site is on a subpath (e.g. `/docs`), make sure to prefix the new pathname with your subpath:
+
+    ```js {5}
+      const OLD_DOCS_SITE = "yourcompany.docs.buildwithfern.com";
+      const NEW_DOCS_SITE = "https://docs.yourcompany.com";
+      if (window.location.host === OLD_DOCS_SITE) {
+        window.location.href = new URL(
+          "/docs" + window.location.pathname,
+          NEW_DOCS_SITE
+        );
+      }
+    ```
+
+  </Step>
+  <Step title="Update `docs.yml` to reference `redirect.js`">
+    <CodeBlock title="docs.yml">
+    ```yaml
+    js:
+      - path: redirect.js
+        strategy: beforeInteractive
+    ```
+    </CodeBlock>
+  </Step>
+</Steps>

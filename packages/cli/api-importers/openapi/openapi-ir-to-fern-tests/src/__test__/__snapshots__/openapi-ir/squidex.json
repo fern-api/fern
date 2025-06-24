@@ -30755,13 +30755,6 @@
                             "type": "int64"
                           },
                           "type": "primitive"
-                        },
-                        "lastExecuted": {
-                          "value": {
-                            "value": "2024-01-15T09:30:00Z",
-                            "type": "datetime"
-                          },
-                          "type": "primitive"
                         }
                       },
                       "type": "object"
@@ -31226,13 +31219,6 @@
                   "value": {
                     "value": 1000000,
                     "type": "int64"
-                  },
-                  "type": "primitive"
-                },
-                "lastExecuted": {
-                  "value": {
-                    "value": "2024-01-15T09:30:00Z",
-                    "type": "datetime"
                   },
                   "type": "primitive"
                 }
@@ -31792,13 +31778,6 @@
                   "value": {
                     "value": 1000000,
                     "type": "int64"
-                  },
-                  "type": "primitive"
-                },
-                "lastExecuted": {
-                  "value": {
-                    "value": "2024-01-15T09:30:00Z",
-                    "type": "datetime"
                   },
                   "type": "primitive"
                 }
@@ -32375,13 +32354,6 @@
                     "type": "int64"
                   },
                   "type": "primitive"
-                },
-                "lastExecuted": {
-                  "value": {
-                    "value": "2024-01-15T09:30:00Z",
-                    "type": "datetime"
-                  },
-                  "type": "primitive"
                 }
               },
               "type": "object"
@@ -32770,13 +32742,6 @@
                   "value": {
                     "value": 1000000,
                     "type": "int64"
-                  },
-                  "type": "primitive"
-                },
-                "lastExecuted": {
-                  "value": {
-                    "value": "2024-01-15T09:30:00Z",
-                    "type": "datetime"
                   },
                   "type": "primitive"
                 }
@@ -45647,13 +45612,6 @@
                         "type": "string"
                       },
                       "type": "primitive"
-                    },
-                    "contentId": {
-                      "value": {
-                        "value": "contentId",
-                        "type": "string"
-                      },
-                      "type": "primitive"
                     }
                   },
                   "type": "object"
@@ -45972,13 +45930,6 @@
                     "id": {
                       "value": {
                         "value": "id",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "contentId": {
-                      "value": {
-                        "value": "contentId",
                         "type": "string"
                       },
                       "type": "primitive"
@@ -54744,20 +54695,6 @@
                             "type": "boolean"
                           },
                           "type": "primitive"
-                        },
-                        "pixelWidth": {
-                          "value": {
-                            "value": 1,
-                            "type": "int"
-                          },
-                          "type": "primitive"
-                        },
-                        "pixelHeight": {
-                          "value": {
-                            "value": 1,
-                            "type": "int"
-                          },
-                          "type": "primitive"
                         }
                       },
                       "type": "object"
@@ -55288,20 +55225,6 @@
                     "type": "boolean"
                   },
                   "type": "primitive"
-                },
-                "pixelWidth": {
-                  "value": {
-                    "value": 1,
-                    "type": "int"
-                  },
-                  "type": "primitive"
-                },
-                "pixelHeight": {
-                  "value": {
-                    "value": 1,
-                    "type": "int"
-                  },
-                  "type": "primitive"
                 }
               },
               "type": "object"
@@ -55764,20 +55687,6 @@
                             "type": "boolean"
                           },
                           "type": "primitive"
-                        },
-                        "pixelWidth": {
-                          "value": {
-                            "value": 1,
-                            "type": "int"
-                          },
-                          "type": "primitive"
-                        },
-                        "pixelHeight": {
-                          "value": {
-                            "value": 1,
-                            "type": "int"
-                          },
-                          "type": "primitive"
                         }
                       },
                       "type": "object"
@@ -56165,20 +56074,6 @@
                   "value": {
                     "value": true,
                     "type": "boolean"
-                  },
-                  "type": "primitive"
-                },
-                "pixelWidth": {
-                  "value": {
-                    "value": 1,
-                    "type": "int"
-                  },
-                  "type": "primitive"
-                },
-                "pixelHeight": {
-                  "value": {
-                    "value": 1,
-                    "type": "int"
                   },
                   "type": "primitive"
                 }
@@ -56710,20 +56605,6 @@
                     "type": "boolean"
                   },
                   "type": "primitive"
-                },
-                "pixelWidth": {
-                  "value": {
-                    "value": 1,
-                    "type": "int"
-                  },
-                  "type": "primitive"
-                },
-                "pixelHeight": {
-                  "value": {
-                    "value": 1,
-                    "type": "int"
-                  },
-                  "type": "primitive"
                 }
               },
               "type": "object"
@@ -57168,20 +57049,6 @@
                   "value": {
                     "value": true,
                     "type": "boolean"
-                  },
-                  "type": "primitive"
-                },
-                "pixelWidth": {
-                  "value": {
-                    "value": 1,
-                    "type": "int"
-                  },
-                  "type": "primitive"
-                },
-                "pixelHeight": {
-                  "value": {
-                    "value": 1,
-                    "type": "int"
                   },
                   "type": "primitive"
                 }
@@ -57692,13 +57559,6 @@
                         "type": "string"
                       },
                       "type": "primitive"
-                    },
-                    "contentId": {
-                      "value": {
-                        "value": "contentId",
-                        "type": "string"
-                      },
-                      "type": "primitive"
                     }
                   },
                   "type": "object"
@@ -58188,20 +58048,6 @@
                     "type": "boolean"
                   },
                   "type": "primitive"
-                },
-                "pixelWidth": {
-                  "value": {
-                    "value": 1,
-                    "type": "int"
-                  },
-                  "type": "primitive"
-                },
-                "pixelHeight": {
-                  "value": {
-                    "value": 1,
-                    "type": "int"
-                  },
-                  "type": "primitive"
                 }
               },
               "type": "object"
@@ -58646,20 +58492,6 @@
                   "value": {
                     "value": true,
                     "type": "boolean"
-                  },
-                  "type": "primitive"
-                },
-                "pixelWidth": {
-                  "value": {
-                    "value": 1,
-                    "type": "int"
-                  },
-                  "type": "primitive"
-                },
-                "pixelHeight": {
-                  "value": {
-                    "value": 1,
-                    "type": "int"
                   },
                   "type": "primitive"
                 }

@@ -3,6 +3,7 @@ using SeedExtends.Core;
 
 namespace SeedExtends;
 
+[Serializable]
 public record Inlined
 {
     [JsonPropertyName("unique")]

@@ -6,6 +6,8 @@ import { assertNever } from "@fern-api/core-utils";
 
 import { HttpEndpoint, HttpResponseBody, PrimitiveTypeV1, TypeReference } from "@fern-fern/ir-sdk/api";
 
+import { getReadableTypeNode } from "../../../getReadableTypeNode";
+
 export function getSuccessReturnType(
     endpoint: HttpEndpoint,
     response:
@@ -17,7 +19,9 @@ export function getSuccessReturnType(
     context: SdkContext,
     opts: {
         includeContentHeadersOnResponse: boolean;
-    } = { includeContentHeadersOnResponse: false }
+        streamType: "wrapper" | "web";
+        fileResponseType: "stream" | "binary-response";
+    }
 ): ts.TypeNode {
     if (response == null) {
         if (endpoint.method === "HEAD") {
@@ -30,7 +34,9 @@ export function getSuccessReturnType(
             return getFileType({
                 targetRuntime: context.targetRuntime,
                 context,
-                includeContentHeadersOnResponse: opts.includeContentHeadersOnResponse
+                includeContentHeadersOnResponse: opts.includeContentHeadersOnResponse,
+                streamType: opts.streamType,
+                fileResponseType: opts.fileResponseType
             });
         }
         case "json":
@@ -51,7 +57,7 @@ export function getSuccessReturnType(
                     throw new Error(`Encountered unknown data event type ${type}`);
                 }
             });
-            return context.coreUtilities.streamUtils.Stream._getReferenceToType(dataEventType.typeNode);
+            return context.coreUtilities.stream.Stream._getReferenceToType(dataEventType.typeNode);
         }
         default:
             assertNever(response);
@@ -66,37 +72,49 @@ export const CONTENT_LENGTH_RESPONSE_KEY = "contentLengthInBytes";
 function getFileType({
     targetRuntime,
     context,
-    includeContentHeadersOnResponse
+    includeContentHeadersOnResponse,
+    streamType,
+    fileResponseType
 }: {
     targetRuntime: JavaScriptRuntime;
     context: SdkContext;
     includeContentHeadersOnResponse: boolean;
+    streamType: "wrapper" | "web";
+    fileResponseType: "stream" | "binary-response";
 }): ts.TypeNode {
     const fileType = visitJavaScriptRuntime(targetRuntime, {
         browser: () => ts.factory.createTypeReferenceNode("Blob"),
-        node: () => context.externalDependencies.stream.Readable._getReferenceToType()
+        node: () => {
+            switch (fileResponseType) {
+                case "stream":
+                    return getReadableTypeNode({
+                        typeArgument: ts.factory.createTypeReferenceNode("Uint8Array"),
+                        context,
+                        streamType
+                    });
+                case "binary-response":
+                    return context.coreUtilities.fetcher.BinaryResponse._getReferenceToType();
+                default:
+                    assertNever(fileResponseType);
+            }
+        }
     });
-    if (includeContentHeadersOnResponse) {
-        return ts.factory.createTypeLiteralNode([
-            ts.factory.createPropertySignature(
-                undefined,
-                READABLE_RESPONSE_KEY,
-                undefined,
-                context.externalDependencies.stream.Readable._getReferenceToType()
-            ),
-            ts.factory.createPropertySignature(
-                undefined,
-                CONTENT_LENGTH_RESPONSE_KEY,
-                ts.factory.createToken(ts.SyntaxKind.QuestionToken),
-                ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword)
-            ),
-            ts.factory.createPropertySignature(
-                undefined,
-                CONTENT_TYPE_RESPONSE_KEY,
-                ts.factory.createToken(ts.SyntaxKind.QuestionToken),
-                ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
-            )
-        ]);
+    if (!includeContentHeadersOnResponse) {
+        return fileType;
     }
-    return fileType;
+    return ts.factory.createTypeLiteralNode([
+        ts.factory.createPropertySignature(undefined, READABLE_RESPONSE_KEY, undefined, fileType),
+        ts.factory.createPropertySignature(
+            undefined,
+            CONTENT_LENGTH_RESPONSE_KEY,
+            ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+            ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword)
+        ),
+        ts.factory.createPropertySignature(
+            undefined,
+            CONTENT_TYPE_RESPONSE_KEY,
+            ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+            ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
+        )
+    ]);
 }

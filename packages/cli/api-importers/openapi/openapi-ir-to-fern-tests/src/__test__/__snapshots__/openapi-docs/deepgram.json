@@ -14598,7 +14598,6 @@ channel:
                           "model_uuid": "80ab3179-d113-4254-bd6b-4a2f96498695",
                           "output_tokens": 7,
                         },
-                        "transaction_key": "transaction_key",
                       },
                       "results": {
                         "channels": [
@@ -15563,7 +15562,6 @@ service:
           response:
             body:
               metadata:
-                transaction_key: transaction_key
                 request_id: a847f427-4ad5-4d67-9b95-db801e58251c
                 sha256: >-
                   154e291ecfa8be6ab8343560bcc109008fa7853eb5372533e8efdefc9b504c33

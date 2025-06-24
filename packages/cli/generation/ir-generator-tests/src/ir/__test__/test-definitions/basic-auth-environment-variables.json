@@ -701,6 +701,7 @@
                     "transport": null,
                     "v2Examples": null,
                     "source": null,
+                    "audiences": null,
                     "availability": null,
                     "docs": "GET request with basic auth scheme"
                 },
@@ -995,10 +996,12 @@
                     "transport": null,
                     "v2Examples": null,
                     "source": null,
+                    "audiences": null,
                     "availability": null,
                     "docs": "POST request with basic auth scheme"
                 }
-            ]
+            ],
+            "audiences": null
         }
     },
     "constants": {
@@ -1397,6 +1400,7 @@
         "environments": null,
         "generatorConfig": null
     },
+    "audiences": null,
     "subpackages": {
         "subpackage_basic-auth": {
             "name": {

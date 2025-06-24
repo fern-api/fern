@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using SeedTrace;
 
 namespace SeedTrace.Test.Unit.MockServer;
 
@@ -29,7 +30,7 @@ public class UpdateWorkspaceSubmissionStatusTest : BaseMockServerTest
         Assert.DoesNotThrowAsync(async () =>
             await Client.Admin.UpdateWorkspaceSubmissionStatusAsync(
                 "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                "no-properties-union"
+                new WorkspaceSubmissionStatus(new WorkspaceSubmissionStatus.Stopped())
             )
         );
     }

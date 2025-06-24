@@ -1765,6 +1765,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.list",
           "name": {
             "originalName": "list",
@@ -3166,6 +3167,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.list",
           "name": {
             "originalName": "list",

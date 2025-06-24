@@ -5,23 +5,21 @@ using ProtoDataV1Grpc = Data.V1.Grpc;
 
 namespace SeedApi;
 
-public record QueryResult
+[Serializable]
+public record QueryResult : IJsonOnDeserialized
 {
+    [JsonExtensionData]
+    private readonly IDictionary<string, JsonElement> _extensionData =
+        new Dictionary<string, JsonElement>();
+
     [JsonPropertyName("matches")]
     public IEnumerable<ScoredColumn>? Matches { get; set; }
 
     [JsonPropertyName("namespace")]
     public string? Namespace { get; set; }
 
-    /// <summary>
-    /// Additional properties received from the response, if any.
-    /// </summary>
-    /// <remarks>
-    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
-    /// </remarks>
-    [JsonExtensionData]
-    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
-        new Dictionary<string, JsonElement>();
+    [JsonIgnore]
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
 
     /// <summary>
     /// Returns a new QueryResult type from its Protobuf-equivalent representation.
@@ -34,6 +32,9 @@ public record QueryResult
             Namespace = value.Namespace,
         };
     }
+
+    void IJsonOnDeserialized.OnDeserialized() =>
+        AdditionalProperties.CopyFromExtensionData(_extensionData);
 
     /// <summary>
     /// Maps the QueryResult type into its Protobuf-equivalent representation.

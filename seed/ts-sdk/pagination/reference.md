@@ -2,7 +2,7 @@
 
 ## Conversations
 
-<details><summary><code>client.complex.<a href="/src/api/resources/complex/client/Client.ts">search</a>({ ...params }) -> core.Page<SeedPagination.Conversation></code></summary>
+<details><summary><code>client.complex.<a href="/src/api/resources/complex/client/Client.ts">search</a>(index, { ...params }) -> core.Page<SeedPagination.Conversation></code></summary>
 <dl>
 <dd>
 
@@ -15,7 +15,7 @@
 <dd>
 
 ```typescript
-const response = await client.complex.search({
+const response = await client.complex.search("index", {
     pagination: {
         per_page: 1,
         starting_after: "starting_after",
@@ -31,7 +31,7 @@ for await (const item of response) {
 }
 
 // Or you can manually iterate page-by-page
-const page = await client.complex.search({
+const page = await client.complex.search("index", {
     pagination: {
         per_page: 1,
         starting_after: "starting_after",
@@ -56,6 +56,14 @@ while (page.hasNextPage()) {
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**index:** `string`
+
+</dd>
+</dl>
 
 <dl>
 <dd>

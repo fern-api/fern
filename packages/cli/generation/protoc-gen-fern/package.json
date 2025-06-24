@@ -36,10 +36,10 @@
     "@fern-api/configs": "workspace:*",
     "@fern-api/ir-sdk": "workspace:*",
     "@fern-api/ir-utils": "workspace:*",
-    "@fern-api/configuration": "workspace:*",
     "@fern-api/casings-generator": "workspace:*",
     "@fern-api/logger": "workspace:*",
     "@fern-api/v2-importer-commons": "workspace:*",
+    "@fern-api/core-utils": "workspace:*",
     "openapi-types": "^12.1.3"
   },
   "devDependencies": {

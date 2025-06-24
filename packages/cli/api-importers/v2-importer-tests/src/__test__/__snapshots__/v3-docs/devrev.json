@@ -35889,6 +35889,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_artifacts.locate",
           "name": {
             "originalName": "locate",
@@ -36185,6 +36186,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_artifacts.prepare",
           "name": {
             "originalName": "prepare",
@@ -36590,6 +36592,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_authTokens.create",
           "name": {
             "originalName": "create",
@@ -36960,6 +36963,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_authTokens.delete",
           "name": {
             "originalName": "delete",
@@ -37309,6 +37313,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_authTokens.get",
           "name": {
             "originalName": "get",
@@ -37873,6 +37878,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_authTokens.list",
           "name": {
             "originalName": "list",
@@ -38276,6 +38282,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_authTokens.selfDelete",
           "name": {
             "originalName": "selfDelete",
@@ -38582,6 +38589,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_authTokens.update",
           "name": {
             "originalName": "update",
@@ -39053,6 +39061,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_authConnection.dev-org-auth-connections-create",
           "name": {
             "originalName": "dev-org-auth-connections-create",
@@ -39413,6 +39422,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_authConnection.dev-org-auth-connections-delete",
           "name": {
             "originalName": "dev-org-auth-connections-delete",
@@ -39766,6 +39776,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_authConnection.dev-org-auth-connections-get",
           "name": {
             "originalName": "dev-org-auth-connections-get",
@@ -40060,6 +40071,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_authConnection.dev-org-auth-connections-list",
           "name": {
             "originalName": "dev-org-auth-connections-list",
@@ -40385,6 +40397,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_authConnection.dev-org-auth-connections-toggle",
           "name": {
             "originalName": "dev-org-auth-connections-toggle",
@@ -40695,6 +40708,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_authConnection.dev-org-auth-connections-update",
           "name": {
             "originalName": "dev-org-auth-connections-update",
@@ -41431,6 +41445,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_devUsers.list",
           "name": {
             "originalName": "list",
@@ -41817,6 +41832,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_devUsers.self",
           "name": {
             "originalName": "self",
@@ -42251,6 +42267,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_parts.create",
           "name": {
             "originalName": "create",
@@ -42733,6 +42750,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_parts.delete",
           "name": {
             "originalName": "delete",
@@ -43136,6 +43154,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_parts.get",
           "name": {
             "originalName": "get",
@@ -43957,6 +43976,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_parts.list",
           "name": {
             "originalName": "list",
@@ -44408,6 +44428,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_parts.update",
           "name": {
             "originalName": "update",
@@ -44917,6 +44938,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_revOrgs.create",
           "name": {
             "originalName": "create",
@@ -45347,6 +45369,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_revOrgs.delete",
           "name": {
             "originalName": "delete",
@@ -45750,6 +45773,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_revOrgs.get",
           "name": {
             "originalName": "get",
@@ -46670,6 +46694,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_revOrgs.list",
           "name": {
             "originalName": "list",
@@ -47065,6 +47090,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_revOrgs.update",
           "name": {
             "originalName": "update",
@@ -47522,6 +47548,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_tags.create",
           "name": {
             "originalName": "create",
@@ -47954,6 +47981,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_tags.delete",
           "name": {
             "originalName": "delete",
@@ -48357,6 +48385,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_tags.get",
           "name": {
             "originalName": "get",
@@ -48882,6 +48911,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_tags.list",
           "name": {
             "originalName": "list",
@@ -49279,6 +49309,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_tags.update",
           "name": {
             "originalName": "update",
@@ -49738,6 +49769,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_timelineEntries.create",
           "name": {
             "originalName": "create",
@@ -50217,6 +50249,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_timelineEntries.get",
           "name": {
             "originalName": "get",
@@ -50821,6 +50854,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_timelineEntries.list",
           "name": {
             "originalName": "list",
@@ -51199,6 +51233,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_timelineEntries.update",
           "name": {
             "originalName": "update",
@@ -51662,6 +51697,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_webhooks.create",
           "name": {
             "originalName": "create",
@@ -52096,6 +52132,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_webhooks.delete",
           "name": {
             "originalName": "delete",
@@ -52499,6 +52536,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_webhooks.get",
           "name": {
             "originalName": "get",
@@ -52863,6 +52901,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_webhooks.list",
           "name": {
             "originalName": "list",
@@ -53258,6 +53297,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_webhooks.update",
           "name": {
             "originalName": "update",
@@ -53719,6 +53759,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_works.create",
           "name": {
             "originalName": "create",
@@ -54249,6 +54290,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_works.delete",
           "name": {
             "originalName": "delete",
@@ -55187,6 +55229,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_works.export",
           "name": {
             "originalName": "export",
@@ -55725,6 +55768,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_works.get",
           "name": {
             "originalName": "get",
@@ -56910,6 +56954,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_works.list",
           "name": {
             "originalName": "list",
@@ -57409,6 +57454,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_works.update",
           "name": {
             "originalName": "update",

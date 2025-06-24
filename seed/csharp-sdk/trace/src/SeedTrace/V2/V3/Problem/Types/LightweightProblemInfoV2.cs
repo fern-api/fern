@@ -1,11 +1,17 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using SeedTrace;
 using SeedTrace.Core;
 
 namespace SeedTrace.V2.V3;
 
-public record LightweightProblemInfoV2
+[Serializable]
+public record LightweightProblemInfoV2 : IJsonOnDeserialized
 {
+    [JsonExtensionData]
+    private readonly IDictionary<string, JsonElement> _extensionData =
+        new Dictionary<string, JsonElement>();
+
     [JsonPropertyName("problemId")]
     public required string ProblemId { get; set; }
 
@@ -16,17 +22,13 @@ public record LightweightProblemInfoV2
     public required int ProblemVersion { get; set; }
 
     [JsonPropertyName("variableTypes")]
-    public HashSet<object> VariableTypes { get; set; } = new HashSet<object>();
+    public HashSet<VariableType> VariableTypes { get; set; } = new HashSet<VariableType>();
 
-    /// <summary>
-    /// Additional properties received from the response, if any.
-    /// </summary>
-    /// <remarks>
-    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
-    /// </remarks>
-    [JsonExtensionData]
-    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
-        new Dictionary<string, JsonElement>();
+    [JsonIgnore]
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+
+    void IJsonOnDeserialized.OnDeserialized() =>
+        AdditionalProperties.CopyFromExtensionData(_extensionData);
 
     /// <inheritdoc />
     public override string ToString()

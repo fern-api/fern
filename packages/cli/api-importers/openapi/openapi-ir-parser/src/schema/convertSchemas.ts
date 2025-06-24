@@ -635,6 +635,25 @@ export function convertSchemaObject(
                 });
             }
         } else if (schema.oneOf.length === 1 && schema.oneOf[0] != null) {
+            if (context.options.preserveSingleSchemaOneOf) {
+                return convertUndiscriminatedOneOf({
+                    nameOverride,
+                    generatedName,
+                    title,
+                    breadcrumbs,
+                    description,
+                    availability,
+                    wrapAsNullable,
+                    context,
+                    subtypes: schema.oneOf.filter((schema) => {
+                        return isReferenceObject(schema) || (schema.type as string) !== "null";
+                    }),
+                    encoding,
+                    namespace,
+                    groupName,
+                    source
+                });
+            }
             const convertedSchema = convertSchema(
                 schema.oneOf[0],
                 wrapAsNullable,

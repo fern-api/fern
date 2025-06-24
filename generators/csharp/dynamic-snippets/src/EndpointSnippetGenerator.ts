@@ -456,7 +456,7 @@ export class EndpointSnippetGenerator {
     }): csharp.TypeLiteral[] {
         const args: csharp.TypeLiteral[] = [];
 
-        const inlinePathParameters = this.context.customConfig?.["inline-path-parameters"] ?? false;
+        const inlinePathParameters = this.context.customConfig?.["inline-path-parameters"] ?? true;
 
         this.context.errors.scope(Scope.PathParameters);
         const pathParameterFields: csharp.ConstructorField[] = [];

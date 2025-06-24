@@ -3,6 +3,7 @@ using SeedAliasExtends.Core;
 
 namespace SeedAliasExtends;
 
+[Serializable]
 public record InlinedChildRequest
 {
     [JsonPropertyName("child")]

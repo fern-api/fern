@@ -15650,6 +15650,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_search.vals",
           "name": {
             "originalName": "vals",
@@ -15969,6 +15970,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_alias.username",
           "name": {
             "originalName": "username",
@@ -16278,6 +16280,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_alias.val",
           "name": {
             "originalName": "val",
@@ -16494,6 +16497,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_me.get",
           "name": {
             "originalName": "get",
@@ -16721,6 +16725,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_me.likes",
           "name": {
             "originalName": "likes",
@@ -17145,6 +17150,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_me.comments",
           "name": {
             "originalName": "comments",
@@ -17508,6 +17514,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_me.references",
           "name": {
             "originalName": "references",
@@ -17775,6 +17782,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_blobs.list",
           "name": {
             "originalName": "list",
@@ -18002,6 +18010,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_blobs.get",
           "name": {
             "originalName": "get",
@@ -18178,6 +18187,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_blobs.store",
           "name": {
             "originalName": "store",
@@ -18363,6 +18373,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_blobs.delete",
           "name": {
             "originalName": "delete",
@@ -18574,6 +18585,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_users.get",
           "name": {
             "originalName": "get",
@@ -18889,6 +18901,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_users.vals",
           "name": {
             "originalName": "vals",
@@ -19119,6 +19132,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_sqlite.execute",
           "name": {
             "originalName": "execute",
@@ -19407,6 +19421,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_sqlite.batch",
           "name": {
             "originalName": "batch",
@@ -19651,7 +19666,8 @@
                             null
                           ]
                         ],
-                        "rowsAffected": 0
+                        "rowsAffected": 0,
+                        "lastInsertRowid": {}
                       }
                     ]
                   },
@@ -19699,7 +19715,8 @@
                             null
                           ]
                         ],
-                        "rowsAffected": 0
+                        "rowsAffected": 0,
+                        "lastInsertRowid": {}
                       }
                     ],
                     "type": "json"
@@ -19818,6 +19835,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_vals.evalPost",
           "name": {
             "originalName": "evalPost",
@@ -20270,6 +20288,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_vals.evalGet",
           "name": {
             "originalName": "evalGet",
@@ -20537,6 +20556,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_vals.runGet",
           "name": {
             "originalName": "runGet",
@@ -20699,6 +20719,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_vals.runPost",
           "name": {
             "originalName": "runPost",
@@ -20855,6 +20876,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_vals.create",
           "name": {
             "originalName": "create",
@@ -21333,6 +21355,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_vals.put",
           "name": {
             "originalName": "put",
@@ -21620,6 +21643,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_vals.get",
           "name": {
             "originalName": "get",
@@ -21873,6 +21897,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_vals.update",
           "name": {
             "originalName": "update",
@@ -22354,6 +22379,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_vals.delete",
           "name": {
             "originalName": "delete",
@@ -22605,6 +22631,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_vals.list",
           "name": {
             "originalName": "list",
@@ -22843,6 +22870,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_vals.createVersion",
           "name": {
             "originalName": "createVersion",
@@ -23599,6 +23627,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_vals.getVersion",
           "name": {
             "originalName": "getVersion",
@@ -23976,6 +24005,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_vals.deleteVersion",
           "name": {
             "originalName": "deleteVersion",
@@ -24256,6 +24286,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_vals.cancel",
           "name": {
             "originalName": "cancel",
@@ -24462,6 +24493,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_emails.send",
           "name": {
             "originalName": "send",

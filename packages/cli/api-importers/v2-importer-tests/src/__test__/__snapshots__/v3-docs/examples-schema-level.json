@@ -677,6 +677,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.listTrees",
           "name": {
             "originalName": "listTrees",
@@ -818,6 +819,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.createTree",
           "name": {
             "originalName": "createTree",
@@ -923,6 +925,7 @@
                     "createTreeExample": {
                       "species": "Ferntacular",
                       "height": 25.4,
+                      "$ref": "#/components/examples/oakTree",
                       "id": "foo"
                     }
                   }
@@ -959,6 +962,7 @@
                     "value": {
                       "species": "Ferntacular",
                       "height": 25.4,
+                      "$ref": "#/components/examples/oakTree",
                       "id": "foo"
                     },
                     "type": "json"
@@ -1084,6 +1088,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.getTree",
           "name": {
             "originalName": "getTree",
@@ -1143,6 +1148,7 @@
                     "getTreeExample": {
                       "species": "Ferntacular",
                       "height": 25.4,
+                      "$ref": "#/components/examples/oakTree",
                       "id": "foo"
                     }
                   }
@@ -1172,6 +1178,7 @@
                     "value": {
                       "species": "Ferntacular",
                       "height": 25.4,
+                      "$ref": "#/components/examples/oakTree",
                       "id": "foo"
                     },
                     "type": "json"
@@ -1205,6 +1212,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.createFern",
           "name": {
             "originalName": "createFern",
@@ -1523,6 +1531,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.getFern",
           "name": {
             "originalName": "getFern",
@@ -1642,6 +1651,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.createGrass",
           "name": {
             "originalName": "createGrass",

@@ -249,6 +249,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.get",
           "name": {
             "originalName": "get",

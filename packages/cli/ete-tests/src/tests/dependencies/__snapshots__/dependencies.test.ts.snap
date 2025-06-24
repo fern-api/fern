@@ -533,10 +533,12 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
                     "transport": null,
                     "v2Examples": null,
                     "source": null,
+                    "audiences": null,
                     "availability": null,
                     "docs": null
                 }
-            ]
+            ],
+            "audiences": null
         }
     },
     "constants": {
@@ -930,6 +932,7 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
         "environments": null,
         "generatorConfig": null
     },
+    "audiences": null,
     "subpackages": {
         "subpackage_imported": {
             "name": {
@@ -1234,4 +1237,4 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
 }"
 `;
 
-exports[`dependencies > file dependencies 1`] = `3539992`;
+exports[`dependencies > file dependencies 1`] = `3540428`;

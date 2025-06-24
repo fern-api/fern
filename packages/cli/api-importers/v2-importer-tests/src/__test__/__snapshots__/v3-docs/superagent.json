@@ -2546,6 +2546,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_agent.List_all_agents_api_v1_agents_get",
           "name": {
             "originalName": "List_all_agents_api_v1_agents_get",
@@ -2660,6 +2661,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_agent.Create_agent_api_v1_agents_post",
           "name": {
             "originalName": "Create_agent_api_v1_agents_post",
@@ -2907,6 +2909,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_agent.Get_agent_api_v1_agents__agentId__get",
           "name": {
             "originalName": "Get_agent_api_v1_agents__agentId__get",
@@ -3111,6 +3114,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_agent.Delete_agent_api_v1_agents__agentId__delete",
           "name": {
             "originalName": "Delete_agent_api_v1_agents__agentId__delete",
@@ -3315,6 +3319,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_agent.Patch_agent_api_v1_agents__agentId__patch",
           "name": {
             "originalName": "Patch_agent_api_v1_agents__agentId__patch",
@@ -3553,6 +3558,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_agent.Prompt_agent_api_v1_agents__agentId__predict_post",
           "name": {
             "originalName": "Prompt_agent_api_v1_agents__agentId__predict_post",
@@ -3767,6 +3773,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_auth.sign_in_api_v1_auth_sign_in_post",
           "name": {
             "originalName": "sign_in_api_v1_auth_sign_in_post",
@@ -3925,6 +3932,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_auth.sign_up_api_v1_auth_sign_up_post",
           "name": {
             "originalName": "sign_up_api_v1_auth_sign_up_post",
@@ -4108,6 +4116,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_user.read_user_me_api_v1_users_me_get",
           "name": {
             "originalName": "read_user_me_api_v1_users_me_get",
@@ -4309,6 +4318,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_user.read_user_api_v1_users__userId__get",
           "name": {
             "originalName": "read_user_api_v1_users__userId__get",
@@ -4449,6 +4459,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_apiToken.List_API_tokens_api_v1_api_tokens_get",
           "name": {
             "originalName": "List_API_tokens_api_v1_api_tokens_get",
@@ -4563,6 +4574,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_apiToken.Create_API_token_api_v1_api_tokens_post",
           "name": {
             "originalName": "Create_API_token_api_v1_api_tokens_post",
@@ -4808,6 +4820,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_apiToken.Get_API_token_api_v1_api_tokens__tokenId__get",
           "name": {
             "originalName": "Get_API_token_api_v1_api_tokens__tokenId__get",
@@ -5012,6 +5025,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_apiToken.Delete_API_token_api_v1_api_tokens__tokenId__delete",
           "name": {
             "originalName": "Delete_API_token_api_v1_api_tokens__tokenId__delete",
@@ -5153,6 +5167,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_documents.List_documents_api_v1_documents_get",
           "name": {
             "originalName": "List_documents_api_v1_documents_get",
@@ -5267,6 +5282,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_documents.Create_document_api_v1_documents_post",
           "name": {
             "originalName": "Create_document_api_v1_documents_post",
@@ -5516,6 +5532,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_documents.Get_document_api_v1_documents__documentId__get",
           "name": {
             "originalName": "Get_document_api_v1_documents__documentId__get",
@@ -5720,6 +5737,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_documents.Delete_document_api_v1_documents__documentId__delete",
           "name": {
             "originalName": "Delete_document_api_v1_documents__documentId__delete",
@@ -5861,6 +5879,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_prompts.List_prompts_api_v1_prompts_get",
           "name": {
             "originalName": "List_prompts_api_v1_prompts_get",
@@ -5975,6 +5994,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_prompts.Create_a_prompt_api_v1_prompts_post",
           "name": {
             "originalName": "Create_a_prompt_api_v1_prompts_post",
@@ -6228,6 +6248,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_prompts.Get_prompt_api_v1_prompts__promptId__get",
           "name": {
             "originalName": "Get_prompt_api_v1_prompts__promptId__get",
@@ -6432,6 +6453,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_prompts.Delete_prompt_api_v1_prompts__promptId__delete",
           "name": {
             "originalName": "Delete_prompt_api_v1_prompts__promptId__delete",
@@ -6636,6 +6658,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_prompts.Patch_prompt_api_v1_prompts__promptId__patch",
           "name": {
             "originalName": "Patch_prompt_api_v1_prompts__promptId__patch",
@@ -6811,6 +6834,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_tools.List_tools_api_v1_tools_get",
           "name": {
             "originalName": "List_tools_api_v1_tools_get",
@@ -6925,6 +6949,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_tools.Create_a_tool_api_v1_tools_post",
           "name": {
             "originalName": "Create_a_tool_api_v1_tools_post",
@@ -7172,6 +7197,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_tools.Get_tool_api_v1_tools__toolId__get",
           "name": {
             "originalName": "Get_tool_api_v1_tools__toolId__get",
@@ -7376,6 +7402,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_tools.Delete_tool_api_v1_tools__toolId__delete",
           "name": {
             "originalName": "Delete_tool_api_v1_tools__toolId__delete",
@@ -7517,6 +7544,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_traces.List_agent_traces_api_v1_traces_get",
           "name": {
             "originalName": "List_agent_traces_api_v1_traces_get",

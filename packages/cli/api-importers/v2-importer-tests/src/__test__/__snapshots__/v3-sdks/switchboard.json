@@ -9706,6 +9706,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_auth.andRedirect",
           "name": {
             "originalName": "andRedirect",
@@ -12810,6 +12811,9 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [
+            "beta"
+          ],
           "id": "endpoint_extensions.get",
           "name": {
             "originalName": "get",
@@ -15589,6 +15593,9 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [
+            "beta"
+          ],
           "id": "endpoint_extensions.post",
           "name": {
             "originalName": "post",
@@ -15861,6 +15868,9 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [
+            "beta"
+          ],
           "id": "endpoint_extensions.delete",
           "name": {
             "originalName": "delete",
@@ -18652,6 +18662,9 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [
+            "beta"
+          ],
           "id": "endpoint_extensions.getById",
           "name": {
             "originalName": "getById",
@@ -22103,6 +22116,9 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [
+            "public"
+          ],
           "id": "endpoint_profiles.get",
           "name": {
             "originalName": "get",
@@ -25061,6 +25077,9 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [
+            "beta"
+          ],
           "id": "endpoint_profiles.post",
           "name": {
             "originalName": "post",
@@ -25396,6 +25415,9 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [
+            "public"
+          ],
           "id": "endpoint_profiles.delete",
           "name": {
             "originalName": "delete",
@@ -28276,6 +28298,9 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [
+            "public"
+          ],
           "id": "endpoint_profiles.getById",
           "name": {
             "originalName": "getById",
@@ -35185,6 +35210,9 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [
+            "public"
+          ],
           "id": "endpoint_sessions.list",
           "name": {
             "originalName": "list",
@@ -39365,6 +39393,9 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [
+            "public"
+          ],
           "id": "endpoint_sessions.post",
           "name": {
             "originalName": "post",
@@ -43639,6 +43670,9 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [
+            "public"
+          ],
           "id": "endpoint_sessions.getinfo",
           "name": {
             "originalName": "getinfo",
@@ -43982,6 +44016,9 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [
+            "public"
+          ],
           "id": "endpoint_sessions.terminate",
           "name": {
             "originalName": "terminate",
@@ -44988,6 +45025,9 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [
+            "public"
+          ],
           "id": "endpoint_sessions.events",
           "name": {
             "originalName": "events",
@@ -47979,6 +48019,9 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [
+            "public"
+          ],
           "id": "endpoint_windows.get-window-info",
           "name": {
             "originalName": "get-window-info",
@@ -51689,6 +51732,9 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [
+            "public"
+          ],
           "id": "endpoint_windows.prompt-content",
           "name": {
             "originalName": "prompt-content",
@@ -55484,6 +55530,9 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [
+            "public"
+          ],
           "id": "endpoint_windows.scrape-content",
           "name": {
             "originalName": "scrape-content",
@@ -59156,6 +59205,9 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [
+            "public"
+          ],
           "id": "endpoint_windows.summarize-content",
           "name": {
             "originalName": "summarize-content",

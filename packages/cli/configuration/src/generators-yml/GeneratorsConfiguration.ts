@@ -72,6 +72,7 @@ export interface APIDefinitionSettings {
     exampleGeneration: generatorsYml.OpenApiExampleGenerationSchema | undefined;
     additionalPropertiesDefaultsTo: boolean | undefined;
     typeDatesAsStrings: boolean | undefined;
+    preserveSingleSchemaOneOf: boolean | undefined;
 }
 
 export interface APIDefinitionLocation {

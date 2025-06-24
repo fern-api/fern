@@ -296,6 +296,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.list",
           "name": {
             "originalName": "list",

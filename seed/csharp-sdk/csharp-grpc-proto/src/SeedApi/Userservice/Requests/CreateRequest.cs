@@ -4,6 +4,7 @@ using Proto = User.V1;
 
 namespace SeedApi;
 
+[Serializable]
 public record CreateRequest
 {
     [JsonPropertyName("username")]

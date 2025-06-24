@@ -1,4 +1,4 @@
-import { ImportsManager, PackageId, Reference } from "@fern-typescript/commons";
+import { ExportsManager, ImportsManager, PackageId, Reference } from "@fern-typescript/commons";
 import { EndpointErrorUnionContext, GeneratedEndpointErrorUnion } from "@fern-typescript/contexts";
 import { EndpointErrorUnionGenerator } from "@fern-typescript/endpoint-error-union-generator";
 import { PackageResolver } from "@fern-typescript/resolvers";
@@ -12,6 +12,7 @@ export declare namespace EndpointErrorUnionContextImpl {
     export interface Init {
         sourceFile: SourceFile;
         importsManager: ImportsManager;
+        exportsManager: ExportsManager;
         endpointErrorUnionDeclarationReferencer: EndpointDeclarationReferencer;
         endpointErrorUnionGenerator: EndpointErrorUnionGenerator;
         packageResolver: PackageResolver;
@@ -21,6 +22,7 @@ export declare namespace EndpointErrorUnionContextImpl {
 export class EndpointErrorUnionContextImpl implements EndpointErrorUnionContext {
     private sourceFile: SourceFile;
     private importsManager: ImportsManager;
+    private exportsManager: ExportsManager;
     private endpointErrorUnionDeclarationReferencer: EndpointDeclarationReferencer;
     private endpointErrorUnionGenerator: EndpointErrorUnionGenerator;
     private packageResolver: PackageResolver;
@@ -28,12 +30,14 @@ export class EndpointErrorUnionContextImpl implements EndpointErrorUnionContext 
     constructor({
         sourceFile,
         importsManager,
+        exportsManager,
         endpointErrorUnionDeclarationReferencer,
         endpointErrorUnionGenerator,
         packageResolver
     }: EndpointErrorUnionContextImpl.Init) {
         this.sourceFile = sourceFile;
         this.importsManager = importsManager;
+        this.exportsManager = exportsManager;
         this.endpointErrorUnionDeclarationReferencer = endpointErrorUnionDeclarationReferencer;
         this.endpointErrorUnionGenerator = endpointErrorUnionGenerator;
         this.packageResolver = packageResolver;
@@ -69,6 +73,7 @@ export class EndpointErrorUnionContextImpl implements EndpointErrorUnionContext 
             name: { packageId, endpoint },
             referencedIn: this.sourceFile,
             importsManager: this.importsManager,
+            exportsManager: this.exportsManager,
             importStrategy: {
                 type: "fromRoot",
                 namespaceImport: this.endpointErrorUnionDeclarationReferencer.namespaceExport

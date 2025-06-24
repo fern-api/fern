@@ -140,7 +140,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                                     type: "entries",
                                     entries: requiredHeaders.map((header) => {
                                         return {
-                                            key: csharp.codeblock(`"${header.name.wireValue}"`),
+                                            key: csharp.codeblock(csharp.string_({ string: header.name.wireValue })),
                                             value: this.stringify({
                                                 reference: header.valueType,
                                                 name: header.name.name

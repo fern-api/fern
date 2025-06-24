@@ -1,6 +1,7 @@
 import {
     CoreUtilitiesManager,
     DependencyManager,
+    ExportsManager,
     ExternalDependencies,
     ImportsManager,
     createExternalDependencies
@@ -55,6 +56,7 @@ export declare namespace ExpressContextImpl {
         logger: Logger;
         sourceFile: SourceFile;
         importsManager: ImportsManager;
+        exportsManager: ExportsManager;
         dependencyManager: DependencyManager;
         coreUtilitiesManager: CoreUtilitiesManager;
         fernConstants: Constants;
@@ -90,6 +92,8 @@ export declare namespace ExpressContextImpl {
         enableInlineTypes: boolean;
         allowExtraFields: boolean;
         omitUndefined: boolean;
+        relativePackagePath: string;
+        relativeTestPath: string;
     }
 }
 
@@ -139,6 +143,7 @@ export class ExpressContextImpl implements ExpressContext {
         treatUnknownAsAny,
         sourceFile,
         importsManager,
+        exportsManager,
         dependencyManager,
         coreUtilitiesManager,
         fernConstants,
@@ -151,7 +156,9 @@ export class ExpressContextImpl implements ExpressContext {
         enableInlineTypes,
         allowExtraFields,
         omitUndefined,
-        useBigInt
+        useBigInt,
+        relativePackagePath,
+        relativeTestPath
     }: ExpressContextImpl.Init) {
         this.logger = logger;
         this.includeSerdeLayer = includeSerdeLayer;
@@ -162,13 +169,17 @@ export class ExpressContextImpl implements ExpressContext {
         });
         this.coreUtilities = coreUtilitiesManager.getCoreUtilities({
             sourceFile,
-            importsManager
+            importsManager,
+            exportsManager,
+            relativePackagePath,
+            relativeTestPath
         });
         this.fernConstants = fernConstants;
 
         this.type = new TypeContextImpl({
             sourceFile,
             importsManager,
+            exportsManager,
             typeResolver,
             typeDeclarationReferencer,
             typeGenerator,
@@ -186,6 +197,7 @@ export class ExpressContextImpl implements ExpressContext {
             sourceFile,
             coreUtilities: this.coreUtilities,
             importsManager,
+            exportsManager,
             context: this,
             typeSchemaDeclarationReferencer,
             typeDeclarationReferencer,
@@ -201,6 +213,7 @@ export class ExpressContextImpl implements ExpressContext {
         });
         this.jsonContext = new JsonContextImpl({
             importsManager,
+            exportsManager,
             jsonDeclarationReferencer,
             sourceFile
         });
@@ -210,12 +223,14 @@ export class ExpressContextImpl implements ExpressContext {
             packageResolver,
             sourceFile: this.sourceFile,
             importsManager,
+            exportsManager,
             retainOriginalCasing,
             includeSerdeLayer
         });
         this.expressInlinedRequestBodySchema = new ExpressInlinedRequestBodySchemaContextImpl({
             packageResolver,
             importsManager,
+            exportsManager,
             sourceFile,
             expressInlinedRequestBodySchemaGenerator,
             expressInlinedRequestBodySchemaDeclarationReferencer
@@ -225,6 +240,7 @@ export class ExpressContextImpl implements ExpressContext {
             expressEndpointTypeSchemasGenerator,
             expressEndpointSchemaDeclarationReferencer,
             importsManager,
+            exportsManager,
             sourceFile
         });
         this.expressService = new ExpressServiceContextImpl({
@@ -232,6 +248,7 @@ export class ExpressContextImpl implements ExpressContext {
             expressServiceGenerator,
             expressServiceDeclarationReferencer,
             importsManager,
+            exportsManager,
             sourceFile
         });
         this.expressError = new ExpressErrorContextImpl({
@@ -239,7 +256,8 @@ export class ExpressContextImpl implements ExpressContext {
             importsManager,
             errorDeclarationReferencer,
             expressErrorGenerator,
-            errorResolver
+            errorResolver,
+            exportsManager
         });
         this.expressErrorSchema = new ExpressErrorSchemaContextImpl({
             sourceFile,
@@ -247,12 +265,14 @@ export class ExpressContextImpl implements ExpressContext {
             expressErrorSchemaGenerator,
             expressErrorSchemaDeclarationReferencer,
             errorResolver,
-            coreUtilities: this.coreUtilities
+            coreUtilities: this.coreUtilities,
+            exportsManager
         });
         this.genericAPIExpressError = new GenericAPIExpressErrorContextImpl({
             genericAPIExpressErrorDeclarationReferencer,
             genericAPIExpressErrorGenerator,
             importsManager,
+            exportsManager,
             sourceFile: this.sourceFile
         });
         this.expressRegister = new ExpressRegisterContextImpl({

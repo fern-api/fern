@@ -517,6 +517,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.Post",
           "name": {
             "originalName": "Post",

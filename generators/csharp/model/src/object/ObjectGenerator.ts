@@ -44,7 +44,8 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
             summary: this.typeDeclaration.docs,
             access: csharp.Access.Public,
             type: csharp.Class.ClassType.Record,
-            interfaceReferences: interfaces
+            interfaceReferences: interfaces,
+            annotations: [this.context.getSerializableAttribute()]
         });
         const properties = [...this.objectDeclaration.properties, ...(this.objectDeclaration.extendedProperties ?? [])];
         class_.addFields(generateFields({ properties, className: this.classReference.name, context: this.context }));

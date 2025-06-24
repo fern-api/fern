@@ -8268,13 +8268,11 @@ The default response lists only recent transactions. Normally, this is transacti
                           "check": {
                             "number": 1,
                           },
-                          "createdOn": "2023-05-18",
                           "description": "description",
                           "id": "d62c0701-0d74",
                           "memo": "memo",
                           "occurredOn": "2023-06-18",
                           "posted": true,
-                          "postedOn": "2023-05-18",
                           "subtype": "check",
                           "type": "balance",
                         },
@@ -8290,7 +8288,6 @@ The default response lists only recent transactions. Normally, this is transacti
                             "imageFront_url": "/accounts/1d16e438-18e0/transactions/88f5bf17-ecc4/images/front/content",
                             "number": 8412,
                           },
-                          "createdOn": "2023-05-18",
                           "description": "description",
                           "id": "88f5bf17-ecc4",
                           "memo": "Paid electric bill",
@@ -8301,7 +8298,6 @@ The default response lists only recent transactions. Normally, this is transacti
                           },
                           "occurredOn": "2023-06-18",
                           "posted": true,
-                          "postedOn": "2023-05-18",
                           "subtype": "check",
                           "type": "debit",
                         },
@@ -8622,8 +8618,6 @@ service:
                   type: balance
                   subtype: check
                   occurredOn: '2023-06-18'
-                  createdOn: '2023-05-18'
-                  postedOn: '2023-05-18'
                   amount: '0.00'
                   posted: true
                   balance: '8509.38'
@@ -8637,8 +8631,6 @@ service:
                   type: debit
                   subtype: check
                   occurredOn: '2023-06-18'
-                  createdOn: '2023-05-18'
-                  postedOn: '2023-05-18'
                   amount: '1276.21'
                   posted: true
                   balance: '8509.38'

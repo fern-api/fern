@@ -87,7 +87,7 @@
           {
             "key": "deletedBy",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -99,7 +99,7 @@
           {
             "key": "deletedAt",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -620,7 +620,7 @@
           {
             "key": "deletedAt",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -633,7 +633,7 @@
           {
             "key": "finishedAt",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -646,7 +646,7 @@
           {
             "key": "startedAt",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -1028,7 +1028,7 @@
           {
             "key": "idleSince",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -1068,7 +1068,7 @@
           {
             "key": "terminatedAt",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -1081,7 +1081,7 @@
           {
             "key": "stoppingAt",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -1094,7 +1094,7 @@
           {
             "key": "startedAt",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -1213,7 +1213,7 @@
           {
             "key": "unscheduledAt",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -1281,7 +1281,7 @@
           {
             "key": "currentAllocation",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "id",
                 "value": "RoomAllocation"
@@ -1349,7 +1349,7 @@
           {
             "key": "currentAllocation",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "id",
                 "value": "RoomAllocation"

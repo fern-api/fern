@@ -50,7 +50,6 @@ public class AsyncRawServiceClient {
                 .url(httpUrl)
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
                 .addHeader("Accept", "application/json")
                 .build();
         OkHttpClient client = clientOptions.httpClient();
@@ -156,17 +155,15 @@ public class AsyncRawServiceClient {
                 .addPathSegments("metadata");
         if (request.getShallow().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "shallow", request.getShallow().get().toString(), false);
+                    httpUrl, "shallow", request.getShallow().get(), false);
         }
         if (request.getTag().isPresent()) {
-            QueryStringMapper.addQueryParameter(
-                    httpUrl, "tag", request.getTag().get().toString(), false);
+            QueryStringMapper.addQueryParameter(httpUrl, "tag", request.getTag().get(), true);
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
                 .addHeader("Accept", "application/json");
         _requestBuilder.addHeader("X-API-Version", request.getXApiVersion());
         Request okhttpRequest = _requestBuilder.build();

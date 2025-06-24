@@ -19,7 +19,8 @@ export class VersionGenerator extends FileGenerator<CSharpFile, ModelCustomConfi
         const class_ = csharp.class_({
             ...this.classReference,
             partial: false,
-            access: csharp.Access.Internal
+            access: csharp.Access.Internal,
+            annotations: [this.context.getSerializableAttribute()]
         });
 
         class_.addField(
@@ -28,7 +29,7 @@ export class VersionGenerator extends FileGenerator<CSharpFile, ModelCustomConfi
                 type: csharp.Type.string(),
                 access: csharp.Access.Public,
                 const_: true,
-                initializer: csharp.codeblock(`"${this.context.version ?? DEFAULT_VERSION}"`)
+                initializer: csharp.codeblock(csharp.string_({ string: this.context.version ?? DEFAULT_VERSION }))
             })
         );
 

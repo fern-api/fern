@@ -1321,13 +1321,6 @@
                   },
                   "type": "primitive"
                 },
-                "speed_boost": {
-                  "value": {
-                    "value": true,
-                    "type": "boolean"
-                  },
-                  "type": "primitive"
-                },
                 "auto_highlights": {
                   "value": {
                     "value": true,
@@ -2463,13 +2456,6 @@
                   },
                   "type": "primitive"
                 },
-                "speed_boost": {
-                  "value": {
-                    "value": true,
-                    "type": "boolean"
-                  },
-                  "type": "primitive"
-                },
                 "auto_highlights": {
                   "value": {
                     "value": true,
@@ -3602,13 +3588,6 @@
                   "value": {
                     "value": "webhook_auth_header_name",
                     "type": "string"
-                  },
-                  "type": "primitive"
-                },
-                "speed_boost": {
-                  "value": {
-                    "value": true,
-                    "type": "boolean"
                   },
                   "type": "primitive"
                 },

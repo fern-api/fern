@@ -19,8 +19,10 @@ packages/cli/configuration/src/docs-yml/schemas/**
 packages/cli/configuration/src/generators-yml/schemas/**
 packages/cli/fern-definition/schema/src/schemas/**
 packages/seed/**
-generators/typescript/utils/core-utilities/**
+generators/typescript/**/*.tempate.*
+generators/typescript/utils/commons/src/core-utilities/**
 generators/typescript/asIs/**
 generators/typescript-mcp/base/src/asIs/**
 seed/**
 docker/seed/**
+generators/typescript/utils/**

@@ -3,6 +3,7 @@ using SeedTrace.Core;
 
 namespace SeedTrace;
 
+[Serializable]
 public record GetDefaultStarterFilesRequest
 {
     [JsonPropertyName("inputParams")]
@@ -10,7 +11,7 @@ public record GetDefaultStarterFilesRequest
         new List<VariableTypeAndName>();
 
     [JsonPropertyName("outputType")]
-    public required object OutputType { get; set; }
+    public required VariableType OutputType { get; set; }
 
     /// <summary>
     /// The name of the `method` that the student has to complete.

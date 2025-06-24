@@ -127,7 +127,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -475,7 +475,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "WebhooksEcommNewOrderPayloadContentApplicationJsonSchemaAllAddressesItemsJapanType"
@@ -631,7 +631,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "WebhooksEcommNewOrderPayloadContentApplicationJsonSchemaShippingAddressJapanType"
@@ -787,7 +787,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "WebhooksEcommNewOrderPayloadContentApplicationJsonSchemaBillingAddressJapanType"
@@ -1385,7 +1385,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1401,7 +1401,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1417,7 +1417,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1433,7 +1433,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1459,7 +1459,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1476,7 +1476,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1493,7 +1493,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1510,7 +1510,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1527,7 +1527,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1544,7 +1544,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1561,7 +1561,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1578,7 +1578,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -2413,7 +2413,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "WebhooksEcommOrderChangedPayloadContentApplicationJsonSchemaAllAddressesItemsJapanType"
@@ -2569,7 +2569,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "WebhooksEcommOrderChangedPayloadContentApplicationJsonSchemaShippingAddressJapanType"
@@ -2725,7 +2725,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "WebhooksEcommOrderChangedPayloadContentApplicationJsonSchemaBillingAddressJapanType"
@@ -3323,7 +3323,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -3339,7 +3339,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -3355,7 +3355,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -3371,7 +3371,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -3397,7 +3397,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -3414,7 +3414,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -3431,7 +3431,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -3448,7 +3448,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -3465,7 +3465,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -3482,7 +3482,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -3499,7 +3499,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -3516,7 +3516,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -5551,7 +5551,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -5856,7 +5856,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -5972,7 +5972,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -6190,7 +6190,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -6405,7 +6405,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -6521,7 +6521,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -6739,7 +6739,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -7229,7 +7229,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "SitesSiteIdActivityLogsGetResponsesContentApplicationJsonSchemaItemsItemsUser"
@@ -7242,7 +7242,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -7257,7 +7257,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -7272,7 +7272,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -7287,7 +7287,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -7302,7 +7302,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "SitesSiteIdActivityLogsGetResponsesContentApplicationJsonSchemaItemsItemsPayload"
@@ -10339,7 +10339,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -11923,7 +11923,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -12402,7 +12402,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -12900,7 +12900,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -13024,7 +13024,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -13049,7 +13049,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -15083,7 +15083,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -15099,7 +15099,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "SitesSiteIdCustomCodeBlocksGetResponsesContentApplicationJsonSchemaBlocksItemsType"
@@ -18320,7 +18320,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -18372,7 +18372,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -18388,7 +18388,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -18568,7 +18568,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -18796,7 +18796,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -18848,7 +18848,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -18864,7 +18864,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -19044,7 +19044,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -24141,7 +24141,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -26122,7 +26122,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -27293,7 +27293,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -28893,7 +28893,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -30073,7 +30073,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -31231,7 +31231,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -31705,7 +31705,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "SitesSiteIdOrdersGetResponsesContentApplicationJsonSchemaOrdersItemsAllAddressesItemsJapanType"
@@ -31861,7 +31861,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "SitesSiteIdOrdersGetResponsesContentApplicationJsonSchemaOrdersItemsShippingAddressJapanType"
@@ -32017,7 +32017,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "SitesSiteIdOrdersGetResponsesContentApplicationJsonSchemaOrdersItemsBillingAddressJapanType"
@@ -32615,7 +32615,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -32631,7 +32631,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -32647,7 +32647,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -32663,7 +32663,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -32689,7 +32689,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -32706,7 +32706,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -32723,7 +32723,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -32740,7 +32740,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -32757,7 +32757,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -32774,7 +32774,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -32791,7 +32791,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -32808,7 +32808,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -33445,7 +33445,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -33462,7 +33462,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -33479,7 +33479,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -33496,7 +33496,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -33513,7 +33513,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -33530,7 +33530,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "SitesSiteIdOrdersGetResponsesContentApplicationJsonSchemaOrdersItemsDisputeLastStatus"
@@ -33613,7 +33613,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -33629,7 +33629,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -33644,7 +33644,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -33960,7 +33960,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -34408,7 +34408,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "SitesSiteIdOrdersOrderIdGetResponsesContentApplicationJsonSchemaAllAddressesItemsJapanType"
@@ -34564,7 +34564,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "SitesSiteIdOrdersOrderIdGetResponsesContentApplicationJsonSchemaShippingAddressJapanType"
@@ -34720,7 +34720,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "SitesSiteIdOrdersOrderIdGetResponsesContentApplicationJsonSchemaBillingAddressJapanType"
@@ -35318,7 +35318,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -35334,7 +35334,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -35350,7 +35350,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -35366,7 +35366,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -35392,7 +35392,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -35409,7 +35409,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -35426,7 +35426,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -35443,7 +35443,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -35460,7 +35460,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -35477,7 +35477,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -35494,7 +35494,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -35511,7 +35511,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -36148,7 +36148,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -36165,7 +36165,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -36182,7 +36182,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -36199,7 +36199,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -36216,7 +36216,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -36233,7 +36233,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "SitesSiteIdOrdersOrderIdGetResponsesContentApplicationJsonSchemaDisputeLastStatus"
@@ -36316,7 +36316,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -36332,7 +36332,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -36347,7 +36347,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -36579,7 +36579,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -37027,7 +37027,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "SitesSiteIdOrdersOrderIdPatchResponsesContentApplicationJsonSchemaAllAddressesItemsJapanType"
@@ -37183,7 +37183,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "SitesSiteIdOrdersOrderIdPatchResponsesContentApplicationJsonSchemaShippingAddressJapanType"
@@ -37339,7 +37339,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "SitesSiteIdOrdersOrderIdPatchResponsesContentApplicationJsonSchemaBillingAddressJapanType"
@@ -37937,7 +37937,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -37953,7 +37953,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -37969,7 +37969,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -37985,7 +37985,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -38011,7 +38011,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -38028,7 +38028,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -38045,7 +38045,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -38062,7 +38062,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -38079,7 +38079,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -38096,7 +38096,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -38113,7 +38113,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -38130,7 +38130,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -38767,7 +38767,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -38784,7 +38784,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -38801,7 +38801,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -38818,7 +38818,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -38835,7 +38835,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -38852,7 +38852,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "SitesSiteIdOrdersOrderIdPatchResponsesContentApplicationJsonSchemaDisputeLastStatus"
@@ -38935,7 +38935,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -38951,7 +38951,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -38966,7 +38966,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -39198,7 +39198,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -39646,7 +39646,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "SitesSiteIdOrdersOrderIdFulfillPostResponsesContentApplicationJsonSchemaAllAddressesItemsJapanType"
@@ -39802,7 +39802,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "SitesSiteIdOrdersOrderIdFulfillPostResponsesContentApplicationJsonSchemaShippingAddressJapanType"
@@ -39958,7 +39958,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "SitesSiteIdOrdersOrderIdFulfillPostResponsesContentApplicationJsonSchemaBillingAddressJapanType"
@@ -40556,7 +40556,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -40572,7 +40572,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -40588,7 +40588,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -40604,7 +40604,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -40630,7 +40630,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -40647,7 +40647,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -40664,7 +40664,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -40681,7 +40681,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -40698,7 +40698,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -40715,7 +40715,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -40732,7 +40732,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -40749,7 +40749,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -41386,7 +41386,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -41403,7 +41403,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -41420,7 +41420,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -41437,7 +41437,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -41454,7 +41454,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -41471,7 +41471,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "SitesSiteIdOrdersOrderIdFulfillPostResponsesContentApplicationJsonSchemaDisputeLastStatus"
@@ -41554,7 +41554,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -41570,7 +41570,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -41585,7 +41585,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -41817,7 +41817,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -42265,7 +42265,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "SitesSiteIdOrdersOrderIdUnfulfillPostResponsesContentApplicationJsonSchemaAllAddressesItemsJapanType"
@@ -42421,7 +42421,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "SitesSiteIdOrdersOrderIdUnfulfillPostResponsesContentApplicationJsonSchemaShippingAddressJapanType"
@@ -42577,7 +42577,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "SitesSiteIdOrdersOrderIdUnfulfillPostResponsesContentApplicationJsonSchemaBillingAddressJapanType"
@@ -43175,7 +43175,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -43191,7 +43191,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -43207,7 +43207,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -43223,7 +43223,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -43249,7 +43249,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -43266,7 +43266,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -43283,7 +43283,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -43300,7 +43300,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -43317,7 +43317,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -43334,7 +43334,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -43351,7 +43351,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -43368,7 +43368,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -44005,7 +44005,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -44022,7 +44022,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -44039,7 +44039,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -44056,7 +44056,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -44073,7 +44073,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -44090,7 +44090,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "SitesSiteIdOrdersOrderIdUnfulfillPostResponsesContentApplicationJsonSchemaDisputeLastStatus"
@@ -44173,7 +44173,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -44189,7 +44189,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -44204,7 +44204,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -44436,7 +44436,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -44902,7 +44902,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "SitesSiteIdOrdersOrderIdRefundPostResponsesContentApplicationJsonSchemaAllAddressesItemsJapanType"
@@ -45058,7 +45058,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "SitesSiteIdOrdersOrderIdRefundPostResponsesContentApplicationJsonSchemaShippingAddressJapanType"
@@ -45214,7 +45214,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "SitesSiteIdOrdersOrderIdRefundPostResponsesContentApplicationJsonSchemaBillingAddressJapanType"
@@ -45812,7 +45812,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -45828,7 +45828,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -45844,7 +45844,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -45860,7 +45860,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -45886,7 +45886,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -45903,7 +45903,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -45920,7 +45920,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -45937,7 +45937,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -45954,7 +45954,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -45971,7 +45971,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -45988,7 +45988,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -46005,7 +46005,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -46642,7 +46642,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -46659,7 +46659,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -46676,7 +46676,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -46693,7 +46693,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -46710,7 +46710,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -46727,7 +46727,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "SitesSiteIdOrdersOrderIdRefundPostResponsesContentApplicationJsonSchemaDisputeLastStatus"
@@ -46810,7 +46810,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -46826,7 +46826,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -46841,7 +46841,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -47073,7 +47073,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -47371,7 +47371,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -47684,7 +47684,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -47971,7 +47971,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -48909,7 +48909,8 @@
                     "formResponse": {
                       "First Name": "Arthur",
                       "Last Name": "Dent"
-                    }
+                    },
+                    "formId": "6321ca84df3949bfc6752327"
                   },
                   {
                     "id": "660d64fabf6e0a0d4edab981",
@@ -48920,7 +48921,8 @@
                     "formResponse": {
                       "First Name": "Ford",
                       "Last Name": "Prefect"
-                    }
+                    },
+                    "formId": "6321ca84df3949bfc6752327"
                   }
                 ],
                 "pagination": {
@@ -48942,7 +48944,8 @@
                       "formResponse": {
                         "First Name": "Arthur",
                         "Last Name": "Dent"
-                      }
+                      },
+                      "formId": "6321ca84df3949bfc6752327"
                     },
                     {
                       "id": "660d64fabf6e0a0d4edab981",
@@ -48953,7 +48956,8 @@
                       "formResponse": {
                         "First Name": "Ford",
                         "Last Name": "Prefect"
-                      }
+                      },
+                      "formId": "6321ca84df3949bfc6752327"
                     }
                   ],
                   "pagination": {
@@ -49123,7 +49127,8 @@
                 "formResponse": {
                   "First Name": "Arthur",
                   "Last Name": "Dent"
-                }
+                },
+                "formId": "6321ca84df3949bfc6752327"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -49136,7 +49141,8 @@
                   "formResponse": {
                     "First Name": "Arthur",
                     "Last Name": "Dent"
-                  }
+                  },
+                  "formId": "6321ca84df3949bfc6752327"
                 }
               }
             }
@@ -49339,7 +49345,8 @@
                 "formResponse": {
                   "First Name": "Arthur",
                   "Last Name": "Dent"
-                }
+                },
+                "formId": "6321ca84df3949bfc6752327"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -49352,7 +49359,8 @@
                   "formResponse": {
                     "First Name": "Arthur",
                     "Last Name": "Dent"
-                  }
+                  },
+                  "formId": "6321ca84df3949bfc6752327"
                 }
               }
             }
@@ -49951,7 +49959,40 @@
                     "url": "heartofgold.spaceship"
                   }
                 ],
-                "locales": {}
+                "locales": {
+                  "value": {
+                    "primary": {
+                      "id": "653fd9af6a07fc9cfd7a5e57",
+                      "cmsLocaleId": "653ad57de882f528b32e810e",
+                      "enabled": false,
+                      "displayName": "English (United States)",
+                      "displayImageId": null,
+                      "redirect": true,
+                      "subdirectory": "",
+                      "tag": "en-US"
+                    },
+                    "secondary": [
+                      {
+                        "id": "653fd9af6a07fc9cfd7a5e56",
+                        "cmsLocaleId": "653fd9af6a07fc9cfd7a5e5d",
+                        "enabled": true,
+                        "displayName": "French (France)",
+                        "displayImageId": null,
+                        "subdirectory": "fr-fr",
+                        "tag": "fr-FR"
+                      },
+                      {
+                        "id": "654112a3a525b2739d97664c",
+                        "cmsLocaleId": "654112a3a525b2739d97664f",
+                        "enabled": true,
+                        "displayName": "Spanish (Mexico)",
+                        "displayImageId": null,
+                        "subdirectory": "es-mx",
+                        "tag": "es-MX"
+                      }
+                    ]
+                  }
+                }
               },
               "responseBodyV3": {
                 "type": "json",
@@ -49976,7 +50017,40 @@
                       "url": "heartofgold.spaceship"
                     }
                   ],
-                  "locales": {}
+                  "locales": {
+                    "value": {
+                      "primary": {
+                        "id": "653fd9af6a07fc9cfd7a5e57",
+                        "cmsLocaleId": "653ad57de882f528b32e810e",
+                        "enabled": false,
+                        "displayName": "English (United States)",
+                        "displayImageId": null,
+                        "redirect": true,
+                        "subdirectory": "",
+                        "tag": "en-US"
+                      },
+                      "secondary": [
+                        {
+                          "id": "653fd9af6a07fc9cfd7a5e56",
+                          "cmsLocaleId": "653fd9af6a07fc9cfd7a5e5d",
+                          "enabled": true,
+                          "displayName": "French (France)",
+                          "displayImageId": null,
+                          "subdirectory": "fr-fr",
+                          "tag": "fr-FR"
+                        },
+                        {
+                          "id": "654112a3a525b2739d97664c",
+                          "cmsLocaleId": "654112a3a525b2739d97664f",
+                          "enabled": true,
+                          "displayName": "Spanish (Mexico)",
+                          "displayImageId": null,
+                          "subdirectory": "es-mx",
+                          "tag": "es-MX"
+                        }
+                      ]
+                    }
+                  }
                 }
               }
             }
@@ -50410,7 +50484,9 @@
                   ],
                   "publishedBy": {
                     "displayName": "Zaphod BeebleBrox"
-                  }
+                  },
+                  "site": "62749158efef318abc8d5a0f",
+                  "publishTime": "2024-07-26T16:43:20.440Z"
                 }
               }
             }
@@ -50723,7 +50799,8 @@
                         "variantSlug": "luxurious-fresh-ball-generic-bronze-practical-plastic",
                         "variantSKU": "luxurious-fresh-ball-generic-bronze-practical-plastic",
                         "variantImage": {
-                          "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2672c_image14.jpeg"
+                          "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2672c_image14.jpeg",
+                          "file": {}
                         },
                         "variantPrice": {
                           "unit": "USD",
@@ -50750,7 +50827,8 @@
                         "variantSlug": "incredible-bronze-towels-sleek-frozen-incredible-metal",
                         "variantSKU": "incredible-bronze-towels-sleek-frozen-incredible-metal",
                         "variantImage": {
-                          "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e26729_image16.jpeg"
+                          "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e26729_image16.jpeg",
+                          "file": {}
                         },
                         "variantPrice": {
                           "unit": "USD",
@@ -50790,7 +50868,8 @@
                       "isBuyNow": false
                     },
                     "hasDownloads": false,
-                    "paymentProcessor": "stripe"
+                    "paymentProcessor": "stripe",
+                    "paypalDetails": {}
                   },
                   {
                     "orderId": "fc7-128",
@@ -50883,7 +50962,8 @@
                         "variantSlug": "luxurious-fresh-ball-generic-bronze-practical-plastic",
                         "variantSKU": "luxurious-fresh-ball-generic-bronze-practical-plastic",
                         "variantImage": {
-                          "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2672c_image14.jpeg"
+                          "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2672c_image14.jpeg",
+                          "file": {}
                         },
                         "variantPrice": {
                           "unit": "USD",
@@ -50910,7 +50990,8 @@
                         "variantSlug": "recycled-steel-gloves-electronic-granite-handcrafted-grey",
                         "variantSKU": "recycled-steel-gloves-electronic-granite-handcrafted-grey",
                         "variantImage": {
-                          "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2671e_image2.jpeg"
+                          "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2671e_image2.jpeg",
+                          "file": {}
                         },
                         "variantPrice": {
                           "unit": "USD",
@@ -50947,7 +51028,9 @@
                       {}
                     ],
                     "metadata": {
-                      "isBuyNow": false
+                      "isBuyNow": false,
+                      "hasDownloads": false,
+                      "paymentProcessor": "stripe"
                     },
                     "isCustomerDeleted": false,
                     "isShippingRequired": true,
@@ -51001,7 +51084,8 @@
                         "name": "New product guide",
                         "url": "https://webflow.com/dashboard/download-digital-product?payload=5d93ba5e38c6b0160ab711d3;e7634a;5eb1aac72912ec06f561278c;5e9a5eba75e0ac242e1b6f63:ka2nehxy:4a1ee0a632feaab94294350087215ed89533f2f530903e3b933b638940e921aa"
                       }
-                    ]
+                    ],
+                    "paypalDetails": {}
                   }
                 ],
                 "pagination": {
@@ -51106,7 +51190,8 @@
                           "variantSlug": "luxurious-fresh-ball-generic-bronze-practical-plastic",
                           "variantSKU": "luxurious-fresh-ball-generic-bronze-practical-plastic",
                           "variantImage": {
-                            "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2672c_image14.jpeg"
+                            "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2672c_image14.jpeg",
+                            "file": {}
                           },
                           "variantPrice": {
                             "unit": "USD",
@@ -51133,7 +51218,8 @@
                           "variantSlug": "incredible-bronze-towels-sleek-frozen-incredible-metal",
                           "variantSKU": "incredible-bronze-towels-sleek-frozen-incredible-metal",
                           "variantImage": {
-                            "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e26729_image16.jpeg"
+                            "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e26729_image16.jpeg",
+                            "file": {}
                           },
                           "variantPrice": {
                             "unit": "USD",
@@ -51173,7 +51259,8 @@
                         "isBuyNow": false
                       },
                       "hasDownloads": false,
-                      "paymentProcessor": "stripe"
+                      "paymentProcessor": "stripe",
+                      "paypalDetails": {}
                     },
                     {
                       "orderId": "fc7-128",
@@ -51266,7 +51353,8 @@
                           "variantSlug": "luxurious-fresh-ball-generic-bronze-practical-plastic",
                           "variantSKU": "luxurious-fresh-ball-generic-bronze-practical-plastic",
                           "variantImage": {
-                            "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2672c_image14.jpeg"
+                            "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2672c_image14.jpeg",
+                            "file": {}
                           },
                           "variantPrice": {
                             "unit": "USD",
@@ -51293,7 +51381,8 @@
                           "variantSlug": "recycled-steel-gloves-electronic-granite-handcrafted-grey",
                           "variantSKU": "recycled-steel-gloves-electronic-granite-handcrafted-grey",
                           "variantImage": {
-                            "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2671e_image2.jpeg"
+                            "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2671e_image2.jpeg",
+                            "file": {}
                           },
                           "variantPrice": {
                             "unit": "USD",
@@ -51330,7 +51419,9 @@
                         {}
                       ],
                       "metadata": {
-                        "isBuyNow": false
+                        "isBuyNow": false,
+                        "hasDownloads": false,
+                        "paymentProcessor": "stripe"
                       },
                       "isCustomerDeleted": false,
                       "isShippingRequired": true,
@@ -51384,7 +51475,8 @@
                           "name": "New product guide",
                           "url": "https://webflow.com/dashboard/download-digital-product?payload=5d93ba5e38c6b0160ab711d3;e7634a;5eb1aac72912ec06f561278c;5e9a5eba75e0ac242e1b6f63:ka2nehxy:4a1ee0a632feaab94294350087215ed89533f2f530903e3b933b638940e921aa"
                         }
-                      ]
+                      ],
+                      "paypalDetails": {}
                     }
                   ],
                   "pagination": {
@@ -51671,7 +51763,8 @@
                     "variantSlug": "luxurious-fresh-ball-generic-bronze-practical-plastic",
                     "variantSKU": "luxurious-fresh-ball-generic-bronze-practical-plastic",
                     "variantImage": {
-                      "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2672c_image14.jpeg"
+                      "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2672c_image14.jpeg",
+                      "file": {}
                     },
                     "variantPrice": {
                       "unit": "USD",
@@ -51698,7 +51791,8 @@
                     "variantSlug": "recycled-steel-gloves-electronic-granite-handcrafted-grey",
                     "variantSKU": "recycled-steel-gloves-electronic-granite-handcrafted-grey",
                     "variantImage": {
-                      "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2671e_image2.jpeg"
+                      "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2671e_image2.jpeg",
+                      "file": {}
                     },
                     "variantPrice": {
                       "unit": "USD",
@@ -51735,7 +51829,9 @@
                   {}
                 ],
                 "metadata": {
-                  "isBuyNow": false
+                  "isBuyNow": false,
+                  "hasDownloads": false,
+                  "paymentProcessor": "stripe"
                 },
                 "isCustomerDeleted": false,
                 "isShippingRequired": true,
@@ -51789,7 +51885,8 @@
                     "name": "New product guide",
                     "url": "https://webflow.com/dashboard/download-digital-product?payload=5d93ba5e38c6b0160ab711d3;e7634a;5eb1aac72912ec06f561278c;5e9a5eba75e0ac242e1b6f63:ka2nehxy:4a1ee0a632feaab94294350087215ed89533f2f530903e3b933b638940e921aa"
                   }
-                ]
+                ],
+                "paypalDetails": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -51885,7 +51982,8 @@
                       "variantSlug": "luxurious-fresh-ball-generic-bronze-practical-plastic",
                       "variantSKU": "luxurious-fresh-ball-generic-bronze-practical-plastic",
                       "variantImage": {
-                        "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2672c_image14.jpeg"
+                        "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2672c_image14.jpeg",
+                        "file": {}
                       },
                       "variantPrice": {
                         "unit": "USD",
@@ -51912,7 +52010,8 @@
                       "variantSlug": "recycled-steel-gloves-electronic-granite-handcrafted-grey",
                       "variantSKU": "recycled-steel-gloves-electronic-granite-handcrafted-grey",
                       "variantImage": {
-                        "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2671e_image2.jpeg"
+                        "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2671e_image2.jpeg",
+                        "file": {}
                       },
                       "variantPrice": {
                         "unit": "USD",
@@ -51949,7 +52048,9 @@
                     {}
                   ],
                   "metadata": {
-                    "isBuyNow": false
+                    "isBuyNow": false,
+                    "hasDownloads": false,
+                    "paymentProcessor": "stripe"
                   },
                   "isCustomerDeleted": false,
                   "isShippingRequired": true,
@@ -52003,7 +52104,8 @@
                       "name": "New product guide",
                       "url": "https://webflow.com/dashboard/download-digital-product?payload=5d93ba5e38c6b0160ab711d3;e7634a;5eb1aac72912ec06f561278c;5e9a5eba75e0ac242e1b6f63:ka2nehxy:4a1ee0a632feaab94294350087215ed89533f2f530903e3b933b638940e921aa"
                     }
-                  ]
+                  ],
+                  "paypalDetails": {}
                 }
               }
             }
@@ -52353,7 +52455,8 @@
                     "variantSlug": "luxurious-fresh-ball-generic-bronze-practical-plastic",
                     "variantSKU": "luxurious-fresh-ball-generic-bronze-practical-plastic",
                     "variantImage": {
-                      "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2672c_image14.jpeg"
+                      "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2672c_image14.jpeg",
+                      "file": {}
                     },
                     "variantPrice": {
                       "unit": "USD",
@@ -52380,7 +52483,8 @@
                     "variantSlug": "recycled-steel-gloves-electronic-granite-handcrafted-grey",
                     "variantSKU": "recycled-steel-gloves-electronic-granite-handcrafted-grey",
                     "variantImage": {
-                      "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2671e_image2.jpeg"
+                      "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2671e_image2.jpeg",
+                      "file": {}
                     },
                     "variantPrice": {
                       "unit": "USD",
@@ -52417,7 +52521,9 @@
                   {}
                 ],
                 "metadata": {
-                  "isBuyNow": false
+                  "isBuyNow": false,
+                  "hasDownloads": false,
+                  "paymentProcessor": "stripe"
                 },
                 "isCustomerDeleted": false,
                 "isShippingRequired": true,
@@ -52471,7 +52577,8 @@
                     "name": "New product guide",
                     "url": "https://webflow.com/dashboard/download-digital-product?payload=5d93ba5e38c6b0160ab711d3;e7634a;5eb1aac72912ec06f561278c;5e9a5eba75e0ac242e1b6f63:ka2nehxy:4a1ee0a632feaab94294350087215ed89533f2f530903e3b933b638940e921aa"
                   }
-                ]
+                ],
+                "paypalDetails": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -52567,7 +52674,8 @@
                       "variantSlug": "luxurious-fresh-ball-generic-bronze-practical-plastic",
                       "variantSKU": "luxurious-fresh-ball-generic-bronze-practical-plastic",
                       "variantImage": {
-                        "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2672c_image14.jpeg"
+                        "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2672c_image14.jpeg",
+                        "file": {}
                       },
                       "variantPrice": {
                         "unit": "USD",
@@ -52594,7 +52702,8 @@
                       "variantSlug": "recycled-steel-gloves-electronic-granite-handcrafted-grey",
                       "variantSKU": "recycled-steel-gloves-electronic-granite-handcrafted-grey",
                       "variantImage": {
-                        "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2671e_image2.jpeg"
+                        "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2671e_image2.jpeg",
+                        "file": {}
                       },
                       "variantPrice": {
                         "unit": "USD",
@@ -52631,7 +52740,9 @@
                     {}
                   ],
                   "metadata": {
-                    "isBuyNow": false
+                    "isBuyNow": false,
+                    "hasDownloads": false,
+                    "paymentProcessor": "stripe"
                   },
                   "isCustomerDeleted": false,
                   "isShippingRequired": true,
@@ -52685,7 +52796,8 @@
                       "name": "New product guide",
                       "url": "https://webflow.com/dashboard/download-digital-product?payload=5d93ba5e38c6b0160ab711d3;e7634a;5eb1aac72912ec06f561278c;5e9a5eba75e0ac242e1b6f63:ka2nehxy:4a1ee0a632feaab94294350087215ed89533f2f530903e3b933b638940e921aa"
                     }
-                  ]
+                  ],
+                  "paypalDetails": {}
                 }
               }
             }
@@ -52997,7 +53109,8 @@
                     "variantSlug": "luxurious-fresh-ball-generic-bronze-practical-plastic",
                     "variantSKU": "luxurious-fresh-ball-generic-bronze-practical-plastic",
                     "variantImage": {
-                      "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2672c_image14.jpeg"
+                      "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2672c_image14.jpeg",
+                      "file": {}
                     },
                     "variantPrice": {
                       "unit": "USD",
@@ -53024,7 +53137,8 @@
                     "variantSlug": "recycled-steel-gloves-electronic-granite-handcrafted-grey",
                     "variantSKU": "recycled-steel-gloves-electronic-granite-handcrafted-grey",
                     "variantImage": {
-                      "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2671e_image2.jpeg"
+                      "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2671e_image2.jpeg",
+                      "file": {}
                     },
                     "variantPrice": {
                       "unit": "USD",
@@ -53061,7 +53175,9 @@
                   {}
                 ],
                 "metadata": {
-                  "isBuyNow": false
+                  "isBuyNow": false,
+                  "hasDownloads": false,
+                  "paymentProcessor": "stripe"
                 },
                 "isCustomerDeleted": false,
                 "isShippingRequired": true,
@@ -53115,7 +53231,8 @@
                     "name": "New product guide",
                     "url": "https://webflow.com/dashboard/download-digital-product?payload=5d93ba5e38c6b0160ab711d3;e7634a;5eb1aac72912ec06f561278c;5e9a5eba75e0ac242e1b6f63:ka2nehxy:4a1ee0a632feaab94294350087215ed89533f2f530903e3b933b638940e921aa"
                   }
-                ]
+                ],
+                "paypalDetails": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -53211,7 +53328,8 @@
                       "variantSlug": "luxurious-fresh-ball-generic-bronze-practical-plastic",
                       "variantSKU": "luxurious-fresh-ball-generic-bronze-practical-plastic",
                       "variantImage": {
-                        "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2672c_image14.jpeg"
+                        "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2672c_image14.jpeg",
+                        "file": {}
                       },
                       "variantPrice": {
                         "unit": "USD",
@@ -53238,7 +53356,8 @@
                       "variantSlug": "recycled-steel-gloves-electronic-granite-handcrafted-grey",
                       "variantSKU": "recycled-steel-gloves-electronic-granite-handcrafted-grey",
                       "variantImage": {
-                        "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2671e_image2.jpeg"
+                        "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2671e_image2.jpeg",
+                        "file": {}
                       },
                       "variantPrice": {
                         "unit": "USD",
@@ -53275,7 +53394,9 @@
                     {}
                   ],
                   "metadata": {
-                    "isBuyNow": false
+                    "isBuyNow": false,
+                    "hasDownloads": false,
+                    "paymentProcessor": "stripe"
                   },
                   "isCustomerDeleted": false,
                   "isShippingRequired": true,
@@ -53329,7 +53450,8 @@
                       "name": "New product guide",
                       "url": "https://webflow.com/dashboard/download-digital-product?payload=5d93ba5e38c6b0160ab711d3;e7634a;5eb1aac72912ec06f561278c;5e9a5eba75e0ac242e1b6f63:ka2nehxy:4a1ee0a632feaab94294350087215ed89533f2f530903e3b933b638940e921aa"
                     }
-                  ]
+                  ],
+                  "paypalDetails": {}
                 }
               }
             }
@@ -53609,7 +53731,8 @@
                     "variantSlug": "luxurious-fresh-ball-generic-bronze-practical-plastic",
                     "variantSKU": "luxurious-fresh-ball-generic-bronze-practical-plastic",
                     "variantImage": {
-                      "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2672c_image14.jpeg"
+                      "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2672c_image14.jpeg",
+                      "file": {}
                     },
                     "variantPrice": {
                       "unit": "USD",
@@ -53636,7 +53759,8 @@
                     "variantSlug": "recycled-steel-gloves-electronic-granite-handcrafted-grey",
                     "variantSKU": "recycled-steel-gloves-electronic-granite-handcrafted-grey",
                     "variantImage": {
-                      "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2671e_image2.jpeg"
+                      "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2671e_image2.jpeg",
+                      "file": {}
                     },
                     "variantPrice": {
                       "unit": "USD",
@@ -53673,7 +53797,9 @@
                   {}
                 ],
                 "metadata": {
-                  "isBuyNow": false
+                  "isBuyNow": false,
+                  "hasDownloads": false,
+                  "paymentProcessor": "stripe"
                 },
                 "isCustomerDeleted": false,
                 "isShippingRequired": true,
@@ -53727,7 +53853,8 @@
                     "name": "New product guide",
                     "url": "https://webflow.com/dashboard/download-digital-product?payload=5d93ba5e38c6b0160ab711d3;e7634a;5eb1aac72912ec06f561278c;5e9a5eba75e0ac242e1b6f63:ka2nehxy:4a1ee0a632feaab94294350087215ed89533f2f530903e3b933b638940e921aa"
                   }
-                ]
+                ],
+                "paypalDetails": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -53823,7 +53950,8 @@
                       "variantSlug": "luxurious-fresh-ball-generic-bronze-practical-plastic",
                       "variantSKU": "luxurious-fresh-ball-generic-bronze-practical-plastic",
                       "variantImage": {
-                        "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2672c_image14.jpeg"
+                        "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2672c_image14.jpeg",
+                        "file": {}
                       },
                       "variantPrice": {
                         "unit": "USD",
@@ -53850,7 +53978,8 @@
                       "variantSlug": "recycled-steel-gloves-electronic-granite-handcrafted-grey",
                       "variantSKU": "recycled-steel-gloves-electronic-granite-handcrafted-grey",
                       "variantImage": {
-                        "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2671e_image2.jpeg"
+                        "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2671e_image2.jpeg",
+                        "file": {}
                       },
                       "variantPrice": {
                         "unit": "USD",
@@ -53887,7 +54016,9 @@
                     {}
                   ],
                   "metadata": {
-                    "isBuyNow": false
+                    "isBuyNow": false,
+                    "hasDownloads": false,
+                    "paymentProcessor": "stripe"
                   },
                   "isCustomerDeleted": false,
                   "isShippingRequired": true,
@@ -53941,7 +54072,8 @@
                       "name": "New product guide",
                       "url": "https://webflow.com/dashboard/download-digital-product?payload=5d93ba5e38c6b0160ab711d3;e7634a;5eb1aac72912ec06f561278c;5e9a5eba75e0ac242e1b6f63:ka2nehxy:4a1ee0a632feaab94294350087215ed89533f2f530903e3b933b638940e921aa"
                     }
-                  ]
+                  ],
+                  "paypalDetails": {}
                 }
               }
             }
@@ -54250,7 +54382,8 @@
                     "variantSlug": "luxurious-fresh-ball-generic-bronze-practical-plastic",
                     "variantSKU": "luxurious-fresh-ball-generic-bronze-practical-plastic",
                     "variantImage": {
-                      "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2672c_image14.jpeg"
+                      "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2672c_image14.jpeg",
+                      "file": {}
                     },
                     "variantPrice": {
                       "unit": "USD",
@@ -54277,7 +54410,8 @@
                     "variantSlug": "recycled-steel-gloves-electronic-granite-handcrafted-grey",
                     "variantSKU": "recycled-steel-gloves-electronic-granite-handcrafted-grey",
                     "variantImage": {
-                      "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2671e_image2.jpeg"
+                      "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2671e_image2.jpeg",
+                      "file": {}
                     },
                     "variantPrice": {
                       "unit": "USD",
@@ -54314,7 +54448,9 @@
                   {}
                 ],
                 "metadata": {
-                  "isBuyNow": false
+                  "isBuyNow": false,
+                  "hasDownloads": false,
+                  "paymentProcessor": "stripe"
                 },
                 "isCustomerDeleted": false,
                 "isShippingRequired": true,
@@ -54368,7 +54504,8 @@
                     "name": "New product guide",
                     "url": "https://webflow.com/dashboard/download-digital-product?payload=5d93ba5e38c6b0160ab711d3;e7634a;5eb1aac72912ec06f561278c;5e9a5eba75e0ac242e1b6f63:ka2nehxy:4a1ee0a632feaab94294350087215ed89533f2f530903e3b933b638940e921aa"
                   }
-                ]
+                ],
+                "paypalDetails": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -54464,7 +54601,8 @@
                       "variantSlug": "luxurious-fresh-ball-generic-bronze-practical-plastic",
                       "variantSKU": "luxurious-fresh-ball-generic-bronze-practical-plastic",
                       "variantImage": {
-                        "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2672c_image14.jpeg"
+                        "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2672c_image14.jpeg",
+                        "file": {}
                       },
                       "variantPrice": {
                         "unit": "USD",
@@ -54491,7 +54629,8 @@
                       "variantSlug": "recycled-steel-gloves-electronic-granite-handcrafted-grey",
                       "variantSKU": "recycled-steel-gloves-electronic-granite-handcrafted-grey",
                       "variantImage": {
-                        "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2671e_image2.jpeg"
+                        "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2671e_image2.jpeg",
+                        "file": {}
                       },
                       "variantPrice": {
                         "unit": "USD",
@@ -54528,7 +54667,9 @@
                     {}
                   ],
                   "metadata": {
-                    "isBuyNow": false
+                    "isBuyNow": false,
+                    "hasDownloads": false,
+                    "paymentProcessor": "stripe"
                   },
                   "isCustomerDeleted": false,
                   "isShippingRequired": true,
@@ -54582,7 +54723,8 @@
                       "name": "New product guide",
                       "url": "https://webflow.com/dashboard/download-digital-product?payload=5d93ba5e38c6b0160ab711d3;e7634a;5eb1aac72912ec06f561278c;5e9a5eba75e0ac242e1b6f63:ka2nehxy:4a1ee0a632feaab94294350087215ed89533f2f530903e3b933b638940e921aa"
                     }
-                  ]
+                  ],
+                  "paypalDetails": {}
                 }
               }
             }
@@ -54660,7 +54802,7 @@
                   "valueType": {
                     "type": "optional",
                     "itemType": {
-                      "type": "optional",
+                      "type": "nullable",
                       "itemType": {
                         "type": "primitive",
                         "value": {
@@ -54677,7 +54819,7 @@
                   "valueType": {
                     "type": "optional",
                     "itemType": {
-                      "type": "optional",
+                      "type": "nullable",
                       "itemType": {
                         "type": "primitive",
                         "value": {
@@ -54694,7 +54836,7 @@
                   "valueType": {
                     "type": "optional",
                     "itemType": {
-                      "type": "optional",
+                      "type": "nullable",
                       "itemType": {
                         "type": "primitive",
                         "value": {
@@ -54711,7 +54853,7 @@
                   "valueType": {
                     "type": "optional",
                     "itemType": {
-                      "type": "optional",
+                      "type": "nullable",
                       "itemType": {
                         "type": "primitive",
                         "value": {
@@ -54728,7 +54870,7 @@
                   "valueType": {
                     "type": "optional",
                     "itemType": {
-                      "type": "optional",
+                      "type": "nullable",
                       "itemType": {
                         "type": "primitive",
                         "value": {
@@ -54745,7 +54887,7 @@
                   "valueType": {
                     "type": "optional",
                     "itemType": {
-                      "type": "optional",
+                      "type": "nullable",
                       "itemType": {
                         "type": "id",
                         "value": "WebhooksEcommNewOrderPayloadContentApplicationJsonSchemaDisputeLastStatus"
@@ -54828,7 +54970,7 @@
                   "valueType": {
                     "type": "optional",
                     "itemType": {
-                      "type": "optional",
+                      "type": "nullable",
                       "itemType": {
                         "type": "primitive",
                         "value": {
@@ -54844,7 +54986,7 @@
                   "valueType": {
                     "type": "optional",
                     "itemType": {
-                      "type": "optional",
+                      "type": "nullable",
                       "itemType": {
                         "type": "primitive",
                         "value": {
@@ -54859,7 +55001,7 @@
                   "valueType": {
                     "type": "optional",
                     "itemType": {
-                      "type": "optional",
+                      "type": "nullable",
                       "itemType": {
                         "type": "primitive",
                         "value": {
@@ -55137,7 +55279,8 @@
                     "variantSlug": "luxurious-fresh-ball-generic-bronze-practical-plastic",
                     "variantSKU": "luxurious-fresh-ball-generic-bronze-practical-plastic",
                     "variantImage": {
-                      "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2672c_image14.jpeg"
+                      "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2672c_image14.jpeg",
+                      "file": {}
                     },
                     "variantPrice": {
                       "unit": "USD",
@@ -55147,7 +55290,8 @@
                     "weight": 11,
                     "width": 82,
                     "height": 70,
-                    "length": 9
+                    "length": 9,
+                    "productId": "66072fb61b89448912e26791"
                   },
                   {
                     "count": 1,
@@ -55163,7 +55307,8 @@
                     "variantSlug": "recycled-steel-gloves-electronic-granite-handcrafted-grey",
                     "variantSKU": "recycled-steel-gloves-electronic-granite-handcrafted-grey",
                     "variantImage": {
-                      "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2671e_image2.jpeg"
+                      "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2671e_image2.jpeg",
+                      "file": {}
                     },
                     "variantPrice": {
                       "unit": "USD",
@@ -55173,7 +55318,8 @@
                     "weight": 38,
                     "width": 76,
                     "height": 85,
-                    "length": 40
+                    "length": 40,
+                    "productId": "66072fb61b89448912e26799"
                   }
                 ],
                 "purchasedItemsCount": 2,
@@ -55200,7 +55346,9 @@
                   {}
                 ],
                 "metadata": {
-                  "isBuyNow": false
+                  "isBuyNow": false,
+                  "hasDownloads": false,
+                  "paymentProcessor": "stripe"
                 },
                 "isCustomerDeleted": false,
                 "isShippingRequired": true,
@@ -55254,7 +55402,9 @@
                     "name": "New product guide",
                     "url": "https://webflow.com/dashboard/download-digital-product?payload=5d93ba5e38c6b0160ab711d3;e7634a;5eb1aac72912ec06f561278c;5e9a5eba75e0ac242e1b6f63:ka2nehxy:4a1ee0a632feaab94294350087215ed89533f2f530903e3b933b638940e921aa"
                   }
-                ]
+                ],
+                "orderId": "fc7-128",
+                "paypalDetails": {}
               }
             }
           ]
@@ -55326,7 +55476,7 @@
                   "valueType": {
                     "type": "optional",
                     "itemType": {
-                      "type": "optional",
+                      "type": "nullable",
                       "itemType": {
                         "type": "primitive",
                         "value": {
@@ -55343,7 +55493,7 @@
                   "valueType": {
                     "type": "optional",
                     "itemType": {
-                      "type": "optional",
+                      "type": "nullable",
                       "itemType": {
                         "type": "primitive",
                         "value": {
@@ -55360,7 +55510,7 @@
                   "valueType": {
                     "type": "optional",
                     "itemType": {
-                      "type": "optional",
+                      "type": "nullable",
                       "itemType": {
                         "type": "primitive",
                         "value": {
@@ -55377,7 +55527,7 @@
                   "valueType": {
                     "type": "optional",
                     "itemType": {
-                      "type": "optional",
+                      "type": "nullable",
                       "itemType": {
                         "type": "primitive",
                         "value": {
@@ -55394,7 +55544,7 @@
                   "valueType": {
                     "type": "optional",
                     "itemType": {
-                      "type": "optional",
+                      "type": "nullable",
                       "itemType": {
                         "type": "primitive",
                         "value": {
@@ -55411,7 +55561,7 @@
                   "valueType": {
                     "type": "optional",
                     "itemType": {
-                      "type": "optional",
+                      "type": "nullable",
                       "itemType": {
                         "type": "id",
                         "value": "WebhooksEcommOrderChangedPayloadContentApplicationJsonSchemaDisputeLastStatus"
@@ -55494,7 +55644,7 @@
                   "valueType": {
                     "type": "optional",
                     "itemType": {
-                      "type": "optional",
+                      "type": "nullable",
                       "itemType": {
                         "type": "primitive",
                         "value": {
@@ -55510,7 +55660,7 @@
                   "valueType": {
                     "type": "optional",
                     "itemType": {
-                      "type": "optional",
+                      "type": "nullable",
                       "itemType": {
                         "type": "primitive",
                         "value": {
@@ -55525,7 +55675,7 @@
                   "valueType": {
                     "type": "optional",
                     "itemType": {
-                      "type": "optional",
+                      "type": "nullable",
                       "itemType": {
                         "type": "primitive",
                         "value": {
@@ -55803,7 +55953,8 @@
                     "variantSlug": "luxurious-fresh-ball-generic-bronze-practical-plastic",
                     "variantSKU": "luxurious-fresh-ball-generic-bronze-practical-plastic",
                     "variantImage": {
-                      "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2672c_image14.jpeg"
+                      "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2672c_image14.jpeg",
+                      "file": {}
                     },
                     "variantPrice": {
                       "unit": "USD",
@@ -55813,7 +55964,8 @@
                     "weight": 11,
                     "width": 82,
                     "height": 70,
-                    "length": 9
+                    "length": 9,
+                    "productId": "66072fb61b89448912e26791"
                   },
                   {
                     "count": 1,
@@ -55829,7 +55981,8 @@
                     "variantSlug": "recycled-steel-gloves-electronic-granite-handcrafted-grey",
                     "variantSKU": "recycled-steel-gloves-electronic-granite-handcrafted-grey",
                     "variantImage": {
-                      "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2671e_image2.jpeg"
+                      "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2671e_image2.jpeg",
+                      "file": {}
                     },
                     "variantPrice": {
                       "unit": "USD",
@@ -55839,7 +55992,8 @@
                     "weight": 38,
                     "width": 76,
                     "height": 85,
-                    "length": 40
+                    "length": 40,
+                    "productId": "66072fb61b89448912e26799"
                   }
                 ],
                 "purchasedItemsCount": 2,
@@ -55866,7 +56020,9 @@
                   {}
                 ],
                 "metadata": {
-                  "isBuyNow": false
+                  "isBuyNow": false,
+                  "hasDownloads": false,
+                  "paymentProcessor": "stripe"
                 },
                 "isCustomerDeleted": false,
                 "isShippingRequired": true,
@@ -55920,7 +56076,9 @@
                     "name": "New product guide",
                     "url": "https://webflow.com/dashboard/download-digital-product?payload=5d93ba5e38c6b0160ab711d3;e7634a;5eb1aac72912ec06f561278c;5e9a5eba75e0ac242e1b6f63:ka2nehxy:4a1ee0a632feaab94294350087215ed89533f2f530903e3b933b638940e921aa"
                   }
-                ]
+                ],
+                "orderId": "fc7-128",
+                "paypalDetails": {}
               }
             }
           ]
@@ -56663,7 +56821,12 @@
                         "type": "admin"
                       }
                     ],
-                    "data": {}
+                    "data": {
+                      "accept-privacy": false,
+                      "accept-communications": false,
+                      "email": "zaphod.beeblebrox@heart-of-gold.com",
+                      "name": "Zaphod Beeblebrox"
+                    }
                   },
                   {
                     "id": "6287ec36a841b25637c663f0",
@@ -56677,7 +56840,12 @@
                         "type": "admin"
                       }
                     ],
-                    "data": {}
+                    "data": {
+                      "accept-privacy": false,
+                      "accept-communications": false,
+                      "email": "ford.prefect@hitchhikers-guide.com",
+                      "name": "Ford Prefect"
+                    }
                   },
                   {
                     "id": "6287ec36a841b25637c663d9",
@@ -56691,7 +56859,12 @@
                         "type": "admin"
                       }
                     ],
-                    "data": {}
+                    "data": {
+                      "accept-privacy": false,
+                      "accept-communications": false,
+                      "email": "arthur.dent@earthling.com",
+                      "name": "Arthur Dent"
+                    }
                   },
                   {
                     "id": "6287ec37a841b25637c6641b",
@@ -56705,7 +56878,12 @@
                         "type": "admin"
                       }
                     ],
-                    "data": {}
+                    "data": {
+                      "accept-privacy": false,
+                      "accept-communications": false,
+                      "email": "marvin@paranoid-android.com",
+                      "name": "Marvin the Paranoid Android"
+                    }
                   },
                   {
                     "id": "6287ec37a841b25637c66449",
@@ -56719,7 +56897,12 @@
                         "type": "admin"
                       }
                     ],
-                    "data": {}
+                    "data": {
+                      "accept-privacy": false,
+                      "accept-communications": false,
+                      "email": "trillian@trillian-alternative.com",
+                      "name": "Trillian"
+                    }
                   }
                 ]
               },
@@ -56743,7 +56926,12 @@
                           "type": "admin"
                         }
                       ],
-                      "data": {}
+                      "data": {
+                        "accept-privacy": false,
+                        "accept-communications": false,
+                        "email": "zaphod.beeblebrox@heart-of-gold.com",
+                        "name": "Zaphod Beeblebrox"
+                      }
                     },
                     {
                       "id": "6287ec36a841b25637c663f0",
@@ -56757,7 +56945,12 @@
                           "type": "admin"
                         }
                       ],
-                      "data": {}
+                      "data": {
+                        "accept-privacy": false,
+                        "accept-communications": false,
+                        "email": "ford.prefect@hitchhikers-guide.com",
+                        "name": "Ford Prefect"
+                      }
                     },
                     {
                       "id": "6287ec36a841b25637c663d9",
@@ -56771,7 +56964,12 @@
                           "type": "admin"
                         }
                       ],
-                      "data": {}
+                      "data": {
+                        "accept-privacy": false,
+                        "accept-communications": false,
+                        "email": "arthur.dent@earthling.com",
+                        "name": "Arthur Dent"
+                      }
                     },
                     {
                       "id": "6287ec37a841b25637c6641b",
@@ -56785,7 +56983,12 @@
                           "type": "admin"
                         }
                       ],
-                      "data": {}
+                      "data": {
+                        "accept-privacy": false,
+                        "accept-communications": false,
+                        "email": "marvin@paranoid-android.com",
+                        "name": "Marvin the Paranoid Android"
+                      }
                     },
                     {
                       "id": "6287ec37a841b25637c66449",
@@ -56799,7 +57002,12 @@
                           "type": "admin"
                         }
                       ],
-                      "data": {}
+                      "data": {
+                        "accept-privacy": false,
+                        "accept-communications": false,
+                        "email": "trillian@trillian-alternative.com",
+                        "name": "Trillian"
+                      }
                     }
                   ]
                 }
@@ -56990,7 +57198,14 @@
                     "type": "admin"
                   }
                 ],
-                "data": {}
+                "data": {
+                  "name": "Arthur Dent",
+                  "email": "arthur.dent@mostlyharmless.com",
+                  "accept-privacy": true,
+                  "accept-communications": true,
+                  "favoriteDrink": "Tea",
+                  "currentPlanet": "Somewhere in the vicinity of Betelgeuse"
+                }
               },
               "responseBodyV3": {
                 "type": "json",
@@ -57008,7 +57223,14 @@
                       "type": "admin"
                     }
                   ],
-                  "data": {}
+                  "data": {
+                    "name": "Arthur Dent",
+                    "email": "arthur.dent@mostlyharmless.com",
+                    "accept-privacy": true,
+                    "accept-communications": true,
+                    "favoriteDrink": "Tea",
+                    "currentPlanet": "Somewhere in the vicinity of Betelgeuse"
+                  }
                 }
               }
             }
@@ -57423,7 +57645,14 @@
                     "type": "admin"
                   }
                 ],
-                "data": {}
+                "data": {
+                  "name": "Arthur Dent",
+                  "email": "arthur.dent@mostlyharmless.com",
+                  "accept-privacy": true,
+                  "accept-communications": true,
+                  "favoriteDrink": "Tea",
+                  "currentPlanet": "Somewhere in the vicinity of Betelgeuse"
+                }
               },
               "responseBodyV3": {
                 "type": "json",
@@ -57441,7 +57670,14 @@
                       "type": "admin"
                     }
                   ],
-                  "data": {}
+                  "data": {
+                    "name": "Arthur Dent",
+                    "email": "arthur.dent@mostlyharmless.com",
+                    "accept-privacy": true,
+                    "accept-communications": true,
+                    "favoriteDrink": "Tea",
+                    "currentPlanet": "Somewhere in the vicinity of Betelgeuse"
+                  }
                 }
               }
             }
@@ -57677,7 +57913,14 @@
                     "type": "admin"
                   }
                 ],
-                "data": {}
+                "data": {
+                  "name": "Arthur Dent",
+                  "email": "arthur.dent@mostlyharmless.com",
+                  "accept-privacy": true,
+                  "accept-communications": true,
+                  "favoriteDrink": "Tea",
+                  "currentPlanet": "Somewhere in the vicinity of Betelgeuse"
+                }
               },
               "responseBodyV3": {
                 "type": "json",
@@ -57695,7 +57938,14 @@
                       "type": "admin"
                     }
                   ],
-                  "data": {}
+                  "data": {
+                    "name": "Arthur Dent",
+                    "email": "arthur.dent@mostlyharmless.com",
+                    "accept-privacy": true,
+                    "accept-communications": true,
+                    "favoriteDrink": "Tea",
+                    "currentPlanet": "Somewhere in the vicinity of Betelgeuse"
+                  }
                 }
               }
             }
@@ -57971,8 +58221,15 @@
                 "isDraft": false,
                 "fieldData": {
                   "name": "Pan Galactic Gargle Blaster Recipe",
-                  "slug": "pan-galactic-gargle-blaster"
-                }
+                  "slug": "pan-galactic-gargle-blaster",
+                  "date": "2022-11-18T00:00:00.000Z",
+                  "featured": true,
+                  "color": "#db4b68"
+                },
+                "id": "42b720ef280c7a7a3be8cabe",
+                "lastPublished": "2022-11-29T16:22:43.159Z",
+                "lastUpdated": "2022-11-17T17:19:43.282Z",
+                "createdOn": "2022-11-17T17:11:57.148Z"
               }
             }
           ]
@@ -58103,8 +58360,15 @@
                 "isDraft": false,
                 "fieldData": {
                   "name": "Pan Galactic Gargle Blaster Recipe",
-                  "slug": "pan-galactic-gargle-blaster"
-                }
+                  "slug": "pan-galactic-gargle-blaster",
+                  "date": "2022-11-18T00:00:00.000Z",
+                  "featured": true,
+                  "color": "#db4b68"
+                },
+                "id": "42b720ef280c7a7a3be8cabe",
+                "lastPublished": "2022-11-29T16:22:43.159Z",
+                "lastUpdated": "2022-11-17T17:19:43.282Z",
+                "createdOn": "2022-11-17T17:11:57.148Z"
               }
             }
           ]
@@ -58425,7 +58689,9 @@
                       "descriptionCopied": false
                     },
                     "localeId": "653fd9af6a07fc9cfd7a5e57",
-                    "publishedPath": "/en-us/guide-to-the-galaxy"
+                    "publishedPath": "/en-us/guide-to-the-galaxy",
+                    "parentId": {},
+                    "collectionId": {}
                   },
                   {
                     "id": "6596da6045e56dee495bcbad",
@@ -58448,7 +58714,9 @@
                       "descriptionCopied": false
                     },
                     "localeId": "653fd9af6a07fc9cfd7a5e57",
-                    "publishedPath": "/en-us/towel-day"
+                    "publishedPath": "/en-us/towel-day",
+                    "parentId": {},
+                    "collectionId": {}
                   }
                 ],
                 "pagination": {
@@ -58482,7 +58750,9 @@
                         "descriptionCopied": false
                       },
                       "localeId": "653fd9af6a07fc9cfd7a5e57",
-                      "publishedPath": "/en-us/guide-to-the-galaxy"
+                      "publishedPath": "/en-us/guide-to-the-galaxy",
+                      "parentId": {},
+                      "collectionId": {}
                     },
                     {
                       "id": "6596da6045e56dee495bcbad",
@@ -58505,7 +58775,9 @@
                         "descriptionCopied": false
                       },
                       "localeId": "653fd9af6a07fc9cfd7a5e57",
-                      "publishedPath": "/en-us/towel-day"
+                      "publishedPath": "/en-us/towel-day",
+                      "parentId": {},
+                      "collectionId": {}
                     }
                   ],
                   "pagination": {
@@ -58691,7 +58963,9 @@
                   "descriptionCopied": false
                 },
                 "localeId": "653fd9af6a07fc9cfd7a5e57",
-                "publishedPath": "/en-us/guide-to-the-galaxy"
+                "publishedPath": "/en-us/guide-to-the-galaxy",
+                "parentId": {},
+                "collectionId": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -58716,7 +58990,9 @@
                     "descriptionCopied": false
                   },
                   "localeId": "653fd9af6a07fc9cfd7a5e57",
-                  "publishedPath": "/en-us/guide-to-the-galaxy"
+                  "publishedPath": "/en-us/guide-to-the-galaxy",
+                  "parentId": {},
+                  "collectionId": {}
                 }
               }
             }
@@ -58987,7 +59263,7 @@
                     "valueType": {
                       "type": "optional",
                       "itemType": {
-                        "type": "optional",
+                        "type": "nullable",
                         "itemType": {
                           "type": "primitive",
                           "value": {
@@ -59109,8 +59385,21 @@
                 },
                 "openGraph": {
                   "title": "Explore the Cosmos with The Ultimate Guide",
-                  "description": "Dive deep into the mysteries of the universe with your guide to everything galactic."
-                }
+                  "description": "Dive deep into the mysteries of the universe with your guide to everything galactic.",
+                  "titleCopied": false,
+                  "descriptionCopied": false
+                },
+                "id": "6596da6045e56dee495bcbba",
+                "siteId": "6258612d1ee792848f805dcf",
+                "parentId": {},
+                "collectionId": {},
+                "createdOn": "2024-03-11T10:42:00.000Z",
+                "lastUpdated": "2024-03-11T10:42:42.000Z",
+                "archived": false,
+                "draft": false,
+                "canBranch": true,
+                "localeId": "653fd9af6a07fc9cfd7a5e57",
+                "publishedPath": "/en-us/guide-to-the-galaxy"
               },
               "requestBodyV3": {
                 "type": "json",
@@ -59123,8 +59412,21 @@
                   },
                   "openGraph": {
                     "title": "Explore the Cosmos with The Ultimate Guide",
-                    "description": "Dive deep into the mysteries of the universe with your guide to everything galactic."
-                  }
+                    "description": "Dive deep into the mysteries of the universe with your guide to everything galactic.",
+                    "titleCopied": false,
+                    "descriptionCopied": false
+                  },
+                  "id": "6596da6045e56dee495bcbba",
+                  "siteId": "6258612d1ee792848f805dcf",
+                  "parentId": {},
+                  "collectionId": {},
+                  "createdOn": "2024-03-11T10:42:00.000Z",
+                  "lastUpdated": "2024-03-11T10:42:42.000Z",
+                  "archived": false,
+                  "draft": false,
+                  "canBranch": true,
+                  "localeId": "653fd9af6a07fc9cfd7a5e57",
+                  "publishedPath": "/en-us/guide-to-the-galaxy"
                 }
               },
               "responseStatusCode": 200,
@@ -59149,7 +59451,9 @@
                   "descriptionCopied": false
                 },
                 "localeId": "653fd9af6a07fc9cfd7a5e57",
-                "publishedPath": "/en-us/guide-to-the-galaxy"
+                "publishedPath": "/en-us/guide-to-the-galaxy",
+                "parentId": {},
+                "collectionId": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -59174,7 +59478,9 @@
                     "descriptionCopied": false
                   },
                   "localeId": "653fd9af6a07fc9cfd7a5e57",
-                  "publishedPath": "/en-us/guide-to-the-galaxy"
+                  "publishedPath": "/en-us/guide-to-the-galaxy",
+                  "parentId": {},
+                  "collectionId": {}
                 }
               }
             }
@@ -60704,7 +61010,8 @@
                     "isEditable": true,
                     "type": "PlainText",
                     "slug": "name",
-                    "displayName": "Name"
+                    "displayName": "Name",
+                    "helpText": {}
                   }
                 ]
               },
@@ -60724,7 +61031,8 @@
                       "isEditable": true,
                       "type": "PlainText",
                       "slug": "name",
-                      "displayName": "Name"
+                      "displayName": "Name",
+                      "helpText": {}
                     }
                   ]
                 }
@@ -60882,7 +61190,8 @@
                     "isEditable": true,
                     "type": "PlainText",
                     "slug": "name",
-                    "displayName": "Name"
+                    "displayName": "Name",
+                    "helpText": {}
                   }
                 ]
               },
@@ -60902,7 +61211,8 @@
                       "isEditable": true,
                       "type": "PlainText",
                       "slug": "name",
-                      "displayName": "Name"
+                      "displayName": "Name",
+                      "helpText": {}
                     }
                   ]
                 }
@@ -61937,7 +62247,9 @@
                     "isDraft": false,
                     "fieldData": {
                       "name": "Senior Data Analyst",
-                      "slug": "senior-data-analyst"
+                      "slug": "senior-data-analyst",
+                      "url": "https://boards.greenhouse.io/webflow/jobs/26567701",
+                      "department": "Data"
                     }
                   },
                   {
@@ -61950,7 +62262,9 @@
                     "isDraft": false,
                     "fieldData": {
                       "name": "Product Manager",
-                      "slug": "product-manager"
+                      "slug": "product-manager",
+                      "url": "https://boards.greenhouse.io/webflow/jobs/31234567",
+                      "department": "Product"
                     }
                   }
                 ],
@@ -61974,7 +62288,9 @@
                       "isDraft": false,
                       "fieldData": {
                         "name": "Senior Data Analyst",
-                        "slug": "senior-data-analyst"
+                        "slug": "senior-data-analyst",
+                        "url": "https://boards.greenhouse.io/webflow/jobs/26567701",
+                        "department": "Data"
                       }
                     },
                     {
@@ -61987,7 +62303,9 @@
                       "isDraft": false,
                       "fieldData": {
                         "name": "Product Manager",
-                        "slug": "product-manager"
+                        "slug": "product-manager",
+                        "url": "https://boards.greenhouse.io/webflow/jobs/31234567",
+                        "department": "Product"
                       }
                     }
                   ],
@@ -62258,8 +62576,15 @@
                 "isDraft": false,
                 "fieldData": {
                   "name": "Pan Galactic Gargle Blaster Recipe",
-                  "slug": "pan-galactic-gargle-blaster"
-                }
+                  "slug": "pan-galactic-gargle-blaster",
+                  "date": "2022-11-18T00:00:00.000Z",
+                  "featured": true,
+                  "color": "#db4b68"
+                },
+                "id": "42b720ef280c7a7a3be8cabe",
+                "lastPublished": "2022-11-29T16:22:43.159Z",
+                "lastUpdated": "2022-11-17T17:19:43.282Z",
+                "createdOn": "2022-11-17T17:11:57.148Z"
               },
               "requestBodyV3": {
                 "type": "json",
@@ -62269,8 +62594,15 @@
                   "isDraft": false,
                   "fieldData": {
                     "name": "Pan Galactic Gargle Blaster Recipe",
-                    "slug": "pan-galactic-gargle-blaster"
-                  }
+                    "slug": "pan-galactic-gargle-blaster",
+                    "date": "2022-11-18T00:00:00.000Z",
+                    "featured": true,
+                    "color": "#db4b68"
+                  },
+                  "id": "42b720ef280c7a7a3be8cabe",
+                  "lastPublished": "2022-11-29T16:22:43.159Z",
+                  "lastUpdated": "2022-11-17T17:19:43.282Z",
+                  "createdOn": "2022-11-17T17:11:57.148Z"
                 }
               },
               "responseStatusCode": 202,
@@ -62284,7 +62616,10 @@
                 "isDraft": false,
                 "fieldData": {
                   "name": "Pan Galactic Gargle Blaster Recipe",
-                  "slug": "pan-galactic-gargle-blaster"
+                  "slug": "pan-galactic-gargle-blaster",
+                  "date": "2022-11-18T00:00:00.000Z",
+                  "featured": true,
+                  "color": "#db4b68"
                 }
               },
               "responseBodyV3": {
@@ -62299,7 +62634,10 @@
                   "isDraft": false,
                   "fieldData": {
                     "name": "Pan Galactic Gargle Blaster Recipe",
-                    "slug": "pan-galactic-gargle-blaster"
+                    "slug": "pan-galactic-gargle-blaster",
+                    "date": "2022-11-18T00:00:00.000Z",
+                    "featured": true,
+                    "color": "#db4b68"
                   }
                 }
               }
@@ -62556,7 +62894,9 @@
                     "isDraft": false,
                     "fieldData": {
                       "name": "Senior Data Analyst",
-                      "slug": "senior-data-analyst"
+                      "slug": "senior-data-analyst",
+                      "url": "https://boards.greenhouse.io/webflow/jobs/26567701",
+                      "department": "Data"
                     }
                   },
                   {
@@ -62569,7 +62909,9 @@
                     "isDraft": false,
                     "fieldData": {
                       "name": "Product Manager",
-                      "slug": "product-manager"
+                      "slug": "product-manager",
+                      "url": "https://boards.greenhouse.io/webflow/jobs/31234567",
+                      "department": "Product"
                     }
                   }
                 ],
@@ -62593,7 +62935,9 @@
                       "isDraft": false,
                       "fieldData": {
                         "name": "Senior Data Analyst",
-                        "slug": "senior-data-analyst"
+                        "slug": "senior-data-analyst",
+                        "url": "https://boards.greenhouse.io/webflow/jobs/26567701",
+                        "department": "Data"
                       }
                     },
                     {
@@ -62606,7 +62950,9 @@
                       "isDraft": false,
                       "fieldData": {
                         "name": "Product Manager",
-                        "slug": "product-manager"
+                        "slug": "product-manager",
+                        "url": "https://boards.greenhouse.io/webflow/jobs/31234567",
+                        "department": "Product"
                       }
                     }
                   ],
@@ -62877,8 +63223,15 @@
                 "isDraft": false,
                 "fieldData": {
                   "name": "Pan Galactic Gargle Blaster Recipe",
-                  "slug": "pan-galactic-gargle-blaster"
-                }
+                  "slug": "pan-galactic-gargle-blaster",
+                  "date": "2022-11-18T00:00:00.000Z",
+                  "featured": true,
+                  "color": "#db4b68"
+                },
+                "id": "42b720ef280c7a7a3be8cabe",
+                "lastPublished": "2022-11-29T16:22:43.159Z",
+                "lastUpdated": "2022-11-17T17:19:43.282Z",
+                "createdOn": "2022-11-17T17:11:57.148Z"
               },
               "requestBodyV3": {
                 "type": "json",
@@ -62888,8 +63241,15 @@
                   "isDraft": false,
                   "fieldData": {
                     "name": "Pan Galactic Gargle Blaster Recipe",
-                    "slug": "pan-galactic-gargle-blaster"
-                  }
+                    "slug": "pan-galactic-gargle-blaster",
+                    "date": "2022-11-18T00:00:00.000Z",
+                    "featured": true,
+                    "color": "#db4b68"
+                  },
+                  "id": "42b720ef280c7a7a3be8cabe",
+                  "lastPublished": "2022-11-29T16:22:43.159Z",
+                  "lastUpdated": "2022-11-17T17:19:43.282Z",
+                  "createdOn": "2022-11-17T17:11:57.148Z"
                 }
               },
               "responseStatusCode": 202,
@@ -62903,7 +63263,10 @@
                 "isDraft": false,
                 "fieldData": {
                   "name": "Pan Galactic Gargle Blaster Recipe",
-                  "slug": "pan-galactic-gargle-blaster"
+                  "slug": "pan-galactic-gargle-blaster",
+                  "date": "2022-11-18T00:00:00.000Z",
+                  "featured": true,
+                  "color": "#db4b68"
                 }
               },
               "responseBodyV3": {
@@ -62918,7 +63281,10 @@
                   "isDraft": false,
                   "fieldData": {
                     "name": "Pan Galactic Gargle Blaster Recipe",
-                    "slug": "pan-galactic-gargle-blaster"
+                    "slug": "pan-galactic-gargle-blaster",
+                    "date": "2022-11-18T00:00:00.000Z",
+                    "featured": true,
+                    "color": "#db4b68"
                   }
                 }
               }
@@ -63017,7 +63383,7 @@
                     "valueType": {
                       "type": "optional",
                       "itemType": {
-                        "type": "optional",
+                        "type": "nullable",
                         "itemType": {
                           "type": "primitive",
                           "value": {
@@ -63182,19 +63548,185 @@
               },
               "queryParameters": {},
               "headers": {},
-              "requestBody": {},
+              "requestBody": {
+                "items": [
+                  {
+                    "id": "66f6ed9576ddacf3149d5ea6",
+                    "cmsLocaleId": "66f6e966c9e1dc700a857ca3",
+                    "lastPublished": null,
+                    "lastUpdated": "2024-02-28T19:25:39.942Z",
+                    "createdOn": "2024-02-28T19:25:39.942Z",
+                    "isArchived": false,
+                    "isDraft": false,
+                    "fieldData": {
+                      "name": "Don't Panic",
+                      "slug": "dont-panic"
+                    }
+                  },
+                  {
+                    "id": "66f6ed9576ddacf3149d5ea6",
+                    "cmsLocaleId": "66f6e966c9e1dc700a857ca4",
+                    "lastPublished": null,
+                    "lastUpdated": "2024-02-28T19:25:39.942Z",
+                    "createdOn": "2024-02-28T19:25:39.942Z",
+                    "isArchived": false,
+                    "isDraft": false,
+                    "fieldData": {
+                      "name": "Don't Panic",
+                      "slug": "dont-panic"
+                    }
+                  },
+                  {
+                    "id": "66f6ed9576ddacf3149d5ea6",
+                    "cmsLocaleId": "66f6e966c9e1dc700a857ca5",
+                    "lastPublished": null,
+                    "lastUpdated": "2024-02-28T19:25:39.942Z",
+                    "createdOn": "2024-02-28T19:25:39.942Z",
+                    "isArchived": false,
+                    "isDraft": false,
+                    "fieldData": {
+                      "name": "Don't Panic",
+                      "slug": "dont-panic"
+                    }
+                  }
+                ]
+              },
               "requestBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "items": [
+                    {
+                      "id": "66f6ed9576ddacf3149d5ea6",
+                      "cmsLocaleId": "66f6e966c9e1dc700a857ca3",
+                      "lastPublished": null,
+                      "lastUpdated": "2024-02-28T19:25:39.942Z",
+                      "createdOn": "2024-02-28T19:25:39.942Z",
+                      "isArchived": false,
+                      "isDraft": false,
+                      "fieldData": {
+                        "name": "Don't Panic",
+                        "slug": "dont-panic"
+                      }
+                    },
+                    {
+                      "id": "66f6ed9576ddacf3149d5ea6",
+                      "cmsLocaleId": "66f6e966c9e1dc700a857ca4",
+                      "lastPublished": null,
+                      "lastUpdated": "2024-02-28T19:25:39.942Z",
+                      "createdOn": "2024-02-28T19:25:39.942Z",
+                      "isArchived": false,
+                      "isDraft": false,
+                      "fieldData": {
+                        "name": "Don't Panic",
+                        "slug": "dont-panic"
+                      }
+                    },
+                    {
+                      "id": "66f6ed9576ddacf3149d5ea6",
+                      "cmsLocaleId": "66f6e966c9e1dc700a857ca5",
+                      "lastPublished": null,
+                      "lastUpdated": "2024-02-28T19:25:39.942Z",
+                      "createdOn": "2024-02-28T19:25:39.942Z",
+                      "isArchived": false,
+                      "isDraft": false,
+                      "fieldData": {
+                        "name": "Don't Panic",
+                        "slug": "dont-panic"
+                      }
+                    }
+                  ]
+                }
               },
               "responseStatusCode": 202,
               "responseBody": {
-                "id": "580e64008c9a982ac9b8b754"
+                "id": "580e64008c9a982ac9b8b754",
+                "items": [
+                  {
+                    "id": "66f6ed9576ddacf3149d5ea6",
+                    "cmsLocaleId": "66f6e966c9e1dc700a857ca3",
+                    "lastPublished": null,
+                    "lastUpdated": "2024-02-28T19:25:39.942Z",
+                    "createdOn": "2024-02-28T19:25:39.942Z",
+                    "isArchived": false,
+                    "isDraft": false,
+                    "fieldData": {
+                      "name": "Don't Panic",
+                      "slug": "dont-panic"
+                    }
+                  },
+                  {
+                    "id": "66f6ed9576ddacf3149d5ea6",
+                    "cmsLocaleId": "66f6e966c9e1dc700a857ca4",
+                    "lastPublished": null,
+                    "lastUpdated": "2024-02-28T19:25:39.942Z",
+                    "createdOn": "2024-02-28T19:25:39.942Z",
+                    "isArchived": false,
+                    "isDraft": false,
+                    "fieldData": {
+                      "name": "Don't Panic",
+                      "slug": "dont-panic"
+                    }
+                  },
+                  {
+                    "id": "66f6ed9576ddacf3149d5ea6",
+                    "cmsLocaleId": "66f6e966c9e1dc700a857ca5",
+                    "lastPublished": null,
+                    "lastUpdated": "2024-02-28T19:25:39.942Z",
+                    "createdOn": "2024-02-28T19:25:39.942Z",
+                    "isArchived": false,
+                    "isDraft": false,
+                    "fieldData": {
+                      "name": "Don't Panic",
+                      "slug": "dont-panic"
+                    }
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "id": "580e64008c9a982ac9b8b754"
+                  "id": "580e64008c9a982ac9b8b754",
+                  "items": [
+                    {
+                      "id": "66f6ed9576ddacf3149d5ea6",
+                      "cmsLocaleId": "66f6e966c9e1dc700a857ca3",
+                      "lastPublished": null,
+                      "lastUpdated": "2024-02-28T19:25:39.942Z",
+                      "createdOn": "2024-02-28T19:25:39.942Z",
+                      "isArchived": false,
+                      "isDraft": false,
+                      "fieldData": {
+                        "name": "Don't Panic",
+                        "slug": "dont-panic"
+                      }
+                    },
+                    {
+                      "id": "66f6ed9576ddacf3149d5ea6",
+                      "cmsLocaleId": "66f6e966c9e1dc700a857ca4",
+                      "lastPublished": null,
+                      "lastUpdated": "2024-02-28T19:25:39.942Z",
+                      "createdOn": "2024-02-28T19:25:39.942Z",
+                      "isArchived": false,
+                      "isDraft": false,
+                      "fieldData": {
+                        "name": "Don't Panic",
+                        "slug": "dont-panic"
+                      }
+                    },
+                    {
+                      "id": "66f6ed9576ddacf3149d5ea6",
+                      "cmsLocaleId": "66f6e966c9e1dc700a857ca5",
+                      "lastPublished": null,
+                      "lastUpdated": "2024-02-28T19:25:39.942Z",
+                      "createdOn": "2024-02-28T19:25:39.942Z",
+                      "isArchived": false,
+                      "isDraft": false,
+                      "fieldData": {
+                        "name": "Don't Panic",
+                        "slug": "dont-panic"
+                      }
+                    }
+                  ]
                 }
               }
             }
@@ -63380,7 +63912,10 @@
                 "isDraft": false,
                 "fieldData": {
                   "name": "Pan Galactic Gargle Blaster Recipe",
-                  "slug": "pan-galactic-gargle-blaster"
+                  "slug": "pan-galactic-gargle-blaster",
+                  "date": "2022-11-18T00:00:00.000Z",
+                  "featured": true,
+                  "color": "#db4b68"
                 }
               },
               "responseBodyV3": {
@@ -63395,7 +63930,10 @@
                   "isDraft": false,
                   "fieldData": {
                     "name": "Pan Galactic Gargle Blaster Recipe",
-                    "slug": "pan-galactic-gargle-blaster"
+                    "slug": "pan-galactic-gargle-blaster",
+                    "date": "2022-11-18T00:00:00.000Z",
+                    "featured": true,
+                    "color": "#db4b68"
                   }
                 }
               }
@@ -63841,8 +64379,15 @@
                 "isDraft": false,
                 "fieldData": {
                   "name": "Pan Galactic Gargle Blaster Recipe",
-                  "slug": "pan-galactic-gargle-blaster"
-                }
+                  "slug": "pan-galactic-gargle-blaster",
+                  "date": "2022-11-18T00:00:00.000Z",
+                  "featured": true,
+                  "color": "#db4b68"
+                },
+                "id": "42b720ef280c7a7a3be8cabe",
+                "lastPublished": "2022-11-29T16:22:43.159Z",
+                "lastUpdated": "2022-11-17T17:19:43.282Z",
+                "createdOn": "2022-11-17T17:11:57.148Z"
               },
               "requestBodyV3": {
                 "type": "json",
@@ -63852,8 +64397,15 @@
                   "isDraft": false,
                   "fieldData": {
                     "name": "Pan Galactic Gargle Blaster Recipe",
-                    "slug": "pan-galactic-gargle-blaster"
-                  }
+                    "slug": "pan-galactic-gargle-blaster",
+                    "date": "2022-11-18T00:00:00.000Z",
+                    "featured": true,
+                    "color": "#db4b68"
+                  },
+                  "id": "42b720ef280c7a7a3be8cabe",
+                  "lastPublished": "2022-11-29T16:22:43.159Z",
+                  "lastUpdated": "2022-11-17T17:19:43.282Z",
+                  "createdOn": "2022-11-17T17:11:57.148Z"
                 }
               },
               "responseStatusCode": 200,
@@ -63867,7 +64419,10 @@
                 "isDraft": false,
                 "fieldData": {
                   "name": "Pan Galactic Gargle Blaster Recipe",
-                  "slug": "pan-galactic-gargle-blaster"
+                  "slug": "pan-galactic-gargle-blaster",
+                  "date": "2022-11-18T00:00:00.000Z",
+                  "featured": true,
+                  "color": "#db4b68"
                 }
               },
               "responseBodyV3": {
@@ -63882,7 +64437,10 @@
                   "isDraft": false,
                   "fieldData": {
                     "name": "Pan Galactic Gargle Blaster Recipe",
-                    "slug": "pan-galactic-gargle-blaster"
+                    "slug": "pan-galactic-gargle-blaster",
+                    "date": "2022-11-18T00:00:00.000Z",
+                    "featured": true,
+                    "color": "#db4b68"
                   }
                 }
               }
@@ -64069,7 +64627,10 @@
                 "isDraft": false,
                 "fieldData": {
                   "name": "Pan Galactic Gargle Blaster Recipe",
-                  "slug": "pan-galactic-gargle-blaster"
+                  "slug": "pan-galactic-gargle-blaster",
+                  "date": "2022-11-18T00:00:00.000Z",
+                  "featured": true,
+                  "color": "#db4b68"
                 }
               },
               "responseBodyV3": {
@@ -64084,7 +64645,10 @@
                   "isDraft": false,
                   "fieldData": {
                     "name": "Pan Galactic Gargle Blaster Recipe",
-                    "slug": "pan-galactic-gargle-blaster"
+                    "slug": "pan-galactic-gargle-blaster",
+                    "date": "2022-11-18T00:00:00.000Z",
+                    "featured": true,
+                    "color": "#db4b68"
                   }
                 }
               }
@@ -64530,8 +65094,15 @@
                 "isDraft": false,
                 "fieldData": {
                   "name": "Pan Galactic Gargle Blaster Recipe",
-                  "slug": "pan-galactic-gargle-blaster"
-                }
+                  "slug": "pan-galactic-gargle-blaster",
+                  "date": "2022-11-18T00:00:00.000Z",
+                  "featured": true,
+                  "color": "#db4b68"
+                },
+                "id": "42b720ef280c7a7a3be8cabe",
+                "lastPublished": "2022-11-29T16:22:43.159Z",
+                "lastUpdated": "2022-11-17T17:19:43.282Z",
+                "createdOn": "2022-11-17T17:11:57.148Z"
               },
               "requestBodyV3": {
                 "type": "json",
@@ -64541,8 +65112,15 @@
                   "isDraft": false,
                   "fieldData": {
                     "name": "Pan Galactic Gargle Blaster Recipe",
-                    "slug": "pan-galactic-gargle-blaster"
-                  }
+                    "slug": "pan-galactic-gargle-blaster",
+                    "date": "2022-11-18T00:00:00.000Z",
+                    "featured": true,
+                    "color": "#db4b68"
+                  },
+                  "id": "42b720ef280c7a7a3be8cabe",
+                  "lastPublished": "2022-11-29T16:22:43.159Z",
+                  "lastUpdated": "2022-11-17T17:19:43.282Z",
+                  "createdOn": "2022-11-17T17:11:57.148Z"
                 }
               },
               "responseStatusCode": 200,
@@ -64556,7 +65134,10 @@
                 "isDraft": false,
                 "fieldData": {
                   "name": "Pan Galactic Gargle Blaster Recipe",
-                  "slug": "pan-galactic-gargle-blaster"
+                  "slug": "pan-galactic-gargle-blaster",
+                  "date": "2022-11-18T00:00:00.000Z",
+                  "featured": true,
+                  "color": "#db4b68"
                 }
               },
               "responseBodyV3": {
@@ -64571,7 +65152,10 @@
                   "isDraft": false,
                   "fieldData": {
                     "name": "Pan Galactic Gargle Blaster Recipe",
-                    "slug": "pan-galactic-gargle-blaster"
+                    "slug": "pan-galactic-gargle-blaster",
+                    "date": "2022-11-18T00:00:00.000Z",
+                    "featured": true,
+                    "color": "#db4b68"
                   }
                 }
               }
@@ -66134,7 +66718,8 @@
                         "id": "chartjs",
                         "location": "header",
                         "version": "4.4.2",
-                        "attributes": {}
+                        "attributes": {},
+                        "displayName": "ChartJS"
                       }
                     ],
                     "createdOn": "2024-04-03T16:49:15.461Z",
@@ -66183,7 +66768,8 @@
                           "id": "chartjs",
                           "location": "header",
                           "version": "4.4.2",
-                          "attributes": {}
+                          "attributes": {},
+                          "displayName": "ChartJS"
                         }
                       ],
                       "createdOn": "2024-04-03T16:49:15.461Z",
@@ -66377,7 +66963,8 @@
                     "displayName": "Alert",
                     "hostedLocation": "https://cdn.webflow.io/.../alert-0.0.1.js",
                     "createdOn": "2022-10-26T00:28:54.191Z",
-                    "version": "0.0.1"
+                    "version": "0.0.1",
+                    "integrityHash": {}
                   },
                   {
                     "id": "alert",
@@ -66385,7 +66972,8 @@
                     "displayName": "Alert",
                     "hostedLocation": "https://cdn.webflow.io/.../alert-0.0.2.js",
                     "createdOn": "2022-10-26T00:28:54.191Z",
-                    "version": "0.0.2"
+                    "version": "0.0.2",
+                    "integrityHash": {}
                   },
                   {
                     "id": "cms_slider",
@@ -66408,7 +66996,8 @@
                       "displayName": "Alert",
                       "hostedLocation": "https://cdn.webflow.io/.../alert-0.0.1.js",
                       "createdOn": "2022-10-26T00:28:54.191Z",
-                      "version": "0.0.1"
+                      "version": "0.0.1",
+                      "integrityHash": {}
                     },
                     {
                       "id": "alert",
@@ -66416,7 +67005,8 @@
                       "displayName": "Alert",
                       "hostedLocation": "https://cdn.webflow.io/.../alert-0.0.2.js",
                       "createdOn": "2022-10-26T00:28:54.191Z",
-                      "version": "0.0.2"
+                      "version": "0.0.2",
+                      "integrityHash": {}
                     },
                     {
                       "id": "cms_slider",
@@ -66885,14 +67475,16 @@
               "requestBody": {
                 "sourceCode": "alert('hello world');",
                 "version": "0.0.1",
-                "displayName": "Alert"
+                "displayName": "Alert",
+                "integrityHash": {}
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
                   "sourceCode": "alert('hello world');",
                   "version": "0.0.1",
-                  "displayName": "Alert"
+                  "displayName": "Alert",
+                  "integrityHash": {}
                 }
               },
               "responseStatusCode": 201,
@@ -66902,7 +67494,8 @@
                 "displayName": "Alert",
                 "hostedLocation": "https://uploads-ssl.webflow.com/6258612d1ee792848f805dcf%2F64b6c769ff52ba6c3d904a91%2F660d6e15b3d1696f2d2b1447%2Falert-0.0.1.js",
                 "createdOn": "2022-10-26T00:28:54.191Z",
-                "version": "0.0.1"
+                "version": "0.0.1",
+                "integrityHash": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -66912,7 +67505,8 @@
                   "displayName": "Alert",
                   "hostedLocation": "https://uploads-ssl.webflow.com/6258612d1ee792848f805dcf%2F64b6c769ff52ba6c3d904a91%2F660d6e15b3d1696f2d2b1447%2Falert-0.0.1.js",
                   "createdOn": "2022-10-26T00:28:54.191Z",
-                  "version": "0.0.1"
+                  "version": "0.0.1",
+                  "integrityHash": {}
                 }
               }
             }
@@ -67084,7 +67678,9 @@
                         "displayName": "660d83ce30f3a599ddb0bdb3_Screenshot%202024-03-20%20at%209.03.24%E2%80%AFPM-p-500.png",
                         "format": "png",
                         "width": 500,
-                        "quality": 100
+                        "quality": 100,
+                        "height": {},
+                        "error": {}
                       }
                     ]
                   }
@@ -67111,7 +67707,9 @@
                           "displayName": "660d83ce30f3a599ddb0bdb3_Screenshot%202024-03-20%20at%209.03.24%E2%80%AFPM-p-500.png",
                           "format": "png",
                           "width": 500,
-                          "quality": 100
+                          "quality": 100,
+                          "height": {},
+                          "error": {}
                         }
                       ]
                     }
@@ -68055,7 +68653,8 @@
                     ],
                     "siteId": "6390c49674a71f84b51a08d8",
                     "createdOn": "2018-10-14T21:55:49.063Z",
-                    "lastUpdated": "2022-12-07T16:51:37.571Z"
+                    "lastUpdated": "2022-12-07T16:51:37.571Z",
+                    "parentFolder": {}
                   }
                 ],
                 "pagination": {
@@ -68077,7 +68676,8 @@
                       ],
                       "siteId": "6390c49674a71f84b51a08d8",
                       "createdOn": "2018-10-14T21:55:49.063Z",
-                      "lastUpdated": "2022-12-07T16:51:37.571Z"
+                      "lastUpdated": "2022-12-07T16:51:37.571Z",
+                      "parentFolder": {}
                     }
                   ],
                   "pagination": {
@@ -68954,13 +69554,25 @@
               "headers": {},
               "requestBody": {
                 "triggerType": "form_submission",
-                "url": "https://webhook.site/7f7f7f7f-7f7f-7f7f-7f7f-7f7f7f7f7f7f"
+                "url": "https://webhook.site/7f7f7f7f-7f7f-7f7f-7f7f-7f7f7f7f7f7f",
+                "id": "582266e0cd48de0f0e3c6d8b",
+                "siteId": "562ac0395358780a1f5e6fbd",
+                "workspaceId": "4f4e46fd476ea8c507000001",
+                "createdOn": "2022-11-08T23:59:28.572Z",
+                "lastTriggered": "2023-02-08T23:59:28.572Z",
+                "filter": {}
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
                   "triggerType": "form_submission",
-                  "url": "https://webhook.site/7f7f7f7f-7f7f-7f7f-7f7f-7f7f7f7f7f7f"
+                  "url": "https://webhook.site/7f7f7f7f-7f7f-7f7f-7f7f-7f7f7f7f7f7f",
+                  "id": "582266e0cd48de0f0e3c6d8b",
+                  "siteId": "562ac0395358780a1f5e6fbd",
+                  "workspaceId": "4f4e46fd476ea8c507000001",
+                  "createdOn": "2022-11-08T23:59:28.572Z",
+                  "lastTriggered": "2023-02-08T23:59:28.572Z",
+                  "filter": {}
                 }
               },
               "responseStatusCode": 201,
@@ -68971,7 +69583,8 @@
                 "workspaceId": "4f4e46fd476ea8c507000001",
                 "siteId": "562ac0395358780a1f5e6fbd",
                 "lastTriggered": "2023-02-08T23:59:28.572Z",
-                "createdOn": "2022-11-08T23:59:28.572Z"
+                "createdOn": "2022-11-08T23:59:28.572Z",
+                "filter": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -68982,7 +69595,8 @@
                   "workspaceId": "4f4e46fd476ea8c507000001",
                   "siteId": "562ac0395358780a1f5e6fbd",
                   "lastTriggered": "2023-02-08T23:59:28.572Z",
-                  "createdOn": "2022-11-08T23:59:28.572Z"
+                  "createdOn": "2022-11-08T23:59:28.572Z",
+                  "filter": {}
                 }
               }
             }
@@ -69131,7 +69745,8 @@
                 "workspaceId": "4f4e46fd476ea8c507000001",
                 "siteId": "562ac0395358780a1f5e6fbd",
                 "lastTriggered": "2023-02-08T23:59:28.572Z",
-                "createdOn": "2022-11-08T23:59:28.572Z"
+                "createdOn": "2022-11-08T23:59:28.572Z",
+                "filter": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -69142,7 +69757,8 @@
                   "workspaceId": "4f4e46fd476ea8c507000001",
                   "siteId": "562ac0395358780a1f5e6fbd",
                   "lastTriggered": "2023-02-08T23:59:28.572Z",
-                  "createdOn": "2022-11-08T23:59:28.572Z"
+                  "createdOn": "2022-11-08T23:59:28.572Z",
+                  "filter": {}
                 }
               }
             }
@@ -70113,10 +70729,132 @@
               },
               "queryParameters": {},
               "headers": {},
-              "requestBody": {},
+              "requestBody": {
+                "id": "660eb7a486d1d6e0412292d7",
+                "cmsLocaleId": "653ad57de882f528b32e810e",
+                "lastPublished": "2024-04-04T14:24:19.467Z",
+                "lastUpdated": "2024-04-04T14:30:19.282Z",
+                "createdOn": "2024-04-04T14:22:28.547Z",
+                "isArchived": false,
+                "isDraft": false,
+                "fieldData": {
+                  "tax-category": "standard-taxable",
+                  "shippable": true,
+                  "ec-product-type": "b6ccc1830db4b1babeb06a9ac5f6dd76",
+                  "sku-properties": [
+                    {
+                      "id": "31b77fa66fa376c2c0abb458d5be39fb",
+                      "name": "Size",
+                      "enum": [
+                        {
+                          "id": "8d21a625d655ab260e9941c27180c75b",
+                          "name": "Small",
+                          "slug": "small"
+                        },
+                        {
+                          "id": "ecdca17106ad86c0dfe3b5f3ac8be6c9",
+                          "name": "Medium",
+                          "slug": "medium"
+                        },
+                        {
+                          "id": "ec7877d6137ecf7ec86f726c135b1812",
+                          "name": "Large",
+                          "slug": "large"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "74d3738e62c568d5634dd6989daec5ec",
+                      "name": "Color",
+                      "enum": [
+                        {
+                          "id": "e539b0d6c3a609cd06ddb2da804f68f0",
+                          "name": "Royal Blue",
+                          "slug": "royal-blue"
+                        },
+                        {
+                          "id": "68d98f2fbafc0fd45651cddc44798dd0",
+                          "name": "Crimson Red",
+                          "slug": "crimson-red"
+                        },
+                        {
+                          "id": "996cd95c97fd5620d0a374c835b37205",
+                          "name": "Forrest Green",
+                          "slug": "forrest-green"
+                        }
+                      ]
+                    }
+                  ],
+                  "name": "T-Shirt",
+                  "description": "A plain t-shirt",
+                  "slug": "t-shirt",
+                  "default-sku": "66072fb71b89448912e2681c"
+                }
+              },
               "requestBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "id": "660eb7a486d1d6e0412292d7",
+                  "cmsLocaleId": "653ad57de882f528b32e810e",
+                  "lastPublished": "2024-04-04T14:24:19.467Z",
+                  "lastUpdated": "2024-04-04T14:30:19.282Z",
+                  "createdOn": "2024-04-04T14:22:28.547Z",
+                  "isArchived": false,
+                  "isDraft": false,
+                  "fieldData": {
+                    "tax-category": "standard-taxable",
+                    "shippable": true,
+                    "ec-product-type": "b6ccc1830db4b1babeb06a9ac5f6dd76",
+                    "sku-properties": [
+                      {
+                        "id": "31b77fa66fa376c2c0abb458d5be39fb",
+                        "name": "Size",
+                        "enum": [
+                          {
+                            "id": "8d21a625d655ab260e9941c27180c75b",
+                            "name": "Small",
+                            "slug": "small"
+                          },
+                          {
+                            "id": "ecdca17106ad86c0dfe3b5f3ac8be6c9",
+                            "name": "Medium",
+                            "slug": "medium"
+                          },
+                          {
+                            "id": "ec7877d6137ecf7ec86f726c135b1812",
+                            "name": "Large",
+                            "slug": "large"
+                          }
+                        ]
+                      },
+                      {
+                        "id": "74d3738e62c568d5634dd6989daec5ec",
+                        "name": "Color",
+                        "enum": [
+                          {
+                            "id": "e539b0d6c3a609cd06ddb2da804f68f0",
+                            "name": "Royal Blue",
+                            "slug": "royal-blue"
+                          },
+                          {
+                            "id": "68d98f2fbafc0fd45651cddc44798dd0",
+                            "name": "Crimson Red",
+                            "slug": "crimson-red"
+                          },
+                          {
+                            "id": "996cd95c97fd5620d0a374c835b37205",
+                            "name": "Forrest Green",
+                            "slug": "forrest-green"
+                          }
+                        ]
+                      }
+                    ],
+                    "name": "T-Shirt",
+                    "description": "A plain t-shirt",
+                    "slug": "t-shirt",
+                    "default-sku": "66072fb71b89448912e2681c"
+                  }
+                }
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -70848,10 +71586,132 @@
               },
               "queryParameters": {},
               "headers": {},
-              "requestBody": {},
+              "requestBody": {
+                "id": "660eb7a486d1d6e0412292d7",
+                "cmsLocaleId": "653ad57de882f528b32e810e",
+                "lastPublished": "2024-04-04T14:24:19.467Z",
+                "lastUpdated": "2024-04-04T14:30:19.282Z",
+                "createdOn": "2024-04-04T14:22:28.547Z",
+                "isArchived": false,
+                "isDraft": false,
+                "fieldData": {
+                  "tax-category": "standard-taxable",
+                  "shippable": true,
+                  "ec-product-type": "b6ccc1830db4b1babeb06a9ac5f6dd76",
+                  "sku-properties": [
+                    {
+                      "id": "31b77fa66fa376c2c0abb458d5be39fb",
+                      "name": "Size",
+                      "enum": [
+                        {
+                          "id": "8d21a625d655ab260e9941c27180c75b",
+                          "name": "Small",
+                          "slug": "small"
+                        },
+                        {
+                          "id": "ecdca17106ad86c0dfe3b5f3ac8be6c9",
+                          "name": "Medium",
+                          "slug": "medium"
+                        },
+                        {
+                          "id": "ec7877d6137ecf7ec86f726c135b1812",
+                          "name": "Large",
+                          "slug": "large"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "74d3738e62c568d5634dd6989daec5ec",
+                      "name": "Color",
+                      "enum": [
+                        {
+                          "id": "e539b0d6c3a609cd06ddb2da804f68f0",
+                          "name": "Royal Blue",
+                          "slug": "royal-blue"
+                        },
+                        {
+                          "id": "68d98f2fbafc0fd45651cddc44798dd0",
+                          "name": "Crimson Red",
+                          "slug": "crimson-red"
+                        },
+                        {
+                          "id": "996cd95c97fd5620d0a374c835b37205",
+                          "name": "Forrest Green",
+                          "slug": "forrest-green"
+                        }
+                      ]
+                    }
+                  ],
+                  "name": "T-Shirt",
+                  "description": "A plain t-shirt",
+                  "slug": "t-shirt",
+                  "default-sku": "66072fb71b89448912e2681c"
+                }
+              },
               "requestBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "id": "660eb7a486d1d6e0412292d7",
+                  "cmsLocaleId": "653ad57de882f528b32e810e",
+                  "lastPublished": "2024-04-04T14:24:19.467Z",
+                  "lastUpdated": "2024-04-04T14:30:19.282Z",
+                  "createdOn": "2024-04-04T14:22:28.547Z",
+                  "isArchived": false,
+                  "isDraft": false,
+                  "fieldData": {
+                    "tax-category": "standard-taxable",
+                    "shippable": true,
+                    "ec-product-type": "b6ccc1830db4b1babeb06a9ac5f6dd76",
+                    "sku-properties": [
+                      {
+                        "id": "31b77fa66fa376c2c0abb458d5be39fb",
+                        "name": "Size",
+                        "enum": [
+                          {
+                            "id": "8d21a625d655ab260e9941c27180c75b",
+                            "name": "Small",
+                            "slug": "small"
+                          },
+                          {
+                            "id": "ecdca17106ad86c0dfe3b5f3ac8be6c9",
+                            "name": "Medium",
+                            "slug": "medium"
+                          },
+                          {
+                            "id": "ec7877d6137ecf7ec86f726c135b1812",
+                            "name": "Large",
+                            "slug": "large"
+                          }
+                        ]
+                      },
+                      {
+                        "id": "74d3738e62c568d5634dd6989daec5ec",
+                        "name": "Color",
+                        "enum": [
+                          {
+                            "id": "e539b0d6c3a609cd06ddb2da804f68f0",
+                            "name": "Royal Blue",
+                            "slug": "royal-blue"
+                          },
+                          {
+                            "id": "68d98f2fbafc0fd45651cddc44798dd0",
+                            "name": "Crimson Red",
+                            "slug": "crimson-red"
+                          },
+                          {
+                            "id": "996cd95c97fd5620d0a374c835b37205",
+                            "name": "Forrest Green",
+                            "slug": "forrest-green"
+                          }
+                        ]
+                      }
+                    ],
+                    "name": "T-Shirt",
+                    "description": "A plain t-shirt",
+                    "slug": "t-shirt",
+                    "default-sku": "66072fb71b89448912e2681c"
+                  }
+                }
               },
               "responseStatusCode": 200,
               "responseBody": {

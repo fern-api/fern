@@ -411,7 +411,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -427,7 +427,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -443,7 +443,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -459,7 +459,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -475,7 +475,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -491,7 +491,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -507,7 +507,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -523,7 +523,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -539,7 +539,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -736,7 +736,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -810,7 +810,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "list",
                   "itemType": {
@@ -829,7 +829,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "list",
                   "itemType": {
@@ -1137,7 +1137,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1295,7 +1295,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1311,7 +1311,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "app"
@@ -1406,7 +1406,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1422,7 +1422,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "AiAgentLastAnswerType"
@@ -1436,7 +1436,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "AiAgentResolutionState"
@@ -1450,7 +1450,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1466,7 +1466,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1605,7 +1605,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "article_statistics"
@@ -1656,7 +1656,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "ArticleContentType"
@@ -1931,7 +1931,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1947,7 +1947,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -2013,7 +2013,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -2029,7 +2029,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -2061,7 +2061,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -2089,7 +2089,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "article_translated_content"
@@ -2494,7 +2494,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "ArticleTranslatedContentType"
@@ -3270,7 +3270,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -3312,7 +3312,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -3328,7 +3328,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -3369,7 +3369,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "group_translated_content"
@@ -3383,7 +3383,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -3399,7 +3399,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -4136,7 +4136,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -4196,7 +4196,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -4249,7 +4249,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -4317,7 +4317,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -4333,7 +4333,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -4349,7 +4349,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -4365,7 +4365,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -4446,7 +4446,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -4462,7 +4462,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -4478,7 +4478,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -4494,7 +4494,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -4510,7 +4510,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -4526,7 +4526,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -4542,7 +4542,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -4558,7 +4558,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -4574,7 +4574,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -4590,7 +4590,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -4606,7 +4606,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -4622,7 +4622,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -4638,7 +4638,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -4654,7 +4654,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -4670,7 +4670,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -4686,7 +4686,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -4702,7 +4702,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -4718,7 +4718,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -4734,7 +4734,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -4750,7 +4750,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -4766,7 +4766,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -4782,7 +4782,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -4798,7 +4798,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -4824,7 +4824,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "ContactAvatar"
@@ -4934,7 +4934,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -5129,7 +5129,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -5238,7 +5238,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -5254,7 +5254,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -5270,7 +5270,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -5286,7 +5286,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -5412,7 +5412,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -5996,7 +5996,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -6235,7 +6235,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -6277,7 +6277,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -6293,7 +6293,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -6357,7 +6357,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -6373,7 +6373,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -6511,7 +6511,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "ai_agent"
@@ -6657,7 +6657,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -6792,7 +6792,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -6847,7 +6847,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "reference"
@@ -6885,7 +6885,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -7205,7 +7205,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -7787,7 +7787,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "group_translated_content"
@@ -7801,7 +7801,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -7817,7 +7817,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -10560,7 +10560,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -10576,7 +10576,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -10612,7 +10612,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -10762,7 +10762,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "GroupContentType"
@@ -10824,7 +10824,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "GroupTranslatedContentType"
@@ -11524,7 +11524,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "LinkedObjectCategory"
@@ -12008,7 +12008,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -12414,7 +12414,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "NoteContact"
@@ -12593,7 +12593,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -13030,7 +13030,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -13232,7 +13232,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -13589,7 +13589,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -14211,7 +14211,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "list",
                   "itemType": {
@@ -14230,7 +14230,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "list",
                   "itemType": {
@@ -14813,7 +14813,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -14877,7 +14877,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "reference"
@@ -14915,7 +14915,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -14999,7 +14999,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -15164,7 +15164,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -16072,7 +16072,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "group_translated_content"
@@ -16086,7 +16086,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -16160,7 +16160,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -16176,7 +16176,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -16192,7 +16192,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -16208,7 +16208,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -16224,7 +16224,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -16240,7 +16240,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -16256,7 +16256,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -16272,7 +16272,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "UpdateContactRequestCustomAttributes"
@@ -16819,7 +16819,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -17269,7 +17269,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -17285,7 +17285,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -17301,7 +17301,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -17448,7 +17448,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -17545,7 +17545,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -17561,7 +17561,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -17577,7 +17577,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -17593,7 +17593,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -17609,7 +17609,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -17625,7 +17625,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -17641,7 +17641,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -18047,7 +18047,8 @@
                   "region": "US",
                   "timezone": "America/Los_Angeles",
                   "created_at": 1719492696,
-                  "identity_verification": false
+                  "identity_verification": false,
+                  "secure": false
                 }
               },
               "responseBodyV3": {
@@ -18070,7 +18071,8 @@
                     "region": "US",
                     "timezone": "America/Los_Angeles",
                     "created_at": 1719492696,
-                    "identity_verification": false
+                    "identity_verification": false,
+                    "secure": false
                   }
                 }
               }
@@ -18430,7 +18432,8 @@
                   "type": "pages",
                   "page": 1,
                   "per_page": 20,
-                  "total_pages": 1
+                  "total_pages": 1,
+                  "next": {}
                 },
                 "activity_logs": [
                   {
@@ -18441,7 +18444,14 @@
                       "email": "admin5@email.com",
                       "ip": "127.0.0.1"
                     },
-                    "metadata": {},
+                    "metadata": {
+                      "message": {
+                        "id": 123,
+                        "title": "Initial message title"
+                      },
+                      "before": "Initial message title",
+                      "after": "Eventual message title"
+                    },
                     "created_at": 1719492702,
                     "activity_type": "message_state_change",
                     "activity_description": "Ciaran5 Lee changed your Initial message title message from Initial message title to Eventual message title."
@@ -18454,7 +18464,10 @@
                       "email": "admin5@email.com",
                       "ip": "127.0.0.1"
                     },
-                    "metadata": {},
+                    "metadata": {
+                      "before": "before",
+                      "after": "after"
+                    },
                     "created_at": 1719492702,
                     "activity_type": "app_name_change",
                     "activity_description": "Ciaran5 Lee changed your app name from before to after."
@@ -18469,7 +18482,8 @@
                     "type": "pages",
                     "page": 1,
                     "per_page": 20,
-                    "total_pages": 1
+                    "total_pages": 1,
+                    "next": {}
                   },
                   "activity_logs": [
                     {
@@ -18480,7 +18494,14 @@
                         "email": "admin5@email.com",
                         "ip": "127.0.0.1"
                       },
-                      "metadata": {},
+                      "metadata": {
+                        "message": {
+                          "id": 123,
+                          "title": "Initial message title"
+                        },
+                        "before": "Initial message title",
+                        "after": "Eventual message title"
+                      },
                       "created_at": 1719492702,
                       "activity_type": "message_state_change",
                       "activity_description": "Ciaran5 Lee changed your Initial message title message from Initial message title to Eventual message title."
@@ -18493,7 +18514,10 @@
                         "email": "admin5@email.com",
                         "ip": "127.0.0.1"
                       },
-                      "metadata": {},
+                      "metadata": {
+                        "before": "before",
+                        "after": "after"
+                      },
                       "created_at": 1719492702,
                       "activity_type": "app_name_change",
                       "activity_description": "Ciaran5 Lee changed your app name from before to after."
@@ -19082,6 +19106,7 @@
                 "statistics": {
                   "type": "article_statistics",
                   "views": 0,
+                  "conversations": 0,
                   "reactions": 0,
                   "happy_reaction_percentage": 0,
                   "neutral_reaction_percentage": 0,
@@ -19108,6 +19133,7 @@
                   "statistics": {
                     "type": "article_statistics",
                     "views": 0,
+                    "conversations": 0,
                     "reactions": 0,
                     "happy_reaction_percentage": 0,
                     "neutral_reaction_percentage": 0,
@@ -19281,6 +19307,7 @@
                 "statistics": {
                   "type": "article_statistics",
                   "views": 0,
+                  "conversations": 0,
                   "reactions": 0,
                   "happy_reaction_percentage": 0,
                   "neutral_reaction_percentage": 0,
@@ -19307,6 +19334,7 @@
                   "statistics": {
                     "type": "article_statistics",
                     "views": 0,
+                    "conversations": 0,
                     "reactions": 0,
                     "happy_reaction_percentage": 0,
                     "neutral_reaction_percentage": 0,
@@ -19479,6 +19507,7 @@
                 "statistics": {
                   "type": "article_statistics",
                   "views": 0,
+                  "conversations": 0,
                   "reactions": 0,
                   "happy_reaction_percentage": 0,
                   "neutral_reaction_percentage": 0,
@@ -19505,6 +19534,7 @@
                   "statistics": {
                     "type": "article_statistics",
                     "views": 0,
+                    "conversations": 0,
                     "reactions": 0,
                     "happy_reaction_percentage": 0,
                     "neutral_reaction_percentage": 0,
@@ -21169,7 +21199,8 @@
                   "type": "pages",
                   "page": 1,
                   "per_page": 15,
-                  "total_pages": 1
+                  "total_pages": 1,
+                  "next": {}
                 },
                 "total_count": 1,
                 "data": [
@@ -21206,7 +21237,8 @@
                     "type": "pages",
                     "page": 1,
                     "per_page": 15,
-                    "total_pages": 1
+                    "total_pages": 1,
+                    "next": {}
                   },
                   "total_count": 1,
                   "data": [
@@ -21425,10 +21457,14 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
-              "requestBody": {},
+              "requestBody": {
+                "test": "invalid"
+              },
               "requestBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "test": "invalid"
+                }
               },
               "responseStatusCode": 200
             }
@@ -22326,7 +22362,8 @@
                   "type": "pages",
                   "page": 1,
                   "per_page": 15,
-                  "total_pages": 1
+                  "total_pages": 1,
+                  "next": {}
                 },
                 "total_count": 1,
                 "data": [
@@ -22363,7 +22400,8 @@
                     "type": "pages",
                     "page": 1,
                     "per_page": 15,
-                    "total_pages": 1
+                    "total_pages": 1,
+                    "next": {}
                   },
                   "total_count": 1,
                   "data": [
@@ -22523,7 +22561,8 @@
                   }
                 ],
                 "total_count": null,
-                "scroll_param": "12d403b5-dc79-47b5-8ea1-01a5ac8cb6cc"
+                "scroll_param": "12d403b5-dc79-47b5-8ea1-01a5ac8cb6cc",
+                "pages": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -22555,7 +22594,8 @@
                     }
                   ],
                   "total_count": null,
-                  "scroll_param": "12d403b5-dc79-47b5-8ea1-01a5ac8cb6cc"
+                  "scroll_param": "12d403b5-dc79-47b5-8ea1-01a5ac8cb6cc",
+                  "pages": {}
                 }
               }
             }
@@ -23125,7 +23165,33 @@
                   "next": null,
                   "per_page": 50,
                   "total_pages": 1
-                }
+                },
+                "data": [
+                  {
+                    "type": "company",
+                    "company_id": "1",
+                    "id": "667d60938a68186f43bafd91",
+                    "app_id": "this_is_an_id182_that_should_be_at_least_",
+                    "name": "company12",
+                    "remote_created_at": 1719492755,
+                    "created_at": 1719492755,
+                    "updated_at": 1719492755,
+                    "last_request_at": 1719319955,
+                    "monthly_spend": 0,
+                    "session_count": 0,
+                    "user_count": 1,
+                    "tags": {
+                      "type": "tag.list",
+                      "tags": []
+                    },
+                    "segments": {
+                      "type": "segment.list",
+                      "segments": []
+                    },
+                    "plan": {},
+                    "custom_attributes": {}
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -23138,7 +23204,33 @@
                     "next": null,
                     "per_page": 50,
                     "total_pages": 1
-                  }
+                  },
+                  "data": [
+                    {
+                      "type": "company",
+                      "company_id": "1",
+                      "id": "667d60938a68186f43bafd91",
+                      "app_id": "this_is_an_id182_that_should_be_at_least_",
+                      "name": "company12",
+                      "remote_created_at": 1719492755,
+                      "created_at": 1719492755,
+                      "updated_at": 1719492755,
+                      "last_request_at": 1719319955,
+                      "monthly_spend": 0,
+                      "session_count": 0,
+                      "user_count": 1,
+                      "tags": {
+                        "type": "tag.list",
+                        "tags": []
+                      },
+                      "segments": {
+                        "type": "segment.list",
+                        "segments": []
+                      },
+                      "plan": {},
+                      "custom_attributes": {}
+                    }
+                  ]
                 }
               }
             }
@@ -23809,28 +23901,55 @@
                   "data": [],
                   "url": "/contacts/667d60a98a68186f43bafdb9/tags",
                   "total_count": 0,
-                  "has_more": false
+                  "has_more": false,
+                  "type": "list"
                 },
                 "notes": {
                   "data": [],
                   "url": "/contacts/667d60a98a68186f43bafdb9/notes",
                   "total_count": 0,
-                  "has_more": false
+                  "has_more": false,
+                  "type": "list"
                 },
                 "companies": {
                   "url": "/contacts/667d60a98a68186f43bafdb9/companies",
                   "total_count": 0,
-                  "has_more": false
+                  "has_more": false,
+                  "type": "list",
+                  "data": []
                 },
                 "location": {
                   "type": "location",
                   "country": null,
                   "region": null,
-                  "city": null
+                  "city": null,
+                  "country_code": {},
+                  "continent_code": {}
                 },
                 "social_profiles": {
-                  "data": []
-                }
+                  "data": [],
+                  "type": "list"
+                },
+                "opted_out_subscription_types": {
+                  "type": "list",
+                  "data": [],
+                  "url": "/contacts/667d60a98a68186f43bafdb9/subscriptions",
+                  "total_count": 0,
+                  "has_more": false
+                },
+                "opted_in_subscription_types": {
+                  "type": "list",
+                  "data": [],
+                  "url": "/contacts/667d60a98a68186f43bafdb9/subscriptions",
+                  "total_count": 0,
+                  "has_more": false
+                },
+                "utm_campaign": {},
+                "utm_content": {},
+                "utm_medium": {},
+                "utm_source": {},
+                "utm_term": {},
+                "referrer": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -23878,28 +23997,55 @@
                     "data": [],
                     "url": "/contacts/667d60a98a68186f43bafdb9/tags",
                     "total_count": 0,
-                    "has_more": false
+                    "has_more": false,
+                    "type": "list"
                   },
                   "notes": {
                     "data": [],
                     "url": "/contacts/667d60a98a68186f43bafdb9/notes",
                     "total_count": 0,
-                    "has_more": false
+                    "has_more": false,
+                    "type": "list"
                   },
                   "companies": {
                     "url": "/contacts/667d60a98a68186f43bafdb9/companies",
                     "total_count": 0,
-                    "has_more": false
+                    "has_more": false,
+                    "type": "list",
+                    "data": []
                   },
                   "location": {
                     "type": "location",
                     "country": null,
                     "region": null,
-                    "city": null
+                    "city": null,
+                    "country_code": {},
+                    "continent_code": {}
                   },
                   "social_profiles": {
-                    "data": []
-                  }
+                    "data": [],
+                    "type": "list"
+                  },
+                  "opted_out_subscription_types": {
+                    "type": "list",
+                    "data": [],
+                    "url": "/contacts/667d60a98a68186f43bafdb9/subscriptions",
+                    "total_count": 0,
+                    "has_more": false
+                  },
+                  "opted_in_subscription_types": {
+                    "type": "list",
+                    "data": [],
+                    "url": "/contacts/667d60a98a68186f43bafdb9/subscriptions",
+                    "total_count": 0,
+                    "has_more": false
+                  },
+                  "utm_campaign": {},
+                  "utm_content": {},
+                  "utm_medium": {},
+                  "utm_source": {},
+                  "utm_term": {},
+                  "referrer": {}
                 }
               }
             }
@@ -24079,28 +24225,55 @@
                   "data": [],
                   "url": "/contacts/667d60a88a68186f43bafdb8/tags",
                   "total_count": 0,
-                  "has_more": false
+                  "has_more": false,
+                  "type": "list"
                 },
                 "notes": {
                   "data": [],
                   "url": "/contacts/667d60a88a68186f43bafdb8/notes",
                   "total_count": 0,
-                  "has_more": false
+                  "has_more": false,
+                  "type": "list"
                 },
                 "companies": {
                   "url": "/contacts/667d60a88a68186f43bafdb8/companies",
                   "total_count": 0,
-                  "has_more": false
+                  "has_more": false,
+                  "type": "list",
+                  "data": []
                 },
                 "location": {
                   "type": "location",
                   "country": null,
                   "region": null,
-                  "city": null
+                  "city": null,
+                  "country_code": {},
+                  "continent_code": {}
                 },
                 "social_profiles": {
-                  "data": []
-                }
+                  "data": [],
+                  "type": "list"
+                },
+                "opted_out_subscription_types": {
+                  "type": "list",
+                  "data": [],
+                  "url": "/contacts/667d60a88a68186f43bafdb8/subscriptions",
+                  "total_count": 0,
+                  "has_more": false
+                },
+                "opted_in_subscription_types": {
+                  "type": "list",
+                  "data": [],
+                  "url": "/contacts/667d60a88a68186f43bafdb8/subscriptions",
+                  "total_count": 0,
+                  "has_more": false
+                },
+                "utm_campaign": {},
+                "utm_content": {},
+                "utm_medium": {},
+                "utm_source": {},
+                "utm_term": {},
+                "referrer": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -24148,28 +24321,55 @@
                     "data": [],
                     "url": "/contacts/667d60a88a68186f43bafdb8/tags",
                     "total_count": 0,
-                    "has_more": false
+                    "has_more": false,
+                    "type": "list"
                   },
                   "notes": {
                     "data": [],
                     "url": "/contacts/667d60a88a68186f43bafdb8/notes",
                     "total_count": 0,
-                    "has_more": false
+                    "has_more": false,
+                    "type": "list"
                   },
                   "companies": {
                     "url": "/contacts/667d60a88a68186f43bafdb8/companies",
                     "total_count": 0,
-                    "has_more": false
+                    "has_more": false,
+                    "type": "list",
+                    "data": []
                   },
                   "location": {
                     "type": "location",
                     "country": null,
                     "region": null,
-                    "city": null
+                    "city": null,
+                    "country_code": {},
+                    "continent_code": {}
                   },
                   "social_profiles": {
-                    "data": []
-                  }
+                    "data": [],
+                    "type": "list"
+                  },
+                  "opted_out_subscription_types": {
+                    "type": "list",
+                    "data": [],
+                    "url": "/contacts/667d60a88a68186f43bafdb8/subscriptions",
+                    "total_count": 0,
+                    "has_more": false
+                  },
+                  "opted_in_subscription_types": {
+                    "type": "list",
+                    "data": [],
+                    "url": "/contacts/667d60a88a68186f43bafdb8/subscriptions",
+                    "total_count": 0,
+                    "has_more": false
+                  },
+                  "utm_campaign": {},
+                  "utm_content": {},
+                  "utm_medium": {},
+                  "utm_source": {},
+                  "utm_term": {},
+                  "referrer": {}
                 }
               }
             }
@@ -24452,28 +24652,55 @@
                   "data": [],
                   "url": "/contacts/667d60ac8a68186f43bafdbc/tags",
                   "total_count": 0,
-                  "has_more": false
+                  "has_more": false,
+                  "type": "list"
                 },
                 "notes": {
                   "data": [],
                   "url": "/contacts/667d60ac8a68186f43bafdbc/notes",
                   "total_count": 0,
-                  "has_more": false
+                  "has_more": false,
+                  "type": "list"
                 },
                 "companies": {
                   "url": "/contacts/667d60ac8a68186f43bafdbc/companies",
                   "total_count": 0,
-                  "has_more": false
+                  "has_more": false,
+                  "type": "list",
+                  "data": []
                 },
                 "location": {
                   "type": "location",
                   "country": null,
                   "region": null,
-                  "city": null
+                  "city": null,
+                  "country_code": {},
+                  "continent_code": {}
                 },
                 "social_profiles": {
-                  "data": []
-                }
+                  "data": [],
+                  "type": "list"
+                },
+                "opted_out_subscription_types": {
+                  "type": "list",
+                  "data": [],
+                  "url": "/contacts/667d60ac8a68186f43bafdbc/subscriptions",
+                  "total_count": 0,
+                  "has_more": false
+                },
+                "opted_in_subscription_types": {
+                  "type": "list",
+                  "data": [],
+                  "url": "/contacts/667d60ac8a68186f43bafdbc/subscriptions",
+                  "total_count": 0,
+                  "has_more": false
+                },
+                "utm_campaign": {},
+                "utm_content": {},
+                "utm_medium": {},
+                "utm_source": {},
+                "utm_term": {},
+                "referrer": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -24521,28 +24748,55 @@
                     "data": [],
                     "url": "/contacts/667d60ac8a68186f43bafdbc/tags",
                     "total_count": 0,
-                    "has_more": false
+                    "has_more": false,
+                    "type": "list"
                   },
                   "notes": {
                     "data": [],
                     "url": "/contacts/667d60ac8a68186f43bafdbc/notes",
                     "total_count": 0,
-                    "has_more": false
+                    "has_more": false,
+                    "type": "list"
                   },
                   "companies": {
                     "url": "/contacts/667d60ac8a68186f43bafdbc/companies",
                     "total_count": 0,
-                    "has_more": false
+                    "has_more": false,
+                    "type": "list",
+                    "data": []
                   },
                   "location": {
                     "type": "location",
                     "country": null,
                     "region": null,
-                    "city": null
+                    "city": null,
+                    "country_code": {},
+                    "continent_code": {}
                   },
                   "social_profiles": {
-                    "data": []
-                  }
+                    "data": [],
+                    "type": "list"
+                  },
+                  "opted_out_subscription_types": {
+                    "type": "list",
+                    "data": [],
+                    "url": "/contacts/667d60ac8a68186f43bafdbc/subscriptions",
+                    "total_count": 0,
+                    "has_more": false
+                  },
+                  "opted_in_subscription_types": {
+                    "type": "list",
+                    "data": [],
+                    "url": "/contacts/667d60ac8a68186f43bafdbc/subscriptions",
+                    "total_count": 0,
+                    "has_more": false
+                  },
+                  "utm_campaign": {},
+                  "utm_content": {},
+                  "utm_medium": {},
+                  "utm_source": {},
+                  "utm_term": {},
+                  "referrer": {}
                 }
               }
             }
@@ -24967,28 +25221,55 @@
                   "data": [],
                   "url": "/contacts/667d60b08a68186f43bafdbf/tags",
                   "total_count": 0,
-                  "has_more": false
+                  "has_more": false,
+                  "type": "list"
                 },
                 "notes": {
                   "data": [],
                   "url": "/contacts/667d60b08a68186f43bafdbf/notes",
                   "total_count": 0,
-                  "has_more": false
+                  "has_more": false,
+                  "type": "list"
                 },
                 "companies": {
                   "url": "/contacts/667d60b08a68186f43bafdbf/companies",
                   "total_count": 0,
-                  "has_more": false
+                  "has_more": false,
+                  "type": "list",
+                  "data": []
                 },
                 "location": {
                   "type": "location",
                   "country": null,
                   "region": null,
-                  "city": null
+                  "city": null,
+                  "country_code": {},
+                  "continent_code": {}
                 },
                 "social_profiles": {
-                  "data": []
-                }
+                  "data": [],
+                  "type": "list"
+                },
+                "opted_out_subscription_types": {
+                  "type": "list",
+                  "data": [],
+                  "url": "/contacts/667d60b08a68186f43bafdbf/subscriptions",
+                  "total_count": 0,
+                  "has_more": false
+                },
+                "opted_in_subscription_types": {
+                  "type": "list",
+                  "data": [],
+                  "url": "/contacts/667d60b08a68186f43bafdbf/subscriptions",
+                  "total_count": 0,
+                  "has_more": false
+                },
+                "utm_campaign": {},
+                "utm_content": {},
+                "utm_medium": {},
+                "utm_source": {},
+                "utm_term": {},
+                "referrer": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -25036,28 +25317,55 @@
                     "data": [],
                     "url": "/contacts/667d60b08a68186f43bafdbf/tags",
                     "total_count": 0,
-                    "has_more": false
+                    "has_more": false,
+                    "type": "list"
                   },
                   "notes": {
                     "data": [],
                     "url": "/contacts/667d60b08a68186f43bafdbf/notes",
                     "total_count": 0,
-                    "has_more": false
+                    "has_more": false,
+                    "type": "list"
                   },
                   "companies": {
                     "url": "/contacts/667d60b08a68186f43bafdbf/companies",
                     "total_count": 0,
-                    "has_more": false
+                    "has_more": false,
+                    "type": "list",
+                    "data": []
                   },
                   "location": {
                     "type": "location",
                     "country": null,
                     "region": null,
-                    "city": null
+                    "city": null,
+                    "country_code": {},
+                    "continent_code": {}
                   },
                   "social_profiles": {
-                    "data": []
-                  }
+                    "data": [],
+                    "type": "list"
+                  },
+                  "opted_out_subscription_types": {
+                    "type": "list",
+                    "data": [],
+                    "url": "/contacts/667d60b08a68186f43bafdbf/subscriptions",
+                    "total_count": 0,
+                    "has_more": false
+                  },
+                  "opted_in_subscription_types": {
+                    "type": "list",
+                    "data": [],
+                    "url": "/contacts/667d60b08a68186f43bafdbf/subscriptions",
+                    "total_count": 0,
+                    "has_more": false
+                  },
+                  "utm_campaign": {},
+                  "utm_content": {},
+                  "utm_medium": {},
+                  "utm_source": {},
+                  "utm_term": {},
+                  "referrer": {}
                 }
               }
             }
@@ -25462,7 +25770,8 @@
                   "type": "pages",
                   "page": 1,
                   "per_page": 50,
-                  "total_pages": 1
+                  "total_pages": 1,
+                  "next": {}
                 }
               },
               "responseBodyV3": {
@@ -25530,7 +25839,8 @@
                     "type": "pages",
                     "page": 1,
                     "per_page": 50,
-                    "total_pages": 1
+                    "total_pages": 1,
+                    "next": {}
                   }
                 }
               }
@@ -27617,12 +27927,14 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "name": "Independent"
+                "name": "Independent",
+                "test": "invalid"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "name": "Independent"
+                  "name": "Independent",
+                  "test": "invalid"
                 }
               },
               "responseStatusCode": 200
@@ -27635,12 +27947,22 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "name": "test"
+                "name": "test",
+                "companies": [
+                  {
+                    "company_id": "123"
+                  }
+                ]
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "name": "test"
+                  "name": "test",
+                  "companies": [
+                    {
+                      "company_id": "123"
+                    }
+                  ]
                 }
               },
               "responseStatusCode": 200
@@ -27653,12 +27975,22 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "name": "test"
+                "name": "test",
+                "users": [
+                  {
+                    "id": "123"
+                  }
+                ]
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "name": "test"
+                  "name": "test",
+                  "users": [
+                    {
+                      "id": "123"
+                    }
+                  ]
                 }
               },
               "responseStatusCode": 200
@@ -28498,7 +28830,70 @@
                   "per_page": 20,
                   "total_pages": 1
                 },
-                "total_count": 1
+                "total_count": 1,
+                "conversations": [
+                  {
+                    "type": "conversation",
+                    "id": "335",
+                    "created_at": 1719492795,
+                    "updated_at": 1719492795,
+                    "waiting_since": null,
+                    "snoozed_until": null,
+                    "source": {
+                      "type": "conversation",
+                      "id": "403918241",
+                      "delivered_as": "admin_initiated",
+                      "subject": "",
+                      "body": "<p>this is the message body</p>",
+                      "author": {
+                        "type": "admin",
+                        "id": "991267536",
+                        "name": "Ciaran143 Lee",
+                        "email": "admin143@email.com"
+                      },
+                      "attachments": [],
+                      "url": null,
+                      "redacted": false
+                    },
+                    "contacts": {
+                      "type": "contact.list",
+                      "contacts": [
+                        {
+                          "type": "contact",
+                          "id": "667d60bb8a68186f43bafdc5",
+                          "external_id": "70"
+                        }
+                      ]
+                    },
+                    "first_contact_reply": null,
+                    "admin_assignee_id": null,
+                    "team_assignee_id": null,
+                    "open": false,
+                    "state": "closed",
+                    "read": false,
+                    "tags": {
+                      "type": "tag.list",
+                      "tags": []
+                    },
+                    "priority": "not_priority",
+                    "sla_applied": null,
+                    "statistics": null,
+                    "conversation_rating": null,
+                    "teammates": null,
+                    "title": null,
+                    "custom_attributes": {},
+                    "topics": {},
+                    "ticket": null,
+                    "linked_objects": {
+                      "type": "list",
+                      "data": [],
+                      "total_count": 0,
+                      "has_more": false
+                    },
+                    "ai_agent": null,
+                    "ai_agent_participated": false
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -28510,7 +28905,70 @@
                     "per_page": 20,
                     "total_pages": 1
                   },
-                  "total_count": 1
+                  "total_count": 1,
+                  "conversations": [
+                    {
+                      "type": "conversation",
+                      "id": "335",
+                      "created_at": 1719492795,
+                      "updated_at": 1719492795,
+                      "waiting_since": null,
+                      "snoozed_until": null,
+                      "source": {
+                        "type": "conversation",
+                        "id": "403918241",
+                        "delivered_as": "admin_initiated",
+                        "subject": "",
+                        "body": "<p>this is the message body</p>",
+                        "author": {
+                          "type": "admin",
+                          "id": "991267536",
+                          "name": "Ciaran143 Lee",
+                          "email": "admin143@email.com"
+                        },
+                        "attachments": [],
+                        "url": null,
+                        "redacted": false
+                      },
+                      "contacts": {
+                        "type": "contact.list",
+                        "contacts": [
+                          {
+                            "type": "contact",
+                            "id": "667d60bb8a68186f43bafdc5",
+                            "external_id": "70"
+                          }
+                        ]
+                      },
+                      "first_contact_reply": null,
+                      "admin_assignee_id": null,
+                      "team_assignee_id": null,
+                      "open": false,
+                      "state": "closed",
+                      "read": false,
+                      "tags": {
+                        "type": "tag.list",
+                        "tags": []
+                      },
+                      "priority": "not_priority",
+                      "sla_applied": null,
+                      "statistics": null,
+                      "conversation_rating": null,
+                      "teammates": null,
+                      "title": null,
+                      "custom_attributes": {},
+                      "topics": {},
+                      "ticket": null,
+                      "linked_objects": {
+                        "type": "list",
+                        "data": [],
+                        "total_count": 0,
+                        "has_more": false
+                      },
+                      "ai_agent": null,
+                      "ai_agent_participated": false
+                    }
+                  ]
                 }
               }
             }
@@ -28911,7 +29369,14 @@
                   "data": []
                 },
                 "ai_agent_participated": false,
-                "ai_agent": {}
+                "ai_agent": {},
+                "first_contact_reply": {},
+                "sla_applied": {},
+                "statistics": {},
+                "conversation_rating": {},
+                "teammates": {},
+                "topics": {},
+                "ticket": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -28972,7 +29437,14 @@
                     "data": []
                   },
                   "ai_agent_participated": false,
-                  "ai_agent": {}
+                  "ai_agent": {},
+                  "first_contact_reply": {},
+                  "sla_applied": {},
+                  "statistics": {},
+                  "conversation_rating": {},
+                  "teammates": {},
+                  "topics": {},
+                  "ticket": {}
                 }
               }
             }
@@ -29256,7 +29728,14 @@
                   "data": []
                 },
                 "ai_agent_participated": false,
-                "ai_agent": {}
+                "ai_agent": {},
+                "first_contact_reply": {},
+                "sla_applied": {},
+                "statistics": {},
+                "conversation_rating": {},
+                "teammates": {},
+                "topics": {},
+                "ticket": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -29359,7 +29838,14 @@
                     "data": []
                   },
                   "ai_agent_participated": false,
-                  "ai_agent": {}
+                  "ai_agent": {},
+                  "first_contact_reply": {},
+                  "sla_applied": {},
+                  "statistics": {},
+                  "conversation_rating": {},
+                  "teammates": {},
+                  "topics": {},
+                  "ticket": {}
                 }
               }
             },
@@ -29567,7 +30053,14 @@
                       "data": []
                     },
                     "ai_agent_participated": false,
-                    "ai_agent": {}
+                    "ai_agent": {},
+                    "first_contact_reply": {},
+                    "sla_applied": {},
+                    "statistics": {},
+                    "conversation_rating": {},
+                    "teammates": {},
+                    "topics": {},
+                    "ticket": {}
                   }
                 ],
                 "total_count": 1,
@@ -29635,7 +30128,14 @@
                         "data": []
                       },
                       "ai_agent_participated": false,
-                      "ai_agent": {}
+                      "ai_agent": {},
+                      "first_contact_reply": {},
+                      "sla_applied": {},
+                      "statistics": {},
+                      "conversation_rating": {},
+                      "teammates": {},
+                      "topics": {},
+                      "ticket": {}
                     }
                   ],
                   "total_count": 1,
@@ -29893,7 +30393,13 @@
                   "data": []
                 },
                 "ai_agent_participated": false,
-                "ai_agent": {}
+                "ai_agent": {},
+                "sla_applied": {},
+                "statistics": {},
+                "conversation_rating": {},
+                "teammates": {},
+                "topics": {},
+                "ticket": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -29979,7 +30485,13 @@
                     "data": []
                   },
                   "ai_agent_participated": false,
-                  "ai_agent": {}
+                  "ai_agent": {},
+                  "sla_applied": {},
+                  "statistics": {},
+                  "conversation_rating": {},
+                  "teammates": {},
+                  "topics": {},
+                  "ticket": {}
                 }
               }
             },
@@ -30085,7 +30597,14 @@
                   "data": []
                 },
                 "ai_agent_participated": false,
-                "ai_agent": {}
+                "ai_agent": {},
+                "first_contact_reply": {},
+                "sla_applied": {},
+                "statistics": {},
+                "conversation_rating": {},
+                "teammates": {},
+                "topics": {},
+                "ticket": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -30166,7 +30685,14 @@
                     "data": []
                   },
                   "ai_agent_participated": false,
-                  "ai_agent": {}
+                  "ai_agent": {},
+                  "first_contact_reply": {},
+                  "sla_applied": {},
+                  "statistics": {},
+                  "conversation_rating": {},
+                  "teammates": {},
+                  "topics": {},
+                  "ticket": {}
                 }
               }
             },
@@ -30277,7 +30803,13 @@
                   "data": []
                 },
                 "ai_agent_participated": false,
-                "ai_agent": {}
+                "ai_agent": {},
+                "sla_applied": {},
+                "statistics": {},
+                "conversation_rating": {},
+                "teammates": {},
+                "topics": {},
+                "ticket": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -30363,7 +30895,13 @@
                     "data": []
                   },
                   "ai_agent_participated": false,
-                  "ai_agent": {}
+                  "ai_agent": {},
+                  "sla_applied": {},
+                  "statistics": {},
+                  "conversation_rating": {},
+                  "teammates": {},
+                  "topics": {},
+                  "ticket": {}
                 }
               }
             },
@@ -30633,7 +31171,14 @@
                   "data": []
                 },
                 "ai_agent_participated": false,
-                "ai_agent": {}
+                "ai_agent": {},
+                "first_contact_reply": {},
+                "sla_applied": {},
+                "statistics": {},
+                "conversation_rating": {},
+                "teammates": {},
+                "topics": {},
+                "ticket": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -30714,7 +31259,14 @@
                     "data": []
                   },
                   "ai_agent_participated": false,
-                  "ai_agent": {}
+                  "ai_agent": {},
+                  "first_contact_reply": {},
+                  "sla_applied": {},
+                  "statistics": {},
+                  "conversation_rating": {},
+                  "teammates": {},
+                  "topics": {},
+                  "ticket": {}
                 }
               }
             },
@@ -30818,7 +31370,14 @@
                   "data": []
                 },
                 "ai_agent_participated": false,
-                "ai_agent": {}
+                "ai_agent": {},
+                "first_contact_reply": {},
+                "sla_applied": {},
+                "statistics": {},
+                "conversation_rating": {},
+                "teammates": {},
+                "topics": {},
+                "ticket": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -30899,7 +31458,14 @@
                     "data": []
                   },
                   "ai_agent_participated": false,
-                  "ai_agent": {}
+                  "ai_agent": {},
+                  "first_contact_reply": {},
+                  "sla_applied": {},
+                  "statistics": {},
+                  "conversation_rating": {},
+                  "teammates": {},
+                  "topics": {},
+                  "ticket": {}
                 }
               }
             },
@@ -31001,7 +31567,14 @@
                   "data": []
                 },
                 "ai_agent_participated": false,
-                "ai_agent": {}
+                "ai_agent": {},
+                "first_contact_reply": {},
+                "sla_applied": {},
+                "statistics": {},
+                "conversation_rating": {},
+                "teammates": {},
+                "topics": {},
+                "ticket": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -31082,7 +31655,14 @@
                     "data": []
                   },
                   "ai_agent_participated": false,
-                  "ai_agent": {}
+                  "ai_agent": {},
+                  "first_contact_reply": {},
+                  "sla_applied": {},
+                  "statistics": {},
+                  "conversation_rating": {},
+                  "teammates": {},
+                  "topics": {},
+                  "ticket": {}
                 }
               }
             },
@@ -31191,7 +31771,14 @@
                   "data": []
                 },
                 "ai_agent_participated": false,
-                "ai_agent": {}
+                "ai_agent": {},
+                "first_contact_reply": {},
+                "sla_applied": {},
+                "statistics": {},
+                "conversation_rating": {},
+                "teammates": {},
+                "topics": {},
+                "ticket": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -31275,7 +31862,14 @@
                     "data": []
                   },
                   "ai_agent_participated": false,
-                  "ai_agent": {}
+                  "ai_agent": {},
+                  "first_contact_reply": {},
+                  "sla_applied": {},
+                  "statistics": {},
+                  "conversation_rating": {},
+                  "teammates": {},
+                  "topics": {},
+                  "ticket": {}
                 }
               }
             },
@@ -31519,7 +32113,14 @@
                   "data": []
                 },
                 "ai_agent_participated": false,
-                "ai_agent": {}
+                "ai_agent": {},
+                "first_contact_reply": {},
+                "sla_applied": {},
+                "statistics": {},
+                "conversation_rating": {},
+                "teammates": {},
+                "topics": {},
+                "ticket": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -31603,7 +32204,14 @@
                     "data": []
                   },
                   "ai_agent_participated": false,
-                  "ai_agent": {}
+                  "ai_agent": {},
+                  "first_contact_reply": {},
+                  "sla_applied": {},
+                  "statistics": {},
+                  "conversation_rating": {},
+                  "teammates": {},
+                  "topics": {},
+                  "ticket": {}
                 }
               }
             }
@@ -31770,10 +32378,24 @@
                 }
               },
               "responseStatusCode": 200,
-              "responseBody": {},
+              "responseBody": {
+                "customers": [
+                  {
+                    "type": "user",
+                    "id": "667d61168a68186f43bafe0d"
+                  }
+                ]
+              },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "customers": [
+                    {
+                      "type": "user",
+                      "id": "667d61168a68186f43bafe0d"
+                    }
+                  ]
+                }
               }
             },
             {
@@ -31982,19 +32604,39 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "admin_id": "991267639"
+                "admin_id": "991267639",
+                "customer": {
+                  "intercom_user_id": "667d611c8a68186f43bafe11"
+                }
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "admin_id": "991267639"
+                  "admin_id": "991267639",
+                  "customer": {
+                    "intercom_user_id": "667d611c8a68186f43bafe11"
+                  }
                 }
               },
               "responseStatusCode": 200,
-              "responseBody": {},
+              "responseBody": {
+                "customers": [
+                  {
+                    "type": "user",
+                    "id": "667d61228a68186f43bafe19"
+                  }
+                ]
+              },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "customers": [
+                    {
+                      "type": "user",
+                      "id": "667d61228a68186f43bafe19"
+                    }
+                  ]
+                }
               }
             },
             {
@@ -32008,12 +32650,18 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "admin_id": "991267642"
+                "admin_id": "991267642",
+                "customer": {
+                  "intercom_user_id": "667d61248a68186f43bafe1a"
+                }
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "admin_id": "991267642"
+                  "admin_id": "991267642",
+                  "customer": {
+                    "intercom_user_id": "667d61248a68186f43bafe1a"
+                  }
                 }
               },
               "responseStatusCode": 200
@@ -32029,12 +32677,18 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "admin_id": "991267645"
+                "admin_id": "991267645",
+                "customer": {
+                  "intercom_user_id": "667d612b8a68186f43bafe22"
+                }
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "admin_id": "991267645"
+                  "admin_id": "991267645",
+                  "customer": {
+                    "intercom_user_id": "667d612b8a68186f43bafe22"
+                  }
                 }
               },
               "responseStatusCode": 200
@@ -32050,12 +32704,18 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "admin_id": "991267648"
+                "admin_id": "991267648",
+                "customer": {
+                  "intercom_user_id": "667d61338a68186f43bafe2a"
+                }
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "admin_id": "991267648"
+                  "admin_id": "991267648",
+                  "customer": {
+                    "intercom_user_id": "667d61338a68186f43bafe2a"
+                  }
                 }
               },
               "responseStatusCode": 200
@@ -32269,7 +32929,13 @@
                   "data": []
                 },
                 "ai_agent_participated": false,
-                "ai_agent": {}
+                "ai_agent": {},
+                "sla_applied": {},
+                "statistics": {},
+                "conversation_rating": {},
+                "teammates": {},
+                "topics": {},
+                "ticket": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -32355,7 +33021,13 @@
                     "data": []
                   },
                   "ai_agent_participated": false,
-                  "ai_agent": {}
+                  "ai_agent": {},
+                  "sla_applied": {},
+                  "statistics": {},
+                  "conversation_rating": {},
+                  "teammates": {},
+                  "topics": {},
+                  "ticket": {}
                 }
               }
             },
@@ -32528,11 +33200,13 @@
                   "icon": "🦁",
                   "workspace_id": "this_is_an_id404_that_should_be_at_least_",
                   "ticket_type_attributes": {
-                    "type": "list"
+                    "type": "list",
+                    "data": []
                   },
                   "archived": false,
                   "created_at": 1719492947,
-                  "updated_at": 1719492947
+                  "updated_at": 1719492947,
+                  "is_internal": false
                 },
                 "contacts": {
                   "type": "contact.list",
@@ -32616,11 +33290,13 @@
                     "icon": "🦁",
                     "workspace_id": "this_is_an_id404_that_should_be_at_least_",
                     "ticket_type_attributes": {
-                      "type": "list"
+                      "type": "list",
+                      "data": []
                     },
                     "archived": false,
                     "created_at": 1719492947,
-                    "updated_at": 1719492947
+                    "updated_at": 1719492947,
+                    "is_internal": false
                   },
                   "contacts": {
                     "type": "contact.list",
@@ -33598,7 +34274,8 @@
                 "description": "Just a plain old ring",
                 "options": [
                   "foo"
-                ]
+                ],
+                "archived": false
               },
               "requestBodyV3": {
                 "type": "json",
@@ -33609,7 +34286,8 @@
                   "description": "Just a plain old ring",
                   "options": [
                     "foo"
-                  ]
+                  ],
+                  "archived": false
                 }
               },
               "responseStatusCode": 200
@@ -34060,7 +34738,10 @@
                 "email": "user26@email.com",
                 "intercom_user_id": "667d61648a68186f43bafe4b",
                 "user_id": "3ecf64d0-9ed1-4e9f-88e1-da7d6e6782f3",
-                "events": []
+                "events": [],
+                "pages": {
+                  "next": "http://api.intercom.test/events?next page"
+                }
               },
               "responseBodyV3": {
                 "type": "json",
@@ -34069,7 +34750,10 @@
                   "email": "user26@email.com",
                   "intercom_user_id": "667d61648a68186f43bafe4b",
                   "user_id": "3ecf64d0-9ed1-4e9f-88e1-da7d6e6782f3",
-                  "events": []
+                  "events": [],
+                  "pages": {
+                    "next": "http://api.intercom.test/events?next page"
+                  }
                 }
               }
             }
@@ -34373,14 +35057,16 @@
               "responseBody": {
                 "status": "pending",
                 "download_expires_at": "",
-                "download_url": ""
+                "download_url": "",
+                "job_identifier": "bxe9awlish03jkq8"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
                   "status": "pending",
                   "download_expires_at": "",
-                  "download_url": ""
+                  "download_url": "",
+                  "job_identifier": "bxe9awlish03jkq8"
                 }
               }
             }
@@ -34481,14 +35167,16 @@
               "responseBody": {
                 "status": "pending",
                 "download_expires_at": "",
-                "download_url": ""
+                "download_url": "",
+                "job_identifier": "b1ppo8h93fj386fk"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
                   "status": "pending",
                   "download_expires_at": "",
-                  "download_url": ""
+                  "download_url": "",
+                  "job_identifier": "b1ppo8h93fj386fk"
                 }
               }
             }
@@ -34589,14 +35277,16 @@
               "responseBody": {
                 "status": "canceled",
                 "download_expires_at": "",
-                "download_url": ""
+                "download_url": "",
+                "job_identifier": "pwrbmmimhakvlfsh"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
                   "status": "canceled",
                   "download_expires_at": "",
-                  "download_url": ""
+                  "download_url": "",
+                  "job_identifier": "pwrbmmimhakvlfsh"
                 }
               }
             }
@@ -34911,7 +35601,15 @@
                 "created_at": 1719492972,
                 "subject": "heyy",
                 "body": "heyy",
-                "message_type": "inapp"
+                "message_type": "inapp",
+                "owner": {
+                  "type": "admin",
+                  "id": "991267716",
+                  "name": "Ciaran269 Lee",
+                  "email": "admin269@email.com",
+                  "away_mode_enabled": false,
+                  "away_mode_reassign": false
+                }
               },
               "responseBodyV3": {
                 "type": "json",
@@ -34921,7 +35619,15 @@
                   "created_at": 1719492972,
                   "subject": "heyy",
                   "body": "heyy",
-                  "message_type": "inapp"
+                  "message_type": "inapp",
+                  "owner": {
+                    "type": "admin",
+                    "id": "991267716",
+                    "name": "Ciaran269 Lee",
+                    "email": "admin269@email.com",
+                    "away_mode_enabled": false,
+                    "away_mode_reassign": false
+                  }
                 }
               }
             },
@@ -36756,12 +37462,14 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "phone_call_redirect"
+                "type": "phone_call_redirect",
+                "url": "http://via.intercom.io/msgr/6eb60123-dadb-4881-80fd-4fc2cf272b12"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "type": "phone_call_redirect"
+                  "type": "phone_call_redirect",
+                  "url": "http://via.intercom.io/msgr/6eb60123-dadb-4881-80fd-4fc2cf272b12"
                 }
               }
             },
@@ -37568,12 +38276,174 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "list"
+                "type": "list",
+                "data": [
+                  {
+                    "type": "ticket_type",
+                    "id": "85",
+                    "name": "Bug Report",
+                    "description": "Bug Report Template",
+                    "icon": "🎟️",
+                    "workspace_id": "this_is_an_id608_that_should_be_at_least_",
+                    "archived": false,
+                    "created_at": 1719493014,
+                    "updated_at": 1719493014,
+                    "is_internal": false,
+                    "ticket_type_attributes": {
+                      "type": "list",
+                      "data": [
+                        {
+                          "type": "ticket_type_attribute",
+                          "id": "218",
+                          "workspace_id": "this_is_an_id608_that_should_be_at_least_",
+                          "name": "_default_title_",
+                          "description": "",
+                          "data_type": "string",
+                          "input_options": {
+                            "multiline": false
+                          },
+                          "order": 0,
+                          "required_to_create": false,
+                          "required_to_create_for_contacts": false,
+                          "visible_on_create": true,
+                          "visible_to_contacts": true,
+                          "default": true,
+                          "ticket_type_id": 85,
+                          "archived": false,
+                          "created_at": 1719493014,
+                          "updated_at": 1719493014
+                        },
+                        {
+                          "type": "ticket_type_attribute",
+                          "id": "220",
+                          "workspace_id": "this_is_an_id608_that_should_be_at_least_",
+                          "name": "name",
+                          "description": "description",
+                          "data_type": "string",
+                          "input_options": null,
+                          "order": 0,
+                          "required_to_create": false,
+                          "required_to_create_for_contacts": false,
+                          "visible_on_create": false,
+                          "visible_to_contacts": false,
+                          "default": false,
+                          "ticket_type_id": 85,
+                          "archived": false,
+                          "created_at": 1719493014,
+                          "updated_at": 1719493014
+                        },
+                        {
+                          "type": "ticket_type_attribute",
+                          "id": "219",
+                          "workspace_id": "this_is_an_id608_that_should_be_at_least_",
+                          "name": "_default_description_",
+                          "description": "",
+                          "data_type": "string",
+                          "input_options": {
+                            "multiline": true
+                          },
+                          "order": 1,
+                          "required_to_create": false,
+                          "required_to_create_for_contacts": false,
+                          "visible_on_create": true,
+                          "visible_to_contacts": true,
+                          "default": true,
+                          "ticket_type_id": 85,
+                          "archived": false,
+                          "created_at": 1719493014,
+                          "updated_at": 1719493014
+                        }
+                      ]
+                    },
+                    "category": "Customer"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "type": "list"
+                  "type": "list",
+                  "data": [
+                    {
+                      "type": "ticket_type",
+                      "id": "85",
+                      "name": "Bug Report",
+                      "description": "Bug Report Template",
+                      "icon": "🎟️",
+                      "workspace_id": "this_is_an_id608_that_should_be_at_least_",
+                      "archived": false,
+                      "created_at": 1719493014,
+                      "updated_at": 1719493014,
+                      "is_internal": false,
+                      "ticket_type_attributes": {
+                        "type": "list",
+                        "data": [
+                          {
+                            "type": "ticket_type_attribute",
+                            "id": "218",
+                            "workspace_id": "this_is_an_id608_that_should_be_at_least_",
+                            "name": "_default_title_",
+                            "description": "",
+                            "data_type": "string",
+                            "input_options": {
+                              "multiline": false
+                            },
+                            "order": 0,
+                            "required_to_create": false,
+                            "required_to_create_for_contacts": false,
+                            "visible_on_create": true,
+                            "visible_to_contacts": true,
+                            "default": true,
+                            "ticket_type_id": 85,
+                            "archived": false,
+                            "created_at": 1719493014,
+                            "updated_at": 1719493014
+                          },
+                          {
+                            "type": "ticket_type_attribute",
+                            "id": "220",
+                            "workspace_id": "this_is_an_id608_that_should_be_at_least_",
+                            "name": "name",
+                            "description": "description",
+                            "data_type": "string",
+                            "input_options": null,
+                            "order": 0,
+                            "required_to_create": false,
+                            "required_to_create_for_contacts": false,
+                            "visible_on_create": false,
+                            "visible_to_contacts": false,
+                            "default": false,
+                            "ticket_type_id": 85,
+                            "archived": false,
+                            "created_at": 1719493014,
+                            "updated_at": 1719493014
+                          },
+                          {
+                            "type": "ticket_type_attribute",
+                            "id": "219",
+                            "workspace_id": "this_is_an_id608_that_should_be_at_least_",
+                            "name": "_default_description_",
+                            "description": "",
+                            "data_type": "string",
+                            "input_options": {
+                              "multiline": true
+                            },
+                            "order": 1,
+                            "required_to_create": false,
+                            "required_to_create_for_contacts": false,
+                            "visible_on_create": true,
+                            "visible_to_contacts": true,
+                            "default": true,
+                            "ticket_type_id": 85,
+                            "archived": false,
+                            "created_at": 1719493014,
+                            "updated_at": 1719493014
+                          }
+                        ]
+                      },
+                      "category": "Customer"
+                    }
+                  ]
                 }
               }
             }
@@ -37701,11 +38571,56 @@
                 "icon": "🎟️",
                 "workspace_id": "this_is_an_id612_that_should_be_at_least_",
                 "ticket_type_attributes": {
-                  "type": "list"
+                  "type": "list",
+                  "data": [
+                    {
+                      "type": "ticket_type_attribute",
+                      "id": "227",
+                      "workspace_id": "this_is_an_id612_that_should_be_at_least_",
+                      "name": "_default_title_",
+                      "description": "",
+                      "data_type": "string",
+                      "input_options": {
+                        "multiline": false
+                      },
+                      "order": 0,
+                      "required_to_create": false,
+                      "required_to_create_for_contacts": false,
+                      "visible_on_create": true,
+                      "visible_to_contacts": true,
+                      "default": true,
+                      "ticket_type_id": 88,
+                      "archived": false,
+                      "created_at": 1719493016,
+                      "updated_at": 1719493016
+                    },
+                    {
+                      "type": "ticket_type_attribute",
+                      "id": "228",
+                      "workspace_id": "this_is_an_id612_that_should_be_at_least_",
+                      "name": "_default_description_",
+                      "description": "",
+                      "data_type": "string",
+                      "input_options": {
+                        "multiline": true
+                      },
+                      "order": 1,
+                      "required_to_create": false,
+                      "required_to_create_for_contacts": false,
+                      "visible_on_create": true,
+                      "visible_to_contacts": true,
+                      "default": true,
+                      "ticket_type_id": 88,
+                      "archived": false,
+                      "created_at": 1719493016,
+                      "updated_at": 1719493016
+                    }
+                  ]
                 },
                 "archived": false,
                 "created_at": 1719493016,
-                "updated_at": 1719493016
+                "updated_at": 1719493016,
+                "is_internal": false
               },
               "responseBodyV3": {
                 "type": "json",
@@ -37718,11 +38633,56 @@
                   "icon": "🎟️",
                   "workspace_id": "this_is_an_id612_that_should_be_at_least_",
                   "ticket_type_attributes": {
-                    "type": "list"
+                    "type": "list",
+                    "data": [
+                      {
+                        "type": "ticket_type_attribute",
+                        "id": "227",
+                        "workspace_id": "this_is_an_id612_that_should_be_at_least_",
+                        "name": "_default_title_",
+                        "description": "",
+                        "data_type": "string",
+                        "input_options": {
+                          "multiline": false
+                        },
+                        "order": 0,
+                        "required_to_create": false,
+                        "required_to_create_for_contacts": false,
+                        "visible_on_create": true,
+                        "visible_to_contacts": true,
+                        "default": true,
+                        "ticket_type_id": 88,
+                        "archived": false,
+                        "created_at": 1719493016,
+                        "updated_at": 1719493016
+                      },
+                      {
+                        "type": "ticket_type_attribute",
+                        "id": "228",
+                        "workspace_id": "this_is_an_id612_that_should_be_at_least_",
+                        "name": "_default_description_",
+                        "description": "",
+                        "data_type": "string",
+                        "input_options": {
+                          "multiline": true
+                        },
+                        "order": 1,
+                        "required_to_create": false,
+                        "required_to_create_for_contacts": false,
+                        "visible_on_create": true,
+                        "visible_to_contacts": true,
+                        "default": true,
+                        "ticket_type_id": 88,
+                        "archived": false,
+                        "created_at": 1719493016,
+                        "updated_at": 1719493016
+                      }
+                    ]
                   },
                   "archived": false,
                   "created_at": 1719493016,
-                  "updated_at": 1719493016
+                  "updated_at": 1719493016,
+                  "is_internal": false
                 }
               }
             }
@@ -37843,11 +38803,75 @@
                 "icon": "🎟️",
                 "workspace_id": "this_is_an_id616_that_should_be_at_least_",
                 "ticket_type_attributes": {
-                  "type": "list"
+                  "type": "list",
+                  "data": [
+                    {
+                      "type": "ticket_type_attribute",
+                      "id": "232",
+                      "workspace_id": "this_is_an_id616_that_should_be_at_least_",
+                      "name": "_default_title_",
+                      "description": "",
+                      "data_type": "string",
+                      "input_options": {
+                        "multiline": false
+                      },
+                      "order": 0,
+                      "required_to_create": false,
+                      "required_to_create_for_contacts": false,
+                      "visible_on_create": true,
+                      "visible_to_contacts": true,
+                      "default": true,
+                      "ticket_type_id": 90,
+                      "archived": false,
+                      "created_at": 1719493017,
+                      "updated_at": 1719493017
+                    },
+                    {
+                      "type": "ticket_type_attribute",
+                      "id": "234",
+                      "workspace_id": "this_is_an_id616_that_should_be_at_least_",
+                      "name": "name",
+                      "description": "description",
+                      "data_type": "string",
+                      "input_options": null,
+                      "order": 0,
+                      "required_to_create": false,
+                      "required_to_create_for_contacts": false,
+                      "visible_on_create": false,
+                      "visible_to_contacts": false,
+                      "default": false,
+                      "ticket_type_id": 90,
+                      "archived": false,
+                      "created_at": 1719493017,
+                      "updated_at": 1719493017
+                    },
+                    {
+                      "type": "ticket_type_attribute",
+                      "id": "233",
+                      "workspace_id": "this_is_an_id616_that_should_be_at_least_",
+                      "name": "_default_description_",
+                      "description": "",
+                      "data_type": "string",
+                      "input_options": {
+                        "multiline": true
+                      },
+                      "order": 1,
+                      "required_to_create": false,
+                      "required_to_create_for_contacts": false,
+                      "visible_on_create": true,
+                      "visible_to_contacts": true,
+                      "default": true,
+                      "ticket_type_id": 90,
+                      "archived": false,
+                      "created_at": 1719493017,
+                      "updated_at": 1719493017
+                    }
+                  ]
                 },
                 "archived": false,
                 "created_at": 1719493017,
-                "updated_at": 1719493017
+                "updated_at": 1719493017,
+                "is_internal": false
               },
               "responseBodyV3": {
                 "type": "json",
@@ -37860,11 +38884,75 @@
                   "icon": "🎟️",
                   "workspace_id": "this_is_an_id616_that_should_be_at_least_",
                   "ticket_type_attributes": {
-                    "type": "list"
+                    "type": "list",
+                    "data": [
+                      {
+                        "type": "ticket_type_attribute",
+                        "id": "232",
+                        "workspace_id": "this_is_an_id616_that_should_be_at_least_",
+                        "name": "_default_title_",
+                        "description": "",
+                        "data_type": "string",
+                        "input_options": {
+                          "multiline": false
+                        },
+                        "order": 0,
+                        "required_to_create": false,
+                        "required_to_create_for_contacts": false,
+                        "visible_on_create": true,
+                        "visible_to_contacts": true,
+                        "default": true,
+                        "ticket_type_id": 90,
+                        "archived": false,
+                        "created_at": 1719493017,
+                        "updated_at": 1719493017
+                      },
+                      {
+                        "type": "ticket_type_attribute",
+                        "id": "234",
+                        "workspace_id": "this_is_an_id616_that_should_be_at_least_",
+                        "name": "name",
+                        "description": "description",
+                        "data_type": "string",
+                        "input_options": null,
+                        "order": 0,
+                        "required_to_create": false,
+                        "required_to_create_for_contacts": false,
+                        "visible_on_create": false,
+                        "visible_to_contacts": false,
+                        "default": false,
+                        "ticket_type_id": 90,
+                        "archived": false,
+                        "created_at": 1719493017,
+                        "updated_at": 1719493017
+                      },
+                      {
+                        "type": "ticket_type_attribute",
+                        "id": "233",
+                        "workspace_id": "this_is_an_id616_that_should_be_at_least_",
+                        "name": "_default_description_",
+                        "description": "",
+                        "data_type": "string",
+                        "input_options": {
+                          "multiline": true
+                        },
+                        "order": 1,
+                        "required_to_create": false,
+                        "required_to_create_for_contacts": false,
+                        "visible_on_create": true,
+                        "visible_to_contacts": true,
+                        "default": true,
+                        "ticket_type_id": 90,
+                        "archived": false,
+                        "created_at": 1719493017,
+                        "updated_at": 1719493017
+                      }
+                    ]
                   },
                   "archived": false,
                   "created_at": 1719493017,
-                  "updated_at": 1719493017
+                  "updated_at": 1719493017,
+                  "is_internal": false
                 }
               }
             }
@@ -38007,11 +39095,75 @@
                 "icon": "🎟️",
                 "workspace_id": "this_is_an_id620_that_should_be_at_least_",
                 "ticket_type_attributes": {
-                  "type": "list"
+                  "type": "list",
+                  "data": [
+                    {
+                      "type": "ticket_type_attribute",
+                      "id": "238",
+                      "workspace_id": "this_is_an_id620_that_should_be_at_least_",
+                      "name": "_default_title_",
+                      "description": "",
+                      "data_type": "string",
+                      "input_options": {
+                        "multiline": false
+                      },
+                      "order": 0,
+                      "required_to_create": false,
+                      "required_to_create_for_contacts": false,
+                      "visible_on_create": true,
+                      "visible_to_contacts": true,
+                      "default": true,
+                      "ticket_type_id": 92,
+                      "archived": false,
+                      "created_at": 1719493018,
+                      "updated_at": 1719493018
+                    },
+                    {
+                      "type": "ticket_type_attribute",
+                      "id": "240",
+                      "workspace_id": "this_is_an_id620_that_should_be_at_least_",
+                      "name": "name",
+                      "description": "description",
+                      "data_type": "string",
+                      "input_options": null,
+                      "order": 0,
+                      "required_to_create": false,
+                      "required_to_create_for_contacts": false,
+                      "visible_on_create": false,
+                      "visible_to_contacts": false,
+                      "default": false,
+                      "ticket_type_id": 92,
+                      "archived": false,
+                      "created_at": 1719493018,
+                      "updated_at": 1719493018
+                    },
+                    {
+                      "type": "ticket_type_attribute",
+                      "id": "239",
+                      "workspace_id": "this_is_an_id620_that_should_be_at_least_",
+                      "name": "_default_description_",
+                      "description": "",
+                      "data_type": "string",
+                      "input_options": {
+                        "multiline": true
+                      },
+                      "order": 1,
+                      "required_to_create": false,
+                      "required_to_create_for_contacts": false,
+                      "visible_on_create": true,
+                      "visible_to_contacts": true,
+                      "default": true,
+                      "ticket_type_id": 92,
+                      "archived": false,
+                      "created_at": 1719493018,
+                      "updated_at": 1719493018
+                    }
+                  ]
                 },
                 "archived": false,
                 "created_at": 1719493018,
-                "updated_at": 1719493018
+                "updated_at": 1719493018,
+                "is_internal": false
               },
               "responseBodyV3": {
                 "type": "json",
@@ -38024,11 +39176,75 @@
                   "icon": "🎟️",
                   "workspace_id": "this_is_an_id620_that_should_be_at_least_",
                   "ticket_type_attributes": {
-                    "type": "list"
+                    "type": "list",
+                    "data": [
+                      {
+                        "type": "ticket_type_attribute",
+                        "id": "238",
+                        "workspace_id": "this_is_an_id620_that_should_be_at_least_",
+                        "name": "_default_title_",
+                        "description": "",
+                        "data_type": "string",
+                        "input_options": {
+                          "multiline": false
+                        },
+                        "order": 0,
+                        "required_to_create": false,
+                        "required_to_create_for_contacts": false,
+                        "visible_on_create": true,
+                        "visible_to_contacts": true,
+                        "default": true,
+                        "ticket_type_id": 92,
+                        "archived": false,
+                        "created_at": 1719493018,
+                        "updated_at": 1719493018
+                      },
+                      {
+                        "type": "ticket_type_attribute",
+                        "id": "240",
+                        "workspace_id": "this_is_an_id620_that_should_be_at_least_",
+                        "name": "name",
+                        "description": "description",
+                        "data_type": "string",
+                        "input_options": null,
+                        "order": 0,
+                        "required_to_create": false,
+                        "required_to_create_for_contacts": false,
+                        "visible_on_create": false,
+                        "visible_to_contacts": false,
+                        "default": false,
+                        "ticket_type_id": 92,
+                        "archived": false,
+                        "created_at": 1719493018,
+                        "updated_at": 1719493018
+                      },
+                      {
+                        "type": "ticket_type_attribute",
+                        "id": "239",
+                        "workspace_id": "this_is_an_id620_that_should_be_at_least_",
+                        "name": "_default_description_",
+                        "description": "",
+                        "data_type": "string",
+                        "input_options": {
+                          "multiline": true
+                        },
+                        "order": 1,
+                        "required_to_create": false,
+                        "required_to_create_for_contacts": false,
+                        "visible_on_create": true,
+                        "visible_to_contacts": true,
+                        "default": true,
+                        "ticket_type_id": 92,
+                        "archived": false,
+                        "created_at": 1719493018,
+                        "updated_at": 1719493018
+                      }
+                    ]
                   },
                   "archived": false,
                   "created_at": 1719493018,
-                  "updated_at": 1719493018
+                  "updated_at": 1719493018,
+                  "is_internal": false
                 }
               }
             }
@@ -38515,11 +39731,52 @@
                   "icon": "🦁",
                   "workspace_id": "this_is_an_id648_that_should_be_at_least_",
                   "ticket_type_attributes": {
-                    "type": "list"
+                    "type": "list",
+                    "data": [
+                      {
+                        "type": "ticket_type_attribute",
+                        "id": "252",
+                        "workspace_id": "this_is_an_id648_that_should_be_at_least_",
+                        "name": "_default_title_",
+                        "description": "ola",
+                        "data_type": "string",
+                        "input_options": null,
+                        "order": 0,
+                        "required_to_create": true,
+                        "required_to_create_for_contacts": false,
+                        "visible_on_create": true,
+                        "visible_to_contacts": false,
+                        "default": false,
+                        "ticket_type_id": 106,
+                        "archived": false,
+                        "created_at": 1719493047,
+                        "updated_at": 1719493047
+                      },
+                      {
+                        "type": "ticket_type_attribute",
+                        "id": "253",
+                        "workspace_id": "this_is_an_id648_that_should_be_at_least_",
+                        "name": "_default_description_",
+                        "description": "ola",
+                        "data_type": "string",
+                        "input_options": null,
+                        "order": 0,
+                        "required_to_create": true,
+                        "required_to_create_for_contacts": false,
+                        "visible_on_create": true,
+                        "visible_to_contacts": false,
+                        "default": false,
+                        "ticket_type_id": 106,
+                        "archived": false,
+                        "created_at": 1719493047,
+                        "updated_at": 1719493047
+                      }
+                    ]
                   },
                   "archived": false,
                   "created_at": 1719493047,
-                  "updated_at": 1719493047
+                  "updated_at": 1719493047,
+                  "is_internal": false
                 },
                 "contacts": {
                   "type": "contact.list",
@@ -38590,11 +39847,52 @@
                     "icon": "🦁",
                     "workspace_id": "this_is_an_id648_that_should_be_at_least_",
                     "ticket_type_attributes": {
-                      "type": "list"
+                      "type": "list",
+                      "data": [
+                        {
+                          "type": "ticket_type_attribute",
+                          "id": "252",
+                          "workspace_id": "this_is_an_id648_that_should_be_at_least_",
+                          "name": "_default_title_",
+                          "description": "ola",
+                          "data_type": "string",
+                          "input_options": null,
+                          "order": 0,
+                          "required_to_create": true,
+                          "required_to_create_for_contacts": false,
+                          "visible_on_create": true,
+                          "visible_to_contacts": false,
+                          "default": false,
+                          "ticket_type_id": 106,
+                          "archived": false,
+                          "created_at": 1719493047,
+                          "updated_at": 1719493047
+                        },
+                        {
+                          "type": "ticket_type_attribute",
+                          "id": "253",
+                          "workspace_id": "this_is_an_id648_that_should_be_at_least_",
+                          "name": "_default_description_",
+                          "description": "ola",
+                          "data_type": "string",
+                          "input_options": null,
+                          "order": 0,
+                          "required_to_create": true,
+                          "required_to_create_for_contacts": false,
+                          "visible_on_create": true,
+                          "visible_to_contacts": false,
+                          "default": false,
+                          "ticket_type_id": 106,
+                          "archived": false,
+                          "created_at": 1719493047,
+                          "updated_at": 1719493047
+                        }
+                      ]
                     },
                     "archived": false,
                     "created_at": 1719493047,
-                    "updated_at": 1719493047
+                    "updated_at": 1719493047,
+                    "is_internal": false
                   },
                   "contacts": {
                     "type": "contact.list",
@@ -38773,11 +40071,52 @@
                   "icon": "🦁",
                   "workspace_id": "this_is_an_id660_that_should_be_at_least_",
                   "ticket_type_attributes": {
-                    "type": "list"
+                    "type": "list",
+                    "data": [
+                      {
+                        "type": "ticket_type_attribute",
+                        "id": "268",
+                        "workspace_id": "this_is_an_id660_that_should_be_at_least_",
+                        "name": "_default_title_",
+                        "description": "ola",
+                        "data_type": "string",
+                        "input_options": null,
+                        "order": 0,
+                        "required_to_create": true,
+                        "required_to_create_for_contacts": false,
+                        "visible_on_create": true,
+                        "visible_to_contacts": false,
+                        "default": false,
+                        "ticket_type_id": 112,
+                        "archived": false,
+                        "created_at": 1719493060,
+                        "updated_at": 1719493060
+                      },
+                      {
+                        "type": "ticket_type_attribute",
+                        "id": "269",
+                        "workspace_id": "this_is_an_id660_that_should_be_at_least_",
+                        "name": "_default_description_",
+                        "description": "ola",
+                        "data_type": "string",
+                        "input_options": null,
+                        "order": 0,
+                        "required_to_create": true,
+                        "required_to_create_for_contacts": false,
+                        "visible_on_create": true,
+                        "visible_to_contacts": false,
+                        "default": false,
+                        "ticket_type_id": 112,
+                        "archived": false,
+                        "created_at": 1719493060,
+                        "updated_at": 1719493060
+                      }
+                    ]
                   },
                   "archived": false,
                   "created_at": 1719493060,
-                  "updated_at": 1719493060
+                  "updated_at": 1719493060,
+                  "is_internal": false
                 },
                 "contacts": {
                   "type": "contact.list",
@@ -38848,11 +40187,52 @@
                     "icon": "🦁",
                     "workspace_id": "this_is_an_id660_that_should_be_at_least_",
                     "ticket_type_attributes": {
-                      "type": "list"
+                      "type": "list",
+                      "data": [
+                        {
+                          "type": "ticket_type_attribute",
+                          "id": "268",
+                          "workspace_id": "this_is_an_id660_that_should_be_at_least_",
+                          "name": "_default_title_",
+                          "description": "ola",
+                          "data_type": "string",
+                          "input_options": null,
+                          "order": 0,
+                          "required_to_create": true,
+                          "required_to_create_for_contacts": false,
+                          "visible_on_create": true,
+                          "visible_to_contacts": false,
+                          "default": false,
+                          "ticket_type_id": 112,
+                          "archived": false,
+                          "created_at": 1719493060,
+                          "updated_at": 1719493060
+                        },
+                        {
+                          "type": "ticket_type_attribute",
+                          "id": "269",
+                          "workspace_id": "this_is_an_id660_that_should_be_at_least_",
+                          "name": "_default_description_",
+                          "description": "ola",
+                          "data_type": "string",
+                          "input_options": null,
+                          "order": 0,
+                          "required_to_create": true,
+                          "required_to_create_for_contacts": false,
+                          "visible_on_create": true,
+                          "visible_to_contacts": false,
+                          "default": false,
+                          "ticket_type_id": 112,
+                          "archived": false,
+                          "created_at": 1719493060,
+                          "updated_at": 1719493060
+                        }
+                      ]
                     },
                     "archived": false,
                     "created_at": 1719493060,
-                    "updated_at": 1719493060
+                    "updated_at": 1719493060,
+                    "is_internal": false
                   },
                   "contacts": {
                     "type": "contact.list",
@@ -39074,11 +40454,52 @@
                   "icon": "🦁",
                   "workspace_id": "this_is_an_id652_that_should_be_at_least_",
                   "ticket_type_attributes": {
-                    "type": "list"
+                    "type": "list",
+                    "data": [
+                      {
+                        "type": "ticket_type_attribute",
+                        "id": "257",
+                        "workspace_id": "this_is_an_id652_that_should_be_at_least_",
+                        "name": "_default_title_",
+                        "description": "ola",
+                        "data_type": "string",
+                        "input_options": null,
+                        "order": 0,
+                        "required_to_create": true,
+                        "required_to_create_for_contacts": false,
+                        "visible_on_create": true,
+                        "visible_to_contacts": false,
+                        "default": false,
+                        "ticket_type_id": 108,
+                        "archived": false,
+                        "created_at": 1719493050,
+                        "updated_at": 1719493050
+                      },
+                      {
+                        "type": "ticket_type_attribute",
+                        "id": "258",
+                        "workspace_id": "this_is_an_id652_that_should_be_at_least_",
+                        "name": "_default_description_",
+                        "description": "ola",
+                        "data_type": "string",
+                        "input_options": null,
+                        "order": 0,
+                        "required_to_create": true,
+                        "required_to_create_for_contacts": false,
+                        "visible_on_create": true,
+                        "visible_to_contacts": false,
+                        "default": false,
+                        "ticket_type_id": 108,
+                        "archived": false,
+                        "created_at": 1719493050,
+                        "updated_at": 1719493050
+                      }
+                    ]
                   },
                   "archived": false,
                   "created_at": 1719493050,
-                  "updated_at": 1719493050
+                  "updated_at": 1719493050,
+                  "is_internal": false
                 },
                 "contacts": {
                   "type": "contact.list",
@@ -39231,11 +40652,52 @@
                     "icon": "🦁",
                     "workspace_id": "this_is_an_id652_that_should_be_at_least_",
                     "ticket_type_attributes": {
-                      "type": "list"
+                      "type": "list",
+                      "data": [
+                        {
+                          "type": "ticket_type_attribute",
+                          "id": "257",
+                          "workspace_id": "this_is_an_id652_that_should_be_at_least_",
+                          "name": "_default_title_",
+                          "description": "ola",
+                          "data_type": "string",
+                          "input_options": null,
+                          "order": 0,
+                          "required_to_create": true,
+                          "required_to_create_for_contacts": false,
+                          "visible_on_create": true,
+                          "visible_to_contacts": false,
+                          "default": false,
+                          "ticket_type_id": 108,
+                          "archived": false,
+                          "created_at": 1719493050,
+                          "updated_at": 1719493050
+                        },
+                        {
+                          "type": "ticket_type_attribute",
+                          "id": "258",
+                          "workspace_id": "this_is_an_id652_that_should_be_at_least_",
+                          "name": "_default_description_",
+                          "description": "ola",
+                          "data_type": "string",
+                          "input_options": null,
+                          "order": 0,
+                          "required_to_create": true,
+                          "required_to_create_for_contacts": false,
+                          "visible_on_create": true,
+                          "visible_to_contacts": false,
+                          "default": false,
+                          "ticket_type_id": 108,
+                          "archived": false,
+                          "created_at": 1719493050,
+                          "updated_at": 1719493050
+                        }
+                      ]
                     },
                     "archived": false,
                     "created_at": 1719493050,
-                    "updated_at": 1719493050
+                    "updated_at": 1719493050,
+                    "is_internal": false
                   },
                   "contacts": {
                     "type": "contact.list",
@@ -39582,11 +41044,52 @@
                       "icon": "🦁",
                       "workspace_id": "this_is_an_id667_that_should_be_at_least_",
                       "ticket_type_attributes": {
-                        "type": "list"
+                        "type": "list",
+                        "data": [
+                          {
+                            "type": "ticket_type_attribute",
+                            "id": "279",
+                            "workspace_id": "this_is_an_id667_that_should_be_at_least_",
+                            "name": "_default_title_",
+                            "description": "ola",
+                            "data_type": "string",
+                            "input_options": null,
+                            "order": 0,
+                            "required_to_create": true,
+                            "required_to_create_for_contacts": false,
+                            "visible_on_create": true,
+                            "visible_to_contacts": false,
+                            "default": false,
+                            "ticket_type_id": 117,
+                            "archived": false,
+                            "created_at": 1719493065,
+                            "updated_at": 1719493065
+                          },
+                          {
+                            "type": "ticket_type_attribute",
+                            "id": "280",
+                            "workspace_id": "this_is_an_id667_that_should_be_at_least_",
+                            "name": "_default_description_",
+                            "description": "ola",
+                            "data_type": "string",
+                            "input_options": null,
+                            "order": 0,
+                            "required_to_create": true,
+                            "required_to_create_for_contacts": false,
+                            "visible_on_create": true,
+                            "visible_to_contacts": false,
+                            "default": false,
+                            "ticket_type_id": 117,
+                            "archived": false,
+                            "created_at": 1719493065,
+                            "updated_at": 1719493065
+                          }
+                        ]
                       },
                       "archived": false,
                       "created_at": 1719493065,
-                      "updated_at": 1719493065
+                      "updated_at": 1719493065,
+                      "is_internal": false
                     },
                     "contacts": {
                       "type": "contact.list",
@@ -39669,11 +41172,52 @@
                         "icon": "🦁",
                         "workspace_id": "this_is_an_id667_that_should_be_at_least_",
                         "ticket_type_attributes": {
-                          "type": "list"
+                          "type": "list",
+                          "data": [
+                            {
+                              "type": "ticket_type_attribute",
+                              "id": "279",
+                              "workspace_id": "this_is_an_id667_that_should_be_at_least_",
+                              "name": "_default_title_",
+                              "description": "ola",
+                              "data_type": "string",
+                              "input_options": null,
+                              "order": 0,
+                              "required_to_create": true,
+                              "required_to_create_for_contacts": false,
+                              "visible_on_create": true,
+                              "visible_to_contacts": false,
+                              "default": false,
+                              "ticket_type_id": 117,
+                              "archived": false,
+                              "created_at": 1719493065,
+                              "updated_at": 1719493065
+                            },
+                            {
+                              "type": "ticket_type_attribute",
+                              "id": "280",
+                              "workspace_id": "this_is_an_id667_that_should_be_at_least_",
+                              "name": "_default_description_",
+                              "description": "ola",
+                              "data_type": "string",
+                              "input_options": null,
+                              "order": 0,
+                              "required_to_create": true,
+                              "required_to_create_for_contacts": false,
+                              "visible_on_create": true,
+                              "visible_to_contacts": false,
+                              "default": false,
+                              "ticket_type_id": 117,
+                              "archived": false,
+                              "created_at": 1719493065,
+                              "updated_at": 1719493065
+                            }
+                          ]
                         },
                         "archived": false,
                         "created_at": 1719493065,
-                        "updated_at": 1719493065
+                        "updated_at": 1719493065,
+                        "is_internal": false
                       },
                       "contacts": {
                         "type": "contact.list",
@@ -39904,7 +41448,8 @@
                 "utm_medium": null,
                 "utm_source": null,
                 "utm_term": null,
-                "do_not_track": null
+                "do_not_track": null,
+                "last_request_at": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -39955,7 +41500,8 @@
                   "utm_medium": null,
                   "utm_source": null,
                   "utm_term": null,
-                  "do_not_track": null
+                  "do_not_track": null,
+                  "last_request_at": {}
                 }
               }
             }
@@ -40125,7 +41671,8 @@
                 "utm_medium": null,
                 "utm_source": null,
                 "utm_term": null,
-                "do_not_track": null
+                "do_not_track": null,
+                "last_request_at": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -40176,7 +41723,8 @@
                   "utm_medium": null,
                   "utm_source": null,
                   "utm_term": null,
-                  "do_not_track": null
+                  "do_not_track": null,
+                  "last_request_at": {}
                 }
               }
             },
@@ -40351,28 +41899,55 @@
                   "data": [],
                   "url": "/contacts/667d61d08a68186f43bafea2/tags",
                   "total_count": 0,
-                  "has_more": false
+                  "has_more": false,
+                  "type": "list"
                 },
                 "notes": {
                   "data": [],
                   "url": "/contacts/667d61d08a68186f43bafea2/notes",
                   "total_count": 0,
-                  "has_more": false
+                  "has_more": false,
+                  "type": "list"
                 },
                 "companies": {
                   "url": "/contacts/667d61d08a68186f43bafea2/companies",
                   "total_count": 0,
-                  "has_more": false
+                  "has_more": false,
+                  "type": "list",
+                  "data": []
                 },
                 "location": {
                   "type": "location",
                   "country": null,
                   "region": null,
-                  "city": null
+                  "city": null,
+                  "country_code": {},
+                  "continent_code": {}
                 },
                 "social_profiles": {
-                  "data": []
-                }
+                  "data": [],
+                  "type": "list"
+                },
+                "opted_out_subscription_types": {
+                  "type": "list",
+                  "data": [],
+                  "url": "/contacts/667d61d08a68186f43bafea2/subscriptions",
+                  "total_count": 0,
+                  "has_more": false
+                },
+                "opted_in_subscription_types": {
+                  "type": "list",
+                  "data": [],
+                  "url": "/contacts/667d61d08a68186f43bafea2/subscriptions",
+                  "total_count": 0,
+                  "has_more": false
+                },
+                "utm_campaign": {},
+                "utm_content": {},
+                "utm_medium": {},
+                "utm_source": {},
+                "utm_term": {},
+                "referrer": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -40420,28 +41995,55 @@
                     "data": [],
                     "url": "/contacts/667d61d08a68186f43bafea2/tags",
                     "total_count": 0,
-                    "has_more": false
+                    "has_more": false,
+                    "type": "list"
                   },
                   "notes": {
                     "data": [],
                     "url": "/contacts/667d61d08a68186f43bafea2/notes",
                     "total_count": 0,
-                    "has_more": false
+                    "has_more": false,
+                    "type": "list"
                   },
                   "companies": {
                     "url": "/contacts/667d61d08a68186f43bafea2/companies",
                     "total_count": 0,
-                    "has_more": false
+                    "has_more": false,
+                    "type": "list",
+                    "data": []
                   },
                   "location": {
                     "type": "location",
                     "country": null,
                     "region": null,
-                    "city": null
+                    "city": null,
+                    "country_code": {},
+                    "continent_code": {}
                   },
                   "social_profiles": {
-                    "data": []
-                  }
+                    "data": [],
+                    "type": "list"
+                  },
+                  "opted_out_subscription_types": {
+                    "type": "list",
+                    "data": [],
+                    "url": "/contacts/667d61d08a68186f43bafea2/subscriptions",
+                    "total_count": 0,
+                    "has_more": false
+                  },
+                  "opted_in_subscription_types": {
+                    "type": "list",
+                    "data": [],
+                    "url": "/contacts/667d61d08a68186f43bafea2/subscriptions",
+                    "total_count": 0,
+                    "has_more": false
+                  },
+                  "utm_campaign": {},
+                  "utm_content": {},
+                  "utm_medium": {},
+                  "utm_source": {},
+                  "utm_term": {},
+                  "referrer": {}
                 }
               }
             }

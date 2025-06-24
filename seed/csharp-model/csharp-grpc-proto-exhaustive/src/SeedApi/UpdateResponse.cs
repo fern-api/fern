@@ -6,8 +6,13 @@ using WellKnownProto = Google.Protobuf.WellKnownTypes;
 
 namespace SeedApi;
 
-public record UpdateResponse
+[Serializable]
+public record UpdateResponse : IJsonOnDeserialized
 {
+    [JsonExtensionData]
+    private readonly IDictionary<string, JsonElement> _extensionData =
+        new Dictionary<string, JsonElement>();
+
     [JsonPropertyName("updatedAt")]
     public DateTime? UpdatedAt { get; set; }
 
@@ -20,15 +25,8 @@ public record UpdateResponse
     [JsonPropertyName("indexTypes")]
     public IEnumerable<IndexType>? IndexTypes { get; set; }
 
-    /// <summary>
-    /// Additional properties received from the response, if any.
-    /// </summary>
-    /// <remarks>
-    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
-    /// </remarks>
-    [JsonExtensionData]
-    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
-        new Dictionary<string, JsonElement>();
+    [JsonIgnore]
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
 
     /// <summary>
     /// Returns a new UpdateResponse type from its Protobuf-equivalent representation.
@@ -57,6 +55,9 @@ public record UpdateResponse
             ),
         };
     }
+
+    void IJsonOnDeserialized.OnDeserialized() =>
+        AdditionalProperties.CopyFromExtensionData(_extensionData);
 
     /// <summary>
     /// Maps the UpdateResponse type into its Protobuf-equivalent representation.

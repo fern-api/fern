@@ -4131,6 +4131,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_petsV1/pet.addPet",
           "name": {
             "originalName": "addPet",
@@ -4417,6 +4418,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_petsV1/pet.updatePet",
           "name": {
             "originalName": "updatePet",
@@ -4712,6 +4714,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_petsV1/pet.findPetsByStatus",
           "name": {
             "originalName": "findPetsByStatus",
@@ -4957,6 +4960,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_petsV1/pet.findPetsByTags",
           "name": {
             "originalName": "findPetsByTags",
@@ -5262,6 +5266,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_petsV1/pet.getPetById",
           "name": {
             "originalName": "getPetById",
@@ -5627,6 +5632,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_petsV1/pet.updatePetWithForm",
           "name": {
             "originalName": "updatePetWithForm",
@@ -5943,6 +5949,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_petsV1/pet.deletePet",
           "name": {
             "originalName": "deletePet",
@@ -6205,6 +6212,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_petsV1/pet.uploadFile",
           "name": {
             "originalName": "uploadFile",
@@ -6435,6 +6443,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_petsV1/store.getInventory",
           "name": {
             "originalName": "getInventory",
@@ -6605,6 +6614,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_petsV1/store.placeOrder",
           "name": {
             "originalName": "placeOrder",
@@ -6919,6 +6929,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_petsV1/store.getOrderById",
           "name": {
             "originalName": "getOrderById",
@@ -7196,6 +7207,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_petsV1/store.deleteOrder",
           "name": {
             "originalName": "deleteOrder",
@@ -7357,6 +7369,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_petsV1/user.createUser",
           "name": {
             "originalName": "createUser",
@@ -7529,6 +7542,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_petsV1/user.createUsersWithListInput",
           "name": {
             "originalName": "createUsersWithListInput",
@@ -7837,6 +7851,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_petsV1/user.loginUser",
           "name": {
             "originalName": "loginUser",
@@ -7933,6 +7948,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_petsV1/user.logoutUser",
           "name": {
             "originalName": "logoutUser",
@@ -8146,6 +8162,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_petsV1/user.getUserByName",
           "name": {
             "originalName": "getUserByName",
@@ -8429,6 +8446,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_petsV1/user.updateUser",
           "name": {
             "originalName": "updateUser",
@@ -8684,6 +8702,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_petsV1/user.deleteUser",
           "name": {
             "originalName": "deleteUser",
@@ -8904,6 +8923,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_petsV2/pet.addPet",
           "name": {
             "originalName": "addPet",
@@ -9190,6 +9210,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_petsV2/pet.updatePet",
           "name": {
             "originalName": "updatePet",
@@ -9485,6 +9506,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_petsV2/pet.findPetsByStatus",
           "name": {
             "originalName": "findPetsByStatus",
@@ -9730,6 +9752,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_petsV2/pet.findPetsByTags",
           "name": {
             "originalName": "findPetsByTags",
@@ -10035,6 +10058,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_petsV2/pet.getPetById",
           "name": {
             "originalName": "getPetById",
@@ -10400,6 +10424,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_petsV2/pet.updatePetWithForm",
           "name": {
             "originalName": "updatePetWithForm",
@@ -10716,6 +10741,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_petsV2/pet.deletePet",
           "name": {
             "originalName": "deletePet",
@@ -10978,6 +11004,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_petsV2/pet.uploadFile",
           "name": {
             "originalName": "uploadFile",
@@ -11208,6 +11235,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_petsV2/store.getInventory",
           "name": {
             "originalName": "getInventory",
@@ -11378,6 +11406,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_petsV2/store.placeOrder",
           "name": {
             "originalName": "placeOrder",
@@ -11692,6 +11721,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_petsV2/store.getOrderById",
           "name": {
             "originalName": "getOrderById",
@@ -11969,6 +11999,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_petsV2/store.deleteOrder",
           "name": {
             "originalName": "deleteOrder",
@@ -12130,6 +12161,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_petsV2/user.createUser",
           "name": {
             "originalName": "createUser",
@@ -12302,6 +12334,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_petsV2/user.createUsersWithListInput",
           "name": {
             "originalName": "createUsersWithListInput",
@@ -12610,6 +12643,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_petsV2/user.loginUser",
           "name": {
             "originalName": "loginUser",
@@ -12706,6 +12740,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_petsV2/user.logoutUser",
           "name": {
             "originalName": "logoutUser",
@@ -12919,6 +12954,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_petsV2/user.getUserByName",
           "name": {
             "originalName": "getUserByName",
@@ -13202,6 +13238,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_petsV2/user.updateUser",
           "name": {
             "originalName": "updateUser",
@@ -13457,6 +13494,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_petsV2/user.deleteUser",
           "name": {
             "originalName": "deleteUser",
@@ -14679,5 +14717,6 @@
       "sdkName": "",
       "sdkVersion": ""
     }
-  }
+  },
+  "audiences": []
 }

@@ -24,7 +24,7 @@ export declare namespace Fetcher {
         withCredentials?: boolean;
         abortSignal?: AbortSignal;
         requestType?: "json" | "file" | "bytes";
-        responseType?: "json" | "blob" | "sse" | "streaming" | "text" | "arrayBuffer";
+        responseType?: "json" | "blob" | "sse" | "streaming" | "text" | "arrayBuffer" | "binary-response";
         duplex?: "half";
     }
 
