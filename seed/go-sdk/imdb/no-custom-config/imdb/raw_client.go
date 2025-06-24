@@ -29,7 +29,7 @@ func NewRawClient(opts ...option.RequestOption) *RawClient {
 	}
 }
 
-func (r RawClient) CreateMovie(
+func (r *RawClient) CreateMovie(
 	ctx context.Context,
 	request *fern.CreateMovieRequest,
 	opts ...option.RequestOption,
@@ -69,7 +69,8 @@ func (r RawClient) CreateMovie(
 		Body:       response,
 	}, nil
 }
-func (r RawClient) GetMovie(
+
+func (r *RawClient) GetMovie(
 	ctx context.Context,
 	movieId *fern.MovieId,
 	opts ...option.RequestOption,

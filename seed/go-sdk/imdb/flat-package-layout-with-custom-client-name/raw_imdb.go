@@ -1,8 +1,7 @@
-package imdb
+package api
 
 import (
 	context "context"
-	fern "github.com/imdb/fern"
 	core "github.com/imdb/fern/core"
 	internal "github.com/imdb/fern/internal"
 	option "github.com/imdb/fern/option"
@@ -29,11 +28,11 @@ func NewRawClient(opts ...option.RequestOption) *RawClient {
 	}
 }
 
-func (r RawClient) CreateMovie(
+func (r *RawClient) CreateMovie(
 	ctx context.Context,
-	request *fern.CreateMovieRequest,
+	request *CreateMovieRequest,
 	opts ...option.RequestOption,
-) (*core.Response[*fern.MovieId], error) {
+) (*core.Response[*MovieId], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -45,7 +44,7 @@ func (r RawClient) CreateMovie(
 		r.header.Clone(),
 		options.ToHeader(),
 	)
-	var response *fern.MovieId
+	var response *MovieId
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -63,17 +62,18 @@ func (r RawClient) CreateMovie(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*fern.MovieId]{
+	return &core.Response[*MovieId]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
 	}, nil
 }
-func (r RawClient) GetMovie(
+
+func (r *RawClient) GetMovie(
 	ctx context.Context,
-	movieId *fern.MovieId,
+	movieId *MovieId,
 	opts ...option.RequestOption,
-) (*core.Response[*fern.Movie], error) {
+) (*core.Response[*Movie], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -90,12 +90,12 @@ func (r RawClient) GetMovie(
 	)
 	errorCodes := internal.ErrorCodes{
 		404: func(apiError *core.APIError) error {
-			return &fern.MovieDoesNotExistError{
+			return &MovieDoesNotExistError{
 				APIError: apiError,
 			}
 		},
 	}
-	var response *fern.Movie
+	var response *Movie
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -113,7 +113,7 @@ func (r RawClient) GetMovie(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*fern.Movie]{
+	return &core.Response[*Movie]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,

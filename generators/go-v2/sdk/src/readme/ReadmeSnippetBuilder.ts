@@ -44,7 +44,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             this.context.ir.readmeConfig?.defaultEndpoint != null
                 ? this.context.ir.readmeConfig.defaultEndpoint
                 : this.getDefaultEndpointId();
-        this.rootPackageName = this.getRootPackageName();
+        this.rootPackageName = this.context.getRootPackageName();
         this.rootPackageClientName = this.getRootPackageClientName();
     }
 
@@ -321,10 +321,6 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         }
 
         return `${this.rootPackageName}.Environments.${defaultEnvironment.name.pascalCase.unsafeName}`;
-    }
-
-    private getRootPackageName(): string {
-        return this.context.config.organization;
     }
 
     private getRootPackageClientName(): string {

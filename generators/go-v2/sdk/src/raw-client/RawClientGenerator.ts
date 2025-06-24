@@ -56,15 +56,13 @@ export class RawClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSch
             });
             struct.addMethod(...methods);
         }
-
-        console.log("Writing to import path", this.getImportPath());
         return new GoFile({
             node: struct,
             rootImportPath: this.context.getRootImportPath(),
             packageName: this.getPackageName(),
             importPath: this.getImportPath(),
             directory: this.getDirectory(),
-            filename: this.context.getRawClientFilename(),
+            filename: this.context.getRawClientFilename(this.subpackage),
             customConfig: this.context.customConfig
         });
     }
@@ -143,7 +141,7 @@ export class RawClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSch
     private getPackageName(): string {
         return this.subpackage != null
             ? this.context.getSubpackageClientPackageName(this.subpackage)
-            : this.context.getClientPackageName(); 
+            : this.context.getClientPackageName();
     }
 
     private getDirectory(): RelativeFilePath {

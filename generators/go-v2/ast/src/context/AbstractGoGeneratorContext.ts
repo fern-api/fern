@@ -88,8 +88,23 @@ export abstract class AbstractGoGeneratorContext<
         return name.pascalCase.unsafeName;
     }
 
+    public getPackageName(name: Name): string {
+        return name.snakeCase.unsafeName.toLowerCase();
+    }
+
+    public getFilename(name: Name): string {
+        return name.snakeCase.unsafeName;
+    }
+
     public getRootImportPath(): string {
         return this.rootImportPath;
+    }
+
+    public getRootPackageName(): string {
+        if (this.customConfig.packageName != null) {
+            return this.customConfig.packageName;
+        }
+        return this.ir.apiName.camelCase.safeName.toLowerCase();
     }
 
     public getCoreImportPath(): string {

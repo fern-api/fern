@@ -18,7 +18,7 @@ import (
     fern "github.com/imdb/fern"
 )
 
-func do()  {
+func do() {
     client := client.NewClient(
         option.WithToken(
             "<token>",
@@ -31,7 +31,8 @@ func do()  {
             Rating: 1.1,
         },
     )
-}```
+}
+```
 
 ## Environments
 

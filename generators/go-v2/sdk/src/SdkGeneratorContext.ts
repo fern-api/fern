@@ -51,27 +51,38 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         });
     }
 
-    public getClientClassName(): string {
+    public getClientClassName(subpackage?: Subpackage): string {
+        if (subpackage != null && this.isFlatPackageLayout()) {
+            return `${this.getClassName(subpackage.name)}Client`;
+        }
         return "Client";
     }
 
-    public getClientPackageName(): string {
+    public getClientPackageName(subpackage?: Subpackage): string {
+        if (subpackage != null && this.isFlatPackageLayout()) {
+            return this.getPackageName(subpackage.name);
+        }
         return "client";
     }
 
-    public getClientFilename(): string {
+    public getClientFilename(subpackage?: Subpackage): string {
+        if (subpackage != null && this.isFlatPackageLayout()) {
+            return `${this.getFilename(subpackage.name)}.go`;
+        }
         return "client.go";
     }
 
-    public getRawClientClassName(): string {
-        // TODO: If we're in flat package layout, we need to add the `Raw` prefix to the
-        // service name (e.g. RawUserClient).
+    public getRawClientClassName(subpackage?: Subpackage): string {
+        if (subpackage != null && this.isFlatPackageLayout()) {
+            return `${this.getClassName(subpackage.name)}RawClient`;
+        }
         return "RawClient";
     }
 
-    public getRawClientFilename(): string {
-        // TODO: If we're in flat package layout, we need to add the `raw_` prefix to the
-        // service filename (e.g. raw_user.go).
+    public getRawClientFilename(subpackage?: Subpackage): string {
+        if (subpackage != null && this.isFlatPackageLayout()) {
+            return `raw_${this.getFilename(subpackage.name)}.go`;
+        }
         return "raw_client.go";
     }
 
@@ -195,8 +206,20 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         });
     }
 
+    public getSubpackageRawClientFilename(subpackage: Subpackage): string {
+        if (this.isFlatPackageLayout()) {
+            return `raw_${this.getFilename(subpackage.name)}.go`;
+        }
+        return "raw_client.go";
+    }
+
     public getSubpackageClientPackageName(subpackage: Subpackage): string {
-        const fileLocation = this.isFlatPackageLayout() ? this.getPackageLocation(subpackage.fernFilepath) : this.getFileLocation(subpackage.fernFilepath);
+        const fileLocation = this.isFlatPackageLayout()
+            ? this.getPackageLocation(subpackage.fernFilepath)
+            : this.getFileLocation(subpackage.fernFilepath);
+        if (fileLocation.importPath === this.getRootImportPath()) {
+            return this.getRootPackageName();
+        }
         return fileLocation.importPath.split("/").pop() ?? "";
     }
 
@@ -454,7 +477,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
             importPath: "net/http"
         });
     }
-    
+
     public isFlatPackageLayout(): boolean {
         return this.customConfig.packageLayout === "flat";
     }
@@ -505,5 +528,4 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         const httpService = this.getHttpServiceOrThrow(serviceId);
         return this.getPackageLocation(httpService.name.fernFilepath);
     }
-
 }

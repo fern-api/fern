@@ -17,7 +17,7 @@ import (
     context "context"
 )
 
-func do()  {
+func do() {
     client := fern.NewClient(
         option.WithToken(
             "<token>",
@@ -30,7 +30,8 @@ func do()  {
             Rating: 1.1,
         },
     )
-}```
+}
+```
 
 ## Environments
 
