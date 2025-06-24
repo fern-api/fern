@@ -185,6 +185,9 @@ fixtures:
     - outputFolder: web-stream-wrapper
       customConfig:
         streamType: "web"
+    - outputFolder: form-data-node18
+      customConfig:
+        formDataSupport: "Node18"
   unknown:
     - customConfig: null
       outputFolder: no-custom-config

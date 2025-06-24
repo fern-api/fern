@@ -7,6 +7,7 @@ export type CoreUtilityName = string;
 export declare namespace CoreUtility {
     export interface Options {
         streamType: "wrapper" | "web";
+        formDataSupport: "Node16" | "Node18";
     }
     export interface Init {
         getReferenceToExport: (args: { manifest: CoreUtility.Manifest; exportedName: string }) => Reference;

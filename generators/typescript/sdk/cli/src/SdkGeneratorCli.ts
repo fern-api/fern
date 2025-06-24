@@ -78,6 +78,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             useLegacyExports: parsed?.useLegacyExports ?? false,
             streamType: parsed?.streamType ?? "wrapper",
             fileResponseType: parsed?.fileResponseType ?? "stream",
+            formDataSupport: parsed?.formDataSupport ?? "Node16",
             packagePath: parsed?.packagePath
         };
     }
@@ -165,6 +166,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 generateWireTests: customConfig.generateWireTests ?? false,
                 streamType: customConfig.streamType ?? "wrapper",
                 fileResponseType: customConfig.fileResponseType ?? "stream",
+                formDataSupport: customConfig.formDataSupport ?? "Node16",
                 packagePath: customConfig.packagePath
             }
         });
@@ -184,7 +186,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
     private getTemplateVariables(customConfig: SdkCustomConfig): Record<string, unknown> {
         return {
             streamType: customConfig.streamType,
-            fileResponseType: customConfig.fileResponseType
+            fileResponseType: customConfig.fileResponseType,
+            formDataSupport: customConfig.formDataSupport,
         };
     }
 

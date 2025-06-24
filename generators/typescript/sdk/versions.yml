@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.9.0
+  changelogEntry:
+    - summary: |
+        Add `formDataSupport` configuration which lets you choose between `Node16` and `Node18`.
+        The default is `Node16`. If you choose `Node18`, the `form-data` dependency will be removed.
+      type: feat
+    - summary: |
+        Removed the `formdata-node` and `form-data-encoder` dependencies, instead use the native `FormData` in Node 18 and up.
+      type: feat
+  createdAt: '2025-06-22'
+  irVersion: 58
 - version: 1.8.1
   changelogEntry:
     - summary: Fix binary response README.md examples

@@ -40,6 +40,7 @@ export async function newFormData(): Promise<CrossPlatformFormData> {
     } else {
         formdata = new WebFormData();
     }
+
     await formdata.setup();
     return formdata;
 }
@@ -59,6 +60,7 @@ export type OldNodeFormDataFd =
                         contentType?: string;
                     },
           ): void;
+          getHeaders(): Record<string, string>;
       }
     | undefined;
 
@@ -93,7 +95,9 @@ export class OldNodeFormData implements CrossPlatformFormData {
         fileName = this.getFileName(value, fileName);
 
         let bufferedValue;
-        if (value instanceof Blob) {
+        // Only Node 16.17.0 and later has a global Blob
+        const BlobImport = typeof Blob !== "undefined" ? Blob : (await import("buffer")).Blob;
+        if (value instanceof BlobImport) {
             bufferedValue = Buffer.from(await value.arrayBuffer());
         } else {
             bufferedValue = value;
@@ -109,7 +113,7 @@ export class OldNodeFormData implements CrossPlatformFormData {
     public getRequest(): FormDataRequest<OldNodeFormDataFd> {
         return {
             body: this.fd,
-            headers: {},
+            headers: this.fd ? this.fd.getHeaders() : {},
         };
     }
 }

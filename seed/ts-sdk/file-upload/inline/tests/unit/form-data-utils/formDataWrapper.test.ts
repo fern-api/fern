@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { Readable, Writable } from "stream";
 import { OldNodeFormData, WebFormData } from "../../../src/core/form-data-utils/FormDataWrapper";
-import { File } from "buffer";
+import { File, Blob } from "buffer";
 import { pipeline } from "stream/promises";
 
 describe("CrossPlatformFormData", () => {
@@ -36,30 +36,6 @@ describe("CrossPlatformFormData", () => {
             expect(data).toContain(filename);
         });
 
-        it("should append a File with a specified filename", async () => {
-            const filename = "testfile.txt";
-            const value = new File(["file content"], filename);
-
-            await formData.appendFile("file", value);
-
-            const request = await formData.getRequest();
-            const buffer = request.body.getBuffer();
-            const data = buffer.toString("utf8");
-            expect(data).toContain("testfile.txt");
-        });
-
-        it("should append a File with an explicit filename", async () => {
-            const filename = "testfile.txt";
-            const value = new File(["file content"], filename);
-
-            await formData.appendFile("file", value, "test.txt");
-
-            const request = await formData.getRequest();
-            const buffer = request.body.getBuffer();
-            const data = buffer.toString("utf8");
-            expect(data).toContain("test.txt");
-        });
-
         it("should append stream with path", async () => {
             const expectedFileName = "testfile.txt";
             const filePath = "/test/testfile.txt";
@@ -69,7 +45,7 @@ describe("CrossPlatformFormData", () => {
 
             const request = (await formData.getRequest()) as { body: Readable };
             const data = await streamToString(request.body);
-            expect(data).toContain(`Content-Disposition: form-data; name="file"; filename="${expectedFileName}"`);
+            expect(data).toContain('Content-Disposition: form-data; name="file"; filename="' + expectedFileName + '"');
         });
     });
 

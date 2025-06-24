@@ -142,6 +142,7 @@ export declare namespace SdkGenerator {
         generateWireTests: boolean;
         streamType: "wrapper" | "web";
         fileResponseType: "stream" | "binary-response";
+        formDataSupport: "Node16" | "Node18";
         packagePath: string | undefined;
     }
 }
@@ -261,6 +262,7 @@ export class SdkGenerator {
         });
         this.coreUtilitiesManager = new CoreUtilitiesManager({
             streamType: this.config.streamType,
+            formDataSupport: this.config.formDataSupport,
             relativePackagePath: this.relativePackagePath,
             relativeTestPath: this.relativeTestPath
         });

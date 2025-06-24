@@ -34,84 +34,10 @@ export interface CrossPlatformFormData {
 }
 
 export async function newFormData(): Promise<CrossPlatformFormData> {
-    let formdata: CrossPlatformFormData;
-    if (RUNTIME.type === "node" && RUNTIME.parsedVersion != null && RUNTIME.parsedVersion < 18) {
-        formdata = new OldNodeFormData();
-    } else {
-        formdata = new WebFormData();
-    }
+    let formdata: CrossPlatformFormData = new WebFormData();
+
     await formdata.setup();
     return formdata;
-}
-
-export type OldNodeFormDataFd =
-    | {
-          append(
-              name: string,
-              value: unknown,
-              options?:
-                  | string
-                  | {
-                        header?: string | Headers;
-                        knownLength?: number;
-                        filename?: string;
-                        filepath?: string;
-                        contentType?: string;
-                    },
-          ): void;
-      }
-    | undefined;
-
-/**
- * Form Data Implementation for Node.js 16-18
- */
-export class OldNodeFormData implements CrossPlatformFormData {
-    private fd: OldNodeFormDataFd;
-
-    public async setup(): Promise<void> {
-        this.fd = new (await import("form-data")).default();
-    }
-
-    public append(key: string, value: any): void {
-        this.fd?.append(key, value);
-    }
-
-    private getFileName(value: any, filename?: string): string | undefined {
-        if (filename != null) {
-            return filename;
-        }
-        if (isNamedValue(value)) {
-            return value.name;
-        }
-        if (isPathedValue(value) && value.path) {
-            return getLastPathSegment(value.path.toString());
-        }
-        return undefined;
-    }
-
-    public async appendFile(key: string, value: unknown, fileName?: string): Promise<void> {
-        fileName = this.getFileName(value, fileName);
-
-        let bufferedValue;
-        if (value instanceof Blob) {
-            bufferedValue = Buffer.from(await value.arrayBuffer());
-        } else {
-            bufferedValue = value;
-        }
-
-        if (fileName == null) {
-            this.fd?.append(key, bufferedValue);
-        } else {
-            this.fd?.append(key, bufferedValue, { filename: fileName });
-        }
-    }
-
-    public getRequest(): FormDataRequest<OldNodeFormDataFd> {
-        return {
-            body: this.fd,
-            headers: {},
-        };
-    }
 }
 
 export type WebFormDataFd = { append(name: string, value: string | Blob, fileName?: string): void } | undefined;
