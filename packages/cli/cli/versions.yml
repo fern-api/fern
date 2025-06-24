@@ -2,7 +2,7 @@
 - changelogEntry:
     - summary: |
         Update v2Examples to use the wire value for headers.
-      type: feat
+      type: fix
   irVersion: 58
   createdAt: "2025-06-24"
   version: 0.64.17
