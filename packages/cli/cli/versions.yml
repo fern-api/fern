@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Make proto file target field optional in generators.yml
+      type: feat
+  irVersion: 58
+  createdAt: "2025-06-25"
+  version: 0.64.22
+
+- changelogEntry:
+    - summary: |
         Introduce `x-fern-discriminated` extension to configure oneOf union behavior in OpenAPI specs.
 
         ```yaml
