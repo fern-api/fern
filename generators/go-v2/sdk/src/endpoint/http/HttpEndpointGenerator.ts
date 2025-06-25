@@ -22,7 +22,7 @@ import { EndpointSignatureInfo } from "../EndpointSignatureInfo";
 import { EndpointRequest } from "../request/EndpointRequest";
 import { getEndpointRequest } from "../utils/getEndpointRequest";
 
-export declare namespace EndpointGenerator {
+export declare namespace HttpEndpointGenerator {
     export const OCTET_STREAM_CONTENT_TYPE = "application/octet-stream";
 
     export interface Args {
@@ -588,7 +588,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     }): string | undefined {
         switch (justRequestBody.type) {
             case "bytes":
-                return justRequestBody.contentType ?? EndpointGenerator.OCTET_STREAM_CONTENT_TYPE;
+                return justRequestBody.contentType ?? HttpEndpointGenerator.OCTET_STREAM_CONTENT_TYPE;
             case "typeReference":
                 return justRequestBody.contentType;
             default:
@@ -605,7 +605,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     }): string | undefined {
         switch (requestBody.type) {
             case "bytes":
-                return requestBody.contentType ?? EndpointGenerator.OCTET_STREAM_CONTENT_TYPE;
+                return requestBody.contentType ?? HttpEndpointGenerator.OCTET_STREAM_CONTENT_TYPE;
             case "fileUpload":
             case "inlinedRequestBody":
             case "reference":
