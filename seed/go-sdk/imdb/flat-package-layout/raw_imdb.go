@@ -8,15 +8,15 @@ import (
 	http "net/http"
 )
 
-type RawClient struct {
+type RawImdbClient struct {
 	baseURL string
 	caller  *internal.Caller
 	header  http.Header
 }
 
-func NewRawClient(opts ...option.RequestOption) *RawClient {
+func NewRawImdbClient(opts ...option.RequestOption) *RawImdbClient {
 	options := core.NewRequestOptions(opts...)
-	return &RawClient{
+	return &RawImdbClient{
 		baseURL: options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
@@ -28,7 +28,7 @@ func NewRawClient(opts ...option.RequestOption) *RawClient {
 	}
 }
 
-func (r *RawClient) CreateMovie(
+func (r *RawImdbClient) CreateMovie(
 	ctx context.Context,
 	request *CreateMovieRequest,
 	opts ...option.RequestOption,
@@ -69,7 +69,7 @@ func (r *RawClient) CreateMovie(
 	}, nil
 }
 
-func (r *RawClient) GetMovie(
+func (r *RawImdbClient) GetMovie(
 	ctx context.Context,
 	movieId MovieId,
 	opts ...option.RequestOption,

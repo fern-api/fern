@@ -1,22 +1,23 @@
-package api
+package client
 
 import (
 	context "context"
-	core "github.com/imdb/fern/core"
-	internal "github.com/imdb/fern/internal"
-	option "github.com/imdb/fern/option"
+	fern "github.com/examples/fern"
+	core "github.com/examples/fern/core"
+	internal "github.com/examples/fern/internal"
+	option "github.com/examples/fern/option"
 	http "net/http"
 )
 
-type RawImdbClient struct {
+type RawClient struct {
 	baseURL string
 	caller  *internal.Caller
 	header  http.Header
 }
 
-func NewRawImdbClient(opts ...option.RequestOption) *RawImdbClient {
+func NewRawClient(opts ...option.RequestOption) *RawClient {
 	options := core.NewRequestOptions(opts...)
-	return &RawImdbClient{
+	return &RawClient{
 		baseURL: options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
@@ -28,23 +29,23 @@ func NewRawImdbClient(opts ...option.RequestOption) *RawImdbClient {
 	}
 }
 
-func (r *RawImdbClient) CreateMovie(
+func (r *RawClient) Echo(
 	ctx context.Context,
-	request *CreateMovieRequest,
+	request string,
 	opts ...option.RequestOption,
-) (*core.Response[MovieId], error) {
+) (*core.Response[string], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
 		r.baseURL,
 		"",
 	)
-	endpointURL := baseURL + "/movies/create-movie"
+	endpointURL := baseURL
 	headers := internal.MergeHeaders(
 		r.header.Clone(),
 		options.ToHeader(),
 	)
-	var response MovieId
+	var response string
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -62,58 +63,48 @@ func (r *RawImdbClient) CreateMovie(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[MovieId]{
+	return &core.Response[string]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
 	}, nil
 }
 
-func (r *RawImdbClient) GetMovie(
+func (r *RawClient) CreateType(
 	ctx context.Context,
-	movieId MovieId,
+	request *fern.Type,
 	opts ...option.RequestOption,
-) (*core.Response[*Movie], error) {
+) (*core.Response[*fern.Identifier], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
 		r.baseURL,
 		"",
 	)
-	endpointURL := internal.EncodeURL(
-		baseURL+"/movies/%v",
-		movieId,
-	)
+	endpointURL := baseURL
 	headers := internal.MergeHeaders(
 		r.header.Clone(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		404: func(apiError *core.APIError) error {
-			return &MovieDoesNotExistError{
-				APIError: apiError,
-			}
-		},
-	}
-	var response *Movie
+	var response *fern.Identifier
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,
-			Method:          http.MethodGet,
+			Method:          http.MethodPost,
 			Headers:         headers,
 			MaxAttempts:     options.MaxAttempts,
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
+			Request:         request,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
 		},
 	)
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*Movie]{
+	return &core.Response[*fern.Identifier]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
