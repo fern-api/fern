@@ -15,6 +15,7 @@ import { AbstractConverter, AbstractConverterContext } from "../..";
 import { convertProperties } from "../../utils/ConvertProperties";
 import { SchemaConverter } from "./SchemaConverter";
 import { SchemaOrReferenceConverter } from "./SchemaOrReferenceConverter";
+import { FernDiscriminatedExtension } from "../../extensions/x-fern-discriminated";
 
 export declare namespace OneOfSchemaConverter {
     export interface Args extends AbstractConverter.AbstractArgs {
@@ -46,6 +47,17 @@ export class OneOfSchemaConverter extends AbstractConverter<
     public convert(): OneOfSchemaConverter.Output | undefined {
         if (this.shouldConvertAsNullableSchemaOrReference()) {
             return this.convertAsNullableSchemaOrReference();
+        }
+
+        const fernDiscriminatedExtension = new FernDiscriminatedExtension({
+            context: this.context,
+            breadcrumbs: this.breadcrumbs,
+            node: this.schema
+        });
+        const isDiscriminated = fernDiscriminatedExtension.convert();
+        
+        if (isDiscriminated === false) {
+            return this.convertAsUndiscriminatedUnion();
         }
 
         if (

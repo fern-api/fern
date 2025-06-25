@@ -555,6 +555,28 @@ export function convertSchemaObject(
         });
     }
 
+    // handle oneOf with IS_DISCRIMINATED extension
+    if (schema.oneOf != null && schema.oneOf.length > 0) {
+        const isDiscriminated = getExtension<boolean>(schema, FernOpenAPIExtension.IS_DISCRIMINATED);
+        if (isDiscriminated === false) {
+            return convertUndiscriminatedOneOf({
+                nameOverride,
+                generatedName,
+                title,
+                breadcrumbs,
+                description,
+                availability,
+                wrapAsNullable,
+                context,
+                subtypes: schema.oneOf,
+                namespace,
+                groupName,
+                encoding,
+                source
+            });
+        }
+    }
+
     if (schema.type === "object" && schema.discriminator != null && schema.discriminator.mapping != null) {
         if (!context.options.discriminatedUnionV2) {
             return convertDiscriminatedOneOf({
