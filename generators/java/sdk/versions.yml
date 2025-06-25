@@ -1,4 +1,19 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.38.0
+  changelogEntry:
+    - summary: |
+        Add support for custom config publish-to to enable publishing to Maven Central with proper metadata and signing configuration.
+
+        ```yaml
+        customConfig:
+          publish-to: central
+        ```
+
+        This configuration enables automatic publishing to Maven Central with proper metadata and signing configuration.
+      type: chore
+  createdAt: '2025-06-23'
+  irVersion: 58
+
 - version: 2.37.2
   changelogEntry:
     - summary: |

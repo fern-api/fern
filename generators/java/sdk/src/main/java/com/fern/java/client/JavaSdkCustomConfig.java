@@ -41,6 +41,19 @@ public interface JavaSdkCustomConfig extends ICustomConfig {
     @JsonProperty("custom-dependencies")
     Optional<List<String>> customDependencies();
 
+    @JsonProperty("publish-to")
+    Optional<String> publishTo();
+
+    @Value.Check
+    default void validatePublishTo() {
+        if (publishTo().isPresent()) {
+            String value = publishTo().get();
+            if (!value.equals("central") && !value.equals("ossrh")) {
+                throw new IllegalArgumentException("publish-to must be either 'central' or 'ossrh', got: " + value);
+            }
+        }
+    }
+
     @JsonProperty("inline-file-properties")
     @Value.Default
     default boolean inlineFileProperties() {
