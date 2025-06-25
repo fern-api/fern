@@ -1,0 +1,263 @@
+{
+  "title": "Test API",
+  "description": "Test API with discriminated union",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "summary": "Test endpoint",
+      "audiences": [],
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "PostTestRequest",
+      "request": {
+        "schema": {
+          "value": {
+            "generatedName": "PostTestRequest",
+            "schemas": [
+              {
+                "generatedName": "PostTestRequestZero",
+                "schema": "Circle",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              {
+                "generatedName": "PostTestRequestOne",
+                "schema": "Square",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              }
+            ],
+            "groupName": [],
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "undiscriminated"
+          },
+          "type": "oneOf"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "Success",
+        "schema": {
+          "value": {
+            "generatedName": "PostTestResponse",
+            "schemas": [
+              {
+                "generatedName": "PostTestResponseZero",
+                "schema": "Circle",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              {
+                "generatedName": "PostTestResponseOne",
+                "schema": "Square",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              }
+            ],
+            "groupName": [],
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "undiscriminated"
+          },
+          "type": "oneOf"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/test",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "type": {
+                "value": {
+                  "value": "circle",
+                  "type": "string"
+                },
+                "type": "literal"
+              },
+              "radius": {
+                "value": {
+                  "value": 1.1,
+                  "type": "double"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "type": {
+                  "value": {
+                    "value": "circle",
+                    "type": "string"
+                  },
+                  "type": "literal"
+                },
+                "radius": {
+                  "value": {
+                    "value": 1.1,
+                    "type": "double"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "Circle": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "circleType",
+            "key": "type",
+            "schema": {
+              "value": {
+                "value": "circle",
+                "type": "string"
+              },
+              "generatedName": "CircleType",
+              "groupName": [],
+              "type": "literal"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "circleRadius",
+            "key": "radius",
+            "schema": {
+              "schema": {
+                "type": "double"
+              },
+              "generatedName": "CircleRadius",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Circle",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Square": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "squareType",
+            "key": "type",
+            "schema": {
+              "value": {
+                "value": "square",
+                "type": "string"
+              },
+              "generatedName": "SquareType",
+              "groupName": [],
+              "type": "literal"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "squareSideLength",
+            "key": "sideLength",
+            "schema": {
+              "schema": {
+                "type": "double"
+              },
+              "generatedName": "SquareSideLength",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Square",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

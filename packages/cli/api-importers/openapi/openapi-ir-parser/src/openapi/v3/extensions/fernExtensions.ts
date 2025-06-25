@@ -469,7 +469,19 @@ export const FernOpenAPIExtension = {
      *   grpc:
      *     service-name: UserService
      */
-    TRANSPORT: "x-fern-transport"
+    TRANSPORT: "x-fern-transport",
+
+    /**
+     * Allows a user to configure whether a union with a discriminant should
+     * be discriminated or undiscriminated.
+     *
+     * Shape:
+     *   x-fern-discriminated: true  # or false
+     *   oneOf:
+     *    - $ref: components/schemas/Triangle
+     *    - $ref: components/schemas/Square
+     */
+    IS_DISCRIMINATED: "x-fern-discriminated"
 } as const;
 
 export type FernOpenAPIExtension = Values<typeof FernOpenAPIExtension>;
