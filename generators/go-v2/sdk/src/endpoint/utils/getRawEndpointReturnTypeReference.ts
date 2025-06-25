@@ -1,7 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 import { go } from "@fern-api/go-ast";
 
-import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
+import { HttpEndpoint, JsonResponse } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 
@@ -26,10 +26,7 @@ export function getRawEndpointReturnTypeReference({
                 returnType: go.Type.reference(context.getIoReaderTypeReference())
             });
         case "json":
-            return wrapWithRawResponseType({
-                context,
-                returnType: context.goTypeMapper.convert({ reference: body.value.responseBodyType })
-            });
+            return getRawEndpointReturnTypeReferenceJson({ context, responseBody: body.value });
         case "streaming":
             return wrapWithRawResponseType({
                 context,
@@ -41,6 +38,30 @@ export function getRawEndpointReturnTypeReference({
             return wrapWithRawResponseType({ context, returnType: go.Type.string() });
         default:
             assertNever(body);
+    }
+}
+
+function getRawEndpointReturnTypeReferenceJson({
+    context,
+    responseBody
+}: {
+    context: SdkGeneratorContext;
+    responseBody: JsonResponse;
+}): go.TypeReference {
+    switch (responseBody.type) {
+        case "response":
+            return context.getRawResponseTypeReference(
+                context.goTypeMapper.convert({ reference: responseBody.responseBodyType })
+            );
+        case "nestedPropertyAsResponse": {
+            const typeReference =
+                responseBody.responseProperty != null
+                    ? responseBody.responseProperty.valueType
+                    : responseBody.responseBodyType;
+            return context.getRawResponseTypeReference(context.goTypeMapper.convert({ reference: typeReference }));
+        }
+        default:
+            assertNever(responseBody);
     }
 }
 

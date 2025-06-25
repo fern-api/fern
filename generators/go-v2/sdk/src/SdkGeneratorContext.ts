@@ -346,7 +346,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
             multiline: false
         });
     }
-    
+
     public callSprintf(arguments_: go.AstNode[]): go.FuncInvocation {
         return go.invokeFunc({
             func: go.typeReference({

@@ -242,7 +242,7 @@ export class Type extends AstNode {
         // Specifying a pointer is equivalent to defining an optional.
         return Type.optional(value);
     }
-
+    
     public static reference(value: GoTypeReference): Type {
         return new this({
             type: "reference",

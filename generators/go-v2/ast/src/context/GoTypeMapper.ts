@@ -106,6 +106,17 @@ export class GoTypeMapper {
     }
 
     private convertNamed({ named }: { named: DeclaredTypeName }): Type {
-        return go.Type.pointer(go.Type.reference(this.convertToTypeReference(named)));
+        const typeDeclaration = this.context.getTypeDeclarationOrThrow(named.typeId);
+        switch (typeDeclaration.shape.type) {
+            case "alias":
+                return go.Type.reference(this.convertToTypeReference(named));
+            case "object":
+            case "enum":
+            case "union":
+            case "undiscriminatedUnion":
+                return go.Type.pointer(go.Type.reference(this.convertToTypeReference(named)));
+            default:
+                assertNever(typeDeclaration.shape);
+        }
     }
 }
