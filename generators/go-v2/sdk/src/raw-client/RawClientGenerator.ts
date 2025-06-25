@@ -134,25 +134,27 @@ export class RawClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSch
 
     private getClassReference(): go.TypeReference {
         return this.subpackage != null
-            ? this.context.getSubpackageRawClientClassReference(this.subpackage)
+            ? this.context.getRawClientClassReference({ service: this.service, subpackage: this.subpackage })
             : this.context.getRootRawClientClassReference();
     }
 
     private getPackageName(): string {
         return this.subpackage != null
-            ? this.context.getSubpackageClientPackageName(this.subpackage)
-            : this.context.getClientPackageName();
+            ? this.context.getServiceClientPackageName({ service: this.service, subpackage: this.subpackage })
+            : this.context.getRootClientPackageName();
     }
 
     private getDirectory(): RelativeFilePath {
         return this.subpackage != null
-            ? this.context.getSubpackageClientFileLocation(this.subpackage).directory
+            ? this.context.getServiceClientFileLocation({ service: this.service, subpackage: this.subpackage })
+                  .directory
             : this.context.getRootClientDirectory();
     }
 
     private getImportPath(): string {
         return this.subpackage != null
-            ? this.context.getSubpackageClientClassReference(this.subpackage).importPath
+            ? this.context.getServiceClientFileLocation({ service: this.service, subpackage: this.subpackage })
+                  .importPath
             : this.context.getRootClientImportPath();
     }
 }

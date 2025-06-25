@@ -9,8 +9,10 @@ import { GithubOutputMode, OutputMode } from "@fern-fern/generator-exec-sdk/api"
 import {
     EnvironmentId,
     EnvironmentUrl,
+    FernFilepath,
     HttpEndpoint,
     HttpMethod,
+    HttpService,
     IntermediateRepresentation,
     Name,
     SdkRequestBodyType,
@@ -59,16 +61,6 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
             return `${this.getClassName(subpackage.name)}Client`;
         }
         return "Client";
-    }
-
-    public getClientPackageName(subpackage?: Subpackage): string {
-        if (this.isFlatPackageLayout()) {
-            if (subpackage != null) {
-                return this.getPackageName(subpackage.name);
-            }
-            return this.getRootPackageName();
-        }
-        return "client";
     }
 
     public getClientFilename(subpackage?: Subpackage): string {
@@ -183,14 +175,21 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         if (this.isFlatPackageLayout()) {
             return RelativeFilePath.of(".");
         }
-        return RelativeFilePath.of(this.getClientPackageName());
+        return RelativeFilePath.of(this.getRootClientPackageName());
     }
 
     public getRootClientImportPath(): string {
         if (this.isFlatPackageLayout()) {
             return this.getRootImportPath();
         }
-        return `${this.getRootImportPath()}/${this.getClientPackageName()}`;
+        return `${this.getRootImportPath()}/${this.getRootClientPackageName()}`;
+    }
+
+    public getRootClientPackageName(): string {
+        if (this.isFlatPackageLayout()) {
+            return this.getRootPackageName();
+        }
+        return "client";
     }
 
     public getRootClientClassReference(): go.TypeReference {
@@ -207,48 +206,69 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         });
     }
 
-    public getSubpackageClientClassReference(subpackage: Subpackage): go.TypeReference {
+    public getServiceClientClassReference({
+        service,
+        subpackage
+    }: {
+        service: HttpService;
+        subpackage?: Subpackage;
+    }): go.TypeReference {
         return go.typeReference({
             name: this.getClientClassName(subpackage),
-            importPath: this.getSubpackageClientFileLocation(subpackage).importPath
+            importPath: this.getServiceClientFileLocation({ service, subpackage }).importPath
         });
     }
 
-    public getSubpackageRawClientClassReference(subpackage: Subpackage): go.TypeReference {
+    public getRawClientClassReference({
+        service,
+        subpackage
+    }: {
+        service: HttpService;
+        subpackage?: Subpackage;
+    }): go.TypeReference {
         return go.typeReference({
             name: this.getRawClientClassName(subpackage),
-            importPath: this.getSubpackageClientFileLocation(subpackage).importPath
+            importPath: this.getServiceClientFileLocation({ service, subpackage }).importPath
         });
     }
 
-    public getSubpackageRawClientFilename(subpackage: Subpackage): string {
-        if (this.isFlatPackageLayout()) {
-            return `raw_${this.getFilename(subpackage.name)}.go`;
-        }
-        return "raw_client.go";
-    }
-
-    public getSubpackageClientPackageName(subpackage: Subpackage): string {
-        const fileLocation = this.isFlatPackageLayout()
-            ? this.getPackageLocation(subpackage.fernFilepath)
-            : this.getFileLocation(subpackage.fernFilepath);
+    public getServiceClientPackageName({
+        service,
+        subpackage
+    }: {
+        service: HttpService;
+        subpackage?: Subpackage;
+    }): string {
+        const fileLocation = this.getServiceClientFileLocation({ service, subpackage });
         if (fileLocation.importPath === this.getRootImportPath()) {
             return this.getRootPackageName();
         }
         return fileLocation.importPath.split("/").pop() ?? "";
     }
 
-    public getSubpackageClientFileLocation(subpackage: Subpackage): FileLocation {
+    public getServiceClientFileLocation({
+        subpackage,
+        service
+    }: {
+        subpackage?: Subpackage;
+        service: HttpService;
+    }): FileLocation {
         if (this.isFlatPackageLayout()) {
-            return this.getPackageLocation(subpackage.fernFilepath);
+            return this.getPackageLocation(service.name.fernFilepath);
         }
-        return this.getFileLocation(subpackage.fernFilepath);
+        return this.getFileLocationForClient({ service, subpackage });
     }
 
-    public getSubpackageClientField(subpackage: Subpackage): go.Field {
+    public getSubpackageClientField({
+        service,
+        subpackage
+    }: {
+        service: HttpService;
+        subpackage: Subpackage;
+    }): go.Field {
         return go.field({
             name: this.getClientClassName(subpackage),
-            type: go.Type.reference(this.getSubpackageClientClassReference(subpackage))
+            type: go.Type.reference(this.getServiceClientClassReference({ service, subpackage }))
         });
     }
 
@@ -546,6 +566,29 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
 
     public isFlatPackageLayout(): boolean {
         return this.customConfig.packageLayout === "flat";
+    }
+
+    public getFileLocationForClient({
+        service,
+        subpackage
+    }: {
+        service: HttpService;
+        subpackage?: Subpackage;
+    }): FileLocation {
+        const parts = [];
+        if (subpackage != null && subpackage.subpackages.length > 0 && subpackage.fernFilepath.file != null) {
+            // This represents a nested root package, so we need to deposit
+            // the client in a 'client' subpackage (e.g. user/client).
+            parts.push(...service.name.fernFilepath.allParts.map((part) => part.camelCase.safeName.toLowerCase()));
+            parts.push("client");
+        } else {
+            parts.push(...service.name.fernFilepath.packagePath.map((part) => part.camelCase.safeName.toLowerCase()));
+            parts.push(service.name.fernFilepath.file?.camelCase.safeName.toLowerCase() ?? "client");
+        }
+        return {
+            importPath: [this.getRootImportPath(), ...parts].join("/"),
+            directory: RelativeFilePath.of(parts.join("/"))
+        };
     }
 
     private getEndpointRequestBodyType(requestBodyType: SdkRequestBodyType): go.Type {

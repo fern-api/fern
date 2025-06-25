@@ -95,7 +95,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             parameters: signature.allParameters,
             return_: this.getRawReturnSignature({ signature }),
             body: this.getRawUnaryEndpointBody({ signature, endpoint, endpointRequest }),
-            typeReference: this.getRawClientTypeReference({ subpackage }),
+            typeReference: this.getRawClientTypeReference({ service, subpackage }),
             pointerReceiver: true
         });
     }
@@ -104,11 +104,17 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         return [go.Type.pointer(go.Type.reference(signature.rawReturnTypeReference)), go.Type.error()];
     }
 
-    private getRawClientTypeReference({ subpackage }: { subpackage: Subpackage | undefined }): go.TypeReference {
+    private getRawClientTypeReference({
+        service,
+        subpackage
+    }: {
+        service: HttpService;
+        subpackage: Subpackage | undefined;
+    }): go.TypeReference {
         if (subpackage == null) {
             return this.context.getRootRawClientClassReference();
         }
-        return this.context.getSubpackageRawClientClassReference(subpackage);
+        return this.context.getRawClientClassReference({ service, subpackage });
     }
 
     private getRawUnaryEndpointBody({

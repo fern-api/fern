@@ -1,10 +1,11 @@
-package c
+package client
 
 import (
 	context "context"
-	core "github.com/folders/fern/core"
-	internal "github.com/folders/fern/internal"
-	option "github.com/folders/fern/option"
+	core "github.com/mixed-file-directory/fern/core"
+	internal "github.com/mixed-file-directory/fern/internal"
+	option "github.com/mixed-file-directory/fern/option"
+	user "github.com/mixed-file-directory/fern/user"
 	http "net/http"
 )
 
@@ -28,39 +29,50 @@ func NewRawClient(opts ...option.RequestOption) *RawClient {
 	}
 }
 
-func (r *RawClient) Foo(
+func (r *RawClient) ListEvents(
 	ctx context.Context,
+	request *user.ListUserEventsRequest,
 	opts ...option.RequestOption,
-) (*core.Response[any], error) {
+) (*core.Response[[]*user.Event], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
 		r.baseURL,
 		"",
 	)
-	endpointURL := baseURL
+	endpointURL := baseURL + "/users/events/"
+	queryParams, err := internal.QueryValues(request)
+	if err != nil {
+		return nil, err
+	}
+	if len(queryParams) > 0 {
+		endpointURL += "?" + queryParams.Encode()
+	}
 	headers := internal.MergeHeaders(
 		r.header.Clone(),
 		options.ToHeader(),
 	)
+	var response []*user.Event
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,
-			Method:          http.MethodPost,
+			Method:          http.MethodGet,
 			Headers:         headers,
 			MaxAttempts:     options.MaxAttempts,
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
+			Request:         request,
+			Response:        &response,
 		},
 	)
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[any]{
+	return &core.Response[[]*user.Event]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
-		Body:       nil,
+		Body:       response,
 	}, nil
 }

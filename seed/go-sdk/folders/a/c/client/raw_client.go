@@ -1,4 +1,4 @@
-package folder
+package client
 
 import (
 	context "context"

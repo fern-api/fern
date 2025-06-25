@@ -1,10 +1,10 @@
-package auth
+package client
 
 import (
 	context "context"
-	core "github.com/oauth-client-credentials-nested-root/fern/core"
-	internal "github.com/oauth-client-credentials-nested-root/fern/internal"
-	option "github.com/oauth-client-credentials-nested-root/fern/option"
+	core "github.com/folders/fern/core"
+	internal "github.com/folders/fern/internal"
+	option "github.com/folders/fern/option"
 	http "net/http"
 )
 
@@ -28,23 +28,21 @@ func NewRawClient(opts ...option.RequestOption) *RawClient {
 	}
 }
 
-func (r *RawClient) GetToken(
+func (r *RawClient) Foo(
 	ctx context.Context,
-	request *GetTokenRequest,
 	opts ...option.RequestOption,
-) (*core.Response[*TokenResponse], error) {
+) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
 		r.baseURL,
 		"",
 	)
-	endpointURL := baseURL + "/token"
+	endpointURL := baseURL
 	headers := internal.MergeHeaders(
 		r.header.Clone(),
 		options.ToHeader(),
 	)
-	var response *TokenResponse
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -55,16 +53,14 @@ func (r *RawClient) GetToken(
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
-			Request:         request,
-			Response:        &response,
 		},
 	)
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*TokenResponse]{
+	return &core.Response[any]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
-		Body:       response,
+		Body:       nil,
 	}, nil
 }

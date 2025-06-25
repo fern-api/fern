@@ -1,11 +1,11 @@
-package user
+package client
 
 import (
 	context "context"
-	fern "github.com/mixed-file-directory/fern"
-	core "github.com/mixed-file-directory/fern/core"
-	internal "github.com/mixed-file-directory/fern/internal"
-	option "github.com/mixed-file-directory/fern/option"
+	auth "github.com/oauth-client-credentials-nested-root/fern/auth"
+	core "github.com/oauth-client-credentials-nested-root/fern/core"
+	internal "github.com/oauth-client-credentials-nested-root/fern/internal"
+	option "github.com/oauth-client-credentials-nested-root/fern/option"
 	http "net/http"
 )
 
@@ -29,35 +29,28 @@ func NewRawClient(opts ...option.RequestOption) *RawClient {
 	}
 }
 
-func (r *RawClient) List(
+func (r *RawClient) GetToken(
 	ctx context.Context,
-	request *fern.ListUsersRequest,
+	request *auth.GetTokenRequest,
 	opts ...option.RequestOption,
-) (*core.Response[[]*fern.User], error) {
+) (*core.Response[*auth.TokenResponse], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
 		r.baseURL,
 		"",
 	)
-	endpointURL := baseURL + "/users/"
-	queryParams, err := internal.QueryValues(request)
-	if err != nil {
-		return nil, err
-	}
-	if len(queryParams) > 0 {
-		endpointURL += "?" + queryParams.Encode()
-	}
+	endpointURL := baseURL + "/token"
 	headers := internal.MergeHeaders(
 		r.header.Clone(),
 		options.ToHeader(),
 	)
-	var response []*fern.User
+	var response *auth.TokenResponse
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,
-			Method:          http.MethodGet,
+			Method:          http.MethodPost,
 			Headers:         headers,
 			MaxAttempts:     options.MaxAttempts,
 			BodyProperties:  options.BodyProperties,
@@ -70,7 +63,7 @@ func (r *RawClient) List(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[[]*fern.User]{
+	return &core.Response[*auth.TokenResponse]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
