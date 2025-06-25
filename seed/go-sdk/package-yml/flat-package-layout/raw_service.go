@@ -8,15 +8,15 @@ import (
 	http "net/http"
 )
 
-type RawClient struct {
+type RawServiceClient struct {
 	baseURL string
 	caller  *internal.Caller
 	header  http.Header
 }
 
-func NewRawClient(opts ...option.RequestOption) *RawClient {
+func NewRawServiceClient(opts ...option.RequestOption) *RawServiceClient {
 	options := core.NewRequestOptions(opts...)
-	return &RawClient{
+	return &RawServiceClient{
 		baseURL: options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
@@ -28,7 +28,7 @@ func NewRawClient(opts ...option.RequestOption) *RawClient {
 	}
 }
 
-func (r *RawClient) Nop(
+func (r *RawServiceClient) Nop(
 	ctx context.Context,
 	id string,
 	nestedId string,

@@ -59,8 +59,11 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
     }
 
     public getClientPackageName(subpackage?: Subpackage): string {
-        if (subpackage != null && this.isFlatPackageLayout()) {
-            return this.getPackageName(subpackage.name);
+        if (this.isFlatPackageLayout()) {
+            if (subpackage != null) {
+                return this.getPackageName(subpackage.name);
+            }
+            return this.getRootPackageName();
         }
         return "client";
     }
@@ -74,7 +77,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
 
     public getRawClientClassName(subpackage?: Subpackage): string {
         if (subpackage != null && this.isFlatPackageLayout()) {
-            return `${this.getClassName(subpackage.name)}RawClient`;
+            return `Raw${this.getClassName(subpackage.name)}Client`;
         }
         return "RawClient";
     }
@@ -200,14 +203,14 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
 
     public getSubpackageClientClassReference(subpackage: Subpackage): go.TypeReference {
         return go.typeReference({
-            name: this.getClientClassName(),
+            name: this.getClientClassName(subpackage),
             importPath: this.getSubpackageClientFileLocation(subpackage).importPath
         });
     }
 
     public getSubpackageRawClientClassReference(subpackage: Subpackage): go.TypeReference {
         return go.typeReference({
-            name: this.getRawClientClassName(),
+            name: this.getRawClientClassName(subpackage),
             importPath: this.getSubpackageClientFileLocation(subpackage).importPath
         });
     }
@@ -238,7 +241,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
 
     public getSubpackageClientField(subpackage: Subpackage): go.Field {
         return go.field({
-            name: this.getClientClassName(),
+            name: this.getClientClassName(subpackage),
             type: go.Type.reference(this.getSubpackageClientClassReference(subpackage))
         });
     }

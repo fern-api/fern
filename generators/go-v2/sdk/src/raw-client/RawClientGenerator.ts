@@ -10,22 +10,22 @@ import { SdkGeneratorContext } from "../SdkGeneratorContext";
 export declare namespace RawClientGenerator {
     interface Args {
         context: SdkGeneratorContext;
-        subpackage: Subpackage;
         serviceId: ServiceId;
         service: HttpService;
+        subpackage: Subpackage | undefined;
     }
 }
 
 export class RawClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema, SdkGeneratorContext> {
-    private subpackage: Subpackage | undefined;
     private serviceId: ServiceId;
     private service: HttpService;
+    private subpackage: Subpackage | undefined;
 
     constructor({ subpackage, context, serviceId, service }: RawClientGenerator.Args) {
         super(context);
-        this.subpackage = subpackage;
         this.serviceId = serviceId;
         this.service = service;
+        this.subpackage = subpackage;
     }
 
     public doGenerate(): GoFile {

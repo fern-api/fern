@@ -74,13 +74,21 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
         if (moduleConfig == null) {
             return;
         }
-        const moduleConfigWriter = new ModuleConfigWriter({ context, moduleConfig });
-
         // We write the go.mod file to disk upfront so that 'go fmt' can be run on the project.
+        const moduleConfigWriter = new ModuleConfigWriter({ context, moduleConfig });
         context.project.writeRawFile(moduleConfigWriter.generate());
     }
 
     private generateRawClients(context: SdkGeneratorContext) {
+        if (context.ir.rootPackage.service != null) {
+            const rawClient = new RawClientGenerator({
+                context,
+                serviceId: context.ir.rootPackage.service,
+                service: context.getHttpServiceOrThrow(context.ir.rootPackage.service),
+                subpackage: undefined
+            });
+            context.project.addGoFiles(rawClient.generate());
+        }
         for (const subpackage of Object.values(context.ir.subpackages)) {
             if (subpackage.service == null) {
                 continue;
@@ -91,7 +99,6 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
                 serviceId: subpackage.service,
                 service: context.getHttpServiceOrThrow(subpackage.service)
             });
-
             context.project.addGoFiles(rawClient.generate());
         }
     }
