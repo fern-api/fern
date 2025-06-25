@@ -5,7 +5,7 @@ WEBSOCKETS_MODULE = AST.Module.external(
     module_path=("websockets",),
     dependency=AST.Dependency(
         name="websockets",
-        version="12.0",
+        version=">=12.0",
         compatibility=DependencyCompatibility.EXACT,
     ),
 )
@@ -14,7 +14,7 @@ WEBSOCKETS_SYNC_CLIENT_MODULE = AST.Module.external(
     module_path=("websockets", "sync", "client"),
     dependency=AST.Dependency(
         name="websockets",
-        version="12.0",
+        version=">=12.0",
         compatibility=DependencyCompatibility.EXACT,
     ),
 )
@@ -23,7 +23,7 @@ WEBSOCKETS_SYNC_CONNECTION_MODULE = AST.Module.external(
     module_path=("websockets", "sync", "connection"),
     dependency=AST.Dependency(
         name="websockets",
-        version="12.0",
+        version=">=12.0",
         compatibility=DependencyCompatibility.EXACT,
     ),
 )
@@ -32,7 +32,7 @@ WEBSOCKETS_SYNC_EXCEPTION_MODULE = AST.Module.external(
     module_path=("websockets", "sync", "exceptions"),
     dependency=AST.Dependency(
         name="websockets",
-        version="12.0",
+        version=">=12.0",
         compatibility=DependencyCompatibility.EXACT,
     ),
 )
