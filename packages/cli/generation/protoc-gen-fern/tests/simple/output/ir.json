@@ -207,7 +207,7 @@
     }
   },
   "services": {
-    "service_": {
+    "MyService": {
       "name": {
         "fernFilepath": {
           "allParts": [],
@@ -500,7 +500,7 @@
       "allParts": [],
       "packagePath": []
     },
-    "service": "service_",
+    "service": "MyService",
     "types": [],
     "errors": [],
     "subpackages": [],
