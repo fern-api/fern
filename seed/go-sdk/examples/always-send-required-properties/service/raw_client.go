@@ -138,7 +138,6 @@ func (r *RawClient) GetMetadata(
 		options.ToHeader(),
 	)
 	headers.Add("X-API-Version", fmt.Sprintf("%v", request.XApiVersion))
-
 	var response *fern.Metadata
 	raw, err := r.caller.Call(
 		ctx,

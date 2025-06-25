@@ -86,7 +86,6 @@ func (r *RawClient) GetWithHeader(
 		options.ToHeader(),
 	)
 	headers.Add("X-Endpoint-Header", fmt.Sprintf("%v", request.XEndpointHeader))
-
 	var response string
 	raw, err := r.caller.Call(
 		ctx,
