@@ -283,9 +283,6 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     go.codeblock("options.ToHeader()")
                 ])
             );
-            if (endpoint.headers.length > 0) {
-                writer.newLine();
-            }
             for (const header of endpoint.headers) {
                 const literal = this.context.maybeLiteral(header.valueType);
                 if (literal != null) {
@@ -617,24 +614,24 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
 
     private addHeaderValue({ wireValue, value }: { wireValue: string; value: go.AstNode }): go.CodeBlock {
         return go.codeblock((writer) => {
+            writer.newLine();
             writer.write(`headers.Add("${wireValue}", `);
             writer.writeNode(this.context.callSprintf([go.codeblock(`"%v"`), value]));
             writer.write(")");
-            writer.newLine();
         });
     }
 
     private addQueryValue({ wireValue, value }: { wireValue: string; value: string }): go.CodeBlock {
         return go.codeblock((writer) => {
-            writer.write(`queryParams.Add("${wireValue}", "${value}")`);
             writer.newLine();
+            writer.write(`queryParams.Add("${wireValue}", "${value}")`);
         });
     }
 
     private setHeaderValue({ wireValue, value }: { wireValue: string; value: string }): go.CodeBlock {
         return go.codeblock((writer) => {
-            writer.write(`headers.Add("${wireValue}", "${value}")`);
             writer.newLine();
+            writer.write(`headers.Add("${wireValue}", "${value}")`);
         });
     }
 
