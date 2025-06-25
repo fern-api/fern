@@ -481,7 +481,7 @@ export const FernOpenAPIExtension = {
      *    - $ref: components/schemas/Triangle
      *    - $ref: components/schemas/Square
      */
-    IS_DISCRIMINATED: "x-fern-discriminated",
+    IS_DISCRIMINATED: "x-fern-discriminated"
 } as const;
 
 export type FernOpenAPIExtension = Values<typeof FernOpenAPIExtension>;

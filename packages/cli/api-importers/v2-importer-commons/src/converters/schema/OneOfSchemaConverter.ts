@@ -12,10 +12,10 @@ import {
 } from "@fern-api/ir-sdk";
 
 import { AbstractConverter, AbstractConverterContext } from "../..";
+import { FernDiscriminatedExtension } from "../../extensions/x-fern-discriminated";
 import { convertProperties } from "../../utils/ConvertProperties";
 import { SchemaConverter } from "./SchemaConverter";
 import { SchemaOrReferenceConverter } from "./SchemaOrReferenceConverter";
-import { FernDiscriminatedExtension } from "../../extensions/x-fern-discriminated";
 
 export declare namespace OneOfSchemaConverter {
     export interface Args extends AbstractConverter.AbstractArgs {
@@ -55,7 +55,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
             node: this.schema
         });
         const isDiscriminated = fernDiscriminatedExtension.convert();
-        
+
         if (isDiscriminated === false) {
             return this.convertAsUndiscriminatedUnion();
         }
