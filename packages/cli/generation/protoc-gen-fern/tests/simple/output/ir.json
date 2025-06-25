@@ -5,30 +5,30 @@
   },
   "selfHosted": false,
   "types": {
-    "Outer.Inner": {
+    "GetUserRequest": {
       "name": {
-        "typeId": "Outer.Inner",
+        "typeId": "GetUserRequest",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
         },
         "name": {
-          "originalName": "Inner",
+          "originalName": "GetUserRequest",
           "camelCase": {
-            "unsafeName": "inner",
-            "safeName": "inner"
+            "unsafeName": "getUserRequest",
+            "safeName": "getUserRequest"
           },
           "snakeCase": {
-            "unsafeName": "inner",
-            "safeName": "inner"
+            "unsafeName": "get_user_request",
+            "safeName": "get_user_request"
           },
           "screamingSnakeCase": {
-            "unsafeName": "INNER",
-            "safeName": "INNER"
+            "unsafeName": "GET_USER_REQUEST",
+            "safeName": "GET_USER_REQUEST"
           },
           "pascalCase": {
-            "unsafeName": "Inner",
-            "safeName": "Inner"
+            "unsafeName": "GetUserRequest",
+            "safeName": "GetUserRequest"
           }
         }
       },
@@ -37,25 +37,25 @@
           {
             "name": {
               "name": {
-                "originalName": "type3",
+                "originalName": "user_id",
                 "camelCase": {
-                  "unsafeName": "type3",
-                  "safeName": "type3"
+                  "unsafeName": "userId",
+                  "safeName": "userId"
                 },
                 "snakeCase": {
-                  "unsafeName": "type_3",
-                  "safeName": "type_3"
+                  "unsafeName": "user_id",
+                  "safeName": "user_id"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "TYPE_3",
-                  "safeName": "TYPE_3"
+                  "unsafeName": "USER_ID",
+                  "safeName": "USER_ID"
                 },
                 "pascalCase": {
-                  "unsafeName": "Type3",
-                  "safeName": "Type3"
+                  "unsafeName": "UserId",
+                  "safeName": "UserId"
                 }
               },
-              "wireValue": "type3"
+              "wireValue": "user_id"
             },
             "valueType": {
               "container": {
@@ -85,140 +85,30 @@
       "referencedTypes": {},
       "inline": false
     },
-    "OuterMessage": {
+    "GetUserResponse": {
       "name": {
-        "typeId": "OuterMessage",
+        "typeId": "GetUserResponse",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
         },
         "name": {
-          "originalName": "OuterMessage",
+          "originalName": "GetUserResponse",
           "camelCase": {
-            "unsafeName": "outerMessage",
-            "safeName": "outerMessage"
+            "unsafeName": "getUserResponse",
+            "safeName": "getUserResponse"
           },
           "snakeCase": {
-            "unsafeName": "outer_message",
-            "safeName": "outer_message"
+            "unsafeName": "get_user_response",
+            "safeName": "get_user_response"
           },
           "screamingSnakeCase": {
-            "unsafeName": "OUTER_MESSAGE",
-            "safeName": "OUTER_MESSAGE"
+            "unsafeName": "GET_USER_RESPONSE",
+            "safeName": "GET_USER_RESPONSE"
           },
           "pascalCase": {
-            "unsafeName": "OuterMessage",
-            "safeName": "OuterMessage"
-          }
-        }
-      },
-      "shape": {
-        "members": [
-          {
-            "type": {
-              "container": {
-                "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "default": "",
-                      "type": "string"
-                    }
-                  },
-                  "type": "primitive"
-                },
-                "type": "optional"
-              },
-              "type": "container"
-            }
-          },
-          {
-            "type": {
-              "container": {
-                "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "default": "",
-                      "type": "string"
-                    }
-                  },
-                  "type": "primitive"
-                },
-                "type": "optional"
-              },
-              "type": "container"
-            }
-          },
-          {
-            "type": {
-              "container": {
-                "optional": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
-                  },
-                  "name": {
-                    "originalName": "Outer.Inner",
-                    "camelCase": {
-                      "unsafeName": "outerInner",
-                      "safeName": "outerInner"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "outer_inner",
-                      "safeName": "outer_inner"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "OUTER_INNER",
-                      "safeName": "OUTER_INNER"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "OuterInner",
-                      "safeName": "OuterInner"
-                    }
-                  },
-                  "typeId": "Outer.Inner",
-                  "inline": false,
-                  "displayName": "innermessage",
-                  "type": "named"
-                },
-                "type": "optional"
-              },
-              "type": "container"
-            }
-          }
-        ],
-        "type": "undiscriminatedUnion"
-      },
-      "autogeneratedExamples": [],
-      "userProvidedExamples": [],
-      "referencedTypes": {},
-      "inline": false
-    },
-    "Outer": {
-      "name": {
-        "typeId": "Outer",
-        "fernFilepath": {
-          "allParts": [],
-          "packagePath": []
-        },
-        "name": {
-          "originalName": "Outer",
-          "camelCase": {
-            "unsafeName": "outer",
-            "safeName": "outer"
-          },
-          "snakeCase": {
-            "unsafeName": "outer",
-            "safeName": "outer"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "OUTER",
-            "safeName": "OUTER"
-          },
-          "pascalCase": {
-            "unsafeName": "Outer",
-            "safeName": "Outer"
+            "unsafeName": "GetUserResponse",
+            "safeName": "GetUserResponse"
           }
         }
       },
@@ -227,25 +117,25 @@
           {
             "name": {
               "name": {
-                "originalName": "type4",
+                "originalName": "name",
                 "camelCase": {
-                  "unsafeName": "type4",
-                  "safeName": "type4"
+                  "unsafeName": "name",
+                  "safeName": "name"
                 },
                 "snakeCase": {
-                  "unsafeName": "type_4",
-                  "safeName": "type_4"
+                  "unsafeName": "name",
+                  "safeName": "name"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "TYPE_4",
-                  "safeName": "TYPE_4"
+                  "unsafeName": "NAME",
+                  "safeName": "NAME"
                 },
                 "pascalCase": {
-                  "unsafeName": "Type4",
-                  "safeName": "Type4"
+                  "unsafeName": "Name",
+                  "safeName": "Name"
                 }
               },
-              "wireValue": "type4"
+              "wireValue": "name"
             },
             "valueType": {
               "container": {
@@ -267,53 +157,41 @@
           {
             "name": {
               "name": {
-                "originalName": "message",
+                "originalName": "age",
                 "camelCase": {
-                  "unsafeName": "message",
-                  "safeName": "message"
+                  "unsafeName": "age",
+                  "safeName": "age"
                 },
                 "snakeCase": {
-                  "unsafeName": "message",
-                  "safeName": "message"
+                  "unsafeName": "age",
+                  "safeName": "age"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "MESSAGE",
-                  "safeName": "MESSAGE"
+                  "unsafeName": "AGE",
+                  "safeName": "AGE"
                 },
                 "pascalCase": {
-                  "unsafeName": "Message",
-                  "safeName": "Message"
+                  "unsafeName": "Age",
+                  "safeName": "Age"
                 }
               },
-              "wireValue": "message"
+              "wireValue": "age"
             },
             "valueType": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "INTEGER",
+                    "v2": {
+                      "default": 0,
+                      "type": "integer"
+                    }
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "name": {
-                "originalName": "OuterMessage",
-                "camelCase": {
-                  "unsafeName": "outerMessage",
-                  "safeName": "outerMessage"
-                },
-                "snakeCase": {
-                  "unsafeName": "outer_message",
-                  "safeName": "outer_message"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "OUTER_MESSAGE",
-                  "safeName": "OUTER_MESSAGE"
-                },
-                "pascalCase": {
-                  "unsafeName": "OuterMessage",
-                  "safeName": "OuterMessage"
-                }
-              },
-              "typeId": "OuterMessage",
-              "inline": false,
-              "type": "named"
+              "type": "container"
             }
           }
         ],
@@ -328,7 +206,282 @@
       "inline": false
     }
   },
-  "services": {},
+  "services": {
+    "MyService": {
+      "name": {
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        }
+      },
+      "basePath": {
+        "head": "",
+        "parts": []
+      },
+      "headers": [],
+      "pathParameters": [],
+      "endpoints": [
+        {
+          "id": "GetUser",
+          "name": {
+            "originalName": "GetUser",
+            "camelCase": {
+              "unsafeName": "getUser",
+              "safeName": "getUser"
+            },
+            "snakeCase": {
+              "unsafeName": "get_user",
+              "safeName": "get_user"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "GET_USER",
+              "safeName": "GET_USER"
+            },
+            "pascalCase": {
+              "unsafeName": "GetUser",
+              "safeName": "GetUser"
+            }
+          },
+          "requestBody": {
+            "contentType": "application/protobuf",
+            "requestBodyType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "GetUserRequest",
+                "camelCase": {
+                  "unsafeName": "getUserRequest",
+                  "safeName": "getUserRequest"
+                },
+                "snakeCase": {
+                  "unsafeName": "get_user_request",
+                  "safeName": "get_user_request"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "GET_USER_REQUEST",
+                  "safeName": "GET_USER_REQUEST"
+                },
+                "pascalCase": {
+                  "unsafeName": "GetUserRequest",
+                  "safeName": "GetUserRequest"
+                }
+              },
+              "typeId": "GetUserRequest",
+              "inline": false,
+              "type": "named"
+            },
+            "type": "reference"
+          },
+          "response": {
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "GetUserResponse",
+                    "camelCase": {
+                      "unsafeName": "getUserResponse",
+                      "safeName": "getUserResponse"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "get_user_response",
+                      "safeName": "get_user_response"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "GET_USER_RESPONSE",
+                      "safeName": "GET_USER_RESPONSE"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "GetUserResponse",
+                      "safeName": "GetUserResponse"
+                    }
+                  },
+                  "typeId": "GetUserResponse",
+                  "inline": false,
+                  "type": "named"
+                },
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
+          "method": "POST",
+          "v2Examples": {
+            "userSpecifiedExamples": {},
+            "autogeneratedExamples": {
+              "getUserExample": {
+                "request": {
+                  "endpoint": {
+                    "method": "POST",
+                    "path": "/GetUser"
+                  },
+                  "pathParameters": {},
+                  "queryParameters": {},
+                  "headers": {}
+                },
+                "response": {}
+              }
+            }
+          },
+          "path": {
+            "head": "GetUser",
+            "parts": []
+          },
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "errors": [],
+          "auth": false,
+          "userSpecifiedExamples": [],
+          "autogeneratedExamples": [],
+          "idempotent": false,
+          "fullPath": {
+            "head": "GetUser",
+            "parts": []
+          },
+          "allPathParameters": [],
+          "source": {
+            "type": "proto"
+          },
+          "audiences": []
+        },
+        {
+          "id": "GetUser2",
+          "name": {
+            "originalName": "GetUser2",
+            "camelCase": {
+              "unsafeName": "getUser2",
+              "safeName": "getUser2"
+            },
+            "snakeCase": {
+              "unsafeName": "get_user_2",
+              "safeName": "get_user_2"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "GET_USER_2",
+              "safeName": "GET_USER_2"
+            },
+            "pascalCase": {
+              "unsafeName": "GetUser2",
+              "safeName": "GetUser2"
+            }
+          },
+          "requestBody": {
+            "contentType": "application/protobuf",
+            "requestBodyType": {
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "name": {
+                "originalName": "GetUserResponse",
+                "camelCase": {
+                  "unsafeName": "getUserResponse",
+                  "safeName": "getUserResponse"
+                },
+                "snakeCase": {
+                  "unsafeName": "get_user_response",
+                  "safeName": "get_user_response"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "GET_USER_RESPONSE",
+                  "safeName": "GET_USER_RESPONSE"
+                },
+                "pascalCase": {
+                  "unsafeName": "GetUserResponse",
+                  "safeName": "GetUserResponse"
+                }
+              },
+              "typeId": "GetUserResponse",
+              "inline": false,
+              "type": "named"
+            },
+            "type": "reference"
+          },
+          "response": {
+            "body": {
+              "value": {
+                "responseBodyType": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "GetUserRequest",
+                    "camelCase": {
+                      "unsafeName": "getUserRequest",
+                      "safeName": "getUserRequest"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "get_user_request",
+                      "safeName": "get_user_request"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "GET_USER_REQUEST",
+                      "safeName": "GET_USER_REQUEST"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "GetUserRequest",
+                      "safeName": "GetUserRequest"
+                    }
+                  },
+                  "typeId": "GetUserRequest",
+                  "inline": false,
+                  "type": "named"
+                },
+                "type": "response"
+              },
+              "type": "json"
+            }
+          },
+          "method": "POST",
+          "v2Examples": {
+            "userSpecifiedExamples": {},
+            "autogeneratedExamples": {
+              "getUser2Example": {
+                "request": {
+                  "endpoint": {
+                    "method": "POST",
+                    "path": "/GetUser2"
+                  },
+                  "pathParameters": {},
+                  "queryParameters": {},
+                  "headers": {}
+                },
+                "response": {}
+              }
+            }
+          },
+          "path": {
+            "head": "GetUser2",
+            "parts": []
+          },
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "errors": [],
+          "auth": false,
+          "userSpecifiedExamples": [],
+          "autogeneratedExamples": [],
+          "idempotent": false,
+          "fullPath": {
+            "head": "GetUser2",
+            "parts": []
+          },
+          "allPathParameters": [],
+          "source": {
+            "type": "proto"
+          },
+          "audiences": []
+        }
+      ]
+    }
+  },
   "errors": {},
   "webhookGroups": {},
   "headers": [],
@@ -347,6 +500,7 @@
       "allParts": [],
       "packagePath": []
     },
+    "service": "MyService",
     "types": [],
     "errors": [],
     "subpackages": [],
