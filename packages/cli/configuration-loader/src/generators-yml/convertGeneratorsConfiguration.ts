@@ -157,7 +157,7 @@ async function parseAPIConfigurationToApiLocations(
                 schema: {
                     type: "protobuf",
                     root: apiConfiguration.proto.root,
-                    target: apiConfiguration.proto.target,
+                    target: apiConfiguration.proto.target ?? "",
                     localGeneration: apiConfiguration.proto["local-generation"] ?? false
                 },
                 origin: undefined,
@@ -183,7 +183,7 @@ async function parseAPIConfigurationToApiLocations(
                         schema: {
                             type: "protobuf",
                             root: definition.proto.root,
-                            target: definition.proto.target,
+                            target: definition.proto.target ?? "",
                             localGeneration: definition.proto["local-generation"] ?? false
                         },
                         origin: undefined,
@@ -334,7 +334,7 @@ async function parseApiConfigurationV2Schema({
                 schema: {
                     type: "protobuf",
                     root: spec.proto.root,
-                    target: spec.proto.target,
+                    target: spec.proto.target ?? "",
                     localGeneration: spec.proto["local-generation"] ?? false
                 },
                 origin: undefined,

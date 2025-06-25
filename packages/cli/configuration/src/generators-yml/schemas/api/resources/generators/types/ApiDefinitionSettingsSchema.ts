@@ -28,6 +28,4 @@ export interface ApiDefinitionSettingsSchema {
     "inline-path-parameters"?: boolean;
     /** Whether to use idiomatic request names for endpoints (e.g. ListUsersRequest instead of UsersListRequest). Defaults to false. */
     "idiomatic-request-names"?: boolean;
-    /** Whether to preserve single schema oneOfs. Defaults to false. */
-    "preserve-single-schema-oneof"?: boolean;
 }
