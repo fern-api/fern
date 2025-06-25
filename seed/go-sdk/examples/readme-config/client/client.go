@@ -19,9 +19,10 @@ type Acme struct {
 	caller  *internal.Caller
 	header  http.Header
 
-	File    *fileclient.Client
-	Health  *healthclient.Client
-	Service *service.Client
+	WithRawResponse *RawAcme
+	File            *fileclient.Client
+	Health          *healthclient.Client
+	Service         *service.Client
 }
 
 func New(opts ...option.RequestOption) *Acme {
@@ -34,10 +35,11 @@ func New(opts ...option.RequestOption) *Acme {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header:  options.ToHeader(),
-		File:    fileclient.NewClient(opts...),
-		Health:  healthclient.NewClient(opts...),
-		Service: service.NewClient(opts...),
+		header:          options.ToHeader(),
+		WithRawResponse: NewRawAcme(opts...),
+		File:            fileclient.NewClient(opts...),
+		Health:          healthclient.NewClient(opts...),
+		Service:         service.NewClient(opts...),
 	}
 }
 

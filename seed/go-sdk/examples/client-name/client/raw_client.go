@@ -9,15 +9,15 @@ import (
 	http "net/http"
 )
 
-type RawClient struct {
+type RawAcme struct {
 	baseURL string
 	caller  *internal.Caller
 	header  http.Header
 }
 
-func NewRawClient(opts ...option.RequestOption) *RawClient {
+func NewRawAcme(opts ...option.RequestOption) *RawAcme {
 	options := core.NewRequestOptions(opts...)
-	return &RawClient{
+	return &RawAcme{
 		baseURL: options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
@@ -29,7 +29,7 @@ func NewRawClient(opts ...option.RequestOption) *RawClient {
 	}
 }
 
-func (r *RawClient) Echo(
+func (r *RawAcme) Echo(
 	ctx context.Context,
 	request string,
 	opts ...option.RequestOption,
@@ -70,7 +70,7 @@ func (r *RawClient) Echo(
 	}, nil
 }
 
-func (r *RawClient) CreateType(
+func (r *RawAcme) CreateType(
 	ctx context.Context,
 	request *fern.Type,
 	opts ...option.RequestOption,

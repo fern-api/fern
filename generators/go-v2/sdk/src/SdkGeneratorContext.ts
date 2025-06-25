@@ -52,6 +52,9 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
     }
 
     public getClientClassName(subpackage?: Subpackage): string {
+        if (subpackage == null && this.customConfig.clientName != null) {
+            return this.customConfig.clientName;
+        }
         if (subpackage != null && this.isFlatPackageLayout()) {
             return `${this.getClassName(subpackage.name)}Client`;
         }
@@ -76,10 +79,13 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
     }
 
     public getRawClientClassName(subpackage?: Subpackage): string {
-        if (subpackage != null && this.isFlatPackageLayout()) {
-            return `Raw${this.getClassName(subpackage.name)}Client`;
+        if (subpackage != null) {
+            if (this.isFlatPackageLayout()) {
+                return `Raw${this.getClassName(subpackage.name)}Client`;
+            }
+            return `RawClient`;
         }
-        return "RawClient";
+        return `Raw${this.getClientClassName()}`;
     }
 
     public getRawClientFilename(subpackage?: Subpackage): string {

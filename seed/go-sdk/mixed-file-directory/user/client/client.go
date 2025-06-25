@@ -17,7 +17,8 @@ type Client struct {
 	caller  *internal.Caller
 	header  http.Header
 
-	Events *eventsclient.Client
+	WithRawResponse *RawClient
+	Events          *eventsclient.Client
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
@@ -30,8 +31,9 @@ func NewClient(opts ...option.RequestOption) *Client {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header: options.ToHeader(),
-		Events: eventsclient.NewClient(opts...),
+		header:          options.ToHeader(),
+		WithRawResponse: NewRawClient(opts...),
+		Events:          eventsclient.NewClient(opts...),
 	}
 }
 

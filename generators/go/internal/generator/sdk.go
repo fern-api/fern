@@ -969,11 +969,13 @@ func (f *fileWriter) WriteClient(
 
 	// Generate the client implementation.
 	f.P("type ", clientName, " struct {")
-	f.P("WithRawResponse *", rawClientName)
 	f.P("baseURL string")
 	f.P("caller *internal.Caller")
 	f.P("header http.Header")
 	f.P()
+	if len(endpoints) > 0 {
+		f.P("WithRawResponse *", rawClientName)
+	}
 	for _, subpackage := range subpackages {
 		if packageLayout == PackageLayoutFlat {
 			f.P(subpackage.Name.PascalCase.UnsafeName, " *", subpackage.Name.PascalCase.UnsafeName, "Client")
@@ -1023,7 +1025,6 @@ func (f *fileWriter) WriteClient(
 		}
 	}
 	f.P("return &", clientName, "{")
-	f.P(" WithRawResponse: ", rawClientConstructorName, "(opts...),")
 	f.P(`baseURL: options.BaseURL,`)
 	f.P("caller: internal.NewCaller(")
 	f.P("&internal.CallerParams{")
@@ -1032,6 +1033,9 @@ func (f *fileWriter) WriteClient(
 	f.P("},")
 	f.P("),")
 	f.P("header: options.ToHeader(),")
+	if len(endpoints) > 0 {
+		f.P(" WithRawResponse: ", rawClientConstructorName, "(opts...),")
+	}
 	for _, subpackage := range subpackages {
 		if packageLayout == PackageLayoutFlat {
 			f.P(subpackage.Name.PascalCase.UnsafeName, ": ", "New", subpackage.Name.PascalCase.UnsafeName, "Client(opts...),")

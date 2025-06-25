@@ -15,7 +15,8 @@ type Acme struct {
 	caller  *internal.Caller
 	header  http.Header
 
-	Service *ServiceClient
+	WithRawResponse *RawAcme
+	Service         *ServiceClient
 }
 
 func New(opts ...option.RequestOption) *Acme {
@@ -28,8 +29,9 @@ func New(opts ...option.RequestOption) *Acme {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header:  options.ToHeader(),
-		Service: NewServiceClient(opts...),
+		header:          options.ToHeader(),
+		WithRawResponse: NewRawAcme(opts...),
+		Service:         NewServiceClient(opts...),
 	}
 }
 

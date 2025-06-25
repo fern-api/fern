@@ -19,9 +19,10 @@ type Client struct {
 	caller  *internal.Caller
 	header  http.Header
 
-	File    *fileclient.Client
-	Health  *healthclient.Client
-	Service *service.Client
+	WithRawResponse *RawClient
+	File            *fileclient.Client
+	Health          *healthclient.Client
+	Service         *service.Client
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
@@ -34,10 +35,11 @@ func NewClient(opts ...option.RequestOption) *Client {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header:  options.ToHeader(),
-		File:    fileclient.NewClient(opts...),
-		Health:  healthclient.NewClient(opts...),
-		Service: service.NewClient(opts...),
+		header:          options.ToHeader(),
+		WithRawResponse: NewRawClient(opts...),
+		File:            fileclient.NewClient(opts...),
+		Health:          healthclient.NewClient(opts...),
+		Service:         service.NewClient(opts...),
 	}
 }
 
