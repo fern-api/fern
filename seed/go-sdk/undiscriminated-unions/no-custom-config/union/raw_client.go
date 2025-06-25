@@ -73,7 +73,7 @@ func (r *RawClient) Get(
 func (r *RawClient) GetMetadata(
 	ctx context.Context,
 	opts ...option.RequestOption,
-) (*core.Response[*undiscriminated.Metadata], error) {
+) (*core.Response[undiscriminated.Metadata], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -85,7 +85,7 @@ func (r *RawClient) GetMetadata(
 		r.header.Clone(),
 		options.ToHeader(),
 	)
-	var response *undiscriminated.Metadata
+	var response undiscriminated.Metadata
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -102,7 +102,7 @@ func (r *RawClient) GetMetadata(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*undiscriminated.Metadata]{
+	return &core.Response[undiscriminated.Metadata]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,

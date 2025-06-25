@@ -31,7 +31,7 @@ func NewRawClient(opts ...option.RequestOption) *RawClient {
 
 func (r *RawClient) GetUser(
 	ctx context.Context,
-	userId *fern.UserId,
+	userId fern.UserId,
 	opts ...option.RequestOption,
 ) (*core.Response[*fern.User], error) {
 	options := core.NewRequestOptions(opts...)

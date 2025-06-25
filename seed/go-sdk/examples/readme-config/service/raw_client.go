@@ -32,7 +32,7 @@ func NewRawClient(opts ...option.RequestOption) *RawClient {
 
 func (r *RawClient) GetMovie(
 	ctx context.Context,
-	movieId *fern.MovieId,
+	movieId fern.MovieId,
 	opts ...option.RequestOption,
 ) (*core.Response[*fern.Movie], error) {
 	options := core.NewRequestOptions(opts...)
@@ -77,7 +77,7 @@ func (r *RawClient) CreateMovie(
 	ctx context.Context,
 	request *fern.Movie,
 	opts ...option.RequestOption,
-) (*core.Response[*fern.MovieId], error) {
+) (*core.Response[fern.MovieId], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -89,7 +89,7 @@ func (r *RawClient) CreateMovie(
 		r.header.Clone(),
 		options.ToHeader(),
 	)
-	var response *fern.MovieId
+	var response fern.MovieId
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -107,7 +107,7 @@ func (r *RawClient) CreateMovie(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*fern.MovieId]{
+	return &core.Response[fern.MovieId]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
