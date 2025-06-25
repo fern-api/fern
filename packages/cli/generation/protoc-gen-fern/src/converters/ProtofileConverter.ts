@@ -55,10 +55,10 @@ export class ProtofileConverter extends AbstractSpecConverter<ProtofileConverter
             const convertedService = serviceConverter.convert();
             if (convertedService != null) {
                 for (const endpoint of convertedService.endpoints) {
-                    // this.addEndpointToIr({
-                    //     endpoint,
-                    //     audiences: this.audiences
-                    // });
+                    this.addEndpointToIr({
+                        endpoint: endpoint.endpoint,
+                        audiences: []
+                    });
                 }
             }
         }

@@ -33,6 +33,8 @@ export class FieldConverter extends AbstractConverter<ProtofileConverterContext,
     }
 
     public convert(): FieldConverter.Output | undefined {
+        // TODO: handle maps
+
         const isRepeated = this.field.label === 3;
 
         if (isRepeated) {
