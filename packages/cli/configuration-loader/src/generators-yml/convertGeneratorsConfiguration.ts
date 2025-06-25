@@ -86,8 +86,7 @@ function parseDeprecatedApiDefinitionSettingsSchema(
         respectNullableSchemas: settings?.["respect-nullable-schemas"],
         onlyIncludeReferencedSchemas: settings?.["only-include-referenced-schemas"],
         inlinePathParameters: settings?.["inline-path-parameters"],
-        shouldUseIdiomaticRequestNames: settings?.["idiomatic-request-names"],
-        preserveSingleSchemaOneOf: settings?.["preserve-single-schema-oneof"]
+        shouldUseIdiomaticRequestNames: settings?.["idiomatic-request-names"]
     };
 }
 
