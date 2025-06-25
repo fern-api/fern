@@ -1,11 +1,11 @@
-import { Spec } from "@fern-api/api-workspace-commons";
+import { ProtobufSpec, OpenAPISpec, Spec } from "@fern-api/api-workspace-commons";
 import {
     DEFINITION_DIRECTORY,
     OPENAPI_DIRECTORY,
     generatorsYml,
     loadGeneratorsConfiguration
 } from "@fern-api/configuration-loader";
-import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join, listFiles } from "@fern-api/fs-utils";
 import {
     ConjureWorkspace,
     LazyFernWorkspace,
@@ -47,55 +47,60 @@ export async function loadSingleNamespaceAPIWorkspace({
                 };
             }
 
-            const absoluteFilepathToProtobufTarget = join(
-                absolutePathToWorkspace,
-                RelativeFilePath.of(definition.schema.target)
-            );
+            // if the target is empty, use all the proto files in the root directory as targets to generate docs
+            const absoluteFilepathsToTargets = definition.schema.target.length === 0
+                ? await listFiles(absoluteFilepathToProtobufRoot, "proto")
+                : [join(absolutePathToWorkspace, RelativeFilePath.of(definition.schema.target))];
 
-            if (!(await doesPathExist(absoluteFilepathToProtobufTarget))) {
-                return {
-                    didSucceed: false,
-                    failures: {
-                        [RelativeFilePath.of(definition.schema.target)]: {
-                            type: WorkspaceLoaderFailureType.FILE_MISSING
+            for (const absoluteFilepathToTarget of absoluteFilepathsToTargets) {
+                if (!(await doesPathExist(absoluteFilepathToTarget))) {
+                    return {
+                        didSucceed: false,
+                        failures: {
+                            [RelativeFilePath.of(definition.schema.target)]: {
+                                type: WorkspaceLoaderFailureType.FILE_MISSING
+                            }
                         }
-                    }
-                };
-            }
-            specs.push({
-                type: "protobuf",
-                absoluteFilepathToProtobufRoot,
-                absoluteFilepathToProtobufTarget,
-                absoluteFilepathToOverrides,
-                relativeFilepathToProtobufRoot,
-                generateLocally: definition.schema.localGeneration,
-                settings: {
-                    audiences: definition.audiences ?? [],
-                    useTitlesAsName: definition.settings?.shouldUseTitleAsName ?? true,
-                    shouldUseUndiscriminatedUnionsWithLiterals:
-                        definition.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false,
-                    shouldUseIdiomaticRequestNames: definition.settings?.shouldUseIdiomaticRequestNames ?? false,
-                    optionalAdditionalProperties: definition.settings?.shouldUseOptionalAdditionalProperties ?? true,
-                    coerceEnumsToLiterals: definition.settings?.coerceEnumsToLiterals ?? true,
-                    objectQueryParameters: definition.settings?.objectQueryParameters ?? false,
-                    respectReadonlySchemas: definition.settings?.respectReadonlySchemas ?? false,
-                    respectNullableSchemas: definition.settings?.respectNullableSchemas ?? false,
-                    onlyIncludeReferencedSchemas: definition.settings?.onlyIncludeReferencedSchemas ?? false,
-                    inlinePathParameters: definition.settings?.inlinePathParameters ?? false,
-                    disableExamples: false,
-                    discriminatedUnionV2: definition.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false,
-                    preserveSchemaIds: false,
-                    asyncApiNaming: definition.settings?.asyncApiMessageNaming ?? "v1",
-                    filter: definition.settings?.filter,
-                    exampleGeneration: undefined,
-                    defaultFormParameterEncoding: definition.settings?.defaultFormParameterEncoding,
-                    useBytesForBinaryResponse: definition.settings?.useBytesForBinaryResponse ?? false,
-                    respectForwardCompatibleEnums: definition.settings?.respectForwardCompatibleEnums ?? false,
-                    additionalPropertiesDefaultsTo: definition.settings?.additionalPropertiesDefaultsTo ?? false,
-                    typeDatesAsStrings: definition.settings?.typeDatesAsStrings ?? true,
-                    preserveSingleSchemaOneOf: definition.settings?.preserveSingleSchemaOneOf ?? false
+                    };
                 }
-            });
+
+                specs.push({
+                    type: "protobuf",
+                    absoluteFilepathToProtobufRoot,
+                    absoluteFilepathToProtobufTarget: absoluteFilepathToTarget,
+                    absoluteFilepathToOverrides,
+                    relativeFilepathToProtobufRoot,
+                    generateDocs: definition.schema.target.length === 0,
+                    generateLocally: definition.schema.localGeneration,
+                    settings: {
+                        audiences: definition.audiences ?? [],
+                        useTitlesAsName: definition.settings?.shouldUseTitleAsName ?? true,
+                        shouldUseUndiscriminatedUnionsWithLiterals:
+                            definition.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false,
+                        shouldUseIdiomaticRequestNames: definition.settings?.shouldUseIdiomaticRequestNames ?? false,
+                        optionalAdditionalProperties:
+                            definition.settings?.shouldUseOptionalAdditionalProperties ?? true,
+                        coerceEnumsToLiterals: definition.settings?.coerceEnumsToLiterals ?? true,
+                        objectQueryParameters: definition.settings?.objectQueryParameters ?? false,
+                        respectReadonlySchemas: definition.settings?.respectReadonlySchemas ?? false,
+                        respectNullableSchemas: definition.settings?.respectNullableSchemas ?? false,
+                        onlyIncludeReferencedSchemas: definition.settings?.onlyIncludeReferencedSchemas ?? false,
+                        inlinePathParameters: definition.settings?.inlinePathParameters ?? false,
+                        disableExamples: false,
+                        discriminatedUnionV2: definition.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false,
+                        preserveSchemaIds: false,
+                        asyncApiNaming: definition.settings?.asyncApiMessageNaming ?? "v1",
+                        filter: definition.settings?.filter,
+                        exampleGeneration: undefined,
+                        defaultFormParameterEncoding: definition.settings?.defaultFormParameterEncoding,
+                        useBytesForBinaryResponse: definition.settings?.useBytesForBinaryResponse ?? false,
+                        respectForwardCompatibleEnums: definition.settings?.respectForwardCompatibleEnums ?? false,
+                        additionalPropertiesDefaultsTo: definition.settings?.additionalPropertiesDefaultsTo ?? false,
+                        typeDatesAsStrings: definition.settings?.typeDatesAsStrings ?? true,
+                        preserveSingleSchemaOneOf: definition.settings?.preserveSingleSchemaOneOf ?? false
+                    }
+                });
+            }
             continue;
         }
 
@@ -260,7 +265,11 @@ export async function loadAPIWorkspace({
         return {
             didSucceed: true,
             workspace: new OSSWorkspace({
-                specs: specs.filter((spec) => spec.type !== "openrpc"),
+                specs: specs.filter((spec) => {
+                    if (spec.type === "openrpc") return false;
+                    if (spec.type === "protobuf" && spec.generateDocs) return false;
+                    return true;
+                }) as (OpenAPISpec | ProtobufSpec)[],
                 allSpecs: specs,
                 workspaceName,
                 absoluteFilePath: absolutePathToWorkspace,

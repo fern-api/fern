@@ -257,6 +257,9 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                             ? result
                             : mergeIntermediateRepresentation(mergedIr, result, casingsGenerator);
                 }
+            } else if (spec.type === "protobuf") {
+                console.error(spec);
+                
             }
         }
 
