@@ -943,25 +943,33 @@ func (f *fileWriter) WriteClient(
 	}
 
 	var (
-		clientName            = "Client"
-		clientConstructorName = "NewClient"
+		clientName               = "Client"
+		rawClientName            = "RawClient"
+		clientConstructorName    = "NewClient"
+		rawClientConstructorName = "NewRawClient"
 	)
 	if packageLayout == PackageLayoutFlat && fernFilepath.File != nil {
 		clientName = fernFilepath.File.PascalCase.UnsafeName + "Client"
+		rawClientName = "Raw" + fernFilepath.File.PascalCase.UnsafeName + "Client"
 		clientConstructorName = "New" + clientName
+		rawClientConstructorName = "New" + rawClientName
 	}
 	if clientNameOverride != "" {
 		clientName = clientNameOverride
+		rawClientName = "Raw" + clientNameOverride
 		clientConstructorName = "New" + clientName
+		rawClientConstructorName = "New" + rawClientName
 	}
 	if clientConstructorNameOverride != "" {
 		clientConstructorName = clientConstructorNameOverride
+		rawClientConstructorName = "New" + rawClientName
 	}
 
 	receiver := typeNameToReceiver(clientName)
 
 	// Generate the client implementation.
 	f.P("type ", clientName, " struct {")
+	f.P("WithRawResponse *", rawClientName)
 	f.P("baseURL string")
 	f.P("caller *internal.Caller")
 	f.P("header http.Header")
@@ -1015,6 +1023,7 @@ func (f *fileWriter) WriteClient(
 		}
 	}
 	f.P("return &", clientName, "{")
+	f.P(" WithRawResponse: ", rawClientConstructorName, "(opts...),")
 	f.P(`baseURL: options.BaseURL,`)
 	f.P("caller: internal.NewCaller(")
 	f.P("&internal.CallerParams{")
