@@ -51,7 +51,7 @@ export async function loadSingleNamespaceAPIWorkspace({
             // if the target is empty, don't specify a target because we are using 'strategy: all' from the root
             const absoluteFilepathToTarget: AbsoluteFilePath =
                 definition.schema.target.length === 0
-                    ? "" as AbsoluteFilePath
+                    ? ("" as AbsoluteFilePath)
                     : join(absolutePathToWorkspace, RelativeFilePath.of(definition.schema.target));
 
             if (definition.schema.target.length > 0) {
@@ -81,8 +81,7 @@ export async function loadSingleNamespaceAPIWorkspace({
                     shouldUseUndiscriminatedUnionsWithLiterals:
                         definition.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false,
                     shouldUseIdiomaticRequestNames: definition.settings?.shouldUseIdiomaticRequestNames ?? false,
-                    optionalAdditionalProperties:
-                        definition.settings?.shouldUseOptionalAdditionalProperties ?? true,
+                    optionalAdditionalProperties: definition.settings?.shouldUseOptionalAdditionalProperties ?? true,
                     coerceEnumsToLiterals: definition.settings?.coerceEnumsToLiterals ?? true,
                     objectQueryParameters: definition.settings?.objectQueryParameters ?? false,
                     respectReadonlySchemas: definition.settings?.respectReadonlySchemas ?? false,
@@ -268,8 +267,12 @@ export async function loadAPIWorkspace({
             didSucceed: true,
             workspace: new OSSWorkspace({
                 specs: specs.filter((spec) => {
-                    if (spec.type === "openrpc") {return false;}
-                    if (spec.type === "protobuf" && spec.generateDocs) {return false;}
+                    if (spec.type === "openrpc") {
+                        return false;
+                    }
+                    if (spec.type === "protobuf" && spec.generateDocs) {
+                        return false;
+                    }
                     return true;
                 }) as (OpenAPISpec | ProtobufSpec)[],
                 allSpecs: specs,

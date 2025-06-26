@@ -6,7 +6,15 @@ import { AbsoluteFilePath, RelativeFilePath, cwd, join, resolve } from "@fern-ap
 import { createLoggingExecutable } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
 
-import { PROTOBUF_GEN_CONFIG, PROTOBUF_GENERATOR_CONFIG_FILENAME, PROTOBUF_GENERATOR_OUTPUT_FILEPATH, PROTOBUF_MODULE_PACKAGE_JSON, PROTOBUF_SHELL_PROXY, PROTOBUF_SHELL_PROXY_FILENAME, createEmptyProtobufLogger } from "./utils";
+import {
+    PROTOBUF_GENERATOR_CONFIG_FILENAME,
+    PROTOBUF_GENERATOR_OUTPUT_FILEPATH,
+    PROTOBUF_GEN_CONFIG,
+    PROTOBUF_MODULE_PACKAGE_JSON,
+    PROTOBUF_SHELL_PROXY,
+    PROTOBUF_SHELL_PROXY_FILENAME,
+    createEmptyProtobufLogger
+} from "./utils";
 
 export class ProtobufIRGenerator {
     private context: TaskContext;
@@ -84,11 +92,7 @@ export class ProtobufIRGenerator {
         return protobufGeneratorConfigPath;
     }
 
-    private async doGenerateLocal({
-        cwd
-    }: {
-        cwd: AbsoluteFilePath;
-    }): Promise<AbsoluteFilePath> {
+    private async doGenerateLocal({ cwd }: { cwd: AbsoluteFilePath }): Promise<AbsoluteFilePath> {
         const which = createLoggingExecutable("which", {
             cwd,
             logger: createEmptyProtobufLogger()

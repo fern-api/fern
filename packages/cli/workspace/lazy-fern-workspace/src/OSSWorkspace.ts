@@ -17,6 +17,7 @@ import { Audiences } from "@fern-api/configuration";
 import { isNonNullish } from "@fern-api/core-utils";
 import { AbsoluteFilePath, RelativeFilePath, cwd, doesPathExist, join, relativize } from "@fern-api/fs-utils";
 import { IntermediateRepresentation, serialization } from "@fern-api/ir-sdk";
+import { MaybeValid } from "@fern-api/ir-sdk/src/sdk/core/schemas/Schema";
 import { mergeIntermediateRepresentation } from "@fern-api/ir-utils";
 import { createLoggingExecutable } from "@fern-api/logging-execa";
 import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
@@ -25,8 +26,6 @@ import { OpenAPI3_1Converter, OpenAPIConverterContext3_1 } from "@fern-api/opena
 import { OpenRPCConverter, OpenRPCConverterContext3_1 } from "@fern-api/openrpc-to-ir";
 import { TaskContext } from "@fern-api/task-context";
 import { ErrorCollector } from "@fern-api/v2-importer-commons";
-
-import { MaybeValid } from "@fern-api/ir-sdk/src/sdk/core/schemas/Schema";
 
 import { constructCasingsGenerator } from "../../../../commons/casings-generator/src/CasingsGenerator";
 import { loadOpenRpc } from "./loaders";
@@ -289,10 +288,10 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                                     mergedIr === undefined
                                         ? serializedIr.value
                                         : mergeIntermediateRepresentation(
-                                            mergedIr,
-                                            serializedIr.value,
-                                            casingsGenerator
-                                    );
+                                              mergedIr,
+                                              serializedIr.value,
+                                              casingsGenerator
+                                          );
                             } else {
                                 throw new Error();
                             }
