@@ -67,7 +67,7 @@ public final class ReferenceType {
 
     public interface FooStage {
         /**
-         * lorem ipsum
+         * <p>lorem ipsum</p>
          */
         _FinalStage foo(@NotNull String foo);
 
@@ -94,7 +94,8 @@ public final class ReferenceType {
         }
 
         /**
-         * lorem ipsum<p>lorem ipsum</p>
+         * <p>lorem ipsum</p>
+         * <p>lorem ipsum</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override

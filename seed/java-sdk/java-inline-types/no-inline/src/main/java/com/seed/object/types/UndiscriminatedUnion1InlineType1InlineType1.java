@@ -80,7 +80,7 @@ public final class UndiscriminatedUnion1InlineType1InlineType1 {
 
     public interface FooStage {
         /**
-         * lorem ipsum
+         * <p>lorem ipsum</p>
          */
         RefStage foo(@NotNull String foo);
 
@@ -89,7 +89,7 @@ public final class UndiscriminatedUnion1InlineType1InlineType1 {
 
     public interface RefStage {
         /**
-         * lorem ipsum
+         * <p>lorem ipsum</p>
          */
         _FinalStage ref(@NotNull ReferenceType ref);
     }
@@ -117,7 +117,8 @@ public final class UndiscriminatedUnion1InlineType1InlineType1 {
         }
 
         /**
-         * lorem ipsum<p>lorem ipsum</p>
+         * <p>lorem ipsum</p>
+         * <p>lorem ipsum</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -128,7 +129,8 @@ public final class UndiscriminatedUnion1InlineType1InlineType1 {
         }
 
         /**
-         * lorem ipsum<p>lorem ipsum</p>
+         * <p>lorem ipsum</p>
+         * <p>lorem ipsum</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
