@@ -272,24 +272,27 @@ export class ExampleEndpointFactory {
 
         // Add global headers to examples
         for (const globalHeader of this.globalHeaders) {
-            const schema = globalHeader.schema != null ? convertSchemaToSchemaWithExample(globalHeader.schema) : SchemaWithExample.primitive({
-                nameOverride: undefined,
-                generatedName: "",
-                title: undefined,
-                description: undefined,
-                availability: undefined,
-                namespace: undefined,
-                groupName: undefined,
-                schema: PrimitiveSchemaValueWithExample.string({
-                    default: undefined,
-                    pattern: undefined,
-                    maxLength: undefined,
-                    minLength: undefined,
-                    example: undefined,
-                    format: undefined
-                })
-            });
-            
+            const schema =
+                globalHeader.schema != null
+                    ? convertSchemaToSchemaWithExample(globalHeader.schema)
+                    : SchemaWithExample.primitive({
+                          nameOverride: undefined,
+                          generatedName: "",
+                          title: undefined,
+                          description: undefined,
+                          availability: undefined,
+                          namespace: undefined,
+                          groupName: undefined,
+                          schema: PrimitiveSchemaValueWithExample.string({
+                              default: undefined,
+                              pattern: undefined,
+                              maxLength: undefined,
+                              minLength: undefined,
+                              example: undefined,
+                              format: undefined
+                          })
+                      });
+
             let example = this.exampleTypeFactory.buildExample({
                 schema,
                 exampleId: undefined,
@@ -300,7 +303,7 @@ export class ExampleEndpointFactory {
                     ignoreOptionals: true
                 }
             });
-            
+
             if (example != null && !isExamplePrimitive(example)) {
                 this.logger.warn(
                     `Expected a primitive example but got ${example.type} for global header ${
