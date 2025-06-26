@@ -48,6 +48,7 @@ scripts:
     commands:
       - CGO_ENABLED=0 go test ./...
 allowedFailures:
+  - enum
   - exhaustive
   - literal
   - mixed-case

@@ -17,7 +17,7 @@ import (
     v2 "github.com/fern-api/stream-go/v2"
 )
 
-func do() () {
+func do() {
     client := client.NewClient()
     client.Dummy.GenerateStream(
         context.TODO(),
@@ -86,6 +86,19 @@ response, err := client.Dummy.GenerateStream(
 ```
 
 ## Advanced
+
+### Response Headers
+
+You can access the raw HTTP response data by using the `WithRawResponse` field on the client. This is useful
+when you need to examine the response headers received from the API call.
+
+```go
+response, err := client.Dummy.WithRawResponse.GenerateStream(...)
+if err != nil {
+    return err
+}
+fmt.Printf("Got response headers: %v", response.Header)
+```
 
 ### Retries
 
