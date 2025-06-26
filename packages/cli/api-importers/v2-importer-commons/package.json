@@ -36,6 +36,7 @@
     "@fern-api/ir-sdk": "workspace:*",
     "@fern-api/ir-utils": "workspace:*",
     "@fern-api/logger": "workspace:*",
+    "heap-js": "^2.6.0",
     "js-yaml": "^4.1.0",
     "js-yaml-source-map": "^0.2.2",
     "lodash-es": "^4.17.21",

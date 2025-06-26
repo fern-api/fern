@@ -1,4 +1,5 @@
 import levenshtein from "fast-levenshtein";
+import { Heap } from "heap-js";
 
 /**
  * Returns the numNeighbors nearest lexical neighbors to the target string from the set of neighbors.
@@ -15,11 +16,43 @@ export function getLexicallyNearestNeighbors(
         return [];
     }
     const norm = normalize ?? ((s: string) => s);
-    return Array.from(neighbors)
-        .map((neighbor) => {
-            return { neighbor, distance: levenshtein.get(norm(target), norm(neighbor)) };
-        })
-        .sort((a, b) => a.distance - b.distance || a.neighbor.localeCompare(b.neighbor))
-        .slice(0, numNeighbors)
-        .map((entry) => entry.neighbor);
+    // Max-heap: worst neighbor at the top
+    const maxHeap = new Heap<{ neighbor: string; distance: number }>(maxHeapComparator);
+    for (const neighbor of neighbors) {
+        const distance = levenshtein.get(norm(target), norm(neighbor));
+        maxHeap.push({ neighbor, distance });
+        if (maxHeap.size() > numNeighbors) {
+            maxHeap.pop(); // Remove the worst
+        }
+    }
+
+    return heapToSortedArray(maxHeap)
+        .reverse()
+        .map((item) => item.neighbor);
+}
+
+/**
+ * Comparator for the max-heap: sorts by distance (descending), then lexicographically (descending).
+ * This ensures the "worst" neighbor is at the top of the heap.
+ */
+function maxHeapComparator(
+    a: { neighbor: string; distance: number },
+    b: { neighbor: string; distance: number }
+): number {
+    if (a.distance !== b.distance) {
+        return b.distance - a.distance;
+    }
+    return b.neighbor.localeCompare(a.neighbor);
+}
+
+function heapToSortedArray<T>(heap: Heap<T>) {
+    const result: Array<T> = [];
+    while (heap.size() > 0) {
+        // Each pop() removes the current "worst", so we build the array in reverse order of "goodness"
+        const item = heap.pop();
+        if (item) {
+            result.push(item);
+        }
+    }
+    return result;
 }
