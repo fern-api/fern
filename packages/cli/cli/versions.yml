@@ -1,6 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Global headers are now used to create endpoint examples. When building endpoint examples, global headers 
+        are automatically included in the headers section of each example. This ensures that all endpoints have consistent 
+        header examples that match the global header configuration.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-06-25"
+  version: 0.64.23
+
+- changelogEntry:
+    - summary: |
         Make proto file target field optional in generators.yml
       type: feat
   irVersion: 58
