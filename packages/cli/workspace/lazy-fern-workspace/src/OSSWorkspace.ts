@@ -17,7 +17,6 @@ import { Audiences } from "@fern-api/configuration";
 import { isNonNullish } from "@fern-api/core-utils";
 import { AbsoluteFilePath, RelativeFilePath, cwd, doesPathExist, join, relativize } from "@fern-api/fs-utils";
 import { IntermediateRepresentation, serialization } from "@fern-api/ir-sdk";
-import { MaybeValid } from "./protobuf/utils";
 import { mergeIntermediateRepresentation } from "@fern-api/ir-utils";
 import { createLoggingExecutable } from "@fern-api/logging-execa";
 import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
@@ -31,6 +30,7 @@ import { constructCasingsGenerator } from "../../../../commons/casings-generator
 import { loadOpenRpc } from "./loaders";
 import { OpenAPILoader } from "./loaders/OpenAPILoader";
 import { ProtobufIRGenerator } from "./protobuf/ProtobufIRGenerator";
+import { MaybeValid } from "./protobuf/utils";
 import { getAllOpenAPISpecs } from "./utils/getAllOpenAPISpecs";
 
 export declare namespace OSSWorkspace {
@@ -282,7 +282,10 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                     if (result != null) {
                         let serializedIr: MaybeValid<IntermediateRepresentation>;
                         try {
-                            serializedIr = serialization.IntermediateRepresentation.parse(JSON.parse(result));
+                            serializedIr = serialization.IntermediateRepresentation.parse(JSON.parse(result), {
+                                allowUnrecognizedEnumValues: true,
+                                skipValidation: true
+                            });
                             if (serializedIr.ok) {
                                 mergedIr =
                                     mergedIr === undefined
@@ -296,11 +299,11 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                                 throw new Error();
                             }
                         } catch (error) {
-                            context.logger.log("error", "Failed to parse protobuf IR");
+                            context.logger.log("error", "Failed to parse protobuf IR: ");
                         }
                     }
                 } catch (error) {
-                    context.logger.log("warn", "Failed to parse protobuf IR");
+                    context.logger.log("warn", "Failed to parse protobuf IR: " + error);
                     // Continue processing other specs even if protobuf generation fails
                 }
             }

@@ -58,12 +58,22 @@ export function generateIr({ req, options }: { req: CodeGeneratorRequest; option
         }
     }
 
-    const serializedIr = serialization.IntermediateRepresentation.json(mergedIr);
+    const serializedIr = serialization.IntermediateRepresentation.json(mergedIr, {
+        allowUnrecognizedEnumValues: true,
+        skipValidation: true
+    });
 
-    return {
-        name: "ir.json",
-        content: JSON.stringify(serializedIr, null, 2)
-    };
+    if (serializedIr.ok) {
+        return {
+            name: "ir.json",
+            content: JSON.stringify(serializedIr.value, null, 2)
+        };
+    } else {
+        return {
+            name: "ir.json",
+            content: JSON.stringify(serializedIr.errors, null, 2)
+        };
+    }
 }
 
 function getPrintableFromMessage(message: DescMessage): Printable {

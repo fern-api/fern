@@ -27,10 +27,10 @@ export class EnumConverter extends AbstractConverter<ProtofileConverterContext, 
         const values = this.enum.value.map((value) => {
             const name = value.name;
             return {
-                name: this.context.casingsGenerator.generateNameAndWireValue({
-                    name,
+                name: {
+                    name: this.context.casingsGenerator.generateName(name),
                     wireValue: name
-                }),
+                },
                 docs: undefined,
                 availability: undefined
             };
