@@ -29,7 +29,7 @@ func NewServiceClient(opts ...option.RequestOption) *ServiceClient {
 			},
 		),
 		header:          options.ToHeader(),
-		WithRawResponse: NewRawServiceClient(opts...),
+		WithRawResponse: NewRawServiceClient(options),
 	}
 }
 

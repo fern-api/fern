@@ -3,7 +3,6 @@ package completions
 import (
 	core "github.com/server-sent-event-examples/fern/core"
 	internal "github.com/server-sent-event-examples/fern/internal"
-	option "github.com/server-sent-event-examples/fern/option"
 	http "net/http"
 )
 
@@ -13,8 +12,7 @@ type RawClient struct {
 	header  http.Header
 }
 
-func NewRawClient(opts ...option.RequestOption) *RawClient {
-	options := core.NewRequestOptions(opts...)
+func NewRawClient(options *core.RequestOptions) *RawClient {
 	return &RawClient{
 		baseURL: options.BaseURL,
 		caller: internal.NewCaller(

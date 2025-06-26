@@ -3,7 +3,6 @@ package complex
 import (
 	core "github.com/pagination/fern/core"
 	internal "github.com/pagination/fern/internal"
-	option "github.com/pagination/fern/option"
 	http "net/http"
 )
 
@@ -13,8 +12,7 @@ type RawClient struct {
 	header  http.Header
 }
 
-func NewRawClient(opts ...option.RequestOption) *RawClient {
-	options := core.NewRequestOptions(opts...)
+func NewRawClient(options *core.RequestOptions) *RawClient {
 	return &RawClient{
 		baseURL: options.BaseURL,
 		caller: internal.NewCaller(

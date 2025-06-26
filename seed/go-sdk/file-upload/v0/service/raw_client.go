@@ -3,7 +3,6 @@ package service
 import (
 	core "github.com/file-upload/fern/core"
 	internal "github.com/file-upload/fern/internal"
-	option "github.com/file-upload/fern/option"
 	http "net/http"
 )
 
@@ -13,8 +12,7 @@ type RawClient struct {
 	header  http.Header
 }
 
-func NewRawClient(opts ...option.RequestOption) *RawClient {
-	options := core.NewRequestOptions(opts...)
+func NewRawClient(options *core.RequestOptions) *RawClient {
 	return &RawClient{
 		baseURL: options.BaseURL,
 		caller: internal.NewCaller(

@@ -30,7 +30,7 @@ func New(opts ...option.RequestOption) *Acme {
 			},
 		),
 		header:          options.ToHeader(),
-		WithRawResponse: NewRawAcme(opts...),
+		WithRawResponse: NewRawAcme(options),
 		Service:         NewServiceClient(opts...),
 	}
 }

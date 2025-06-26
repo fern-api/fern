@@ -31,7 +31,7 @@ func NewImdbClient(opts ...option.RequestOption) *ImdbClient {
 			},
 		),
 		header:          options.ToHeader(),
-		WithRawResponse: NewRawImdbClient(opts...),
+		WithRawResponse: NewRawImdbClient(options),
 	}
 }
 

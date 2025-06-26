@@ -1034,7 +1034,7 @@ func (f *fileWriter) WriteClient(
 	f.P("),")
 	f.P("header: options.ToHeader(),")
 	if len(endpoints) > 0 {
-		f.P(" WithRawResponse: ", rawClientConstructorName, "(opts...),")
+		f.P(" WithRawResponse: ", rawClientConstructorName, "(options),")
 	}
 	for _, subpackage := range subpackages {
 		if packageLayout == PackageLayoutFlat {

@@ -14,8 +14,7 @@ type RawImdbClient struct {
 	header  http.Header
 }
 
-func NewRawImdbClient(opts ...option.RequestOption) *RawImdbClient {
-	options := core.NewRequestOptions(opts...)
+func NewRawImdbClient(options *core.RequestOptions) *RawImdbClient {
 	return &RawImdbClient{
 		baseURL: options.BaseURL,
 		caller: internal.NewCaller(

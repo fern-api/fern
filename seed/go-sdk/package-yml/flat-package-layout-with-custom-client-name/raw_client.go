@@ -14,8 +14,7 @@ type RawAcme struct {
 	header  http.Header
 }
 
-func NewRawAcme(opts ...option.RequestOption) *RawAcme {
-	options := core.NewRequestOptions(opts...)
+func NewRawAcme(options *core.RequestOptions) *RawAcme {
 	return &RawAcme{
 		baseURL: options.BaseURL,
 		caller: internal.NewCaller(

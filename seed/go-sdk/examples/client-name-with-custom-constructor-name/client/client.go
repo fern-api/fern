@@ -36,7 +36,7 @@ func New(opts ...option.RequestOption) *Acme {
 			},
 		),
 		header:          options.ToHeader(),
-		WithRawResponse: NewRawAcme(opts...),
+		WithRawResponse: NewRawAcme(options),
 		File:            fileclient.NewClient(opts...),
 		Health:          healthclient.NewClient(opts...),
 		Service:         service.NewClient(opts...),

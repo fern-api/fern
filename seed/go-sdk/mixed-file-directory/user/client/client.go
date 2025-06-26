@@ -32,7 +32,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 			},
 		),
 		header:          options.ToHeader(),
-		WithRawResponse: NewRawClient(opts...),
+		WithRawResponse: NewRawClient(options),
 		Events:          eventsclient.NewClient(opts...),
 	}
 }

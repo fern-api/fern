@@ -75,14 +75,11 @@ export class RawClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSch
         return {
             parameters: [
                 go.parameter({
-                    name: "opts",
-                    type: this.context.getVariadicRequestOptionType()
+                    name: "options",
+                    type: this.context.getRequestOptionsType()
                 })
             ],
             body: go.codeblock((writer) => {
-                writer.write("options := ");
-                writer.writeNode(this.context.callNewRequestOptions(go.codeblock("opts...")));
-                writer.newLine();
                 writer.write("return ");
                 writer.writeNode(
                     go.TypeInstantiation.structPointer({

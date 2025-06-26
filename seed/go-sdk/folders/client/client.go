@@ -33,7 +33,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 			},
 		),
 		header:          options.ToHeader(),
-		WithRawResponse: NewRawClient(opts...),
+		WithRawResponse: NewRawClient(options),
 		A:               aclient.NewClient(opts...),
 		Folder:          folderclient.NewClient(opts...),
 	}

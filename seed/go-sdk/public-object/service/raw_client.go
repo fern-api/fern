@@ -16,8 +16,7 @@ type RawClient struct {
 	header  http.Header
 }
 
-func NewRawClient(opts ...option.RequestOption) *RawClient {
-	options := core.NewRequestOptions(opts...)
+func NewRawClient(options *core.RequestOptions) *RawClient {
 	return &RawClient{
 		baseURL: options.BaseURL,
 		caller: internal.NewCaller(
