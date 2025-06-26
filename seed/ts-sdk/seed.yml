@@ -165,6 +165,13 @@ fixtures:
     - outputFolder: web-stream-wrapper
       customConfig:
         streamType: "web"
+    - customConfig:
+        fileResponseType: "binary-response"
+      outputFolder: binary-response
+    - customConfig:
+        streamType: "web"
+        fileResponseType: "binary-response"
+      outputFolder: binary-response-web-stream-wrapper
   file-upload:
     - customConfig: null
       outputFolder: no-custom-config
@@ -260,14 +267,15 @@ fixtures:
         retainOriginalCasing: true
       outputFolder: inline-path-parameters-retain-original-casing
   websocket:
-    - outputFolder: websocket-base
+    - outputFolder: no-websocket-clients
     - customConfig:
         noSerdeLayer: false
         shouldGenerateWebsocketClients: true
-      outputFolder: websocket-serde
+      outputFolder: serde
     - customConfig:
+        noSerdeLayer: true
         shouldGenerateWebsocketClients: true
-      outputFolder: websocket-with-serde
+      outputFolder: no-serde
 scripts:
   - docker: fernapi/ts-seed
     commands:

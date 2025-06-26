@@ -7,7 +7,7 @@ groups:
       - generators-yml
     generators:
       - name: fernapi/fern-typescript-node-sdk
-        version: 0.51.4
+        version: 0.48.5
         output:
           location: local-file-system
           path: ../../../packages/cli/configuration/src/generators-yml/schemas

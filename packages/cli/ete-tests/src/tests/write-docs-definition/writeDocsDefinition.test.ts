@@ -8,7 +8,9 @@ import { runFernCli } from "../../utils/runFernCli";
 const FIXTURES_DIR = path.join(__dirname, "fixtures");
 
 describe("write-docs-definition", () => {
+    // eslint-disable-next-line jest/no-disabled-tests
     it.skip("petstore", () => testFixture("petstore"), 10_000);
+    // eslint-disable-next-line jest/no-disabled-tests
     it.skip("products-with-versions", () => testFixture("products-with-versions"), 10_000);
 });
 

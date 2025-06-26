@@ -128,7 +128,7 @@ public final class ExecutionSessionState {
 
     public interface SessionIdStage {
         /**
-         * The auto-generated session id. Formatted as a uuid.
+         * <p>The auto-generated session id. Formatted as a uuid.</p>
          */
         IsWarmInstanceStage sessionId(@NotNull String sessionId);
 
@@ -191,7 +191,8 @@ public final class ExecutionSessionState {
         }
 
         /**
-         * The auto-generated session id. Formatted as a uuid.<p>The auto-generated session id. Formatted as a uuid.</p>
+         * <p>The auto-generated session id. Formatted as a uuid.</p>
+         * <p>The auto-generated session id. Formatted as a uuid.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override

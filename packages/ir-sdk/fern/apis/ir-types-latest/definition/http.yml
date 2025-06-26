@@ -1,6 +1,7 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
 imports:
+  audience: audience.yml
   commons: commons.yml
   environment: environment.yml
   errors: errors.yml
@@ -21,6 +22,7 @@ types:
       pathParameters: list<PathParameter>
       encoding: optional<types.Encoding>
       transport: optional<Transport>
+      audiences: optional<list<audience.AudienceReference>>
 
   DeclaredServiceName:
     properties:
@@ -65,6 +67,7 @@ types:
       v2Examples: optional<examples.V2HttpEndpointExamples>
       transport: optional<Transport>
       source: optional<HttpEndpointSource>
+      audiences: optional<list<audience.AudienceReference>>
 
   HttpEndpointSource:
     union:

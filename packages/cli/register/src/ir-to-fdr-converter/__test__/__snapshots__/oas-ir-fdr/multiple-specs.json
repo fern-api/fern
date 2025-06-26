@@ -259,7 +259,7 @@
                       "value": "UploadWithContentTypePostRequestBodyContentMultipartFormDataSchemaMetadata"
                     }
                   },
-                  "contentType": "multipart/form-data",
+                  "contentType": "application/json",
                   "description": "This is a metadata field",
                   "exploded": false
                 },

@@ -2795,9 +2795,13 @@
                     "transport": null,
                     "v2Examples": null,
                     "source": null,
+                    "audiences": null,
                     "availability": null,
                     "docs": null
                 }
+            ],
+            "audiences": [
+                "public"
             ]
         },
         "service_folder-d/service": {
@@ -3350,9 +3354,13 @@
                     "transport": null,
                     "v2Examples": null,
                     "source": null,
+                    "audiences": null,
                     "availability": null,
                     "docs": null
                 }
+            ],
+            "audiences": [
+                "partner"
             ]
         },
         "service_foo": {
@@ -4207,10 +4215,15 @@
                     "transport": null,
                     "v2Examples": null,
                     "source": null,
+                    "audiences": [
+                        "public",
+                        "private"
+                    ],
                     "availability": null,
                     "docs": null
                 }
-            ]
+            ],
+            "audiences": null
         }
     },
     "constants": {
@@ -5799,6 +5812,11 @@
         },
         "generatorConfig": null
     },
+    "audiences": [
+        "public",
+        "private",
+        "partner"
+    ],
     "subpackages": {
         "subpackage_commons": {
             "name": {

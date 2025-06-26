@@ -6132,6 +6132,7 @@
         "environments": null,
         "generatorConfig": null
     },
+    "audiences": null,
     "subpackages": {
         "subpackage_a": {
             "name": {

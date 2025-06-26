@@ -20,6 +20,9 @@ class SeedAuthEnvironmentVariables:
 
     x_another_header : typing.Optional[str]
     api_key : typing.Optional[str]
+    headers : typing.Optional[typing.Dict[str, str]]
+        Additional headers to send with every request.
+
     timeout : typing.Optional[float]
         The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
 
@@ -47,6 +50,7 @@ class SeedAuthEnvironmentVariables:
         base_url: str,
         x_another_header: typing.Optional[str] = os.getenv("ANOTHER_ENV_VAR"),
         api_key: typing.Optional[str] = os.getenv("FERN_API_KEY"),
+        headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
@@ -65,6 +69,7 @@ class SeedAuthEnvironmentVariables:
             base_url=base_url,
             x_another_header=x_another_header,
             api_key=api_key,
+            headers=headers,
             httpx_client=httpx_client
             if httpx_client is not None
             else httpx.Client(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
@@ -87,6 +92,9 @@ class AsyncSeedAuthEnvironmentVariables:
 
     x_another_header : typing.Optional[str]
     api_key : typing.Optional[str]
+    headers : typing.Optional[typing.Dict[str, str]]
+        Additional headers to send with every request.
+
     timeout : typing.Optional[float]
         The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
 
@@ -114,6 +122,7 @@ class AsyncSeedAuthEnvironmentVariables:
         base_url: str,
         x_another_header: typing.Optional[str] = os.getenv("ANOTHER_ENV_VAR"),
         api_key: typing.Optional[str] = os.getenv("FERN_API_KEY"),
+        headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
@@ -132,6 +141,7 @@ class AsyncSeedAuthEnvironmentVariables:
             base_url=base_url,
             x_another_header=x_another_header,
             api_key=api_key,
+            headers=headers,
             httpx_client=httpx_client
             if httpx_client is not None
             else httpx.AsyncClient(timeout=_defaulted_timeout, follow_redirects=follow_redirects)

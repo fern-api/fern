@@ -104,7 +104,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     public shouldUseDiscriminatedUnions(): boolean {
-        return this.customConfig?.["use-discriminated-unions"] ?? false;
+        return this.customConfig?.["use-discriminated-unions"] ?? true;
     }
 
     public getRootClientClassName(): string {

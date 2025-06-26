@@ -171,6 +171,42 @@ components:
       enum:
         - safe
         - Custom
+    SpecialEnum:
+      title: SpecialEnum
+      type: string
+      enum:
+        - ''
+        - Hello \"World\"
+        - Hello 'World'
+        - Hello\\World
+        - Hello\nWorld
+        - Hello\rWorld
+        - Hello\tWorld
+        - Hello\fWorld
+        - Hello\u0008World
+        - Hello\vWorld
+        - Hello\0World
+        - Hello\u0007World
+        - Hello\u0001World
+        - Hello\u0002World
+        - Hello\u001FWorld
+        - Hello\u007FWorld
+        - Hello\u009FWorld
+        - Line 1\n"Quote"\tTab\\Backslash\r\nLine 2\0Null
+        - \n\r\t\0\u0008\f\v\u0007
+        - Hello 世界
+        - café
+        - 🚀
+        - \\n
+        - \\
+        - '{"name": "John", "age": 30, "city": "New York"}'
+        - SELECT * FROM users WHERE name = 'John O\\'Reilly'
+        - C:\\Users\\John\\Documents\\file.txt
+        - /usr/local/bin/app
+        - \\d{3}-\\d{2}-\\d{4}
+        - '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}'
+        - transcript[transcriptType="final"]
+        - transcript[transcriptType='final']
     Status:
       title: Status
       type: string

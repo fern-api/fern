@@ -513,6 +513,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_auth.get-token",
           "name": {
             "originalName": "get-token",

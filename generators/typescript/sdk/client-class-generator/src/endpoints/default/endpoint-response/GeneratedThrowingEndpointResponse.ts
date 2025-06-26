@@ -46,6 +46,7 @@ export declare namespace GeneratedThrowingEndpointResponse {
         includeContentHeadersOnResponse: boolean;
         clientClass: GeneratedSdkClientClassImpl;
         streamType: "wrapper" | "web";
+        fileResponseType: "stream" | "binary-response";
     }
 }
 
@@ -65,6 +66,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
     private includeContentHeadersOnResponse: boolean;
     private clientClass: GeneratedSdkClientClassImpl;
     private streamType: "wrapper" | "web";
+    private readonly fileResponseType: "stream" | "binary-response";
 
     constructor({
         packageId,
@@ -74,7 +76,8 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         errorResolver,
         includeContentHeadersOnResponse,
         clientClass,
-        streamType
+        streamType,
+        fileResponseType
     }: GeneratedThrowingEndpointResponse.Init) {
         this.packageId = packageId;
         this.endpoint = endpoint;
@@ -84,6 +87,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         this.includeContentHeadersOnResponse = includeContentHeadersOnResponse;
         this.clientClass = clientClass;
         this.streamType = streamType;
+        this.fileResponseType = fileResponseType;
     }
 
     private getItemTypeFromListOrOptionalList(typeReference: TypeReference): TypeReference | undefined {
@@ -102,7 +106,8 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
     public getPaginationInfo(context: SdkContext): PaginationResponseInfo | undefined {
         const successReturnType = getSuccessReturnType(this.endpoint, this.response, context, {
             includeContentHeadersOnResponse: this.includeContentHeadersOnResponse,
-            streamType: this.streamType
+            streamType: this.streamType,
+            fileResponseType: this.fileResponseType
         });
 
         if (this.endpoint.pagination != null) {
@@ -441,7 +446,8 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
     public getReturnType(context: SdkContext): ts.TypeNode {
         return getSuccessReturnType(this.endpoint, this.response, context, {
             includeContentHeadersOnResponse: this.includeContentHeadersOnResponse,
-            streamType: this.streamType
+            streamType: this.streamType,
+            fileResponseType: this.fileResponseType
         });
     }
 

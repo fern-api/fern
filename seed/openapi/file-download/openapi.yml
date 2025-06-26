@@ -3,6 +3,15 @@ info:
   title: file-download
   version: ''
 paths:
+  /snippet:
+    post:
+      operationId: service_simple
+      tags:
+        - Service
+      parameters: []
+      responses:
+        '204':
+          description: ''
   /:
     post:
       operationId: service_downloadFile

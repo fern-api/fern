@@ -10,7 +10,7 @@ export const ProtobufDefinitionSchema: core.serialization.ObjectSchema<
     serializers.ProtobufDefinitionSchema.Raw,
     FernDefinition.ProtobufDefinitionSchema
 > = core.serialization.object({
-    target: core.serialization.string(),
+    target: core.serialization.string().optional(),
     root: core.serialization.string(),
     overrides: core.serialization.string().optional(),
     "local-generation": core.serialization.boolean().optional(),
@@ -18,7 +18,7 @@ export const ProtobufDefinitionSchema: core.serialization.ObjectSchema<
 
 export declare namespace ProtobufDefinitionSchema {
     export interface Raw {
-        target: string;
+        target?: string | null;
         root: string;
         overrides?: string | null;
         "local-generation"?: boolean | null;

@@ -12726,20 +12726,6 @@
                           },
                           "type": "primitive"
                         },
-                        "createdOn": {
-                          "value": {
-                            "value": "2023-05-18",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "postedOn": {
-                          "value": {
-                            "value": "2023-05-18",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
                         "amount": {
                           "value": {
                             "value": "0.00",
@@ -12822,20 +12808,6 @@
                         "occurredOn": {
                           "value": {
                             "value": "2023-06-18",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "createdOn": {
-                          "value": {
-                            "value": "2023-05-18",
-                            "type": "string"
-                          },
-                          "type": "primitive"
-                        },
-                        "postedOn": {
-                          "value": {
-                            "value": "2023-05-18",
                             "type": "string"
                           },
                           "type": "primitive"

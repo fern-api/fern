@@ -17,21 +17,15 @@ public class Example20
             new GetDefaultStarterFilesRequest{
                 InputParams = new List<VariableTypeAndName>(){
                     new VariableTypeAndName{
-                        VariableType = new Dictionary<string, object>() {
-                            ["type"] = "integerType",
-                        },
+                        VariableType = new VariableType(),
                         Name = "name"
                     },
                     new VariableTypeAndName{
-                        VariableType = new Dictionary<string, object>() {
-                            ["type"] = "integerType",
-                        },
+                        VariableType = new VariableType(),
                         Name = "name"
                     },
                 },
-                OutputType = new Dictionary<string, object>() {
-                    ["type"] = "integerType",
-                },
+                OutputType = new VariableType(),
                 MethodName = "methodName"
             }
         );

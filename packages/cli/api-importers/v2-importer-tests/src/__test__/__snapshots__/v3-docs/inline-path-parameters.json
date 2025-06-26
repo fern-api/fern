@@ -423,6 +423,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.GetUser",
           "name": {
             "originalName": "GetUser",
@@ -700,6 +701,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.GetOrganizationUser",
           "name": {
             "originalName": "GetOrganizationUser",
@@ -1042,6 +1044,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_organizations.Search",
           "name": {
             "originalName": "Search",

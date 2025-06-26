@@ -402,6 +402,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.getVndFernUserJsonVersion1",
           "name": {
             "originalName": "getVndFernUserJsonVersion1",
@@ -739,6 +740,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.getApplicationJson",
           "name": {
             "originalName": "getApplicationJson",

@@ -74655,6 +74655,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_nftOwnershipEndpoints.getNFTsForOwner-v3",
           "name": {
             "originalName": "getNFTsForOwner-v3",
@@ -75614,6 +75615,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_nftOwnershipEndpoints.getOwnersForNFT-v3",
           "name": {
             "originalName": "getOwnersForNFT-v3",
@@ -75973,6 +75975,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_nftOwnershipEndpoints.getOwnersForContract-v3",
           "name": {
             "originalName": "getOwnersForContract-v3",
@@ -76292,6 +76295,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_nftOwnershipEndpoints.isHolderOfContract-v3",
           "name": {
             "originalName": "isHolderOfContract-v3",
@@ -76974,6 +76978,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_nftOwnershipEndpoints.getContractsForOwner-v3",
           "name": {
             "originalName": "getContractsForOwner-v3",
@@ -77675,6 +77680,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_nftOwnershipEndpoints.getCollectionsForOwner-v3",
           "name": {
             "originalName": "getCollectionsForOwner-v3",
@@ -78306,6 +78312,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_nftMetadataEndpoints.getNFTsForContract-v3",
           "name": {
             "originalName": "getNFTsForContract-v3",
@@ -78943,6 +78950,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_nftMetadataEndpoints.getNFTsForCollection-v3",
           "name": {
             "originalName": "getNFTsForCollection-v3",
@@ -79496,6 +79504,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_nftMetadataEndpoints.getNFTMetadata-v3",
           "name": {
             "originalName": "getNFTMetadata-v3",
@@ -79833,6 +79842,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_nftMetadataEndpoints.getNFTMetadataBatch-v3",
           "name": {
             "originalName": "getNFTMetadataBatch-v3",
@@ -80421,6 +80431,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_nftMetadataEndpoints.getContractMetadata-v3",
           "name": {
             "originalName": "getContractMetadata-v3",
@@ -80711,6 +80722,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_nftMetadataEndpoints.getCollectionMetadata-v3",
           "name": {
             "originalName": "getCollectionMetadata-v3",
@@ -80987,6 +80999,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_nftMetadataEndpoints.invalidateContract-v3",
           "name": {
             "originalName": "invalidateContract-v3",
@@ -81201,6 +81214,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_nftMetadataEndpoints.getContractMetadataBatch-v3",
           "name": {
             "originalName": "getContractMetadataBatch-v3",
@@ -81593,6 +81607,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_nftMetadataEndpoints.summarizeNFTAttributes-v3",
           "name": {
             "originalName": "summarizeNFTAttributes-v3",
@@ -82277,6 +82292,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_nftMetadataEndpoints.searchContractMetadata-v3",
           "name": {
             "originalName": "searchContractMetadata-v3",
@@ -82623,6 +82639,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_nftMetadataEndpoints.computeRarity-v3",
           "name": {
             "originalName": "computeRarity-v3",
@@ -82848,6 +82865,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_nftMetadataEndpoints.refreshNftMetadata-v3",
           "name": {
             "originalName": "refreshNftMetadata-v3",
@@ -83249,6 +83267,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_nftSpamEndpoints.getSpamContracts-v3",
           "name": {
             "originalName": "getSpamContracts-v3",
@@ -83510,6 +83529,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_nftSpamEndpoints.isSpamContract-v3",
           "name": {
             "originalName": "isSpamContract-v3",
@@ -83809,6 +83829,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_nftSpamEndpoints.isAirdropNFT-v3",
           "name": {
             "originalName": "isAirdropNFT-v3",
@@ -84066,6 +84087,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_nftSpamEndpoints.reportSpam-v3",
           "name": {
             "originalName": "reportSpam-v3",
@@ -84413,6 +84435,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_nftSalesEndpoints.getFloorPrice-v3",
           "name": {
             "originalName": "getFloorPrice-v3",
@@ -85225,6 +85248,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_nftSalesEndpoints.getNFTSales-v3",
           "name": {
             "originalName": "getNFTSales-v3",
@@ -86189,6 +86213,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_nftApiV2MethodsOlderVersion.getNFTs",
           "name": {
             "originalName": "getNFTs",
@@ -87168,6 +87193,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_nftApiV2MethodsOlderVersion.getNFTMetadata",
           "name": {
             "originalName": "getNFTMetadata",
@@ -87531,6 +87557,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_nftApiV2MethodsOlderVersion.getNFTMetadataBatch",
           "name": {
             "originalName": "getNFTMetadataBatch",
@@ -88145,6 +88172,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_nftApiV2MethodsOlderVersion.getContractMetadata",
           "name": {
             "originalName": "getContractMetadata",
@@ -88395,6 +88423,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_nftApiV2MethodsOlderVersion.getContractMetadataBatch",
           "name": {
             "originalName": "getContractMetadataBatch",
@@ -89063,6 +89092,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_nftApiV2MethodsOlderVersion.getNFTsForCollection",
           "name": {
             "originalName": "getNFTsForCollection",
@@ -89568,6 +89598,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_nftApiV2MethodsOlderVersion.getOwnersForToken",
           "name": {
             "originalName": "getOwnersForToken",
@@ -89925,6 +89956,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_nftApiV2MethodsOlderVersion.getOwnersForCollection",
           "name": {
             "originalName": "getOwnersForCollection",
@@ -90128,6 +90160,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_nftApiV2MethodsOlderVersion.getSpamContracts",
           "name": {
             "originalName": "getSpamContracts",
@@ -90389,6 +90422,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_nftApiV2MethodsOlderVersion.isSpamContract",
           "name": {
             "originalName": "isSpamContract",
@@ -90665,6 +90699,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_nftApiV2MethodsOlderVersion.isAirdrop",
           "name": {
             "originalName": "isAirdrop",
@@ -90899,6 +90934,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_nftApiV2MethodsOlderVersion.invalidateContract",
           "name": {
             "originalName": "invalidateContract",
@@ -91160,6 +91196,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_nftApiV2MethodsOlderVersion.getFloorPrice",
           "name": {
             "originalName": "getFloorPrice",
@@ -91474,6 +91511,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_nftApiV2MethodsOlderVersion.computeRarity",
           "name": {
             "originalName": "computeRarity",
@@ -91746,6 +91784,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_nftApiV2MethodsOlderVersion.searchContractMetadata",
           "name": {
             "originalName": "searchContractMetadata",
@@ -92053,6 +92092,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_nftApiV2MethodsOlderVersion.summarizeNFTAttributes",
           "name": {
             "originalName": "summarizeNFTAttributes",
@@ -92356,6 +92396,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_nftApiV2MethodsOlderVersion.isHolderOfCollection",
           "name": {
             "originalName": "isHolderOfCollection",
@@ -93159,6 +93200,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_nftApiV2MethodsOlderVersion.getNFTSales",
           "name": {
             "originalName": "getNFTSales",
@@ -93964,6 +94006,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_nftApiV2MethodsOlderVersion.getContractsForOwner",
           "name": {
             "originalName": "getContractsForOwner",
@@ -94372,6 +94415,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_nftApiV2MethodsOlderVersion.reportSpam",
           "name": {
             "originalName": "reportSpam",

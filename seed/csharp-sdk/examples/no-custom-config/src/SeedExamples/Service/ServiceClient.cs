@@ -137,7 +137,7 @@ public partial class ServiceClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<object> GetMetadataAsync(
+    public async Task<Metadata> GetMetadataAsync(
         GetMetadataRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -171,7 +171,7 @@ public partial class ServiceClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<object>(responseBody)!;
+                return JsonUtils.Deserialize<Metadata>(responseBody)!;
             }
             catch (JsonException e)
             {
@@ -215,28 +215,36 @@ public partial class ServiceClient
     ///             Revenue = 1000000,
     ///         },
     ///         Entity = new Entity { Type = BasicType.Primitive, Name = "name" },
-    ///         Metadata = "metadata",
+    ///         Metadata = new SeedExamples.Metadata(new Metadata.Html("metadata")),
     ///         CommonMetadata = new SeedExamples.Commons.Metadata
     ///         {
     ///             Id = "id",
     ///             Data = new Dictionary&lt;string, string&gt;() { { "data", "data" } },
     ///             JsonString = "jsonString",
     ///         },
-    ///         EventInfo = new SeedExamples.Commons.Metadata
-    ///         {
-    ///             Id = "id",
-    ///             Data = new Dictionary&lt;string, string&gt;() { { "data", "data" } },
-    ///             JsonString = "jsonString",
-    ///         },
-    ///         Data = "data",
+    ///         EventInfo = new EventInfo(
+    ///             new EventInfo.Metadata(
+    ///                 new SeedExamples.Commons.Metadata
+    ///                 {
+    ///                     Id = "id",
+    ///                     Data = new Dictionary&lt;string, string&gt;() { { "data", "data" } },
+    ///                     JsonString = "jsonString",
+    ///                 }
+    ///             )
+    ///         ),
+    ///         Data = new Data(new Data.String("data")),
     ///         Migration = new Migration { Name = "name", Status = MigrationStatus.Running },
-    ///         Exception = new ExceptionInfo
-    ///         {
-    ///             ExceptionType = "exceptionType",
-    ///             ExceptionMessage = "exceptionMessage",
-    ///             ExceptionStacktrace = "exceptionStacktrace",
-    ///         },
-    ///         Test = true,
+    ///         Exception = new Exception(
+    ///             new Exception.Generic(
+    ///                 new ExceptionInfo
+    ///                 {
+    ///                     ExceptionType = "exceptionType",
+    ///                     ExceptionMessage = "exceptionMessage",
+    ///                     ExceptionStacktrace = "exceptionStacktrace",
+    ///                 }
+    ///             )
+    ///         ),
+    ///         Test = new Test(new Test.And(true)),
     ///         Node = new Node
     ///         {
     ///             Name = "name",

@@ -637,6 +637,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.getExample",
           "name": {
             "originalName": "getExample",

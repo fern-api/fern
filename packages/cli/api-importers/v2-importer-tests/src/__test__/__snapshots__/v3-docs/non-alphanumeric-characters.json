@@ -314,6 +314,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.patchSettings",
           "name": {
             "originalName": "patchSettings",

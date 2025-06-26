@@ -118,6 +118,44 @@ try {
 }
 ```
 
+## Advanced
+
+### Retries
+
+The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long
+as the request is deemed retryable and the number of retry attempts has not grown larger than the configured
+retry limit (default: 2).
+
+A request is deemed retryable when any of the following HTTP status codes is returned:
+
+- [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
+- [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
+- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
+
+Use the `maxRetries` request option to configure this behavior.
+
+```php
+$response = $client->user->getUsername(
+    ...,
+    options: [
+        'maxRetries' => 0 // Override maxRetries at the request level
+    ]
+);
+```
+
+### Timeouts
+
+The SDK defaults to a 30 second timeout. Use the `timeout` option to configure this behavior.
+
+```php
+$response = $client->user->getUsername(
+    ...,
+    options: [
+        'timeout' => 3.0 // Override timeout to 3 seconds
+    ]
+);
+```
+
 ## Contributing
 
 While we value open-source contributions to this SDK, this library is generated programmatically.

@@ -3,7 +3,7 @@ export default {
     preset: "ts-jest",
     testEnvironment: "node",
     moduleNameMapper: {
-        "(.+)\.js$": "$1",
+        "^(\.{1,2}/.*)\.js$": "$1",
     },
     setupFilesAfterEnv: ["<rootDir>/src/test-packagePath/tests/mock-server/setup.ts"],
 };

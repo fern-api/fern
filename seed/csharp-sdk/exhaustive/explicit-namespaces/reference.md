@@ -1119,7 +1119,7 @@ await client.Endpoints.Params.GetWithPathAsync("param");
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Params.<a href="/src/SeedExhaustive/Endpoints/Params/ParamsClient.cs">GetWithInlinePathAsync</a>(param, GetWithInlinePath { ... }) -> string</code></summary>
+<details><summary><code>client.Endpoints.Params.<a href="/src/SeedExhaustive/Endpoints/Params/ParamsClient.cs">GetWithInlinePathAsync</a>(GetWithInlinePath { ... }) -> string</code></summary>
 <dl>
 <dd>
 
@@ -1146,7 +1146,7 @@ GET with path param
 <dd>
 
 ```csharp
-await client.Endpoints.Params.GetWithInlinePathAsync("param", new GetWithInlinePath());
+await client.Endpoints.Params.GetWithInlinePathAsync(new GetWithInlinePath { Param = "param" });
 ```
 </dd>
 </dl>
@@ -1157,14 +1157,6 @@ await client.Endpoints.Params.GetWithInlinePathAsync("param", new GetWithInlineP
 
 <dl>
 <dd>
-
-<dl>
-<dd>
-
-**param:** `string` 
-    
-</dd>
-</dl>
 
 <dl>
 <dd>
@@ -1356,7 +1348,7 @@ await client.Endpoints.Params.GetWithPathAndQueryAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Params.<a href="/src/SeedExhaustive/Endpoints/Params/ParamsClient.cs">GetWithInlinePathAndQueryAsync</a>(param, GetWithInlinePathAndQuery { ... })</code></summary>
+<details><summary><code>client.Endpoints.Params.<a href="/src/SeedExhaustive/Endpoints/Params/ParamsClient.cs">GetWithInlinePathAndQueryAsync</a>(GetWithInlinePathAndQuery { ... })</code></summary>
 <dl>
 <dd>
 
@@ -1384,8 +1376,7 @@ GET with path and query params
 
 ```csharp
 await client.Endpoints.Params.GetWithInlinePathAndQueryAsync(
-    "param",
-    new GetWithInlinePathAndQuery { Query = "query" }
+    new GetWithInlinePathAndQuery { Param = "param", Query = "query" }
 );
 ```
 </dd>
@@ -1397,14 +1388,6 @@ await client.Endpoints.Params.GetWithInlinePathAndQueryAsync(
 
 <dl>
 <dd>
-
-<dl>
-<dd>
-
-**param:** `string` 
-    
-</dd>
-</dl>
 
 <dl>
 <dd>
@@ -1483,7 +1466,7 @@ await client.Endpoints.Params.ModifyWithPathAsync("param", "string");
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Params.<a href="/src/SeedExhaustive/Endpoints/Params/ParamsClient.cs">ModifyWithInlinePathAsync</a>(param, ModifyResourceAtInlinedPath { ... }) -> string</code></summary>
+<details><summary><code>client.Endpoints.Params.<a href="/src/SeedExhaustive/Endpoints/Params/ParamsClient.cs">ModifyWithInlinePathAsync</a>(ModifyResourceAtInlinedPath { ... }) -> string</code></summary>
 <dl>
 <dd>
 
@@ -1511,8 +1494,7 @@ PUT to update with path param
 
 ```csharp
 await client.Endpoints.Params.ModifyWithInlinePathAsync(
-    "param",
-    new ModifyResourceAtInlinedPath { Body = "string" }
+    new ModifyResourceAtInlinedPath { Param = "param", Body = "string" }
 );
 ```
 </dd>
@@ -1524,14 +1506,6 @@ await client.Endpoints.Params.ModifyWithInlinePathAsync(
 
 <dl>
 <dd>
-
-<dl>
-<dd>
-
-**param:** `string` 
-    
-</dd>
-</dl>
 
 <dl>
 <dd>
@@ -1912,7 +1886,7 @@ await client.Endpoints.Primitive.GetAndReturnBase64Async("SGVsbG8gd29ybGQh");
 </details>
 
 ## Endpoints Put
-<details><summary><code>client.Endpoints.Put.<a href="/src/SeedExhaustive/Endpoints/Put/PutClient.cs">AddAsync</a>(id, PutRequest { ... }) -> PutResponse</code></summary>
+<details><summary><code>client.Endpoints.Put.<a href="/src/SeedExhaustive/Endpoints/Put/PutClient.cs">AddAsync</a>(PutRequest { ... }) -> PutResponse</code></summary>
 <dl>
 <dd>
 
@@ -1925,7 +1899,7 @@ await client.Endpoints.Primitive.GetAndReturnBase64Async("SGVsbG8gd29ybGQh");
 <dd>
 
 ```csharp
-await client.Endpoints.Put.AddAsync("id", new PutRequest());
+await client.Endpoints.Put.AddAsync(new PutRequest { Id = "id" });
 ```
 </dd>
 </dl>
@@ -1936,14 +1910,6 @@ await client.Endpoints.Put.AddAsync("id", new PutRequest());
 
 <dl>
 <dd>
-
-<dl>
-<dd>
-
-**id:** `string` 
-    
-</dd>
-</dl>
 
 <dl>
 <dd>
@@ -1961,7 +1927,7 @@ await client.Endpoints.Put.AddAsync("id", new PutRequest());
 </details>
 
 ## Endpoints Union
-<details><summary><code>client.Endpoints.Union.<a href="/src/SeedExhaustive/Endpoints/Union/UnionClient.cs">GetAndReturnUnionAsync</a>(object { ... }) -> object</code></summary>
+<details><summary><code>client.Endpoints.Union.<a href="/src/SeedExhaustive/Endpoints/Union/UnionClient.cs">GetAndReturnUnionAsync</a>(Animal { ... }) -> Animal</code></summary>
 <dl>
 <dd>
 
@@ -1974,7 +1940,9 @@ await client.Endpoints.Put.AddAsync("id", new PutRequest());
 <dd>
 
 ```csharp
-await client.Endpoints.Union.GetAndReturnUnionAsync(new Dog { Name = "name", LikesToWoof = true });
+await client.Endpoints.Union.GetAndReturnUnionAsync(
+    new Animal(new Animal.Dog(new Dog { Name = "name", LikesToWoof = true }))
+);
 ```
 </dd>
 </dl>
@@ -1989,7 +1957,7 @@ await client.Endpoints.Union.GetAndReturnUnionAsync(new Dog { Name = "name", Lik
 <dl>
 <dd>
 
-**request:** `object` 
+**request:** `Animal` 
     
 </dd>
 </dl>

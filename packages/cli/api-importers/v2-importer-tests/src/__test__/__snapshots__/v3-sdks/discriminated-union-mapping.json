@@ -631,6 +631,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.Get",
           "name": {
             "originalName": "Get",
@@ -1004,6 +1005,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.Post",
           "name": {
             "originalName": "Post",

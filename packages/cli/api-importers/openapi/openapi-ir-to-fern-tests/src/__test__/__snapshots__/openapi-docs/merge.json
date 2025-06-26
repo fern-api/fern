@@ -9725,7 +9725,9 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
               "docs": "Get details for a linked account.",
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "X-Account-Token": "X-Account-Token",
+                  },
                   "response": {
                     "body": {
                       "category": "hris",
@@ -9778,7 +9780,8 @@ service:
         type: root.AccountDetails
         status-code: 200
       examples:
-        - headers: {}
+        - headers:
+            X-Account-Token: X-Account-Token
           response:
             body:
               id: 0496d4c2-42e6-4072-80b3-7b69bfdc76fd
@@ -9913,7 +9916,9 @@ service:
               "docs": "Returns a list of models and actions available for an account.",
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "X-Account-Token": "X-Account-Token",
+                  },
                   "response": {
                     "body": {
                       "available_model_operations": [
@@ -9989,7 +9994,8 @@ service:
         type: root.AvailableActions
         status-code: 200
       examples:
-        - headers: {}
+        - headers:
+            X-Account-Token: X-Account-Token
           response:
             body:
               integration:
@@ -10035,7 +10041,9 @@ service:
               "docs": "Returns a list of `BankInfo` objects.",
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "X-Account-Token": "X-Account-Token",
+                  },
                   "response": {
                     "body": {
                       "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
@@ -10163,7 +10171,9 @@ service:
               "docs": "Returns a `BankInfo` object with the given `id`.",
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "X-Account-Token": "X-Account-Token",
+                  },
                   "path-parameters": {
                     "id": "id",
                   },
@@ -10372,7 +10382,8 @@ service:
         type: root.PaginatedBankInfoList
         status-code: 200
       examples:
-        - headers: {}
+        - headers:
+            X-Account-Token: X-Account-Token
           response:
             body:
               next: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
@@ -10432,7 +10443,8 @@ service:
       examples:
         - path-parameters:
             id: id
-          headers: {}
+          headers:
+            X-Account-Token: X-Account-Token
           response:
             body:
               id: fd1e0fb5-8f92-4ec9-9f32-179cf732867d
@@ -10473,7 +10485,9 @@ service:
               "docs": "Returns a list of `Benefit` objects.",
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "X-Account-Token": "X-Account-Token",
+                  },
                   "response": {
                     "body": {
                       "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
@@ -10579,7 +10593,9 @@ service:
               "docs": "Returns a `Benefit` object with the given `id`.",
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "X-Account-Token": "X-Account-Token",
+                  },
                   "path-parameters": {
                     "id": "id",
                   },
@@ -10718,7 +10734,8 @@ service:
         type: root.PaginatedBenefitList
         status-code: 200
       examples:
-        - headers: {}
+        - headers:
+            X-Account-Token: X-Account-Token
           response:
             body:
               next: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
@@ -10773,7 +10790,8 @@ service:
       examples:
         - path-parameters:
             id: id
-          headers: {}
+          headers:
+            X-Account-Token: X-Account-Token
           response:
             body:
               id: 3fe5ae7a-f1ba-4529-b7af-84e86dc6d232
@@ -10815,7 +10833,9 @@ service:
               "docs": "Returns a list of `Company` objects.",
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "X-Account-Token": "X-Account-Token",
+                  },
                   "response": {
                     "body": {
                       "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
@@ -10913,7 +10933,9 @@ service:
               "docs": "Returns a `Company` object with the given `id`.",
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "X-Account-Token": "X-Account-Token",
+                  },
                   "path-parameters": {
                     "id": "id",
                   },
@@ -11038,7 +11060,8 @@ service:
         type: root.PaginatedCompanyList
         status-code: 200
       examples:
-        - headers: {}
+        - headers:
+            X-Account-Token: X-Account-Token
           response:
             body:
               next: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
@@ -11087,7 +11110,8 @@ service:
       examples:
         - path-parameters:
             id: id
-          headers: {}
+          headers:
+            X-Account-Token: X-Account-Token
           response:
             body:
               id: 1b998423-db0a-4037-a4cf-f79c60cb67b3
@@ -11125,7 +11149,9 @@ service:
               "docs": "Delete a linked account.",
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "X-Account-Token": "X-Account-Token",
+                  },
                 },
               ],
               "method": "POST",
@@ -11153,7 +11179,8 @@ service:
       source:
         openapi: ../openapi.yml
       examples:
-        - headers: {}
+        - headers:
+            X-Account-Token: X-Account-Token
   source:
     openapi: ../openapi.yml
 ",
@@ -11173,7 +11200,9 @@ service:
               "docs": "Returns a list of `EmployeePayrollRun` objects.",
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "X-Account-Token": "X-Account-Token",
+                  },
                   "response": {
                     "body": {
                       "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
@@ -11335,7 +11364,9 @@ service:
               "docs": "Returns an `EmployeePayrollRun` object with the given `id`.",
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "X-Account-Token": "X-Account-Token",
+                  },
                   "path-parameters": {
                     "id": "id",
                   },
@@ -11645,7 +11676,8 @@ service:
         type: root.PaginatedEmployeePayrollRunList
         status-code: 200
       examples:
-        - headers: {}
+        - headers:
+            X-Account-Token: X-Account-Token
           response:
             body:
               next: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
@@ -11725,7 +11757,8 @@ service:
       examples:
         - path-parameters:
             id: id
-          headers: {}
+          headers:
+            X-Account-Token: X-Account-Token
           response:
             body:
               id: fb8c55b6-1cb8-4b4c-9fb6-17924231619d
@@ -11830,7 +11863,9 @@ service:
               "docs": "Creates an `Employee` object with the given values.",
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "X-Account-Token": "X-Account-Token",
+                  },
                   "request": {
                     "model": {},
                   },
@@ -11884,7 +11919,6 @@ service:
                         "groups": [
                           "21a54124-397f-494d-985e-3c5b330b8a68",
                         ],
-                        "hire_date": "2020-10-10T00:00:00Z",
                         "home_location": "d2f972d0-2526-434b-9409-4c3b468e08f0",
                         "id": "0958cbc6-6040-430a-848e-aafacbadf4ae",
                         "last_name": "Hirsch",
@@ -11965,7 +11999,9 @@ service:
               "docs": "Ignores a specific row based on the `model_id` in the url. These records will have their properties set to null, and will not be updated in future syncs. The "reason" and "message" fields in the request body will be stored for audit purposes.",
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "X-Account-Token": "X-Account-Token",
+                  },
                   "path-parameters": {
                     "model_id": "model_id",
                   },
@@ -12010,7 +12046,9 @@ service:
               "docs": "Returns a list of `Employee` objects.",
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "X-Account-Token": "X-Account-Token",
+                  },
                   "response": {
                     "body": {
                       "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
@@ -12043,7 +12081,6 @@ service:
                           "groups": [
                             "21a54124-397f-494d-985e-3c5b330b8a68",
                           ],
-                          "hire_date": "2020-10-10T00:00:00Z",
                           "home_location": "d2f972d0-2526-434b-9409-4c3b468e08f0",
                           "id": "0958cbc6-6040-430a-848e-aafacbadf4ae",
                           "last_name": "Hirsch",
@@ -12231,7 +12268,9 @@ service:
               "docs": "Returns metadata for `Employee` POSTs.",
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "X-Account-Token": "X-Account-Token",
+                  },
                   "response": {
                     "body": {
                       "has_conditional_params": true,
@@ -12267,7 +12306,9 @@ service:
               "docs": "Returns an `Employee` object with the given `id`.",
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "X-Account-Token": "X-Account-Token",
+                  },
                   "path-parameters": {
                     "id": "id",
                   },
@@ -12299,7 +12340,6 @@ service:
                       "groups": [
                         "21a54124-397f-494d-985e-3c5b330b8a68",
                       ],
-                      "hire_date": "2020-10-10T00:00:00Z",
                       "home_location": "d2f972d0-2526-434b-9409-4c3b468e08f0",
                       "id": "0958cbc6-6040-430a-848e-aafacbadf4ae",
                       "last_name": "Hirsch",
@@ -15911,7 +15951,8 @@ service:
         type: root.PaginatedEmployeeList
         status-code: 200
       examples:
-        - headers: {}
+        - headers:
+            X-Account-Token: X-Account-Token
           response:
             body:
               next: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
@@ -15942,7 +15983,6 @@ service:
                   ethnicity: AMERICAN_INDIAN_OR_ALASKA_NATIVE
                   marital_status: SINGLE
                   date_of_birth: '1990-11-10T00:00:00Z'
-                  hire_date: '2020-10-10T00:00:00Z'
                   start_date: '2020-10-11T00:00:00Z'
                   remote_created_at: '2020-10-11T00:00:00Z'
                   employment_status: ACTIVE
@@ -15988,7 +16028,8 @@ service:
         type: root.EmployeeResponse
         status-code: 201
       examples:
-        - headers: {}
+        - headers:
+            X-Account-Token: X-Account-Token
           request:
             model: {}
           response:
@@ -16019,7 +16060,6 @@ service:
                 ethnicity: AMERICAN_INDIAN_OR_ALASKA_NATIVE
                 marital_status: SINGLE
                 date_of_birth: '1990-11-10T00:00:00Z'
-                hire_date: '2020-10-10T00:00:00Z'
                 start_date: '2020-10-11T00:00:00Z'
                 remote_created_at: '2020-10-11T00:00:00Z'
                 employment_status: ACTIVE
@@ -16098,7 +16138,8 @@ service:
       examples:
         - path-parameters:
             id: id
-          headers: {}
+          headers:
+            X-Account-Token: X-Account-Token
           response:
             body:
               id: 0958cbc6-6040-430a-848e-aafacbadf4ae
@@ -16126,7 +16167,6 @@ service:
               ethnicity: AMERICAN_INDIAN_OR_ALASKA_NATIVE
               marital_status: SINGLE
               date_of_birth: '1990-11-10T00:00:00Z'
-              hire_date: '2020-10-10T00:00:00Z'
               start_date: '2020-10-11T00:00:00Z'
               remote_created_at: '2020-10-11T00:00:00Z'
               employment_status: ACTIVE
@@ -16172,7 +16212,8 @@ service:
       examples:
         - path-parameters:
             model_id: model_id
-          headers: {}
+          headers:
+            X-Account-Token: X-Account-Token
           request:
             reason: GENERAL_CUSTOMER_REQUEST
     metaPostRetrieve:
@@ -16187,7 +16228,8 @@ service:
         type: root.MetaResponse
         status-code: 200
       examples:
-        - headers: {}
+        - headers:
+            X-Account-Token: X-Account-Token
           response:
             body:
               request_schema:
@@ -16218,7 +16260,9 @@ service:
               "docs": "Returns a list of `Employment` objects.",
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "X-Account-Token": "X-Account-Token",
+                  },
                   "response": {
                     "body": {
                       "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
@@ -16339,7 +16383,9 @@ service:
               "docs": "Returns an `Employment` object with the given `id`.",
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "X-Account-Token": "X-Account-Token",
+                  },
                   "path-parameters": {
                     "id": "id",
                   },
@@ -16911,7 +16957,8 @@ service:
         type: root.PaginatedEmploymentList
         status-code: 200
       examples:
-        - headers: {}
+        - headers:
+            X-Account-Token: X-Account-Token
           response:
             body:
               next: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
@@ -16975,7 +17022,8 @@ service:
       examples:
         - path-parameters:
             id: id
-          headers: {}
+          headers:
+            X-Account-Token: X-Account-Token
           response:
             body:
               id: 65d8ffd0-211b-4ba4-b85a-fbe2ce220982
@@ -17020,7 +17068,9 @@ service:
               "docs": "Force re-sync of all models. This is available for all organizations via the dashboard. Force re-sync is also available programmatically via API for monthly, quarterly, and highest sync frequency customers on the Core, Professional, or Enterprise plans. Doing so will consume a sync credit for the relevant linked account.",
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "X-Account-Token": "X-Account-Token",
+                  },
                   "response": {
                     "body": [
                       {
@@ -17077,7 +17127,8 @@ service:
         type: list<root.SyncStatus>
         status-code: 200
       examples:
-        - headers: {}
+        - headers:
+            X-Account-Token: X-Account-Token
           response:
             body:
               - model_name: Employee
@@ -17207,7 +17258,9 @@ service:
               "docs": "Returns a list of `Group` objects.",
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "X-Account-Token": "X-Account-Token",
+                  },
                   "response": {
                     "body": {
                       "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
@@ -17313,7 +17366,9 @@ service:
               "docs": "Returns a `Group` object with the given `id`.",
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "X-Account-Token": "X-Account-Token",
+                  },
                   "path-parameters": {
                     "id": "id",
                   },
@@ -17453,7 +17508,8 @@ service:
         type: root.PaginatedGroupList
         status-code: 200
       examples:
-        - headers: {}
+        - headers:
+            X-Account-Token: X-Account-Token
           response:
             body:
               next: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
@@ -17505,7 +17561,8 @@ service:
       examples:
         - path-parameters:
             id: id
-          headers: {}
+          headers:
+            X-Account-Token: X-Account-Token
           response:
             body:
               id: 134e0111-0f67-44f6-98f0-597000290bb3
@@ -18371,7 +18428,9 @@ service:
               "docs": "Returns a list of `Location` objects.",
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "X-Account-Token": "X-Account-Token",
+                  },
                   "response": {
                     "body": {
                       "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
@@ -18479,7 +18538,9 @@ service:
               "docs": "Returns a `Location` object with the given `id`.",
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "X-Account-Token": "X-Account-Token",
+                  },
                   "path-parameters": {
                     "id": "id",
                   },
@@ -18620,7 +18681,8 @@ service:
         type: root.PaginatedLocationList
         status-code: 200
       examples:
-        - headers: {}
+        - headers:
+            X-Account-Token: X-Account-Token
           response:
             body:
               next: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
@@ -18678,7 +18740,8 @@ service:
       examples:
         - path-parameters:
             id: id
-          headers: {}
+          headers:
+            X-Account-Token: X-Account-Token
           response:
             body:
               id: f5e6a151-f44e-449a-afb1-8fd781905958
@@ -18722,7 +18785,9 @@ service:
               "docs": "Pull data from an endpoint not currently supported by Merge.",
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "X-Account-Token": "X-Account-Token",
+                  },
                   "request": {
                     "method": "GET",
                     "path": "/scooters",
@@ -18873,7 +18938,8 @@ service:
         type: root.RemoteResponse
         status-code: 200
       examples:
-        - headers: {}
+        - headers:
+            X-Account-Token: X-Account-Token
           request:
             method: GET
             path: /scooters
@@ -18909,7 +18975,9 @@ service:
               "docs": "Returns a list of `PayGroup` objects.",
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "X-Account-Token": "X-Account-Token",
+                  },
                   "response": {
                     "body": {
                       "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
@@ -19001,7 +19069,9 @@ service:
               "docs": "Returns a `PayGroup` object with the given `id`.",
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "X-Account-Token": "X-Account-Token",
+                  },
                   "path-parameters": {
                     "id": "id",
                   },
@@ -19120,7 +19190,8 @@ service:
         type: root.PaginatedPayGroupList
         status-code: 200
       examples:
-        - headers: {}
+        - headers:
+            X-Account-Token: X-Account-Token
           response:
             body:
               next: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
@@ -19164,7 +19235,8 @@ service:
       examples:
         - path-parameters:
             id: id
-          headers: {}
+          headers:
+            X-Account-Token: X-Account-Token
           response:
             body:
               id: fd1e0fb5-8f92-4ec9-9f32-179cf732867d
@@ -19200,7 +19272,9 @@ service:
               "docs": "Returns a list of `PayrollRun` objects.",
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "X-Account-Token": "X-Account-Token",
+                  },
                   "response": {
                     "body": {
                       "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
@@ -19330,7 +19404,9 @@ service:
               "docs": "Returns a `PayrollRun` object with the given `id`.",
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "X-Account-Token": "X-Account-Token",
+                  },
                   "path-parameters": {
                     "id": "id",
                   },
@@ -19617,7 +19693,8 @@ service:
         type: root.PaginatedPayrollRunList
         status-code: 200
       examples:
-        - headers: {}
+        - headers:
+            X-Account-Token: X-Account-Token
           response:
             body:
               next: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
@@ -19671,7 +19748,8 @@ service:
       examples:
         - path-parameters:
             id: id
-          headers: {}
+          headers:
+            X-Account-Token: X-Account-Token
           response:
             body:
               id: 37336947-b3d4-4a4c-a310-ab6ab510e079
@@ -19812,7 +19890,9 @@ service:
               "docs": "Get a linked account's selective syncs.",
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "X-Account-Token": "X-Account-Token",
+                  },
                   "name": "Employees that started on or after January 1st, 2022",
                   "response": {
                     "body": [
@@ -19849,7 +19929,9 @@ service:
               "docs": "Replace a linked account's selective syncs.",
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "X-Account-Token": "X-Account-Token",
+                  },
                   "name": "Employees that started on or after January 1st, 2022",
                   "request": {
                     "sync_configurations": [
@@ -19908,7 +19990,9 @@ service:
               "docs": "Get metadata for the conditions available to a linked account.",
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "X-Account-Token": "X-Account-Token",
+                  },
                   "name": "Employees that started on or after January 1st, 2022",
                   "response": {
                     "body": {
@@ -19989,7 +20073,8 @@ service:
         status-code: 200
       examples:
         - name: Employees that started on or after January 1st, 2022
-          headers: {}
+          headers:
+            X-Account-Token: X-Account-Token
           response:
             body:
               - linked_account_conditions:
@@ -20020,7 +20105,8 @@ service:
         status-code: 200
       examples:
         - name: Employees that started on or after January 1st, 2022
-          headers: {}
+          headers:
+            X-Account-Token: X-Account-Token
           request:
             sync_configurations:
               - linked_account_conditions: []
@@ -20056,7 +20142,8 @@ service:
         status-code: 200
       examples:
         - name: Employees that started on or after January 1st, 2022
-          headers: {}
+          headers:
+            X-Account-Token: X-Account-Token
           response:
             body:
               next: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
@@ -20092,7 +20179,9 @@ service:
               "docs": "Get syncing status. Possible values: `DISABLED`, `DONE`, `FAILED`, `PARTIALLY_SYNCED`, `PAUSED`, `SYNCING`",
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "X-Account-Token": "X-Account-Token",
+                  },
                   "response": {
                     "body": {
                       "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
@@ -20172,7 +20261,8 @@ service:
         type: root.PaginatedSyncStatusList
         status-code: 200
       examples:
-        - headers: {}
+        - headers:
+            X-Account-Token: X-Account-Token
           response:
             body:
               next: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
@@ -20204,7 +20294,9 @@ service:
               "docs": "Returns a list of `Team` objects.",
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "X-Account-Token": "X-Account-Token",
+                  },
                   "response": {
                     "body": {
                       "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
@@ -20305,7 +20397,9 @@ service:
               "docs": "Returns a `Team` object with the given `id`.",
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "X-Account-Token": "X-Account-Token",
+                  },
                   "path-parameters": {
                     "id": "id",
                   },
@@ -20437,7 +20531,8 @@ service:
         type: root.PaginatedTeamList
         status-code: 200
       examples:
-        - headers: {}
+        - headers:
+            X-Account-Token: X-Account-Token
           response:
             body:
               next: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
@@ -20487,7 +20582,8 @@ service:
       examples:
         - path-parameters:
             id: id
-          headers: {}
+          headers:
+            X-Account-Token: X-Account-Token
           response:
             body:
               id: 13a72919-9fae-4f54-81ca-ddfd8712a1ba
@@ -20524,7 +20620,9 @@ service:
               "docs": "Creates a `TimeOff` object with the given values.",
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "X-Account-Token": "X-Account-Token",
+                  },
                   "request": {
                     "model": {},
                   },
@@ -20634,7 +20732,9 @@ service:
               "docs": "Returns a list of `TimeOff` objects.",
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "X-Account-Token": "X-Account-Token",
+                  },
                   "response": {
                     "body": {
                       "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
@@ -20775,7 +20875,9 @@ service:
               "docs": "Returns metadata for `TimeOff` POSTs.",
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "X-Account-Token": "X-Account-Token",
+                  },
                   "response": {
                     "body": {
                       "has_conditional_params": true,
@@ -20811,7 +20913,9 @@ service:
               "docs": "Returns a `TimeOff` object with the given `id`.",
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "X-Account-Token": "X-Account-Token",
+                  },
                   "path-parameters": {
                     "id": "id",
                   },
@@ -21263,7 +21367,8 @@ service:
         type: root.PaginatedTimeOffList
         status-code: 200
       examples:
-        - headers: {}
+        - headers:
+            X-Account-Token: X-Account-Token
           response:
             body:
               next: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
@@ -21318,7 +21423,8 @@ service:
         type: root.TimeOffResponse
         status-code: 201
       examples:
-        - headers: {}
+        - headers:
+            X-Account-Token: X-Account-Token
           request:
             model: {}
           response:
@@ -21401,7 +21507,8 @@ service:
       examples:
         - path-parameters:
             id: id
-          headers: {}
+          headers:
+            X-Account-Token: X-Account-Token
           response:
             body:
               id: 91b2b905-e866-40c8-8be2-efe53827a0aa
@@ -21438,7 +21545,8 @@ service:
         type: root.MetaResponse
         status-code: 200
       examples:
-        - headers: {}
+        - headers:
+            X-Account-Token: X-Account-Token
           response:
             body:
               request_schema:
@@ -21469,7 +21577,9 @@ service:
               "docs": "Returns a list of `TimeOffBalance` objects.",
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "X-Account-Token": "X-Account-Token",
+                  },
                   "response": {
                     "body": {
                       "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
@@ -21591,7 +21701,9 @@ service:
               "docs": "Returns a `TimeOffBalance` object with the given `id`.",
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "X-Account-Token": "X-Account-Token",
+                  },
                   "path-parameters": {
                     "id": "id",
                   },
@@ -21785,7 +21897,8 @@ service:
         type: root.PaginatedTimeOffBalanceList
         status-code: 200
       examples:
-        - headers: {}
+        - headers:
+            X-Account-Token: X-Account-Token
           response:
             body:
               next: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
@@ -21843,7 +21956,8 @@ service:
       examples:
         - path-parameters:
             id: id
-          headers: {}
+          headers:
+            X-Account-Token: X-Account-Token
           response:
             body:
               id: 91b2b905-e866-40c8-8be2-efe53827a0aa
@@ -21882,7 +21996,9 @@ service:
               "docs": "Creates a `WebhookReceiver` object with the given values.",
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "X-Account-Token": "X-Account-Token",
+                  },
                   "request": {
                     "event": "event",
                     "is_active": true,
@@ -21943,7 +22059,9 @@ service:
               "docs": "Returns a list of `WebhookReceiver` objects.",
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "X-Account-Token": "X-Account-Token",
+                  },
                   "response": {
                     "body": [
                       {
@@ -21991,7 +22109,8 @@ service:
         type: list<root.WebhookReceiver>
         status-code: 200
       examples:
-        - headers: {}
+        - headers:
+            X-Account-Token: X-Account-Token
           response:
             body:
               - event: event
@@ -22023,7 +22142,8 @@ service:
         type: root.WebhookReceiver
         status-code: 201
       examples:
-        - headers: {}
+        - headers:
+            X-Account-Token: X-Account-Token
           request:
             event: event
             is_active: true

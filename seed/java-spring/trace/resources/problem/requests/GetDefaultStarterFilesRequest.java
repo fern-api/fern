@@ -95,12 +95,14 @@ public final class GetDefaultStarterFilesRequest {
 
   public interface MethodNameStage {
     /**
-     * The name of the `method` that the student has to complete.
-     * The method name cannot include the following characters:
-     *   - Greater Than `>`
-     *   - Less Than `<``
-     *   - Equals `=`
-     *   - Period `.`
+     * <p>The name of the <code>method</code> that the student has to complete.
+     * The method name cannot include the following characters:</p>
+     * <ul>
+     * <li>Greater Than <code>&gt;</code></li>
+     * <li>Less Than `&lt;``</li>
+     * <li>Equals <code>=</code></li>
+     * <li>Period <code>.</code></li>
+     * </ul>
      */
     _FinalStage methodName(@NotNull String methodName);
   }
@@ -144,12 +146,15 @@ public final class GetDefaultStarterFilesRequest {
     }
 
     /**
-     * The name of the `method` that the student has to complete.
-     * The method name cannot include the following characters:
-     *   - Greater Than `>`
-     *   - Less Than `<``
-     *   - Equals `=`
-     *   - Period `.`<p>The name of the <code>method</code> that the student has to complete.
+     * <p>The name of the <code>method</code> that the student has to complete.
+     * The method name cannot include the following characters:</p>
+     * <ul>
+     * <li>Greater Than <code>&gt;</code></li>
+     * <li>Less Than `&lt;``</li>
+     * <li>Equals <code>=</code></li>
+     * <li>Period <code>.</code></li>
+     * </ul>
+     * <p>The name of the <code>method</code> that the student has to complete.
      * The method name cannot include the following characters:</p>
      * <ul>
      * <li>Greater Than <code>&gt;</code></li>

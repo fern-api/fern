@@ -83,7 +83,7 @@ public final class Page {
 
     public interface PageStage {
         /**
-         * The current page
+         * <p>The current page</p>
          */
         PerPageStage page(int page);
 
@@ -128,7 +128,8 @@ public final class Page {
         }
 
         /**
-         * The current page<p>The current page</p>
+         * <p>The current page</p>
+         * <p>The current page</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override

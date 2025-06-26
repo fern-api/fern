@@ -1808,6 +1808,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.getWorkspaceAuditLogs",
           "name": {
             "originalName": "getWorkspaceAuditLogs",

@@ -141,6 +141,7 @@ export declare namespace SdkGenerator {
         useLegacyExports: boolean;
         generateWireTests: boolean;
         streamType: "wrapper" | "web";
+        fileResponseType: "stream" | "binary-response";
         packagePath: string | undefined;
     }
 }
@@ -419,6 +420,7 @@ export class SdkGenerator {
             omitUndefined: config.omitUndefined,
             allowExtraFields: config.allowExtraFields,
             streamType: config.streamType,
+            fileResponseType: config.fileResponseType,
             exportsManager: this.exportsManager
         });
         this.websocketGenerator = new WebsocketClassGenerator({
@@ -452,7 +454,8 @@ export class SdkGenerator {
             logger: this.context.logger,
             config: this.rawConfig,
             readmeConfigBuilder: new ReadmeConfigBuilder({
-                endpointSnippets: this.endpointSnippets
+                endpointSnippets: this.endpointSnippets,
+                fileResponseType: this.config.fileResponseType
             }),
             ir: intermediateRepresentation
         });
