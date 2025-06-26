@@ -4,7 +4,6 @@ import java.io.Reader;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * The {@code Stream} class implements {@link Iterable} to provide a simple mechanism for reading and parsing
@@ -32,8 +31,9 @@ public final class Stream<T> implements Iterable<T>, Closeable {
     private final StreamType streamType;
     private final String messageTerminator;
     private final String streamTerminator;
-    private final AtomicBoolean isClosed = new AtomicBoolean(false);
     private final Reader sseReader;
+    private boolean isClosed = false;
+    private SSEIterator currentSseIterator = null;
 
     /**
      * Constructs a new {@code Stream} with the specified value type, reader, and delimiter.
@@ -78,16 +78,21 @@ public final class Stream<T> implements Iterable<T>, Closeable {
 
     @Override
     public void close() throws IOException {
-        if (isClosed.compareAndSet(false, true)) {
+        if (!isClosed) {
+            isClosed = true;
             if (scanner != null) {
                 scanner.close();
+            }
+            if (currentSseIterator != null) {
+                currentSseIterator.closeScanner();
             }
         }
     }
 
     private boolean isStreamClosed() {
-        return isClosed.get();
+        return isClosed;
     }
+
     /**
      * Returns an iterator over the elements in this stream that blocks during iteration when the next object is
      * not yet available.
@@ -97,7 +102,8 @@ public final class Stream<T> implements Iterable<T>, Closeable {
     @Override
     public Iterator<T> iterator() {
         if (streamType == StreamType.SSE) {
-            return new SSEIterator();
+            currentSseIterator = new SSEIterator();
+            return currentSseIterator;
         } else {
             return new JsonIterator();
         }
@@ -250,6 +256,12 @@ public final class Stream<T> implements Iterable<T>, Closeable {
                 System.err.println("Failed to parse SSE stream: " + e.getMessage());
                 endOfStream = true;
                 return false;
+            }
+        }
+
+        private void closeScanner() {
+            if (sseScanner != null) {
+                sseScanner.close();
             }
         }
     }
