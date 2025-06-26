@@ -1510,7 +1510,8 @@ export class SdkGenerator {
             neverThrowErrors: this.config.neverThrowErrors,
             allowExtraFields: this.config.allowExtraFields,
             relativePackagePath: this.relativePackagePath,
-            relativeTestPath: this.relativeTestPath
+            relativeTestPath: this.relativeTestPath,
+            formDataSupport: this.config.formDataSupport
         });
     }
 

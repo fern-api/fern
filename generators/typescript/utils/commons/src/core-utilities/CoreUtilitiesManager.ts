@@ -14,6 +14,7 @@ import { CallbackQueueImpl } from "./CallbackQueue";
 import { CoreUtilities } from "./CoreUtilities";
 import { CoreUtility, CoreUtilityName } from "./CoreUtility";
 import { FetcherImpl } from "./Fetcher";
+import { FileUtilsImpl } from "./FileUtils";
 import { FormDataUtilsImpl } from "./FormDataUtils";
 import { PaginationImpl } from "./Pagination";
 import { RuntimeImpl } from "./Runtime";
@@ -90,7 +91,8 @@ export class CoreUtilitiesManager {
             runtime: new RuntimeImpl({ getReferenceToExport }),
             pagination: new PaginationImpl({ getReferenceToExport }),
             utils: new UtilsImpl({ getReferenceToExport }),
-            websocket: new WebsocketImpl({ getReferenceToExport })
+            websocket: new WebsocketImpl({ getReferenceToExport }),
+            fileUtils: new FileUtilsImpl({ getReferenceToExport })
         };
     }
 
@@ -124,7 +126,7 @@ export class CoreUtilitiesManager {
                 Object.entries(this.referencedCoreUtilities).map(async ([name, utility]) => {
                     const { patterns, ignore } = utility.getFilesPatterns({
                         streamType: this.streamType,
-                        formDataSupport: this.formDataSupport,
+                        formDataSupport: this.formDataSupport
                     });
 
                     const foundFiles = await glob(patterns, {
