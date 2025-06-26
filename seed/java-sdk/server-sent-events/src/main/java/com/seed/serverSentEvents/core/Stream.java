@@ -9,7 +9,6 @@ import java.io.Reader;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * The {@code Stream} class implements {@link Iterable} to provide a simple mechanism for reading and parsing
@@ -37,8 +36,8 @@ public final class Stream<T> implements Iterable<T>, Closeable {
     private final StreamType streamType;
     private final String messageTerminator;
     private final String streamTerminator;
-    private final AtomicBoolean isClosed = new AtomicBoolean(false);
     private final Reader sseReader;
+    private boolean isClosed = false;
 
     /**
      * Constructs a new {@code Stream} with the specified value type, reader, and delimiter.
@@ -56,13 +55,20 @@ public final class Stream<T> implements Iterable<T>, Closeable {
         this.sseReader = null;
     }
 
-    private Stream(Class<T> valueType, Reader sseReader, String streamTerminator) {
+    private Stream(Class<T> valueType, StreamType type, Reader reader, String terminator) {
         this.valueType = valueType;
-        this.scanner = null;
-        this.streamType = StreamType.SSE;
-        this.messageTerminator = NEWLINE;
-        this.streamTerminator = streamTerminator;
-        this.sseReader = sseReader;
+        this.streamType = type;
+        if (type == StreamType.JSON) {
+            this.scanner = new Scanner(reader).useDelimiter(terminator);
+            this.messageTerminator = terminator;
+            this.streamTerminator = null;
+            this.sseReader = null;
+        } else {
+            this.scanner = null;
+            this.messageTerminator = NEWLINE;
+            this.streamTerminator = terminator;
+            this.sseReader = reader;
+        }
     }
 
     public static <T> Stream<T> fromJson(Class<T> valueType, Reader reader, String delimiter) {
@@ -74,25 +80,30 @@ public final class Stream<T> implements Iterable<T>, Closeable {
     }
 
     public static <T> Stream<T> fromSse(Class<T> valueType, Reader sseReader) {
-        return new Stream<>(valueType, sseReader, null);
+        return new Stream<>(valueType, StreamType.SSE, sseReader, null);
     }
 
     public static <T> Stream<T> fromSse(Class<T> valueType, Reader sseReader, String streamTerminator) {
-        return new Stream<>(valueType, sseReader, streamTerminator);
+        return new Stream<>(valueType, StreamType.SSE, sseReader, streamTerminator);
     }
 
     @Override
     public void close() throws IOException {
-        if (isClosed.compareAndSet(false, true)) {
+        if (!isClosed) {
+            isClosed = true;
             if (scanner != null) {
                 scanner.close();
+            }
+            if (sseReader != null) {
+                sseReader.close();
             }
         }
     }
 
     private boolean isStreamClosed() {
-        return isClosed.get();
+        return isClosed;
     }
+
     /**
      * Returns an iterator over the elements in this stream that blocks during iteration when the next object is
      * not yet available.
@@ -167,7 +178,7 @@ public final class Stream<T> implements Iterable<T>, Closeable {
         private boolean prefixSeen = false;
 
         private SSEIterator() {
-            if (sseReader != null) {
+            if (sseReader != null && !isStreamClosed()) {
                 this.sseScanner = new Scanner(sseReader);
             } else {
                 this.endOfStream = true;
@@ -205,7 +216,7 @@ public final class Stream<T> implements Iterable<T>, Closeable {
         }
 
         private boolean readNextMessage() {
-            if (sseScanner == null) {
+            if (sseScanner == null || isStreamClosed()) {
                 endOfStream = true;
                 return false;
             }

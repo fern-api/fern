@@ -33,7 +33,6 @@ public final class Stream<T> implements Iterable<T>, Closeable {
     private final String streamTerminator;
     private final Reader sseReader;
     private boolean isClosed = false;
-    private SSEIterator currentSseIterator = null;
 
     /**
      * Constructs a new {@code Stream} with the specified value type, reader, and delimiter.
@@ -51,13 +50,20 @@ public final class Stream<T> implements Iterable<T>, Closeable {
         this.sseReader = null;
     }
 
-    private Stream(Class<T> valueType, Reader sseReader, String streamTerminator) {
+    private Stream(Class<T> valueType, StreamType type, Reader reader, String terminator) {
         this.valueType = valueType;
-        this.scanner = null;
-        this.streamType = StreamType.SSE;
-        this.messageTerminator = NEWLINE;
-        this.streamTerminator = streamTerminator;
-        this.sseReader = sseReader;
+        this.streamType = type;
+        if (type == StreamType.JSON) {
+            this.scanner = new Scanner(reader).useDelimiter(terminator);
+            this.messageTerminator = terminator;
+            this.streamTerminator = null;
+            this.sseReader = null;
+        } else {
+            this.scanner = null;
+            this.messageTerminator = NEWLINE;
+            this.streamTerminator = terminator;
+            this.sseReader = reader;
+        }
     }
 
     public static <T> Stream<T> fromJson(Class<T> valueType, Reader reader, String delimiter) {
@@ -69,11 +75,11 @@ public final class Stream<T> implements Iterable<T>, Closeable {
     }
 
     public static <T> Stream<T> fromSse(Class<T> valueType, Reader sseReader) {
-        return new Stream<>(valueType, sseReader, null);
+        return new Stream<>(valueType, StreamType.SSE, sseReader, null);
     }
 
     public static <T> Stream<T> fromSse(Class<T> valueType, Reader sseReader, String streamTerminator) {
-        return new Stream<>(valueType, sseReader, streamTerminator);
+        return new Stream<>(valueType, StreamType.SSE, sseReader, streamTerminator);
     }
 
     @Override
@@ -83,8 +89,8 @@ public final class Stream<T> implements Iterable<T>, Closeable {
             if (scanner != null) {
                 scanner.close();
             }
-            if (currentSseIterator != null) {
-                currentSseIterator.closeScanner();
+            if (sseReader != null) {
+                sseReader.close();
             }
         }
     }
@@ -102,8 +108,7 @@ public final class Stream<T> implements Iterable<T>, Closeable {
     @Override
     public Iterator<T> iterator() {
         if (streamType == StreamType.SSE) {
-            currentSseIterator = new SSEIterator();
-            return currentSseIterator;
+            return new SSEIterator();
         } else {
             return new JsonIterator();
         }
@@ -168,7 +173,7 @@ public final class Stream<T> implements Iterable<T>, Closeable {
         private boolean prefixSeen = false;
 
         private SSEIterator() {
-            if (sseReader != null) {
+            if (sseReader != null && !isStreamClosed()) {
                 this.sseScanner = new Scanner(sseReader);
             } else {
                 this.endOfStream = true;
@@ -206,7 +211,7 @@ public final class Stream<T> implements Iterable<T>, Closeable {
         }
 
         private boolean readNextMessage() {
-            if (sseScanner == null) {
+            if (sseScanner == null || isStreamClosed()) {
                 endOfStream = true;
                 return false;
             }
@@ -259,10 +264,5 @@ public final class Stream<T> implements Iterable<T>, Closeable {
             }
         }
 
-        private void closeScanner() {
-            if (sseScanner != null) {
-                sseScanner.close();
-            }
-        }
     }
 }
