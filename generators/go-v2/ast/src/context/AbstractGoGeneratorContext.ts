@@ -129,7 +129,7 @@ export abstract class AbstractGoGeneratorContext<
 
     public maybeUnwrapIterable(typeReference: TypeReference): TypeReference | undefined {
         switch (typeReference.type) {
-            case "container":
+            case "container": {
                 const container = typeReference.container;
                 switch (container.type) {
                     case "list":
@@ -146,7 +146,8 @@ export abstract class AbstractGoGeneratorContext<
                     default:
                         assertNever(container);
                 }
-            case "named":
+            }
+            case "named": {
                 const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId).shape;
                 switch (typeDeclaration.type) {
                     case "alias":
@@ -159,6 +160,7 @@ export abstract class AbstractGoGeneratorContext<
                     default:
                         assertNever(typeDeclaration);
                 }
+            }
             case "primitive":
             case "unknown":
                 return undefined;
@@ -169,7 +171,7 @@ export abstract class AbstractGoGeneratorContext<
 
     public maybeUnwrapOptionalOrNullable(typeReference: TypeReference): TypeReference | undefined {
         switch (typeReference.type) {
-            case "container":
+            case "container": {
                 const container = typeReference.container;
                 switch (container.type) {
                     case "optional":
@@ -184,6 +186,7 @@ export abstract class AbstractGoGeneratorContext<
                     default:
                         assertNever(container);
                 }
+            }
             case "named":
             case "primitive":
             case "unknown":
@@ -202,7 +205,7 @@ export abstract class AbstractGoGeneratorContext<
      */
     public needsOptionalDereference(typeReference: TypeReference): boolean {
         switch (typeReference.type) {
-            case "named":
+            case "named": {
                 const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId).shape;
                 switch (typeDeclaration.type) {
                     case "alias":
@@ -216,6 +219,7 @@ export abstract class AbstractGoGeneratorContext<
                     default:
                         assertNever(typeDeclaration);
                 }
+            }
             case "primitive":
                 return true;
             case "container":
@@ -362,7 +366,7 @@ export abstract class AbstractGoGeneratorContext<
 
     public maybePrimitive(typeReference: TypeReference): PrimitiveTypeV1 | undefined {
         switch (typeReference.type) {
-            case "container":
+            case "container": {
                 const container = typeReference.container;
                 switch (container.type) {
                     case "optional":
@@ -377,6 +381,7 @@ export abstract class AbstractGoGeneratorContext<
                     default:
                         assertNever(container);
                 }
+            }
             case "named": {
                 const declaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
                 if (declaration.shape.type === "alias") {

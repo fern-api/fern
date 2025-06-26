@@ -63,7 +63,7 @@ export class GoValueFormatter {
                     break;
                 case PrimitiveTypeV1.Date:
                     prefix = "";
-                    suffix = `.Format("2006-01-02")`;
+                    suffix = '.Format("2006-01-02")';
                     break;
                 case PrimitiveTypeV1.Base64:
                     prefix = "base64.StdEncoding.EncodeToString(" + prefix + ")";

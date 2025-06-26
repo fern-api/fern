@@ -272,7 +272,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             }
             writer.writeLine("if len(queryParams) > 0 {");
             writer.indent();
-            writer.writeLine(`endpointURL += "?" + queryParams.Encode()`);
+            writer.writeLine('endpointURL += "?" + queryParams.Encode()');
             writer.dedent();
             writer.write("}");
         });
@@ -477,12 +477,13 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         switch (jsonResponse.type) {
             case "response":
                 return go.codeblock("response");
-            case "nestedPropertyAsResponse":
+            case "nestedPropertyAsResponse": {
                 const responseProperty = jsonResponse.responseProperty;
                 if (responseProperty == null) {
                     return go.codeblock("response");
                 }
                 return go.codeblock(`response.${this.context.getFieldName(responseProperty.name.name)}`);
+            }
             default:
                 assertNever(jsonResponse);
         }
@@ -620,7 +621,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         return go.codeblock((writer) => {
             writer.newLine();
             writer.write(`headers.Add("${wireValue}", `);
-            writer.writeNode(this.context.callSprintf([go.codeblock(`"%v"`), value]));
+            writer.writeNode(this.context.callSprintf([go.codeblock('"%v"'), value]));
             writer.write(")");
         });
     }
@@ -641,17 +642,6 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
 
     private writeRawReturnZeroValueWithError(): go.CodeBlock {
         return go.codeblock("return nil, err");
-    }
-
-    private writeReturnZeroValueWithError({ zeroValue }: { zeroValue?: go.TypeInstantiation }): go.CodeBlock {
-        return go.codeblock((writer) => {
-            writer.write(`return `);
-            if (zeroValue != null) {
-                writer.writeNode(zeroValue);
-                writer.write(", ");
-            }
-            writer.write("err");
-        });
     }
 
     private getRawClientReceiverCodeBlock(): go.AstNode {

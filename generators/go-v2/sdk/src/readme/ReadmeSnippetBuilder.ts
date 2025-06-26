@@ -69,7 +69,9 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             }
         > = {
             [ReadmeSnippetBuilder.ENVIRONMENTS_FEATURE_ID]: { renderer: this.renderEnvironmentsSnippet.bind(this) },
-            [ReadmeSnippetBuilder.RESPONSE_HEADERS_FEATURE_ID]: { renderer: this.renderWithRawResponseHeadersSnippet.bind(this) },
+            [ReadmeSnippetBuilder.RESPONSE_HEADERS_FEATURE_ID]: {
+                renderer: this.renderWithRawResponseHeadersSnippet.bind(this)
+            },
             [FernGeneratorCli.StructuredFeatureId.RequestOptions]: {
                 renderer: this.renderRequestOptionsSnippet.bind(this)
             },
@@ -290,7 +292,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             endpoint.endpoint
         )}`;
     }
-    
+
     private getWithRawResponseMethodCall(endpoint: EndpointWithFilepath): string {
         return `${this.getAccessFromRootClient(endpoint.fernFilepath)}.WithRawResponse.${this.getEndpointMethodName(
             endpoint.endpoint

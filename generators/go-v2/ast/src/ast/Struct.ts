@@ -95,6 +95,6 @@ export class Struct extends AstNode {
         writer.writeNode(constructor.body);
         writer.writeNewLineIfLastLineNot();
         writer.dedent();
-        writer.writeLine(`}`);
+        writer.writeLine("}");
     }
 }

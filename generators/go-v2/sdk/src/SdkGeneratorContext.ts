@@ -73,7 +73,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
             if (this.isFlatPackageLayout()) {
                 return `Raw${this.getClassName(subpackage.name)}Client`;
             }
-            return `RawClient`;
+            return "RawClient";
         }
         return `Raw${this.getClientClassName()}`;
     }
