@@ -4,8 +4,7 @@ export const PROTOBUF_GENERATOR_CONFIG_FILENAME = "buf.gen.yaml";
 export const PROTOBUF_GENERATOR_OUTPUT_PATH = "output";
 export const PROTOBUF_GENERATOR_OUTPUT_FILEPATH = `${PROTOBUF_GENERATOR_OUTPUT_PATH}/ir.json`;
 export const PROTOBUF_SHELL_PROXY_FILENAME = "protoc-gen-fern";
-export const PROTOC_GEN_FERN_PLUGIN_PATH =
-    "/Users/sahil/Fern/fern/packages/cli/generation/protoc-gen-fern/lib/protoc-gen-fern.js";
+export const PROTOC_GEN_FERN_PLUGIN_PATH = "path-to-fern-binary.js";
 
 export const PROTOBUF_GEN_CONFIG = `version: v2
 plugins:
