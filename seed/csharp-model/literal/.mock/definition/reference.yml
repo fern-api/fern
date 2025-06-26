@@ -32,10 +32,7 @@ service:
       request: SendRequest
       response: root.SendResponse
       examples:
-        - headers:
-            X-API-Version: "02-02-2024"
-            X-API-Enable-Audit-Logging: true
-          request:
+        - request:
             prompt: "You are a helpful assistant"
             stream: false
             context: "You're super wise"
