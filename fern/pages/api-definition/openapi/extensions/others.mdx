@@ -378,10 +378,17 @@ paths:
               ssn: 1234
           code-samples:
             - sdk: typescript
+              name: User ID
               code: |
                 import { UserClient } from "...";
 
                 client.users.get("user-1234")
+            - sdk: typescript
+              name: User Name
+              code: |
+                import { UserClient } from "...";
+
+                client.users.get("Fern Fernie")
 ```
 
 If you're on the Fern Starter plan or higher for SDKs you won't have to worry about manually adding code samples! Our generators do that for you.
