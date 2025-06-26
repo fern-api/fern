@@ -35,6 +35,39 @@ func NewClient(opts ...option.RequestOption) *Client {
 	}
 }
 
+func (c *Client) Simple(
+	ctx context.Context,
+	opts ...option.RequestOption,
+) error {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
+	)
+	endpointURL := baseURL + "/snippet"
+	headers := internal.MergeHeaders(
+		c.header.Clone(),
+		options.ToHeader(),
+	)
+
+	if _, err := c.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+		},
+	); err != nil {
+		return err
+	}
+	return nil
+}
+
 func (c *Client) DownloadFile(
 	ctx context.Context,
 	opts ...option.RequestOption,

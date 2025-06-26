@@ -12,25 +12,14 @@ Instantiate and use the client with the following:
 package example
 
 import (
-    client "github.com/enum/fern/client"
+    client "github.com/file-download/fern/client"
     context "context"
-    fern "github.com/enum/fern"
 )
 
 func do() {
     client := client.NewClient()
-    client.InlinedRequest.Send(
+    client.Service.Simple(
         context.TODO(),
-        &fern.SendEnumInlinedRequest{
-            Operand: fern.OperandGreaterThan,
-            MaybeOperand: fern.OperandGreaterThan.Ptr(),
-            OperandOrColor: &fern.ColorOrOperand{
-                Color: fern.ColorRed,
-            },
-            MaybeOperandOrColor: &fern.ColorOrOperand{
-                Color: fern.ColorRed,
-            },
-        },
     )
 }
 ```
@@ -52,7 +41,7 @@ Structured error types are returned from API calls that return non-success statu
 with the `errors.Is` and `errors.As` APIs, so you can access the error like so:
 
 ```go
-response, err := client.InlinedRequest.Send(...)
+response, err := client.Service.Simple(...)
 if err != nil {
     var apiError *core.APIError
     if errors.As(err, apiError) {
@@ -86,7 +75,7 @@ client := client.NewClient(
 )
 
 // Specify options for an individual request.
-response, err := client.InlinedRequest.Send(
+response, err := client.Service.Simple(
     ...,
     option.WithToken("<YOUR_API_KEY>"),
 )
@@ -100,7 +89,7 @@ You can access the raw HTTP response data by using the `WithRawResponse` field o
 when you need to examine the response headers received from the API call.
 
 ```go
-response, err := client.InlinedRequest.WithRawResponse.Send(...)
+response, err := client.Service.WithRawResponse.Simple(...)
 if err != nil {
     return err
 }
@@ -126,7 +115,7 @@ client := client.NewClient(
     option.WithMaxAttempts(1),
 )
 
-response, err := client.InlinedRequest.Send(
+response, err := client.Service.Simple(
     ...,
     option.WithMaxAttempts(1),
 )
@@ -140,7 +129,7 @@ Setting a timeout for each individual request is as simple as using the standard
 ctx, cancel := context.WithTimeout(ctx, time.Second)
 defer cancel()
 
-response, err := client.InlinedRequest.Send(ctx, ...)
+response, err := client.Service.Simple(ctx, ...)
 ```
 
 ## Contributing
