@@ -111,13 +111,10 @@ function convertHeaderExamples({
     context: OpenApiIrConverterContext;
     namedFullExamples: NamedFullExample[];
 }): Record<string, RawSchemas.ExampleTypeReferenceSchema> {
-    const globalHeaderNames = context.builder.getGlobalHeaderNames();
     const result: Record<string, RawSchemas.ExampleTypeReferenceSchema> = {};
     namedFullExamples.forEach((namedFullExample) => {
         const convertedExample = convertFullExample(namedFullExample.value);
-        if (globalHeaderNames.has(namedFullExample.name)) {
-            return;
-        } else if (convertedExample != null) {
+        if (convertedExample != null) {
             result[namedFullExample.name] = convertedExample;
         }
     });
