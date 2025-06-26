@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.38.1
+  changelogEntry:
+    - summary: |
+        Fix JavaDoc generation to properly escape dollar signs ($) when using JavaPoet.
+
+        When generating JavaDoc comments with JavaPoet, dollar signs need to be escaped as `$$` to prevent 
+        JavaPoet from interpreting them as template variables. This ensures that dollar signs in documentation 
+        are rendered correctly in the final generated code.
+      type: fix
+  createdAt: '2025-06-23'
+  irVersion: 58
+
 - version: 2.38.0
   changelogEntry:
     - summary: |
