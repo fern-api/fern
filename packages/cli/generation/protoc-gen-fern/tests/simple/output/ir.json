@@ -2,69 +2,27 @@
   "ok": false,
   "errors": [
     {
-      "path": [
-        "types",
-        "ClassificationLevels",
-        "shape",
-        "values",
-        "[0]",
-        "casing"
-      ],
+      "path": ["types", "ClassificationLevels", "shape", "values", "[0]", "casing"],
       "message": "Unexpected key \"casing\""
     },
     {
-      "path": [
-        "types",
-        "ClassificationLevels",
-        "shape",
-        "values",
-        "[1]",
-        "casing"
-      ],
+      "path": ["types", "ClassificationLevels", "shape", "values", "[1]", "casing"],
       "message": "Unexpected key \"casing\""
     },
     {
-      "path": [
-        "types",
-        "ClassificationLevels",
-        "shape",
-        "values",
-        "[2]",
-        "casing"
-      ],
+      "path": ["types", "ClassificationLevels", "shape", "values", "[2]", "casing"],
       "message": "Unexpected key \"casing\""
     },
     {
-      "path": [
-        "types",
-        "ClassificationLevels",
-        "shape",
-        "values",
-        "[3]",
-        "casing"
-      ],
+      "path": ["types", "ClassificationLevels", "shape", "values", "[3]", "casing"],
       "message": "Unexpected key \"casing\""
     },
     {
-      "path": [
-        "types",
-        "ClassificationLevels",
-        "shape",
-        "values",
-        "[4]",
-        "casing"
-      ],
+      "path": ["types", "ClassificationLevels", "shape", "values", "[4]", "casing"],
       "message": "Unexpected key \"casing\""
     },
     {
-      "path": [
-        "types",
-        "ClassificationLevels",
-        "shape",
-        "values",
-        "[5]",
-        "casing"
-      ],
+      "path": ["types", "ClassificationLevels", "shape", "values", "[5]", "casing"],
       "message": "Unexpected key \"casing\""
     }
   ]

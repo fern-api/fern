@@ -53,3 +53,20 @@ export const createEmptyProtobufLogger = (): Logger => {
         log: () => {}
     };
 };
+
+export type MaybeValid<T> = Valid<T> | Invalid;
+
+export interface Valid<T> {
+    ok: true;
+    value: T;
+}
+
+export interface Invalid {
+    ok: false;
+    errors: ValidationError[];
+}
+
+export interface ValidationError {
+    path: string[];
+    message: string;
+}

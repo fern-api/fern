@@ -17,7 +17,7 @@ import { Audiences } from "@fern-api/configuration";
 import { isNonNullish } from "@fern-api/core-utils";
 import { AbsoluteFilePath, RelativeFilePath, cwd, doesPathExist, join, relativize } from "@fern-api/fs-utils";
 import { IntermediateRepresentation, serialization } from "@fern-api/ir-sdk";
-import { MaybeValid } from "@fern-api/ir-sdk/src/sdk/core/schemas/Schema";
+import { MaybeValid } from "./protobuf/utils";
 import { mergeIntermediateRepresentation } from "@fern-api/ir-utils";
 import { createLoggingExecutable } from "@fern-api/logging-execa";
 import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
