@@ -298,21 +298,21 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     );
                     continue;
                 }
-                const headerField = go.codeblock(
-                    `${this.getRequestParameterName({ endpoint })}.${this.context.getFieldName(header.name.name)}`
-                );
+                const headerField = `${this.getRequestParameterName({ endpoint })}.${this.context.getFieldName(header.name.name)}`;
                 const format = this.context.goValueFormatter.convert({
                     reference: header.valueType,
-                    value: headerField
+                    value: go.codeblock(headerField)
                 });
                 if (format.isOptional) {
-                    writer.write(`if ${headerField} != nil {`);
+                    writer.writeNewLineIfLastLineNot();
+                    writer.writeLine(`if ${headerField} != nil {`);
                     writer.indent();
                     writer.writeNode(
                         this.addHeaderValue({ wireValue: header.name.wireValue, value: format.formatted })
                     );
+                    writer.newLine();
                     writer.dedent();
-                    writer.write("}");
+                    writer.writeLine("}");
                     continue;
                 }
                 writer.writeNode(this.addHeaderValue({ wireValue: header.name.wireValue, value: format.formatted }));

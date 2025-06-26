@@ -235,7 +235,7 @@ export abstract class AbstractGoGeneratorContext<
     }
 
     public getLiteralAsString(literal: Literal): string {
-        return literal.type === "string" ? `'${literal.string}'` : literal.boolean ? "'true'" : "'false'";
+        return literal.type === "string" ? `"${literal.string}"` : literal.boolean ? '"true"' : '"false"';
     }
 
     public getContextTypeReference(): go.TypeReference {
