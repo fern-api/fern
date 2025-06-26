@@ -564,7 +564,7 @@ export class SdkGenerator {
         if (this.generateJestTests && this.config.writeUnitTests) {
             this.generateTestFiles();
         }
-        this.jestTestGenerator.addExtras();
+        await this.jestTestGenerator.addExtras();
         this.extraScripts = {
             ...this.extraScripts,
             ...this.jestTestGenerator.scripts

@@ -32,11 +32,20 @@ export const MANIFEST: CoreUtility.Manifest = {
     addDependencies: (dependencyManager: DependencyManager, { formDataSupport }): void => {
         if (formDataSupport === "Node16") {
             dependencyManager.addDependency("form-data", "^4.0.0");
+            dependencyManager.addDependency("formdata-node", "^6.0.3");
+            dependencyManager.addDependency("form-data-encoder", "^4.0.2");
         }
     },
     dependsOn: [RuntimeManifest],
-    getFilesPatterns: () => {
-        return { patterns: ["src/core/form-data-utils/**", "tests/unit/form-data-utils/**"] };
+    getFilesPatterns: ({ formDataSupport }) => {
+        const glob = {
+            patterns: ["src/core/form-data-utils/**", "tests/unit/form-data-utils/**"],
+            ignore: [] as string[]
+        };
+        if (formDataSupport === "Node16") {
+            glob.ignore.push("tests/unit/form-data-utils/formDataWrapper.browser.test.ts");
+        }
+        return glob;
     }
 };
 

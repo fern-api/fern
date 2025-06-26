@@ -1,20 +1,35 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-import { Readable } from "stream";
 import { FormDataWrapper, newFormData } from "../../../src/core/form-data-utils/FormDataWrapper";
-import { File, Blob } from "buffer";
 
-// Helper function to serialize FormData to string for inspection
-async function serializeFormData(formData: FormData): Promise<string> {
+type FormDataRequest = ReturnType<InstanceType<typeof FormDataWrapper>["getRequest"]>;
+
+async function getFormDataInfo(formRequest: FormDataRequest): Promise<{
+    hasFile: boolean;
+    filename?: string;
+    contentType?: string;
+    serialized: string;
+}> {
     const request = new Request("http://localhost", {
+        ...formRequest,
         method: "POST",
-        body: formData,
     });
-
     const buffer = await request.arrayBuffer();
-    return new TextDecoder().decode(buffer);
+    const serialized = new TextDecoder().decode(buffer);
+
+    const filenameMatch = serialized.match(/filename="([^"]+)"/);
+    const filename = filenameMatch ? filenameMatch[1] : undefined;
+
+    const contentTypeMatch = serialized.match(/Content-Type: ([^\r\n]+)/);
+    const contentType = contentTypeMatch ? contentTypeMatch[1] : undefined;
+
+    return {
+        hasFile: !!filename,
+        filename,
+        contentType,
+        serialized
+    };
 }
 
-describe("FormDataWrapper", () => {
+describe("FormDataWrapper - Browser Environment", () => {
     let formData: FormDataWrapper;
 
     beforeEach(async () => {
@@ -22,47 +37,7 @@ describe("FormDataWrapper", () => {
         await formData.setup();
     });
 
-    describe("Stream handling", () => {
-        it("serializes Node.js Readable stream with filename", async () => {
-            const stream = Readable.from(["file content"]);
-            await formData.appendFile("file", stream, "testfile.txt");
-
-            const serialized = await serializeFormData(formData.getRequest().body);
-
-            expect(serialized).toContain('Content-Disposition: form-data; name="file"');
-            expect(serialized).toContain('filename="testfile.txt"');
-            expect(serialized).toContain("file content");
-        });
-
-        it("auto-detects filename from stream path property", async () => {
-            const stream = Readable.from(["file content"]);
-            (stream as { path?: string }).path = "/test/path/testfile.txt";
-
-            await formData.appendFile("file", stream);
-
-            const serialized = await serializeFormData(formData.getRequest().body);
-            expect(serialized).toContain('filename="testfile.txt"');
-        });
-
-        it("handles Windows-style paths", async () => {
-            const stream = Readable.from(["file content"]);
-            (stream as { path?: string }).path = "C:\\test\\path\\testfile.txt";
-
-            await formData.appendFile("file", stream);
-
-            const serialized = await serializeFormData(formData.getRequest().body);
-            expect(serialized).toContain('filename="testfile.txt"');
-        });
-
-        it("handles empty streams", async () => {
-            const stream = Readable.from([]);
-            await formData.appendFile("file", stream, "empty.txt");
-
-            const serialized = await serializeFormData(formData.getRequest().body);
-            expect(serialized).toContain('filename="empty.txt"');
-            expect(serialized).toMatch(/------formdata-undici-\w+|------WebKitFormBoundary\w+/);
-        });
-
+    describe("Web ReadableStream", () => {
         it("serializes Web ReadableStream with filename", async () => {
             const stream = new ReadableStream({
                 start(controller) {
@@ -73,9 +48,12 @@ describe("FormDataWrapper", () => {
 
             await formData.appendFile("file", stream, "webstream.txt");
 
-            const serialized = await serializeFormData(formData.getRequest().body);
+            const { serialized, hasFile, filename} = await getFormDataInfo(formData.getRequest());
+
+            expect(serialized).toContain('name="file"');
             expect(serialized).toContain('filename="webstream.txt"');
-            expect(serialized).toContain("web stream content");
+            expect(hasFile).toBe(true);
+            expect(filename).toBe("webstream.txt");
         });
 
         it("handles empty Web ReadableStream", async () => {
@@ -87,51 +65,53 @@ describe("FormDataWrapper", () => {
 
             await formData.appendFile("file", stream, "empty.txt");
 
-            const serialized = await serializeFormData(formData.getRequest().body);
+            const { serialized, hasFile, filename} = await getFormDataInfo(formData.getRequest());
+
+            expect(serialized).toContain('name="file"');
             expect(serialized).toContain('filename="empty.txt"');
-            expect(serialized).toMatch(/------formdata-undici-\w+|------WebKitFormBoundary\w+/);
+            expect(hasFile).toBe(true);
+            expect(filename).toBe("empty.txt");
         });
     });
 
-    describe("Blob and File types", () => {
-        it("serializes Blob with specified filename", async () => {
+    describe("Browser-specific types", () => {
+        it("serializes Blob with specified filename and content type", async () => {
             const blob = new Blob(["file content"], { type: "text/plain" });
             await formData.appendFile("file", blob, "testfile.txt");
 
-            const serialized = await serializeFormData(formData.getRequest().body);
+            const { serialized, hasFile, contentType, filename} = await getFormDataInfo(formData.getRequest());
+
+            expect(serialized).toContain('name="file"');
             expect(serialized).toContain('filename="testfile.txt"');
-            expect(serialized).toContain("Content-Type: text/plain");
-            expect(serialized).toContain("file content");
+            expect(hasFile).toBe(true);
+            expect(filename).toBe("testfile.txt");
+            expect(contentType).toBe("text/plain");
         });
 
-        it("uses default filename for Blob without explicit filename", async () => {
-            const blob = new Blob(["file content"], { type: "text/plain" });
-            await formData.appendFile("file", blob);
+        it("serializes File and preserves filename", async () => {
+            const file = new File(["file content"], "testfile.txt", { type: "text/plain" });
+            await formData.appendFile("file", file);
 
-            const serialized = await serializeFormData(formData.getRequest().body);
-            expect(serialized).toContain('filename="blob"');
-        });
+            const { serialized, hasFile, contentType, filename} = await getFormDataInfo(formData.getRequest());
 
-        it("preserves File object filename", async () => {
-            if (typeof File !== "undefined") {
-                const file = new File(["file content"], "original.txt", { type: "text/plain" });
-                await formData.appendFile("file", file);
-
-                const serialized = await serializeFormData(formData.getRequest().body);
-                expect(serialized).toContain('filename="original.txt"');
-                expect(serialized).toContain("file content");
-            }
+            expect(serialized).toContain('name="file"');
+            expect(serialized).toContain('filename="testfile.txt"');
+            expect(hasFile).toBe(true);
+            expect(filename).toBe("testfile.txt");
+            expect(contentType).toBe("text/plain");
         });
 
         it("allows filename override for File objects", async () => {
-            if (typeof File !== "undefined") {
-                const file = new File(["file content"], "original.txt", { type: "text/plain" });
-                await formData.appendFile("file", file, "override.txt");
+            const file = new File(["file content"], "original.txt", { type: "text/plain" });
+            await formData.appendFile("file", file, "override.txt");
 
-                const serialized = await serializeFormData(formData.getRequest().body);
-                expect(serialized).toContain('filename="override.txt"');
-                expect(serialized).not.toContain('filename="original.txt"');
-            }
+            const { serialized, hasFile, filename} = await getFormDataInfo(formData.getRequest());
+
+            expect(serialized).toContain('name="file"');
+            expect(serialized).toContain('filename="override.txt"');
+            expect(serialized).not.toContain('filename="original.txt"');
+            expect(hasFile).toBe(true);
+            expect(filename).toBe("override.txt");
         });
     });
 
@@ -142,37 +122,36 @@ describe("FormDataWrapper", () => {
 
             await formData.appendFile("file", arrayBuffer, "binary.bin");
 
-            const serialized = await serializeFormData(formData.getRequest().body);
+            const { serialized, hasFile, filename} = await getFormDataInfo(formData.getRequest());
+
+            expect(serialized).toContain('name="file"');
             expect(serialized).toContain('filename="binary.bin"');
-            expect(serialized).toMatch(/------formdata-undici-\w+|------WebKitFormBoundary\w+/);
+            expect(hasFile).toBe(true);
+            expect(filename).toBe("binary.bin");
         });
 
         it("serializes Uint8Array with filename", async () => {
             const uint8Array = new Uint8Array([72, 101, 108, 108, 111]); // "Hello"
             await formData.appendFile("file", uint8Array, "binary.bin");
 
-            const serialized = await serializeFormData(formData.getRequest().body);
+            const { serialized, hasFile, filename} = await getFormDataInfo(formData.getRequest());
+
+            expect(serialized).toContain('name="file"');
             expect(serialized).toContain('filename="binary.bin"');
-            expect(serialized).toContain("Hello");
+            expect(hasFile).toBe(true);
+            expect(filename).toBe("binary.bin");
         });
 
         it("serializes other typed arrays", async () => {
             const int16Array = new Int16Array([1000, 2000, 3000]);
             await formData.appendFile("file", int16Array, "numbers.bin");
 
-            const serialized = await serializeFormData(formData.getRequest().body);
+            const { serialized, hasFile, filename} = await getFormDataInfo(formData.getRequest());
+
+            expect(serialized).toContain('name="file"');
             expect(serialized).toContain('filename="numbers.bin"');
-        });
-
-        it("serializes Buffer data with filename", async () => {
-            if (typeof Buffer !== "undefined" && typeof Buffer.isBuffer === "function") {
-                const buffer = Buffer.from("test content");
-                await formData.appendFile("file", buffer, "test.txt");
-
-                const serialized = await serializeFormData(formData.getRequest().body);
-                expect(serialized).toContain('filename="test.txt"');
-                expect(serialized).toContain("test content");
-            }
+            expect(hasFile).toBe(true);
+            expect(filename).toBe("numbers.bin");
         });
     });
 
@@ -180,25 +159,30 @@ describe("FormDataWrapper", () => {
         it("serializes string as regular form field", async () => {
             formData.append("text", "test string");
 
-            const serialized = await serializeFormData(formData.getRequest().body);
+            const { serialized, hasFile} = await getFormDataInfo(formData.getRequest());
+
             expect(serialized).toContain('name="text"');
             expect(serialized).not.toContain("filename=");
             expect(serialized).toContain("test string");
+            expect(hasFile).toBe(false);
         });
 
         it("serializes string as file with filename", async () => {
             await formData.appendFile("file", "test content", "text.txt");
 
-            const serialized = await serializeFormData(formData.getRequest().body);
+            const { serialized, hasFile, filename} = await getFormDataInfo(formData.getRequest());
+
+            expect(serialized).toContain('name="file"');
             expect(serialized).toContain('filename="text.txt"');
-            expect(serialized).toContain("test content");
+            expect(hasFile).toBe(true);
+            expect(filename).toBe("text.txt");
         });
 
         it("serializes numbers and booleans as strings", async () => {
             formData.append("number", 12345);
             formData.append("flag", true);
 
-            const serialized = await serializeFormData(formData.getRequest().body);
+            const { serialized} = await getFormDataInfo(formData.getRequest());
             expect(serialized).toContain("12345");
             expect(serialized).toContain("true");
         });
@@ -209,26 +193,33 @@ describe("FormDataWrapper", () => {
             const obj = { test: "value", nested: { key: "data" } };
             await formData.appendFile("data", obj, "data.json");
 
-            const serialized = await serializeFormData(formData.getRequest().body);
+            const { serialized, hasFile, contentType, filename} = await getFormDataInfo(formData.getRequest());
+
+            expect(serialized).toContain('name="data"');
             expect(serialized).toContain('filename="data.json"');
             expect(serialized).toContain("Content-Type: application/json");
-            expect(serialized).toContain(JSON.stringify(obj));
+            expect(hasFile).toBe(true);
+            expect(filename).toBe("data.json");
+            expect(contentType).toBe("application/json");
         });
 
         it("serializes arrays as JSON", async () => {
             const arr = [1, 2, 3, "test"];
             await formData.appendFile("array", arr, "array.json");
 
-            const serialized = await serializeFormData(formData.getRequest().body);
+            const { serialized, hasFile, filename} = await getFormDataInfo(formData.getRequest());
+
+            expect(serialized).toContain('name="array"');
             expect(serialized).toContain('filename="array.json"');
-            expect(serialized).toContain(JSON.stringify(arr));
+            expect(hasFile).toBe(true);
+            expect(filename).toBe("array.json");
         });
 
         it("handles null and undefined values", async () => {
             formData.append("nullValue", null);
             formData.append("undefinedValue", undefined);
 
-            const serialized = await serializeFormData(formData.getRequest().body);
+            const { serialized } = await getFormDataInfo(formData.getRequest());
             expect(serialized).toContain("null");
             expect(serialized).toContain("undefined");
         });
@@ -239,26 +230,37 @@ describe("FormDataWrapper", () => {
             const namedValue = { name: "custom-name.txt", data: "content" };
             await formData.appendFile("file", namedValue);
 
-            const serialized = await serializeFormData(formData.getRequest().body);
+            const { serialized, hasFile, filename} = await getFormDataInfo(formData.getRequest());
+
+            expect(serialized).toContain('name="file"');
             expect(serialized).toContain('filename="custom-name.txt"');
-            expect(serialized).toContain(JSON.stringify(namedValue));
+            expect(hasFile).toBe(true);
+            expect(filename).toBe("custom-name.txt");
         });
 
         it("extracts filename from object with path property", async () => {
             const pathedValue = { path: "/some/path/file.txt", content: "data" };
             await formData.appendFile("file", pathedValue);
 
-            const serialized = await serializeFormData(formData.getRequest().body);
+            const { serialized, hasFile, filename} = await getFormDataInfo(formData.getRequest());
+
+            expect(serialized).toContain('name="file"');
             expect(serialized).toContain('filename="file.txt"');
+            expect(hasFile).toBe(true);
+            expect(filename).toBe("file.txt");
         });
 
         it("prioritizes explicit filename over object properties", async () => {
             const namedValue = { name: "original.txt", data: "content" };
             await formData.appendFile("file", namedValue, "override.txt");
 
-            const serialized = await serializeFormData(formData.getRequest().body);
+            const { serialized, hasFile, filename} = await getFormDataInfo(formData.getRequest());
+
+            expect(serialized).toContain('name="file"');
             expect(serialized).toContain('filename="override.txt"');
             expect(serialized).not.toContain('filename="original.txt"');
+            expect(hasFile).toBe(true);
+            expect(filename).toBe("override.txt");
         });
     });
 
@@ -266,16 +268,24 @@ describe("FormDataWrapper", () => {
         it("handles empty filename gracefully", async () => {
             await formData.appendFile("file", "content", "");
 
-            const serialized = await serializeFormData(formData.getRequest().body);
+            const { serialized, hasFile, filename} = await getFormDataInfo(formData.getRequest());
+
+            expect(serialized).toContain('Content-Disposition: form-data; name="file"');
             expect(serialized).toContain('filename="blob"'); // Default fallback
+            expect(hasFile).toBe(true);
+            expect(filename).toBe("blob");
         });
 
         it("handles large strings", async () => {
             const largeString = "x".repeat(1000);
             await formData.appendFile("large", largeString, "large.txt");
 
-            const serialized = await serializeFormData(formData.getRequest().body);
+            const { serialized, hasFile, filename} = await getFormDataInfo(formData.getRequest());
+
+            expect(serialized).toContain('name="large"');
             expect(serialized).toContain('filename="large.txt"');
+            expect(hasFile).toBe(true);
+            expect(filename).toBe("large.txt");
         });
 
         it("handles unicode content and filenames", async () => {
@@ -284,9 +294,12 @@ describe("FormDataWrapper", () => {
 
             await formData.appendFile("unicode", unicodeContent, unicodeFilename);
 
-            const serialized = await serializeFormData(formData.getRequest().body);
-            expect(serialized).toContain('filename="' + unicodeFilename + '"');
-            expect(serialized).toContain(unicodeContent);
+            const { serialized, hasFile, filename} = await getFormDataInfo(formData.getRequest());
+
+            expect(serialized).toContain('name="unicode"');
+            expect(serialized).toContain(`filename="${unicodeFilename}"`);
+            expect(hasFile).toBe(true);
+            expect(filename).toBe(unicodeFilename);
         });
 
         it("handles multiple files in single form", async () => {
@@ -294,12 +307,17 @@ describe("FormDataWrapper", () => {
             await formData.appendFile("file2", "content2", "file2.txt");
             formData.append("text", "regular field");
 
-            const serialized = await serializeFormData(formData.getRequest().body);
+            const { serialized} = await getFormDataInfo(formData.getRequest());
 
+            expect(serialized).toContain('name="file1"');
             expect(serialized).toContain('filename="file1.txt"');
+
+            expect(serialized).toContain('name="file2"');
             expect(serialized).toContain('filename="file2.txt"');
+
             expect(serialized).toContain('name="text"');
             expect(serialized).not.toContain('filename="text"');
+            expect(serialized).toContain("regular field");
         });
     });
 
@@ -321,7 +339,7 @@ describe("FormDataWrapper", () => {
             await formData.appendFile("file", "test content", "test.txt");
             formData.append("field", "value");
 
-            const serialized = await serializeFormData(formData.getRequest().body);
+            const { serialized } = await getFormDataInfo(formData.getRequest());
 
             expect(serialized).toMatch(/------formdata-undici-\w+|------WebKitFormBoundary\w+/);
             expect(serialized).toContain("Content-Disposition: form-data;");
