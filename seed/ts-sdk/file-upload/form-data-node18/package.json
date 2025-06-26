@@ -61,7 +61,8 @@
     "browser": {
         "fs": false,
         "os": false,
-        "path": false
+        "path": false,
+        "stream": false
     },
     "packageManager": "yarn@1.22.22"
 }

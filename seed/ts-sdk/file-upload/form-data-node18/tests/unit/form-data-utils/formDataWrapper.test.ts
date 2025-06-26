@@ -16,10 +16,11 @@ describe("CrossPlatformFormData", () => {
         });
 
         it("should append a Readable stream with a specified filename", async () => {
-            const value = Readable.from(["file content"]);
+            const largeContent = Buffer.alloc(50 * 1024 * 1024, 'x'); // 50MB of 'x'
+            const largeStream = Readable.from([largeContent]);
             const filename = "testfile.txt";
 
-            await formData.appendFile("file", value, filename);
+            await formData.appendFile("file", largeStream, filename);
 
             const request = formData.getRequest();
             expect(request.body.get("file").name).toBe(filename);

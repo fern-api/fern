@@ -123,7 +123,8 @@ export class CoreUtilitiesManager {
             await Promise.all(
                 Object.entries(this.referencedCoreUtilities).map(async ([name, utility]) => {
                     const { patterns, ignore } = utility.getFilesPatterns({
-                        streamType: this.streamType
+                        streamType: this.streamType,
+                        formDataSupport: this.formDataSupport,
                     });
 
                     const foundFiles = await glob(patterns, {
