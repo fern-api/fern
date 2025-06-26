@@ -9,13 +9,11 @@ import { GithubOutputMode, OutputMode } from "@fern-fern/generator-exec-sdk/api"
 import {
     EnvironmentId,
     EnvironmentUrl,
-    FernFilepath,
     HttpEndpoint,
     HttpMethod,
     HttpService,
     IntermediateRepresentation,
     Name,
-    SdkRequestBodyType,
     SdkRequestWrapper,
     ServiceId,
     StreamingResponse,
@@ -482,36 +480,6 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         });
     }
 
-    public getEndpointRequestType({
-        endpoint,
-        serviceId
-    }: {
-        endpoint: HttpEndpoint;
-        serviceId: ServiceId;
-    }): go.Type | undefined {
-        const sdkRequest = endpoint.sdkRequest;
-        if (sdkRequest == null) {
-            return undefined;
-        }
-        switch (sdkRequest.shape.type) {
-            case "justRequestBody":
-                return this.getEndpointRequestBodyType(sdkRequest.shape.value);
-            case "wrapper": {
-                const location = this.getLocationForWrappedRequest(serviceId);
-                return go.Type.pointer(
-                    go.Type.reference(
-                        go.typeReference({
-                            name: this.getClassName(sdkRequest.shape.wrapperName),
-                            importPath: location.importPath
-                        })
-                    )
-                );
-            }
-            default:
-                assertNever(sdkRequest.shape);
-        }
-    }
-
     public shouldSkipWrappedRequest({
         endpoint,
         wrapper
@@ -589,18 +557,6 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
             importPath: [this.getRootImportPath(), ...parts].join("/"),
             directory: RelativeFilePath.of(parts.join("/"))
         };
-    }
-
-    private getEndpointRequestBodyType(requestBodyType: SdkRequestBodyType): go.Type {
-        switch (requestBodyType.type) {
-            case "typeReference":
-                return this.goTypeMapper.convert({ reference: requestBodyType.requestBodyType });
-            case "bytes": {
-                return go.Type.reference(this.getIoReaderTypeReference());
-            }
-            default:
-                assertNever(requestBodyType);
-        }
     }
 
     private callInternalFunc(name: string, arguments_: go.AstNode[], multiline: boolean = true): go.FuncInvocation {

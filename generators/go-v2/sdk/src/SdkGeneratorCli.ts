@@ -13,7 +13,6 @@ import { ModuleConfigWriter } from "./module/ModuleConfigWriter";
 import { RawClientGenerator } from "./raw-client/RawClientGenerator";
 import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest";
 import { convertIr } from "./utils/convertIr";
-import { WireTestGenerator } from "./wiretest/WireTestGenerator";
 
 export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     protected constructContext({
@@ -165,18 +164,6 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
             case "direct":
             default:
                 return hasSnippetFilepath;
-        }
-    }
-
-    private generateWireTests(context: SdkGeneratorContext) {
-        const wireTestGenerator = new WireTestGenerator(context);
-        for (const subpackage of Object.values(context.ir.subpackages)) {
-            const serviceId = subpackage.service != null ? subpackage.service : undefined;
-            if (serviceId == null) {
-                continue;
-            }
-            const service = context.getHttpServiceOrThrow(serviceId);
-            context.project.addGoFiles(wireTestGenerator.generate({ serviceId, endpoints: service.endpoints }));
         }
     }
 }

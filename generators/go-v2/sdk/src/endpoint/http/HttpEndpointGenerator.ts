@@ -1,5 +1,3 @@
-import { write } from "fs";
-
 import { assertNever } from "@fern-api/core-utils";
 import { go } from "@fern-api/go-ast";
 

@@ -3,12 +3,7 @@ import { go } from "@fern-api/go-ast";
 import { HttpEndpoint, HttpService, SdkRequest, TypeReference } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import {
-    EndpointRequest,
-    HeaderParameterCodeBlock,
-    QueryParameterCodeBlock,
-    RequestBodyCodeBlock
-} from "./EndpointRequest";
+import { EndpointRequest } from "./EndpointRequest";
 
 export class ReferencedEndpointRequest extends EndpointRequest {
     private requestBodyShape: TypeReference;
@@ -26,23 +21,5 @@ export class ReferencedEndpointRequest extends EndpointRequest {
 
     public getRequestParameterType(): go.Type {
         return this.context.goTypeMapper.convert({ reference: this.requestBodyShape });
-    }
-
-    public getRequestReference(): go.AstNode {
-        return go.codeblock(this.getRequestParameterName());
-    }
-
-    public getQueryParameterCodeBlock(): QueryParameterCodeBlock | undefined {
-        return undefined;
-    }
-
-    public getHeaderParameterCodeBlock(): HeaderParameterCodeBlock | undefined {
-        return undefined;
-    }
-
-    public getRequestBodyCodeBlock(): RequestBodyCodeBlock | undefined {
-        return {
-            requestBodyReference: go.codeblock(this.getRequestParameterName())
-        };
     }
 }

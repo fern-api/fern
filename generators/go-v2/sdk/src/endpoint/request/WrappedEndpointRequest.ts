@@ -1,22 +1,9 @@
 import { go } from "@fern-api/go-ast";
 
-import {
-    HttpEndpoint,
-    HttpService,
-    Name,
-    SdkRequest,
-    SdkRequestWrapper,
-    ServiceId,
-    TypeReference
-} from "@fern-fern/ir-sdk/api";
+import { HttpEndpoint, HttpService, SdkRequest, SdkRequestWrapper, ServiceId } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import {
-    EndpointRequest,
-    HeaderParameterCodeBlock,
-    QueryParameterCodeBlock,
-    RequestBodyCodeBlock
-} from "./EndpointRequest";
+import { EndpointRequest } from "./EndpointRequest";
 
 export declare namespace WrappedEndpointRequest {
     interface Args {
@@ -43,25 +30,5 @@ export class WrappedEndpointRequest extends EndpointRequest {
         return go.Type.pointer(
             go.Type.reference(this.context.getRequestWrapperTypeReference(this.serviceId, this.wrapper.wrapperName))
         );
-    }
-
-    public getRequestReference(): go.AstNode {
-        return go.codeblock(this.getRequestParameterName());
-    }
-
-    public getQueryParameterCodeBlock(): QueryParameterCodeBlock | undefined {
-        // TODO: Implement this.
-        return undefined;
-    }
-
-    public getHeaderParameterCodeBlock(): HeaderParameterCodeBlock | undefined {
-        // TODO: Implement this.
-        return undefined;
-    }
-
-    public getRequestBodyCodeBlock(): RequestBodyCodeBlock | undefined {
-        return {
-            requestBodyReference: go.codeblock(this.getRequestParameterName())
-        };
     }
 }
