@@ -29,6 +29,12 @@ features:
       > and your client will wait indefinitely for a response (unless the per-request, context-based timeout
       > is used).
 
+  - id: RESPONSE_HEADERS
+    advanced: true
+    description: |
+      You can access the raw HTTP response data by using the `WithRawResponse` field on the client. This is useful
+      when you need to examine the response headers received from the API call.
+
   - id: RETRIES
     advanced: true
     description: |

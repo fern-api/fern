@@ -18,6 +18,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static CLIENT_VARIABLE_NAME = "client";
 
     private static ENVIRONMENTS_FEATURE_ID: FernGeneratorCli.FeatureId = "ENVIRONMENTS";
+    private static RESPONSE_HEADERS_FEATURE_ID: FernGeneratorCli.FeatureId = "RESPONSE_HEADERS";
 
     private readonly context: SdkGeneratorContext;
     private readonly endpointsById: Record<EndpointId, EndpointWithFilepath> = {};
@@ -68,6 +69,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             }
         > = {
             [ReadmeSnippetBuilder.ENVIRONMENTS_FEATURE_ID]: { renderer: this.renderEnvironmentsSnippet.bind(this) },
+            [ReadmeSnippetBuilder.RESPONSE_HEADERS_FEATURE_ID]: { renderer: this.renderWithRawResponseHeadersSnippet.bind(this) },
             [FernGeneratorCli.StructuredFeatureId.RequestOptions]: {
                 renderer: this.renderRequestOptionsSnippet.bind(this)
             },
@@ -120,12 +122,21 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     ): string[] {
         return this.getEndpointsForFeature(featureId).filter(predicate).map(templateRenderer);
     }
-
     private renderEnvironmentsSnippet(endpoint: EndpointWithFilepath): string {
         return this.writeCode(dedent`
             ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} := ${this.rootPackageClientName}.NewClient(
                 option.WithBaseURL(${this.getBaseUrlOptionValue()}),
             )
+        `);
+    }
+
+    private renderWithRawResponseHeadersSnippet(endpoint: EndpointWithFilepath): string {
+        return this.writeCode(dedent`
+            response, err := ${this.getWithRawResponseMethodCall(endpoint)}(...)
+            if err != nil {
+                return err
+            }
+            fmt.Printf("Got response headers: %v", response.Header)
         `);
     }
 
@@ -193,28 +204,28 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                 ...
             )
             if err != nil {
-                return nil, err
+                return err
             }
             iter := page.Iterator()
             for iter.Next(ctx) {
                 item := iter.Current()
-                fmt.Printf("Got item: %v\\n", *item)
+                fmt.Printf("Got item: %v", *item)
             }
             if err := iter.Err(); err != nil {
-                // Handle the error!
+                return err
             }
 
             // Alternatively, iterate page-by-page.
             for page != nil {
                 for _, item := range page.Results {
-                    fmt.Printf("Got item: %v\\n", *item)
+                    fmt.Printf("Got item: %v", *item)
                 }
                 page, err = page.GetNextPage(ctx)
                 if errors.Is(err, core.ErrNoPages) {
                     break
                 }
                 if err != nil {
-                    // Handle the error!
+                    return err
                 }
             }
         `);
@@ -276,6 +287,12 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
     private getMethodCall(endpoint: EndpointWithFilepath): string {
         return `${this.getAccessFromRootClient(endpoint.fernFilepath)}.${this.getEndpointMethodName(
+            endpoint.endpoint
+        )}`;
+    }
+    
+    private getWithRawResponseMethodCall(endpoint: EndpointWithFilepath): string {
+        return `${this.getAccessFromRootClient(endpoint.fernFilepath)}.WithRawResponse.${this.getEndpointMethodName(
             endpoint.endpoint
         )}`;
     }
