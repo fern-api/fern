@@ -48,7 +48,6 @@ function maxHeapComparator(
 function heapToSortedArray<T>(heap: Heap<T>) {
     const result: Array<T> = [];
     while (heap.size() > 0) {
-        // Each pop() removes the current "worst", so we build the array in reverse order of "goodness"
         const item = heap.pop();
         if (item) {
             result.push(item);
