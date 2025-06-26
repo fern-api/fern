@@ -2707,6 +2707,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.createAUser",
           "name": {
             "originalName": "createAUser",
@@ -4296,6 +4297,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.getAUser",
           "name": {
             "originalName": "getAUser",

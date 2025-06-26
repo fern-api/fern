@@ -3,6 +3,7 @@ using SeedPagination.Core;
 
 namespace SeedPagination;
 
+[Serializable]
 public record ListWithGlobalConfigRequest
 {
     [JsonIgnore]

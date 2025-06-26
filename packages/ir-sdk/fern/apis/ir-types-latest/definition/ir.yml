@@ -1,6 +1,7 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
 imports:
+  audience: audience.yml
   auth: auth.yml
   commons: commons.yml
   constants: constants.yml
@@ -64,6 +65,7 @@ types:
       publishConfig: optional<publish.PublishingConfig>
       dynamic: optional<dynamic.DynamicIntermediateRepresentation>
       selfHosted: optional<boolean>
+      audiences: optional<list<audience.AudienceDefinition>>
 
   ReadmeConfig:
     docs: |

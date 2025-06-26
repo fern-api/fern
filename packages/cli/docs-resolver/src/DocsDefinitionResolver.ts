@@ -179,7 +179,10 @@ export class DocsDefinitionResolver {
             });
         }
 
-        const filesToUploadSet = collectFilesFromDocsConfig(this.parsedDocsConfig);
+        const filesToUploadSet = await collectFilesFromDocsConfig({
+            parsedDocsConfig: this.parsedDocsConfig,
+            docsWorkspace: this.docsWorkspace
+        });
 
         // preprocess markdown files to extract image paths
         for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
@@ -218,11 +221,10 @@ export class DocsDefinitionResolver {
         });
 
         // postprocess markdown files after uploading all images to replace the image paths in the markdown files with the fileIDs
-        const basePath = this.getDocsBasePath();
 
         // TODO: include more (canonical) slugs from the navigation tree
         const markdownFilesToPathName: Record<AbsoluteFilePath, string> =
-            await this.getMarkdownFilesToFullyQualifiedPathNames(basePath);
+            await this.getMarkdownFilesToFullyQualifiedPathNames();
 
         for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
             this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = replaceImagePathsAndUrls(
@@ -345,12 +347,10 @@ export class DocsDefinitionResolver {
 
     /**
      * Creates a map of markdown files to their fully qualified pathnames, based on the entire navigation tree
-     * @param basePath - the base path of the docs
+     * FernNavigation NodeCollector already includes basepath in slugmap
      * @returns a map of markdown files to their fully qualified pathnames
      */
-    private async getMarkdownFilesToFullyQualifiedPathNames(
-        basePath: string
-    ): Promise<Record<AbsoluteFilePath, string>> {
+    private async getMarkdownFilesToFullyQualifiedPathNames(): Promise<Record<AbsoluteFilePath, string>> {
         const markdownFilesToPathName: Record<AbsoluteFilePath, string> = {};
         const root = FernNavigation.migrate.FernNavigationV1ToLatest.create().root(await this.toRootNode());
 
@@ -367,7 +367,7 @@ export class DocsDefinitionResolver {
             }
 
             const absoluteFilePath = join(this.docsWorkspace.absoluteFilePath, RelativeFilePath.of(pageId));
-            markdownFilesToPathName[absoluteFilePath] = urlJoin(basePath, slug);
+            markdownFilesToPathName[absoluteFilePath] = slug;
         });
         return markdownFilesToPathName;
     }

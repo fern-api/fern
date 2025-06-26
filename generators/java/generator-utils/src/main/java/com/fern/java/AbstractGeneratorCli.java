@@ -232,8 +232,9 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
 
         Optional<MavenGithubPublishInfo> mavenGithubPublishInfo =
                 githubOutputMode.getPublishInfo().flatMap(githubPublishInfo -> githubPublishInfo.getMaven());
-        Boolean addSignatureBlock = mavenGithubPublishInfo.isPresent()
-                && mavenGithubPublishInfo.get().getSignature().isPresent();
+        Boolean addSignatureBlock = (mavenGithubPublishInfo.isPresent()
+                        && mavenGithubPublishInfo.get().getSignature().isPresent())
+                || customConfigPublishToCentral(generatorConfig);
         // add project level files
         addRootProjectFiles(maybeMavenCoordinate, true, addSignatureBlock, generatorConfig);
         addGeneratedFile(GithubWorkflowGenerator.getGithubWorkflow(
@@ -243,6 +244,10 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
         generatedFiles.forEach(generatedFile -> generatedFile.write(outputDirectory, false, Optional.empty()));
         runCommandBlocking(new String[] {"gradle", "wrapper"}, outputDirectory, Collections.emptyMap());
         runCommandBlocking(new String[] {"gradle", "spotlessApply"}, outputDirectory, Collections.emptyMap());
+    }
+
+    public boolean customConfigPublishToCentral(GeneratorConfig _generatorConfig) {
+        return false;
     }
 
     public abstract void runInGithubModeHook(

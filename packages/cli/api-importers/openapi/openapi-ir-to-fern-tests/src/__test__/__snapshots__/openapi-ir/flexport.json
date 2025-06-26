@@ -36498,13 +36498,6 @@
                                           },
                                           "type": "primitive"
                                         },
-                                        "country_of_origin": {
-                                          "value": {
-                                            "value": "China",
-                                            "type": "string"
-                                          },
-                                          "type": "primitive"
-                                        },
                                         "client_verified": {
                                           "value": {
                                             "value": true,
@@ -37297,13 +37290,6 @@
                                 "product_category": {
                                   "value": {
                                     "value": "Cosmetics",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "country_of_origin": {
-                                  "value": {
-                                    "value": "China",
                                     "type": "string"
                                   },
                                   "type": "primitive"
@@ -38961,13 +38947,6 @@
                               },
                               "type": "primitive"
                             },
-                            "country_of_origin": {
-                              "value": {
-                                "value": "China",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
                             "client_verified": {
                               "value": {
                                 "value": true,
@@ -38996,37 +38975,6 @@
                                     "value": {
                                       "value": {
                                         "value": "blue",
-                                        "type": "string"
-                                      },
-                                      "type": "primitive"
-                                    }
-                                  },
-                                  "type": "object"
-                                }
-                              ],
-                              "type": "array"
-                            },
-                            "hs_codes": {
-                              "value": [
-                                {
-                                  "properties": {
-                                    "_object": {
-                                      "value": {
-                                        "value": "/hs_code",
-                                        "type": "string"
-                                      },
-                                      "type": "primitive"
-                                    },
-                                    "code": {
-                                      "value": {
-                                        "value": "0301:00",
-                                        "type": "string"
-                                      },
-                                      "type": "primitive"
-                                    },
-                                    "country_code": {
-                                      "value": {
-                                        "value": "US",
                                         "type": "string"
                                       },
                                       "type": "primitive"
@@ -39558,13 +39506,6 @@
                       },
                       "type": "primitive"
                     },
-                    "country_of_origin": {
-                      "value": {
-                        "value": "China",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "client_verified": {
                       "value": {
                         "value": true,
@@ -39593,37 +39534,6 @@
                             "value": {
                               "value": {
                                 "value": "blue",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          },
-                          "type": "object"
-                        }
-                      ],
-                      "type": "array"
-                    },
-                    "hs_codes": {
-                      "value": [
-                        {
-                          "properties": {
-                            "_object": {
-                              "value": {
-                                "value": "/hs_code",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "code": {
-                              "value": {
-                                "value": "0301:00",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "country_code": {
-                              "value": {
-                                "value": "US",
                                 "type": "string"
                               },
                               "type": "primitive"
@@ -40125,13 +40035,6 @@
                       },
                       "type": "primitive"
                     },
-                    "country_of_origin": {
-                      "value": {
-                        "value": "China",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "client_verified": {
                       "value": {
                         "value": true,
@@ -40160,37 +40063,6 @@
                             "value": {
                               "value": {
                                 "value": "blue",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          },
-                          "type": "object"
-                        }
-                      ],
-                      "type": "array"
-                    },
-                    "hs_codes": {
-                      "value": [
-                        {
-                          "properties": {
-                            "_object": {
-                              "value": {
-                                "value": "/hs_code",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "code": {
-                              "value": {
-                                "value": "0301:00",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "country_code": {
-                              "value": {
-                                "value": "US",
                                 "type": "string"
                               },
                               "type": "primitive"
@@ -40715,13 +40587,6 @@
                       },
                       "type": "primitive"
                     },
-                    "country_of_origin": {
-                      "value": {
-                        "value": "China",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "client_verified": {
                       "value": {
                         "value": true,
@@ -40750,37 +40615,6 @@
                             "value": {
                               "value": {
                                 "value": "blue",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            }
-                          },
-                          "type": "object"
-                        }
-                      ],
-                      "type": "array"
-                    },
-                    "hs_codes": {
-                      "value": [
-                        {
-                          "properties": {
-                            "_object": {
-                              "value": {
-                                "value": "/hs_code",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "code": {
-                              "value": {
-                                "value": "0301:00",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "country_code": {
-                              "value": {
-                                "value": "US",
                                 "type": "string"
                               },
                               "type": "primitive"
@@ -55518,13 +55352,6 @@
                                           },
                                           "type": "primitive"
                                         },
-                                        "country_of_origin": {
-                                          "value": {
-                                            "value": "China",
-                                            "type": "string"
-                                          },
-                                          "type": "primitive"
-                                        },
                                         "client_verified": {
                                           "value": {
                                             "value": true,
@@ -57604,13 +57431,6 @@
                                 "product_category": {
                                   "value": {
                                     "value": "Cosmetics",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "country_of_origin": {
-                                  "value": {
-                                    "value": "China",
                                     "type": "string"
                                   },
                                   "type": "primitive"
@@ -59787,13 +59607,6 @@
                                 "product_category": {
                                   "value": {
                                     "value": "Cosmetics",
-                                    "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "country_of_origin": {
-                                  "value": {
-                                    "value": "China",
                                     "type": "string"
                                   },
                                   "type": "primitive"

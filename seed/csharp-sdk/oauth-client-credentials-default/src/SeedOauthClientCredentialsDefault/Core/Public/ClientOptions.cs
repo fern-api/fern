@@ -1,10 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using SeedOauthClientCredentialsDefault.Core;
 
 namespace SeedOauthClientCredentialsDefault;
 
+[Serializable]
 public partial class ClientOptions
 {
     /// <summary>

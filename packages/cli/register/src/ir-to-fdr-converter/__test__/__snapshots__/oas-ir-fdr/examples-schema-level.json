@@ -285,6 +285,7 @@
             "responseBody": {
               "species": "Ferntacular",
               "height": 25.4,
+              "$ref": "#/components/examples/oakTree",
               "id": "foo"
             },
             "responseBodyV3": {
@@ -292,6 +293,7 @@
               "value": {
                 "species": "Ferntacular",
                 "height": 25.4,
+                "$ref": "#/components/examples/oakTree",
                 "id": "foo"
               }
             }
@@ -366,6 +368,7 @@
             "responseBody": {
               "species": "Ferntacular",
               "height": 25.4,
+              "$ref": "#/components/examples/oakTree",
               "id": "foo"
             },
             "responseBodyV3": {
@@ -373,6 +376,7 @@
               "value": {
                 "species": "Ferntacular",
                 "height": 25.4,
+                "$ref": "#/components/examples/oakTree",
                 "id": "foo"
               }
             }

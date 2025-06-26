@@ -97,8 +97,6 @@ export async function replaceReferencedCode({
                 .join("\n");
             replacement = replacement + "\n"; // add newline after the code block
             newMarkdown = newMarkdown.replace(matchString, replacement);
-
-            context.logger.error(`Generated markdown:\n${newMarkdown}`);
         } catch (e) {
             context.logger.warn(`Failed to read markdown file "${src}" referenced in ${absolutePathToMarkdownFile}`);
             break;

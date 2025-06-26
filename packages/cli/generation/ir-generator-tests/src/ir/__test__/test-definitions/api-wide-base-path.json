@@ -611,10 +611,12 @@
                     "transport": null,
                     "v2Examples": null,
                     "source": null,
+                    "audiences": null,
                     "availability": null,
                     "docs": null
                 }
-            ]
+            ],
+            "audiences": null
         }
     },
     "constants": {
@@ -909,6 +911,7 @@
         "environments": null,
         "generatorConfig": null
     },
+    "audiences": null,
     "subpackages": {
         "subpackage_service": {
             "name": {

@@ -1,4 +1,4 @@
-import { ImportsManager, Reference } from "@fern-typescript/commons";
+import { ExportsManager, ImportsManager, Reference } from "@fern-typescript/commons";
 import { ExpressErrorContext, GeneratedExpressError } from "@fern-typescript/contexts";
 import { ExpressErrorGenerator } from "@fern-typescript/express-error-generator";
 import { ErrorResolver } from "@fern-typescript/resolvers";
@@ -12,6 +12,7 @@ export declare namespace ExpressErrorContextImpl {
     export interface Init {
         sourceFile: SourceFile;
         importsManager: ImportsManager;
+        exportsManager: ExportsManager;
         errorDeclarationReferencer: ExpressErrorDeclarationReferencer;
         expressErrorGenerator: ExpressErrorGenerator;
         errorResolver: ErrorResolver;
@@ -21,6 +22,7 @@ export declare namespace ExpressErrorContextImpl {
 export class ExpressErrorContextImpl implements ExpressErrorContext {
     private sourceFile: SourceFile;
     private importsManager: ImportsManager;
+    private exportsManager: ExportsManager;
     private errorDeclarationReferencer: ExpressErrorDeclarationReferencer;
     private expressErrorGenerator: ExpressErrorGenerator;
     private errorResolver: ErrorResolver;
@@ -28,12 +30,14 @@ export class ExpressErrorContextImpl implements ExpressErrorContext {
     constructor({
         sourceFile,
         importsManager,
+        exportsManager,
         errorDeclarationReferencer,
         expressErrorGenerator,
         errorResolver
     }: ExpressErrorContextImpl.Init) {
         this.sourceFile = sourceFile;
         this.importsManager = importsManager;
+        this.exportsManager = exportsManager;
         this.errorDeclarationReferencer = errorDeclarationReferencer;
         this.expressErrorGenerator = expressErrorGenerator;
         this.errorResolver = errorResolver;
@@ -44,7 +48,8 @@ export class ExpressErrorContextImpl implements ExpressErrorContext {
             name: errorName,
             importStrategy: { type: "fromRoot", namespaceImport: this.errorDeclarationReferencer.namespaceExport },
             referencedIn: this.sourceFile,
-            importsManager: this.importsManager
+            importsManager: this.importsManager,
+            exportsManager: this.exportsManager
         });
     }
 

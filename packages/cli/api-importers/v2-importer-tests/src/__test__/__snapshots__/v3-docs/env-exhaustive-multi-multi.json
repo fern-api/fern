@@ -689,6 +689,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_alpha.listPets",
           "name": {
             "originalName": "listPets",
@@ -841,6 +842,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_beta.listPets",
           "name": {
             "originalName": "listPets",
@@ -1912,5 +1914,6 @@
       "sdkName": "",
       "sdkVersion": ""
     }
-  }
+  },
+  "audiences": []
 }

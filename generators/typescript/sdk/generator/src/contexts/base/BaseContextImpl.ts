@@ -1,6 +1,7 @@
 import {
     CoreUtilitiesManager,
     DependencyManager,
+    ExportsManager,
     ExternalDependencies,
     ImportsManager,
     createExternalDependencies
@@ -18,6 +19,7 @@ export declare namespace BaseContextImpl {
         logger: Logger;
         sourceFile: SourceFile;
         importsManager: ImportsManager;
+        exportsManager: ExportsManager;
         dependencyManager: DependencyManager;
         coreUtilitiesManager: CoreUtilitiesManager;
         fernConstants: Constants;
@@ -25,6 +27,8 @@ export declare namespace BaseContextImpl {
         typeSchema: TypeSchemaContext;
         jsonContext: JsonContext;
         includeSerdeLayer: boolean;
+        relativePackagePath: string;
+        relativeTestPath: string;
     }
 }
 
@@ -43,13 +47,16 @@ export class BaseContextImpl implements BaseContext {
         logger,
         sourceFile,
         importsManager,
+        exportsManager,
         dependencyManager,
         coreUtilitiesManager,
         fernConstants,
         type,
         typeSchema,
         includeSerdeLayer,
-        jsonContext
+        jsonContext,
+        relativePackagePath,
+        relativeTestPath
     }: BaseContextImpl.Init) {
         this.logger = logger;
         this.sourceFile = sourceFile;
@@ -64,7 +71,10 @@ export class BaseContextImpl implements BaseContext {
         });
         this.coreUtilities = coreUtilitiesManager.getCoreUtilities({
             sourceFile,
-            importsManager
+            importsManager,
+            exportsManager,
+            relativePackagePath,
+            relativeTestPath
         });
     }
 }

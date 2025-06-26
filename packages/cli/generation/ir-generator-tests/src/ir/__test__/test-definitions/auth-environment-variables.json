@@ -324,6 +324,7 @@
                     "transport": null,
                     "v2Examples": null,
                     "source": null,
+                    "audiences": null,
                     "availability": null,
                     "docs": "GET request with custom api key"
                 },
@@ -576,10 +577,12 @@
                     "transport": null,
                     "v2Examples": null,
                     "source": null,
+                    "audiences": null,
                     "availability": null,
                     "docs": "GET request with custom api key"
                 }
-            ]
+            ],
+            "audiences": null
         }
     },
     "constants": {
@@ -1011,6 +1014,7 @@
         "environments": null,
         "generatorConfig": null
     },
+    "audiences": null,
     "subpackages": {
         "subpackage_service": {
             "name": {

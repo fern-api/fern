@@ -25936,6 +25936,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.List Jobs",
           "name": {
             "originalName": "List Jobs",
@@ -26168,6 +26169,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.Start Job",
           "name": {
             "originalName": "Start Job",
@@ -26417,6 +26419,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.Get Job Predictions",
           "name": {
             "originalName": "Get Job Predictions",
@@ -27118,6 +27121,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_getJobPredictions.get_job_artifacts",
           "name": {
             "originalName": "get_job_artifacts",
@@ -27291,6 +27295,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_getJobPredictions.get_job",
           "name": {
             "originalName": "get_job",
@@ -28649,5 +28654,6 @@
       "sdkName": "",
       "sdkVersion": ""
     }
-  }
+  },
+  "audiences": []
 }

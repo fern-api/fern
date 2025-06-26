@@ -4,6 +4,7 @@ using SeedEnum.Core;
 namespace SeedEnum;
 
 [JsonConverter(typeof(StringEnumSerializer<Color>))]
+[Serializable]
 public readonly record struct Color : IStringEnum
 {
     public static readonly Color Red = new(Values.Red);
@@ -52,6 +53,7 @@ public readonly record struct Color : IStringEnum
     /// <summary>
     /// Constant strings for enum values
     /// </summary>
+    [Serializable]
     public static class Values
     {
         public const string Red = "red";

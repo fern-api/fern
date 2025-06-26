@@ -676,7 +676,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -895,7 +895,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1008,7 +1008,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1340,7 +1340,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1399,7 +1399,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1416,7 +1416,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1474,7 +1474,7 @@
             "description": "Unique reference of a team",
             "key": "id",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -1487,7 +1487,7 @@
             "description": "Name of a team",
             "key": "name",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -1762,7 +1762,7 @@
           {
             "key": "probation_period",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -1796,7 +1796,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1988,7 +1988,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -2398,7 +2398,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -2414,7 +2414,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -2440,7 +2440,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -2476,7 +2476,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -2493,7 +2493,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -2540,7 +2540,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -2556,7 +2556,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -2572,7 +2572,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -2623,7 +2623,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "ContractToCreateSharedSeniority"
@@ -2664,7 +2664,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -2680,7 +2680,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "ContractToCreateSharedWorker"
@@ -2933,7 +2933,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -3620,7 +3620,7 @@
           {
             "key": "quantity",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -3643,7 +3643,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -3658,7 +3658,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -3678,7 +3678,7 @@
           {
             "key": "worksheet",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "id",
                 "value": "BasicTimesheetWorksheet"
@@ -3688,7 +3688,7 @@
           {
             "key": "reviewed_by",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "id",
                 "value": "BasicTimesheetReviewedBy"
@@ -4032,7 +4032,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -4149,7 +4149,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -4197,7 +4197,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -4270,7 +4270,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -5042,7 +5042,7 @@
           {
             "key": "quantity",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -5072,7 +5072,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -5087,7 +5087,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -5107,7 +5107,7 @@
           {
             "key": "worksheet",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "id",
                 "value": "BasicInvoiceAdjustmentWorksheet"
@@ -5117,7 +5117,7 @@
           {
             "key": "reviewed_by",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "id",
                 "value": "BasicInvoiceAdjustmentReviewedBy"
@@ -5328,7 +5328,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -5378,7 +5378,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "UniqueObjectIdentifier"
@@ -5515,7 +5515,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -5621,7 +5621,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -6069,7 +6069,7 @@
             "description": "Identifies the type of sub-territory within a country where local laws may apply. Some countries may have states, provinces, prefectures or regions.",
             "key": "state_type",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -6676,7 +6676,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -7350,7 +7350,7 @@
             "description": "Reviewer's information.",
             "key": "reviewed_by",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "id",
                 "value": "MilestoneReviewedBy"
@@ -7453,7 +7453,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -7526,7 +7526,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -8149,7 +8149,7 @@
           {
             "key": "reviewed_by",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "id",
                 "value": "OffCyclePaymentReviewedBy"
@@ -8414,7 +8414,7 @@
             "description": "Task description.",
             "key": "description",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -8511,7 +8511,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -8527,7 +8527,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -9863,7 +9863,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -9953,7 +9953,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "EorContractToCreateEmployeeAddress"
@@ -10016,7 +10016,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -10077,7 +10077,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -10117,7 +10117,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -10186,7 +10186,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -10281,7 +10281,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -10297,7 +10297,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "EorContractToCreateCompensationDetailsVariableCompensationType"
@@ -10397,7 +10397,7 @@
             "description": "Employee's job title.",
             "key": "job_title",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -10433,7 +10433,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "EorContractToCreateQuoteAdditionalFields"
@@ -10515,7 +10515,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -10557,7 +10557,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -10675,7 +10675,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -10891,7 +10891,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "EorContractCreatedHealthPlan"
@@ -11446,7 +11446,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "EorCountryValidationsHealthInsurance"
@@ -11528,7 +11528,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -12015,7 +12015,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "DateTimeString"
@@ -12026,7 +12026,7 @@
           {
             "key": "start_date",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "id",
                 "value": "DateTimeString"
@@ -12038,7 +12038,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "DateTimeString"
@@ -12052,7 +12052,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -12068,7 +12068,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -12084,7 +12084,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "EorTimeoffsBaseItem"
@@ -12121,7 +12121,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -12153,7 +12153,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "DateTimeString"
@@ -12167,7 +12167,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -12183,7 +12183,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -12207,7 +12207,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -12223,7 +12223,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "TimeoffsProfile"
@@ -12237,7 +12237,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "TimeoffsProfile"
@@ -12315,7 +12315,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "DateTimeString"
@@ -12329,7 +12329,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -12344,7 +12344,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "TimeoffsAttachments"
@@ -12571,7 +12571,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "UrlType"
@@ -13268,7 +13268,7 @@
             "description": "Webhook subscription name.",
             "key": "name",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -13281,7 +13281,7 @@
             "description": "Webhook subscription description.",
             "key": "description",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -13312,7 +13312,7 @@
             "description": "The webhook's signing key, used to generate webhook signatures.",
             "key": "signing_key",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -13371,7 +13371,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -13428,7 +13428,7 @@
             "description": "Webhook subscription name.",
             "key": "name",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -13441,7 +13441,7 @@
             "description": "Webhook subscription description.",
             "key": "description",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -13472,7 +13472,7 @@
             "description": "The webhook's signing key, used to generate webhook signatures.",
             "key": "signing_key",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -13548,7 +13548,7 @@
             "description": "Webhook subscription name.",
             "key": "name",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -13561,7 +13561,7 @@
             "description": "Webhook subscription description.",
             "key": "description",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -13592,7 +13592,7 @@
             "description": "The webhook's signing key, used to generate webhook signatures.",
             "key": "signing_key",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -13711,7 +13711,7 @@
             "description": "URL to worker's Deel avatar.",
             "key": "picUrl",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -13726,7 +13726,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -14495,7 +14495,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -14510,7 +14510,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "PaymentMethodEnum"
@@ -14554,7 +14554,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -14569,7 +14569,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -14585,7 +14585,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -14601,7 +14601,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -14617,7 +14617,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -14633,7 +14633,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -14649,7 +14649,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -15122,7 +15122,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "HrisDirectEmployeeVacationInfo"
@@ -16108,7 +16108,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -16163,7 +16163,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -16189,7 +16189,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -16205,7 +16205,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -16234,7 +16234,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {

@@ -86,7 +86,7 @@ public final class Movie {
 
   public interface RatingStage {
     /**
-     * The rating scale is one to five stars
+     * <p>The rating scale is one to five stars</p>
      */
     _FinalStage rating(double rating);
   }
@@ -131,7 +131,8 @@ public final class Movie {
     }
 
     /**
-     * The rating scale is one to five stars<p>The rating scale is one to five stars</p>
+     * <p>The rating scale is one to five stars</p>
+     * <p>The rating scale is one to five stars</p>
      * @return Reference to {@code this} so that method calls can be chained together.
      */
     @java.lang.Override

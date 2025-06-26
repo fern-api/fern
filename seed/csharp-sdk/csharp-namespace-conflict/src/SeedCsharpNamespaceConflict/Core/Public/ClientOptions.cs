@@ -1,10 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using SeedCsharpNamespaceConflict.Core;
 
 namespace SeedCsharpNamespaceConflict;
 
+[Serializable]
 public partial class ClientOptions
 {
     /// <summary>

@@ -1,10 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using SeedNoEnvironment.Core;
 
 namespace SeedNoEnvironment;
 
+[Serializable]
 public partial class ClientOptions
 {
     /// <summary>

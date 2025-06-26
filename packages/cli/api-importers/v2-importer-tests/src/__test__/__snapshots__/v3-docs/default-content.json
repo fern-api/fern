@@ -254,6 +254,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_generativelanguage.GenerateContent",
           "name": {
             "originalName": "GenerateContent",

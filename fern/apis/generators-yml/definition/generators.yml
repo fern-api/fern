@@ -182,7 +182,7 @@ types:
   ProtobufDefinitionSchema:
     properties:
       target:
-        type: string
+        type: optional<string>
         docs: The path to the target `.proto` file that defines the API (e.g. `proto/user/v1/user.proto`).
       root:
         type: string
@@ -288,6 +288,13 @@ types:
           If false, convert strings with format date to dates.
           Defaults to true.
         default: true
+      preserve-single-schema-oneof:
+        type: optional<boolean>
+        docs: |
+          If true, preserve oneOf structures with a single schema.
+          If false, unwrap oneOf structures with a single schema.
+          Defaults to false.
+        default: false
 
   FormParameterEncoding:
     enum:

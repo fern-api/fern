@@ -5,20 +5,21 @@ using SeedUndiscriminatedUnions.Core;
 
 namespace SeedUndiscriminatedUnions;
 
-public record Request
+[Serializable]
+public record Request : IJsonOnDeserialized
 {
-    [JsonPropertyName("union")]
-    public OneOf<object?, NamedMetadata>? Union { get; set; }
-
-    /// <summary>
-    /// Additional properties received from the response, if any.
-    /// </summary>
-    /// <remarks>
-    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
-    /// </remarks>
     [JsonExtensionData]
-    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+    private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
+
+    [JsonPropertyName("union")]
+    public OneOf<Dictionary<string, object?>?, NamedMetadata>? Union { get; set; }
+
+    [JsonIgnore]
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+
+    void IJsonOnDeserialized.OnDeserialized() =>
+        AdditionalProperties.CopyFromExtensionData(_extensionData);
 
     /// <inheritdoc />
     public override string ToString()

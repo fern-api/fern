@@ -953,7 +953,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -980,7 +980,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1019,7 +1019,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1058,7 +1058,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1096,7 +1096,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -2517,7 +2517,7 @@
       "shape": {
         "type": "alias",
         "value": {
-          "type": "optional",
+          "type": "nullable",
           "itemType": {
             "type": "id",
             "value": "Place"
@@ -2645,7 +2645,7 @@
       "shape": {
         "type": "alias",
         "value": {
-          "type": "optional",
+          "type": "nullable",
           "itemType": {
             "type": "id",
             "value": "OceanBookingDetail"
@@ -2702,7 +2702,7 @@
       "shape": {
         "type": "alias",
         "value": {
-          "type": "optional",
+          "type": "nullable",
           "itemType": {
             "type": "id",
             "value": "AirBookingDetail"
@@ -2729,7 +2729,7 @@
       "shape": {
         "type": "alias",
         "value": {
-          "type": "optional",
+          "type": "nullable",
           "itemType": {
             "type": "id",
             "value": "TruckingBookingDetail"
@@ -2950,7 +2950,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -3662,7 +3662,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -4434,7 +4434,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -5814,7 +5814,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -5844,7 +5844,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -6164,7 +6164,7 @@
       "shape": {
         "type": "alias",
         "value": {
-          "type": "optional",
+          "type": "nullable",
           "itemType": {
             "type": "id",
             "value": "OceanShipmentDetail"
@@ -6177,7 +6177,7 @@
       "shape": {
         "type": "alias",
         "value": {
-          "type": "optional",
+          "type": "nullable",
           "itemType": {
             "type": "id",
             "value": "AirShipmentDetail"
@@ -6435,7 +6435,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -7682,7 +7682,7 @@
       "shape": {
         "type": "alias",
         "value": {
-          "type": "optional",
+          "type": "nullable",
           "itemType": {
             "type": "id",
             "value": "Terminal"
@@ -7752,7 +7752,7 @@
       "shape": {
         "type": "alias",
         "value": {
-          "type": "optional",
+          "type": "nullable",
           "itemType": {
             "type": "id",
             "value": "AirShipmentLeg"
@@ -7913,7 +7913,7 @@
       "shape": {
         "type": "alias",
         "value": {
-          "type": "optional",
+          "type": "nullable",
           "itemType": {
             "type": "id",
             "value": "TruckingShipmentLeg"
@@ -7926,7 +7926,7 @@
       "shape": {
         "type": "alias",
         "value": {
-          "type": "optional",
+          "type": "nullable",
           "itemType": {
             "type": "id",
             "value": "RailShipmentLeg"
@@ -8033,7 +8033,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -8474,7 +8474,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -8489,7 +8489,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -8504,7 +8504,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -8520,7 +8520,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -8536,7 +8536,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -8552,7 +8552,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -8568,7 +8568,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -8584,7 +8584,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -8600,7 +8600,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -8616,7 +8616,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -8632,7 +8632,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -8648,7 +8648,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -8663,7 +8663,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -8679,7 +8679,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -8695,7 +8695,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -8711,7 +8711,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -15857,7 +15857,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -15872,7 +15872,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -22665,7 +22665,14 @@
                     "packed_loose"
                   ]
                 },
-                "new_metadata": {}
+                "new_metadata": {
+                  "PO": [
+                    "12345"
+                  ],
+                  "SKU": [
+                    "abc123"
+                  ]
+                }
               },
               "requestBodyV3": {
                 "type": "json",
@@ -22731,7 +22738,14 @@
                       "packed_loose"
                     ]
                   },
-                  "new_metadata": {}
+                  "new_metadata": {
+                    "PO": [
+                      "12345"
+                    ],
+                    "SKU": [
+                      "abc123"
+                    ]
+                  }
                 }
               },
               "responseStatusCode": 200
@@ -22772,7 +22786,10 @@
                     "country_code": "CN",
                     "timezone": "China/Shanghai",
                     "ref": "my-shanghai-address-ref",
-                    "unlocode": "CNSHA"
+                    "unlocode": "CNSHA",
+                    "street_address2": {},
+                    "state": {},
+                    "zip": {}
                   },
                   "new_port_of_loading": {
                     "_object": "/address",
@@ -22782,7 +22799,10 @@
                     "country_code": "CN",
                     "timezone": "China/Shanghai",
                     "ref": "my-shanghai-address-ref",
-                    "unlocode": "CNSHA"
+                    "unlocode": "CNSHA",
+                    "street_address2": {},
+                    "state": {},
+                    "zip": {}
                   },
                   "new_port_of_unloading": {
                     "_object": "/address",
@@ -22882,7 +22902,10 @@
                       "country_code": "CN",
                       "timezone": "China/Shanghai",
                       "ref": "my-shanghai-address-ref",
-                      "unlocode": "CNSHA"
+                      "unlocode": "CNSHA",
+                      "street_address2": {},
+                      "state": {},
+                      "zip": {}
                     },
                     "new_port_of_loading": {
                       "_object": "/address",
@@ -22892,7 +22915,10 @@
                       "country_code": "CN",
                       "timezone": "China/Shanghai",
                       "ref": "my-shanghai-address-ref",
-                      "unlocode": "CNSHA"
+                      "unlocode": "CNSHA",
+                      "street_address2": {},
+                      "state": {},
+                      "zip": {}
                     },
                     "new_port_of_unloading": {
                       "_object": "/address",
@@ -23152,7 +23178,8 @@
                       },
                       "units": 200
                     }
-                  ]
+                  ],
+                  "next": {}
                 }
               },
               "responseBodyV3": {
@@ -23182,7 +23209,8 @@
                         },
                         "units": 200
                       }
-                    ]
+                    ],
+                    "next": {}
                   }
                 }
               }
@@ -23903,7 +23931,11 @@
                             "country": "China",
                             "country_code": "CN",
                             "timezone": "America/Los_Angeles",
-                            "unlocode": "CNSZP"
+                            "unlocode": "CNSZP",
+                            "street_address2": {},
+                            "state": {},
+                            "zip": {},
+                            "ref": {}
                           },
                           "details": [
                             {
@@ -23926,7 +23958,11 @@
                             "country": "United States",
                             "country_code": "US",
                             "timezone": "America/Los_Angeles",
-                            "unlocode": "USLA"
+                            "unlocode": "USLA",
+                            "street_address2": {},
+                            "state": {},
+                            "zip": {},
+                            "ref": {}
                           },
                           "details": [
                             {
@@ -23947,7 +23983,8 @@
                             "hs_code": {
                               "_object": "/hs_code",
                               "code": "9101.00",
-                              "country_code": "US"
+                              "country_code": "US",
+                              "description": {}
                             }
                           }
                         ]
@@ -24018,9 +24055,11 @@
                         "sku": [
                           "abc123"
                         ]
-                      }
+                      },
+                      "notify_party": {}
                     }
-                  ]
+                  ],
+                  "next": {}
                 }
               },
               "responseBodyV3": {
@@ -24112,7 +24151,11 @@
                               "country": "China",
                               "country_code": "CN",
                               "timezone": "America/Los_Angeles",
-                              "unlocode": "CNSZP"
+                              "unlocode": "CNSZP",
+                              "street_address2": {},
+                              "state": {},
+                              "zip": {},
+                              "ref": {}
                             },
                             "details": [
                               {
@@ -24135,7 +24178,11 @@
                               "country": "United States",
                               "country_code": "US",
                               "timezone": "America/Los_Angeles",
-                              "unlocode": "USLA"
+                              "unlocode": "USLA",
+                              "street_address2": {},
+                              "state": {},
+                              "zip": {},
+                              "ref": {}
                             },
                             "details": [
                               {
@@ -24156,7 +24203,8 @@
                               "hs_code": {
                                 "_object": "/hs_code",
                                 "code": "9101.00",
-                                "country_code": "US"
+                                "country_code": "US",
+                                "description": {}
                               }
                             }
                           ]
@@ -24227,9 +24275,11 @@
                           "sku": [
                             "abc123"
                           ]
-                        }
+                        },
+                        "notify_party": {}
                       }
-                    ]
+                    ],
+                    "next": {}
                   }
                 }
               }
@@ -24346,11 +24396,13 @@
                 "cargo": {
                   "volume": {
                     "value": 472.62,
-                    "unit": "cbm"
+                    "unit": "cbm",
+                    "_object": "/quantity/volume"
                   },
                   "weight": {
                     "value": 2300.4,
-                    "unit": "kg"
+                    "unit": "kg",
+                    "_object": "/quantity/weight"
                   },
                   "marks_and_numbers": "Fragile",
                   "shipping_units": [
@@ -24358,23 +24410,28 @@
                       "name": "Watches",
                       "volume": {
                         "value": 472.62,
-                        "unit": "cbm"
+                        "unit": "cbm",
+                        "_object": "/quantity/volume"
                       },
                       "weight": {
                         "value": 2300.4,
-                        "unit": "kg"
+                        "unit": "kg",
+                        "_object": "/quantity/weight"
                       },
                       "height": {
                         "value": 472.62,
-                        "unit": "cm"
+                        "unit": "cm",
+                        "_object": "/quantity/length"
                       },
                       "length": {
                         "value": 472.62,
-                        "unit": "cm"
+                        "unit": "cm",
+                        "_object": "/quantity/length"
                       },
                       "width": {
                         "value": 472.62,
-                        "unit": "cm"
+                        "unit": "cm",
+                        "_object": "/quantity/length"
                       },
                       "count": 9,
                       "atomic_count": 9,
@@ -24391,7 +24448,15 @@
                   ]
                 },
                 "special_instructions": "Handle carefully",
-                "metadata": {}
+                "metadata": {
+                  "purchase_order": [
+                    "12345"
+                  ],
+                  "sku": [
+                    "abc123"
+                  ]
+                },
+                "notify_party": {}
               },
               "requestBodyV3": {
                 "type": "json",
@@ -24427,11 +24492,13 @@
                   "cargo": {
                     "volume": {
                       "value": 472.62,
-                      "unit": "cbm"
+                      "unit": "cbm",
+                      "_object": "/quantity/volume"
                     },
                     "weight": {
                       "value": 2300.4,
-                      "unit": "kg"
+                      "unit": "kg",
+                      "_object": "/quantity/weight"
                     },
                     "marks_and_numbers": "Fragile",
                     "shipping_units": [
@@ -24439,23 +24506,28 @@
                         "name": "Watches",
                         "volume": {
                           "value": 472.62,
-                          "unit": "cbm"
+                          "unit": "cbm",
+                          "_object": "/quantity/volume"
                         },
                         "weight": {
                           "value": 2300.4,
-                          "unit": "kg"
+                          "unit": "kg",
+                          "_object": "/quantity/weight"
                         },
                         "height": {
                           "value": 472.62,
-                          "unit": "cm"
+                          "unit": "cm",
+                          "_object": "/quantity/length"
                         },
                         "length": {
                           "value": 472.62,
-                          "unit": "cm"
+                          "unit": "cm",
+                          "_object": "/quantity/length"
                         },
                         "width": {
                           "value": 472.62,
-                          "unit": "cm"
+                          "unit": "cm",
+                          "_object": "/quantity/length"
                         },
                         "count": 9,
                         "atomic_count": 9,
@@ -24472,7 +24544,15 @@
                     ]
                   },
                   "special_instructions": "Handle carefully",
-                  "metadata": {}
+                  "metadata": {
+                    "purchase_order": [
+                      "12345"
+                    ],
+                    "sku": [
+                      "abc123"
+                    ]
+                  },
+                  "notify_party": {}
                 }
               },
               "responseStatusCode": 200
@@ -24572,7 +24652,10 @@
                         "country_code": "CN",
                         "timezone": "America/Los_Angeles",
                         "ref": "shanghai-ref",
-                        "unlocode": "CNSZP"
+                        "unlocode": "CNSZP",
+                        "street_address2": {},
+                        "state": {},
+                        "zip": {}
                       },
                       "details": [
                         {
@@ -24596,7 +24679,10 @@
                         "country_code": "US",
                         "timezone": "America/Los_Angeles",
                         "ref": "la-address-ref",
-                        "unlocode": "USLA"
+                        "unlocode": "USLA",
+                        "street_address2": {},
+                        "state": {},
+                        "zip": {}
                       },
                       "details": [
                         {
@@ -24622,7 +24708,8 @@
                           "country_code": "US"
                         }
                       }
-                    ]
+                    ],
+                    "wants_pick_up_service": false
                   },
                   "origin_address": {
                     "_object": "/address",
@@ -24717,7 +24804,11 @@
                     "sku": [
                       "abc123"
                     ]
-                  }
+                  },
+                  "notify_party": {},
+                  "air_booking": {},
+                  "trucking_booking": {},
+                  "quote_status": {}
                 }
               },
               "responseBodyV3": {
@@ -24806,7 +24897,10 @@
                           "country_code": "CN",
                           "timezone": "America/Los_Angeles",
                           "ref": "shanghai-ref",
-                          "unlocode": "CNSZP"
+                          "unlocode": "CNSZP",
+                          "street_address2": {},
+                          "state": {},
+                          "zip": {}
                         },
                         "details": [
                           {
@@ -24830,7 +24924,10 @@
                           "country_code": "US",
                           "timezone": "America/Los_Angeles",
                           "ref": "la-address-ref",
-                          "unlocode": "USLA"
+                          "unlocode": "USLA",
+                          "street_address2": {},
+                          "state": {},
+                          "zip": {}
                         },
                         "details": [
                           {
@@ -24856,7 +24953,8 @@
                             "country_code": "US"
                           }
                         }
-                      ]
+                      ],
+                      "wants_pick_up_service": false
                     },
                     "origin_address": {
                       "_object": "/address",
@@ -24951,7 +25049,11 @@
                       "sku": [
                         "abc123"
                       ]
-                    }
+                    },
+                    "notify_party": {},
+                    "air_booking": {},
+                    "trucking_booking": {},
+                    "quote_status": {}
                   }
                 }
               }
@@ -25129,7 +25231,10 @@
                         "country_code": "CN",
                         "timezone": "China/Shanghai",
                         "ref": "my-shanghai-ref",
-                        "unlocode": "CNSHA"
+                        "unlocode": "CNSHA",
+                        "street_address2": {},
+                        "state": {},
+                        "zip": {}
                       },
                       "details": [
                         {
@@ -25153,7 +25258,10 @@
                         "country_code": "CN",
                         "timezone": "China/Shanghai",
                         "ref": "my-shanghai-ref",
-                        "unlocode": "CNSHA"
+                        "unlocode": "CNSHA",
+                        "street_address2": {},
+                        "state": {},
+                        "zip": {}
                       },
                       "details": [
                         {
@@ -25165,7 +25273,8 @@
                           "port_code": "57035"
                         }
                       ]
-                    }
+                    },
+                    "wants_pick_up_service": true
                   },
                   "origin_address": {
                     "_object": "/address",
@@ -25260,7 +25369,9 @@
                     "sku": [
                       "abc123"
                     ]
-                  }
+                  },
+                  "air_booking": {},
+                  "trucking_booking": {}
                 }
               },
               "responseBodyV3": {
@@ -25349,7 +25460,10 @@
                           "country_code": "CN",
                           "timezone": "China/Shanghai",
                           "ref": "my-shanghai-ref",
-                          "unlocode": "CNSHA"
+                          "unlocode": "CNSHA",
+                          "street_address2": {},
+                          "state": {},
+                          "zip": {}
                         },
                         "details": [
                           {
@@ -25373,7 +25487,10 @@
                           "country_code": "CN",
                           "timezone": "China/Shanghai",
                           "ref": "my-shanghai-ref",
-                          "unlocode": "CNSHA"
+                          "unlocode": "CNSHA",
+                          "street_address2": {},
+                          "state": {},
+                          "zip": {}
                         },
                         "details": [
                           {
@@ -25385,7 +25502,8 @@
                             "port_code": "57035"
                           }
                         ]
-                      }
+                      },
+                      "wants_pick_up_service": true
                     },
                     "origin_address": {
                       "_object": "/address",
@@ -25480,7 +25598,9 @@
                       "sku": [
                         "abc123"
                       ]
-                    }
+                    },
+                    "air_booking": {},
+                    "trucking_booking": {}
                   }
                 }
               }
@@ -25827,7 +25947,8 @@
                             "container_number": "XYZ123",
                             "commercial_invoice_line_item_id": 12345,
                             "created_at": "2020-01-01T15:28:03.265Z",
-                            "updated_at": "2020-01-01T15:28:03.265Z"
+                            "updated_at": "2020-01-01T15:28:03.265Z",
+                            "deleted_at": {}
                           },
                           "purchase_order_number": "9876-ABC",
                           "weight": {
@@ -25886,7 +26007,8 @@
                         "unit": "kg"
                       }
                     }
-                  ]
+                  ],
+                  "next": {}
                 }
               },
               "responseBodyV3": {
@@ -25924,7 +26046,8 @@
                               "container_number": "XYZ123",
                               "commercial_invoice_line_item_id": 12345,
                               "created_at": "2020-01-01T15:28:03.265Z",
-                              "updated_at": "2020-01-01T15:28:03.265Z"
+                              "updated_at": "2020-01-01T15:28:03.265Z",
+                              "deleted_at": {}
                             },
                             "purchase_order_number": "9876-ABC",
                             "weight": {
@@ -25983,7 +26106,8 @@
                           "unit": "kg"
                         }
                       }
-                    ]
+                    ],
+                    "next": {}
                   }
                 }
               }
@@ -26132,7 +26256,8 @@
                         "container_number": "XYZ123",
                         "commercial_invoice_line_item_id": 12345,
                         "created_at": "2020-01-01T15:28:03.265Z",
-                        "updated_at": "2020-01-01T15:28:03.265Z"
+                        "updated_at": "2020-01-01T15:28:03.265Z",
+                        "deleted_at": {}
                       },
                       "purchase_order_number": "9876-ABC",
                       "weight": {
@@ -26222,7 +26347,8 @@
                           "container_number": "XYZ123",
                           "commercial_invoice_line_item_id": 12345,
                           "created_at": "2020-01-01T15:28:03.265Z",
-                          "updated_at": "2020-01-01T15:28:03.265Z"
+                          "updated_at": "2020-01-01T15:28:03.265Z",
+                          "deleted_at": {}
                         },
                         "purchase_order_number": "9876-ABC",
                         "weight": {
@@ -26398,7 +26524,8 @@
                         "container_number": "XYZ123",
                         "commercial_invoice_line_item_id": 12345,
                         "created_at": "2020-01-01T15:28:03.265Z",
-                        "updated_at": "2020-01-01T15:28:03.265Z"
+                        "updated_at": "2020-01-01T15:28:03.265Z",
+                        "deleted_at": {}
                       },
                       "purchase_order_number": "9876-ABC",
                       "weight": {
@@ -26488,7 +26615,8 @@
                           "container_number": "XYZ123",
                           "commercial_invoice_line_item_id": 12345,
                           "created_at": "2020-01-01T15:28:03.265Z",
-                          "updated_at": "2020-01-01T15:28:03.265Z"
+                          "updated_at": "2020-01-01T15:28:03.265Z",
+                          "deleted_at": {}
                         },
                         "purchase_order_number": "9876-ABC",
                         "weight": {
@@ -26668,7 +26796,8 @@
                         "container_number": "XYZ123",
                         "commercial_invoice_line_item_id": 12345,
                         "created_at": "2020-01-01T15:28:03.265Z",
-                        "updated_at": "2020-01-01T15:28:03.265Z"
+                        "updated_at": "2020-01-01T15:28:03.265Z",
+                        "deleted_at": {}
                       },
                       "purchase_order_number": "9876-ABC",
                       "weight": {
@@ -26759,7 +26888,8 @@
                           "container_number": "XYZ123",
                           "commercial_invoice_line_item_id": 12345,
                           "created_at": "2020-01-01T15:28:03.265Z",
-                          "updated_at": "2020-01-01T15:28:03.265Z"
+                          "updated_at": "2020-01-01T15:28:03.265Z",
+                          "deleted_at": {}
                         },
                         "purchase_order_number": "9876-ABC",
                         "weight": {
@@ -26965,7 +27095,8 @@
                         "id": 123456
                       }
                     }
-                  ]
+                  ],
+                  "next": {}
                 }
               },
               "responseBodyV3": {
@@ -26991,7 +27122,8 @@
                           "id": 123456
                         }
                       }
-                    ]
+                    ],
+                    "next": {}
                   }
                 }
               }
@@ -27351,9 +27483,12 @@
                         "ref_type": "/shipment",
                         "link": "https://api.flexport.com/shipments/123456",
                         "id": 123456
-                      }
+                      },
+                      "memo": {},
+                      "archived_at": {}
                     }
-                  ]
+                  ],
+                  "next": {}
                 }
               },
               "responseBodyV3": {
@@ -27383,9 +27518,12 @@
                           "ref_type": "/shipment",
                           "link": "https://api.flexport.com/shipments/123456",
                           "id": 123456
-                        }
+                        },
+                        "memo": {},
+                        "archived_at": {}
                       }
-                    ]
+                    ],
+                    "next": {}
                   }
                 }
               }
@@ -27493,6 +27631,26 @@
                 "self": "https://api.flexport.com/documents",
                 "version": 3,
                 "data": {
+                  "0": {
+                    "_object": "/document",
+                    "id": "ABC123",
+                    "file_name": "readme.pdf",
+                    "document_type": "packing_list",
+                    "memo": "",
+                    "file_link": "https://api.flexport.com/documents/ABC123/download",
+                    "archived_at": null,
+                    "file_metadata": {
+                      "_object": "file/metadata",
+                      "size": 2000,
+                      "uploaded_at": "2019-06-12T02:00:00.338Z"
+                    },
+                    "shipment": {
+                      "_object": "/api/refs/object",
+                      "ref_type": "/shipment",
+                      "link": "https://api.flexport.com/shipments/123456",
+                      "id": 123456
+                    }
+                  },
                   "file_name": "Flexport-Booking.pdf",
                   "mime_type": "application/pdf",
                   "document_type": "packing_list",
@@ -27507,6 +27665,26 @@
                   "self": "https://api.flexport.com/documents",
                   "version": 3,
                   "data": {
+                    "0": {
+                      "_object": "/document",
+                      "id": "ABC123",
+                      "file_name": "readme.pdf",
+                      "document_type": "packing_list",
+                      "memo": "",
+                      "file_link": "https://api.flexport.com/documents/ABC123/download",
+                      "archived_at": null,
+                      "file_metadata": {
+                        "_object": "file/metadata",
+                        "size": 2000,
+                        "uploaded_at": "2019-06-12T02:00:00.338Z"
+                      },
+                      "shipment": {
+                        "_object": "/api/refs/object",
+                        "ref_type": "/shipment",
+                        "link": "https://api.flexport.com/shipments/123456",
+                        "id": 123456
+                      }
+                    },
                     "file_name": "Flexport-Booking.pdf",
                     "mime_type": "application/pdf",
                     "document_type": "packing_list",
@@ -27625,7 +27803,9 @@
                     "ref_type": "/shipment",
                     "link": "https://api.flexport.com/shipments/123456",
                     "id": 123456
-                  }
+                  },
+                  "memo": {},
+                  "archived_at": {}
                 }
               },
               "responseBodyV3": {
@@ -27650,7 +27830,9 @@
                       "ref_type": "/shipment",
                       "link": "https://api.flexport.com/shipments/123456",
                       "id": 123456
-                    }
+                    },
+                    "memo": {},
+                    "archived_at": {}
                   }
                 }
               }
@@ -31529,7 +31711,8 @@
                           "country_code": "US",
                           "zip": "12345",
                           "timezone": "America/Los_Angeles",
-                          "ref": "my-address-ref"
+                          "ref": "my-address-ref",
+                          "unlocode": {}
                         },
                         "vat_numbers": [
                           {
@@ -31554,7 +31737,8 @@
                           "country_code": "US",
                           "zip": "94102-2300",
                           "timezone": "America/Los_Angeles",
-                          "ref": "flexport-address-ref"
+                          "ref": "flexport-address-ref",
+                          "unlocode": {}
                         },
                         "vat_numbers": [
                           {
@@ -31721,7 +31905,8 @@
                         "link": "https://api.flexport.com/shipments?f.invoice_id=gwdpaYrhTI-T1ljn1M7o7w"
                       }
                     }
-                  ]
+                  ],
+                  "prev": {}
                 }
               },
               "responseBodyV3": {
@@ -31769,7 +31954,8 @@
                             "country_code": "US",
                             "zip": "12345",
                             "timezone": "America/Los_Angeles",
-                            "ref": "my-address-ref"
+                            "ref": "my-address-ref",
+                            "unlocode": {}
                           },
                           "vat_numbers": [
                             {
@@ -31794,7 +31980,8 @@
                             "country_code": "US",
                             "zip": "94102-2300",
                             "timezone": "America/Los_Angeles",
-                            "ref": "flexport-address-ref"
+                            "ref": "flexport-address-ref",
+                            "unlocode": {}
                           },
                           "vat_numbers": [
                             {
@@ -31961,7 +32148,8 @@
                           "link": "https://api.flexport.com/shipments?f.invoice_id=gwdpaYrhTI-T1ljn1M7o7w"
                         }
                       }
-                    ]
+                    ],
+                    "prev": {}
                   }
                 }
               }
@@ -32094,7 +32282,8 @@
                       "country_code": "US",
                       "zip": "12345",
                       "timezone": "America/Los_Angeles",
-                      "ref": "my-address-ref"
+                      "ref": "my-address-ref",
+                      "unlocode": {}
                     },
                     "vat_numbers": [
                       {
@@ -32119,7 +32308,8 @@
                       "country_code": "US",
                       "zip": "94102-2300",
                       "timezone": "America/Los_Angeles",
-                      "ref": "flexport-address-ref"
+                      "ref": "flexport-address-ref",
+                      "unlocode": {}
                     },
                     "vat_numbers": [
                       {
@@ -32328,7 +32518,8 @@
                         "country_code": "US",
                         "zip": "12345",
                         "timezone": "America/Los_Angeles",
-                        "ref": "my-address-ref"
+                        "ref": "my-address-ref",
+                        "unlocode": {}
                       },
                       "vat_numbers": [
                         {
@@ -32353,7 +32544,8 @@
                         "country_code": "US",
                         "zip": "94102-2300",
                         "timezone": "America/Los_Angeles",
-                        "ref": "flexport-address-ref"
+                        "ref": "flexport-address-ref",
+                        "unlocode": {}
                       },
                       "vat_numbers": [
                         {
@@ -32714,7 +32906,8 @@
                         "ref_type": "/network/contacts"
                       }
                     }
-                  ]
+                  ],
+                  "next": {}
                 }
               },
               "responseBodyV3": {
@@ -32774,7 +32967,8 @@
                           "ref_type": "/network/contacts"
                         }
                       }
-                    ]
+                    ],
+                    "next": {}
                   }
                 }
               }
@@ -33683,7 +33877,8 @@
                         }
                       ]
                     }
-                  ]
+                  ],
+                  "next": {}
                 }
               },
               "responseBodyV3": {
@@ -33723,7 +33918,8 @@
                           }
                         ]
                       }
-                    ]
+                    ],
+                    "next": {}
                   }
                 }
               }
@@ -34388,7 +34584,8 @@
                         "id": "2UXaj4xcHoW8nwh9UVOMpw"
                       }
                     }
-                  ]
+                  ],
+                  "next": {}
                 }
               },
               "responseBodyV3": {
@@ -34420,7 +34617,8 @@
                           "id": "2UXaj4xcHoW8nwh9UVOMpw"
                         }
                       }
-                    ]
+                    ],
+                    "next": {}
                   }
                 }
               }
@@ -35078,7 +35276,8 @@
                         "ref_type": "/network/contacts"
                       }
                     }
-                  ]
+                  ],
+                  "next": {}
                 }
               },
               "responseBodyV3": {
@@ -35123,7 +35322,8 @@
                           "ref_type": "/network/contacts"
                         }
                       }
-                    ]
+                    ],
+                    "next": {}
                   }
                 }
               }
@@ -35587,7 +35787,8 @@
                     "zip": "90045",
                     "timezone": "America/Los_Angeles",
                     "ref": "zoomit-management-co",
-                    "unlocode": "USLAX"
+                    "unlocode": "USLAX",
+                    "street_address2": {}
                   },
                   "editable": true,
                   "company": {
@@ -35624,7 +35825,8 @@
                       "zip": "90045",
                       "timezone": "America/Los_Angeles",
                       "ref": "zoomit-management-co",
-                      "unlocode": "USLAX"
+                      "unlocode": "USLAX",
+                      "street_address2": {}
                     },
                     "editable": true,
                     "company": {
@@ -36698,7 +36900,8 @@
                         "zip": "94607",
                         "timezone": "America/Los_Angeles",
                         "ref": "oakland-ref",
-                        "unlocode": "US AL2"
+                        "unlocode": "US AL2",
+                        "street_address2": {}
                       },
                       "details": [
                         {
@@ -36773,7 +36976,8 @@
                           "zip": "94607",
                           "timezone": "America/Los_Angeles",
                           "ref": "oakland-ref",
-                          "unlocode": "US AL2"
+                          "unlocode": "US AL2",
+                          "street_address2": {}
                         },
                         "details": [
                           {
@@ -36942,7 +37146,8 @@
                       "hs_codes": [
                         {
                           "_object": "/hs_code",
-                          "code": "0301:00"
+                          "code": "0301:00",
+                          "description": {}
                         }
                       ],
                       "classifications": [
@@ -36989,7 +37194,8 @@
                         "hs_codes": [
                           {
                             "_object": "/hs_code",
-                            "code": "0301:00"
+                            "code": "0301:00",
+                            "description": {}
                           }
                         ],
                         "classifications": [
@@ -37127,7 +37333,8 @@
                   "hs_codes": [
                     {
                       "_object": "/hs_code",
-                      "code": "0301:00"
+                      "code": "0301:00",
+                      "description": {}
                     }
                   ],
                   "classifications": [
@@ -37167,7 +37374,8 @@
                     "hs_codes": [
                       {
                         "_object": "/hs_code",
-                        "code": "0301:00"
+                        "code": "0301:00",
+                        "description": {}
                       }
                     ],
                     "classifications": [
@@ -37296,7 +37504,8 @@
                   "hs_codes": [
                     {
                       "_object": "/hs_code",
-                      "code": "0301:00"
+                      "code": "0301:00",
+                      "description": {}
                     }
                   ],
                   "classifications": [
@@ -37336,7 +37545,8 @@
                     "hs_codes": [
                       {
                         "_object": "/hs_code",
-                        "code": "0301:00"
+                        "code": "0301:00",
+                        "description": {}
                       }
                     ],
                     "classifications": [
@@ -37483,7 +37693,8 @@
                   "hs_codes": [
                     {
                       "_object": "/hs_code",
-                      "code": "0301:00"
+                      "code": "0301:00",
+                      "description": {}
                     }
                   ],
                   "classifications": [
@@ -37523,7 +37734,8 @@
                     "hs_codes": [
                       {
                         "_object": "/hs_code",
-                        "code": "0301:00"
+                        "code": "0301:00",
+                        "description": {}
                       }
                     ],
                     "classifications": [
@@ -37744,7 +37956,8 @@
                         "lot_number": "123456789",
                         "size": "m",
                         "style": "classic",
-                        "upc": "123456789"
+                        "upc": "123456789",
+                        "_object": "/purchase_order/line_item_product"
                       },
                       "units": 20,
                       "unit_cost": {
@@ -37769,11 +37982,27 @@
                         "country": "China",
                         "country_code": "CN",
                         "timezone": "China/Shenzhen",
-                        "ref": "sellingcoaddress"
+                        "ref": "sellingcoaddress",
+                        "street_address2": {},
+                        "zip": {},
+                        "unlocode": {}
                       },
                       "destination_addresses": [
                         {
-                          "units": 1
+                          "units": 1,
+                          "address": {
+                            "_object": "/address",
+                            "street_address": "1556 20TH ST STE 2D",
+                            "street_address2": null,
+                            "city": "SANTA MONICA",
+                            "state": "CA",
+                            "country": "United States",
+                            "country_code": "US",
+                            "zip": "90404-3465",
+                            "unlocode": null,
+                            "ref": "studiosantamonica",
+                            "timezone": "America/Los Angeles"
+                          }
                         }
                       ],
                       "hs_codes": [
@@ -37798,7 +38027,8 @@
                           "country_code": "US",
                           "zip": "56307",
                           "timezone": "America/Los_Angeles",
-                          "unlocode": "US AL2"
+                          "unlocode": "US AL2",
+                          "ref": {}
                         },
                         "vat_numbers": [
                           {
@@ -37812,16 +38042,21 @@
                         {
                           "measure_type": "length",
                           "unit_of_measure": "EA",
-                          "value": "1.0"
+                          "value": "1.0",
+                          "_object": "/line_item_measure"
                         }
                       ],
                       "metadata": {
                         "size": [
                           "M"
                         ]
-                      }
+                      },
+                      "parent_line_key": {},
+                      "origin_port": {},
+                      "destination_port": {}
                     }
-                  ]
+                  ],
+                  "next": {}
                 }
               },
               "responseBodyV3": {
@@ -37858,7 +38093,8 @@
                           "lot_number": "123456789",
                           "size": "m",
                           "style": "classic",
-                          "upc": "123456789"
+                          "upc": "123456789",
+                          "_object": "/purchase_order/line_item_product"
                         },
                         "units": 20,
                         "unit_cost": {
@@ -37883,11 +38119,27 @@
                           "country": "China",
                           "country_code": "CN",
                           "timezone": "China/Shenzhen",
-                          "ref": "sellingcoaddress"
+                          "ref": "sellingcoaddress",
+                          "street_address2": {},
+                          "zip": {},
+                          "unlocode": {}
                         },
                         "destination_addresses": [
                           {
-                            "units": 1
+                            "units": 1,
+                            "address": {
+                              "_object": "/address",
+                              "street_address": "1556 20TH ST STE 2D",
+                              "street_address2": null,
+                              "city": "SANTA MONICA",
+                              "state": "CA",
+                              "country": "United States",
+                              "country_code": "US",
+                              "zip": "90404-3465",
+                              "unlocode": null,
+                              "ref": "studiosantamonica",
+                              "timezone": "America/Los Angeles"
+                            }
                           }
                         ],
                         "hs_codes": [
@@ -37912,7 +38164,8 @@
                             "country_code": "US",
                             "zip": "56307",
                             "timezone": "America/Los_Angeles",
-                            "unlocode": "US AL2"
+                            "unlocode": "US AL2",
+                            "ref": {}
                           },
                           "vat_numbers": [
                             {
@@ -37926,16 +38179,21 @@
                           {
                             "measure_type": "length",
                             "unit_of_measure": "EA",
-                            "value": "1.0"
+                            "value": "1.0",
+                            "_object": "/line_item_measure"
                           }
                         ],
                         "metadata": {
                           "size": [
                             "M"
                           ]
-                        }
+                        },
+                        "parent_line_key": {},
+                        "origin_port": {},
+                        "destination_port": {}
                       }
-                    ]
+                    ],
+                    "next": {}
                   }
                 }
               }
@@ -38057,7 +38315,8 @@
                     "lot_number": "123456789",
                     "size": "m",
                     "style": "classic",
-                    "upc": "123456789"
+                    "upc": "123456789",
+                    "_object": "/purchase_order/line_item_product"
                   },
                   "units": 20,
                   "unit_cost": {
@@ -38082,11 +38341,27 @@
                     "country": "China",
                     "country_code": "CN",
                     "timezone": "China/Shenzhen",
-                    "ref": "sellingcoaddress"
+                    "ref": "sellingcoaddress",
+                    "street_address2": {},
+                    "zip": {},
+                    "unlocode": {}
                   },
                   "destination_addresses": [
                     {
-                      "units": 1
+                      "units": 1,
+                      "address": {
+                        "_object": "/address",
+                        "street_address": "1556 20TH ST STE 2D",
+                        "street_address2": null,
+                        "city": "SANTA MONICA",
+                        "state": "CA",
+                        "country": "United States",
+                        "country_code": "US",
+                        "zip": "90404-3465",
+                        "unlocode": null,
+                        "ref": "studiosantamonica",
+                        "timezone": "America/Los Angeles"
+                      }
                     }
                   ],
                   "hs_codes": [
@@ -38111,7 +38386,8 @@
                       "country_code": "US",
                       "zip": "56307",
                       "timezone": "America/Los_Angeles",
-                      "unlocode": "US AL2"
+                      "unlocode": "US AL2",
+                      "ref": {}
                     },
                     "vat_numbers": [
                       {
@@ -38125,14 +38401,19 @@
                     {
                       "measure_type": "length",
                       "unit_of_measure": "EA",
-                      "value": "1.0"
+                      "value": "1.0",
+                      "_object": "/line_item_measure"
                     }
                   ],
                   "metadata": {
                     "size": [
                       "M"
                     ]
-                  }
+                  },
+                  "parent_line_key": {},
+                  "cargo_ready_date": "2019-02-11",
+                  "origin_port": {},
+                  "destination_port": {}
                 }
               },
               "responseBodyV3": {
@@ -38165,7 +38446,8 @@
                       "lot_number": "123456789",
                       "size": "m",
                       "style": "classic",
-                      "upc": "123456789"
+                      "upc": "123456789",
+                      "_object": "/purchase_order/line_item_product"
                     },
                     "units": 20,
                     "unit_cost": {
@@ -38190,11 +38472,27 @@
                       "country": "China",
                       "country_code": "CN",
                       "timezone": "China/Shenzhen",
-                      "ref": "sellingcoaddress"
+                      "ref": "sellingcoaddress",
+                      "street_address2": {},
+                      "zip": {},
+                      "unlocode": {}
                     },
                     "destination_addresses": [
                       {
-                        "units": 1
+                        "units": 1,
+                        "address": {
+                          "_object": "/address",
+                          "street_address": "1556 20TH ST STE 2D",
+                          "street_address2": null,
+                          "city": "SANTA MONICA",
+                          "state": "CA",
+                          "country": "United States",
+                          "country_code": "US",
+                          "zip": "90404-3465",
+                          "unlocode": null,
+                          "ref": "studiosantamonica",
+                          "timezone": "America/Los Angeles"
+                        }
                       }
                     ],
                     "hs_codes": [
@@ -38219,7 +38517,8 @@
                         "country_code": "US",
                         "zip": "56307",
                         "timezone": "America/Los_Angeles",
-                        "unlocode": "US AL2"
+                        "unlocode": "US AL2",
+                        "ref": {}
                       },
                       "vat_numbers": [
                         {
@@ -38233,14 +38532,19 @@
                       {
                         "measure_type": "length",
                         "unit_of_measure": "EA",
-                        "value": "1.0"
+                        "value": "1.0",
+                        "_object": "/line_item_measure"
                       }
                     ],
                     "metadata": {
                       "size": [
                         "M"
                       ]
-                    }
+                    },
+                    "parent_line_key": {},
+                    "cargo_ready_date": "2019-02-11",
+                    "origin_port": {},
+                    "destination_port": {}
                   }
                 }
               }
@@ -38554,17 +38858,23 @@
                           "country_code": "US",
                           "timezone": "America/New_York",
                           "ref": "id-313120",
-                          "unlocode": "USFBN"
+                          "unlocode": "USFBN",
+                          "street_address": {},
+                          "street_address2": {},
+                          "zip": {}
                         },
                         "details": [
                           {
-                            "_object": "/ocean/railport"
+                            "_object": "/ocean/railport",
+                            "port_code": {}
                           },
                           {
-                            "_object": "/trucking/port"
+                            "_object": "/trucking/port",
+                            "port_code": {}
                           },
                           {
-                            "_object": "/ocean/port"
+                            "_object": "/ocean/port",
+                            "port_code": {}
                           }
                         ]
                       },
@@ -38576,7 +38886,10 @@
                         "country": "China",
                         "country_code": "CN",
                         "timezone": "Asia/Shanghai",
-                        "ref": "id-274346"
+                        "ref": "id-274346",
+                        "street_address2": {},
+                        "zip": {},
+                        "unlocode": {}
                       },
                       "destination_port": {
                         "_object": "/place",
@@ -38589,17 +38902,23 @@
                           "country_code": "US",
                           "timezone": "America/New_York",
                           "ref": "id-313120",
-                          "unlocode": "USFBN"
+                          "unlocode": "USFBN",
+                          "street_address": {},
+                          "street_address2": {},
+                          "zip": {}
                         },
                         "details": [
                           {
-                            "_object": "/ocean/railport"
+                            "_object": "/ocean/railport",
+                            "port_code": {}
                           },
                           {
-                            "_object": "/trucking/port"
+                            "_object": "/trucking/port",
+                            "port_code": {}
                           },
                           {
-                            "_object": "/ocean/port"
+                            "_object": "/ocean/port",
+                            "port_code": {}
                           }
                         ]
                       },
@@ -38613,7 +38932,9 @@
                           "country_code": "DE",
                           "zip": "56776",
                           "timezone": "Europe/Berlin",
-                          "ref": "id-318238"
+                          "ref": "id-318238",
+                          "street_address2": {},
+                          "unlocode": {}
                         }
                       ],
                       "parties": [
@@ -38631,11 +38952,17 @@
                               "state": "Shanghai",
                               "country": "China",
                               "country_code": "CN",
-                              "timezone": "Asia/Shanghai"
+                              "timezone": "Asia/Shanghai",
+                              "street_address2": {},
+                              "zip": {},
+                              "unlocode": {},
+                              "ref": {}
                             },
                             "vat_numbers": []
                           },
-                          "contacts": []
+                          "contacts": [],
+                          "_object": "purchase_orders/party",
+                          "location_address": {}
                         },
                         {
                           "role": "seller",
@@ -38644,7 +38971,8 @@
                             "id": 677939,
                             "name": "75 Aero Camino Suite 203 Goleta",
                             "ref": "id-677939",
-                            "vat_numbers": []
+                            "vat_numbers": [],
+                            "mailing_address": {}
                           },
                           "contacts": [
                             {
@@ -38652,9 +38980,24 @@
                               "phone": "123456789",
                               "email": "abc@173.com",
                               "fax": "123456789",
-                              "department": "a department"
+                              "department": "a department",
+                              "_object": "purchase_orders/contact"
                             }
-                          ]
+                          ],
+                          "_object": "purchase_orders/party",
+                          "location_address": {
+                            "_object": "/address",
+                            "street_address": "Vandelay street 1",
+                            "street_address2": null,
+                            "city": "Duisburg",
+                            "state": "North Rhine Westphalia",
+                            "country": "Germany",
+                            "country_code": "DE",
+                            "zip": "56776",
+                            "unlocode": null,
+                            "timezone": "Europe/Berlin",
+                            "ref": "id-318238"
+                          }
                         },
                         {
                           "role": "owner",
@@ -38670,7 +39013,11 @@
                               "state": "Shanghai",
                               "country": "China",
                               "country_code": "CN",
-                              "timezone": "Asia/Shanghai"
+                              "timezone": "Asia/Shanghai",
+                              "street_address2": {},
+                              "zip": {},
+                              "unlocode": {},
+                              "ref": {}
                             },
                             "vat_numbers": []
                           },
@@ -38680,9 +39027,12 @@
                               "phone": "123456789",
                               "email": "abc@173.com",
                               "fax": "123456789",
-                              "department": "a department"
+                              "department": "a department",
+                              "_object": "purchase_orders/contact"
                             }
-                          ]
+                          ],
+                          "_object": "purchase_orders/party",
+                          "location_address": {}
                         }
                       ],
                       "memo": "memo",
@@ -38697,9 +39047,12 @@
                         "size": [
                           "M"
                         ]
-                      }
+                      },
+                      "archived_at": {},
+                      "freight_payment_terms": "freight_collect"
                     }
-                  ]
+                  ],
+                  "next": {}
                 }
               },
               "responseBodyV3": {
@@ -38735,17 +39088,23 @@
                             "country_code": "US",
                             "timezone": "America/New_York",
                             "ref": "id-313120",
-                            "unlocode": "USFBN"
+                            "unlocode": "USFBN",
+                            "street_address": {},
+                            "street_address2": {},
+                            "zip": {}
                           },
                           "details": [
                             {
-                              "_object": "/ocean/railport"
+                              "_object": "/ocean/railport",
+                              "port_code": {}
                             },
                             {
-                              "_object": "/trucking/port"
+                              "_object": "/trucking/port",
+                              "port_code": {}
                             },
                             {
-                              "_object": "/ocean/port"
+                              "_object": "/ocean/port",
+                              "port_code": {}
                             }
                           ]
                         },
@@ -38757,7 +39116,10 @@
                           "country": "China",
                           "country_code": "CN",
                           "timezone": "Asia/Shanghai",
-                          "ref": "id-274346"
+                          "ref": "id-274346",
+                          "street_address2": {},
+                          "zip": {},
+                          "unlocode": {}
                         },
                         "destination_port": {
                           "_object": "/place",
@@ -38770,17 +39132,23 @@
                             "country_code": "US",
                             "timezone": "America/New_York",
                             "ref": "id-313120",
-                            "unlocode": "USFBN"
+                            "unlocode": "USFBN",
+                            "street_address": {},
+                            "street_address2": {},
+                            "zip": {}
                           },
                           "details": [
                             {
-                              "_object": "/ocean/railport"
+                              "_object": "/ocean/railport",
+                              "port_code": {}
                             },
                             {
-                              "_object": "/trucking/port"
+                              "_object": "/trucking/port",
+                              "port_code": {}
                             },
                             {
-                              "_object": "/ocean/port"
+                              "_object": "/ocean/port",
+                              "port_code": {}
                             }
                           ]
                         },
@@ -38794,7 +39162,9 @@
                             "country_code": "DE",
                             "zip": "56776",
                             "timezone": "Europe/Berlin",
-                            "ref": "id-318238"
+                            "ref": "id-318238",
+                            "street_address2": {},
+                            "unlocode": {}
                           }
                         ],
                         "parties": [
@@ -38812,11 +39182,17 @@
                                 "state": "Shanghai",
                                 "country": "China",
                                 "country_code": "CN",
-                                "timezone": "Asia/Shanghai"
+                                "timezone": "Asia/Shanghai",
+                                "street_address2": {},
+                                "zip": {},
+                                "unlocode": {},
+                                "ref": {}
                               },
                               "vat_numbers": []
                             },
-                            "contacts": []
+                            "contacts": [],
+                            "_object": "purchase_orders/party",
+                            "location_address": {}
                           },
                           {
                             "role": "seller",
@@ -38825,7 +39201,8 @@
                               "id": 677939,
                               "name": "75 Aero Camino Suite 203 Goleta",
                               "ref": "id-677939",
-                              "vat_numbers": []
+                              "vat_numbers": [],
+                              "mailing_address": {}
                             },
                             "contacts": [
                               {
@@ -38833,9 +39210,24 @@
                                 "phone": "123456789",
                                 "email": "abc@173.com",
                                 "fax": "123456789",
-                                "department": "a department"
+                                "department": "a department",
+                                "_object": "purchase_orders/contact"
                               }
-                            ]
+                            ],
+                            "_object": "purchase_orders/party",
+                            "location_address": {
+                              "_object": "/address",
+                              "street_address": "Vandelay street 1",
+                              "street_address2": null,
+                              "city": "Duisburg",
+                              "state": "North Rhine Westphalia",
+                              "country": "Germany",
+                              "country_code": "DE",
+                              "zip": "56776",
+                              "unlocode": null,
+                              "timezone": "Europe/Berlin",
+                              "ref": "id-318238"
+                            }
                           },
                           {
                             "role": "owner",
@@ -38851,7 +39243,11 @@
                                 "state": "Shanghai",
                                 "country": "China",
                                 "country_code": "CN",
-                                "timezone": "Asia/Shanghai"
+                                "timezone": "Asia/Shanghai",
+                                "street_address2": {},
+                                "zip": {},
+                                "unlocode": {},
+                                "ref": {}
                               },
                               "vat_numbers": []
                             },
@@ -38861,9 +39257,12 @@
                                 "phone": "123456789",
                                 "email": "abc@173.com",
                                 "fax": "123456789",
-                                "department": "a department"
+                                "department": "a department",
+                                "_object": "purchase_orders/contact"
                               }
-                            ]
+                            ],
+                            "_object": "purchase_orders/party",
+                            "location_address": {}
                           }
                         ],
                         "memo": "memo",
@@ -38878,9 +39277,12 @@
                           "size": [
                             "M"
                           ]
-                        }
+                        },
+                        "archived_at": {},
+                        "freight_payment_terms": "freight_collect"
                       }
-                    ]
+                    ],
+                    "next": {}
                   }
                 }
               }
@@ -39078,7 +39480,11 @@
                       }
                     ],
                     "assigned_party_ref": "id-12355",
-                    "metadata": {}
+                    "metadata": {
+                      "size": [
+                        "M"
+                      ]
+                    }
                   }
                 ]
               },
@@ -39197,7 +39603,11 @@
                         }
                       ],
                       "assigned_party_ref": "id-12355",
-                      "metadata": {}
+                      "metadata": {
+                        "size": [
+                          "M"
+                        ]
+                      }
                     }
                   ]
                 }
@@ -39216,12 +39626,450 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "_object": "/api/response"
+                "_object": "/api/response",
+                "self": "https://api.flexport.com/purchase_orders",
+                "version": 3,
+                "data": {
+                  "metadata": {
+                    "size": [
+                      "M"
+                    ]
+                  },
+                  "_object": "/purchase_order",
+                  "id": 109771,
+                  "name": "PO 123",
+                  "incoterm": "FOB",
+                  "transportation_mode": "ocean",
+                  "cargo_ready_date": "2019-06-30",
+                  "must_arrive_date": "2019-07-31",
+                  "origin_port": {
+                    "_object": "/place",
+                    "name": "Fairburn",
+                    "address": {
+                      "_object": "/address",
+                      "street_address": null,
+                      "street_address2": null,
+                      "city": "Fairburn",
+                      "state": "GA",
+                      "country": "United States",
+                      "country_code": "US",
+                      "zip": null,
+                      "unlocode": "USFBN",
+                      "timezone": "America/New_York",
+                      "ref": "id-313120"
+                    },
+                    "details": [
+                      {
+                        "_object": "/ocean/railport",
+                        "port_code": null
+                      },
+                      {
+                        "_object": "/trucking/port",
+                        "port_code": null
+                      },
+                      {
+                        "_object": "/ocean/port",
+                        "port_code": null
+                      }
+                    ]
+                  },
+                  "origin_address": {
+                    "_object": "/address",
+                    "street_address": "No 1, 123 St",
+                    "street_address2": null,
+                    "city": "Shenzhen",
+                    "state": "Beijing",
+                    "country": "China",
+                    "country_code": "CN",
+                    "zip": null,
+                    "unlocode": null,
+                    "timezone": "Asia/Shanghai",
+                    "ref": "id-274346"
+                  },
+                  "destination_port": {
+                    "_object": "/place",
+                    "name": "Fairburn",
+                    "address": {
+                      "_object": "/address",
+                      "street_address": null,
+                      "street_address2": null,
+                      "city": "Fairburn",
+                      "state": "GA",
+                      "country": "United States",
+                      "country_code": "US",
+                      "zip": null,
+                      "unlocode": "USFBN",
+                      "timezone": "America/New_York",
+                      "ref": "id-313120"
+                    },
+                    "details": [
+                      {
+                        "_object": "/ocean/railport",
+                        "port_code": null
+                      },
+                      {
+                        "_object": "/trucking/port",
+                        "port_code": null
+                      },
+                      {
+                        "_object": "/ocean/port",
+                        "port_code": null
+                      }
+                    ]
+                  },
+                  "destination_addresses": [
+                    {
+                      "_object": "/address",
+                      "street_address": "Vandelay street 1",
+                      "street_address2": null,
+                      "city": "Duisburg",
+                      "state": "North Rhine Westphalia",
+                      "country": "Germany",
+                      "country_code": "DE",
+                      "zip": "56776",
+                      "unlocode": null,
+                      "timezone": "Europe/Berlin",
+                      "ref": "id-318238"
+                    }
+                  ],
+                  "line_items": {
+                    "_object": "/api/refs/collection",
+                    "ref_type": "/purchase_orders/line_item",
+                    "link": "https://api.flexport.com/purchase_order_line_items?f.purchase_order.id=109771"
+                  },
+                  "parties": [
+                    {
+                      "_object": "purchase_orders/party",
+                      "role": "buyer",
+                      "company_entity": {
+                        "_object": "/company_entity",
+                        "id": 754619,
+                        "name": "test",
+                        "mailing_address": {
+                          "_object": "/address",
+                          "street_address": "test",
+                          "street_address2": null,
+                          "city": "shanghai",
+                          "state": "Shanghai",
+                          "country": "China",
+                          "country_code": "CN",
+                          "zip": null,
+                          "unlocode": null,
+                          "timezone": "Asia/Shanghai",
+                          "ref": null
+                        },
+                        "ref": "id-754619",
+                        "vat_numbers": []
+                      },
+                      "location_address": null,
+                      "contacts": []
+                    },
+                    {
+                      "_object": "purchase_orders/party",
+                      "role": "seller",
+                      "company_entity": {
+                        "_object": "/company_entity",
+                        "id": 677939,
+                        "name": "75 Aero Camino Suite 203 Goleta",
+                        "mailing_address": null,
+                        "ref": "id-677939",
+                        "vat_numbers": []
+                      },
+                      "location_address": {
+                        "_object": "/address",
+                        "street_address": "Vandelay street 1",
+                        "street_address2": null,
+                        "city": "Duisburg",
+                        "state": "North Rhine Westphalia",
+                        "country": "Germany",
+                        "country_code": "DE",
+                        "zip": "56776",
+                        "unlocode": null,
+                        "timezone": "Europe/Berlin",
+                        "ref": "id-318238"
+                      },
+                      "contacts": [
+                        {
+                          "_object": "purchase_orders/contact",
+                          "name": "cds",
+                          "phone": "123456789",
+                          "email": "abc@173.com",
+                          "fax": "123456789",
+                          "department": "a department"
+                        }
+                      ]
+                    },
+                    {
+                      "_object": "purchase_orders/party",
+                      "role": "owner",
+                      "company_entity": {
+                        "_object": "/company_entity",
+                        "id": 754619,
+                        "name": "test",
+                        "mailing_address": {
+                          "_object": "/address",
+                          "street_address": "test",
+                          "street_address2": null,
+                          "city": "shanghai",
+                          "state": "Shanghai",
+                          "country": "China",
+                          "country_code": "CN",
+                          "zip": null,
+                          "unlocode": null,
+                          "timezone": "Asia/Shanghai",
+                          "ref": null
+                        },
+                        "ref": "id-754619",
+                        "vat_numbers": []
+                      },
+                      "location_address": null,
+                      "contacts": [
+                        {
+                          "_object": "purchase_orders/contact",
+                          "name": "abc",
+                          "phone": "123456789",
+                          "email": "abc@173.com",
+                          "fax": "123456789",
+                          "department": "a department"
+                        }
+                      ]
+                    }
+                  ],
+                  "memo": "memo",
+                  "status": "open",
+                  "archived_at": null,
+                  "created_at": "2020-07-31T19:52:58.140Z",
+                  "updated_at": "2020-07-31T19:52:58.161Z",
+                  "priority": "standard",
+                  "order_type": "Apparel",
+                  "issue_date": "2019-06-30",
+                  "freight_payment_terms": "freight_collect"
+                },
+                "error": {}
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "_object": "/api/response"
+                  "_object": "/api/response",
+                  "self": "https://api.flexport.com/purchase_orders",
+                  "version": 3,
+                  "data": {
+                    "metadata": {
+                      "size": [
+                        "M"
+                      ]
+                    },
+                    "_object": "/purchase_order",
+                    "id": 109771,
+                    "name": "PO 123",
+                    "incoterm": "FOB",
+                    "transportation_mode": "ocean",
+                    "cargo_ready_date": "2019-06-30",
+                    "must_arrive_date": "2019-07-31",
+                    "origin_port": {
+                      "_object": "/place",
+                      "name": "Fairburn",
+                      "address": {
+                        "_object": "/address",
+                        "street_address": null,
+                        "street_address2": null,
+                        "city": "Fairburn",
+                        "state": "GA",
+                        "country": "United States",
+                        "country_code": "US",
+                        "zip": null,
+                        "unlocode": "USFBN",
+                        "timezone": "America/New_York",
+                        "ref": "id-313120"
+                      },
+                      "details": [
+                        {
+                          "_object": "/ocean/railport",
+                          "port_code": null
+                        },
+                        {
+                          "_object": "/trucking/port",
+                          "port_code": null
+                        },
+                        {
+                          "_object": "/ocean/port",
+                          "port_code": null
+                        }
+                      ]
+                    },
+                    "origin_address": {
+                      "_object": "/address",
+                      "street_address": "No 1, 123 St",
+                      "street_address2": null,
+                      "city": "Shenzhen",
+                      "state": "Beijing",
+                      "country": "China",
+                      "country_code": "CN",
+                      "zip": null,
+                      "unlocode": null,
+                      "timezone": "Asia/Shanghai",
+                      "ref": "id-274346"
+                    },
+                    "destination_port": {
+                      "_object": "/place",
+                      "name": "Fairburn",
+                      "address": {
+                        "_object": "/address",
+                        "street_address": null,
+                        "street_address2": null,
+                        "city": "Fairburn",
+                        "state": "GA",
+                        "country": "United States",
+                        "country_code": "US",
+                        "zip": null,
+                        "unlocode": "USFBN",
+                        "timezone": "America/New_York",
+                        "ref": "id-313120"
+                      },
+                      "details": [
+                        {
+                          "_object": "/ocean/railport",
+                          "port_code": null
+                        },
+                        {
+                          "_object": "/trucking/port",
+                          "port_code": null
+                        },
+                        {
+                          "_object": "/ocean/port",
+                          "port_code": null
+                        }
+                      ]
+                    },
+                    "destination_addresses": [
+                      {
+                        "_object": "/address",
+                        "street_address": "Vandelay street 1",
+                        "street_address2": null,
+                        "city": "Duisburg",
+                        "state": "North Rhine Westphalia",
+                        "country": "Germany",
+                        "country_code": "DE",
+                        "zip": "56776",
+                        "unlocode": null,
+                        "timezone": "Europe/Berlin",
+                        "ref": "id-318238"
+                      }
+                    ],
+                    "line_items": {
+                      "_object": "/api/refs/collection",
+                      "ref_type": "/purchase_orders/line_item",
+                      "link": "https://api.flexport.com/purchase_order_line_items?f.purchase_order.id=109771"
+                    },
+                    "parties": [
+                      {
+                        "_object": "purchase_orders/party",
+                        "role": "buyer",
+                        "company_entity": {
+                          "_object": "/company_entity",
+                          "id": 754619,
+                          "name": "test",
+                          "mailing_address": {
+                            "_object": "/address",
+                            "street_address": "test",
+                            "street_address2": null,
+                            "city": "shanghai",
+                            "state": "Shanghai",
+                            "country": "China",
+                            "country_code": "CN",
+                            "zip": null,
+                            "unlocode": null,
+                            "timezone": "Asia/Shanghai",
+                            "ref": null
+                          },
+                          "ref": "id-754619",
+                          "vat_numbers": []
+                        },
+                        "location_address": null,
+                        "contacts": []
+                      },
+                      {
+                        "_object": "purchase_orders/party",
+                        "role": "seller",
+                        "company_entity": {
+                          "_object": "/company_entity",
+                          "id": 677939,
+                          "name": "75 Aero Camino Suite 203 Goleta",
+                          "mailing_address": null,
+                          "ref": "id-677939",
+                          "vat_numbers": []
+                        },
+                        "location_address": {
+                          "_object": "/address",
+                          "street_address": "Vandelay street 1",
+                          "street_address2": null,
+                          "city": "Duisburg",
+                          "state": "North Rhine Westphalia",
+                          "country": "Germany",
+                          "country_code": "DE",
+                          "zip": "56776",
+                          "unlocode": null,
+                          "timezone": "Europe/Berlin",
+                          "ref": "id-318238"
+                        },
+                        "contacts": [
+                          {
+                            "_object": "purchase_orders/contact",
+                            "name": "cds",
+                            "phone": "123456789",
+                            "email": "abc@173.com",
+                            "fax": "123456789",
+                            "department": "a department"
+                          }
+                        ]
+                      },
+                      {
+                        "_object": "purchase_orders/party",
+                        "role": "owner",
+                        "company_entity": {
+                          "_object": "/company_entity",
+                          "id": 754619,
+                          "name": "test",
+                          "mailing_address": {
+                            "_object": "/address",
+                            "street_address": "test",
+                            "street_address2": null,
+                            "city": "shanghai",
+                            "state": "Shanghai",
+                            "country": "China",
+                            "country_code": "CN",
+                            "zip": null,
+                            "unlocode": null,
+                            "timezone": "Asia/Shanghai",
+                            "ref": null
+                          },
+                          "ref": "id-754619",
+                          "vat_numbers": []
+                        },
+                        "location_address": null,
+                        "contacts": [
+                          {
+                            "_object": "purchase_orders/contact",
+                            "name": "abc",
+                            "phone": "123456789",
+                            "email": "abc@173.com",
+                            "fax": "123456789",
+                            "department": "a department"
+                          }
+                        ]
+                      }
+                    ],
+                    "memo": "memo",
+                    "status": "open",
+                    "archived_at": null,
+                    "created_at": "2020-07-31T19:52:58.140Z",
+                    "updated_at": "2020-07-31T19:52:58.161Z",
+                    "priority": "standard",
+                    "order_type": "Apparel",
+                    "issue_date": "2019-06-30",
+                    "freight_payment_terms": "freight_collect"
+                  },
+                  "error": {}
                 }
               }
             }
@@ -39329,12 +40177,438 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "_object": "/purchase_order"
+                "_object": "/purchase_order",
+                "id": 109771,
+                "name": "PO 123",
+                "incoterm": "FOB",
+                "transportation_mode": "ocean",
+                "cargo_ready_date": "2019-06-30",
+                "must_arrive_date": "2019-07-31",
+                "origin_port": {
+                  "_object": "/place",
+                  "name": "Fairburn",
+                  "address": {
+                    "_object": "/address",
+                    "street_address": null,
+                    "street_address2": null,
+                    "city": "Fairburn",
+                    "state": "GA",
+                    "country": "United States",
+                    "country_code": "US",
+                    "zip": null,
+                    "unlocode": "USFBN",
+                    "timezone": "America/New_York",
+                    "ref": "id-313120"
+                  },
+                  "details": [
+                    {
+                      "_object": "/ocean/railport",
+                      "port_code": null
+                    },
+                    {
+                      "_object": "/trucking/port",
+                      "port_code": null
+                    },
+                    {
+                      "_object": "/ocean/port",
+                      "port_code": null
+                    }
+                  ]
+                },
+                "origin_address": {
+                  "_object": "/address",
+                  "street_address": "No 1, 123 St",
+                  "street_address2": null,
+                  "city": "Shenzhen",
+                  "state": "Beijing",
+                  "country": "China",
+                  "country_code": "CN",
+                  "zip": null,
+                  "unlocode": null,
+                  "timezone": "Asia/Shanghai",
+                  "ref": "id-274346"
+                },
+                "destination_port": {
+                  "_object": "/place",
+                  "name": "Fairburn",
+                  "address": {
+                    "_object": "/address",
+                    "street_address": null,
+                    "street_address2": null,
+                    "city": "Fairburn",
+                    "state": "GA",
+                    "country": "United States",
+                    "country_code": "US",
+                    "zip": null,
+                    "unlocode": "USFBN",
+                    "timezone": "America/New_York",
+                    "ref": "id-313120"
+                  },
+                  "details": [
+                    {
+                      "_object": "/ocean/railport",
+                      "port_code": null
+                    },
+                    {
+                      "_object": "/trucking/port",
+                      "port_code": null
+                    },
+                    {
+                      "_object": "/ocean/port",
+                      "port_code": null
+                    }
+                  ]
+                },
+                "destination_addresses": [
+                  {
+                    "_object": "/address",
+                    "street_address": "Vandelay street 1",
+                    "street_address2": null,
+                    "city": "Duisburg",
+                    "state": "North Rhine Westphalia",
+                    "country": "Germany",
+                    "country_code": "DE",
+                    "zip": "56776",
+                    "unlocode": null,
+                    "timezone": "Europe/Berlin",
+                    "ref": "id-318238"
+                  }
+                ],
+                "line_items": {
+                  "_object": "/api/refs/collection",
+                  "ref_type": "/purchase_orders/line_item",
+                  "link": "https://api.flexport.com/purchase_order_line_items?f.purchase_order.id=109771"
+                },
+                "parties": [
+                  {
+                    "_object": "purchase_orders/party",
+                    "role": "buyer",
+                    "company_entity": {
+                      "_object": "/company_entity",
+                      "id": 754619,
+                      "name": "test",
+                      "mailing_address": {
+                        "_object": "/address",
+                        "street_address": "test",
+                        "street_address2": null,
+                        "city": "shanghai",
+                        "state": "Shanghai",
+                        "country": "China",
+                        "country_code": "CN",
+                        "zip": null,
+                        "unlocode": null,
+                        "timezone": "Asia/Shanghai",
+                        "ref": null
+                      },
+                      "ref": "id-754619",
+                      "vat_numbers": []
+                    },
+                    "location_address": null,
+                    "contacts": []
+                  },
+                  {
+                    "_object": "purchase_orders/party",
+                    "role": "seller",
+                    "company_entity": {
+                      "_object": "/company_entity",
+                      "id": 677939,
+                      "name": "75 Aero Camino Suite 203 Goleta",
+                      "mailing_address": null,
+                      "ref": "id-677939",
+                      "vat_numbers": []
+                    },
+                    "location_address": {
+                      "_object": "/address",
+                      "street_address": "Vandelay street 1",
+                      "street_address2": null,
+                      "city": "Duisburg",
+                      "state": "North Rhine Westphalia",
+                      "country": "Germany",
+                      "country_code": "DE",
+                      "zip": "56776",
+                      "unlocode": null,
+                      "timezone": "Europe/Berlin",
+                      "ref": "id-318238"
+                    },
+                    "contacts": [
+                      {
+                        "_object": "purchase_orders/contact",
+                        "name": "cds",
+                        "phone": "123456789",
+                        "email": "abc@173.com",
+                        "fax": "123456789",
+                        "department": "a department"
+                      }
+                    ]
+                  },
+                  {
+                    "_object": "purchase_orders/party",
+                    "role": "owner",
+                    "company_entity": {
+                      "_object": "/company_entity",
+                      "id": 754619,
+                      "name": "test",
+                      "mailing_address": {
+                        "_object": "/address",
+                        "street_address": "test",
+                        "street_address2": null,
+                        "city": "shanghai",
+                        "state": "Shanghai",
+                        "country": "China",
+                        "country_code": "CN",
+                        "zip": null,
+                        "unlocode": null,
+                        "timezone": "Asia/Shanghai",
+                        "ref": null
+                      },
+                      "ref": "id-754619",
+                      "vat_numbers": []
+                    },
+                    "location_address": null,
+                    "contacts": [
+                      {
+                        "_object": "purchase_orders/contact",
+                        "name": "abc",
+                        "phone": "123456789",
+                        "email": "abc@173.com",
+                        "fax": "123456789",
+                        "department": "a department"
+                      }
+                    ]
+                  }
+                ],
+                "memo": "memo",
+                "status": "open",
+                "archived_at": {},
+                "created_at": "2020-07-31T19:52:58.140Z",
+                "updated_at": "2020-07-31T19:52:58.161Z",
+                "priority": "standard",
+                "order_type": "Apparel",
+                "issue_date": "2019-06-30",
+                "freight_payment_terms": "freight_collect",
+                "metadata": {
+                  "size": [
+                    "M"
+                  ]
+                }
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "_object": "/purchase_order"
+                  "_object": "/purchase_order",
+                  "id": 109771,
+                  "name": "PO 123",
+                  "incoterm": "FOB",
+                  "transportation_mode": "ocean",
+                  "cargo_ready_date": "2019-06-30",
+                  "must_arrive_date": "2019-07-31",
+                  "origin_port": {
+                    "_object": "/place",
+                    "name": "Fairburn",
+                    "address": {
+                      "_object": "/address",
+                      "street_address": null,
+                      "street_address2": null,
+                      "city": "Fairburn",
+                      "state": "GA",
+                      "country": "United States",
+                      "country_code": "US",
+                      "zip": null,
+                      "unlocode": "USFBN",
+                      "timezone": "America/New_York",
+                      "ref": "id-313120"
+                    },
+                    "details": [
+                      {
+                        "_object": "/ocean/railport",
+                        "port_code": null
+                      },
+                      {
+                        "_object": "/trucking/port",
+                        "port_code": null
+                      },
+                      {
+                        "_object": "/ocean/port",
+                        "port_code": null
+                      }
+                    ]
+                  },
+                  "origin_address": {
+                    "_object": "/address",
+                    "street_address": "No 1, 123 St",
+                    "street_address2": null,
+                    "city": "Shenzhen",
+                    "state": "Beijing",
+                    "country": "China",
+                    "country_code": "CN",
+                    "zip": null,
+                    "unlocode": null,
+                    "timezone": "Asia/Shanghai",
+                    "ref": "id-274346"
+                  },
+                  "destination_port": {
+                    "_object": "/place",
+                    "name": "Fairburn",
+                    "address": {
+                      "_object": "/address",
+                      "street_address": null,
+                      "street_address2": null,
+                      "city": "Fairburn",
+                      "state": "GA",
+                      "country": "United States",
+                      "country_code": "US",
+                      "zip": null,
+                      "unlocode": "USFBN",
+                      "timezone": "America/New_York",
+                      "ref": "id-313120"
+                    },
+                    "details": [
+                      {
+                        "_object": "/ocean/railport",
+                        "port_code": null
+                      },
+                      {
+                        "_object": "/trucking/port",
+                        "port_code": null
+                      },
+                      {
+                        "_object": "/ocean/port",
+                        "port_code": null
+                      }
+                    ]
+                  },
+                  "destination_addresses": [
+                    {
+                      "_object": "/address",
+                      "street_address": "Vandelay street 1",
+                      "street_address2": null,
+                      "city": "Duisburg",
+                      "state": "North Rhine Westphalia",
+                      "country": "Germany",
+                      "country_code": "DE",
+                      "zip": "56776",
+                      "unlocode": null,
+                      "timezone": "Europe/Berlin",
+                      "ref": "id-318238"
+                    }
+                  ],
+                  "line_items": {
+                    "_object": "/api/refs/collection",
+                    "ref_type": "/purchase_orders/line_item",
+                    "link": "https://api.flexport.com/purchase_order_line_items?f.purchase_order.id=109771"
+                  },
+                  "parties": [
+                    {
+                      "_object": "purchase_orders/party",
+                      "role": "buyer",
+                      "company_entity": {
+                        "_object": "/company_entity",
+                        "id": 754619,
+                        "name": "test",
+                        "mailing_address": {
+                          "_object": "/address",
+                          "street_address": "test",
+                          "street_address2": null,
+                          "city": "shanghai",
+                          "state": "Shanghai",
+                          "country": "China",
+                          "country_code": "CN",
+                          "zip": null,
+                          "unlocode": null,
+                          "timezone": "Asia/Shanghai",
+                          "ref": null
+                        },
+                        "ref": "id-754619",
+                        "vat_numbers": []
+                      },
+                      "location_address": null,
+                      "contacts": []
+                    },
+                    {
+                      "_object": "purchase_orders/party",
+                      "role": "seller",
+                      "company_entity": {
+                        "_object": "/company_entity",
+                        "id": 677939,
+                        "name": "75 Aero Camino Suite 203 Goleta",
+                        "mailing_address": null,
+                        "ref": "id-677939",
+                        "vat_numbers": []
+                      },
+                      "location_address": {
+                        "_object": "/address",
+                        "street_address": "Vandelay street 1",
+                        "street_address2": null,
+                        "city": "Duisburg",
+                        "state": "North Rhine Westphalia",
+                        "country": "Germany",
+                        "country_code": "DE",
+                        "zip": "56776",
+                        "unlocode": null,
+                        "timezone": "Europe/Berlin",
+                        "ref": "id-318238"
+                      },
+                      "contacts": [
+                        {
+                          "_object": "purchase_orders/contact",
+                          "name": "cds",
+                          "phone": "123456789",
+                          "email": "abc@173.com",
+                          "fax": "123456789",
+                          "department": "a department"
+                        }
+                      ]
+                    },
+                    {
+                      "_object": "purchase_orders/party",
+                      "role": "owner",
+                      "company_entity": {
+                        "_object": "/company_entity",
+                        "id": 754619,
+                        "name": "test",
+                        "mailing_address": {
+                          "_object": "/address",
+                          "street_address": "test",
+                          "street_address2": null,
+                          "city": "shanghai",
+                          "state": "Shanghai",
+                          "country": "China",
+                          "country_code": "CN",
+                          "zip": null,
+                          "unlocode": null,
+                          "timezone": "Asia/Shanghai",
+                          "ref": null
+                        },
+                        "ref": "id-754619",
+                        "vat_numbers": []
+                      },
+                      "location_address": null,
+                      "contacts": [
+                        {
+                          "_object": "purchase_orders/contact",
+                          "name": "abc",
+                          "phone": "123456789",
+                          "email": "abc@173.com",
+                          "fax": "123456789",
+                          "department": "a department"
+                        }
+                      ]
+                    }
+                  ],
+                  "memo": "memo",
+                  "status": "open",
+                  "archived_at": {},
+                  "created_at": "2020-07-31T19:52:58.140Z",
+                  "updated_at": "2020-07-31T19:52:58.161Z",
+                  "priority": "standard",
+                  "order_type": "Apparel",
+                  "issue_date": "2019-06-30",
+                  "freight_payment_terms": "freight_collect",
+                  "metadata": {
+                    "size": [
+                      "M"
+                    ]
+                  }
                 }
               }
             }
@@ -39447,12 +40721,30 @@
                   {
                     "role": "buyer",
                     "external_ref": "id-1232",
-                    "location_ref": "id-1232"
+                    "location_ref": "id-1232",
+                    "contact": [
+                      {
+                        "name": "abc",
+                        "phone": 123456789,
+                        "email": "abc@173.com",
+                        "fax": 123456789,
+                        "department": "a department"
+                      }
+                    ]
                   },
                   {
                     "role": "seller",
                     "external_ref": "id-321",
-                    "location_ref": "id-432"
+                    "location_ref": "id-432",
+                    "contact": [
+                      {
+                        "name": "cds",
+                        "phone": 123456789,
+                        "email": "abc@173.com",
+                        "fax": 123456789,
+                        "department": "a department"
+                      }
+                    ]
                   }
                 ],
                 "currency_code": "USD",
@@ -39511,7 +40803,9 @@
                     "origin_location_ref": "id-123456",
                     "destination_locations": [
                       {
-                        "location_ref": "id-1234"
+                        "location_ref": "id-1234",
+                        "address_ref": "id-654321",
+                        "destination_units": 1
                       }
                     ],
                     "units": 10,
@@ -39532,7 +40826,11 @@
                         "value": "1"
                       }
                     ],
-                    "metadata": {}
+                    "metadata": {
+                      "size": [
+                        "M"
+                      ]
+                    }
                   }
                 ]
               },
@@ -39546,12 +40844,30 @@
                     {
                       "role": "buyer",
                       "external_ref": "id-1232",
-                      "location_ref": "id-1232"
+                      "location_ref": "id-1232",
+                      "contact": [
+                        {
+                          "name": "abc",
+                          "phone": 123456789,
+                          "email": "abc@173.com",
+                          "fax": 123456789,
+                          "department": "a department"
+                        }
+                      ]
                     },
                     {
                       "role": "seller",
                       "external_ref": "id-321",
-                      "location_ref": "id-432"
+                      "location_ref": "id-432",
+                      "contact": [
+                        {
+                          "name": "cds",
+                          "phone": 123456789,
+                          "email": "abc@173.com",
+                          "fax": 123456789,
+                          "department": "a department"
+                        }
+                      ]
                     }
                   ],
                   "currency_code": "USD",
@@ -39610,7 +40926,9 @@
                       "origin_location_ref": "id-123456",
                       "destination_locations": [
                         {
-                          "location_ref": "id-1234"
+                          "location_ref": "id-1234",
+                          "address_ref": "id-654321",
+                          "destination_units": 1
                         }
                       ],
                       "units": 10,
@@ -39631,7 +40949,11 @@
                           "value": "1"
                         }
                       ],
-                      "metadata": {}
+                      "metadata": {
+                        "size": [
+                          "M"
+                        ]
+                      }
                     }
                   ]
                 }
@@ -39652,12 +40974,450 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "_object": "/api/response"
+                "_object": "/api/response",
+                "self": "https://api.flexport.com/purchase_orders/12345",
+                "version": 3,
+                "data": {
+                  "metadata": {
+                    "size": [
+                      "M"
+                    ]
+                  },
+                  "_object": "/purchase_order",
+                  "id": 109771,
+                  "name": "PO 123",
+                  "incoterm": "FOB",
+                  "transportation_mode": "ocean",
+                  "cargo_ready_date": "2019-06-30",
+                  "must_arrive_date": "2019-07-31",
+                  "origin_port": {
+                    "_object": "/place",
+                    "name": "Fairburn",
+                    "address": {
+                      "_object": "/address",
+                      "street_address": null,
+                      "street_address2": null,
+                      "city": "Fairburn",
+                      "state": "GA",
+                      "country": "United States",
+                      "country_code": "US",
+                      "zip": null,
+                      "unlocode": "USFBN",
+                      "timezone": "America/New_York",
+                      "ref": "id-313120"
+                    },
+                    "details": [
+                      {
+                        "_object": "/ocean/railport",
+                        "port_code": null
+                      },
+                      {
+                        "_object": "/trucking/port",
+                        "port_code": null
+                      },
+                      {
+                        "_object": "/ocean/port",
+                        "port_code": null
+                      }
+                    ]
+                  },
+                  "origin_address": {
+                    "_object": "/address",
+                    "street_address": "No 1, 123 St",
+                    "street_address2": null,
+                    "city": "Shenzhen",
+                    "state": "Beijing",
+                    "country": "China",
+                    "country_code": "CN",
+                    "zip": null,
+                    "unlocode": null,
+                    "timezone": "Asia/Shanghai",
+                    "ref": "id-274346"
+                  },
+                  "destination_port": {
+                    "_object": "/place",
+                    "name": "Fairburn",
+                    "address": {
+                      "_object": "/address",
+                      "street_address": null,
+                      "street_address2": null,
+                      "city": "Fairburn",
+                      "state": "GA",
+                      "country": "United States",
+                      "country_code": "US",
+                      "zip": null,
+                      "unlocode": "USFBN",
+                      "timezone": "America/New_York",
+                      "ref": "id-313120"
+                    },
+                    "details": [
+                      {
+                        "_object": "/ocean/railport",
+                        "port_code": null
+                      },
+                      {
+                        "_object": "/trucking/port",
+                        "port_code": null
+                      },
+                      {
+                        "_object": "/ocean/port",
+                        "port_code": null
+                      }
+                    ]
+                  },
+                  "destination_addresses": [
+                    {
+                      "_object": "/address",
+                      "street_address": "Vandelay street 1",
+                      "street_address2": null,
+                      "city": "Duisburg",
+                      "state": "North Rhine Westphalia",
+                      "country": "Germany",
+                      "country_code": "DE",
+                      "zip": "56776",
+                      "unlocode": null,
+                      "timezone": "Europe/Berlin",
+                      "ref": "id-318238"
+                    }
+                  ],
+                  "line_items": {
+                    "_object": "/api/refs/collection",
+                    "ref_type": "/purchase_orders/line_item",
+                    "link": "https://api.flexport.com/purchase_order_line_items?f.purchase_order.id=109771"
+                  },
+                  "parties": [
+                    {
+                      "_object": "purchase_orders/party",
+                      "role": "buyer",
+                      "company_entity": {
+                        "_object": "/company_entity",
+                        "id": 754619,
+                        "name": "test",
+                        "mailing_address": {
+                          "_object": "/address",
+                          "street_address": "test",
+                          "street_address2": null,
+                          "city": "shanghai",
+                          "state": "Shanghai",
+                          "country": "China",
+                          "country_code": "CN",
+                          "zip": null,
+                          "unlocode": null,
+                          "timezone": "Asia/Shanghai",
+                          "ref": null
+                        },
+                        "ref": "id-754619",
+                        "vat_numbers": []
+                      },
+                      "location_address": null,
+                      "contacts": []
+                    },
+                    {
+                      "_object": "purchase_orders/party",
+                      "role": "seller",
+                      "company_entity": {
+                        "_object": "/company_entity",
+                        "id": 677939,
+                        "name": "75 Aero Camino Suite 203 Goleta",
+                        "mailing_address": null,
+                        "ref": "id-677939",
+                        "vat_numbers": []
+                      },
+                      "location_address": {
+                        "_object": "/address",
+                        "street_address": "Vandelay street 1",
+                        "street_address2": null,
+                        "city": "Duisburg",
+                        "state": "North Rhine Westphalia",
+                        "country": "Germany",
+                        "country_code": "DE",
+                        "zip": "56776",
+                        "unlocode": null,
+                        "timezone": "Europe/Berlin",
+                        "ref": "id-318238"
+                      },
+                      "contacts": [
+                        {
+                          "_object": "purchase_orders/contact",
+                          "name": "cds",
+                          "phone": "123456789",
+                          "email": "abc@173.com",
+                          "fax": "123456789",
+                          "department": "a department"
+                        }
+                      ]
+                    },
+                    {
+                      "_object": "purchase_orders/party",
+                      "role": "owner",
+                      "company_entity": {
+                        "_object": "/company_entity",
+                        "id": 754619,
+                        "name": "test",
+                        "mailing_address": {
+                          "_object": "/address",
+                          "street_address": "test",
+                          "street_address2": null,
+                          "city": "shanghai",
+                          "state": "Shanghai",
+                          "country": "China",
+                          "country_code": "CN",
+                          "zip": null,
+                          "unlocode": null,
+                          "timezone": "Asia/Shanghai",
+                          "ref": null
+                        },
+                        "ref": "id-754619",
+                        "vat_numbers": []
+                      },
+                      "location_address": null,
+                      "contacts": [
+                        {
+                          "_object": "purchase_orders/contact",
+                          "name": "abc",
+                          "phone": "123456789",
+                          "email": "abc@173.com",
+                          "fax": "123456789",
+                          "department": "a department"
+                        }
+                      ]
+                    }
+                  ],
+                  "memo": "memo",
+                  "status": "open",
+                  "archived_at": null,
+                  "created_at": "2020-07-31T19:52:58.140Z",
+                  "updated_at": "2020-07-31T19:52:58.161Z",
+                  "priority": "standard",
+                  "order_type": "Apparel",
+                  "issue_date": "2019-06-30",
+                  "freight_payment_terms": "freight_collect"
+                },
+                "error": {}
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "_object": "/api/response"
+                  "_object": "/api/response",
+                  "self": "https://api.flexport.com/purchase_orders/12345",
+                  "version": 3,
+                  "data": {
+                    "metadata": {
+                      "size": [
+                        "M"
+                      ]
+                    },
+                    "_object": "/purchase_order",
+                    "id": 109771,
+                    "name": "PO 123",
+                    "incoterm": "FOB",
+                    "transportation_mode": "ocean",
+                    "cargo_ready_date": "2019-06-30",
+                    "must_arrive_date": "2019-07-31",
+                    "origin_port": {
+                      "_object": "/place",
+                      "name": "Fairburn",
+                      "address": {
+                        "_object": "/address",
+                        "street_address": null,
+                        "street_address2": null,
+                        "city": "Fairburn",
+                        "state": "GA",
+                        "country": "United States",
+                        "country_code": "US",
+                        "zip": null,
+                        "unlocode": "USFBN",
+                        "timezone": "America/New_York",
+                        "ref": "id-313120"
+                      },
+                      "details": [
+                        {
+                          "_object": "/ocean/railport",
+                          "port_code": null
+                        },
+                        {
+                          "_object": "/trucking/port",
+                          "port_code": null
+                        },
+                        {
+                          "_object": "/ocean/port",
+                          "port_code": null
+                        }
+                      ]
+                    },
+                    "origin_address": {
+                      "_object": "/address",
+                      "street_address": "No 1, 123 St",
+                      "street_address2": null,
+                      "city": "Shenzhen",
+                      "state": "Beijing",
+                      "country": "China",
+                      "country_code": "CN",
+                      "zip": null,
+                      "unlocode": null,
+                      "timezone": "Asia/Shanghai",
+                      "ref": "id-274346"
+                    },
+                    "destination_port": {
+                      "_object": "/place",
+                      "name": "Fairburn",
+                      "address": {
+                        "_object": "/address",
+                        "street_address": null,
+                        "street_address2": null,
+                        "city": "Fairburn",
+                        "state": "GA",
+                        "country": "United States",
+                        "country_code": "US",
+                        "zip": null,
+                        "unlocode": "USFBN",
+                        "timezone": "America/New_York",
+                        "ref": "id-313120"
+                      },
+                      "details": [
+                        {
+                          "_object": "/ocean/railport",
+                          "port_code": null
+                        },
+                        {
+                          "_object": "/trucking/port",
+                          "port_code": null
+                        },
+                        {
+                          "_object": "/ocean/port",
+                          "port_code": null
+                        }
+                      ]
+                    },
+                    "destination_addresses": [
+                      {
+                        "_object": "/address",
+                        "street_address": "Vandelay street 1",
+                        "street_address2": null,
+                        "city": "Duisburg",
+                        "state": "North Rhine Westphalia",
+                        "country": "Germany",
+                        "country_code": "DE",
+                        "zip": "56776",
+                        "unlocode": null,
+                        "timezone": "Europe/Berlin",
+                        "ref": "id-318238"
+                      }
+                    ],
+                    "line_items": {
+                      "_object": "/api/refs/collection",
+                      "ref_type": "/purchase_orders/line_item",
+                      "link": "https://api.flexport.com/purchase_order_line_items?f.purchase_order.id=109771"
+                    },
+                    "parties": [
+                      {
+                        "_object": "purchase_orders/party",
+                        "role": "buyer",
+                        "company_entity": {
+                          "_object": "/company_entity",
+                          "id": 754619,
+                          "name": "test",
+                          "mailing_address": {
+                            "_object": "/address",
+                            "street_address": "test",
+                            "street_address2": null,
+                            "city": "shanghai",
+                            "state": "Shanghai",
+                            "country": "China",
+                            "country_code": "CN",
+                            "zip": null,
+                            "unlocode": null,
+                            "timezone": "Asia/Shanghai",
+                            "ref": null
+                          },
+                          "ref": "id-754619",
+                          "vat_numbers": []
+                        },
+                        "location_address": null,
+                        "contacts": []
+                      },
+                      {
+                        "_object": "purchase_orders/party",
+                        "role": "seller",
+                        "company_entity": {
+                          "_object": "/company_entity",
+                          "id": 677939,
+                          "name": "75 Aero Camino Suite 203 Goleta",
+                          "mailing_address": null,
+                          "ref": "id-677939",
+                          "vat_numbers": []
+                        },
+                        "location_address": {
+                          "_object": "/address",
+                          "street_address": "Vandelay street 1",
+                          "street_address2": null,
+                          "city": "Duisburg",
+                          "state": "North Rhine Westphalia",
+                          "country": "Germany",
+                          "country_code": "DE",
+                          "zip": "56776",
+                          "unlocode": null,
+                          "timezone": "Europe/Berlin",
+                          "ref": "id-318238"
+                        },
+                        "contacts": [
+                          {
+                            "_object": "purchase_orders/contact",
+                            "name": "cds",
+                            "phone": "123456789",
+                            "email": "abc@173.com",
+                            "fax": "123456789",
+                            "department": "a department"
+                          }
+                        ]
+                      },
+                      {
+                        "_object": "purchase_orders/party",
+                        "role": "owner",
+                        "company_entity": {
+                          "_object": "/company_entity",
+                          "id": 754619,
+                          "name": "test",
+                          "mailing_address": {
+                            "_object": "/address",
+                            "street_address": "test",
+                            "street_address2": null,
+                            "city": "shanghai",
+                            "state": "Shanghai",
+                            "country": "China",
+                            "country_code": "CN",
+                            "zip": null,
+                            "unlocode": null,
+                            "timezone": "Asia/Shanghai",
+                            "ref": null
+                          },
+                          "ref": "id-754619",
+                          "vat_numbers": []
+                        },
+                        "location_address": null,
+                        "contacts": [
+                          {
+                            "_object": "purchase_orders/contact",
+                            "name": "abc",
+                            "phone": "123456789",
+                            "email": "abc@173.com",
+                            "fax": "123456789",
+                            "department": "a department"
+                          }
+                        ]
+                      }
+                    ],
+                    "memo": "memo",
+                    "status": "open",
+                    "archived_at": null,
+                    "created_at": "2020-07-31T19:52:58.140Z",
+                    "updated_at": "2020-07-31T19:52:58.161Z",
+                    "priority": "standard",
+                    "order_type": "Apparel",
+                    "issue_date": "2019-06-30",
+                    "freight_payment_terms": "freight_collect"
+                  },
+                  "error": {}
                 }
               }
             }
@@ -39890,7 +41650,8 @@
                             "zip": "56307",
                             "timezone": "America/Chicago",
                             "ref": "address_ref_1",
-                            "unlocode": "US AL2"
+                            "unlocode": "US AL2",
+                            "street_address2": {}
                           }
                         }
                       },
@@ -39928,7 +41689,8 @@
                               "port_code": "3901"
                             }
                           ]
-                        }
+                        },
+                        "terminal": {}
                       },
                       "transportation_mode": "ocean",
                       "carrier_name": "Liberty Carrier",
@@ -39943,7 +41705,11 @@
                           "ref_type": "/ocean/shipment_container_leg",
                           "link": "https://api.flexport.com/ocean/shipment_container_legs?f.shipment_container.id=123"
                         }
-                      }
+                      },
+                      "deleted_at": {},
+                      "air_leg": {},
+                      "trucking_leg": {},
+                      "rail_leg": {}
                     }
                   ]
                 }
@@ -40029,7 +41795,8 @@
                               "zip": "56307",
                               "timezone": "America/Chicago",
                               "ref": "address_ref_1",
-                              "unlocode": "US AL2"
+                              "unlocode": "US AL2",
+                              "street_address2": {}
                             }
                           }
                         },
@@ -40067,7 +41834,8 @@
                                 "port_code": "3901"
                               }
                             ]
-                          }
+                          },
+                          "terminal": {}
                         },
                         "transportation_mode": "ocean",
                         "carrier_name": "Liberty Carrier",
@@ -40082,7 +41850,11 @@
                             "ref_type": "/ocean/shipment_container_leg",
                             "link": "https://api.flexport.com/ocean/shipment_container_legs?f.shipment_container.id=123"
                           }
-                        }
+                        },
+                        "deleted_at": {},
+                        "air_leg": {},
+                        "trucking_leg": {},
+                        "rail_leg": {}
                       }
                     ]
                   }
@@ -40266,7 +42038,8 @@
                         "zip": "56307",
                         "timezone": "America/Chicago",
                         "ref": "address_ref_1",
-                        "unlocode": "US AL2"
+                        "unlocode": "US AL2",
+                        "street_address2": {}
                       }
                     }
                   },
@@ -40304,7 +42077,8 @@
                           "port_code": "3901"
                         }
                       ]
-                    }
+                    },
+                    "terminal": {}
                   },
                   "transportation_mode": "ocean",
                   "carrier_name": "Liberty Carrier",
@@ -40319,7 +42093,10 @@
                       "ref_type": "/ocean/shipment_container_leg",
                       "link": "https://api.flexport.com/ocean/shipment_container_legs?f.shipment_container.id=123"
                     }
-                  }
+                  },
+                  "air_leg": {},
+                  "trucking_leg": {},
+                  "rail_leg": {}
                 }
               },
               "responseBodyV3": {
@@ -40398,7 +42175,8 @@
                           "zip": "56307",
                           "timezone": "America/Chicago",
                           "ref": "address_ref_1",
-                          "unlocode": "US AL2"
+                          "unlocode": "US AL2",
+                          "street_address2": {}
                         }
                       }
                     },
@@ -40436,7 +42214,8 @@
                             "port_code": "3901"
                           }
                         ]
-                      }
+                      },
+                      "terminal": {}
                     },
                     "transportation_mode": "ocean",
                     "carrier_name": "Liberty Carrier",
@@ -40451,7 +42230,10 @@
                         "ref_type": "/ocean/shipment_container_leg",
                         "link": "https://api.flexport.com/ocean/shipment_container_legs?f.shipment_container.id=123"
                       }
-                    }
+                    },
+                    "air_leg": {},
+                    "trucking_leg": {},
+                    "rail_leg": {}
                   }
                 }
               }
@@ -41192,9 +42974,14 @@
                       "departure_date": "2019-02-06T19:28:25+00:00",
                       "arrival_date": "2019-02-06T19:28:25+00:00",
                       "picked_up_in_full_date": "2019-02-06T19:28:25+00:00",
-                      "delivered_in_full_date": "2019-02-06T19:28:25+00:00"
+                      "delivered_in_full_date": "2019-02-06T19:28:25+00:00",
+                      "air_shipment": {},
+                      "child_shipments": {},
+                      "parent_shipment": {}
                     }
-                  ]
+                  ],
+                  "prev": {},
+                  "next": {}
                 }
               },
               "responseBodyV3": {
@@ -41460,9 +43247,14 @@
                         "departure_date": "2019-02-06T19:28:25+00:00",
                         "arrival_date": "2019-02-06T19:28:25+00:00",
                         "picked_up_in_full_date": "2019-02-06T19:28:25+00:00",
-                        "delivered_in_full_date": "2019-02-06T19:28:25+00:00"
+                        "delivered_in_full_date": "2019-02-06T19:28:25+00:00",
+                        "air_shipment": {},
+                        "child_shipments": {},
+                        "parent_shipment": {}
                       }
-                    ]
+                    ],
+                    "prev": {},
+                    "next": {}
                   }
                 }
               }
@@ -41810,7 +43602,10 @@
                   "departure_date": "2019-02-06T19:28:25+00:00",
                   "arrival_date": "2019-02-06T19:28:25+00:00",
                   "picked_up_in_full_date": "2019-02-06T19:28:25+00:00",
-                  "delivered_in_full_date": "2019-02-06T19:28:25+00:00"
+                  "delivered_in_full_date": "2019-02-06T19:28:25+00:00",
+                  "air_shipment": {},
+                  "child_shipments": {},
+                  "parent_shipment": {}
                 }
               },
               "responseBodyV3": {
@@ -42069,7 +43864,10 @@
                     "departure_date": "2019-02-06T19:28:25+00:00",
                     "arrival_date": "2019-02-06T19:28:25+00:00",
                     "picked_up_in_full_date": "2019-02-06T19:28:25+00:00",
-                    "delivered_in_full_date": "2019-02-06T19:28:25+00:00"
+                    "delivered_in_full_date": "2019-02-06T19:28:25+00:00",
+                    "air_shipment": {},
+                    "child_shipments": {},
+                    "parent_shipment": {}
                   }
                 }
               }
@@ -42437,7 +44235,8 @@
                   "departure_date": "2019-02-06T19:28:25+00:00",
                   "arrival_date": "2019-02-06T19:28:25+00:00",
                   "picked_up_in_full_date": "2019-02-06T19:28:25+00:00",
-                  "delivered_in_full_date": "2019-02-06T19:28:25+00:00"
+                  "delivered_in_full_date": "2019-02-06T19:28:25+00:00",
+                  "air_shipment": {}
                 }
               },
               "responseBodyV3": {
@@ -42699,7 +44498,8 @@
                     "departure_date": "2019-02-06T19:28:25+00:00",
                     "arrival_date": "2019-02-06T19:28:25+00:00",
                     "picked_up_in_full_date": "2019-02-06T19:28:25+00:00",
-                    "delivered_in_full_date": "2019-02-06T19:28:25+00:00"
+                    "delivered_in_full_date": "2019-02-06T19:28:25+00:00",
+                    "air_shipment": {}
                   }
                 }
               }

@@ -20,6 +20,8 @@ import { assertNever } from "@fern-api/core-utils";
 import * as IR from "@fern-fern/ir-sdk/api";
 import { ExampleRequestBody } from "@fern-fern/ir-sdk/api";
 
+const DEFAULT_PACKAGE_PATH = "src";
+
 export declare namespace JestTestGenerator {
     interface Args {
         ir: IR.IntermediateRepresentation;
@@ -30,6 +32,8 @@ export declare namespace JestTestGenerator {
         generateWireTests: boolean;
         useBigInt: boolean;
         retainOriginalCasing: boolean;
+        relativePackagePath: string;
+        relativeTestPath: string;
     }
 }
 
@@ -42,6 +46,8 @@ export class JestTestGenerator {
     private readonly generateWireTests: boolean;
     private readonly useBigInt: boolean;
     private readonly retainOriginalCasing: boolean;
+    private readonly relativePackagePath: string;
+    private readonly relativeTestPath: string;
 
     constructor({
         ir,
@@ -51,7 +57,9 @@ export class JestTestGenerator {
         writeUnitTests,
         generateWireTests,
         useBigInt,
-        retainOriginalCasing
+        retainOriginalCasing,
+        relativePackagePath,
+        relativeTestPath
     }: JestTestGenerator.Args) {
         this.ir = ir;
         this.dependencyManager = dependencyManager;
@@ -61,15 +69,17 @@ export class JestTestGenerator {
         this.includeSerdeLayer = includeSerdeLayer;
         this.useBigInt = useBigInt;
         this.retainOriginalCasing = retainOriginalCasing;
+        this.relativePackagePath = relativePackagePath;
+        this.relativeTestPath = relativeTestPath;
     }
 
     private addJestConfig(): void {
         const setupFilesAfterEnv = [];
         if (this.useBigInt) {
-            setupFilesAfterEnv.push("<rootDir>/tests/bigint.setup.ts");
+            setupFilesAfterEnv.push(`<rootDir>/${this.relativeTestPath}/bigint.setup.ts`);
         }
         if (this.generateWireTests) {
-            setupFilesAfterEnv.push("<rootDir>/tests/mock-server/setup.ts");
+            setupFilesAfterEnv.push(`<rootDir>/${this.relativeTestPath}/mock-server/setup.ts`);
         }
         const jestConfig = this.rootDirectory.createSourceFile(
             "jest.config.mjs",
@@ -79,7 +89,7 @@ export class JestTestGenerator {
                 preset: "ts-jest",
                 testEnvironment: "node",
                 moduleNameMapper: {
-                    "(.+)\\.js$": "$1",
+                    "^(\\.{1,2}/.*)\\.js$": "$1"
                 },
                 setupFilesAfterEnv: ${arrayOf(...setupFilesAfterEnv)},
                 ${this.useBigInt ? code`workerThreads: true,` : code``}
@@ -94,12 +104,13 @@ export class JestTestGenerator {
         const filename = `${service.name.fernFilepath.file?.camelCase.unsafeName ?? "main"}.test.ts`;
 
         const filePath = path.join("wire", ...folders, filename);
+
         return {
             directories: [],
             file: {
                 nameOnDisk: filePath
             },
-            rootDir: "tests"
+            rootDir: this.relativeTestPath
         };
     }
 
@@ -122,30 +133,39 @@ export class JestTestGenerator {
     public get scripts(): Record<string, string> {
         const scripts: Record<string, string> = {};
         if (this.writeUnitTests) {
-            scripts.test = "jest tests/unit --passWithNoTests";
+            scripts.test = `jest ${this.relativeTestPath}/unit --passWithNoTests`;
         } else {
             scripts.test = "jest --passWithNoTests";
         }
         if (this.generateWireTests) {
-            scripts["test:wire"] = "jest tests/wire --passWithNoTests";
+            scripts["test:wire"] = `jest ${this.relativeTestPath}/wire --passWithNoTests`;
             scripts["wire:test"] = "yarn test:wire";
         }
         return scripts;
     }
 
     public get extraFiles(): Record<string, string> {
+        const pathToRoot =
+            this.relativePackagePath === DEFAULT_PACKAGE_PATH
+                ? "../"
+                : "../".repeat(this.relativePackagePath.split("/").length + 1);
+
+        const extendsPath = `${pathToRoot}tsconfig.base.json`;
+
+        const includePaths = [`${pathToRoot}${this.relativePackagePath}`, `${pathToRoot}${this.relativeTestPath}`];
+
         return {
-            "tests/tsconfig.json": `{
-    "extends": "../tsconfig.base.json",
+            [`${this.relativeTestPath}/tsconfig.json`]: `{
+    "extends": "${extendsPath}",
     "compilerOptions": {
         "outDir": null,
         "rootDir": "..",
         "baseUrl": ".."
     },
-    "include": ["../src", "../tests"],
+    "include": ${JSON.stringify(includePaths)},
     "exclude": []
 }`,
-            "tests/custom.test.ts": `
+            [`${this.relativeTestPath}/custom.test.ts`]: `
 /**
 * This is a custom test file, if you wish to add more tests
 * to your SDK.
@@ -169,9 +189,13 @@ describe("test", () => {
         serviceGenerator: GeneratedSdkClientClass,
         context: SdkContext
     ): Code | undefined {
-        context.importsManager.addImportFromRoot("tests/mock-server/MockServerPool.js", {
-            namedImports: ["mockServerPool"]
-        });
+        context.importsManager.addImportFromRoot(
+            "mock-server/MockServerPool.js",
+            {
+                namedImports: ["mockServerPool"]
+            },
+            this.relativeTestPath
+        );
         const importStatement = context.sdkClientClass.getReferenceToClientClass({ isRoot: true });
 
         const baseOptions: Record<string, Code> = {};

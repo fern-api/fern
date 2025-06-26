@@ -5,6 +5,7 @@ using WellKnownProto = Google.Protobuf.WellKnownTypes;
 
 namespace SeedApi;
 
+[Serializable]
 public record DescribeRequest
 {
     [JsonPropertyName("filter")]

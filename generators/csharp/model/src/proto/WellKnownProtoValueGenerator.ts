@@ -64,7 +64,8 @@ export class WellKnownProtoValueGenerator extends FileGenerator<
                     })
                 ],
                 superClassArguments: [csharp.codeblock("value")]
-            }
+            },
+            annotations: [this.context.getSerializableAttribute()]
         });
 
         for (const operator of this.getProtoValueOperators()) {

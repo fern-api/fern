@@ -26,7 +26,8 @@ export class IdempotentRequestOptionsGenerator extends FileGenerator<
             ...this.context.getIdempotentRequestOptionsClassReference(),
             partial: true,
             access: csharp.Access.Public,
-            interfaceReferences: [this.context.getIdempotentRequestOptionsInterfaceClassReference()]
+            interfaceReferences: [this.context.getIdempotentRequestOptionsInterfaceClassReference()],
+            annotations: [this.context.getSerializableAttribute()]
         });
         class_.addFields(this.baseOptionsGenerator.getRequestOptionFields());
         class_.addFields(this.baseOptionsGenerator.getIdempotentRequestOptionFields());

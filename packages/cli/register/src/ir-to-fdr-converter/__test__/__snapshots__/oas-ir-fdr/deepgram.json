@@ -8914,7 +8914,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -8930,7 +8930,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -8946,7 +8946,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -8962,7 +8962,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -8978,7 +8978,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -8994,7 +8994,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -9010,7 +9010,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -12526,7 +12526,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "ChannelsAgentMessagesSettingsConfigurationAudioInput"
@@ -12540,7 +12540,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "ChannelsAgentMessagesSettingsConfigurationAudioOutput"
@@ -12820,7 +12820,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -12835,7 +12835,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "list",
                   "itemType": {
@@ -12942,7 +12942,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "ChannelsAgentMessagesSettingsConfigurationAgentSpeak"
@@ -13019,7 +13019,7 @@
             "description": "Optional audio configuration settings",
             "key": "audio",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "id",
                 "value": "ChannelsAgentMessagesSettingsConfigurationAudio"
@@ -13038,7 +13038,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "ChannelsAgentMessagesSettingsConfigurationContext"
@@ -17942,7 +17942,9 @@
                 ],
                 "tags": [
                   "tag-1"
-                ]
+                ],
+                "comments": "a comment",
+                "expiration_date": "2024-05-01T00:00:00.000000Z"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -17954,7 +17956,9 @@
                   ],
                   "tags": [
                     "tag-1"
-                  ]
+                  ],
+                  "comments": "a comment",
+                  "expiration_date": "2024-05-01T00:00:00.000000Z"
                 }
               }
             }

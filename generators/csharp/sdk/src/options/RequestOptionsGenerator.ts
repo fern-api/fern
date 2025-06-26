@@ -22,7 +22,8 @@ export class RequestOptionsGenerator extends FileGenerator<CSharpFile, SdkCustom
             ...this.context.getRequestOptionsClassReference(),
             partial: true,
             access: csharp.Access.Public,
-            interfaceReferences: [this.context.getRequestOptionsInterfaceReference()]
+            interfaceReferences: [this.context.getRequestOptionsInterfaceReference()],
+            annotations: [this.context.getSerializableAttribute()]
         });
         class_.addFields(this.baseOptionsGenerator.getRequestOptionFields());
         return new CSharpFile({

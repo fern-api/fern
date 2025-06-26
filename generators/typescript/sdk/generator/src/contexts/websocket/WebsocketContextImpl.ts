@@ -1,4 +1,4 @@
-import { ImportsManager, NpmPackage, PackageId, Reference } from "@fern-typescript/commons";
+import { ExportsManager, ImportsManager, NpmPackage, PackageId, Reference } from "@fern-typescript/commons";
 import { GeneratedWebsocketSocketClass, WebsocketClassContext } from "@fern-typescript/contexts";
 import { PackageResolver } from "@fern-typescript/resolvers";
 import { WebsocketClassGenerator } from "@fern-typescript/sdk-client-class-generator";
@@ -12,6 +12,7 @@ export declare namespace WebsocketContextImpl {
     export interface Init {
         sourceFile: SourceFile;
         importsManager: ImportsManager;
+        exportsManager: ExportsManager;
         websocketSocketDeclarationReferencer: WebsocketSocketDeclarationReferencer;
         websocketGenerator: WebsocketClassGenerator;
         includeSerdeLayer: boolean;
@@ -22,6 +23,7 @@ export declare namespace WebsocketContextImpl {
 export class WebsocketContextImpl implements WebsocketClassContext {
     public sourceFile: SourceFile;
     public importsManager: ImportsManager;
+    public exportsManager: ExportsManager;
     public websocketSocketDeclarationReferencer: WebsocketSocketDeclarationReferencer;
     public websocketGenerator: WebsocketClassGenerator;
     public includeSerdeLayer: boolean;
@@ -29,12 +31,14 @@ export class WebsocketContextImpl implements WebsocketClassContext {
     constructor({
         sourceFile,
         importsManager,
+        exportsManager,
         websocketSocketDeclarationReferencer,
         websocketGenerator,
         includeSerdeLayer
     }: WebsocketContextImpl.Init) {
         this.sourceFile = sourceFile;
         this.importsManager = importsManager;
+        this.exportsManager = exportsManager;
         this.websocketSocketDeclarationReferencer = websocketSocketDeclarationReferencer;
         this.websocketGenerator = websocketGenerator;
         this.includeSerdeLayer = includeSerdeLayer;
@@ -68,6 +72,7 @@ export class WebsocketContextImpl implements WebsocketClassContext {
                 name: subpackageId,
                 referencedIn: this.sourceFile,
                 importsManager: this.importsManager,
+                exportsManager: this.exportsManager,
                 importStrategy: { type: "fromPackage", packageName: npmPackage.packageName }
             });
         }
@@ -75,6 +80,7 @@ export class WebsocketContextImpl implements WebsocketClassContext {
             name: subpackageId,
             referencedIn: this.sourceFile,
             importsManager: this.importsManager,
+            exportsManager: this.exportsManager,
             importStrategy: { type: "direct", alias: importAlias }
         });
     }

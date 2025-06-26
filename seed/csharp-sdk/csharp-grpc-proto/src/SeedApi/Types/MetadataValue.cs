@@ -4,6 +4,7 @@ using WellKnownProto = Google.Protobuf.WellKnownTypes;
 
 namespace SeedApi;
 
+[Serializable]
 public sealed class MetadataValue(
     OneOf<string, double, bool, IEnumerable<MetadataValue?>, Metadata> value
 ) : OneOfBase<string, double, bool, IEnumerable<MetadataValue?>, Metadata>(value)

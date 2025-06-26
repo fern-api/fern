@@ -1,11 +1,6 @@
 import { SourceFile, ts } from "ts-morph";
 
-import {
-    ExportedDirectory,
-    ExportedFilePath,
-    convertExportedDirectoryPathToFilePath,
-    convertExportedFilePathToFilePath
-} from "../exports-manager/ExportedFilePath";
+import { ExportedDirectory, ExportedFilePath, ExportsManager } from "../exports-manager";
 import { ImportsManager } from "../imports-manager/ImportsManager";
 import { ModuleSpecifier } from "./ModuleSpecifier";
 import { GetReferenceOpts, Reference } from "./Reference";
@@ -14,12 +9,15 @@ import { getEntityNameOfDirectory } from "./getEntityNameOfDirectory";
 import { getExpressionToDirectory } from "./getExpressionToDirectory";
 import { getRelativePathAsModuleSpecifierTo } from "./getRelativePathAsModuleSpecifierTo";
 
+const DEFAULT_SRC_DIRECTORY = "src";
+
 export declare namespace getReferenceToExportFromRoot {
     export interface Args {
         referencedIn: SourceFile;
         exportedName: string;
         exportedFromPath: ExportedFilePath;
         importsManager: ImportsManager;
+        exportsManager: ExportsManager;
         namespaceImport?: string;
         useDynamicImport?: boolean;
         subImport?: string[];
@@ -30,6 +28,7 @@ export function getReferenceToExportFromRoot({
     exportedName,
     exportedFromPath,
     importsManager,
+    exportsManager,
     referencedIn,
     namespaceImport,
     useDynamicImport = false,
@@ -46,7 +45,7 @@ export function getReferenceToExportFromRoot({
     if (firstDirectory?.exportDeclaration?.defaultExport != null) {
         moduleSpecifier = getRelativePathAsModuleSpecifierTo({
             from: referencedIn,
-            to: convertExportedDirectoryPathToFilePath([])
+            to: exportsManager.convertExportedDirectoryPathToFilePath([])
         });
 
         const { recommendedImportName } = firstDirectory.exportDeclaration.defaultExport;
@@ -66,8 +65,8 @@ export function getReferenceToExportFromRoot({
             from: referencedIn,
             to:
                 firstDirectory != null
-                    ? convertExportedDirectoryPathToFilePath([firstDirectory])
-                    : convertExportedFilePathToFilePath(exportedFromPath)
+                    ? exportsManager.convertExportedDirectoryPathToFilePath([firstDirectory])
+                    : exportsManager.convertExportedFilePathToFilePath(exportedFromPath)
         });
 
         addImport = () => {
@@ -101,6 +100,7 @@ export function getReferenceToExportFromRoot({
                 exportedName,
                 exportedFromPath,
                 importsManager,
+                exportsManager,
                 referencedIn,
                 importAlias: undefined,
                 subImport
@@ -109,7 +109,7 @@ export function getReferenceToExportFromRoot({
 
         moduleSpecifier = getRelativePathAsModuleSpecifierTo({
             from: referencedIn,
-            to: convertExportedDirectoryPathToFilePath(directoryToImportDirectlyFrom)
+            to: exportsManager.convertExportedDirectoryPathToFilePath(directoryToImportDirectlyFrom)
         });
 
         const namedImport = firstDirectoryInsideNamespaceExport.exportDeclaration.namespaceExport;
@@ -124,7 +124,8 @@ export function getReferenceToExportFromRoot({
         (acc, part) => ts.factory.createQualifiedName(acc, part),
         getEntityNameOfDirectory({
             pathToDirectory: directoriesInsideNamespaceExport,
-            prefix
+            prefix,
+            exportsManager
         })
     );
 
@@ -132,6 +133,7 @@ export function getReferenceToExportFromRoot({
         (acc, part) => ts.factory.createPropertyAccessExpression(acc, part),
         getExpressionToDirectory({
             pathToDirectory: directoriesInsideNamespaceExport,
+            exportsManager,
             prefix: useDynamicImport
                 ? ts.factory.createParenthesizedExpression(
                       ts.factory.createAwaitExpression(

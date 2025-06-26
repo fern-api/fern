@@ -14,7 +14,8 @@ export async function runRemoteGenerationForDocsWorkspace({
     context,
     token,
     instanceUrl,
-    preview
+    preview,
+    disableTemplates
 }: {
     organization: string;
     apiWorkspaces: AbstractAPIWorkspace<unknown>[];
@@ -24,6 +25,7 @@ export async function runRemoteGenerationForDocsWorkspace({
     token: FernToken;
     instanceUrl: string | undefined;
     preview: boolean;
+    disableTemplates: boolean | undefined;
 }): Promise<void> {
     const instances = docsWorkspace.config.instances;
 
@@ -83,7 +85,8 @@ export async function runRemoteGenerationForDocsWorkspace({
             ossWorkspaces,
             preview,
             editThisPage: maybeInstance.editThisPage,
-            isPrivate: maybeInstance.private
+            isPrivate: maybeInstance.private,
+            disableTemplates
         });
     });
     return;

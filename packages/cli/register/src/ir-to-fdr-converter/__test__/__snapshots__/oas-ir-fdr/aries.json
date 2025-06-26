@@ -233,7 +233,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -673,7 +673,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "map",
                   "keyType": {
@@ -1263,7 +1263,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -2227,7 +2227,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -2999,7 +2999,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -3103,7 +3103,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -4423,7 +4423,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -4449,7 +4449,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -4645,7 +4645,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -4675,7 +4675,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -4882,7 +4882,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "IndyCredentialRevReg"
@@ -4896,7 +4896,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -4957,7 +4957,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "IndyCredentialWitness"
@@ -5670,7 +5670,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "list",
                   "itemType": {
@@ -5753,7 +5753,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -5784,7 +5784,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -6329,7 +6329,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "map",
                   "keyType": {
@@ -6352,7 +6352,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "map",
                   "keyType": {
@@ -7210,7 +7210,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -9369,7 +9369,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -9528,7 +9528,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -9587,7 +9587,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -9631,7 +9631,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "list",
                   "itemType": {
@@ -9769,7 +9769,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -9922,7 +9922,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -12000,7 +12000,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -12069,7 +12069,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -12612,7 +12612,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -12679,7 +12679,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -12735,7 +12735,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -12887,7 +12887,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -13214,7 +13214,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -13587,7 +13587,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -13655,7 +13655,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -13746,7 +13746,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -13833,7 +13833,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -13890,7 +13890,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -14799,7 +14799,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -14877,7 +14877,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -14929,7 +14929,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -15025,7 +15025,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -15106,7 +15106,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -15231,7 +15231,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -15315,7 +15315,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -15375,7 +15375,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -15409,7 +15409,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -15447,7 +15447,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -15669,7 +15669,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -15759,7 +15759,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -15817,7 +15817,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -16415,7 +16415,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -16595,7 +16595,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -18796,10 +18796,14 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {},
+              "responseBody": {
+                "result": {}
+              },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "result": {}
+                }
               }
             }
           ],
@@ -19851,7 +19855,8 @@
                   "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
                   "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV"
                 ],
-                "serviceEndpoint": "http://192.168.56.101:8020"
+                "serviceEndpoint": "http://192.168.56.101:8020",
+                "@type": "https://didcomm.org/my-family/1.0/my-message-type"
               },
               "requestBodyV3": {
                 "type": "json",
@@ -19868,7 +19873,8 @@
                     "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
                     "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV"
                   ],
-                  "serviceEndpoint": "http://192.168.56.101:8020"
+                  "serviceEndpoint": "http://192.168.56.101:8020",
+                  "@type": "https://didcomm.org/my-family/1.0/my-message-type"
                 }
               },
               "responseStatusCode": 200,
@@ -21281,14 +21287,16 @@
               "responseBody": {
                 "sent": {
                   "credential_definition_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag"
-                }
+                },
+                "txn": {}
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
                   "sent": {
                     "credential_definition_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag"
-                  }
+                  },
+                  "txn": {}
                 }
               }
             }
@@ -21526,7 +21534,8 @@
                   "schemaId": "20",
                   "tag": "tag",
                   "type": "CL",
-                  "ver": "1.0"
+                  "ver": "1.0",
+                  "value": {}
                 }
               },
               "responseBodyV3": {
@@ -21537,7 +21546,8 @@
                     "schemaId": "20",
                     "tag": "tag",
                     "type": "CL",
-                    "ver": "1.0"
+                    "ver": "1.0",
+                    "value": {}
                   }
                 }
               }
@@ -21623,7 +21633,8 @@
                   "schemaId": "20",
                   "tag": "tag",
                   "type": "CL",
-                  "ver": "1.0"
+                  "ver": "1.0",
+                  "value": {}
                 }
               },
               "responseBodyV3": {
@@ -21634,7 +21645,8 @@
                     "schemaId": "20",
                     "tag": "tag",
                     "type": "CL",
-                    "ver": "1.0"
+                    "ver": "1.0",
+                    "value": {}
                   }
                 }
               }
@@ -23005,14 +23017,18 @@
               "requestBody": {
                 "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                 "did": "WgWxqztrNooG92RXvxSTWv",
-                "label": "Request to connect with Bob"
+                "label": "Request to connect with Bob",
+                "@type": "https://didcomm.org/my-family/1.0/my-message-type",
+                "did_doc~attach": {}
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
                   "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   "did": "WgWxqztrNooG92RXvxSTWv",
-                  "label": "Request to connect with Bob"
+                  "label": "Request to connect with Bob",
+                  "@type": "https://didcomm.org/my-family/1.0/my-message-type",
+                  "did_doc~attach": {}
                 }
               },
               "responseStatusCode": 200,
@@ -23468,10 +23484,14 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {},
+              "responseBody": {
+                "results": {}
+              },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "results": {}
+                }
               }
             }
           ],
@@ -23668,7 +23688,9 @@
                 "state": "active",
                 "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                 "trace": true,
-                "updated_at": "2021-12-31 23:59:59+00:00"
+                "updated_at": "2021-12-31 23:59:59+00:00",
+                "query_msg": {},
+                "disclose": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -23679,7 +23701,9 @@
                   "state": "active",
                   "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   "trace": true,
-                  "updated_at": "2021-12-31 23:59:59+00:00"
+                  "updated_at": "2021-12-31 23:59:59+00:00",
+                  "query_msg": {},
+                  "disclose": {}
                 }
               }
             }
@@ -23901,7 +23925,13 @@
                 "state": "done",
                 "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                 "trace": true,
-                "updated_at": "2021-12-31 23:59:59+00:00"
+                "updated_at": "2021-12-31 23:59:59+00:00",
+                "cred_request": {},
+                "cred_offer": {},
+                "cred_issue": {},
+                "cred_proposal": {},
+                "by_format": {},
+                "cred_preview": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -23919,7 +23949,13 @@
                   "state": "done",
                   "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   "trace": true,
-                  "updated_at": "2021-12-31 23:59:59+00:00"
+                  "updated_at": "2021-12-31 23:59:59+00:00",
+                  "cred_request": {},
+                  "cred_offer": {},
+                  "cred_issue": {},
+                  "cred_proposal": {},
+                  "by_format": {},
+                  "cred_preview": {}
                 }
               }
             }
@@ -24050,7 +24086,13 @@
                 "state": "done",
                 "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                 "trace": true,
-                "updated_at": "2021-12-31 23:59:59+00:00"
+                "updated_at": "2021-12-31 23:59:59+00:00",
+                "cred_request": {},
+                "cred_offer": {},
+                "cred_issue": {},
+                "cred_proposal": {},
+                "by_format": {},
+                "cred_preview": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -24068,7 +24110,13 @@
                   "state": "done",
                   "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   "trace": true,
-                  "updated_at": "2021-12-31 23:59:59+00:00"
+                  "updated_at": "2021-12-31 23:59:59+00:00",
+                  "cred_request": {},
+                  "cred_offer": {},
+                  "cred_issue": {},
+                  "cred_proposal": {},
+                  "by_format": {},
+                  "cred_preview": {}
                 }
               }
             }
@@ -24197,7 +24245,8 @@
                       "cred_id_stored": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "state": "active",
                       "updated_at": "2021-12-31 23:59:59+00:00"
-                    }
+                    },
+                    "cred_ex_record": {}
                   },
                   {
                     "indy": {
@@ -24218,7 +24267,8 @@
                       "cred_id_stored": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "state": "active",
                       "updated_at": "2021-12-31 23:59:59+00:00"
-                    }
+                    },
+                    "cred_ex_record": {}
                   }
                 ]
               },
@@ -24245,7 +24295,8 @@
                         "cred_id_stored": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                         "state": "active",
                         "updated_at": "2021-12-31 23:59:59+00:00"
-                      }
+                      },
+                      "cred_ex_record": {}
                     },
                     {
                       "indy": {
@@ -24266,7 +24317,8 @@
                         "cred_id_stored": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                         "state": "active",
                         "updated_at": "2021-12-31 23:59:59+00:00"
-                      }
+                      },
+                      "cred_ex_record": {}
                     }
                   ]
                 }
@@ -24366,7 +24418,8 @@
                   "cred_id_stored": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   "state": "active",
                   "updated_at": "2021-12-31 23:59:59+00:00"
-                }
+                },
+                "cred_ex_record": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -24389,7 +24442,8 @@
                     "cred_id_stored": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "state": "active",
                     "updated_at": "2021-12-31 23:59:59+00:00"
-                  }
+                  },
+                  "cred_ex_record": {}
                 }
               }
             }
@@ -24590,7 +24644,8 @@
                   "cred_id_stored": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   "state": "active",
                   "updated_at": "2021-12-31 23:59:59+00:00"
-                }
+                },
+                "cred_ex_record": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -24613,7 +24668,8 @@
                     "cred_id_stored": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "state": "active",
                     "updated_at": "2021-12-31 23:59:59+00:00"
-                  }
+                  },
+                  "cred_ex_record": {}
                 }
               }
             }
@@ -24807,10 +24863,16 @@
               },
               "queryParameters": {},
               "headers": {},
-              "requestBody": {},
+              "requestBody": {
+                "filter": {},
+                "counter_preview": {}
+              },
               "requestBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "filter": {},
+                  "counter_preview": {}
+                }
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -24827,7 +24889,13 @@
                 "state": "done",
                 "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                 "trace": true,
-                "updated_at": "2021-12-31 23:59:59+00:00"
+                "updated_at": "2021-12-31 23:59:59+00:00",
+                "cred_request": {},
+                "cred_offer": {},
+                "cred_issue": {},
+                "cred_proposal": {},
+                "by_format": {},
+                "cred_preview": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -24845,7 +24913,13 @@
                   "state": "done",
                   "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   "trace": true,
-                  "updated_at": "2021-12-31 23:59:59+00:00"
+                  "updated_at": "2021-12-31 23:59:59+00:00",
+                  "cred_request": {},
+                  "cred_offer": {},
+                  "cred_issue": {},
+                  "cred_proposal": {},
+                  "by_format": {},
+                  "cred_preview": {}
                 }
               }
             }
@@ -24960,7 +25034,13 @@
                 "state": "done",
                 "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                 "trace": true,
-                "updated_at": "2021-12-31 23:59:59+00:00"
+                "updated_at": "2021-12-31 23:59:59+00:00",
+                "cred_request": {},
+                "cred_offer": {},
+                "cred_issue": {},
+                "cred_proposal": {},
+                "by_format": {},
+                "cred_preview": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -24978,7 +25058,13 @@
                   "state": "done",
                   "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   "trace": true,
-                  "updated_at": "2021-12-31 23:59:59+00:00"
+                  "updated_at": "2021-12-31 23:59:59+00:00",
+                  "cred_request": {},
+                  "cred_offer": {},
+                  "cred_issue": {},
+                  "cred_proposal": {},
+                  "by_format": {},
+                  "cred_preview": {}
                 }
               }
             }
@@ -25098,7 +25184,8 @@
                   "cred_id_stored": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   "state": "active",
                   "updated_at": "2021-12-31 23:59:59+00:00"
-                }
+                },
+                "cred_ex_record": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -25121,7 +25208,8 @@
                     "cred_id_stored": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "state": "active",
                     "updated_at": "2021-12-31 23:59:59+00:00"
-                  }
+                  },
+                  "cred_ex_record": {}
                 }
               }
             }
@@ -25254,7 +25342,13 @@
                 "state": "done",
                 "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                 "trace": true,
-                "updated_at": "2021-12-31 23:59:59+00:00"
+                "updated_at": "2021-12-31 23:59:59+00:00",
+                "cred_request": {},
+                "cred_offer": {},
+                "cred_issue": {},
+                "cred_proposal": {},
+                "by_format": {},
+                "cred_preview": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -25272,7 +25366,13 @@
                   "state": "done",
                   "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   "trace": true,
-                  "updated_at": "2021-12-31 23:59:59+00:00"
+                  "updated_at": "2021-12-31 23:59:59+00:00",
+                  "cred_request": {},
+                  "cred_offer": {},
+                  "cred_issue": {},
+                  "cred_proposal": {},
+                  "by_format": {},
+                  "cred_preview": {}
                 }
               }
             }
@@ -25405,7 +25505,13 @@
                 "state": "done",
                 "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                 "trace": true,
-                "updated_at": "2021-12-31 23:59:59+00:00"
+                "updated_at": "2021-12-31 23:59:59+00:00",
+                "cred_request": {},
+                "cred_offer": {},
+                "cred_issue": {},
+                "cred_proposal": {},
+                "by_format": {},
+                "cred_preview": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -25423,7 +25529,13 @@
                   "state": "done",
                   "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   "trace": true,
-                  "updated_at": "2021-12-31 23:59:59+00:00"
+                  "updated_at": "2021-12-31 23:59:59+00:00",
+                  "cred_request": {},
+                  "cred_offer": {},
+                  "cred_issue": {},
+                  "cred_proposal": {},
+                  "by_format": {},
+                  "cred_preview": {}
                 }
               }
             }
@@ -25556,7 +25668,13 @@
                 "state": "done",
                 "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                 "trace": true,
-                "updated_at": "2021-12-31 23:59:59+00:00"
+                "updated_at": "2021-12-31 23:59:59+00:00",
+                "cred_request": {},
+                "cred_offer": {},
+                "cred_issue": {},
+                "cred_proposal": {},
+                "by_format": {},
+                "cred_preview": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -25574,7 +25692,13 @@
                   "state": "done",
                   "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   "trace": true,
-                  "updated_at": "2021-12-31 23:59:59+00:00"
+                  "updated_at": "2021-12-31 23:59:59+00:00",
+                  "cred_request": {},
+                  "cred_offer": {},
+                  "cred_issue": {},
+                  "cred_proposal": {},
+                  "by_format": {},
+                  "cred_preview": {}
                 }
               }
             }
@@ -25715,7 +25839,13 @@
                 "state": "done",
                 "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                 "trace": true,
-                "updated_at": "2021-12-31 23:59:59+00:00"
+                "updated_at": "2021-12-31 23:59:59+00:00",
+                "cred_request": {},
+                "cred_offer": {},
+                "cred_issue": {},
+                "cred_proposal": {},
+                "by_format": {},
+                "cred_preview": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -25733,7 +25863,13 @@
                   "state": "done",
                   "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   "trace": true,
-                  "updated_at": "2021-12-31 23:59:59+00:00"
+                  "updated_at": "2021-12-31 23:59:59+00:00",
+                  "cred_request": {},
+                  "cred_offer": {},
+                  "cred_issue": {},
+                  "cred_proposal": {},
+                  "by_format": {},
+                  "cred_preview": {}
                 }
               }
             }
@@ -25888,7 +26024,13 @@
                 "state": "credential_acked",
                 "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                 "trace": true,
-                "updated_at": "2021-12-31 23:59:59+00:00"
+                "updated_at": "2021-12-31 23:59:59+00:00",
+                "credential_proposal_dict": {},
+                "raw_credential": {},
+                "credential": {},
+                "credential_request": {},
+                "credential_offer": {},
+                "credential_offer_dict": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -25912,7 +26054,13 @@
                   "state": "credential_acked",
                   "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   "trace": true,
-                  "updated_at": "2021-12-31 23:59:59+00:00"
+                  "updated_at": "2021-12-31 23:59:59+00:00",
+                  "credential_proposal_dict": {},
+                  "raw_credential": {},
+                  "credential": {},
+                  "credential_request": {},
+                  "credential_offer": {},
+                  "credential_offer_dict": {}
                 }
               }
             }
@@ -26049,7 +26197,13 @@
                 "state": "credential_acked",
                 "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                 "trace": true,
-                "updated_at": "2021-12-31 23:59:59+00:00"
+                "updated_at": "2021-12-31 23:59:59+00:00",
+                "credential_proposal_dict": {},
+                "raw_credential": {},
+                "credential": {},
+                "credential_request": {},
+                "credential_offer": {},
+                "credential_offer_dict": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -26073,7 +26227,13 @@
                   "state": "credential_acked",
                   "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   "trace": true,
-                  "updated_at": "2021-12-31 23:59:59+00:00"
+                  "updated_at": "2021-12-31 23:59:59+00:00",
+                  "credential_proposal_dict": {},
+                  "raw_credential": {},
+                  "credential": {},
+                  "credential_request": {},
+                  "credential_offer": {},
+                  "credential_offer_dict": {}
                 }
               }
             }
@@ -26203,7 +26363,13 @@
                     "state": "credential_acked",
                     "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "trace": true,
-                    "updated_at": "2021-12-31 23:59:59+00:00"
+                    "updated_at": "2021-12-31 23:59:59+00:00",
+                    "credential_proposal_dict": {},
+                    "raw_credential": {},
+                    "credential": {},
+                    "credential_request": {},
+                    "credential_offer": {},
+                    "credential_offer_dict": {}
                   },
                   {
                     "auto_issue": false,
@@ -26225,7 +26391,13 @@
                     "state": "credential_acked",
                     "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "trace": true,
-                    "updated_at": "2021-12-31 23:59:59+00:00"
+                    "updated_at": "2021-12-31 23:59:59+00:00",
+                    "credential_proposal_dict": {},
+                    "raw_credential": {},
+                    "credential": {},
+                    "credential_request": {},
+                    "credential_offer": {},
+                    "credential_offer_dict": {}
                   }
                 ]
               },
@@ -26253,7 +26425,13 @@
                       "state": "credential_acked",
                       "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "trace": true,
-                      "updated_at": "2021-12-31 23:59:59+00:00"
+                      "updated_at": "2021-12-31 23:59:59+00:00",
+                      "credential_proposal_dict": {},
+                      "raw_credential": {},
+                      "credential": {},
+                      "credential_request": {},
+                      "credential_offer": {},
+                      "credential_offer_dict": {}
                     },
                     {
                       "auto_issue": false,
@@ -26275,7 +26453,13 @@
                       "state": "credential_acked",
                       "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "trace": true,
-                      "updated_at": "2021-12-31 23:59:59+00:00"
+                      "updated_at": "2021-12-31 23:59:59+00:00",
+                      "credential_proposal_dict": {},
+                      "raw_credential": {},
+                      "credential": {},
+                      "credential_request": {},
+                      "credential_offer": {},
+                      "credential_offer_dict": {}
                     }
                   ]
                 }
@@ -26376,7 +26560,13 @@
                 "state": "credential_acked",
                 "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                 "trace": true,
-                "updated_at": "2021-12-31 23:59:59+00:00"
+                "updated_at": "2021-12-31 23:59:59+00:00",
+                "credential_proposal_dict": {},
+                "raw_credential": {},
+                "credential": {},
+                "credential_request": {},
+                "credential_offer": {},
+                "credential_offer_dict": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -26400,7 +26590,13 @@
                   "state": "credential_acked",
                   "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   "trace": true,
-                  "updated_at": "2021-12-31 23:59:59+00:00"
+                  "updated_at": "2021-12-31 23:59:59+00:00",
+                  "credential_proposal_dict": {},
+                  "raw_credential": {},
+                  "credential": {},
+                  "credential_request": {},
+                  "credential_offer": {},
+                  "credential_offer_dict": {}
                 }
               }
             }
@@ -26602,7 +26798,13 @@
                 "state": "credential_acked",
                 "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                 "trace": true,
-                "updated_at": "2021-12-31 23:59:59+00:00"
+                "updated_at": "2021-12-31 23:59:59+00:00",
+                "credential_proposal_dict": {},
+                "raw_credential": {},
+                "credential": {},
+                "credential_request": {},
+                "credential_offer": {},
+                "credential_offer_dict": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -26626,7 +26828,13 @@
                   "state": "credential_acked",
                   "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   "trace": true,
-                  "updated_at": "2021-12-31 23:59:59+00:00"
+                  "updated_at": "2021-12-31 23:59:59+00:00",
+                  "credential_proposal_dict": {},
+                  "raw_credential": {},
+                  "credential": {},
+                  "credential_request": {},
+                  "credential_offer": {},
+                  "credential_offer_dict": {}
                 }
               }
             }
@@ -26820,10 +27028,14 @@
               },
               "queryParameters": {},
               "headers": {},
-              "requestBody": {},
+              "requestBody": {
+                "counter_proposal": {}
+              },
               "requestBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "counter_proposal": {}
+                }
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -26846,7 +27058,13 @@
                 "state": "credential_acked",
                 "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                 "trace": true,
-                "updated_at": "2021-12-31 23:59:59+00:00"
+                "updated_at": "2021-12-31 23:59:59+00:00",
+                "credential_proposal_dict": {},
+                "raw_credential": {},
+                "credential": {},
+                "credential_request": {},
+                "credential_offer": {},
+                "credential_offer_dict": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -26870,7 +27088,13 @@
                   "state": "credential_acked",
                   "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   "trace": true,
-                  "updated_at": "2021-12-31 23:59:59+00:00"
+                  "updated_at": "2021-12-31 23:59:59+00:00",
+                  "credential_proposal_dict": {},
+                  "raw_credential": {},
+                  "credential": {},
+                  "credential_request": {},
+                  "credential_offer": {},
+                  "credential_offer_dict": {}
                 }
               }
             }
@@ -26969,7 +27193,13 @@
                 "state": "credential_acked",
                 "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                 "trace": true,
-                "updated_at": "2021-12-31 23:59:59+00:00"
+                "updated_at": "2021-12-31 23:59:59+00:00",
+                "credential_proposal_dict": {},
+                "raw_credential": {},
+                "credential": {},
+                "credential_request": {},
+                "credential_offer": {},
+                "credential_offer_dict": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -26993,7 +27223,13 @@
                   "state": "credential_acked",
                   "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   "trace": true,
-                  "updated_at": "2021-12-31 23:59:59+00:00"
+                  "updated_at": "2021-12-31 23:59:59+00:00",
+                  "credential_proposal_dict": {},
+                  "raw_credential": {},
+                  "credential": {},
+                  "credential_request": {},
+                  "credential_offer": {},
+                  "credential_offer_dict": {}
                 }
               }
             }
@@ -27114,7 +27350,13 @@
                 "state": "credential_acked",
                 "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                 "trace": true,
-                "updated_at": "2021-12-31 23:59:59+00:00"
+                "updated_at": "2021-12-31 23:59:59+00:00",
+                "credential_proposal_dict": {},
+                "raw_credential": {},
+                "credential": {},
+                "credential_request": {},
+                "credential_offer": {},
+                "credential_offer_dict": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -27138,7 +27380,13 @@
                   "state": "credential_acked",
                   "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   "trace": true,
-                  "updated_at": "2021-12-31 23:59:59+00:00"
+                  "updated_at": "2021-12-31 23:59:59+00:00",
+                  "credential_proposal_dict": {},
+                  "raw_credential": {},
+                  "credential": {},
+                  "credential_request": {},
+                  "credential_offer": {},
+                  "credential_offer_dict": {}
                 }
               }
             }
@@ -27285,7 +27533,13 @@
                 "state": "credential_acked",
                 "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                 "trace": true,
-                "updated_at": "2021-12-31 23:59:59+00:00"
+                "updated_at": "2021-12-31 23:59:59+00:00",
+                "credential_proposal_dict": {},
+                "raw_credential": {},
+                "credential": {},
+                "credential_request": {},
+                "credential_offer": {},
+                "credential_offer_dict": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -27309,7 +27563,13 @@
                   "state": "credential_acked",
                   "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   "trace": true,
-                  "updated_at": "2021-12-31 23:59:59+00:00"
+                  "updated_at": "2021-12-31 23:59:59+00:00",
+                  "credential_proposal_dict": {},
+                  "raw_credential": {},
+                  "credential": {},
+                  "credential_request": {},
+                  "credential_offer": {},
+                  "credential_offer_dict": {}
                 }
               }
             }
@@ -27448,7 +27708,13 @@
                 "state": "credential_acked",
                 "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                 "trace": true,
-                "updated_at": "2021-12-31 23:59:59+00:00"
+                "updated_at": "2021-12-31 23:59:59+00:00",
+                "credential_proposal_dict": {},
+                "raw_credential": {},
+                "credential": {},
+                "credential_request": {},
+                "credential_offer": {},
+                "credential_offer_dict": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -27472,7 +27738,13 @@
                   "state": "credential_acked",
                   "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   "trace": true,
-                  "updated_at": "2021-12-31 23:59:59+00:00"
+                  "updated_at": "2021-12-31 23:59:59+00:00",
+                  "credential_proposal_dict": {},
+                  "raw_credential": {},
+                  "credential": {},
+                  "credential_request": {},
+                  "credential_offer": {},
+                  "credential_offer_dict": {}
                 }
               }
             }
@@ -27619,7 +27891,13 @@
                 "state": "credential_acked",
                 "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                 "trace": true,
-                "updated_at": "2021-12-31 23:59:59+00:00"
+                "updated_at": "2021-12-31 23:59:59+00:00",
+                "credential_proposal_dict": {},
+                "raw_credential": {},
+                "credential": {},
+                "credential_request": {},
+                "credential_offer": {},
+                "credential_offer_dict": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -27643,7 +27921,13 @@
                   "state": "credential_acked",
                   "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   "trace": true,
-                  "updated_at": "2021-12-31 23:59:59+00:00"
+                  "updated_at": "2021-12-31 23:59:59+00:00",
+                  "credential_proposal_dict": {},
+                  "raw_credential": {},
+                  "credential": {},
+                  "credential_request": {},
+                  "credential_offer": {},
+                  "credential_offer_dict": {}
                 }
               }
             }
@@ -28397,12 +28681,14 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "success": true
+                "success": true,
+                "txn": {}
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "success": true
+                  "success": true,
+                  "txn": {}
                 }
               }
             }
@@ -29118,14 +29404,20 @@
               "responseBody": {
                 "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                 "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                "filter": {}
+                "filter": {
+                  "filter": {}
+                },
+                "paginate": {}
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
                   "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                  "filter": {}
+                  "filter": {
+                    "filter": {}
+                  },
+                  "paginate": {}
                 }
               }
             }
@@ -31203,7 +31495,8 @@
                 "oob_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                 "state": "await_response",
                 "trace": true,
-                "updated_at": "2021-12-31 23:59:59+00:00"
+                "updated_at": "2021-12-31 23:59:59+00:00",
+                "invitation": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -31215,7 +31508,8 @@
                   "oob_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   "state": "await_response",
                   "trace": true,
-                  "updated_at": "2021-12-31 23:59:59+00:00"
+                  "updated_at": "2021-12-31 23:59:59+00:00",
+                  "invitation": {}
                 }
               }
             }
@@ -31362,7 +31656,8 @@
                         "https://link.to/data",
                         "https://link.to/data"
                       ],
-                      "sha256": "617a48c7c8afe0521efdc03e5bb0ad9e655893e6b4b51f0e794d70fba132aacb"
+                      "sha256": "617a48c7c8afe0521efdc03e5bb0ad9e655893e6b4b51f0e794d70fba132aacb",
+                      "jws": {}
                     },
                     "description": "view from doorway, facing east, with lights off",
                     "filename": "IMG1092348.png",
@@ -31379,7 +31674,8 @@
                         "https://link.to/data",
                         "https://link.to/data"
                       ],
-                      "sha256": "617a48c7c8afe0521efdc03e5bb0ad9e655893e6b4b51f0e794d70fba132aacb"
+                      "sha256": "617a48c7c8afe0521efdc03e5bb0ad9e655893e6b4b51f0e794d70fba132aacb",
+                      "jws": {}
                     },
                     "description": "view from doorway, facing east, with lights off",
                     "filename": "IMG1092348.png",
@@ -31429,7 +31725,8 @@
                           "https://link.to/data",
                           "https://link.to/data"
                         ],
-                        "sha256": "617a48c7c8afe0521efdc03e5bb0ad9e655893e6b4b51f0e794d70fba132aacb"
+                        "sha256": "617a48c7c8afe0521efdc03e5bb0ad9e655893e6b4b51f0e794d70fba132aacb",
+                        "jws": {}
                       },
                       "description": "view from doorway, facing east, with lights off",
                       "filename": "IMG1092348.png",
@@ -31446,7 +31743,8 @@
                           "https://link.to/data",
                           "https://link.to/data"
                         ],
-                        "sha256": "617a48c7c8afe0521efdc03e5bb0ad9e655893e6b4b51f0e794d70fba132aacb"
+                        "sha256": "617a48c7c8afe0521efdc03e5bb0ad9e655893e6b4b51f0e794d70fba132aacb",
+                        "jws": {}
                       },
                       "description": "view from doorway, facing east, with lights off",
                       "filename": "IMG1092348.png",
@@ -32058,7 +32356,10 @@
               "requestBody": {
                 "auto_verify": false,
                 "comment": "comment",
-                "presentation_request": {},
+                "presentation_request": {
+                  "dif": {},
+                  "indy": {}
+                },
                 "trace": false
               },
               "requestBodyV3": {
@@ -32066,7 +32367,10 @@
                 "value": {
                   "auto_verify": false,
                   "comment": "comment",
-                  "presentation_request": {},
+                  "presentation_request": {
+                    "dif": {},
+                    "indy": {}
+                  },
                   "trace": false
                 }
               },
@@ -32088,7 +32392,11 @@
                 "verified_msgs": [
                   "verified_msgs",
                   "verified_msgs"
-                ]
+                ],
+                "pres": {},
+                "pres_request": {},
+                "by_format": {},
+                "pres_proposal": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -32109,7 +32417,11 @@
                   "verified_msgs": [
                     "verified_msgs",
                     "verified_msgs"
-                  ]
+                  ],
+                  "pres": {},
+                  "pres_request": {},
+                  "by_format": {},
+                  "pres_proposal": {}
                 }
               }
             }
@@ -32236,7 +32548,11 @@
                     "verified_msgs": [
                       "verified_msgs",
                       "verified_msgs"
-                    ]
+                    ],
+                    "pres": {},
+                    "pres_request": {},
+                    "by_format": {},
+                    "pres_proposal": {}
                   },
                   {
                     "auto_present": false,
@@ -32255,7 +32571,11 @@
                     "verified_msgs": [
                       "verified_msgs",
                       "verified_msgs"
-                    ]
+                    ],
+                    "pres": {},
+                    "pres_request": {},
+                    "by_format": {},
+                    "pres_proposal": {}
                   }
                 ]
               },
@@ -32280,7 +32600,11 @@
                       "verified_msgs": [
                         "verified_msgs",
                         "verified_msgs"
-                      ]
+                      ],
+                      "pres": {},
+                      "pres_request": {},
+                      "by_format": {},
+                      "pres_proposal": {}
                     },
                     {
                       "auto_present": false,
@@ -32299,7 +32623,11 @@
                       "verified_msgs": [
                         "verified_msgs",
                         "verified_msgs"
-                      ]
+                      ],
+                      "pres": {},
+                      "pres_request": {},
+                      "by_format": {},
+                      "pres_proposal": {}
                     }
                   ]
                 }
@@ -32397,7 +32725,11 @@
                 "verified_msgs": [
                   "verified_msgs",
                   "verified_msgs"
-                ]
+                ],
+                "pres": {},
+                "pres_request": {},
+                "by_format": {},
+                "pres_proposal": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -32418,7 +32750,11 @@
                   "verified_msgs": [
                     "verified_msgs",
                     "verified_msgs"
-                  ]
+                  ],
+                  "pres": {},
+                  "pres_request": {},
+                  "by_format": {},
+                  "pres_proposal": {}
                 }
               }
             }
@@ -32870,12 +33206,16 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "trace": true
+                "trace": true,
+                "dif": {},
+                "indy": {}
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "trace": true
+                  "trace": true,
+                  "dif": {},
+                  "indy": {}
                 }
               },
               "responseStatusCode": 200,
@@ -32896,7 +33236,11 @@
                 "verified_msgs": [
                   "verified_msgs",
                   "verified_msgs"
-                ]
+                ],
+                "pres": {},
+                "pres_request": {},
+                "by_format": {},
+                "pres_proposal": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -32917,7 +33261,11 @@
                   "verified_msgs": [
                     "verified_msgs",
                     "verified_msgs"
-                  ]
+                  ],
+                  "pres": {},
+                  "pres_request": {},
+                  "by_format": {},
+                  "pres_proposal": {}
                 }
               }
             }
@@ -33037,7 +33385,11 @@
                 "verified_msgs": [
                   "verified_msgs",
                   "verified_msgs"
-                ]
+                ],
+                "pres": {},
+                "pres_request": {},
+                "by_format": {},
+                "pres_proposal": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -33058,7 +33410,11 @@
                   "verified_msgs": [
                     "verified_msgs",
                     "verified_msgs"
-                  ]
+                  ],
+                  "pres": {},
+                  "pres_request": {},
+                  "by_format": {},
+                  "pres_proposal": {}
                 }
               }
             }
@@ -33154,7 +33510,11 @@
                 "verified_msgs": [
                   "verified_msgs",
                   "verified_msgs"
-                ]
+                ],
+                "pres": {},
+                "pres_request": {},
+                "by_format": {},
+                "pres_proposal": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -33175,7 +33535,11 @@
                   "verified_msgs": [
                     "verified_msgs",
                     "verified_msgs"
-                  ]
+                  ],
+                  "pres": {},
+                  "pres_request": {},
+                  "by_format": {},
+                  "pres_proposal": {}
                 }
               }
             }
@@ -33248,7 +33612,10 @@
                 "auto_present": true,
                 "comment": "comment",
                 "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                "presentation_proposal": {},
+                "presentation_proposal": {
+                  "dif": {},
+                  "indy": {}
+                },
                 "trace": false
               },
               "requestBodyV3": {
@@ -33257,7 +33624,10 @@
                   "auto_present": true,
                   "comment": "comment",
                   "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "presentation_proposal": {},
+                  "presentation_proposal": {
+                    "dif": {},
+                    "indy": {}
+                  },
                   "trace": false
                 }
               },
@@ -33279,7 +33649,11 @@
                 "verified_msgs": [
                   "verified_msgs",
                   "verified_msgs"
-                ]
+                ],
+                "pres": {},
+                "pres_request": {},
+                "by_format": {},
+                "pres_proposal": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -33300,7 +33674,11 @@
                   "verified_msgs": [
                     "verified_msgs",
                     "verified_msgs"
-                  ]
+                  ],
+                  "pres": {},
+                  "pres_request": {},
+                  "by_format": {},
+                  "pres_proposal": {}
                 }
               }
             }
@@ -33373,7 +33751,10 @@
                 "auto_verify": false,
                 "comment": "comment",
                 "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                "presentation_request": {},
+                "presentation_request": {
+                  "dif": {},
+                  "indy": {}
+                },
                 "trace": false
               },
               "requestBodyV3": {
@@ -33382,7 +33763,10 @@
                   "auto_verify": false,
                   "comment": "comment",
                   "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "presentation_request": {},
+                  "presentation_request": {
+                    "dif": {},
+                    "indy": {}
+                  },
                   "trace": false
                 }
               },
@@ -33404,7 +33788,11 @@
                 "verified_msgs": [
                   "verified_msgs",
                   "verified_msgs"
-                ]
+                ],
+                "pres": {},
+                "pres_request": {},
+                "by_format": {},
+                "pres_proposal": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -33425,7 +33813,11 @@
                   "verified_msgs": [
                     "verified_msgs",
                     "verified_msgs"
-                  ]
+                  ],
+                  "pres": {},
+                  "pres_request": {},
+                  "by_format": {},
+                  "pres_proposal": {}
                 }
               }
             }
@@ -33544,7 +33936,8 @@
                       "non_revoked": null
                     }
                   },
-                  "version": "1.0"
+                  "version": "1.0",
+                  "non_revoked": {}
                 },
                 "trace": false
               },
@@ -33590,7 +33983,8 @@
                         "non_revoked": null
                       }
                     },
-                    "version": "1.0"
+                    "version": "1.0",
+                    "non_revoked": {}
                   },
                   "trace": false
                 }
@@ -33613,7 +34007,11 @@
                 "verified_msgs": [
                   "verified_msgs",
                   "verified_msgs"
-                ]
+                ],
+                "presentation_request": {},
+                "presentation_proposal_dict": {},
+                "presentation": {},
+                "presentation_request_dict": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -33634,7 +34032,11 @@
                   "verified_msgs": [
                     "verified_msgs",
                     "verified_msgs"
-                  ]
+                  ],
+                  "presentation_request": {},
+                  "presentation_proposal_dict": {},
+                  "presentation": {},
+                  "presentation_request_dict": {}
                 }
               }
             }
@@ -33761,7 +34163,11 @@
                     "verified_msgs": [
                       "verified_msgs",
                       "verified_msgs"
-                    ]
+                    ],
+                    "presentation_request": {},
+                    "presentation_proposal_dict": {},
+                    "presentation": {},
+                    "presentation_request_dict": {}
                   },
                   {
                     "auto_present": false,
@@ -33780,7 +34186,11 @@
                     "verified_msgs": [
                       "verified_msgs",
                       "verified_msgs"
-                    ]
+                    ],
+                    "presentation_request": {},
+                    "presentation_proposal_dict": {},
+                    "presentation": {},
+                    "presentation_request_dict": {}
                   }
                 ]
               },
@@ -33805,7 +34215,11 @@
                       "verified_msgs": [
                         "verified_msgs",
                         "verified_msgs"
-                      ]
+                      ],
+                      "presentation_request": {},
+                      "presentation_proposal_dict": {},
+                      "presentation": {},
+                      "presentation_request_dict": {}
                     },
                     {
                       "auto_present": false,
@@ -33824,7 +34238,11 @@
                       "verified_msgs": [
                         "verified_msgs",
                         "verified_msgs"
-                      ]
+                      ],
+                      "presentation_request": {},
+                      "presentation_proposal_dict": {},
+                      "presentation": {},
+                      "presentation_request_dict": {}
                     }
                   ]
                 }
@@ -33922,7 +34340,11 @@
                 "verified_msgs": [
                   "verified_msgs",
                   "verified_msgs"
-                ]
+                ],
+                "presentation_request": {},
+                "presentation_proposal_dict": {},
+                "presentation": {},
+                "presentation_request_dict": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -33943,7 +34365,11 @@
                   "verified_msgs": [
                     "verified_msgs",
                     "verified_msgs"
-                  ]
+                  ],
+                  "presentation_request": {},
+                  "presentation_proposal_dict": {},
+                  "presentation": {},
+                  "presentation_request_dict": {}
                 }
               }
             }
@@ -34451,7 +34877,11 @@
                 "verified_msgs": [
                   "verified_msgs",
                   "verified_msgs"
-                ]
+                ],
+                "presentation_request": {},
+                "presentation_proposal_dict": {},
+                "presentation": {},
+                "presentation_request_dict": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -34472,7 +34902,11 @@
                   "verified_msgs": [
                     "verified_msgs",
                     "verified_msgs"
-                  ]
+                  ],
+                  "presentation_request": {},
+                  "presentation_proposal_dict": {},
+                  "presentation": {},
+                  "presentation_request_dict": {}
                 }
               }
             }
@@ -34592,7 +35026,11 @@
                 "verified_msgs": [
                   "verified_msgs",
                   "verified_msgs"
-                ]
+                ],
+                "presentation_request": {},
+                "presentation_proposal_dict": {},
+                "presentation": {},
+                "presentation_request_dict": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -34613,7 +35051,11 @@
                   "verified_msgs": [
                     "verified_msgs",
                     "verified_msgs"
-                  ]
+                  ],
+                  "presentation_request": {},
+                  "presentation_proposal_dict": {},
+                  "presentation": {},
+                  "presentation_request_dict": {}
                 }
               }
             }
@@ -34709,7 +35151,11 @@
                 "verified_msgs": [
                   "verified_msgs",
                   "verified_msgs"
-                ]
+                ],
+                "presentation_request": {},
+                "presentation_proposal_dict": {},
+                "presentation": {},
+                "presentation_request_dict": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -34730,7 +35176,11 @@
                   "verified_msgs": [
                     "verified_msgs",
                     "verified_msgs"
-                  ]
+                  ],
+                  "presentation_request": {},
+                  "presentation_proposal_dict": {},
+                  "presentation": {},
+                  "presentation_request_dict": {}
                 }
               }
             }
@@ -34898,7 +35348,11 @@
                 "verified_msgs": [
                   "verified_msgs",
                   "verified_msgs"
-                ]
+                ],
+                "presentation_request": {},
+                "presentation_proposal_dict": {},
+                "presentation": {},
+                "presentation_request_dict": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -34919,7 +35373,11 @@
                   "verified_msgs": [
                     "verified_msgs",
                     "verified_msgs"
-                  ]
+                  ],
+                  "presentation_request": {},
+                  "presentation_proposal_dict": {},
+                  "presentation": {},
+                  "presentation_request_dict": {}
                 }
               }
             }
@@ -35029,7 +35487,8 @@
                       "non_revoked": null
                     }
                   },
-                  "version": "1.0"
+                  "version": "1.0",
+                  "non_revoked": {}
                 },
                 "trace": false
               },
@@ -35076,7 +35535,8 @@
                         "non_revoked": null
                       }
                     },
-                    "version": "1.0"
+                    "version": "1.0",
+                    "non_revoked": {}
                   },
                   "trace": false
                 }
@@ -35099,7 +35559,11 @@
                 "verified_msgs": [
                   "verified_msgs",
                   "verified_msgs"
-                ]
+                ],
+                "presentation_request": {},
+                "presentation_proposal_dict": {},
+                "presentation": {},
+                "presentation_request_dict": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -35120,7 +35584,11 @@
                   "verified_msgs": [
                     "verified_msgs",
                     "verified_msgs"
-                  ]
+                  ],
+                  "presentation_request": {},
+                  "presentation_proposal_dict": {},
+                  "presentation": {},
+                  "presentation_request_dict": {}
                 }
               }
             }
@@ -35327,7 +35795,9 @@
                   "tails_hash": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
                   "tails_local_path": "tails_local_path",
                   "tails_public_uri": "tails_public_uri",
-                  "updated_at": "2021-12-31 23:59:59+00:00"
+                  "updated_at": "2021-12-31 23:59:59+00:00",
+                  "revoc_reg_def": {},
+                  "revoc_reg_entry": {}
                 }
               },
               "responseBodyV3": {
@@ -35351,7 +35821,9 @@
                     "tails_hash": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
                     "tails_local_path": "tails_local_path",
                     "tails_public_uri": "tails_public_uri",
-                    "updated_at": "2021-12-31 23:59:59+00:00"
+                    "updated_at": "2021-12-31 23:59:59+00:00",
+                    "revoc_reg_def": {},
+                    "revoc_reg_entry": {}
                   }
                 }
               }
@@ -35557,7 +36029,9 @@
                   "tails_hash": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
                   "tails_local_path": "tails_local_path",
                   "tails_public_uri": "tails_public_uri",
-                  "updated_at": "2021-12-31 23:59:59+00:00"
+                  "updated_at": "2021-12-31 23:59:59+00:00",
+                  "revoc_reg_def": {},
+                  "revoc_reg_entry": {}
                 }
               },
               "responseBodyV3": {
@@ -35581,7 +36055,9 @@
                     "tails_hash": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
                     "tails_local_path": "tails_local_path",
                     "tails_public_uri": "tails_public_uri",
-                    "updated_at": "2021-12-31 23:59:59+00:00"
+                    "updated_at": "2021-12-31 23:59:59+00:00",
+                    "revoc_reg_def": {},
+                    "revoc_reg_entry": {}
                   }
                 }
               }
@@ -35805,7 +36281,8 @@
                       "12345"
                     ]
                   }
-                }
+                },
+                "txn": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -35817,7 +36294,8 @@
                         "12345"
                       ]
                     }
-                  }
+                  },
+                  "txn": {}
                 }
               }
             }
@@ -36102,7 +36580,9 @@
                   "tails_hash": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
                   "tails_local_path": "tails_local_path",
                   "tails_public_uri": "tails_public_uri",
-                  "updated_at": "2021-12-31 23:59:59+00:00"
+                  "updated_at": "2021-12-31 23:59:59+00:00",
+                  "revoc_reg_def": {},
+                  "revoc_reg_entry": {}
                 }
               },
               "responseBodyV3": {
@@ -36126,7 +36606,9 @@
                     "tails_hash": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
                     "tails_local_path": "tails_local_path",
                     "tails_public_uri": "tails_public_uri",
-                    "updated_at": "2021-12-31 23:59:59+00:00"
+                    "updated_at": "2021-12-31 23:59:59+00:00",
+                    "revoc_reg_def": {},
+                    "revoc_reg_entry": {}
                   }
                 }
               }
@@ -36247,7 +36729,9 @@
                   "tails_hash": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
                   "tails_local_path": "tails_local_path",
                   "tails_public_uri": "tails_public_uri",
-                  "updated_at": "2021-12-31 23:59:59+00:00"
+                  "updated_at": "2021-12-31 23:59:59+00:00",
+                  "revoc_reg_def": {},
+                  "revoc_reg_entry": {}
                 }
               },
               "responseBodyV3": {
@@ -36271,7 +36755,9 @@
                     "tails_hash": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
                     "tails_local_path": "tails_local_path",
                     "tails_public_uri": "tails_public_uri",
-                    "updated_at": "2021-12-31 23:59:59+00:00"
+                    "updated_at": "2021-12-31 23:59:59+00:00",
+                    "revoc_reg_def": {},
+                    "revoc_reg_entry": {}
                   }
                 }
               }
@@ -36398,9 +36884,12 @@
                     "tails_hash": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
                     "tails_local_path": "tails_local_path",
                     "tails_public_uri": "tails_public_uri",
-                    "updated_at": "2021-12-31 23:59:59+00:00"
+                    "updated_at": "2021-12-31 23:59:59+00:00",
+                    "revoc_reg_def": {},
+                    "revoc_reg_entry": {}
                   }
-                }
+                },
+                "txn": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -36424,9 +36913,12 @@
                       "tails_hash": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
                       "tails_local_path": "tails_local_path",
                       "tails_public_uri": "tails_public_uri",
-                      "updated_at": "2021-12-31 23:59:59+00:00"
+                      "updated_at": "2021-12-31 23:59:59+00:00",
+                      "revoc_reg_def": {},
+                      "revoc_reg_entry": {}
                     }
-                  }
+                  },
+                  "txn": {}
                 }
               }
             }
@@ -36551,7 +37043,9 @@
                   "tails_hash": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
                   "tails_local_path": "tails_local_path",
                   "tails_public_uri": "tails_public_uri",
-                  "updated_at": "2021-12-31 23:59:59+00:00"
+                  "updated_at": "2021-12-31 23:59:59+00:00",
+                  "revoc_reg_def": {},
+                  "revoc_reg_entry": {}
                 }
               },
               "responseBodyV3": {
@@ -36575,7 +37069,9 @@
                     "tails_hash": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
                     "tails_local_path": "tails_local_path",
                     "tails_public_uri": "tails_public_uri",
-                    "updated_at": "2021-12-31 23:59:59+00:00"
+                    "updated_at": "2021-12-31 23:59:59+00:00",
+                    "revoc_reg_def": {},
+                    "revoc_reg_entry": {}
                   }
                 }
               }
@@ -37088,7 +37584,9 @@
                   "tails_hash": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
                   "tails_local_path": "tails_local_path",
                   "tails_public_uri": "tails_public_uri",
-                  "updated_at": "2021-12-31 23:59:59+00:00"
+                  "updated_at": "2021-12-31 23:59:59+00:00",
+                  "revoc_reg_def": {},
+                  "revoc_reg_entry": {}
                 }
               },
               "responseBodyV3": {
@@ -37112,7 +37610,9 @@
                     "tails_hash": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
                     "tails_local_path": "tails_local_path",
                     "tails_public_uri": "tails_public_uri",
-                    "updated_at": "2021-12-31 23:59:59+00:00"
+                    "updated_at": "2021-12-31 23:59:59+00:00",
+                    "revoc_reg_def": {},
+                    "revoc_reg_entry": {}
                   }
                 }
               }
@@ -37555,10 +38055,16 @@
                 }
               },
               "responseStatusCode": 200,
-              "responseBody": {},
+              "responseBody": {
+                "txn": {},
+                "sent": {}
+              },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "txn": {},
+                  "sent": {}
+                }
               }
             }
           ],
@@ -37997,21 +38503,68 @@
                   }
                 ],
                 "messages_attach": [
-                  {},
-                  {}
+                  {
+                    "@id": "143c458d-1b1c-40c7-ab85-4d16808ddf0a",
+                    "data": {
+                      "json": "{\"endorser\": \"V4SGRU86Z58d6TV7PBUe6f\",\"identifier\": \"LjgpST2rjsoxYegQDRm7EL\",\"operation\": {\"data\": {\"attr_names\": [\"first_name\", \"last_name\"],\"name\": \"test_schema\",\"version\": \"2.1\",},\"type\": \"101\",},\"protocolVersion\": 2,\"reqId\": 1597766666168851000,\"signatures\": {\"LjgpST2rjsox\": \"4ATKMn6Y9sTgwqaGTm7py2c2M8x1EVDTWKZArwyuPgjU\"},\"taaAcceptance\": {\"mechanism\": \"manual\",\"taaDigest\": \"f50fe2c2ab977006761d36bd6f23e4c6a7e0fc2feb9f62\",\"time\": 1597708800,}}"
+                    },
+                    "mime-type": "application/json"
+                  },
+                  {
+                    "@id": "143c458d-1b1c-40c7-ab85-4d16808ddf0a",
+                    "data": {
+                      "json": "{\"endorser\": \"V4SGRU86Z58d6TV7PBUe6f\",\"identifier\": \"LjgpST2rjsoxYegQDRm7EL\",\"operation\": {\"data\": {\"attr_names\": [\"first_name\", \"last_name\"],\"name\": \"test_schema\",\"version\": \"2.1\",},\"type\": \"101\",},\"protocolVersion\": 2,\"reqId\": 1597766666168851000,\"signatures\": {\"LjgpST2rjsox\": \"4ATKMn6Y9sTgwqaGTm7py2c2M8x1EVDTWKZArwyuPgjU\"},\"taaAcceptance\": {\"mechanism\": \"manual\",\"taaDigest\": \"f50fe2c2ab977006761d36bd6f23e4c6a7e0fc2feb9f62\",\"time\": 1597708800,}}"
+                    },
+                    "mime-type": "application/json"
+                  }
                 ],
-                "meta_data": {},
+                "meta_data": {
+                  "context": {
+                    "param1": "param1_value",
+                    "param2": "param2_value"
+                  },
+                  "post_process": [
+                    {
+                      "topic": "topic_value",
+                      "other": "other_value"
+                    }
+                  ]
+                },
                 "signature_request": [
-                  {},
-                  {}
+                  {
+                    "author_goal_code": "aries.transaction.ledger.write",
+                    "context": "did:sov",
+                    "method": "add-signature",
+                    "signature_type": "<requested signature type>",
+                    "signer_goal_code": "aries.transaction.endorse"
+                  },
+                  {
+                    "author_goal_code": "aries.transaction.ledger.write",
+                    "context": "did:sov",
+                    "method": "add-signature",
+                    "signature_type": "<requested signature type>",
+                    "signer_goal_code": "aries.transaction.endorse"
+                  }
                 ],
                 "signature_response": [
-                  {},
-                  {}
+                  {
+                    "context": "did:sov",
+                    "message_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "method": "add-signature",
+                    "signer_goal_code": "aries.transaction.refuse"
+                  },
+                  {
+                    "context": "did:sov",
+                    "message_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "method": "add-signature",
+                    "signer_goal_code": "aries.transaction.refuse"
+                  }
                 ],
                 "state": "active",
                 "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                "timing": {},
+                "timing": {
+                  "expires_time": "2020-12-13T17:29:06+0000"
+                },
                 "trace": true,
                 "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                 "updated_at": "2021-12-31 23:59:59+00:00"
@@ -38034,21 +38587,68 @@
                     }
                   ],
                   "messages_attach": [
-                    {},
-                    {}
+                    {
+                      "@id": "143c458d-1b1c-40c7-ab85-4d16808ddf0a",
+                      "data": {
+                        "json": "{\"endorser\": \"V4SGRU86Z58d6TV7PBUe6f\",\"identifier\": \"LjgpST2rjsoxYegQDRm7EL\",\"operation\": {\"data\": {\"attr_names\": [\"first_name\", \"last_name\"],\"name\": \"test_schema\",\"version\": \"2.1\",},\"type\": \"101\",},\"protocolVersion\": 2,\"reqId\": 1597766666168851000,\"signatures\": {\"LjgpST2rjsox\": \"4ATKMn6Y9sTgwqaGTm7py2c2M8x1EVDTWKZArwyuPgjU\"},\"taaAcceptance\": {\"mechanism\": \"manual\",\"taaDigest\": \"f50fe2c2ab977006761d36bd6f23e4c6a7e0fc2feb9f62\",\"time\": 1597708800,}}"
+                      },
+                      "mime-type": "application/json"
+                    },
+                    {
+                      "@id": "143c458d-1b1c-40c7-ab85-4d16808ddf0a",
+                      "data": {
+                        "json": "{\"endorser\": \"V4SGRU86Z58d6TV7PBUe6f\",\"identifier\": \"LjgpST2rjsoxYegQDRm7EL\",\"operation\": {\"data\": {\"attr_names\": [\"first_name\", \"last_name\"],\"name\": \"test_schema\",\"version\": \"2.1\",},\"type\": \"101\",},\"protocolVersion\": 2,\"reqId\": 1597766666168851000,\"signatures\": {\"LjgpST2rjsox\": \"4ATKMn6Y9sTgwqaGTm7py2c2M8x1EVDTWKZArwyuPgjU\"},\"taaAcceptance\": {\"mechanism\": \"manual\",\"taaDigest\": \"f50fe2c2ab977006761d36bd6f23e4c6a7e0fc2feb9f62\",\"time\": 1597708800,}}"
+                      },
+                      "mime-type": "application/json"
+                    }
                   ],
-                  "meta_data": {},
+                  "meta_data": {
+                    "context": {
+                      "param1": "param1_value",
+                      "param2": "param2_value"
+                    },
+                    "post_process": [
+                      {
+                        "topic": "topic_value",
+                        "other": "other_value"
+                      }
+                    ]
+                  },
                   "signature_request": [
-                    {},
-                    {}
+                    {
+                      "author_goal_code": "aries.transaction.ledger.write",
+                      "context": "did:sov",
+                      "method": "add-signature",
+                      "signature_type": "<requested signature type>",
+                      "signer_goal_code": "aries.transaction.endorse"
+                    },
+                    {
+                      "author_goal_code": "aries.transaction.ledger.write",
+                      "context": "did:sov",
+                      "method": "add-signature",
+                      "signature_type": "<requested signature type>",
+                      "signer_goal_code": "aries.transaction.endorse"
+                    }
                   ],
                   "signature_response": [
-                    {},
-                    {}
+                    {
+                      "context": "did:sov",
+                      "message_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                      "method": "add-signature",
+                      "signer_goal_code": "aries.transaction.refuse"
+                    },
+                    {
+                      "context": "did:sov",
+                      "message_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                      "method": "add-signature",
+                      "signer_goal_code": "aries.transaction.refuse"
+                    }
                   ],
                   "state": "active",
                   "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "timing": {},
+                  "timing": {
+                    "expires_time": "2020-12-13T17:29:06+0000"
+                  },
                   "trace": true,
                   "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   "updated_at": "2021-12-31 23:59:59+00:00"
@@ -38126,21 +38726,68 @@
                       }
                     ],
                     "messages_attach": [
-                      {},
-                      {}
+                      {
+                        "@id": "143c458d-1b1c-40c7-ab85-4d16808ddf0a",
+                        "data": {
+                          "json": "{\"endorser\": \"V4SGRU86Z58d6TV7PBUe6f\",\"identifier\": \"LjgpST2rjsoxYegQDRm7EL\",\"operation\": {\"data\": {\"attr_names\": [\"first_name\", \"last_name\"],\"name\": \"test_schema\",\"version\": \"2.1\",},\"type\": \"101\",},\"protocolVersion\": 2,\"reqId\": 1597766666168851000,\"signatures\": {\"LjgpST2rjsox\": \"4ATKMn6Y9sTgwqaGTm7py2c2M8x1EVDTWKZArwyuPgjU\"},\"taaAcceptance\": {\"mechanism\": \"manual\",\"taaDigest\": \"f50fe2c2ab977006761d36bd6f23e4c6a7e0fc2feb9f62\",\"time\": 1597708800,}}"
+                        },
+                        "mime-type": "application/json"
+                      },
+                      {
+                        "@id": "143c458d-1b1c-40c7-ab85-4d16808ddf0a",
+                        "data": {
+                          "json": "{\"endorser\": \"V4SGRU86Z58d6TV7PBUe6f\",\"identifier\": \"LjgpST2rjsoxYegQDRm7EL\",\"operation\": {\"data\": {\"attr_names\": [\"first_name\", \"last_name\"],\"name\": \"test_schema\",\"version\": \"2.1\",},\"type\": \"101\",},\"protocolVersion\": 2,\"reqId\": 1597766666168851000,\"signatures\": {\"LjgpST2rjsox\": \"4ATKMn6Y9sTgwqaGTm7py2c2M8x1EVDTWKZArwyuPgjU\"},\"taaAcceptance\": {\"mechanism\": \"manual\",\"taaDigest\": \"f50fe2c2ab977006761d36bd6f23e4c6a7e0fc2feb9f62\",\"time\": 1597708800,}}"
+                        },
+                        "mime-type": "application/json"
+                      }
                     ],
-                    "meta_data": {},
+                    "meta_data": {
+                      "context": {
+                        "param1": "param1_value",
+                        "param2": "param2_value"
+                      },
+                      "post_process": [
+                        {
+                          "topic": "topic_value",
+                          "other": "other_value"
+                        }
+                      ]
+                    },
                     "signature_request": [
-                      {},
-                      {}
+                      {
+                        "author_goal_code": "aries.transaction.ledger.write",
+                        "context": "did:sov",
+                        "method": "add-signature",
+                        "signature_type": "<requested signature type>",
+                        "signer_goal_code": "aries.transaction.endorse"
+                      },
+                      {
+                        "author_goal_code": "aries.transaction.ledger.write",
+                        "context": "did:sov",
+                        "method": "add-signature",
+                        "signature_type": "<requested signature type>",
+                        "signer_goal_code": "aries.transaction.endorse"
+                      }
                     ],
                     "signature_response": [
-                      {},
-                      {}
+                      {
+                        "context": "did:sov",
+                        "message_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                        "method": "add-signature",
+                        "signer_goal_code": "aries.transaction.refuse"
+                      },
+                      {
+                        "context": "did:sov",
+                        "message_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                        "method": "add-signature",
+                        "signer_goal_code": "aries.transaction.refuse"
+                      }
                     ],
                     "state": "active",
                     "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "timing": {},
+                    "timing": {
+                      "expires_time": "2020-12-13T17:29:06+0000"
+                    },
                     "trace": true,
                     "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "updated_at": "2021-12-31 23:59:59+00:00"
@@ -38161,21 +38808,68 @@
                       }
                     ],
                     "messages_attach": [
-                      {},
-                      {}
+                      {
+                        "@id": "143c458d-1b1c-40c7-ab85-4d16808ddf0a",
+                        "data": {
+                          "json": "{\"endorser\": \"V4SGRU86Z58d6TV7PBUe6f\",\"identifier\": \"LjgpST2rjsoxYegQDRm7EL\",\"operation\": {\"data\": {\"attr_names\": [\"first_name\", \"last_name\"],\"name\": \"test_schema\",\"version\": \"2.1\",},\"type\": \"101\",},\"protocolVersion\": 2,\"reqId\": 1597766666168851000,\"signatures\": {\"LjgpST2rjsox\": \"4ATKMn6Y9sTgwqaGTm7py2c2M8x1EVDTWKZArwyuPgjU\"},\"taaAcceptance\": {\"mechanism\": \"manual\",\"taaDigest\": \"f50fe2c2ab977006761d36bd6f23e4c6a7e0fc2feb9f62\",\"time\": 1597708800,}}"
+                        },
+                        "mime-type": "application/json"
+                      },
+                      {
+                        "@id": "143c458d-1b1c-40c7-ab85-4d16808ddf0a",
+                        "data": {
+                          "json": "{\"endorser\": \"V4SGRU86Z58d6TV7PBUe6f\",\"identifier\": \"LjgpST2rjsoxYegQDRm7EL\",\"operation\": {\"data\": {\"attr_names\": [\"first_name\", \"last_name\"],\"name\": \"test_schema\",\"version\": \"2.1\",},\"type\": \"101\",},\"protocolVersion\": 2,\"reqId\": 1597766666168851000,\"signatures\": {\"LjgpST2rjsox\": \"4ATKMn6Y9sTgwqaGTm7py2c2M8x1EVDTWKZArwyuPgjU\"},\"taaAcceptance\": {\"mechanism\": \"manual\",\"taaDigest\": \"f50fe2c2ab977006761d36bd6f23e4c6a7e0fc2feb9f62\",\"time\": 1597708800,}}"
+                        },
+                        "mime-type": "application/json"
+                      }
                     ],
-                    "meta_data": {},
+                    "meta_data": {
+                      "context": {
+                        "param1": "param1_value",
+                        "param2": "param2_value"
+                      },
+                      "post_process": [
+                        {
+                          "topic": "topic_value",
+                          "other": "other_value"
+                        }
+                      ]
+                    },
                     "signature_request": [
-                      {},
-                      {}
+                      {
+                        "author_goal_code": "aries.transaction.ledger.write",
+                        "context": "did:sov",
+                        "method": "add-signature",
+                        "signature_type": "<requested signature type>",
+                        "signer_goal_code": "aries.transaction.endorse"
+                      },
+                      {
+                        "author_goal_code": "aries.transaction.ledger.write",
+                        "context": "did:sov",
+                        "method": "add-signature",
+                        "signature_type": "<requested signature type>",
+                        "signer_goal_code": "aries.transaction.endorse"
+                      }
                     ],
                     "signature_response": [
-                      {},
-                      {}
+                      {
+                        "context": "did:sov",
+                        "message_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                        "method": "add-signature",
+                        "signer_goal_code": "aries.transaction.refuse"
+                      },
+                      {
+                        "context": "did:sov",
+                        "message_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                        "method": "add-signature",
+                        "signer_goal_code": "aries.transaction.refuse"
+                      }
                     ],
                     "state": "active",
                     "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "timing": {},
+                    "timing": {
+                      "expires_time": "2020-12-13T17:29:06+0000"
+                    },
                     "trace": true,
                     "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "updated_at": "2021-12-31 23:59:59+00:00"
@@ -38202,21 +38896,68 @@
                         }
                       ],
                       "messages_attach": [
-                        {},
-                        {}
+                        {
+                          "@id": "143c458d-1b1c-40c7-ab85-4d16808ddf0a",
+                          "data": {
+                            "json": "{\"endorser\": \"V4SGRU86Z58d6TV7PBUe6f\",\"identifier\": \"LjgpST2rjsoxYegQDRm7EL\",\"operation\": {\"data\": {\"attr_names\": [\"first_name\", \"last_name\"],\"name\": \"test_schema\",\"version\": \"2.1\",},\"type\": \"101\",},\"protocolVersion\": 2,\"reqId\": 1597766666168851000,\"signatures\": {\"LjgpST2rjsox\": \"4ATKMn6Y9sTgwqaGTm7py2c2M8x1EVDTWKZArwyuPgjU\"},\"taaAcceptance\": {\"mechanism\": \"manual\",\"taaDigest\": \"f50fe2c2ab977006761d36bd6f23e4c6a7e0fc2feb9f62\",\"time\": 1597708800,}}"
+                          },
+                          "mime-type": "application/json"
+                        },
+                        {
+                          "@id": "143c458d-1b1c-40c7-ab85-4d16808ddf0a",
+                          "data": {
+                            "json": "{\"endorser\": \"V4SGRU86Z58d6TV7PBUe6f\",\"identifier\": \"LjgpST2rjsoxYegQDRm7EL\",\"operation\": {\"data\": {\"attr_names\": [\"first_name\", \"last_name\"],\"name\": \"test_schema\",\"version\": \"2.1\",},\"type\": \"101\",},\"protocolVersion\": 2,\"reqId\": 1597766666168851000,\"signatures\": {\"LjgpST2rjsox\": \"4ATKMn6Y9sTgwqaGTm7py2c2M8x1EVDTWKZArwyuPgjU\"},\"taaAcceptance\": {\"mechanism\": \"manual\",\"taaDigest\": \"f50fe2c2ab977006761d36bd6f23e4c6a7e0fc2feb9f62\",\"time\": 1597708800,}}"
+                          },
+                          "mime-type": "application/json"
+                        }
                       ],
-                      "meta_data": {},
+                      "meta_data": {
+                        "context": {
+                          "param1": "param1_value",
+                          "param2": "param2_value"
+                        },
+                        "post_process": [
+                          {
+                            "topic": "topic_value",
+                            "other": "other_value"
+                          }
+                        ]
+                      },
                       "signature_request": [
-                        {},
-                        {}
+                        {
+                          "author_goal_code": "aries.transaction.ledger.write",
+                          "context": "did:sov",
+                          "method": "add-signature",
+                          "signature_type": "<requested signature type>",
+                          "signer_goal_code": "aries.transaction.endorse"
+                        },
+                        {
+                          "author_goal_code": "aries.transaction.ledger.write",
+                          "context": "did:sov",
+                          "method": "add-signature",
+                          "signature_type": "<requested signature type>",
+                          "signer_goal_code": "aries.transaction.endorse"
+                        }
                       ],
                       "signature_response": [
-                        {},
-                        {}
+                        {
+                          "context": "did:sov",
+                          "message_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                          "method": "add-signature",
+                          "signer_goal_code": "aries.transaction.refuse"
+                        },
+                        {
+                          "context": "did:sov",
+                          "message_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                          "method": "add-signature",
+                          "signer_goal_code": "aries.transaction.refuse"
+                        }
                       ],
                       "state": "active",
                       "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "timing": {},
+                      "timing": {
+                        "expires_time": "2020-12-13T17:29:06+0000"
+                      },
                       "trace": true,
                       "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "updated_at": "2021-12-31 23:59:59+00:00"
@@ -38237,21 +38978,68 @@
                         }
                       ],
                       "messages_attach": [
-                        {},
-                        {}
+                        {
+                          "@id": "143c458d-1b1c-40c7-ab85-4d16808ddf0a",
+                          "data": {
+                            "json": "{\"endorser\": \"V4SGRU86Z58d6TV7PBUe6f\",\"identifier\": \"LjgpST2rjsoxYegQDRm7EL\",\"operation\": {\"data\": {\"attr_names\": [\"first_name\", \"last_name\"],\"name\": \"test_schema\",\"version\": \"2.1\",},\"type\": \"101\",},\"protocolVersion\": 2,\"reqId\": 1597766666168851000,\"signatures\": {\"LjgpST2rjsox\": \"4ATKMn6Y9sTgwqaGTm7py2c2M8x1EVDTWKZArwyuPgjU\"},\"taaAcceptance\": {\"mechanism\": \"manual\",\"taaDigest\": \"f50fe2c2ab977006761d36bd6f23e4c6a7e0fc2feb9f62\",\"time\": 1597708800,}}"
+                          },
+                          "mime-type": "application/json"
+                        },
+                        {
+                          "@id": "143c458d-1b1c-40c7-ab85-4d16808ddf0a",
+                          "data": {
+                            "json": "{\"endorser\": \"V4SGRU86Z58d6TV7PBUe6f\",\"identifier\": \"LjgpST2rjsoxYegQDRm7EL\",\"operation\": {\"data\": {\"attr_names\": [\"first_name\", \"last_name\"],\"name\": \"test_schema\",\"version\": \"2.1\",},\"type\": \"101\",},\"protocolVersion\": 2,\"reqId\": 1597766666168851000,\"signatures\": {\"LjgpST2rjsox\": \"4ATKMn6Y9sTgwqaGTm7py2c2M8x1EVDTWKZArwyuPgjU\"},\"taaAcceptance\": {\"mechanism\": \"manual\",\"taaDigest\": \"f50fe2c2ab977006761d36bd6f23e4c6a7e0fc2feb9f62\",\"time\": 1597708800,}}"
+                          },
+                          "mime-type": "application/json"
+                        }
                       ],
-                      "meta_data": {},
+                      "meta_data": {
+                        "context": {
+                          "param1": "param1_value",
+                          "param2": "param2_value"
+                        },
+                        "post_process": [
+                          {
+                            "topic": "topic_value",
+                            "other": "other_value"
+                          }
+                        ]
+                      },
                       "signature_request": [
-                        {},
-                        {}
+                        {
+                          "author_goal_code": "aries.transaction.ledger.write",
+                          "context": "did:sov",
+                          "method": "add-signature",
+                          "signature_type": "<requested signature type>",
+                          "signer_goal_code": "aries.transaction.endorse"
+                        },
+                        {
+                          "author_goal_code": "aries.transaction.ledger.write",
+                          "context": "did:sov",
+                          "method": "add-signature",
+                          "signature_type": "<requested signature type>",
+                          "signer_goal_code": "aries.transaction.endorse"
+                        }
                       ],
                       "signature_response": [
-                        {},
-                        {}
+                        {
+                          "context": "did:sov",
+                          "message_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                          "method": "add-signature",
+                          "signer_goal_code": "aries.transaction.refuse"
+                        },
+                        {
+                          "context": "did:sov",
+                          "message_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                          "method": "add-signature",
+                          "signer_goal_code": "aries.transaction.refuse"
+                        }
                       ],
                       "state": "active",
                       "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "timing": {},
+                      "timing": {
+                        "expires_time": "2020-12-13T17:29:06+0000"
+                      },
                       "trace": true,
                       "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "updated_at": "2021-12-31 23:59:59+00:00"
@@ -38377,21 +39165,68 @@
                   }
                 ],
                 "messages_attach": [
-                  {},
-                  {}
+                  {
+                    "@id": "143c458d-1b1c-40c7-ab85-4d16808ddf0a",
+                    "data": {
+                      "json": "{\"endorser\": \"V4SGRU86Z58d6TV7PBUe6f\",\"identifier\": \"LjgpST2rjsoxYegQDRm7EL\",\"operation\": {\"data\": {\"attr_names\": [\"first_name\", \"last_name\"],\"name\": \"test_schema\",\"version\": \"2.1\",},\"type\": \"101\",},\"protocolVersion\": 2,\"reqId\": 1597766666168851000,\"signatures\": {\"LjgpST2rjsox\": \"4ATKMn6Y9sTgwqaGTm7py2c2M8x1EVDTWKZArwyuPgjU\"},\"taaAcceptance\": {\"mechanism\": \"manual\",\"taaDigest\": \"f50fe2c2ab977006761d36bd6f23e4c6a7e0fc2feb9f62\",\"time\": 1597708800,}}"
+                    },
+                    "mime-type": "application/json"
+                  },
+                  {
+                    "@id": "143c458d-1b1c-40c7-ab85-4d16808ddf0a",
+                    "data": {
+                      "json": "{\"endorser\": \"V4SGRU86Z58d6TV7PBUe6f\",\"identifier\": \"LjgpST2rjsoxYegQDRm7EL\",\"operation\": {\"data\": {\"attr_names\": [\"first_name\", \"last_name\"],\"name\": \"test_schema\",\"version\": \"2.1\",},\"type\": \"101\",},\"protocolVersion\": 2,\"reqId\": 1597766666168851000,\"signatures\": {\"LjgpST2rjsox\": \"4ATKMn6Y9sTgwqaGTm7py2c2M8x1EVDTWKZArwyuPgjU\"},\"taaAcceptance\": {\"mechanism\": \"manual\",\"taaDigest\": \"f50fe2c2ab977006761d36bd6f23e4c6a7e0fc2feb9f62\",\"time\": 1597708800,}}"
+                    },
+                    "mime-type": "application/json"
+                  }
                 ],
-                "meta_data": {},
+                "meta_data": {
+                  "context": {
+                    "param1": "param1_value",
+                    "param2": "param2_value"
+                  },
+                  "post_process": [
+                    {
+                      "topic": "topic_value",
+                      "other": "other_value"
+                    }
+                  ]
+                },
                 "signature_request": [
-                  {},
-                  {}
+                  {
+                    "author_goal_code": "aries.transaction.ledger.write",
+                    "context": "did:sov",
+                    "method": "add-signature",
+                    "signature_type": "<requested signature type>",
+                    "signer_goal_code": "aries.transaction.endorse"
+                  },
+                  {
+                    "author_goal_code": "aries.transaction.ledger.write",
+                    "context": "did:sov",
+                    "method": "add-signature",
+                    "signature_type": "<requested signature type>",
+                    "signer_goal_code": "aries.transaction.endorse"
+                  }
                 ],
                 "signature_response": [
-                  {},
-                  {}
+                  {
+                    "context": "did:sov",
+                    "message_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "method": "add-signature",
+                    "signer_goal_code": "aries.transaction.refuse"
+                  },
+                  {
+                    "context": "did:sov",
+                    "message_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "method": "add-signature",
+                    "signer_goal_code": "aries.transaction.refuse"
+                  }
                 ],
                 "state": "active",
                 "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                "timing": {},
+                "timing": {
+                  "expires_time": "2020-12-13T17:29:06+0000"
+                },
                 "trace": true,
                 "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                 "updated_at": "2021-12-31 23:59:59+00:00"
@@ -38414,21 +39249,68 @@
                     }
                   ],
                   "messages_attach": [
-                    {},
-                    {}
+                    {
+                      "@id": "143c458d-1b1c-40c7-ab85-4d16808ddf0a",
+                      "data": {
+                        "json": "{\"endorser\": \"V4SGRU86Z58d6TV7PBUe6f\",\"identifier\": \"LjgpST2rjsoxYegQDRm7EL\",\"operation\": {\"data\": {\"attr_names\": [\"first_name\", \"last_name\"],\"name\": \"test_schema\",\"version\": \"2.1\",},\"type\": \"101\",},\"protocolVersion\": 2,\"reqId\": 1597766666168851000,\"signatures\": {\"LjgpST2rjsox\": \"4ATKMn6Y9sTgwqaGTm7py2c2M8x1EVDTWKZArwyuPgjU\"},\"taaAcceptance\": {\"mechanism\": \"manual\",\"taaDigest\": \"f50fe2c2ab977006761d36bd6f23e4c6a7e0fc2feb9f62\",\"time\": 1597708800,}}"
+                      },
+                      "mime-type": "application/json"
+                    },
+                    {
+                      "@id": "143c458d-1b1c-40c7-ab85-4d16808ddf0a",
+                      "data": {
+                        "json": "{\"endorser\": \"V4SGRU86Z58d6TV7PBUe6f\",\"identifier\": \"LjgpST2rjsoxYegQDRm7EL\",\"operation\": {\"data\": {\"attr_names\": [\"first_name\", \"last_name\"],\"name\": \"test_schema\",\"version\": \"2.1\",},\"type\": \"101\",},\"protocolVersion\": 2,\"reqId\": 1597766666168851000,\"signatures\": {\"LjgpST2rjsox\": \"4ATKMn6Y9sTgwqaGTm7py2c2M8x1EVDTWKZArwyuPgjU\"},\"taaAcceptance\": {\"mechanism\": \"manual\",\"taaDigest\": \"f50fe2c2ab977006761d36bd6f23e4c6a7e0fc2feb9f62\",\"time\": 1597708800,}}"
+                      },
+                      "mime-type": "application/json"
+                    }
                   ],
-                  "meta_data": {},
+                  "meta_data": {
+                    "context": {
+                      "param1": "param1_value",
+                      "param2": "param2_value"
+                    },
+                    "post_process": [
+                      {
+                        "topic": "topic_value",
+                        "other": "other_value"
+                      }
+                    ]
+                  },
                   "signature_request": [
-                    {},
-                    {}
+                    {
+                      "author_goal_code": "aries.transaction.ledger.write",
+                      "context": "did:sov",
+                      "method": "add-signature",
+                      "signature_type": "<requested signature type>",
+                      "signer_goal_code": "aries.transaction.endorse"
+                    },
+                    {
+                      "author_goal_code": "aries.transaction.ledger.write",
+                      "context": "did:sov",
+                      "method": "add-signature",
+                      "signature_type": "<requested signature type>",
+                      "signer_goal_code": "aries.transaction.endorse"
+                    }
                   ],
                   "signature_response": [
-                    {},
-                    {}
+                    {
+                      "context": "did:sov",
+                      "message_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                      "method": "add-signature",
+                      "signer_goal_code": "aries.transaction.refuse"
+                    },
+                    {
+                      "context": "did:sov",
+                      "message_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                      "method": "add-signature",
+                      "signer_goal_code": "aries.transaction.refuse"
+                    }
                   ],
                   "state": "active",
                   "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "timing": {},
+                  "timing": {
+                    "expires_time": "2020-12-13T17:29:06+0000"
+                  },
                   "trace": true,
                   "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   "updated_at": "2021-12-31 23:59:59+00:00"
@@ -38735,21 +39617,68 @@
                   }
                 ],
                 "messages_attach": [
-                  {},
-                  {}
+                  {
+                    "@id": "143c458d-1b1c-40c7-ab85-4d16808ddf0a",
+                    "data": {
+                      "json": "{\"endorser\": \"V4SGRU86Z58d6TV7PBUe6f\",\"identifier\": \"LjgpST2rjsoxYegQDRm7EL\",\"operation\": {\"data\": {\"attr_names\": [\"first_name\", \"last_name\"],\"name\": \"test_schema\",\"version\": \"2.1\",},\"type\": \"101\",},\"protocolVersion\": 2,\"reqId\": 1597766666168851000,\"signatures\": {\"LjgpST2rjsox\": \"4ATKMn6Y9sTgwqaGTm7py2c2M8x1EVDTWKZArwyuPgjU\"},\"taaAcceptance\": {\"mechanism\": \"manual\",\"taaDigest\": \"f50fe2c2ab977006761d36bd6f23e4c6a7e0fc2feb9f62\",\"time\": 1597708800,}}"
+                    },
+                    "mime-type": "application/json"
+                  },
+                  {
+                    "@id": "143c458d-1b1c-40c7-ab85-4d16808ddf0a",
+                    "data": {
+                      "json": "{\"endorser\": \"V4SGRU86Z58d6TV7PBUe6f\",\"identifier\": \"LjgpST2rjsoxYegQDRm7EL\",\"operation\": {\"data\": {\"attr_names\": [\"first_name\", \"last_name\"],\"name\": \"test_schema\",\"version\": \"2.1\",},\"type\": \"101\",},\"protocolVersion\": 2,\"reqId\": 1597766666168851000,\"signatures\": {\"LjgpST2rjsox\": \"4ATKMn6Y9sTgwqaGTm7py2c2M8x1EVDTWKZArwyuPgjU\"},\"taaAcceptance\": {\"mechanism\": \"manual\",\"taaDigest\": \"f50fe2c2ab977006761d36bd6f23e4c6a7e0fc2feb9f62\",\"time\": 1597708800,}}"
+                    },
+                    "mime-type": "application/json"
+                  }
                 ],
-                "meta_data": {},
+                "meta_data": {
+                  "context": {
+                    "param1": "param1_value",
+                    "param2": "param2_value"
+                  },
+                  "post_process": [
+                    {
+                      "topic": "topic_value",
+                      "other": "other_value"
+                    }
+                  ]
+                },
                 "signature_request": [
-                  {},
-                  {}
+                  {
+                    "author_goal_code": "aries.transaction.ledger.write",
+                    "context": "did:sov",
+                    "method": "add-signature",
+                    "signature_type": "<requested signature type>",
+                    "signer_goal_code": "aries.transaction.endorse"
+                  },
+                  {
+                    "author_goal_code": "aries.transaction.ledger.write",
+                    "context": "did:sov",
+                    "method": "add-signature",
+                    "signature_type": "<requested signature type>",
+                    "signer_goal_code": "aries.transaction.endorse"
+                  }
                 ],
                 "signature_response": [
-                  {},
-                  {}
+                  {
+                    "context": "did:sov",
+                    "message_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "method": "add-signature",
+                    "signer_goal_code": "aries.transaction.refuse"
+                  },
+                  {
+                    "context": "did:sov",
+                    "message_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "method": "add-signature",
+                    "signer_goal_code": "aries.transaction.refuse"
+                  }
                 ],
                 "state": "active",
                 "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                "timing": {},
+                "timing": {
+                  "expires_time": "2020-12-13T17:29:06+0000"
+                },
                 "trace": true,
                 "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                 "updated_at": "2021-12-31 23:59:59+00:00"
@@ -38772,21 +39701,68 @@
                     }
                   ],
                   "messages_attach": [
-                    {},
-                    {}
+                    {
+                      "@id": "143c458d-1b1c-40c7-ab85-4d16808ddf0a",
+                      "data": {
+                        "json": "{\"endorser\": \"V4SGRU86Z58d6TV7PBUe6f\",\"identifier\": \"LjgpST2rjsoxYegQDRm7EL\",\"operation\": {\"data\": {\"attr_names\": [\"first_name\", \"last_name\"],\"name\": \"test_schema\",\"version\": \"2.1\",},\"type\": \"101\",},\"protocolVersion\": 2,\"reqId\": 1597766666168851000,\"signatures\": {\"LjgpST2rjsox\": \"4ATKMn6Y9sTgwqaGTm7py2c2M8x1EVDTWKZArwyuPgjU\"},\"taaAcceptance\": {\"mechanism\": \"manual\",\"taaDigest\": \"f50fe2c2ab977006761d36bd6f23e4c6a7e0fc2feb9f62\",\"time\": 1597708800,}}"
+                      },
+                      "mime-type": "application/json"
+                    },
+                    {
+                      "@id": "143c458d-1b1c-40c7-ab85-4d16808ddf0a",
+                      "data": {
+                        "json": "{\"endorser\": \"V4SGRU86Z58d6TV7PBUe6f\",\"identifier\": \"LjgpST2rjsoxYegQDRm7EL\",\"operation\": {\"data\": {\"attr_names\": [\"first_name\", \"last_name\"],\"name\": \"test_schema\",\"version\": \"2.1\",},\"type\": \"101\",},\"protocolVersion\": 2,\"reqId\": 1597766666168851000,\"signatures\": {\"LjgpST2rjsox\": \"4ATKMn6Y9sTgwqaGTm7py2c2M8x1EVDTWKZArwyuPgjU\"},\"taaAcceptance\": {\"mechanism\": \"manual\",\"taaDigest\": \"f50fe2c2ab977006761d36bd6f23e4c6a7e0fc2feb9f62\",\"time\": 1597708800,}}"
+                      },
+                      "mime-type": "application/json"
+                    }
                   ],
-                  "meta_data": {},
+                  "meta_data": {
+                    "context": {
+                      "param1": "param1_value",
+                      "param2": "param2_value"
+                    },
+                    "post_process": [
+                      {
+                        "topic": "topic_value",
+                        "other": "other_value"
+                      }
+                    ]
+                  },
                   "signature_request": [
-                    {},
-                    {}
+                    {
+                      "author_goal_code": "aries.transaction.ledger.write",
+                      "context": "did:sov",
+                      "method": "add-signature",
+                      "signature_type": "<requested signature type>",
+                      "signer_goal_code": "aries.transaction.endorse"
+                    },
+                    {
+                      "author_goal_code": "aries.transaction.ledger.write",
+                      "context": "did:sov",
+                      "method": "add-signature",
+                      "signature_type": "<requested signature type>",
+                      "signer_goal_code": "aries.transaction.endorse"
+                    }
                   ],
                   "signature_response": [
-                    {},
-                    {}
+                    {
+                      "context": "did:sov",
+                      "message_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                      "method": "add-signature",
+                      "signer_goal_code": "aries.transaction.refuse"
+                    },
+                    {
+                      "context": "did:sov",
+                      "message_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                      "method": "add-signature",
+                      "signer_goal_code": "aries.transaction.refuse"
+                    }
                   ],
                   "state": "active",
                   "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "timing": {},
+                  "timing": {
+                    "expires_time": "2020-12-13T17:29:06+0000"
+                  },
                   "trace": true,
                   "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   "updated_at": "2021-12-31 23:59:59+00:00"
@@ -38883,21 +39859,68 @@
                   }
                 ],
                 "messages_attach": [
-                  {},
-                  {}
+                  {
+                    "@id": "143c458d-1b1c-40c7-ab85-4d16808ddf0a",
+                    "data": {
+                      "json": "{\"endorser\": \"V4SGRU86Z58d6TV7PBUe6f\",\"identifier\": \"LjgpST2rjsoxYegQDRm7EL\",\"operation\": {\"data\": {\"attr_names\": [\"first_name\", \"last_name\"],\"name\": \"test_schema\",\"version\": \"2.1\",},\"type\": \"101\",},\"protocolVersion\": 2,\"reqId\": 1597766666168851000,\"signatures\": {\"LjgpST2rjsox\": \"4ATKMn6Y9sTgwqaGTm7py2c2M8x1EVDTWKZArwyuPgjU\"},\"taaAcceptance\": {\"mechanism\": \"manual\",\"taaDigest\": \"f50fe2c2ab977006761d36bd6f23e4c6a7e0fc2feb9f62\",\"time\": 1597708800,}}"
+                    },
+                    "mime-type": "application/json"
+                  },
+                  {
+                    "@id": "143c458d-1b1c-40c7-ab85-4d16808ddf0a",
+                    "data": {
+                      "json": "{\"endorser\": \"V4SGRU86Z58d6TV7PBUe6f\",\"identifier\": \"LjgpST2rjsoxYegQDRm7EL\",\"operation\": {\"data\": {\"attr_names\": [\"first_name\", \"last_name\"],\"name\": \"test_schema\",\"version\": \"2.1\",},\"type\": \"101\",},\"protocolVersion\": 2,\"reqId\": 1597766666168851000,\"signatures\": {\"LjgpST2rjsox\": \"4ATKMn6Y9sTgwqaGTm7py2c2M8x1EVDTWKZArwyuPgjU\"},\"taaAcceptance\": {\"mechanism\": \"manual\",\"taaDigest\": \"f50fe2c2ab977006761d36bd6f23e4c6a7e0fc2feb9f62\",\"time\": 1597708800,}}"
+                    },
+                    "mime-type": "application/json"
+                  }
                 ],
-                "meta_data": {},
+                "meta_data": {
+                  "context": {
+                    "param1": "param1_value",
+                    "param2": "param2_value"
+                  },
+                  "post_process": [
+                    {
+                      "topic": "topic_value",
+                      "other": "other_value"
+                    }
+                  ]
+                },
                 "signature_request": [
-                  {},
-                  {}
+                  {
+                    "author_goal_code": "aries.transaction.ledger.write",
+                    "context": "did:sov",
+                    "method": "add-signature",
+                    "signature_type": "<requested signature type>",
+                    "signer_goal_code": "aries.transaction.endorse"
+                  },
+                  {
+                    "author_goal_code": "aries.transaction.ledger.write",
+                    "context": "did:sov",
+                    "method": "add-signature",
+                    "signature_type": "<requested signature type>",
+                    "signer_goal_code": "aries.transaction.endorse"
+                  }
                 ],
                 "signature_response": [
-                  {},
-                  {}
+                  {
+                    "context": "did:sov",
+                    "message_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "method": "add-signature",
+                    "signer_goal_code": "aries.transaction.refuse"
+                  },
+                  {
+                    "context": "did:sov",
+                    "message_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "method": "add-signature",
+                    "signer_goal_code": "aries.transaction.refuse"
+                  }
                 ],
                 "state": "active",
                 "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                "timing": {},
+                "timing": {
+                  "expires_time": "2020-12-13T17:29:06+0000"
+                },
                 "trace": true,
                 "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                 "updated_at": "2021-12-31 23:59:59+00:00"
@@ -38920,21 +39943,68 @@
                     }
                   ],
                   "messages_attach": [
-                    {},
-                    {}
+                    {
+                      "@id": "143c458d-1b1c-40c7-ab85-4d16808ddf0a",
+                      "data": {
+                        "json": "{\"endorser\": \"V4SGRU86Z58d6TV7PBUe6f\",\"identifier\": \"LjgpST2rjsoxYegQDRm7EL\",\"operation\": {\"data\": {\"attr_names\": [\"first_name\", \"last_name\"],\"name\": \"test_schema\",\"version\": \"2.1\",},\"type\": \"101\",},\"protocolVersion\": 2,\"reqId\": 1597766666168851000,\"signatures\": {\"LjgpST2rjsox\": \"4ATKMn6Y9sTgwqaGTm7py2c2M8x1EVDTWKZArwyuPgjU\"},\"taaAcceptance\": {\"mechanism\": \"manual\",\"taaDigest\": \"f50fe2c2ab977006761d36bd6f23e4c6a7e0fc2feb9f62\",\"time\": 1597708800,}}"
+                      },
+                      "mime-type": "application/json"
+                    },
+                    {
+                      "@id": "143c458d-1b1c-40c7-ab85-4d16808ddf0a",
+                      "data": {
+                        "json": "{\"endorser\": \"V4SGRU86Z58d6TV7PBUe6f\",\"identifier\": \"LjgpST2rjsoxYegQDRm7EL\",\"operation\": {\"data\": {\"attr_names\": [\"first_name\", \"last_name\"],\"name\": \"test_schema\",\"version\": \"2.1\",},\"type\": \"101\",},\"protocolVersion\": 2,\"reqId\": 1597766666168851000,\"signatures\": {\"LjgpST2rjsox\": \"4ATKMn6Y9sTgwqaGTm7py2c2M8x1EVDTWKZArwyuPgjU\"},\"taaAcceptance\": {\"mechanism\": \"manual\",\"taaDigest\": \"f50fe2c2ab977006761d36bd6f23e4c6a7e0fc2feb9f62\",\"time\": 1597708800,}}"
+                      },
+                      "mime-type": "application/json"
+                    }
                   ],
-                  "meta_data": {},
+                  "meta_data": {
+                    "context": {
+                      "param1": "param1_value",
+                      "param2": "param2_value"
+                    },
+                    "post_process": [
+                      {
+                        "topic": "topic_value",
+                        "other": "other_value"
+                      }
+                    ]
+                  },
                   "signature_request": [
-                    {},
-                    {}
+                    {
+                      "author_goal_code": "aries.transaction.ledger.write",
+                      "context": "did:sov",
+                      "method": "add-signature",
+                      "signature_type": "<requested signature type>",
+                      "signer_goal_code": "aries.transaction.endorse"
+                    },
+                    {
+                      "author_goal_code": "aries.transaction.ledger.write",
+                      "context": "did:sov",
+                      "method": "add-signature",
+                      "signature_type": "<requested signature type>",
+                      "signer_goal_code": "aries.transaction.endorse"
+                    }
                   ],
                   "signature_response": [
-                    {},
-                    {}
+                    {
+                      "context": "did:sov",
+                      "message_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                      "method": "add-signature",
+                      "signer_goal_code": "aries.transaction.refuse"
+                    },
+                    {
+                      "context": "did:sov",
+                      "message_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                      "method": "add-signature",
+                      "signer_goal_code": "aries.transaction.refuse"
+                    }
                   ],
                   "state": "active",
                   "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "timing": {},
+                  "timing": {
+                    "expires_time": "2020-12-13T17:29:06+0000"
+                  },
                   "trace": true,
                   "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   "updated_at": "2021-12-31 23:59:59+00:00"
@@ -39031,21 +40101,68 @@
                   }
                 ],
                 "messages_attach": [
-                  {},
-                  {}
+                  {
+                    "@id": "143c458d-1b1c-40c7-ab85-4d16808ddf0a",
+                    "data": {
+                      "json": "{\"endorser\": \"V4SGRU86Z58d6TV7PBUe6f\",\"identifier\": \"LjgpST2rjsoxYegQDRm7EL\",\"operation\": {\"data\": {\"attr_names\": [\"first_name\", \"last_name\"],\"name\": \"test_schema\",\"version\": \"2.1\",},\"type\": \"101\",},\"protocolVersion\": 2,\"reqId\": 1597766666168851000,\"signatures\": {\"LjgpST2rjsox\": \"4ATKMn6Y9sTgwqaGTm7py2c2M8x1EVDTWKZArwyuPgjU\"},\"taaAcceptance\": {\"mechanism\": \"manual\",\"taaDigest\": \"f50fe2c2ab977006761d36bd6f23e4c6a7e0fc2feb9f62\",\"time\": 1597708800,}}"
+                    },
+                    "mime-type": "application/json"
+                  },
+                  {
+                    "@id": "143c458d-1b1c-40c7-ab85-4d16808ddf0a",
+                    "data": {
+                      "json": "{\"endorser\": \"V4SGRU86Z58d6TV7PBUe6f\",\"identifier\": \"LjgpST2rjsoxYegQDRm7EL\",\"operation\": {\"data\": {\"attr_names\": [\"first_name\", \"last_name\"],\"name\": \"test_schema\",\"version\": \"2.1\",},\"type\": \"101\",},\"protocolVersion\": 2,\"reqId\": 1597766666168851000,\"signatures\": {\"LjgpST2rjsox\": \"4ATKMn6Y9sTgwqaGTm7py2c2M8x1EVDTWKZArwyuPgjU\"},\"taaAcceptance\": {\"mechanism\": \"manual\",\"taaDigest\": \"f50fe2c2ab977006761d36bd6f23e4c6a7e0fc2feb9f62\",\"time\": 1597708800,}}"
+                    },
+                    "mime-type": "application/json"
+                  }
                 ],
-                "meta_data": {},
+                "meta_data": {
+                  "context": {
+                    "param1": "param1_value",
+                    "param2": "param2_value"
+                  },
+                  "post_process": [
+                    {
+                      "topic": "topic_value",
+                      "other": "other_value"
+                    }
+                  ]
+                },
                 "signature_request": [
-                  {},
-                  {}
+                  {
+                    "author_goal_code": "aries.transaction.ledger.write",
+                    "context": "did:sov",
+                    "method": "add-signature",
+                    "signature_type": "<requested signature type>",
+                    "signer_goal_code": "aries.transaction.endorse"
+                  },
+                  {
+                    "author_goal_code": "aries.transaction.ledger.write",
+                    "context": "did:sov",
+                    "method": "add-signature",
+                    "signature_type": "<requested signature type>",
+                    "signer_goal_code": "aries.transaction.endorse"
+                  }
                 ],
                 "signature_response": [
-                  {},
-                  {}
+                  {
+                    "context": "did:sov",
+                    "message_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "method": "add-signature",
+                    "signer_goal_code": "aries.transaction.refuse"
+                  },
+                  {
+                    "context": "did:sov",
+                    "message_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "method": "add-signature",
+                    "signer_goal_code": "aries.transaction.refuse"
+                  }
                 ],
                 "state": "active",
                 "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                "timing": {},
+                "timing": {
+                  "expires_time": "2020-12-13T17:29:06+0000"
+                },
                 "trace": true,
                 "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                 "updated_at": "2021-12-31 23:59:59+00:00"
@@ -39068,21 +40185,68 @@
                     }
                   ],
                   "messages_attach": [
-                    {},
-                    {}
+                    {
+                      "@id": "143c458d-1b1c-40c7-ab85-4d16808ddf0a",
+                      "data": {
+                        "json": "{\"endorser\": \"V4SGRU86Z58d6TV7PBUe6f\",\"identifier\": \"LjgpST2rjsoxYegQDRm7EL\",\"operation\": {\"data\": {\"attr_names\": [\"first_name\", \"last_name\"],\"name\": \"test_schema\",\"version\": \"2.1\",},\"type\": \"101\",},\"protocolVersion\": 2,\"reqId\": 1597766666168851000,\"signatures\": {\"LjgpST2rjsox\": \"4ATKMn6Y9sTgwqaGTm7py2c2M8x1EVDTWKZArwyuPgjU\"},\"taaAcceptance\": {\"mechanism\": \"manual\",\"taaDigest\": \"f50fe2c2ab977006761d36bd6f23e4c6a7e0fc2feb9f62\",\"time\": 1597708800,}}"
+                      },
+                      "mime-type": "application/json"
+                    },
+                    {
+                      "@id": "143c458d-1b1c-40c7-ab85-4d16808ddf0a",
+                      "data": {
+                        "json": "{\"endorser\": \"V4SGRU86Z58d6TV7PBUe6f\",\"identifier\": \"LjgpST2rjsoxYegQDRm7EL\",\"operation\": {\"data\": {\"attr_names\": [\"first_name\", \"last_name\"],\"name\": \"test_schema\",\"version\": \"2.1\",},\"type\": \"101\",},\"protocolVersion\": 2,\"reqId\": 1597766666168851000,\"signatures\": {\"LjgpST2rjsox\": \"4ATKMn6Y9sTgwqaGTm7py2c2M8x1EVDTWKZArwyuPgjU\"},\"taaAcceptance\": {\"mechanism\": \"manual\",\"taaDigest\": \"f50fe2c2ab977006761d36bd6f23e4c6a7e0fc2feb9f62\",\"time\": 1597708800,}}"
+                      },
+                      "mime-type": "application/json"
+                    }
                   ],
-                  "meta_data": {},
+                  "meta_data": {
+                    "context": {
+                      "param1": "param1_value",
+                      "param2": "param2_value"
+                    },
+                    "post_process": [
+                      {
+                        "topic": "topic_value",
+                        "other": "other_value"
+                      }
+                    ]
+                  },
                   "signature_request": [
-                    {},
-                    {}
+                    {
+                      "author_goal_code": "aries.transaction.ledger.write",
+                      "context": "did:sov",
+                      "method": "add-signature",
+                      "signature_type": "<requested signature type>",
+                      "signer_goal_code": "aries.transaction.endorse"
+                    },
+                    {
+                      "author_goal_code": "aries.transaction.ledger.write",
+                      "context": "did:sov",
+                      "method": "add-signature",
+                      "signature_type": "<requested signature type>",
+                      "signer_goal_code": "aries.transaction.endorse"
+                    }
                   ],
                   "signature_response": [
-                    {},
-                    {}
+                    {
+                      "context": "did:sov",
+                      "message_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                      "method": "add-signature",
+                      "signer_goal_code": "aries.transaction.refuse"
+                    },
+                    {
+                      "context": "did:sov",
+                      "message_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                      "method": "add-signature",
+                      "signer_goal_code": "aries.transaction.refuse"
+                    }
                   ],
                   "state": "active",
                   "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "timing": {},
+                  "timing": {
+                    "expires_time": "2020-12-13T17:29:06+0000"
+                  },
                   "trace": true,
                   "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   "updated_at": "2021-12-31 23:59:59+00:00"
@@ -39179,21 +40343,68 @@
                   }
                 ],
                 "messages_attach": [
-                  {},
-                  {}
+                  {
+                    "@id": "143c458d-1b1c-40c7-ab85-4d16808ddf0a",
+                    "data": {
+                      "json": "{\"endorser\": \"V4SGRU86Z58d6TV7PBUe6f\",\"identifier\": \"LjgpST2rjsoxYegQDRm7EL\",\"operation\": {\"data\": {\"attr_names\": [\"first_name\", \"last_name\"],\"name\": \"test_schema\",\"version\": \"2.1\",},\"type\": \"101\",},\"protocolVersion\": 2,\"reqId\": 1597766666168851000,\"signatures\": {\"LjgpST2rjsox\": \"4ATKMn6Y9sTgwqaGTm7py2c2M8x1EVDTWKZArwyuPgjU\"},\"taaAcceptance\": {\"mechanism\": \"manual\",\"taaDigest\": \"f50fe2c2ab977006761d36bd6f23e4c6a7e0fc2feb9f62\",\"time\": 1597708800,}}"
+                    },
+                    "mime-type": "application/json"
+                  },
+                  {
+                    "@id": "143c458d-1b1c-40c7-ab85-4d16808ddf0a",
+                    "data": {
+                      "json": "{\"endorser\": \"V4SGRU86Z58d6TV7PBUe6f\",\"identifier\": \"LjgpST2rjsoxYegQDRm7EL\",\"operation\": {\"data\": {\"attr_names\": [\"first_name\", \"last_name\"],\"name\": \"test_schema\",\"version\": \"2.1\",},\"type\": \"101\",},\"protocolVersion\": 2,\"reqId\": 1597766666168851000,\"signatures\": {\"LjgpST2rjsox\": \"4ATKMn6Y9sTgwqaGTm7py2c2M8x1EVDTWKZArwyuPgjU\"},\"taaAcceptance\": {\"mechanism\": \"manual\",\"taaDigest\": \"f50fe2c2ab977006761d36bd6f23e4c6a7e0fc2feb9f62\",\"time\": 1597708800,}}"
+                    },
+                    "mime-type": "application/json"
+                  }
                 ],
-                "meta_data": {},
+                "meta_data": {
+                  "context": {
+                    "param1": "param1_value",
+                    "param2": "param2_value"
+                  },
+                  "post_process": [
+                    {
+                      "topic": "topic_value",
+                      "other": "other_value"
+                    }
+                  ]
+                },
                 "signature_request": [
-                  {},
-                  {}
+                  {
+                    "author_goal_code": "aries.transaction.ledger.write",
+                    "context": "did:sov",
+                    "method": "add-signature",
+                    "signature_type": "<requested signature type>",
+                    "signer_goal_code": "aries.transaction.endorse"
+                  },
+                  {
+                    "author_goal_code": "aries.transaction.ledger.write",
+                    "context": "did:sov",
+                    "method": "add-signature",
+                    "signature_type": "<requested signature type>",
+                    "signer_goal_code": "aries.transaction.endorse"
+                  }
                 ],
                 "signature_response": [
-                  {},
-                  {}
+                  {
+                    "context": "did:sov",
+                    "message_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "method": "add-signature",
+                    "signer_goal_code": "aries.transaction.refuse"
+                  },
+                  {
+                    "context": "did:sov",
+                    "message_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "method": "add-signature",
+                    "signer_goal_code": "aries.transaction.refuse"
+                  }
                 ],
                 "state": "active",
                 "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                "timing": {},
+                "timing": {
+                  "expires_time": "2020-12-13T17:29:06+0000"
+                },
                 "trace": true,
                 "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                 "updated_at": "2021-12-31 23:59:59+00:00"
@@ -39216,21 +40427,68 @@
                     }
                   ],
                   "messages_attach": [
-                    {},
-                    {}
+                    {
+                      "@id": "143c458d-1b1c-40c7-ab85-4d16808ddf0a",
+                      "data": {
+                        "json": "{\"endorser\": \"V4SGRU86Z58d6TV7PBUe6f\",\"identifier\": \"LjgpST2rjsoxYegQDRm7EL\",\"operation\": {\"data\": {\"attr_names\": [\"first_name\", \"last_name\"],\"name\": \"test_schema\",\"version\": \"2.1\",},\"type\": \"101\",},\"protocolVersion\": 2,\"reqId\": 1597766666168851000,\"signatures\": {\"LjgpST2rjsox\": \"4ATKMn6Y9sTgwqaGTm7py2c2M8x1EVDTWKZArwyuPgjU\"},\"taaAcceptance\": {\"mechanism\": \"manual\",\"taaDigest\": \"f50fe2c2ab977006761d36bd6f23e4c6a7e0fc2feb9f62\",\"time\": 1597708800,}}"
+                      },
+                      "mime-type": "application/json"
+                    },
+                    {
+                      "@id": "143c458d-1b1c-40c7-ab85-4d16808ddf0a",
+                      "data": {
+                        "json": "{\"endorser\": \"V4SGRU86Z58d6TV7PBUe6f\",\"identifier\": \"LjgpST2rjsoxYegQDRm7EL\",\"operation\": {\"data\": {\"attr_names\": [\"first_name\", \"last_name\"],\"name\": \"test_schema\",\"version\": \"2.1\",},\"type\": \"101\",},\"protocolVersion\": 2,\"reqId\": 1597766666168851000,\"signatures\": {\"LjgpST2rjsox\": \"4ATKMn6Y9sTgwqaGTm7py2c2M8x1EVDTWKZArwyuPgjU\"},\"taaAcceptance\": {\"mechanism\": \"manual\",\"taaDigest\": \"f50fe2c2ab977006761d36bd6f23e4c6a7e0fc2feb9f62\",\"time\": 1597708800,}}"
+                      },
+                      "mime-type": "application/json"
+                    }
                   ],
-                  "meta_data": {},
+                  "meta_data": {
+                    "context": {
+                      "param1": "param1_value",
+                      "param2": "param2_value"
+                    },
+                    "post_process": [
+                      {
+                        "topic": "topic_value",
+                        "other": "other_value"
+                      }
+                    ]
+                  },
                   "signature_request": [
-                    {},
-                    {}
+                    {
+                      "author_goal_code": "aries.transaction.ledger.write",
+                      "context": "did:sov",
+                      "method": "add-signature",
+                      "signature_type": "<requested signature type>",
+                      "signer_goal_code": "aries.transaction.endorse"
+                    },
+                    {
+                      "author_goal_code": "aries.transaction.ledger.write",
+                      "context": "did:sov",
+                      "method": "add-signature",
+                      "signature_type": "<requested signature type>",
+                      "signer_goal_code": "aries.transaction.endorse"
+                    }
                   ],
                   "signature_response": [
-                    {},
-                    {}
+                    {
+                      "context": "did:sov",
+                      "message_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                      "method": "add-signature",
+                      "signer_goal_code": "aries.transaction.refuse"
+                    },
+                    {
+                      "context": "did:sov",
+                      "message_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                      "method": "add-signature",
+                      "signer_goal_code": "aries.transaction.refuse"
+                    }
                   ],
                   "state": "active",
                   "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "timing": {},
+                  "timing": {
+                    "expires_time": "2020-12-13T17:29:06+0000"
+                  },
                   "trace": true,
                   "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   "updated_at": "2021-12-31 23:59:59+00:00"
@@ -39470,13 +40728,15 @@
               "headers": {},
               "requestBody": {
                 "method": "sov",
-                "seed": "000000000000000000000000Trustee1"
+                "seed": "000000000000000000000000Trustee1",
+                "options": {}
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
                   "method": "sov",
-                  "seed": "000000000000000000000000Trustee1"
+                  "seed": "000000000000000000000000Trustee1",
+                  "options": {}
                 }
               },
               "responseStatusCode": 200,
@@ -40082,21 +41342,68 @@
                 }
               ],
               "messages_attach": [
-                {},
-                {}
+                {
+                  "@id": "143c458d-1b1c-40c7-ab85-4d16808ddf0a",
+                  "data": {
+                    "json": "{\"endorser\": \"V4SGRU86Z58d6TV7PBUe6f\",\"identifier\": \"LjgpST2rjsoxYegQDRm7EL\",\"operation\": {\"data\": {\"attr_names\": [\"first_name\", \"last_name\"],\"name\": \"test_schema\",\"version\": \"2.1\",},\"type\": \"101\",},\"protocolVersion\": 2,\"reqId\": 1597766666168851000,\"signatures\": {\"LjgpST2rjsox\": \"4ATKMn6Y9sTgwqaGTm7py2c2M8x1EVDTWKZArwyuPgjU\"},\"taaAcceptance\": {\"mechanism\": \"manual\",\"taaDigest\": \"f50fe2c2ab977006761d36bd6f23e4c6a7e0fc2feb9f62\",\"time\": 1597708800,}}"
+                  },
+                  "mime-type": "application/json"
+                },
+                {
+                  "@id": "143c458d-1b1c-40c7-ab85-4d16808ddf0a",
+                  "data": {
+                    "json": "{\"endorser\": \"V4SGRU86Z58d6TV7PBUe6f\",\"identifier\": \"LjgpST2rjsoxYegQDRm7EL\",\"operation\": {\"data\": {\"attr_names\": [\"first_name\", \"last_name\"],\"name\": \"test_schema\",\"version\": \"2.1\",},\"type\": \"101\",},\"protocolVersion\": 2,\"reqId\": 1597766666168851000,\"signatures\": {\"LjgpST2rjsox\": \"4ATKMn6Y9sTgwqaGTm7py2c2M8x1EVDTWKZArwyuPgjU\"},\"taaAcceptance\": {\"mechanism\": \"manual\",\"taaDigest\": \"f50fe2c2ab977006761d36bd6f23e4c6a7e0fc2feb9f62\",\"time\": 1597708800,}}"
+                  },
+                  "mime-type": "application/json"
+                }
               ],
-              "meta_data": {},
+              "meta_data": {
+                "context": {
+                  "param1": "param1_value",
+                  "param2": "param2_value"
+                },
+                "post_process": [
+                  {
+                    "topic": "topic_value",
+                    "other": "other_value"
+                  }
+                ]
+              },
               "signature_request": [
-                {},
-                {}
+                {
+                  "author_goal_code": "aries.transaction.ledger.write",
+                  "context": "did:sov",
+                  "method": "add-signature",
+                  "signature_type": "<requested signature type>",
+                  "signer_goal_code": "aries.transaction.endorse"
+                },
+                {
+                  "author_goal_code": "aries.transaction.ledger.write",
+                  "context": "did:sov",
+                  "method": "add-signature",
+                  "signature_type": "<requested signature type>",
+                  "signer_goal_code": "aries.transaction.endorse"
+                }
               ],
               "signature_response": [
-                {},
-                {}
+                {
+                  "context": "did:sov",
+                  "message_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                  "method": "add-signature",
+                  "signer_goal_code": "aries.transaction.refuse"
+                },
+                {
+                  "context": "did:sov",
+                  "message_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                  "method": "add-signature",
+                  "signer_goal_code": "aries.transaction.refuse"
+                }
               ],
               "state": "active",
               "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "timing": {},
+              "timing": {
+                "expires_time": "2020-12-13T17:29:06+0000"
+              },
               "trace": true,
               "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
               "updated_at": "2021-12-31 23:59:59+00:00"
@@ -40119,21 +41426,68 @@
                   }
                 ],
                 "messages_attach": [
-                  {},
-                  {}
+                  {
+                    "@id": "143c458d-1b1c-40c7-ab85-4d16808ddf0a",
+                    "data": {
+                      "json": "{\"endorser\": \"V4SGRU86Z58d6TV7PBUe6f\",\"identifier\": \"LjgpST2rjsoxYegQDRm7EL\",\"operation\": {\"data\": {\"attr_names\": [\"first_name\", \"last_name\"],\"name\": \"test_schema\",\"version\": \"2.1\",},\"type\": \"101\",},\"protocolVersion\": 2,\"reqId\": 1597766666168851000,\"signatures\": {\"LjgpST2rjsox\": \"4ATKMn6Y9sTgwqaGTm7py2c2M8x1EVDTWKZArwyuPgjU\"},\"taaAcceptance\": {\"mechanism\": \"manual\",\"taaDigest\": \"f50fe2c2ab977006761d36bd6f23e4c6a7e0fc2feb9f62\",\"time\": 1597708800,}}"
+                    },
+                    "mime-type": "application/json"
+                  },
+                  {
+                    "@id": "143c458d-1b1c-40c7-ab85-4d16808ddf0a",
+                    "data": {
+                      "json": "{\"endorser\": \"V4SGRU86Z58d6TV7PBUe6f\",\"identifier\": \"LjgpST2rjsoxYegQDRm7EL\",\"operation\": {\"data\": {\"attr_names\": [\"first_name\", \"last_name\"],\"name\": \"test_schema\",\"version\": \"2.1\",},\"type\": \"101\",},\"protocolVersion\": 2,\"reqId\": 1597766666168851000,\"signatures\": {\"LjgpST2rjsox\": \"4ATKMn6Y9sTgwqaGTm7py2c2M8x1EVDTWKZArwyuPgjU\"},\"taaAcceptance\": {\"mechanism\": \"manual\",\"taaDigest\": \"f50fe2c2ab977006761d36bd6f23e4c6a7e0fc2feb9f62\",\"time\": 1597708800,}}"
+                    },
+                    "mime-type": "application/json"
+                  }
                 ],
-                "meta_data": {},
+                "meta_data": {
+                  "context": {
+                    "param1": "param1_value",
+                    "param2": "param2_value"
+                  },
+                  "post_process": [
+                    {
+                      "topic": "topic_value",
+                      "other": "other_value"
+                    }
+                  ]
+                },
                 "signature_request": [
-                  {},
-                  {}
+                  {
+                    "author_goal_code": "aries.transaction.ledger.write",
+                    "context": "did:sov",
+                    "method": "add-signature",
+                    "signature_type": "<requested signature type>",
+                    "signer_goal_code": "aries.transaction.endorse"
+                  },
+                  {
+                    "author_goal_code": "aries.transaction.ledger.write",
+                    "context": "did:sov",
+                    "method": "add-signature",
+                    "signature_type": "<requested signature type>",
+                    "signer_goal_code": "aries.transaction.endorse"
+                  }
                 ],
                 "signature_response": [
-                  {},
-                  {}
+                  {
+                    "context": "did:sov",
+                    "message_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "method": "add-signature",
+                    "signer_goal_code": "aries.transaction.refuse"
+                  },
+                  {
+                    "context": "did:sov",
+                    "message_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "method": "add-signature",
+                    "signer_goal_code": "aries.transaction.refuse"
+                  }
                 ],
                 "state": "active",
                 "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                "timing": {},
+                "timing": {
+                  "expires_time": "2020-12-13T17:29:06+0000"
+                },
                 "trace": true,
                 "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                 "updated_at": "2021-12-31 23:59:59+00:00"

@@ -1,0 +1,131 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "test": {
+              "auth": false,
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {
+                    "value": "value",
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/test",
+              "request": {
+                "body": "OuterOneOf",
+                "content-type": "application/json",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+        "types": {
+          "InnerOneOf": {
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              "InnerOneOfValue",
+            ],
+          },
+          "InnerOneOfValue": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "value": "string",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "OuterOneOf": {
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              "InnerOneOf",
+            ],
+          },
+        },
+      },
+      "rawContents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    test:
+      path: /test
+      method: POST
+      auth: false
+      source:
+        openapi: ../openapi.yml
+      request:
+        body: OuterOneOf
+        content-type: application/json
+      examples:
+        - request:
+            value: value
+  source:
+    openapi: ../openapi.yml
+types:
+  OuterOneOf:
+    discriminated: false
+    union:
+      - InnerOneOf
+    source:
+      openapi: ../openapi.yml
+  InnerOneOfValue:
+    properties:
+      value: string
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  InnerOneOf:
+    discriminated: false
+    union:
+      - InnerOneOfValue
+    source:
+      openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "Preserve Single Schema OneOf Test",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Preserve Single Schema OneOf Test
+",
+  },
+}

@@ -213,6 +213,48 @@ Fern integrates with several API definition formats:
     ```
 
   </Accordion>
+  <Accordion
+    title="OpenRPC (JSON-RPC APIs)"
+  >
+    [OpenRPC](https://open-rpc.org/) is a spec for describing JSON-RPC 2.0 APIs. It enables interactive docs and code generation tooling to the JSON-RPC ecosystem.
+
+    Check out an example OpenRPC Specification for a crypto wallet service below:
+
+    ```yaml maxLines=0
+    # yaml-language-server: $schema=https://meta.open-rpc.org/
+    $schema: https://meta.open-rpc.org/
+    openrpc: 1.2.4
+    info:
+      title: Basic Wallet API JSON-RPC Specification
+      description: A simple JSON-RPC API for querying wallet balances.
+      version: 0.0.1
+    servers:
+      - url: https://wallet.example.com/json-rpc
+        name: Mainnet
+    methods:
+      - name: getBalance
+        description: Get the balance of a wallet address.
+        params:
+          - name: address
+            required: true
+            description: The wallet address to query.
+            schema:
+              type: string
+        result:
+          name: balance
+          description: The balance of the wallet address.
+          schema:
+            type: number
+        examples:
+          - name: getBalance example
+            params:
+              - name: address
+                value: "0x1234567890abcdef1234567890abcdef12345678"
+            result:
+              name: balance
+              value: 42.5
+    ```
+  </Accordion>
 </AccordionGroup>
 
 ## Why create an API Definition ? 

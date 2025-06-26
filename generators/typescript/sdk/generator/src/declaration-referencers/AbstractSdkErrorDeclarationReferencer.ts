@@ -1,4 +1,4 @@
-import { ExportedFilePath, ImportsManager, Reference } from "@fern-typescript/commons";
+import { ExportedFilePath, ExportsManager, ImportsManager, Reference } from "@fern-typescript/commons";
 import { SourceFile } from "ts-morph";
 
 import { AbstractDeclarationReferencer } from "./AbstractDeclarationReferencer";
@@ -29,14 +29,17 @@ export abstract class AbstractSdkErrorDeclarationReferencer extends AbstractDecl
 
     public getReferenceToError({
         importsManager,
+        exportsManager,
         referencedIn
     }: {
         importsManager: ImportsManager;
+        exportsManager: ExportsManager;
         referencedIn: SourceFile;
     }): Reference {
         return this.getReferenceTo(this.getExportedName(), {
             name: undefined as never,
             importsManager,
+            exportsManager,
             referencedIn,
             importStrategy: {
                 type: "fromRoot",

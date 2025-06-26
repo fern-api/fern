@@ -25,8 +25,8 @@ export class PythonProject extends AbstractProject<AbstractPythonGeneratorContex
                 return await file.write(this.absolutePathToOutputDirectory);
             })
         );
-        await loggingExeca(undefined, "ruff", ["format", ".", "--no-cache"], {
-            cwd: this.absolutePathToOutputDirectory
-        });
+        // await loggingExeca(undefined, "ruff", ["format", ".", "--no-cache"], {
+        //     cwd: this.absolutePathToOutputDirectory
+        // });
     }
 }

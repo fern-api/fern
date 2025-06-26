@@ -1,10 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using SeedCustomAuth.Core;
 
 namespace SeedCustomAuth;
 
+[Serializable]
 public partial class ClientOptions
 {
     /// <summary>

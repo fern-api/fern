@@ -23,7 +23,7 @@ Instantiate and use the client with the following:
 import { SeedPaginationClient } from "@fern/pagination";
 
 const client = new SeedPaginationClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
-const response = await client.complex.search({
+const response = await client.complex.search("index", {
     pagination: {
         per_page: 1,
         starting_after: "starting_after",
@@ -39,7 +39,7 @@ for await (const item of response) {
 }
 
 // Or you can manually iterate page-by-page
-const page = await client.complex.search({
+const page = await client.complex.search("index", {
     pagination: {
         per_page: 1,
         starting_after: "starting_after",
@@ -96,7 +96,7 @@ List endpoints are paginated. The SDK provides an iterator so that you can simpl
 import { SeedPaginationClient } from "@fern/pagination";
 
 const client = new SeedPaginationClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
-const response = await client.complex.search({
+const response = await client.complex.search("index", {
     pagination: {
         per_page: 1,
         starting_after: "starting_after",
@@ -112,7 +112,7 @@ for await (const item of response) {
 }
 
 // Or you can manually iterate page-by-page
-const page = await client.complex.search({
+const page = await client.complex.search("index", {
     pagination: {
         per_page: 1,
         starting_after: "starting_after",

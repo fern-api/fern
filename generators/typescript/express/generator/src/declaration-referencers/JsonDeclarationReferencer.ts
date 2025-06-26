@@ -1,4 +1,10 @@
-import { ExportedFilePath, ImportsManager, Reference, getReferenceToExportFromRoot } from "@fern-typescript/commons";
+import {
+    ExportedFilePath,
+    ExportsManager,
+    ImportsManager,
+    Reference,
+    getReferenceToExportFromRoot
+} from "@fern-typescript/commons";
 import { SourceFile } from "ts-morph";
 
 import { AbstractDeclarationReferencer } from "./AbstractDeclarationReferencer";
@@ -30,13 +36,16 @@ export class JsonDeclarationReferencer extends AbstractDeclarationReferencer {
 
     public getReferenceToFromJson({
         importsManager,
+        exportsManager,
         sourceFile
     }: {
         importsManager: ImportsManager;
         sourceFile: SourceFile;
+        exportsManager: ExportsManager;
     }): Reference {
         return this.getReferenceToExport({
             importsManager,
+            exportsManager,
             sourceFile,
             exportedName: "fromJson"
         });
@@ -44,13 +53,16 @@ export class JsonDeclarationReferencer extends AbstractDeclarationReferencer {
 
     public getReferenceToToJson({
         importsManager,
+        exportsManager,
         sourceFile
     }: {
         importsManager: ImportsManager;
+        exportsManager: ExportsManager;
         sourceFile: SourceFile;
     }): Reference {
         return this.getReferenceToExport({
             importsManager,
+            exportsManager,
             sourceFile,
             exportedName: "toJson"
         });
@@ -58,10 +70,12 @@ export class JsonDeclarationReferencer extends AbstractDeclarationReferencer {
 
     private getReferenceToExport({
         importsManager,
+        exportsManager,
         sourceFile,
         exportedName
     }: {
         importsManager: ImportsManager;
+        exportsManager: ExportsManager;
         sourceFile: SourceFile;
         exportedName: string;
     }): Reference {
@@ -72,6 +86,7 @@ export class JsonDeclarationReferencer extends AbstractDeclarationReferencer {
             },
             exportedName,
             importsManager,
+            exportsManager,
             referencedIn: sourceFile
         });
     }

@@ -1,8 +1,29 @@
 import path from "path";
 import { Directory, SourceFile } from "ts-morph";
 
+import { RelativeFilePath } from "@fern-api/fs-utils";
+
 import { ModuleSpecifier, getRelativePathAsModuleSpecifierTo } from "../referencing";
-import { ExportedDirectory, ExportedFilePath, convertExportedFilePathToFilePath } from "./ExportedFilePath";
+
+export interface ExportedFilePath {
+    directories: ExportedDirectory[];
+    file: ExportedFilePathPart | undefined;
+    /**
+     * @default "src"
+     */
+    rootDir?: string;
+}
+
+export interface ExportedDirectory extends ExportedFilePathPart {
+    // optionally export deeper items within this directory from the index.ts
+    subExports?: Record<RelativeFilePath, ExportDeclaration>;
+}
+
+export interface ExportedFilePathPart {
+    nameOnDisk: string;
+    // how the items in this file/directory are exported from the index.ts
+    exportDeclaration?: ExportDeclaration;
+}
 
 export interface ExportDeclaration {
     exportAll?: boolean;
@@ -21,8 +42,41 @@ interface CombinedExportDeclarations {
 
 type PathToDirectory = string;
 
+const DEFAULT_PACKAGE_PATH = "src";
+
 export class ExportsManager {
     private exports: Record<PathToDirectory, Record<ModuleSpecifier, CombinedExportDeclarations>> = {};
+    public packagePath: string;
+
+    constructor({ packagePath = DEFAULT_PACKAGE_PATH }: { packagePath?: string } = {}) {
+        this.packagePath = packagePath;
+    }
+
+    public convertExportedFilePathToFilePath(
+        exportedFilePath: ExportedFilePath,
+        packagePath: string = this.packagePath
+    ): string {
+        const directoryPath = this.convertExportedDirectoryPathToFilePath(
+            exportedFilePath.directories,
+            exportedFilePath.rootDir || packagePath
+        );
+        if (exportedFilePath.file == null) {
+            return directoryPath;
+        } else {
+            return path.join(directoryPath, exportedFilePath.file.nameOnDisk);
+        }
+    }
+
+    public convertExportedDirectoryPathToFilePath(
+        exportedDirectoryPath: ExportedDirectory[],
+        packagePath: string = this.packagePath
+    ): string {
+        return path.join(
+            // within a ts-morph Project, we treat "/src" as the root of the project
+            "/" + packagePath,
+            ...exportedDirectoryPath.map((directory) => RelativeFilePath.of(directory.nameOnDisk))
+        );
+    }
 
     public addExport(
         from: SourceFile | string,
@@ -50,14 +104,14 @@ export class ExportsManager {
     public addExportsForFilepath(filepath: ExportedFilePath, addExportTypeModifier?: boolean): void {
         this.addExportsForDirectories(filepath.directories, addExportTypeModifier);
         this.addExport(
-            convertExportedFilePathToFilePath(filepath),
+            this.convertExportedFilePathToFilePath(filepath),
             filepath.file?.exportDeclaration,
             addExportTypeModifier
         );
     }
 
     public addExportsForDirectories(directories: ExportedDirectory[], addExportTypeModifier?: boolean): void {
-        let directoryFilepath = "/src";
+        let directoryFilepath = this.packagePath;
         for (const part of directories) {
             const nextDirectoryPath = path.join(directoryFilepath, part.nameOnDisk);
             this.addExportDeclarationForDirectory({

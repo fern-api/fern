@@ -31,9 +31,16 @@
     "dist": "tsc --project build.tsconfig.json --outDir ./dist/cjs"
   },
   "dependencies": {
-    "@fern-api/configs": "workspace:*",
     "@bufbuild/protobuf": "^2.2.5",
-    "@bufbuild/protoplugin": "2.2.5"
+    "@bufbuild/protoplugin": "2.2.5",
+    "@fern-api/configs": "workspace:*",
+    "@fern-api/ir-sdk": "workspace:*",
+    "@fern-api/ir-utils": "workspace:*",
+    "@fern-api/casings-generator": "workspace:*",
+    "@fern-api/logger": "workspace:*",
+    "@fern-api/v2-importer-commons": "workspace:*",
+    "@fern-api/core-utils": "workspace:*",
+    "openapi-types": "^12.1.3"
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^5.2.1",

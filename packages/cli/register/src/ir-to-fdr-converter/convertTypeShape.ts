@@ -151,9 +151,8 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): F
                 },
                 nullable: (itemType) => {
                     return {
-                        type: "optional",
-                        itemType: convertTypeReference(itemType),
-                        defaultValue: undefined
+                        type: "nullable",
+                        itemType: convertTypeReference(itemType)
                     };
                 },
                 set: (itemType) => {

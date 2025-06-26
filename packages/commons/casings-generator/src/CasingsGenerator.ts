@@ -59,21 +59,23 @@ export function constructCasingsGenerator({
                             return word;
                         })
                         .join("");
-                    pascalCaseName = camelCaseWords
-                        .map((word, index) => {
-                            const pluralInitialism = maybeGetPluralInitialism(word);
-                            if (pluralInitialism != null) {
-                                return pluralInitialism;
-                            }
-                            if (isCommonInitialism(word)) {
-                                return word.toUpperCase();
-                            }
-                            if (index === 0) {
-                                return upperFirst(word);
-                            }
-                            return word;
-                        })
-                        .join("");
+                    pascalCaseName = upperFirst(
+                        camelCaseWords
+                            .map((word, index) => {
+                                const pluralInitialism = maybeGetPluralInitialism(word);
+                                if (pluralInitialism != null) {
+                                    return pluralInitialism;
+                                }
+                                if (isCommonInitialism(word)) {
+                                    return word.toUpperCase();
+                                }
+                                if (index === 0) {
+                                    return upperFirst(word);
+                                }
+                                return word;
+                            })
+                            .join("")
+                    );
                 }
 
                 // In smartCasing, manage numbers next to letters differently:

@@ -33,9 +33,9 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SeedApiError = exports.register = exports.SeedApi = void 0;
+exports.register = exports.SeedApiError = exports.SeedApi = void 0;
 exports.SeedApi = __importStar(require("./api"));
-var register_1 = require("./register");
-Object.defineProperty(exports, "register", { enumerable: true, get: function () { return register_1.register; } });
 var errors_1 = require("./errors");
 Object.defineProperty(exports, "SeedApiError", { enumerable: true, get: function () { return errors_1.SeedApiError; } });
+var register_1 = require("./register");
+Object.defineProperty(exports, "register", { enumerable: true, get: function () { return register_1.register; } });

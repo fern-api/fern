@@ -1,0 +1,147 @@
+{
+  "title": "Preserve Single Schema OneOf Test",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "operationId": "test",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "TestRequest",
+      "request": {
+        "schema": {
+          "generatedName": "TestRequest",
+          "schema": "OuterOneOf",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/test",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "value": {
+                "value": {
+                  "value": "value",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "OuterOneOf": {
+        "value": {
+          "generatedName": "OuterOneOf",
+          "schemas": [
+            {
+              "generatedName": "OuterOneOfZero",
+              "schema": "InnerOneOf",
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            }
+          ],
+          "groupName": [],
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "undiscriminated"
+        },
+        "type": "oneOf"
+      },
+      "InnerOneOf": {
+        "value": {
+          "generatedName": "InnerOneOf",
+          "schemas": [
+            {
+              "allOf": [],
+              "properties": [
+                {
+                  "conflict": {},
+                  "generatedName": "innerOneOfValueValue",
+                  "key": "value",
+                  "schema": {
+                    "schema": {
+                      "type": "string"
+                    },
+                    "generatedName": "InnerOneOfValueValue",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "audiences": []
+                }
+              ],
+              "allOfPropertyConflicts": [],
+              "generatedName": "InnerOneOfValue",
+              "groupName": [],
+              "additionalProperties": false,
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "object"
+            }
+          ],
+          "groupName": [],
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "undiscriminated"
+        },
+        "type": "oneOf"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

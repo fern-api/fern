@@ -1,4 +1,84 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.8.1
+  changelogEntry:
+    - summary: Fix binary response README.md examples
+      type: fix
+  createdAt: '2025-06-22'
+  irVersion: 58
+- version: 1.8.0
+  changelogEntry:
+    - summary: |
+        You can now specify whether to return the `BinaryResponse` type for binary response endpoints.
+        Change the response type by setting `fileResponseType` to `stream` or `binary-response` in the `config` of your generator configuration.
+        The default is `stream` for backwards compatibility, but we recommend using `binary-response`.
+
+        Here's how you users can interact with the `BinaryResponse`:
+        ```ts
+        const response = await client.getFile(...);
+        const stream = response.stream();
+        // const arrayBuffer = await response.arrayBuffer();
+        // const blob = await response.blob();
+        // const bytes = await response.bytes();
+        const bodyUsed = response.bodyUsed;
+        ```
+        The user can choose how to consume the binary data.
+      type: feat
+  createdAt: '2025-06-19'
+  irVersion: 58
+
+- version: 1.7.2
+  changelogEntry:
+    - summary: |
+        Fix bug where duplicate file generation was silently allowed instead of failing. The `withSourceFile` method now properly 
+        handles the `overwrite` option to prevent unintended file overwrites.
+      type: fix
+  createdAt: '2025-06-19'
+  irVersion: 58
+- version: 1.7.1
+  changelogEntry:
+    - summary: |
+        __jest.config.mjs__ now only maps relative path modules that end on `.js` to their `.ts` equivalent.
+      type: fix
+  createdAt: '2025-06-18'
+  irVersion: 58
+- version: 1.7.0
+  changelogEntry:
+    - summary: |
+        Allow users to specify the path they'd like to generate the SDK to.
+
+        Here's an example of how to implement this in generators.yml:
+        ```yml
+        # In generators.yml
+        groups:
+          ts-sdk:
+            generators:
+              - name: fernapi/fern-typescript-node-sdk
+                config:
+                  packagePath: src/package-path
+        ```
+      type: feat
+  createdAt: '2025-06-16'
+  irVersion: 58
+- version: 1.6.0
+  changelogEntry:
+    - summary: |
+        You can now specify whether to return streams using the stream wrapper, or return the web standard stream.
+        Change the type of stream returned by setting `streamType` to `wrapper` or `web` in the `config` of your generator configuration.
+        The default is `wrapper`.
+      type: feat
+    - summary: |
+        `tests/unit/zurg` are moved to `tests/unit/schemas` to match the name in `src/core/schemas` which is what the tests are verifying. 
+      type: internal
+  createdAt: '2025-06-13'
+  irVersion: 58
+
+- version: 1.5.0
+  changelogEntry:
+    - summary: Add support for websocket connect methods with path parameters in the TypeScript generator
+      type: feat
+  createdAt: '2025-06-11'
+  irVersion: 58
+
 - version: 1.4.0
   changelogEntry:
     - summary: You can now pass in headers to the root client. These headers will be merged with service and endpoint specific headers.

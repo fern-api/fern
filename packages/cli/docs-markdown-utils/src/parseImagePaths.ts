@@ -178,7 +178,8 @@ export function getReplacedHref({
         if (absoluteFilePath != null) {
             const slug = markdownFilesToPathName[absoluteFilePath];
             if (slug != null) {
-                return { type: "replace", slug, href };
+                const normalizeSlug = slug.startsWith("/") ? slug : "/" + slug;
+                return { type: "replace", slug: normalizeSlug, href };
             } else {
                 return { type: "missing-reference", path: absoluteFilePath, href };
             }

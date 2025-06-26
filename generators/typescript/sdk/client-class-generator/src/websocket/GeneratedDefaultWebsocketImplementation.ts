@@ -1,4 +1,9 @@
-import { PackageId, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
+import {
+    PackageId,
+    getParameterNameForPositionalPathParameter,
+    getPropertyKey,
+    getTextOfTsNode
+} from "@fern-typescript/commons";
 import { ChannelSignature, GeneratedWebsocketImplementation, SdkContext } from "@fern-typescript/contexts";
 import {
     ClassDeclarationStructure,
@@ -9,11 +14,18 @@ import {
     ts
 } from "ts-morph";
 
-import { SetRequired } from "@fern-api/core-utils";
+import { SetRequired, assertNever } from "@fern-api/core-utils";
 
-import { IntermediateRepresentation, WebSocketChannel, WebSocketChannelId } from "@fern-fern/ir-sdk/api";
+import {
+    IntermediateRepresentation,
+    PathParameter,
+    PathParameterLocation,
+    WebSocketChannel,
+    WebSocketChannelId
+} from "@fern-fern/ir-sdk/api";
 
 import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
+import { GetReferenceToPathParameterVariableFromRequest } from "../endpoints/utils/buildUrl";
 
 export declare namespace GeneratedDefaultWebsocketImplementation {
     export interface Init {
@@ -65,12 +77,14 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
     }
 
     public getSignature(context: SdkContext): ChannelSignature {
+        const connectArgsInterface = this.generateConnectArgsInterface(context);
+
         return {
             parameters: [
                 {
                     name: "args",
                     type: `${this.serviceClassName}.${GeneratedDefaultWebsocketImplementation.CONNECT_ARGS_INTERFACE_NAME}`,
-                    initializer: "{}"
+                    initializer: connectArgsInterface.properties?.every((p) => p.hasQuestionToken) ? "{}" : undefined
                 }
             ],
             returnTypeWithoutPromise: this.getSocketTypeNode(context)
@@ -86,12 +100,14 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
     }
 
     public writeToFile(context: SdkContext): void {
+        const connectArgsInterface = this.generateConnectArgsInterface(context);
+
         const serviceModule: ModuleDeclarationStructure = {
             kind: StructureKind.Module,
             name: this.serviceClassName,
             isExported: true,
             hasDeclareKeyword: true,
-            statements: [this.generateConnectArgsInterface(context)]
+            statements: [connectArgsInterface]
         };
 
         const serviceClass: ClassDeclarationStructure = {
@@ -113,7 +129,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                 {
                     name: "args",
                     type: `${this.serviceClassName}.${GeneratedDefaultWebsocketImplementation.CONNECT_ARGS_INTERFACE_NAME}`,
-                    initializer: "{}"
+                    initializer: connectArgsInterface.properties?.every((p) => p.hasQuestionToken) ? "{}" : undefined
                 }
             ],
             returnType: getTextOfTsNode(
@@ -133,6 +149,13 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
             kind: StructureKind.Interface,
             name: GeneratedDefaultWebsocketImplementation.CONNECT_ARGS_INTERFACE_NAME,
             properties: [
+                ...(this.channel.pathParameters ?? []).map((pathParameter) => {
+                    return {
+                        name: getPropertyKey(pathParameter.name.originalName),
+                        type: getTextOfTsNode(context.type.getReferenceToType(pathParameter.valueType).typeNode),
+                        hasQuestionToken: false
+                    };
+                }),
                 ...(this.channel.queryParameters ?? []).map((queryParameter) => {
                     return {
                         name: getPropertyKey(queryParameter.name.wireValue),
@@ -382,6 +405,17 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
             ts.factory.createTemplateSpan(
                 url,
                 ts.factory.createTemplateMiddle(`${channel.path.head}?`, `${channel.path.head}?`)
+            ),
+            ...channel.path.parts.map((part) =>
+                ts.factory.createTemplateSpan(
+                    ts.factory.createCallExpression(ts.factory.createIdentifier("encodeURIComponent"), undefined, [
+                        ts.factory.createElementAccessExpression(
+                            ts.factory.createIdentifier("args"),
+                            ts.factory.createStringLiteral(part.pathParameter)
+                        )
+                    ]),
+                    ts.factory.createTemplateMiddle(part.tail, part.tail)
+                )
             ),
             ts.factory.createTemplateSpan(
                 context.externalDependencies.qs.stringify(ts.factory.createIdentifier("queryParams")),

@@ -38,6 +38,7 @@ export abstract class AbstractDeclarationReferencer<Name = never> implements Dec
         {
             name,
             importsManager,
+            exportsManager,
             referencedIn,
             subImport,
             importStrategy
@@ -50,6 +51,7 @@ export abstract class AbstractDeclarationReferencer<Name = never> implements Dec
                     exportedFromPath: this.getExportedFilepathForReference(name),
                     importAlias: importStrategy.alias,
                     importsManager,
+                    exportsManager,
                     referencedIn,
                     subImport
                 });
@@ -59,6 +61,7 @@ export abstract class AbstractDeclarationReferencer<Name = never> implements Dec
                     exportedFromPath: this.getExportedFilepathForReference(name),
                     referencedIn,
                     importsManager,
+                    exportsManager,
                     namespaceImport: importStrategy.namespaceImport,
                     useDynamicImport: importStrategy.useDynamicImport,
                     subImport

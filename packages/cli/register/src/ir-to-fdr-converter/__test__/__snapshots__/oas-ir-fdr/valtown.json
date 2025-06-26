@@ -41,7 +41,7 @@
           {
             "key": "bio",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -53,7 +53,7 @@
           {
             "key": "username",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -65,7 +65,7 @@
           {
             "key": "profileImageUrl",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -183,7 +183,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "ResultSetLastInsertRowid"
@@ -304,7 +304,7 @@
           {
             "key": "username",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -358,7 +358,7 @@
           {
             "key": "code",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -424,7 +424,7 @@
           {
             "key": "author",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "id",
                 "value": "ExtendedValAuthor"
@@ -455,7 +455,7 @@
           {
             "key": "readme",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -577,7 +577,7 @@
           {
             "key": "username",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -631,7 +631,7 @@
           {
             "key": "code",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -697,7 +697,7 @@
           {
             "key": "author",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "id",
                 "value": "BasicValAuthor"
@@ -893,7 +893,7 @@
           {
             "key": "username",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -947,7 +947,7 @@
           {
             "key": "code",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -1013,7 +1013,7 @@
           {
             "key": "author",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "id",
                 "value": "V1AliasUsernameValNameGetResponsesContentApplicationJsonSchemaAuthor"
@@ -1044,7 +1044,7 @@
           {
             "key": "readme",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -1112,7 +1112,7 @@
           {
             "key": "bio",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -1124,7 +1124,7 @@
           {
             "key": "username",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -1136,7 +1136,7 @@
           {
             "key": "profileImageUrl",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -1167,7 +1167,7 @@
           {
             "key": "tier",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "id",
                 "value": "V1MeGetResponsesContentApplicationJsonSchemaTier"
@@ -1251,7 +1251,7 @@
           {
             "key": "username",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -1301,7 +1301,7 @@
           {
             "key": "username",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -1360,7 +1360,7 @@
           {
             "key": "author",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "id",
                 "value": "V1MeCommentsGetResponsesContentApplicationJsonSchemaDataItemsValAuthor"
@@ -1472,7 +1472,7 @@
           {
             "key": "username",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -1484,7 +1484,7 @@
           {
             "key": "author_id",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -1528,7 +1528,7 @@
           {
             "key": "username",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -1540,7 +1540,7 @@
           {
             "key": "author_id",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -1738,7 +1738,7 @@
         "value": {
           "type": "list",
           "itemType": {
-            "type": "optional",
+            "type": "nullable",
             "itemType": {
               "type": "id",
               "value": "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatementOneOf1ArgsOneOf0Items"
@@ -1793,7 +1793,7 @@
             }
           },
           "valueType": {
-            "type": "optional",
+            "type": "nullable",
             "itemType": {
               "type": "id",
               "value": "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatementOneOf1ArgsOneOf1"
@@ -1920,7 +1920,7 @@
         "value": {
           "type": "list",
           "itemType": {
-            "type": "optional",
+            "type": "nullable",
             "itemType": {
               "type": "id",
               "value": "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItemsOneOf1ArgsOneOf0Items"
@@ -1975,7 +1975,7 @@
             }
           },
           "valueType": {
-            "type": "optional",
+            "type": "nullable",
             "itemType": {
               "type": "id",
               "value": "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItemsOneOf1ArgsOneOf1"
@@ -5090,7 +5090,8 @@
                       null
                     ]
                   ],
-                  "rowsAffected": 0
+                  "rowsAffected": 0,
+                  "lastInsertRowid": {}
                 }
               ],
               "responseBodyV3": {
@@ -5108,7 +5109,8 @@
                         null
                       ]
                     ],
-                    "rowsAffected": 0
+                    "rowsAffected": 0,
+                    "lastInsertRowid": {}
                   }
                 ]
               }
@@ -5198,7 +5200,7 @@
             "type": {
               "type": "reference",
               "value": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "V1EvalPostResponsesContentApplicationJsonSchema"
@@ -5347,7 +5349,7 @@
             "type": {
               "type": "reference",
               "value": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "V1EvalCodeGetResponsesContentApplicationJsonSchema"

@@ -3,6 +3,7 @@ using SeedStreaming.Core;
 
 namespace SeedStreaming;
 
+[Serializable]
 public record GenerateStreamRequest
 {
     [JsonPropertyName("stream")]

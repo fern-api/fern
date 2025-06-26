@@ -8,9 +8,12 @@ import {
     EndpointWithExample,
     FernOpenapiIr,
     FullExample,
+    GlobalHeader,
     HeaderExample,
+    HeaderWithExample,
     NamedFullExample,
     PathParameterExample,
+    PrimitiveSchemaValueWithExample,
     QueryParameterExample,
     RequestWithExample,
     ResponseWithExample,
@@ -31,7 +34,8 @@ export class ExampleEndpointFactory {
 
     constructor(
         private readonly schemas: Record<string, SchemaWithExample>,
-        private readonly context: OpenAPIV3ParserContext
+        private readonly context: OpenAPIV3ParserContext,
+        private readonly globalHeaders: GlobalHeader[]
     ) {
         this.schemas = schemas;
         this.exampleTypeFactory = new ExampleTypeFactory(schemas, context.nonRequestReferencedSchemas, context);
@@ -261,6 +265,58 @@ export class ExampleEndpointFactory {
             } else if (example != null) {
                 headers.push({
                     name: header.name,
+                    value: example
+                });
+            }
+        }
+
+        // Add global headers to examples
+        for (const globalHeader of this.globalHeaders) {
+            const schema =
+                globalHeader.schema != null
+                    ? convertSchemaToSchemaWithExample(globalHeader.schema)
+                    : SchemaWithExample.primitive({
+                          nameOverride: undefined,
+                          generatedName: "",
+                          title: undefined,
+                          description: undefined,
+                          availability: undefined,
+                          namespace: undefined,
+                          groupName: undefined,
+                          schema: PrimitiveSchemaValueWithExample.string({
+                              default: undefined,
+                              pattern: undefined,
+                              maxLength: undefined,
+                              minLength: undefined,
+                              example: undefined,
+                              format: undefined
+                          })
+                      });
+
+            let example = this.exampleTypeFactory.buildExample({
+                schema,
+                exampleId: undefined,
+                example: undefined,
+                options: {
+                    name: globalHeader.header,
+                    isParameter: true,
+                    ignoreOptionals: true
+                }
+            });
+
+            if (example != null && !isExamplePrimitive(example)) {
+                this.logger.warn(
+                    `Expected a primitive example but got ${example.type} for global header ${
+                        globalHeader.header
+                    } for ${endpoint.method.toUpperCase()} ${endpoint.path}`
+                );
+                example = undefined;
+            }
+            if (example == null) {
+                return [];
+            } else if (example != null) {
+                headers.push({
+                    name: globalHeader.header,
                     value: example
                 });
             }

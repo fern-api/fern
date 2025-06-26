@@ -1,10 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using SeedNullable.Core;
 
 namespace SeedNullable;
 
+[Serializable]
 public partial class ClientOptions
 {
     /// <summary>

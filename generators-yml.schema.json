@@ -746,7 +746,14 @@
       "type": "object",
       "properties": {
         "target": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "root": {
           "type": "string"
@@ -773,7 +780,6 @@
         }
       },
       "required": [
-        "target",
         "root"
       ],
       "additionalProperties": false
@@ -1524,6 +1530,16 @@
           ]
         },
         "type-dates-as-strings": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "preserve-single-schema-oneof": {
           "oneOf": [
             {
               "type": "boolean"

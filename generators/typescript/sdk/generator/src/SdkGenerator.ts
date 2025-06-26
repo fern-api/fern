@@ -11,7 +11,6 @@ import {
     PackageId,
     SimpleTypescriptProject,
     TypescriptProject,
-    convertExportedFilePathToFilePath,
     getFullPathForEndpoint,
     getTextOfTsNode
 } from "@fern-typescript/commons";
@@ -141,6 +140,9 @@ export declare namespace SdkGenerator {
         useBigInt: boolean;
         useLegacyExports: boolean;
         generateWireTests: boolean;
+        streamType: "wrapper" | "web";
+        fileResponseType: "stream" | "binary-response";
+        packagePath: string | undefined;
     }
 }
 
@@ -208,6 +210,15 @@ export class SdkGenerator {
     private readonly asIsManager: AsIsManager;
     private websocketSocketDeclarationReferencer: WebsocketSocketDeclarationReferencer;
     private websocketTypeSchemaDeclarationReferencer: WebsocketTypeSchemaDeclarationReferencer;
+
+    private rootDirectoryPath: string;
+    private defaultSrcDirectory: string;
+    private defaultTestDirectory: string;
+    private relativePackagePath: string;
+    private relativeTestPath: string;
+    private testDirectory: Directory;
+    private packagePathDirectory: Directory;
+
     constructor({
         namespaceExport,
         intermediateRepresentation,
@@ -217,6 +228,10 @@ export class SdkGenerator {
         config,
         generateJestTests
     }: SdkGenerator.Init) {
+        this.rootDirectoryPath = "/";
+        this.defaultSrcDirectory = "src";
+        this.defaultTestDirectory = "tests";
+
         this.context = context;
         this.namespaceExport = namespaceExport;
         this.intermediateRepresentation = intermediateRepresentation;
@@ -229,16 +244,26 @@ export class SdkGenerator {
             this.intermediateRepresentation.auth.schemes.some((scheme) => scheme.type === "oauth");
         this.shouldGenerateWebsocketClients = this.config.shouldGenerateWebsocketClients;
 
-        this.exportsManager = new ExportsManager();
-        this.coreUtilitiesManager = new CoreUtilitiesManager();
-
         this.project = new Project({
             useInMemoryFileSystem: true
         });
-        this.rootDirectory = this.project.createDirectory("/");
+        this.rootDirectory = this.project.createDirectory(this.rootDirectoryPath);
+        this.relativePackagePath = this.getRelativePackagePath();
+        this.relativeTestPath = this.getRelativeTestPath();
+        this.testDirectory = this.project.createDirectory(this.getRelativeTestPath());
+        this.packagePathDirectory = this.project.createDirectory(this.relativePackagePath);
         this.typeResolver = new TypeResolver(intermediateRepresentation);
         this.errorResolver = new ErrorResolver(intermediateRepresentation);
         this.packageResolver = new PackageResolver(intermediateRepresentation);
+
+        this.exportsManager = new ExportsManager({
+            packagePath: this.relativePackagePath
+        });
+        this.coreUtilitiesManager = new CoreUtilitiesManager({
+            streamType: this.config.streamType,
+            relativePackagePath: this.relativePackagePath,
+            relativeTestPath: this.relativeTestPath
+        });
 
         const apiDirectory: ExportedDirectory[] = [
             {
@@ -256,7 +281,9 @@ export class SdkGenerator {
         this.versionDeclarationReferencer = new VersionDeclarationReferencer({
             containingDirectory: apiDirectory,
             namespaceExport,
-            apiVersion: this.intermediateRepresentation.apiVersion
+            apiVersion: this.intermediateRepresentation.apiVersion,
+            relativePackagePath: this.relativePackagePath,
+            relativeTestPath: this.relativeTestPath
         });
         this.typeDeclarationReferencer = new TypeDeclarationReferencer({
             containingDirectory: apiDirectory,
@@ -303,7 +330,9 @@ export class SdkGenerator {
             containingDirectory: [],
             namespaceExport,
             npmPackage: this.npmPackage,
-            environmentsConfig: intermediateRepresentation.environments ?? undefined
+            environmentsConfig: intermediateRepresentation.environments ?? undefined,
+            relativePackagePath: this.relativePackagePath,
+            relativeTestPath: this.relativeTestPath
         });
         this.genericAPISdkErrorDeclarationReferencer = new GenericAPISdkErrorDeclarationReferencer({
             containingDirectory: [],
@@ -389,7 +418,10 @@ export class SdkGenerator {
             inlineFileProperties: config.inlineFileProperties,
             oauthTokenProviderGenerator: this.oauthTokenProviderGenerator,
             omitUndefined: config.omitUndefined,
-            allowExtraFields: config.allowExtraFields
+            allowExtraFields: config.allowExtraFields,
+            streamType: config.streamType,
+            fileResponseType: config.fileResponseType,
+            exportsManager: this.exportsManager
         });
         this.websocketGenerator = new WebsocketClassGenerator({
             intermediateRepresentation
@@ -413,14 +445,17 @@ export class SdkGenerator {
             includeSerdeLayer: config.includeSerdeLayer,
             generateWireTests: config.generateWireTests,
             useBigInt: config.useBigInt,
-            retainOriginalCasing: config.retainOriginalCasing
+            retainOriginalCasing: config.retainOriginalCasing,
+            relativePackagePath: this.relativePackagePath,
+            relativeTestPath: this.relativeTestPath
         });
         this.referenceConfigBuilder = new ReferenceConfigBuilder();
         this.generatorAgent = new TypeScriptGeneratorAgent({
             logger: this.context.logger,
             config: this.rawConfig,
             readmeConfigBuilder: new ReadmeConfigBuilder({
-                endpointSnippets: this.endpointSnippets
+                endpointSnippets: this.endpointSnippets,
+                fileResponseType: this.config.fileResponseType
             }),
             ir: intermediateRepresentation
         });
@@ -437,7 +472,9 @@ export class SdkGenerator {
 
         this.asIsManager = new AsIsManager({
             useBigInt: config.useBigInt,
-            generateWireTests: config.generateWireTests
+            generateWireTests: config.generateWireTests,
+            relativePackagePath: this.relativePackagePath,
+            relativeTestPath: this.relativeTestPath
         });
 
         this.websocketTypeSchemaDeclarationReferencer = new WebsocketTypeSchemaDeclarationReferencer({
@@ -513,7 +550,7 @@ export class SdkGenerator {
         if (this.npmPackage?.version != null) {
             const versionFileGenerator = new VersionFileGenerator({
                 version: this.npmPackage.version,
-                rootDirectory: this.rootDirectory
+                packagePathDirectory: this.packagePathDirectory
             });
             versionFileGenerator.generate();
         }
@@ -600,7 +637,8 @@ export class SdkGenerator {
                   extraConfigs: this.config.packageJson,
                   outputJsr: this.config.outputJsr,
                   runScripts: this.config.runScripts,
-                  exportSerde
+                  exportSerde,
+                  packagePath: this.relativePackagePath
               })
             : new SimpleTypescriptProject({
                   npmPackage: this.npmPackage,
@@ -618,7 +656,8 @@ export class SdkGenerator {
                   extraConfigs: this.config.packageJson,
                   runScripts: this.config.runScripts,
                   exportSerde,
-                  useLegacyExports: this.config.useLegacyExports
+                  useLegacyExports: this.config.useLegacyExports,
+                  packagePath: this.relativePackagePath
               });
     }
 
@@ -894,7 +933,8 @@ export class SdkGenerator {
                     if (file) {
                         sourceFile.replaceWithText(file.toString({ dprintOptions: { indentWidth: 4 } }));
                     }
-                }
+                },
+                packagePath: this.getRelativeTestPath()
             });
         });
     }
@@ -913,7 +953,8 @@ export class SdkGenerator {
                     endpointSnippets: this.endpointSnippets
                 });
                 sourceFile.replaceWithText(readmeContent);
-            }
+            },
+            packagePath: "/"
         });
     }
 
@@ -927,7 +968,8 @@ export class SdkGenerator {
                 const context = this.generateSdkContext({ sourceFile, importsManager });
                 const referenceContent = await this.generatorAgent.generateReference(this.referenceConfigBuilder);
                 sourceFile.replaceWithText(referenceContent);
-            }
+            },
+            packagePath: "/"
         });
     }
 
@@ -1005,7 +1047,8 @@ export class SdkGenerator {
             });
 
             const exportedFilepath = this.sdkClientClassDeclarationReferencer.getExportedFilepath(packageId);
-            const serviceFilepath = convertExportedFilePathToFilePath(exportedFilepath);
+            exportedFilepath.rootDir = this.relativePackagePath;
+            const serviceFilepath = this.exportsManager.convertExportedFilePathToFilePath(exportedFilepath);
 
             for (const endpoint of service.endpoints) {
                 if (packageId.isRoot) {
@@ -1017,14 +1060,18 @@ export class SdkGenerator {
                         useInMemoryFileSystem: true
                     });
                     const sourceFile = project.createSourceFile("snippet-test", undefined, { overwrite: true });
-                    const importsManager = new ImportsManager();
+                    const importsManager = new ImportsManager({
+                        packagePath: this.relativePackagePath
+                    });
                     const endpointContext = this.generateSdkContext(
                         { sourceFile, importsManager },
                         { isForSnippet: true }
                     );
 
                     const clientSourceFile = project.createSourceFile("snippet-client", undefined, { overwrite: true });
-                    const clientImportsManager = new ImportsManager();
+                    const clientImportsManager = new ImportsManager({
+                        packagePath: this.relativePackagePath
+                    });
                     const clientContext = this.generateSdkContext(
                         { sourceFile: clientSourceFile, importsManager: clientImportsManager },
                         { isForSnippet: true }
@@ -1281,7 +1328,9 @@ export class SdkGenerator {
             useInMemoryFileSystem: true
         });
         const sourceFile = project.createSourceFile("snippet");
-        const importsManager = new ImportsManager();
+        const importsManager = new ImportsManager({
+            packagePath: this.relativePackagePath
+        });
         const statements = run({ sourceFile, importsManager });
         if (statements != null) {
             sourceFile.addStatements(statements.map((expression) => getTextOfTsNode(expression)));
@@ -1297,18 +1346,23 @@ export class SdkGenerator {
         run,
         filepath,
         addExportTypeModifier,
-        overwrite
+        overwrite,
+        packagePath = this.relativePackagePath
     }: {
         run: (args: { sourceFile: SourceFile; importsManager: ImportsManager }) => void;
         filepath: ExportedFilePath;
         addExportTypeModifier?: boolean;
         overwrite?: boolean;
+        packagePath?: string;
     }) {
-        const filepathStr = convertExportedFilePathToFilePath(filepath);
+        filepath.rootDir = packagePath;
+        const filepathStr = this.exportsManager.convertExportedFilePathToFilePath(filepath);
         this.context.logger.debug(`Generating ${filepathStr}`);
 
-        const sourceFile = this.rootDirectory.createSourceFile(filepathStr, undefined, { overwrite });
-        const importsManager = new ImportsManager();
+        const sourceFile = this.rootDirectory.createSourceFile(filepathStr, undefined, { overwrite: true });
+        const importsManager = new ImportsManager({
+            packagePath: this.relativePackagePath
+        });
 
         run({ sourceFile, importsManager });
 
@@ -1336,17 +1390,22 @@ export class SdkGenerator {
     private async withRawFile({
         run,
         filepath,
-        overwrite
+        overwrite,
+        packagePath = this.relativePackagePath
     }: {
         run: (args: { sourceFile: SourceFile; importsManager: ImportsManager }) => Promise<void>;
         filepath: ExportedFilePath;
         overwrite?: boolean;
+        packagePath?: string;
     }) {
-        const filepathStr = convertExportedFilePathToFilePath(filepath);
+        filepath.rootDir = packagePath;
+        const filepathStr = this.exportsManager.convertExportedFilePathToFilePath(filepath);
         this.context.logger.debug(`Generating ${filepathStr}`);
         await run({
-            sourceFile: this.rootDirectory.createSourceFile(filepathStr, undefined, { overwrite }),
-            importsManager: new ImportsManager()
+            sourceFile: this.rootDirectory.createSourceFile(filepathStr, undefined, { overwrite: true }),
+            importsManager: new ImportsManager({
+                packagePath: this.relativePackagePath
+            })
         });
         this.context.logger.debug(`Generated ${filepathStr}`);
     }
@@ -1400,6 +1459,7 @@ export class SdkGenerator {
             dependencyManager: this.dependencyManager,
             fernConstants: this.intermediateRepresentation.constants,
             importsManager,
+            exportsManager: this.exportsManager,
             versionGenerator: this.versionGenerator,
             versionDeclarationReferencer: this.versionDeclarationReferencer,
             jsonDeclarationReferencer: this.jsonDeclarationReferencer,
@@ -1446,7 +1506,37 @@ export class SdkGenerator {
             omitUndefined: this.config.omitUndefined,
             useBigInt: this.config.useBigInt,
             neverThrowErrors: this.config.neverThrowErrors,
-            allowExtraFields: this.config.allowExtraFields
+            allowExtraFields: this.config.allowExtraFields,
+            relativePackagePath: this.relativePackagePath,
+            relativeTestPath: this.relativeTestPath
         });
+    }
+
+    private getRelativePackagePath(): string {
+        if (!this.config.packagePath) {
+            return this.defaultSrcDirectory;
+        }
+
+        let packagePath = this.config.packagePath;
+
+        if (packagePath.startsWith("/")) {
+            packagePath = packagePath.slice(1);
+        }
+
+        if (packagePath.endsWith("/")) {
+            packagePath = packagePath.slice(0, -1);
+        }
+
+        return packagePath;
+    }
+
+    private getRelativeTestPath(): string {
+        const packagePath = this.getRelativePackagePath();
+
+        if (packagePath === this.defaultSrcDirectory) {
+            return this.defaultTestDirectory;
+        }
+
+        return packagePath + "/" + this.defaultTestDirectory;
     }
 }

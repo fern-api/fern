@@ -1,4 +1,4 @@
-import { PackageId, StreamingFetcher, getFullPathForEndpoint, getTextOfTsNode } from "@fern-typescript/commons";
+import { PackageId, Stream, getFullPathForEndpoint, getTextOfTsNode } from "@fern-typescript/commons";
 import { GeneratedSdkEndpointTypeSchemas, SdkContext } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { ts } from "ts-morph";
@@ -45,6 +45,8 @@ export declare namespace GeneratedThrowingEndpointResponse {
         errorResolver: ErrorResolver;
         includeContentHeadersOnResponse: boolean;
         clientClass: GeneratedSdkClientClassImpl;
+        streamType: "wrapper" | "web";
+        fileResponseType: "stream" | "binary-response";
     }
 }
 
@@ -63,6 +65,8 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
     private errorResolver: ErrorResolver;
     private includeContentHeadersOnResponse: boolean;
     private clientClass: GeneratedSdkClientClassImpl;
+    private streamType: "wrapper" | "web";
+    private readonly fileResponseType: "stream" | "binary-response";
 
     constructor({
         packageId,
@@ -71,7 +75,9 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         errorDiscriminationStrategy,
         errorResolver,
         includeContentHeadersOnResponse,
-        clientClass
+        clientClass,
+        streamType,
+        fileResponseType
     }: GeneratedThrowingEndpointResponse.Init) {
         this.packageId = packageId;
         this.endpoint = endpoint;
@@ -80,6 +86,8 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         this.errorResolver = errorResolver;
         this.includeContentHeadersOnResponse = includeContentHeadersOnResponse;
         this.clientClass = clientClass;
+        this.streamType = streamType;
+        this.fileResponseType = fileResponseType;
     }
 
     private getItemTypeFromListOrOptionalList(typeReference: TypeReference): TypeReference | undefined {
@@ -97,7 +105,9 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
 
     public getPaginationInfo(context: SdkContext): PaginationResponseInfo | undefined {
         const successReturnType = getSuccessReturnType(this.endpoint, this.response, context, {
-            includeContentHeadersOnResponse: this.includeContentHeadersOnResponse
+            includeContentHeadersOnResponse: this.includeContentHeadersOnResponse,
+            streamType: this.streamType,
+            fileResponseType: this.fileResponseType
         });
 
         if (this.endpoint.pagination != null) {
@@ -435,7 +445,9 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
 
     public getReturnType(context: SdkContext): ts.TypeNode {
         return getSuccessReturnType(this.endpoint, this.response, context, {
-            includeContentHeadersOnResponse: this.includeContentHeadersOnResponse
+            includeContentHeadersOnResponse: this.includeContentHeadersOnResponse,
+            streamType: this.streamType,
+            fileResponseType: this.fileResponseType
         });
     }
 
@@ -534,9 +546,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                 )
             ];
         } else if (this.response?.type === "streaming") {
-            const eventShape = this.response.value._visit<
-                StreamingFetcher.MessageEventShape | StreamingFetcher.SSEEventShape
-            >({
+            const eventShape = this.response.value._visit<Stream.MessageEventShape | Stream.SSEEventShape>({
                 sse: (sse) => ({
                     type: "sse",
                     streamTerminator: ts.factory.createStringLiteral(sse.terminator ?? "[DONE]")
@@ -559,7 +569,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                         [
                             ts.factory.createPropertyAssignment(
                                 ts.factory.createIdentifier("data"),
-                                context.coreUtilities.streamUtils.Stream._construct({
+                                context.coreUtilities.stream.Stream._construct({
                                     stream: ts.factory.createPropertyAccessChain(
                                         ts.factory.createIdentifier(
                                             GeneratedThrowingEndpointResponse.RESPONSE_VARIABLE_NAME

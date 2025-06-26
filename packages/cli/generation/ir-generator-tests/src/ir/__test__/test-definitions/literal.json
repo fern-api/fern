@@ -2883,7 +2883,7 @@
                     "userSpecifiedExamples": [
                         {
                             "example": {
-                                "id": "973e1804",
+                                "id": "ba6be479",
                                 "name": null,
                                 "url": "/headers",
                                 "rootPathParameters": [],
@@ -3641,10 +3641,12 @@
                     "transport": null,
                     "v2Examples": null,
                     "source": null,
+                    "audiences": null,
                     "availability": null,
                     "docs": null
                 }
-            ]
+            ],
+            "audiences": null
         },
         "service_inlined": {
             "availability": null,
@@ -6674,10 +6676,12 @@
                     "transport": null,
                     "v2Examples": null,
                     "source": null,
+                    "audiences": null,
                     "availability": null,
                     "docs": null
                 }
-            ]
+            ],
+            "audiences": null
         },
         "service_path": {
             "availability": null,
@@ -7507,10 +7511,12 @@
                     "transport": null,
                     "v2Examples": null,
                     "source": null,
+                    "audiences": null,
                     "availability": null,
                     "docs": null
                 }
-            ]
+            ],
+            "audiences": null
         },
         "service_query": {
             "availability": null,
@@ -10089,10 +10095,12 @@
                     "transport": null,
                     "v2Examples": null,
                     "source": null,
+                    "audiences": null,
                     "availability": null,
                     "docs": null
                 }
-            ]
+            ],
+            "audiences": null
         },
         "service_reference": {
             "availability": null,
@@ -14265,10 +14273,12 @@
                     "transport": null,
                     "v2Examples": null,
                     "source": null,
+                    "audiences": null,
                     "availability": null,
                     "docs": null
                 }
-            ]
+            ],
+            "audiences": null
         }
     },
     "constants": {
@@ -17146,6 +17156,7 @@
         "environments": null,
         "generatorConfig": null
     },
+    "audiences": null,
     "subpackages": {
         "subpackage_headers": {
             "name": {

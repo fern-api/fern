@@ -5,7 +5,7 @@
       "shape": {
         "type": "alias",
         "value": {
-          "type": "optional",
+          "type": "nullable",
           "itemType": {
             "type": "primitive",
             "value": {
@@ -42,7 +42,7 @@
           },
           {
             "type": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -55,7 +55,7 @@
             "type": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -101,7 +101,7 @@
           {
             "key": "tags",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "list",
                 "itemType": {
@@ -118,7 +118,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "type_nullable:Metadata"
@@ -145,7 +145,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "list",
                   "itemType": {
@@ -163,7 +163,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "map",
                   "keyType": {
@@ -203,7 +203,7 @@
                 {
                   "key": "value",
                   "valueType": {
-                    "type": "optional",
+                    "type": "nullable",
                     "itemType": {
                       "type": "primitive",
                       "value": {
@@ -265,7 +265,7 @@
           {
             "key": "avatar",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -279,7 +279,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -311,7 +311,7 @@
                 "valueType": {
                   "type": "optional",
                   "itemType": {
-                    "type": "optional",
+                    "type": "nullable",
                     "itemType": {
                       "type": "primitive",
                       "value": {
@@ -393,7 +393,7 @@
               "type": {
                 "type": "optional",
                 "itemType": {
-                  "type": "optional",
+                  "type": "nullable",
                   "itemType": {
                     "type": "primitive",
                     "value": {
@@ -408,7 +408,7 @@
               "type": {
                 "type": "optional",
                 "itemType": {
-                  "type": "optional",
+                  "type": "nullable",
                   "itemType": {
                     "type": "primitive",
                     "value": {
@@ -643,7 +643,7 @@
                     "valueType": {
                       "type": "optional",
                       "itemType": {
-                        "type": "optional",
+                        "type": "nullable",
                         "itemType": {
                           "type": "primitive",
                           "value": {
@@ -787,7 +787,7 @@
                     "valueType": {
                       "type": "optional",
                       "itemType": {
-                        "type": "optional",
+                        "type": "nullable",
                         "itemType": {
                           "type": "primitive",
                           "value": {

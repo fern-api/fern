@@ -6,7 +6,7 @@
             "type": "typescript"
         },
         "endpointId": {
-            "path": "/conversations/search",
+            "path": "/{index}/conversations/search",
             "method": "POST",
             "identifierOverride": "endpoint_complex.search"
         },
@@ -65,6 +65,34 @@
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "$FERN_INPUT",
+                            "isOptional": false,
+                            "inputDelimiter": ",\n\t",
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "$FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "PATH",
+                                                "path": "index",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    },
                     {
                         "value": {
                             "imports": [],

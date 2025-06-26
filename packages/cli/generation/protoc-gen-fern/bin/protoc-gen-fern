@@ -1,6 +1,6 @@
 #!/usr/bin/env node
+import { runNodeJs } from "@bufbuild/protoplugin";
 
-const { runNodeJs } = require("@bufbuild/protoplugin");
-const { protocGenFern } = require("../dist/cjs/src/protoc-gen-fern.js");
+import { protocGenFern } from "../lib/protoc-gen-fern.js";
 
 runNodeJs(protocGenFern);

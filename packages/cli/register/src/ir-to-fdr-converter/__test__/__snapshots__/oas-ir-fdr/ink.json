@@ -148,7 +148,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -484,7 +484,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1187,7 +1187,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1466,7 +1466,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1685,7 +1685,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -2226,7 +2226,7 @@
       "shape": {
         "type": "alias",
         "value": {
-          "type": "optional",
+          "type": "nullable",
           "itemType": {
             "type": "id",
             "value": "EthGetBlockByHashResult"
@@ -2641,7 +2641,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -2920,7 +2920,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -3139,7 +3139,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -3718,7 +3718,7 @@
       "shape": {
         "type": "alias",
         "value": {
-          "type": "optional",
+          "type": "nullable",
           "itemType": {
             "type": "id",
             "value": "EthGetBlockByNumberResult"
@@ -3744,7 +3744,7 @@
       "shape": {
         "type": "alias",
         "value": {
-          "type": "optional",
+          "type": "nullable",
           "itemType": {
             "type": "primitive",
             "value": {
@@ -3811,7 +3811,7 @@
       "shape": {
         "type": "alias",
         "value": {
-          "type": "optional",
+          "type": "nullable",
           "itemType": {
             "type": "primitive",
             "value": {
@@ -4170,7 +4170,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "EthGetLogsParamFilterAddress"
@@ -4183,7 +4183,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "list",
                   "itemType": {
@@ -5026,7 +5026,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -5305,7 +5305,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -5524,7 +5524,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -5695,7 +5695,7 @@
       "shape": {
         "type": "alias",
         "value": {
-          "type": "optional",
+          "type": "nullable",
           "itemType": {
             "type": "id",
             "value": "EthGetTransactionByBlockHashAndIndexResult"
@@ -6110,7 +6110,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -6389,7 +6389,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -6608,7 +6608,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -6817,7 +6817,7 @@
       "shape": {
         "type": "alias",
         "value": {
-          "type": "optional",
+          "type": "nullable",
           "itemType": {
             "type": "id",
             "value": "EthGetTransactionByBlockNumberAndIndexResult"
@@ -7232,7 +7232,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -7511,7 +7511,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -7730,7 +7730,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -7888,7 +7888,7 @@
       "shape": {
         "type": "alias",
         "value": {
-          "type": "optional",
+          "type": "nullable",
           "itemType": {
             "type": "id",
             "value": "EthGetTransactionByHashResult"
@@ -8182,7 +8182,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -8235,7 +8235,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -8340,7 +8340,7 @@
       "shape": {
         "type": "alias",
         "value": {
-          "type": "optional",
+          "type": "nullable",
           "itemType": {
             "type": "id",
             "value": "EthGetTransactionReceiptResult"
@@ -9211,7 +9211,7 @@
           "type": {
             "type": "reference",
             "value": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "id",
                 "value": "EthGetBlockByHashResult"
@@ -9401,7 +9401,7 @@
           "type": {
             "type": "reference",
             "value": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "id",
                 "value": "EthGetBlockByNumberResult"
@@ -9584,7 +9584,7 @@
           "type": {
             "type": "reference",
             "value": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -9691,7 +9691,7 @@
           "type": {
             "type": "reference",
             "value": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -10394,7 +10394,7 @@
           "type": {
             "type": "reference",
             "value": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "id",
                 "value": "EthGetTransactionByBlockHashAndIndexResult"
@@ -10543,7 +10543,7 @@
           "type": {
             "type": "reference",
             "value": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "id",
                 "value": "EthGetTransactionByBlockNumberAndIndexResult"
@@ -10684,7 +10684,7 @@
           "type": {
             "type": "reference",
             "value": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "id",
                 "value": "EthGetTransactionByHashResult"
@@ -10940,7 +10940,7 @@
           "type": {
             "type": "reference",
             "value": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "id",
                 "value": "EthGetTransactionReceiptResult"

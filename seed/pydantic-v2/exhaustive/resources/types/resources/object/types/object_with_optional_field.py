@@ -2,9 +2,8 @@ from pydantic import BaseModel
 from typing import Optional, List, Set, Dict
 from datetime import datetime
 from uuid import UUID
-from dt import datetime
+from dt import datetime as Dtdatetime
 from core.datetime_utils import serialize_datetime
-
 
 class ObjectWithOptionalField(BaseModel):
     string: Optional[str] = None
@@ -23,8 +22,8 @@ class ObjectWithOptionalField(BaseModel):
     set_: Optional[Set[str]]
     map_: Optional[Dict[int, str]]
     bigint: Optional[str] = None
-
     class Config:
         frozen = True
         smart_union = True
-        json_encoders = {datetime: serialize_datetime}
+        json_encoders = {Dtdatetime: serialize_datetime}
+

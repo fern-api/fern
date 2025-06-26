@@ -5,20 +5,18 @@ using ProtoDataV1Grpc = Data.V1.Grpc;
 
 namespace SeedApi;
 
-public record ListElement
+[Serializable]
+public record ListElement : IJsonOnDeserialized
 {
+    [JsonExtensionData]
+    private readonly IDictionary<string, JsonElement> _extensionData =
+        new Dictionary<string, JsonElement>();
+
     [JsonPropertyName("id")]
     public string? Id { get; set; }
 
-    /// <summary>
-    /// Additional properties received from the response, if any.
-    /// </summary>
-    /// <remarks>
-    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
-    /// </remarks>
-    [JsonExtensionData]
-    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
-        new Dictionary<string, JsonElement>();
+    [JsonIgnore]
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
 
     /// <summary>
     /// Returns a new ListElement type from its Protobuf-equivalent representation.
@@ -27,6 +25,9 @@ public record ListElement
     {
         return new ListElement { Id = value.Id };
     }
+
+    void IJsonOnDeserialized.OnDeserialized() =>
+        AdditionalProperties.CopyFromExtensionData(_extensionData);
 
     /// <summary>
     /// Maps the ListElement type into its Protobuf-equivalent representation.

@@ -1,3 +1,4 @@
+import { csharp } from "..";
 import { Access } from "./Access";
 import { Annotation } from "./Annotation";
 import { ClassReference } from "./ClassReference";
@@ -64,7 +65,10 @@ export class Enum extends AstNode {
             name: field.name,
             value: new Annotation({
                 reference: ENUM_MEMBER,
-                argument: `Value = "${field.value}"`
+                argument: csharp.codeblock((writer) => {
+                    writer.write("Value = ");
+                    writer.writeNode(csharp.string_({ string: field.value }));
+                })
             })
         });
     }

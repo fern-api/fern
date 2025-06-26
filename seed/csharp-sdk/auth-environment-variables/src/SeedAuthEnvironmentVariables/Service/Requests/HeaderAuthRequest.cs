@@ -3,6 +3,7 @@ using SeedAuthEnvironmentVariables.Core;
 
 namespace SeedAuthEnvironmentVariables;
 
+[Serializable]
 public record HeaderAuthRequest
 {
     /// <summary>

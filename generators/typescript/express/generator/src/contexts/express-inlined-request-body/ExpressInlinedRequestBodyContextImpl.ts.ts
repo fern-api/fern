@@ -1,4 +1,4 @@
-import { ImportsManager, PackageId, Reference } from "@fern-typescript/commons";
+import { ExportsManager, ImportsManager, PackageId, Reference } from "@fern-typescript/commons";
 import { ExpressInlinedRequestBodyContext, GeneratedExpressInlinedRequestBody } from "@fern-typescript/contexts";
 import { ExpressInlinedRequestBodyGenerator } from "@fern-typescript/express-inlined-request-body-generator";
 import { PackageResolver } from "@fern-typescript/resolvers";
@@ -14,6 +14,7 @@ export declare namespace ExpressInlinedRequestBodyContextImpl {
         expressInlinedRequestBodyDeclarationReferencer: ExpressInlinedRequestBodyDeclarationReferencer;
         packageResolver: PackageResolver;
         importsManager: ImportsManager;
+        exportsManager: ExportsManager;
         sourceFile: SourceFile;
         retainOriginalCasing: boolean;
         includeSerdeLayer: boolean;
@@ -25,6 +26,7 @@ export class ExpressInlinedRequestBodyContextImpl implements ExpressInlinedReque
     private expressInlinedRequestBodyDeclarationReferencer: ExpressInlinedRequestBodyDeclarationReferencer;
     private packageResolver: PackageResolver;
     private importsManager: ImportsManager;
+    private exportsManager: ExportsManager;
     private sourceFile: SourceFile;
     private retainOriginalCasing: boolean;
     private includeSerdeLayer: boolean;
@@ -34,6 +36,7 @@ export class ExpressInlinedRequestBodyContextImpl implements ExpressInlinedReque
         expressInlinedRequestBodyDeclarationReferencer,
         packageResolver,
         importsManager,
+        exportsManager,
         sourceFile,
         retainOriginalCasing,
         includeSerdeLayer
@@ -42,6 +45,7 @@ export class ExpressInlinedRequestBodyContextImpl implements ExpressInlinedReque
         this.expressInlinedRequestBodyDeclarationReferencer = expressInlinedRequestBodyDeclarationReferencer;
         this.packageResolver = packageResolver;
         this.importsManager = importsManager;
+        this.exportsManager = exportsManager;
         this.sourceFile = sourceFile;
         this.retainOriginalCasing = retainOriginalCasing;
         this.includeSerdeLayer = includeSerdeLayer;
@@ -83,6 +87,7 @@ export class ExpressInlinedRequestBodyContextImpl implements ExpressInlinedReque
         return this.expressInlinedRequestBodyDeclarationReferencer.getReferenceToInlinedRequestBody({
             name: { packageId, endpoint },
             importsManager: this.importsManager,
+            exportsManager: this.exportsManager,
             importStrategy: {
                 type: "fromRoot",
                 namespaceImport: this.expressInlinedRequestBodyDeclarationReferencer.namespaceExport

@@ -5,6 +5,7 @@ namespace SeedExhaustive.Types;
 /// <summary>
 /// This exception type will be thrown for any non-2XX API responses.
 /// </summary>
+[Serializable]
 public class ErrorWithEnumBody(WeatherReport body)
     : SeedExhaustiveApiException("ErrorWithEnumBody", 400, body)
 {

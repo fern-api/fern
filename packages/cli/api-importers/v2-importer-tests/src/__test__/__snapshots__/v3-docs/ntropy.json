@@ -30043,6 +30043,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_transactions.get_transaction_v3_transactions__id__get",
           "name": {
             "originalName": "get_transaction_v3_transactions__id__get",
@@ -30409,6 +30410,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_transactions.delete_transaction_v3_transactions__id__delete",
           "name": {
             "originalName": "delete_transaction_v3_transactions__id__delete",
@@ -30754,6 +30756,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_transactions.list_transactions_v3_transactions_get",
           "name": {
             "originalName": "list_transactions_v3_transactions_get",
@@ -31012,6 +31015,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_transactions.post_transactions_v3_transactions_post",
           "name": {
             "originalName": "post_transactions_v3_transactions_post",
@@ -31446,6 +31450,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_transactions.set_transaction_ah_v3_transactions__id__assign_post",
           "name": {
             "originalName": "set_transaction_ah_v3_transactions__id__assign_post",
@@ -32061,6 +32066,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_batches.get_batches_v3_batches_get",
           "name": {
             "originalName": "get_batches_v3_batches_get",
@@ -32229,6 +32235,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_batches.post_batch_v3_batches_post",
           "name": {
             "originalName": "post_batch_v3_batches_post",
@@ -32567,6 +32574,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_batches.get_single_batch_v3_batches__id__get",
           "name": {
             "originalName": "get_single_batch_v3_batches__id__get",
@@ -32843,6 +32851,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_batches.get_batch_results_v3_batches__id__results_get",
           "name": {
             "originalName": "get_batch_results_v3_batches__id__results_get",
@@ -33431,6 +33440,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_bankStatements.get_bank_statements_v3_bank_statements_get",
           "name": {
             "originalName": "get_bank_statements_v3_bank_statements_get",
@@ -33603,6 +33613,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_bankStatements.post_bank_statement_v3_bank_statements_post",
           "name": {
             "originalName": "post_bank_statement_v3_bank_statements_post",
@@ -33948,6 +33959,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_bankStatements.get_bank_statement_v3_bank_statements__id__get",
           "name": {
             "originalName": "get_bank_statement_v3_bank_statements__id__get",
@@ -34228,6 +34240,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_bankStatements.delete_bank_statement_v3_bank_statements__id__delete",
           "name": {
             "originalName": "delete_bank_statement_v3_bank_statements__id__delete",
@@ -34440,6 +34453,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_bankStatements.get_bank_statement_statement_info_v3_bank_statements__id__overview_post",
           "name": {
             "originalName": "get_bank_statement_statement_info_v3_bank_statements__id__overview_post",
@@ -34751,6 +34765,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_bankStatements.get_bank_statement_result_v3_bank_statements__id__results_get",
           "name": {
             "originalName": "get_bank_statement_result_v3_bank_statements__id__results_get",
@@ -35117,6 +35132,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_accountHolders.get_account_holder_v3_account_holders__id__get",
           "name": {
             "originalName": "get_account_holder_v3_account_holders__id__get",
@@ -35389,6 +35405,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_accountHolders.delete_account_holder_v3_account_holders__id__delete",
           "name": {
             "originalName": "delete_account_holder_v3_account_holders__id__delete",
@@ -35686,6 +35703,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_accountHolders.get_account_holders_v3_account_holders_get",
           "name": {
             "originalName": "get_account_holders_v3_account_holders_get",
@@ -35878,6 +35896,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_accountHolders.create_account_holder_v3_account_holders_post",
           "name": {
             "originalName": "create_account_holder_v3_account_holders_post",
@@ -36248,6 +36267,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_recurrence.get_account_holder_recurring_payments_v3_account_holders__id__recurring_groups_post",
           "name": {
             "originalName": "get_account_holder_recurring_payments_v3_account_holders__id__recurring_groups_post",
@@ -36509,6 +36529,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_webhooks.get_webhooks_v3_webhooks_get",
           "name": {
             "originalName": "get_webhooks_v3_webhooks_get",
@@ -36683,6 +36704,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_webhooks.post_webhook_v3_webhooks_post",
           "name": {
             "originalName": "post_webhook_v3_webhooks_post",
@@ -36984,6 +37006,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_webhooks.get_webhook_v3_webhooks__id__get",
           "name": {
             "originalName": "get_webhook_v3_webhooks__id__get",
@@ -37267,6 +37290,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_webhooks.delete_webhook_v3_webhooks__id__delete",
           "name": {
             "originalName": "delete_webhook_v3_webhooks__id__delete",
@@ -37451,6 +37475,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_webhooks.patch_webhook_v3_webhooks__id__patch",
           "name": {
             "originalName": "patch_webhook_v3_webhooks__id__patch",
@@ -37711,6 +37736,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_personalization.filter_get_v3_rules_get",
           "name": {
             "originalName": "filter_get_v3_rules_get",
@@ -37943,6 +37969,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_personalization.filter_post_v3_rules_post",
           "name": {
             "originalName": "filter_post_v3_rules_post",
@@ -38186,6 +38213,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_personalization.filter_append_v3_rules_append_post",
           "name": {
             "originalName": "filter_append_v3_rules_append_post",
@@ -38462,6 +38490,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_personalization.filter_delete_v3_rules__index__delete",
           "name": {
             "originalName": "filter_delete_v3_rules__index__delete",
@@ -38697,6 +38726,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_personalization.filter_patch_v3_rules__index__patch",
           "name": {
             "originalName": "filter_patch_v3_rules__index__patch",
@@ -39180,6 +39210,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_reports.get_reports_v3_reports_get",
           "name": {
             "originalName": "get_reports_v3_reports_get",
@@ -39354,6 +39385,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_reports.post_report_v3_reports_post",
           "name": {
             "originalName": "post_report_v3_reports_post",
@@ -39684,6 +39716,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_reports.get_report_v3_reports__id__get",
           "name": {
             "originalName": "get_report_v3_reports__id__get",
@@ -39965,6 +39998,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_reports.delete_report_v3_reports__id__delete",
           "name": {
             "originalName": "delete_report_v3_reports__id__delete",
@@ -40240,6 +40274,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_categories.get_category_set_v3_categories__account_holder_type__get",
           "name": {
             "originalName": "get_category_set_v3_categories__account_holder_type__get",
@@ -40566,6 +40601,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_categories.custom_categories_post_v3_categories__account_holder_type__post",
           "name": {
             "originalName": "custom_categories_post_v3_categories__account_holder_type__post",
@@ -40923,6 +40959,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_categories.delete_custom_category_set_v3_categories__account_holder_type__reset_post",
           "name": {
             "originalName": "delete_custom_category_set_v3_categories__account_holder_type__reset_post",
@@ -41383,6 +41420,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_entities.search_entity_v3_entities_lookup_get",
           "name": {
             "originalName": "search_entity_v3_entities_lookup_get",
@@ -41691,6 +41729,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_entities.get_entity_by_id_v3_entities__id__get",
           "name": {
             "originalName": "get_entity_by_id_v3_entities__id__get",

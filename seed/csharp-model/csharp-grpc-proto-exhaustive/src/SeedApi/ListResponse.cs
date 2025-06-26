@@ -5,8 +5,13 @@ using ProtoDataV1Grpc = Data.V1.Grpc;
 
 namespace SeedApi;
 
-public record ListResponse
+[Serializable]
+public record ListResponse : IJsonOnDeserialized
 {
+    [JsonExtensionData]
+    private readonly IDictionary<string, JsonElement> _extensionData =
+        new Dictionary<string, JsonElement>();
+
     [JsonPropertyName("columns")]
     public IEnumerable<ListElement>? Columns { get; set; }
 
@@ -19,15 +24,8 @@ public record ListResponse
     [JsonPropertyName("usage")]
     public Usage? Usage { get; set; }
 
-    /// <summary>
-    /// Additional properties received from the response, if any.
-    /// </summary>
-    /// <remarks>
-    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
-    /// </remarks>
-    [JsonExtensionData]
-    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
-        new Dictionary<string, JsonElement>();
+    [JsonIgnore]
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
 
     /// <summary>
     /// Returns a new ListResponse type from its Protobuf-equivalent representation.
@@ -42,6 +40,9 @@ public record ListResponse
             Usage = value.Usage != null ? Usage.FromProto(value.Usage) : null,
         };
     }
+
+    void IJsonOnDeserialized.OnDeserialized() =>
+        AdditionalProperties.CopyFromExtensionData(_extensionData);
 
     /// <summary>
     /// Maps the ListResponse type into its Protobuf-equivalent representation.

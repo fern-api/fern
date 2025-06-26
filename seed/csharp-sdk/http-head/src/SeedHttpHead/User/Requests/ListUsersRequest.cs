@@ -3,6 +3,7 @@ using SeedHttpHead.Core;
 
 namespace SeedHttpHead;
 
+[Serializable]
 public record ListUsersRequest
 {
     [JsonIgnore]

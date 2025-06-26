@@ -7,6 +7,7 @@ import logging
 import typing
 
 import fastapi
+import starlette
 from ....core.abstract_fern_service import AbstractFernService
 from ....core.exceptions.fern_http_exception import FernHTTPException
 from ....core.route_args import get_route_args
@@ -22,6 +23,9 @@ class AbstractServiceService(AbstractFernService):
     """
 
     @abc.abstractmethod
+    def simple(self) -> None: ...
+
+    @abc.abstractmethod
     def download_file(self) -> fastapi.responses.FileResponse: ...
 
     """
@@ -31,7 +35,43 @@ class AbstractServiceService(AbstractFernService):
 
     @classmethod
     def _init_fern(cls, router: fastapi.APIRouter) -> None:
+        cls.__init_simple(router=router)
         cls.__init_download_file(router=router)
+
+    @classmethod
+    def __init_simple(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.simple)
+        new_parameters: typing.List[inspect.Parameter] = []
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            if index == 0:
+                new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
+            else:
+                new_parameters.append(parameter)
+        setattr(cls.simple, "__signature__", endpoint_function.replace(parameters=new_parameters))
+
+        @functools.wraps(cls.simple)
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> None:
+            try:
+                return cls.simple(*args, **kwargs)
+            except FernHTTPException as e:
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
+                    f"Endpoint 'simple' unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "the endpoint's errors list in your Fern Definition."
+                )
+                raise e
+
+        # this is necessary for FastAPI to find forward-ref'ed type hints.
+        # https://github.com/tiangolo/fastapi/pull/5077
+        wrapper.__globals__.update(cls.simple.__globals__)
+
+        router.post(
+            path="/snippet",
+            response_model=None,
+            status_code=starlette.status.HTTP_204_NO_CONTENT,
+            description=AbstractServiceService.simple.__doc__,
+            **get_route_args(cls.simple, default_tag="service"),
+        )(wrapper)
 
     @classmethod
     def __init_download_file(cls, router: fastapi.APIRouter) -> None:

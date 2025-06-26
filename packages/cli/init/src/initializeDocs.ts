@@ -37,10 +37,7 @@ export async function initializeDocs({
             return;
         } else {
             try {
-                await writeFile(
-                    docsYmlPath,
-                    yaml.dump(convertExperimentalToKebabCase(getDocsConfig(createDirectoryResponse.organization)))
-                );
+                await writeFile(docsYmlPath, yaml.dump(getDocsConfig(createDirectoryResponse.organization)));
                 taskContext.logger.info(chalk.green("Created docs configuration"));
                 return;
             } catch (writeError) {
@@ -65,32 +62,6 @@ function getDocsConfig(organization: string): docsYml.RawSchemas.DocsConfigurati
         colors: {
             accentPrimary: "#ffffff",
             background: "#000000"
-        },
-        experimental: {
-            openapiParserV3: true
-        }
-    };
-}
-
-type KebabCaseExperimentalConfig = {
-    experimental: {
-        "mdx-components"?: string[];
-        "disable-stream-toggle"?: boolean;
-        "openapi-parser-v2"?: boolean;
-        "openapi-parser-v3": boolean;
-    };
-};
-
-function convertExperimentalToKebabCase(
-    config: docsYml.RawSchemas.DocsConfiguration
-): Omit<docsYml.RawSchemas.DocsConfiguration, "experimental"> & KebabCaseExperimentalConfig {
-    const { experimental, ...restConfig } = config;
-    const { openapiParserV3 = true } = experimental ?? {};
-
-    return {
-        ...restConfig,
-        experimental: {
-            "openapi-parser-v3": openapiParserV3
         }
     };
 }

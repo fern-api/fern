@@ -1,4 +1,4 @@
-import { ExportedFilePath, ImportsManager } from "@fern-typescript/commons";
+import { ExportedFilePath, ExportsManager, ImportsManager } from "@fern-typescript/commons";
 import { SourceFile } from "ts-morph";
 
 export type ImportStrategy =
@@ -17,6 +17,7 @@ export declare namespace DeclarationReferencer {
             name: Name;
             importStrategy: ImportStrategy;
             importsManager: ImportsManager;
+            exportsManager: ExportsManager;
             referencedIn: SourceFile;
             subImport?: string[];
         }

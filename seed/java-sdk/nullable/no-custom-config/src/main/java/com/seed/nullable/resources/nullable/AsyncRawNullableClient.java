@@ -57,25 +57,24 @@ public class AsyncRawNullableClient {
         }
         if (request.getExtra().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "extra", request.getExtra().get().toString(), false);
+                    httpUrl, "extra", request.getExtra().get(), false);
         }
         if (request.getUsernames().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "usernames", request.getUsernames().get().toString(), false);
+                    httpUrl, "usernames", request.getUsernames().get(), true);
         }
         if (request.getActivated().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "activated", request.getActivated().get().toString(), false);
+                    httpUrl, "activated", request.getActivated().get(), true);
         }
         if (request.getTags().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "tags", request.getTags().get().toString(), false);
+                    httpUrl, "tags", request.getTags().get(), true);
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
                 .addHeader("Accept", "application/json");
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();

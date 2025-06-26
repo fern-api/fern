@@ -1,6 +1,180 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        When a part in a multipart form request has `Content-Type: application/json` in OpenAPI or Fern Definition, interpret it as `style: json`.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-06-26"
+  version: 0.64.24
+  
+- changelogEntry:
+    - summary: |
+        Global headers are now used to create endpoint examples. When building endpoint examples, global headers 
+        are automatically included in the headers section of each example. This ensures that all endpoints have consistent 
+        header examples that match the global header configuration.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-06-25"
+  version: 0.64.23
+
+- changelogEntry:
+    - summary: |
+        Make proto file target field optional in generators.yml
+      type: feat
+  irVersion: 58
+  createdAt: "2025-06-25"
+  version: 0.64.22
+
+- changelogEntry:
+    - summary: |
+        Introduce `x-fern-discriminated` extension to configure oneOf union behavior in OpenAPI specs.
+
+        ```yaml
+        # Example usage in OpenAPI schema
+        oneOf:
+          - $ref: '#/components/schemas/Circle'
+          - $ref: '#/components/schemas/Square'
+        x-fern-discriminated: false  # Treat as undiscriminated union
+        ```
+        
+        When `x-fern-discriminated` is set to `false`, the oneOf will be treated as an undiscriminated union instead of a discriminated union.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-06-24"
+  version: 0.64.21
+
+
+- changelogEntry:
+    - summary: |
+        Remove 'fern-check' error for global header examples included with 'x-fern-examples'
+      type: fix
+  irVersion: 58
+  createdAt: "2025-06-24"
+  version: 0.64.20
+
+- changelogEntry:
+    - summary: |
+        Pin Windows to legacy preview mode.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-06-24"
+  version: 0.64.19
+
+- changelogEntry:
+    - summary: |
+      type: fix
+  irVersion: 58
+  createdAt: "2025-06-24"
+  version: 0.64.18
+
+- changelogEntry:
+    - summary: |
+      type: feat
+  irVersion: 58
+  createdAt: "2025-06-23"
+  version: 0.64.17-rc0
+
+- changelogEntry:
+    - summary: |
+        Add `fern export` command to export API to an OpenAPI spec.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-06-23"
+  version: 0.64.16
+
+- changelogEntry:
+    - summary: |
+        Fixed ExampleTypeFactory to ignore generating parameters in example when that parameter is both optional and deprecated
+      type: fix
+  irVersion: 58
+  createdAt: "2025-06-21"
+  version: 0.64.15
+
+- changelogEntry:
+    - summary: |
+        Separate nullable and optional property handling in IR conversion.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-06-19"
+  version: 0.64.14
+
+- changelogEntry:
+    - summary: |
+        Respect additional properties in docs example generation by preserving them in generated examples instead of 
+        stripping unknown properties.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-06-19"
+  version: 0.64.13
+
+- changelogEntry:
+    - summary: |
+        Add configuration option to preserve oneOfs with a single schema.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-06-18"
+  version: 0.64.12
+
+- changelogEntry:
+    - summary: |
+        Fix handling of legacy webhook examples snippets.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-06-17"
+  version: 0.64.11
+
+- changelogEntry:
+    - summary: |
+        Add configuration option to disable snippets in docs generation, speeding up generation time.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-06-16"
+  version: 0.64.10
+
+- changelogEntry:
+    - summary: |
+        Update CLI for sites pinned to the legacy deployment.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-06-16"
+  version: 0.64.9
+
+- changelogEntry:
+    - summary: |
+        Support hot-reloading for changes to OpenRPC specs in local development mode.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-06-14"
+  version: 0.64.8
+
+- changelogEntry:
+    - summary: |
+        Further support for docs with multiple custom subpaths
+      type: fix
+  irVersion: 58
+  createdAt: "2025-06-12"
+  version: 0.64.7
+
+- changelogEntry:
+    - summary: |
+        The Readme importer now downloads MDX files from the source documentation. 
+        This allows for better handling of React components and dynamic content in the imported documentation. 
+        The importer will preserve the MDX syntax and structure while converting the content to a format compatible with Fern's documentation system.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-06-12"
+  version: 0.64.6
+
+- changelogEntry:
+    - summary: |
+        Relative links between markdown files now works for docs using custom subpaths. 
+      type: fix
+  irVersion: 58
+  createdAt: "2025-06-12"
+  version: 0.64.5
+
+- changelogEntry:
+    - summary: |
         Don't use posthog when CLI is running from self-hosted container.
       type: fix
   irVersion: 58

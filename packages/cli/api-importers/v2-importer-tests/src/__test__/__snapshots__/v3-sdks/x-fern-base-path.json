@@ -139,6 +139,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.exampleEndpoint",
           "name": {
             "originalName": "exampleEndpoint",
@@ -215,5 +216,6 @@
       "sdkName": "",
       "sdkVersion": ""
     }
-  }
+  },
+  "audiences": []
 }

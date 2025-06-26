@@ -1,5 +1,6 @@
 namespace SeedAudiences;
 
+[Serializable]
 public class SeedAudiencesEnvironment
 {
     public const string EnvironmentA = "https://api.example.a.com";

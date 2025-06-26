@@ -1,4 +1,4 @@
-import { ImportsManager, PackageId, Reference } from "@fern-typescript/commons";
+import { ExportsManager, ImportsManager, PackageId, Reference } from "@fern-typescript/commons";
 import { GeneratedWebsocketTypeSchema, WebsocketTypeSchemaContext } from "@fern-typescript/contexts";
 import { PackageResolver } from "@fern-typescript/resolvers";
 import { WebsocketTypeSchemaGenerator } from "@fern-typescript/websocket-type-schema-generator";
@@ -16,6 +16,7 @@ export declare namespace WebsocketTypeSchemaContextImpl {
         packageResolver: PackageResolver;
         sourceFile: SourceFile;
         importsManager: ImportsManager;
+        exportsManager: ExportsManager;
     }
 }
 
@@ -25,9 +26,11 @@ export class WebsocketTypeSchemaContextImpl implements WebsocketTypeSchemaContex
     private packageResolver: PackageResolver;
     private sourceFile: SourceFile;
     private importsManager: ImportsManager;
+    private exportsManager: ExportsManager;
 
     constructor({
         importsManager,
+        exportsManager,
         packageResolver,
         sourceFile,
         websocketTypeSchemaDeclarationReferencer,
@@ -37,6 +40,7 @@ export class WebsocketTypeSchemaContextImpl implements WebsocketTypeSchemaContex
         this.websocketTypeSchemaDeclarationReferencer = websocketTypeSchemaDeclarationReferencer;
         this.sourceFile = sourceFile;
         this.importsManager = importsManager;
+        this.exportsManager = exportsManager;
         this.packageResolver = packageResolver;
     }
 
@@ -65,6 +69,7 @@ export class WebsocketTypeSchemaContextImpl implements WebsocketTypeSchemaContex
             name: { packageId, channel },
             referencedIn: this.sourceFile,
             importsManager: this.importsManager,
+            exportsManager: this.exportsManager,
             importStrategy: getSchemaImportStrategy({ useDynamicImport: false })
         });
     }

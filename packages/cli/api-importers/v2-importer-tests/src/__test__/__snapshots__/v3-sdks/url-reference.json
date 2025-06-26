@@ -7278,6 +7278,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_pet.updateAnExistingPet",
           "name": {
             "originalName": "updateAnExistingPet",
@@ -8511,6 +8512,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_order.getAnOrder",
           "name": {
             "originalName": "getAnOrder",
@@ -9801,5 +9803,6 @@
       "sdkName": "",
       "sdkVersion": ""
     }
-  }
+  },
+  "audiences": []
 }

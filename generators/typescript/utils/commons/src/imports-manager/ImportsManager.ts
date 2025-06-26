@@ -20,10 +20,31 @@ interface CombinedImportDeclarations {
 }
 
 export class ImportsManager {
+    private packagePath: string | undefined;
+
     private imports: Record<ModuleSpecifier, CombinedImportDeclarations> = {};
 
-    public addImportFromRoot(modulePath: string, importDeclaration: ImportDeclaration): void {
-        this.addImport(`@root/${modulePath}`, importDeclaration);
+    public constructor({ packagePath }: { packagePath?: string }) {
+        this.packagePath = packagePath;
+    }
+
+    public addImportFromRoot(modulePath: string, importDeclaration: ImportDeclaration, packagePath?: string): void {
+        if (packagePath) {
+            packagePath += "/";
+        } else {
+            packagePath = this.packagePath ? `${this.packagePath}/` : "";
+        }
+
+        this.addImport(`@root/${packagePath}${modulePath}`, importDeclaration);
+    }
+    public addImportFromSrc(modulePath: string, importDeclaration: ImportDeclaration, packagePath?: string): void {
+        if (packagePath) {
+            packagePath += "/";
+        } else {
+            packagePath = this.packagePath ? `${this.packagePath}/` : "";
+        }
+
+        this.addImport(`@src/${packagePath}${modulePath}`, importDeclaration);
     }
 
     public addImport(moduleSpecifier: ModuleSpecifier, importDeclaration: ImportDeclaration): void {

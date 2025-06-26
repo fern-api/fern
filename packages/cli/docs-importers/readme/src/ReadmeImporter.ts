@@ -78,10 +78,10 @@ export class ReadmeImporter extends DocsImporter<object> {
                 this.absolutePathToFernDirectory,
                 RelativeFilePath.of(this.kebabCaseWithoutEmojis(tab.name))
             );
-            // await this.downloadMarkdownPages({
-            //     absolutePathToOutputDirectory,
-            //     sections: sidebar
-            // });
+            await this.downloadMarkdownPages({
+                absolutePathToOutputDirectory,
+                sections: sidebar
+            });
             const navigationItems = await this.getNavigationItems({ absolutePathToOutputDirectory, sections: sidebar });
             for (const item of navigationItems) {
                 nav.addItem({ item });

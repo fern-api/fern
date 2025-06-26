@@ -96,7 +96,7 @@ export class PrimitiveInstantiation extends AstNode {
                 writer.write(`${this.internalType.value.toString()}`);
                 break;
             case "string":
-                writer.write(`"${PrimitiveInstantiation.escapeForCSharp(this.internalType.value)}"`);
+                writer.writeNode(csharp.string_({ string: this.internalType.value }));
                 break;
             case "boolean":
                 writer.write(this.internalType.value.toString());
@@ -235,14 +235,5 @@ export class PrimitiveInstantiation extends AstNode {
         const seconds = datetime.getUTCSeconds().toString().padStart(2, "0");
         const milliseconds = datetime.getUTCMilliseconds().toString().padStart(3, "0");
         return `new DateTime(${dateTimeYear}, ${dateTimeMonth}, ${dateTimeDay}, ${hours}, ${minutes}, ${seconds}, ${milliseconds})`;
-    }
-
-    private static escapeForCSharp(input: string): string {
-        return input
-            .replace(/\\/g, "\\\\") // Escape backslashes
-            .replace(/"/g, '\\"') // Escape double quotes
-            .replace(/\n/g, "\\n") // Escape newlines
-            .replace(/\r/g, "\\r") // Escape carriage returns
-            .replace(/\t/g, "\\t"); // Escape tabs
     }
 }

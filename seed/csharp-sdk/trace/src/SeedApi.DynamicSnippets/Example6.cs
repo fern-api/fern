@@ -24,10 +24,9 @@ public class Example6
                         Filename = "filename",
                         Directory = "directory"
                     },
-                    ReturnValue = new Dictionary<string, object>() {
-                        ["type"] = "integerValue",
-                        ["value"] = 1,
-                    },
+                    ReturnValue = new DebugVariableValue(
+
+                    ),
                     ExpressionLocation = new ExpressionLocation{
                         Start = 1,
                         Offset = 1
@@ -39,19 +38,17 @@ public class Example6
                             LineNumber = 1,
                             Scopes = new List<Scope>(){
                                 new Scope{
-                                    Variables = new Dictionary<string, object>(){
-                                        ["variables"] = new Dictionary<string, object>() {
-                                            ["type"] = "integerValue",
-                                            ["value"] = 1,
-                                        },
+                                    Variables = new Dictionary<string, DebugVariableValue>(){
+                                        ["variables"] = new DebugVariableValue(
+
+                                        ),
                                     }
                                 },
                                 new Scope{
-                                    Variables = new Dictionary<string, object>(){
-                                        ["variables"] = new Dictionary<string, object>() {
-                                            ["type"] = "integerValue",
-                                            ["value"] = 1,
-                                        },
+                                    Variables = new Dictionary<string, DebugVariableValue>(){
+                                        ["variables"] = new DebugVariableValue(
+
+                                        ),
                                     }
                                 },
                             }
@@ -66,10 +63,9 @@ public class Example6
                         Filename = "filename",
                         Directory = "directory"
                     },
-                    ReturnValue = new Dictionary<string, object>() {
-                        ["type"] = "integerValue",
-                        ["value"] = 1,
-                    },
+                    ReturnValue = new DebugVariableValue(
+
+                    ),
                     ExpressionLocation = new ExpressionLocation{
                         Start = 1,
                         Offset = 1
@@ -81,19 +77,17 @@ public class Example6
                             LineNumber = 1,
                             Scopes = new List<Scope>(){
                                 new Scope{
-                                    Variables = new Dictionary<string, object>(){
-                                        ["variables"] = new Dictionary<string, object>() {
-                                            ["type"] = "integerValue",
-                                            ["value"] = 1,
-                                        },
+                                    Variables = new Dictionary<string, DebugVariableValue>(){
+                                        ["variables"] = new DebugVariableValue(
+
+                                        ),
                                     }
                                 },
                                 new Scope{
-                                    Variables = new Dictionary<string, object>(){
-                                        ["variables"] = new Dictionary<string, object>() {
-                                            ["type"] = "integerValue",
-                                            ["value"] = 1,
-                                        },
+                                    Variables = new Dictionary<string, DebugVariableValue>(){
+                                        ["variables"] = new DebugVariableValue(
+
+                                        ),
                                     }
                                 },
                             }

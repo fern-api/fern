@@ -1,4 +1,4 @@
-import { ImportsManager, Reference, TypeReferenceNode, Zurg } from "@fern-typescript/commons";
+import { ExportsManager, ImportsManager, Reference, TypeReferenceNode, Zurg } from "@fern-typescript/commons";
 import { CoreUtilities } from "@fern-typescript/commons/src/core-utilities/CoreUtilities";
 import { BaseContext, GeneratedTypeSchema, TypeSchemaContext } from "@fern-typescript/contexts";
 import { TypeResolver } from "@fern-typescript/resolvers";
@@ -20,6 +20,7 @@ export declare namespace TypeSchemaContextImpl {
         sourceFile: SourceFile;
         coreUtilities: CoreUtilities;
         importsManager: ImportsManager;
+        exportsManager: ExportsManager;
         context: BaseContext;
         typeDeclarationReferencer: TypeDeclarationReferencer;
         typeSchemaDeclarationReferencer: TypeDeclarationReferencer;
@@ -39,6 +40,7 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
     private sourceFile: SourceFile;
     private coreUtilities: CoreUtilities;
     private importsManager: ImportsManager;
+    private exportsManager: ExportsManager;
     private typeDeclarationReferencer: TypeDeclarationReferencer;
     private typeSchemaDeclarationReferencer: TypeDeclarationReferencer;
     private typeReferenceToRawTypeNodeConverter: TypeReferenceToRawTypeNodeConverter;
@@ -53,6 +55,7 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
         sourceFile,
         coreUtilities,
         importsManager,
+        exportsManager,
         context,
         typeDeclarationReferencer,
         typeGenerator,
@@ -69,6 +72,7 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
         this.sourceFile = sourceFile;
         this.coreUtilities = coreUtilities;
         this.importsManager = importsManager;
+        this.exportsManager = exportsManager;
         this.typeReferenceToRawTypeNodeConverter = new TypeReferenceToRawTypeNodeConverter({
             getReferenceToNamedType: (typeName) => this.getReferenceToRawNamedType(typeName).getEntityName(),
             generateForInlineUnion: (typeName) => this.generateForInlineUnion(typeName),
@@ -127,6 +131,7 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
                     .getReferenceToType({
                         name: typeDeclaration.name,
                         importsManager: this.importsManager,
+                        exportsManager: this.exportsManager,
                         referencedIn: this.sourceFile,
                         // setting this to direct will create a direct import in the same file as the schema const is declared and being exported
                         importStrategy: {
@@ -139,6 +144,7 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
                 this.typeSchemaDeclarationReferencer.getReferenceToType({
                     name: typeDeclaration.name,
                     importsManager: this.importsManager,
+                    exportsManager: this.exportsManager,
                     referencedIn: this.sourceFile,
                     // setting this to direct will create a direct import in the same file as the schema const is declared and being exported
                     importStrategy: getSchemaImportStrategy({ useDynamicImport: false })
@@ -170,6 +176,7 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
             // TODO this should not be hardcoded here
             subImport: ["Raw"],
             importsManager: this.importsManager,
+            exportsManager: this.exportsManager,
             referencedIn: this.sourceFile
         });
     }
@@ -198,14 +205,13 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
                         // Circular references should be imported from the root.
                         return { type: "fromRoot", useDynamicImport: false, namespaceImport: "serializers" };
                     } else if (isGeneratingSchema) {
-                        // Return default import strategy or another strategy based on your logic
                         return { type: "direct" };
                     } else {
-                        // We don't really know when or if this case is actually used
-                        return getSchemaImportStrategy({ useDynamicImport: false });
+                        return { type: "fromRoot", namespaceImport: "serializers" };
                     }
                 })(),
                 importsManager: this.importsManager,
+                exportsManager: this.exportsManager,
                 referencedIn: this.sourceFile
             })
             .getExpression();

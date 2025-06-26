@@ -1,0 +1,23 @@
+## 2.38.1
+**`(fix):`** Fix JavaDoc generation to properly escape dollar signs ($) when using JavaPoet.
+
+When generating JavaDoc comments with JavaPoet, dollar signs need to be escaped as `$$` to prevent 
+JavaPoet from interpreting them as template variables. This ensures that dollar signs in documentation 
+are rendered correctly in the final generated code.
+
+
+## 2.38.0
+**`(chore):`** Add support for custom config publish-to to enable publishing to Maven Central with proper metadata and signing configuration.
+
+```yaml
+customConfig:
+  publish-to: central
+```
+
+This configuration enables automatic publishing to Maven Central with proper metadata and signing configuration.
+
+
+## 2.37.2
+**`(chore):`** No changes. Publishing changes from 2.37.1-rc0 and 2.37.1-rc1 to release track.
+
+

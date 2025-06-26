@@ -59,7 +59,6 @@ public class AsyncRawParamsClient {
                 .url(httpUrl)
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
                 .addHeader("Accept", "application/json")
                 .build();
         OkHttpClient client = clientOptions.httpClient();
@@ -118,7 +117,6 @@ public class AsyncRawParamsClient {
                 .url(httpUrl)
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
                 .addHeader("Accept", "application/json");
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
@@ -170,7 +168,7 @@ public class AsyncRawParamsClient {
                 .newBuilder()
                 .addPathSegments("params");
         QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery(), false);
-        QueryStringMapper.addQueryParameter(httpUrl, "number", Integer.toString(request.getNumber()), false);
+        QueryStringMapper.addQueryParameter(httpUrl, "number", request.getNumber(), false);
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -224,9 +222,8 @@ public class AsyncRawParamsClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("params");
-        QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery(), false);
-        QueryStringMapper.addQueryParameter(
-                httpUrl, "number", request.getNumber().toString(), false);
+        QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery(), true);
+        QueryStringMapper.addQueryParameter(httpUrl, "number", request.getNumber(), true);
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)

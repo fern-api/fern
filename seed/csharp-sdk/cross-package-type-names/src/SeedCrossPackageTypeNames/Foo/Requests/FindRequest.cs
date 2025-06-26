@@ -3,6 +3,7 @@ using SeedCrossPackageTypeNames.Core;
 
 namespace SeedCrossPackageTypeNames;
 
+[Serializable]
 public record FindRequest
 {
     [JsonIgnore]

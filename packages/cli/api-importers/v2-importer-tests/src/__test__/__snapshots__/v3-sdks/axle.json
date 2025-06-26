@@ -6844,6 +6844,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_ignition.StartIgnition",
           "name": {
             "originalName": "StartIgnition",
@@ -7971,6 +7972,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_tokens.ExchangeToken",
           "name": {
             "originalName": "ExchangeToken",
@@ -9617,6 +9619,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_accounts.GetAccount",
           "name": {
             "originalName": "GetAccount",
@@ -18215,6 +18218,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_policies.GetPolicy",
           "name": {
             "originalName": "GetPolicy",
@@ -20144,6 +20148,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_carriers.GetCarrier",
           "name": {
             "originalName": "GetCarrier",
@@ -22923,6 +22928,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_carriers.GetCarriers",
           "name": {
             "originalName": "GetCarriers",

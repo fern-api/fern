@@ -1,4 +1,5 @@
 import {
+    ExportsManager,
     ImportsManager,
     JavaScriptRuntime,
     NpmPackage,
@@ -68,6 +69,7 @@ export declare namespace GeneratedSdkClientClassImpl {
     export interface Init {
         isRoot: boolean;
         importsManager: ImportsManager;
+        exportsManager: ExportsManager;
         intermediateRepresentation: IntermediateRepresentation;
         packageId: PackageId;
         serviceClassName: string;
@@ -88,6 +90,8 @@ export declare namespace GeneratedSdkClientClassImpl {
         omitUndefined: boolean;
         allowExtraFields: boolean;
         oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
+        streamType: "wrapper" | "web";
+        fileResponseType: "stream" | "binary-response";
     }
 }
 
@@ -125,6 +129,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private readonly omitUndefined: boolean;
     private readonly allowExtraFields: boolean;
     private readonly importsManager: ImportsManager;
+    private readonly exportsManager: ExportsManager;
     private readonly oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
     private oauthAuthScheme: OAuthScheme | undefined;
     private bearerAuthScheme: BearerAuthScheme | undefined;
@@ -154,7 +159,10 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         omitUndefined,
         allowExtraFields,
         importsManager,
-        oauthTokenProviderGenerator
+        oauthTokenProviderGenerator,
+        exportsManager,
+        streamType,
+        fileResponseType
     }: GeneratedSdkClientClassImpl.Init) {
         this.isRoot = isRoot;
         this.intermediateRepresentation = intermediateRepresentation;
@@ -172,6 +180,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         this.omitUndefined = omitUndefined;
         this.allowExtraFields = allowExtraFields;
         this.importsManager = importsManager;
+        this.exportsManager = exportsManager;
         this.oauthTokenProviderGenerator = oauthTokenProviderGenerator;
 
         const package_ = packageResolver.resolvePackage(packageId);
@@ -198,7 +207,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             requestBody,
                             generatedSdkClientClass: this,
                             targetRuntime: this.targetRuntime,
-                            retainOriginalCasing: this.retainOriginalCasing
+                            retainOriginalCasing: this.retainOriginalCasing,
+                            exportsManager: this.exportsManager
                         });
                     }
                     if (requestBody?.type === "fileUpload") {
@@ -226,7 +236,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             endpoint,
                             requestBody,
                             generatedSdkClientClass: this,
-                            retainOriginalCasing: this.retainOriginalCasing
+                            retainOriginalCasing: this.retainOriginalCasing,
+                            exportsManager: this.exportsManager
                         });
                     }
                 };
@@ -248,7 +259,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             errorDiscriminationStrategy: intermediateRepresentation.errorDiscriminationStrategy,
                             errorResolver,
                             response,
-                            includeSerdeLayer
+                            includeSerdeLayer,
+                            streamType,
+                            fileResponseType
                         });
                     } else {
                         return new GeneratedThrowingEndpointResponse({
@@ -258,7 +271,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             errorResolver,
                             response,
                             includeContentHeadersOnResponse: includeContentHeadersOnFileDownloadResponse,
-                            clientClass: this
+                            clientClass: this,
+                            streamType,
+                            fileResponseType
                         });
                     }
                 };
@@ -298,7 +313,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             }),
                             includeSerdeLayer,
                             retainOriginalCasing: this.retainOriginalCasing,
-                            omitUndefined: this.omitUndefined
+                            omitUndefined: this.omitUndefined,
+                            streamType,
+                            fileResponseType
                         }),
                     json: (jsonResponse) =>
                         getDefaultEndpointImplementation({
@@ -317,7 +334,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             request: getGeneratedEndpointRequest(),
                             includeSerdeLayer,
                             retainOriginalCasing: this.retainOriginalCasing,
-                            omitUndefined: this.omitUndefined
+                            omitUndefined: this.omitUndefined,
+                            streamType
                         }),
                     streamParameter: (streamParameter) =>
                         // TODO(amckinney): For now we just generate the stream variant of the endpoint.
@@ -334,7 +352,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             request: getGeneratedEndpointRequest(),
                             includeSerdeLayer,
                             retainOriginalCasing: this.retainOriginalCasing,
-                            omitUndefined: this.omitUndefined
+                            omitUndefined: this.omitUndefined,
+                            streamType
                         }),
                     text: (textResponse) => {
                         return getDefaultEndpointImplementation({
@@ -861,7 +880,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         const rootHeaders = this.isRoot ? this.getRootHeaders(context) : [];
         const shouldGenerateRootHeaders = this.isRoot && rootHeaders.length > 0;
         if (shouldGenerateRootHeaders) {
-            context.importsManager.addImportFromRoot("src/core/headers.js", {
+            context.importsManager.addImportFromRoot("core/headers.js", {
                 namedImports: ["mergeHeaders"]
             });
             return code`this._options = {

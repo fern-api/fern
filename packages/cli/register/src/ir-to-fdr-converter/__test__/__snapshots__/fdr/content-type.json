@@ -37,7 +37,7 @@
                   {
                     "key": "application",
                     "valueType": {
-                      "type": "optional",
+                      "type": "nullable",
                       "itemType": {
                         "type": "primitive",
                         "value": {
@@ -49,7 +49,7 @@
                   {
                     "key": "require_auth",
                     "valueType": {
-                      "type": "optional",
+                      "type": "nullable",
                       "itemType": {
                         "type": "primitive",
                         "value": {

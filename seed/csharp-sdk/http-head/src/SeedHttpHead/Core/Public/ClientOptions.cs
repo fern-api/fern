@@ -1,10 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using SeedHttpHead.Core;
 
 namespace SeedHttpHead;
 
+[Serializable]
 public partial class ClientOptions
 {
     /// <summary>

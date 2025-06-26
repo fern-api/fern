@@ -211,7 +211,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -293,7 +293,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -563,7 +563,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -622,7 +622,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "list",
                   "itemType": {
@@ -1540,7 +1540,7 @@
             "description": "Image orientation from EXIF.",
             "key": "orientation",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -1595,7 +1595,7 @@
             "description": "Geo-location of image from EXIF.",
             "key": "geo_location",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "id",
                 "value": "ImageInfoGeoLocation"
@@ -1606,7 +1606,7 @@
             "description": "Image date and time from EXIF. Please be aware that this data is not always formatted and displayed exactly as it appears in the EXIF.",
             "key": "datetime_original",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -1620,7 +1620,7 @@
             "description": "Image DPI for two dimensions.",
             "key": "dpi",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "list",
                 "itemType": {
@@ -1648,7 +1648,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1664,7 +1664,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1680,7 +1680,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1696,7 +1696,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -1836,7 +1836,7 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "LegacyVideoInfoAudio"
@@ -1955,7 +1955,7 @@
             "description": "Image orientation from EXIF.",
             "key": "orientation",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -2010,7 +2010,7 @@
             "description": "Geo-location of image from EXIF.",
             "key": "geo_location",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "id",
                 "value": "SchemasImageInfoGeoLocation"
@@ -2021,7 +2021,7 @@
             "description": "Image date and time from EXIF. Please be aware that this data is not always formatted and displayed exactly as it appears in the EXIF.",
             "key": "datetime_original",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -2035,7 +2035,7 @@
             "description": "Image DPI for two dimensions.",
             "key": "dpi",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "list",
                 "itemType": {
@@ -2061,7 +2061,7 @@
             "description": "Audio stream's bitrate.",
             "key": "bitrate",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -2074,7 +2074,7 @@
             "description": "Audio stream's codec.",
             "key": "codec",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -2087,7 +2087,7 @@
             "description": "Audio stream's sample rate.",
             "key": "sample_rate",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -2100,7 +2100,7 @@
             "description": "Audio stream's number of channels.",
             "key": "channels",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -2153,7 +2153,7 @@
             "description": "Video stream's bitrate.",
             "key": "bitrate",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -2166,7 +2166,7 @@
             "description": "Video stream's codec.",
             "key": "codec",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -2189,7 +2189,7 @@
             "description": "Video file's duration in milliseconds.",
             "key": "duration",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -2212,7 +2212,7 @@
             "description": "Video file's bitrate.",
             "key": "bitrate",
             "valueType": {
-              "type": "optional",
+              "type": "nullable",
               "itemType": {
                 "type": "primitive",
                 "value": {
@@ -2638,7 +2638,10 @@
                 "UPLOADCARE_STORE": "auto",
                 "{filename}": [
                   "foo"
-                ]
+                ],
+                "my_file.jpg": "@my_file.jpg",
+                "metadata[subsystem]": "uploader",
+                "metadata[pet]": "cat"
               },
               "requestBodyV3": {
                 "type": "form",
@@ -2669,10 +2672,14 @@
                 }
               },
               "responseStatusCode": 200,
-              "responseBody": {},
+              "responseBody": {
+                "my_file.jpg": "17be4678-dab7-4bc7-8753-28914a22960a"
+              },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "my_file.jpg": "17be4678-dab7-4bc7-8753-28914a22960a"
+                }
               }
             },
             {
@@ -2687,7 +2694,10 @@
                 "UPLOADCARE_STORE": "auto",
                 "{filename}": [
                   "foo"
-                ]
+                ],
+                "my_file.jpg": "@my_file.jpg",
+                "another_file.jpg": "@another_file.jpg",
+                "metadata[subsystem]": "uploader"
               },
               "requestBodyV3": {
                 "type": "form",
@@ -2718,10 +2728,14 @@
                 }
               },
               "responseStatusCode": 200,
-              "responseBody": {},
+              "responseBody": {
+                "my_file.jpg": "17be4678-dab7-4bc7-8753-28914a22960a"
+              },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "my_file.jpg": "17be4678-dab7-4bc7-8753-28914a22960a"
+                }
               }
             }
           ],
@@ -2913,7 +2927,9 @@
                 "UPLOADCARE_STORE": "auto",
                 "filename": "myfile.mp4",
                 "size": 27796904,
-                "content_type": "video/mp4"
+                "content_type": "video/mp4",
+                "metadata[subsystem]": "uploader",
+                "metadata[pet]": "cat"
               },
               "requestBodyV3": {
                 "type": "form",
@@ -3443,7 +3459,9 @@
               "headers": {},
               "requestBody": {
                 "pub_key": "YOUR_PUBLIC_KEY",
-                "source_url": "https://source.unsplash.com/featured"
+                "source_url": "https://source.unsplash.com/featured",
+                "metadata[subsystem]": "uploader",
+                "metadata[pet]": "cat"
               },
               "requestBodyV3": {
                 "type": "form",
@@ -3518,12 +3536,122 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "token"
+                "type": "token",
+                "uuid": "be3b4d5e-179d-460e-8a5d-69112ac86cbb",
+                "file_id": "be3b4d5e-179d-460e-8a5d-69112ac86cbb",
+                "size": 2667636,
+                "total": 2667636,
+                "done": 2667636,
+                "original_filename": "IMG-0412_123.JPG",
+                "filename": "IMG0412_123.JPG",
+                "mime_type": "image/jpeg",
+                "image_info": {
+                  "color_mode": "RGB",
+                  "orientation": 6,
+                  "format": "JPEG",
+                  "height": 4032,
+                  "width": 3024,
+                  "sequence": false,
+                  "geo_location": {
+                    "latitude": 55.62013611111111,
+                    "longitude": 37.66299166666666
+                  },
+                  "dpi": [
+                    72,
+                    72
+                  ]
+                },
+                "video_info": {},
+                "content_info": {
+                  "mime": {
+                    "mime": "image/jpeg",
+                    "type": "image",
+                    "subtype": "jpeg"
+                  },
+                  "image": {
+                    "color_mode": "RGB",
+                    "orientation": 6,
+                    "format": "JPEG",
+                    "height": 4032,
+                    "width": 3024,
+                    "sequence": false,
+                    "geo_location": {
+                      "latitude": 55.62013611111111,
+                      "longitude": 37.66299166666666
+                    },
+                    "dpi": [
+                      72,
+                      72
+                    ]
+                  }
+                },
+                "metadata": {
+                  "subsystem": "uploader",
+                  "pet": "cat"
+                },
+                "is_image": true,
+                "is_stored": true,
+                "is_ready": true
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "type": "token"
+                  "type": "token",
+                  "uuid": "be3b4d5e-179d-460e-8a5d-69112ac86cbb",
+                  "file_id": "be3b4d5e-179d-460e-8a5d-69112ac86cbb",
+                  "size": 2667636,
+                  "total": 2667636,
+                  "done": 2667636,
+                  "original_filename": "IMG-0412_123.JPG",
+                  "filename": "IMG0412_123.JPG",
+                  "mime_type": "image/jpeg",
+                  "image_info": {
+                    "color_mode": "RGB",
+                    "orientation": 6,
+                    "format": "JPEG",
+                    "height": 4032,
+                    "width": 3024,
+                    "sequence": false,
+                    "geo_location": {
+                      "latitude": 55.62013611111111,
+                      "longitude": 37.66299166666666
+                    },
+                    "dpi": [
+                      72,
+                      72
+                    ]
+                  },
+                  "video_info": {},
+                  "content_info": {
+                    "mime": {
+                      "mime": "image/jpeg",
+                      "type": "image",
+                      "subtype": "jpeg"
+                    },
+                    "image": {
+                      "color_mode": "RGB",
+                      "orientation": 6,
+                      "format": "JPEG",
+                      "height": 4032,
+                      "width": 3024,
+                      "sequence": false,
+                      "geo_location": {
+                        "latitude": 55.62013611111111,
+                        "longitude": 37.66299166666666
+                      },
+                      "dpi": [
+                        72,
+                        72
+                      ]
+                    }
+                  },
+                  "metadata": {
+                    "subsystem": "uploader",
+                    "pet": "cat"
+                  },
+                  "is_image": true,
+                  "is_stored": true,
+                  "is_ready": true
                 }
               }
             }
@@ -3617,12 +3745,16 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "status": "waiting"
+                "status": "waiting",
+                "total": 732434,
+                "done": 134427
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "status": "waiting"
+                  "status": "waiting",
+                  "total": 732434,
+                  "done": 134427
                 }
               }
             },
@@ -3637,12 +3769,122 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "status": "waiting"
+                "status": "waiting",
+                "uuid": "be3b4d5e-179d-460e-8a5d-69112ac86cbb",
+                "file_id": "be3b4d5e-179d-460e-8a5d-69112ac86cbb",
+                "size": 2667636,
+                "total": 2667636,
+                "done": 2667636,
+                "original_filename": "IMG-0412_123.JPG",
+                "filename": "IMG0412_123.JPG",
+                "mime_type": "image/jpeg",
+                "image_info": {
+                  "color_mode": "RGB",
+                  "orientation": 6,
+                  "format": "JPEG",
+                  "height": 4032,
+                  "width": 3024,
+                  "sequence": false,
+                  "geo_location": {
+                    "latitude": 55.62013611111111,
+                    "longitude": 37.66299166666666
+                  },
+                  "dpi": [
+                    72,
+                    72
+                  ]
+                },
+                "video_info": {},
+                "content_info": {
+                  "mime": {
+                    "mime": "image/jpeg",
+                    "type": "image",
+                    "subtype": "jpeg"
+                  },
+                  "image": {
+                    "color_mode": "RGB",
+                    "orientation": 6,
+                    "format": "JPEG",
+                    "height": 4032,
+                    "width": 3024,
+                    "sequence": false,
+                    "geo_location": {
+                      "latitude": 55.62013611111111,
+                      "longitude": 37.66299166666666
+                    },
+                    "dpi": [
+                      72,
+                      72
+                    ]
+                  }
+                },
+                "metadata": {
+                  "subsystem": "uploader",
+                  "pet": "cat"
+                },
+                "is_image": true,
+                "is_stored": true,
+                "is_ready": true
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "status": "waiting"
+                  "status": "waiting",
+                  "uuid": "be3b4d5e-179d-460e-8a5d-69112ac86cbb",
+                  "file_id": "be3b4d5e-179d-460e-8a5d-69112ac86cbb",
+                  "size": 2667636,
+                  "total": 2667636,
+                  "done": 2667636,
+                  "original_filename": "IMG-0412_123.JPG",
+                  "filename": "IMG0412_123.JPG",
+                  "mime_type": "image/jpeg",
+                  "image_info": {
+                    "color_mode": "RGB",
+                    "orientation": 6,
+                    "format": "JPEG",
+                    "height": 4032,
+                    "width": 3024,
+                    "sequence": false,
+                    "geo_location": {
+                      "latitude": 55.62013611111111,
+                      "longitude": 37.66299166666666
+                    },
+                    "dpi": [
+                      72,
+                      72
+                    ]
+                  },
+                  "video_info": {},
+                  "content_info": {
+                    "mime": {
+                      "mime": "image/jpeg",
+                      "type": "image",
+                      "subtype": "jpeg"
+                    },
+                    "image": {
+                      "color_mode": "RGB",
+                      "orientation": 6,
+                      "format": "JPEG",
+                      "height": 4032,
+                      "width": 3024,
+                      "sequence": false,
+                      "geo_location": {
+                        "latitude": 55.62013611111111,
+                        "longitude": 37.66299166666666
+                      },
+                      "dpi": [
+                        72,
+                        72
+                      ]
+                    }
+                  },
+                  "metadata": {
+                    "subsystem": "uploader",
+                    "pet": "cat"
+                  },
+                  "is_image": true,
+                  "is_stored": true,
+                  "is_ready": true
                 }
               }
             },
@@ -3657,12 +3899,16 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "status": "waiting"
+                "status": "waiting",
+                "error": "HTTP client error: 404.",
+                "error_code": "DownloadFileHTTPClientError"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "status": "waiting"
+                  "status": "waiting",
+                  "error": "HTTP client error: 404.",
+                  "error_code": "DownloadFileHTTPClientError"
                 }
               }
             },

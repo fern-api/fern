@@ -26,7 +26,7 @@ await client.V2.TestAsync();
 </details>
 
 ## Admin
-<details><summary><code>client.Admin.<a href="/src/SeedTrace/Admin/AdminClient.cs">UpdateTestSubmissionStatusAsync</a>(submissionId, object { ... })</code></summary>
+<details><summary><code>client.Admin.<a href="/src/SeedTrace/Admin/AdminClient.cs">UpdateTestSubmissionStatusAsync</a>(submissionId, TestSubmissionStatus { ... })</code></summary>
 <dl>
 <dd>
 
@@ -41,7 +41,7 @@ await client.V2.TestAsync();
 ```csharp
 await client.Admin.UpdateTestSubmissionStatusAsync(
     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    "no-properties-union"
+    new TestSubmissionStatus(new TestSubmissionStatus.Stopped())
 );
 ```
 </dd>
@@ -65,7 +65,7 @@ await client.Admin.UpdateTestSubmissionStatusAsync(
 <dl>
 <dd>
 
-**request:** `object` 
+**request:** `TestSubmissionStatus` 
     
 </dd>
 </dl>
@@ -95,7 +95,9 @@ await client.Admin.SendTestSubmissionUpdateAsync(
     new TestSubmissionUpdate
     {
         UpdateTime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
-        UpdateInfo = RunningSubmissionState.QueueingSubmission,
+        UpdateInfo = new TestSubmissionUpdateInfo(
+            new TestSubmissionUpdateInfo.Running(RunningSubmissionState.QueueingSubmission)
+        ),
     }
 );
 ```
@@ -132,7 +134,7 @@ await client.Admin.SendTestSubmissionUpdateAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Admin.<a href="/src/SeedTrace/Admin/AdminClient.cs">UpdateWorkspaceSubmissionStatusAsync</a>(submissionId, object { ... })</code></summary>
+<details><summary><code>client.Admin.<a href="/src/SeedTrace/Admin/AdminClient.cs">UpdateWorkspaceSubmissionStatusAsync</a>(submissionId, WorkspaceSubmissionStatus { ... })</code></summary>
 <dl>
 <dd>
 
@@ -147,7 +149,7 @@ await client.Admin.SendTestSubmissionUpdateAsync(
 ```csharp
 await client.Admin.UpdateWorkspaceSubmissionStatusAsync(
     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    "no-properties-union"
+    new WorkspaceSubmissionStatus(new WorkspaceSubmissionStatus.Stopped())
 );
 ```
 </dd>
@@ -171,7 +173,7 @@ await client.Admin.UpdateWorkspaceSubmissionStatusAsync(
 <dl>
 <dd>
 
-**request:** `object` 
+**request:** `WorkspaceSubmissionStatus` 
     
 </dd>
 </dl>
@@ -201,7 +203,9 @@ await client.Admin.SendWorkspaceSubmissionUpdateAsync(
     new WorkspaceSubmissionUpdate
     {
         UpdateTime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
-        UpdateInfo = RunningSubmissionState.QueueingSubmission,
+        UpdateInfo = new WorkspaceSubmissionUpdateInfo(
+            new WorkspaceSubmissionUpdateInfo.Running(RunningSubmissionState.QueueingSubmission)
+        ),
     }
 );
 ```
@@ -260,8 +264,12 @@ await client.Admin.StoreTracedTestCaseAsync(
         {
             Result = new TestCaseResult
             {
-                ExpectedResult = 1,
-                ActualResult = 1,
+                ExpectedResult = new VariableValue(new VariableValue.IntegerValue(1)),
+                ActualResult = new ActualResult(
+                    new ActualResult.ValueInner(
+                        new VariableValue(new VariableValue.IntegerValue(1))
+                    )
+                ),
                 Passed = true,
             },
             Stdout = "stdout",
@@ -272,7 +280,7 @@ await client.Admin.StoreTracedTestCaseAsync(
             {
                 SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                 LineNumber = 1,
-                ReturnValue = 1,
+                ReturnValue = new DebugVariableValue(new DebugVariableValue.IntegerValue(1)),
                 ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
                 Stack = new StackInformation
                 {
@@ -285,11 +293,27 @@ await client.Admin.StoreTracedTestCaseAsync(
                         {
                             new Scope
                             {
-                                Variables = new Dictionary<string, object>() { { "variables", 1 } },
+                                Variables = new Dictionary<string, DebugVariableValue>()
+                                {
+                                    {
+                                        "variables",
+                                        new DebugVariableValue(
+                                            new DebugVariableValue.IntegerValue(1)
+                                        )
+                                    },
+                                },
                             },
                             new Scope
                             {
-                                Variables = new Dictionary<string, object>() { { "variables", 1 } },
+                                Variables = new Dictionary<string, DebugVariableValue>()
+                                {
+                                    {
+                                        "variables",
+                                        new DebugVariableValue(
+                                            new DebugVariableValue.IntegerValue(1)
+                                        )
+                                    },
+                                },
                             },
                         },
                     },
@@ -300,7 +324,7 @@ await client.Admin.StoreTracedTestCaseAsync(
             {
                 SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                 LineNumber = 1,
-                ReturnValue = 1,
+                ReturnValue = new DebugVariableValue(new DebugVariableValue.IntegerValue(1)),
                 ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
                 Stack = new StackInformation
                 {
@@ -313,11 +337,27 @@ await client.Admin.StoreTracedTestCaseAsync(
                         {
                             new Scope
                             {
-                                Variables = new Dictionary<string, object>() { { "variables", 1 } },
+                                Variables = new Dictionary<string, DebugVariableValue>()
+                                {
+                                    {
+                                        "variables",
+                                        new DebugVariableValue(
+                                            new DebugVariableValue.IntegerValue(1)
+                                        )
+                                    },
+                                },
                             },
                             new Scope
                             {
-                                Variables = new Dictionary<string, object>() { { "variables", 1 } },
+                                Variables = new Dictionary<string, DebugVariableValue>()
+                                {
+                                    {
+                                        "variables",
+                                        new DebugVariableValue(
+                                            new DebugVariableValue.IntegerValue(1)
+                                        )
+                                    },
+                                },
                             },
                         },
                     },
@@ -392,7 +432,7 @@ await client.Admin.StoreTracedTestCaseV2Async(
             SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             LineNumber = 1,
             File = new TracedFile { Filename = "filename", Directory = "directory" },
-            ReturnValue = 1,
+            ReturnValue = new DebugVariableValue(new DebugVariableValue.IntegerValue(1)),
             ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
             Stack = new StackInformation
             {
@@ -405,11 +445,23 @@ await client.Admin.StoreTracedTestCaseV2Async(
                     {
                         new Scope
                         {
-                            Variables = new Dictionary<string, object>() { { "variables", 1 } },
+                            Variables = new Dictionary<string, DebugVariableValue>()
+                            {
+                                {
+                                    "variables",
+                                    new DebugVariableValue(new DebugVariableValue.IntegerValue(1))
+                                },
+                            },
                         },
                         new Scope
                         {
-                            Variables = new Dictionary<string, object>() { { "variables", 1 } },
+                            Variables = new Dictionary<string, DebugVariableValue>()
+                            {
+                                {
+                                    "variables",
+                                    new DebugVariableValue(new DebugVariableValue.IntegerValue(1))
+                                },
+                            },
                         },
                     },
                 },
@@ -421,7 +473,7 @@ await client.Admin.StoreTracedTestCaseV2Async(
             SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             LineNumber = 1,
             File = new TracedFile { Filename = "filename", Directory = "directory" },
-            ReturnValue = 1,
+            ReturnValue = new DebugVariableValue(new DebugVariableValue.IntegerValue(1)),
             ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
             Stack = new StackInformation
             {
@@ -434,11 +486,23 @@ await client.Admin.StoreTracedTestCaseV2Async(
                     {
                         new Scope
                         {
-                            Variables = new Dictionary<string, object>() { { "variables", 1 } },
+                            Variables = new Dictionary<string, DebugVariableValue>()
+                            {
+                                {
+                                    "variables",
+                                    new DebugVariableValue(new DebugVariableValue.IntegerValue(1))
+                                },
+                            },
                         },
                         new Scope
                         {
-                            Variables = new Dictionary<string, object>() { { "variables", 1 } },
+                            Variables = new Dictionary<string, DebugVariableValue>()
+                            {
+                                {
+                                    "variables",
+                                    new DebugVariableValue(new DebugVariableValue.IntegerValue(1))
+                                },
+                            },
                         },
                     },
                 },
@@ -508,12 +572,16 @@ await client.Admin.StoreTracedWorkspaceAsync(
     {
         WorkspaceRunDetails = new WorkspaceRunDetails
         {
-            ExceptionV2 = new ExceptionInfo
-            {
-                ExceptionType = "exceptionType",
-                ExceptionMessage = "exceptionMessage",
-                ExceptionStacktrace = "exceptionStacktrace",
-            },
+            ExceptionV2 = new ExceptionV2(
+                new ExceptionV2.Generic(
+                    new ExceptionInfo
+                    {
+                        ExceptionType = "exceptionType",
+                        ExceptionMessage = "exceptionMessage",
+                        ExceptionStacktrace = "exceptionStacktrace",
+                    }
+                )
+            ),
             Exception = new ExceptionInfo
             {
                 ExceptionType = "exceptionType",
@@ -528,7 +596,7 @@ await client.Admin.StoreTracedWorkspaceAsync(
             {
                 SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                 LineNumber = 1,
-                ReturnValue = 1,
+                ReturnValue = new DebugVariableValue(new DebugVariableValue.IntegerValue(1)),
                 ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
                 Stack = new StackInformation
                 {
@@ -541,11 +609,27 @@ await client.Admin.StoreTracedWorkspaceAsync(
                         {
                             new Scope
                             {
-                                Variables = new Dictionary<string, object>() { { "variables", 1 } },
+                                Variables = new Dictionary<string, DebugVariableValue>()
+                                {
+                                    {
+                                        "variables",
+                                        new DebugVariableValue(
+                                            new DebugVariableValue.IntegerValue(1)
+                                        )
+                                    },
+                                },
                             },
                             new Scope
                             {
-                                Variables = new Dictionary<string, object>() { { "variables", 1 } },
+                                Variables = new Dictionary<string, DebugVariableValue>()
+                                {
+                                    {
+                                        "variables",
+                                        new DebugVariableValue(
+                                            new DebugVariableValue.IntegerValue(1)
+                                        )
+                                    },
+                                },
                             },
                         },
                     },
@@ -556,7 +640,7 @@ await client.Admin.StoreTracedWorkspaceAsync(
             {
                 SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                 LineNumber = 1,
-                ReturnValue = 1,
+                ReturnValue = new DebugVariableValue(new DebugVariableValue.IntegerValue(1)),
                 ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
                 Stack = new StackInformation
                 {
@@ -569,11 +653,27 @@ await client.Admin.StoreTracedWorkspaceAsync(
                         {
                             new Scope
                             {
-                                Variables = new Dictionary<string, object>() { { "variables", 1 } },
+                                Variables = new Dictionary<string, DebugVariableValue>()
+                                {
+                                    {
+                                        "variables",
+                                        new DebugVariableValue(
+                                            new DebugVariableValue.IntegerValue(1)
+                                        )
+                                    },
+                                },
                             },
                             new Scope
                             {
-                                Variables = new Dictionary<string, object>() { { "variables", 1 } },
+                                Variables = new Dictionary<string, DebugVariableValue>()
+                                {
+                                    {
+                                        "variables",
+                                        new DebugVariableValue(
+                                            new DebugVariableValue.IntegerValue(1)
+                                        )
+                                    },
+                                },
                             },
                         },
                     },
@@ -639,7 +739,7 @@ await client.Admin.StoreTracedWorkspaceV2Async(
             SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             LineNumber = 1,
             File = new TracedFile { Filename = "filename", Directory = "directory" },
-            ReturnValue = 1,
+            ReturnValue = new DebugVariableValue(new DebugVariableValue.IntegerValue(1)),
             ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
             Stack = new StackInformation
             {
@@ -652,11 +752,23 @@ await client.Admin.StoreTracedWorkspaceV2Async(
                     {
                         new Scope
                         {
-                            Variables = new Dictionary<string, object>() { { "variables", 1 } },
+                            Variables = new Dictionary<string, DebugVariableValue>()
+                            {
+                                {
+                                    "variables",
+                                    new DebugVariableValue(new DebugVariableValue.IntegerValue(1))
+                                },
+                            },
                         },
                         new Scope
                         {
-                            Variables = new Dictionary<string, object>() { { "variables", 1 } },
+                            Variables = new Dictionary<string, DebugVariableValue>()
+                            {
+                                {
+                                    "variables",
+                                    new DebugVariableValue(new DebugVariableValue.IntegerValue(1))
+                                },
+                            },
                         },
                     },
                 },
@@ -668,7 +780,7 @@ await client.Admin.StoreTracedWorkspaceV2Async(
             SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             LineNumber = 1,
             File = new TracedFile { Filename = "filename", Directory = "directory" },
-            ReturnValue = 1,
+            ReturnValue = new DebugVariableValue(new DebugVariableValue.IntegerValue(1)),
             ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
             Stack = new StackInformation
             {
@@ -681,11 +793,23 @@ await client.Admin.StoreTracedWorkspaceV2Async(
                     {
                         new Scope
                         {
-                            Variables = new Dictionary<string, object>() { { "variables", 1 } },
+                            Variables = new Dictionary<string, DebugVariableValue>()
+                            {
+                                {
+                                    "variables",
+                                    new DebugVariableValue(new DebugVariableValue.IntegerValue(1))
+                                },
+                            },
                         },
                         new Scope
                         {
-                            Variables = new Dictionary<string, object>() { { "variables", 1 } },
+                            Variables = new Dictionary<string, DebugVariableValue>()
+                            {
+                                {
+                                    "variables",
+                                    new DebugVariableValue(new DebugVariableValue.IntegerValue(1))
+                                },
+                            },
                         },
                     },
                 },
@@ -1187,7 +1311,7 @@ await client.Playlist.DeletePlaylistAsync(1, "playlist_id");
 </details>
 
 ## Problem
-<details><summary><code>client.Problem.<a href="/src/SeedTrace/Problem/ProblemClient.cs">CreateProblemAsync</a>(CreateProblemRequest { ... }) -> object</code></summary>
+<details><summary><code>client.Problem.<a href="/src/SeedTrace/Problem/ProblemClient.cs">CreateProblemAsync</a>(CreateProblemRequest { ... }) -> CreateProblemResponse</code></summary>
 <dl>
 <dd>
 
@@ -1220,7 +1344,11 @@ await client.Problem.CreateProblemAsync(
         ProblemName = "problemName",
         ProblemDescription = new ProblemDescription
         {
-            Boards = new List<object>() { "boards", "boards" },
+            Boards = new List<ProblemDescriptionBoard>()
+            {
+                new ProblemDescriptionBoard(new ProblemDescriptionBoard.Html("boards")),
+                new ProblemDescriptionBoard(new ProblemDescriptionBoard.Html("boards")),
+            },
         },
         Files = new Dictionary<Language, ProblemFiles>()
         {
@@ -1239,10 +1367,18 @@ await client.Problem.CreateProblemAsync(
         },
         InputParams = new List<VariableTypeAndName>()
         {
-            new VariableTypeAndName { VariableType = "no-properties-union", Name = "name" },
-            new VariableTypeAndName { VariableType = "no-properties-union", Name = "name" },
+            new VariableTypeAndName
+            {
+                VariableType = new VariableType(new VariableType.IntegerType()),
+                Name = "name",
+            },
+            new VariableTypeAndName
+            {
+                VariableType = new VariableType(new VariableType.IntegerType()),
+                Name = "name",
+            },
         },
-        OutputType = "no-properties-union",
+        OutputType = new VariableType(new VariableType.IntegerType()),
         Testcases = new List<TestCaseWithExpectedResult>()
         {
             new TestCaseWithExpectedResult
@@ -1250,18 +1386,26 @@ await client.Problem.CreateProblemAsync(
                 TestCase = new TestCase
                 {
                     Id = "id",
-                    Params = new List<object>() { 1, 1 },
+                    Params = new List<VariableValue>()
+                    {
+                        new VariableValue(new VariableValue.IntegerValue(1)),
+                        new VariableValue(new VariableValue.IntegerValue(1)),
+                    },
                 },
-                ExpectedResult = 1,
+                ExpectedResult = new VariableValue(new VariableValue.IntegerValue(1)),
             },
             new TestCaseWithExpectedResult
             {
                 TestCase = new TestCase
                 {
                     Id = "id",
-                    Params = new List<object>() { 1, 1 },
+                    Params = new List<VariableValue>()
+                    {
+                        new VariableValue(new VariableValue.IntegerValue(1)),
+                        new VariableValue(new VariableValue.IntegerValue(1)),
+                    },
                 },
-                ExpectedResult = 1,
+                ExpectedResult = new VariableValue(new VariableValue.IntegerValue(1)),
             },
         },
         MethodName = "methodName",
@@ -1327,7 +1471,11 @@ await client.Problem.UpdateProblemAsync(
         ProblemName = "problemName",
         ProblemDescription = new ProblemDescription
         {
-            Boards = new List<object>() { "boards", "boards" },
+            Boards = new List<ProblemDescriptionBoard>()
+            {
+                new ProblemDescriptionBoard(new ProblemDescriptionBoard.Html("boards")),
+                new ProblemDescriptionBoard(new ProblemDescriptionBoard.Html("boards")),
+            },
         },
         Files = new Dictionary<Language, ProblemFiles>()
         {
@@ -1346,10 +1494,18 @@ await client.Problem.UpdateProblemAsync(
         },
         InputParams = new List<VariableTypeAndName>()
         {
-            new VariableTypeAndName { VariableType = "no-properties-union", Name = "name" },
-            new VariableTypeAndName { VariableType = "no-properties-union", Name = "name" },
+            new VariableTypeAndName
+            {
+                VariableType = new VariableType(new VariableType.IntegerType()),
+                Name = "name",
+            },
+            new VariableTypeAndName
+            {
+                VariableType = new VariableType(new VariableType.IntegerType()),
+                Name = "name",
+            },
         },
-        OutputType = "no-properties-union",
+        OutputType = new VariableType(new VariableType.IntegerType()),
         Testcases = new List<TestCaseWithExpectedResult>()
         {
             new TestCaseWithExpectedResult
@@ -1357,18 +1513,26 @@ await client.Problem.UpdateProblemAsync(
                 TestCase = new TestCase
                 {
                     Id = "id",
-                    Params = new List<object>() { 1, 1 },
+                    Params = new List<VariableValue>()
+                    {
+                        new VariableValue(new VariableValue.IntegerValue(1)),
+                        new VariableValue(new VariableValue.IntegerValue(1)),
+                    },
                 },
-                ExpectedResult = 1,
+                ExpectedResult = new VariableValue(new VariableValue.IntegerValue(1)),
             },
             new TestCaseWithExpectedResult
             {
                 TestCase = new TestCase
                 {
                     Id = "id",
-                    Params = new List<object>() { 1, 1 },
+                    Params = new List<VariableValue>()
+                    {
+                        new VariableValue(new VariableValue.IntegerValue(1)),
+                        new VariableValue(new VariableValue.IntegerValue(1)),
+                    },
                 },
-                ExpectedResult = 1,
+                ExpectedResult = new VariableValue(new VariableValue.IntegerValue(1)),
             },
         },
         MethodName = "methodName",
@@ -1494,10 +1658,18 @@ await client.Problem.GetDefaultStarterFilesAsync(
     {
         InputParams = new List<VariableTypeAndName>()
         {
-            new VariableTypeAndName { VariableType = "no-properties-union", Name = "name" },
-            new VariableTypeAndName { VariableType = "no-properties-union", Name = "name" },
+            new VariableTypeAndName
+            {
+                VariableType = new VariableType(new VariableType.IntegerType()),
+                Name = "name",
+            },
+            new VariableTypeAndName
+            {
+                VariableType = new VariableType(new VariableType.IntegerType()),
+                Name = "name",
+            },
         },
-        OutputType = "no-properties-union",
+        OutputType = new VariableType(new VariableType.IntegerType()),
         MethodName = "methodName",
     }
 );

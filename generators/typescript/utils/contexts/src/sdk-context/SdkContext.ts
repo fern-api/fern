@@ -1,4 +1,4 @@
-import { ImportsManager, JavaScriptRuntime, NpmPackage } from "@fern-typescript/commons";
+import { ExportsManager, ImportsManager, JavaScriptRuntime, NpmPackage } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
 
 import { GeneratorNotificationService } from "@fern-api/base-generator";
@@ -52,4 +52,5 @@ export interface SdkContext extends BaseContext {
     omitUndefined: boolean;
     neverThrowErrors: boolean;
     importsManager: ImportsManager;
+    exportsManager: ExportsManager;
 }

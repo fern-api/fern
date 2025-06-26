@@ -186,9 +186,7 @@ public abstract class AbstractEndpointWriter {
         endpointMethodBuilder.addCode(generatedHttpUrl.initialization());
 
         // Step 5: Get request initializer
-        boolean sendContentType = httpEndpoint.getRequestBody().isPresent()
-                || (httpEndpoint.getResponse().isPresent()
-                        && httpEndpoint.getResponse().get().getBody().isPresent());
+        boolean sendContentType = httpEndpoint.getRequestBody().isPresent();
         String contentType = httpEndpoint
                 .getRequestBody()
                 .flatMap(body -> body.visit(new HttpRequestBody.Visitor<Optional<String>>() {

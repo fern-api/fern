@@ -6,47 +6,58 @@ import { Project } from "ts-morph";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 
 const filePathOnDockerContainer = AbsoluteFilePath.of("/assets/asIs");
-/**
- * A map containing the original source path and the target path in the generated project
- */
-const asIsFiles = {
-    core: {
-        mergeHeaders: { "core/headers.ts": "src/core/headers.ts" },
-        json: {
-            vanilla: { "core/json.vanilla.ts": "src/core/json.ts" },
-            bigint: { "core/json.bigint.ts": "src/core/json.ts" }
-        }
-    },
-    tests: {
-        mockServer: {
-            "tests/mock-server/*": "tests/mock-server/"
-        },
-        bigintSetup: { "tests/bigint.setup.ts": "tests/bigint.setup.ts" }
-    },
-    scripts: {
-        renameToEsmFiles: {
-            "scripts/rename-to-esm-files.js": "scripts/rename-to-esm-files.js"
-        }
-    }
-} as const;
 
+const DEFAULT_PACKAGE_PATH = "src";
 export namespace AsIsManager {
     export interface Init {
         useBigInt: boolean;
         generateWireTests: boolean;
+        relativePackagePath: string;
+        relativeTestPath: string;
     }
 }
 
 export class AsIsManager {
     private readonly useBigInt: boolean;
     private readonly generateWireTests: boolean;
-    constructor({ useBigInt, generateWireTests }: AsIsManager.Init) {
+    private readonly relativePackagePath: string;
+    private readonly relativeTestPath: string;
+    constructor({ useBigInt, generateWireTests, relativePackagePath, relativeTestPath }: AsIsManager.Init) {
         this.useBigInt = useBigInt;
         this.generateWireTests = generateWireTests;
+        this.relativePackagePath = relativePackagePath;
+        this.relativeTestPath = relativeTestPath;
+    }
+
+    /**
+     * A map containing the original source path and the target path in the generated project
+     */
+    private getAsIsFiles() {
+        return {
+            core: {
+                mergeHeaders: { "core/headers.ts": `${this.relativePackagePath}/core/headers.ts` },
+                json: {
+                    vanilla: { "core/json.vanilla.ts": `${this.relativePackagePath}/core/json.ts` },
+                    bigint: { "core/json.bigint.ts": `${this.relativePackagePath}/core/json.ts` }
+                }
+            },
+            tests: {
+                mockServer: {
+                    ["tests/mock-server/*"]: `${this.relativeTestPath}/mock-server/`
+                },
+                bigintSetup: { ["tests/bigint.setup.ts"]: `${this.relativeTestPath}/bigint.setup.ts` }
+            },
+            scripts: {
+                renameToEsmFiles: {
+                    "scripts/rename-to-esm-files.js": "scripts/rename-to-esm-files.js"
+                }
+            }
+        };
     }
 
     public async AddToTsProject({ project }: { project: Project }): Promise<void> {
         const filesToCopy: Record<string, string>[] = [];
+        const asIsFiles = this.getAsIsFiles();
 
         filesToCopy.push(asIsFiles.core.mergeHeaders);
         filesToCopy.push(asIsFiles.scripts.renameToEsmFiles);
@@ -71,7 +82,25 @@ export class AsIsManager {
                     const sourceFilePath = path.join(filePathOnDockerContainer, match);
                     const relativePath = path.relative(filePathOnDockerContainer, match);
                     const targetFilePath = path.join(targetPattern, relativePath);
-                    const fileContent = await fs.readFile(sourceFilePath, "utf-8");
+                    let fileContent = await fs.readFile(sourceFilePath, "utf-8");
+
+                    // Transform import paths in test files
+                    if (sourcePattern.includes("tests")) {
+                        // Only change the import paths if the relativePackagePath is not "src"
+                        if (this.relativePackagePath !== DEFAULT_PACKAGE_PATH) {
+                            // Calculate the relative path from the test file to the package path
+                            const testDir = path.dirname(targetFilePath);
+                            const relativePathToPackage = path.relative(testDir, this.relativePackagePath);
+                            const normalizedPath = relativePathToPackage.replace(/\\/g, "/"); // Normalize for Windows paths
+
+                            // Replace the import path with the calculated relative path
+                            fileContent = fileContent.replace(
+                                /from "([^"]*\/)src\/([^"]*)"/g,
+                                `from "${normalizedPath}/$2"`
+                            );
+                        }
+                    }
+
                     project.createSourceFile(targetFilePath, fileContent, { overwrite: true });
                 }
             } else {

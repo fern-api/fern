@@ -80,7 +80,7 @@
             "shape": {
               "type": "reference",
               "value": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "primitive",
                   "value": {
@@ -229,7 +229,7 @@
             "shape": {
               "type": "reference",
               "value": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
                   "type": "id",
                   "value": "SearchWithUnionAndNullGetRequestBodyContentApplicationJsonSchema"

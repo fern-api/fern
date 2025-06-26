@@ -1,4 +1,4 @@
-import { ImportsManager, Reference } from "@fern-typescript/commons";
+import { ExportsManager, ImportsManager, Reference } from "@fern-typescript/commons";
 import { JsonContext } from "@fern-typescript/contexts";
 import { SourceFile } from "ts-morph";
 
@@ -8,6 +8,7 @@ export declare namespace JsonContextImpl {
     export interface Init {
         jsonDeclarationReferencer: JsonDeclarationReferencer;
         importsManager: ImportsManager;
+        exportsManager: ExportsManager;
         sourceFile: SourceFile;
     }
 }
@@ -15,25 +16,29 @@ export declare namespace JsonContextImpl {
 export class JsonContextImpl implements JsonContext {
     private jsonDeclarationReferencer: JsonDeclarationReferencer;
     private importsManager: ImportsManager;
+    private exportsManager: ExportsManager;
     private sourceFile: SourceFile;
 
-    constructor({ jsonDeclarationReferencer, importsManager, sourceFile }: JsonContextImpl.Init) {
+    constructor({ jsonDeclarationReferencer, importsManager, exportsManager, sourceFile }: JsonContextImpl.Init) {
         this.jsonDeclarationReferencer = jsonDeclarationReferencer;
         this.importsManager = importsManager;
         this.sourceFile = sourceFile;
+        this.exportsManager = exportsManager;
     }
 
     public getReferenceToFromJson(): Reference {
         return this.jsonDeclarationReferencer.getReferenceToFromJson({
             importsManager: this.importsManager,
-            sourceFile: this.sourceFile
+            sourceFile: this.sourceFile,
+            exportsManager: this.exportsManager
         });
     }
 
     public getReferenceToToJson(): Reference {
         return this.jsonDeclarationReferencer.getReferenceToToJson({
             importsManager: this.importsManager,
-            sourceFile: this.sourceFile
+            sourceFile: this.sourceFile,
+            exportsManager: this.exportsManager
         });
     }
 }

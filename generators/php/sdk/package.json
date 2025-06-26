@@ -31,6 +31,9 @@
   "devDependencies": {
     "@fern-api/base-generator": "workspace:*",
     "@fern-api/configs": "workspace:*",
+    "@fern-api/logger": "workspace:*",
+    "@fern-fern/generator-cli-sdk": "0.0.28",
+    "@fern-api/php-dynamic-snippets": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/php-base": "workspace:*",

@@ -4,17 +4,17 @@ import { Writer, ts } from "@fern-api/typescript-ast";
 
 export declare namespace VersionFileGenerator {
     interface Args {
-        rootDirectory: Directory;
+        packagePathDirectory: Directory;
         version: string;
     }
 }
 
 export class VersionFileGenerator {
-    private rootDirectory: Directory;
+    private packagePathDirectory: Directory;
     private version: string;
 
-    constructor({ rootDirectory, version }: VersionFileGenerator.Args) {
-        this.rootDirectory = rootDirectory;
+    constructor({ packagePathDirectory, version }: VersionFileGenerator.Args) {
+        this.packagePathDirectory = packagePathDirectory;
         this.version = version;
     }
 
@@ -28,6 +28,6 @@ export class VersionFileGenerator {
                 name: "SDK_VERSION"
             })
         );
-        this.rootDirectory.createSourceFile("src/version.ts", writer.toString());
+        this.packagePathDirectory.createSourceFile("version.ts", writer.toString());
     }
 }

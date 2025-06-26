@@ -3598,8 +3598,8 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "limit": 100,
                 "nextPage_url": "https://production.api.apiture.com/banking/accounts?start=641f62296ecbf1882c84?limit=100?allows=view",
+                "count": 6,
                 "items": [
                   {
                     "id": "bf23bc970b78d27691e8",
@@ -3646,13 +3646,13 @@
                     }
                   }
                 ],
-                "count": 6
+                "limit": 100
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "limit": 100,
                   "nextPage_url": "https://production.api.apiture.com/banking/accounts?start=641f62296ecbf1882c84?limit=100?allows=view",
+                  "count": 6,
                   "items": [
                     {
                       "id": "bf23bc970b78d27691e8",
@@ -3699,7 +3699,7 @@
                       }
                     }
                   ],
-                  "count": 6
+                  "limit": 100
                 }
               }
             }
@@ -3819,8 +3819,8 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "id": "bf23bc970b78d27691e8",
-                "label": "Payroll Checking *1008",
                 "nickname": "Payroll Checking",
+                "label": "Payroll Checking *1008",
                 "maskedNumber": "*1008",
                 "product": {
                   "type": "checking",
@@ -3846,8 +3846,8 @@
                 "type": "json",
                 "value": {
                   "id": "bf23bc970b78d27691e8",
-                  "label": "Payroll Checking *1008",
                   "nickname": "Payroll Checking",
+                  "label": "Payroll Checking *1008",
                   "maskedNumber": "*1008",
                   "product": {
                     "type": "checking",
@@ -4237,8 +4237,8 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "limit": 100,
                 "nextPage_url": "https://production.api.apiture.com/banking/accounts?start=641f62296ecbf1882c84?limit=100?allows=view",
+                "count": 6,
                 "items": [
                   {
                     "id": "bf23bc970b78d27691e8",
@@ -4285,13 +4285,13 @@
                     }
                   }
                 ],
-                "count": 6
+                "limit": 100
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "limit": 100,
                   "nextPage_url": "https://production.api.apiture.com/banking/accounts?start=641f62296ecbf1882c84?limit=100?allows=view",
+                  "count": 6,
                   "items": [
                     {
                       "id": "bf23bc970b78d27691e8",
@@ -4338,7 +4338,7 @@
                       }
                     }
                   ],
-                  "count": 6
+                  "limit": 100
                 }
               }
             }
@@ -4690,18 +4690,18 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "limit": 100,
-                "nextPage_url": "https://production.api.apiture.com/banking/accounts/f204d292df9fb/eligibleOverdraftAccounts?start=641f62296ecbf1882c84?limit=100",
                 "items": null,
-                "maximumOverdraftAccounts": 1
+                "maximumOverdraftAccounts": 1,
+                "limit": 100,
+                "nextPage_url": "https://production.api.apiture.com/banking/accounts/f204d292df9fb/eligibleOverdraftAccounts?start=641f62296ecbf1882c84?limit=100"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "limit": 100,
-                  "nextPage_url": "https://production.api.apiture.com/banking/accounts/f204d292df9fb/eligibleOverdraftAccounts?start=641f62296ecbf1882c84?limit=100",
                   "items": null,
-                  "maximumOverdraftAccounts": 1
+                  "maximumOverdraftAccounts": 1,
+                  "limit": 100,
+                  "nextPage_url": "https://production.api.apiture.com/banking/accounts/f204d292df9fb/eligibleOverdraftAccounts?start=641f62296ecbf1882c84?limit=100"
                 }
               }
             }
@@ -4820,12 +4820,36 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "maximumOverdraftAccounts": 1
+                "maximumOverdraftAccounts": 1,
+                "items": [
+                  {
+                    "id": "da1331a9e9168ea91346",
+                    "label": "Checking *3456",
+                    "maskedNumber": "*3456"
+                  },
+                  {
+                    "id": "5c9b4e50a0401ef4eb2e",
+                    "label": "Premiere Savings *1234",
+                    "maskedNumber": "*1234"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "maximumOverdraftAccounts": 1
+                  "maximumOverdraftAccounts": 1,
+                  "items": [
+                    {
+                      "id": "da1331a9e9168ea91346",
+                      "label": "Checking *3456",
+                      "maskedNumber": "*3456"
+                    },
+                    {
+                      "id": "5c9b4e50a0401ef4eb2e",
+                      "label": "Premiere Savings *1234",
+                      "maskedNumber": "*1234"
+                    }
+                  ]
                 }
               }
             }
@@ -4983,19 +5007,69 @@
               },
               "queryParameters": {},
               "headers": {},
-              "requestBody": {},
+              "requestBody": {
+                "items": [
+                  {
+                    "id": "da1331a9e9168ea91346",
+                    "label": "Checking *3456",
+                    "maskedNumber": "*3456"
+                  },
+                  {
+                    "id": "5c9b4e50a0401ef4eb2e",
+                    "label": "Premiere Savings *1234",
+                    "maskedNumber": "*1234"
+                  }
+                ]
+              },
               "requestBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "items": [
+                    {
+                      "id": "da1331a9e9168ea91346",
+                      "label": "Checking *3456",
+                      "maskedNumber": "*3456"
+                    },
+                    {
+                      "id": "5c9b4e50a0401ef4eb2e",
+                      "label": "Premiere Savings *1234",
+                      "maskedNumber": "*1234"
+                    }
+                  ]
+                }
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "maximumOverdraftAccounts": 1
+                "maximumOverdraftAccounts": 1,
+                "items": [
+                  {
+                    "id": "da1331a9e9168ea91346",
+                    "label": "Checking *3456",
+                    "maskedNumber": "*3456"
+                  },
+                  {
+                    "id": "5c9b4e50a0401ef4eb2e",
+                    "label": "Premiere Savings *1234",
+                    "maskedNumber": "*1234"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "maximumOverdraftAccounts": 1
+                  "maximumOverdraftAccounts": 1,
+                  "items": [
+                    {
+                      "id": "da1331a9e9168ea91346",
+                      "label": "Checking *3456",
+                      "maskedNumber": "*3456"
+                    },
+                    {
+                      "id": "5c9b4e50a0401ef4eb2e",
+                      "label": "Premiere Savings *1234",
+                      "maskedNumber": "*1234"
+                    }
+                  ]
                 }
               }
             }
@@ -5166,6 +5240,7 @@
               "requestBody": {
                 "firstName": "Mary",
                 "lastName": "Jones",
+                "identification": "3333",
                 "sharedSecret": "obsolete obese octopus",
                 "emailAddress": "Mary.Jones@example.com",
                 "disallowDebitCardAccess": false
@@ -5175,6 +5250,7 @@
                 "value": {
                   "firstName": "Mary",
                   "lastName": "Jones",
+                  "identification": "3333",
                   "sharedSecret": "obsolete obese octopus",
                   "emailAddress": "Mary.Jones@example.com",
                   "disallowDebitCardAccess": false
@@ -5182,22 +5258,24 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
+                "id": "db4f580290d3e07bf55d",
                 "firstName": "Mary",
                 "lastName": "Jones",
+                "identification": "3333",
                 "sharedSecret": "obsolete obese octopus",
                 "emailAddress": "Mary.Jones@example.com",
-                "disallowDebitCardAccess": false,
-                "id": "db4f580290d3e07bf55d"
+                "disallowDebitCardAccess": false
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
+                  "id": "db4f580290d3e07bf55d",
                   "firstName": "Mary",
                   "lastName": "Jones",
+                  "identification": "3333",
                   "sharedSecret": "obsolete obese octopus",
                   "emailAddress": "Mary.Jones@example.com",
-                  "disallowDebitCardAccess": false,
-                  "id": "db4f580290d3e07bf55d"
+                  "disallowDebitCardAccess": false
                 }
               }
             }
@@ -6560,36 +6638,37 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "limit": 10,
-                "nextPage_url": "https://production.api.apiture.com/banking/accounts/c9fc25b47d52916fc9ad/transactions?start=6117a4dcefb841cab7316cef1ac8b58c&limit=10",
                 "start": "d1b48af913464aa49fcb07065dcc0616",
+                "limit": 10,
+                "count": 2381,
+                "nextPage_url": "https://production.api.apiture.com/banking/accounts/c9fc25b47d52916fc9ad/transactions?start=6117a4dcefb841cab7316cef1ac8b58c&limit=10",
                 "items": [
                   {
                     "id": "d62c0701-0d74",
                     "type": "balance",
-                    "subtype": "check",
                     "occurredOn": "2023-06-18",
                     "amount": "0.00",
                     "posted": true,
-                    "balance": "8509.38"
+                    "balance": "8509.38",
+                    "subtype": "check"
                   },
                   {
                     "id": "88f5bf17-ecc4",
                     "type": "debit",
                     "subtype": "check",
                     "occurredOn": "2023-06-18",
-                    "amount": "1276.21",
-                    "posted": true,
-                    "balance": "8509.38",
                     "memo": "Paid electric bill",
-                    "category": {
-                      "label": "Utilities",
-                      "id": "127"
-                    },
                     "merchant": {
                       "name": "B&T's Excellent Electric Co.",
                       "website_url": "https://BillTedsExcellentElectricCompany.example.com/",
                       "logo_url": "https://BillTedsExcellentElectricCompany.example.com/img/logos/medium.png"
+                    },
+                    "amount": "1276.21",
+                    "posted": true,
+                    "balance": "8509.38",
+                    "category": {
+                      "label": "Utilities",
+                      "id": "127"
                     },
                     "check": {
                       "number": 8412,
@@ -6597,42 +6676,42 @@
                       "imageBack_url": "/accounts/1d16e438-18e0/transactions/88f5bf17-ecc4/images/back/content"
                     }
                   }
-                ],
-                "count": 2381
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "limit": 10,
-                  "nextPage_url": "https://production.api.apiture.com/banking/accounts/c9fc25b47d52916fc9ad/transactions?start=6117a4dcefb841cab7316cef1ac8b58c&limit=10",
                   "start": "d1b48af913464aa49fcb07065dcc0616",
+                  "limit": 10,
+                  "count": 2381,
+                  "nextPage_url": "https://production.api.apiture.com/banking/accounts/c9fc25b47d52916fc9ad/transactions?start=6117a4dcefb841cab7316cef1ac8b58c&limit=10",
                   "items": [
                     {
                       "id": "d62c0701-0d74",
                       "type": "balance",
-                      "subtype": "check",
                       "occurredOn": "2023-06-18",
                       "amount": "0.00",
                       "posted": true,
-                      "balance": "8509.38"
+                      "balance": "8509.38",
+                      "subtype": "check"
                     },
                     {
                       "id": "88f5bf17-ecc4",
                       "type": "debit",
                       "subtype": "check",
                       "occurredOn": "2023-06-18",
-                      "amount": "1276.21",
-                      "posted": true,
-                      "balance": "8509.38",
                       "memo": "Paid electric bill",
-                      "category": {
-                        "label": "Utilities",
-                        "id": "127"
-                      },
                       "merchant": {
                         "name": "B&T's Excellent Electric Co.",
                         "website_url": "https://BillTedsExcellentElectricCompany.example.com/",
                         "logo_url": "https://BillTedsExcellentElectricCompany.example.com/img/logos/medium.png"
+                      },
+                      "amount": "1276.21",
+                      "posted": true,
+                      "balance": "8509.38",
+                      "category": {
+                        "label": "Utilities",
+                        "id": "127"
                       },
                       "check": {
                         "number": 8412,
@@ -6640,8 +6719,7 @@
                         "imageBack_url": "/accounts/1d16e438-18e0/transactions/88f5bf17-ecc4/images/back/content"
                       }
                     }
-                  ],
-                  "count": 2381
+                  ]
                 }
               }
             }
@@ -6780,18 +6858,18 @@
               "responseBody": {
                 "items": [
                   {
-                    "label": "Groceries",
                     "id": "ef7958260dce34abddb7",
+                    "label": "Groceries",
                     "type": "debit"
                   },
                   {
-                    "label": "Dining",
                     "id": "f24096860ebf1383e202",
+                    "label": "Dining",
                     "type": "debit"
                   },
                   {
-                    "label": "Entertainment",
                     "id": "33c3d38ca0a744b8d903",
+                    "label": "Entertainment",
                     "type": "debit"
                   }
                 ]
@@ -6801,18 +6879,18 @@
                 "value": {
                   "items": [
                     {
-                      "label": "Groceries",
                       "id": "ef7958260dce34abddb7",
+                      "label": "Groceries",
                       "type": "debit"
                     },
                     {
-                      "label": "Dining",
                       "id": "f24096860ebf1383e202",
+                      "label": "Dining",
                       "type": "debit"
                     },
                     {
-                      "label": "Entertainment",
                       "id": "33c3d38ca0a744b8d903",
+                      "label": "Entertainment",
                       "type": "debit"
                     }
                   ]
@@ -7016,9 +7094,9 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
+                "start": "d1b48af913464aa49fcb07065dcc0616",
                 "limit": 10,
                 "nextPage_url": "https://production.api.apiture.com/transfers/transfers?start=6117a4dcefb841cab7316cef1ac8b58c&limit=10",
-                "start": "d1b48af913464aa49fcb07065dcc0616",
                 "items": [
                   {
                     "amount": "275.00",
@@ -7036,13 +7114,13 @@
                     },
                     "memo": "Cover check for car repair",
                     "id": "0399abed-fd3d",
+                    "state": "processed",
                     "schedule": {
                       "scheduledOn": "2026-06-28",
                       "frequency": "once",
-                      "debitsOn": "2026-06-24",
-                      "creditsOn": "2026-06-26"
+                      "creditsOn": "2026-06-26",
+                      "debitsOn": "2026-06-24"
                     },
-                    "state": "processed",
                     "processedAt": "2022-06-28T021:00:00.000Z"
                   },
                   {
@@ -7061,23 +7139,24 @@
                     },
                     "memo": "school expenses",
                     "id": "d62c0701-0d74",
+                    "state": "scheduled",
                     "schedule": {
                       "scheduledOn": "2023-08-01",
                       "frequency": "monthly",
                       "count": 9,
-                      "debitsOn": "2026-08-01",
-                      "creditsOn": "2023-08-01"
-                    },
-                    "state": "scheduled"
+                      "recurreneType": "fixed",
+                      "creditsOn": "2023-08-01",
+                      "debitsOn": "2026-08-01"
+                    }
                   }
                 ]
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
+                  "start": "d1b48af913464aa49fcb07065dcc0616",
                   "limit": 10,
                   "nextPage_url": "https://production.api.apiture.com/transfers/transfers?start=6117a4dcefb841cab7316cef1ac8b58c&limit=10",
-                  "start": "d1b48af913464aa49fcb07065dcc0616",
                   "items": [
                     {
                       "amount": "275.00",
@@ -7095,13 +7174,13 @@
                       },
                       "memo": "Cover check for car repair",
                       "id": "0399abed-fd3d",
+                      "state": "processed",
                       "schedule": {
                         "scheduledOn": "2026-06-28",
                         "frequency": "once",
-                        "debitsOn": "2026-06-24",
-                        "creditsOn": "2026-06-26"
+                        "creditsOn": "2026-06-26",
+                        "debitsOn": "2026-06-24"
                       },
-                      "state": "processed",
                       "processedAt": "2022-06-28T021:00:00.000Z"
                     },
                     {
@@ -7120,14 +7199,15 @@
                       },
                       "memo": "school expenses",
                       "id": "d62c0701-0d74",
+                      "state": "scheduled",
                       "schedule": {
                         "scheduledOn": "2023-08-01",
                         "frequency": "monthly",
                         "count": 9,
-                        "debitsOn": "2026-08-01",
-                        "creditsOn": "2023-08-01"
-                      },
-                      "state": "scheduled"
+                        "recurreneType": "fixed",
+                        "creditsOn": "2023-08-01",
+                        "debitsOn": "2026-08-01"
+                      }
                     }
                   ]
                 }
@@ -7268,6 +7348,7 @@
               "headers": {},
               "requestBody": {
                 "amount": "275.00",
+                "memo": "Cover check for car repair",
                 "sourceAccount": {
                   "id": "bd9b7af2-6f9b",
                   "location": "internal"
@@ -7276,7 +7357,6 @@
                   "id": "88b1ca3e-d0f3",
                   "location": "internal"
                 },
-                "memo": "Cover check for car repair",
                 "schedule": {
                   "scheduledOn": "2022-06-28",
                   "frequency": "once"
@@ -7286,6 +7366,7 @@
                 "type": "json",
                 "value": {
                   "amount": "275.00",
+                  "memo": "Cover check for car repair",
                   "sourceAccount": {
                     "id": "bd9b7af2-6f9b",
                     "location": "internal"
@@ -7294,7 +7375,6 @@
                     "id": "88b1ca3e-d0f3",
                     "location": "internal"
                   },
-                  "memo": "Cover check for car repair",
                   "schedule": {
                     "scheduledOn": "2022-06-28",
                     "frequency": "once"
@@ -7303,7 +7383,9 @@
               },
               "responseStatusCode": 201,
               "responseBody": {
+                "id": "0399abed-fd3d",
                 "amount": "275.00",
+                "memo": "Cover check for car repair",
                 "sourceAccount": {
                   "id": "bd9b7af2-6f9b",
                   "label": "Premiere Checking *6789",
@@ -7316,20 +7398,20 @@
                   "type": "savings",
                   "location": "internal"
                 },
-                "memo": "Cover check for car repair",
-                "id": "0399abed-fd3d",
                 "schedule": {
                   "scheduledOn": "2026-06-28",
                   "frequency": "once",
-                  "debitsOn": "2026-06-24",
-                  "creditsOn": "2026-06-26"
+                  "creditsOn": "2026-06-26",
+                  "debitsOn": "2026-06-24"
                 },
                 "state": "unscheduled"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
+                  "id": "0399abed-fd3d",
                   "amount": "275.00",
+                  "memo": "Cover check for car repair",
                   "sourceAccount": {
                     "id": "bd9b7af2-6f9b",
                     "label": "Premiere Checking *6789",
@@ -7342,13 +7424,11 @@
                     "type": "savings",
                     "location": "internal"
                   },
-                  "memo": "Cover check for car repair",
-                  "id": "0399abed-fd3d",
                   "schedule": {
                     "scheduledOn": "2026-06-28",
                     "frequency": "once",
-                    "debitsOn": "2026-06-24",
-                    "creditsOn": "2026-06-26"
+                    "creditsOn": "2026-06-26",
+                    "debitsOn": "2026-06-24"
                   },
                   "state": "unscheduled"
                 }
@@ -7469,7 +7549,9 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
+                "id": "0399abed-fd3d",
                 "amount": "275.00",
+                "memo": "Cover check for car repair",
                 "sourceAccount": {
                   "id": "bd9b7af2-6f9b",
                   "label": "Premiere Checking *6789",
@@ -7482,20 +7564,20 @@
                   "type": "savings",
                   "location": "internal"
                 },
-                "memo": "Cover check for car repair",
-                "id": "0399abed-fd3d",
                 "schedule": {
                   "scheduledOn": "2026-06-28",
                   "frequency": "once",
-                  "debitsOn": "2026-06-24",
-                  "creditsOn": "2026-06-26"
+                  "creditsOn": "2026-06-26",
+                  "debitsOn": "2026-06-24"
                 },
                 "state": "unscheduled"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
+                  "id": "0399abed-fd3d",
                   "amount": "275.00",
+                  "memo": "Cover check for car repair",
                   "sourceAccount": {
                     "id": "bd9b7af2-6f9b",
                     "label": "Premiere Checking *6789",
@@ -7508,13 +7590,11 @@
                     "type": "savings",
                     "location": "internal"
                   },
-                  "memo": "Cover check for car repair",
-                  "id": "0399abed-fd3d",
                   "schedule": {
                     "scheduledOn": "2026-06-28",
                     "frequency": "once",
-                    "debitsOn": "2026-06-24",
-                    "creditsOn": "2026-06-26"
+                    "creditsOn": "2026-06-26",
+                    "debitsOn": "2026-06-24"
                   },
                   "state": "unscheduled"
                 }
@@ -7828,7 +7908,9 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
+                "id": "0399abed-fd3d",
                 "amount": "275.00",
+                "memo": "Cover check for car repair",
                 "sourceAccount": {
                   "id": "bd9b7af2-6f9b",
                   "label": "Premiere Checking *6789",
@@ -7841,20 +7923,20 @@
                   "type": "savings",
                   "location": "internal"
                 },
-                "memo": "Cover check for car repair",
-                "id": "0399abed-fd3d",
                 "schedule": {
                   "scheduledOn": "2026-06-28",
                   "frequency": "once",
-                  "debitsOn": "2026-06-24",
-                  "creditsOn": "2026-06-26"
+                  "creditsOn": "2026-06-26",
+                  "debitsOn": "2026-06-24"
                 },
                 "state": "unscheduled"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
+                  "id": "0399abed-fd3d",
                   "amount": "275.00",
+                  "memo": "Cover check for car repair",
                   "sourceAccount": {
                     "id": "bd9b7af2-6f9b",
                     "label": "Premiere Checking *6789",
@@ -7867,13 +7949,11 @@
                     "type": "savings",
                     "location": "internal"
                   },
-                  "memo": "Cover check for car repair",
-                  "id": "0399abed-fd3d",
                   "schedule": {
                     "scheduledOn": "2026-06-28",
                     "frequency": "once",
-                    "debitsOn": "2026-06-24",
-                    "creditsOn": "2026-06-26"
+                    "creditsOn": "2026-06-26",
+                    "debitsOn": "2026-06-24"
                   },
                   "state": "unscheduled"
                 }

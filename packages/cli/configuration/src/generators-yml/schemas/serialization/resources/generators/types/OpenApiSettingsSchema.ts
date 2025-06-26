@@ -27,6 +27,7 @@ export const OpenApiSettingsSchema: core.serialization.ObjectSchema<
         "example-generation": OpenApiExampleGenerationSchema.optional(),
         "additional-properties-defaults-to": core.serialization.boolean().optional(),
         "type-dates-as-strings": core.serialization.boolean().optional(),
+        "preserve-single-schema-oneof": core.serialization.boolean().optional(),
     })
     .extend(BaseApiSettingsSchema);
 
@@ -44,5 +45,6 @@ export declare namespace OpenApiSettingsSchema {
         "example-generation"?: OpenApiExampleGenerationSchema.Raw | null;
         "additional-properties-defaults-to"?: boolean | null;
         "type-dates-as-strings"?: boolean | null;
+        "preserve-single-schema-oneof"?: boolean | null;
     }
 }

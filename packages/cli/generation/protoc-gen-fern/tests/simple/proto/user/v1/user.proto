@@ -2,19 +2,16 @@ syntax = "proto3";
 
 package user.v1;
 
-message User {
-  string name = 1;
-  string email = 2;
+service MyService {
+  rpc GetUser (GetUserRequest) returns (GetUserResponse);
+  rpc GetUser2 (GetUserResponse) returns (GetUserRequest);
 }
 
 message GetUserRequest {
-  string name = 1;
+  string user_id = 1;
 }
 
 message GetUserResponse {
-  User user = 1;
-}
-
-service UserService {
-  rpc GetUser(GetUserRequest) returns (GetUserResponse);
+  string name = 1;
+  int32 age = 2;
 }

@@ -3,6 +3,7 @@ using SeedExhaustive.Core;
 
 namespace SeedExhaustive.ReqWithHeaders;
 
+[Serializable]
 public record ReqWithHeaders
 {
     [JsonIgnore]

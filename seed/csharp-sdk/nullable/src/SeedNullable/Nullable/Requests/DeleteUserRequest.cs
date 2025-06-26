@@ -3,6 +3,7 @@ using SeedNullable.Core;
 
 namespace SeedNullable;
 
+[Serializable]
 public record DeleteUserRequest
 {
     /// <summary>

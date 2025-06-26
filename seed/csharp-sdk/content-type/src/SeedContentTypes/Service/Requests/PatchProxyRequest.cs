@@ -3,6 +3,7 @@ using SeedContentTypes.Core;
 
 namespace SeedContentTypes;
 
+[Serializable]
 public record PatchProxyRequest
 {
     [JsonPropertyName("application")]

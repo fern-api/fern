@@ -53,6 +53,9 @@ fixtures:
         allowCustomFetcher: true
         timeoutInSeconds: 2
       outputFolder: allow-custom-fetcher
+    - outputFolder: web-stream-wrapper
+      customConfig:
+        streamType: "web"
   audiences:
     - customConfig: null
       outputFolder: no-custom-config
@@ -61,6 +64,9 @@ fixtures:
         - partner
       outputFolder: with-partner-audience
   exhaustive:
+    - customConfig:
+        packagePath: src/test-packagePath
+      outputFolder: package-path
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig: null
@@ -135,6 +141,9 @@ fixtures:
       customConfig:
         useBigInt: true
         noSerdeLayer: false
+    - outputFolder: web-stream-wrapper
+      customConfig:
+        streamType: "web"
   error-property:
     - customConfig:
         private: true
@@ -153,6 +162,16 @@ fixtures:
     - customConfig:
         includeContentHeadersOnFileDownloadResponse: true
       outputFolder: file-download-response-headers
+    - outputFolder: web-stream-wrapper
+      customConfig:
+        streamType: "web"
+    - customConfig:
+        fileResponseType: "binary-response"
+      outputFolder: binary-response
+    - customConfig:
+        streamType: "web"
+        fileResponseType: "binary-response"
+      outputFolder: binary-response-web-stream-wrapper
   file-upload:
     - customConfig: null
       outputFolder: no-custom-config
@@ -163,6 +182,9 @@ fixtures:
     - customConfig:
         noSerdeLayer: false
       outputFolder: serde
+    - outputFolder: web-stream-wrapper
+      customConfig:
+        streamType: "web"
   unknown:
     - customConfig: null
       outputFolder: no-custom-config
@@ -245,14 +267,15 @@ fixtures:
         retainOriginalCasing: true
       outputFolder: inline-path-parameters-retain-original-casing
   websocket:
-    - outputFolder: websocket-base
+    - outputFolder: no-websocket-clients
     - customConfig:
         noSerdeLayer: false
         shouldGenerateWebsocketClients: true
-      outputFolder: websocket-serde
+      outputFolder: serde
     - customConfig:
+        noSerdeLayer: true
         shouldGenerateWebsocketClients: true
-      outputFolder: websocket-with-serde
+      outputFolder: no-serde
 scripts:
   - docker: fernapi/ts-seed
     commands:

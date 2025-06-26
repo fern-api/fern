@@ -1,5 +1,6 @@
 import { ImportsManager, Reference, TypeReferenceNode, Zurg } from "@fern-typescript/commons";
 import { CoreUtilities } from "@fern-typescript/commons/src/core-utilities/CoreUtilities";
+import { ExportsManager } from "@fern-typescript/commons/src/exports-manager/ExportsManager";
 import { BaseContext, GeneratedTypeSchema, TypeSchemaContext } from "@fern-typescript/contexts";
 import { TypeResolver } from "@fern-typescript/resolvers";
 import { TypeGenerator } from "@fern-typescript/type-generator";
@@ -20,6 +21,7 @@ export declare namespace TypeSchemaContextImpl {
         sourceFile: SourceFile;
         coreUtilities: CoreUtilities;
         importsManager: ImportsManager;
+        exportsManager: ExportsManager;
         context: BaseContext;
         typeDeclarationReferencer: TypeDeclarationReferencer;
         typeSchemaDeclarationReferencer: TypeDeclarationReferencer;
@@ -39,6 +41,7 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
     private sourceFile: SourceFile;
     private coreUtilities: CoreUtilities;
     private importsManager: ImportsManager;
+    private exportsManager: ExportsManager;
     private typeDeclarationReferencer: TypeDeclarationReferencer;
     private typeSchemaDeclarationReferencer: TypeDeclarationReferencer;
     private typeReferenceToRawTypeNodeConverter: TypeReferenceToRawTypeNodeConverter;
@@ -53,6 +56,7 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
         sourceFile,
         coreUtilities,
         importsManager,
+        exportsManager,
         context,
         typeDeclarationReferencer,
         typeGenerator,
@@ -69,6 +73,7 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
         this.sourceFile = sourceFile;
         this.coreUtilities = coreUtilities;
         this.importsManager = importsManager;
+        this.exportsManager = exportsManager;
         this.typeReferenceToRawTypeNodeConverter = new TypeReferenceToRawTypeNodeConverter({
             getReferenceToNamedType: (typeName) => this.getReferenceToRawNamedType(typeName).getEntityName(),
             generateForInlineUnion: (typeName) => this.generateForInlineUnion(typeName),
@@ -127,6 +132,7 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
                     .getReferenceToType({
                         name: typeDeclaration.name,
                         importsManager: this.importsManager,
+                        exportsManager: this.exportsManager,
                         referencedIn: this.sourceFile,
                         importStrategy: {
                             type: "fromRoot",
@@ -138,6 +144,7 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
                 this.typeSchemaDeclarationReferencer.getReferenceToType({
                     name: typeDeclaration.name,
                     importsManager: this.importsManager,
+                    exportsManager: this.exportsManager,
                     referencedIn: this.sourceFile,
                     importStrategy: getSchemaImportStrategy({ useDynamicImport: false })
                 })
@@ -158,6 +165,7 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
             // TODO this should not be hardcoded here
             subImport: ["Raw"],
             importsManager: this.importsManager,
+            exportsManager: this.exportsManager,
             referencedIn: this.sourceFile
         });
     }
@@ -181,6 +189,7 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
                     useDynamicImport: false
                 }),
                 importsManager: this.importsManager,
+                exportsManager: this.exportsManager,
                 referencedIn: this.sourceFile
             })
             .getExpression();

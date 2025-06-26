@@ -49,7 +49,7 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomCo
                     namespace: this.context.getCoreNamespace()
                 })
             ],
-            annotations: [serializerAnnotation],
+            annotations: [serializerAnnotation, this.context.getSerializableAttribute()],
             access: csharp.Access.Public,
             type: csharp.Class.ClassType.RecordStruct,
             readonly: true
@@ -86,7 +86,8 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomCo
             static_: true,
             namespace: this.context.getNamespace(),
             isNestedClass: true,
-            summary: "Constant strings for enum values"
+            summary: "Constant strings for enum values",
+            annotations: [this.context.getSerializableAttribute()]
         });
 
         this.enumDeclaration.values.forEach((member) => {
@@ -101,7 +102,7 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomCo
                     access: csharp.Access.Public,
                     summary: member.docs,
                     const_: true,
-                    initializer: csharp.codeblock(`"${member.name.wireValue}"`)
+                    initializer: csharp.codeblock(csharp.string_({ string: member.name.wireValue }))
                 })
             );
             stringEnum.addField(

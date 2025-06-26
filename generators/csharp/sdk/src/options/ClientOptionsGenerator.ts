@@ -25,7 +25,8 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
         const class_ = csharp.class_({
             ...this.context.getClientOptionsClassReference(),
             partial: true,
-            access: csharp.Access.Public
+            access: csharp.Access.Public,
+            annotations: [this.context.getSerializableAttribute()]
         });
         const optionArgs: OptionArgs = {
             optional: false,

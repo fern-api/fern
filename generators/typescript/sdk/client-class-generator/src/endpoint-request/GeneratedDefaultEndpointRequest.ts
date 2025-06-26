@@ -1,4 +1,5 @@
 import {
+    ExportsManager,
     Fetcher,
     GetReferenceOpts,
     PackageId,
@@ -41,6 +42,7 @@ export declare namespace GeneratedDefaultEndpointRequest {
         requestBody: HttpRequestBody.InlinedRequestBody | HttpRequestBody.Reference | undefined;
         generatedSdkClientClass: GeneratedSdkClientClassImpl;
         retainOriginalCasing: boolean;
+        exportsManager: ExportsManager;
     }
 }
 
@@ -59,6 +61,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
     private requestBody: HttpRequestBody.InlinedRequestBody | HttpRequestBody.Reference | undefined;
     private generatedSdkClientClass: GeneratedSdkClientClassImpl;
     private retainOriginalCasing: boolean;
+    private exportsManager: ExportsManager;
 
     constructor({
         ir,
@@ -68,7 +71,8 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         endpoint,
         requestBody,
         generatedSdkClientClass,
-        retainOriginalCasing
+        retainOriginalCasing,
+        exportsManager
     }: GeneratedDefaultEndpointRequest.Init) {
         this.ir = ir;
         this.packageId = packageId;
@@ -102,6 +106,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         this.queryParams = new GeneratedQueryParams({
             requestParameter: this.requestParameter
         });
+        this.exportsManager = exportsManager;
     }
 
     public getRequestParameter(context: SdkContext): ts.TypeNode | undefined {

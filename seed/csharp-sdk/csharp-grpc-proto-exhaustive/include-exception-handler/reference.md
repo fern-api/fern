@@ -1,6 +1,6 @@
 # Reference
 ## DataService
-<details><summary><code>client.Dataservice.<a href="/src/SeedApi/Dataservice/DataserviceClient.cs">FooAsync</a>() -> object</code></summary>
+<details><summary><code>client.Dataservice.<a href="/src/SeedApi/Dataservice/DataserviceClient.cs">FooAsync</a>() -> Dictionary<string, object?></code></summary>
 <dl>
 <dd>
 

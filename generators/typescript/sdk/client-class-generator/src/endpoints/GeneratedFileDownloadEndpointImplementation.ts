@@ -2,10 +2,13 @@ import { Fetcher, GetReferenceOpts, visitJavaScriptRuntime } from "@fern-typescr
 import { GeneratedEndpointImplementation, SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
+import { assertNever } from "@fern-api/core-utils";
+
 import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api";
 
 import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
 import { GeneratedEndpointRequest } from "../endpoint-request/GeneratedEndpointRequest";
+import { getReadableTypeNode } from "../getReadableTypeNode";
 import { GeneratedEndpointResponse } from "./default/endpoint-response/GeneratedEndpointResponse";
 import { buildUrl } from "./utils/buildUrl";
 import {
@@ -26,6 +29,8 @@ export declare namespace GeneratedFileDownloadEndpointImplementation {
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
         omitUndefined: boolean;
+        streamType: "wrapper" | "web";
+        fileResponseType: "stream" | "binary-response";
     }
 }
 
@@ -39,6 +44,8 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
     private includeSerdeLayer: boolean;
     private retainOriginalCasing: boolean;
     private omitUndefined: boolean;
+    private streamType: "wrapper" | "web";
+    private readonly fileResponseType: "stream" | "binary-response";
 
     constructor({
         endpoint,
@@ -49,7 +56,9 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
         response,
         includeSerdeLayer,
         retainOriginalCasing,
-        omitUndefined
+        omitUndefined,
+        streamType,
+        fileResponseType
     }: GeneratedFileDownloadEndpointImplementation.Init) {
         this.endpoint = endpoint;
         this.generatedSdkClientClass = generatedSdkClientClass;
@@ -60,6 +69,8 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
         this.includeSerdeLayer = includeSerdeLayer;
         this.retainOriginalCasing = retainOriginalCasing;
         this.omitUndefined = omitUndefined;
+        this.streamType = streamType;
+        this.fileResponseType = fileResponseType;
     }
     public isPaginated(context: SdkContext): boolean {
         return false;
@@ -193,7 +204,16 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
             withCredentials: this.includeCredentialsOnCrossOriginRequests,
             responseType: visitJavaScriptRuntime(context.targetRuntime, {
                 browser: () => "blob",
-                node: () => "streaming"
+                node: () => {
+                    switch (this.fileResponseType) {
+                        case "stream":
+                            return "streaming";
+                        case "binary-response":
+                            return "binary-response";
+                        default:
+                            assertNever(this.fileResponseType);
+                    }
+                }
             })
         };
 
@@ -210,7 +230,20 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
                                 referenceToFetcher: this.generatedSdkClientClass.getReferenceToFetcher(context),
                                 cast: visitJavaScriptRuntime(context.targetRuntime, {
                                     browser: () => ts.factory.createTypeReferenceNode("Blob"),
-                                    node: () => context.externalDependencies.stream.Readable._getReferenceToType()
+                                    node: () => {
+                                        switch (this.fileResponseType) {
+                                            case "stream":
+                                                return getReadableTypeNode({
+                                                    typeArgument: ts.factory.createTypeReferenceNode("Uint8Array"),
+                                                    context,
+                                                    streamType: this.streamType
+                                                });
+                                            case "binary-response":
+                                                return context.coreUtilities.fetcher.BinaryResponse._getReferenceToType();
+                                            default:
+                                                assertNever(this.fileResponseType);
+                                        }
+                                    }
                                 })
                             })
                         )

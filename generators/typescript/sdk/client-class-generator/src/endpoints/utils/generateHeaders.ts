@@ -1,3 +1,4 @@
+import { ExportsManager } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
@@ -86,7 +87,7 @@ export function generateHeaders({
         );
     }
 
-    context.importsManager.addImportFromRoot("src/core/headers.js", {
+    context.importsManager.addImportFromRoot("core/headers.js", {
         namedImports: ["mergeHeaders"]
     });
 
@@ -103,7 +104,7 @@ export function generateHeaders({
         )
     );
     if (onlyDefinedHeaders.length > 0) {
-        context.importsManager.addImportFromRoot("src/core/headers.js", {
+        context.importsManager.addImportFromRoot("core/headers.js", {
             namedImports: ["mergeOnlyDefinedHeaders"]
         });
         mergeHeadersArgs.push(

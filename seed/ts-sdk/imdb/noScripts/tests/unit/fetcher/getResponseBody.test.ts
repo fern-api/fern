@@ -1,6 +1,8 @@
 import { RUNTIME } from "../../../src/core/runtime";
 import { getResponseBody } from "../../../src/core/fetcher/getResponseBody";
+
 import { chooseStreamWrapper } from "../../../src/core/fetcher/stream-wrappers/chooseStreamWrapper";
+
 
 describe("Test getResponseBody", () => {
     it("should handle blob response type", async () => {
@@ -20,6 +22,7 @@ describe("Test getResponseBody", () => {
         }
     });
 
+
     it("should handle streaming response type", async () => {
         if (RUNTIME.type === "node") {
             const mockStream = new ReadableStream();
@@ -29,6 +32,7 @@ describe("Test getResponseBody", () => {
             expect(JSON.stringify(result)).toBe(JSON.stringify(await chooseStreamWrapper(new ReadableStream())));
         }
     });
+
 
     it("should handle text response type", async () => {
         const mockResponse = new Response("test text");

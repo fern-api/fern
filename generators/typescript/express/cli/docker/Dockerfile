@@ -10,9 +10,7 @@ RUN /cache_heavy_dependencies.sh
 RUN rm /cache_heavy_dependencies.sh
 
 COPY generators/typescript/asIs/ /assets/asIs
-COPY generators/typescript/utils/core-utilities/zurg/src/ /assets/zurg
-COPY generators/typescript/utils/core-utilities/base/src/ /assets/base-core-utilities
-
+COPY generators/typescript/utils/core-utilities/ /assets/core-utilities
 COPY generators/typescript/express/cli/docker/dist/cli.cjs /cli.cjs
 
 ENTRYPOINT ["node", "/cli.cjs"]

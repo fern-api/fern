@@ -181,6 +181,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.getSearchWithArrayUnion",
           "name": {
             "originalName": "getSearchWithArrayUnion",
@@ -310,6 +311,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.getSearchWithObjectUnion",
           "name": {
             "originalName": "getSearchWithObjectUnion",

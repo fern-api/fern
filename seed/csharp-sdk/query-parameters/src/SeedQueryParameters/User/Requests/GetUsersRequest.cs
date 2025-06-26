@@ -3,6 +3,7 @@ using SeedQueryParameters.Core;
 
 namespace SeedQueryParameters;
 
+[Serializable]
 public record GetUsersRequest
 {
     [JsonIgnore]

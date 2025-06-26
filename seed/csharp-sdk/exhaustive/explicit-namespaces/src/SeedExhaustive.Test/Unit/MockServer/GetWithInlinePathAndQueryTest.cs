@@ -21,8 +21,7 @@ public class GetWithInlinePathAndQueryTest : BaseMockServerTest
 
         Assert.DoesNotThrowAsync(async () =>
             await Client.Endpoints.Params.GetWithInlinePathAndQueryAsync(
-                "param",
-                new GetWithInlinePathAndQuery { Query = "query" }
+                new GetWithInlinePathAndQuery { Param = "param", Query = "query" }
             )
         );
     }

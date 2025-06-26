@@ -56,7 +56,6 @@ public class RawServiceClient {
                 .url(httpUrl)
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
                 .addHeader("Accept", "application/json");
         _requestBuilder.addHeader("X-File-API-Version", request.getXFileApiVersion());
         Request okhttpRequest = _requestBuilder.build();

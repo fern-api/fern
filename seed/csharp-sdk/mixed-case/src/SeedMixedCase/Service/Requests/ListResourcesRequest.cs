@@ -3,6 +3,7 @@ using SeedMixedCase.Core;
 
 namespace SeedMixedCase;
 
+[Serializable]
 public record ListResourcesRequest
 {
     [JsonIgnore]

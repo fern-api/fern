@@ -26,11 +26,12 @@ export declare namespace TypescriptProject {
         extraConfigs: Record<string, unknown> | undefined;
         outputJsr: boolean;
         exportSerde: boolean;
+        packagePath?: string;
     }
 }
 
 export abstract class TypescriptProject {
-    protected static SRC_DIRECTORY = "src" as const;
+    protected static DEFAULT_SRC_DIRECTORY = "src" as const;
     protected static TEST_DIRECTORY = "tests" as const;
     protected static DIST_DIRECTORY = "dist" as const;
     protected static SCRIPTS_DIRECTORY_NAME = "scripts" as const;
@@ -80,6 +81,7 @@ export abstract class TypescriptProject {
     protected extraPeerDependenciesMeta: Record<string, unknown>;
     protected extraPeerDependencies: Record<string, string>;
     protected extraScripts: Record<string, string>;
+    protected packagePath: string;
 
     private runScripts: boolean;
 
@@ -96,7 +98,8 @@ export abstract class TypescriptProject {
         dependencies,
         outputJsr,
         exportSerde,
-        extraConfigs
+        extraConfigs,
+        packagePath
     }: TypescriptProject.Init) {
         this.npmPackage = npmPackage;
         this.runScripts = runScripts;
@@ -111,6 +114,7 @@ export abstract class TypescriptProject {
         this.outputJsr = outputJsr ?? false;
         this.exportSerde = exportSerde;
         this.extraConfigs = extraConfigs;
+        this.packagePath = packagePath ?? TypescriptProject.DEFAULT_SRC_DIRECTORY;
     }
 
     public getFoldersForExports(): string[] {
@@ -139,7 +143,7 @@ export abstract class TypescriptProject {
         return new PersistedTypescriptProject({
             runScripts: this.runScripts,
             directory: directoryOnDiskToWriteTo,
-            srcDirectory: RelativeFilePath.of(TypescriptProject.SRC_DIRECTORY),
+            srcDirectory: RelativeFilePath.of(this.packagePath),
             testDirectory: RelativeFilePath.of(TypescriptProject.TEST_DIRECTORY),
             distDirectory: RelativeFilePath.of(TypescriptProject.DIST_DIRECTORY),
             yarnBuildCommand: this.getYarnBuildCommand(),

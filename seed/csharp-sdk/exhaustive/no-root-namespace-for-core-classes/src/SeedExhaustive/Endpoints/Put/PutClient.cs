@@ -15,10 +15,9 @@ public partial class PutClient
     }
 
     /// <example><code>
-    /// await client.Endpoints.Put.AddAsync("id", new PutRequest());
+    /// await client.Endpoints.Put.AddAsync(new PutRequest { Id = "id" });
     /// </code></example>
     public async Task<PutResponse> AddAsync(
-        string id,
         PutRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -30,7 +29,7 @@ public partial class PutClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Put,
-                    Path = string.Format("{0}", ValueConvert.ToPathParameterString(id)),
+                    Path = string.Format("{0}", ValueConvert.ToPathParameterString(request.Id)),
                     Options = options,
                 },
                 cancellationToken

@@ -18,6 +18,9 @@ class SeedBasicAuth:
 
     username : typing.Union[str, typing.Callable[[], str]]
     password : typing.Union[str, typing.Callable[[], str]]
+    headers : typing.Optional[typing.Dict[str, str]]
+        Additional headers to send with every request.
+
     timeout : typing.Optional[float]
         The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
 
@@ -44,6 +47,7 @@ class SeedBasicAuth:
         base_url: str,
         username: typing.Union[str, typing.Callable[[], str]],
         password: typing.Union[str, typing.Callable[[], str]],
+        headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
@@ -55,6 +59,7 @@ class SeedBasicAuth:
             base_url=base_url,
             username=username,
             password=password,
+            headers=headers,
             httpx_client=httpx_client
             if httpx_client is not None
             else httpx.Client(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
@@ -76,6 +81,9 @@ class AsyncSeedBasicAuth:
 
     username : typing.Union[str, typing.Callable[[], str]]
     password : typing.Union[str, typing.Callable[[], str]]
+    headers : typing.Optional[typing.Dict[str, str]]
+        Additional headers to send with every request.
+
     timeout : typing.Optional[float]
         The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
 
@@ -102,6 +110,7 @@ class AsyncSeedBasicAuth:
         base_url: str,
         username: typing.Union[str, typing.Callable[[], str]],
         password: typing.Union[str, typing.Callable[[], str]],
+        headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
@@ -113,6 +122,7 @@ class AsyncSeedBasicAuth:
             base_url=base_url,
             username=username,
             password=password,
+            headers=headers,
             httpx_client=httpx_client
             if httpx_client is not None
             else httpx.AsyncClient(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
