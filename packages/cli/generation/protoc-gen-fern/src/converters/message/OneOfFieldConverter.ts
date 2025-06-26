@@ -14,7 +14,7 @@ export declare namespace OneOfFieldConverter {
 
     export interface Output {
         type: Type;
-        referencedTypes: Set<string>;
+        referencedTypes: Set<TypeId>;
         inlinedTypes: Record<TypeId, EnumOrMessageConverter.ConvertedSchema>;
     }
 }
@@ -51,7 +51,7 @@ export class OneOfFieldConverter extends AbstractConverter<ProtofileConverterCon
             type: Type.undiscriminatedUnion({
                 members: unionTypes
             }),
-            referencedTypes: new Set(),
+            referencedTypes: new Set<TypeId>(),
             inlinedTypes: {}
         };
     }

@@ -1,7 +1,7 @@
 import { DescriptorProto } from "@bufbuild/protobuf/wkt";
 
 import * as FernIr from "@fern-api/ir-sdk";
-import { Type } from "@fern-api/ir-sdk";
+import { Type, TypeId } from "@fern-api/ir-sdk";
 import { AbstractConverter } from "@fern-api/v2-importer-commons";
 
 import { ProtofileConverterContext } from "../ProtofileConverterContext";
@@ -32,6 +32,7 @@ export class MessageConverter extends AbstractConverter<ProtofileConverterContex
         // TODO: convert message (i.e. convert schema)
 
         let inlinedTypes: Record<FernIr.TypeId, EnumOrMessageConverter.ConvertedSchema> = {};
+        const allReferencedTypes: Set<TypeId> = new Set();
 
         // Step 1: Convert all fields
         const { convertedFields, referencedTypes, propertiesByAudience, oneOfFields } = convertFields({
@@ -39,6 +40,11 @@ export class MessageConverter extends AbstractConverter<ProtofileConverterContex
             breadcrumbs: this.breadcrumbs,
             context: this.context
         });
+
+        // Merge referenced types from fields
+        for (const referencedType of referencedTypes) {
+            allReferencedTypes.add(referencedType);
+        }
 
         // Step 2: Convert all nested messages and enums
         for (const nestedEnumOrMessage of [...this.message.nestedType, ...this.message.enumType]) {
@@ -49,6 +55,12 @@ export class MessageConverter extends AbstractConverter<ProtofileConverterContex
             });
             const convertedNestedEnumOrMessage = enumOrMessageConverter.convert();
             if (convertedNestedEnumOrMessage != null) {
+                // Add referenced types from nested types
+                for (const referencedType of convertedNestedEnumOrMessage.convertedSchema.typeDeclaration
+                    .referencedTypes) {
+                    allReferencedTypes.add(referencedType);
+                }
+
                 inlinedTypes = {
                     ...inlinedTypes,
                     ...Object.fromEntries(
@@ -73,6 +85,11 @@ export class MessageConverter extends AbstractConverter<ProtofileConverterContex
             });
             const convertedOneOfField = oneOfFieldConverter.convert();
             if (convertedOneOfField != null) {
+                // Add referenced types from oneof
+                for (const referencedType of convertedOneOfField.referencedTypes) {
+                    allReferencedTypes.add(referencedType);
+                }
+
                 const convertedOneOfSchema = {
                     typeDeclaration: this.createTypeDeclaration({
                         shape: convertedOneOfField.type,
@@ -117,7 +134,7 @@ export class MessageConverter extends AbstractConverter<ProtofileConverterContex
                         extendedProperties: [],
                         extraProperties: false
                     }),
-                    referencedTypes,
+                    referencedTypes: allReferencedTypes,
                     typeName: this.message.name
                 }),
                 audiences: [],
@@ -134,7 +151,7 @@ export class MessageConverter extends AbstractConverter<ProtofileConverterContex
         omitV2Examples
     }: {
         shape: FernIr.Type;
-        referencedTypes: Set<string>;
+        referencedTypes: Set<TypeId>;
         typeName: string;
         omitV2Examples?: boolean;
     }): FernIr.TypeDeclaration {

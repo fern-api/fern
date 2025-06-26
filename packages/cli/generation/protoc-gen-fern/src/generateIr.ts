@@ -4,6 +4,7 @@ import { FileInfo, Printable } from "@bufbuild/protoplugin";
 
 import { constructCasingsGenerator } from "@fern-api/casings-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
+import { serialization } from "@fern-api/ir-sdk";
 import { mergeIntermediateRepresentation } from "@fern-api/ir-utils";
 import { ErrorCollector } from "@fern-api/v2-importer-commons";
 
@@ -57,9 +58,12 @@ export function generateIr({ req, options }: { req: CodeGeneratorRequest; option
         }
     }
 
+    // Use the IR SDK's serialization to properly handle Sets
+    const serializedIr = serialization.IntermediateRepresentation.jsonOrThrow(mergedIr);
+
     return {
         name: "ir.json",
-        content: `${JSON.stringify(mergedIr, null, 2)}`
+        content: `${JSON.stringify(serializedIr, null, 2)}`
     };
 }
 

@@ -1,11 +1,11 @@
-import { ProtobufSpec, OpenAPISpec, Spec } from "@fern-api/api-workspace-commons";
+import { OpenAPISpec, ProtobufSpec, Spec } from "@fern-api/api-workspace-commons";
 import {
     DEFINITION_DIRECTORY,
     OPENAPI_DIRECTORY,
     generatorsYml,
     loadGeneratorsConfiguration
 } from "@fern-api/configuration-loader";
-import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join, listFiles } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join, listFiles, relative } from "@fern-api/fs-utils";
 import {
     ConjureWorkspace,
     LazyFernWorkspace,
@@ -13,6 +13,7 @@ import {
     WorkspaceLoader,
     WorkspaceLoaderFailureType
 } from "@fern-api/lazy-fern-workspace";
+import { createLoggingExecutable } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
 
 import { loadAPIChangelog } from "./loadAPIChangelog";
@@ -48,9 +49,10 @@ export async function loadSingleNamespaceAPIWorkspace({
             }
 
             // if the target is empty, use all the proto files in the root directory as targets to generate docs
-            const absoluteFilepathsToTargets = definition.schema.target.length === 0
-                ? await listFiles(absoluteFilepathToProtobufRoot, "proto")
-                : [join(absolutePathToWorkspace, RelativeFilePath.of(definition.schema.target))];
+            const absoluteFilepathsToTargets =
+                definition.schema.target.length === 0
+                    ? await listFiles(absoluteFilepathToProtobufRoot, "proto")
+                    : [join(absolutePathToWorkspace, RelativeFilePath.of(definition.schema.target))];
 
             for (const absoluteFilepathToTarget of absoluteFilepathsToTargets) {
                 if (!(await doesPathExist(absoluteFilepathToTarget))) {
@@ -266,8 +268,8 @@ export async function loadAPIWorkspace({
             didSucceed: true,
             workspace: new OSSWorkspace({
                 specs: specs.filter((spec) => {
-                    if (spec.type === "openrpc") return false;
-                    if (spec.type === "protobuf" && spec.generateDocs) return false;
+                    if (spec.type === "openrpc") {return false;}
+                    if (spec.type === "protobuf" && spec.generateDocs) {return false;}
                     return true;
                 }) as (OpenAPISpec | ProtobufSpec)[],
                 allSpecs: specs,

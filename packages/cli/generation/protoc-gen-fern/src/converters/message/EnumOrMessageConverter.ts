@@ -1,6 +1,6 @@
 import { DescriptorProto, EnumDescriptorProto } from "@bufbuild/protobuf/wkt";
 
-import { FernIr } from "@fern-api/ir-sdk";
+import { FernIr, TypeId } from "@fern-api/ir-sdk";
 import { AbstractConverter, AbstractConverterContext } from "@fern-api/v2-importer-commons";
 
 import { ProtofileConverterContext } from "../ProtofileConverterContext";
@@ -97,7 +97,7 @@ export class EnumOrMessageConverter extends AbstractConverter<
         omitV2Examples
     }: {
         shape: FernIr.Type;
-        referencedTypes: Set<string>;
+        referencedTypes: Set<TypeId>;
         omitV2Examples?: boolean;
     }): FernIr.TypeDeclaration {
         return {
