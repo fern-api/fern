@@ -444,15 +444,19 @@ internal sealed class CursorPager<TRequest, TRequestOptions, TResponse, TCursor,
             var items = getItems(response);
             var page = items is not null ? new Page<TItem>(items) : Page<TItem>.Empty;
             var cursor = getNextCursor(response);
-            var hasNextPage = cursor is not null;
+            var hasNextPage = !isCursorNull(cursor);
             setCursor(request, cursor);
-            if (cursor is null)
+            if (isCursorNull(cursor))
             {
                 return (default, false, page);
             }
 
             return (request, hasNextPage, page);
         };
+    }
+
+    private static isCursorNull(TCursor cursor) {
+        return (cursor is null || (cursor is string s && string.IsNullOrEmpty(s)));
     }
 
     private async Task<Page<TItem>> SendRequestAndHandleResponse(
