@@ -15,8 +15,8 @@ import { ChangelogNodeConverter } from "./ChangelogNodeConverter";
 import { NodeIdGenerator } from "./NodeIdGenerator";
 import { convertPlaygroundSettings } from "./utils/convertPlaygroundSettings";
 import { enrichApiPackageChild } from "./utils/enrichApiPackageChild";
+import { cannotFindSubpackageByLocatorError, packageReuseError } from "./utils/errorMessages";
 import { getApiLatestToNavigationNodeUrlSlug } from "./utils/getApiLatestToNavigationNodeUrlSlug";
-import { getKLexicallyNearestNeighbors } from "./utils/getKLexicallyNearestNeighbors";
 import { mergeAndFilterChildren } from "./utils/mergeAndFilterChildren";
 import { mergeEndpointPairs } from "./utils/mergeEndpointPairs";
 import { stringifyEndpointPathParts, stringifyEndpointPathPartsWithMethod } from "./utils/stringifyEndpointPathParts";
@@ -276,8 +276,7 @@ export class ApiReferenceNodeConverterLatest {
                 const subpackage = this.#apiDefinitionHolder.getSubpackageByLocator(locator);
                 if (subpackage === null || subpackage === undefined) {
                     this.taskContext.logger.error(
-                        `Unable to add subsection ${locator} to section ${section.title} due to error: ` +
-                            this.cannotFindSubpackageByLocatorError(locator)
+                        cannotFindSubpackageByLocatorError(locator, this.#apiDefinitionHolder.subpackageLocators)
                     );
                     return undefined;
                 }
@@ -290,7 +289,7 @@ export class ApiReferenceNodeConverterLatest {
         this.#nodeIdToSubpackageId.set(nodeId, subPackageIds);
         subPackageTuples.forEach((subPackageTuple) => {
             if (this.#visitedSubpackages.has(subPackageTuple.subpackageId)) {
-                this.taskContext.logger.error(this.packageReuseError(subPackageTuple.locator));
+                this.taskContext.logger.error(packageReuseError(subPackageTuple.locator));
             }
             this.#visitedSubpackages.add(subPackageTuple.subpackageId);
         });
@@ -347,7 +346,7 @@ export class ApiReferenceNodeConverterLatest {
             const subpackageNodeId = this.#idgen.get(`${this.apiDefinitionId}:${subpackageId}`);
 
             if (this.#visitedSubpackages.has(subpackageId)) {
-                this.taskContext.logger.error(this.packageReuseError(unknownIdentifier));
+                this.taskContext.logger.warn(packageReuseError(unknownIdentifier));
             }
 
             this.#visitedSubpackages.add(subpackageId);
@@ -802,7 +801,7 @@ export class ApiReferenceNodeConverterLatest {
         const pkg = packageId != null ? this.#resolveSubpackage(packageId) : undefined;
 
         if (pkg == null) {
-            this.taskContext.logger.error(this.cannotFindSubpackageByLocatorError(packageId || "unknown"));
+            this.taskContext.logger.error(cannotFindSubpackageByLocatorError(packageId || "unknown", []));
             return [];
         }
 
@@ -825,18 +824,5 @@ export class ApiReferenceNodeConverterLatest {
             disableEndpointPairs: this.disableEndpointPairs,
             apiDefinitionId: this.apiDefinitionId
         });
-    }
-
-    private cannotFindSubpackageByLocatorError(locator: string) {
-        const nearestMatch = getKLexicallyNearestNeighbors(locator, this.#apiDefinitionHolder.subpackageLocators, 1)[0];
-        let msg = `Cannot find identifier ${locator} in api definition.`;
-        if (nearestMatch !== undefined) {
-            msg += ` Did you mean ${nearestMatch}?`;
-        }
-        return msg;
-    }
-
-    private packageReuseError(name: string): string {
-        return `Component ${name} used multiple times in the API Reference layout`;
     }
 }

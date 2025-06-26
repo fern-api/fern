@@ -14,7 +14,7 @@ import { ChangelogNodeConverter } from "./ChangelogNodeConverter";
 import { NodeIdGenerator } from "./NodeIdGenerator";
 import { convertPlaygroundSettings } from "./utils/convertPlaygroundSettings";
 import { enrichApiPackageChild } from "./utils/enrichApiPackageChild";
-import { getKLexicallyNearestNeighbors } from "./utils/getKLexicallyNearestNeighbors";
+import { cannotFindSubpackageByLocatorError, packageReuseError } from "./utils/errorMessages";
 import { isSubpackage } from "./utils/isSubpackage";
 import { mergeAndFilterChildren } from "./utils/mergeAndFilterChildren";
 import { mergeEndpointPairs } from "./utils/mergeEndpointPairs";
@@ -192,7 +192,7 @@ export class ApiReferenceNodeConverter {
             const subpackageNodeId = this.#idgen.get(overviewPageId ?? `${this.apiDefinitionId}:${subpackageId}`);
 
             if (this.#visitedSubpackages.has(subpackageId)) {
-                this.taskContext.logger.error(this.packageReuseError(pkg.title || pkg.package));
+                this.taskContext.logger.warn(packageReuseError(pkg.title || pkg.package));
             }
 
             this.#visitedSubpackages.add(subpackageId);
@@ -232,7 +232,9 @@ export class ApiReferenceNodeConverter {
                 featureFlags: pkg.featureFlags
             };
         } else {
-            this.taskContext.logger.warn(`Cannot find component ${pkg.title}, treating it as a section`);
+            this.taskContext.logger.warn(
+                cannotFindSubpackageByLocatorError(pkg.title || pkg.package, this.#holder.subpackageLocators)
+            );
             const urlSlug = pkg.slug ?? kebabCase(pkg.package);
             const slug = parentSlug.apply({
                 fullSlug: maybeFullSlug?.split("/"),
@@ -289,8 +291,7 @@ export class ApiReferenceNodeConverter {
                 const subpackageId = subpackage != null ? ApiDefinitionHolder.getSubpackageId(subpackage) : undefined;
                 if (subpackageId === undefined) {
                     this.taskContext.logger.error(
-                        `Unable to add subsection ${locator} to section ${section.title} due to error: ` +
-                            this.cannotFindSubpackageByLocatorError(locator)
+                        cannotFindSubpackageByLocatorError(locator, this.#holder.subpackageLocators)
                     );
                     return undefined;
                 }
@@ -305,7 +306,7 @@ export class ApiReferenceNodeConverter {
         );
         subPackageTuples.forEach((subPackageTuple) => {
             if (this.#visitedSubpackages.has(subPackageTuple.subpackageId)) {
-                this.taskContext.logger.error(this.packageReuseError(subPackageTuple.locator));
+                this.taskContext.logger.error(packageReuseError(subPackageTuple.locator));
             }
             this.#visitedSubpackages.add(subPackageTuple.subpackageId);
         });
@@ -354,7 +355,7 @@ export class ApiReferenceNodeConverter {
             const subpackageNodeId = this.#idgen.get(`${this.apiDefinitionId}:${subpackageId}`);
 
             if (this.#visitedSubpackages.has(subpackageId)) {
-                this.taskContext.logger.error(this.packageReuseError(unknownIdentifier));
+                this.taskContext.logger.error(packageReuseError(unknownIdentifier));
             }
 
             this.#visitedSubpackages.add(subpackageId);
@@ -718,7 +719,7 @@ export class ApiReferenceNodeConverter {
                 : undefined;
 
         if (pkg == null) {
-            this.taskContext.logger.error(this.cannotFindSubpackageByLocatorError(packageId || "unknown"));
+            this.taskContext.logger.error(cannotFindSubpackageByLocatorError(packageId || "unknown", []));
             return [];
         }
 
@@ -741,18 +742,5 @@ export class ApiReferenceNodeConverter {
             disableEndpointPairs: this.disableEndpointPairs,
             apiDefinitionId: this.apiDefinitionId
         });
-    }
-
-    private cannotFindSubpackageByLocatorError(locator: string) {
-        const nearestMatch = getKLexicallyNearestNeighbors(locator, this.#holder.subpackageLocators, 1)[0];
-        let msg = `Cannot find identifier ${locator} in api definition.`;
-        if (nearestMatch !== undefined) {
-            msg += ` Did you mean ${nearestMatch}?`;
-        }
-        return msg;
-    }
-
-    private packageReuseError(name: string): string {
-        return `Component ${name} used multiple times in the API Reference layout`;
     }
 }
