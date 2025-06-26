@@ -1,3 +1,4 @@
+import { normalizeLocatorString } from "../errorMessages";
 import { getLexicallyNearestNeighbors } from "../getLexicallyNearestNeighbors";
 
 describe("getLexicallyNearestNeighbors", () => {
@@ -15,5 +16,15 @@ describe("getLexicallyNearestNeighbors", () => {
     });
     it("handles empty neighbors iterable", () => {
         expect(getLexicallyNearestNeighbors("foo", [], 3)).toEqual([]);
+    });
+});
+
+describe("getLexicallyNearestNeighbors with normalization", () => {
+    it("finds neighbors ignoring case and symbols", () => {
+        const neighbors = ["Foo-Bar", "foo_bar", "baz"];
+        const result = getLexicallyNearestNeighbors("foo.bar", neighbors, 2, normalizeLocatorString);
+        // Both 'Foo-Bar' and 'foo_bar' normalize to 'foobar', so both are equally close
+        expect(result).toContain("Foo-Bar");
+        expect(result).toContain("foo_bar");
     });
 });

@@ -1,4 +1,4 @@
-import { cannotFindSubpackageByLocatorError } from "../errorMessages";
+import { cannotFindSubpackageByLocatorError, normalizeLocatorString } from "../errorMessages";
 
 describe("cannotFindSubpackageByLocatorError", () => {
     it("returns base error when no matches", () => {
@@ -20,5 +20,24 @@ describe("cannotFindSubpackageByLocatorError", () => {
     it("returns only three suggestions even if more exist", () => {
         const result = cannotFindSubpackageByLocatorError("foo.bar", ["foo.baz", "foo.bat", "foo.baq", "foo.bam"]);
         expect(result).toBe("Failed to locate API section foo.bar. Did you mean foo.bam, foo.baq, or foo.bat?");
+    });
+    it("suggests ignoring case and symbols", () => {
+        // 'Foo-Bar' and 'foo_bar' should be considered similar to 'foo.bar' after normalization
+        const result = cannotFindSubpackageByLocatorError("foo.bar", ["Foo-Bar", "foo_bar", "baz"]);
+        // Both 'Foo-Bar' and 'foo_bar' normalize to 'foobar', so both are equally close
+        expect(result).toContain("Foo-Bar");
+        expect(result).toContain("foo_bar");
+    });
+});
+
+describe("normalizeLocatorString", () => {
+    it("removes non-alphanumeric and lowercases", () => {
+        expect(normalizeLocatorString("Foo.Bar-Baz_123")).toBe("foobarbaz123");
+    });
+    it("handles empty string", () => {
+        expect(normalizeLocatorString("")).toBe("");
+    });
+    it("removes all symbols", () => {
+        expect(normalizeLocatorString("-._!@# ")).toBe("");
     });
 });
