@@ -9,15 +9,15 @@ var value = \`{"one": 1, "two": 2}\`"
 exports[`Snippets > 'any (list)' 1`] = `
 "package example
 
-var value = map[string]interface{}{
+var value = map[string]any{
     "organization": "acme",
-    "users": []interface{}{
-        map[string]interface{}{
+    "users": []any{
+        map[string]any{
             "name": "John Doe",
             "age": 42,
             "active": false,
         },
-        map[string]interface{}{
+        map[string]any{
             "name": "Jane Doe",
             "age": 41,
             "active": true,
@@ -29,8 +29,8 @@ var value = map[string]interface{}{
 exports[`Snippets > 'any (nested)' 1`] = `
 "package example
 
-var value = map[string]interface{}{
-    "user": map[string]interface{}{
+var value = map[string]any{
+    "user": map[string]any{
         "name": "John Doe",
         "age": 42,
         "active": false,
