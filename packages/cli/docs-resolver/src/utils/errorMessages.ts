@@ -1,7 +1,11 @@
-import { getLexicallyNearestNeighbors } from "./getKLexicallyNearestNeighbors";
+import { getLexicallyNearestNeighbors } from "./getLexicallyNearestNeighbors";
 
-export function cannotFindSubpackageByLocatorError(locator: string, existingLocators: Iterable<string>) {
-    const nearestThreeMatches = getLexicallyNearestNeighbors(locator, existingLocators, 3);
+function normalizeLocatorString(s: string): string {
+    return s.toLowerCase().replace(/[^a-z0-9]/g, "");
+}
+
+export function cannotFindSubpackageByLocatorError(locator: string, existingLocators: Iterable<string>): string {
+    const nearestThreeMatches = getLexicallyNearestNeighbors(locator, existingLocators, 3, normalizeLocatorString);
     const msg = `Failed to locate API section ${locator}.`;
     switch (nearestThreeMatches.length) {
         case 0:
