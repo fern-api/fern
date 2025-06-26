@@ -1,6 +1,51 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Global headers are now used to create endpoint examples. When building endpoint examples, global headers 
+        are automatically included in the headers section of each example. This ensures that all endpoints have consistent 
+        header examples that match the global header configuration.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-06-25"
+  version: 0.64.23
+
+- changelogEntry:
+    - summary: |
+        Make proto file target field optional in generators.yml
+      type: feat
+  irVersion: 58
+  createdAt: "2025-06-25"
+  version: 0.64.22
+
+- changelogEntry:
+    - summary: |
+        Introduce `x-fern-discriminated` extension to configure oneOf union behavior in OpenAPI specs.
+
+        ```yaml
+        # Example usage in OpenAPI schema
+        oneOf:
+          - $ref: '#/components/schemas/Circle'
+          - $ref: '#/components/schemas/Square'
+        x-fern-discriminated: false  # Treat as undiscriminated union
+        ```
+        
+        When `x-fern-discriminated` is set to `false`, the oneOf will be treated as an undiscriminated union instead of a discriminated union.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-06-24"
+  version: 0.64.21
+
+
+- changelogEntry:
+    - summary: |
+        Remove 'fern-check' error for global header examples included with 'x-fern-examples'
+      type: fix
+  irVersion: 58
+  createdAt: "2025-06-24"
+  version: 0.64.20
+
+- changelogEntry:
+    - summary: |
         Pin Windows to legacy preview mode.
       type: fix
   irVersion: 58

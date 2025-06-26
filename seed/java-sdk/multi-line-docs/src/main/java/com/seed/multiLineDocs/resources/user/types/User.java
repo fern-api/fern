@@ -99,10 +99,12 @@ public final class User {
 
     public interface NameStage {
         /**
-         * The user's name. This name is unique to each user. A few examples are included below:
-         *  - Alice
-         *  - Bob
-         *  - Charlie
+         * <p>The user's name. This name is unique to each user. A few examples are included below:</p>
+         * <ul>
+         * <li>Alice</li>
+         * <li>Bob</li>
+         * <li>Charlie</li>
+         * </ul>
          */
         _FinalStage name(@NotNull String name);
     }
@@ -147,10 +149,13 @@ public final class User {
         }
 
         /**
-         * The user's name. This name is unique to each user. A few examples are included below:
-         *  - Alice
-         *  - Bob
-         *  - Charlie<p>The user's name. This name is unique to each user. A few examples are included below:</p>
+         * <p>The user's name. This name is unique to each user. A few examples are included below:</p>
+         * <ul>
+         * <li>Alice</li>
+         * <li>Bob</li>
+         * <li>Charlie</li>
+         * </ul>
+         * <p>The user's name. This name is unique to each user. A few examples are included below:</p>
          * <ul>
          * <li>Alice</li>
          * <li>Bob</li>
