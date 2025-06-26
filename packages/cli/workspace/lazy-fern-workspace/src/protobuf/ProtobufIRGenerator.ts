@@ -1,19 +1,12 @@
 import { execSync } from "child_process";
-import { chmod, cp, readFile, writeFile } from "fs/promises";
-import path, { resolve } from "path";
+import { chmod, cp, writeFile } from "fs/promises";
 import tmp from "tmp-promise";
 
-import { AbsoluteFilePath, RelativeFilePath, join, listFiles, relative } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath, cwd, join, resolve } from "@fern-api/fs-utils";
 import { createLoggingExecutable } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
 
-const PROTOBUF_GENERATOR_CONFIG_FILENAME = "buf.gen.yaml";
-const PROTOBUF_GENERATOR_OUTPUT_PATH = "output";
-const PROTOBUF_GENERATOR_OUTPUT_FILEPATH = `${PROTOBUF_GENERATOR_OUTPUT_PATH}/ir.json`;
-const PROTOC_GEN_FERN_PLUGIN_PATH =
-    "/Users/sahil/Fern/fern/packages/cli/generation/protoc-gen-fern/lib/protoc-gen-fern.js";
-
-const PROTOBUF_SHELL_PROXY_FILENAME = "protoc-gen-fern";
+import { PROTOBUF_GEN_CONFIG, PROTOBUF_GENERATOR_CONFIG_FILENAME, PROTOBUF_GENERATOR_OUTPUT_FILEPATH, PROTOBUF_MODULE_PACKAGE_JSON, PROTOBUF_SHELL_PROXY, PROTOBUF_SHELL_PROXY_FILENAME, createEmptyProtobufLogger } from "./utils";
 
 export class ProtobufIRGenerator {
     private context: TaskContext;
@@ -24,19 +17,16 @@ export class ProtobufIRGenerator {
 
     public async generate({
         absoluteFilepathToProtobufRoot,
-        absoluteFilepathToProtobufTarget,
         relativeFilepathToProtobufRoot,
         local
     }: {
         absoluteFilepathToProtobufRoot: AbsoluteFilePath;
-        absoluteFilepathToProtobufTarget: AbsoluteFilePath;
         relativeFilepathToProtobufRoot: RelativeFilePath;
         local: boolean;
     }): Promise<AbsoluteFilePath> {
         if (local) {
             return this.generateLocal({
                 absoluteFilepathToProtobufRoot,
-                absoluteFilepathToProtobufTarget,
                 relativeFilepathToProtobufRoot
             });
         }
@@ -45,21 +35,17 @@ export class ProtobufIRGenerator {
 
     private async generateLocal({
         absoluteFilepathToProtobufRoot,
-        absoluteFilepathToProtobufTarget,
         relativeFilepathToProtobufRoot
     }: {
         absoluteFilepathToProtobufRoot: AbsoluteFilePath;
-        absoluteFilepathToProtobufTarget: AbsoluteFilePath;
         relativeFilepathToProtobufRoot: RelativeFilePath;
     }): Promise<AbsoluteFilePath> {
         const protobufGeneratorConfigPath = await this.setupProtobufGeneratorConfig({
             absoluteFilepathToProtobufRoot,
             relativeFilepathToProtobufRoot
         });
-        const protoTargetRelativeFilePath = relative(absoluteFilepathToProtobufRoot, absoluteFilepathToProtobufTarget);
         return this.doGenerateLocal({
-            cwd: protobufGeneratorConfigPath,
-            target: protoTargetRelativeFilePath
+            cwd: protobufGeneratorConfigPath
         });
     }
 
@@ -76,51 +62,36 @@ export class ProtobufIRGenerator {
         // Initialize package.json
         await writeFile(
             join(protobufGeneratorConfigPath, RelativeFilePath.of("package.json")),
-            JSON.stringify(
-                {
-                    name: "temp-protoc-gen-fern",
-                    version: "1.0.0",
-                    type: "module",
-                    dependencies: {
-                        "@bufbuild/protobuf": "^2.2.5",
-                        "@bufbuild/protoplugin": "2.2.5"
-                    }
-                },
-                null,
-                2
-            )
+            PROTOBUF_MODULE_PACKAGE_JSON
         );
 
-        // Install dependencies
         execSync("npm install", {
             cwd: protobufGeneratorConfigPath,
-            stdio: "inherit" // This will show npm output
+            stdio: "ignore"
         });
 
         // Write buf config
         await writeFile(
             join(protobufGeneratorConfigPath, RelativeFilePath.of(PROTOBUF_GENERATOR_CONFIG_FILENAME)),
-            getProtobufGeneratorConfig()
+            PROTOBUF_GEN_CONFIG
         );
 
         // Write and make executable the protoc plugin
         const shellProxyPath = join(protobufGeneratorConfigPath, RelativeFilePath.of(PROTOBUF_SHELL_PROXY_FILENAME));
-        await writeFile(shellProxyPath, getProtobufShellProxy());
+        await writeFile(shellProxyPath, PROTOBUF_SHELL_PROXY);
         await chmod(shellProxyPath, 0o755);
 
         return protobufGeneratorConfigPath;
     }
 
     private async doGenerateLocal({
-        cwd,
-        target
+        cwd
     }: {
         cwd: AbsoluteFilePath;
-        target: RelativeFilePath;
     }): Promise<AbsoluteFilePath> {
         const which = createLoggingExecutable("which", {
             cwd,
-            logger: this.context.logger
+            logger: createEmptyProtobufLogger()
         });
 
         try {
@@ -133,7 +104,7 @@ export class ProtobufIRGenerator {
 
         const buf = createLoggingExecutable("buf", {
             cwd,
-            logger: this.context.logger
+            logger: createEmptyProtobufLogger()
         });
 
         await buf(["config", "init"]);
@@ -145,22 +116,4 @@ export class ProtobufIRGenerator {
     private async generateRemote(): Promise<AbsoluteFilePath> {
         this.context.failAndThrow("Remote Protobuf generation is unimplemented.");
     }
-}
-
-const PROTOBUF_GEN_CONFIG = `version: v2
-plugins:
-  - local: ["tsx", "protoc-gen-fern"]
-    out: output`;
-
-function getProtobufGeneratorConfig(): string {
-    return PROTOBUF_GEN_CONFIG;
-}
-
-function getProtobufShellProxy(): string {
-    return `#!/usr/bin/env node
-    import { runNodeJs } from "@bufbuild/protoplugin";
-
-    import { protocGenFern } from "${PROTOC_GEN_FERN_PLUGIN_PATH}";
-
-    runNodeJs(protocGenFern);`;
 }

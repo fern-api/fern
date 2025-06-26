@@ -48,13 +48,13 @@ export async function loadSingleNamespaceAPIWorkspace({
                 };
             }
 
-            // if the target is empty, use all the proto files in the root directory as targets to generate docs
-            const absoluteFilepathsToTargets =
+            // if the target is empty, don't specify a target because we are using 'strategy: all' from the root
+            const absoluteFilepathToTarget: AbsoluteFilePath =
                 definition.schema.target.length === 0
-                    ? await listFiles(absoluteFilepathToProtobufRoot, "proto")
-                    : [join(absolutePathToWorkspace, RelativeFilePath.of(definition.schema.target))];
+                    ? "" as AbsoluteFilePath
+                    : join(absolutePathToWorkspace, RelativeFilePath.of(definition.schema.target));
 
-            for (const absoluteFilepathToTarget of absoluteFilepathsToTargets) {
+            if (definition.schema.target.length > 0) {
                 if (!(await doesPathExist(absoluteFilepathToTarget))) {
                     return {
                         didSucceed: false,
@@ -65,44 +65,44 @@ export async function loadSingleNamespaceAPIWorkspace({
                         }
                     };
                 }
-
-                specs.push({
-                    type: "protobuf",
-                    absoluteFilepathToProtobufRoot,
-                    absoluteFilepathToProtobufTarget: absoluteFilepathToTarget,
-                    absoluteFilepathToOverrides,
-                    relativeFilepathToProtobufRoot,
-                    generateDocs: definition.schema.target.length === 0,
-                    generateLocally: definition.schema.localGeneration,
-                    settings: {
-                        audiences: definition.audiences ?? [],
-                        useTitlesAsName: definition.settings?.shouldUseTitleAsName ?? true,
-                        shouldUseUndiscriminatedUnionsWithLiterals:
-                            definition.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false,
-                        shouldUseIdiomaticRequestNames: definition.settings?.shouldUseIdiomaticRequestNames ?? false,
-                        optionalAdditionalProperties:
-                            definition.settings?.shouldUseOptionalAdditionalProperties ?? true,
-                        coerceEnumsToLiterals: definition.settings?.coerceEnumsToLiterals ?? true,
-                        objectQueryParameters: definition.settings?.objectQueryParameters ?? false,
-                        respectReadonlySchemas: definition.settings?.respectReadonlySchemas ?? false,
-                        respectNullableSchemas: definition.settings?.respectNullableSchemas ?? false,
-                        onlyIncludeReferencedSchemas: definition.settings?.onlyIncludeReferencedSchemas ?? false,
-                        inlinePathParameters: definition.settings?.inlinePathParameters ?? false,
-                        disableExamples: false,
-                        discriminatedUnionV2: definition.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false,
-                        preserveSchemaIds: false,
-                        asyncApiNaming: definition.settings?.asyncApiMessageNaming ?? "v1",
-                        filter: definition.settings?.filter,
-                        exampleGeneration: undefined,
-                        defaultFormParameterEncoding: definition.settings?.defaultFormParameterEncoding,
-                        useBytesForBinaryResponse: definition.settings?.useBytesForBinaryResponse ?? false,
-                        respectForwardCompatibleEnums: definition.settings?.respectForwardCompatibleEnums ?? false,
-                        additionalPropertiesDefaultsTo: definition.settings?.additionalPropertiesDefaultsTo ?? false,
-                        typeDatesAsStrings: definition.settings?.typeDatesAsStrings ?? true,
-                        preserveSingleSchemaOneOf: definition.settings?.preserveSingleSchemaOneOf ?? false
-                    }
-                });
             }
+
+            specs.push({
+                type: "protobuf",
+                absoluteFilepathToProtobufRoot,
+                absoluteFilepathToProtobufTarget: absoluteFilepathToTarget,
+                absoluteFilepathToOverrides,
+                relativeFilepathToProtobufRoot,
+                generateDocs: definition.schema.target.length === 0,
+                generateLocally: definition.schema.localGeneration,
+                settings: {
+                    audiences: definition.audiences ?? [],
+                    useTitlesAsName: definition.settings?.shouldUseTitleAsName ?? true,
+                    shouldUseUndiscriminatedUnionsWithLiterals:
+                        definition.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false,
+                    shouldUseIdiomaticRequestNames: definition.settings?.shouldUseIdiomaticRequestNames ?? false,
+                    optionalAdditionalProperties:
+                        definition.settings?.shouldUseOptionalAdditionalProperties ?? true,
+                    coerceEnumsToLiterals: definition.settings?.coerceEnumsToLiterals ?? true,
+                    objectQueryParameters: definition.settings?.objectQueryParameters ?? false,
+                    respectReadonlySchemas: definition.settings?.respectReadonlySchemas ?? false,
+                    respectNullableSchemas: definition.settings?.respectNullableSchemas ?? false,
+                    onlyIncludeReferencedSchemas: definition.settings?.onlyIncludeReferencedSchemas ?? false,
+                    inlinePathParameters: definition.settings?.inlinePathParameters ?? false,
+                    disableExamples: false,
+                    discriminatedUnionV2: definition.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false,
+                    preserveSchemaIds: false,
+                    asyncApiNaming: definition.settings?.asyncApiMessageNaming ?? "v1",
+                    filter: definition.settings?.filter,
+                    exampleGeneration: undefined,
+                    defaultFormParameterEncoding: definition.settings?.defaultFormParameterEncoding,
+                    useBytesForBinaryResponse: definition.settings?.useBytesForBinaryResponse ?? false,
+                    respectForwardCompatibleEnums: definition.settings?.respectForwardCompatibleEnums ?? false,
+                    additionalPropertiesDefaultsTo: definition.settings?.additionalPropertiesDefaultsTo ?? false,
+                    typeDatesAsStrings: definition.settings?.typeDatesAsStrings ?? true,
+                    preserveSingleSchemaOneOf: definition.settings?.preserveSingleSchemaOneOf ?? false
+                }
+            });
             continue;
         }
 

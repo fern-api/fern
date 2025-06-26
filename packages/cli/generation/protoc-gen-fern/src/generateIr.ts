@@ -58,12 +58,11 @@ export function generateIr({ req, options }: { req: CodeGeneratorRequest; option
         }
     }
 
-    // Use the IR SDK's serialization to properly handle Sets
-    const serializedIr = serialization.IntermediateRepresentation.jsonOrThrow(mergedIr);
+    const serializedIr = serialization.IntermediateRepresentation.json(mergedIr);
 
     return {
         name: "ir.json",
-        content: `${JSON.stringify(serializedIr, null, 2)}`
+        content: JSON.stringify(serializedIr, null, 2)
     };
 }
 

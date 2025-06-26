@@ -32,8 +32,7 @@ export class EnumConverter extends AbstractConverter<ProtofileConverterContext, 
                     wireValue: name
                 }),
                 docs: undefined,
-                availability: undefined,
-                casing: undefined
+                availability: undefined
             };
         });
 

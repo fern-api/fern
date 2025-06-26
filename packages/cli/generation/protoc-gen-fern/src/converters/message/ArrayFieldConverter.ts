@@ -14,7 +14,7 @@ export declare namespace ArrayFieldConverter {
 
     export interface Output {
         typeReference: TypeReference;
-        referencedTypes: Set<string>;
+        referencedTypes: Set<TypeId>;
         inlinedTypes: Record<TypeId, EnumOrMessageConverter.ConvertedSchema>;
     }
 }
@@ -42,7 +42,7 @@ export class ArrayFieldConverter extends AbstractConverter<ProtofileConverterCon
             });
             const convertedField = fieldConverter.convert();
             if (convertedField != null) {
-                const referencedTypes = new Set<string>();
+                const referencedTypes = new Set<TypeId>();
                 return {
                     typeReference: TypeReference.container(ContainerType.list(convertedField.type)),
                     referencedTypes,
@@ -50,6 +50,10 @@ export class ArrayFieldConverter extends AbstractConverter<ProtofileConverterCon
                 };
             }
         }
-        return { typeReference: ArrayFieldConverter.LIST_UNKNOWN, referencedTypes: new Set(), inlinedTypes: {} };
+        return {
+            typeReference: ArrayFieldConverter.LIST_UNKNOWN,
+            referencedTypes: new Set<TypeId>(),
+            inlinedTypes: {}
+        };
     }
 }
