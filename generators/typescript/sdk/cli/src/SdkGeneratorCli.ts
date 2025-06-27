@@ -187,7 +187,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
         return {
             streamType: customConfig.streamType,
             fileResponseType: customConfig.fileResponseType,
-            formDataSupport: customConfig.formDataSupport,
+            formDataSupport: customConfig.formDataSupport
         };
     }
 
