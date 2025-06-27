@@ -659,23 +659,23 @@ navigation:
           - page: Commands
             path: ./pages/cli-api/commands.mdx
           - changelog: ./pages/changelogs/cli
-      - api: API Reference
-        api-name: public-api
-        icon: fa-regular fa-pro
-        paginated: true
-        snippets:
-          python: fern-api
-          typescript: '@fern-api/node-sdk'
-        audiences:
-          - external
-        layout:
-          - page: Overview
-            path: ./pages/cli-api/api-get-started.mdx
-          - sdk: 
-            - endpoint: sdk.generate
-              hidden: true
-            - endpoint: sdk.getStatus
-              hidden: true
+      # - api: API Reference
+      #   api-name: public-api
+      #   icon: fa-regular fa-pro
+      #   paginated: true
+      #   snippets:
+      #     python: fern-api
+      #     typescript: '@fern-api/node-sdk'
+      #   audiences:
+      #     - external
+      #   layout:
+      #     - page: Overview
+      #       path: ./pages/cli-api/api-get-started.mdx
+      #     - sdk: 
+      #       - endpoint: sdk.generate
+      #         hidden: true
+      #       - endpoint: sdk.getStatus
+      #         hidden: true
 
 
 navbar-links:
