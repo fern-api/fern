@@ -21,7 +21,7 @@ if [[ $TAG == *"-rc"* ]]; then
   is_not_rc=false
 fi
 
-docker buildx --platform "linux/amd64,linux/arm64" -f "$DOCKER_DIR/Dockerfile" -t "$DOCKER_NAME" ${is_not_rc:+-t "fernapi/fern-typescript-node-sdk:latest"} "$ROOT_DIR" --label "version=$TAG"
+docker buildx build --platform "linux/amd64,linux/arm64" -f "$DOCKER_DIR/Dockerfile" -t "$DOCKER_NAME" ${is_not_rc:+-t "fernapi/fern-typescript-node-sdk:latest"} "$ROOT_DIR" --label "version=$TAG"
 
 echo
 echo "Built docker: $DOCKER_NAME"
