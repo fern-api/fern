@@ -155,6 +155,7 @@ service:
               type: optional<file>
             request:
               content-type: application/json; charset=utf-8
+              style: json
               type: optional<unknown>
         content-type: multipart/form-data
         name: OptionalArgsRequest
