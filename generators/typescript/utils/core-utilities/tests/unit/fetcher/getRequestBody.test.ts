@@ -7,7 +7,7 @@ describe("Test getRequestBody", () => {
             const body = { key: "value" };
             const result = await getRequestBody({
                 body,
-                type: "json",
+                type: "json"
             });
             expect(result).toBe('{"key":"value"}');
         }
@@ -19,7 +19,7 @@ describe("Test getRequestBody", () => {
             formData.append("key", "value");
             const result = await getRequestBody({
                 body: formData,
-                type: "file",
+                type: "file"
             });
             expect(result).toBe(formData);
         }
@@ -30,7 +30,7 @@ describe("Test getRequestBody", () => {
             const body = { key: "value" };
             const result = await getRequestBody({
                 body,
-                type: "json",
+                type: "json"
             });
             expect(result).toBe('{"key":"value"}');
         }
@@ -40,7 +40,7 @@ describe("Test getRequestBody", () => {
         const input = new Uint8Array([1, 2, 3]);
         const result = await getRequestBody({
             body: input,
-            type: "bytes",
+            type: "bytes"
         });
         expect(result).toBe(input);
     });
@@ -49,7 +49,7 @@ describe("Test getRequestBody", () => {
         const input = "key=value&another=param";
         const result = await getRequestBody({
             body: input,
-            type: "other",
+            type: "other"
         });
         expect(result).toBe(input);
     });
@@ -58,7 +58,7 @@ describe("Test getRequestBody", () => {
         const input = { key: "value" };
         const result = await getRequestBody({
             body: input,
-            type: "json",
+            type: "json"
         });
         expect(result).toBe('{"key":"value"}');
     });

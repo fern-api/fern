@@ -47,7 +47,7 @@ export class AsIsManager {
                 },
                 bigintSetup: { ["tests/bigint.setup.ts"]: `${this.relativeTestPath}/bigint.setup.ts` },
                 jestBrowserConfig: {
-                    ["tests/jest.browser.config.mjs"]: 'jest.browser.config.mjs'
+                    ["tests/jest.browser.config.mjs"]: "jest.browser.config.mjs"
                 },
                 BrowserEnvironment: {
                     ["tests/BrowserTestEnvironment.ts"]: `${this.relativeTestPath}/BrowserTestEnvironment.ts`
