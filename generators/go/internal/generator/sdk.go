@@ -943,19 +943,26 @@ func (f *fileWriter) WriteClient(
 	}
 
 	var (
-		clientName            = "Client"
-		clientConstructorName = "NewClient"
+		clientName               = "Client"
+		rawClientName            = "RawClient"
+		clientConstructorName    = "NewClient"
+		rawClientConstructorName = "NewRawClient"
 	)
 	if packageLayout == PackageLayoutFlat && fernFilepath.File != nil {
 		clientName = fernFilepath.File.PascalCase.UnsafeName + "Client"
+		rawClientName = "Raw" + fernFilepath.File.PascalCase.UnsafeName + "Client"
 		clientConstructorName = "New" + clientName
+		rawClientConstructorName = "New" + rawClientName
 	}
 	if clientNameOverride != "" {
 		clientName = clientNameOverride
+		rawClientName = "Raw" + clientNameOverride
 		clientConstructorName = "New" + clientName
+		rawClientConstructorName = "New" + rawClientName
 	}
 	if clientConstructorNameOverride != "" {
 		clientConstructorName = clientConstructorNameOverride
+		rawClientConstructorName = "New" + rawClientName
 	}
 
 	receiver := typeNameToReceiver(clientName)
@@ -966,6 +973,9 @@ func (f *fileWriter) WriteClient(
 	f.P("caller *internal.Caller")
 	f.P("header http.Header")
 	f.P()
+	if len(endpoints) > 0 {
+		f.P("WithRawResponse *", rawClientName)
+	}
 	for _, subpackage := range subpackages {
 		if packageLayout == PackageLayoutFlat {
 			f.P(subpackage.Name.PascalCase.UnsafeName, " *", subpackage.Name.PascalCase.UnsafeName, "Client")
@@ -1023,6 +1033,9 @@ func (f *fileWriter) WriteClient(
 	f.P("},")
 	f.P("),")
 	f.P("header: options.ToHeader(),")
+	if len(endpoints) > 0 {
+		f.P(" WithRawResponse: ", rawClientConstructorName, "(options),")
+	}
 	for _, subpackage := range subpackages {
 		if packageLayout == PackageLayoutFlat {
 			f.P(subpackage.Name.PascalCase.UnsafeName, ": ", "New", subpackage.Name.PascalCase.UnsafeName, "Client(opts...),")
@@ -1141,12 +1154,12 @@ func (f *fileWriter) WriteClient(
 				)
 				switchValue = fmt.Sprintf("discriminant.%s", discriminant.Name.PascalCase.UnsafeName)
 				discriminantContentField = fmt.Sprintf("discriminant.%s", content.Name.PascalCase.UnsafeName)
-				f.P("errorDecoder := func(statusCode int, body io.Reader) error {")
+				f.P("errorDecoder := func(statusCode int, header http.Header,body io.Reader) error {")
 				f.P("raw, err := io.ReadAll(body)")
 				f.P("if err != nil {")
 				f.P("return err")
 				f.P("}")
-				f.P("apiError := core.NewAPIError(statusCode, errors.New(string(raw)))")
+				f.P("apiError := core.NewAPIError(statusCode, header, errors.New(string(raw)))")
 				f.P("decoder := json.NewDecoder(bytes.NewReader(raw))")
 				f.P("var discriminant struct {")
 				f.P(discriminant.Name.PascalCase.UnsafeName, " string `json:\"", discriminant.WireValue, "\"`")
@@ -1294,9 +1307,9 @@ func (f *fileWriter) WriteClient(
 		if endpoint.Method == "http.MethodHead" {
 			// HEAD requests don't have a response body, so we can simply return the raw
 			// response headers.
-			f.P("response, err := ", receiver, ".caller.CallRaw(")
+			f.P("response, err := ", receiver, ".caller.Call(")
 			f.P("ctx,")
-			f.P("&internal.CallRawParams{")
+			f.P("&internal.CallParams{")
 			f.P("URL: endpointURL, ")
 			f.P("Method:", endpoint.Method, ",")
 			f.P("Headers:", headersParameter, ",")
@@ -1315,7 +1328,6 @@ func (f *fileWriter) WriteClient(
 			f.P("if err != nil {")
 			f.P("return ", endpoint.ErrorReturnValues)
 			f.P("}")
-			f.P("defer response.Body.Close()")
 			f.P("return response.Header, nil")
 			f.P("}")
 			f.P()
@@ -1488,7 +1500,7 @@ func (f *fileWriter) WriteClient(
 			f.P("}")
 			f.P()
 		} else {
-			f.P("if err := ", receiver, ".caller.Call(")
+			f.P("if _, err := ", receiver, ".caller.Call(")
 			f.P("ctx,")
 			f.P("&internal.CallParams{")
 			f.P("URL: endpointURL, ")

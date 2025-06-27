@@ -16,6 +16,8 @@ type Client struct {
 	baseURL string
 	caller  *internal.Caller
 	header  http.Header
+
+	WithRawResponse *RawClient
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
@@ -28,7 +30,8 @@ func NewClient(opts ...option.RequestOption) *Client {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header: options.ToHeader(),
+		header:          options.ToHeader(),
+		WithRawResponse: NewRawClient(options),
 	}
 }
 
@@ -53,7 +56,7 @@ func (c *Client) GetMovie(
 	)
 
 	var response *fern.Movie
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,
@@ -89,7 +92,7 @@ func (c *Client) CreateMovie(
 	)
 
 	var response fern.MovieId
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,
@@ -134,7 +137,7 @@ func (c *Client) GetMetadata(
 	headers.Add("X-API-Version", fmt.Sprintf("%v", request.XApiVersion))
 
 	var response *fern.Metadata
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,
@@ -170,7 +173,7 @@ func (c *Client) CreateBigEntity(
 	)
 
 	var response *fern.Response
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,

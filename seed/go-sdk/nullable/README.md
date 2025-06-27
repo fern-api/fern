@@ -17,7 +17,7 @@ import (
     fern "github.com/nullable/fern"
 )
 
-func do() () {
+func do() {
     client := client.NewClient()
     client.Nullable.CreateUser(
         context.TODO(),
@@ -115,6 +115,19 @@ response, err := client.Nullable.CreateUser(
 ```
 
 ## Advanced
+
+### Response Headers
+
+You can access the raw HTTP response data by using the `WithRawResponse` field on the client. This is useful
+when you need to examine the response headers received from the API call.
+
+```go
+response, err := client.Nullable.WithRawResponse.CreateUser(...)
+if err != nil {
+    return err
+}
+fmt.Printf("Got response headers: %v", response.Header)
+```
 
 ### Retries
 

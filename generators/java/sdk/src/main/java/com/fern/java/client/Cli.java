@@ -39,6 +39,7 @@ import com.fern.java.client.generators.ResponseBodyInputStreamGenerator;
 import com.fern.java.client.generators.ResponseBodyReaderGenerator;
 import com.fern.java.client.generators.RetryInterceptorGenerator;
 import com.fern.java.client.generators.SampleAppGenerator;
+import com.fern.java.client.generators.StreamTestGenerator;
 import com.fern.java.client.generators.SuppliersGenerator;
 import com.fern.java.client.generators.SyncRootClientGenerator;
 import com.fern.java.client.generators.SyncSubpackageClientGenerator;
@@ -77,7 +78,13 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
 
     private static final Logger log = LoggerFactory.getLogger(Cli.class);
 
+    public static void main(String... args) {
+        Cli cli = new Cli();
+        cli.run(args);
+    }
+
     private final List<String> subprojects = new ArrayList<>();
+
     private final List<AbstractGradleDependency> dependencies = new ArrayList<>();
 
     public Cli() {
@@ -111,6 +118,14 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
     @Override
     public void runV2Generator(DefaultGeneratorExecClient defaultGeneratorExecClient, String[] args) {
         JavaV2Adapter.run(defaultGeneratorExecClient, new JavaV2Arguments(args[0]));
+    }
+
+    @Override
+    public boolean customConfigPublishToCentral(GeneratorConfig generatorConfig) {
+        return getCustomConfig(generatorConfig)
+                .publishTo()
+                .map(publishTo -> publishTo.equals("central"))
+                .orElse(false);
     }
 
     @Override
@@ -197,42 +212,6 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
         ClientGeneratorContext context = new ClientGeneratorContext(
                 ir, generatorConfig, customConfig, clientPoetClassNameFactory, resolvedAuthSchemes);
         generateClient(context, ir, generatorExecClient);
-    }
-
-    private void runInProjectModeHook(
-            DefaultGeneratorExecClient generatorExecClient,
-            GeneratorConfig generatorConfig,
-            IntermediateRepresentation ir,
-            JavaSdkCustomConfig customConfig) {
-        List<String> packagePrefixTokens = customConfig
-                .packagePrefix()
-                .map(List::of)
-                .orElseGet(() -> AbstractPoetClassNameFactory.getPackagePrefixWithOrgAndApiName(
-                        ir, generatorConfig.getOrganization()));
-        ClientPoetClassNameFactory clientPoetClassNameFactory =
-                new ClientPoetClassNameFactory(packagePrefixTokens, customConfig.packageLayout());
-        List<AuthScheme> resolvedAuthSchemes =
-                new FeatureResolver(ir, generatorConfig, generatorExecClient).getResolvedAuthSchemes();
-        ClientGeneratorContext context = new ClientGeneratorContext(
-                ir, generatorConfig, customConfig, clientPoetClassNameFactory, resolvedAuthSchemes);
-        GeneratedRootClient generatedClientWrapper = generateClient(context, ir, generatorExecClient);
-        SampleAppGenerator sampleAppGenerator = new SampleAppGenerator(context, generatedClientWrapper);
-        sampleAppGenerator.generateFiles().forEach(this::addGeneratedFile);
-        subprojects.add(SampleAppGenerator.SAMPLE_APP_DIRECTORY);
-        dependencies.add(ParsedGradleDependency.builder()
-                .type(GradleDependencyType.TEST_IMPLEMENTATION)
-                .group("org.junit.jupiter")
-                .artifact("junit-jupiter-api")
-                .version(ParsedGradleDependency.JUNIT_DEPENDENCY)
-                .build());
-        dependencies.add(ParsedGradleDependency.builder()
-                .type(GradleDependencyType.TEST_IMPLEMENTATION)
-                .group("org.junit.jupiter")
-                .artifact("junit-jupiter-engine")
-                .version(ParsedGradleDependency.JUNIT_DEPENDENCY)
-                .build());
-        TestGenerator testGenerator = new TestGenerator(context);
-        this.addGeneratedFile(testGenerator.generateFile());
     }
 
     public GeneratedRootClient generateClient(
@@ -488,8 +467,41 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
         return JavaSdkCustomConfig.builder().build();
     }
 
-    public static void main(String... args) {
-        Cli cli = new Cli();
-        cli.run(args);
+    private void runInProjectModeHook(
+            DefaultGeneratorExecClient generatorExecClient,
+            GeneratorConfig generatorConfig,
+            IntermediateRepresentation ir,
+            JavaSdkCustomConfig customConfig) {
+        List<String> packagePrefixTokens = customConfig
+                .packagePrefix()
+                .map(List::of)
+                .orElseGet(() -> AbstractPoetClassNameFactory.getPackagePrefixWithOrgAndApiName(
+                        ir, generatorConfig.getOrganization()));
+        ClientPoetClassNameFactory clientPoetClassNameFactory =
+                new ClientPoetClassNameFactory(packagePrefixTokens, customConfig.packageLayout());
+        List<AuthScheme> resolvedAuthSchemes =
+                new FeatureResolver(ir, generatorConfig, generatorExecClient).getResolvedAuthSchemes();
+        ClientGeneratorContext context = new ClientGeneratorContext(
+                ir, generatorConfig, customConfig, clientPoetClassNameFactory, resolvedAuthSchemes);
+        GeneratedRootClient generatedClientWrapper = generateClient(context, ir, generatorExecClient);
+        SampleAppGenerator sampleAppGenerator = new SampleAppGenerator(context, generatedClientWrapper);
+        sampleAppGenerator.generateFiles().forEach(this::addGeneratedFile);
+        subprojects.add(SampleAppGenerator.SAMPLE_APP_DIRECTORY);
+        dependencies.add(ParsedGradleDependency.builder()
+                .type(GradleDependencyType.TEST_IMPLEMENTATION)
+                .group("org.junit.jupiter")
+                .artifact("junit-jupiter-api")
+                .version(ParsedGradleDependency.JUNIT_DEPENDENCY)
+                .build());
+        dependencies.add(ParsedGradleDependency.builder()
+                .type(GradleDependencyType.TEST_IMPLEMENTATION)
+                .group("org.junit.jupiter")
+                .artifact("junit-jupiter-engine")
+                .version(ParsedGradleDependency.JUNIT_DEPENDENCY)
+                .build());
+        TestGenerator testGenerator = new TestGenerator(context);
+        this.addGeneratedFile(testGenerator.generateFile());
+        StreamTestGenerator streamTestGenerator = new StreamTestGenerator(context);
+        this.addGeneratedFile(streamTestGenerator.generateFile());
     }
 }

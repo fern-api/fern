@@ -141,12 +141,14 @@ export declare namespace Fetcher {
 export const MANIFEST: CoreUtility.Manifest = {
     name: "fetcher",
     pathInCoreUtilities: { nameOnDisk: "fetcher", exportDeclaration: { exportAll: true } },
-    addDependencies: (dependencyManager: DependencyManager, options): void => {
-        dependencyManager.addDependency("form-data", "^4.0.0");
-        dependencyManager.addDependency("formdata-node", "^6.0.3");
+    addDependencies: (dependencyManager: DependencyManager, { formDataSupport, streamType }): void => {
+        if (formDataSupport === "Node16") {
+            dependencyManager.addDependency("form-data", "^4.0.0");
+            dependencyManager.addDependency("formdata-node", "^6.0.3");
+        }
         dependencyManager.addDependency("node-fetch", "^2.7.0");
         dependencyManager.addDependency("qs", "^6.13.1");
-        if (options.streamType === "wrapper") {
+        if (streamType === "wrapper") {
             dependencyManager.addDependency("readable-stream", "^4.5.2");
         }
         dependencyManager.addDependency("@types/qs", "^6.9.17", {
@@ -155,7 +157,7 @@ export const MANIFEST: CoreUtility.Manifest = {
         dependencyManager.addDependency("@types/node-fetch", "^2.6.12", {
             type: DependencyType.DEV
         });
-        if (options.streamType === "wrapper") {
+        if (streamType === "wrapper") {
             dependencyManager.addDependency("@types/readable-stream", "^4.0.18", {
                 type: DependencyType.DEV
             });

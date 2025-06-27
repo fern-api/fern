@@ -16,6 +16,8 @@ type ImdbClient struct {
 	baseURL string
 	caller  *internal.Caller
 	header  http.Header
+
+	WithRawResponse *RawImdbClient
 }
 
 func NewImdbClient(opts ...option.RequestOption) *ImdbClient {
@@ -28,7 +30,8 @@ func NewImdbClient(opts ...option.RequestOption) *ImdbClient {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header: options.ToHeader(),
+		header:          options.ToHeader(),
+		WithRawResponse: NewRawImdbClient(options),
 	}
 }
 
@@ -51,7 +54,7 @@ func (i *ImdbClient) CreateMovie(
 	)
 
 	var response MovieId
-	if err := i.caller.Call(
+	if _, err := i.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,
@@ -98,7 +101,7 @@ func (i *ImdbClient) GetMovie(
 	}
 
 	var response *Movie
-	if err := i.caller.Call(
+	if _, err := i.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,

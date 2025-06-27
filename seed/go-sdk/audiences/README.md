@@ -17,7 +17,7 @@ import (
     fern "github.com/audiences/fern"
 )
 
-func do() () {
+func do() {
     client := client.NewClient()
     client.Foo.Find(
         context.TODO(),
@@ -43,7 +43,7 @@ URL, which is particularly useful in test environments.
 
 ```go
 client := client.NewClient(
-    option.WithBaseURL(seed.Environments.EnvironmentA),
+    option.WithBaseURL(audiences.Environments.EnvironmentA),
 )
 ```
 
@@ -94,6 +94,19 @@ response, err := client.Foo.Find(
 ```
 
 ## Advanced
+
+### Response Headers
+
+You can access the raw HTTP response data by using the `WithRawResponse` field on the client. This is useful
+when you need to examine the response headers received from the API call.
+
+```go
+response, err := client.Foo.WithRawResponse.Find(...)
+if err != nil {
+    return err
+}
+fmt.Printf("Got response headers: %v", response.Header)
+```
 
 ### Retries
 

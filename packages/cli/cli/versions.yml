@@ -1,5 +1,41 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
+    - summary: |  
+        Remove all org-specific legacy preview pins.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-06-27"
+  version: 0.64.25
+
+- changelogEntry:
+    - summary: |  
+        Added Server-Sent Events (SSE) support to Java stream implementation. The Java SDK generator now 
+        supports SSE streaming alongside existing JSON streaming, enabling real-time incremental responses 
+        for chat applications and live data feeds.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-06-27"
+  version: 0.64.24
+
+- changelogEntry:
+    - summary: |
+        When a part in a multipart form request has `Content-Type: application/json` in OpenAPI or Fern Definition, interpret it as `style: json`.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-06-26"
+  version: 0.64.25
+
+- changelogEntry:
+    - summary: |
+        Global headers are now used to create endpoint examples. When building endpoint examples, global headers 
+        are automatically included in the headers section of each example. This ensures that all endpoints have consistent 
+        header examples that match the global header configuration.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-06-25"
+  version: 0.64.23
+
+- changelogEntry:
     - summary: |
         Make proto file target field optional in generators.yml
       type: feat

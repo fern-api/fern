@@ -405,7 +405,10 @@
               "docs": "The Get Account method will return an Account object including high-level account information (e.g., name) and any children objects (e.g., Policies) associated with the Account. Please note that this method will NOT refresh the Account object.",
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "x-client-id": "x-client-id",
+                    "x-client-secret": "x-client-secret",
+                  },
                   "path-parameters": {
                     "id": "id",
                   },
@@ -654,7 +657,9 @@ service:
       examples:
         - path-parameters:
             id: id
-          headers: {}
+          headers:
+            x-client-id: x-client-id
+            x-client-secret: x-client-secret
           response:
             body:
               success: true
@@ -690,7 +695,10 @@ service:
               "docs": "The Get Carrier method returns a Carrier object that include additional details about an Axle-supported insurance carrier.",
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "x-client-id": "x-client-id",
+                    "x-client-secret": "x-client-secret",
+                  },
                   "path-parameters": {
                     "id": "id",
                   },
@@ -741,7 +749,10 @@ service:
               "docs": "The Get Carriers method returns an array of Carrier objects.",
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "x-client-id": "x-client-id",
+                    "x-client-secret": "x-client-secret",
+                  },
                   "response": {
                     "body": {
                       "data": [
@@ -844,7 +855,9 @@ service:
       examples:
         - path-parameters:
             id: id
-          headers: {}
+          headers:
+            x-client-id: x-client-id
+            x-client-secret: x-client-secret
           response:
             body:
               success: true
@@ -875,7 +888,9 @@ service:
         type: GetCarriersResponse
         status-code: 200
       examples:
-        - headers: {}
+        - headers:
+            x-client-id: x-client-id
+            x-client-secret: x-client-secret
           response:
             body:
               success: true
@@ -907,7 +922,10 @@ service:
               "docs": "Start an Ignition session. Returns the ignitionUri to direct the user to authenticate.",
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "x-client-id": "x-client-id",
+                    "x-client-secret": "x-client-secret",
+                  },
                   "request": {
                     "redirectUri": "https://example.com/redirect",
                     "webhookUri": "https://example.com/webhook",
@@ -1060,7 +1078,9 @@ service:
         type: StartIgnitionResponse
         status-code: 200
       examples:
-        - headers: {}
+        - headers:
+            x-client-id: x-client-id
+            x-client-secret: x-client-secret
           request:
             redirectUri: https://example.com/redirect
             webhookUri: https://example.com/webhook
@@ -1091,7 +1111,10 @@ service:
               "docs": "The Get Policy method returns a Policy object including high-level policy information (e.g., policy number) and any children objects (e.g., Coverages) associated with the Policy. Please note that this method will NOT refresh the Policy object.",
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "x-client-id": "x-client-id",
+                    "x-client-secret": "x-client-secret",
+                  },
                   "path-parameters": {
                     "id": "id",
                   },
@@ -1260,7 +1283,9 @@ service:
       examples:
         - path-parameters:
             id: id
-          headers: {}
+          headers:
+            x-client-id: x-client-id
+            x-client-secret: x-client-secret
           response:
             body:
               success: true
@@ -1335,7 +1360,10 @@ service:
 Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not expire.",
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "x-client-id": "x-client-id",
+                    "x-client-secret": "x-client-secret",
+                  },
                   "request": {
                     "authCode": "authCode",
                   },
@@ -1489,7 +1517,9 @@ service:
         type: ExchangeTokenResponse
         status-code: 200
       examples:
-        - headers: {}
+        - headers:
+            x-client-id: x-client-id
+            x-client-secret: x-client-secret
           request:
             authCode: authCode
           response:

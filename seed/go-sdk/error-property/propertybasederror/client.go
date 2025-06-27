@@ -19,6 +19,8 @@ type Client struct {
 	baseURL string
 	caller  *internal.Caller
 	header  http.Header
+
+	WithRawResponse *RawClient
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
@@ -31,7 +33,8 @@ func NewClient(opts ...option.RequestOption) *Client {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header: options.ToHeader(),
+		header:          options.ToHeader(),
+		WithRawResponse: NewRawClient(options),
 	}
 }
 
@@ -51,12 +54,12 @@ func (c *Client) ThrowError(
 		c.header.Clone(),
 		options.ToHeader(),
 	)
-	errorDecoder := func(statusCode int, body io.Reader) error {
+	errorDecoder := func(statusCode int, header http.Header, body io.Reader) error {
 		raw, err := io.ReadAll(body)
 		if err != nil {
 			return err
 		}
-		apiError := core.NewAPIError(statusCode, errors.New(string(raw)))
+		apiError := core.NewAPIError(statusCode, header, errors.New(string(raw)))
 		decoder := json.NewDecoder(bytes.NewReader(raw))
 		var discriminant struct {
 			ErrorName string          `json:"errorName"`
@@ -78,7 +81,7 @@ func (c *Client) ThrowError(
 	}
 
 	var response string
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,

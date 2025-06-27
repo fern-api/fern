@@ -1,0 +1,75 @@
+package service
+
+import (
+	context "context"
+	core "github.com/api-wide-base-path/fern/core"
+	internal "github.com/api-wide-base-path/fern/internal"
+	option "github.com/api-wide-base-path/fern/option"
+	http "net/http"
+)
+
+type RawClient struct {
+	baseURL string
+	caller  *internal.Caller
+	header  http.Header
+}
+
+func NewRawClient(options *core.RequestOptions) *RawClient {
+	return &RawClient{
+		baseURL: options.BaseURL,
+		caller: internal.NewCaller(
+			&internal.CallerParams{
+				Client:      options.HTTPClient,
+				MaxAttempts: options.MaxAttempts,
+			},
+		),
+		header: options.ToHeader(),
+	}
+}
+
+func (r *RawClient) Post(
+	ctx context.Context,
+	pathParam string,
+	serviceParam string,
+	resourceParam string,
+	endpointParam int,
+	opts ...option.RequestOption,
+) (*core.Response[any], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		r.baseURL,
+		"",
+	)
+	endpointURL := internal.EncodeURL(
+		baseURL+"/test/%v/%v/%v/%v",
+		pathParam,
+		serviceParam,
+		resourceParam,
+		endpointParam,
+	)
+	headers := internal.MergeHeaders(
+		r.header.Clone(),
+		options.ToHeader(),
+	)
+	raw, err := r.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+	return &core.Response[any]{
+		StatusCode: raw.StatusCode,
+		Header:     raw.Header,
+		Body:       nil,
+	}, nil
+}

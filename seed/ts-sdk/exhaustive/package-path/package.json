@@ -31,8 +31,9 @@
         "build": "yarn build:cjs && yarn build:esm",
         "build:cjs": "tsc --project ./tsconfig.cjs.json",
         "build:esm": "tsc --project ./tsconfig.esm.json && node scripts/rename-to-esm-files.js dist/esm",
-        "test": "jest src/test-packagePath/tests/unit --passWithNoTests",
-        "test:wire": "jest src/test-packagePath/tests/wire --passWithNoTests",
+        "test": "jest src/test-packagePath/tests/unit",
+        "test:browser": "jest --config jest.browser.config.mjs",
+        "test:wire": "jest src/test-packagePath/tests/wire",
         "wire:test": "yarn test:wire"
     },
     "dependencies": {
@@ -64,7 +65,8 @@
     "browser": {
         "fs": false,
         "os": false,
-        "path": false
+        "path": false,
+        "stream": false
     },
     "packageManager": "yarn@1.22.22"
 }

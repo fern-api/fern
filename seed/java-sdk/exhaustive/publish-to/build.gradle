@@ -1,0 +1,130 @@
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+    id 'com.diffplug.spotless' version '6.11.0'
+    id 'signing'
+    id 'cl.franciscosolis.sonatype-central-upload' version '1.0.3'
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
+    }
+}
+
+dependencies {
+    api 'com.squareup.okhttp3:okhttp:4.12.0'
+    api 'com.fasterxml.jackson.core:jackson-databind:2.17.2'
+    api 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.17.2'
+    api 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.17.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+}
+
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+tasks.withType(Javadoc) {
+    failOnError false
+    options.addStringOption('Xdoclint:none', '-quiet')
+}
+
+spotless {
+    java {
+        palantirJavaFormat()
+    }
+}
+
+
+java {
+    withSourcesJar()
+    withJavadocJar()
+}
+
+
+group = 'com.fern'
+
+version = '0.0.1'
+
+jar {
+    dependsOn(":generatePomFileForMavenPublication")
+    archiveBaseName = "exhaustive"
+}
+
+sourcesJar {
+    archiveBaseName = "exhaustive"
+}
+
+javadocJar {
+    archiveBaseName = "exhaustive"
+}
+
+signing {
+    sign(publishing.publications)
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        showStandardStreams = true
+    }
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'com.fern'
+            artifactId = 'exhaustive'
+            version = '0.0.1'
+            from components.java
+            pom {
+                name = 'seed'
+                description = 'The official SDK of seed'
+                url = 'https://buildwithfern.com'
+                licenses {
+                    license {
+                        name = 'The MIT License (MIT)'
+                        url = 'https://mit-license.org/'
+                    }
+                }
+                developers {
+                    developer {
+                        name = 'seed'
+                        email = 'developers@seed.com'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git://github.com/exhaustive/fern.git'
+                    developerConnection = 'scm:git:git://github.com/exhaustive/fern.git'
+                    url = 'https://github.com/exhaustive/fern'
+                }
+            }
+        }
+    }
+}
+
+sonatypeCentralUpload {
+    username = "$System.env.MAVEN_USERNAME"
+    password = "$System.env.MAVEN_PASSWORD"
+
+    archives = files(
+        "$buildDir/libs/exhaustive-" + version + ".jar",
+        "$buildDir/libs/exhaustive-" + version + "-sources.jar",
+        "$buildDir/libs/exhaustive-" + version + "-javadoc.jar"
+    )
+
+    pom = file("$buildDir/publications/maven/pom-default.xml")
+    signingKey = "$System.env.MAVEN_SIGNATURE_SECRET_KEY"
+    signingKeyPassphrase = "$System.env.MAVEN_SIGNATURE_PASSWORD"
+}
+
+signing {
+    def signingKeyId = "$System.env.MAVEN_SIGNATURE_SECRET_KEY"
+    def signingPassword = "$System.env.MAVEN_SIGNATURE_PASSWORD"
+    useInMemoryPgpKeys(signingKeyId, signingPassword)
+    sign publishing.publications.maven
+}
+
+sonatypeCentralUpload.dependsOn build

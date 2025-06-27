@@ -14,6 +14,7 @@ import { CallbackQueueImpl } from "./CallbackQueue";
 import { CoreUtilities } from "./CoreUtilities";
 import { CoreUtility, CoreUtilityName } from "./CoreUtility";
 import { FetcherImpl } from "./Fetcher";
+import { FileUtilsImpl } from "./FileUtils";
 import { FormDataUtilsImpl } from "./FormDataUtils";
 import { PaginationImpl } from "./Pagination";
 import { RuntimeImpl } from "./Runtime";
@@ -40,23 +41,27 @@ const DEFAULT_PACKAGE_PATH = "src";
 const DEFAULT_TEST_PATH = "tests";
 
 export class CoreUtilitiesManager {
-    private referencedCoreUtilities: Record<CoreUtilityName, CoreUtility.Manifest> = {};
-    private authOverrides: Record<RelativeFilePath, string> = {};
-    private streamType: "wrapper" | "web";
+    private readonly referencedCoreUtilities: Record<CoreUtilityName, CoreUtility.Manifest> = {};
+    private readonly authOverrides: Record<RelativeFilePath, string> = {};
+    private readonly streamType: "wrapper" | "web";
+    private readonly formDataSupport: "Node16" | "Node18";
 
-    private relativePackagePath: string;
-    private relativeTestPath: string;
+    private readonly relativePackagePath: string;
+    private readonly relativeTestPath: string;
 
     constructor({
         streamType,
+        formDataSupport,
         relativePackagePath = DEFAULT_PACKAGE_PATH,
         relativeTestPath = DEFAULT_TEST_PATH
     }: {
         streamType: "wrapper" | "web";
+        formDataSupport: "Node16" | "Node18";
         relativePackagePath?: string;
         relativeTestPath?: string;
     }) {
         this.streamType = streamType;
+        this.formDataSupport = formDataSupport;
         this.relativePackagePath = relativePackagePath;
         this.relativeTestPath = relativeTestPath;
     }
@@ -86,7 +91,8 @@ export class CoreUtilitiesManager {
             runtime: new RuntimeImpl({ getReferenceToExport }),
             pagination: new PaginationImpl({ getReferenceToExport }),
             utils: new UtilsImpl({ getReferenceToExport }),
-            websocket: new WebsocketImpl({ getReferenceToExport })
+            websocket: new WebsocketImpl({ getReferenceToExport }),
+            fileUtils: new FileUtilsImpl({ getReferenceToExport })
         };
     }
 
@@ -102,7 +108,8 @@ export class CoreUtilitiesManager {
                 true
             );
             utility.addDependencies?.(dependencyManager, {
-                streamType: this.streamType
+                streamType: this.streamType,
+                formDataSupport: this.formDataSupport
             });
         }
     }
@@ -118,7 +125,8 @@ export class CoreUtilitiesManager {
             await Promise.all(
                 Object.entries(this.referencedCoreUtilities).map(async ([name, utility]) => {
                     const { patterns, ignore } = utility.getFilesPatterns({
-                        streamType: this.streamType
+                        streamType: this.streamType,
+                        formDataSupport: this.formDataSupport
                     });
 
                     const foundFiles = await glob(patterns, {

@@ -16,7 +16,7 @@ import (
     context "context"
 )
 
-func do() () {
+func do() {
     client := fern.NewClient()
     client.Echo(
         context.TODO(),
@@ -87,6 +87,19 @@ response, err := client.Echo(
 ```
 
 ## Advanced
+
+### Response Headers
+
+You can access the raw HTTP response data by using the `WithRawResponse` field on the client. This is useful
+when you need to examine the response headers received from the API call.
+
+```go
+response, err := client.WithRawResponse.Echo(...)
+if err != nil {
+    return err
+}
+fmt.Printf("Got response headers: %v", response.Header)
+```
 
 ### Retries
 

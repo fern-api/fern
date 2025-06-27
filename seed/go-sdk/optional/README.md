@@ -16,12 +16,12 @@ import (
     context "context"
 )
 
-func do() () {
+func do() {
     client := client.NewClient()
     client.Optional.SendOptionalBody(
         context.TODO(),
-        map[string]interface{}{
-            "string": map[string]interface{}{
+        map[string]any{
+            "string": map[string]any{
                 "key": "value",
             },
         },
@@ -87,6 +87,19 @@ response, err := client.Optional.SendOptionalBody(
 ```
 
 ## Advanced
+
+### Response Headers
+
+You can access the raw HTTP response data by using the `WithRawResponse` field on the client. This is useful
+when you need to examine the response headers received from the API call.
+
+```go
+response, err := client.Optional.WithRawResponse.SendOptionalBody(...)
+if err != nil {
+    return err
+}
+fmt.Printf("Got response headers: %v", response.Header)
+```
 
 ### Retries
 

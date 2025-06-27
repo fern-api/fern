@@ -1,29 +1,70 @@
 {
   "$schema": "https://turbo.build/schema.json",
+  "globalDependencies": [
+    ".npmrc",
+    ".prettierrc.json",
+    ".stylelintrc.json",
+    "babel.config.json",
+    "package.json",
+    "shared/.prettierignore",
+    "shared/stylelintrc.shared.json",
+    "tsconfig.json",
+    "turbo.json"
+  ],
   "tasks": {
     "clean": {
       "cache": false
     },
     "compile": {
       "dependsOn": ["^compile"],
-      "outputs": ["lib/**"]
+      "outputs": ["lib/**"],
+      "inputs": ["src/**", "tests/**", "package.json", "tsconfig.json"]
     },
     "depcheck": {
-      "outputs": []
+      "outputs": [],
+      "inputs": ["src/**", "tests/**", "package.json", ".depcheckrc.json", "$TURBO_ROOT$/.depcheckrc.json"]
     },
     "lint:eslint": {
-      "outputs": []
+      "outputs": [],
+      "inputs": ["src/**", "tests/**", "$TURBO_ROOT$/.eslintrc.js", "$TURBO_ROOT$/.eslintignore", "tsconfig.json"]
     },
     "lint:eslint:fix": {
-      "outputs": []
+      "outputs": [],
+      "inputs": ["src/**", "tests/**", "$TURBO_ROOT$/.eslintrc.js", "$TURBO_ROOT$/.eslintignore", "tsconfig.json"]
     },
     "test": {
       "dependsOn": ["^compile"],
-      "outputs": []
+      "outputs": [],
+      "inputs": [
+        "$TURBO_ROOT$/shared/jest.config.shared.js",
+        "$TURBO_ROOT$/shared/vitest.config.ts",
+        "$TURBO_ROOT$/test-definitions-openapi/**",
+        "$TURBO_ROOT$/test-definitions/**",
+        "$TURBO_ROOT$/tsconfig.eslint.json",
+        "$TURBO_ROOT$/vitest.workspace.ts",
+        "jest.config.{js,mjs,mts,ts,cjs,cts}",
+        "src/**",
+        "tests/**",
+        "tsconfig.json",
+        "vitest.config.{js,mjs,mts,ts,cjs,cts}"
+      ]
     },
     "test:update": {
       "dependsOn": ["^compile"],
-      "outputs": []
+      "outputs": [],
+      "inputs": [
+        "$TURBO_ROOT$/shared/jest.config.shared.js",
+        "$TURBO_ROOT$/shared/vitest.config.ts",
+        "$TURBO_ROOT$/test-definitions-openapi/**",
+        "$TURBO_ROOT$/test-definitions/**",
+        "$TURBO_ROOT$/tsconfig.eslint.json",
+        "$TURBO_ROOT$/vitest.workspace.ts",
+        "jest.config.{js,mjs,mts,ts,cjs,cts}",
+        "src/**",
+        "tests/**",
+        "tsconfig.json",
+        "vitest.config.{js,mjs,mts,ts,cjs,cts}"
+      ]
     }
   }
 }
