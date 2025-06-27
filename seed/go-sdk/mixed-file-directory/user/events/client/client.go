@@ -17,7 +17,8 @@ type Client struct {
 	caller  *internal.Caller
 	header  http.Header
 
-	Metadata *metadata.Client
+	WithRawResponse *RawClient
+	Metadata        *metadata.Client
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
@@ -30,8 +31,9 @@ func NewClient(opts ...option.RequestOption) *Client {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header:   options.ToHeader(),
-		Metadata: metadata.NewClient(opts...),
+		header:          options.ToHeader(),
+		WithRawResponse: NewRawClient(options),
+		Metadata:        metadata.NewClient(opts...),
 	}
 }
 
@@ -61,7 +63,7 @@ func (c *Client) ListEvents(
 	)
 
 	var response []*user.Event
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,

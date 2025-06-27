@@ -155,6 +155,10 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         return EndpointSnippetsGenerator.CLIENT_VARIABLE_NAME;
     }
 
+    public shouldInlinePathParameters(): boolean {
+        return this.customConfig["inline-path-parameters"] ?? true;
+    }
+
     public includePathParametersInWrappedRequest({
         endpoint,
         wrapper
@@ -162,16 +166,17 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         endpoint: HttpEndpoint;
         wrapper: SdkRequestWrapper;
     }): boolean {
-        const inlinePathParameters = this.customConfig["inline-path-parameters"];
-        if (inlinePathParameters == null) {
-            return false;
-        }
+        const inlinePathParameters = this.shouldInlinePathParameters();
         const wrapperShouldIncludePathParameters = wrapper.includePathParameters ?? false;
         return endpoint.allPathParameters.length > 0 && inlinePathParameters && wrapperShouldIncludePathParameters;
     }
 
     public includeExceptionHandler(): boolean {
         return this.customConfig["include-exception-handler"] ?? false;
+    }
+
+    public generateMockServerTests(): boolean {
+        return this.customConfig["generate-mock-server-tests"] ?? true;
     }
 
     public getRawAsIsFiles(): string[] {

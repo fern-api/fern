@@ -15,11 +15,9 @@ public partial class UserClient
     }
 
     /// <example><code>
-    /// await client.User.GetUserAsync("tenant_id", "user_id", new GetUsersRequest());
+    /// await client.User.GetUserAsync(new GetUsersRequest { TenantId = "tenant_id", UserId = "user_id" });
     /// </code></example>
     public async Task<User> GetUserAsync(
-        string tenantId,
-        string userId,
         GetUsersRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -33,8 +31,8 @@ public partial class UserClient
                     Method = HttpMethod.Get,
                     Path = string.Format(
                         "/{0}/user/{1}",
-                        ValueConvert.ToPathParameterString(tenantId),
-                        ValueConvert.ToPathParameterString(userId)
+                        ValueConvert.ToPathParameterString(request.TenantId),
+                        ValueConvert.ToPathParameterString(request.UserId)
                     ),
                     Options = options,
                 },
@@ -122,10 +120,10 @@ public partial class UserClient
 
     /// <example><code>
     /// await client.User.UpdateUserAsync(
-    ///     "tenant_id",
-    ///     "user_id",
     ///     new UpdateUserRequest
     ///     {
+    ///         TenantId = "tenant_id",
+    ///         UserId = "user_id",
     ///         Body = new User
     ///         {
     ///             Name = "name",
@@ -135,8 +133,6 @@ public partial class UserClient
     /// );
     /// </code></example>
     public async Task<User> UpdateUserAsync(
-        string tenantId,
-        string userId,
         UpdateUserRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -150,8 +146,8 @@ public partial class UserClient
                     Method = HttpMethodExtensions.Patch,
                     Path = string.Format(
                         "/{0}/user/{1}",
-                        ValueConvert.ToPathParameterString(tenantId),
-                        ValueConvert.ToPathParameterString(userId)
+                        ValueConvert.ToPathParameterString(request.TenantId),
+                        ValueConvert.ToPathParameterString(request.UserId)
                     ),
                     Body = request.Body,
                     Options = options,
@@ -183,11 +179,16 @@ public partial class UserClient
     }
 
     /// <example><code>
-    /// await client.User.SearchUsersAsync("tenant_id", "user_id", new SearchUsersRequest { Limit = 1 });
+    /// await client.User.SearchUsersAsync(
+    ///     new SearchUsersRequest
+    ///     {
+    ///         TenantId = "tenant_id",
+    ///         UserId = "user_id",
+    ///         Limit = 1,
+    ///     }
+    /// );
     /// </code></example>
     public async Task<IEnumerable<User>> SearchUsersAsync(
-        string tenantId,
-        string userId,
         SearchUsersRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -206,8 +207,8 @@ public partial class UserClient
                     Method = HttpMethod.Get,
                     Path = string.Format(
                         "/{0}/user/{1}/search",
-                        ValueConvert.ToPathParameterString(tenantId),
-                        ValueConvert.ToPathParameterString(userId)
+                        ValueConvert.ToPathParameterString(request.TenantId),
+                        ValueConvert.ToPathParameterString(request.UserId)
                     ),
                     Query = _query,
                     Options = options,

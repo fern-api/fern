@@ -7737,6 +7737,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_api.listAccounts",
           "name": {
             "originalName": "listAccounts",
@@ -7960,6 +7961,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_api.retrieveAccount",
           "name": {
             "originalName": "retrieveAccount",
@@ -8322,6 +8324,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_api.listGames",
           "name": {
             "originalName": "listGames",
@@ -8796,6 +8799,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_api.retrieveGame",
           "name": {
             "originalName": "retrieveGame",
@@ -9120,6 +9124,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_api.listGroups",
           "name": {
             "originalName": "listGroups",
@@ -9562,6 +9567,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_api.retrieveGroup",
           "name": {
             "originalName": "retrieveGroup",
@@ -9854,6 +9860,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_api.listPlayers",
           "name": {
             "originalName": "listPlayers",
@@ -10103,6 +10110,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_api.retrievePlayer",
           "name": {
             "originalName": "retrievePlayer",
@@ -10299,6 +10307,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_api.listLocations",
           "name": {
             "originalName": "listLocations",
@@ -10522,6 +10531,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_api.retrieveLocation",
           "name": {
             "originalName": "retrieveLocation",
@@ -10692,6 +10702,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_api.listPhotos",
           "name": {
             "originalName": "listPhotos",
@@ -10935,6 +10946,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_api.retrievePhoto",
           "name": {
             "originalName": "retrievePhoto",

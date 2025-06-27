@@ -234,7 +234,7 @@ export function generateIr({
         };
     });
 
-    const exampleEndpointFactory = new ExampleEndpointFactory(schemasWithDiscriminants, context);
+    const exampleEndpointFactory = new ExampleEndpointFactory(schemasWithDiscriminants, context, globalHeaders);
     const endpoints = endpointsWithExample.map((endpointWithExample): Endpoint => {
         // if x-fern-examples is not present, generate an example
         const extensionExamples = endpointWithExample.examples;

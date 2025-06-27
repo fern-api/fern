@@ -44,6 +44,10 @@ class RootClientGenerator(BaseWrappedClientGenerator):
     )
     FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_NAME = "follow_redirects"
 
+    HEADERS_CONSTRUCTOR_PARAMETER_NAME = "headers"
+    HEADERS_CONSTRUCTOR_PARAMETER_DOCS = "Additional headers to send with every request."
+    HEADERS_MEMBER_NAME = "_headers"
+
     ENVIRONMENT_CONSTRUCTOR_PARAMETER_NAME = "environment"
     ENVIRONMENT_MEMBER_NAME = "_environment"
     ENVIRONMENT_CONSTRUCTOR_PARAMETER_DOCS = "The environment to use for requests from the client."
@@ -95,7 +99,7 @@ class RootClientGenerator(BaseWrappedClientGenerator):
         exclude_auth = self._oauth_scheme is not None
 
         self._constructor_info = client_wrapper_generator._get_constructor_info(exclude_auth=exclude_auth)
-        self._root_client_constructor_params = self._constructor_info.constructor_parameters
+        self._root_client_constructor_params = self._constructor_info.constructor_parameters 
         if self._context.ir.environments is not None and self._context.ir.environments.default_environment is None:
             environment_constructor_parameter = client_wrapper_generator._get_environment_constructor_parameter()
             self._root_client_constructor_params.append(environment_constructor_parameter)
@@ -455,6 +459,7 @@ class RootClientGenerator(BaseWrappedClientGenerator):
                         if param.environment_variable is not None
                         else None
                     ),
+                    docs=param.docs,
                     validation_check=(
                         AST.Expression(
                             AST.CodeWriter(
@@ -600,6 +605,7 @@ class RootClientGenerator(BaseWrappedClientGenerator):
             )
         )
         parameters.extend(self._get_literal_header_parameters())
+
         return parameters
 
     def _get_parameter_validation_writer(self, *, param_name: str, environment_variable: str) -> CodeWriterFunction:

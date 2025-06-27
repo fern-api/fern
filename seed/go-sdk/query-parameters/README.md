@@ -18,7 +18,7 @@ import (
     uuid "github.com/google/uuid"
 )
 
-func do() () {
+func do() {
     client := client.NewClient()
     client.User.GetUsername(
         context.TODO(),
@@ -160,6 +160,19 @@ response, err := client.User.GetUsername(
 ```
 
 ## Advanced
+
+### Response Headers
+
+You can access the raw HTTP response data by using the `WithRawResponse` field on the client. This is useful
+when you need to examine the response headers received from the API call.
+
+```go
+response, err := client.User.WithRawResponse.GetUsername(...)
+if err != nil {
+    return err
+}
+fmt.Printf("Got response headers: %v", response.Header)
+```
 
 ### Retries
 

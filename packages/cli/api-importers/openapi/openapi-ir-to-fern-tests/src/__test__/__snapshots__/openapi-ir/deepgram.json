@@ -2040,13 +2040,6 @@
               "properties": {
                 "metadata": {
                   "properties": {
-                    "transaction_key": {
-                      "value": {
-                        "value": "transaction_key",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
                     "request_id": {
                       "value": {
                         "value": "a847f427-4ad5-4d67-9b95-db801e58251c",

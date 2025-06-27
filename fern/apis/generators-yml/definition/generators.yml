@@ -182,7 +182,7 @@ types:
   ProtobufDefinitionSchema:
     properties:
       target:
-        type: string
+        type: optional<string>
         docs: The path to the target `.proto` file that defines the API (e.g. `proto/user/v1/user.proto`).
       root:
         type: string

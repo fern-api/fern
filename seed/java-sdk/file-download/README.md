@@ -13,11 +13,15 @@ package com.example.usage;
 
 import com.seed.fileDownload.SeedFileDownloadClient;
 
-SeedFileDownloadClient client = SeedFileDownloadClient
-    .builder()
-    .build();
+public class Example {
+    public static void main(String[] args) {
+        SeedFileDownloadClient client = SeedFileDownloadClient
+            .builder()
+            .build();
 
-client.service().downloadFile(...);
+        client.service().simple();
+    }
+}
 ```
 
 ## Base Url
@@ -41,7 +45,7 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
 import com.seed.fileDownload.core.SeedFileDownloadApiException;
 
 try {
-    client.service().downloadFile(...);
+    client.service().simple(...);
 } catch (SeedFileDownloadApiException e) {
     // Do something with the API exception...
 }
@@ -104,7 +108,7 @@ SeedFileDownloadClient client = SeedFileDownloadClient
     .build();
 
 // Request level
-client.service().downloadFile(
+client.service().simple(
     ...,
     RequestOptions
         .builder()

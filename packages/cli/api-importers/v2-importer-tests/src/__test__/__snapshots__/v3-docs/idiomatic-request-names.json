@@ -1449,6 +1449,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_organizationUsers.listOrganizationUsers",
           "name": {
             "originalName": "listOrganizationUsers",
@@ -1750,6 +1751,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_users.listUsers",
           "name": {
             "originalName": "listUsers",
@@ -2003,6 +2005,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.getAUser",
           "name": {
             "originalName": "getAUser",

@@ -29123,6 +29123,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_files.upload",
           "name": {
             "originalName": "upload",
@@ -29909,6 +29910,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_transcript.list",
           "name": {
             "originalName": "list",
@@ -30263,6 +30265,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_transcript.create",
           "name": {
             "originalName": "create",
@@ -31059,6 +31062,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_transcript.get",
           "name": {
             "originalName": "get",
@@ -31813,6 +31817,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_transcript.delete",
           "name": {
             "originalName": "delete",
@@ -32738,6 +32743,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_transcript.getSubtitles",
           "name": {
             "originalName": "getSubtitles",
@@ -33118,6 +33124,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_transcript.getSentences",
           "name": {
             "originalName": "getSentences",
@@ -33570,6 +33577,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_transcript.getParagraphs",
           "name": {
             "originalName": "getParagraphs",
@@ -34073,6 +34081,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_transcript.wordSearch",
           "name": {
             "originalName": "wordSearch",
@@ -34521,6 +34530,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_transcript.getRedactedAudio",
           "name": {
             "originalName": "getRedactedAudio",
@@ -34903,6 +34913,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_realtime.createTemporaryToken",
           "name": {
             "originalName": "createTemporaryToken",
@@ -35325,6 +35336,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_lemur.summary",
           "name": {
             "originalName": "summary",
@@ -35697,6 +35709,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_lemur.questionAnswer",
           "name": {
             "originalName": "questionAnswer",
@@ -36089,6 +36102,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_lemur.actionItems",
           "name": {
             "originalName": "actionItems",
@@ -36461,6 +36475,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_lemur.task",
           "name": {
             "originalName": "task",
@@ -36925,6 +36940,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_lemur.purgeRequestData",
           "name": {
             "originalName": "purgeRequestData",
@@ -38435,5 +38451,6 @@
       "sdkName": "",
       "sdkVersion": ""
     }
-  }
+  },
+  "audiences": []
 }

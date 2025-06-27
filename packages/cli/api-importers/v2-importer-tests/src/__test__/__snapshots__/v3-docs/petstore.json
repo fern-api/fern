@@ -771,7 +771,8 @@
           },
           "source": {
             "type": "openrpc"
-          }
+          },
+          "audiences": []
         },
         {
           "baseUrl": "http://localhost:8080",
@@ -1000,7 +1001,8 @@
           },
           "source": {
             "type": "openrpc"
-          }
+          },
+          "audiences": []
         },
         {
           "baseUrl": "http://localhost:8080",
@@ -1197,7 +1199,8 @@
           },
           "source": {
             "type": "openrpc"
-          }
+          },
+          "audiences": []
         }
       ]
     }

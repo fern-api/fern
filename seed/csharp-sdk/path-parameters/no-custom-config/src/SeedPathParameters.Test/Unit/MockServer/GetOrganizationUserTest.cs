@@ -36,10 +36,12 @@ public class GetOrganizationUserTest : BaseMockServerTest
             );
 
         var response = await Client.Organizations.GetOrganizationUserAsync(
-            "tenant_id",
-            "organization_id",
-            "user_id",
-            new GetOrganizationUserRequest()
+            new GetOrganizationUserRequest
+            {
+                TenantId = "tenant_id",
+                OrganizationId = "organization_id",
+                UserId = "user_id",
+            }
         );
         Assert.That(
             response,

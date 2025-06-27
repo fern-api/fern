@@ -7,6 +7,9 @@ namespace SeedExhaustive.Endpoints;
 public record GetWithInlinePathAndQuery
 {
     [JsonIgnore]
+    public required string Param { get; set; }
+
+    [JsonIgnore]
     public required string Query { get; set; }
 
     /// <inheritdoc />

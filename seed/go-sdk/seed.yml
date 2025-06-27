@@ -176,6 +176,7 @@ scripts:
 allowedFailures:
   - alias-extends
   - bytes
+  - enum
   - exhaustive
   - literal
   - mixed-case

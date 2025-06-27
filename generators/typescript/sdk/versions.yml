@@ -1,4 +1,31 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.8.1
+  changelogEntry:
+    - summary: Fix binary response README.md examples
+      type: fix
+  createdAt: '2025-06-22'
+  irVersion: 58
+- version: 1.8.0
+  changelogEntry:
+    - summary: |
+        You can now specify whether to return the `BinaryResponse` type for binary response endpoints.
+        Change the response type by setting `fileResponseType` to `stream` or `binary-response` in the `config` of your generator configuration.
+        The default is `stream` for backwards compatibility, but we recommend using `binary-response`.
+
+        Here's how you users can interact with the `BinaryResponse`:
+        ```ts
+        const response = await client.getFile(...);
+        const stream = response.stream();
+        // const arrayBuffer = await response.arrayBuffer();
+        // const blob = await response.blob();
+        // const bytes = await response.bytes();
+        const bodyUsed = response.bodyUsed;
+        ```
+        The user can choose how to consume the binary data.
+      type: feat
+  createdAt: '2025-06-19'
+  irVersion: 58
+
 - version: 1.7.2
   changelogEntry:
     - summary: |

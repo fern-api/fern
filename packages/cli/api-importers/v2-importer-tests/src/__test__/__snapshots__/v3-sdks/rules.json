@@ -1016,6 +1016,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.defaultAndValidationRules",
           "name": {
             "originalName": "defaultAndValidationRules",

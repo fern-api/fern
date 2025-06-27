@@ -461,10 +461,12 @@
                     "transport": null,
                     "v2Examples": null,
                     "source": null,
+                    "audiences": null,
                     "availability": null,
                     "docs": null
                 }
-            ]
+            ],
+            "audiences": null
         },
         "service_a/b": {
             "availability": null,
@@ -644,10 +646,12 @@
                     "transport": null,
                     "v2Examples": null,
                     "source": null,
+                    "audiences": null,
                     "availability": null,
                     "docs": null
                 }
-            ]
+            ],
+            "audiences": null
         },
         "service_a/c": {
             "availability": null,
@@ -827,10 +831,12 @@
                     "transport": null,
                     "v2Examples": null,
                     "source": null,
+                    "audiences": null,
                     "availability": null,
                     "docs": null
                 }
-            ]
+            ],
+            "audiences": null
         },
         "service_folder": {
             "availability": null,
@@ -972,10 +978,12 @@
                     "transport": null,
                     "v2Examples": null,
                     "source": null,
+                    "audiences": null,
                     "availability": null,
                     "docs": null
                 }
-            ]
+            ],
+            "audiences": null
         },
         "service_folder/service": {
             "availability": null,
@@ -1154,6 +1162,7 @@
                     "transport": null,
                     "v2Examples": null,
                     "source": null,
+                    "audiences": null,
                     "availability": null,
                     "docs": null
                 },
@@ -1393,10 +1402,12 @@
                     "transport": null,
                     "v2Examples": null,
                     "source": null,
+                    "audiences": null,
                     "availability": null,
                     "docs": null
                 }
-            ]
+            ],
+            "audiences": null
         }
     },
     "constants": {
@@ -2207,6 +2218,7 @@
         "environments": null,
         "generatorConfig": null
     },
+    "audiences": null,
     "subpackages": {
         "subpackage_a": {
             "name": {

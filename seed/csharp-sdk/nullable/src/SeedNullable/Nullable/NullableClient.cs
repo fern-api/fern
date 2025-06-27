@@ -94,7 +94,7 @@ public partial class NullableClient
     ///             UpdatedAt = new DateTime(2024, 01, 15, 09, 30, 00, 000),
     ///             Avatar = "avatar",
     ///             Activated = true,
-    ///             Status = "no-properties-union",
+    ///             Status = new Status(new Status.Active()),
     ///             Values = new Dictionary&lt;string, string?&gt;() { { "values", "values" } },
     ///         },
     ///         Avatar = "avatar",

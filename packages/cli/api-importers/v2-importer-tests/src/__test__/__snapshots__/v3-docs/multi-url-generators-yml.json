@@ -520,6 +520,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.listUsers",
           "name": {
             "originalName": "listUsers",
@@ -791,6 +792,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.getUserInformation",
           "name": {
             "originalName": "getUserInformation",
@@ -947,6 +949,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.getAuthenticationToken",
           "name": {
             "originalName": "getAuthenticationToken",

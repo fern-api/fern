@@ -137,6 +137,12 @@ export class OperationConverter extends AbstractOperationConverter {
             };
         }
 
+        const audiences =
+            this.context.getAudiences({
+                operation: this.operation,
+                breadcrumbs: this.breadcrumbs
+            }) ?? [];
+
         const baseEndpoint: OperationConverter.BaseEndpoint = {
             displayName: this.operation.summary,
             method: httpMethod,
@@ -164,7 +170,8 @@ export class OperationConverter extends AbstractOperationConverter {
             allPathParameters: pathParameters,
             pagination: undefined,
             transport: undefined,
-            source: HttpEndpointSource.openapi()
+            source: HttpEndpointSource.openapi(),
+            audiences
         };
 
         const endpointGroupParts = this.context.namespace != null ? [this.context.namespace] : [];
@@ -172,11 +179,7 @@ export class OperationConverter extends AbstractOperationConverter {
         endpointGroupParts.push(...(camelCasedGroup ?? []));
 
         return {
-            audiences:
-                this.context.getAudiences({
-                    operation: this.operation,
-                    breadcrumbs: this.breadcrumbs
-                }) ?? [],
+            audiences,
             group,
             groupDisplayName,
             errors: topLevelErrors,

@@ -677,6 +677,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.listTrees",
           "name": {
             "originalName": "listTrees",
@@ -818,6 +819,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.createTree",
           "name": {
             "originalName": "createTree",
@@ -1086,6 +1088,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.getTree",
           "name": {
             "originalName": "getTree",
@@ -1209,6 +1212,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.createFern",
           "name": {
             "originalName": "createFern",
@@ -1527,6 +1531,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.getFern",
           "name": {
             "originalName": "getFern",
@@ -1646,6 +1651,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.createGrass",
           "name": {
             "originalName": "createGrass",

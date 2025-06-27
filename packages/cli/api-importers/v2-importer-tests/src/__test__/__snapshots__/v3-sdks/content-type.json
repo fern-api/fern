@@ -123,6 +123,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.testUpload",
           "name": {
             "originalName": "testUpload",
@@ -635,6 +636,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.testWithDualContentTypeRequestTypes",
           "name": {
             "originalName": "testWithDualContentTypeRequestTypes",

@@ -103,7 +103,7 @@ public class CreateUserTest : BaseMockServerTest
                     ),
                     Avatar = "avatar",
                     Activated = true,
-                    Status = "no-properties-union",
+                    Status = new Status(new Status.Active()),
                     Values = new Dictionary<string, string?>() { { "values", "values" } },
                 },
                 Avatar = "avatar",

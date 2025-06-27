@@ -4699,6 +4699,7 @@
         "environments": null,
         "generatorConfig": null
     },
+    "audiences": null,
     "subpackages": {},
     "rootPackage": {
         "fernFilepath": {

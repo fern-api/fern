@@ -649,6 +649,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                               { type: "object" },
                               { type: "array" }
                           ]
+                          // eslint-disable-next-line @typescript-eslint/no-explicit-any
                       } as any);
 
             // Find properties in the example that are not defined in the schema

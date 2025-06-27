@@ -1,5 +1,49 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+
+- version: 4.23.2
+  changelogEntry:
+    - summary: |
+        Bump websockets dependency to >=12.0.0 to ensure compatibility with newer websocket implementations and improve stability.
+      type: chore
+  createdAt: '2025-06-25'
+  irVersion: 58
+
+- version: 4.23.1
+  changelogEntry:
+    - summary: |
+        Bump pydantic-core dependency to >=2.18.2 to ensure compatibility with newer pydantic versions and improve performance.
+      type: chore
+  createdAt: '2025-06-24'
+  irVersion: 58
+
+- version: 4.23.0
+  changelogEntry:
+    - summary: |
+        Add support for custom headers parameter at the top level of the client constructor.
+
+        ```python
+        client = Client(
+            headers={"X-Custom-Header": "custom-value"}
+        )
+        ```
+      type: feat
+  createdAt: '2025-06-24'
+  irVersion: 58
+
+- version: 4.22.1-rc0
+  changelogEntry:
+    - summary: |
+        Lazily validate model serialization to reduce memory consumption. Pydantic 2.11.0 introduced an issue where the model_serializer 
+        decorator set to wrap mode forced it to eagerly do schema validation at import time. Because we had this decorator on the UniversalBaseModel,
+        it would try to validate the schemas of all the Model types at import time. This caused massive memory spikes for more complex SDKs, upto 2.6GB
+        in some cases. This change essentially accomplishes the same logic of wrapping the serialization process and modifying the serialization
+        structure of datetime fields. The difference is that we manually wrap, so we're able to defer model validation until runtime, drastically
+        reducing our memory consumption.
+      type: feat
+  createdAt: '2025-06-20'
+  irVersion: 58
+
 - version: 4.22.0
   changelogEntry:
     - summary: |

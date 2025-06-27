@@ -22716,6 +22716,7 @@
                     "transport": null,
                     "v2Examples": null,
                     "source": null,
+                    "audiences": null,
                     "availability": null,
                     "docs": null
                 },
@@ -23346,10 +23347,12 @@
                     "transport": null,
                     "v2Examples": null,
                     "source": null,
+                    "audiences": null,
                     "availability": null,
                     "docs": null
                 }
-            ]
+            ],
+            "audiences": null
         },
         "service_file/notification/service": {
             "availability": null,
@@ -24702,10 +24705,12 @@
                     "transport": null,
                     "v2Examples": null,
                     "source": null,
+                    "audiences": null,
                     "availability": null,
                     "docs": null
                 }
-            ]
+            ],
+            "audiences": null
         },
         "service_file/service": {
             "availability": null,
@@ -25748,10 +25753,12 @@
                     "transport": null,
                     "v2Examples": null,
                     "source": null,
+                    "audiences": null,
                     "availability": null,
                     "docs": "This endpoint returns a file by its name."
                 }
-            ]
+            ],
+            "audiences": null
         },
         "service_health/service": {
             "availability": null,
@@ -26205,6 +26212,7 @@
                     "transport": null,
                     "v2Examples": null,
                     "source": null,
+                    "audiences": null,
                     "availability": null,
                     "docs": "This endpoint checks the health of a resource."
                 },
@@ -26361,10 +26369,12 @@
                     "transport": null,
                     "v2Examples": null,
                     "source": null,
+                    "audiences": null,
                     "availability": null,
                     "docs": "This endpoint checks the health of the service."
                 }
-            ]
+            ],
+            "audiences": null
         },
         "service_service": {
             "availability": null,
@@ -29999,6 +30009,7 @@
                     "transport": null,
                     "v2Examples": null,
                     "source": null,
+                    "audiences": null,
                     "availability": null,
                     "docs": null
                 },
@@ -33395,6 +33406,7 @@
                     "transport": null,
                     "v2Examples": null,
                     "source": null,
+                    "audiences": null,
                     "availability": null,
                     "docs": null
                 },
@@ -34253,6 +34265,7 @@
                     "transport": null,
                     "v2Examples": null,
                     "source": null,
+                    "audiences": null,
                     "availability": null,
                     "docs": null
                 },
@@ -37935,10 +37948,12 @@
                     "transport": null,
                     "v2Examples": null,
                     "source": null,
+                    "audiences": null,
                     "availability": null,
                     "docs": null
                 }
-            ]
+            ],
+            "audiences": null
         }
     },
     "constants": {
@@ -44763,6 +44778,7 @@
         },
         "generatorConfig": null
     },
+    "audiences": null,
     "subpackages": {
         "subpackage_commons": {
             "name": {

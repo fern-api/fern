@@ -18,7 +18,7 @@ import (
     fern "github.com/pagination/fern"
 )
 
-func do() () {
+func do() {
     client := client.NewClient(
         option.WithToken(
             "<token>",
@@ -73,30 +73,28 @@ page, err := client.Complex.Search(
     ...
 )
 if err != nil {
-    return nil, err
+    return err
 }
 iter := page.Iterator()
 for iter.Next(ctx) {
     item := iter.Current()
-    fmt.Printf("Got item: %v\
-", *item)
+    fmt.Printf("Got item: %v", *item)
 }
 if err := iter.Err(); err != nil {
-    // Handle the error!
+    return err
 }
 
 // Alternatively, iterate page-by-page.
 for page != nil {
     for _, item := range page.Results {
-        fmt.Printf("Got item: %v\
-", *item)
+        fmt.Printf("Got item: %v", *item)
     }
     page, err = page.GetNextPage(ctx)
     if errors.Is(err, core.ErrNoPages) {
         break
     }
     if err != nil {
-        // Handle the error!
+        return err
     }
 }
 ```
@@ -148,6 +146,19 @@ response, err := client.Complex.Search(
 ```
 
 ## Advanced
+
+### Response Headers
+
+You can access the raw HTTP response data by using the `WithRawResponse` field on the client. This is useful
+when you need to examine the response headers received from the API call.
+
+```go
+response, err := client.Complex.WithRawResponse.Search(...)
+if err != nil {
+    return err
+}
+fmt.Printf("Got response headers: %v", response.Header)
+```
 
 ### Retries
 

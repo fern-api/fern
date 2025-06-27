@@ -1,6 +1,97 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        When a part in a multipart form request has `Content-Type: application/json` in OpenAPI or Fern Definition, interpret it as `style: json`.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-06-26"
+  version: 0.64.24
+  
+- changelogEntry:
+    - summary: |
+        Global headers are now used to create endpoint examples. When building endpoint examples, global headers 
+        are automatically included in the headers section of each example. This ensures that all endpoints have consistent 
+        header examples that match the global header configuration.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-06-25"
+  version: 0.64.23
+
+- changelogEntry:
+    - summary: |
+        Make proto file target field optional in generators.yml
+      type: feat
+  irVersion: 58
+  createdAt: "2025-06-25"
+  version: 0.64.22
+
+- changelogEntry:
+    - summary: |
+        Introduce `x-fern-discriminated` extension to configure oneOf union behavior in OpenAPI specs.
+
+        ```yaml
+        # Example usage in OpenAPI schema
+        oneOf:
+          - $ref: '#/components/schemas/Circle'
+          - $ref: '#/components/schemas/Square'
+        x-fern-discriminated: false  # Treat as undiscriminated union
+        ```
+        
+        When `x-fern-discriminated` is set to `false`, the oneOf will be treated as an undiscriminated union instead of a discriminated union.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-06-24"
+  version: 0.64.21
+
+
+- changelogEntry:
+    - summary: |
+        Remove 'fern-check' error for global header examples included with 'x-fern-examples'
+      type: fix
+  irVersion: 58
+  createdAt: "2025-06-24"
+  version: 0.64.20
+
+- changelogEntry:
+    - summary: |
+        Pin Windows to legacy preview mode.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-06-24"
+  version: 0.64.19
+
+- changelogEntry:
+    - summary: |
+      type: fix
+  irVersion: 58
+  createdAt: "2025-06-24"
+  version: 0.64.18
+
+- changelogEntry:
+    - summary: |
+      type: feat
+  irVersion: 58
+  createdAt: "2025-06-23"
+  version: 0.64.17-rc0
+
+- changelogEntry:
+    - summary: |
+        Add `fern export` command to export API to an OpenAPI spec.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-06-23"
+  version: 0.64.16
+
+- changelogEntry:
+    - summary: |
+        Fixed ExampleTypeFactory to ignore generating parameters in example when that parameter is both optional and deprecated
+      type: fix
+  irVersion: 58
+  createdAt: "2025-06-21"
+  version: 0.64.15
+
+- changelogEntry:
+    - summary: |
         Separate nullable and optional property handling in IR conversion.
       type: fix
   irVersion: 58

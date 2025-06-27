@@ -67880,6 +67880,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_accountDetails.retrieve",
           "name": {
             "originalName": "retrieve",
@@ -68161,6 +68162,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_accountToken.retrieve",
           "name": {
             "originalName": "retrieve",
@@ -68402,6 +68404,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_availableActions.retrieve",
           "name": {
             "originalName": "retrieve",
@@ -69544,6 +69547,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_bankInfo.list",
           "name": {
             "originalName": "list",
@@ -70097,6 +70101,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_bankInfo.retrieve",
           "name": {
             "originalName": "retrieve",
@@ -70909,6 +70914,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_benefits.list",
           "name": {
             "originalName": "list",
@@ -71330,6 +71336,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_benefits.retrieve",
           "name": {
             "originalName": "retrieve",
@@ -72028,6 +72035,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_companies.list",
           "name": {
             "originalName": "list",
@@ -72381,6 +72389,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_companies.retrieve",
           "name": {
             "originalName": "retrieve",
@@ -72638,6 +72647,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_deleteAccount.create",
           "name": {
             "originalName": "create",
@@ -73602,6 +73612,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_employeePayrollRuns.list",
           "name": {
             "originalName": "list",
@@ -74080,6 +74091,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_employeePayrollRuns.retrieve",
           "name": {
             "originalName": "retrieve",
@@ -75877,6 +75889,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_employees.list",
           "name": {
             "originalName": "list",
@@ -76243,6 +76256,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_employees.create",
           "name": {
             "originalName": "create",
@@ -76986,6 +77000,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_employees.retrieve",
           "name": {
             "originalName": "retrieve",
@@ -77333,6 +77348,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_employees.ignoreCreate",
           "name": {
             "originalName": "ignoreCreate",
@@ -77485,6 +77501,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_employees.metaPostRetrieve",
           "name": {
             "originalName": "metaPostRetrieve",
@@ -78467,6 +78484,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_employments.list",
           "name": {
             "originalName": "list",
@@ -79028,6 +79046,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_employments.retrieve",
           "name": {
             "originalName": "retrieve",
@@ -79253,6 +79272,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_generateKey.create",
           "name": {
             "originalName": "create",
@@ -80132,6 +80152,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_groups.list",
           "name": {
             "originalName": "list",
@@ -80611,6 +80632,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_groups.retrieve",
           "name": {
             "originalName": "retrieve",
@@ -81469,6 +81491,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_issues.list",
           "name": {
             "originalName": "list",
@@ -81712,6 +81735,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_issues.retrieve",
           "name": {
             "originalName": "retrieve",
@@ -81907,6 +81931,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_linkToken.create",
           "name": {
             "originalName": "create",
@@ -82780,6 +82805,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_linkedAccounts.list",
           "name": {
             "originalName": "list",
@@ -83654,6 +83680,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_locations.list",
           "name": {
             "originalName": "list",
@@ -84145,6 +84172,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_locations.retrieve",
           "name": {
             "originalName": "retrieve",
@@ -84409,6 +84437,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_passthrough.create",
           "name": {
             "originalName": "create",
@@ -85122,6 +85151,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_payGroups.list",
           "name": {
             "originalName": "list",
@@ -85463,6 +85493,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_payGroups.retrieve",
           "name": {
             "originalName": "retrieve",
@@ -86545,6 +86576,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_payrollRuns.list",
           "name": {
             "originalName": "list",
@@ -87028,6 +87060,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_payrollRuns.retrieve",
           "name": {
             "originalName": "retrieve",
@@ -87242,6 +87275,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_regenerateKey.create",
           "name": {
             "originalName": "create",
@@ -87502,6 +87536,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_selectiveSync.configurationsList",
           "name": {
             "originalName": "configurationsList",
@@ -87691,6 +87726,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_selectiveSync.configurationsUpdate",
           "name": {
             "originalName": "configurationsUpdate",
@@ -88101,6 +88137,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_selectiveSync.metaList",
           "name": {
             "originalName": "metaList",
@@ -88459,6 +88496,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_syncStatus.list",
           "name": {
             "originalName": "list",
@@ -88702,6 +88740,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_forceResync.sync_status_resync_create",
           "name": {
             "originalName": "sync_status_resync_create",
@@ -89494,6 +89533,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_teams.list",
           "name": {
             "originalName": "list",
@@ -89905,6 +89945,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_teams.retrieve",
           "name": {
             "originalName": "retrieve",
@@ -91019,6 +91060,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_timeOff.list",
           "name": {
             "originalName": "list",
@@ -91336,6 +91378,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_timeOff.create",
           "name": {
             "originalName": "create",
@@ -91986,6 +92029,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_timeOff.retrieve",
           "name": {
             "originalName": "retrieve",
@@ -92195,6 +92239,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_timeOff.metaPostRetrieve",
           "name": {
             "originalName": "metaPostRetrieve",
@@ -93177,6 +93222,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_timeOffBalances.list",
           "name": {
             "originalName": "list",
@@ -93726,6 +93772,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_timeOffBalances.retrieve",
           "name": {
             "originalName": "retrieve",
@@ -93981,6 +94028,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_webhookReceivers.list",
           "name": {
             "originalName": "list",
@@ -94156,6 +94204,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_webhookReceivers.create",
           "name": {
             "originalName": "create",

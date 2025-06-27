@@ -3,6 +3,7 @@ import { OpenAPIV3 } from "openapi-types";
 import { MediaType } from "@fern-api/core-utils";
 import {
     MultipartRequestProperty,
+    MultipartRequestPropertyEncoding,
     MultipartSchema,
     NamedFullExample,
     RequestWithExample,
@@ -156,7 +157,10 @@ export function convertRequest({
                         description: undefined,
                         contentType,
                         exploded: multipartEncoding != null ? multipartEncoding[property.key]?.explode : undefined,
-                        encoding: contentType == null ? context.options.defaultFormParameterEncoding : undefined
+                        encoding:
+                            contentType == null
+                                ? context.options.defaultFormParameterEncoding
+                                : getMultipartPartEncodingFromContentType(contentType)
                     });
                 }
             }
@@ -216,6 +220,19 @@ export function convertRequest({
         });
     }
     return undefined;
+}
+
+const CONTENT_TYPE_TO_ENCODING_MAP: Record<string, MultipartRequestPropertyEncoding> = {
+    "application/json": "json"
+};
+function getMultipartPartEncodingFromContentType(
+    contentType: string | undefined
+): MultipartRequestPropertyEncoding | undefined {
+    if (!contentType) {
+        return undefined;
+    }
+    const encoding = CONTENT_TYPE_TO_ENCODING_MAP[contentType];
+    return encoding;
 }
 
 interface ResolvedSchema {

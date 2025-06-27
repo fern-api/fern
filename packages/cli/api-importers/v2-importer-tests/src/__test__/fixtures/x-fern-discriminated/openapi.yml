@@ -1,0 +1,55 @@
+openapi: 3.0.0
+info:
+  title: Test API
+  version: 1.0.0
+  description: Test API with discriminated union
+
+paths:
+  /test:
+    post:
+      summary: Test endpoint
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/Circle'
+                - $ref: '#/components/schemas/Square'
+              x-fern-discriminated: false
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/Circle'
+                  - $ref: '#/components/schemas/Square'
+                x-fern-discriminated: false
+
+components:
+  schemas:
+    Circle:
+      type: object
+      properties:
+        type:
+          type: string
+          enum: [circle]
+        radius:
+          type: number
+      required:
+        - type
+        - radius
+
+    Square:
+      type: object
+      properties:
+        type:
+          type: string
+          enum: [square]
+        sideLength:
+          type: number
+      required:
+        - type
+        - sideLength

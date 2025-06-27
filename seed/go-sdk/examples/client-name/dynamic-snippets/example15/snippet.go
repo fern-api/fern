@@ -7,7 +7,7 @@ import (
     fern "github.com/examples/fern"
 )
 
-func do() () {
+func do() {
     client := client.NewAcme(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -30,8 +30,8 @@ func do() () {
             Book: fern.String(
                 "book",
             ),
-            Metadata: map[string]interface{}{
-                "metadata": map[string]interface{}{
+            Metadata: map[string]any{
+                "metadata": map[string]any{
                     "key": "value",
                 },
             },

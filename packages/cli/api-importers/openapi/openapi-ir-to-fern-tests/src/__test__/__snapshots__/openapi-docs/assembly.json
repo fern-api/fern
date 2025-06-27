@@ -6225,7 +6225,6 @@ docs: Real-time transcription
                       "speaker_labels": true,
                       "speakers_expected": 1,
                       "speech_threshold": 1.1,
-                      "speed_boost": true,
                       "status": "queued",
                       "summarization": true,
                       "summary": "summary",
@@ -6449,7 +6448,6 @@ docs: Real-time transcription
                       "speaker_labels": true,
                       "speakers_expected": 1,
                       "speech_threshold": 1.1,
-                      "speed_boost": true,
                       "status": "queued",
                       "summarization": true,
                       "summary": "summary",
@@ -6661,7 +6659,6 @@ docs: Real-time transcription
                       "speaker_labels": true,
                       "speakers_expected": 1,
                       "speech_threshold": 1.1,
-                      "speed_boost": true,
                       "status": "queued",
                       "summarization": true,
                       "summary": "summary",
@@ -7249,7 +7246,6 @@ service:
               webhook_status_code: 1
               webhook_auth: true
               webhook_auth_header_name: webhook_auth_header_name
-              speed_boost: true
               auto_highlights: true
               auto_highlights_result:
                 results:
@@ -7402,7 +7398,6 @@ service:
               webhook_status_code: 1
               webhook_auth: true
               webhook_auth_header_name: webhook_auth_header_name
-              speed_boost: true
               auto_highlights: true
               auto_highlights_result:
                 results:
@@ -7553,7 +7548,6 @@ service:
               webhook_status_code: 1
               webhook_auth: true
               webhook_auth_header_name: webhook_auth_header_name
-              speed_boost: true
               auto_highlights: true
               auto_highlights_result:
                 results:

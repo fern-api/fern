@@ -1110,6 +1110,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_.createAUser",
           "name": {
             "originalName": "createAUser",

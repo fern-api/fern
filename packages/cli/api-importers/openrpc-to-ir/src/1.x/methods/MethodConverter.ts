@@ -204,7 +204,8 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
             },
             transport: undefined,
             availability: undefined,
-            source: HttpEndpointSource.openrpc()
+            source: HttpEndpointSource.openrpc(),
+            audiences
         };
 
         return {

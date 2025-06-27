@@ -13,6 +13,7 @@ export declare namespace ServiceConverter {
 
     export interface Output {
         endpoints: MethodConverter.Output[];
+        serviceName: string;
         inlinedTypes: Record<string, Converters.SchemaConverters.SchemaConverter.ConvertedSchema>;
     }
 }
@@ -25,11 +26,22 @@ export class ServiceConverter extends AbstractConverter<ProtofileConverterContex
     }
 
     public convert(): ServiceConverter.Output | undefined {
-        // TODO: convert service by using MethodConverter to convert contained methods
-        // return {
-        //     endpoints: [],
-        //     inlinedTypes: {}
-        // };
-        return undefined;
+        const rpcServiceMethods: MethodConverter.Output[] = [];
+        for (const rpcMethod of this.service.method) {
+            const methodConverter = new MethodConverter({
+                context: this.context,
+                breadcrumbs: this.breadcrumbs,
+                operation: rpcMethod
+            });
+            const convertedMethod = methodConverter.convert();
+            if (convertedMethod != null) {
+                rpcServiceMethods.push(convertedMethod);
+            }
+        }
+        return {
+            endpoints: rpcServiceMethods,
+            serviceName: this.service.name,
+            inlinedTypes: {}
+        };
     }
 }

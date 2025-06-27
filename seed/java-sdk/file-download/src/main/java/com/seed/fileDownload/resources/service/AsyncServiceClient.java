@@ -25,6 +25,14 @@ public class AsyncServiceClient {
         return this.rawClient;
     }
 
+    public CompletableFuture<Void> simple() {
+        return this.rawClient.simple().thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Void> simple(RequestOptions requestOptions) {
+        return this.rawClient.simple(requestOptions).thenApply(response -> response.body());
+    }
+
     public CompletableFuture<InputStream> downloadFile() {
         return this.rawClient.downloadFile().thenApply(response -> response.body());
     }

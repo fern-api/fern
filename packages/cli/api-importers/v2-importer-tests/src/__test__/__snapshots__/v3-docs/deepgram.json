@@ -73619,6 +73619,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_speechToText.listen",
           "name": {
             "originalName": "listen",
@@ -74792,6 +74793,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_textIntelligence.TextRead",
           "name": {
             "originalName": "TextRead",
@@ -75694,6 +75696,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_textToSpeech.speak",
           "name": {
             "originalName": "speak",
@@ -75907,6 +75910,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_managementApi.listProjects",
           "name": {
             "originalName": "listProjects",
@@ -76410,6 +76414,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_managementApi.getProject",
           "name": {
             "originalName": "getProject",
@@ -76715,6 +76720,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_managementApi.deleteProject",
           "name": {
             "originalName": "deleteProject",
@@ -77013,6 +77019,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_managementApi.updateProject",
           "name": {
             "originalName": "updateProject",
@@ -77355,6 +77362,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_managementApi.getProjectBalances",
           "name": {
             "originalName": "getProjectBalances",
@@ -77753,6 +77761,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_managementApi.getProjectBalance",
           "name": {
             "originalName": "getProjectBalance",
@@ -78042,6 +78051,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_managementApi.listProjectModels",
           "name": {
             "originalName": "listProjectModels",
@@ -78444,6 +78454,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_managementApi.getProjectModel",
           "name": {
             "originalName": "getProjectModel",
@@ -78740,6 +78751,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_managementApi.listProjectKeys",
           "name": {
             "originalName": "listProjectKeys",
@@ -79043,6 +79055,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_managementApi.createProjectKey",
           "name": {
             "originalName": "createProjectKey",
@@ -79460,6 +79473,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_managementApi.getProjectKey",
           "name": {
             "originalName": "getProjectKey",
@@ -79846,6 +79860,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_managementApi.deleteProjectKey",
           "name": {
             "originalName": "deleteProjectKey",
@@ -80116,6 +80131,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_managementApi.listProjectMembers",
           "name": {
             "originalName": "listProjectMembers",
@@ -80479,6 +80495,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_managementApi.deleteProjectMember",
           "name": {
             "originalName": "deleteProjectMember",
@@ -80835,6 +80852,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_managementApi.listProjectMemberScopes",
           "name": {
             "originalName": "listProjectMemberScopes",
@@ -81195,6 +81213,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_managementApi.updateProjectMemberScopes",
           "name": {
             "originalName": "updateProjectMemberScopes",
@@ -81450,6 +81469,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_managementApi.listProjectInvites",
           "name": {
             "originalName": "listProjectInvites",
@@ -81729,6 +81749,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_managementApi.createProjectInvite",
           "name": {
             "originalName": "createProjectInvite",
@@ -82130,6 +82151,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_managementApi.deleteProjectInvite",
           "name": {
             "originalName": "deleteProjectInvite",
@@ -82400,6 +82422,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_managementApi.deleteProjectLeave",
           "name": {
             "originalName": "deleteProjectLeave",
@@ -82899,6 +82922,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_managementApi.listProjectRequests",
           "name": {
             "originalName": "listProjectRequests",
@@ -83228,6 +83252,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_managementApi.getProjectRequest",
           "name": {
             "originalName": "getProjectRequest",
@@ -83685,6 +83710,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_managementApi.getProjectUsage",
           "name": {
             "originalName": "getProjectUsage",
@@ -84068,6 +84094,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_managementApi.listProjectUsageFields",
           "name": {
             "originalName": "listProjectUsageFields",
@@ -84613,6 +84640,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_managementApi.getProjectUsageBreakdown",
           "name": {
             "originalName": "getProjectUsageBreakdown",
@@ -85013,6 +85041,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_managementApi.listProjectPurchases",
           "name": {
             "originalName": "listProjectPurchases",
@@ -85226,6 +85255,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_managementApi.listModels",
           "name": {
             "originalName": "listModels",
@@ -85540,6 +85570,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_managementApi.getModel",
           "name": {
             "originalName": "getModel",
@@ -85831,6 +85862,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_managementApi.listSelfHostedDistCreds",
           "name": {
             "originalName": "listSelfHostedDistCreds",
@@ -86252,6 +86284,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_managementApi.createSelfHostedDistCreds",
           "name": {
             "originalName": "createSelfHostedDistCreds",
@@ -86599,6 +86632,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_managementApi.getSelfHostedCredentials",
           "name": {
             "originalName": "getSelfHostedCredentials",
@@ -86981,6 +87015,7 @@
           "source": {
             "type": "openapi"
           },
+          "audiences": [],
           "id": "endpoint_managementApi.deleteSelfHostedDistCreds",
           "name": {
             "originalName": "deleteSelfHostedDistCreds",
@@ -92691,5 +92726,6 @@
       "sdkName": "",
       "sdkVersion": ""
     }
-  }
+  },
+  "audiences": []
 }

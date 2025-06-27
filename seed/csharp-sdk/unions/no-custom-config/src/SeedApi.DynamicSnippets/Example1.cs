@@ -1,5 +1,6 @@
 using global::System.Threading.Tasks;
 using SeedUnions;
+using System.Globalization;
 
 namespace Usage;
 
@@ -13,12 +14,14 @@ public class Example1
         );
 
         await client.Bigunion.UpdateAsync(
-            new Dictionary<string, object>() {
-                ["type"] = "normalSweet",
-                ["value"] = "value",
-                ["id"] = "id",
-                ["created-at"] = "2024-01-15T09:30:00Z",
-                ["archived-at"] = "2024-01-15T09:30:00Z",
+            new BigUnion(
+                new NormalSweet{
+                    Value = "value"
+                }
+            ) {
+                Id = "id",
+                CreatedAt = DateTime.Parse("2024-01-15T09:30:00Z", null, DateTimeStyles.AdjustToUniversal),
+                ArchivedAt = DateTime.Parse("2024-01-15T09:30:00Z", null, DateTimeStyles.AdjustToUniversal),
             }
         );
     }

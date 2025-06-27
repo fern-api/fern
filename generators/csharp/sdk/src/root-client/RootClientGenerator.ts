@@ -1,6 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
-import { csharp } from "@fern-api/csharp-codegen";
+import { csharp, escapeForCSharpString } from "@fern-api/csharp-codegen";
 import { RelativeFilePath, join } from "@fern-api/fs-utils";
 
 import {
@@ -184,7 +184,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
         for (const param of [...requiredParameters, ...optionalParameters]) {
             if (param.header != null) {
                 headerEntries.push({
-                    key: csharp.codeblock(`"${param.header.name}"`),
+                    key: csharp.codeblock(csharp.string_({ string: param.header.name })),
                     value: csharp.codeblock(
                         param.header.prefix != null ? `$"${param.header.prefix} {${param.name}}"` : param.name
                     )
@@ -195,10 +195,10 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
         for (const param of literalParameters) {
             if (param.header != null) {
                 headerEntries.push({
-                    key: csharp.codeblock(`"${param.header.name}"`),
+                    key: csharp.codeblock(csharp.string_({ string: param.header.name })),
                     value: csharp.codeblock(
                         param.value.type === "string"
-                            ? `"${param.value.string}"`
+                            ? csharp.string_({ string: param.value.string })
                             : param.value
                               ? `"${true.toString()}"`
                               : `"${false.toString()}"`
@@ -243,9 +243,10 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                     if (param.environmentVariable != null) {
                         writer.writeLine(`${param.name} ??= ${GetFromEnvironmentOrThrow}(`);
                         writer.indent();
-                        writer.writeLine(`"${param.environmentVariable}",`);
+                        writer.writeNode(csharp.string_({ string: param.environmentVariable }));
+                        writer.writeLine(",");
                         writer.writeLine(
-                            `"Please pass in ${param.name} or set the environment variable ${param.environmentVariable}."`
+                            `"Please pass in ${escapeForCSharpString(param.name)} or set the environment variable ${escapeForCSharpString(param.environmentVariable)}."`
                         );
                         writer.dedent();
                         writer.writeLine(");");

@@ -120,6 +120,7 @@ function evaluateRuntime(): Runtime {
      * A constant that indicates whether the environment the code is running is in React-Native.
      * https://github.com/facebook/react-native/blob/main/packages/react-native/Libraries/Core/setUpNavigator.js
      */
+    // eslint-disable-next-line deprecation/deprecation
     const isReactNative = typeof navigator !== "undefined" && navigator?.product === "ReactNative";
     if (isReactNative) {
         return {

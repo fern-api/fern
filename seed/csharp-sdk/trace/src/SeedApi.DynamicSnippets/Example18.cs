@@ -18,15 +18,13 @@ public class Example18
             new CreateProblemRequest{
                 ProblemName = "problemName",
                 ProblemDescription = new ProblemDescription{
-                    Boards = new List<object>(){
-                        new Dictionary<string, object>() {
-                            ["type"] = "html",
-                            ["value"] = "boards",
-                        },
-                        new Dictionary<string, object>() {
-                            ["type"] = "html",
-                            ["value"] = "boards",
-                        },
+                    Boards = new List<ProblemDescriptionBoard>(){
+                        new ProblemDescriptionBoard(
+
+                        ),
+                        new ProblemDescriptionBoard(
+
+                        ),
                     }
                 },
                 Files = new Dictionary<Language, ProblemFiles>(){
@@ -49,59 +47,47 @@ public class Example18
                 },
                 InputParams = new List<VariableTypeAndName>(){
                     new VariableTypeAndName{
-                        VariableType = new Dictionary<string, object>() {
-                            ["type"] = "integerType",
-                        },
+                        VariableType = new VariableType(),
                         Name = "name"
                     },
                     new VariableTypeAndName{
-                        VariableType = new Dictionary<string, object>() {
-                            ["type"] = "integerType",
-                        },
+                        VariableType = new VariableType(),
                         Name = "name"
                     },
                 },
-                OutputType = new Dictionary<string, object>() {
-                    ["type"] = "integerType",
-                },
+                OutputType = new VariableType(),
                 Testcases = new List<TestCaseWithExpectedResult>(){
                     new TestCaseWithExpectedResult{
                         TestCase = new TestCase{
                             Id = "id",
-                            Params = new List<object>(){
-                                new Dictionary<string, object>() {
-                                    ["type"] = "integerValue",
-                                    ["value"] = 1,
-                                },
-                                new Dictionary<string, object>() {
-                                    ["type"] = "integerValue",
-                                    ["value"] = 1,
-                                },
+                            Params = new List<VariableValue>(){
+                                new VariableValue(
+
+                                ),
+                                new VariableValue(
+
+                                ),
                             }
                         },
-                        ExpectedResult = new Dictionary<string, object>() {
-                            ["type"] = "integerValue",
-                            ["value"] = 1,
-                        }
+                        ExpectedResult = new VariableValue(
+
+                        )
                     },
                     new TestCaseWithExpectedResult{
                         TestCase = new TestCase{
                             Id = "id",
-                            Params = new List<object>(){
-                                new Dictionary<string, object>() {
-                                    ["type"] = "integerValue",
-                                    ["value"] = 1,
-                                },
-                                new Dictionary<string, object>() {
-                                    ["type"] = "integerValue",
-                                    ["value"] = 1,
-                                },
+                            Params = new List<VariableValue>(){
+                                new VariableValue(
+
+                                ),
+                                new VariableValue(
+
+                                ),
                             }
                         },
-                        ExpectedResult = new Dictionary<string, object>() {
-                            ["type"] = "integerValue",
-                            ["value"] = 1,
-                        }
+                        ExpectedResult = new VariableValue(
+
+                        )
                     },
                 },
                 MethodName = "methodName"

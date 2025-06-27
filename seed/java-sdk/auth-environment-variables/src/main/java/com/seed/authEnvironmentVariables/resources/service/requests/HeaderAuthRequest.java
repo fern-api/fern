@@ -67,7 +67,7 @@ public final class HeaderAuthRequest {
 
     public interface XEndpointHeaderStage {
         /**
-         * Specifies the endpoint key.
+         * <p>Specifies the endpoint key.</p>
          */
         _FinalStage xEndpointHeader(@NotNull String xEndpointHeader);
 
@@ -94,7 +94,8 @@ public final class HeaderAuthRequest {
         }
 
         /**
-         * Specifies the endpoint key.<p>Specifies the endpoint key.</p>
+         * <p>Specifies the endpoint key.</p>
+         * <p>Specifies the endpoint key.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
