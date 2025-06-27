@@ -31,7 +31,8 @@ export class ServiceConverter extends AbstractConverter<ProtofileConverterContex
             const methodConverter = new MethodConverter({
                 context: this.context,
                 breadcrumbs: this.breadcrumbs,
-                operation: rpcMethod
+                operation: rpcMethod,
+                serviceName: this.service.name
             });
             const convertedMethod = methodConverter.convert();
             if (convertedMethod != null) {

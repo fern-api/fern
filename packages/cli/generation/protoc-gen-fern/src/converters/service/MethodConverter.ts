@@ -18,9 +18,11 @@ export type gRPCMethodType = "UNARY" | "CLIENT_STREAM" | "SERVER_STREAM" | "BIDI
 export declare namespace MethodConverter {
     export interface Args extends AbstractConverter.Args<ProtofileConverterContext> {
         operation: MethodDescriptorProto;
+        serviceName: string;
     }
 
     export interface Output {
+        group: string[];
         endpoint: HttpEndpoint;
     }
 
@@ -29,19 +31,24 @@ export declare namespace MethodConverter {
 
 export class MethodConverter extends AbstractConverter<ProtofileConverterContext, MethodConverter.Output> {
     private readonly operation: MethodDescriptorProto;
-
-    constructor({ context, breadcrumbs, operation }: MethodConverter.Args) {
+    private readonly serviceName: string;
+    constructor({ context, breadcrumbs, operation, serviceName }: MethodConverter.Args) {
         super({ context, breadcrumbs });
         this.operation = operation;
+        this.serviceName = serviceName;
     }
 
     public convert(): MethodConverter.Output | undefined {
         // TODO: convert method by parsing name, request type, and response type
+
+        const packageName = this.context.spec.package;
+
         const convertedRequestBody = this.convertRequestBody();
 
         const convertedResponseBody = this.convertResponseBody();
 
         return {
+            group: [packageName, this.serviceName],
             endpoint: {
                 id: this.operation.name,
                 docs: undefined,
@@ -100,7 +107,7 @@ export class MethodConverter extends AbstractConverter<ProtofileConverterContext
         });
         if (requestBodyType.ok) {
             return HttpRequestBody.reference({
-                contentType: "application/protobuf",
+                contentType: "application/proto",
                 docs: undefined,
                 requestBodyType: requestBodyType.reference,
                 v2Examples: undefined
