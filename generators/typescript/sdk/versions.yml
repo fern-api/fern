@@ -1,4 +1,9 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.9.1
+  changelogEntry:
+    - summary: Update create_docker.sh script to specify platform during build
+      type: fix
+  createdAt: '2025-06-27'
 - version: 1.9.0
   changelogEntry:
     - summary: |
