@@ -809,13 +809,13 @@ redirects:
   - source: /learn/sdks/capabilities/merging-multiple-apis
     destination: /learn/sdks/capabilities/merging-apis
     permanent: true
-  - source: /learn/ask-fern/getting-started/:slug*
+  - source: /learn/ai-search/getting-started/:slug*
     destination: /learn/ask-fern/:slug*
     permanent: true    
-  - source: /learn/ask-fern/features/:slug*
+  - source: /learn/ai-search/features/:slug*
     destination: /learn/ask-fern/:slug*
     permanent: true   
-  - source: /learn/ask-fern/ask-fern-customer-showcase
+  - source: /learn/ai-search/customer-showcase
     destination: /learn/ask-fern/customer-showcase
     permanent: true
   - source: /learn/docs/getting-started/changelog/2025/5/23
