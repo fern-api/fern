@@ -2,9 +2,9 @@ package service
 
 import (
 	context "context"
-	core "github.com/file-upload/fern/core"
-	internal "github.com/file-upload/fern/internal"
-	option "github.com/file-upload/fern/option"
+	core "github.com/bytes-upload/fern/core"
+	internal "github.com/bytes-upload/fern/internal"
+	option "github.com/bytes-upload/fern/option"
 	http "net/http"
 )
 
@@ -27,8 +27,9 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
-func (r *RawClient) Simple(
+func (r *RawClient) Upload(
 	ctx context.Context,
+	request []byte,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -37,7 +38,7 @@ func (r *RawClient) Simple(
 		r.baseURL,
 		"",
 	)
-	endpointURL := baseURL + "/snippet"
+	endpointURL := baseURL + "/upload-content"
 	headers := internal.MergeHeaders(
 		r.header.Clone(),
 		options.ToHeader(),
@@ -52,6 +53,7 @@ func (r *RawClient) Simple(
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
+			Request:         request,
 		},
 	)
 	if err != nil {
