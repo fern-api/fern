@@ -4948,7 +4948,7 @@
                             },
                             {
                                 "type": "bodyProperty",
-                                "style": null,
+                                "style": "json",
                                 "name": {
                                     "name": {
                                         "originalName": "request",
