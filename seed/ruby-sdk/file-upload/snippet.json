@@ -1,4 +1,27 @@
 {
-    "endpoints": [],
+    "endpoints": [
+        {
+            "id": {
+                "path": "/snippet",
+                "method": "POST",
+                "identifierOverride": "endpoint_service.simple"
+            },
+            "snippet": {
+                "client": "require \"fern_file_upload\"\n\nfile_upload = SeedFileUploadClient::Client.new(base_url: \"https://api.example.com\")\nfile_upload.service.simple",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/snippet",
+                "method": "POST",
+                "identifierOverride": "endpoint_service.simple"
+            },
+            "snippet": {
+                "client": "require \"fern_file_upload\"\n\nfile_upload = SeedFileUploadClient::Client.new(base_url: \"https://api.example.com\")\nfile_upload.service.simple",
+                "type": "ruby"
+            }
+        }
+    ],
     "types": {}
 }

@@ -1,4 +1,28 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.9.0
+  changelogEntry:
+    - summary: |
+        Add `formDataSupport` configuration which lets you choose between `Node16` and `Node18`.
+        The default is `Node16`. If you choose `Node18`, the `form-data`, `formdata-node`, and `form-data-encoder` dependencies will be removed.
+        `formDataSupport: Node18` supports uploading files from the following types:
+        * `Buffer`
+        * `File`
+        * `Blob`
+        * `Readable` (includes Readstream)
+        * `ReadableStream`
+        * `ArrayBuffer`
+        * `Uint8Array`
+      type: feat
+  createdAt: '2025-06-22'
+  irVersion: 58
+- version: 1.8.2
+  changelogEntry:
+    - summary: |
+        When a multipart form part is explicitly marked as JSON, serialize the data as JSON regardless of type. 
+        This also means arrays, maps, etc. will not be split into multiple parts, but serialized to JSON as a single part.
+      type: fix
+  createdAt: '2025-06-27'
+  irVersion: 58
 - version: 1.8.1
   changelogEntry:
     - summary: Fix binary response README.md examples
