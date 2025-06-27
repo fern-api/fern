@@ -73,7 +73,7 @@ export class JestTestGenerator {
         this.relativeTestPath = relativeTestPath;
     }
 
-    private addJestConfig(): void {
+    private async addJestConfigs(): Promise<void> {
         const setupFilesAfterEnv = [];
         if (this.useBigInt) {
             setupFilesAfterEnv.push(`<rootDir>/${this.relativeTestPath}/bigint.setup.ts`);
@@ -91,12 +91,14 @@ export class JestTestGenerator {
                 moduleNameMapper: {
                     "^(\\.{1,2}/.*)\\.js$": "$1"
                 },
+                testPathIgnorePatterns: ["<rootDir>/.*\\\\.browser\\\\.test\\\\.ts$"],
                 setupFilesAfterEnv: ${arrayOf(...setupFilesAfterEnv)},
                 ${this.useBigInt ? code`workerThreads: true,` : code``}
+                passWithNoTests: true
             };
             `.toString({ dprintOptions: { indentWidth: 4 } })
         );
-        jestConfig.saveSync();
+        await jestConfig.save();
     }
 
     public getTestFile(service: IR.HttpService): ExportedFilePath {
@@ -125,20 +127,21 @@ export class JestTestGenerator {
         }
     }
 
-    public addExtras(): void {
-        this.addJestConfig();
+    public async addExtras(): Promise<void> {
+        await this.addJestConfigs();
         this.addDependencies();
     }
 
     public get scripts(): Record<string, string> {
         const scripts: Record<string, string> = {};
         if (this.writeUnitTests) {
-            scripts.test = `jest ${this.relativeTestPath}/unit --passWithNoTests`;
+            scripts.test = `jest ${this.relativeTestPath}/unit`;
         } else {
-            scripts.test = "jest --passWithNoTests";
+            scripts.test = "jest";
         }
+        scripts["test:browser"] = "jest --config jest.browser.config.mjs";
         if (this.generateWireTests) {
-            scripts["test:wire"] = `jest ${this.relativeTestPath}/wire --passWithNoTests`;
+            scripts["test:wire"] = `jest ${this.relativeTestPath}/wire`;
             scripts["wire:test"] = "yarn test:wire";
         }
         return scripts;

@@ -142,6 +142,7 @@ export declare namespace SdkGenerator {
         generateWireTests: boolean;
         streamType: "wrapper" | "web";
         fileResponseType: "stream" | "binary-response";
+        formDataSupport: "Node16" | "Node18";
         packagePath: string | undefined;
     }
 }
@@ -261,6 +262,7 @@ export class SdkGenerator {
         });
         this.coreUtilitiesManager = new CoreUtilitiesManager({
             streamType: this.config.streamType,
+            formDataSupport: this.config.formDataSupport,
             relativePackagePath: this.relativePackagePath,
             relativeTestPath: this.relativeTestPath
         });
@@ -421,7 +423,8 @@ export class SdkGenerator {
             allowExtraFields: config.allowExtraFields,
             streamType: config.streamType,
             fileResponseType: config.fileResponseType,
-            exportsManager: this.exportsManager
+            exportsManager: this.exportsManager,
+            formDataSupport: config.formDataSupport
         });
         this.websocketGenerator = new WebsocketClassGenerator({
             intermediateRepresentation
@@ -562,7 +565,7 @@ export class SdkGenerator {
         if (this.generateJestTests && this.config.writeUnitTests) {
             this.generateTestFiles();
         }
-        this.jestTestGenerator.addExtras();
+        await this.jestTestGenerator.addExtras();
         this.extraScripts = {
             ...this.extraScripts,
             ...this.jestTestGenerator.scripts
@@ -1508,7 +1511,8 @@ export class SdkGenerator {
             neverThrowErrors: this.config.neverThrowErrors,
             allowExtraFields: this.config.allowExtraFields,
             relativePackagePath: this.relativePackagePath,
-            relativeTestPath: this.relativeTestPath
+            relativeTestPath: this.relativeTestPath,
+            formDataSupport: this.config.formDataSupport
         });
     }
 
