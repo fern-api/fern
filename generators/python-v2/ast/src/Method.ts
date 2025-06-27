@@ -114,20 +114,26 @@ export class Method extends AstNode {
             writer.write("self");
             if (this.parameters.length > 0) {
                 writer.write(useMultiline ? "," : ", ");
-                if (useMultiline) {writer.newLine();}
+                if (useMultiline) {
+                    writer.newLine();
+                }
             }
         } else if (this.type === ClassMethodType.CLASS) {
             writer.write("cls");
             if (this.parameters.length > 0) {
                 writer.write(useMultiline ? "," : ", ");
-                if (useMultiline) {writer.newLine();}
+                if (useMultiline) {
+                    writer.newLine();
+                }
             }
         }
         this.parameters.forEach((param, index) => {
             param.write(writer);
             if (index < this.parameters.length - 1) {
                 writer.write(useMultiline ? "," : ", ");
-                if (useMultiline) {writer.newLine();}
+                if (useMultiline) {
+                    writer.newLine();
+                }
             }
         });
 
