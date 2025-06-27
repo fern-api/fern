@@ -423,7 +423,8 @@ export class SdkGenerator {
             allowExtraFields: config.allowExtraFields,
             streamType: config.streamType,
             fileResponseType: config.fileResponseType,
-            exportsManager: this.exportsManager
+            exportsManager: this.exportsManager,
+            formDataSupport: config.formDataSupport
         });
         this.websocketGenerator = new WebsocketClassGenerator({
             intermediateRepresentation
