@@ -1,4 +1,5 @@
 import { AbstractGeneratorAgent } from "@fern-api/base-generator";
+import { ReferenceConfigBuilder } from "@fern-api/base-generator";
 import { Logger } from "@fern-api/logger";
 
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
@@ -41,6 +42,10 @@ export class JavaGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorConte
 
     public getLanguage(): FernGeneratorCli.Language {
         return FernGeneratorCli.Language.Java;
+    }
+
+    public getExportedReferenceFilePath(): string {
+        return this.REFERENCE_FILENAME;
     }
 
     public getGitHubConfig(
