@@ -4,6 +4,45 @@
 
 from . import nullable
 from .client import AsyncSeedNullable, SeedNullable
-from .nullable import Email, Metadata, MetadataParams, Status, StatusParams, Status_Active, Status_ActiveParams, Status_Archived, Status_ArchivedParams, Status_SoftDeleted, Status_SoftDeletedParams, User, UserId, UserParams, WeirdNumber, WeirdNumberParams
+from .nullable import (
+    Email,
+    Metadata,
+    MetadataParams,
+    Status,
+    StatusParams,
+    Status_Active,
+    Status_ActiveParams,
+    Status_Archived,
+    Status_ArchivedParams,
+    Status_SoftDeleted,
+    Status_SoftDeletedParams,
+    User,
+    UserId,
+    UserParams,
+    WeirdNumber,
+    WeirdNumberParams,
+)
 from .version import __version__
-__all__ = ["AsyncSeedNullable", "Email", "Metadata", "MetadataParams", "SeedNullable", "Status", "StatusParams", "Status_Active", "Status_ActiveParams", "Status_Archived", "Status_ArchivedParams", "Status_SoftDeleted", "Status_SoftDeletedParams", "User", "UserId", "UserParams", "WeirdNumber", "WeirdNumberParams", "__version__", "nullable"]
+
+__all__ = [
+    "AsyncSeedNullable",
+    "Email",
+    "Metadata",
+    "MetadataParams",
+    "SeedNullable",
+    "Status",
+    "StatusParams",
+    "Status_Active",
+    "Status_ActiveParams",
+    "Status_Archived",
+    "Status_ArchivedParams",
+    "Status_SoftDeleted",
+    "Status_SoftDeletedParams",
+    "User",
+    "UserId",
+    "UserParams",
+    "WeirdNumber",
+    "WeirdNumberParams",
+    "__version__",
+    "nullable",
+]

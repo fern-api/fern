@@ -2,6 +2,42 @@
 
 # isort: skip_file
 
-from .types import Email, Metadata, Status, Status_Active, Status_Archived, Status_SoftDeleted, User, UserId, WeirdNumber
-from .requests import MetadataParams, StatusParams, Status_ActiveParams, Status_ArchivedParams, Status_SoftDeletedParams, UserParams, WeirdNumberParams
-__all__ = ["Email", "Metadata", "MetadataParams", "Status", "StatusParams", "Status_Active", "Status_ActiveParams", "Status_Archived", "Status_ArchivedParams", "Status_SoftDeleted", "Status_SoftDeletedParams", "User", "UserId", "UserParams", "WeirdNumber", "WeirdNumberParams"]
+from .types import (
+    Email,
+    Metadata,
+    Status,
+    Status_Active,
+    Status_Archived,
+    Status_SoftDeleted,
+    User,
+    UserId,
+    WeirdNumber,
+)
+from .requests import (
+    MetadataParams,
+    StatusParams,
+    Status_ActiveParams,
+    Status_ArchivedParams,
+    Status_SoftDeletedParams,
+    UserParams,
+    WeirdNumberParams,
+)
+
+__all__ = [
+    "Email",
+    "Metadata",
+    "MetadataParams",
+    "Status",
+    "StatusParams",
+    "Status_Active",
+    "Status_ActiveParams",
+    "Status_Archived",
+    "Status_ArchivedParams",
+    "Status_SoftDeleted",
+    "Status_SoftDeletedParams",
+    "User",
+    "UserId",
+    "UserParams",
+    "WeirdNumber",
+    "WeirdNumberParams",
+]

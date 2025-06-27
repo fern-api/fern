@@ -89,4 +89,12 @@ public class ServiceClient {
     public String optionalArgs(OptionalArgsRequest request, RequestOptions requestOptions) {
         return this.rawClient.optionalArgs(request, requestOptions).body();
     }
+
+    public void simple() {
+        this.rawClient.simple().body();
+    }
+
+    public void simple(RequestOptions requestOptions) {
+        this.rawClient.simple(requestOptions).body();
+    }
 }

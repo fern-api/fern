@@ -1,0 +1,92 @@
+[
+    {
+        "sdk": {
+            "package": "fern_bytes-download",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/download-content/{id}",
+            "method": "GET",
+            "identifierOverride": "endpoint_service.download"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": {
+                "imports": [
+                    "from seed import SeedBytesDownload"
+                ],
+                "isOptional": true,
+                "templateString": "client = SeedBytesDownload(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "templateInputs": [],
+                "inputDelimiter": ",",
+                "type": "generic"
+            },
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "client.service.download(\n\t$FERN_INPUT\n)",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "id=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "PATH",
+                                    "path": "id",
+                                    "type": "payload"
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",\n\t",
+                "type": "generic"
+            },
+            "type": "v1"
+        },
+        "additionalTemplates": {
+            "async": {
+                "clientInstantiation": {
+                    "imports": [
+                        "from seed import AsyncSeedBytesDownload"
+                    ],
+                    "isOptional": true,
+                    "templateString": "client = AsyncSeedBytesDownload(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                    "templateInputs": [],
+                    "inputDelimiter": ",",
+                    "type": "generic"
+                },
+                "functionInvocation": {
+                    "imports": [],
+                    "isOptional": true,
+                    "templateString": "await client.service.download(\n\t$FERN_INPUT\n)",
+                    "templateInputs": [
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "id=$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "PATH",
+                                        "path": "id",
+                                        "type": "payload"
+                                    }
+                                ],
+                                "type": "generic"
+                            }
+                        }
+                    ],
+                    "inputDelimiter": ",\n\t",
+                    "type": "generic"
+                },
+                "type": "v1"
+            }
+        }
+    }
+]

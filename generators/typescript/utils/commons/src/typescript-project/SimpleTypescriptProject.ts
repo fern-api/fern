@@ -324,7 +324,8 @@ export class SimpleTypescriptProject extends TypescriptProject {
             draft.browser = {
                 fs: false,
                 os: false,
-                path: false
+                path: false,
+                stream: false,
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
             } as any;
 
