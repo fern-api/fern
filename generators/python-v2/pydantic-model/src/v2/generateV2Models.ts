@@ -1,6 +1,7 @@
 import { WriteablePythonFile } from "@fern-api/python-base";
 
 import { PydanticModelGeneratorContext } from "../ModelGeneratorContext";
+import { EnumGenerator } from "./EnumGenerator";
 import { ObjectGenerator } from "./ObjectGenerator";
 import { WrappedAliasGenerator } from "./WrappedAliasGenerator";
 
@@ -12,6 +13,9 @@ export function generateV2Models({ context }: { context: PydanticModelGeneratorC
                 return new WrappedAliasGenerator(typeId, context, typeDeclaration, aliasTypeDeclaration).doGenerate();
             },
             enum: () => undefined,
+            // enum: (enumTypeDeclaration) => {
+            //     return new EnumGenerator(typeId, context, typeDeclaration, enumTypeDeclaration).doGenerate();
+            // },
             object: (objectTypDeclaration) => {
                 return new ObjectGenerator(typeId, context, typeDeclaration, objectTypDeclaration).doGenerate();
             },
