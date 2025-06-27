@@ -91,4 +91,12 @@ public class AsyncServiceClient {
     public CompletableFuture<String> optionalArgs(OptionalArgsRequest request, RequestOptions requestOptions) {
         return this.rawClient.optionalArgs(request, requestOptions).thenApply(response -> response.body());
     }
+
+    public CompletableFuture<Void> simple() {
+        return this.rawClient.simple().thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Void> simple(RequestOptions requestOptions) {
+        return this.rawClient.simple(requestOptions).thenApply(response -> response.body());
+    }
 }

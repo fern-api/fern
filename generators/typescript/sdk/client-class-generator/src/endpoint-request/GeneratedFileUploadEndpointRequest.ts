@@ -44,6 +44,7 @@ export declare namespace GeneratedFileUploadEndpointRequest {
         includeSerdeLayer: boolean;
         allowExtraFields: boolean;
         omitUndefined: boolean;
+        formDataSupport: "Node16" | "Node18";
     }
 }
 
@@ -65,6 +66,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
     private includeSerdeLayer: boolean;
     private allowExtraFields: boolean;
     private omitUndefined: boolean;
+    private readonly formDataSupport: "Node16" | "Node18";
 
     constructor({
         ir,
@@ -79,7 +81,8 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         importsManager,
         includeSerdeLayer,
         allowExtraFields,
-        omitUndefined
+        omitUndefined,
+        formDataSupport
     }: GeneratedFileUploadEndpointRequest.Init) {
         this.ir = ir;
         this.service = service;
@@ -93,6 +96,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         this.includeSerdeLayer = includeSerdeLayer;
         this.allowExtraFields = allowExtraFields;
         this.omitUndefined = omitUndefined;
+        this.formDataSupport = formDataSupport;
         if (
             this.inlineFileProperties ||
             requestBody.properties.some((property) => property.type === "bodyProperty") ||
@@ -217,28 +221,38 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
     }
 
     private getFileParameterType(property: FileProperty, context: SdkContext): ts.TypeNode {
-        const types: ts.TypeNode[] = [
-            this.maybeWrapFileArray({
-                property,
-                value: ts.factory.createTypeReferenceNode("File")
-            })
-        ];
+        const types: ts.TypeNode[] = [];
 
         visitJavaScriptRuntime(this.targetRuntime, {
             node: () => {
-                types.push(
-                    this.maybeWrapFileArray({
-                        property,
-                        value: context.externalDependencies.fs.ReadStream._getReferenceToType()
-                    })
-                );
+                if (this.formDataSupport === "Node16") {
+                    types.push(
+                        this.maybeWrapFileArray({
+                            property,
+                            value: ts.factory.createTypeReferenceNode("File")
+                        })
+                    );
+                    types.push(
+                        this.maybeWrapFileArray({
+                            property,
+                            value: context.externalDependencies.fs.ReadStream._getReferenceToType()
+                        })
+                    );
 
-                types.push(
-                    this.maybeWrapFileArray({
-                        property,
-                        value: context.externalDependencies.blob.Blob._getReferenceToType()
-                    })
-                );
+                    types.push(
+                        this.maybeWrapFileArray({
+                            property,
+                            value: context.externalDependencies.blob.Blob._getReferenceToType()
+                        })
+                    );
+                } else {
+                    types.push(
+                        this.maybeWrapFileArray({
+                            property,
+                            value: context.coreUtilities.fileUtils.FileLike._getReferenceToType()
+                        })
+                    );
+                }
             },
             browser: () => {
                 types.push(

@@ -30,6 +30,7 @@ export declare namespace SdkClientClassGenerator {
         oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
         streamType: "wrapper" | "web";
         fileResponseType: "stream" | "binary-response";
+        formDataSupport: "Node16" | "Node18";
         exportsManager: ExportsManager;
     }
 
@@ -63,6 +64,7 @@ export class SdkClientClassGenerator {
     private allowExtraFields: boolean;
     private oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
     private streamType: "wrapper" | "web";
+    private readonly formDataSupport: "Node16" | "Node18";
     private readonly fileResponseType: "stream" | "binary-response";
     private exportsManager: ExportsManager;
 
@@ -87,7 +89,8 @@ export class SdkClientClassGenerator {
         allowExtraFields,
         streamType,
         fileResponseType,
-        exportsManager
+        exportsManager,
+        formDataSupport
     }: SdkClientClassGenerator.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.errorResolver = errorResolver;
@@ -110,6 +113,7 @@ export class SdkClientClassGenerator {
         this.streamType = streamType;
         this.fileResponseType = fileResponseType;
         this.exportsManager = exportsManager;
+        this.formDataSupport = formDataSupport;
     }
 
     public generateService({
@@ -143,7 +147,8 @@ export class SdkClientClassGenerator {
             omitUndefined: this.omitUndefined,
             allowExtraFields: this.allowExtraFields,
             streamType: this.streamType,
-            fileResponseType: this.fileResponseType
+            fileResponseType: this.fileResponseType,
+            formDataSupport: this.formDataSupport
         });
     }
 }

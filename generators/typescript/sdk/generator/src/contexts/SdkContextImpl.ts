@@ -138,6 +138,7 @@ export declare namespace SdkContextImpl {
         useBigInt: boolean;
         relativePackagePath: string;
         relativeTestPath: string;
+        formDataSupport: "Node16" | "Node18";
     }
 }
 
@@ -177,6 +178,7 @@ export class SdkContextImpl implements SdkContext {
     public readonly retainOriginalCasing: boolean;
     public readonly inlineFileProperties: boolean;
     public readonly inlinePathParameters: boolean;
+    public readonly formDataSupport: "Node16" | "Node18";
     public readonly generateOAuthClients: boolean;
     public readonly omitUndefined: boolean;
     public readonly neverThrowErrors: boolean;
@@ -246,7 +248,8 @@ export class SdkContextImpl implements SdkContext {
         neverThrowErrors,
         enableInlineTypes,
         relativePackagePath,
-        relativeTestPath
+        relativeTestPath,
+        formDataSupport
     }: SdkContextImpl.Init) {
         this.logger = logger;
         this.ir = ir;
@@ -258,6 +261,7 @@ export class SdkContextImpl implements SdkContext {
         this.inlineFileProperties = inlineFileProperties;
         this.inlinePathParameters = inlinePathParameters;
         this.targetRuntime = targetRuntime;
+        this.formDataSupport = formDataSupport;
         this.generateOAuthClients = generateOAuthClients;
         this.namespaceExport = typeDeclarationReferencer.namespaceExport;
         this.rootClientVariableName = ROOT_CLIENT_VARIABLE_NAME;
@@ -369,7 +373,8 @@ export class SdkContextImpl implements SdkContext {
             retainOriginalCasing,
             inlineFileProperties,
             inlinePathParameters,
-            enableInlineTypes
+            enableInlineTypes,
+            formDataSupport
         });
         this.sdkInlinedRequestBodySchema = new SdkInlinedRequestBodySchemaContextImpl({
             importsManager,

@@ -6,7 +6,7 @@ import (
     context "context"
 )
 
-func do() () {
+func do() {
     client := fern.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",

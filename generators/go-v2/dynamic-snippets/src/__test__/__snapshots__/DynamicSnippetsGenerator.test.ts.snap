@@ -108,10 +108,10 @@ func do() {
 				From:   "Quentin Tarantino",
 				Rating: 8.5,
 				Tag:    "tag-12efs9dv",
-				Metadata: map[string]interface{}{
+				Metadata: map[string]any{
 					"academyAward": true,
 					"releaseDate":  "2023-12-08",
-					"ratings": map[string]interface{}{
+					"ratings": map[string]any{
 						"rottenTomatoes": 97,
 						"imdb":           7.6,
 					},
@@ -164,14 +164,14 @@ func do() {
 			From:   "Hayao Miyazaki",
 			Rating: 8,
 			Tag:    "development",
-			Metadata: map[string]interface{}{
-				"actors": []interface{}{
+			Metadata: map[string]any{
+				"actors": []any{
 					"Christian Bale",
 					"Florence Pugh",
 					"Willem Dafoe",
 				},
 				"releaseDate": "2023-12-08",
-				"ratings": map[string]interface{}{
+				"ratings": map[string]any{
 					"rottenTomatoes": 97,
 					"imdb":           7.6,
 				},
@@ -855,10 +855,10 @@ func do() {
 				From:   "Quentin Tarantino",
 				Rating: 8.5,
 				Tag:    "tag-12efs9dv",
-				Metadata: map[string]interface{}{
+				Metadata: map[string]any{
 					"academyAward": true,
 					"releaseDate":  "2023-12-08",
-					"ratings": map[string]interface{}{
+					"ratings": map[string]any{
 						"rottenTomatoes": 97,
 						"imdb":           7.6,
 					},
@@ -911,14 +911,14 @@ func do() {
 			From:   "Hayao Miyazaki",
 			Rating: 8,
 			Tag:    "development",
-			Metadata: map[string]interface{}{
-				"actors": []interface{}{
+			Metadata: map[string]any{
+				"actors": []any{
 					"Christian Bale",
 					"Florence Pugh",
 					"Willem Dafoe",
 				},
 				"releaseDate": "2023-12-08",
-				"ratings": map[string]interface{}{
+				"ratings": map[string]any{
 					"rottenTomatoes": 97,
 					"imdb":           7.6,
 				},

@@ -14,6 +14,8 @@ type ServiceClient struct {
 	baseURL string
 	caller  *internal.Caller
 	header  http.Header
+
+	WithRawResponse *RawServiceClient
 }
 
 func NewServiceClient(opts ...option.RequestOption) *ServiceClient {
@@ -26,7 +28,8 @@ func NewServiceClient(opts ...option.RequestOption) *ServiceClient {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header: options.ToHeader(),
+		header:          options.ToHeader(),
+		WithRawResponse: NewRawServiceClient(options),
 	}
 }
 
@@ -52,7 +55,7 @@ func (s *ServiceClient) Nop(
 		options.ToHeader(),
 	)
 
-	if err := s.caller.Call(
+	if _, err := s.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,

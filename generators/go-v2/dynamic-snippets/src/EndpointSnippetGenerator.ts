@@ -61,15 +61,20 @@ export class EndpointSnippetGenerator {
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): go.AstNode {
-        return go.func({
-            name: SNIPPET_FUNC_NAME,
-            parameters: [],
-            return_: [],
-            body: go.codeblock((writer) => {
-                writer.writeNode(this.constructClient({ endpoint, snippet }));
-                writer.writeLine();
-                writer.writeNode(this.callMethod({ endpoint, snippet }));
-            })
+        return go.codeblock((writer) => {
+            writer.writeNode(
+                go.func({
+                    name: SNIPPET_FUNC_NAME,
+                    parameters: [],
+                    return_: [],
+                    body: go.codeblock((writer) => {
+                        writer.writeNode(this.constructClient({ endpoint, snippet }));
+                        writer.writeLine();
+                        writer.writeNode(this.callMethod({ endpoint, snippet }));
+                    })
+                })
+            );
+            writer.writeNewLineIfLastLineNot();
         });
     }
 
