@@ -20,14 +20,20 @@ export function createGlobalCommentsStore(spec: FileDescriptorProto): Record<Pat
     spec.sourceCodeInfo?.location.forEach((sourceCodeInfoLocation) => {
         const path = sourceCodeInfoLocation.path;
 
-        if (!path || path.length === 0) {return;}
+        if (!path || path.length === 0) {
+            return;
+        }
 
         const startValue = path[0] as PathStarterValues;
-        if (!(startValue in commentsByStartingNodeType)) {return;}
+        if (!(startValue in commentsByStartingNodeType)) {
+            return;
+        }
 
         const comment = sourceCodeInfoLocation.leadingComments || sourceCodeInfoLocation.trailingComments || "";
 
-        if (!comment) {return;}
+        if (!comment) {
+            return;
+        }
 
         let current: CommentNode = commentsByStartingNodeType[startValue];
 
@@ -35,7 +41,9 @@ export function createGlobalCommentsStore(spec: FileDescriptorProto): Record<Pat
         for (let i = 1; i < path.length; i++) {
             const key = path[i];
 
-            if (key === undefined) {continue;}
+            if (key === undefined) {
+                continue;
+            }
 
             if (!(key in current)) {
                 current[key] = {};

@@ -5,7 +5,7 @@ import {
     generatorsYml,
     loadGeneratorsConfiguration
 } from "@fern-api/configuration-loader";
-import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join, listFiles, relative } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils";
 import {
     ConjureWorkspace,
     LazyFernWorkspace,
@@ -13,7 +13,6 @@ import {
     WorkspaceLoader,
     WorkspaceLoaderFailureType
 } from "@fern-api/lazy-fern-workspace";
-import { createLoggingExecutable } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
 
 import { loadAPIChangelog } from "./loadAPIChangelog";
@@ -73,7 +72,6 @@ export async function loadSingleNamespaceAPIWorkspace({
                 absoluteFilepathToProtobufTarget: absoluteFilepathToTarget,
                 absoluteFilepathToOverrides,
                 relativeFilepathToProtobufRoot,
-                generateDocs: definition.schema.target.length === 0,
                 generateLocally: definition.schema.localGeneration,
                 settings: {
                     audiences: definition.audiences ?? [],
@@ -270,7 +268,7 @@ export async function loadAPIWorkspace({
                     if (spec.type === "openrpc") {
                         return false;
                     }
-                    if (spec.type === "protobuf" && spec.generateDocs) {
+                    if (spec.type === "protobuf") {
                         return false;
                     }
                     return true;

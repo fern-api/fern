@@ -1,9 +1,8 @@
-import { execSync } from "child_process";
 import { chmod, cp, writeFile } from "fs/promises";
 import tmp from "tmp-promise";
 
 import { AbsoluteFilePath, RelativeFilePath, cwd, join, resolve } from "@fern-api/fs-utils";
-import { createLoggingExecutable } from "@fern-api/logging-execa";
+import { createLoggingExecutable, runExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
 
 import {
@@ -73,7 +72,7 @@ export class ProtobufIRGenerator {
             PROTOBUF_MODULE_PACKAGE_JSON
         );
 
-        execSync("npm install", {
+        await runExeca(this.context.logger, "npm", ["install"], {
             cwd: protobufGeneratorConfigPath,
             stdio: "ignore"
         });
