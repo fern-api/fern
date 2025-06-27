@@ -102,6 +102,9 @@ class AbstractServiceService(AbstractFernService):
         request: typing.Optional[typing.Optional[typing.Any]] = None,
     ) -> str: ...
 
+    @abc.abstractmethod
+    def simple(self) -> None: ...
+
     """
     Below are internal methods used by Fern to register your implementation.
     You can ignore them.
@@ -116,6 +119,7 @@ class AbstractServiceService(AbstractFernService):
         cls.__init_with_form_encoding(router=router)
         cls.__init_with_form_encoded_containers(router=router)
         cls.__init_optional_args(router=router)
+        cls.__init_simple(router=router)
 
     @classmethod
     def __init_post(cls, router: fastapi.APIRouter) -> None:
@@ -455,4 +459,39 @@ class AbstractServiceService(AbstractFernService):
             response_model=str,
             description=AbstractServiceService.optional_args.__doc__,
             **get_route_args(cls.optional_args, default_tag="service"),
+        )(wrapper)
+
+    @classmethod
+    def __init_simple(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.simple)
+        new_parameters: typing.List[inspect.Parameter] = []
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            if index == 0:
+                new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
+            else:
+                new_parameters.append(parameter)
+        setattr(cls.simple, "__signature__", endpoint_function.replace(parameters=new_parameters))
+
+        @functools.wraps(cls.simple)
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> None:
+            try:
+                return cls.simple(*args, **kwargs)
+            except FernHTTPException as e:
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
+                    f"Endpoint 'simple' unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "the endpoint's errors list in your Fern Definition."
+                )
+                raise e
+
+        # this is necessary for FastAPI to find forward-ref'ed type hints.
+        # https://github.com/tiangolo/fastapi/pull/5077
+        wrapper.__globals__.update(cls.simple.__globals__)
+
+        router.post(
+            path="/snippet",
+            response_model=None,
+            status_code=starlette.status.HTTP_204_NO_CONTENT,
+            description=AbstractServiceService.simple.__doc__,
+            **get_route_args(cls.simple, default_tag="service"),
         )(wrapper)
