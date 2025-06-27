@@ -155,6 +155,17 @@ export function appendPropertyToFormData({
                         true
                     )
                 );
+            } else if (property.style === "json") {
+                // if JSON, always serialize to JSON, regardless of whether the property is iterable or not
+                statement = context.coreUtilities.formDataUtils.append({
+                    referenceToFormData,
+                    key: property.name.wireValue,
+                    value: ts.factory.createCallExpression(
+                        context.jsonContext.getReferenceToToJson().getExpression(),
+                        [],
+                        [referenceToBodyProperty]
+                    )
+                });
             } else if (isMaybeIterable(property.valueType, context)) {
                 statement = ts.factory.createForOfStatement(
                     undefined,

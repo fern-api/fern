@@ -642,10 +642,7 @@ export class Service {
         }
 
         if (request.request != null) {
-            if (Array.isArray(request.request) || request.request instanceof Set)
-                for (const _item of request.request) {
-                    _request.append("request", typeof _item === "string" ? _item : toJson(_item));
-                }
+            _request.append("request", toJson(request.request));
         }
 
         const _maybeEncodedRequest = await _request.getRequest();

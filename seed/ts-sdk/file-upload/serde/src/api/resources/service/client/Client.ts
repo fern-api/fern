@@ -374,22 +374,9 @@ export class Service {
         const _request = await core.newFormData();
         await _request.appendFile("file", request.file);
         _request.append("foo", request.foo);
-        _request.append(
-            "bar",
-            toJson(
-                serializers.MyObject.jsonOrThrow(request.bar, { unrecognizedObjectKeys: "strip", omitUndefined: true }),
-            ),
-        );
+        _request.append("bar", toJson(request.bar));
         if (request.fooBar != null) {
-            _request.append(
-                "foo_bar",
-                toJson(
-                    serializers.MyObject.jsonOrThrow(request.fooBar, {
-                        unrecognizedObjectKeys: "strip",
-                        omitUndefined: true,
-                    }),
-                ),
-            );
+            _request.append("foo_bar", toJson(request.fooBar));
         }
 
         const _maybeEncodedRequest = await _request.getRequest();
@@ -694,10 +681,7 @@ export class Service {
         }
 
         if (request.request != null) {
-            if (Array.isArray(request.request) || request.request instanceof Set)
-                for (const _item of request.request) {
-                    _request.append("request", typeof _item === "string" ? _item : toJson(_item));
-                }
+            _request.append("request", toJson(request.request));
         }
 
         const _maybeEncodedRequest = await _request.getRequest();
