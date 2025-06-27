@@ -19,23 +19,8 @@ service:
               value: exampleValue
               default: exampleDefault
 
-    updateMetadata:
-      path: "/metadata"
-      method: PUT
-      request: MetadataUnion
-      response: boolean
-
-    call:
-      path: "/call"
-      method: POST
-      request: Request
-      response: boolean
 
 types:
-  Request:
-    properties:
-      union: optional<MetadataUnion>
-
   TypeWithOptionalUnion:
     properties:
       myUnion: optional<MyUnion>
@@ -51,20 +36,6 @@ types:
       - list<integer>
       - list<list<integer>>
       - set<string>
-
-  MetadataUnion:
-    discriminated: false
-    union:
-      - OptionalMetadata
-      - NamedMetadata
-
-  NamedMetadata:
-    properties:
-      name: string
-      value: map<string, unknown>
-
-  OptionalMetadata:
-    type: optional<map<string, unknown>>
 
   Metadata:
     docs: |

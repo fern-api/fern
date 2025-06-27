@@ -1,1 +1,0 @@
-Key = Union[KeyType, str]

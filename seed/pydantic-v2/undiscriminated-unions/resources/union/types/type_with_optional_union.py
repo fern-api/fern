@@ -1,11 +1,10 @@
 from pydantic import BaseModel
 from typing import Optional
-from .my_union import MyUnion
+from resources.union.types.my_union import MyUnion
 from dt import datetime
 from core.datetime_utils import serialize_datetime
-
 class TypeWithOptionalUnion(BaseModel):
-    my_union: Optional[MyUnion]
+    my_union: Optional[MyUnion] = 
     class Config:
         frozen = True
         smart_union = True
