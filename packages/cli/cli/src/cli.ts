@@ -1245,7 +1245,7 @@ function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
                 port,
                 bundlePath,
                 brokenLinks: argv.brokenLinks,
-                appPreview: argv.beta,
+                appPreview: argv.beta ?? true,
                 legacyPreview: argv.legacy || process.platform === "win32",
                 backendPort
             });
