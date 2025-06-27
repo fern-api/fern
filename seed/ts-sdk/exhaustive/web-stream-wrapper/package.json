@@ -46,8 +46,8 @@
     },
     "devDependencies": {
         "@types/url-join": "4.0.1",
-        "@types/qs": "^6.9.17",
         "@types/node-fetch": "^2.6.12",
+        "@types/qs": "^6.9.17",
         "webpack": "^5.97.1",
         "ts-loader": "^9.5.1",
         "jest": "^29.7.0",
