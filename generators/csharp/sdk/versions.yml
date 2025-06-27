@@ -3,7 +3,7 @@
   changelogEntry:
     - summary: Improve auto-pagination logic to consider empty strings in response as null cursors and stop paging.
       type: fix
-  createdAt: '2025-06-26'
+  createdAt: '2025-06-27'
   irVersion: 58
 - version: 2.0.1
   changelogEntry:
