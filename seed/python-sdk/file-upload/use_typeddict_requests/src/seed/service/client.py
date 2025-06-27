@@ -349,6 +349,29 @@ class ServiceClient:
         )
         return _response.data
 
+    def simple(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from seed import SeedFileUpload
+
+        client = SeedFileUpload(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.service.simple()
+        """
+        _response = self._raw_client.simple(request_options=request_options)
+        return _response.data
+
 
 class AsyncServiceClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -682,4 +705,35 @@ class AsyncServiceClient:
         _response = await self._raw_client.optional_args(
             image_file=image_file, request=request, request_options=request_options
         )
+        return _response.data
+
+    async def simple(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedFileUpload
+
+        client = AsyncSeedFileUpload(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.service.simple()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.simple(request_options=request_options)
         return _response.data
