@@ -10,7 +10,7 @@ async function getFormDataInfo(formRequest: FormDataRequest): Promise<{
 }> {
     const request = new Request("http://localhost", {
         ...formRequest,
-        method: "POST",
+        method: "POST"
     });
     const buffer = await request.arrayBuffer();
     const serialized = new TextDecoder().decode(buffer);
@@ -43,12 +43,12 @@ describe("FormDataWrapper - Browser Environment", () => {
                 start(controller) {
                     controller.enqueue(new TextEncoder().encode("web stream content"));
                     controller.close();
-                },
+                }
             });
 
             await formData.appendFile("file", stream, "webstream.txt");
 
-            const { serialized, hasFile, filename} = await getFormDataInfo(formData.getRequest());
+            const { serialized, hasFile, filename } = await getFormDataInfo(formData.getRequest());
 
             expect(serialized).toContain('name="file"');
             expect(serialized).toContain('filename="webstream.txt"');
@@ -60,12 +60,12 @@ describe("FormDataWrapper - Browser Environment", () => {
             const stream = new ReadableStream({
                 start(controller) {
                     controller.close();
-                },
+                }
             });
 
             await formData.appendFile("file", stream, "empty.txt");
 
-            const { serialized, hasFile, filename} = await getFormDataInfo(formData.getRequest());
+            const { serialized, hasFile, filename } = await getFormDataInfo(formData.getRequest());
 
             expect(serialized).toContain('name="file"');
             expect(serialized).toContain('filename="empty.txt"');
@@ -79,7 +79,7 @@ describe("FormDataWrapper - Browser Environment", () => {
             const blob = new Blob(["file content"], { type: "text/plain" });
             await formData.appendFile("file", blob, "testfile.txt");
 
-            const { serialized, hasFile, contentType, filename} = await getFormDataInfo(formData.getRequest());
+            const { serialized, hasFile, contentType, filename } = await getFormDataInfo(formData.getRequest());
 
             expect(serialized).toContain('name="file"');
             expect(serialized).toContain('filename="testfile.txt"');
@@ -92,7 +92,7 @@ describe("FormDataWrapper - Browser Environment", () => {
             const file = new File(["file content"], "testfile.txt", { type: "text/plain" });
             await formData.appendFile("file", file);
 
-            const { serialized, hasFile, contentType, filename} = await getFormDataInfo(formData.getRequest());
+            const { serialized, hasFile, contentType, filename } = await getFormDataInfo(formData.getRequest());
 
             expect(serialized).toContain('name="file"');
             expect(serialized).toContain('filename="testfile.txt"');
@@ -105,7 +105,7 @@ describe("FormDataWrapper - Browser Environment", () => {
             const file = new File(["file content"], "original.txt", { type: "text/plain" });
             await formData.appendFile("file", file, "override.txt");
 
-            const { serialized, hasFile, filename} = await getFormDataInfo(formData.getRequest());
+            const { serialized, hasFile, filename } = await getFormDataInfo(formData.getRequest());
 
             expect(serialized).toContain('name="file"');
             expect(serialized).toContain('filename="override.txt"');
@@ -122,7 +122,7 @@ describe("FormDataWrapper - Browser Environment", () => {
 
             await formData.appendFile("file", arrayBuffer, "binary.bin");
 
-            const { serialized, hasFile, filename} = await getFormDataInfo(formData.getRequest());
+            const { serialized, hasFile, filename } = await getFormDataInfo(formData.getRequest());
 
             expect(serialized).toContain('name="file"');
             expect(serialized).toContain('filename="binary.bin"');
@@ -134,7 +134,7 @@ describe("FormDataWrapper - Browser Environment", () => {
             const uint8Array = new Uint8Array([72, 101, 108, 108, 111]); // "Hello"
             await formData.appendFile("file", uint8Array, "binary.bin");
 
-            const { serialized, hasFile, filename} = await getFormDataInfo(formData.getRequest());
+            const { serialized, hasFile, filename } = await getFormDataInfo(formData.getRequest());
 
             expect(serialized).toContain('name="file"');
             expect(serialized).toContain('filename="binary.bin"');
@@ -146,7 +146,7 @@ describe("FormDataWrapper - Browser Environment", () => {
             const int16Array = new Int16Array([1000, 2000, 3000]);
             await formData.appendFile("file", int16Array, "numbers.bin");
 
-            const { serialized, hasFile, filename} = await getFormDataInfo(formData.getRequest());
+            const { serialized, hasFile, filename } = await getFormDataInfo(formData.getRequest());
 
             expect(serialized).toContain('name="file"');
             expect(serialized).toContain('filename="numbers.bin"');
@@ -159,7 +159,7 @@ describe("FormDataWrapper - Browser Environment", () => {
         it("serializes string as regular form field", async () => {
             formData.append("text", "test string");
 
-            const { serialized, hasFile} = await getFormDataInfo(formData.getRequest());
+            const { serialized, hasFile } = await getFormDataInfo(formData.getRequest());
 
             expect(serialized).toContain('name="text"');
             expect(serialized).not.toContain("filename=");
@@ -170,7 +170,7 @@ describe("FormDataWrapper - Browser Environment", () => {
         it("serializes string as file with filename", async () => {
             await formData.appendFile("file", "test content", "text.txt");
 
-            const { serialized, hasFile, filename} = await getFormDataInfo(formData.getRequest());
+            const { serialized, hasFile, filename } = await getFormDataInfo(formData.getRequest());
 
             expect(serialized).toContain('name="file"');
             expect(serialized).toContain('filename="text.txt"');
@@ -182,7 +182,7 @@ describe("FormDataWrapper - Browser Environment", () => {
             formData.append("number", 12345);
             formData.append("flag", true);
 
-            const { serialized} = await getFormDataInfo(formData.getRequest());
+            const { serialized } = await getFormDataInfo(formData.getRequest());
             expect(serialized).toContain("12345");
             expect(serialized).toContain("true");
         });
@@ -193,7 +193,7 @@ describe("FormDataWrapper - Browser Environment", () => {
             const obj = { test: "value", nested: { key: "data" } };
             await formData.appendFile("data", obj, "data.json");
 
-            const { serialized, hasFile, contentType, filename} = await getFormDataInfo(formData.getRequest());
+            const { serialized, hasFile, contentType, filename } = await getFormDataInfo(formData.getRequest());
 
             expect(serialized).toContain('name="data"');
             expect(serialized).toContain('filename="data.json"');
@@ -207,7 +207,7 @@ describe("FormDataWrapper - Browser Environment", () => {
             const arr = [1, 2, 3, "test"];
             await formData.appendFile("array", arr, "array.json");
 
-            const { serialized, hasFile, filename} = await getFormDataInfo(formData.getRequest());
+            const { serialized, hasFile, filename } = await getFormDataInfo(formData.getRequest());
 
             expect(serialized).toContain('name="array"');
             expect(serialized).toContain('filename="array.json"');
@@ -230,7 +230,7 @@ describe("FormDataWrapper - Browser Environment", () => {
             const namedValue = { name: "custom-name.txt", data: "content" };
             await formData.appendFile("file", namedValue);
 
-            const { serialized, hasFile, filename} = await getFormDataInfo(formData.getRequest());
+            const { serialized, hasFile, filename } = await getFormDataInfo(formData.getRequest());
 
             expect(serialized).toContain('name="file"');
             expect(serialized).toContain('filename="custom-name.txt"');
@@ -242,7 +242,7 @@ describe("FormDataWrapper - Browser Environment", () => {
             const pathedValue = { path: "/some/path/file.txt", content: "data" };
             await formData.appendFile("file", pathedValue);
 
-            const { serialized, hasFile, filename} = await getFormDataInfo(formData.getRequest());
+            const { serialized, hasFile, filename } = await getFormDataInfo(formData.getRequest());
 
             expect(serialized).toContain('name="file"');
             expect(serialized).toContain('filename="file.txt"');
@@ -254,7 +254,7 @@ describe("FormDataWrapper - Browser Environment", () => {
             const namedValue = { name: "original.txt", data: "content" };
             await formData.appendFile("file", namedValue, "override.txt");
 
-            const { serialized, hasFile, filename} = await getFormDataInfo(formData.getRequest());
+            const { serialized, hasFile, filename } = await getFormDataInfo(formData.getRequest());
 
             expect(serialized).toContain('name="file"');
             expect(serialized).toContain('filename="override.txt"');
@@ -268,7 +268,7 @@ describe("FormDataWrapper - Browser Environment", () => {
         it("handles empty filename gracefully", async () => {
             await formData.appendFile("file", "content", "");
 
-            const { serialized, hasFile, filename} = await getFormDataInfo(formData.getRequest());
+            const { serialized, hasFile, filename } = await getFormDataInfo(formData.getRequest());
 
             expect(serialized).toContain('Content-Disposition: form-data; name="file"');
             expect(serialized).toContain('filename="blob"'); // Default fallback
@@ -280,7 +280,7 @@ describe("FormDataWrapper - Browser Environment", () => {
             const largeString = "x".repeat(1000);
             await formData.appendFile("large", largeString, "large.txt");
 
-            const { serialized, hasFile, filename} = await getFormDataInfo(formData.getRequest());
+            const { serialized, hasFile, filename } = await getFormDataInfo(formData.getRequest());
 
             expect(serialized).toContain('name="large"');
             expect(serialized).toContain('filename="large.txt"');
@@ -294,7 +294,7 @@ describe("FormDataWrapper - Browser Environment", () => {
 
             await formData.appendFile("unicode", unicodeContent, unicodeFilename);
 
-            const { serialized, hasFile, filename} = await getFormDataInfo(formData.getRequest());
+            const { serialized, hasFile, filename } = await getFormDataInfo(formData.getRequest());
 
             expect(serialized).toContain('name="unicode"');
             expect(serialized).toContain(`filename="${unicodeFilename}"`);
@@ -307,7 +307,7 @@ describe("FormDataWrapper - Browser Environment", () => {
             await formData.appendFile("file2", "content2", "file2.txt");
             formData.append("text", "regular field");
 
-            const { serialized} = await getFormDataInfo(formData.getRequest());
+            const { serialized } = await getFormDataInfo(formData.getRequest());
 
             expect(serialized).toContain('name="file1"');
             expect(serialized).toContain('filename="file1.txt"');

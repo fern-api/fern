@@ -325,7 +325,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
                 fs: false,
                 os: false,
                 path: false,
-                stream: false,
+                stream: false
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
             } as any;
 
