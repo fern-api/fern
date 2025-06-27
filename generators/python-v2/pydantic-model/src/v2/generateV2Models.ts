@@ -12,10 +12,9 @@ export function generateV2Models({ context }: { context: PydanticModelGeneratorC
             alias: (aliasTypeDeclaration) => {
                 return new WrappedAliasGenerator(typeId, context, typeDeclaration, aliasTypeDeclaration).doGenerate();
             },
-            enum: () => undefined,
-            // enum: (enumTypeDeclaration) => {
-            //     return new EnumGenerator(typeId, context, typeDeclaration, enumTypeDeclaration).doGenerate();
-            // },
+            enum: (enumTypeDeclaration) => {
+                return new EnumGenerator(typeId, context, typeDeclaration, enumTypeDeclaration).doGenerate();
+            },
             object: (objectTypDeclaration) => {
                 return new ObjectGenerator(typeId, context, typeDeclaration, objectTypDeclaration).doGenerate();
             },
