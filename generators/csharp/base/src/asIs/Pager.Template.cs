@@ -455,7 +455,8 @@ internal sealed class CursorPager<TRequest, TRequestOptions, TResponse, TCursor,
         };
     }
 
-    private static isCursorNull(TCursor cursor) {
+    private static bool isCursorNull(TCursor cursor)
+    {
         return (cursor is null || (cursor is string s && string.IsNullOrEmpty(s)));
     }
 
