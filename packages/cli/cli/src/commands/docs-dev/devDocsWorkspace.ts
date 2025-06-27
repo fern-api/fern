@@ -11,7 +11,6 @@ export async function previewDocsWorkspace({
     port,
     bundlePath,
     brokenLinks,
-    appPreview,
     legacyPreview,
     backendPort
 }: {
@@ -20,7 +19,6 @@ export async function previewDocsWorkspace({
     port: number;
     bundlePath?: string;
     brokenLinks: boolean;
-    appPreview?: boolean;
     legacyPreview?: boolean;
     backendPort: number;
 }): Promise<void> {
@@ -30,7 +28,7 @@ export async function previewDocsWorkspace({
         return;
     }
 
-    if (legacyPreview || !appPreview) {
+    if (legacyPreview) {
         await cliContext.instrumentPostHogEvent({
             orgId: project.config.organization,
             command: "fern docs dev --legacy"
