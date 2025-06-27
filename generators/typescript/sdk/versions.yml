@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.8.2
+  changelogEntry:
+    - summary: |
+        When a multipart form part is explicitly marked as JSON, serialize the data as JSON regardless of type. 
+        This also means arrays, maps, etc. will not be split into multiple parts, but serialized to JSON as a single part.
+      type: fix
+  createdAt: '2025-06-27'
+  irVersion: 58
 - version: 1.8.1
   changelogEntry:
     - summary: Fix binary response README.md examples
