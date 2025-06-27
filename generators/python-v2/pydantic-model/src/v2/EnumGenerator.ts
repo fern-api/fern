@@ -15,9 +15,10 @@ export class EnumGenerator {
     ) {}
 
     public doGenerate(): WriteablePythonFile {
-        // TODO(suyash): This currently only supports string enums. We should add support other basic types, and properly support multi-type enums as well.
+        const className = this.context.getPascalCaseSafeName(this.typeDeclaration.name.name);
+
         const enumClass = python.class_({
-            name: this.context.getPascalCaseSafeName(this.typeDeclaration.name.name),
+            name: className,
             docs: this.typeDeclaration.docs,
             extends_: [python.reference({ name: "str" }), python.reference({ name: "enum.Enum" })],
             decorators: []
@@ -37,11 +38,16 @@ export class EnumGenerator {
             );
         }
 
-        // TODO(suyash): Generate a visit function for the enum class.
+        // Add visit method
+        enumClass.add(python.codeBlock(""));
+        enumClass.add(this.generateVisitMethod(className));
 
         const path = this.context.getModulePathForId(this.typeId);
         const filename = this.context.getSnakeCaseSafeName(this.typeDeclaration.name.name);
         const file = python.file({ path });
+
+        // Add T_Result type variable
+        file.addStatement(python.codeBlock('T_Result = typing.TypeVar("T_Result")'));
         file.addStatement(enumClass);
 
         return new WriteablePythonFile({
@@ -49,6 +55,50 @@ export class EnumGenerator {
             directory: RelativeFilePath.of(path.join("/")),
             filename
         });
+    }
+
+    private generateVisitMethod(className: string): python.Method {
+        const visitMethod = python.method({
+            name: "visit",
+            parameters: [
+                python.parameter({
+                    name: "self",
+                    type: undefined
+                }),
+                ...this.enumDeclaration.values.map((enumValue) => {
+                    const parameterName = enumValue.name.name.snakeCase.safeName;
+                    return python.parameter({
+                        name: parameterName,
+                        type: python.Type.reference(
+                            python.reference({
+                                name: "typing.Callable[[], T_Result]"
+                            })
+                        )
+                    });
+                })
+            ],
+            return_: python.Type.reference(
+                python.reference({
+                    name: "T_Result"
+                })
+            )
+        });
+
+        // Add if statements for each enum value
+        for (const enumValue of this.enumDeclaration.values) {
+            const memberName = enumValue.name.name.screamingSnakeCase.safeName;
+            const parameterName = enumValue.name.name.snakeCase.safeName;
+
+            visitMethod.addStatement(
+                python.codeBlock((writer) => {
+                    writer.write(`if self is ${className}.${memberName}:`);
+                    writer.write("\n");
+                    writer.write(`    return ${parameterName}()`);
+                })
+            );
+        }
+
+        return visitMethod;
     }
 
     private escapeStringForPython(value: string): string {

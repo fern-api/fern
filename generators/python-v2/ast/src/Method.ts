@@ -101,23 +101,42 @@ export class Method extends AstNode {
 
         // Write method signature
         writer.write(`def ${this.name}(`);
+
+        const totalParams = this.parameters.length;
+        const useMultiline = totalParams > 3;
+
+        if (useMultiline) {
+            writer.newLine();
+            writer.indent();
+        }
+
         if (this.type === ClassMethodType.INSTANCE) {
             writer.write("self");
             if (this.parameters.length > 0) {
-                writer.write(", ");
+                writer.write(useMultiline ? "," : ", ");
+                if (useMultiline) {writer.newLine();}
             }
         } else if (this.type === ClassMethodType.CLASS) {
             writer.write("cls");
             if (this.parameters.length > 0) {
-                writer.write(", ");
+                writer.write(useMultiline ? "," : ", ");
+                if (useMultiline) {writer.newLine();}
             }
         }
         this.parameters.forEach((param, index) => {
             param.write(writer);
             if (index < this.parameters.length - 1) {
-                writer.write(", ");
+                writer.write(useMultiline ? "," : ", ");
+                if (useMultiline) {writer.newLine();}
             }
         });
+
+        if (useMultiline) {
+            writer.write(",");
+            writer.dedent();
+            writer.newLine();
+        }
+
         writer.write(")");
 
         // Write return type if specified
