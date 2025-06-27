@@ -52,22 +52,28 @@ export class ReadmeConfigBuilder {
 
     private getLanguageInfo({ context }: { context: SdkGeneratorContext }): FernGeneratorCli.LanguageInfo {
         context.logger.debug(
-            "[jsklan-debug]: " + context.config.publish
-                ? JSON.stringify(context.config.publish, null, 2)
-                : "Unknown publish config"
+            "[jsklan-debug]: FernGeneratorExec.config.GeneratorConfig: " + JSON.stringify(context.config)
         );
-        const publishConfig = context.config.publish;
-        if (publishConfig) {
-            const group = publishConfig.registriesV2.maven.coordinate.split(":")[0];
-            const artifact = publishConfig.registriesV2.maven.coordinate.split(":")[1];
-            if (group !== undefined && artifact !== undefined)
-                {return FernGeneratorCli.LanguageInfo.java({
-                    publishInfo: {
-                        group,
-                        artifact,
-                        version: publishConfig.version
-                    }
-                });}
+        const config = context.config;
+        if (config) {
+            const outputMode = config.output.mode;
+            let group = JSON.stringify(config);
+            let artifact = JSON.stringify(config);
+            let version = JSON.stringify(config);
+            if (outputMode.type == "github") {
+                version = outputMode.version;
+                if (outputMode.publishInfo?.type == "maven") {
+                    group = outputMode.publishInfo.coordinate.split(":")[0] || group;
+                    artifact = outputMode.publishInfo.coordinate.split(":")[1] || group;
+                }
+            }
+            return FernGeneratorCli.LanguageInfo.java({
+                publishInfo: {
+                    group,
+                    artifact,
+                    version
+                }
+            });
         }
         return FernGeneratorCli.LanguageInfo.java({});
     }
