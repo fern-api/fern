@@ -36,7 +36,8 @@ export class OneOfFieldConverter extends AbstractConverter<ProtofileConverterCon
             const fieldConverter = new FieldConverter({
                 context: this.context,
                 breadcrumbs: this.breadcrumbs,
-                field: oneOfField
+                field: oneOfField,
+                wrapAsOptional: false
             });
             const field = fieldConverter.convert();
             if (field != null) {

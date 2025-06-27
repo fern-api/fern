@@ -86,7 +86,6 @@ export class FieldConverter extends AbstractConverter<ProtofileConverterContext,
     }
 
     private wrapInOptional(type: TypeReference): TypeReference {
-        return type;
-        // return TypeReference.container(ContainerType.optional(type));
+        return TypeReference.container(ContainerType.optional(type));
     }
 }
