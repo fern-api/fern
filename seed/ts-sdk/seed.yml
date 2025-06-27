@@ -7,7 +7,6 @@ publish:
   versionSubstitution: $VERSION
   command:
     - pnpm --filter @fern-typescript/sdk-generator-cli dockerTagVersion:node $VERSION
-    - docker push fernapi/fern-typescript-node-sdk:$VERSION
 test:
   docker:
     image: fernapi/fern-typescript-node-sdk:local
