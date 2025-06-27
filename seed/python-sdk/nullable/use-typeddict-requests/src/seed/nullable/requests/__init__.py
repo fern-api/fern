@@ -6,4 +6,13 @@ from .metadata import MetadataParams
 from .status import StatusParams, Status_ActiveParams, Status_ArchivedParams, Status_SoftDeletedParams
 from .user import UserParams
 from .weird_number import WeirdNumberParams
-__all__ = ["MetadataParams", "StatusParams", "Status_ActiveParams", "Status_ArchivedParams", "Status_SoftDeletedParams", "UserParams", "WeirdNumberParams"]
+
+__all__ = [
+    "MetadataParams",
+    "StatusParams",
+    "Status_ActiveParams",
+    "Status_ArchivedParams",
+    "Status_SoftDeletedParams",
+    "UserParams",
+    "WeirdNumberParams",
+]
