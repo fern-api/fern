@@ -112,4 +112,12 @@ public class ServiceClient {
     public String optionalArgs(Optional<File> imageFile, OptionalArgsRequest request, RequestOptions requestOptions) {
         return this.rawClient.optionalArgs(imageFile, request, requestOptions).body();
     }
+
+    public void simple() {
+        this.rawClient.simple().body();
+    }
+
+    public void simple(RequestOptions requestOptions) {
+        this.rawClient.simple(requestOptions).body();
+    }
 }
