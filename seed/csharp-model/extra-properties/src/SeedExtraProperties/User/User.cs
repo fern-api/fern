@@ -1,24 +1,26 @@
-using System.Text.Json;
 using System.Text.Json.Serialization;
 using SeedExtraProperties.Core;
 
 namespace SeedExtraProperties;
 
 [Serializable]
-public record User
+public record User : IJsonOnDeserialized, IJsonOnSerializing
 {
+    [JsonExtensionData]
+    private readonly IDictionary<string, object?> _extensionData =
+        new Dictionary<string, object?>();
+
     [JsonPropertyName("name")]
     public required string Name { get; set; }
 
-    /// <summary>
-    /// Additional properties received from the response, if any.
-    /// </summary>
-    /// <remarks>
-    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
-    /// </remarks>
-    [JsonExtensionData]
-    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
-        new Dictionary<string, JsonElement>();
+    [JsonIgnore]
+    public AdditionalProperties AdditionalProperties { get; set; } = new();
+
+    void IJsonOnDeserialized.OnDeserialized() =>
+        AdditionalProperties.CopyFromExtensionData(_extensionData);
+
+    void IJsonOnSerializing.OnSerializing() =>
+        AdditionalProperties.CopyToExtensionData(_extensionData);
 
     /// <inheritdoc />
     public override string ToString()

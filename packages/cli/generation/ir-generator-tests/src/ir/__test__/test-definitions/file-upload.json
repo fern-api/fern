@@ -2979,7 +2979,7 @@
                             },
                             {
                                 "type": "bodyProperty",
-                                "style": null,
+                                "style": "json",
                                 "name": {
                                     "name": {
                                         "originalName": "bar",
@@ -3081,7 +3081,7 @@
                             },
                             {
                                 "type": "bodyProperty",
-                                "style": null,
+                                "style": "json",
                                 "name": {
                                     "name": {
                                         "originalName": "foo_bar",

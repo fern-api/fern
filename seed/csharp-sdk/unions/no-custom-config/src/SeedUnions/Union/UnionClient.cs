@@ -17,7 +17,7 @@ public partial class UnionClient
     /// <example><code>
     /// await client.Union.GetAsync("id");
     /// </code></example>
-    public async Task<object> GetAsync(
+    public async Task<Shape> GetAsync(
         string id,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -40,7 +40,7 @@ public partial class UnionClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<object>(responseBody)!;
+                return JsonUtils.Deserialize<Shape>(responseBody)!;
             }
             catch (JsonException e)
             {
@@ -59,10 +59,10 @@ public partial class UnionClient
     }
 
     /// <example><code>
-    /// await client.Union.UpdateAsync(new Circle { Radius = 1.1 });
+    /// await client.Union.UpdateAsync(new Shape(new Shape.Circle(new Circle { Radius = 1.1 })));
     /// </code></example>
     public async Task<bool> UpdateAsync(
-        object request,
+        Shape request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

@@ -65,7 +65,7 @@ await client.Union.GetMetadataAsync();
 </dl>
 </details>
 
-<details><summary><code>client.Union.<a href="/src/SeedUndiscriminatedUnions/Union/UnionClient.cs">UpdateMetadataAsync</a>(OneOf<object?, NamedMetadata> { ... }) -> bool</code></summary>
+<details><summary><code>client.Union.<a href="/src/SeedUndiscriminatedUnions/Union/UnionClient.cs">UpdateMetadataAsync</a>(OneOf<Dictionary<string, object?>?, NamedMetadata> { ... }) -> bool</code></summary>
 <dl>
 <dd>
 
@@ -101,7 +101,7 @@ await client.Union.UpdateMetadataAsync(
 <dl>
 <dd>
 
-**request:** `OneOf<object?, NamedMetadata>` 
+**request:** `OneOf<Dictionary<string, object?>?, NamedMetadata>` 
     
 </dd>
 </dl>

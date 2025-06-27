@@ -25,9 +25,7 @@ public class Example1
                     UpdatedAt = DateTime.Parse("2024-01-15T09:30:00Z", null, DateTimeStyles.AdjustToUniversal),
                     Avatar = "avatar",
                     Activated = true,
-                    Status = new Dictionary<string, object>() {
-                        ["type"] = "active",
-                    },
+                    Status = new Status(),
                     Values = new Dictionary<string, string?>(){
                         ["values"] = "values",
                     }

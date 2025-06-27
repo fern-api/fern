@@ -12,13 +12,9 @@ export declare namespace Func {
 export class Func extends AstNode {
     private func: Method;
 
-    constructor({ name, parameters, return_, body, docs }: Func.Args) {
+    constructor({ name, parameters, return_, body, docs, multiline }: Func.Args) {
         super();
-        this.func = new Method({ name, parameters, return_, body, docs });
-    }
-
-    public get name(): string {
-        return this.func.name;
+        this.func = new Method({ name, parameters, return_, body, docs, multiline });
     }
 
     public get parameters(): Parameter[] {
@@ -27,6 +23,10 @@ export class Func extends AstNode {
 
     public get return_(): Type[] {
         return this.func.return_;
+    }
+
+    public get name(): string | undefined {
+        return this.func.name;
     }
 
     public get body(): CodeBlock | undefined {

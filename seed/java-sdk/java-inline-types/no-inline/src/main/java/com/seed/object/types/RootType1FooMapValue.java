@@ -78,7 +78,7 @@ public final class RootType1FooMapValue {
 
     public interface FooStage {
         /**
-         * lorem ipsum
+         * <p>lorem ipsum</p>
          */
         RefStage foo(@NotNull String foo);
 
@@ -87,7 +87,7 @@ public final class RootType1FooMapValue {
 
     public interface RefStage {
         /**
-         * lorem ipsum
+         * <p>lorem ipsum</p>
          */
         _FinalStage ref(@NotNull ReferenceType ref);
     }
@@ -115,7 +115,8 @@ public final class RootType1FooMapValue {
         }
 
         /**
-         * lorem ipsum<p>lorem ipsum</p>
+         * <p>lorem ipsum</p>
+         * <p>lorem ipsum</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -126,7 +127,8 @@ public final class RootType1FooMapValue {
         }
 
         /**
-         * lorem ipsum<p>lorem ipsum</p>
+         * <p>lorem ipsum</p>
+         * <p>lorem ipsum</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override

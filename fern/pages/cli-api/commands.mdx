@@ -2,7 +2,7 @@
 title: 'Commands'
 description: 'Complete reference for all Fern CLI commands for generating SDKs and developer documentation.'
 subtitle: 'Learn about the Fern CLI commands.'
-hideOnThisPage: true
+max-toc-depth: 3
 ---
 
 | Command                         | Description                                          |
@@ -18,7 +18,7 @@ hideOnThisPage: true
 | [`fern docs dev`](#fern-docs-dev)               | Run local documentation preview server |
 | [`fern generate --docs`](#fern-generate---docs) | Build & publish documentation updates  |
 
-## SDK Generation Commands
+## Generation Commands
 
 | Command                                             | Description                                                                              |
 | --------------------------------------------------- | ---------------------------------------------------------------------------------------- |
@@ -26,6 +26,7 @@ hideOnThisPage: true
 | [`fern write-definition`](#fern-write-definition)   | Convert OpenAPI specifications to [Fern Definition](/learn/api-definition/fern/overview) |
 | [`fern write-overrides`](#fern-write-overrides)     | Create OpenAPI customizations                                                            |
 | [`fern generator upgrade`](#fern-generator-upgrade) | Update SDK generators to latest versions                                                 |
+| [`fern export`](#fern-export)                       | Export an OpenAPI spec for your API                                                      |
 
 ## Detailed Command Documentation
 
@@ -491,3 +492,25 @@ Use `--group` to upgrade generators within a specific group in your `generators.
 fern generator upgrade --group public
 ```
 
+### `fern export`
+
+Use `fern export` to generate an OpenAPI spec for your API.
+
+<Callout intent='info'>
+  Generally, this is only useful if you're defining your API in another format,
+  like the [Fern Definition](/learn/api-definition/fern/overview).
+</Callout>
+
+  <CodeBlock title="terminal">
+  ```bash
+  fern export [--api <api>] <path>
+  ```
+  </CodeBlock>
+
+#### `--api`
+
+Use `--api` to specify the API to write the OpenAPI for if you have multiple defined in your `fern/apis/` folder.
+
+```bash
+fern export --api public-api path/to/openapi.yml
+```

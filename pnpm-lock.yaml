@@ -678,6 +678,9 @@ importers:
       '@fern-api/go-ast':
         specifier: workspace:*
         version: link:../ast
+      '@fern-api/logging-execa':
+        specifier: workspace:*
+        version: link:../../../packages/commons/logging-execa
       '@fern-fern/ir-sdk':
         specifier: ^58.2.0
         version: 58.2.0
@@ -874,9 +877,6 @@ importers:
       '@fern-api/logger':
         specifier: workspace:*
         version: link:../../../packages/cli/logger
-      '@fern-api/path-utils':
-        specifier: workspace:*
-        version: link:../../../packages/commons/path-utils
       '@fern-fern/generator-cli-sdk':
         specifier: 0.0.28
         version: 0.0.28
@@ -916,9 +916,6 @@ importers:
       typescript:
         specifier: 5.7.2
         version: 5.7.2
-      url-join:
-        specifier: ^5.0.0
-        version: 5.0.0
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -5635,6 +5632,9 @@ importers:
       '@types/tar':
         specifier: ^6.1.11
         version: 6.1.13
+      '@types/url-join':
+        specifier: 4.0.1
+        version: 4.0.1
       '@types/validate-npm-package-name':
         specifier: ^4.0.0
         version: 4.0.2
@@ -5680,6 +5680,9 @@ importers:
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
+      openapi-types:
+        specifier: ^12.1.3
+        version: 12.1.3
       ora:
         specifier: ^7.0.1
         version: 7.0.1
@@ -5704,6 +5707,9 @@ importers:
       undici:
         specifier: ^6.21.1
         version: 6.21.3
+      url-join:
+        specifier: ^5.0.0
+        version: 5.0.0
       validate-npm-package-name:
         specifier: ^5.0.1
         version: 5.0.1

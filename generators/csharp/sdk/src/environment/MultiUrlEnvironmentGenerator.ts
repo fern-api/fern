@@ -56,7 +56,7 @@ export class MultiUrlEnvironmentGenerator extends FileGenerator<
                                     }
                                     return {
                                         name: baseUrl?.name.pascalCase.safeName ?? "",
-                                        assignment: csharp.codeblock(`"${url}"`)
+                                        assignment: csharp.codeblock(csharp.string_({ string: url }))
                                     };
                                 })
                             })

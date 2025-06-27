@@ -13,6 +13,10 @@ channel:
       display-name: Send
       origin: client
       body: SendEvent
+    send_snake_case:
+      display-name: send_snake
+      origin: client
+      body: send_snake_case
     send2:
       display-name: Send2
       origin: client
@@ -21,6 +25,10 @@ channel:
       display-name: Receive
       origin: server
       body: ReceiveEvent
+    receive_snake_case:
+      display-name: Receive
+      origin: server
+      body: receive_snake_case
     receive2:
       display-name: Receive2
       origin: server
@@ -56,10 +64,18 @@ types:
     properties:
       sendText: string
       sendParam: integer
+  send_snake_case:
+    properties:
+      send_text: string
+      send_param: integer
   ReceiveEvent:
     properties:
       alpha: string
       beta: integer
+  receive_snake_case:
+    properties:
+      receive_text: string
+      receive_int: integer
   SendEvent2:
     properties:
       sendText2: string

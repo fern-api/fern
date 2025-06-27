@@ -29,3 +29,4 @@ export { TestClass } from "./TestClass";
 export { convertReadOnlyPrimitiveTypes, Type, VALID_READ_ONLY_MEMORY_TYPES } from "./Type";
 export { TypeLiteral } from "./TypeLiteral";
 export { XmlDocBlock } from "./XmlDocBlock";
+export { String_ } from "./String_";

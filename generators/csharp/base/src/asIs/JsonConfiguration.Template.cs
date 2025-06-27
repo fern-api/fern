@@ -1,4 +1,4 @@
-<% if (customConfig["experimental-additional-properties"]) { %>using global::System.Reflection; <% } %>
+<% if (additionalProperties) { %>using global::System.Reflection; <% } %>
 using global::System.Text.Json;
 using global::System.Text.Json.Nodes;
 using global::System.Text.Json.Serialization;
@@ -71,7 +71,7 @@ internal static partial class JsonOptions
                                 propertyInfo.IsRequired = false;
                             }
                         }
-                        <% if (customConfig["experimental-additional-properties"]) { %>
+                        <% if (additionalProperties) { %>
                         if (
                             typeInfo.Kind == JsonTypeInfoKind.Object
                             && typeInfo.Properties.All(prop => !prop.IsExtensionData)

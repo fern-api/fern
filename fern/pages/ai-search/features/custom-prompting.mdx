@@ -3,7 +3,8 @@ title: Custom Prompting
 subtitle: Learn how to add your own prompts to our AI Search feature.
 ---
 
-Out of the box, our AI Search feature uses default prompts to help fine-tune search results. You can reference these in our [system prompts](https://github.com/fern-api/fern-platform/blob/app/packages/fern-docs/search-server/src/utils/system-prompt.ts) file.  
+Out of the box, our AI Search feature uses default prompts to help fine-tune search results. You can reference these in our [system prompts](https://github.com/fern-api/fern-platform/blob/app/packages/fern-docs/search-server/ask-fern/src/utils/system-prompt.ts) file.  
+
 
 Customizing the system prompt gives you the ability to tailor the AI search responses to best serve your users. You can replace the default prompt with your own prompt to increase the relevance and accuracy of the results.
 
@@ -26,7 +27,7 @@ Customizing the system prompt gives you the ability to tailor the AI search resp
   </Step>
   <Step title="Add in your custom prompts">
     Insert your custom prompts in the `system-prompt` field. Anthropic has a [great guide](https://docs.anthropic.com/en/docs/prompt-engineering/system-prompts) that can help provide ideas and examples for your custom prompts. 
-    You can also leverage Fern's [system prompts](https://github.com/fern-api/fern-platform/blob/4e823037606106a293f6abff24a9606cdcfe31fb/packages/fern-docs/search-server/src/utils/system-prompt.ts#L22-L31) as a starting point. 
+    You can also leverage Fern's [system prompts](https://github.com/fern-api/fern-platform/blob/86e893f59a60bfd23dd1e50f29cca35403109abc/packages/fern-docs/search-server/ask-fern/src/utils/system-prompt.ts#L14-L31) as a starting point. 
 
   </Step>
 </Steps>

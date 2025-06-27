@@ -25,7 +25,7 @@ public partial class DataserviceClient
     /// <example><code>
     /// await client.Dataservice.FooAsync();
     /// </code></example>
-    public async Task<object> FooAsync(
+    public async Task<Dictionary<string, object?>> FooAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -50,7 +50,7 @@ public partial class DataserviceClient
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
                     {
-                        return JsonUtils.Deserialize<object>(responseBody)!;
+                        return JsonUtils.Deserialize<Dictionary<string, object?>>(responseBody)!;
                     }
                     catch (JsonException e)
                     {

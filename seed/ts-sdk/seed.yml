@@ -270,14 +270,15 @@ fixtures:
         retainOriginalCasing: true
       outputFolder: inline-path-parameters-retain-original-casing
   websocket:
-    - outputFolder: websocket-base
+    - outputFolder: no-websocket-clients
     - customConfig:
         noSerdeLayer: false
         shouldGenerateWebsocketClients: true
-      outputFolder: websocket-serde
+      outputFolder: serde
     - customConfig:
+        noSerdeLayer: true
         shouldGenerateWebsocketClients: true
-      outputFolder: websocket-with-serde
+      outputFolder: no-serde
 scripts:
   - docker: fernapi/ts-seed
     commands:

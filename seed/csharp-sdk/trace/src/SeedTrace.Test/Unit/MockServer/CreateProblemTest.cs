@@ -133,7 +133,11 @@ public class CreateProblemTest : BaseMockServerTest
                 ProblemName = "problemName",
                 ProblemDescription = new ProblemDescription
                 {
-                    Boards = new List<object>() { "boards", "boards" },
+                    Boards = new List<ProblemDescriptionBoard>()
+                    {
+                        new ProblemDescriptionBoard(new ProblemDescriptionBoard.Html("boards")),
+                        new ProblemDescriptionBoard(new ProblemDescriptionBoard.Html("boards")),
+                    },
                 },
                 Files = new Dictionary<Language, ProblemFiles>()
                 {
@@ -156,10 +160,18 @@ public class CreateProblemTest : BaseMockServerTest
                 },
                 InputParams = new List<VariableTypeAndName>()
                 {
-                    new VariableTypeAndName { VariableType = "no-properties-union", Name = "name" },
-                    new VariableTypeAndName { VariableType = "no-properties-union", Name = "name" },
+                    new VariableTypeAndName
+                    {
+                        VariableType = new VariableType(new VariableType.IntegerType()),
+                        Name = "name",
+                    },
+                    new VariableTypeAndName
+                    {
+                        VariableType = new VariableType(new VariableType.IntegerType()),
+                        Name = "name",
+                    },
                 },
-                OutputType = "no-properties-union",
+                OutputType = new VariableType(new VariableType.IntegerType()),
                 Testcases = new List<TestCaseWithExpectedResult>()
                 {
                     new TestCaseWithExpectedResult
@@ -167,18 +179,26 @@ public class CreateProblemTest : BaseMockServerTest
                         TestCase = new TestCase
                         {
                             Id = "id",
-                            Params = new List<object>() { 1, 1 },
+                            Params = new List<VariableValue>()
+                            {
+                                new VariableValue(new VariableValue.IntegerValue(1)),
+                                new VariableValue(new VariableValue.IntegerValue(1)),
+                            },
                         },
-                        ExpectedResult = 1,
+                        ExpectedResult = new VariableValue(new VariableValue.IntegerValue(1)),
                     },
                     new TestCaseWithExpectedResult
                     {
                         TestCase = new TestCase
                         {
                             Id = "id",
-                            Params = new List<object>() { 1, 1 },
+                            Params = new List<VariableValue>()
+                            {
+                                new VariableValue(new VariableValue.IntegerValue(1)),
+                                new VariableValue(new VariableValue.IntegerValue(1)),
+                            },
                         },
-                        ExpectedResult = 1,
+                        ExpectedResult = new VariableValue(new VariableValue.IntegerValue(1)),
                     },
                 },
                 MethodName = "methodName",
@@ -186,7 +206,7 @@ public class CreateProblemTest : BaseMockServerTest
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<object>(mockResponse)).UsingDefaults()
+            Is.EqualTo(JsonUtils.Deserialize<CreateProblemResponse>(mockResponse)).UsingDefaults()
         );
     }
 }

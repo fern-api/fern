@@ -44,13 +44,13 @@ public class Example18
                     Type = BasicType.Primitive,
                     Name = "name"
                 },
-                Metadata = new Dictionary<string, object>() {
-                    ["type"] = "html",
-                    ["value"] = "metadata",
-                    ["extra"] = new Dictionary<string, object>() {
+                Metadata = new Metadata(
+
+                ) {
+                    Extra = new Dictionary<string, string>(){
                         ["extra"] = "extra",
                     },
-                    ["tags"] = new List<object>() {
+                    Tags = new HashSet<string>(){
                         "tags",
                     },
                 },
@@ -61,32 +61,32 @@ public class Example18
                     },
                     JsonString = "jsonString"
                 },
-                EventInfo = new Dictionary<string, object>() {
-                    ["type"] = "metadata",
-                    ["id"] = "id",
-                    ["data"] = new Dictionary<string, object>() {
-                        ["data"] = "data",
-                    },
-                    ["jsonString"] = "jsonString",
-                },
-                Data = new Dictionary<string, object>() {
-                    ["type"] = "string",
-                    ["value"] = "data",
-                },
+                EventInfo = new EventInfo(
+                    new Metadata{
+                        Id = "id",
+                        Data = new Dictionary<string, string>(){
+                            ["data"] = "data",
+                        },
+                        JsonString = "jsonString"
+                    }
+                ),
+                Data = new Data(
+
+                ),
                 Migration = new Migration{
                     Name = "name",
                     Status = MigrationStatus.Running
                 },
-                Exception = new Dictionary<string, object>() {
-                    ["type"] = "generic",
-                    ["exceptionType"] = "exceptionType",
-                    ["exceptionMessage"] = "exceptionMessage",
-                    ["exceptionStacktrace"] = "exceptionStacktrace",
-                },
-                Test = new Dictionary<string, object>() {
-                    ["type"] = "and",
-                    ["value"] = true,
-                },
+                Exception = new Exception(
+                    new ExceptionInfo{
+                        ExceptionType = "exceptionType",
+                        ExceptionMessage = "exceptionMessage",
+                        ExceptionStacktrace = "exceptionStacktrace"
+                    }
+                ),
+                Test = new Test(
+
+                ),
                 Node = new Node{
                     Name = "name",
                     Nodes = new List<Node>(){

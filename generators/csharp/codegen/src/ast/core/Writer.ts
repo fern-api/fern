@@ -101,7 +101,7 @@ export class Writer extends AbstractWriter {
     }
 
     public getSimplifyObjectDictionaries(): boolean {
-        return this.customConfig["simplify-object-dictionaries"] ?? true;
+        return this.customConfig["simplify-object-dictionaries"] ?? false;
     }
 
     public toString(skipImports = false): string {

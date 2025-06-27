@@ -137,11 +137,17 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
                             }
                         }
 
-                        if (
-                            !HEADERS_TO_SKIP.has(headerName.toLowerCase()) &&
-                            !duplicateHeader &&
-                            !this.context.globalHeaderNames?.includes(headerWireValue)
-                        ) {
+                        const globalHeaderNames = this.context.globalHeaderNames;
+                        if (globalHeaderNames != null) {
+                            for (const globalHeaderName of globalHeaderNames) {
+                                if (globalHeaderName.toLowerCase() === headerWireValue.toLowerCase()) {
+                                    duplicateHeader = true;
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (!HEADERS_TO_SKIP.has(headerName.toLowerCase()) && !duplicateHeader) {
                             headers.push(convertedParameter.parameter);
                         }
                         break;

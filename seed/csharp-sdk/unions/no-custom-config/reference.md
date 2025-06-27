@@ -1,6 +1,6 @@
 # Reference
 ## Bigunion
-<details><summary><code>client.Bigunion.<a href="/src/SeedUnions/Bigunion/BigunionClient.cs">GetAsync</a>(id) -> object</code></summary>
+<details><summary><code>client.Bigunion.<a href="/src/SeedUnions/Bigunion/BigunionClient.cs">GetAsync</a>(id) -> BigUnion</code></summary>
 <dl>
 <dd>
 
@@ -40,7 +40,7 @@ await client.Bigunion.GetAsync("id");
 </dl>
 </details>
 
-<details><summary><code>client.Bigunion.<a href="/src/SeedUnions/Bigunion/BigunionClient.cs">UpdateAsync</a>(object { ... }) -> bool</code></summary>
+<details><summary><code>client.Bigunion.<a href="/src/SeedUnions/Bigunion/BigunionClient.cs">UpdateAsync</a>(BigUnion { ... }) -> bool</code></summary>
 <dl>
 <dd>
 
@@ -53,7 +53,9 @@ await client.Bigunion.GetAsync("id");
 <dd>
 
 ```csharp
-await client.Bigunion.UpdateAsync(new NormalSweet { Value = "value" });
+await client.Bigunion.UpdateAsync(
+    new BigUnion(new BigUnion.NormalSweet(new NormalSweet { Value = "value" }))
+);
 ```
 </dd>
 </dl>
@@ -68,7 +70,7 @@ await client.Bigunion.UpdateAsync(new NormalSweet { Value = "value" });
 <dl>
 <dd>
 
-**request:** `object` 
+**request:** `BigUnion` 
     
 </dd>
 </dl>
@@ -80,7 +82,7 @@ await client.Bigunion.UpdateAsync(new NormalSweet { Value = "value" });
 </dl>
 </details>
 
-<details><summary><code>client.Bigunion.<a href="/src/SeedUnions/Bigunion/BigunionClient.cs">UpdateManyAsync</a>(IEnumerable<object> { ... }) -> Dictionary<string, bool></code></summary>
+<details><summary><code>client.Bigunion.<a href="/src/SeedUnions/Bigunion/BigunionClient.cs">UpdateManyAsync</a>(IEnumerable<BigUnion> { ... }) -> Dictionary<string, bool></code></summary>
 <dl>
 <dd>
 
@@ -94,10 +96,10 @@ await client.Bigunion.UpdateAsync(new NormalSweet { Value = "value" });
 
 ```csharp
 await client.Bigunion.UpdateManyAsync(
-    new List<object>()
+    new List<BigUnion>()
     {
-        new NormalSweet { Value = "value" },
-        new NormalSweet { Value = "value" },
+        new BigUnion(new BigUnion.NormalSweet(new NormalSweet { Value = "value" })),
+        new BigUnion(new BigUnion.NormalSweet(new NormalSweet { Value = "value" })),
     }
 );
 ```
@@ -114,7 +116,7 @@ await client.Bigunion.UpdateManyAsync(
 <dl>
 <dd>
 
-**request:** `IEnumerable<object>` 
+**request:** `IEnumerable<BigUnion>` 
     
 </dd>
 </dl>
@@ -127,7 +129,7 @@ await client.Bigunion.UpdateManyAsync(
 </details>
 
 ## Union
-<details><summary><code>client.Union.<a href="/src/SeedUnions/Union/UnionClient.cs">GetAsync</a>(id) -> object</code></summary>
+<details><summary><code>client.Union.<a href="/src/SeedUnions/Union/UnionClient.cs">GetAsync</a>(id) -> Shape</code></summary>
 <dl>
 <dd>
 
@@ -167,7 +169,7 @@ await client.Union.GetAsync("id");
 </dl>
 </details>
 
-<details><summary><code>client.Union.<a href="/src/SeedUnions/Union/UnionClient.cs">UpdateAsync</a>(object { ... }) -> bool</code></summary>
+<details><summary><code>client.Union.<a href="/src/SeedUnions/Union/UnionClient.cs">UpdateAsync</a>(Shape { ... }) -> bool</code></summary>
 <dl>
 <dd>
 
@@ -180,7 +182,7 @@ await client.Union.GetAsync("id");
 <dd>
 
 ```csharp
-await client.Union.UpdateAsync(new Circle { Radius = 1.1 });
+await client.Union.UpdateAsync(new Shape(new Shape.Circle(new Circle { Radius = 1.1 })));
 ```
 </dd>
 </dl>
@@ -195,7 +197,7 @@ await client.Union.UpdateAsync(new Circle { Radius = 1.1 });
 <dl>
 <dd>
 
-**request:** `object` 
+**request:** `Shape` 
     
 </dd>
 </dl>

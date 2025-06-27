@@ -1,27 +1,28 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using SeedTrace;
 using SeedTrace.Core;
 
 namespace SeedTrace.V2;
 
 [Serializable]
-public record DefaultProvidedFile
+public record DefaultProvidedFile : IJsonOnDeserialized
 {
+    [JsonExtensionData]
+    private readonly IDictionary<string, JsonElement> _extensionData =
+        new Dictionary<string, JsonElement>();
+
     [JsonPropertyName("file")]
     public required FileInfoV2 File { get; set; }
 
     [JsonPropertyName("relatedTypes")]
-    public IEnumerable<object> RelatedTypes { get; set; } = new List<object>();
+    public IEnumerable<VariableType> RelatedTypes { get; set; } = new List<VariableType>();
 
-    /// <summary>
-    /// Additional properties received from the response, if any.
-    /// </summary>
-    /// <remarks>
-    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
-    /// </remarks>
-    [JsonExtensionData]
-    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
-        new Dictionary<string, JsonElement>();
+    [JsonIgnore]
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+
+    void IJsonOnDeserialized.OnDeserialized() =>
+        AdditionalProperties.CopyFromExtensionData(_extensionData);
 
     /// <inheritdoc />
     public override string ToString()

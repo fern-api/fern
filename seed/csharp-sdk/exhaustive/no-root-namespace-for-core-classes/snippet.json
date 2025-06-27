@@ -274,7 +274,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedExhaustive.Endpoints;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Params.GetWithInlinePathAsync(\"param\", new GetWithInlinePath());\n"
+                "client": "using SeedExhaustive.Endpoints;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Params.GetWithInlinePathAsync(new GetWithInlinePath { Param = \"param\" });\n"
             }
         },
         {
@@ -322,7 +322,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedExhaustive.Endpoints;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Params.GetWithInlinePathAndQueryAsync(\n    \"param\",\n    new GetWithInlinePathAndQuery { Query = \"query\" }\n);\n"
+                "client": "using SeedExhaustive.Endpoints;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Params.GetWithInlinePathAndQueryAsync(\n    new GetWithInlinePathAndQuery { Param = \"param\", Query = \"query\" }\n);\n"
             }
         },
         {
@@ -346,7 +346,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedExhaustive.Endpoints;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Params.ModifyWithInlinePathAsync(\n    \"param\",\n    new ModifyResourceAtInlinedPath { Body = \"string\" }\n);\n"
+                "client": "using SeedExhaustive.Endpoints;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Params.ModifyWithInlinePathAsync(\n    new ModifyResourceAtInlinedPath { Param = \"param\", Body = \"string\" }\n);\n"
             }
         },
         {
@@ -466,7 +466,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedExhaustive.Endpoints;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Put.AddAsync(\"id\", new PutRequest());\n"
+                "client": "using SeedExhaustive.Endpoints;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Put.AddAsync(new PutRequest { Id = \"id\" });\n"
             }
         },
         {
@@ -478,7 +478,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedExhaustive.Types;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Union.GetAndReturnUnionAsync(new Dog { Name = \"name\", LikesToWoof = true });\n"
+                "client": "using SeedExhaustive.Types;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Union.GetAndReturnUnionAsync(\n    new Animal(new Animal.Dog(new Dog { Name = \"name\", LikesToWoof = true }))\n);\n"
             }
         },
         {

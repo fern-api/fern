@@ -77,10 +77,18 @@ public class GetDefaultStarterFilesTest : BaseMockServerTest
             {
                 InputParams = new List<VariableTypeAndName>()
                 {
-                    new VariableTypeAndName { VariableType = "no-properties-union", Name = "name" },
-                    new VariableTypeAndName { VariableType = "no-properties-union", Name = "name" },
+                    new VariableTypeAndName
+                    {
+                        VariableType = new VariableType(new VariableType.IntegerType()),
+                        Name = "name",
+                    },
+                    new VariableTypeAndName
+                    {
+                        VariableType = new VariableType(new VariableType.IntegerType()),
+                        Name = "name",
+                    },
                 },
-                OutputType = "no-properties-union",
+                OutputType = new VariableType(new VariableType.IntegerType()),
                 MethodName = "methodName",
             }
         );

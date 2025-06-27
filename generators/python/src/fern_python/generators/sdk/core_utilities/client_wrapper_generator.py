@@ -71,6 +71,11 @@ class ClientWrapperGenerator:
     STRING_OR_SUPPLIER_TYPE_HINT = AST.TypeHint.union(
         AST.TypeHint.str_(), AST.TypeHint.callable(parameters=[], return_type=AST.TypeHint.str_())
     )
+    
+    HEADERS_CONSTRUCTOR_PARAMETER_NAME = "headers"
+    HEADERS_CONSTRUCTOR_PARAMETER_DOCS = "Additional headers to send with every request."
+    HEADERS_MEMBER_NAME = "_headers"
+    GET_CUSTOM_HEADERS_METHOD_NAME = "get_custom_headers"
 
     def __init__(
         self,
@@ -364,6 +369,7 @@ class ClientWrapperGenerator:
                 writer.write_line(
                     f'"{self._context.ir.sdk_config.platform_headers.sdk_version}": "{project._project_config.package_version}",'
                 )
+            writer.write_line("**(self.get_custom_headers() or {}),")
             writer.write_line("}")
             writer.write_newline_if_last_line_not()
             basic_auth_scheme = self._get_basic_auth_scheme()
@@ -694,6 +700,22 @@ class ClientWrapperGenerator:
                     password_constructor_parameter,
                 ]
             )
+        
+        # Add generic headers parameter
+        headers_constructor_parameter = ConstructorParameter(
+            constructor_parameter_name=ClientWrapperGenerator.HEADERS_CONSTRUCTOR_PARAMETER_NAME,
+            type_hint=AST.TypeHint.optional(AST.TypeHint.dict(AST.TypeHint.str_(), AST.TypeHint.str_())),
+            private_member_name=ClientWrapperGenerator.HEADERS_MEMBER_NAME,
+            getter_method=AST.FunctionDeclaration(
+                name=ClientWrapperGenerator.GET_CUSTOM_HEADERS_METHOD_NAME,
+                signature=AST.FunctionSignature(
+                    return_type=AST.TypeHint.optional(AST.TypeHint.dict(AST.TypeHint.str_(), AST.TypeHint.str_()))
+                ),
+                body=AST.CodeWriter(f"return self.{ClientWrapperGenerator.HEADERS_MEMBER_NAME}"),
+            ),
+            docs=ClientWrapperGenerator.HEADERS_CONSTRUCTOR_PARAMETER_DOCS
+        )
+        parameters.append(headers_constructor_parameter)
 
         return ConstructorInfo(
             constructor_parameters=parameters,
