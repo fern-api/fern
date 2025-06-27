@@ -13,6 +13,7 @@ import {
     GeneratedRequestWrapper,
     GeneratedRequestWrapperExample,
     RequestWrapperNonBodyProperty,
+    RequestWrapperNonBodyPropertyWithData,
     SdkContext
 } from "@fern-typescript/contexts";
 import { ModuleDeclarationStructure, OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
@@ -380,6 +381,45 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             ...this.getAllFileUploadProperties().map((fileProperty) =>
                 this.getPropertyNameOfFileParameter(fileProperty)
             ),
+            ...properties
+        ];
+    }
+
+    public getNonBodyKeysWithData(context: SdkContext): RequestWrapperNonBodyPropertyWithData[] {
+        const properties: RequestWrapperNonBodyPropertyWithData[] = [
+            ...this.getPathParamsForRequestWrapper().map((pathParameter) => ({
+                ...this.getPropertyNameOfPathParameter(pathParameter),
+                originalParameter: {
+                    type: "path" as const,
+                    parameter: pathParameter
+                }
+            })),
+            ...this.getAllQueryParameters().map((queryParameter) => ({
+                ...this.getPropertyNameOfQueryParameter(queryParameter),
+                originalParameter: {
+                    type: "query" as const,
+                    parameter: queryParameter
+                }
+            })),
+            ...this.getAllNonLiteralHeaders(context).map((header) => ({
+                ...this.getPropertyNameOfNonLiteralHeader(header),
+                originalParameter: {
+                    type: "header" as const,
+                    parameter: header
+                }
+            }))
+        ];
+        if (!this.inlineFileProperties) {
+            return properties;
+        }
+        return [
+            ...this.getAllFileUploadProperties().map((fileProperty) => ({
+                ...this.getPropertyNameOfFileParameter(fileProperty),
+                originalParameter: {
+                    type: "file" as const,
+                    parameter: fileProperty
+                }
+            })),
             ...properties
         ];
     }
