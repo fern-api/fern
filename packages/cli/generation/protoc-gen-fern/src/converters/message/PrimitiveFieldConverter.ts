@@ -8,15 +8,17 @@ import { ProtofileConverterContext } from "../ProtofileConverterContext";
 export declare namespace PrimitiveFieldConverter {
     export interface Args extends AbstractConverter.Args<ProtofileConverterContext> {
         field: FieldDescriptorProto;
+        sourceCodeInfoPath: number[];
     }
 }
 
 export class PrimitiveFieldConverter extends AbstractConverter<ProtofileConverterContext, TypeReference> {
     private readonly field: FieldDescriptorProto;
-
-    constructor({ context, breadcrumbs, field }: PrimitiveFieldConverter.Args) {
+    private readonly sourceCodeInfoPath: number[];
+    constructor({ context, breadcrumbs, field, sourceCodeInfoPath }: PrimitiveFieldConverter.Args) {
         super({ context, breadcrumbs });
         this.field = field;
+        this.sourceCodeInfoPath = sourceCodeInfoPath;
     }
 
     public convert(): TypeReference | undefined {

@@ -8,11 +8,13 @@ import { FieldConverter } from "../message/FieldConverter";
 export function convertFields({
     fields,
     breadcrumbs,
-    context
+    context,
+    sourceCodeInfoPath
 }: {
     fields: FieldDescriptorProto[];
     breadcrumbs: string[];
     context: ProtofileConverterContext;
+    sourceCodeInfoPath: number[];
 }): {
     convertedFields: ObjectProperty[];
     referencedTypes: Set<TypeId>;
@@ -28,7 +30,8 @@ export function convertFields({
         const fieldConverter = new FieldConverter({
             context,
             breadcrumbs: [...breadcrumbs, "fields", field.name],
-            field
+            field,
+            sourceCodeInfoPath
         });
         const convertedField = fieldConverter.convert();
         if (convertedField != null) {

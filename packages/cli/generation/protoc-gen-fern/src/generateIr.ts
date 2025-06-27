@@ -11,6 +11,7 @@ import { ErrorCollector } from "@fern-api/v2-importer-commons";
 import { Logger } from "./commons/logging";
 import { ProtofileConverter } from "./converters/ProtofileConverter";
 import { ProtofileConverterContext } from "./converters/ProtofileConverterContext";
+import { createGlobalCommentsStore } from "./converters/utils/CreateGlobalCommentsStore";
 import { Options } from "./parseOptions";
 
 export function generateIr({ req, options }: { req: CodeGeneratorRequest; options: Options }): FileInfo {
@@ -42,7 +43,8 @@ export function generateIr({ req, options }: { req: CodeGeneratorRequest; option
                     disabled: true
                 },
                 enableUniqueErrorsPerEndpoint: false,
-                generateV1Examples: false
+                generateV1Examples: false,
+                comments: createGlobalCommentsStore(protoFile)
             }),
             breadcrumbs: [],
             audiences: {

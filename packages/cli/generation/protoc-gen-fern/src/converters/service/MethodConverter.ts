@@ -19,6 +19,7 @@ export declare namespace MethodConverter {
     export interface Args extends AbstractConverter.Args<ProtofileConverterContext> {
         operation: MethodDescriptorProto;
         serviceName: string;
+        sourceCodeInfoPath: number[];
     }
 
     export interface Output {
@@ -32,10 +33,12 @@ export declare namespace MethodConverter {
 export class MethodConverter extends AbstractConverter<ProtofileConverterContext, MethodConverter.Output> {
     private readonly operation: MethodDescriptorProto;
     private readonly serviceName: string;
-    constructor({ context, breadcrumbs, operation, serviceName }: MethodConverter.Args) {
+    private readonly sourceCodeInfoPath: number[];
+    constructor({ context, breadcrumbs, operation, serviceName, sourceCodeInfoPath }: MethodConverter.Args) {
         super({ context, breadcrumbs });
         this.operation = operation;
         this.serviceName = serviceName;
+        this.sourceCodeInfoPath = sourceCodeInfoPath;
     }
 
     public convert(): MethodConverter.Output | undefined {
@@ -51,7 +54,7 @@ export class MethodConverter extends AbstractConverter<ProtofileConverterContext
             group: [packageName, this.serviceName],
             endpoint: {
                 id: this.operation.name,
-                docs: undefined,
+                docs: this.context.getCommentForPath(this.sourceCodeInfoPath),
                 name: this.context.casingsGenerator.generateName(this.operation.name),
                 requestBody: convertedRequestBody,
                 response: convertedResponseBody,

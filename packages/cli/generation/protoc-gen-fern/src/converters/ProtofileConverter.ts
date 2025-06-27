@@ -6,6 +6,7 @@ import { AbstractSpecConverter } from "@fern-api/v2-importer-commons";
 import { ProtofileConverterContext } from "./ProtofileConverterContext";
 import { EnumOrMessageConverter } from "./message/EnumOrMessageConverter";
 import { ServiceConverter } from "./service/ServiceConverter";
+import { PATH_FIELD_NUMBERS, SOURCE_CODE_INFO_PATH_STARTERS } from "./utils/PathFieldNumbers";
 
 export declare namespace ProtofileConverter {
     interface Args extends AbstractSpecConverter.Args<ProtofileConverterContext> {}
@@ -28,11 +29,30 @@ export class ProtofileConverter extends AbstractSpecConverter<ProtofileConverter
     }
 
     private convertEnumsAndMessages() {
-        for (const schema of [...this.context.spec.enumType, ...this.context.spec.messageType]) {
+        for (const [index, schema] of this.context.spec.enumType.entries()) {
+            const enumConverter = new EnumOrMessageConverter({
+                context: this.context,
+                breadcrumbs: [...this.breadcrumbs, this.context.spec.package],
+                schema,
+                sourceCodeInfoPath: [SOURCE_CODE_INFO_PATH_STARTERS.ENUM, index],
+                schemaIndex: index
+            });
+            const convertedEnum = enumConverter.convert();
+            if (convertedEnum != null) {
+                this.addTypesToIr({
+                    ...convertedEnum.inlinedTypes,
+                    [schema.name]: convertedEnum.convertedSchema
+                });
+            }
+        }
+
+        for (const [index, schema] of this.context.spec.messageType.entries()) {
             const enumOrMessageConverter = new EnumOrMessageConverter({
                 context: this.context,
                 breadcrumbs: [...this.breadcrumbs, this.context.spec.package],
-                schema
+                schema,
+                sourceCodeInfoPath: [SOURCE_CODE_INFO_PATH_STARTERS.MESSAGE, index],
+                schemaIndex: index
             });
             const convertedEnum = enumOrMessageConverter.convert();
             if (convertedEnum != null) {
@@ -45,11 +65,12 @@ export class ProtofileConverter extends AbstractSpecConverter<ProtofileConverter
     }
 
     private convertServices() {
-        for (const service of this.context.spec.service) {
+        for (const [index, service] of this.context.spec.service.entries()) {
             const serviceConverter = new ServiceConverter({
                 context: this.context,
                 breadcrumbs: this.breadcrumbs,
-                service
+                service,
+                sourceCodeInfoPath: [SOURCE_CODE_INFO_PATH_STARTERS.SERVICE, index]
             });
             const convertedService = serviceConverter.convert();
             if (convertedService != null) {

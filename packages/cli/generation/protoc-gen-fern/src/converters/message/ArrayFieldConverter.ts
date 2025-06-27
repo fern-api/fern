@@ -10,6 +10,7 @@ import { FieldConverter } from "./FieldConverter";
 export declare namespace ArrayFieldConverter {
     export interface Args extends AbstractConverter.Args<ProtofileConverterContext> {
         field: FieldDescriptorProto;
+        sourceCodeInfoPath: number[];
     }
 
     export interface Output {
@@ -23,10 +24,12 @@ export class ArrayFieldConverter extends AbstractConverter<ProtofileConverterCon
     private static LIST_UNKNOWN = TypeReference.container(ContainerType.list(TypeReference.unknown()));
 
     private readonly field: FieldDescriptorProto;
+    private readonly sourceCodeInfoPath: number[];
 
-    constructor({ context, breadcrumbs, field }: ArrayFieldConverter.Args) {
+    constructor({ context, breadcrumbs, field, sourceCodeInfoPath }: ArrayFieldConverter.Args) {
         super({ context, breadcrumbs });
         this.field = field;
+        this.sourceCodeInfoPath = sourceCodeInfoPath;
     }
 
     public convert(): ArrayFieldConverter.Output | undefined {
@@ -38,7 +41,8 @@ export class ArrayFieldConverter extends AbstractConverter<ProtofileConverterCon
                     ...this.field,
                     // set to optional to avoid infinite recursion
                     label: FieldDescriptorProto_Label.OPTIONAL
-                }
+                },
+                sourceCodeInfoPath: this.sourceCodeInfoPath
             });
             const convertedField = fieldConverter.convert();
             if (convertedField != null) {
