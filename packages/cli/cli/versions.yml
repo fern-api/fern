@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |  
-        Remove all legacy preview pins.
+        Remove all org-specific legacy preview pins.
       type: feat
   irVersion: 58
   createdAt: "2025-06-27"
