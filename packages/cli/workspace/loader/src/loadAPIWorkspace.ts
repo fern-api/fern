@@ -48,12 +48,12 @@ export async function loadSingleNamespaceAPIWorkspace({
             }
 
             // if the target is empty, don't specify a target because we are using 'strategy: all' from the root
-            const absoluteFilepathToTarget: AbsoluteFilePath =
+            const absoluteFilepathToTarget: AbsoluteFilePath | undefined =
                 definition.schema.target.length === 0
-                    ? ("" as AbsoluteFilePath)
+                    ? undefined
                     : join(absolutePathToWorkspace, RelativeFilePath.of(definition.schema.target));
 
-            if (definition.schema.target.length > 0) {
+            if (absoluteFilepathToTarget != null) {
                 if (!(await doesPathExist(absoluteFilepathToTarget))) {
                     return {
                         didSucceed: false,
