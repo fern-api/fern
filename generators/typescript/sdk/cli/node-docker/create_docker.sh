@@ -21,10 +21,11 @@ if [[ $TAG == *"-rc"* ]]; then
   is_not_rc=false
 fi
 
-docker login
 docker buildx create --use --name multiarch-builder
 docker buildx inspect --bootstrap
-docker buildx build --platform "linux/amd64,linux/arm64" -f "$DOCKER_DIR/Dockerfile" -t "$DOCKER_NAME" ${is_not_rc:+-t "fernapi/fern-typescript-node-sdk:latest"} "$ROOT_DIR" --label "version=$TAG" --push
+docker buildx build --platform "linux/amd64,linux/arm64" -f "$DOCKER_DIR/Dockerfile" -t "my-local-image:multiarch" ${is_not_rc:+-t "fernapi/fern-typescript-node-sdk:latest"} "$ROOT_DIR" --label "version=$TAG" --output type=tar,dest=multiarch.tar
+docker load < multiarch.tar
+docker tag "my-local-image:multiarch" "$DOCKER_NAME"
 
 echo
 echo "Built docker: $DOCKER_NAME"
