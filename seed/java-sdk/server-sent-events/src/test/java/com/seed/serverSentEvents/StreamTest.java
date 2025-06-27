@@ -18,7 +18,7 @@ public final class StreamTest {
     @Test
     public void testJsonStream() {
         List<Map> messages = List.of(Map.of("message", "hello"), Map.of("message", "world"));
-        List jsonStrings = messages.stream().map(this::mapToJson).toList();
+        List jsonStrings = messages.stream().map(StreamTest::mapToJson).toList();
         String input = String.join("\n", jsonStrings);
         StringReader jsonInput = new StringReader(input);
         Stream<Map> jsonStream = Stream.fromJson(Map.class, jsonInput);
@@ -34,8 +34,7 @@ public final class StreamTest {
     @Test
     public void testSseStream() {
         List<Map> events = List.of(Map.of("event", "start"), Map.of("event", "end"));
-        List sseStrings =
-                events.stream().map(event -> "data: " + mapToJson(event)).toList();
+        List sseStrings = events.stream().map(StreamTest::mapToSse).toList();
         String input = String.join("\n" + "\n", sseStrings);
         StringReader sseInput = new StringReader(input);
         Stream<Map> sseStream = Stream.fromSse(Map.class, sseInput);
@@ -51,8 +50,7 @@ public final class StreamTest {
     @Test
     public void testSseStreamWithTerminator() {
         List<Map> events = List.of(Map.of("message", "first"), Map.of("message", "second"));
-        List sseStrings =
-                events.stream().map(event -> "data: " + mapToJson(event)).collect(Collectors.toList());
+        List sseStrings = events.stream().map(StreamTest::mapToSse).collect(Collectors.toList());
         sseStrings.add("data: [DONE]");
         String input = String.join("\n" + "\n", sseStrings);
         StringReader sseInput = new StringReader(input);
@@ -63,7 +61,7 @@ public final class StreamTest {
             actualEvents++;
             assertTrue(eventData.containsKey("message"));
         }
-        assertEquals(expectedEvents, actualMessages);
+        assertEquals(expectedEvents, actualEvents);
     }
 
     @Test
@@ -80,6 +78,9 @@ public final class StreamTest {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        ;
+    }
+
+    private static String mapToSse(Map map) {
+        return "data: " + mapToJson(map);
     }
 }
