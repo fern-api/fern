@@ -107,7 +107,7 @@ export class PythonTypeMapper {
         const typeDeclaration = this.context.getTypeDeclarationOrThrow(named.typeId);
         switch (typeDeclaration.shape.type) {
             case "alias":
-                return this.convert({ reference: typeDeclaration.shape.aliasOf });
+                return python.Type.reference(objectClassReference);
             case "enum":
                 return python.Type.reference(objectClassReference);
             case "object":
