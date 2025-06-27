@@ -4,10 +4,9 @@ import { SOURCE_CODE_INFO_PATH_STARTERS } from "./PathFieldNumbers";
 
 export type PathStarterValues = (typeof SOURCE_CODE_INFO_PATH_STARTERS)[keyof typeof SOURCE_CODE_INFO_PATH_STARTERS];
 
-// Updated type to allow comment at each level
 export type CommentNode = {
-    _comment?: string; // The comment for this node itself
-    [key: number]: CommentNode; // Child nodes
+    _comment?: string;
+    [key: number]: CommentNode;
 };
 
 export function createGlobalCommentsStore(spec: FileDescriptorProto): Record<PathStarterValues, CommentNode> {
@@ -37,11 +36,10 @@ export function createGlobalCommentsStore(spec: FileDescriptorProto): Record<Pat
 
         let current: CommentNode = commentsByStartingNodeType[startValue];
 
-        // Navigate to the correct node, creating nodes as needed
         for (let i = 1; i < path.length; i++) {
             const key = path[i];
 
-            if (key === undefined) {
+            if (key == null) {
                 continue;
             }
 
@@ -49,10 +47,9 @@ export function createGlobalCommentsStore(spec: FileDescriptorProto): Record<Pat
                 current[key] = {};
             }
 
-            current = current[key]!; // Add non-null assertion since we just created it
+            current = current[key] as CommentNode;
         }
 
-        // Set the comment on the node we reached
         current._comment = comment.trim();
     });
 
