@@ -92,6 +92,7 @@ export declare namespace GeneratedSdkClientClassImpl {
         oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
         streamType: "wrapper" | "web";
         fileResponseType: "stream" | "binary-response";
+        formDataSupport: "Node16" | "Node18";
     }
 }
 
@@ -127,6 +128,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private readonly inlineFileProperties: boolean;
     private readonly includeSerdeLayer: boolean;
     private readonly omitUndefined: boolean;
+    private readonly formDataSupport: "Node16" | "Node18";
     private readonly allowExtraFields: boolean;
     private readonly importsManager: ImportsManager;
     private readonly exportsManager: ExportsManager;
@@ -162,7 +164,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         oauthTokenProviderGenerator,
         exportsManager,
         streamType,
-        fileResponseType
+        fileResponseType,
+        formDataSupport
     }: GeneratedSdkClientClassImpl.Init) {
         this.isRoot = isRoot;
         this.intermediateRepresentation = intermediateRepresentation;
@@ -179,6 +182,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         this.includeSerdeLayer = includeSerdeLayer;
         this.omitUndefined = omitUndefined;
         this.allowExtraFields = allowExtraFields;
+        this.formDataSupport = formDataSupport;
         this.importsManager = importsManager;
         this.exportsManager = exportsManager;
         this.oauthTokenProviderGenerator = oauthTokenProviderGenerator;
@@ -225,7 +229,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             inlineFileProperties: this.inlineFileProperties,
                             includeSerdeLayer: this.includeSerdeLayer,
                             allowExtraFields: this.allowExtraFields,
-                            omitUndefined: this.omitUndefined
+                            omitUndefined: this.omitUndefined,
+                            formDataSupport: this.formDataSupport
                         });
                     } else {
                         return new GeneratedDefaultEndpointRequest({

@@ -13,11 +13,15 @@ package com.example.usage;
 
 import com.seed.fileUpload.SeedFileUploadClient;
 
-SeedFileUploadClient client = SeedFileUploadClient
-    .builder()
-    .build();
+public class Example {
+    public static void main(String[] args) {
+        SeedFileUploadClient client = SeedFileUploadClient
+            .builder()
+            .build();
 
-client.service().post(...);
+        client.service().simple();
+    }
+}
 ```
 
 ## Base Url
@@ -41,7 +45,7 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
 import com.seed.fileUpload.core.SeedFileUploadApiException;
 
 try {
-    client.service().post(...);
+    client.service().simple(...);
 } catch (SeedFileUploadApiException e) {
     // Do something with the API exception...
 }
@@ -104,7 +108,7 @@ SeedFileUploadClient client = SeedFileUploadClient
     .build();
 
 // Request level
-client.service().post(
+client.service().simple(
     ...,
     RequestOptions
         .builder()

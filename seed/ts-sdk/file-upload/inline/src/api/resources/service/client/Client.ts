@@ -642,10 +642,7 @@ export class Service {
         }
 
         if (request.request != null) {
-            if (Array.isArray(request.request) || request.request instanceof Set)
-                for (const _item of request.request) {
-                    _request.append("request", typeof _item === "string" ? _item : toJson(_item));
-                }
+            _request.append("request", toJson(request.request));
         }
 
         const _maybeEncodedRequest = await _request.getRequest();
@@ -689,6 +686,58 @@ export class Service {
                 });
             case "timeout":
                 throw new errors.SeedFileUploadTimeoutError("Timeout exceeded when calling POST /optional-args.");
+            case "unknown":
+                throw new errors.SeedFileUploadError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
+    }
+
+    /**
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.service.simple()
+     */
+    public simple(requestOptions?: Service.RequestOptions): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__simple(requestOptions));
+    }
+
+    private async __simple(requestOptions?: Service.RequestOptions): Promise<core.WithRawResponse<void>> {
+        const _response = await core.fetcher({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/snippet",
+            ),
+            method: "POST",
+            headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return { data: undefined, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedFileUploadError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedFileUploadError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedFileUploadTimeoutError("Timeout exceeded when calling POST /snippet.");
             case "unknown":
                 throw new errors.SeedFileUploadError({
                     message: _response.error.errorMessage,

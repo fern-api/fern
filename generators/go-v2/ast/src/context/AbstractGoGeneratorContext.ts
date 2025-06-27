@@ -7,6 +7,8 @@ import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/path-utils";
 
 import {
+    ErrorDeclaration,
+    ErrorId,
     FernFilepath,
     HttpService,
     IntermediateRepresentation,
@@ -22,10 +24,12 @@ import {
 } from "@fern-fern/ir-sdk/api";
 
 import { go } from "..";
-import { TimeTypeReference, UuidTypeReference } from "../ast/Type";
+import { IoReaderTypeReference, TimeTypeReference, UuidTypeReference } from "../ast/Type";
 import { BaseGoCustomConfigSchema } from "../custom-config/BaseGoCustomConfigSchema";
 import { resolveRootImportPath } from "../custom-config/resolveRootImportPath";
 import { GoTypeMapper } from "./GoTypeMapper";
+import { GoValueFormatter } from "./GoValueFormatter";
+import { GoZeroValueMapper } from "./GoZeroValueMapper";
 
 export interface FileLocation {
     importPath: string;
@@ -37,6 +41,8 @@ export abstract class AbstractGoGeneratorContext<
 > extends AbstractGeneratorContext {
     private rootImportPath: string;
     public readonly goTypeMapper: GoTypeMapper;
+    public readonly goValueFormatter: GoValueFormatter;
+    public readonly goZeroValueMapper: GoZeroValueMapper;
 
     public constructor(
         public readonly ir: IntermediateRepresentation,
@@ -46,6 +52,8 @@ export abstract class AbstractGoGeneratorContext<
     ) {
         super(config, generatorNotificationService);
         this.goTypeMapper = new GoTypeMapper(this);
+        this.goValueFormatter = new GoValueFormatter(this);
+        this.goZeroValueMapper = new GoZeroValueMapper(this);
         this.rootImportPath = resolveRootImportPath({
             config: this.config,
             customConfig: this.customConfig
@@ -68,24 +76,187 @@ export abstract class AbstractGoGeneratorContext<
         return subpackage;
     }
 
+    public getErrorDeclarationOrThrow(errorId: ErrorId): ErrorDeclaration {
+        const errorDeclaration = this.ir.errors[errorId];
+        if (errorDeclaration == null) {
+            throw new Error(`Error declaration with id ${errorId} not found`);
+        }
+        return errorDeclaration;
+    }
+
     public getClassName(name: Name): string {
         return name.pascalCase.unsafeName;
+    }
+
+    public getPackageName(name: Name): string {
+        return name.snakeCase.unsafeName.toLowerCase();
+    }
+
+    public getFilename(name: Name): string {
+        return name.snakeCase.unsafeName;
     }
 
     public getRootImportPath(): string {
         return this.rootImportPath;
     }
 
+    public getRootPackageName(): string {
+        if (this.customConfig.packageName != null) {
+            return this.customConfig.packageName;
+        }
+        return this.ir.apiName.camelCase.safeName.toLowerCase();
+    }
+
     public getCoreImportPath(): string {
         return `${this.rootImportPath}/core`;
+    }
+
+    public getInternalImportPath(): string {
+        return `${this.rootImportPath}/internal`;
+    }
+
+    public getOptionImportPath(): string {
+        return `${this.rootImportPath}/option`;
     }
 
     public getFieldName(name: Name): string {
         return name.pascalCase.unsafeName;
     }
 
+    public getParameterName(name: Name): string {
+        return name.camelCase.safeName;
+    }
+
+    public maybeUnwrapIterable(typeReference: TypeReference): TypeReference | undefined {
+        switch (typeReference.type) {
+            case "container": {
+                const container = typeReference.container;
+                switch (container.type) {
+                    case "list":
+                        return container.list;
+                    case "set":
+                        return container.set;
+                    case "optional":
+                        return this.maybeUnwrapIterable(container.optional);
+                    case "nullable":
+                        return this.maybeUnwrapIterable(container.nullable);
+                    case "literal":
+                    case "map":
+                        return undefined;
+                    default:
+                        assertNever(container);
+                }
+                break;
+            }
+            case "named": {
+                const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId).shape;
+                switch (typeDeclaration.type) {
+                    case "alias":
+                        return this.maybeUnwrapIterable(typeDeclaration.aliasOf);
+                    case "enum":
+                    case "object":
+                    case "union":
+                    case "undiscriminatedUnion":
+                        return undefined;
+                    default:
+                        assertNever(typeDeclaration);
+                }
+                break;
+            }
+            case "primitive":
+            case "unknown":
+                return undefined;
+            default:
+                assertNever(typeReference);
+        }
+    }
+
+    public maybeUnwrapOptionalOrNullable(typeReference: TypeReference): TypeReference | undefined {
+        switch (typeReference.type) {
+            case "container": {
+                const container = typeReference.container;
+                switch (container.type) {
+                    case "optional":
+                        return container.optional;
+                    case "nullable":
+                        return container.nullable;
+                    case "list":
+                    case "set":
+                    case "literal":
+                    case "map":
+                        return undefined;
+                    default:
+                        assertNever(container);
+                }
+                break;
+            }
+            case "named":
+            case "primitive":
+            case "unknown":
+                return undefined;
+            default:
+                assertNever(typeReference);
+        }
+    }
+
+    /**
+     * Returns true if the type reference needs to be dereferenced to get the
+     * underlying type.
+     *
+     * Container types like lists, maps, and sets are already nil-able, so they
+     * don't require a dereference prefix.
+     */
+    public needsOptionalDereference(typeReference: TypeReference): boolean {
+        switch (typeReference.type) {
+            case "named": {
+                const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId).shape;
+                switch (typeDeclaration.type) {
+                    case "alias":
+                        return this.needsOptionalDereference(typeDeclaration.aliasOf);
+                    case "enum":
+                        return true;
+                    case "object":
+                    case "union":
+                    case "undiscriminatedUnion":
+                        return false;
+                    default:
+                        assertNever(typeDeclaration);
+                }
+                break;
+            }
+            case "primitive":
+                return true;
+            case "container":
+            case "unknown":
+                return false;
+            default:
+                assertNever(typeReference);
+        }
+    }
+
     public getLiteralAsString(literal: Literal): string {
-        return literal.type === "string" ? `'${literal.string}'` : literal.boolean ? "'true'" : "'false'";
+        return literal.type === "string" ? `"${literal.string}"` : literal.boolean ? '"true"' : '"false"';
+    }
+
+    public getContextTypeReference(): go.TypeReference {
+        return go.typeReference({
+            name: "Context",
+            importPath: "context"
+        });
+    }
+
+    public getZeroTime(): go.TypeInstantiation {
+        return go.TypeInstantiation.struct({
+            typeReference: TimeTypeReference,
+            fields: []
+        });
+    }
+
+    public getZeroUuid(): go.TypeInstantiation {
+        return go.TypeInstantiation.struct({
+            typeReference: UuidTypeReference,
+            fields: []
+        });
     }
 
     public getUuidTypeReference(): go.TypeReference {
@@ -94,6 +265,10 @@ export abstract class AbstractGoGeneratorContext<
 
     public getTimeTypeReference(): go.TypeReference {
         return TimeTypeReference;
+    }
+
+    public getIoReaderTypeReference(): go.TypeReference {
+        return IoReaderTypeReference;
     }
 
     public isOptional(typeReference: TypeReference): boolean {
@@ -188,32 +363,42 @@ export abstract class AbstractGoGeneratorContext<
         primitive
     }: {
         typeReference: TypeReference;
-        primitive?: PrimitiveTypeV1;
+        primitive: PrimitiveTypeV1;
     }): boolean {
+        return this.maybePrimitive(typeReference) === primitive;
+    }
+
+    public maybePrimitive(typeReference: TypeReference): PrimitiveTypeV1 | undefined {
         switch (typeReference.type) {
-            case "container":
-                switch (typeReference.container.type) {
+            case "container": {
+                const container = typeReference.container;
+                switch (container.type) {
                     case "optional":
-                        return this.isPrimitive({ typeReference: typeReference.container.optional, primitive });
+                        return this.maybePrimitive(container.optional);
                     case "nullable":
-                        return this.isPrimitive({ typeReference: typeReference.container.nullable, primitive });
+                        return this.maybePrimitive(container.nullable);
+                    case "list":
+                    case "set":
+                    case "literal":
+                    case "map":
+                        return undefined;
+                    default:
+                        assertNever(container);
                 }
-                return false;
+                break;
+            }
             case "named": {
                 const declaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
                 if (declaration.shape.type === "alias") {
-                    return this.isPrimitive({ typeReference: declaration.shape.aliasOf, primitive });
+                    return this.maybePrimitive(declaration.shape.aliasOf);
                 }
-                return false;
+                return undefined;
             }
             case "primitive": {
-                if (primitive == null) {
-                    return true;
-                }
-                return typeReference.primitive.v1 === primitive;
+                return typeReference.primitive.v1;
             }
             case "unknown": {
-                return false;
+                return undefined;
             }
             default:
                 assertNever(typeReference);
@@ -241,11 +426,24 @@ export abstract class AbstractGoGeneratorContext<
 
     public getLocationForTypeId(typeId: TypeId): FileLocation {
         const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
-        return this.getFileLocation(typeDeclaration.name.fernFilepath);
+        return this.getPackageLocation(typeDeclaration.name.fernFilepath);
+    }
+
+    public getLocationForErrorId(errorId: ErrorId): FileLocation {
+        const errorDeclaration = this.getErrorDeclarationOrThrow(errorId);
+        return this.getPackageLocation(errorDeclaration.name.fernFilepath);
     }
 
     protected getFileLocation(filepath: FernFilepath, suffix?: string): FileLocation {
-        let parts = filepath.packagePath.map((path) => path.pascalCase.safeName.toLowerCase());
+        return this.getLocation(filepath.allParts, suffix);
+    }
+
+    protected getPackageLocation(filepath: FernFilepath, suffix?: string): FileLocation {
+        return this.getLocation(filepath.packagePath, suffix);
+    }
+
+    private getLocation(names: Name[], suffix?: string): FileLocation {
+        let parts = names.map((name) => name.camelCase.safeName.toLowerCase());
         parts = suffix != null ? [...parts, suffix] : parts;
         return {
             importPath: [this.getRootImportPath(), ...parts].join("/"),

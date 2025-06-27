@@ -15,6 +15,8 @@ type Client struct {
 	baseURL string
 	caller  *internal.Caller
 	header  http.Header
+
+	WithRawResponse *RawClient
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
@@ -27,7 +29,8 @@ func NewClient(opts ...option.RequestOption) *Client {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header: options.ToHeader(),
+		header:          options.ToHeader(),
+		WithRawResponse: NewRawClient(options),
 	}
 }
 
@@ -52,7 +55,7 @@ func (c *Client) Get(
 	)
 
 	var response *unionsgo.BigUnion
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,
@@ -88,7 +91,7 @@ func (c *Client) Update(
 	)
 
 	var response bool
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,
@@ -125,7 +128,7 @@ func (c *Client) UpdateMany(
 	)
 
 	var response map[string]bool
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,

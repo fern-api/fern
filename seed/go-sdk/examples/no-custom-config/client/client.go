@@ -19,9 +19,10 @@ type Client struct {
 	caller  *internal.Caller
 	header  http.Header
 
-	File    *fileclient.Client
-	Health  *healthclient.Client
-	Service *service.Client
+	WithRawResponse *RawClient
+	File            *fileclient.Client
+	Health          *healthclient.Client
+	Service         *service.Client
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
@@ -34,10 +35,11 @@ func NewClient(opts ...option.RequestOption) *Client {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header:  options.ToHeader(),
-		File:    fileclient.NewClient(opts...),
-		Health:  healthclient.NewClient(opts...),
-		Service: service.NewClient(opts...),
+		header:          options.ToHeader(),
+		WithRawResponse: NewRawClient(options),
+		File:            fileclient.NewClient(opts...),
+		Health:          healthclient.NewClient(opts...),
+		Service:         service.NewClient(opts...),
 	}
 }
 
@@ -59,7 +61,7 @@ func (c *Client) Echo(
 	)
 
 	var response string
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,
@@ -96,7 +98,7 @@ func (c *Client) CreateType(
 	)
 
 	var response *fern.Identifier
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,

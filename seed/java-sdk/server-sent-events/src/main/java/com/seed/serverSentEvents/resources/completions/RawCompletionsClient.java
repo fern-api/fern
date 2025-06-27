@@ -63,8 +63,7 @@ public class RawCompletionsClient {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
                 return new SeedServerSentEventsHttpResponse<>(
-                        new Stream<StreamedCompletion>(
-                                StreamedCompletion.class, new ResponseBodyReader(response), "[[DONE]]"),
+                        Stream.fromSse(StreamedCompletion.class, new ResponseBodyReader(response), "[[DONE]]"),
                         response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";

@@ -7,7 +7,7 @@ import (
     events "github.com/mixed-file-directory/fern/user/events"
 )
 
-func do() () {
+func do() {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",

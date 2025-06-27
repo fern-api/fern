@@ -52,10 +52,7 @@ service:
 
       response: root.SendResponse
       examples: 
-        - headers:
-            X-API-Version: "02-02-2024"
-            X-API-Enable-Audit-Logging: true
-          request:
+        - request:
             temperature: 10.1
             prompt: "You are a helpful assistant"
             context: "You're super wise"

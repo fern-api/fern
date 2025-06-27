@@ -39,6 +39,7 @@ import com.fern.java.client.generators.ResponseBodyInputStreamGenerator;
 import com.fern.java.client.generators.ResponseBodyReaderGenerator;
 import com.fern.java.client.generators.RetryInterceptorGenerator;
 import com.fern.java.client.generators.SampleAppGenerator;
+import com.fern.java.client.generators.StreamTestGenerator;
 import com.fern.java.client.generators.SuppliersGenerator;
 import com.fern.java.client.generators.SyncRootClientGenerator;
 import com.fern.java.client.generators.SyncSubpackageClientGenerator;
@@ -500,5 +501,7 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                 .build());
         TestGenerator testGenerator = new TestGenerator(context);
         this.addGeneratedFile(testGenerator.generateFile());
+        StreamTestGenerator streamTestGenerator = new StreamTestGenerator(context);
+        this.addGeneratedFile(streamTestGenerator.generateFile());
     }
 }

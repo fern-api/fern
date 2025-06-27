@@ -185,6 +185,9 @@ fixtures:
     - outputFolder: web-stream-wrapper
       customConfig:
         streamType: "web"
+    - outputFolder: form-data-node18
+      customConfig:
+        formDataSupport: "Node18"
   unknown:
     - customConfig: null
       outputFolder: no-custom-config
@@ -285,7 +288,7 @@ scripts:
       - if grep -q '"test"' package.json; then yarn test --passWithNoTests; fi
       - if grep -q '"test:wire"' package.json; then yarn test:wire --passWithNoTests; fi
 allowedFailures:
-  - bytes
+  - bytes-download
   - circular-references
   - cross-package-type-names
   - idempotency-headers
