@@ -1,29 +1,70 @@
 {
   "$schema": "https://turbo.build/schema.json",
+  "globalDependencies": [
+    ".depcheckrc.json",
+    ".eslintignore",
+    ".eslintrc.json",
+    ".npmrc",
+    ".prettierrc.json",
+    ".stylelintrc.json",
+    "babel.config.json",
+    "jest.config.js",
+    "package.json",
+    "shared/.prettierignore",
+    "shared/jest.config.shared.js",
+    "shared/stylelintrc.shared.json",
+    "shared/vitest.config.ts",
+    "tsconfig.eslint.json",
+    "tsconfig.json",
+    "turbo.json",
+    "vitest.workspace.ts"
+  ],
   "tasks": {
     "clean": {
       "cache": false
     },
     "compile": {
       "dependsOn": ["^compile"],
-      "outputs": ["lib/**"]
+      "outputs": ["lib/**"],
+      "inputs": ["src/**", "tests/**", "package.json", "tsconfig.json"]
     },
     "depcheck": {
-      "outputs": []
+      "outputs": [],
+      "inputs": ["src/**", "tests/**", "package.json", ".depcheckrc.json"]
     },
     "lint:eslint": {
-      "outputs": []
+      "outputs": [],
+      "inputs": ["src/**", "tests/**", ".eslintrc.js", "tsconfig.json"]
     },
     "lint:eslint:fix": {
-      "outputs": []
+      "outputs": [],
+      "inputs": ["src/**", "tests/**", ".eslintrc.js", "tsconfig.json"]
     },
     "test": {
       "dependsOn": ["^compile"],
-      "outputs": []
+      "outputs": [],
+      "inputs": [
+        "src/**",
+        "tests/**",
+        "jest.config.{js,mjs,mts,ts,cjs,cts}",
+        "vitest.config.{js,mjs,mts,ts,cjs,cts}",
+        "tsconfig.json",
+        "$TURBO_ROOT$/test-definitions/**",
+        "$TURBO_ROOT$/test-definitions-openapi/**"
+      ]
     },
     "test:update": {
       "dependsOn": ["^compile"],
-      "outputs": []
+      "outputs": [],
+      "inputs": [
+        "src/**",
+        "tests/**",
+        "jest.config.{js,mjs,mts,ts,cjs,cts}",
+        "vitest.config.{js,mjs,mts,ts,cjs,cts}",
+        "tsconfig.json",
+        "$TURBO_ROOT$/test-definitions/**",
+        "$TURBO_ROOT$/test-definitions-openapi/**"
+      ]
     }
   }
 }
