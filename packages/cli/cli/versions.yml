@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |  
+        Remove all legacy preview pins.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-06-27"
+  version: 0.64.25
+
+- changelogEntry:
+    - summary: |  
         Added Server-Sent Events (SSE) support to Java stream implementation. The Java SDK generator now 
         supports SSE streaming alongside existing JSON streaming, enabling real-time incremental responses 
         for chat applications and live data feeds.

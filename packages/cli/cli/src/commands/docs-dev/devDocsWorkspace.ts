@@ -5,8 +5,6 @@ import { Project } from "@fern-api/project-loader";
 import { CliContext } from "../../cli-context/CliContext";
 import { validateDocsWorkspaceWithoutExiting } from "../validate/validateDocsWorkspaceAndLogIssues";
 
-const legacyPin = ["devrev"];
-
 export async function previewDocsWorkspace({
     loadProject,
     cliContext,
@@ -32,23 +30,16 @@ export async function previewDocsWorkspace({
         return;
     }
 
-    let usePages = legacyPin.includes(project.config.organization);
-    if (appPreview) {
-        usePages = false;
-    } else if (legacyPreview) {
-        usePages = true;
-    }
-
-    if (!usePages || appPreview) {
+    if (legacyPreview || !appPreview) {
         await cliContext.instrumentPostHogEvent({
             orgId: project.config.organization,
-            command: "fern docs dev --beta"
+            command: "fern docs dev --legacy"
         });
 
         await cliContext.runTaskForWorkspace(docsWorkspace, async (context) => {
             context.logger.info(`Starting server on port ${port}`);
 
-            await runAppPreviewServer({
+            await runPreviewServer({
                 initialProject: project,
                 reloadProject: loadProject,
                 validateProject: async (project) => {
@@ -83,23 +74,20 @@ export async function previewDocsWorkspace({
                 },
                 context,
                 port,
-                bundlePath,
-                backendPort
+                bundlePath
             });
         });
-
-        return;
     }
 
     await cliContext.instrumentPostHogEvent({
         orgId: project.config.organization,
-        command: "fern docs dev --legacy"
+        command: "fern docs dev --beta"
     });
 
     await cliContext.runTaskForWorkspace(docsWorkspace, async (context) => {
         context.logger.info(`Starting server on port ${port}`);
 
-        await runPreviewServer({
+        await runAppPreviewServer({
             initialProject: project,
             reloadProject: loadProject,
             validateProject: async (project) => {
@@ -134,7 +122,10 @@ export async function previewDocsWorkspace({
             },
             context,
             port,
-            bundlePath
+            bundlePath,
+            backendPort
         });
     });
+
+    return;
 }
