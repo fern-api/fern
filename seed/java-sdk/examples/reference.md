@@ -108,7 +108,7 @@ public class Example {
 </details>
 
 ## File Notification Service
-<details><summary><code>client.file().notification().service().getException(...)</code></summary>
+<details><summary><code>client.file().notification().getException(...)</code></summary>
 <dl>
 <dd>
 
@@ -163,7 +163,7 @@ public class Example {
 </details>
 
 ## File Service
-<details><summary><code>client.file().service().getFile(...)</code></summary>
+<details><summary><code>client.file().getFile(...)</code></summary>
 <dl>
 <dd>
 
@@ -239,7 +239,7 @@ public class Example {
 </details>
 
 ## Health Service
-<details><summary><code>client.health().service().check(...)</code></summary>
+<details><summary><code>client.health().check(...)</code></summary>
 <dl>
 <dd>
 
@@ -307,7 +307,7 @@ public class Example {
 </dl>
 </details>
 
-<details><summary><code>client.health().service().ping(...)</code></summary>
+<details><summary><code>client.health().ping(...)</code></summary>
 <dl>
 <dd>
 
@@ -361,7 +361,7 @@ public class Example {
 </details>
 
 ## Service
-<details><summary><code>client.service().getMovie(...)</code></summary>
+<details><summary><code>client.getMovie(...)</code></summary>
 <dl>
 <dd>
 
@@ -403,7 +403,7 @@ public class Example {
 <dl>
 <dd>
 
-**movieId:** `String` 
+**movieId:** `MovieId` 
     
 </dd>
 </dl>
@@ -415,7 +415,7 @@ public class Example {
 </dl>
 </details>
 
-<details><summary><code>client.service().createMovie(...)</code></summary>
+<details><summary><code>client.createMovie(...)</code></summary>
 <dl>
 <dd>
 
@@ -491,7 +491,7 @@ public class Example {
 </dl>
 </details>
 
-<details><summary><code>client.service().getMetadata(...)</code></summary>
+<details><summary><code>client.getMetadata(...)</code></summary>
 <dl>
 <dd>
 
@@ -540,12 +540,43 @@ public class Example {
 </dd>
 </dl>
 
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**shallow:** `Boolean` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tag:** `List<Optional<String>>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**xApiVersion:** `String` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.service().createBigEntity(...)</code></summary>
+<details><summary><code>client.createBigEntity(...)</code></summary>
 <dl>
 <dd>
 

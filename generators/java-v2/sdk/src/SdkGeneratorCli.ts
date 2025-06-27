@@ -199,7 +199,7 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
     }): Promise<void> {
         // Use standard IR instead of dynamic IR (like other generators)
         const ir = context.ir;
-        
+
         // Create a map of endpoint snippets by endpoint ID for quick lookup
         const snippetsByEndpointId = new Map<string, Endpoint>();
         for (const snippet of endpointSnippets) {
@@ -210,24 +210,22 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
 
         // Iterate through services using the standard IR structure
         for (const [serviceId, service] of Object.entries(ir.services)) {
-            const serviceEndpoints = service.endpoints.filter(endpoint => 
-                snippetsByEndpointId.has(endpoint.id)
-            );
-            
+            const serviceEndpoints = service.endpoints.filter((endpoint) => snippetsByEndpointId.has(endpoint.id));
+
             if (serviceEndpoints.length === 0) {
                 continue;
             }
 
             // Determine if this is a root service
             const isRootService = ir.rootPackage.service === serviceId;
-            
+
             // Create appropriate section
             const section = isRootService
                 ? referenceConfigBuilder.addRootSection()
                 : referenceConfigBuilder.addSection({
-                    title: this.getServiceSectionTitle(service),
-                    description: service.docs
-                });
+                      title: this.getServiceSectionTitle(service),
+                      description: service.displayName || undefined
+                  });
 
             // Add endpoints to the section
             for (const endpoint of serviceEndpoints) {
@@ -243,88 +241,107 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
                         },
                         description: endpoint.docs,
                         snippet: snippet.snippet.syncClient,
-                        parameters: this.extractEndpointParameters(endpoint, context)
+                        parameters: this.extractEndpointParameters(endpoint, context).map((param) => ({
+                            ...param,
+                            required: true
+                        }))
                     });
                 }
             }
         }
     }
 
-    private getServiceSectionTitle(service: any): string {
+    private getServiceSectionTitle(service: IntermediateRepresentation["services"][string]): string {
         // Extract service name from fernFilepath
-        if (service.name?.fernFilepath && service.name.fernFilepath.length > 0) {
-            const pathParts = service.name.fernFilepath.map((part: any) => 
-                part.pascalCase || part.camelCase || part.originalName || part
+        if (service.name?.fernFilepath && service.name.fernFilepath.allParts.length > 0) {
+            const pathParts = service.name.fernFilepath.allParts.map(
+                (part) => part.pascalCase?.safeName || part.camelCase?.safeName || part.originalName || "Unknown"
             );
             return pathParts.join(" ") + " Service";
         }
-        
-        // Fallback to service name
-        return (service.name?.pascalCase || service.name?.camelCase || service.name?.originalName || "Service") + " Service";
+
+        // Fallback to service name based on file name
+        if (service.name?.fernFilepath?.file) {
+            return (
+                (service.name.fernFilepath.file.pascalCase?.safeName ||
+                    service.name.fernFilepath.file.camelCase?.safeName ||
+                    service.name.fernFilepath.file.originalName ||
+                    "Service") + " Service"
+            );
+        }
+
+        return "Service";
     }
 
-    private getEndpointMethodCall(endpoint: any, service: any, context: SdkGeneratorContext): string {
+    private getEndpointMethodCall(
+        endpoint: IntermediateRepresentation["services"][string]["endpoints"][number],
+        service: IntermediateRepresentation["services"][string],
+        context: SdkGeneratorContext
+    ): string {
         // Build the client method call chain
         let methodCall = "client";
-        
+
         // Add service path if not root service
-        const isRootService = context.ir.rootPackage.service === service.name?.originalName;
+        const isRootService = context.ir.rootPackage.service === service.name?.fernFilepath?.file?.originalName;
         if (!isRootService && service.name?.fernFilepath) {
-            for (const pathPart of service.name.fernFilepath) {
-                const partName = pathPart.camelCase || pathPart.originalName;
+            for (const pathPart of service.name.fernFilepath.packagePath) {
+                const partName = pathPart.camelCase?.safeName || pathPart.originalName;
                 methodCall += `.${partName}()`;
             }
         }
-        
+
         // Add endpoint method name
-        const endpointName = endpoint.name?.camelCase || endpoint.name?.originalName || "unknown";
+        const endpointName = endpoint.name?.camelCase?.safeName || endpoint.name?.originalName || "unknown";
         methodCall += `.${endpointName}(...)`;
-        
+
         return methodCall;
     }
 
-    private extractEndpointParameters(endpoint: any, context: SdkGeneratorContext): Array<{name: string, type: string, description?: string}> {
-        const parameters: Array<{name: string, type: string, description?: string}> = [];
-        
+    private extractEndpointParameters(
+        endpoint: IntermediateRepresentation["services"][string]["endpoints"][number],
+        context: SdkGeneratorContext
+    ): Array<{ name: string; type: string; description?: string }> {
+        const parameters: Array<{ name: string; type: string; description?: string }> = [];
+
         // Extract path parameters
         if (endpoint.allPathParameters) {
             for (const pathParam of endpoint.allPathParameters) {
                 parameters.push({
-                    name: pathParam.name?.camelCase || pathParam.name?.originalName || "param",
+                    name: pathParam.name?.camelCase?.safeName || pathParam.name?.originalName || "param",
                     type: this.extractSimpleTypeName(this.getJavaTypeForTypeReference(pathParam.valueType, context)),
                     description: pathParam.docs
                 });
             }
         }
-        
+
         // Extract query parameters
         if (endpoint.queryParameters) {
             for (const queryParam of endpoint.queryParameters) {
                 parameters.push({
-                    name: queryParam.name?.camelCase || queryParam.name?.originalName || "param",
+                    name: queryParam.name?.name?.camelCase?.safeName || queryParam.name?.name?.originalName || "param",
                     type: this.extractSimpleTypeName(this.getJavaTypeForTypeReference(queryParam.valueType, context)),
                     description: queryParam.docs
                 });
             }
         }
-        
+
         // Extract headers
         if (endpoint.headers) {
             for (const header of endpoint.headers) {
                 parameters.push({
-                    name: header.name?.camelCase || header.name?.originalName || "header",
+                    name: header.name?.name?.camelCase?.safeName || header.name?.name?.originalName || "header",
                     type: this.extractSimpleTypeName(this.getJavaTypeForTypeReference(header.valueType, context)),
                     description: header.docs
                 });
             }
         }
-        
+
         // Extract request body
         if (endpoint.requestBody) {
             const requestBody = endpoint.requestBody;
             let bodyType = "Object";
             let description = "Request body";
-            
+
             if (requestBody.type === "reference") {
                 bodyType = this.getJavaTypeForTypeReference(requestBody.requestBodyType, context);
                 description = requestBody.docs || "Request body";
@@ -339,41 +356,53 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
                 bodyType = "File";
                 description = "File upload";
             }
-            
+
             parameters.push({
                 name: "request",
                 type: this.extractSimpleTypeName(bodyType),
                 description
             });
         }
-        
+
         return parameters;
     }
 
-    private getJavaTypeForTypeReference(typeRef: any, context: SdkGeneratorContext): string {
-        if (!typeRef) {
+    private getJavaTypeForTypeReference(typeRef: unknown, context: SdkGeneratorContext): string {
+        if (!typeRef || typeof typeRef !== "object") {
             return "Object";
         }
-        
-        switch (typeRef.type) {
+
+        const typedRef = typeRef as { type?: string; [key: string]: unknown };
+
+        switch (typedRef.type) {
             case "primitive":
-                return this.mapPrimitiveToJavaType(typeRef.primitive);
+                return this.mapPrimitiveToJavaType(typedRef.primitive as string);
             case "optional":
-                return `Optional<${this.getJavaTypeForTypeReference(typeRef.itemType, context)}>`;
+                return `Optional<${this.getJavaTypeForTypeReference(typedRef.itemType, context)}>`;
             case "list":
-                return `List<${this.getJavaTypeForTypeReference(typeRef.itemType, context)}>`;
+                return `List<${this.getJavaTypeForTypeReference(typedRef.itemType, context)}>`;
             case "set":
-                return `Set<${this.getJavaTypeForTypeReference(typeRef.itemType, context)}>`;
+                return `Set<${this.getJavaTypeForTypeReference(typedRef.itemType, context)}>`;
             case "map":
-                return `Map<${this.getJavaTypeForTypeReference(typeRef.keyType, context)}, ${this.getJavaTypeForTypeReference(typeRef.valueType, context)}>`;
+                return `Map<${this.getJavaTypeForTypeReference(typedRef.keyType, context)}, ${this.getJavaTypeForTypeReference(typedRef.valueType, context)}>`;
             case "named":
-                return typeRef.name?.pascalCase || typeRef.name?.originalName || "Object";
+                return (
+                    (typedRef.name as { pascalCase?: { safeName?: string }; originalName?: string })?.pascalCase
+                        ?.safeName ||
+                    (typedRef.name as { pascalCase?: { safeName?: string }; originalName?: string })?.originalName ||
+                    "Object"
+                );
             case "union":
-                return typeRef.name?.pascalCase || typeRef.name?.originalName || "Object";
+                return (
+                    (typedRef.name as { pascalCase?: { safeName?: string }; originalName?: string })?.pascalCase
+                        ?.safeName ||
+                    (typedRef.name as { pascalCase?: { safeName?: string }; originalName?: string })?.originalName ||
+                    "Object"
+                );
             case "literal":
-                if (typeRef.literal?.type === "string") {
+                if ((typedRef.literal as { type?: string })?.type === "string") {
                     return "String";
-                } else if (typeRef.literal?.type === "boolean") {
+                } else if ((typedRef.literal as { type?: string })?.type === "boolean") {
                     return "Boolean";
                 }
                 return "Object";
@@ -411,10 +440,10 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
 
     private extractSimpleTypeName(fullTypeName: string): string {
         // Remove package declarations and imports to get just the type name
-        const lines = fullTypeName.split('\n');
+        const lines = fullTypeName.split("\n");
         for (const line of lines) {
             const trimmed = line.trim();
-            if (trimmed && !trimmed.startsWith('package ') && !trimmed.startsWith('import ')) {
+            if (trimmed && !trimmed.startsWith("package ") && !trimmed.startsWith("import ")) {
                 return trimmed;
             }
         }
