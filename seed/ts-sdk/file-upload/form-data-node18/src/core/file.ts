@@ -3,7 +3,7 @@ export type FileLike =
     | Uint8Array
     | import("buffer").Buffer
     | import("buffer").Blob
-    | import("buffer").FileOptions
+    | import("buffer").File
     | import("stream").Readable
     | import("stream/web").ReadableStream
     | globalThis.Blob
