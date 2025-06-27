@@ -50,6 +50,7 @@ export declare namespace GeneratedRequestWrapperImpl {
         inlineFileProperties: boolean;
         enableInlineTypes: boolean;
         shouldInlinePathParameters: boolean;
+        formDataSupport: "Node16" | "Node18";
     }
 }
 
@@ -65,6 +66,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     protected inlineFileProperties: boolean;
     private enableInlineTypes: boolean;
     private _shouldInlinePathParameters: boolean;
+    private readonly formDataSupport: "Node16" | "Node18";
 
     constructor({
         service,
@@ -75,7 +77,8 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         retainOriginalCasing,
         inlineFileProperties,
         enableInlineTypes,
-        shouldInlinePathParameters
+        shouldInlinePathParameters,
+        formDataSupport
     }: GeneratedRequestWrapperImpl.Init) {
         this.service = service;
         this.endpoint = endpoint;
@@ -86,6 +89,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         this.inlineFileProperties = inlineFileProperties;
         this.enableInlineTypes = enableInlineTypes;
         this._shouldInlinePathParameters = shouldInlinePathParameters;
+        this.formDataSupport = formDataSupport;
     }
 
     public shouldInlinePathParameters(): boolean {
@@ -588,27 +592,43 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     }
 
     private getFileParameterType(property: FileProperty, context: SdkContext): ts.TypeNode {
-        const types: ts.TypeNode[] = [
-            this.maybeWrapFileArray({
-                property,
-                value: ts.factory.createTypeReferenceNode("File")
-            })
-        ];
+        const types: ts.TypeNode[] = [];
 
         visitJavaScriptRuntime(context.targetRuntime, {
             node: () => {
+                if (this.formDataSupport === "Node16") {
+                    types.push(
+                        this.maybeWrapFileArray({
+                            property,
+                            value: ts.factory.createTypeReferenceNode("File")
+                        })
+                    );
+                    types.push(
+                        this.maybeWrapFileArray({
+                            property,
+                            value: context.externalDependencies.fs.ReadStream._getReferenceToType()
+                        }),
+                        this.maybeWrapFileArray({
+                            property,
+                            value: ts.factory.createTypeReferenceNode("Blob")
+                        })
+                    );
+                } else {
+                    types.push(
+                        this.maybeWrapFileArray({
+                            property,
+                            value: context.coreUtilities.fileUtils.FileLike._getReferenceToType()
+                        })
+                    );
+                }
+            },
+            browser: () => {
                 types.push(
                     this.maybeWrapFileArray({
                         property,
-                        value: context.externalDependencies.fs.ReadStream._getReferenceToType()
-                    }),
-                    this.maybeWrapFileArray({
-                        property,
-                        value: ts.factory.createTypeReferenceNode("Blob")
+                        value: ts.factory.createTypeReferenceNode("File")
                     })
                 );
-            },
-            browser: () => {
                 types.push(
                     this.maybeWrapFileArray({
                         property,

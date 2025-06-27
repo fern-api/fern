@@ -1,5 +1,8 @@
 import { RUNTIME } from "../runtime/index.js";
-import { toReadableStream } from "./toReadableStream.js";
+
+export async function toReadableStream(encoder: import("form-data-encoder").FormDataEncoder) {
+    return (await import("readable-stream")).Readable.from(encoder);
+}
 
 export type MaybePromise<T> = Promise<T> | T;
 

@@ -42,7 +42,7 @@ export declare namespace GeneratedBytesEndpointRequest {
 }
 
 export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
-    private static BYTES_VARIABLE_NAME = "bytes";
+    private static readonly BYTES_VARIABLE_NAME = "bytes";
 
     private ir: IntermediateRepresentation;
     private requestParameter: FileUploadRequestParameter | undefined;

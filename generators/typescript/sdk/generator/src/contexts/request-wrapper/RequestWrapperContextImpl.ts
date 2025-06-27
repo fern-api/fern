@@ -23,6 +23,7 @@ export declare namespace RequestWrapperContextImpl {
         inlineFileProperties: boolean;
         inlinePathParameters: boolean;
         enableInlineTypes: boolean;
+        formDataSupport: "Node16" | "Node18";
     }
 }
 
@@ -38,6 +39,7 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
     private inlineFileProperties: boolean;
     private inlinePathParameters: boolean;
     private enableInlineTypes: boolean;
+    private readonly formDataSupport: "Node16" | "Node18";
 
     constructor({
         requestWrapperGenerator,
@@ -50,7 +52,8 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
         retainOriginalCasing,
         inlineFileProperties,
         inlinePathParameters,
-        enableInlineTypes
+        enableInlineTypes,
+        formDataSupport
     }: RequestWrapperContextImpl.Init) {
         this.requestWrapperGenerator = requestWrapperGenerator;
         this.requestWrapperDeclarationReferencer = requestWrapperDeclarationReferencer;
@@ -63,6 +66,7 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
         this.inlineFileProperties = inlineFileProperties;
         this.inlinePathParameters = inlinePathParameters;
         this.enableInlineTypes = enableInlineTypes;
+        this.formDataSupport = formDataSupport;
     }
 
     public shouldInlinePathParameters(sdkRequest: SdkRequest | undefined | null): boolean {
@@ -109,7 +113,8 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
             retainOriginalCasing: this.retainOriginalCasing,
             inlineFileProperties: this.inlineFileProperties,
             enableInlineTypes: this.enableInlineTypes,
-            shouldInlinePathParameters: this.shouldInlinePathParameters(endpoint.sdkRequest)
+            shouldInlinePathParameters: this.shouldInlinePathParameters(endpoint.sdkRequest),
+            formDataSupport: this.formDataSupport
         });
     }
 
