@@ -7,6 +7,12 @@
       type: feat
   createdAt: '2025-06-27'
   irVersion: 58
+- version: 1.9.1
+  changelogEntry:
+    - summary: Improve auto-pagination logic to consider empty strings in response as null cursors and stop paging.
+      type: fix
+  createdAt: '2025-06-27'
+  irVersion: 58
 - version: 1.9.0
   changelogEntry:
     - summary: |
@@ -28,9 +34,6 @@
     - summary: |
         When a multipart form part is explicitly marked as JSON, serialize the data as JSON regardless of type. 
         This also means arrays, maps, etc. will not be split into multiple parts, but serialized to JSON as a single part.
-      type: fix
-  createdAt: '2025-06-27'
-  irVersion: 58
 - version: 1.8.1
   changelogEntry:
     - summary: Fix binary response README.md examples

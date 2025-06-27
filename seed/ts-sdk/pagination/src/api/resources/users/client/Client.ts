@@ -123,7 +123,12 @@ export class Users {
         return new core.Pageable<SeedPagination.ListUsersPaginationResponse, SeedPagination.User>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
-            hasNextPage: (response) => response?.page?.next?.starting_after != null,
+            hasNextPage: (response) =>
+                response?.page?.next?.starting_after != null &&
+                !(
+                    typeof response?.page?.next?.starting_after === "string" &&
+                    response?.page?.next?.starting_after === ""
+                ),
             getItems: (response) => response?.data ?? [],
             loadPage: (response) => {
                 return list(core.setObjectProperty(request, "starting_after", response?.page?.next?.starting_after));
@@ -205,7 +210,8 @@ export class Users {
         return new core.Pageable<SeedPagination.ListUsersMixedTypePaginationResponse, SeedPagination.User>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
-            hasNextPage: (response) => response?.next != null,
+            hasNextPage: (response) =>
+                response?.next != null && !(typeof response?.next === "string" && response?.next === ""),
             getItems: (response) => response?.data ?? [],
             loadPage: (response) => {
                 return list(core.setObjectProperty(request, "cursor", response?.next));
@@ -286,7 +292,12 @@ export class Users {
         return new core.Pageable<SeedPagination.ListUsersPaginationResponse, SeedPagination.User>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
-            hasNextPage: (response) => response?.page?.next?.starting_after != null,
+            hasNextPage: (response) =>
+                response?.page?.next?.starting_after != null &&
+                !(
+                    typeof response?.page?.next?.starting_after === "string" &&
+                    response?.page?.next?.starting_after === ""
+                ),
             getItems: (response) => response?.data ?? [],
             loadPage: (response) => {
                 return list(core.setObjectProperty(request, "pagination.cursor", response?.page?.next?.starting_after));
@@ -827,7 +838,8 @@ export class Users {
         return new core.Pageable<SeedPagination.ListUsersExtendedResponse, SeedPagination.User>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
-            hasNextPage: (response) => response?.next != null,
+            hasNextPage: (response) =>
+                response?.next != null && !(typeof response?.next === "string" && response?.next === ""),
             getItems: (response) => response?.data?.users ?? [],
             loadPage: (response) => {
                 return list(core.setObjectProperty(request, "cursor", response?.next));
@@ -909,7 +921,8 @@ export class Users {
         return new core.Pageable<SeedPagination.ListUsersExtendedOptionalListResponse, SeedPagination.User>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
-            hasNextPage: (response) => response?.next != null,
+            hasNextPage: (response) =>
+                response?.next != null && !(typeof response?.next === "string" && response?.next === ""),
             getItems: (response) => response?.data?.users ?? [],
             loadPage: (response) => {
                 return list(core.setObjectProperty(request, "cursor", response?.next));
@@ -991,7 +1004,9 @@ export class Users {
         return new core.Pageable<SeedPagination.UsernameCursor, string>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
-            hasNextPage: (response) => response?.cursor?.after != null,
+            hasNextPage: (response) =>
+                response?.cursor?.after != null &&
+                !(typeof response?.cursor?.after === "string" && response?.cursor?.after === ""),
             getItems: (response) => response?.cursor?.data ?? [],
             loadPage: (response) => {
                 return list(core.setObjectProperty(request, "starting_after", response?.cursor?.after));
