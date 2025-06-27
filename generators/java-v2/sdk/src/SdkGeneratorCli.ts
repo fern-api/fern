@@ -184,6 +184,10 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
         );
     }
 
+    private async generateGitHub({ context }: { context: SdkGeneratorContext }): Promise<void> {
+        await context.generatorAgent.pushToGitHub({ context });
+    }
+
     private async populateReferenceConfig({
         context,
         endpointSnippets,
@@ -193,55 +197,228 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
         endpointSnippets: Endpoint[];
         referenceConfigBuilder: ReferenceConfigBuilder;
     }): Promise<void> {
-        const dynamicIr = context.ir.dynamic;
-        if (!dynamicIr) {
-            context.logger.debug("No dynamic IR available for reference generation");
-            return;
-        }
-
-        // Group endpoints by service
-        const endpointsByService: Record<string, { endpoint: any; snippets: Endpoint[] }> = {};
-
-        for (const endpointSnippet of endpointSnippets) {
-            const endpointId = endpointSnippet.id.identifierOverride;
-            if (!endpointId) {continue;}
-
-            const dynamicEndpoint = dynamicIr.endpoints[endpointId];
-            if (!dynamicEndpoint) {continue;}
-
-            const serviceName = dynamicEndpoint.location.path.split("/")[1] || "root";
-
-            if (!endpointsByService[serviceName]) {
-                endpointsByService[serviceName] = {
-                    endpoint: dynamicEndpoint,
-                    snippets: []
-                };
+        // Use standard IR instead of dynamic IR (like other generators)
+        const ir = context.ir;
+        
+        // Create a map of endpoint snippets by endpoint ID for quick lookup
+        const snippetsByEndpointId = new Map<string, Endpoint>();
+        for (const snippet of endpointSnippets) {
+            if (snippet.id.identifierOverride) {
+                snippetsByEndpointId.set(snippet.id.identifierOverride, snippet);
             }
-            endpointsByService[serviceName].snippets.push(endpointSnippet);
         }
 
-        // Create reference sections for each service
-        for (const [serviceName, serviceData] of Object.entries(endpointsByService)) {
-            const section = referenceConfigBuilder.addSection(
-                serviceName.charAt(0).toUpperCase() + serviceName.slice(1),
-                `${serviceName} service endpoints`
+        // Iterate through services using the standard IR structure
+        for (const [serviceId, service] of Object.entries(ir.services)) {
+            const serviceEndpoints = service.endpoints.filter(endpoint => 
+                snippetsByEndpointId.has(endpoint.id)
             );
+            
+            if (serviceEndpoints.length === 0) {
+                continue;
+            }
 
-            for (const snippet of serviceData.snippets) {
-                if (snippet.snippet.type === "java") {
-                    const javaSnippet = snippet.snippet;
-                    const endpointId = snippet.id.identifierOverride;
-                    const dynamicEndpoint = endpointId ? dynamicIr.endpoints[endpointId] : undefined;
+            // Determine if this is a root service
+            const isRootService = ir.rootPackage.service === serviceId;
+            
+            // Create appropriate section
+            const section = isRootService
+                ? referenceConfigBuilder.addRootSection()
+                : referenceConfigBuilder.addSection({
+                    title: this.getServiceSectionTitle(service),
+                    description: service.docs
+                });
 
+            // Add endpoints to the section
+            for (const endpoint of serviceEndpoints) {
+                const snippet = snippetsByEndpointId.get(endpoint.id);
+                if (snippet && snippet.snippet.type === "java") {
                     section.addEndpoint({
-                        title: this.getEndpointTitle(dynamicEndpoint, snippet),
-                        description: dynamicEndpoint?.docs,
-                        snippet: javaSnippet.syncClient,
-                        parameters: dynamicEndpoint ? this.extractParameters(dynamicEndpoint) : []
+                        title: {
+                            snippetParts: [
+                                {
+                                    text: this.getEndpointMethodCall(endpoint, service, context)
+                                }
+                            ]
+                        },
+                        description: endpoint.docs,
+                        snippet: snippet.snippet.syncClient,
+                        parameters: this.extractEndpointParameters(endpoint, context)
                     });
                 }
             }
         }
+    }
+
+    private getServiceSectionTitle(service: any): string {
+        // Extract service name from fernFilepath
+        if (service.name?.fernFilepath && service.name.fernFilepath.length > 0) {
+            const pathParts = service.name.fernFilepath.map((part: any) => 
+                part.pascalCase || part.camelCase || part.originalName || part
+            );
+            return pathParts.join(" ") + " Service";
+        }
+        
+        // Fallback to service name
+        return (service.name?.pascalCase || service.name?.camelCase || service.name?.originalName || "Service") + " Service";
+    }
+
+    private getEndpointMethodCall(endpoint: any, service: any, context: SdkGeneratorContext): string {
+        // Build the client method call chain
+        let methodCall = "client";
+        
+        // Add service path if not root service
+        const isRootService = context.ir.rootPackage.service === service.name?.originalName;
+        if (!isRootService && service.name?.fernFilepath) {
+            for (const pathPart of service.name.fernFilepath) {
+                const partName = pathPart.camelCase || pathPart.originalName;
+                methodCall += `.${partName}()`;
+            }
+        }
+        
+        // Add endpoint method name
+        const endpointName = endpoint.name?.camelCase || endpoint.name?.originalName || "unknown";
+        methodCall += `.${endpointName}(...)`;
+        
+        return methodCall;
+    }
+
+    private extractEndpointParameters(endpoint: any, context: SdkGeneratorContext): Array<{name: string, type: string, description?: string}> {
+        const parameters: Array<{name: string, type: string, description?: string}> = [];
+        
+        // Extract path parameters
+        if (endpoint.allPathParameters) {
+            for (const pathParam of endpoint.allPathParameters) {
+                parameters.push({
+                    name: pathParam.name?.camelCase || pathParam.name?.originalName || "param",
+                    type: this.extractSimpleTypeName(this.getJavaTypeForTypeReference(pathParam.valueType, context)),
+                    description: pathParam.docs
+                });
+            }
+        }
+        
+        // Extract query parameters
+        if (endpoint.queryParameters) {
+            for (const queryParam of endpoint.queryParameters) {
+                parameters.push({
+                    name: queryParam.name?.camelCase || queryParam.name?.originalName || "param",
+                    type: this.extractSimpleTypeName(this.getJavaTypeForTypeReference(queryParam.valueType, context)),
+                    description: queryParam.docs
+                });
+            }
+        }
+        
+        // Extract headers
+        if (endpoint.headers) {
+            for (const header of endpoint.headers) {
+                parameters.push({
+                    name: header.name?.camelCase || header.name?.originalName || "header",
+                    type: this.extractSimpleTypeName(this.getJavaTypeForTypeReference(header.valueType, context)),
+                    description: header.docs
+                });
+            }
+        }
+        
+        // Extract request body
+        if (endpoint.requestBody) {
+            const requestBody = endpoint.requestBody;
+            let bodyType = "Object";
+            let description = "Request body";
+            
+            if (requestBody.type === "reference") {
+                bodyType = this.getJavaTypeForTypeReference(requestBody.requestBodyType, context);
+                description = requestBody.docs || "Request body";
+            } else if (requestBody.type === "inlinedRequestBody") {
+                // For inlined request bodies, we might want to show the wrapper type
+                bodyType = "Request"; // This could be more specific based on the endpoint
+                description = requestBody.docs || "Request body";
+            } else if (requestBody.type === "bytes") {
+                bodyType = "byte[]";
+                description = "Request body";
+            } else if (requestBody.type === "fileUpload") {
+                bodyType = "File";
+                description = "File upload";
+            }
+            
+            parameters.push({
+                name: "request",
+                type: this.extractSimpleTypeName(bodyType),
+                description
+            });
+        }
+        
+        return parameters;
+    }
+
+    private getJavaTypeForTypeReference(typeRef: any, context: SdkGeneratorContext): string {
+        if (!typeRef) {
+            return "Object";
+        }
+        
+        switch (typeRef.type) {
+            case "primitive":
+                return this.mapPrimitiveToJavaType(typeRef.primitive);
+            case "optional":
+                return `Optional<${this.getJavaTypeForTypeReference(typeRef.itemType, context)}>`;
+            case "list":
+                return `List<${this.getJavaTypeForTypeReference(typeRef.itemType, context)}>`;
+            case "set":
+                return `Set<${this.getJavaTypeForTypeReference(typeRef.itemType, context)}>`;
+            case "map":
+                return `Map<${this.getJavaTypeForTypeReference(typeRef.keyType, context)}, ${this.getJavaTypeForTypeReference(typeRef.valueType, context)}>`;
+            case "named":
+                return typeRef.name?.pascalCase || typeRef.name?.originalName || "Object";
+            case "union":
+                return typeRef.name?.pascalCase || typeRef.name?.originalName || "Object";
+            case "literal":
+                if (typeRef.literal?.type === "string") {
+                    return "String";
+                } else if (typeRef.literal?.type === "boolean") {
+                    return "Boolean";
+                }
+                return "Object";
+            default:
+                return "Object";
+        }
+    }
+
+    private mapPrimitiveToJavaType(primitive: string): string {
+        switch (primitive) {
+            case "STRING":
+                return "String";
+            case "INTEGER":
+                return "Integer";
+            case "DOUBLE":
+                return "Double";
+            case "BOOLEAN":
+                return "Boolean";
+            case "LONG":
+                return "Long";
+            case "DATE_TIME":
+                return "OffsetDateTime";
+            case "DATE":
+                return "LocalDate";
+            case "UUID":
+                return "UUID";
+            case "BASE_64":
+                return "String";
+            case "BIG_INTEGER":
+                return "BigInteger";
+            default:
+                return "Object";
+        }
+    }
+
+    private extractSimpleTypeName(fullTypeName: string): string {
+        // Remove package declarations and imports to get just the type name
+        const lines = fullTypeName.split('\n');
+        for (const line of lines) {
+            const trimmed = line.trim();
+            if (trimmed && !trimmed.startsWith('package ') && !trimmed.startsWith('import ')) {
+                return trimmed;
+            }
+        }
+        return fullTypeName;
     }
 
     private async generateReference({
@@ -252,165 +429,13 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
         referenceConfigBuilder: ReferenceConfigBuilder;
     }): Promise<void> {
         if (referenceConfigBuilder.isEmpty()) {
-            context.logger.debug("No reference content to generate");
+            context.logger.debug("No reference config to generate, skipping reference.md generation.");
             return;
         }
 
-        const content = await context.generatorAgent.generateReference(referenceConfigBuilder);
+        const referenceContent = await context.generatorAgent.generateReference(referenceConfigBuilder);
         context.project.addRawFiles(
-            new File(context.generatorAgent.getExportedReferenceFilePath(), RelativeFilePath.of("."), content)
+            new File(context.generatorAgent.getExportedReferenceFilePath(), RelativeFilePath.of("."), referenceContent)
         );
-    }
-
-    private getEndpointTitle(endpoint: FernIr.dynamic.Endpoint | undefined, snippet: Endpoint): string {
-        if (!endpoint) {
-            return `${snippet.id.method.toUpperCase()} ${snippet.id.path}`;
-        }
-
-        // Use display name if available, otherwise fallback to method + path
-        const displayName = endpoint.displayName;
-        if (displayName) {
-            return displayName;
-        }
-
-        // Create a readable title from the endpoint name
-        const endpointName = endpoint.name?.original || endpoint.name?.camelCase;
-        if (endpointName) {
-            // Convert camelCase to Title Case
-            const titleCase = endpointName.replace(/([A-Z])/g, " $1").replace(/^./, (str) => str.toUpperCase());
-            return titleCase.trim();
-        }
-
-        return `${snippet.id.method.toUpperCase()} ${snippet.id.path}`;
-    }
-
-    private extractParameters(
-        endpoint: FernIr.dynamic.Endpoint
-    ): Array<{ name: string; type: string; description?: string }> {
-        const parameters: Array<{ name: string; type: string; description?: string }> = [];
-
-        // Extract path parameters
-        const allPathParameters = [
-            ...(endpoint.request.type === "inlined" ? endpoint.request.pathParameters || [] : []),
-            ...(endpoint.request.type === "body" ? endpoint.request.pathParameters || [] : [])
-        ];
-
-        for (const pathParam of allPathParameters) {
-            parameters.push({
-                name: pathParam.name.camelCase || pathParam.name.original,
-                type: this.getJavaTypeForDynamicType(pathParam.typeReference),
-                description: pathParam.docs
-            });
-        }
-
-        // Extract query parameters (for inlined requests)
-        if (endpoint.request.type === "inlined" && endpoint.request.queryParameters) {
-            for (const queryParam of endpoint.request.queryParameters) {
-                parameters.push({
-                    name: queryParam.name.camelCase || queryParam.name.original,
-                    type: this.getJavaTypeForDynamicType(queryParam.typeReference),
-                    description: queryParam.docs
-                });
-            }
-        }
-
-        // Extract headers (for inlined requests)
-        if (endpoint.request.type === "inlined" && endpoint.request.headers) {
-            for (const header of endpoint.request.headers) {
-                parameters.push({
-                    name: header.name.camelCase || header.name.original,
-                    type: this.getJavaTypeForDynamicType(header.typeReference),
-                    description: header.docs
-                });
-            }
-        }
-
-        // Extract request body (for body requests)
-        if (endpoint.request.type === "body" && endpoint.request.body) {
-            const bodyType = endpoint.request.body;
-            let javaType = "Object";
-            if (bodyType.type === "typeReference") {
-                javaType = this.getJavaTypeForDynamicType(bodyType.value);
-            } else if (bodyType.type === "bytes") {
-                javaType = "byte[]";
-            }
-
-            parameters.push({
-                name: "request",
-                type: javaType,
-                description: "Request body"
-            });
-        }
-
-        // Extract request body properties (for inlined requests)
-        if (endpoint.request.type === "inlined" && endpoint.request.body) {
-            for (const bodyProperty of endpoint.request.body) {
-                parameters.push({
-                    name: bodyProperty.name.camelCase || bodyProperty.name.original,
-                    type: this.getJavaTypeForDynamicType(bodyProperty.typeReference),
-                    description: bodyProperty.docs
-                });
-            }
-        }
-
-        return parameters;
-    }
-
-    private getJavaTypeForDynamicType(typeRef: FernIr.dynamic.TypeReference): string {
-        switch (typeRef.type) {
-            case "primitive":
-                switch (typeRef.value) {
-                    case "STRING":
-                        return "String";
-                    case "INTEGER":
-                        return "Integer";
-                    case "DOUBLE":
-                        return "Double";
-                    case "BOOLEAN":
-                        return "Boolean";
-                    case "LONG":
-                        return "Long";
-                    case "DATE_TIME":
-                        return "OffsetDateTime";
-                    case "DATE":
-                        return "LocalDate";
-                    case "UUID":
-                        return "UUID";
-                    case "BASE_64":
-                        return "String";
-                    case "BIG_INTEGER":
-                        return "BigInteger";
-                    default:
-                        return "Object";
-                }
-            case "optional":
-                return `Optional<${this.getJavaTypeForDynamicType(typeRef.value)}>`;
-            case "list":
-                return `List<${this.getJavaTypeForDynamicType(typeRef.value)}>`;
-            case "set":
-                return `Set<${this.getJavaTypeForDynamicType(typeRef.value)}>`;
-            case "map":
-                return `Map<${this.getJavaTypeForDynamicType(typeRef.keyType)}, ${this.getJavaTypeForDynamicType(typeRef.valueType)}>`;
-            case "named":
-                // Use the type name for custom types
-                return typeRef.name.pascalCase || typeRef.name.original || "Object";
-            case "union":
-                // For unions, use the base type name or generic Object
-                return typeRef.name?.pascalCase || typeRef.name?.original || "Object";
-            case "literal":
-                // literal types
-                if (typeRef.value.type === "string") {
-                    return "String";
-                } else if (typeRef.value.type === "boolean") {
-                    return "Boolean";
-                }
-                return "Object";
-            default:
-                return "Object";
-        }
-    }
-
-    private async generateGitHub({ context }: { context: SdkGeneratorContext }): Promise<void> {
-        await context.generatorAgent.pushToGitHub({ context });
     }
 }
