@@ -163,6 +163,11 @@ service:
         status-code: 200
         type: string
 
+        # add one non-file endpoint to force snippet generation
+    
+    simple:
+      path: "/snippet"
+      method: POST
 types:
   Id: string
 
