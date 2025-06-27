@@ -1,9 +1,14 @@
 ## 1.9.0
 **`(feat):`** Add `formDataSupport` configuration which lets you choose between `Node16` and `Node18`.
-The default is `Node16`. If you choose `Node18`, the `form-data` dependency will be removed.
-
-
-**`(feat):`** Removed the `formdata-node` and `form-data-encoder` dependencies, instead use the native `FormData` in Node 18 and up.
+The default is `Node16`. If you choose `Node18`, the `form-data`, `formdata-node`, and `form-data-encoder` dependencies will be removed.
+`formDataSupport: Node18` supports uploading files from the following types:
+* `Buffer`
+* `File`
+* `Blob`
+* `Readable` (includes Readstream)
+* `ReadableStream`
+* `ArrayBuffer`
+* `Uint8Array`
 
 
 ## 1.8.1
