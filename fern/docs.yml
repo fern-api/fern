@@ -31,10 +31,10 @@ tabs:
     display-name: SDKs
     icon: fa-brands fa-codepen
     slug: sdks
-  ai-search: 
-    display-name: AI Search
-    icon: fa-regular fa-magnifying-glass
-    slug: ai-search
+  ask-fern: 
+    display-name: Ask Fern
+    icon: fa-regular fa-wand-sparkles
+    slug: ask-fern
   cli-api:
     display-name: CLI & API Reference
     icon: fa-regular fa-code
@@ -624,27 +624,27 @@ navigation:
             slug: mintlify
             path: ./pages/docs/comparison/mintlify.mdx
 
-  - tab: ai-search
+  - tab: ask-fern
     layout:
     - section: Getting Started
       skip-slug: true
       contents:
         - page: Overview
           icon: fa-regular fa-book-open
-          path: ./pages/ai-search/getting-started/overview.mdx
-        - page: AI Search Customer Showcase
+          path: ./pages/ask-fern/getting-started/overview.mdx
+        - page: Ask Fern Customer Showcase
           icon: fa-regular fa-star
           slug: customer-showcase
-          path: ./pages/ai-search/getting-started/customer-showcase.mdx
+          path: ./pages/ask-fern/getting-started/customer-showcase.mdx
     - section: Features 
       skip-slug: true
       contents:
         - page: Custom Prompting
           icon: fa-regular fa-gear
-          path: ./pages/ai-search/features/custom-prompting.mdx
+          path: ./pages/ask-fern/features/custom-prompting.mdx
         - page: Citations
           icon: fa-regular fa-quote-right
-          path: ./pages/ai-search/features/citations.mdx
+          path: ./pages/ask-fern/features/citations.mdx
 
   - tab: cli-api
     layout:
@@ -810,17 +810,26 @@ redirects:
     destination: /learn/sdks/capabilities/merging-apis
     permanent: true
   - source: /learn/ai-search/getting-started/:slug*
-    destination: /learn/ai-search/:slug*
+    destination: /learn/ask-fern/:slug*
     permanent: true    
   - source: /learn/ai-search/features/:slug*
-    destination: /learn/ai-search/:slug*
+    destination: /learn/ask-fern/:slug*
     permanent: true   
-  - source: /learn/ai-search/ai-search-customer-showcase
-    destination: /learn/ai-search/customer-showcase
+  - source: /learn/ai-search/customer-showcase
+    destination: /learn/ask-fern/customer-showcase
     permanent: true
   - source: /learn/docs/getting-started/changelog/2025/5/23
     destination: /learn/docs/getting-started/changelog/2025/6/5
     permanent: true
-
-ai-chat:
-  model: claude-4
+  - source: /learn/ai-search/overview 
+    destination: /learn/ask-fern/overview
+    permanent: true
+  - source: /learn/ai-search/custom-prompting
+    destination: /learn/ask-fern/custom-prompting
+    permanent: true
+  - source: /learn/ai-search/citations
+    destination: /learn/ask-fern/citations
+    permanent: true
+  - source: /learn/ai-search/customer-showcase
+    destination: /learn/ask-fern/customer-showcase
+    permanent: true
