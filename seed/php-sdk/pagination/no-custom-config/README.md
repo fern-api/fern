@@ -62,7 +62,7 @@ try {
     $response = $client->complex->search(...);
 } catch (SeedApiException $e) {
     echo 'API Exception occurred: ' . $e->getMessage() . "\n";
-    echo 'Status Code: ' . $e->getCode() . "\n"; 
+    echo 'Status Code: ' . $e->getCode() . "\n";
     echo 'Response Body: ' . $e->getBody() . "\n";
     // Optionally, rethrow the exception or handle accordingly.
 }
@@ -73,35 +73,33 @@ try {
 List endpoints return a `Pager<T>` which lets you loop over all items and the SDK will automatically make multiple HTTP requests for you.
 
 ```php
-<?php
-
-namespace Example;
+namespace Seed;
 
 use Seed\SeedClient;
-use Seed\Complex\Types\SearchRequest;
-use Seed\Complex\Types\StartingAfterPaging;
-use Seed\Complex\Types\SingleFilterSearchRequest;
-use Seed\Complex\Types\SingleFilterSearchRequestOperator;
 
-$client = new SeedClient(
-    token: '<token>',
-);
-$client->complex->search(
-    'index',
-    new SearchRequest([
-        'pagination' => new StartingAfterPaging([
-            'perPage' => 1,
-            'startingAfter' => 'starting_after',
-        ]),
-        'query' => new SingleFilterSearchRequest([
-            'field' => 'field',
-            'operator' => SingleFilterSearchRequestOperator::Equals->value,
-            'value' => 'value',
-        ]),
-    ]),
+$client = namespace Seed;
+
+new SeedClient(
+    '<token>',
+    ['baseUrl' => 'https://api.example.com'],
 );
 
+$items = $client->complex->search(['limit' => 10]);
+
+foreach ($items as $item) {
+    var_dump($item);
+}
 ```
+You can also iterate page-by-page:
+
+```php
+foreach ($items->getPages() as $page) {
+    foreach ($page->getItems() as $pageItem) {
+        var_dump($pageItem);
+    }
+}
+```
+
 
 ## Advanced
 

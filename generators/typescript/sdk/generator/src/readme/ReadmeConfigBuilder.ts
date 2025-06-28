@@ -43,7 +43,9 @@ export class ReadmeConfigBuilder {
             if (snippetForFeature == null) {
                 continue;
             }
+
             const addendumForFeature = addendums[feature.id];
+
             if (addendumForFeature != null) {
                 feature.addendum = addendumForFeature;
             }

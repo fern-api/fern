@@ -1,4 +1,5 @@
 import { AbstractReadmeSnippetBuilder } from "@fern-api/base-generator";
+import { php } from "@fern-api/php-codegen";
 
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
@@ -13,6 +14,7 @@ interface EndpointWithFilepath {
 
 export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static EXCEPTION_HANDLING_FEATURE_ID: FernGeneratorCli.FeatureId = "EXCEPTION_HANDLING";
+    private static PAGINATION_FEATURE_ID: FernGeneratorCli.FeatureId = "PAGINATION";
 
     private readonly context: SdkGeneratorContext;
     private readonly endpoints: Record<EndpointId, EndpointWithFilepath> = {};
@@ -50,6 +52,18 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         return snippets;
     }
 
+    public buildReadmeAddendums(): Record<FernGeneratorCli.FeatureId, string> {
+        const addendums: Record<FernGeneratorCli.FeatureId, string | undefined> = {};
+
+        if (this.isPaginationEnabled) {
+            addendums[FernGeneratorCli.StructuredFeatureId.Pagination] = this.buildPaginationAddendum();
+        }
+
+        return Object.fromEntries(
+            Object.entries(addendums).filter(([_, value]) => value != null) as [FernGeneratorCli.FeatureId, string][]
+        );
+    }
+
     private buildUsageSnippets(): string[] {
         const usageEndpointIds = this.getEndpointIdsForFeature(FernGeneratorCli.StructuredFeatureId.Usage);
         if (usageEndpointIds != null) {
@@ -71,7 +85,7 @@ try {
     $response = ${this.getMethodCall(exceptionHandlingEndpoint)}(...);
 } catch (${this.context.getBaseApiExceptionClassReference().name} $e) {
     echo 'API Exception occurred: ' . $e->getMessage() . "\\n";
-    echo 'Status Code: ' . $e->getCode() . "\\n"; 
+    echo 'Status Code: ' . $e->getCode() . "\\n";
     echo 'Response Body: ' . $e->getBody() . "\\n";
     // Optionally, rethrow the exception or handle accordingly.
 }
@@ -114,12 +128,109 @@ $response = ${this.getMethodCall(timeoutEndpoint)}(
         if (explicitlyConfigured != null) {
             return explicitlyConfigured;
         }
+
         const paginationEndpoint = this.getEndpointWithPagination();
-        if (paginationEndpoint != null) {
-            const snippet = this.getSnippetForEndpointId(paginationEndpoint.endpoint.id);
-            return snippet != null ? [snippet] : [];
+
+        if (paginationEndpoint === undefined) {
+            return [];
         }
-        return [];
+
+        const codeBlock = php.codeblock((writer) => {
+            // Import statement
+            writer.write(`use ${this.context.getRootNamespace()}\\${this.context.getRootClientClassName()};\n\n`);
+
+            // Here we'll build up the client instantiation
+            const optionsArray = php.array({
+                entries: [php.codeblock((w) => w.write("'baseUrl' => 'https://api.example.com'"))]
+            });
+
+            const clientClassReference = php.classReference({
+                name: this.context.getRootClientClassName(),
+                namespace: this.context.getRootNamespace()
+            });
+
+            const clientInstantiation = php.instantiateClass({
+                classReference: clientClassReference,
+                arguments_: [php.codeblock((w) => w.write("'<token>'")), optionsArray],
+                multiline: true
+            });
+
+            // Write variable assignment with the client instantiation
+            writer.write(
+                "$client = " +
+                    clientInstantiation.toString({
+                        namespace: this.context.getRootNamespace(),
+                        rootNamespace: this.context.getRootNamespace(),
+                        customConfig: this.context.customConfig
+                    }) +
+                    ";\n\n"
+            );
+
+            // Create variable for pagination result
+            writer.write("$items = ");
+
+            // Method invocation using the paginationEndpoint
+            const methodName = this.context.getEndpointMethodName(paginationEndpoint.endpoint);
+            const clientAccess = this.context.getAccessFromRootClient(paginationEndpoint.fernFilepath);
+
+            // Create a simple request argument with a limit parameter
+            const requestArg = php.array({
+                entries: [
+                    php.codeblock((w) => {
+                        w.write("'limit' => 10");
+                    })
+                ]
+            });
+
+            // Create the method invocation using the pagination endpoint
+            const listMethodCall = php.invokeMethod({
+                method: methodName,
+                arguments_: [requestArg],
+                on: php.codeblock((w) => {
+                    w.write(clientAccess);
+                })
+            });
+
+            listMethodCall.write(writer);
+            writer.write(";\n\n");
+
+            // Foreach loop
+            writer.write("foreach ($items as $item) {\n");
+            writer.indent();
+
+            // Echo statement with sprintf
+            writer.write("var_dump($item);\n");
+
+            writer.dedent();
+            writer.write("}");
+        });
+
+        const codeString = codeBlock.toString({
+            namespace: this.context.getRootNamespace(),
+            rootNamespace: this.context.getRootNamespace(),
+            customConfig: this.context.customConfig
+        });
+
+        return [this.writeCode(codeString)];
+    }
+
+    private buildPaginationAddendum(): string | undefined {
+        const paginationEndpoint = this.getEndpointWithPagination();
+        if (paginationEndpoint == null) {
+            return undefined;
+        }
+
+        // This part can be generic across generations so we don't need to generate it using the AST.
+        return this.writeCode(`You can also iterate page-by-page:
+
+\`\`\`php
+foreach ($items->getPages() as $page) {
+    foreach ($page->getItems() as $pageItem) {
+        var_dump($pageItem);
+    }
+}
+\`\`\`
+`);
     }
 
     private getEndpointWithPagination(): EndpointWithFilepath | undefined {
