@@ -1,14 +1,15 @@
 import { ServiceDescriptorProto } from "@bufbuild/protobuf/wkt";
 
-import * as FernIr from "@fern-api/ir-sdk";
 import { AbstractConverter, Converters } from "@fern-api/v2-importer-commons";
 
 import { ProtofileConverterContext } from "../ProtofileConverterContext";
+import { PATH_FIELD_NUMBERS, SOURCE_CODE_INFO_PATH_STARTERS } from "../utils/PathFieldNumbers";
 import { MethodConverter } from "./MethodConverter";
 
 export declare namespace ServiceConverter {
     export interface Args extends AbstractConverter.Args<ProtofileConverterContext> {
         service: ServiceDescriptorProto;
+        sourceCodeInfoPath: number[];
     }
 
     export interface Output {
@@ -20,18 +21,22 @@ export declare namespace ServiceConverter {
 
 export class ServiceConverter extends AbstractConverter<ProtofileConverterContext, ServiceConverter.Output> {
     private readonly service: ServiceDescriptorProto;
-    constructor({ context, breadcrumbs, service }: ServiceConverter.Args) {
+    private readonly sourceCodeInfoPath: number[];
+    constructor({ context, breadcrumbs, service, sourceCodeInfoPath }: ServiceConverter.Args) {
         super({ context, breadcrumbs });
         this.service = service;
+        this.sourceCodeInfoPath = sourceCodeInfoPath;
     }
 
     public convert(): ServiceConverter.Output | undefined {
         const rpcServiceMethods: MethodConverter.Output[] = [];
-        for (const rpcMethod of this.service.method) {
+        for (const [index, rpcMethod] of this.service.method.entries()) {
             const methodConverter = new MethodConverter({
                 context: this.context,
                 breadcrumbs: this.breadcrumbs,
-                operation: rpcMethod
+                operation: rpcMethod,
+                serviceName: this.service.name,
+                sourceCodeInfoPath: [...this.sourceCodeInfoPath, PATH_FIELD_NUMBERS.SERVICE.METHOD, index]
             });
             const convertedMethod = methodConverter.convert();
             if (convertedMethod != null) {

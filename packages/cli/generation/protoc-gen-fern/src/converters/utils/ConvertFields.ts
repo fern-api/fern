@@ -1,6 +1,6 @@
 import { FieldDescriptorProto } from "@bufbuild/protobuf/wkt";
 
-import { ObjectProperty } from "@fern-api/ir-sdk";
+import { ObjectProperty, TypeId } from "@fern-api/ir-sdk";
 
 import { ProtofileConverterContext } from "../ProtofileConverterContext";
 import { FieldConverter } from "../message/FieldConverter";
@@ -8,27 +8,30 @@ import { FieldConverter } from "../message/FieldConverter";
 export function convertFields({
     fields,
     breadcrumbs,
-    context
+    context,
+    sourceCodeInfoPath
 }: {
     fields: FieldDescriptorProto[];
     breadcrumbs: string[];
     context: ProtofileConverterContext;
+    sourceCodeInfoPath: number[];
 }): {
     convertedFields: ObjectProperty[];
-    referencedTypes: Set<string>;
+    referencedTypes: Set<TypeId>;
     propertiesByAudience: Record<string, Set<string>>;
     oneOfFields: Record<number, FieldDescriptorProto[]>;
 } {
     const convertedFields: ObjectProperty[] = [];
     const propertiesByAudience: Record<string, Set<string>> = {};
-    const referencedTypes: Set<string> = new Set();
+    const referencedTypes: Set<TypeId> = new Set();
     const oneOfFields: Record<number, FieldDescriptorProto[]> = {};
 
     for (const field of fields) {
         const fieldConverter = new FieldConverter({
             context,
             breadcrumbs: [...breadcrumbs, "fields", field.name],
-            field
+            field,
+            sourceCodeInfoPath
         });
         const convertedField = fieldConverter.convert();
         if (convertedField != null) {

@@ -10,21 +10,24 @@ import { FieldConverter } from "./FieldConverter";
 export declare namespace OneOfFieldConverter {
     export interface Args extends AbstractConverter.Args<ProtofileConverterContext> {
         oneOfFields: FieldDescriptorProto[];
+        sourceCodeInfoPath: number[];
     }
 
     export interface Output {
         type: Type;
-        referencedTypes: Set<string>;
+        referencedTypes: Set<TypeId>;
         inlinedTypes: Record<TypeId, EnumOrMessageConverter.ConvertedSchema>;
     }
 }
 
 export class OneOfFieldConverter extends AbstractConverter<ProtofileConverterContext, OneOfFieldConverter.Output> {
     private readonly oneOfFields: FieldDescriptorProto[];
+    private readonly sourceCodeInfoPath: number[];
 
-    constructor({ context, breadcrumbs, oneOfFields }: OneOfFieldConverter.Args) {
+    constructor({ context, breadcrumbs, oneOfFields, sourceCodeInfoPath }: OneOfFieldConverter.Args) {
         super({ context, breadcrumbs });
         this.oneOfFields = oneOfFields;
+        this.sourceCodeInfoPath = sourceCodeInfoPath;
     }
 
     public convert(): OneOfFieldConverter.Output | undefined {
@@ -36,7 +39,9 @@ export class OneOfFieldConverter extends AbstractConverter<ProtofileConverterCon
             const fieldConverter = new FieldConverter({
                 context: this.context,
                 breadcrumbs: this.breadcrumbs,
-                field: oneOfField
+                field: oneOfField,
+                wrapAsOptional: false,
+                sourceCodeInfoPath: this.sourceCodeInfoPath
             });
             const field = fieldConverter.convert();
             if (field != null) {
@@ -51,7 +56,7 @@ export class OneOfFieldConverter extends AbstractConverter<ProtofileConverterCon
             type: Type.undiscriminatedUnion({
                 members: unionTypes
             }),
-            referencedTypes: new Set(),
+            referencedTypes: new Set<TypeId>(),
             inlinedTypes: {}
         };
     }

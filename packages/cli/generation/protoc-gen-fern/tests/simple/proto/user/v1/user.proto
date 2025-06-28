@@ -2,16 +2,28 @@ syntax = "proto3";
 
 package user.v1;
 
-service MyService {
-  rpc GetUser (GetUserRequest) returns (GetUserResponse);
-  rpc GetUser2 (GetUserResponse) returns (GetUserRequest);
+message Classification {
+  ClassificationInformation default = 2;
+  repeated FieldClassificationInformation fields = 3;
+
+  reserved 1;
 }
 
-message GetUserRequest {
-  string user_id = 1;
+message FieldClassificationInformation {
+  string field_path = 1;
+  ClassificationInformation classification_information = 2;
 }
 
-message GetUserResponse {
-  string name = 1;
-  int32 age = 2;
+message ClassificationInformation {
+  ClassificationLevels level = 1;
+  repeated string caveats = 2;
+}
+
+enum ClassificationLevels {
+  CLASSIFICATION_LEVELS_INVALID = 0;
+  CLASSIFICATION_LEVELS_UNCLASSIFIED = 1;
+  CLASSIFICATION_LEVELS_CONTROLLED_UNCLASSIFIED = 2;
+  CLASSIFICATION_LEVELS_CONFIDENTIAL = 3;
+  CLASSIFICATION_LEVELS_SECRET = 4;
+  CLASSIFICATION_LEVELS_TOP_SECRET = 5;
 }

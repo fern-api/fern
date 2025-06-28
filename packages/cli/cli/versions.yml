@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |  
+        Support for gRPC docs generation.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-06-27"
+  version: 0.64.26
+
+- changelogEntry:
+    - summary: |  
         Remove all org-specific legacy preview pins.
       type: feat
   irVersion: 58
