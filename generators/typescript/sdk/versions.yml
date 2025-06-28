@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.10.0
+  changelogEntry:
+    - summary: |
+        Add `fetchSupport` configuration which lets you choose between `node-fetch` and `native`.
+        The default is `node-fetch`. If you choose `native`, the `node-fetch` dependency will be removed.
+      type: feat
+  createdAt: '2025-06-27'
+  irVersion: 58
 - version: 1.9.1
   changelogEntry:
     - summary: Improve auto-pagination logic to consider empty strings in response as null cursors and stop paging.

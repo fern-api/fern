@@ -143,7 +143,10 @@ fixtures:
         noSerdeLayer: false
     - outputFolder: web-stream-wrapper
       customConfig:
-        streamType: "web"
+        streamType: web
+    - outputFolder: fetch-native
+      customConfig:
+        fetchSupport: native
   error-property:
     - customConfig:
         private: true

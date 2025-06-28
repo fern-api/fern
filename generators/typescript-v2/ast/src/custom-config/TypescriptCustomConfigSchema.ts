@@ -25,6 +25,7 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     streamType: z.optional(z.enum(["wrapper", "web"])),
     fileResponseType: z.optional(z.enum(["stream", "binary-response"])),
     formDataSupport: z.optional(z.enum(["Node16", "Node18"])),
+    fetchSupport: z.optional(z.enum(["node-fetch", "native"])),
     packagePath: z.optional(z.string()),
 
     // relevant to dynamic snippets
