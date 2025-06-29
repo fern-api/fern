@@ -33,7 +33,7 @@ tabs:
     slug: sdks
   ask-fern: 
     display-name: Ask Fern
-    icon: fa-regular fa-wand-sparkles
+    icon: fa-regular fa-sparkles
     slug: ask-fern
   cli-api:
     display-name: CLI & API Reference
@@ -438,6 +438,10 @@ navigation:
                 path: ./pages/docs/components/asides.mdx
                 icon: fa-regular fa-align-right
                 slug: aside
+              - page: Button
+                path: ./pages/docs/components/button.mdx
+                icon: fa-regular fa-square-check
+                slug: button
               - page: Callouts
                 path: ./pages/docs/components/callouts.mdx
                 icon: fa-regular fa-circle-exclamation
