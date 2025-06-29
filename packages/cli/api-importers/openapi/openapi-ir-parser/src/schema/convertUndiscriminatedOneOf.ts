@@ -1,5 +1,5 @@
 import { difference } from "lodash-es";
-import { OpenAPIV3 } from "openapi-types";
+import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
 
 import {
     Availability,
@@ -108,7 +108,16 @@ export function convertUndiscriminatedOneOf({
     subtypePrefixOverrides?: UndiscriminatedOneOfPrefix[];
 }): SchemaWithExample {
     const derivedSubtypePrefixes = getUniqueSubTypeNames({ schemas: subtypes });
-
+    const isEnumWithConstValues = subtypes.every((schema) => {
+        if (isReferenceObject(schema)) {
+            return false;
+        }
+        try {
+            return (schema as OpenAPIV3_1.SchemaObject).const != null;
+        } catch {
+            return false;
+        }
+    });
     const convertedSubtypes = subtypes.flatMap((schema, index) => {
         if (
             !isReferenceObject(schema) &&
@@ -128,6 +137,25 @@ export function convertUndiscriminatedOneOf({
                     availability: enumValue.availability
                 });
             });
+        } else if (isEnumWithConstValues) {
+            const enumOptionSchema = schema as NumberOrStringConstEnumOption;
+            const enumValueTitle = enumOptionSchema.title;
+            const enumValue = enumOptionSchema.const;
+            return [
+                SchemaWithExample.literal({
+                    nameOverride: undefined,
+                    generatedName: getGeneratedTypeName(
+                        [generatedName, enumValue.toString()],
+                        context.options.preserveSchemaIds
+                    ),
+                    title: enumValueTitle,
+                    value: LiteralSchemaValue.string(String(enumValue)),
+                    namespace,
+                    groupName: undefined,
+                    description: enumOptionSchema.description,
+                    availability: undefined
+                })
+            ];
         }
         let subtypePrefix = derivedSubtypePrefixes[index];
         if (subtypePrefixOverrides != null) {
@@ -177,6 +205,13 @@ function deduplicateSubtypes(subtypes: SchemaWithExample[]): SchemaWithExample[]
     return uniqueSubtypes;
 }
 
+type NumberOrStringConstEnumOption = {
+    type: "string" | "number" | "integer";
+    const: string | number;
+    description?: string;
+    title?: string;
+};
+
 function processSubtypes({
     uniqueSubtypes,
     nameOverride,
@@ -204,15 +239,22 @@ function processSubtypes({
     encoding: Encoding | undefined;
     source: Source;
 }): SchemaWithExample {
-    const everySubTypeIsLiteral = Object.entries(uniqueSubtypes).every(([_, schema]) => {
+    const everySubTypeIsLiteral = uniqueSubtypes.every((schema) => {
         return schema.type === "literal";
     });
+
     if (everySubTypeIsLiteral) {
         const enumDescriptions: Record<string, { description: string }> = {};
         const enumValues: string[] = [];
+        const enumVarNames: string[] = [];
         Object.entries(uniqueSubtypes).forEach(([_, schema]) => {
             if (schema.type === "literal" && schema.value.type === "string") {
                 enumValues.push(schema.value.value);
+                if (schema.title != null) {
+                    enumVarNames.push(schema.title);
+                } else {
+                    enumVarNames.push(schema.value.value);
+                }
                 if (schema.description != null) {
                     enumDescriptions[schema.value.value] = {
                         description: schema.description
@@ -220,6 +262,7 @@ function processSubtypes({
                 }
             }
         });
+
         return convertEnum({
             nameOverride,
             generatedName,
@@ -228,7 +271,7 @@ function processSubtypes({
             description,
             availability,
             fernEnum: enumDescriptions,
-            enumVarNames: undefined,
+            enumVarNames,
             enumValues,
             _default: undefined,
             namespace,
@@ -332,8 +375,13 @@ export function convertUndiscriminatedOneOfWithDiscriminant({
         for (let j = i + 1; j < convertedSubtypes.length; ++j) {
             const b = convertedSubtypes[j];
             if (a != null && b != null && isSchemaEqual(a, b)) {
-                isDuplicate = true;
-                break;
+                const valueA = maybeGetLiteralValue(a);
+                const valueB = maybeGetLiteralValue(b);
+                // Only not a duplicate if they have different non-null values
+                if (!(valueA != null && valueB != null && valueA !== valueB)) {
+                    isDuplicate = true;
+                    break;
+                }
             }
         }
         if (a != null && !isDuplicate) {
@@ -344,6 +392,7 @@ export function convertUndiscriminatedOneOfWithDiscriminant({
     const everySubTypeIsLiteral = Object.entries(uniqueSubtypes).every(([_, schema]) => {
         return schema.type === "literal";
     });
+
     if (everySubTypeIsLiteral) {
         const enumDescriptions: Record<string, { description: string }> = {};
         const enumValues: string[] = [];
@@ -393,6 +442,13 @@ export function convertUndiscriminatedOneOfWithDiscriminant({
         encoding,
         source
     });
+}
+
+function maybeGetLiteralValue(schema: SchemaWithExample): string | number | undefined {
+    if (schema.type === "literal" && schema.value.type === "string") {
+        return schema.value.value;
+    }
+    return undefined;
 }
 
 function getUniqueSubTypeNames({
