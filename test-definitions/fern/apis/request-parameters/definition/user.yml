@@ -38,9 +38,4 @@ service:
           filter:
             type: string
             allow-multiple: true
-        body:
-          properties:
-            searchTerm:
-              type: string
-              default: "test"
       response: User
