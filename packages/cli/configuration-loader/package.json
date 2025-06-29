@@ -29,13 +29,14 @@
   "dependencies": {
     "@fern-api/configuration": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
+    "@fern-api/fern-definition-schema": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",
-    "@fern-api/fern-definition-schema": "workspace:*",
     "@fern-fern/fdr-cjs-sdk": "0.138.1-818bc4be9",
     "@fern-fern/fiddle-sdk": "0.0.584",
     "@fern-fern/generators-sdk": "0.114.0-5745f9e74",
     "find-up": "^6.3.0",
+    "heap-js": "^2.6.0",
     "js-yaml": "^4.1.0",
     "lodash-es": "^4.17.21",
     "semver": "^7.6.2",
@@ -46,17 +47,17 @@
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
     "@fern-api/logger": "workspace:*",
-    "@types/node": "18.15.3",
-    "depcheck": "^1.4.7",
-    "eslint": "^8.56.0",
-    "prettier": "^3.4.2",
     "@trivago/prettier-plugin-sort-imports": "^5.2.1",
-    "typescript": "5.7.2",
     "@types/jest": "^29.5.14",
     "@types/js-yaml": "^4.0.8",
     "@types/lodash-es": "^4.17.12",
+    "@types/node": "18.15.3",
     "@types/semver": "^7.5.8",
     "@types/tinycolor2": "^1.4.6",
+    "depcheck": "^1.4.7",
+    "eslint": "^8.56.0",
+    "prettier": "^3.4.2",
+    "typescript": "5.7.2",
     "vitest": "^2.1.9"
   }
 }
