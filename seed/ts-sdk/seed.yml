@@ -203,6 +203,9 @@ fixtures:
     - customConfig:
         noSerdeLayer: false
       outputFolder: serde-layer-query
+  request-parameters:
+    - customConfig: null
+      outputFolder: no-custom-config
   trace:
     - customConfig: null
       outputFolder: no-custom-config

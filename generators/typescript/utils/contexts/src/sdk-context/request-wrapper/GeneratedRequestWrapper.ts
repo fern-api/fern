@@ -14,7 +14,7 @@ import {
 import { GeneratedFile } from "../../commons/GeneratedFile";
 import { SdkContext } from "../SdkContext";
 import { GeneratedRequestWrapperExample } from "./GeneratedRequestWrapperExample";
-import { RequestWrapperNonBodyProperty } from "./types";
+import { RequestWrapperNonBodyProperty, RequestWrapperNonBodyPropertyWithData } from "./types";
 
 export interface GeneratedRequestWrapper extends GeneratedFile<SdkContext> {
     areAllPropertiesOptional: (context: SdkContext) => boolean;
@@ -22,6 +22,7 @@ export interface GeneratedRequestWrapper extends GeneratedFile<SdkContext> {
     getReferencedBodyPropertyName: () => string;
     getAllQueryParameters: () => QueryParameter[];
     getNonBodyKeys: (context: SdkContext) => RequestWrapperNonBodyProperty[];
+    getNonBodyKeysWithData: (context: SdkContext) => RequestWrapperNonBodyPropertyWithData[];
     getInlinedRequestBodyPropertyKey: (property: InlinedRequestBodyProperty) => string;
     getInlinedRequestBodyPropertyKeyFromName: (name: NameAndWireValue) => string;
     shouldInlinePathParameters: () => boolean;
