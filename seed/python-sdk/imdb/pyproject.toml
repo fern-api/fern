@@ -50,7 +50,10 @@ ruff = "==0.11.5"
 
 [tool.pytest.ini_options]
 testpaths = [ "tests" ]
-asyncio_mode = "auto"
+
+# TODO: Did this on LLM advice to get rid of a warning; is this actually needed?
+[tool.pytest-asyncio]
+asyncio_mode = "strict"
 
 [tool.mypy]
 plugins = ["pydantic.mypy"]
