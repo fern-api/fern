@@ -120,7 +120,12 @@ export class Complex {
         return new core.Pageable<SeedPagination.PaginatedConversationResponse, SeedPagination.Conversation>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
-            hasNextPage: (response) => response?.pages?.next?.starting_after != null,
+            hasNextPage: (response) =>
+                response?.pages?.next?.starting_after != null &&
+                !(
+                    typeof response?.pages?.next?.starting_after === "string" &&
+                    response?.pages?.next?.starting_after === ""
+                ),
             getItems: (response) => response?.conversations ?? [],
             loadPage: (response) => {
                 return list(

@@ -1,3 +1,4 @@
+<% if (fetchSupport === "node-fetch") { %>
 import { RUNTIME } from "../runtime/index";
 
 /**
@@ -23,3 +24,8 @@ export async function getFetchFn(): Promise<any> {
     // Defaults to node `node-fetch` if global fetch isn't available
     return (await import("node-fetch")).default as any;
 }
+<% } else { %>
+export async function getFetchFn(): Promise<typeof fetch> {
+    return fetch;
+}
+<% } %>
