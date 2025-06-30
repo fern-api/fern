@@ -4,12 +4,10 @@ import tmp from "tmp-promise";
 
 import { createLoggingExecutable, runExeca } from "@fern-api/logging-execa";
 
-
-import { createEmptyProtobufLogger } from "../../../../workspace/lazy-fern-workspace/src/protobuf/utils";
-import { AbsoluteFilePath, getDirectoryContentsForSnapshot, RelativeFilePath } from "@fern-api/fs-utils";
 import { PosthogEvent } from "../../../../task-context/src/TaskContext";
 import { TaskResult } from "../../../../task-context/src/TaskContext";
 import { TaskContext } from "../../../../task-context/src/TaskContext";
+import { Logger } from "../../../../logger/src/Logger";
 
 const FIXTURES_DIR = path.join(__dirname, "fixtures");
 
@@ -28,7 +26,28 @@ describe("fern protoc-gen-fern", () => {
     }, 60_000);
 });
 
-export function createTaskContext(): TaskContext {
+const createEmptyProtobufLogger = (): Logger => {
+    return {
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        disable: () => {},
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        enable: () => {},
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        trace: () => {},
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        debug: () => {},
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        info: () => {},
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        warn: () => {},
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        error: () => {},
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        log: () => {}
+    };
+};
+
+function createTaskContext(): TaskContext {
     const context: TaskContext = {
         logger: createEmptyProtobufLogger(),
         takeOverTerminal: async (run: () => void | Promise<void>) => {
