@@ -4,6 +4,7 @@ import { Fetcher } from "./Fetcher";
 import { FileUtils } from "./FileUtils";
 import { FormDataUtils } from "./FormDataUtils";
 import { Pagination } from "./Pagination";
+import { QsUtils } from "./QsUtils";
 import { Runtime } from "./Runtime";
 import { Stream } from "./Stream";
 import { UrlUtils } from "./UrlUtils";
@@ -24,4 +25,5 @@ export interface CoreUtilities {
     websocket: Websocket;
     fileUtils: FileUtils;
     urlUtils: UrlUtils;
+    qsUtils: QsUtils;
 }
