@@ -52,10 +52,9 @@ import { FERN_CWD_ENV_VAR } from "./cwd";
 import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion";
 import { RUNTIME } from "./runtime";
 import type { ReadStream, WriteStream } from "node:tty";
-import { runNodeJs } from "@bufbuild/protoplugin";
-import { protocGenFern } from "../../generation/protoc-gen-fern/lib/protoc-gen-fern.js";
-import { create, fromBinary, toBinary } from "@bufbuild/protobuf";
-import { CodeGeneratorRequestSchema, FieldDescriptorProto_Type, FieldDescriptorProto_Label, CodeGeneratorResponseSchema } from "@bufbuild/protobuf/wkt";
+import { protocGenFern } from "../../generation/protoc-gen-fern/src/protoc-gen-fern";
+import { fromBinary, toBinary } from "@bufbuild/protobuf";
+import { CodeGeneratorRequestSchema, CodeGeneratorResponseSchema } from "@bufbuild/protobuf/wkt";
 
 void runCli();
 
