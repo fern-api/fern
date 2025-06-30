@@ -1,0 +1,90 @@
+syntax = "proto3";
+
+package anduril.type;
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+
+option go_package = "ghe.anduril.dev/anduril/andurilapis-go/anduril/type;atypes";
+option java_multiple_files = true;
+option java_package = "com.anduril.type";
+
+// Orbit Mean Elements data, analogous to the Orbit Mean Elements Message in CCSDS 502.0-B-3
+message OrbitMeanElements {
+  anduril.type.OrbitMeanElementsMetadata metadata = 1;
+  anduril.type.MeanKeplerianElements mean_keplerian_elements = 2;
+  anduril.type.TleParameters tle_parameters = 3;
+}
+
+message OrbitMeanElementsMetadata {
+  // Creation date/time in UTC
+  google.protobuf.Timestamp creation_date = 1;
+  // Creating agency or operator
+  google.protobuf.StringValue originator = 2;
+  // ID that uniquely identifies a message from a given originator.
+  google.protobuf.StringValue message_id = 3;
+  // Reference frame, assumed to be Earth-centered
+  EciReferenceFrame ref_frame = 4;
+  // Reference frame epoch in UTC - mandatory only if not intrinsic to frame definition
+  google.protobuf.Timestamp ref_frame_epoch = 5;
+  MeanElementTheory mean_element_theory = 6;
+}
+
+message MeanKeplerianElements {
+  // UTC time of validity
+  google.protobuf.Timestamp epoch = 1;
+  oneof line2_field8 {
+    // Preferred: semi major axis in kilometers
+    double semi_major_axis_km = 2;
+    // If using SGP/SGP4, provide the Keplerian Mean Motion in revolutions per day
+    double mean_motion = 3;
+  }
+  double eccentricity = 4;
+  // Angle of inclination in deg
+  double inclination_deg = 5;
+  // Right ascension of the ascending node in deg
+  double ra_of_asc_node_deg = 6;
+  // Argument of pericenter in deg
+  double arg_of_pericenter_deg = 7;
+  // Mean anomaly in deg
+  double mean_anomaly_deg = 8;
+  // Optional: gravitational coefficient (Gravitational Constant x central mass) in kg^3 / s^2
+  google.protobuf.DoubleValue gm = 9;
+}
+
+message TleParameters {
+  // Integer specifying TLE ephemeris type
+  google.protobuf.UInt32Value ephemeris_type = 1;
+  // User-defined free-text message classification/caveats of this TLE
+  google.protobuf.StringValue classification_type = 2;
+  // Norad catalog number: integer up to nine digits.
+  google.protobuf.UInt32Value norad_cat_id = 3;
+  google.protobuf.UInt32Value element_set_no = 4;
+  // Optional: revolution number
+  google.protobuf.UInt32Value rev_at_epoch = 5;
+  // Drag-like ballistic coefficient, required for SGP4 and SGP4-XP mean element models
+  oneof line1_field11 {
+    // Drag parameter for SGP-4 in units 1 / Earth radii
+    double bstar = 6;
+    // Drag parameter for SGP4-XP in units m^2 / kg
+    double bterm = 7;
+  }
+  // First time derivative of mean motion in rev / day^2
+  google.protobuf.DoubleValue mean_motion_dot = 8;
+  oneof line1_field10 {
+    // Second time derivative of mean motion in rev / day^3. For use with SGP or PPT3.
+    double mean_motion_ddot = 9;
+    // Solar radiation pressure coefficient A_gamma / m in m^2 / kg. For use with SGP4-XP.
+    double agom = 10;
+  }
+}
+
+enum MeanElementTheory {
+  MEAN_ELEMENT_THEORY_INVALID = 0;
+  MEAN_ELEMENT_THEORY_SGP4 = 1;
+}
+
+enum EciReferenceFrame {
+  ECI_REFERENCE_FRAME_INVALID = 0;
+  ECI_REFERENCE_FRAME_TEME = 1;
+}

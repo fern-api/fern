@@ -3,3 +3,4 @@ version: v2
 plugins:
   - local: ["tsx", "../../bin/protoc-gen-fern"]
     out: output
+    strategy: all
