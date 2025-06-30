@@ -143,6 +143,7 @@ export declare namespace SdkGenerator {
         streamType: "wrapper" | "web";
         fileResponseType: "stream" | "binary-response";
         formDataSupport: "Node16" | "Node18";
+        fetchSupport: "node-fetch" | "native";
         packagePath: string | undefined;
     }
 }
@@ -263,6 +264,7 @@ export class SdkGenerator {
         this.coreUtilitiesManager = new CoreUtilitiesManager({
             streamType: this.config.streamType,
             formDataSupport: this.config.formDataSupport,
+            fetchSupport: this.config.fetchSupport,
             relativePackagePath: this.relativePackagePath,
             relativeTestPath: this.relativeTestPath
         });

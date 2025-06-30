@@ -159,10 +159,40 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
             ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
             ts.factory.createIdentifier(nextProperty)
         );
-        const hasNextPage = ts.factory.createBinaryExpression(
+
+        const nextPropertyIsNonNull = ts.factory.createBinaryExpression(
             nextPropertyAccess,
             ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
             ts.factory.createNull()
+        );
+
+        const nextPropertyIsStringType = ts.factory.createBinaryExpression(
+            ts.factory.createTypeOfExpression(nextPropertyAccess),
+            ts.factory.createToken(ts.SyntaxKind.EqualsEqualsEqualsToken),
+            ts.factory.createStringLiteral("string")
+        );
+
+        const nextPropertyIsEmptyString = ts.factory.createBinaryExpression(
+            nextPropertyAccess,
+            ts.factory.createToken(ts.SyntaxKind.EqualsEqualsEqualsToken),
+            ts.factory.createStringLiteral("")
+        );
+
+        const nextPropertyIsStringAndEmpty = ts.factory.createBinaryExpression(
+            nextPropertyIsStringType,
+            ts.factory.createToken(ts.SyntaxKind.AmpersandAmpersandToken),
+            nextPropertyIsEmptyString
+        );
+
+        const nextPropertyIsNotEmptyString = ts.factory.createPrefixUnaryExpression(
+            ts.SyntaxKind.ExclamationToken,
+            nextPropertyIsStringAndEmpty
+        );
+
+        const hasNextPage = ts.factory.createBinaryExpression(
+            nextPropertyIsNonNull,
+            ts.factory.createToken(ts.SyntaxKind.AmpersandAmpersandToken),
+            nextPropertyIsNotEmptyString
         );
 
         // getItems gets the items

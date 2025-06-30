@@ -79,6 +79,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             streamType: parsed?.streamType ?? "wrapper",
             fileResponseType: parsed?.fileResponseType ?? "stream",
             formDataSupport: parsed?.formDataSupport ?? "Node16",
+            fetchSupport: parsed?.fetchSupport ?? "node-fetch",
             packagePath: parsed?.packagePath
         };
     }
@@ -167,6 +168,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 streamType: customConfig.streamType ?? "wrapper",
                 fileResponseType: customConfig.fileResponseType ?? "stream",
                 formDataSupport: customConfig.formDataSupport ?? "Node16",
+                fetchSupport: customConfig.fetchSupport ?? "node-fetch",
                 packagePath: customConfig.packagePath
             }
         });
@@ -187,7 +189,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
         return {
             streamType: customConfig.streamType,
             fileResponseType: customConfig.fileResponseType,
-            formDataSupport: customConfig.formDataSupport
+            formDataSupport: customConfig.formDataSupport,
+            fetchSupport: customConfig.fetchSupport
         };
     }
 

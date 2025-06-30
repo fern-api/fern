@@ -381,6 +381,7 @@ ngrok
 nint
 noauth
 nodets
+nodir
 nofocus
 noindex
 NOLOGO

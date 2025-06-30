@@ -8516,6 +8516,7 @@ service:
               "request": {
                 "body": "bytes",
                 "content-type": "application/octet-stream",
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Returns the recording ID in the response.",
