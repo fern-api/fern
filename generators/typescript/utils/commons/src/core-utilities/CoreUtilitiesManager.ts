@@ -19,6 +19,7 @@ import { FormDataUtilsImpl } from "./FormDataUtils";
 import { PaginationImpl } from "./Pagination";
 import { RuntimeImpl } from "./Runtime";
 import { StreamImpl } from "./Stream";
+import { UrlUtilsImpl } from "./UrlUtils";
 import { UtilsImpl } from "./Utils";
 import { WebsocketImpl } from "./Websocket";
 import { ZurgImpl } from "./Zurg";
@@ -45,6 +46,7 @@ export class CoreUtilitiesManager {
     private readonly authOverrides: Record<RelativeFilePath, string> = {};
     private readonly streamType: "wrapper" | "web";
     private readonly formDataSupport: "Node16" | "Node18";
+    private readonly fetchSupport: "node-fetch" | "native";
 
     private readonly relativePackagePath: string;
     private readonly relativeTestPath: string;
@@ -52,16 +54,19 @@ export class CoreUtilitiesManager {
     constructor({
         streamType,
         formDataSupport,
+        fetchSupport,
         relativePackagePath = DEFAULT_PACKAGE_PATH,
         relativeTestPath = DEFAULT_TEST_PATH
     }: {
         streamType: "wrapper" | "web";
         formDataSupport: "Node16" | "Node18";
+        fetchSupport: "node-fetch" | "native";
         relativePackagePath?: string;
         relativeTestPath?: string;
     }) {
         this.streamType = streamType;
         this.formDataSupport = formDataSupport;
+        this.fetchSupport = fetchSupport;
         this.relativePackagePath = relativePackagePath;
         this.relativeTestPath = relativeTestPath;
     }
@@ -92,7 +97,8 @@ export class CoreUtilitiesManager {
             pagination: new PaginationImpl({ getReferenceToExport }),
             utils: new UtilsImpl({ getReferenceToExport }),
             websocket: new WebsocketImpl({ getReferenceToExport }),
-            fileUtils: new FileUtilsImpl({ getReferenceToExport })
+            fileUtils: new FileUtilsImpl({ getReferenceToExport }),
+            urlUtils: new UrlUtilsImpl({ getReferenceToExport })
         };
     }
 
@@ -109,7 +115,8 @@ export class CoreUtilitiesManager {
             );
             utility.addDependencies?.(dependencyManager, {
                 streamType: this.streamType,
-                formDataSupport: this.formDataSupport
+                formDataSupport: this.formDataSupport,
+                fetchSupport: this.fetchSupport
             });
         }
     }
@@ -126,7 +133,8 @@ export class CoreUtilitiesManager {
                 Object.entries(this.referencedCoreUtilities).map(async ([name, utility]) => {
                     const { patterns, ignore } = utility.getFilesPatterns({
                         streamType: this.streamType,
-                        formDataSupport: this.formDataSupport
+                        formDataSupport: this.formDataSupport,
+                        fetchSupport: this.fetchSupport
                     });
 
                     const foundFiles = await glob(patterns, {

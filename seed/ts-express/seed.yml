@@ -89,7 +89,8 @@ fixtures:
         retainOriginalCasing: true
       outputFolder: retain-original-casing
 allowedFailures:
-  - bytes
+  - bytes-upload
+  - bytes-download
   - file-download
   - file-upload
   - imdb:skip-request-validation
