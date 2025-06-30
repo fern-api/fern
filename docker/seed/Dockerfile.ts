@@ -8,14 +8,11 @@ RUN yarn add \
   @types/node@^18.19.70 \
   qs@^6.13.1 \
   @types/qs@^6.9.17 \
-  url-join@4.0.1 \
-  @types/url-join@4.0.1 \
   readable-stream@^4.5.2 \
   @types/readable-stream@^4.0.18 \
   form-data@^4.0.0 \
   formdata-node@^6.0.3 \
   jest-environment-jsdom@^29.7.0 \
-  js-base64@3.7.7 \
   prettier@^3.4.2 \
   ts-jest@^29.1.1 \
   typescript@~5.7.2 \
