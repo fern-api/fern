@@ -5,7 +5,6 @@
 import * as core from "../../../../../../core/index.js";
 import * as SeedMixedFileDirectory from "../../../../../index.js";
 import { mergeHeaders } from "../../../../../../core/headers.js";
-import urlJoin from "url-join";
 import * as errors from "../../../../../../errors/index.js";
 import { Metadata } from "../resources/metadata/client/Client.js";
 
@@ -71,7 +70,7 @@ export class Events {
         }
 
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.joinUrl(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/users/events/",
