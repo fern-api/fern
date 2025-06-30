@@ -2,6 +2,58 @@
 
 ## User
 
+<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">createUsername</a>({ ...params }) -> void</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.user.createUsername({
+    username: "username",
+    password: "password",
+    name: "test",
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedRequestParameters.CreateUsernameRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `User.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">getUsername</a>({ ...params }) -> SeedRequestParameters.User</code></summary>
 <dl>
 <dd>
@@ -56,7 +108,6 @@ await client.user.getUsername({
         tags: ["tags", "tags"],
     },
     filter: "filter",
-    searchTerm: "test",
 });
 ```
 

@@ -12,21 +12,6 @@ service:
   base-path: /user
   auth: false
   endpoints:
-    createUsername:
-      path: /username
-      method: POST
-      request:
-        name: CreateUsernameRequest
-        body:
-          properties:
-            username: string
-            password: string
-            # required:
-            #   - username
-            #   - password
-            name:
-              type: string
-              default: "test"
     getUsername:
       path: ""
       method: GET
@@ -53,4 +38,9 @@ service:
           filter:
             type: string
             allow-multiple: true
+        body:
+          properties:
+            searchTerm:
+              type: string
+              default: "test"
       response: User

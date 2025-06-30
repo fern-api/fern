@@ -43,12 +43,11 @@ import * as SeedRequestParameters from "../../../../index.js";
  *             name: "name",
  *             tags: ["tags", "tags"]
  *         },
- *         filter: "filter",
- *         searchTerm: "test"
+ *         filter: "filter"
  *     }
  */
 export interface GetUsersRequest {
-    limit: number;
+    limit?: number;
     id: string;
     date: string;
     deadline: string;
@@ -62,5 +61,4 @@ export interface GetUsersRequest {
     optionalUser?: SeedRequestParameters.User;
     excludeUser: SeedRequestParameters.User | SeedRequestParameters.User[];
     filter: string | string[];
-    searchTerm: string;
 }

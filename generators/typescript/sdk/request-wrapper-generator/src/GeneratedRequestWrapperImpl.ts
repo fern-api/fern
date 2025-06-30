@@ -124,16 +124,18 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
 
         for (const pathParameter of this.getPathParamsForRequestWrapper()) {
             const type = context.type.getReferenceToType(pathParameter.valueType);
+            const hasDefaultValue = context.type.hasDefaultValue(pathParameter.valueType);
             const property = requestInterface.addProperty({
                 name: getPropertyKey(this.getPropertyNameOfPathParameter(pathParameter).propertyName),
                 type: getTextOfTsNode(type.typeNodeWithoutUndefined),
-                hasQuestionToken: type.isOptional
+                hasQuestionToken: type.isOptional || hasDefaultValue
             });
             maybeAddDocsNode(property, pathParameter.docs);
         }
 
         for (const queryParameter of this.getAllQueryParameters()) {
             const type = context.type.getReferenceToType(queryParameter.valueType);
+            const hasDefaultValue = context.type.hasDefaultValue(queryParameter.valueType);
             const property = requestInterface.addProperty({
                 name: getPropertyKey(this.getPropertyNameOfQueryParameter(queryParameter).propertyName),
                 type: getTextOfTsNode(
@@ -144,16 +146,17 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                           ])
                         : type.typeNodeWithoutUndefined
                 ),
-                hasQuestionToken: type.isOptional
+                hasQuestionToken: type.isOptional || hasDefaultValue
             });
             maybeAddDocsNode(property, queryParameter.docs);
         }
         for (const header of this.getAllNonLiteralHeaders(context)) {
             const type = context.type.getReferenceToType(header.valueType);
+            const hasDefaultValue = context.type.hasDefaultValue(header.valueType);
             const property = requestInterface.addProperty({
                 name: getPropertyKey(this.getPropertyNameOfNonLiteralHeader(header).propertyName),
                 type: getTextOfTsNode(type.typeNodeWithoutUndefined),
-                hasQuestionToken: type.isOptional
+                hasQuestionToken: type.isOptional || hasDefaultValue
             });
             maybeAddDocsNode(property, header.docs);
         }

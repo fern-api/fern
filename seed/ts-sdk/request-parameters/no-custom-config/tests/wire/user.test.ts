@@ -6,19 +6,27 @@ import { mockServerPool } from "../mock-server/MockServerPool.js";
 import { SeedRequestParametersClient } from "../../src/Client";
 
 describe("User", () => {
+    test("createUsername", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedRequestParametersClient({ environment: server.baseUrl });
+        const rawRequestBody = { username: "username", password: "password", name: "test" };
+
+        server.mockEndpoint().post("/user/username").jsonBody(rawRequestBody).respondWith().statusCode(200).build();
+
+        const response = await client.user.createUsername({
+            username: "username",
+            password: "password",
+            name: "test",
+        });
+        expect(response).toEqual(undefined);
+    });
+
     test("getUsername", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedRequestParametersClient({ environment: server.baseUrl });
-        const rawRequestBody = { searchTerm: "test" };
+
         const rawResponseBody = { name: "name", tags: ["tags", "tags"] };
-        server
-            .mockEndpoint()
-            .get("/user")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+        server.mockEndpoint().get("/user").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.user.getUsername({
             limit: 1,
@@ -61,7 +69,6 @@ describe("User", () => {
                 tags: ["tags", "tags"],
             },
             filter: "filter",
-            searchTerm: "test",
         });
         expect(response).toEqual({
             name: "name",

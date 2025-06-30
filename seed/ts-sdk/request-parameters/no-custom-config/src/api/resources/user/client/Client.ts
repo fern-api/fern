@@ -4,10 +4,10 @@
 
 import * as core from "../../../../core/index.js";
 import * as SeedRequestParameters from "../../../index.js";
-import { toJson } from "../../../../core/json.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import urlJoin from "url-join";
 import * as errors from "../../../../errors/index.js";
+import { toJson } from "../../../../core/json.js";
 
 export declare namespace User {
     export interface Options {
@@ -35,6 +35,74 @@ export class User {
 
     constructor(_options: User.Options) {
         this._options = _options;
+    }
+
+    /**
+     * @param {SeedRequestParameters.CreateUsernameRequest} request
+     * @param {User.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.user.createUsername({
+     *         username: "username",
+     *         password: "password",
+     *         name: "test"
+     *     })
+     */
+    public createUsername(
+        request: SeedRequestParameters.CreateUsernameRequest,
+        requestOptions?: User.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__createUsername(request, requestOptions));
+    }
+
+    private async __createUsername(
+        request: SeedRequestParameters.CreateUsernameRequest,
+        requestOptions?: User.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
+        const _response = await core.fetcher({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/user/username",
+            ),
+            method: "POST",
+            headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
+            contentType: "application/json",
+            requestType: "json",
+            body: request,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return { data: undefined, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedRequestParametersError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedRequestParametersError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedRequestParametersTimeoutError(
+                    "Timeout exceeded when calling POST /user/username.",
+                );
+            case "unknown":
+                throw new errors.SeedRequestParametersError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
     }
 
     /**
@@ -79,8 +147,7 @@ export class User {
      *             name: "name",
      *             tags: ["tags", "tags"]
      *         },
-     *         filter: "filter",
-     *         searchTerm: "test"
+     *         filter: "filter"
      *     })
      */
     public getUsername(
@@ -109,10 +176,12 @@ export class User {
             optionalUser,
             excludeUser,
             filter,
-            ..._body
         } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        _queryParams["limit"] = limit.toString();
+        if (limit != null) {
+            _queryParams["limit"] = limit.toString();
+        }
+
         _queryParams["id"] = id;
         _queryParams["date"] = date;
         _queryParams["deadline"] = deadline;
@@ -153,10 +222,7 @@ export class User {
             ),
             method: "GET",
             headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
-            contentType: "application/json",
             queryParameters: _queryParams,
-            requestType: "json",
-            body: _body,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

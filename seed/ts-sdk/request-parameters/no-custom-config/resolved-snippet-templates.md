@@ -4,6 +4,21 @@ import { SeedRequestParametersClient } from "@fern/request-parameters";
 const client = new SeedRequestParametersClient({
   environment: "YOUR_BASE_URL",
 });
+await client.user.createUsername({
+  username: "username",
+  password: "password",
+  name: "test",
+});
+
+```
+
+
+```typescript
+import { SeedRequestParametersClient } from "@fern/request-parameters";
+
+const client = new SeedRequestParametersClient({
+  environment: "YOUR_BASE_URL",
+});
 await client.user.getUsername({
   limit: 1,
   id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -43,7 +58,6 @@ await client.user.getUsername({
     tags: ["tags", "tags"],
   },
   filter: "filter",
-  searchTerm: "test",
 });
 
 ```

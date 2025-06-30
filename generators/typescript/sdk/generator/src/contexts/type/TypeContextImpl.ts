@@ -229,6 +229,10 @@ export class TypeContextImpl implements TypeContext {
     }
 
     public isOptional(typeReference: TypeReference): boolean {
+        if (this.hasDefaultValue(typeReference)) {
+            return true;
+        }
+        
         switch (typeReference.type) {
             case "named": {
                 const typeDeclaration = this.typeResolver.getTypeDeclarationFromId(typeReference.typeId);
@@ -273,8 +277,34 @@ export class TypeContextImpl implements TypeContext {
                         return this.isNullable(typeReference.container.optional);
                     default:
                         return false;
-                }
+               } 
             }
+            default:
+                return false;
+        }
+    }
+
+    public hasDefaultValue(typeReference: TypeReference): boolean {
+        switch (typeReference.type) {
+            case "primitive":
+                return typeReference.primitive.v2 != null && 
+                       typeof typeReference.primitive.v2 === 'object' && 
+                       'default' in typeReference.primitive.v2 && 
+                       typeReference.primitive.v2.default != null;
+            case "container":
+                if (typeReference.container.type === "optional") {
+                    return this.hasDefaultValue(typeReference.container.optional);
+                }
+                if (typeReference.container.type === "nullable") {
+                    return this.hasDefaultValue(typeReference.container.nullable);
+                }
+                return false;
+            case "named":
+                const typeDeclaration = this.typeResolver.getTypeDeclarationFromId(typeReference.typeId);
+                if (typeDeclaration.shape.type === "alias") {
+                    return this.hasDefaultValue(typeDeclaration.shape.aliasOf);
+                }
+                return false;
             default:
                 return false;
         }
