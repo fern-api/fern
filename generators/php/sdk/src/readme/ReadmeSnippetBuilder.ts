@@ -161,7 +161,8 @@ $response = ${this.getMethodCall(timeoutEndpoint)}(
                     clientInstantiation.toString({
                         namespace: this.context.getRootNamespace(),
                         rootNamespace: this.context.getRootNamespace(),
-                        customConfig: this.context.customConfig
+                        customConfig: this.context.customConfig,
+                        skipImports: true
                     }) +
                     ";\n\n"
             );

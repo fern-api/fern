@@ -77,9 +77,7 @@ namespace Seed;
 
 use Seed\SeedClient;
 
-$client = namespace Seed;
-
-new SeedClient(
+$client = new SeedClient(
     '<token>',
     ['baseUrl' => 'https://api.example.com'],
 );
