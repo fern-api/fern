@@ -7,9 +7,16 @@ export const PROTOBUF_SHELL_PROXY_FILENAME = "protoc-gen-fern";
 export const PROTOC_GEN_FERN_PLUGIN_PATH =
     "/Users/sahil/Fern/fern/packages/cli/generation/protoc-gen-fern/lib/protoc-gen-fern.js";
 
+// export const PROTOBUF_GEN_CONFIG = `version: v2
+// plugins:
+//   - local: ["tsx", "protoc-gen-fern"]
+//     out: output
+//     strategy: all
+// `;
+
 export const PROTOBUF_GEN_CONFIG = `version: v2
 plugins:
-  - local: ["tsx", "protoc-gen-fern"]
+  - local: ["bash", "protoc-gen-fern"]
     out: output
     strategy: all
 `;
@@ -25,17 +32,17 @@ export const PROTOBUF_MODULE_PACKAGE_JSON = `{
 }
 `;
 
-export const PROTOBUF_SHELL_PROXY = `#!/usr/bin/env node
-import { runNodeJs } from "@bufbuild/protoplugin";
+// export const PROTOBUF_SHELL_PROXY = `#!/usr/bin/env node
+// import { runNodeJs } from "@bufbuild/protoplugin";
 
-import { protocGenFern } from "${PROTOC_GEN_FERN_PLUGIN_PATH}";
+// import { protocGenFern } from "${PROTOC_GEN_FERN_PLUGIN_PATH}";
 
-runNodeJs(protocGenFern);
-`;
-
-// export const PROTOBUF_SHELL_PROXY = `#!/usr/bin/env bash
-// exec fern protoc-gen-fern
+// runNodeJs(protocGenFern);
 // `;
+
+export const PROTOBUF_SHELL_PROXY = `#!/usr/bin/env bash
+exec fern protoc-gen-fern
+`;
 
 export const createEmptyProtobufLogger = (): Logger => {
     return {
