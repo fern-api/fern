@@ -19,6 +19,7 @@ import { FormDataUtilsImpl } from "./FormDataUtils";
 import { PaginationImpl } from "./Pagination";
 import { RuntimeImpl } from "./Runtime";
 import { StreamImpl } from "./Stream";
+import { UrlUtilsImpl } from "./UrlUtils";
 import { UtilsImpl } from "./Utils";
 import { WebsocketImpl } from "./Websocket";
 import { ZurgImpl } from "./Zurg";
@@ -96,7 +97,8 @@ export class CoreUtilitiesManager {
             pagination: new PaginationImpl({ getReferenceToExport }),
             utils: new UtilsImpl({ getReferenceToExport }),
             websocket: new WebsocketImpl({ getReferenceToExport }),
-            fileUtils: new FileUtilsImpl({ getReferenceToExport })
+            fileUtils: new FileUtilsImpl({ getReferenceToExport }),
+            urlUtils: new UrlUtilsImpl({ getReferenceToExport })
         };
     }
 
