@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+package anduril.tasks.v2;
+
+import "google/protobuf/duration.proto";
+
+option go_package = "ghe.anduril.dev/anduril/andurilapis-go/anduril/tasks/v2;tasks";
+option java_multiple_files = true;
+option java_package = "com.anduril.tasks.v2";
+
+// Maps to the UCI DurationRangeType.
+message DurationRange {
+  google.protobuf.Duration min = 1;
+  google.protobuf.Duration max = 2;
+}
+
+// Maps to the UCI AnglePair.
+message AnglePair {
+  // Angle lower bound in radians.
+  double min = 1;
+  // Angle lower bound in radians.
+  double max = 2;
+}
+
+// Maps to UCI AreaConstraints.
+message AreaConstraints {
+  AltitudeConstraint altitude_constraint = 1;
+}
+
+message AltitudeConstraint {
+  // Minimum altitude (AGL) in meters.
+  double min = 1;
+  // Maximum altitude (AGL) in meters.
+  double max = 2;
+}
+
+// Includes information about an Agent.
+message Agent {
+  string entity_id = 2;
+
+  reserved 1;
+}
+
+// Models a Control Area within which Agents must operate.
+message ControlArea {
+  // Reference to GeoPolygon GeoEntity representing the ControlArea.
+  string entity_id = 1;
+  // Type of ControlArea.
+  ControlAreaType control_area_type = 2;
+}
+
+enum ControlAreaType {
+  CONTROL_AREA_TYPE_INVALID = 0;
+  CONTROL_AREA_TYPE_KEEP_IN_ZONE = 1;
+  CONTROL_AREA_TYPE_KEEP_OUT_ZONE = 2;
+  // Zone for an autonomous asset to nose-dive into
+  // when its assignment has been concluded
+  CONTROL_AREA_TYPE_DITCH_ZONE = 3;
+}
