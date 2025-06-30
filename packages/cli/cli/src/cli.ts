@@ -1390,19 +1390,13 @@ function addProtocGenFernCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
         (yargs) => {},
         async () => {
             const plugin = protocGenFern;
-
-            await readBytes(process.stdin)
-                .then(async (data) => {
-                    const req = fromBinary(CodeGeneratorRequestSchema, data);
-                    const res = plugin.run(req);
-                    return await writeBytes(
-                        process.stdout,
-                        toBinary(CodeGeneratorResponseSchema, res),
-                    );
-                })
-                    .then(() => process.exit(0));
-                    }
-                );  
+            const data = await readBytes(process.stdin);
+            const req = fromBinary(CodeGeneratorRequestSchema, data);
+            const res = plugin.run(req);
+            await writeBytes(process.stdout, toBinary(CodeGeneratorResponseSchema, res));
+            process.exit(0);
+            }
+        );
 }
 
 function readBytes(stream: ReadStream): Promise<Uint8Array> {
@@ -1410,10 +1404,10 @@ function readBytes(stream: ReadStream): Promise<Uint8Array> {
         const chunks: Uint8Array[] = [];
         stream.on("data", (chunk: Uint8Array) => chunks.push(chunk));
         stream.on("end", () => {
-        resolve(Buffer.concat(chunks) as unknown as Uint8Array);
+            resolve(new Uint8Array(Buffer.concat(chunks)));
         });
         stream.on("error", (err) => {
-        reject(err);
+            reject(err);
         });
     });
 }
