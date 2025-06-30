@@ -5457,6 +5457,10 @@ importers:
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
 
   packages/cli/cli:
+    dependencies:
+      '@bufbuild/protoplugin':
+        specifier: 2.2.5
+        version: 2.2.5
     devDependencies:
       '@fern-api/api-workspace-commons':
         specifier: workspace:*
@@ -21925,7 +21929,7 @@ snapshots:
 
   extract-zip@2.0.1:
     dependencies:
-      debug: 4.3.4
+      debug: 4.4.1
       get-stream: 5.2.0
       yauzl: 2.10.0
     optionalDependencies:

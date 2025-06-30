@@ -51,6 +51,8 @@ import { writeDocsDefinitionForProject } from "./commands/write-docs-definition/
 import { FERN_CWD_ENV_VAR } from "./cwd";
 import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion";
 import { RUNTIME } from "./runtime";
+import { protocGenFern } from "../../generation/protoc-gen-fern/lib/protoc-gen-fern.js"; 
+import { runNodeJs } from "@bufbuild/protoplugin";
 
 void runCli();
 
@@ -169,6 +171,7 @@ async function tryRunCli(cliContext: CliContext) {
     addLoginCommand(cli, cliContext);
     addFormatCommand(cli, cliContext);
     addWriteDefinitionCommand(cli, cliContext);
+    addProtocGenFernCommand(cli, cliContext);
     addDocsCommand(cli, cliContext);
     addMockCommand(cli, cliContext);
     addWriteOverridesCommand(cli, cliContext);
@@ -1165,6 +1168,20 @@ function addWriteDefinitionCommand(cli: Argv<GlobalCliOptions>, cliContext: CliC
                 sdkLanguage: argv.language,
                 preserveSchemaIds
             });
+        }
+    );
+}
+
+function addProtocGenFernCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "protoc-gen-fern",
+        false,
+        (yargs) => yargs,
+        async () => {
+            await cliContext.instrumentPostHogEvent({
+                command: "fern protoc-gen-fern"
+            });
+            runNodeJs(protocGenFern);
         }
     );
 }
