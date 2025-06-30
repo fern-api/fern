@@ -51,6 +51,11 @@ import { writeDocsDefinitionForProject } from "./commands/write-docs-definition/
 import { FERN_CWD_ENV_VAR } from "./cwd";
 import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion";
 import { RUNTIME } from "./runtime";
+import type { ReadStream, WriteStream } from "node:tty";
+import { runNodeJs } from "@bufbuild/protoplugin";
+import { protocGenFern } from "../../generation/protoc-gen-fern/lib/protoc-gen-fern.js";
+import { create, fromBinary, toBinary } from "@bufbuild/protobuf";
+import { CodeGeneratorRequestSchema, FieldDescriptorProto_Type, FieldDescriptorProto_Label, CodeGeneratorResponseSchema } from "@bufbuild/protobuf/wkt";
 
 void runCli();
 
@@ -188,6 +193,7 @@ async function tryRunCli(cliContext: CliContext) {
     // CLI V2 Sanctioned Commands
     addGetOrganizationCommand(cli, cliContext);
     addGeneratorCommands(cli, cliContext);
+    addProtocGenFernCommand(cli, cliContext);
 
     cli.middleware(async (argv) => {
         cliContext.setLogLevel(argv["log-level"]);
@@ -1375,4 +1381,51 @@ function addExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
             });
         }
     );
+}
+
+function addProtocGenFernCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "protoc-gen-fern",
+        false,
+        (yargs) => {},
+        async () => {
+            const plugin = protocGenFern;
+
+            await readBytes(process.stdin)
+                .then(async (data) => {
+                    const req = fromBinary(CodeGeneratorRequestSchema, data);
+                    const res = plugin.run(req);
+                    return await writeBytes(
+                        process.stdout,
+                        toBinary(CodeGeneratorResponseSchema, res),
+                    );
+                })
+                    .then(() => process.exit(0));
+                    }
+                );  
+}
+
+function readBytes(stream: ReadStream): Promise<Uint8Array> {
+    return new Promise<Uint8Array>((resolve, reject) => {
+        const chunks: Uint8Array[] = [];
+        stream.on("data", (chunk: Uint8Array) => chunks.push(chunk));
+        stream.on("end", () => {
+        resolve(Buffer.concat(chunks) as unknown as Uint8Array);
+        });
+        stream.on("error", (err) => {
+        reject(err);
+        });
+    });
+}
+
+function writeBytes(stream: WriteStream, data: Uint8Array): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+        stream.write(data, (err) => {
+        if (err) {
+            reject(err);
+        } else {
+            resolve();
+        }
+        });
+    });
 }
