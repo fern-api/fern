@@ -1,0 +1,377 @@
+syntax = "proto3";
+
+package anduril.entitymanager.v1;
+
+import "anduril/entitymanager/v1/classification.pub.proto";
+import "anduril/entitymanager/v1/dimensions.pub.proto";
+import "anduril/entitymanager/v1/geoentity.pub.proto";
+import "anduril/entitymanager/v1/group.pub.proto";
+import "anduril/entitymanager/v1/health_status.pub.proto";
+import "anduril/entitymanager/v1/location.pub.proto";
+import "anduril/entitymanager/v1/ontology.pub.proto";
+import "anduril/entitymanager/v1/options.pub.proto";
+import "anduril/entitymanager/v1/orbit.pub.proto";
+import "anduril/entitymanager/v1/payloads.pub.proto";
+import "anduril/entitymanager/v1/power.pub.proto";
+import "anduril/entitymanager/v1/relationship.pub.proto";
+import "anduril/entitymanager/v1/route_details.pub.proto";
+import "anduril/entitymanager/v1/schedule.pub.proto";
+import "anduril/entitymanager/v1/sensors.pub.proto";
+import "anduril/entitymanager/v1/signal.pub.proto";
+import "anduril/entitymanager/v1/supplies.pub.proto";
+import "anduril/entitymanager/v1/target_priority.pub.proto";
+import "anduril/entitymanager/v1/transponder_codes.pub.proto";
+import "anduril/entitymanager/v1/types.pub.proto";
+import "anduril/tasks/v2/catalog.pub.proto";
+import "anduril/type/color.pub.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+
+option csharp_namespace = "Anduril.Entitymanager.V1";
+option go_package = "ghe.anduril.dev/anduril/andurilapis-go/anduril/entitymanager/v1;entitymanager";
+option java_multiple_files = true;
+option java_outer_classname = "EntityProto";
+option java_package = "com.anduril.entitymanager.v1";
+option objc_class_prefix = "AEX";
+
+// The entity object represents a single known object within the Lattice operational environment. It contains
+// all data associated with the entity, such as its name, ID, and other relevant components.
+message Entity {
+  // A Globally Unique Identifier (GUID) for your entity. If this field is empty, the Entity Manager API
+  // automatically generates an ID when it creates the entity.
+  string entity_id = 1;
+  // A human-readable entity description that's helpful for debugging purposes and human
+  // traceability. If this field is empty, the Entity Manager API generates one for you.
+  string description = 2;
+  // Indicates the entity is active and should have a lifecycle state of CREATE or UPDATE.
+  // Set this field to true when publishing an entity.
+  bool is_live = 3;
+  // The time when the entity was first known to the entity producer. If this field is empty, the Entity Manager API uses the
+  // current timestamp of when the entity is first received.
+  // For example, when a drone is first powered on, it might report its startup time as the created time.
+  // The timestamp doesn't change for the lifetime of an entity.
+  google.protobuf.Timestamp created_time = 4;
+  // Future time that expires an entity and updates the is_live flag.
+  // For entities that are constantly updating, the expiry time also updates.
+  // In some cases, this may differ from is_live.
+  // Example: Entities with tasks exported to an external system must remain
+  // active even after they expire.
+  // This field is required when publishing a prepopulated entity.
+  // The expiry time must be in the future, but less than 30 days from the current time.
+  google.protobuf.Timestamp expiry_time = 5;
+  // Human-readable descriptions of what the entity is currently doing.
+  Status status = 19;
+  // Geospatial data related to the entity, including its position, kinematics, and orientation.
+  Location location = 6;
+  // Indicates uncertainty of the entity's position and kinematics.
+  LocationUncertainty location_uncertainty = 15;
+  // Geospatial representation of the entity, including entities that cover an area rather than a fixed point.
+  GeoShape geo_shape = 23;
+  // Additional details on what the geospatial area or point represents, along with visual display details.
+  GeoDetails geo_details = 24;
+  // Entity name displayed in the Lattice UI side panel. Also includes identifiers that other systems can use to reference the same entity.
+  Aliases aliases = 7;
+  // If this entity is tracked by another entity, this component contains data related to how it's being tracked.
+  Tracked tracked = 8;
+  // If this entity has been correlated or decorrelated to another one, this component contains information on the correlation or decorrelation.
+  Correlation correlation = 47;
+  // View of the entity.
+  MilView mil_view = 10;
+  // Ontology defines an entity's categorization in Lattice, and improves data retrieval and integration. Builds a standardized representation of the entity.
+  Ontology ontology = 11;
+  // Details an entity's available sensors.
+  Sensors sensors = 20;
+  // Details an entity's available payloads.
+  Payloads payloads = 21;
+  // Details the entity's power source.
+  PowerState power_state = 30;
+  // The primary data source provenance for this entity.
+  Provenance provenance = 12;
+  // Provenance of override data.
+  Overrides overrides = 13;
+  // Describes an entity's specific characteristics and the operations that can be performed on the entity.
+  // For example, "simulated" informs the operator that the entity is from a simulation, and "deletable"
+  // informs the operator (and system) that the delete operation is valid against the entity.
+  Indicators indicators = 14;
+  // The prioritization associated with an entity, such as if it's a threat or a high-value target.
+  TargetPriority target_priority = 22;
+  // Describes an entity's signal characteristics, primarily used when an entity is a signal of interest.
+  Signal signal = 25;
+  // A message describing any transponder codes associated with Mode 1, 2, 3, 4, 5, S interrogations. These are related to ADS-B modes.
+  TransponderCodes transponder_codes = 26;
+  // Describes an entity's security classification levels at an overall classification level and on a per
+  // field level.
+  Classification data_classification = 29;
+  // A catalog of tasks that can be performed by an entity.
+  anduril.tasks.v2.TaskCatalog task_catalog = 31;
+  // The relationships between this entity and other entities in the common operational picture (COP).
+  Relationships relationships = 33;
+  // Visual details associated with the display of an entity in the client.
+  VisualDetails visual_details = 34;
+  // Physical dimensions of the entity.
+  Dimensions dimensions = 36;
+  // Additional information about an entity's route.
+  RouteDetails route_details = 37;
+  // Schedules associated with this entity.
+  Schedules schedules = 38;
+  // Health metrics or connection status reported by the entity.
+  Health health = 39;
+  // Details for the group associated with this entity.
+  GroupDetails group_details = 40;
+  // Contains relevant supply information for the entity, such as fuel.
+  Supplies supplies = 42;
+  // Orbit information for space objects.
+  Orbit orbit = 46;
+
+  reserved 9, 16, 17, 18, 27, 28, 32, 41, 43;
+  reserved "correlated", "original_data", "geopolygon", "media", "contact", "team_status", "no_expiry";
+}
+
+// Contains status of entities.
+message Status {
+  // A string that describes the activity that the entity is performing.
+  // Examples include "RECONNAISSANCE", "INTERDICTION", "RETURN TO BASE (RTB)", "PREPARING FOR LAUNCH".
+  string platform_activity = 1;
+  // A human-readable string that describes the role the entity is currently performing. E.g. "Team Member", "Commander".
+  string role = 2;
+}
+
+// Available for any Entities with alternate ids in other systems.
+message Aliases {
+  repeated AlternateId alternate_ids = 1 [(anduril.entitymanager.v1.overridable) = true];
+  // The best available version of the entity's display name.
+  string name = 2 [(anduril.entitymanager.v1.overridable) = true];
+}
+
+// Available for Entities that are tracked.
+message Tracked {
+  // Quality score, 0-15, nil if none
+  google.protobuf.Int32Value track_quality_wrapper = 2;
+  // Sensor hits aggregation on the tracked entity.
+  google.protobuf.Int32Value sensor_hits = 3;
+  // Estimated number of objects or units that are represented by this entity. Known as Strength in certain contexts (Link16)
+  // if UpperBound == LowerBound; (strength = LowerBound)
+  // If both UpperBound and LowerBound are defined; strength is between LowerBound and UpperBound (represented as string "Strength: 4-5")
+  // If UpperBound is defined only (LowerBound unset), Strength ≤ UpperBound
+  // If LowerBound is defined only (UpperBound unset), LowerBound ≤ Strength
+  // 0 indicates unset.
+  UInt32Range number_of_objects = 4;
+  // The radar cross section (RCS) is a measure of how detectable an object is by radar. A large RCS indicates an object is more easily
+  // detected. The unit is “decibels per square meter,” or dBsm
+  google.protobuf.DoubleValue radar_cross_section = 6;
+  // Timestamp of the latest tracking measurement for this entity.
+  google.protobuf.Timestamp last_measurement_time = 7;
+  // The relative position of a track with respect to the entity that is tracking it. Used for tracks that do not yet have a 3D position.
+  // For this entity (A), being tracked by some entity (B), this LineOfBearing would express a ray from B to A.
+  LineOfBearing line_of_bearing = 9;
+
+  reserved 1, 5, 8;
+  reserved "track_quality", "sensor_details", "relative_position";
+}
+
+// Data provenance.
+message Provenance {
+  // Name of the integration that produced this entity
+  string integration_name = 5;
+  // Source data type of this entity. Examples: ADSB, Link16, etc.
+  string data_type = 6;
+  // An ID that allows an element from a source to be uniquely identified
+  string source_id = 3;
+  // The time, according to the source system, that the data in the entity was last modified. Generally, this should
+  // be the time that the source-reported time of validity of the data in the entity. This field must be
+  // updated with every change to the entity or else Entity Manager will discard the update.
+  google.protobuf.Timestamp source_update_time = 2;
+  // Description of the modification source. In the case of a user this is the email address.
+  string source_description = 4;
+
+  reserved 1;
+}
+
+// Indicators to describe entity to consumers.
+message Indicators {
+  google.protobuf.BoolValue simulated = 1;
+  google.protobuf.BoolValue exercise = 2;
+  google.protobuf.BoolValue emergency = 3;
+  google.protobuf.BoolValue c2 = 4;
+  // Indicates the Entity should be egressed to external sources.
+  // Integrations choose how the egressing happens (e.g. if an Entity needs fuzzing).
+  google.protobuf.BoolValue egressable = 6 [(anduril.entitymanager.v1.overridable) = true];
+  // A signal of arbitrary importance such that the entity should be globally marked for all users
+  google.protobuf.BoolValue starred = 7 [(anduril.entitymanager.v1.overridable) = true];
+  reserved 5;
+  reserved "deletable";
+}
+
+// Metadata about entity overrides present.
+message Overrides {
+  repeated Override override = 2;
+  reserved 1;
+  reserved "provenance";
+}
+
+// Details about an override. Last write wins.
+message Override {
+  // override request id for an override request
+  string request_id = 1;
+  // proto field path which is the string representation of a field.
+  // example: correlated.primary_entity_id would be primary_entity_id in correlated component
+  string field_path = 2;
+  // new field value corresponding to field path. In the shape of an empty entity with only the changed value.
+  // example: entity: { mil_view: { disposition: Disposition_DISPOSITION_HOSTILE } }
+  Entity masked_field_value = 3;
+  // status of the override
+  OverrideStatus status = 4;
+  Provenance provenance = 5;
+  // The type of the override, defined by the stage of the entity lifecycle that the entity was in when the override
+  // was requested.
+  OverrideType type = 6;
+  // Timestamp of the override request. The timestamp is generated by the Entity Manager instance that receives the request.
+  google.protobuf.Timestamp request_timestamp = 7;
+}
+
+// An alternate id for an Entity.
+message AlternateId {
+  string id = 2;
+  AltIdType type = 3;
+  reserved 1;
+  reserved "source";
+}
+
+// Visual details associated with the display of an entity in the client.
+message VisualDetails {
+  // The range rings to display around an entity.
+  RangeRings range_rings = 1 [(anduril.entitymanager.v1.overridable) = true];
+}
+
+// Range rings allow visual assessment of map distance at varying zoom levels.
+message RangeRings {
+  // The minimum range ring distance, specified in meters.
+  google.protobuf.DoubleValue min_distance_m = 1;
+  // The maximum range ring distance, specified in meters.
+  google.protobuf.DoubleValue max_distance_m = 2;
+  // The count of range rings.
+  uint32 ring_count = 3;
+  // The color of range rings, specified in hex string.
+  anduril.type.Color ring_line_color = 4;
+}
+
+// Available for Entities that are a correlated (N to 1) set of entities. This will be present on
+// each entity in the set.
+message Correlation {
+  // If an entity is correlated, it is either the primary or a secondary.
+  // DEPRECATED - Use membership instead.
+  oneof correlation {
+    // This entity is the primary of a correlation meaning that it serves as the representative
+    // entity of the correlation set.
+    PrimaryCorrelation primary = 1;
+    // This entity is a secondary of a correlation meaning that it will be represented by the
+    // primary of the correlation set.
+    SecondaryCorrelation secondary = 2;
+  }
+  // If present, this entity is a part of a correlation set.
+  CorrelationMembership membership = 4;
+  // If present, this entity was explicitly decorrelated from one or more entities.
+  // An entity can be both correlated and decorrelated as long as they are disjoint sets.
+  // An example would be if a user in the UI decides that two tracks are not actually the
+  // same despite an automatic correlator having correlated them. The user would then
+  // decorrelate the two tracks and this decorrelation would be preserved preventing the
+  // correlator from re-correlating them at a later time.
+  Decorrelation decorrelation = 3;
+}
+
+message PrimaryCorrelation {
+  // The secondary entity IDs part of this correlation.
+  repeated string secondary_entity_ids = 1;
+}
+
+message SecondaryCorrelation {
+  // The primary of this correlation.
+  string primary_entity_id = 1;
+  // Metadata about the correlation.
+  CorrelationMetadata metadata = 2;
+}
+
+message CorrelationMembership {
+  // The ID of the correlation set this entity belongs to.
+  string correlation_set_id = 1;
+  // If an entity is correlated, it may or may not be the primary.
+  oneof membership {
+    // This entity is the primary of a correlation set meaning that it serves as the representative
+    // entity of the correlation set.
+    PrimaryMembership primary = 2;
+    // This entity is not the primary of the correlation set. Note that there may not
+    // be a primary at all.
+    NonPrimaryMembership non_primary = 3;
+  }
+  // Additional metadata on this correlation.
+  CorrelationMetadata metadata = 4;
+}
+
+message PrimaryMembership {}
+
+message NonPrimaryMembership {}
+
+message Decorrelation {
+  // This will be specified if this entity was decorrelated against all other entities.
+  DecorrelatedAll all = 1;
+  // A list of decorrelated entities that have been explicitly decorrelated against this entity
+  // which prevents lower precedence correlations from overriding it in the future.
+  // For example, if an operator in the UI decorrelated tracks A and B, any automated
+  // correlators would be unable to correlate them since manual decorrelations have
+  // higher precedence than automatic ones. Precedence is determined by both correlation
+  // type and replication mode.
+  repeated DecorrelatedSingle decorrelated_entities = 2;
+}
+
+message DecorrelatedAll {
+  // Metadata about the decorrelation.
+  CorrelationMetadata metadata = 1;
+}
+
+message DecorrelatedSingle {
+  // The entity that was decorrelated against.
+  string entity_id = 1;
+  // Metadata about the decorrelation.
+  CorrelationMetadata metadata = 2;
+}
+
+message CorrelationMetadata {
+  // Who or what added this entity to the (de)correlation.
+  Provenance provenance = 1;
+  // Indicates how the correlation will be distributed. Because a correlation is composed of
+  // multiple secondaries, each of which may have been correlated with different replication
+  // modes, the distribution of the correlation is composed of distributions of the individual
+  // entities within the correlation set.
+  // For example, if there are two secondary entities A and B correlated against a primary C,
+  // with A having been correlated globally and B having been correlated locally, then the
+  // correlation set that is distributed globally than what is known locally in the node.
+  CorrelationReplicationMode replication_mode = 2;
+  // What type of (de)correlation was this entity added with.
+  CorrelationType type = 3;
+}
+
+// The type of correlation indicating how it was made.
+enum CorrelationType {
+  CORRELATION_TYPE_INVALID = 0;
+  // The correlation was made manually by a human.
+  // Manual is higher precedence than automated assuming the same replication mode.
+  CORRELATION_TYPE_MANUAL = 1;
+  // The correlation was automatically made by a service or some other automated process.
+  // Automated is lower precedence than manual assuming the same replication mode.
+  CORRELATION_TYPE_AUTOMATED = 2;
+}
+
+// The replication mode of the correlation indicating how the correlation will be replication to
+// other nodes in the mesh.
+enum CorrelationReplicationMode {
+  CORRELATION_REPLICATION_MODE_INVALID = 0;
+  // The correlation is local only to the originating node and will not be distributed to other
+  // nodes in the mesh. In the case of conflicts, this correlation will override ones coming from
+  // other nodes. Local is always higher precedence than global regardless of the correlation type.
+  CORRELATION_REPLICATION_MODE_LOCAL = 1;
+  // The correlation is distributed globally across all nodes in the mesh. Because an entity can
+  // only be part of one correlation, this is based on last-write-wins semantics, however, the
+  // correlation will also be stored locally in the originating node preventing any overrides.
+  // Global is always lower precedence than local regardless of the correlation type.
+  CORRELATION_REPLICATION_MODE_GLOBAL = 2;
+}

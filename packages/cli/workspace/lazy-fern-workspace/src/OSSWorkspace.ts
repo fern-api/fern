@@ -304,7 +304,6 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                     }
                 } catch (error) {
                     context.logger.log("warn", "Failed to parse protobuf IR: " + error);
-                    // Continue processing other specs even if protobuf generation fails
                 }
             }
         }
