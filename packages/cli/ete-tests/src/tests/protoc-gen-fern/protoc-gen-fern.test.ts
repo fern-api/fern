@@ -18,7 +18,7 @@ describe("fern protoc-gen-fern", () => {
         await buf(["generate"]);
 
         const contents = await readFile(path.join(FIXTURES_DIR, "output", "ir.json"), "utf-8");
-        expect(contents).toMatchSnapshot();
+        expect(contents).toMatchFileSnapshot("ir.json");
     }, 60_000);
 });
 
