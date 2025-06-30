@@ -1,4 +1,4 @@
-import { Spec } from "@fern-api/api-workspace-commons";
+import { OpenAPISpec, ProtobufSpec, Spec } from "@fern-api/api-workspace-commons";
 import {
     DEFINITION_DIRECTORY,
     OPENAPI_DIRECTORY,
@@ -47,25 +47,29 @@ export async function loadSingleNamespaceAPIWorkspace({
                 };
             }
 
-            const absoluteFilepathToProtobufTarget = join(
-                absolutePathToWorkspace,
-                RelativeFilePath.of(definition.schema.target)
-            );
+            // if the target is empty, don't specify a target because we are using 'strategy: all' from the root
+            const absoluteFilepathToTarget: AbsoluteFilePath | undefined =
+                definition.schema.target.length === 0
+                    ? undefined
+                    : join(absolutePathToWorkspace, RelativeFilePath.of(definition.schema.target));
 
-            if (!(await doesPathExist(absoluteFilepathToProtobufTarget))) {
-                return {
-                    didSucceed: false,
-                    failures: {
-                        [RelativeFilePath.of(definition.schema.target)]: {
-                            type: WorkspaceLoaderFailureType.FILE_MISSING
+            if (absoluteFilepathToTarget != null) {
+                if (!(await doesPathExist(absoluteFilepathToTarget))) {
+                    return {
+                        didSucceed: false,
+                        failures: {
+                            [RelativeFilePath.of(definition.schema.target)]: {
+                                type: WorkspaceLoaderFailureType.FILE_MISSING
+                            }
                         }
-                    }
-                };
+                    };
+                }
             }
+
             specs.push({
                 type: "protobuf",
                 absoluteFilepathToProtobufRoot,
-                absoluteFilepathToProtobufTarget,
+                absoluteFilepathToProtobufTarget: absoluteFilepathToTarget,
                 absoluteFilepathToOverrides,
                 relativeFilepathToProtobufRoot,
                 generateLocally: definition.schema.localGeneration,
@@ -260,7 +264,15 @@ export async function loadAPIWorkspace({
         return {
             didSucceed: true,
             workspace: new OSSWorkspace({
-                specs: specs.filter((spec) => spec.type !== "openrpc"),
+                specs: specs.filter((spec) => {
+                    if (spec.type === "openrpc") {
+                        return false;
+                    }
+                    if (spec.type === "protobuf") {
+                        return false;
+                    }
+                    return true;
+                }) as (OpenAPISpec | ProtobufSpec)[],
                 allSpecs: specs,
                 workspaceName,
                 absoluteFilePath: absolutePathToWorkspace,

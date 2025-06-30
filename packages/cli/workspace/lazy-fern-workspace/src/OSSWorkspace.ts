@@ -1,3 +1,4 @@
+import { readFile } from "fs/promises";
 import { OpenAPIV3_1 } from "openapi-types";
 import { v4 as uuidv4 } from "uuid";
 
@@ -14,9 +15,10 @@ import {
 import { AsyncAPIConverter, AsyncAPIConverterContext } from "@fern-api/asyncapi-to-ir";
 import { Audiences } from "@fern-api/configuration";
 import { isNonNullish } from "@fern-api/core-utils";
-import { AbsoluteFilePath, RelativeFilePath, cwd, join, relativize } from "@fern-api/fs-utils";
-import { IntermediateRepresentation } from "@fern-api/ir-sdk";
+import { AbsoluteFilePath, RelativeFilePath, cwd, doesPathExist, join, relativize } from "@fern-api/fs-utils";
+import { IntermediateRepresentation, serialization } from "@fern-api/ir-sdk";
 import { mergeIntermediateRepresentation } from "@fern-api/ir-utils";
+import { createLoggingExecutable } from "@fern-api/logging-execa";
 import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
 import { parse } from "@fern-api/openapi-ir-parser";
 import { OpenAPI3_1Converter, OpenAPIConverterContext3_1 } from "@fern-api/openapi-to-ir";
@@ -27,6 +29,8 @@ import { ErrorCollector } from "@fern-api/v2-importer-commons";
 import { constructCasingsGenerator } from "../../../../commons/casings-generator/src/CasingsGenerator";
 import { loadOpenRpc } from "./loaders";
 import { OpenAPILoader } from "./loaders/OpenAPILoader";
+import { ProtobufIRGenerator } from "./protobuf/ProtobufIRGenerator";
+import { MaybeValid } from "./protobuf/utils";
 import { getAllOpenAPISpecs } from "./utils/getAllOpenAPISpecs";
 
 export declare namespace OSSWorkspace {
@@ -256,6 +260,50 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                         mergedIr === undefined
                             ? result
                             : mergeIntermediateRepresentation(mergedIr, result, casingsGenerator);
+                }
+            } else if (spec.type === "protobuf") {
+                // Handle protobuf specs by calling buf generate with protoc-gen-fern
+                try {
+                    const protobufIRGenerator = new ProtobufIRGenerator({ context });
+                    const protobufIRFilepath = await protobufIRGenerator.generate({
+                        absoluteFilepathToProtobufRoot: spec.absoluteFilepathToProtobufRoot,
+                        relativeFilepathToProtobufRoot: spec.relativeFilepathToProtobufRoot,
+                        local: true
+                    });
+
+                    const result = await readFile(protobufIRFilepath, "utf-8");
+
+                    const casingsGenerator = constructCasingsGenerator({
+                        generationLanguage: "typescript",
+                        keywords: undefined,
+                        smartCasing: false
+                    });
+
+                    if (result != null) {
+                        let serializedIr: MaybeValid<IntermediateRepresentation>;
+                        try {
+                            serializedIr = serialization.IntermediateRepresentation.parse(JSON.parse(result), {
+                                allowUnrecognizedEnumValues: true,
+                                skipValidation: true
+                            });
+                            if (serializedIr.ok) {
+                                mergedIr =
+                                    mergedIr === undefined
+                                        ? serializedIr.value
+                                        : mergeIntermediateRepresentation(
+                                              mergedIr,
+                                              serializedIr.value,
+                                              casingsGenerator
+                                          );
+                            } else {
+                                throw new Error();
+                            }
+                        } catch (error) {
+                            context.logger.log("error", "Failed to parse protobuf IR: ");
+                        }
+                    }
+                } catch (error) {
+                    context.logger.log("warn", "Failed to parse protobuf IR: " + error);
                 }
             }
         }

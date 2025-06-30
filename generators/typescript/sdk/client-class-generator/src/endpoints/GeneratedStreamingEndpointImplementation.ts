@@ -211,7 +211,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
             }
         });
         if (url != null) {
-            return context.externalDependencies.urlJoin.invoke([baseUrl, url]);
+            return context.coreUtilities.urlUtils.joinUrl._invoke([baseUrl, url]);
         } else {
             return baseUrl;
         }
