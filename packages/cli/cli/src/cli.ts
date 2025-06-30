@@ -1,5 +1,8 @@
 #!/usr/bin/env node
+import { fromBinary, toBinary } from "@bufbuild/protobuf";
+import { CodeGeneratorRequestSchema, CodeGeneratorResponseSchema } from "@bufbuild/protobuf/wkt";
 import getPort from "get-port";
+import type { ReadStream, WriteStream } from "node:tty";
 import { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
@@ -18,6 +21,7 @@ import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
 import { askToLogin, login } from "@fern-api/login";
 import { FernCliError, LoggableFernCliError } from "@fern-api/task-context";
 
+import { protocGenFern } from "../../generation/protoc-gen-fern/src/protoc-gen-fern";
 import { LoadOpenAPIStatus, loadOpenAPIFromUrl } from "../../init/src/utils/loadOpenApiFromUrl";
 import { CliContext } from "./cli-context/CliContext";
 import { getLatestVersionOfCli } from "./cli-context/upgrade-utils/getLatestVersionOfCli";
@@ -51,10 +55,6 @@ import { writeDocsDefinitionForProject } from "./commands/write-docs-definition/
 import { FERN_CWD_ENV_VAR } from "./cwd";
 import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion";
 import { RUNTIME } from "./runtime";
-import type { ReadStream, WriteStream } from "node:tty";
-import { protocGenFern } from "../../generation/protoc-gen-fern/src/protoc-gen-fern";
-import { fromBinary, toBinary } from "@bufbuild/protobuf";
-import { CodeGeneratorRequestSchema, CodeGeneratorResponseSchema } from "@bufbuild/protobuf/wkt";
 
 void runCli();
 
@@ -1395,8 +1395,8 @@ function addProtocGenFernCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
             const res = plugin.run(req);
             await writeBytes(process.stdout, toBinary(CodeGeneratorResponseSchema, res));
             process.exit(0);
-            }
-        );
+        }
+    );
 }
 
 function readBytes(stream: ReadStream): Promise<Uint8Array> {
@@ -1415,11 +1415,11 @@ function readBytes(stream: ReadStream): Promise<Uint8Array> {
 function writeBytes(stream: WriteStream, data: Uint8Array): Promise<void> {
     return new Promise<void>((resolve, reject) => {
         stream.write(data, (err) => {
-        if (err) {
-            reject(err);
-        } else {
-            resolve();
-        }
+            if (err) {
+                reject(err);
+            } else {
+                resolve();
+            }
         });
     });
 }
