@@ -9,7 +9,10 @@ const defaultOptions: Required<QsOptions> = {
 };
 
 function encodeValue(value: unknown, shouldEncode: boolean): string {
-    if (value === null || value === undefined) {
+    if (value === undefined) {
+        return "";
+    }
+    if (value === null) {
         return "";
     }
     const stringValue = String(value);
@@ -22,7 +25,7 @@ function stringifyObject(obj: Record<string, unknown>, prefix = "", options: Req
     for (const [key, value] of Object.entries(obj)) {
         const fullKey = prefix ? `${prefix}[${key}]` : key;
 
-        if (value === null || value === undefined) {
+        if (value === undefined) {
             continue;
         }
 
@@ -32,10 +35,10 @@ function stringifyObject(obj: Record<string, unknown>, prefix = "", options: Req
             }
             for (let i = 0; i < value.length; i++) {
                 const item = value[i];
-                if (item === null || item === undefined) {
+                if (item === undefined) {
                     continue;
                 }
-                if (typeof item === "object" && !Array.isArray(item)) {
+                if (typeof item === "object" && !Array.isArray(item) && item !== null) {
                     const arrayKey = options.arrayFormat === "indices" ? `${fullKey}[${i}]` : fullKey;
                     parts.push(...stringifyObject(item as Record<string, unknown>, arrayKey, options));
                 } else {
@@ -44,7 +47,7 @@ function stringifyObject(obj: Record<string, unknown>, prefix = "", options: Req
                     parts.push(`${encodedKey}=${encodeValue(item, options.encode)}`);
                 }
             }
-        } else if (typeof value === "object") {
+        } else if (typeof value === "object" && value !== null) {
             if (Object.keys(value as Record<string, unknown>).length === 0) {
                 continue;
             }
