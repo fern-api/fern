@@ -5,7 +5,6 @@
 import * as core from "../../../../../../../../core/index.js";
 import * as SeedMixedFileDirectory from "../../../../../../../index.js";
 import { mergeHeaders } from "../../../../../../../../core/headers.js";
-import urlJoin from "url-join";
 import * as errors from "../../../../../../../../errors/index.js";
 
 export declare namespace Metadata {
@@ -62,7 +61,7 @@ export class Metadata {
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         _queryParams["id"] = id;
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.joinUrl(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/users/events/metadata/",

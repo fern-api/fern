@@ -5,7 +5,6 @@
 import * as core from "../../../../core/index.js";
 import * as SeedIdempotencyHeaders from "../../../index.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
-import urlJoin from "url-join";
 import * as errors from "../../../../errors/index.js";
 
 export declare namespace Payment {
@@ -64,7 +63,7 @@ export class Payment {
         requestOptions?: Payment.IdempotentRequestOptions,
     ): Promise<core.WithRawResponse<string>> {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.joinUrl(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/payment",
@@ -131,7 +130,7 @@ export class Payment {
         requestOptions?: Payment.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.joinUrl(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 `/payment/${encodeURIComponent(paymentId)}`,

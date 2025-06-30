@@ -49,16 +49,12 @@
         "wire:test": "yarn test:wire"
     },
     "dependencies": {
-        "url-join": "4.0.1",
         "form-data": "^4.0.0",
         "formdata-node": "^6.0.3",
         "node-fetch": "^2.7.0",
-        "qs": "^6.13.1",
         "readable-stream": "^4.5.2"
     },
     "devDependencies": {
-        "@types/url-join": "4.0.1",
-        "@types/qs": "^6.9.17",
         "@types/node-fetch": "^2.6.12",
         "@types/readable-stream": "^4.0.18",
         "webpack": "^5.97.1",

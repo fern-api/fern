@@ -1,10 +1,6 @@
-import qs from "qs";
+import { stringify } from "./qs.js";
 
-export function createRequestUrl(
-    baseUrl: string,
-    queryParameters?: Record<string, string | string[] | object | object[] | null>
-): string {
-    return Object.keys(queryParameters ?? {}).length > 0
-        ? `${baseUrl}?${qs.stringify(queryParameters, { arrayFormat: "repeat" })}`
-        : baseUrl;
+export function createRequestUrl(baseUrl: string, queryParameters?: Record<string, unknown>): string {
+    const queryString = stringify(queryParameters, { arrayFormat: "repeat" });
+    return queryString ? `${baseUrl}?${queryString}` : baseUrl;
 }

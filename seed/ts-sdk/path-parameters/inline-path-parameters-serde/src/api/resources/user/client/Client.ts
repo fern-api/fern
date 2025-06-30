@@ -5,7 +5,6 @@
 import * as core from "../../../../core/index.js";
 import * as SeedPathParameters from "../../../index.js";
 import { mergeHeaders } from "../../../../core/headers.js";
-import urlJoin from "url-join";
 import * as serializers from "../../../../serialization/index.js";
 import * as errors from "../../../../errors/index.js";
 
@@ -60,7 +59,7 @@ export class User {
     ): Promise<core.WithRawResponse<SeedPathParameters.User>> {
         const { userId } = request;
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.joinUrl(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 `/${encodeURIComponent(this._options.tenantId)}/user/${encodeURIComponent(userId)}`,
@@ -133,7 +132,7 @@ export class User {
         requestOptions?: User.RequestOptions,
     ): Promise<core.WithRawResponse<SeedPathParameters.User>> {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.joinUrl(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 `/${encodeURIComponent(this._options.tenantId)}/user/`,
@@ -213,7 +212,7 @@ export class User {
     ): Promise<core.WithRawResponse<SeedPathParameters.User>> {
         const { userId, body: _body } = request;
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.joinUrl(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 `/${encodeURIComponent(this._options.tenantId)}/user/${encodeURIComponent(userId)}`,
@@ -295,7 +294,7 @@ export class User {
         }
 
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.joinUrl(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 `/${encodeURIComponent(this._options.tenantId)}/user/${encodeURIComponent(userId)}/search`,
