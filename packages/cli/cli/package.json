@@ -126,7 +126,5 @@
     "typescript": "5.7.2",
     "vitest": "^2.1.9"
   },
-  "dependencies": {
-    "@bufbuild/protoplugin": "2.2.5"
-  }
+  "dependencies": {}
 }
