@@ -64,7 +64,9 @@ describe("Test qs stringify", () => {
 
         it("should handle deeply nested objects", () => {
             const obj = { user: { profile: { name: "John", settings: { theme: "dark" } } } };
-            expect(stringify(obj)).toBe("user%5Bprofile%5D%5Bname%5D=John&user%5Bprofile%5D%5Bsettings%5D%5Btheme%5D=dark");
+            expect(stringify(obj)).toBe(
+                "user%5Bprofile%5D%5Bname%5D=John&user%5Bprofile%5D%5Bsettings%5D%5Btheme%5D=dark",
+            );
         });
 
         it("should handle empty nested objects", () => {
@@ -108,7 +110,7 @@ describe("Test qs stringify", () => {
                 sort: { field: "name", direction: "asc" },
             };
             expect(stringify(obj)).toBe(
-                "filters%5Bstatus%5D%5B0%5D=active&filters%5Bstatus%5D%5B1%5D=pending&filters%5Bcategory%5D%5Btype%5D=electronics&filters%5Bcategory%5D%5Bsubcategories%5D%5B0%5D=phones&filters%5Bcategory%5D%5Bsubcategories%5D%5B1%5D=laptops&sort%5Bfield%5D=name&sort%5Bdirection%5D=asc"
+                "filters%5Bstatus%5D%5B0%5D=active&filters%5Bstatus%5D%5B1%5D=pending&filters%5Bcategory%5D%5Btype%5D=electronics&filters%5Bcategory%5D%5Bsubcategories%5D%5B0%5D=phones&filters%5Bcategory%5D%5Bsubcategories%5D%5B1%5D=laptops&sort%5Bfield%5D=name&sort%5Bdirection%5D=asc",
             );
         });
 
@@ -124,7 +126,7 @@ describe("Test qs stringify", () => {
                 sort: { field: "name", direction: "asc" },
             };
             expect(stringify(obj, { arrayFormat: "repeat" })).toBe(
-                "filters%5Bstatus%5D=active&filters%5Bstatus%5D=pending&filters%5Bcategory%5D%5Btype%5D=electronics&filters%5Bcategory%5D%5Bsubcategories%5D=phones&filters%5Bcategory%5D%5Bsubcategories%5D=laptops&sort%5Bfield%5D=name&sort%5Bdirection%5D=asc"
+                "filters%5Bstatus%5D=active&filters%5Bstatus%5D=pending&filters%5Bcategory%5D%5Btype%5D=electronics&filters%5Bcategory%5D%5Bsubcategories%5D=phones&filters%5Bcategory%5D%5Bsubcategories%5D=laptops&sort%5Bfield%5D=name&sort%5Bdirection%5D=asc",
             );
         });
 
@@ -182,4 +184,4 @@ describe("Test qs stringify", () => {
             expect(stringify(obj, { encode: false })).toBe("items[0]=a&items[1]=b&name=John Doe");
         });
     });
-}); 
+});
