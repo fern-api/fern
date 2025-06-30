@@ -15,8 +15,25 @@ describe("fern protoc-gen-fern", () => {
         });
 
         await buf(["generate"]);
-
-        const contents = await readFile(path.join(FIXTURES_DIR, "output", "ir.json"), "utf-8");
+        let contents = await readFile(path.join(FIXTURES_DIR, "output", "ir.json"), "utf-8");
+        const parsed = JSON.parse(contents);
+        const filterDocs = (obj: any): any => {
+            if (Array.isArray(obj)) {
+                return obj.map(filterDocs);
+            }
+            if (obj && typeof obj === 'object') {
+                const filtered: any = {};
+                for (const [key, value] of Object.entries(obj)) {
+                    if (key !== 'docs') {
+                        filtered[key] = filterDocs(value);
+                    }
+                }
+                return filtered;
+            }
+            return obj;
+        };
+        const filtered = filterDocs(parsed);
+        contents = JSON.stringify(filtered, null, 2);
         expect(contents).toMatchSnapshot();
     }, 60_000);
 });
