@@ -5461,9 +5461,6 @@ importers:
       '@bufbuild/protobuf':
         specifier: ^2.2.5
         version: 2.5.2
-      '@bufbuild/protoplugin':
-        specifier: ^2.2.5
-        version: 2.2.5
     devDependencies:
       '@fern-api/api-workspace-commons':
         specifier: workspace:*
