@@ -31,7 +31,7 @@ describe("joinUrl", () => {
             expect(joinUrl("https://example.com?query=1", "api")).toBe("https://example.com/api?query=1");
             expect(joinUrl("https://example.com#fragment", "api")).toBe("https://example.com/api#fragment");
             expect(joinUrl("https://example.com?query=1#fragment", "api")).toBe(
-                "https://example.com/api?query=1#fragment",
+                "https://example.com/api?query=1#fragment"
             );
         });
 

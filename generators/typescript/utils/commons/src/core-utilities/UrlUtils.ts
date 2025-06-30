@@ -1,4 +1,5 @@
 import { ts } from "ts-morph";
+
 import { CoreUtility } from "./CoreUtility";
 
 export interface UrlUtils {
