@@ -17,14 +17,16 @@ describe("fern protoc-gen-fern", () => {
         await buf(["generate"]);
         let contents = await readFile(path.join(FIXTURES_DIR, "output", "ir.json"), "utf-8");
         const parsed = JSON.parse(contents);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const filterDocs = (obj: any): any => {
             if (Array.isArray(obj)) {
                 return obj.map(filterDocs);
             }
-            if (obj && typeof obj === 'object') {
+            if (obj && typeof obj === "object") {
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 const filtered: any = {};
                 for (const [key, value] of Object.entries(obj)) {
-                    if (key !== 'docs') {
+                    if (key !== "docs") {
                         filtered[key] = filterDocs(value);
                     }
                 }
