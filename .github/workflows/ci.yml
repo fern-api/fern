@@ -113,29 +113,6 @@ jobs:
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
 
-  live-test:
-    if: ${{ inputs.version == null && github.repository == 'fern-api/fern' }}
-    environment: Fern Prod
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - name: Install
-        uses: ./.github/actions/install
-
-      - name: Check API definition is valid
-        env:
-          FORCE_COLOR: "2"
-          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
-          AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
-          AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
-          POSTHOG_API_KEY: ${{ secrets.POSTHOG_PROJECT_API_KEY }}
-        run: |
-          pnpm --filter @fern-api/cli dist:cli:prod
-          cli_path="$(pwd)/packages/cli/cli/dist/prod/cli.cjs"
-          ./scripts/live-test.sh "$cli_path" "$FERN_TOKEN"
-
   live-test-dev:
     environment: Fern Dev
     if: github.repository == 'fern-api/fern'
