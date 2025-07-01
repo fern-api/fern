@@ -124,7 +124,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
 
         for (const pathParameter of this.getPathParamsForRequestWrapper()) {
             const type = context.type.getReferenceToType(pathParameter.valueType);
-            const hasDefaultValue = context.type.hasDefaultValue(pathParameter.valueType);
+            const hasDefaultValue = this.hasDefaultValue(pathParameter.valueType, context);
             const property = requestInterface.addProperty({
                 name: getPropertyKey(this.getPropertyNameOfPathParameter(pathParameter).propertyName),
                 type: getTextOfTsNode(type.typeNodeWithoutUndefined),
@@ -135,7 +135,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
 
         for (const queryParameter of this.getAllQueryParameters()) {
             const type = context.type.getReferenceToType(queryParameter.valueType);
-            const hasDefaultValue = context.type.hasDefaultValue(queryParameter.valueType);
+            const hasDefaultValue = this.hasDefaultValue(queryParameter.valueType, context);
             const property = requestInterface.addProperty({
                 name: getPropertyKey(this.getPropertyNameOfQueryParameter(queryParameter).propertyName),
                 type: getTextOfTsNode(
@@ -152,7 +152,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         }
         for (const header of this.getAllNonLiteralHeaders(context)) {
             const type = context.type.getReferenceToType(header.valueType);
-            const hasDefaultValue = context.type.hasDefaultValue(header.valueType);
+            const hasDefaultValue = this.hasDefaultValue(header.valueType, context);
             const property = requestInterface.addProperty({
                 name: getPropertyKey(this.getPropertyNameOfNonLiteralHeader(header).propertyName),
                 type: getTextOfTsNode(type.typeNodeWithoutUndefined),
@@ -690,5 +690,12 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
 
     private maybeWrapFileArray({ property, value }: { property: FileProperty; value: ts.TypeNode }): ts.TypeNode {
         return property.type === "fileArray" ? ts.factory.createArrayTypeNode(value) : value;
+    }
+
+    private hasDefaultValue(typeReference: TypeReference, context: SdkContext): boolean {
+        const hasDefaultValue = context.type.hasDefaultValue(typeReference)
+        const useDefaultValues = (context.config.customConfig as { useDefaultRequestParameterValues?: boolean })?.useDefaultRequestParameterValues;
+        
+        return hasDefaultValue && Boolean(useDefaultValues);
     }
 }

@@ -49,7 +49,7 @@ import * as SeedRequestParameters from "../../../../index.js";
  *     }
  */
 export interface GetUsersRequest {
-    limit?: number;
+    limit: number;
     id: string;
     date: string;
     deadline: string;
@@ -63,6 +63,6 @@ export interface GetUsersRequest {
     optionalUser?: SeedRequestParameters.User;
     excludeUser: SeedRequestParameters.User | SeedRequestParameters.User[];
     filter: string | string[];
-    longParam?: number;
-    bigIntParam?: string;
+    longParam: number;
+    bigIntParam: string;
 }

@@ -68,11 +68,14 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
             const nonConflictingName = getNonConflictingName(defaultName);
             this.nonBodyKeyAliases[defaultName] = nonConflictingName;
 
-            // Extract default value if available
+            const useDefaultValues = (context.config.customConfig as { useDefaultRequestParameterValues?: boolean })?.useDefaultRequestParameterValues;
+
             let defaultValue: ts.Expression | undefined;
-            if (nonBodyKey.originalParameter != null) {
-                if (nonBodyKey.originalParameter.type !== "file") {
-                    defaultValue = this.extractDefaultValue(nonBodyKey.originalParameter.parameter.valueType, context);
+            if (useDefaultValues) { 
+                if (nonBodyKey.originalParameter != null) {
+                    if (nonBodyKey.originalParameter.type !== "file") {
+                        defaultValue = this.extractDefaultValue(nonBodyKey.originalParameter.parameter.valueType, context);
+                    }
                 }
             }
 
@@ -229,7 +232,7 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
         if (resolvedType.type === "container" && resolvedType.container.type === "optional") {
             return this.extractDefaultValue(resolvedType.container.optional, context);
         }
-        
+
         const useBigInt = (context.config.customConfig as { useBigInt?: boolean })?.useBigInt;
 
         if (resolvedType.type === "primitive" && resolvedType.primitive.v2 != null) {

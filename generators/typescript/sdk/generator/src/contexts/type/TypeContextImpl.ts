@@ -37,6 +37,7 @@ export declare namespace TypeContextImpl {
         enableInlineTypes: boolean;
         allowExtraFields: boolean;
         omitUndefined: boolean;
+        useDefaultRequestParameterValues: boolean;
         context: BaseContext;
     }
 }
@@ -56,9 +57,10 @@ export class TypeContextImpl implements TypeContext {
     private isForSnippet: boolean;
     private npmPackage: NpmPackage | undefined;
     private context: BaseContext;
+    private useDefaultRequestParameterValues: boolean;
 
     constructor({
-        npmPackage,
+        npmPackage, 
         isForSnippet,
         sourceFile,
         importsManager,
@@ -74,6 +76,7 @@ export class TypeContextImpl implements TypeContext {
         enableInlineTypes,
         allowExtraFields,
         omitUndefined,
+        useDefaultRequestParameterValues,
         context
     }: TypeContextImpl.Init) {
         this.npmPackage = npmPackage;
@@ -87,6 +90,7 @@ export class TypeContextImpl implements TypeContext {
         this.typeReferenceExampleGenerator = typeReferenceExampleGenerator;
         this.includeSerdeLayer = includeSerdeLayer;
         this.retainOriginalCasing = retainOriginalCasing;
+        this.useDefaultRequestParameterValues = useDefaultRequestParameterValues;
         this.context = context;
 
         this.typeReferenceToParsedTypeNodeConverter = new TypeReferenceToParsedTypeNodeConverter({
@@ -229,7 +233,7 @@ export class TypeContextImpl implements TypeContext {
     }
 
     public isOptional(typeReference: TypeReference): boolean {
-        if (this.hasDefaultValue(typeReference)) {
+        if (this.hasDefaultValue(typeReference) && this.useDefaultRequestParameterValues) {
             return true;
         }
         

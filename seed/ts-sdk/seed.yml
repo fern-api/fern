@@ -210,8 +210,12 @@ fixtures:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
+        useDefaultRequestParameterValues: true
+      outputFolder: use-default-request-parameter-values
+    - customConfig:
+        useDefaultRequestParameterValues: true
         useBigInt: true
-      outputFolder: use-big-int
+      outputFolder: use-big-int-and-default-request-parameter-values
   trace:
     - customConfig: null
       outputFolder: no-custom-config

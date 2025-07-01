@@ -81,7 +81,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             formDataSupport: parsed?.formDataSupport ?? "Node16",
             fetchSupport: parsed?.fetchSupport ?? "node-fetch",
             packagePath: parsed?.packagePath,
-            omitFernHeaders: parsed?.omitFernHeaders ?? false
+            omitFernHeaders: parsed?.omitFernHeaders ?? false,
+            useDefaultRequestParameterValues: parsed?.useDefaultRequestParameterValues ?? false,
         };
     }
 
@@ -171,7 +172,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 formDataSupport: customConfig.formDataSupport ?? "Node16",
                 fetchSupport: customConfig.fetchSupport ?? "node-fetch",
                 packagePath: customConfig.packagePath,
-                omitFernHeaders: customConfig.omitFernHeaders ?? false
+                omitFernHeaders: customConfig.omitFernHeaders ?? false,
+                useDefaultRequestParameterValues: customConfig.useDefaultRequestParameterValues ?? false
             }
         });
         const typescriptProject = await sdkGenerator.generate();
