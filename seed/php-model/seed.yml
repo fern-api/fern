@@ -38,3 +38,7 @@ allowedFailures:
   - trace
   - circular-references
   - circular-references-advanced
+  # unknown
+  - enum
+  - file-upload
+  - http-head

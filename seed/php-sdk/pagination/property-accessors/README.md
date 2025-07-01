@@ -62,11 +62,40 @@ try {
     $response = $client->complex->search(...);
 } catch (SeedApiException $e) {
     echo 'API Exception occurred: ' . $e->getMessage() . "\n";
-    echo 'Status Code: ' . $e->getCode() . "\n"; 
+    echo 'Status Code: ' . $e->getCode() . "\n";
     echo 'Response Body: ' . $e->getBody() . "\n";
     // Optionally, rethrow the exception or handle accordingly.
 }
 ```
+
+## Pagination
+
+List endpoints return a `Pager<T>` which lets you loop over all items and the SDK will automatically make multiple HTTP requests for you.
+
+```php
+use Seed\SeedClient;
+
+$client = new SeedClient(
+    '<token>',
+    ['baseUrl' => 'https://api.example.com'],
+);
+
+$items = $client->complex->search(['limit' => 10]);
+
+foreach ($items as $item) {
+    var_dump($item);
+}
+```
+You can also iterate page-by-page:
+
+```php
+foreach ($items->getPages() as $page) {
+    foreach ($page->getItems() as $pageItem) {
+        var_dump($pageItem);
+    }
+}
+```
+
 
 ## Advanced
 
