@@ -2,7 +2,7 @@
 - version: 1.10.6
   changelogEntry:
     - summary: |
-        Split up Jest configuration into multiple files, and reference them as projects inside of the main Jest configuration.
+        Split up Jest configuration into multiple projects.
         You can now run the following command to run tests:
         * `yarn test`: runs all tests
         * `yarn test:unit`: runs unit tests (any non-browser and non-wire tests)
