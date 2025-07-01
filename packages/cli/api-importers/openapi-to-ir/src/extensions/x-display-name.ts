@@ -25,7 +25,7 @@ export class DisplayNameExtension extends AbstractExtension<DisplayNameExtension
         }
 
         const extensionValue = (this.tag as Record<string, unknown>)[this.key];
-        
+
         if (extensionValue == null) {
             return undefined;
         }
@@ -45,5 +45,5 @@ export class DisplayNameExtension extends AbstractExtension<DisplayNameExtension
         return {
             displayName: extensionValue
         };
-    };
+    }
 }
