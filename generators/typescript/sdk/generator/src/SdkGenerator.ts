@@ -1519,7 +1519,7 @@ export class SdkGenerator {
             relativePackagePath: this.relativePackagePath,
             relativeTestPath: this.relativeTestPath,
             formDataSupport: this.config.formDataSupport,
-            useDefaultRequestParameterValues: this.config.useDefaultRequestParameterValues,
+            useDefaultRequestParameterValues: this.config.useDefaultRequestParameterValues
         });
     }
 

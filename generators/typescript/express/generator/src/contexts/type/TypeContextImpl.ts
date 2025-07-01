@@ -268,10 +268,12 @@ export class TypeContextImpl implements TypeContext {
     public hasDefaultValue(typeReference: TypeReference): boolean {
         switch (typeReference.type) {
             case "primitive":
-                return typeReference.primitive.v2 != null && 
-                       typeof typeReference.primitive.v2 === "object" && 
-                       "default" in typeReference.primitive.v2 && 
-                       typeReference.primitive.v2.default != null;
+                return (
+                    typeReference.primitive.v2 != null &&
+                    typeof typeReference.primitive.v2 === "object" &&
+                    "default" in typeReference.primitive.v2 &&
+                    typeReference.primitive.v2.default != null
+                );
             case "container":
                 if (typeReference.container.type === "optional") {
                     return this.hasDefaultValue(typeReference.container.optional);
