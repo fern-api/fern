@@ -177,8 +177,8 @@ export class User {
             optionalUser,
             excludeUser,
             filter,
-            longParam = 9223372036854776000,
-            bigIntParam = 18446744073709551615,
+            longParam = BigInt("9223372036854776000"),
+            bigIntParam = BigInt("18446744073709551615"),
         } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (limit != null) {
