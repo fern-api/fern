@@ -8,7 +8,7 @@
     <AssemblyVersion>$(Version)</AssemblyVersion>
     <FileVersion>$(Version)</FileVersion>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageProjectUrl>https://github.com/csharp-grpc-proto-exhaustive/fern</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/request-parameters/fern</PackageProjectUrl>
     <PolySharpIncludeRuntimeSupportedAttributes>true</PolySharpIncludeRuntimeSupportedAttributes>
   </PropertyGroup>
   <PropertyGroup>
@@ -40,8 +40,11 @@
   </ItemGroup>
   <ItemGroup>
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
-      <_Parameter1>SeedApi.Test</_Parameter1>
+      <_Parameter1>SeedRequestParameters.Test</_Parameter1>
     </AssemblyAttribute>
   </ItemGroup>
-  <Import Project="SeedApi.Custom.props" Condition="Exists('SeedApi.Custom.props')" />
+  <Import
+    Project="SeedRequestParameters.Custom.props"
+    Condition="Exists('SeedRequestParameters.Custom.props')"
+  />
 </Project>
