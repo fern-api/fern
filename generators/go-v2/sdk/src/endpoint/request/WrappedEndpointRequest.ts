@@ -1,6 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
 import { go } from "@fern-api/go-ast";
-import { GoValueFormatter } from "@fern-api/go-ast/src/context/GoValueFormatter";
 
 import {
     FileProperty,
@@ -16,7 +15,6 @@ import {
 } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { EndpointSignatureInfo } from "../EndpointSignatureInfo";
 import { EndpointRequest } from "./EndpointRequest";
 
 export declare namespace WrappedEndpointRequest {
@@ -88,7 +86,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
 
     private getRequestBodyBlockForFileUpload(fileUploadRequest: FileUploadRequest): go.AstNode {
         return go.codeblock((writer) => {
-            writer.write(`writer := `);
+            writer.write("writer := ");
             writer.writeNode(this.context.callNewMultipartWriter([]));
             writer.newLine();
             fileUploadRequest.properties.forEach((property, idx) => {
@@ -97,11 +95,11 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 }
                 this.writeFileUploadProperty({ writer, property });
             });
-            writer.writeLine(`if err := writer.Close(); err != nil {`);
+            writer.writeLine("if err := writer.Close(); err != nil {");
             writer.indent();
-            writer.writeLine(`return nil, err`);
+            writer.writeLine("return nil, err");
             writer.dedent();
-            writer.writeLine(`}`);
+            writer.writeLine("}");
             writer.writeLine(`headers.Set("Content-Type", writer.ContentType())`);
         });
     }
@@ -149,7 +147,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                     format: "file"
                 });
                 writer.dedent();
-                writer.writeLine(`}`);
+                writer.writeLine("}");
                 break;
             default:
                 assertNever(fileProperty);
@@ -189,7 +187,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 format: formatType
             });
             writer.dedent();
-            writer.writeLine(`}`);
+            writer.writeLine("}");
             return;
         }
         if (format.isOptional) {
@@ -235,10 +233,10 @@ export class WrappedEndpointRequest extends EndpointRequest {
         const method = format === "file" ? "WriteFile" : format === "field" ? "WriteField" : "WriteJSON";
         writer.write(`if err := writer.${method}("${key}", `);
         writer.writeNode(value);
-        writer.writeLine(`); err != nil {`);
+        writer.writeLine("); err != nil {");
         writer.indent();
-        writer.writeLine(`return nil, err`);
+        writer.writeLine("return nil, err");
         writer.dedent();
-        writer.writeLine(`}`);
+        writer.writeLine("}");
     }
 }
