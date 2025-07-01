@@ -236,7 +236,7 @@ export class JestTestGenerator {
 
     public get scripts(): Record<string, string> {
         const scripts: Record<string, string> = {
-            "test": "jest --config jest.config.mjs",
+            test: "jest --config jest.config.mjs"
         };
         if (this.writeUnitTests) {
             scripts["test:unit"] = `jest --config jest.unit.config.mjs`;
