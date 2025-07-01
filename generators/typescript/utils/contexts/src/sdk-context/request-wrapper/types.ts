@@ -9,9 +9,29 @@ import {
     QueryParameter
 } from "@fern-fern/ir-sdk/api";
 
+
+interface QueryParameterOriginalParameter {
+    type: "query";
+    parameter: QueryParameter;
+}
+
+interface PathParameterOriginalParameter {
+    type: "path";
+    parameter: PathParameter;
+}
+
+interface HeaderOriginalParameter {
+    type: "header";
+    parameter: HttpHeader;
+}
+
+interface FileOriginalParameter {
+    type: "file";
+    parameter: FileProperty;
+}
+
+type OriginalParameter<T extends "query" | "path" | "header" | "file"> = T extends "query" ? QueryParameterOriginalParameter : T extends "path" ? PathParameterOriginalParameter : T extends "header" ? HeaderOriginalParameter : FileOriginalParameter;
+
 export interface RequestWrapperNonBodyPropertyWithData extends RequestWrapperNonBodyProperty {
-    originalParameter?: {
-        type: "query" | "path" | "header" | "file";
-        parameter: QueryParameter | PathParameter | HttpHeader | FileProperty
-    };
+    originalParameter?: OriginalParameter<"query" | "path" | "header" | "file">;
 }

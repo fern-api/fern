@@ -71,8 +71,9 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
             // Extract default value if available
             let defaultValue: ts.Expression | undefined;
             if (nonBodyKey.originalParameter != null) {
-                const parameter = nonBodyKey.originalParameter.parameter;
-                defaultValue = this.extractDefaultValue(parameter.valueType, context);
+                if (nonBodyKey.originalParameter.type !== "file") {
+                    defaultValue = this.extractDefaultValue(nonBodyKey.originalParameter.parameter.valueType, context);
+                }
             }
 
             return ts.factory.createBindingElement(
@@ -224,9 +225,13 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
 
     private extractDefaultValue(typeReference: TypeReference, context: SdkContext): ts.Expression | undefined {
         const resolvedType = context.type.resolveTypeReference(typeReference);
+        
         if (resolvedType.type === "container" && resolvedType.container.type === "optional") {
             return this.extractDefaultValue(resolvedType.container.optional, context);
         }
+        
+        const { useBigInt } = (context.config.customConfig as { useBigInt?: boolean }) ?? false;
+
         if (resolvedType.type === "primitive" && resolvedType.primitive.v2 != null) {
             return resolvedType.primitive.v2._visit<ts.Expression | undefined>({
                 integer: (integerType: IntegerType) => {
@@ -237,7 +242,10 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
                 },
                 long: (longType: LongType) => {
                     if (longType.default != null) {
-                        return ts.factory.createBigIntLiteral(longType.default.toString());
+                        if (useBigInt) {
+                            return ts.factory.createBigIntLiteral(longType.default.toString());
+                        }
+                        return ts.factory.createNumericLiteral(longType.default.toString());
                     }
                     return undefined;
                 },
@@ -261,7 +269,10 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
                 },
                 bigInteger: (bigIntegerType: BigIntegerType) => {
                     if (bigIntegerType.default != null) {
-                        return ts.factory.createBigIntLiteral(bigIntegerType.default);
+                        if (useBigInt) {
+                            return ts.factory.createBigIntLiteral(bigIntegerType.default);
+                        }
+                        return ts.factory.createStringLiteral(bigIntegerType.default);
                     }
                     return undefined;
                 },
