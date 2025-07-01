@@ -20,6 +20,7 @@
         Add `omitFernHeaders` configuration to omit Fern headers from the generated SDK.
       type: fix
   createdAt: '2025-07-01'
+  irVersion: 58
 - version: 1.10.3
   changelogEntry:
     - summary: |

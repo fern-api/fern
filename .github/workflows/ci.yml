@@ -115,7 +115,7 @@ jobs:
 
   live-test-dev:
     environment: Fern Dev
-    if: ${{ github.ref == 'refs/heads/main' && github.repository == 'fern-api/fern' }}
+    if: github.repository == 'fern-api/fern'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo

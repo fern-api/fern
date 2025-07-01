@@ -1,7 +1,7 @@
 import { chmod, cp, writeFile } from "fs/promises";
 import tmp from "tmp-promise";
 
-import { AbsoluteFilePath, RelativeFilePath, cwd, join, resolve } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 import { createLoggingExecutable, runExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
 
@@ -73,6 +73,11 @@ export class ProtobufIRGenerator {
         );
 
         await runExeca(this.context.logger, "npm", ["install"], {
+            cwd: protobufGeneratorConfigPath,
+            stdio: "ignore"
+        });
+
+        await runExeca(this.context.logger, "npm", ["install", "-g", "fern-api@0.64.32-rc0"], {
             cwd: protobufGeneratorConfigPath,
             stdio: "ignore"
         });
