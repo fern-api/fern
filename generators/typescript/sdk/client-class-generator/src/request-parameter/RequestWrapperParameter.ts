@@ -237,7 +237,7 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
                 },
                 long: (longType: LongType) => {
                     if (longType.default != null) {
-                        return ts.factory.createNumericLiteral(longType.default.toString());
+                        return ts.factory.createBigIntLiteral(longType.default.toString());
                     }
                     return undefined;
                 },
@@ -261,7 +261,7 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
                 },
                 bigInteger: (bigIntegerType: BigIntegerType) => {
                     if (bigIntegerType.default != null) {
-                        return ts.factory.createStringLiteral(bigIntegerType.default);
+                        return ts.factory.createBigIntLiteral(bigIntegerType.default);
                     }
                     return undefined;
                 },
