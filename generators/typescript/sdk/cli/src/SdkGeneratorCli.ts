@@ -76,10 +76,10 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             noScripts: parsed?.noScripts ?? false,
             useBigInt: parsed?.useBigInt ?? false,
             useLegacyExports: parsed?.useLegacyExports ?? false,
-            streamType: parsed?.streamType ?? "wrapper",
-            fileResponseType: parsed?.fileResponseType ?? "stream",
-            formDataSupport: parsed?.formDataSupport ?? "Node16",
-            fetchSupport: parsed?.fetchSupport ?? "node-fetch",
+            streamType: parsed?.streamType ?? "web",
+            fileResponseType: parsed?.fileResponseType ?? "binary-response",
+            formDataSupport: parsed?.formDataSupport ?? "Node18",
+            fetchSupport: parsed?.fetchSupport ?? "native",
             packagePath: parsed?.packagePath,
             omitFernHeaders: parsed?.omitFernHeaders ?? false
         };
@@ -166,10 +166,10 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 enableInlineTypes: customConfig.enableInlineTypes ?? true,
                 useLegacyExports,
                 generateWireTests: customConfig.generateWireTests ?? false,
-                streamType: customConfig.streamType ?? "wrapper",
-                fileResponseType: customConfig.fileResponseType ?? "stream",
-                formDataSupport: customConfig.formDataSupport ?? "Node16",
-                fetchSupport: customConfig.fetchSupport ?? "node-fetch",
+                streamType: customConfig.streamType ?? "web",
+                fileResponseType: customConfig.fileResponseType ?? "binary-response",
+                formDataSupport: customConfig.formDataSupport ?? "Node18",
+                fetchSupport: customConfig.fetchSupport ?? "native",
                 packagePath: customConfig.packagePath,
                 omitFernHeaders: customConfig.omitFernHeaders ?? false
             }
