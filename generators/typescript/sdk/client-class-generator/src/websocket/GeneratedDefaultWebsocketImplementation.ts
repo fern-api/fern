@@ -418,7 +418,15 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                 )
             ),
             ts.factory.createTemplateSpan(
-                context.coreUtilities.urlUtils.toQueryString._invoke([ts.factory.createIdentifier("queryParams")]),
+                context.coreUtilities.urlUtils.toQueryString._invoke([
+                    ts.factory.createIdentifier("queryParams"),
+                    ts.factory.createObjectLiteralExpression([
+                        ts.factory.createPropertyAssignment(
+                            ts.factory.createIdentifier("arrayFormat"),
+                            ts.factory.createStringLiteral("repeat")
+                        )
+                    ])
+                ]),
                 ts.factory.createTemplateTail("", "")
             )
         ]);
