@@ -2,6 +2,7 @@ import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
 
 import { FernIr, TypeReference } from "@fern-api/ir-sdk";
 import { AbstractConverterContext, Converters, DisplayNameOverrideSource } from "@fern-api/v2-importer-commons";
+
 import { DisplayNameExtension } from "../extensions/x-display-name";
 
 /**
