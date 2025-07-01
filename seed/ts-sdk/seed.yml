@@ -53,9 +53,9 @@ fixtures:
         allowCustomFetcher: true
         timeoutInSeconds: 2
       outputFolder: allow-custom-fetcher
-    - outputFolder: web-stream-wrapper
+    - outputFolder: wrapper
       customConfig:
-        streamType: "web"
+        streamType: "wrapper"
   audiences:
     - customConfig: null
       outputFolder: no-custom-config
@@ -147,9 +147,9 @@ fixtures:
     - outputFolder: web-stream-wrapper
       customConfig:
         streamType: web
-    - outputFolder: fetch-native
+    - outputFolder: node-fetch
       customConfig:
-        fetchSupport: native
+        fetchSupport: node-fetch
   error-property:
     - customConfig:
         private: true
@@ -168,16 +168,12 @@ fixtures:
     - customConfig:
         includeContentHeadersOnFileDownloadResponse: true
       outputFolder: file-download-response-headers
-    - outputFolder: web-stream-wrapper
+    - outputFolder: wrapper
       customConfig:
-        streamType: "web"
+        streamType: "wrapper"
     - customConfig:
-        fileResponseType: "binary-response"
-      outputFolder: binary-response
-    - customConfig:
-        streamType: "web"
-        fileResponseType: "binary-response"
-      outputFolder: binary-response-web-stream-wrapper
+        fileResponseType: "stream"
+      outputFolder: stream
   file-upload:
     - customConfig: null
       outputFolder: no-custom-config
@@ -188,12 +184,12 @@ fixtures:
     - customConfig:
         noSerdeLayer: false
       outputFolder: serde
-    - outputFolder: web-stream-wrapper
+    - outputFolder: wrapper
       customConfig:
-        streamType: "web"
-    - outputFolder: form-data-node18
+        streamType: "wrapper"
+    - outputFolder: form-data-node16
       customConfig:
-        formDataSupport: "Node18"
+        formDataSupport: "Node16"
   unknown:
     - customConfig: null
       outputFolder: no-custom-config
