@@ -11,7 +11,7 @@ publish:
     context: .
 test:
   docker:
-    image: fernapi/fern-typescript-node-sdk:local
+    image: fernapi/fern-typescript-node-sdk:latest
     command: 
       - pnpm --filter @fern-typescript/sdk-generator-cli dockerTagLatest
   local:
