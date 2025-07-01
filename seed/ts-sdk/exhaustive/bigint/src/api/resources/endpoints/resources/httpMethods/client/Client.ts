@@ -4,7 +4,6 @@
 
 import * as core from "../../../../../../core/index.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/headers.js";
-import urlJoin from "url-join";
 import * as errors from "../../../../../../errors/index.js";
 import * as SeedExhaustive from "../../../../../index.js";
 
@@ -53,7 +52,7 @@ export class HttpMethods {
         requestOptions?: HttpMethods.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.joinUrl(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 `/http-methods/${encodeURIComponent(id)}`,
@@ -118,7 +117,7 @@ export class HttpMethods {
         requestOptions?: HttpMethods.RequestOptions,
     ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithOptionalField>> {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.joinUrl(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/http-methods",
@@ -192,7 +191,7 @@ export class HttpMethods {
         requestOptions?: HttpMethods.RequestOptions,
     ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithOptionalField>> {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.joinUrl(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 `/http-methods/${encodeURIComponent(id)}`,
@@ -280,7 +279,7 @@ export class HttpMethods {
         requestOptions?: HttpMethods.RequestOptions,
     ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithOptionalField>> {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.joinUrl(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 `/http-methods/${encodeURIComponent(id)}`,
@@ -346,7 +345,7 @@ export class HttpMethods {
         requestOptions?: HttpMethods.RequestOptions,
     ): Promise<core.WithRawResponse<boolean>> {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.joinUrl(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 `/http-methods/${encodeURIComponent(id)}`,

@@ -5,7 +5,6 @@
 import * as core from "../../../../core/index.js";
 import * as SeedBasicAuth from "../../../index.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
-import urlJoin from "url-join";
 import * as errors from "../../../../errors/index.js";
 
 export declare namespace BasicAuth {
@@ -56,7 +55,7 @@ export class BasicAuth {
         requestOptions?: BasicAuth.RequestOptions,
     ): Promise<core.WithRawResponse<boolean>> {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.joinUrl(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "basic-auth",
@@ -134,7 +133,7 @@ export class BasicAuth {
         requestOptions?: BasicAuth.RequestOptions,
     ): Promise<core.WithRawResponse<boolean>> {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.joinUrl(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "basic-auth",

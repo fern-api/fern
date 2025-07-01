@@ -5,7 +5,6 @@
 import * as core from "../../../../core/index.js";
 import * as SeedVersion from "../../../index.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
-import urlJoin from "url-join";
 import * as errors from "../../../../errors/index.js";
 
 export declare namespace User {
@@ -59,7 +58,7 @@ export class User {
         requestOptions?: User.RequestOptions,
     ): Promise<core.WithRawResponse<SeedVersion.User>> {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.joinUrl(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 `/users/${encodeURIComponent(userId)}`,

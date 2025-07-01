@@ -5,7 +5,6 @@
 import * as core from "../../../../../../core/index.js";
 import * as Fiddle from "../../../../../index.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/headers.js";
-import urlJoin from "url-join";
 
 export declare namespace Object_ {
     export interface Options {
@@ -83,7 +82,7 @@ export class Object_ {
         >
     > {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.joinUrl(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/object/get-and-return-with-optional-field",
@@ -156,7 +155,7 @@ export class Object_ {
         >
     > {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.joinUrl(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/object/get-and-return-with-required-field",
@@ -227,7 +226,7 @@ export class Object_ {
         >
     > {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.joinUrl(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/object/get-and-return-with-map-of-map",
@@ -319,7 +318,7 @@ export class Object_ {
         >
     > {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.joinUrl(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/object/get-and-return-nested-with-optional-field",
@@ -414,7 +413,7 @@ export class Object_ {
         >
     > {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.joinUrl(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 `/object/get-and-return-nested-with-required-field/${encodeURIComponent(string_)}`,
@@ -525,7 +524,7 @@ export class Object_ {
         >
     > {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.joinUrl(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/object/get-and-return-nested-with-required-field-list",

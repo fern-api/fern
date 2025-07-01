@@ -6,7 +6,6 @@ import * as core from "../../../../core/index.js";
 import * as SeedUndiscriminatedUnions from "../../../index.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as errors from "../../../../errors/index.js";
-import urlJoin from "url-join";
 
 export declare namespace Union {
     export interface Options {
@@ -112,7 +111,7 @@ export class Union {
         requestOptions?: Union.RequestOptions,
     ): Promise<core.WithRawResponse<SeedUndiscriminatedUnions.Metadata>> {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.joinUrl(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/metadata",
@@ -175,7 +174,7 @@ export class Union {
         requestOptions?: Union.RequestOptions,
     ): Promise<core.WithRawResponse<boolean>> {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.joinUrl(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/metadata",
@@ -243,7 +242,7 @@ export class Union {
         requestOptions?: Union.RequestOptions,
     ): Promise<core.WithRawResponse<boolean>> {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.joinUrl(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/call",

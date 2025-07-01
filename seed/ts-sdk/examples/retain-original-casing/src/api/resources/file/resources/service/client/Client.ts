@@ -6,7 +6,6 @@ import * as environments from "../../../../../../environments.js";
 import * as core from "../../../../../../core/index.js";
 import * as SeedExamples from "../../../../../index.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/headers.js";
-import urlJoin from "url-join";
 import * as errors from "../../../../../../errors/index.js";
 
 export declare namespace Service {
@@ -67,7 +66,7 @@ export class Service {
     ): Promise<core.WithRawResponse<SeedExamples.File_>> {
         const { "X-File-API-Version": xFileApiVersion } = request;
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.joinUrl(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 `/file/${encodeURIComponent(filename)}`,
