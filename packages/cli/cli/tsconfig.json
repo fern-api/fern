@@ -128,9 +128,6 @@
     },
     {
       "path": "../../../generators/typescript/utils/commons"
-    },
-    {
-      "path": "../generation/protoc-gen-fern"
     }
   ]
 }
