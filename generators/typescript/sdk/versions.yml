@@ -4,6 +4,17 @@
     - summary: |
         Add default values to request parameters.
         For example, if you have a query parameter `foo` with a default value of `bar`, the generated request parameter will have a default value of `bar`.
+
+        To enable this, set `useDefaultRequestParameterValues` to `true` in the `config` of your generator configuration.
+        ```yml
+        # In generators.yml
+        groups:
+          ts-sdk:
+            generators:
+              - name: fernapi/fern-typescript-node-sdk
+                config:
+                  useDefaultRequestParameterValues: true
+        ```
       type: feat
   createdAt: '2025-06-30'
 - version: 1.10.4
