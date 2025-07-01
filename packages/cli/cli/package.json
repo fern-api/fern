@@ -124,9 +124,7 @@
     "prettier": "^3.4.2",
     "@trivago/prettier-plugin-sort-imports": "^5.2.1",
     "typescript": "5.7.2",
-    "vitest": "^2.1.9"
-  },
-  "dependencies": {
+    "vitest": "^2.1.9",
     "@bufbuild/protobuf": "^2.2.5"
   }
 }
