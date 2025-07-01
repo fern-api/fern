@@ -17,7 +17,7 @@
 
         With these defaults, the generated SDKs will have _**ZERO**_ dependencies (excluding devDependencies and `ws` in case of WebSocket generation).
         As a result, the SDKs are smaller, faster, more secure, and easier to use.
-      type: fix
+      type: feat
   createdAt: '2025-07-01'
   irVersion: 58
 - version: 1.10.4
