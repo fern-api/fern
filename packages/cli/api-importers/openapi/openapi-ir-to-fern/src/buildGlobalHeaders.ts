@@ -2,7 +2,7 @@ import { camelCase } from "lodash-es";
 
 import { ROOT_API_FILENAME } from "@fern-api/configuration";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { GlobalHeader, Schema } from "@fern-api/openapi-ir";
+import { GlobalHeader } from "@fern-api/openapi-ir";
 import { RelativeFilePath, join } from "@fern-api/path-utils";
 
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
