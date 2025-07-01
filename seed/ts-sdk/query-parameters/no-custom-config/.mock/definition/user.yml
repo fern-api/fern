@@ -28,6 +28,7 @@ service:
           optionalDeadline: optional<datetime>
           keyValue: map<string, string>
           optionalString: optional<string>
+          optionalListOfString: optional<list<string>>
           nestedUser: NestedUser
           optionalUser: optional<User>
           excludeUser:

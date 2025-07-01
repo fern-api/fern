@@ -64,6 +64,7 @@ export class User {
      *             "keyValue": "keyValue"
      *         },
      *         optionalString: "optionalString",
+     *         optionalListOfString: ["optionalListOfString", "optionalListOfString"],
      *         nestedUser: {
      *             name: "name",
      *             user: {
@@ -104,6 +105,7 @@ export class User {
             optionalDeadline,
             keyValue,
             optionalString,
+            optionalListOfString,
             nestedUser,
             optionalUser,
             excludeUser,
@@ -130,6 +132,10 @@ export class User {
         _queryParams["keyValue"] = toJson(keyValue);
         if (optionalString != null) {
             _queryParams["optionalString"] = optionalString;
+        }
+
+        if (optionalListOfString != null) {
+            _queryParams["optionalListOfString"] = toJson(optionalListOfString);
         }
 
         _queryParams["nestedUser"] = serializers.NestedUser.jsonOrThrow(nestedUser, {

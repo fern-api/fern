@@ -38,6 +38,7 @@ describe("User", () => {
                 keyValue: "keyValue",
             },
             optionalString: "optionalString",
+            optionalListOfString: ["optionalListOfString", "optionalListOfString"],
             nestedUser: {
                 name: "name",
                 user: {

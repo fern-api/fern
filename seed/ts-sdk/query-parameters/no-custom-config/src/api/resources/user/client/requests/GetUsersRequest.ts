@@ -28,6 +28,7 @@ import * as SeedQueryParameters from "../../../../index.js";
  *             "keyValue": "keyValue"
  *         },
  *         optionalString: "optionalString",
+ *         optionalListOfString: ["optionalListOfString", "optionalListOfString"],
  *         nestedUser: {
  *             name: "name",
  *             user: {
@@ -57,6 +58,7 @@ export interface GetUsersRequest {
     optionalDeadline?: string;
     keyValue: Record<string, string>;
     optionalString?: string;
+    optionalListOfString?: string[];
     nestedUser: SeedQueryParameters.NestedUser;
     optionalUser?: SeedQueryParameters.User;
     excludeUser: SeedQueryParameters.User | SeedQueryParameters.User[];

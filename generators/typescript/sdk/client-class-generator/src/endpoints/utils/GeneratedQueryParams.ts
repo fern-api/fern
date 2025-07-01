@@ -1,6 +1,8 @@
 import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
+import { assertNever } from "@fern-api/core-utils";
+
 import { DeclaredTypeName, QueryParameter, TypeReference } from "@fern-fern/ir-sdk/api";
 
 import { RequestParameter } from "../../request-parameter/RequestParameter";
@@ -23,151 +25,176 @@ export class GeneratedQueryParams {
     public getBuildStatements(context: SdkContext): ts.Statement[] {
         const statements: ts.Statement[] = [];
 
-        if (this.requestParameter != null) {
-            const queryParameters = this.requestParameter.getAllQueryParameters(context);
-            if (queryParameters.length > 0) {
-                statements.push(
-                    ts.factory.createVariableStatement(
-                        undefined,
-                        ts.factory.createVariableDeclarationList(
-                            [
-                                ts.factory.createVariableDeclaration(
-                                    GeneratedQueryParams.QUERY_PARAMS_VARIABLE_NAME,
-                                    undefined,
-                                    ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Record"), [
-                                        ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
-                                        ts.factory.createUnionTypeNode([
-                                            ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
-                                            ts.factory.createArrayTypeNode(
-                                                ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
-                                            ),
-                                            ts.factory.createKeywordTypeNode(ts.SyntaxKind.ObjectKeyword),
-                                            ts.factory.createArrayTypeNode(
-                                                ts.factory.createKeywordTypeNode(ts.SyntaxKind.ObjectKeyword)
-                                            ),
-                                            ts.factory.createLiteralTypeNode(ts.factory.createNull())
-                                        ])
-                                    ]),
-                                    ts.factory.createObjectLiteralExpression([], false)
-                                )
-                            ],
-                            ts.NodeFlags.Const
-                        )
-                    )
-                );
-                for (const queryParameter of queryParameters) {
-                    statements.push(
-                        ...this.requestParameter.withQueryParameter(
-                            queryParameter,
-                            context,
-                            (referenceToQueryParameter) => {
-                                let assignmentExpression: ts.Expression;
-                                const objectType = this.getObjectType(queryParameter.valueType, context);
-                                const primitiveType = objectType
-                                    ? undefined
-                                    : this.getPrimitiveType(queryParameter.valueType, context);
-                                const paramName = context.retainOriginalCasing
-                                    ? queryParameter.name.name.originalName
-                                    : queryParameter.name.name.camelCase.unsafeName;
-                                if (objectType != null) {
-                                    if (context.includeSerdeLayer) {
-                                        assignmentExpression = context.typeSchema
-                                            .getSchemaOfNamedType(objectType, {
-                                                isGeneratingSchema: false
-                                            })
-                                            .jsonOrThrow(referenceToQueryParameter, {
-                                                allowUnrecognizedEnumValues: true,
-                                                allowUnrecognizedUnionMembers: true,
-                                                unrecognizedObjectKeys: "passthrough",
-                                                skipValidation: false,
-                                                breadcrumbsPrefix: ["request", paramName],
-                                                omitUndefined: context.omitUndefined
-                                            });
-                                    } else {
-                                        assignmentExpression = referenceToQueryParameter;
-                                    }
-                                }
-                                // if it's a primitive type, the previous null check already unwrapped the null or undefined
-                                // use the primitive type directly to stringify
-                                else if (primitiveType != null) {
-                                    assignmentExpression = context.type.stringify(
-                                        referenceToQueryParameter,
-                                        primitiveType,
-                                        {
-                                            includeNullCheckIfOptional: false
-                                        }
-                                    );
-                                } else {
-                                    assignmentExpression = context.type.stringify(
-                                        referenceToQueryParameter,
-                                        queryParameter.valueType,
-                                        {
-                                            includeNullCheckIfOptional: false
-                                        }
-                                    );
-                                }
+        if (this.requestParameter == null) {
+            return statements;
+        }
 
-                                return [
-                                    this.getQueryParameterAssignExpression({
-                                        queryParameter,
-                                        assignmentExpression
-                                    })
-                                ];
-                            },
-                            (referenceToQueryParameter) => {
-                                let getAssignmentExpression: (itemReference: ts.Expression) => ts.Expression;
-                                let isAssignmentExpressionAsync = false;
-                                const objectType = this.getObjectType(
-                                    queryParameter.valueType.type === "container" &&
-                                        queryParameter.valueType.container.type === "list"
-                                        ? queryParameter.valueType.container.list
-                                        : queryParameter.valueType,
-                                    context
-                                );
-                                if (objectType != null && context.includeSerdeLayer) {
-                                    isAssignmentExpressionAsync = true;
-                                    getAssignmentExpression = (itemReference) =>
-                                        context.typeSchema
-                                            .getSchemaOfNamedType(objectType, {
-                                                isGeneratingSchema: false
-                                            })
-                                            .jsonOrThrow(itemReference, {
-                                                allowUnrecognizedEnumValues: true,
-                                                allowUnrecognizedUnionMembers: true,
-                                                unrecognizedObjectKeys: "passthrough",
-                                                skipValidation: false,
-                                                breadcrumbsPrefix: [
-                                                    "request",
-                                                    context.retainOriginalCasing
-                                                        ? queryParameter.name.name.originalName
-                                                        : queryParameter.name.name.camelCase.unsafeName
-                                                ],
-                                                omitUndefined: context.omitUndefined
-                                            });
-                                } else if (objectType != null) {
-                                    getAssignmentExpression = (itemReference) => itemReference;
-                                } else {
-                                    getAssignmentExpression = (itemReference) =>
-                                        context.type.stringify(itemReference, queryParameter.valueType, {
-                                            includeNullCheckIfOptional: false
-                                        });
-                                }
-                                return [
-                                    this.getQueryParameterArrayAssignExpression({
-                                        queryParameter,
-                                        referenceToQueryParameter,
-                                        getAssignmentExpression,
-                                        isAssignmentExpressionAsync
-                                    })
-                                ];
-                            }
+        const queryParameters = this.requestParameter.getAllQueryParameters(context);
+        if (queryParameters.length === 0) {
+            return statements;
+        }
+
+        statements.push(
+            ts.factory.createVariableStatement(
+                undefined,
+                ts.factory.createVariableDeclarationList(
+                    [
+                        ts.factory.createVariableDeclaration(
+                            GeneratedQueryParams.QUERY_PARAMS_VARIABLE_NAME,
+                            undefined,
+                            ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Record"), [
+                                ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+                                ts.factory.createUnionTypeNode([
+                                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+                                    ts.factory.createArrayTypeNode(
+                                        ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
+                                    ),
+                                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.ObjectKeyword),
+                                    ts.factory.createArrayTypeNode(
+                                        ts.factory.createKeywordTypeNode(ts.SyntaxKind.ObjectKeyword)
+                                    ),
+                                    ts.factory.createLiteralTypeNode(ts.factory.createNull())
+                                ])
+                            ]),
+                            ts.factory.createObjectLiteralExpression([], false)
                         )
-                    );
-                }
-            }
+                    ],
+                    ts.NodeFlags.Const
+                )
+            )
+        );
+        for (const queryParameter of queryParameters) {
+            statements.push(
+                ...this.requestParameter.withQueryParameter(
+                    queryParameter,
+                    context,
+                    (referenceToQueryParameter) => {
+                        let assignmentExpression: ts.Expression;
+                        const objectType = this.getObjectType(queryParameter.valueType, context);
+                        const primitiveType = objectType
+                            ? undefined
+                            : this.getPrimitiveType(queryParameter.valueType, context);
+                        const paramName = context.retainOriginalCasing
+                            ? queryParameter.name.name.originalName
+                            : queryParameter.name.name.camelCase.unsafeName;
+                        if (objectType != null) {
+                            if (context.includeSerdeLayer) {
+                                assignmentExpression = context.typeSchema
+                                    .getSchemaOfNamedType(objectType, {
+                                        isGeneratingSchema: false
+                                    })
+                                    .jsonOrThrow(referenceToQueryParameter, {
+                                        allowUnrecognizedEnumValues: true,
+                                        allowUnrecognizedUnionMembers: true,
+                                        unrecognizedObjectKeys: "passthrough",
+                                        skipValidation: false,
+                                        breadcrumbsPrefix: ["request", paramName],
+                                        omitUndefined: context.omitUndefined
+                                    });
+                            } else {
+                                assignmentExpression = referenceToQueryParameter;
+                            }
+                        }
+                        // if it's a primitive type, the previous null check already unwrapped the null or undefined
+                        // use the primitive type directly to stringify
+                        else if (primitiveType != null) {
+                            assignmentExpression = context.type.stringify(referenceToQueryParameter, primitiveType, {
+                                includeNullCheckIfOptional: false
+                            });
+                        } else {
+                            assignmentExpression = context.type.stringify(
+                                referenceToQueryParameter,
+                                queryParameter.valueType,
+                                {
+                                    includeNullCheckIfOptional: false
+                                }
+                            );
+                        }
+
+                        return [
+                            this.getQueryParameterAssignExpression({
+                                queryParameter,
+                                assignmentExpression
+                            })
+                        ];
+                    },
+                    (referenceToQueryParameter) => {
+                        let getAssignmentExpression:
+                            | ((itemReference: ts.Expression) => ts.Expression)
+                            | null
+                            | undefined = undefined;
+                        let isAssignmentExpressionAsync = false;
+                        const listType = this.getListType(queryParameter.valueType);
+                        const objectType = this.getObjectType(listType ?? queryParameter.valueType, context);
+                        if (objectType != null) {
+                            if (context.includeSerdeLayer) {
+                                isAssignmentExpressionAsync = true;
+                                getAssignmentExpression = (itemReference) =>
+                                    context.typeSchema
+                                        .getSchemaOfNamedType(objectType, {
+                                            isGeneratingSchema: false
+                                        })
+                                        .jsonOrThrow(itemReference, {
+                                            allowUnrecognizedEnumValues: true,
+                                            allowUnrecognizedUnionMembers: true,
+                                            unrecognizedObjectKeys: "passthrough",
+                                            skipValidation: false,
+                                            breadcrumbsPrefix: [
+                                                "request",
+                                                context.retainOriginalCasing
+                                                    ? queryParameter.name.name.originalName
+                                                    : queryParameter.name.name.camelCase.unsafeName
+                                            ],
+                                            omitUndefined: context.omitUndefined
+                                        });
+                            } else {
+                                getAssignmentExpression = null;
+                            }
+                        }
+                        if (getAssignmentExpression === undefined) {
+                            getAssignmentExpression = (itemReference) =>
+                                context.type.stringify(itemReference, queryParameter.valueType, {
+                                    includeNullCheckIfOptional: false
+                                });
+                        }
+                        return [
+                            this.getQueryParameterArrayAssignExpression({
+                                queryParameter,
+                                referenceToQueryParameter,
+                                getAssignmentExpression,
+                                isAssignmentExpressionAsync
+                            })
+                        ];
+                    }
+                )
+            );
         }
 
         return statements;
+    }
+
+    private getListType(valueType: TypeReference): TypeReference | undefined {
+        switch (valueType.type) {
+            case "container":
+                switch (valueType.container.type) {
+                    case "optional":
+                        return undefined;
+                    case "list":
+                        return valueType.container.list;
+                    case "set":
+                        return valueType.container.set;
+                    case "map":
+                        return undefined;
+                    case "literal":
+                        return undefined;
+                    case "nullable":
+                        return undefined;
+                    default:
+                        assertNever(valueType.container);
+                }
+            default:
+                return undefined;
+        }
     }
 
     public getReferenceTo(context: SdkContext): ts.Expression | undefined {
@@ -206,9 +233,21 @@ export class GeneratedQueryParams {
         queryParameter: QueryParameter;
         referenceToQueryParameter: ts.Expression;
         /* Pass in itemReference and get back the serialized query parameter */
-        getAssignmentExpression: (itemReference: ts.Expression) => ts.Expression;
+        getAssignmentExpression: ((itemReference: ts.Expression) => ts.Expression) | null;
         isAssignmentExpressionAsync?: boolean;
     }): ts.Statement {
+        if (getAssignmentExpression === null) {
+            return ts.factory.createExpressionStatement(
+                ts.factory.createBinaryExpression(
+                    ts.factory.createElementAccessExpression(
+                        ts.factory.createIdentifier(GeneratedQueryParams.QUERY_PARAMS_VARIABLE_NAME),
+                        ts.factory.createStringLiteral(queryParameter.name.wireValue)
+                    ),
+                    ts.factory.createToken(ts.SyntaxKind.EqualsToken),
+                    referenceToQueryParameter
+                )
+            );
+        }
         const mapFunction = ts.factory.createArrowFunction(
             isAssignmentExpressionAsync ? [ts.factory.createModifier(ts.SyntaxKind.AsyncKeyword)] : undefined,
             undefined,

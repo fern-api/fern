@@ -40,6 +40,7 @@ await client.user.getUsername({
         keyValue: "keyValue",
     },
     optionalString: "optionalString",
+    optionalListOfString: ["optionalListOfString", "optionalListOfString"],
     nestedUser: {
         name: "name",
         user: {

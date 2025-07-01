@@ -63,6 +63,7 @@ export class User {
      *             "keyValue": "keyValue"
      *         },
      *         optionalString: "optionalString",
+     *         optionalListOfString: ["optionalListOfString", "optionalListOfString"],
      *         nestedUser: {
      *             name: "name",
      *             user: {
@@ -103,6 +104,7 @@ export class User {
             optionalDeadline,
             keyValue,
             optionalString,
+            optionalListOfString,
             nestedUser,
             optionalUser,
             excludeUser,
@@ -125,13 +127,17 @@ export class User {
             _queryParams["optionalString"] = optionalString;
         }
 
+        if (optionalListOfString != null) {
+            _queryParams["optionalListOfString"] = toJson(optionalListOfString);
+        }
+
         _queryParams["nestedUser"] = nestedUser;
         if (optionalUser != null) {
             _queryParams["optionalUser"] = optionalUser;
         }
 
         if (Array.isArray(excludeUser)) {
-            _queryParams["excludeUser"] = excludeUser.map((item) => item);
+            _queryParams["excludeUser"] = excludeUser;
         } else {
             _queryParams["excludeUser"] = excludeUser;
         }

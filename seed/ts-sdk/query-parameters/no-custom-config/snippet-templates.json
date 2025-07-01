@@ -333,6 +333,33 @@
                                 {
                                     "value": {
                                         "imports": [],
+                                        "isOptional": true,
+                                        "containerTemplateString": "optionalListOfString: [\n\t\t\t$FERN_INPUT\n\t\t]",
+                                        "delimiter": ",\n\t\t\t",
+                                        "innerTemplate": {
+                                            "imports": [],
+                                            "templateString": "$FERN_INPUT",
+                                            "isOptional": true,
+                                            "templateInputs": [
+                                                {
+                                                    "location": "RELATIVE",
+                                                    "type": "payload"
+                                                }
+                                            ],
+                                            "type": "generic"
+                                        },
+                                        "templateInput": {
+                                            "location": "QUERY",
+                                            "path": "optionalListOfString",
+                                            "type": "payload"
+                                        },
+                                        "type": "iterable"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
                                         "templateString": "nestedUser: {\n\t\t\t$FERN_INPUT\n\t\t}",
                                         "isOptional": true,
                                         "inputDelimiter": ",\n\t\t\t",
