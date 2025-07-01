@@ -9,6 +9,7 @@ import { AbstractPythonGeneratorContext } from "../cli";
 import { BasePythonCustomConfigSchema } from "../custom-config";
 import { WriteablePythonFile } from "./WriteablePythonFile";
 import { PythonDependency } from "./PythonDependency";
+import { PackageConfig, PyprojectToml } from "./PyprojectToml";
 
 const AS_IS_DIRECTORY = path.join(__dirname, "asIs");
 
@@ -67,11 +68,26 @@ export class PythonProject extends AbstractProject<AbstractPythonGeneratorContex
         const devDependencies = this.dependencies.filter(dep => dep.isDevDependency);
 
         const requirementsTxt = getDependenciesAsRequirementsTxt(prodDependencies);
-        // Add ProjectToml dependencies.
+
+        const pyprojectToml = new PyprojectToml(
+            this.context.getPackageName(),
+            this.context.getPackageVersion(),
+            this.context.getPythonVersion(),
+            prodDependencies,
+            devDependencies,
+            new PackageConfig(this.context.getPackageName(), "src") // Is this correct?
+        );
         
+        // Write requirements.txt
         await writeFile(
             join(this.absolutePathToOutputDirectory, RelativeFilePath.of("requirements.txt")),
             requirementsTxt
+        );
+
+        // Write pyproject.toml
+        await writeFile(
+            join(this.absolutePathToOutputDirectory, RelativeFilePath.of("pyproject.toml")),
+            pyprojectToml.toString()
         );
     }
 
@@ -82,6 +98,10 @@ function getAsIsFilepath(filename: string): AbsoluteFilePath {
     return AbsoluteFilePath.of(path.join(AS_IS_DIRECTORY, filename));
 }
 
+/**
+ * Converts a list of dependencies to a string of requirements.txt format.
+ * @param dependencies - Production dependencies only.
+ */
 function getDependenciesAsRequirementsTxt(dependencies: PythonDependency[]): string {
     const textLines = dependencies.map(x => x.toRequirementsTxtString())
     return textLines.join("\n");

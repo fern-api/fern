@@ -1,5 +1,5 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
-import { AbstractPythonGeneratorContext, PythonProject } from "@fern-api/python-base";
+import { AbstractPythonGeneratorContext, core, PythonProject } from "@fern-api/python-base";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
@@ -32,5 +32,9 @@ export class SdkGeneratorContext extends AbstractPythonGeneratorContext<SdkCusto
 
     public isSelfHosted(): boolean {
         return this.ir.selfHosted ?? false;
+    }
+
+    public getRawAsIsFiles(): string[] {
+        return [core.AsIsFiles.GitIgnore];
     }
 }
