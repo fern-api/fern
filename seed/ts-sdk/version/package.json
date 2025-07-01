@@ -44,6 +44,7 @@
     },
     "devDependencies": {
         "@types/node-fetch": "^2.6.12",
+        "@types/qs": "^6.9.17",
         "@types/readable-stream": "^4.0.18",
         "webpack": "^5.97.1",
         "ts-loader": "^9.5.1",

@@ -13,6 +13,7 @@ import {
     GeneratedRequestWrapper,
     GeneratedRequestWrapperExample,
     RequestWrapperNonBodyProperty,
+    RequestWrapperNonBodyPropertyWithData,
     SdkContext
 } from "@fern-typescript/contexts";
 import { ModuleDeclarationStructure, OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
@@ -123,16 +124,18 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
 
         for (const pathParameter of this.getPathParamsForRequestWrapper()) {
             const type = context.type.getReferenceToType(pathParameter.valueType);
+            const hasDefaultValue = this.hasDefaultValue(pathParameter.valueType, context);
             const property = requestInterface.addProperty({
                 name: getPropertyKey(this.getPropertyNameOfPathParameter(pathParameter).propertyName),
                 type: getTextOfTsNode(type.typeNodeWithoutUndefined),
-                hasQuestionToken: type.isOptional
+                hasQuestionToken: type.isOptional || hasDefaultValue
             });
             maybeAddDocsNode(property, pathParameter.docs);
         }
 
         for (const queryParameter of this.getAllQueryParameters()) {
             const type = context.type.getReferenceToType(queryParameter.valueType);
+            const hasDefaultValue = this.hasDefaultValue(queryParameter.valueType, context);
             const property = requestInterface.addProperty({
                 name: getPropertyKey(this.getPropertyNameOfQueryParameter(queryParameter).propertyName),
                 type: getTextOfTsNode(
@@ -143,16 +146,17 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                           ])
                         : type.typeNodeWithoutUndefined
                 ),
-                hasQuestionToken: type.isOptional
+                hasQuestionToken: type.isOptional || hasDefaultValue
             });
             maybeAddDocsNode(property, queryParameter.docs);
         }
         for (const header of this.getAllNonLiteralHeaders(context)) {
             const type = context.type.getReferenceToType(header.valueType);
+            const hasDefaultValue = this.hasDefaultValue(header.valueType, context);
             const property = requestInterface.addProperty({
                 name: getPropertyKey(this.getPropertyNameOfNonLiteralHeader(header).propertyName),
                 type: getTextOfTsNode(type.typeNodeWithoutUndefined),
-                hasQuestionToken: type.isOptional
+                hasQuestionToken: type.isOptional || hasDefaultValue
             });
             maybeAddDocsNode(property, header.docs);
         }
@@ -380,6 +384,45 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             ...this.getAllFileUploadProperties().map((fileProperty) =>
                 this.getPropertyNameOfFileParameter(fileProperty)
             ),
+            ...properties
+        ];
+    }
+
+    public getNonBodyKeysWithData(context: SdkContext): RequestWrapperNonBodyPropertyWithData[] {
+        const properties: RequestWrapperNonBodyPropertyWithData[] = [
+            ...this.getPathParamsForRequestWrapper().map((pathParameter) => ({
+                ...this.getPropertyNameOfPathParameter(pathParameter),
+                originalParameter: {
+                    type: "path" as const,
+                    parameter: pathParameter
+                }
+            })),
+            ...this.getAllQueryParameters().map((queryParameter) => ({
+                ...this.getPropertyNameOfQueryParameter(queryParameter),
+                originalParameter: {
+                    type: "query" as const,
+                    parameter: queryParameter
+                }
+            })),
+            ...this.getAllNonLiteralHeaders(context).map((header) => ({
+                ...this.getPropertyNameOfNonLiteralHeader(header),
+                originalParameter: {
+                    type: "header" as const,
+                    parameter: header
+                }
+            }))
+        ];
+        if (!this.inlineFileProperties) {
+            return properties;
+        }
+        return [
+            ...this.getAllFileUploadProperties().map((fileProperty) => ({
+                ...this.getPropertyNameOfFileParameter(fileProperty),
+                originalParameter: {
+                    type: "file" as const,
+                    parameter: fileProperty
+                }
+            })),
             ...properties
         ];
     }
@@ -647,5 +690,12 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
 
     private maybeWrapFileArray({ property, value }: { property: FileProperty; value: ts.TypeNode }): ts.TypeNode {
         return property.type === "fileArray" ? ts.factory.createArrayTypeNode(value) : value;
+    }
+
+    private hasDefaultValue(typeReference: TypeReference, context: SdkContext): boolean {
+        const hasDefaultValue = context.type.hasDefaultValue(typeReference);
+        const useDefaultValues = (context.config.customConfig as { useDefaultRequestParameterValues?: boolean })?.useDefaultRequestParameterValues;
+        
+        return hasDefaultValue && Boolean(useDefaultValues);
     }
 }

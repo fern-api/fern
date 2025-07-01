@@ -94,6 +94,7 @@ export declare namespace GeneratedSdkClientClassImpl {
         fileResponseType: "stream" | "binary-response";
         formDataSupport: "Node16" | "Node18";
         omitFernHeaders: boolean;
+        useDefaultRequestParameterValues: boolean;
     }
 }
 
@@ -140,6 +141,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private readonly authHeaders: HeaderAuthScheme[];
     private readonly service: HttpService | undefined;
     private readonly omitFernHeaders: boolean;
+    private readonly useDefaultRequestParameterValues: boolean;
 
     constructor({
         isRoot,
@@ -168,7 +170,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         streamType,
         fileResponseType,
         formDataSupport,
-        omitFernHeaders
+        omitFernHeaders,
+        useDefaultRequestParameterValues
     }: GeneratedSdkClientClassImpl.Init) {
         this.isRoot = isRoot;
         this.intermediateRepresentation = intermediateRepresentation;
@@ -190,6 +193,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         this.exportsManager = exportsManager;
         this.oauthTokenProviderGenerator = oauthTokenProviderGenerator;
         this.omitFernHeaders = omitFernHeaders;
+        this.useDefaultRequestParameterValues = useDefaultRequestParameterValues;
 
         const package_ = packageResolver.resolvePackage(packageId);
         this.package_ = package_;

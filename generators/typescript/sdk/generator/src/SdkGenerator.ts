@@ -146,6 +146,7 @@ export declare namespace SdkGenerator {
         fetchSupport: "node-fetch" | "native";
         packagePath: string | undefined;
         omitFernHeaders: boolean;
+        useDefaultRequestParameterValues: boolean;
     }
 }
 
@@ -428,7 +429,8 @@ export class SdkGenerator {
             fileResponseType: config.fileResponseType,
             exportsManager: this.exportsManager,
             formDataSupport: config.formDataSupport,
-            omitFernHeaders: config.omitFernHeaders
+            omitFernHeaders: config.omitFernHeaders,
+            useDefaultRequestParameterValues: config.useDefaultRequestParameterValues
         });
         this.websocketGenerator = new WebsocketClassGenerator({
             intermediateRepresentation
@@ -1516,7 +1518,8 @@ export class SdkGenerator {
             allowExtraFields: this.config.allowExtraFields,
             relativePackagePath: this.relativePackagePath,
             relativeTestPath: this.relativeTestPath,
-            formDataSupport: this.config.formDataSupport
+            formDataSupport: this.config.formDataSupport,
+            useDefaultRequestParameterValues: this.config.useDefaultRequestParameterValues,
         });
     }
 
