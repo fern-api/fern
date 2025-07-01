@@ -55,6 +55,7 @@ COPY ./generators/python/core_utilities/shared /assets/core_utilities
 COPY ./generators/python/sdk/features.yml /assets/features.yml
 COPY ./generators/python/tests /assets/tests
 COPY ./generators/python/src ./src
+COPY ./generators/python/src/asIs /bin/asIs
 
 RUN git config --global user.email "115122769+fern-api[bot]@users.noreply.github.com" && \
     git config --global user.name "fern-api"
