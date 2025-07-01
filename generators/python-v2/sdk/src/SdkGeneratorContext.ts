@@ -26,6 +26,10 @@ export class SdkGeneratorContext extends AbstractPythonGeneratorContext<SdkCusto
         });
     }
 
+    public getRawAsIsFiles(): string[] {
+        return [];
+    }
+
     public isSelfHosted(): boolean {
         return this.ir.selfHosted ?? false;
     }
