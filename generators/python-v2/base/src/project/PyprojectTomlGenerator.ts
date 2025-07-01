@@ -159,7 +159,7 @@ class DependenciesBlock extends Block {
         lines.push(`python = "${this.pythonVersion}"`);
         lines.push(this.prodDependencies.map((dep) => PyprojectTomlGenerator.dependencyToString(dep)).join("\n"));
 
-        lines[lines.length - 1] = lines[lines.length - 1] += "\n";
+        lines[lines.length - 1] += "\n";
 
         lines.push("[tool.poetry.group.dev.dependencies]");
         lines.push(this.devDependencies.map((dep) => PyprojectTomlGenerator.dependencyToString(dep)).join("\n"));
