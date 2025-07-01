@@ -1,5 +1,5 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
-import { AbstractPythonGeneratorCli } from "@fern-api/python-base";
+import { AbstractPythonGeneratorCli, PythonDependency } from "@fern-api/python-base";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
@@ -43,13 +43,33 @@ export class ModelGeneratorCLI extends AbstractPythonGeneratorCli<
         for (const file of files) {
             context.project.addSourceFiles(file);
         }
+        const dependencies = this.generateDependencies()
+        for (const dependency of dependencies) {
+            context.project.addDependency(dependency);
+        }
         await context.project.persist();
     }
 
     protected publishPackage(context: PydanticModelGeneratorContext): Promise<void> {
         throw new Error("Method not implemented.");
     }
+
     protected writeForGithub(context: PydanticModelGeneratorContext): Promise<void> {
         throw new Error("Method not implemented.");
     }
+
+    protected generateDependencies(): PythonDependency[] {
+        // Include both dependencies and dev-dependencies.
+        return [
+            new PythonDependency("pydantic", ">=1.9.2"),
+            new PythonDependency("pydantic-core", ">=2.18.2"),
+            new PythonDependency("mypy", "==1.13.0", true),
+            new PythonDependency("pytest", "^7.4.0", true),
+            new PythonDependency("pytest-asyncio", "^0.23.5", true),
+            new PythonDependency("python-dateutil", "^2.9.0", true),
+            new PythonDependency("types-python-dateutil", "^2.9.0.20240316", true),
+            new PythonDependency("ruff", "==0.11.5", true),
+        ];
+    }
+
 }

@@ -1,4 +1,4 @@
-import { readFile } from "fs/promises";
+import { readFile, writeFile } from "fs/promises";
 import path from "path";
 
 import { AbstractProject, File } from "@fern-api/base-generator";
@@ -8,6 +8,7 @@ import { loggingExeca } from "@fern-api/logging-execa";
 import { AbstractPythonGeneratorContext } from "../cli";
 import { BasePythonCustomConfigSchema } from "../custom-config";
 import { WriteablePythonFile } from "./WriteablePythonFile";
+import { PythonDependency } from "./PythonDependency";
 
 const AS_IS_DIRECTORY = path.join(__dirname, "asIs");
 
@@ -16,6 +17,7 @@ const AS_IS_DIRECTORY = path.join(__dirname, "asIs");
  */
 export class PythonProject extends AbstractProject<AbstractPythonGeneratorContext<BasePythonCustomConfigSchema>> {
     private sourceFiles: WriteablePythonFile[] = [];
+    private dependencies: PythonDependency[] = [];
 
     public constructor({ context }: { context: AbstractPythonGeneratorContext<BasePythonCustomConfigSchema> }) {
         super(context);
@@ -23,6 +25,10 @@ export class PythonProject extends AbstractProject<AbstractPythonGeneratorContex
 
     public addSourceFiles(file: WriteablePythonFile): void {
         this.sourceFiles.push(file);
+    }
+
+    public addDependency(dependency: PythonDependency): void {
+        this.dependencies.push(dependency);
     }
 
     private async createRawFiles(): Promise<void> {
@@ -46,13 +52,37 @@ export class PythonProject extends AbstractProject<AbstractPythonGeneratorContex
         );
 
         await this.createRawFiles();
+
+        await this.writeDependencies();
         // await loggingExeca(undefined, "ruff", ["format", ".", "--no-cache"], {
         //     cwd: this.absolutePathToOutputDirectory
         // });
     }
+
+    /**
+     * Writes dependency as both pyproject.toml and requirements.txt.
+     */
+    private async writeDependencies(): Promise<void> {
+        const prodDependencies = this.dependencies.filter(dep => !dep.isDevDependency);
+        const devDependencies = this.dependencies.filter(dep => dep.isDevDependency);
+
+        const requirementsTxt = getDependenciesAsRequirementsTxt(prodDependencies);
+        // Add ProjectToml dependencies.
+        
+        await writeFile(
+            join(this.absolutePathToOutputDirectory, RelativeFilePath.of("requirements.txt")),
+            requirementsTxt
+        );
+    }
+
 }
 
 // TODO(nevil): Share code between this and CsharpProject.
 function getAsIsFilepath(filename: string): AbsoluteFilePath {
     return AbsoluteFilePath.of(path.join(AS_IS_DIRECTORY, filename));
+}
+
+function getDependenciesAsRequirementsTxt(dependencies: PythonDependency[]): string {
+    const textLines = dependencies.map(x => x.toRequirementsTxtString())
+    return textLines.join("\n");
 }
