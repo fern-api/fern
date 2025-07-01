@@ -5,7 +5,6 @@
 import * as core from "./core/index.js";
 import { mergeHeaders } from "./core/headers.js";
 import * as SeedPackageYml from "./api/index.js";
-import urlJoin from "url-join";
 import * as errors from "./errors/index.js";
 import { Service } from "./api/resources/service/client/Client.js";
 
@@ -78,7 +77,7 @@ export class SeedPackageYmlClient {
         requestOptions?: SeedPackageYmlClient.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.joinUrl(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 `/${encodeURIComponent(this._options.id)}/`,

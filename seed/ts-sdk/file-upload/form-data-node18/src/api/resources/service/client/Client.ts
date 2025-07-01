@@ -7,7 +7,6 @@ import * as SeedFileUpload from "../../../index.js";
 import { toJson } from "../../../../core/json.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as errors from "../../../../errors/index.js";
-import urlJoin from "url-join";
 
 export declare namespace Service {
     export interface Options {
@@ -177,7 +176,7 @@ export class Service {
         await _request.appendFile("file", request.file);
         const _maybeEncodedRequest = await _request.getRequest();
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.joinUrl(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/just-file",
@@ -267,7 +266,7 @@ export class Service {
         await _request.appendFile("file", request.file);
         const _maybeEncodedRequest = await _request.getRequest();
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.joinUrl(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/just-file-with-query-params",
@@ -342,7 +341,7 @@ export class Service {
 
         const _maybeEncodedRequest = await _request.getRequest();
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.joinUrl(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/with-content-type",
@@ -416,7 +415,7 @@ export class Service {
 
         const _maybeEncodedRequest = await _request.getRequest();
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.joinUrl(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/with-form-encoding",
@@ -642,15 +641,12 @@ export class Service {
         }
 
         if (request.request != null) {
-            if (Array.isArray(request.request) || request.request instanceof Set)
-                for (const _item of request.request) {
-                    _request.append("request", typeof _item === "string" ? _item : toJson(_item));
-                }
+            _request.append("request", toJson(request.request));
         }
 
         const _maybeEncodedRequest = await _request.getRequest();
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.joinUrl(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/optional-args",
@@ -709,7 +705,7 @@ export class Service {
 
     private async __simple(requestOptions?: Service.RequestOptions): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.joinUrl(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/snippet",

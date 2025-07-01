@@ -1,6 +1,7 @@
 import { ts } from "ts-morph";
 
 import { DependencyManager } from "../dependency-manager/DependencyManager";
+import { MANIFEST as Base64Manifest } from "./Base64Utils";
 import { CoreUtility } from "./CoreUtility";
 
 export interface Auth {
@@ -27,9 +28,7 @@ export interface Auth {
 export const MANIFEST: CoreUtility.Manifest = {
     name: "auth",
     pathInCoreUtilities: { nameOnDisk: "auth", exportDeclaration: { exportAll: true } },
-    addDependencies: (dependencyManager: DependencyManager): void => {
-        dependencyManager.addDependency("js-base64", "3.7.7");
-    },
+    dependsOn: [Base64Manifest],
     getFilesPatterns: () => {
         return { patterns: ["src/core/auth/**", "tests/unit/auth/**"] };
     }

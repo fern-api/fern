@@ -6,7 +6,6 @@ import * as environments from "../../../../environments.js";
 import * as core from "../../../../core/index.js";
 import * as SeedTrace from "../../../index.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
-import urlJoin from "url-join";
 
 export declare namespace Submission {
     export interface Options {
@@ -71,7 +70,7 @@ export class Submission {
         >
     > {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.joinUrl(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
@@ -143,7 +142,7 @@ export class Submission {
         >
     > {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.joinUrl(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
@@ -206,7 +205,7 @@ export class Submission {
         requestOptions?: Submission.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.submission.stopExecutionSession.Error>>> {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.joinUrl(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
@@ -276,7 +275,7 @@ export class Submission {
         >
     > {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.joinUrl(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,

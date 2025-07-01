@@ -6,7 +6,6 @@ import * as core from "../../../../core/index.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as errors from "../../../../errors/index.js";
 import * as SeedUnknownAsAny from "../../../index.js";
-import urlJoin from "url-join";
 
 export declare namespace Unknown {
     export interface Options {
@@ -118,7 +117,7 @@ export class Unknown {
         requestOptions?: Unknown.RequestOptions,
     ): Promise<core.WithRawResponse<unknown[]>> {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.joinUrl(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/with-object",

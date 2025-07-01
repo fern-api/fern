@@ -5,7 +5,6 @@
 import * as core from "../../../../../../core/index.js";
 import * as Fiddle from "../../../../../index.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/headers.js";
-import urlJoin from "url-join";
 
 export declare namespace Union {
     export interface Options {
@@ -61,7 +60,7 @@ export class Union {
         core.WithRawResponse<core.APIResponse<Fiddle.types.Animal, Fiddle.endpoints.union.getAndReturnUnion.Error>>
     > {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.joinUrl(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/union",

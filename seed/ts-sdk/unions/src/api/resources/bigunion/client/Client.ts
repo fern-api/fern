@@ -5,7 +5,6 @@
 import * as core from "../../../../core/index.js";
 import * as SeedUnions from "../../../index.js";
 import { mergeHeaders } from "../../../../core/headers.js";
-import urlJoin from "url-join";
 import * as errors from "../../../../errors/index.js";
 
 export declare namespace Bigunion {
@@ -52,7 +51,7 @@ export class Bigunion {
         requestOptions?: Bigunion.RequestOptions,
     ): Promise<core.WithRawResponse<SeedUnions.BigUnion>> {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.joinUrl(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 `/${encodeURIComponent(id)}`,
@@ -180,7 +179,7 @@ export class Bigunion {
         requestOptions?: Bigunion.RequestOptions,
     ): Promise<core.WithRawResponse<Record<string, boolean>>> {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.joinUrl(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/many",
