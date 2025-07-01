@@ -209,7 +209,8 @@ $response = ${this.getMethodCall(timeoutEndpoint)}(
         const codeString = codeBlock.toString({
             namespace: this.context.getRootNamespace(),
             rootNamespace: this.context.getRootNamespace(),
-            customConfig: this.context.customConfig
+            customConfig: this.context.customConfig,
+            skipImports: true
         });
 
         return [this.writeCode(codeString)];

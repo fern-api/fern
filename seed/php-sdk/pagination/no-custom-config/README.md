@@ -73,8 +73,6 @@ try {
 List endpoints return a `Pager<T>` which lets you loop over all items and the SDK will automatically make multiple HTTP requests for you.
 
 ```php
-namespace Seed;
-
 use Seed\SeedClient;
 
 $client = new SeedClient(
