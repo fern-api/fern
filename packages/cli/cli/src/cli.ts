@@ -21,7 +21,7 @@ import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
 import { askToLogin, login } from "@fern-api/login";
 import { FernCliError, LoggableFernCliError } from "@fern-api/task-context";
 
-import { protocGenFern } from "../../generation/protoc-gen-fern/src/protoc-gen-fern";
+import { protocGenFern } from "@fern-api/protoc-gen-fern";
 import { LoadOpenAPIStatus, loadOpenAPIFromUrl } from "../../init/src/utils/loadOpenApiFromUrl";
 import { CliContext } from "./cli-context/CliContext";
 import { getLatestVersionOfCli } from "./cli-context/upgrade-utils/getLatestVersionOfCli";

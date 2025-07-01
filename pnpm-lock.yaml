@@ -5572,6 +5572,9 @@ importers:
       '@fern-api/project-loader':
         specifier: workspace:*
         version: link:../project-loader
+      '@fern-api/protoc-gen-fern':
+        specifier: workspace:*
+        version: link:../generation/protoc-gen-fern
       '@fern-api/register':
         specifier: workspace:*
         version: link:../register
@@ -7379,7 +7382,7 @@ importers:
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
 
   packages/cli/generation/protoc-gen-fern:
-    dependencies:
+    devDependencies:
       '@bufbuild/protobuf':
         specifier: ^2.2.5
         version: 2.5.2
@@ -7407,13 +7410,6 @@ importers:
       '@fern-api/v2-importer-commons':
         specifier: workspace:*
         version: link:../../api-importers/v2-importer-commons
-      lodash-es:
-        specifier: ^4.17.21
-        version: 4.17.21
-      openapi-types:
-        specifier: ^12.1.3
-        version: 12.1.3
-    devDependencies:
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.2(@vue/compiler-sfc@3.5.17)(prettier@3.5.3)
@@ -7432,6 +7428,12 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.57.1
+      lodash-es:
+        specifier: ^4.17.21
+        version: 4.17.21
+      openapi-types:
+        specifier: ^12.1.3
+        version: 12.1.3
       prettier:
         specifier: ^3.4.2
         version: 3.5.3

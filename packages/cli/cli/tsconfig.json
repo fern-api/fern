@@ -52,6 +52,9 @@
       "path": "../generation/remote-generation/remote-workspace-runner"
     },
     {
+      "path": "../generation/protoc-gen-fern"
+    },
+    {
       "path": "../init"
     },
     {
