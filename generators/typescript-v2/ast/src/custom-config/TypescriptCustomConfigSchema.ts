@@ -28,6 +28,7 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     fetchSupport: z.optional(z.enum(["node-fetch", "native"])),
     packagePath: z.optional(z.string()),
     omitFernHeaders: z.optional(z.boolean()),
+    useDefaultRequestParameterValues: z.optional(z.boolean()),
 
     // relevant to dynamic snippets
     allowExtraFields: z.optional(z.boolean()),
