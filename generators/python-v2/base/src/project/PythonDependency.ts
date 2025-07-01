@@ -4,10 +4,10 @@
  * Supports writing as both pyproject.toml and requirements.txt formats.
  */
 export class PythonDependency {
-    public name: string;
+    private readonly name: string;
     // Assume version string is prefixed with comparator (eg. "==" or ">=")
-    public version: string;
-    public isDevDependency: boolean;
+    private readonly version: string;
+    public readonly isDevDependency: boolean;
 
     constructor(name: string, version: string, isDevDependency: boolean = false) {
         this.name = name;
