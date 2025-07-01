@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.4.0
+  changelogEntry:
+    - summary: |
+        Add support for receiving raw response headers from API calls with the new `WithRawResponse` client field
+        for multipart/form-data endpoints.
+      type: feat
+  createdAt: '2025-07-01'
+  irVersion: 58
+
 - version: 1.3.0
   changelogEntry:
     - summary: |

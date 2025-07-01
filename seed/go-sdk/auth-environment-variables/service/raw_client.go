@@ -2,7 +2,6 @@ package service
 
 import (
 	context "context"
-	fmt "fmt"
 	fern "github.com/auth-environment-variables/fern"
 	core "github.com/auth-environment-variables/fern/core"
 	internal "github.com/auth-environment-variables/fern/internal"
@@ -84,7 +83,7 @@ func (r *RawClient) GetWithHeader(
 		r.header.Clone(),
 		options.ToHeader(),
 	)
-	headers.Add("X-Endpoint-Header", fmt.Sprintf("%v", request.XEndpointHeader))
+	headers.Add("X-Endpoint-Header", request.XEndpointHeader)
 	var response string
 	raw, err := r.caller.Call(
 		ctx,

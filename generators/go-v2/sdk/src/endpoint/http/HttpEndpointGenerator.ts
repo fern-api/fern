@@ -62,32 +62,32 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         if (!this.shouldGenerateRawEndpoint({ endpoint })) {
             return [];
         }
+        const signature = this.getEndpointSignatureInfo({ serviceId, service, endpoint });
         const endpointRequest = getEndpointRequest({ context: this.context, endpoint, serviceId, service });
-        return [this.generateRawUnaryEndpoint({ serviceId, service, endpoint, subpackage, endpointRequest })];
+        return [
+            this.generateRawUnaryEndpoint({ serviceId, service, endpoint, signature, subpackage, endpointRequest })
+        ];
     }
 
     private shouldGenerateRawEndpoint({ endpoint }: { endpoint: HttpEndpoint }): boolean {
-        return (
-            !this.context.isFileUploadEndpoint(endpoint) &&
-            !this.context.isPaginationEndpoint(endpoint) &&
-            !this.context.isStreamingEndpoint(endpoint)
-        );
+        return !this.context.isPaginationEndpoint(endpoint) && !this.context.isStreamingEndpoint(endpoint);
     }
 
     private generateRawUnaryEndpoint({
         serviceId,
         service,
         endpoint,
+        signature,
         subpackage,
         endpointRequest
     }: {
         serviceId: ServiceId;
         service: HttpService;
         endpoint: HttpEndpoint;
+        signature: EndpointSignatureInfo;
         subpackage: Subpackage | undefined;
         endpointRequest: EndpointRequest | undefined;
     }): go.Method {
-        const signature = this.getEndpointSignatureInfo({ serviceId, service, endpoint });
         return new go.Method({
             name: this.context.getMethodName(endpoint.name),
             parameters: signature.allParameters,
@@ -145,6 +145,12 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             if (buildErrorDecoder != null) {
                 writer.newLine();
                 writer.writeNode(buildErrorDecoder);
+            }
+
+            const requestBody = endpointRequest?.getRequestBodyBlock();
+            if (requestBody != null) {
+                writer.newLine();
+                writer.writeNode(requestBody);
             }
 
             const responseInitialization = this.getResponseInitialization({ endpoint });
@@ -621,7 +627,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         return go.codeblock((writer) => {
             writer.newLine();
             writer.write(`headers.Add("${wireValue}", `);
-            writer.writeNode(this.context.callSprintf([go.codeblock('"%v"'), value]));
+            writer.writeNode(value);
             writer.write(")");
         });
     }
