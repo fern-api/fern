@@ -60,7 +60,10 @@ export class WrappedEndpointRequest extends EndpointRequest {
                     assertNever(requestBody);
             }
         }
-        if (this.context.shouldSkipWrappedRequest({ endpoint: this.endpoint, wrapper: this.wrapper })) {
+        if (
+            this.wrapper.onlyPathParameters ||
+            this.context.shouldSkipWrappedRequest({ endpoint: this.endpoint, wrapper: this.wrapper })
+        ) {
             return undefined;
         }
         return super.getRequestReference();
