@@ -3,6 +3,32 @@ info:
   title: request-parameters
   version: ''
 paths:
+  /user/username:
+    post:
+      operationId: user_createUsername
+      tags:
+        - User
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+                name:
+                  type: string
+              required:
+                - username
+                - password
+                - name
   /user:
     get:
       operationId: user_getUsername
@@ -95,6 +121,18 @@ paths:
             type: array
             items:
               type: string
+        - name: longParam
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: bigIntParam
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: bigint
       responses:
         '200':
           description: ''
@@ -102,17 +140,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                searchTerm:
-                  type: string
-              required:
-                - searchTerm
 components:
   schemas:
     User:
