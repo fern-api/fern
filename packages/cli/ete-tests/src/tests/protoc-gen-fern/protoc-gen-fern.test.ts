@@ -1,9 +1,8 @@
 import { readFile } from "fs/promises";
 import path from "path";
 
-import { createLoggingExecutable } from "@fern-api/logging-execa";
-
 import { Logger } from "@fern-api/logger";
+import { createLoggingExecutable } from "@fern-api/logging-execa";
 
 const FIXTURES_DIR = path.join(__dirname, "fixtures");
 

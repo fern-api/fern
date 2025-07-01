@@ -1,12 +1,11 @@
 #!/usr/bin/env node
+import { fromBinary, toBinary } from "@bufbuild/protobuf";
+import { CodeGeneratorRequestSchema, CodeGeneratorResponseSchema } from "@bufbuild/protobuf/wkt";
 import getPort from "get-port";
+import type { ReadStream, WriteStream } from "node:tty";
 import { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
-
-import { fromBinary, toBinary } from "@bufbuild/protobuf";
-import { CodeGeneratorRequestSchema, CodeGeneratorResponseSchema } from "@bufbuild/protobuf/wkt";
-import type { ReadStream, WriteStream } from "node:tty";
 
 import {
     GENERATORS_CONFIGURATION_FILENAME,
@@ -20,8 +19,9 @@ import { AbsoluteFilePath, cwd, doesPathExist, isURL, resolve } from "@fern-api/
 import { initializeAPI, initializeDocs, initializeWithMintlify, initializeWithReadme } from "@fern-api/init";
 import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
 import { askToLogin, login } from "@fern-api/login";
+import { protocGenFern } from "@fern-api/protoc-gen-fern";
 import { FernCliError, LoggableFernCliError } from "@fern-api/task-context";
-import { protocGenFern } from "@fern-api/protoc-gen-fern"
+
 import { LoadOpenAPIStatus, loadOpenAPIFromUrl } from "../../init/src/utils/loadOpenApiFromUrl";
 import { CliContext } from "./cli-context/CliContext";
 import { getLatestVersionOfCli } from "./cli-context/upgrade-utils/getLatestVersionOfCli";
