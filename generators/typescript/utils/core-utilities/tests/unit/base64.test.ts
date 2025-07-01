@@ -1,4 +1,4 @@
-import { base64Decode, base64Encode } from "../../src/core/base64";
+import { base64Encode, base64Decode } from "../../src/core/base64";
 
 describe("base64", () => {
     describe("base64Encode", () => {
@@ -39,7 +39,7 @@ describe("base64", () => {
             "test@example.com",
             "café",
             "username:password",
-            "user@domain.com:super$ecret123!"
+            "user@domain.com:super$ecret123!",
         ];
 
         testStrings.forEach((testString) => {

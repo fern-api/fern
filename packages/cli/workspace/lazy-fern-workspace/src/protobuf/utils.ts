@@ -25,7 +25,7 @@ export const PROTOBUF_MODULE_PACKAGE_JSON = `{
 
 export const PROTOBUF_SHELL_PROXY = `#!/usr/bin/env bash
 export FERN_NO_VERSION_REDIRECTION=true
-exec node ~/Fern/fern/packages/cli/cli/dist/prod/cli.cjs protoc-gen-fern "$@"
+exec node ~/Fern/fern/packages/cli/cli/dist/dev/cli.cjs protoc-gen-fern "$@"
 `;
 
 export const createEmptyProtobufLogger = (): Logger => {
