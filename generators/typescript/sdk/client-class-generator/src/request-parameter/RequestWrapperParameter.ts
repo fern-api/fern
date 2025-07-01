@@ -3,6 +3,15 @@ import { GeneratedRequestWrapper, RequestWrapperNonBodyProperty, SdkContext } fr
 import { ts } from "ts-morph";
 
 import { ExampleEndpointCall, HttpHeader, QueryParameter } from "@fern-fern/ir-sdk/api";
+import {
+    BigIntegerType,
+    BooleanType,
+    DoubleType,
+    IntegerType,
+    LongType,
+    StringType,
+    TypeReference
+} from "@fern-fern/ir-sdk/api/resources/types/types";
 
 import { AbstractRequestParameter } from "./AbstractRequestParameter";
 
@@ -39,7 +48,7 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
         this.nonBodyKeyAliases = {};
 
         const generatedRequestWrapper = this.getGeneratedRequestWrapper(context);
-        const nonBodyKeys = generatedRequestWrapper.getNonBodyKeys(context);
+        const nonBodyKeys = generatedRequestWrapper.getNonBodyKeysWithData(context);
 
         if (nonBodyKeys.length === 0) {
             return [];
@@ -59,13 +68,28 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
             const nonConflictingName = getNonConflictingName(defaultName);
             this.nonBodyKeyAliases[defaultName] = nonConflictingName;
 
+            const useDefaultValues = (context.config.customConfig as { useDefaultRequestParameterValues?: boolean })
+                ?.useDefaultRequestParameterValues;
+
+            let defaultValue: ts.Expression | undefined;
+            if (useDefaultValues) {
+                if (nonBodyKey.originalParameter != null) {
+                    if (nonBodyKey.originalParameter.type !== "file") {
+                        defaultValue = this.extractDefaultValue(
+                            nonBodyKey.originalParameter.parameter.valueType,
+                            context
+                        );
+                    }
+                }
+            }
+
             return ts.factory.createBindingElement(
                 undefined,
                 nonConflictingName !== nonBodyKey.propertyName
                     ? ts.factory.createStringLiteral(nonBodyKey.propertyName)
                     : undefined,
                 nonConflictingName,
-                undefined
+                defaultValue
             );
         });
 
@@ -204,5 +228,75 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
             throw new Error("Could not locate alias for: " + defaultName);
         }
         return alias;
+    }
+
+    private extractDefaultValue(typeReference: TypeReference, context: SdkContext): ts.Expression | undefined {
+        const resolvedType = context.type.resolveTypeReference(typeReference);
+
+        if (resolvedType.type === "container" && resolvedType.container.type === "optional") {
+            return this.extractDefaultValue(resolvedType.container.optional, context);
+        }
+
+        const useBigInt = (context.config.customConfig as { useBigInt?: boolean })?.useBigInt;
+
+        if (resolvedType.type === "primitive" && resolvedType.primitive.v2 != null) {
+            return resolvedType.primitive.v2._visit<ts.Expression | undefined>({
+                integer: (integerType: IntegerType) => {
+                    if (integerType.default != null) {
+                        return ts.factory.createNumericLiteral(integerType.default.toString());
+                    }
+                    return undefined;
+                },
+                long: (longType: LongType) => {
+                    if (longType.default != null) {
+                        if (useBigInt) {
+                            return ts.factory.createCallExpression(ts.factory.createIdentifier("BigInt"), undefined, [
+                                ts.factory.createStringLiteral(longType.default.toString())
+                            ]);
+                        }
+                        return ts.factory.createNumericLiteral(longType.default.toString());
+                    }
+                    return undefined;
+                },
+                double: (doubleType: DoubleType) => {
+                    if (doubleType.default != null) {
+                        return ts.factory.createNumericLiteral(doubleType.default.toString());
+                    }
+                    return undefined;
+                },
+                string: (stringType: StringType) => {
+                    if (stringType.default != null) {
+                        return ts.factory.createStringLiteral(stringType.default);
+                    }
+                    return undefined;
+                },
+                boolean: (booleanType: BooleanType) => {
+                    if (booleanType.default != null) {
+                        return booleanType.default ? ts.factory.createTrue() : ts.factory.createFalse();
+                    }
+                    return undefined;
+                },
+                bigInteger: (bigIntegerType: BigIntegerType) => {
+                    if (bigIntegerType.default != null) {
+                        if (useBigInt) {
+                            return ts.factory.createCallExpression(ts.factory.createIdentifier("BigInt"), undefined, [
+                                ts.factory.createStringLiteral(bigIntegerType.default)
+                            ]);
+                        }
+                        return ts.factory.createStringLiteral(bigIntegerType.default);
+                    }
+                    return undefined;
+                },
+                uint: () => undefined,
+                uint64: () => undefined,
+                float: () => undefined,
+                date: () => undefined,
+                dateTime: () => undefined,
+                uuid: () => undefined,
+                base64: () => undefined,
+                _other: () => undefined
+            });
+        }
+        return undefined;
     }
 }

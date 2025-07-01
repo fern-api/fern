@@ -1,0 +1,169 @@
+openapi: 3.0.1
+info:
+  title: request-parameters
+  version: ''
+paths:
+  /user/username:
+    post:
+      operationId: user_createUsername
+      tags:
+        - User
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+                name:
+                  type: string
+              required:
+                - username
+                - password
+                - name
+  /user:
+    get:
+      operationId: user_getUsername
+      tags:
+        - User
+      parameters:
+        - name: limit
+          in: query
+          required: true
+          schema:
+            type: integer
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: date
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: deadline
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date-time
+        - name: bytes
+          in: query
+          required: true
+          schema:
+            type: string
+            format: byte
+        - name: user
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/User'
+        - name: userList
+          in: query
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/User'
+        - name: optionalDeadline
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date-time
+            nullable: true
+        - name: keyValue
+          in: query
+          required: true
+          schema:
+            type: object
+            additionalProperties:
+              type: string
+        - name: optionalString
+          in: query
+          required: false
+          schema:
+            type: string
+            nullable: true
+        - name: nestedUser
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/NestedUser'
+        - name: optionalUser
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/User'
+            nullable: true
+        - name: excludeUser
+          in: query
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/User'
+        - name: filter
+          in: query
+          required: true
+          schema:
+            type: array
+            items:
+              type: string
+        - name: longParam
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: bigIntParam
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: bigint
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+components:
+  schemas:
+    User:
+      title: User
+      type: object
+      properties:
+        name:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+      required:
+        - name
+        - tags
+    NestedUser:
+      title: NestedUser
+      type: object
+      properties:
+        name:
+          type: string
+        user:
+          $ref: '#/components/schemas/User'
+      required:
+        - name
+        - user
+  securitySchemes: {}

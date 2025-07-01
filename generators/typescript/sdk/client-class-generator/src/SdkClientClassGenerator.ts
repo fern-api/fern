@@ -33,6 +33,7 @@ export declare namespace SdkClientClassGenerator {
         formDataSupport: "Node16" | "Node18";
         exportsManager: ExportsManager;
         omitFernHeaders: boolean;
+        useDefaultRequestParameterValues: boolean;
     }
 
     export namespace generateService {
@@ -69,7 +70,7 @@ export class SdkClientClassGenerator {
     private readonly fileResponseType: "stream" | "binary-response";
     private exportsManager: ExportsManager;
     private omitFernHeaders: boolean;
-
+    private useDefaultRequestParameterValues: boolean;
     constructor({
         intermediateRepresentation,
         errorResolver,
@@ -93,7 +94,8 @@ export class SdkClientClassGenerator {
         fileResponseType,
         exportsManager,
         formDataSupport,
-        omitFernHeaders
+        omitFernHeaders,
+        useDefaultRequestParameterValues
     }: SdkClientClassGenerator.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.errorResolver = errorResolver;
@@ -118,6 +120,7 @@ export class SdkClientClassGenerator {
         this.exportsManager = exportsManager;
         this.formDataSupport = formDataSupport;
         this.omitFernHeaders = omitFernHeaders;
+        this.useDefaultRequestParameterValues = useDefaultRequestParameterValues;
     }
 
     public generateService({
@@ -153,7 +156,8 @@ export class SdkClientClassGenerator {
             streamType: this.streamType,
             fileResponseType: this.fileResponseType,
             formDataSupport: this.formDataSupport,
-            omitFernHeaders: this.omitFernHeaders
+            omitFernHeaders: this.omitFernHeaders,
+            useDefaultRequestParameterValues: this.useDefaultRequestParameterValues
         });
     }
 }

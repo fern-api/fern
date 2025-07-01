@@ -139,6 +139,7 @@ export declare namespace SdkContextImpl {
         relativePackagePath: string;
         relativeTestPath: string;
         formDataSupport: "Node16" | "Node18";
+        useDefaultRequestParameterValues: boolean;
     }
 }
 
@@ -249,7 +250,8 @@ export class SdkContextImpl implements SdkContext {
         enableInlineTypes,
         relativePackagePath,
         relativeTestPath,
-        formDataSupport
+        formDataSupport,
+        useDefaultRequestParameterValues
     }: SdkContextImpl.Init) {
         this.logger = logger;
         this.ir = ir;
@@ -317,6 +319,7 @@ export class SdkContextImpl implements SdkContext {
             enableInlineTypes,
             allowExtraFields,
             omitUndefined,
+            useDefaultRequestParameterValues,
             context: this
         });
         this.typeSchema = new TypeSchemaContextImpl({
