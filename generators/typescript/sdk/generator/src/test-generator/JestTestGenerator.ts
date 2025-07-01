@@ -98,8 +98,8 @@ export class JestTestGenerator {
                 function extractRootConfig(configs) {
                     const rootConfig = {};
                     for (const config of configs) {
-                        if (rootConfig.workerThreads === true) {
-                            config.workerThreads = true;
+                        if (config.workerThreads === true) {
+                            rootConfig.workerThreads = true;
                         }
                     }
                     return rootConfig;

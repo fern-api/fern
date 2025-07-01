@@ -6,8 +6,8 @@ const configs = [unitConfig, browserConfig, wireConfig];
 function extractRootConfig(configs) {
     const rootConfig = {};
     for (const config of configs) {
-        if (rootConfig.workerThreads === true) {
-            config.workerThreads = true;
+        if (config.workerThreads === true) {
+            rootConfig.workerThreads = true;
         }
     }
     return rootConfig;
