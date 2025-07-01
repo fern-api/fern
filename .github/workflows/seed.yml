@@ -302,7 +302,7 @@ jobs:
         uses: ./.github/actions/cached-seed
         with:
           generator-name: go-fiber
-          generator-path: generators/go
+          generator-path: generators/go generators/go-v2
 
   go-model:
     runs-on: Seed
@@ -316,7 +316,7 @@ jobs:
         uses: ./.github/actions/cached-seed
         with:
           generator-name: go-model
-          generator-path: generators/go
+          generator-path: generators/go generators/go-v2
 
   go-sdk:
     runs-on: Seed
@@ -330,7 +330,7 @@ jobs:
         uses: ./.github/actions/cached-seed
         with:
           generator-name: go-sdk
-          generator-path: generators/go
+          generator-path: generators/go generators/go-v2
 
   csharp-model:
     runs-on: Seed
