@@ -269,8 +269,8 @@ export class TypeContextImpl implements TypeContext {
         switch (typeReference.type) {
             case "primitive":
                 return typeReference.primitive.v2 != null && 
-                       typeof typeReference.primitive.v2 === 'object' && 
-                       'default' in typeReference.primitive.v2 && 
+                       typeof typeReference.primitive.v2 === "object" && 
+                       "default" in typeReference.primitive.v2 && 
                        typeReference.primitive.v2.default != null;
             case "container":
                 if (typeReference.container.type === "optional") {
@@ -280,12 +280,13 @@ export class TypeContextImpl implements TypeContext {
                     return this.hasDefaultValue(typeReference.container.nullable);
                 }
                 return false;
-            case "named":
+            case "named": {
                 const typeDeclaration = this.typeResolver.getTypeDeclarationFromId(typeReference.typeId);
                 if (typeDeclaration.shape.type === "alias") {
                     return this.hasDefaultValue(typeDeclaration.shape.aliasOf);
                 }
                 return false;
+            }
             default:
                 return false;
         }
