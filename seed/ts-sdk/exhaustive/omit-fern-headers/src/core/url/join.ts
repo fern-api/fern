@@ -1,4 +1,4 @@
-export function joinUrl(base: string, ...segments: string[]): string {
+export function join(base: string, ...segments: string[]): string {
     if (!base) {
         return "";
     }
