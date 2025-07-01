@@ -8,6 +8,7 @@ import { Logger } from "../../../../logger/src/Logger";
 const FIXTURES_DIR = path.join(__dirname, "fixtures");
 
 describe("fern protoc-gen-fern", () => {
+    // eslint-disable-next-line jest/no-disabled-tests
     it.skip("test with buf", async () => {
         const buf = createLoggingExecutable("buf", {
             cwd: FIXTURES_DIR,
