@@ -10,3 +10,4 @@ export * from "./utils/index";
 export * from "./websocket/index";
 export * from "./utils/index";
 export * from "./url.js";
+export * from "./base64.js";

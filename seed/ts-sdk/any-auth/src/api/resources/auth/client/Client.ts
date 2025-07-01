@@ -5,7 +5,6 @@
 import * as core from "../../../../core/index.js";
 import * as SeedAnyAuth from "../../../index.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
-import urlJoin from "url-join";
 import * as errors from "../../../../errors/index.js";
 
 export declare namespace Auth {
@@ -61,7 +60,7 @@ export class Auth {
         requestOptions?: Auth.RequestOptions,
     ): Promise<core.WithRawResponse<SeedAnyAuth.TokenResponse>> {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.joinUrl(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/token",

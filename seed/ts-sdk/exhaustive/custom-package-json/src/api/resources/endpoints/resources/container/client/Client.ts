@@ -5,7 +5,6 @@
 import * as core from "../../../../../../core/index.js";
 import * as Fiddle from "../../../../../index.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/headers.js";
-import urlJoin from "url-join";
 
 export declare namespace Container {
     export interface Options {
@@ -59,7 +58,7 @@ export class Container {
         core.WithRawResponse<core.APIResponse<string[], Fiddle.endpoints.container.getAndReturnListOfPrimitives.Error>>
     > {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.joinUrl(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/container/list-of-primitives",
@@ -134,7 +133,7 @@ export class Container {
         >
     > {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.joinUrl(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/container/list-of-objects",
@@ -197,7 +196,7 @@ export class Container {
         core.WithRawResponse<core.APIResponse<string[], Fiddle.endpoints.container.getAndReturnSetOfPrimitives.Error>>
     > {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.joinUrl(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/container/set-of-primitives",
@@ -270,7 +269,7 @@ export class Container {
         >
     > {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.joinUrl(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/container/set-of-objects",
@@ -337,7 +336,7 @@ export class Container {
         >
     > {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.joinUrl(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/container/map-prim-to-prim",
@@ -412,7 +411,7 @@ export class Container {
         >
     > {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.joinUrl(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/container/map-prim-to-object",
@@ -485,7 +484,7 @@ export class Container {
         >
     > {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.joinUrl(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/container/opt-objects",

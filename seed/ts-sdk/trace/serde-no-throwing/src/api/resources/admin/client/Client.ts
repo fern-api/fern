@@ -7,7 +7,6 @@ import * as core from "../../../../core/index.js";
 import * as SeedTrace from "../../../index.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as serializers from "../../../../serialization/index.js";
-import urlJoin from "url-join";
 
 export declare namespace Admin {
     export interface Options {
@@ -68,7 +67,7 @@ export class Admin {
         requestOptions?: Admin.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.admin.updateTestSubmissionStatus.Error>>> {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.joinUrl(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
@@ -145,7 +144,7 @@ export class Admin {
         requestOptions?: Admin.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.admin.sendTestSubmissionUpdate.Error>>> {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.joinUrl(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
@@ -218,7 +217,7 @@ export class Admin {
         requestOptions?: Admin.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.admin.updateWorkspaceSubmissionStatus.Error>>> {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.joinUrl(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
@@ -295,7 +294,7 @@ export class Admin {
         requestOptions?: Admin.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.admin.sendWorkspaceSubmissionUpdate.Error>>> {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.joinUrl(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
@@ -456,7 +455,7 @@ export class Admin {
         requestOptions?: Admin.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.admin.storeTracedTestCase.Error>>> {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.joinUrl(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
@@ -606,7 +605,7 @@ export class Admin {
         requestOptions?: Admin.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.admin.storeTracedTestCaseV2.Error>>> {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.joinUrl(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
@@ -759,7 +758,7 @@ export class Admin {
         requestOptions?: Admin.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.admin.storeTracedWorkspace.Error>>> {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.joinUrl(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
@@ -906,7 +905,7 @@ export class Admin {
         requestOptions?: Admin.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.admin.storeTracedWorkspaceV2.Error>>> {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.joinUrl(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,

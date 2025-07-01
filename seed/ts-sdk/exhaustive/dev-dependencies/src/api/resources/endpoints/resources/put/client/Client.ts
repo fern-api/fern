@@ -5,7 +5,6 @@
 import * as core from "../../../../../../core/index.js";
 import * as Fiddle from "../../../../../index.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/headers.js";
-import urlJoin from "url-join";
 
 export declare namespace Put {
     export interface Options {
@@ -58,7 +57,7 @@ export class Put {
     ): Promise<core.WithRawResponse<core.APIResponse<Fiddle.endpoints.PutResponse, Fiddle.endpoints.put.add.Error>>> {
         const { id } = request;
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.joinUrl(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 `${encodeURIComponent(id)}`,

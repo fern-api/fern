@@ -5,7 +5,6 @@
 import * as core from "../../../../core/index.js";
 import * as Fiddle from "../../../index.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
-import urlJoin from "url-join";
 
 export declare namespace NoAuth {
     export interface Options {
@@ -59,7 +58,7 @@ export class NoAuth {
         requestOptions?: NoAuth.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<boolean, Fiddle.noAuth.postWithNoAuth.Error>>> {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.joinUrl(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/no-auth",
