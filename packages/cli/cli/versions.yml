@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |  
+        Add global headers in endpoint example generation.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-07-01"
+  version: 0.64.34
+
+- changelogEntry:
+    - summary: |  
         GA release with support for protobuf generation
       type: feat
   irVersion: 58
