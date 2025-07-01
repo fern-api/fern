@@ -53,4 +53,10 @@ service:
           filter:
             type: string
             allow-multiple: true
+          longParam:
+            type: long
+            default: 9223372036854775807
+          bigIntParam:
+            type: bigint
+            default: "18446744073709551615"
       response: User

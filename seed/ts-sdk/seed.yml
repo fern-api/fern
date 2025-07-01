@@ -209,6 +209,9 @@ fixtures:
   request-parameters:
     - customConfig: null
       outputFolder: no-custom-config
+    - customConfig:
+        useBigInt: true
+      outputFolder: use-big-int
   trace:
     - customConfig: null
       outputFolder: no-custom-config

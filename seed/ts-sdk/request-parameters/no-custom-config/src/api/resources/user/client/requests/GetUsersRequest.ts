@@ -43,7 +43,9 @@ import * as SeedRequestParameters from "../../../../index.js";
  *             name: "name",
  *             tags: ["tags", "tags"]
  *         },
- *         filter: "filter"
+ *         filter: "filter",
+ *         longParam: 1000000,
+ *         bigIntParam: "1000000"
  *     }
  */
 export interface GetUsersRequest {
@@ -61,4 +63,6 @@ export interface GetUsersRequest {
     optionalUser?: SeedRequestParameters.User;
     excludeUser: SeedRequestParameters.User | SeedRequestParameters.User[];
     filter: string | string[];
+    longParam?: number;
+    bigIntParam?: string;
 }

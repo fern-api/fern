@@ -108,6 +108,8 @@ await client.user.getUsername({
         tags: ["tags", "tags"],
     },
     filter: "filter",
+    longParam: 1000000,
+    bigIntParam: "1000000",
 });
 ```
 

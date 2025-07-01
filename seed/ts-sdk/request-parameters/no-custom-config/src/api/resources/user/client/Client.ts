@@ -59,7 +59,7 @@ export class User {
         requestOptions?: User.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/user/username",
@@ -146,7 +146,9 @@ export class User {
      *             name: "name",
      *             tags: ["tags", "tags"]
      *         },
-     *         filter: "filter"
+     *         filter: "filter",
+     *         longParam: 1000000,
+     *         bigIntParam: "1000000"
      *     })
      */
     public getUsername(
@@ -175,6 +177,8 @@ export class User {
             optionalUser,
             excludeUser,
             filter,
+            longParam = 9223372036854776000,
+            bigIntParam = "18446744073709551615",
         } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (limit != null) {
@@ -213,8 +217,16 @@ export class User {
             _queryParams["filter"] = filter;
         }
 
+        if (longParam != null) {
+            _queryParams["longParam"] = longParam.toString();
+        }
+
+        if (bigIntParam != null) {
+            _queryParams["bigIntParam"] = bigIntParam;
+        }
+
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/user",
