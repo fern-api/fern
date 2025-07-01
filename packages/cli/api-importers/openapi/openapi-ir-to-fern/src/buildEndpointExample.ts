@@ -1,6 +1,7 @@
 import { isNonNullish } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { EndpointExample, FullExample, PathParameterExample } from "@fern-api/openapi-ir";
+import { EndpointExample, FullExample, PathParameterExample, PrimitiveExample } from "@fern-api/openapi-ir";
+import { Schema } from "@fern-api/openapi-ir";
 
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { convertEndpointResponseExample, convertFullExample } from "./utils/convertFullExample";
@@ -33,8 +34,21 @@ export function buildEndpointExample({
         example["query-parameters"] = convertQueryParameterExample(endpointExample.queryParameters);
     }
 
-    if (endpointExample.headers != null && endpointExample.headers.length > 0) {
-        example.headers = convertHeaderExamples({ context, namedFullExamples: endpointExample.headers });
+    const hasEndpointHeaders = endpointExample.headers != null && endpointExample.headers.length > 0;
+    const hasGlobalHeaders = context.ir.globalHeaders != null && context.ir.globalHeaders.length > 0;
+    if (hasEndpointHeaders || hasGlobalHeaders) {
+        const namedFullExamples: NamedFullExample[] = [
+            ...(endpointExample.headers ?? []),
+            ...(context.ir.globalHeaders?.map((header) => ({
+                name: header.header,
+                value: FullExample.primitive(PrimitiveExample.string(header.header))
+            })) ?? [])
+        ];
+
+        example.headers = convertHeaderExamples({ 
+            context, 
+            namedFullExamples 
+        });
     }
 
     if (endpointExample.request != null) {

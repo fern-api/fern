@@ -2,7 +2,7 @@ import { camelCase } from "lodash-es";
 
 import { ROOT_API_FILENAME } from "@fern-api/configuration";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { GlobalHeader } from "@fern-api/openapi-ir";
+import { GlobalHeader, Schema } from "@fern-api/openapi-ir";
 import { RelativeFilePath, join } from "@fern-api/path-utils";
 
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
@@ -121,11 +121,25 @@ export function buildGlobalHeaders(context: OpenApiIrConverterContext): void {
                     name: headerName,
                     schema: header.schema
                 });
+                context.ir.globalHeaders?.push({
+                    header: headerName,
+                    name: headerName,
+                    optional: undefined,
+                    env: undefined,
+                    schema: header.schema as Schema
+                })
             } else if (isOptional) {
                 context.builder.addGlobalHeader({
                     name: headerName,
                     schema: wrapTypeReferenceAsOptional(header.schema)
                 });
+                context.ir.globalHeaders?.push({
+                    header: headerName,
+                    name: headerName,
+                    optional: undefined,
+                    env: undefined,
+                    schema: wrapTypeReferenceAsOptional(header.schema) as Schema
+                })
             }
         }
     }
