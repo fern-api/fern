@@ -81,7 +81,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             formDataSupport: parsed?.formDataSupport ?? "Node16",
             fetchSupport: parsed?.fetchSupport ?? "node-fetch",
             packagePath: parsed?.packagePath,
-            omitFernHeaders: parsed?.omitFernHeaders ?? false,
+            omitFernHeaders: parsed?.omitFernHeaders ?? false
         };
     }
 

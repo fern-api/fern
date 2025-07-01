@@ -2,8 +2,8 @@ import { ts } from "ts-morph";
 
 import { DependencyManager, DependencyType } from "../dependency-manager/DependencyManager";
 import { CoreUtility } from "./CoreUtility";
-import { MANIFEST as UrlManifest } from "./UrlUtils";
 import { MANIFEST as RuntimeManifest } from "./Runtime";
+import { MANIFEST as UrlManifest } from "./UrlUtils";
 
 export interface Fetcher {
     readonly Fetcher: {

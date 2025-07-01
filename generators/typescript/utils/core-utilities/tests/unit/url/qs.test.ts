@@ -65,7 +65,7 @@ describe("Test qs toQueryString", () => {
         it("should handle deeply nested objects", () => {
             const obj = { user: { profile: { name: "John", settings: { theme: "dark" } } } };
             expect(toQueryString(obj)).toBe(
-                "user%5Bprofile%5D%5Bname%5D=John&user%5Bprofile%5D%5Bsettings%5D%5Btheme%5D=dark",
+                "user%5Bprofile%5D%5Bname%5D=John&user%5Bprofile%5D%5Bsettings%5D%5Btheme%5D=dark"
             );
         });
 
@@ -104,13 +104,13 @@ describe("Test qs toQueryString", () => {
                     status: ["active", "pending"],
                     category: {
                         type: "electronics",
-                        subcategories: ["phones", "laptops"],
-                    },
+                        subcategories: ["phones", "laptops"]
+                    }
                 },
-                sort: { field: "name", direction: "asc" },
+                sort: { field: "name", direction: "asc" }
             };
             expect(toQueryString(obj)).toBe(
-                "filters%5Bstatus%5D%5B0%5D=active&filters%5Bstatus%5D%5B1%5D=pending&filters%5Bcategory%5D%5Btype%5D=electronics&filters%5Bcategory%5D%5Bsubcategories%5D%5B0%5D=phones&filters%5Bcategory%5D%5Bsubcategories%5D%5B1%5D=laptops&sort%5Bfield%5D=name&sort%5Bdirection%5D=asc",
+                "filters%5Bstatus%5D%5B0%5D=active&filters%5Bstatus%5D%5B1%5D=pending&filters%5Bcategory%5D%5Btype%5D=electronics&filters%5Bcategory%5D%5Bsubcategories%5D%5B0%5D=phones&filters%5Bcategory%5D%5Bsubcategories%5D%5B1%5D=laptops&sort%5Bfield%5D=name&sort%5Bdirection%5D=asc"
             );
         });
 
@@ -120,13 +120,13 @@ describe("Test qs toQueryString", () => {
                     status: ["active", "pending"],
                     category: {
                         type: "electronics",
-                        subcategories: ["phones", "laptops"],
-                    },
+                        subcategories: ["phones", "laptops"]
+                    }
                 },
-                sort: { field: "name", direction: "asc" },
+                sort: { field: "name", direction: "asc" }
             };
             expect(toQueryString(obj, { arrayFormat: "repeat" })).toBe(
-                "filters%5Bstatus%5D=active&filters%5Bstatus%5D=pending&filters%5Bcategory%5D%5Btype%5D=electronics&filters%5Bcategory%5D%5Bsubcategories%5D=phones&filters%5Bcategory%5D%5Bsubcategories%5D=laptops&sort%5Bfield%5D=name&sort%5Bdirection%5D=asc",
+                "filters%5Bstatus%5D=active&filters%5Bstatus%5D=pending&filters%5Bcategory%5D%5Btype%5D=electronics&filters%5Bcategory%5D%5Bsubcategories%5D=phones&filters%5Bcategory%5D%5Bsubcategories%5D=laptops&sort%5Bfield%5D=name&sort%5Bdirection%5D=asc"
             );
         });
 

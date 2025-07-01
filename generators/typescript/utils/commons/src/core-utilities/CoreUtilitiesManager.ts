@@ -98,7 +98,7 @@ export class CoreUtilitiesManager {
             utils: new UtilsImpl({ getReferenceToExport }),
             websocket: new WebsocketImpl({ getReferenceToExport }),
             fileUtils: new FileUtilsImpl({ getReferenceToExport }),
-            urlUtils: new UrlUtilsImpl({ getReferenceToExport }),
+            urlUtils: new UrlUtilsImpl({ getReferenceToExport })
         };
     }
 
