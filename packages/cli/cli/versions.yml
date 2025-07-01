@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |  
+        Use 'fern protoc-gen-fern' in buf shell proxy instead of local cli build.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-01"
+  version: 0.64.32-rc1
+
+- changelogEntry:
+    - summary: |  
         Reintroduce buf command/dependency.
       type: feat
   irVersion: 58
