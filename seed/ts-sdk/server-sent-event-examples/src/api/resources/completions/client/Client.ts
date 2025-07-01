@@ -48,7 +48,7 @@ export class Completions {
         requestOptions?: Completions.RequestOptions,
     ): Promise<core.WithRawResponse<core.Stream<SeedServerSentEvents.StreamedCompletion>>> {
         const _response = await core.fetcher<stream.Readable>({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "stream",

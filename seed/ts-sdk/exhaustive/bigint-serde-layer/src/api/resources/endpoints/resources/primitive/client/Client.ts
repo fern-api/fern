@@ -55,7 +55,7 @@ export class Primitive {
         requestOptions?: Primitive.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/primitive/string",
@@ -133,7 +133,7 @@ export class Primitive {
         requestOptions?: Primitive.RequestOptions,
     ): Promise<core.WithRawResponse<number>> {
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/primitive/integer",
@@ -211,7 +211,7 @@ export class Primitive {
         requestOptions?: Primitive.RequestOptions,
     ): Promise<core.WithRawResponse<bigint>> {
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/primitive/long",
@@ -289,7 +289,7 @@ export class Primitive {
         requestOptions?: Primitive.RequestOptions,
     ): Promise<core.WithRawResponse<number>> {
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/primitive/double",
@@ -367,7 +367,7 @@ export class Primitive {
         requestOptions?: Primitive.RequestOptions,
     ): Promise<core.WithRawResponse<boolean>> {
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/primitive/boolean",
@@ -445,7 +445,7 @@ export class Primitive {
         requestOptions?: Primitive.RequestOptions,
     ): Promise<core.WithRawResponse<Date>> {
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/primitive/datetime",
@@ -523,7 +523,7 @@ export class Primitive {
         requestOptions?: Primitive.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/primitive/date",
@@ -601,7 +601,7 @@ export class Primitive {
         requestOptions?: Primitive.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/primitive/uuid",
@@ -679,7 +679,7 @@ export class Primitive {
         requestOptions?: Primitive.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/primitive/base64",

@@ -63,7 +63,7 @@ export class Migration {
     ): Promise<core.WithRawResponse<SeedTrace.Migration[]>> {
         const { "admin-key-header": adminKeyHeader } = request;
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,

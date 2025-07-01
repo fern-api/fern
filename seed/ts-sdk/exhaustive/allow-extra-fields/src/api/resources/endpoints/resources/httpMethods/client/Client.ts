@@ -52,7 +52,7 @@ export class HttpMethods {
         requestOptions?: HttpMethods.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 `/http-methods/${encodeURIComponent(id)}`,
@@ -117,7 +117,7 @@ export class HttpMethods {
         requestOptions?: HttpMethods.RequestOptions,
     ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithOptionalField>> {
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/http-methods",
@@ -191,7 +191,7 @@ export class HttpMethods {
         requestOptions?: HttpMethods.RequestOptions,
     ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithOptionalField>> {
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 `/http-methods/${encodeURIComponent(id)}`,
@@ -279,7 +279,7 @@ export class HttpMethods {
         requestOptions?: HttpMethods.RequestOptions,
     ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithOptionalField>> {
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 `/http-methods/${encodeURIComponent(id)}`,
@@ -345,7 +345,7 @@ export class HttpMethods {
         requestOptions?: HttpMethods.RequestOptions,
     ): Promise<core.WithRawResponse<boolean>> {
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 `/http-methods/${encodeURIComponent(id)}`,

@@ -3,7 +3,6 @@
  */
 
 import * as core from "../../../../core/index.js";
-import * as qs from "qs";
 import { RealtimeSocket } from "./Socket.js";
 
 export declare namespace Realtime {
@@ -51,7 +50,7 @@ export class Realtime {
             ...args["headers"],
         };
         const socket = new core.ReconnectingWebSocket(
-            `${(await core.Supplier.get(this._options["baseUrl"])) ?? (await core.Supplier.get(this._options["environment"]))}/realtime/?${encodeURIComponent(args["id"])}${qs.stringify(queryParams, { arrayFormat: "repeat" })}`,
+            `${(await core.Supplier.get(this._options["baseUrl"])) ?? (await core.Supplier.get(this._options["environment"]))}/realtime/?${encodeURIComponent(args["id"])}${core.url.toQueryString(queryParams, { arrayFormat: "repeat" })}`,
             [],
             { debug: args["debug"] ?? false, maxRetries: args["reconnectAttempts"] ?? 30 },
             websocketHeaders,

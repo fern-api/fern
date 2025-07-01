@@ -2,6 +2,7 @@ import { ts } from "ts-morph";
 
 import { DependencyManager, DependencyType } from "../dependency-manager/DependencyManager";
 import { CoreUtility } from "./CoreUtility";
+import { MANIFEST as UrlManifest } from "./UrlUtils";
 import { MANIFEST as RuntimeManifest } from "./Runtime";
 
 export interface Fetcher {
@@ -158,11 +159,6 @@ export const MANIFEST: CoreUtility.Manifest = {
             dependencyManager.addDependency("readable-stream", "^4.5.2");
         }
 
-        dependencyManager.addDependency("qs", "^6.13.1");
-        dependencyManager.addDependency("@types/qs", "^6.9.17", {
-            type: DependencyType.DEV
-        });
-
         if (streamType === "wrapper") {
             dependencyManager.addDependency("@types/readable-stream", "^4.0.18", {
                 type: DependencyType.DEV
@@ -175,7 +171,7 @@ export const MANIFEST: CoreUtility.Manifest = {
             type: DependencyType.DEV
         });
     },
-    dependsOn: [RuntimeManifest],
+    dependsOn: [RuntimeManifest, UrlManifest],
     getFilesPatterns: (options) => {
         const ignore: string[] = [];
         if (options.streamType !== "wrapper") {

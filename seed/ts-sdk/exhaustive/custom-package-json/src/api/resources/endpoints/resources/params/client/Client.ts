@@ -56,7 +56,7 @@ export class Params {
         requestOptions?: Params.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<string, Fiddle.endpoints.params.getWithPath.Error>>> {
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 `/params/path/${encodeURIComponent(param)}`,
@@ -117,7 +117,7 @@ export class Params {
     ): Promise<core.WithRawResponse<core.APIResponse<string, Fiddle.endpoints.params.getWithInlinePath.Error>>> {
         const { param } = request;
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 `/params/path/${encodeURIComponent(param)}`,
@@ -182,7 +182,7 @@ export class Params {
         _queryParams["query"] = query;
         _queryParams["number"] = number_.toString();
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/params",
@@ -258,7 +258,7 @@ export class Params {
         }
 
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/params",
@@ -325,7 +325,7 @@ export class Params {
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         _queryParams["query"] = query;
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 `/params/path-query/${encodeURIComponent(param)}`,
@@ -390,7 +390,7 @@ export class Params {
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         _queryParams["query"] = query;
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 `/params/path-query/${encodeURIComponent(param)}`,
@@ -452,7 +452,7 @@ export class Params {
         requestOptions?: Params.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<string, Fiddle.endpoints.params.modifyWithPath.Error>>> {
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 `/params/path/${encodeURIComponent(param)}`,
@@ -517,7 +517,7 @@ export class Params {
     ): Promise<core.WithRawResponse<core.APIResponse<string, Fiddle.endpoints.params.modifyWithInlinePath.Error>>> {
         const { param, body: _body } = request;
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 `/params/path/${encodeURIComponent(param)}`,

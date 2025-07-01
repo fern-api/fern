@@ -60,7 +60,7 @@ export class Imdb {
         requestOptions?: Imdb.RequestOptions,
     ): Promise<core.WithRawResponse<SeedApi.MovieId>> {
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/movies/create-movie",
@@ -128,7 +128,7 @@ export class Imdb {
         requestOptions?: Imdb.RequestOptions,
     ): Promise<core.WithRawResponse<SeedApi.Movie>> {
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 `/movies/${encodeURIComponent(movieId)}`,

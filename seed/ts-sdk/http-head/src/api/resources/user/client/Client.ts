@@ -47,7 +47,7 @@ export class User {
 
     private async __head(requestOptions?: User.RequestOptions): Promise<core.WithRawResponse<Headers>> {
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/users",
@@ -111,7 +111,7 @@ export class User {
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         _queryParams["limit"] = limit.toString();
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/users",

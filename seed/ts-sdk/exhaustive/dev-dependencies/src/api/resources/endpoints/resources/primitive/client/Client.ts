@@ -54,7 +54,7 @@ export class Primitive {
         requestOptions?: Primitive.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<string, Fiddle.endpoints.primitive.getAndReturnString.Error>>> {
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/primitive/string",
@@ -113,7 +113,7 @@ export class Primitive {
         requestOptions?: Primitive.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<number, Fiddle.endpoints.primitive.getAndReturnInt.Error>>> {
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/primitive/integer",
@@ -172,7 +172,7 @@ export class Primitive {
         requestOptions?: Primitive.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<number, Fiddle.endpoints.primitive.getAndReturnLong.Error>>> {
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/primitive/long",
@@ -231,7 +231,7 @@ export class Primitive {
         requestOptions?: Primitive.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<number, Fiddle.endpoints.primitive.getAndReturnDouble.Error>>> {
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/primitive/double",
@@ -290,7 +290,7 @@ export class Primitive {
         requestOptions?: Primitive.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<boolean, Fiddle.endpoints.primitive.getAndReturnBool.Error>>> {
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/primitive/boolean",
@@ -349,7 +349,7 @@ export class Primitive {
         requestOptions?: Primitive.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<string, Fiddle.endpoints.primitive.getAndReturnDatetime.Error>>> {
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/primitive/datetime",
@@ -408,7 +408,7 @@ export class Primitive {
         requestOptions?: Primitive.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<string, Fiddle.endpoints.primitive.getAndReturnDate.Error>>> {
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/primitive/date",
@@ -467,7 +467,7 @@ export class Primitive {
         requestOptions?: Primitive.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<string, Fiddle.endpoints.primitive.getAndReturnUuid.Error>>> {
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/primitive/uuid",
@@ -526,7 +526,7 @@ export class Primitive {
         requestOptions?: Primitive.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<string, Fiddle.endpoints.primitive.getAndReturnBase64.Error>>> {
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/primitive/base64",

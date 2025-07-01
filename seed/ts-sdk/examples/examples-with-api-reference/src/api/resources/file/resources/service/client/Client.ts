@@ -66,7 +66,7 @@ export class Service {
     ): Promise<core.WithRawResponse<SeedExamples.File_>> {
         const { "X-File-API-Version": xFileApiVersion } = request;
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 `/file/${encodeURIComponent(filename)}`,

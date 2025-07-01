@@ -60,7 +60,7 @@ export class Problem {
         requestOptions?: Problem.RequestOptions,
     ): Promise<core.WithRawResponse<SeedTrace.v2.v3.LightweightProblemInfoV2[]>> {
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
@@ -137,7 +137,7 @@ export class Problem {
         requestOptions?: Problem.RequestOptions,
     ): Promise<core.WithRawResponse<SeedTrace.v2.v3.ProblemInfoV2[]>> {
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
@@ -215,7 +215,7 @@ export class Problem {
         requestOptions?: Problem.RequestOptions,
     ): Promise<core.WithRawResponse<SeedTrace.v2.v3.ProblemInfoV2>> {
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
@@ -300,7 +300,7 @@ export class Problem {
         requestOptions?: Problem.RequestOptions,
     ): Promise<core.WithRawResponse<SeedTrace.v2.v3.ProblemInfoV2>> {
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,

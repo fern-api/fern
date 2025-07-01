@@ -114,7 +114,7 @@ export class Unknown {
         requestOptions?: Unknown.RequestOptions,
     ): Promise<core.WithRawResponse<any[]>> {
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/with-object",

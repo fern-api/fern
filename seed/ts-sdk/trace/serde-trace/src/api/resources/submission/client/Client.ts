@@ -66,7 +66,7 @@ export class Submission {
         requestOptions?: Submission.RequestOptions,
     ): Promise<core.WithRawResponse<SeedTrace.ExecutionSessionResponse>> {
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
@@ -146,7 +146,7 @@ export class Submission {
         requestOptions?: Submission.RequestOptions,
     ): Promise<core.WithRawResponse<SeedTrace.ExecutionSessionResponse | undefined>> {
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
@@ -224,7 +224,7 @@ export class Submission {
         requestOptions?: Submission.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
@@ -290,7 +290,7 @@ export class Submission {
         requestOptions?: Submission.RequestOptions,
     ): Promise<core.WithRawResponse<SeedTrace.GetExecutionSessionStateResponse>> {
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,

@@ -51,7 +51,7 @@ export class Bigunion {
         requestOptions?: Bigunion.RequestOptions,
     ): Promise<core.WithRawResponse<SeedUnions.BigUnion>> {
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 `/${encodeURIComponent(id)}`,
@@ -179,7 +179,7 @@ export class Bigunion {
         requestOptions?: Bigunion.RequestOptions,
     ): Promise<core.WithRawResponse<Record<string, boolean>>> {
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/many",

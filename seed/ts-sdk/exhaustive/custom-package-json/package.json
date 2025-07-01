@@ -30,13 +30,12 @@
         "formdata-node": "^6.0.3",
         "node-fetch": "^2.7.0",
         "readable-stream": "^4.5.2",
-        "qs": "^6.11.2",
         "lodash-es": "^4.17.21",
-        "stream": "^0.0.2"
+        "stream": "^0.0.2",
+        "qs": "^6.11.2"
     },
     "devDependencies": {
         "@types/node-fetch": "^2.6.12",
-        "@types/qs": "^6.9.17",
         "@types/readable-stream": "^4.0.18",
         "webpack": "^5.97.1",
         "ts-loader": "^9.5.1",
