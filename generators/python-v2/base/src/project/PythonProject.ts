@@ -7,8 +7,8 @@ import { loggingExeca } from "@fern-api/logging-execa";
 
 import { AbstractPythonGeneratorContext } from "../cli";
 import { BasePythonCustomConfigSchema } from "../custom-config";
-import { PackageConfig, PyprojectToml } from "./PyprojectToml";
-import { PythonDependency } from "./PythonDependency";
+import { PackageConfig, PyprojectTomlGenerator } from "./PyprojectTomlGenerator";
+import { PythonDependency, PythonDependencyType } from "./PythonDependency";
 import { WriteablePythonFile } from "./WriteablePythonFile";
 
 const AS_IS_DIRECTORY = path.join(__dirname, "asIs");
@@ -64,12 +64,12 @@ export class PythonProject extends AbstractProject<AbstractPythonGeneratorContex
      * Writes dependency as both pyproject.toml and requirements.txt.
      */
     private async writeDependencies(): Promise<void> {
-        const prodDependencies = this.dependencies.filter((dep) => !dep.isDevDependency);
-        const devDependencies = this.dependencies.filter((dep) => dep.isDevDependency);
+        const prodDependencies = this.dependencies.filter((dep) => dep.type === PythonDependencyType.PROD);
+        const devDependencies = this.dependencies.filter((dep) => dep.type === PythonDependencyType.DEV);
 
         const requirementsTxt = getDependenciesAsRequirementsTxt(prodDependencies);
 
-        const pyprojectToml = new PyprojectToml(
+        const pyprojectToml = new PyprojectTomlGenerator(
             this.context.getPackageName(),
             this.context.getPackageVersion(),
             this.context.getPythonVersion(),
@@ -102,6 +102,6 @@ function getAsIsFilepath(filename: string): AbsoluteFilePath {
  * @param dependencies - Production dependencies only.
  */
 function getDependenciesAsRequirementsTxt(dependencies: PythonDependency[]): string {
-    const textLines = dependencies.map((x) => x.toRequirementsTxtString());
+    const textLines = dependencies.map((x) => `${x.package}${x.version}`);
     return textLines.join("\n");
 }

@@ -3,7 +3,7 @@ import { PythonDependency } from "./PythonDependency";
 /**
  * Represents a pyproject.toml file and generates a string representation of it.
  */
-export class PyprojectToml {
+export class PyprojectTomlGenerator {
     private readonly name: string;
     private readonly version: string;
     private readonly pythonVersion: string;
@@ -37,6 +37,10 @@ export class PyprojectToml {
         ];
 
         return blocks.join("\n\n");
+    }
+
+    static dependencyToString(dependency: PythonDependency): string {
+        return `${dependency.package} = "${dependency.version}"`;
     }
 }
 
@@ -153,12 +157,12 @@ class DependenciesBlock extends Block {
     public toString(): string {
         const lines: string[] = ["[tool.poetry.dependencies]"];
         lines.push(`python = "${this.pythonVersion}"`);
-        lines.push(this.prodDependencies.map((dep) => dep.toProjectTomlString()).join("\n"));
+        lines.push(this.prodDependencies.map((dep) => PyprojectTomlGenerator.dependencyToString(dep)).join("\n"));
 
         lines[lines.length - 1] = lines[lines.length - 1] += "\n";
 
         lines.push("[tool.poetry.group.dev.dependencies]");
-        lines.push(this.devDependencies.map((dep) => dep.toProjectTomlString()).join("\n"));
+        lines.push(this.devDependencies.map((dep) => PyprojectTomlGenerator.dependencyToString(dep)).join("\n"));
 
         return lines.join("\n");
     }
