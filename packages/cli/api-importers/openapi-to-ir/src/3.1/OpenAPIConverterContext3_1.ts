@@ -2,12 +2,14 @@ import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
 
 import { FernIr, TypeReference } from "@fern-api/ir-sdk";
 import { AbstractConverterContext, Converters, DisplayNameOverrideSource } from "@fern-api/v2-importer-commons";
+import { DisplayNameExtension } from "../extensions/x-display-name";
 
 /**
  * Context class for converting OpenAPI 3.1 specifications
  */
 export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPIV3_1.Document> {
     public globalHeaderNames: string[] | undefined;
+    private readonly tagToDisplayName: Record<string, string> = {};
 
     public isReferenceObject(
         parameter:
@@ -100,5 +102,21 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
 
     public setGlobalHeaders(globalHeaders: FernIr.HttpHeader[]): void {
         this.globalHeaderNames = globalHeaders.map((header) => header.name.wireValue);
+    }
+
+    public getDisplayNameForTag(tag: string): string {
+        if (Object.keys(this.tagToDisplayName).length === 0) {
+            for (const tag of this.spec.tags ?? []) {
+                const displayNameExtension = new DisplayNameExtension({
+                    breadcrumbs: ["tags", tag.name],
+                    tag,
+                    context: this
+                });
+                const tagDisplayName = displayNameExtension.convert()?.displayName ?? tag.name;
+                this.tagToDisplayName[tag.name] = tagDisplayName;
+            }
+        }
+        console.error(this.tagToDisplayName);
+        return this.tagToDisplayName[tag] ?? tag;
     }
 }
