@@ -174,7 +174,7 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
         });
 
         if (url != null) {
-            return context.coreUtilities.urlUtils.joinUrl._invoke([baseUrl, url]);
+            return context.coreUtilities.urlUtils.join._invoke([baseUrl, url]);
         } else {
             return baseUrl;
         }

@@ -5,7 +5,6 @@
 import * as core from "../../../../core/index.js";
 import * as SeedPagination from "../../../index.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
-import urlJoin from "url-join";
 import * as errors from "../../../../errors/index.js";
 
 export declare namespace Complex {
@@ -65,7 +64,7 @@ export class Complex {
                 request: SeedPagination.SearchRequest,
             ): Promise<core.WithRawResponse<SeedPagination.PaginatedConversationResponse>> => {
                 const _response = await core.fetcher({
-                    url: urlJoin(
+                    url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
                         `${encodeURIComponent(index)}/conversations/search`,
