@@ -5457,10 +5457,6 @@ importers:
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
 
   packages/cli/cli:
-    dependencies:
-      '@bufbuild/protobuf':
-        specifier: ^2.2.5
-        version: 2.5.2
     devDependencies:
       '@fern-api/api-workspace-commons':
         specifier: workspace:*
