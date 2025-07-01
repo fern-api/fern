@@ -694,8 +694,9 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
 
     private hasDefaultValue(typeReference: TypeReference, context: SdkContext): boolean {
         const hasDefaultValue = context.type.hasDefaultValue(typeReference);
-        const useDefaultValues = (context.config.customConfig as { useDefaultRequestParameterValues?: boolean })?.useDefaultRequestParameterValues;
-        
+        const useDefaultValues = (context.config.customConfig as { useDefaultRequestParameterValues?: boolean })
+            ?.useDefaultRequestParameterValues;
+
         return hasDefaultValue && Boolean(useDefaultValues);
     }
 }

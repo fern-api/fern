@@ -60,7 +60,7 @@ export class TypeContextImpl implements TypeContext {
     private useDefaultRequestParameterValues: boolean;
 
     constructor({
-        npmPackage, 
+        npmPackage,
         isForSnippet,
         sourceFile,
         importsManager,
@@ -236,7 +236,7 @@ export class TypeContextImpl implements TypeContext {
         if (this.hasDefaultValue(typeReference) && this.useDefaultRequestParameterValues) {
             return true;
         }
-        
+
         switch (typeReference.type) {
             case "named": {
                 const typeDeclaration = this.typeResolver.getTypeDeclarationFromId(typeReference.typeId);
@@ -281,7 +281,7 @@ export class TypeContextImpl implements TypeContext {
                         return this.isNullable(typeReference.container.optional);
                     default:
                         return false;
-               } 
+                }
             }
             default:
                 return false;
@@ -291,10 +291,12 @@ export class TypeContextImpl implements TypeContext {
     public hasDefaultValue(typeReference: TypeReference): boolean {
         switch (typeReference.type) {
             case "primitive":
-                return typeReference.primitive.v2 != null && 
-                       typeof typeReference.primitive.v2 === "object" && 
-                       "default" in typeReference.primitive.v2 && 
-                       typeReference.primitive.v2.default != null;
+                return (
+                    typeReference.primitive.v2 != null &&
+                    typeof typeReference.primitive.v2 === "object" &&
+                    "default" in typeReference.primitive.v2 &&
+                    typeReference.primitive.v2.default != null
+                );
             case "container":
                 if (typeReference.container.type === "optional") {
                     return this.hasDefaultValue(typeReference.container.optional);

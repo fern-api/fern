@@ -82,7 +82,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             fetchSupport: parsed?.fetchSupport ?? "node-fetch",
             packagePath: parsed?.packagePath,
             omitFernHeaders: parsed?.omitFernHeaders ?? false,
-            useDefaultRequestParameterValues: parsed?.useDefaultRequestParameterValues ?? false,
+            useDefaultRequestParameterValues: parsed?.useDefaultRequestParameterValues ?? false
         };
     }
 

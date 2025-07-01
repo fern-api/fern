@@ -320,7 +320,7 @@ export class SdkContextImpl implements SdkContext {
             allowExtraFields,
             omitUndefined,
             useDefaultRequestParameterValues,
-            context: this,
+            context: this
         });
         this.typeSchema = new TypeSchemaContextImpl({
             sourceFile,

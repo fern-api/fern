@@ -68,13 +68,17 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
             const nonConflictingName = getNonConflictingName(defaultName);
             this.nonBodyKeyAliases[defaultName] = nonConflictingName;
 
-            const useDefaultValues = (context.config.customConfig as { useDefaultRequestParameterValues?: boolean })?.useDefaultRequestParameterValues;
+            const useDefaultValues = (context.config.customConfig as { useDefaultRequestParameterValues?: boolean })
+                ?.useDefaultRequestParameterValues;
 
             let defaultValue: ts.Expression | undefined;
-            if (useDefaultValues) { 
+            if (useDefaultValues) {
                 if (nonBodyKey.originalParameter != null) {
                     if (nonBodyKey.originalParameter.type !== "file") {
-                        defaultValue = this.extractDefaultValue(nonBodyKey.originalParameter.parameter.valueType, context);
+                        defaultValue = this.extractDefaultValue(
+                            nonBodyKey.originalParameter.parameter.valueType,
+                            context
+                        );
                     }
                 }
             }
@@ -228,7 +232,7 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
 
     private extractDefaultValue(typeReference: TypeReference, context: SdkContext): ts.Expression | undefined {
         const resolvedType = context.type.resolveTypeReference(typeReference);
-        
+
         if (resolvedType.type === "container" && resolvedType.container.type === "optional") {
             return this.extractDefaultValue(resolvedType.container.optional, context);
         }
@@ -246,11 +250,9 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
                 long: (longType: LongType) => {
                     if (longType.default != null) {
                         if (useBigInt) {
-                            return ts.factory.createCallExpression(
-                                ts.factory.createIdentifier("BigInt"),
-                                undefined,
-                                [ts.factory.createStringLiteral(longType.default.toString())]
-                            );
+                            return ts.factory.createCallExpression(ts.factory.createIdentifier("BigInt"), undefined, [
+                                ts.factory.createStringLiteral(longType.default.toString())
+                            ]);
                         }
                         return ts.factory.createNumericLiteral(longType.default.toString());
                     }
@@ -277,11 +279,9 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
                 bigInteger: (bigIntegerType: BigIntegerType) => {
                     if (bigIntegerType.default != null) {
                         if (useBigInt) {
-                            return ts.factory.createCallExpression(
-                                ts.factory.createIdentifier("BigInt"),
-                                undefined,
-                                [ts.factory.createStringLiteral(bigIntegerType.default)]
-                            );
+                            return ts.factory.createCallExpression(ts.factory.createIdentifier("BigInt"), undefined, [
+                                ts.factory.createStringLiteral(bigIntegerType.default)
+                            ]);
                         }
                         return ts.factory.createStringLiteral(bigIntegerType.default);
                     }
