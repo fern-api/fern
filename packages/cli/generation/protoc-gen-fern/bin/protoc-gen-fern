@@ -1,6 +1,0 @@
-#!/usr/bin/env node
-import { runNodeJs } from "@bufbuild/protoplugin";
-
-import { protocGenFern } from "../lib/protoc-gen-fern.js";
-
-runNodeJs(protocGenFern);

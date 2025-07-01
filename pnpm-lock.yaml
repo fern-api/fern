@@ -7375,72 +7375,6 @@ importers:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
 
-  packages/cli/generation/protoc-gen-fern:
-    dependencies:
-      '@bufbuild/protobuf':
-        specifier: ^2.2.5
-        version: 2.5.2
-      '@bufbuild/protoplugin':
-        specifier: 2.2.5
-        version: 2.2.5
-      '@fern-api/casings-generator':
-        specifier: workspace:*
-        version: link:../../../commons/casings-generator
-      '@fern-api/configs':
-        specifier: workspace:*
-        version: link:../../../configs
-      '@fern-api/core-utils':
-        specifier: workspace:*
-        version: link:../../../commons/core-utils
-      '@fern-api/ir-sdk':
-        specifier: workspace:*
-        version: link:../../../ir-sdk
-      '@fern-api/ir-utils':
-        specifier: workspace:*
-        version: link:../../../commons/ir-utils
-      '@fern-api/logger':
-        specifier: workspace:*
-        version: link:../../logger
-      '@fern-api/v2-importer-commons':
-        specifier: workspace:*
-        version: link:../../api-importers/v2-importer-commons
-      lodash-es:
-        specifier: ^4.17.21
-        version: 4.17.21
-      openapi-types:
-        specifier: ^12.1.3
-        version: 12.1.3
-    devDependencies:
-      '@trivago/prettier-plugin-sort-imports':
-        specifier: ^5.2.1
-        version: 5.2.2(@vue/compiler-sfc@3.5.17)(prettier@3.5.3)
-      '@types/jest':
-        specifier: ^29.5.14
-        version: 29.5.14
-      '@types/lodash-es':
-        specifier: ^4.17.12
-        version: 4.17.12
-      '@types/node':
-        specifier: 18.15.3
-        version: 18.15.3
-      depcheck:
-        specifier: ^1.4.7
-        version: 1.4.7
-      eslint:
-        specifier: ^8.56.0
-        version: 8.57.1
-      prettier:
-        specifier: ^3.4.2
-        version: 3.5.3
-      typescript:
-        specifier: 5.7.2
-        version: 5.7.2
-      vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
-
-  packages/cli/generation/protoc-gen-fern/bin: {}
-
   packages/cli/generation/remote-generation/remote-workspace-runner:
     dependencies:
       '@fern-api/auth':
@@ -9975,15 +9909,6 @@ packages:
     peerDependencies:
       stylelint: ^14.12.1 || ^15.10.3 || ^16.10.0
 
-  '@bufbuild/protobuf@2.2.5':
-    resolution: {integrity: sha512-/g5EzJifw5GF8aren8wZ/G5oMuPoGeS6MQD3ca8ddcvdXR5UELUfdTZITCGNhNXynY/AYl3Z4plmxdj/tRl/hQ==}
-
-  '@bufbuild/protobuf@2.5.2':
-    resolution: {integrity: sha512-foZ7qr0IsUBjzWIq+SuBLfdQCpJ1j8cTuNNT4owngTHoN5KsJb8L9t65fzz7SCeSWzescoOil/0ldqiL041ABg==}
-
-  '@bufbuild/protoplugin@2.2.5':
-    resolution: {integrity: sha512-Z68KTDLiidUYoJ8kjs6YfhK8r58W93pOFIfGqlnK1RZQTQRtbH6WRWjSqtuiy4WjJpJZ5qE0lKtFGR+bHU8Vaw==}
-
   '@cspell/cspell-bundled-dicts@8.19.4':
     resolution: {integrity: sha512-2ZRcZP/ncJ5q953o8i+R0fb8+14PDt5UefUNMrFZZHvfTI0jukAASOQeLY+WT6ASZv6CgbPrApAdbppy9FaXYQ==}
     engines: {node: '>=18'}
@@ -11866,11 +11791,6 @@ packages:
   '@typescript-eslint/visitor-keys@8.34.1':
     resolution: {integrity: sha512-xoh5rJ+tgsRKoXnkBPFRLZ7rjKM0AfVbC68UZ/ECXoDbfggb9RbEySN359acY1vS3qZ0jVTVWzbtfapwm5ztxw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
-
-  '@typescript/vfs@1.6.1':
-    resolution: {integrity: sha512-JwoxboBh7Oz1v38tPbkrZ62ZXNHAk9bJ7c9x0eI5zBfBnBYGhURdbnh7Z4smN/MV48Y5OCcZb58n972UtbazsA==}
-    peerDependencies:
-      typescript: '*'
 
   '@ungap/structured-clone@1.3.0':
     resolution: {integrity: sha512-WmoN8qaIAo7WTYWbAZuG8PYEhn5fkz7dZrqTBZ7dtt//lL2Gwms1IcnQ5yHqjDfX8Ft5j4YzDM23f87zBfDe9g==}
@@ -16600,11 +16520,6 @@ packages:
     resolution: {integrity: sha512-3KS2b+kL7fsuk/eJZ7EQdnEmQoaho/r6KUef7hxvltNA5DR8NAUM+8wJMbJyZ4G9/7i3v5zPBIMN5aybAh2/Jg==}
     engines: {node: '>= 0.4'}
 
-  typescript@5.4.5:
-    resolution: {integrity: sha512-vcI4UpRgg81oIRUFwR0WSIHKt11nJ7SAVlYNIu+QpqeyXP+gpQJy/Z4+F0aGxSE4MqwjyXvW/TzgkLAx2AGHwQ==}
-    engines: {node: '>=14.17'}
-    hasBin: true
-
   typescript@5.7.2:
     resolution: {integrity: sha512-i5t66RHxDvVN40HfDd1PsEThGNnlMCMT3jMUuoh9/0TaqWevNontacunWyN02LA9/fIbEWlcHZcgTKb9QoaLfg==}
     engines: {node: '>=14.17'}
@@ -17916,18 +17831,6 @@ snapshots:
       postcss-selector-parser: 7.1.0
       postcss-value-parser: 4.2.0
       stylelint: 14.16.1
-
-  '@bufbuild/protobuf@2.2.5': {}
-
-  '@bufbuild/protobuf@2.5.2': {}
-
-  '@bufbuild/protoplugin@2.2.5':
-    dependencies:
-      '@bufbuild/protobuf': 2.2.5
-      '@typescript/vfs': 1.6.1(typescript@5.4.5)
-      typescript: 5.4.5
-    transitivePeerDependencies:
-      - supports-color
 
   '@cspell/cspell-bundled-dicts@8.19.4':
     dependencies:
@@ -19960,13 +19863,6 @@ snapshots:
     dependencies:
       '@typescript-eslint/types': 8.34.1
       eslint-visitor-keys: 4.2.1
-
-  '@typescript/vfs@1.6.1(typescript@5.4.5)':
-    dependencies:
-      debug: 4.4.1
-      typescript: 5.4.5
-    transitivePeerDependencies:
-      - supports-color
 
   '@ungap/structured-clone@1.3.0': {}
 
@@ -26014,8 +25910,6 @@ snapshots:
       is-typed-array: 1.1.15
       possible-typed-array-names: 1.1.0
       reflect.getprototypeof: 1.0.10
-
-  typescript@5.4.5: {}
 
   typescript@5.7.2: {}
 
