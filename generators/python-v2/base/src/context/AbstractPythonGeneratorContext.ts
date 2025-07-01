@@ -65,4 +65,6 @@ export abstract class AbstractPythonGeneratorContext<
         const fernFilepath = typeDeclaration.name.fernFilepath;
         return [...fernFilepath.allParts.flatMap((part) => ["resources", this.getSnakeCaseSafeName(part)]), "types"];
     }
+
+    public abstract getRawAsIsFiles(): string[];
 }

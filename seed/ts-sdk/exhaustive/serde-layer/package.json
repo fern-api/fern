@@ -52,8 +52,7 @@
         "form-data": "^4.0.0",
         "formdata-node": "^6.0.3",
         "node-fetch": "^2.7.0",
-        "readable-stream": "^4.5.2",
-        "js-base64": "3.7.7"
+        "readable-stream": "^4.5.2"
     },
     "devDependencies": {
         "@types/node-fetch": "^2.6.12",

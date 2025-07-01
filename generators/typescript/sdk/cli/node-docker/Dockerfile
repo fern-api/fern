@@ -11,13 +11,11 @@ RUN yarn add \
   node-fetch@^2.7.0 \
   @types/node-fetch@^2.6.12 \
   @types/node@^18.19.70 \
-  url-join@^5.0.0 \
   readable-stream@^4.6.0 \
   @types/readable-stream@^4.0.18 \
   form-data@^4.0.0 \
   formdata-node@^6.0.3 \
   jest-environment-jsdom@^29.7.0 \
-  js-base64@^3.7.7 \
   prettier@^3.4.2 \
   ts-jest@^29.1.1 \
   typescript@~5.7.2 \

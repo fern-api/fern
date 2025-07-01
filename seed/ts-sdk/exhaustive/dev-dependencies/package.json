@@ -29,7 +29,6 @@
         "formdata-node": "^6.0.3",
         "node-fetch": "^2.7.0",
         "readable-stream": "^4.5.2",
-        "js-base64": "3.7.7",
         "lodash-es": "^4.17.21"
     },
     "peerDependencies": {

@@ -8,15 +8,17 @@ import { ProtofileConverterContext } from "../ProtofileConverterContext";
 export declare namespace PrimitiveFieldConverter {
     export interface Args extends AbstractConverter.Args<ProtofileConverterContext> {
         field: FieldDescriptorProto;
+        sourceCodeInfoPath: number[];
     }
 }
 
 export class PrimitiveFieldConverter extends AbstractConverter<ProtofileConverterContext, TypeReference> {
     private readonly field: FieldDescriptorProto;
-
-    constructor({ context, breadcrumbs, field }: PrimitiveFieldConverter.Args) {
+    private readonly sourceCodeInfoPath: number[];
+    constructor({ context, breadcrumbs, field, sourceCodeInfoPath }: PrimitiveFieldConverter.Args) {
         super({ context, breadcrumbs });
         this.field = field;
+        this.sourceCodeInfoPath = sourceCodeInfoPath;
     }
 
     public convert(): TypeReference | undefined {
@@ -25,7 +27,7 @@ export class PrimitiveFieldConverter extends AbstractConverter<ProtofileConverte
                 return TypeReference.primitive({
                     v1: PrimitiveTypeV1.String,
                     v2: PrimitiveTypeV2.string({
-                        default: "",
+                        default: undefined,
                         validation: undefined
                     })
                 });
@@ -34,7 +36,7 @@ export class PrimitiveFieldConverter extends AbstractConverter<ProtofileConverte
                 return TypeReference.primitive({
                     v1: PrimitiveTypeV1.Double,
                     v2: PrimitiveTypeV2.double({
-                        default: 0.0,
+                        default: undefined,
                         validation: undefined
                     })
                 });
@@ -42,16 +44,14 @@ export class PrimitiveFieldConverter extends AbstractConverter<ProtofileConverte
             case FieldDescriptorProto_Type.FLOAT: {
                 return TypeReference.primitive({
                     v1: PrimitiveTypeV1.Float,
-                    v2: PrimitiveTypeV2.float({
-                        default: 0.0
-                    })
+                    v2: PrimitiveTypeV2.float({})
                 });
             }
             case FieldDescriptorProto_Type.INT32: {
                 return TypeReference.primitive({
                     v1: PrimitiveTypeV1.Integer,
                     v2: PrimitiveTypeV2.integer({
-                        default: 0,
+                        default: undefined,
                         validation: undefined
                     })
                 });
@@ -60,32 +60,36 @@ export class PrimitiveFieldConverter extends AbstractConverter<ProtofileConverte
                 return TypeReference.primitive({
                     v1: PrimitiveTypeV1.Long,
                     v2: PrimitiveTypeV2.long({
-                        default: 0
+                        default: undefined
                     })
                 });
             }
             case FieldDescriptorProto_Type.UINT32: {
                 return TypeReference.primitive({
                     v1: PrimitiveTypeV1.Uint,
-                    v2: PrimitiveTypeV2.uint({})
+                    v2: PrimitiveTypeV2.uint({
+                        default: undefined
+                    })
                 });
             }
             case FieldDescriptorProto_Type.UINT64: {
                 return TypeReference.primitive({
                     v1: PrimitiveTypeV1.Uint64,
-                    v2: PrimitiveTypeV2.uint64({})
+                    v2: PrimitiveTypeV2.uint64({
+                        default: undefined
+                    })
                 });
             }
             case FieldDescriptorProto_Type.BOOL: {
                 return TypeReference.primitive({
                     v1: PrimitiveTypeV1.Boolean,
                     v2: PrimitiveTypeV2.boolean({
-                        default: false
+                        default: undefined
                     })
                 });
             }
             default:
-                return undefined;
+                return TypeReference.unknown();
         }
     }
 }

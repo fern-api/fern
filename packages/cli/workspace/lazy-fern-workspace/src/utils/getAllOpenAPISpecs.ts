@@ -1,5 +1,6 @@
 import { OpenAPISpec, ProtobufSpec, Spec } from "@fern-api/api-workspace-commons";
-import { RelativeFilePath, join } from "@fern-api/fs-utils";
+import { isNonNullish } from "@fern-api/core-utils";
+import { RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 
 import { ProtobufOpenAPIGenerator } from "../protobuf/ProtobufOpenAPIGenerator";
@@ -25,7 +26,7 @@ export async function getAllOpenAPISpecs({
             return convertProtobufToOpenAPI({ generator, protobufSpec, relativePathToDependency });
         })
     );
-    return [...openApiSpecs, ...openApiSpecsFromProto];
+    return [...openApiSpecs, ...openApiSpecsFromProto.filter((spec) => isNonNullish(spec))];
 }
 
 export async function convertProtobufToOpenAPI({
@@ -36,7 +37,10 @@ export async function convertProtobufToOpenAPI({
     generator: ProtobufOpenAPIGenerator;
     protobufSpec: ProtobufSpec;
     relativePathToDependency?: RelativeFilePath;
-}): Promise<OpenAPISpec> {
+}): Promise<OpenAPISpec | undefined> {
+    if (protobufSpec.absoluteFilepathToProtobufTarget == null) {
+        return undefined;
+    }
     const openAPIAbsoluteFilePath = await generator.generate({
         absoluteFilepathToProtobufRoot: protobufSpec.absoluteFilepathToProtobufRoot,
         absoluteFilepathToProtobufTarget: protobufSpec.absoluteFilepathToProtobufTarget,

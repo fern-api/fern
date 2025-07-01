@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+package anduril.tasks.ad.desertguardian.rf.v1;
+
+option csharp_namespace = "Anduril.Tasks.AD.desertguardian.rf.v1";
+option go_package = "ghe.anduril.dev/anduril/andurilapis-go/anduril/tasks/ad/desertguardian/rf/v1;tasksv1";
+option java_multiple_files = true;
+option java_outer_classname = "ThirdPartyRfTaskProto";
+option java_package = "com.anduril.tasks.ad.desertguardian.rf.v1";
+option objc_class_prefix = "DesertGuardianThirdParty";
+
+// Set the transmit state of an RF Platform such as a Radar, Beacon, or Radio.
+message SetTransmitState {
+  TransmitState transmit_state = 1;
+}
+
+enum TransmitState {
+  TRANSMIT_STATE_INVALID = 0;
+  TRANSMIT_STATE_TRANSMITTING = 1;
+  TRANSMIT_STATE_NOT_TRANSMITTING = 2;
+}
+
+// Set the surveillance state of a passive (listen-only) RF Platform.
+message SetSurveillanceState {
+  SurveillanceState surveillance_state = 1;
+}
+
+enum SurveillanceState {
+  SURVEILLANCE_STATE_INVALID = 0;
+  SURVEILLANCE_STATE_SURVEILLING = 1;
+  SURVEILLANCE_STATE_NOT_SURVEILLING = 2;
+}
+
+// Set whether or not an RF Platform has Emmission Control (EmCon).
+// If supported, RF platforms should only expose the SetTransmitState task when EmissionControlState is EMISSION_CONTROL_STATE_ALLOWED.
+// When in EMISSION_CONTROL_STATE_NOT_ALLOWED, the Platform should be in TRANSMIT_STATE_NOT_TRANSMITTING, and should remove SetTransmitState from the task Catalog.
+message SetEmissionControlState {
+  EmissionControlState emcon_state = 1;
+}
+
+enum EmissionControlState {
+  EMISSION_CONTROL_STATE_INVALID = 0;
+  EMISSION_CONTROL_STATE_ALLOWED = 1;
+  EMISSION_CONTROL_STATE_NOT_ALLOWED = 2;
+}

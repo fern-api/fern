@@ -4,7 +4,14 @@
     - summary: |
         Remove `qs` dependency.
       type: fix
-  createdAt: '2025-06-30'
+  createdAt: '2025-06-31'
+  irVersion: 58
+- version: 1.10.2
+  changelogEntry:
+    - summary: |
+        Remove `js-base64` dependency in favor of using native implementations.
+      type: fix
+  createdAt: '2025-06-31'
   irVersion: 58
 - version: 1.10.1
   changelogEntry:
