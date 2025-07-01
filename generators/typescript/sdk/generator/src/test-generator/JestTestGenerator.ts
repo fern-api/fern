@@ -79,43 +79,57 @@ export class JestTestGenerator {
             setupFilesAfterEnv.push(`<rootDir>/${this.relativeTestPath}/bigint.setup.ts`);
         }
         if (this.generateWireTests || this.writeUnitTests) {
-            const configs: Record<string, string> = {};
-            if (this.writeUnitTests) {
-                configs.unitConfig = "./jest.unit.config.mjs";
-                configs.browserConfig = "./jest.browser.config.mjs";
-            }
-            if (this.generateWireTests) {
-                configs.wireConfig = "./jest.wire.config.mjs";
-            }
             const jestConfig = this.rootDirectory.createSourceFile(
                 "jest.config.mjs",
                 code`
-                ${Object.entries(configs)
-                    .map(([varName, importPath]) => `import ${varName} from "${importPath}";`)
-                    .join("\n")}
-
-                const configs = [${Object.keys(configs).join(", ")}];
-                function extractRootConfig(configs) {
-                    const rootConfig = {};
-                    for (const config of configs) {
-                        if (config.workerThreads === true) {
-                            rootConfig.workerThreads = true;
-                        }
-                    }
-                    return rootConfig;
-                }
-                function stripRootConfig(configs) {
-                    return configs.map((config) => {
-                        const { workerThreads, passWithNoTests, ...rest } = config;
-                        return rest;
-                    });
-                }
-
                 /** @type {import('jest').Config} */
                 export default {
-                    projects: stripRootConfig(configs),
+                    preset: "ts-jest",
+                    testEnvironment: "node",
+                    projects: [
+                        ${
+                            this.writeUnitTests
+                                ? code`{
+                            displayName: "unit",
+                            preset: "ts-jest",
+                            testEnvironment: "node",
+                            moduleNameMapper: {
+                                "^(\\.{1,2}/.*)\\.js$": "$1",
+                            },
+                            roots: ["<rootDir>/${this.relativeTestPath}"],
+                            testPathIgnorePatterns: ["\\.browser\\.(spec|test)\\.[jt]sx?$", "/tests/wire/"],
+                            setupFilesAfterEnv: ${arrayOf(...setupFilesAfterEnv)},
+                        },
+                        {
+                            displayName: "browser",
+                            preset: "ts-jest",
+                            testEnvironment: "<rootDir>/tests/BrowserTestEnvironment.ts",
+                            moduleNameMapper: {
+                                "^(\\.{1,2}/.*)\\.js$": "$1",
+                            },
+                            roots: ["<rootDir>/${this.relativeTestPath}"],
+                            testMatch: ["<rootDir>/tests/unit/**/?(*.)+(browser).(spec|test).[jt]s?(x)"],
+                            setupFilesAfterEnv: ${arrayOf(...setupFilesAfterEnv)},
+                        },`
+                                : ""
+                        },
+                        ${
+                            this.generateWireTests
+                                ? code`{
+                            displayName: "wire",
+                            preset: "ts-jest",
+                            testEnvironment: "node",
+                            moduleNameMapper: {
+                                "^(\\.{1,2}/.*)\\.js$": "$1",
+                            },
+                            roots: ["<rootDir>/${this.relativeTestPath}/wire"],
+                            setupFilesAfterEnv: ${arrayOf(...setupFilesAfterEnv, "<rootDir>/tests/mock-server/setup.ts")},
+                        }`
+                                : ""
+                        }
+                    ],
+                    workerThreads: ${this.useBigInt ? "true" : "false"},
                     passWithNoTests: true,
-                    ...extractRootConfig(configs),
                 };
                 `.toString({ dprintOptions: { indentWidth: 4 } })
             );
@@ -132,7 +146,7 @@ export class JestTestGenerator {
                         "^(\\.{1,2}/.*)\\.js$": "$1"
                     },
                     roots: ["<rootDir>/${this.relativeTestPath}"],
-                    testPathIgnorePatterns: ["\\\\.browser\\\\.(spec|test)\\\\.[jt]sx?$", "/tests/wire/"],
+                    testPathIgnorePatterns: ["\\.browser\\.(spec|test)\\.[jt]sx?$", "/tests/wire/"],
                     setupFilesAfterEnv: ${arrayOf(...setupFilesAfterEnv)},
                     workerThreads: ${this.useBigInt ? "true" : "false"},
                     passWithNoTests: true
@@ -140,66 +154,6 @@ export class JestTestGenerator {
                 `.toString({ dprintOptions: { indentWidth: 4 } })
             );
             await jestConfig.save();
-        }
-        if (this.writeUnitTests) {
-            const jestUnitConfig = this.rootDirectory.createSourceFile(
-                "jest.unit.config.mjs",
-                code`
-                /** @type {import('jest').Config} */
-                export default {
-                    preset: "ts-jest",
-                    testEnvironment: "node",
-                    moduleNameMapper: {
-                        "^(\\.{1,2}/.*)\\.js$": "$1"
-                    },
-                    roots: ["<rootDir>/${this.relativeTestPath}"],
-                    testPathIgnorePatterns: ["\\\\.browser\\\\.(spec|test)\\\\.[jt]sx?$", "/tests/wire/"],
-                    setupFilesAfterEnv: ${arrayOf(...setupFilesAfterEnv)},
-                    workerThreads: ${this.useBigInt ? "true" : "false"},
-                    passWithNoTests: true
-                };
-                `.toString({ dprintOptions: { indentWidth: 4 } })
-            );
-            await jestUnitConfig.save();
-            const jestBrowserConfig = this.rootDirectory.createSourceFile(
-                "jest.browser.config.mjs",
-                code`
-                /** @type {import('jest').Config} */
-                export default {
-                    preset: "ts-jest",
-                    testEnvironment: "<rootDir>/tests/BrowserTestEnvironment.ts",
-                    moduleNameMapper: {
-                        "^(\\.{1,2}/.*)\\.js$": "$1",
-                    },
-                    roots: ["<rootDir>/${this.relativeTestPath}"],
-                    testMatch: ["<rootDir>/tests/unit/**/?(*.)+(browser).(spec|test).[jt]s?(x)"],
-                    workerThreads: ${this.useBigInt ? "true" : "false"},
-                    passWithNoTests: true
-                };
-                `.toString({ dprintOptions: { indentWidth: 4 } })
-            );
-            await jestBrowserConfig.save();
-        }
-        if (this.generateWireTests) {
-            const jestWireConfig = this.rootDirectory.createSourceFile(
-                "jest.wire.config.mjs",
-                code`
-                /** @type {import('jest').Config} */
-                export default {
-                    preset: "ts-jest",
-                    testEnvironment: "node",
-                    moduleNameMapper: {
-                        "^(\\.{1,2}/.*)\\.js$": "$1",
-                    },
-                    roots: ["<rootDir>/${this.relativeTestPath}"],
-                    testMatch: ["<rootDir>/tests/wire/**/?(*.)+(spec|test).[jt]s?(x)"],
-                    setupFilesAfterEnv: ${arrayOf(...setupFilesAfterEnv, "<rootDir>/tests/mock-server/setup.ts")},
-                    workerThreads: ${this.useBigInt ? "true" : "false"},
-                    passWithNoTests: true
-                };
-                `.toString({ dprintOptions: { indentWidth: 4 } })
-            );
-            await jestWireConfig.save();
         }
     }
 
@@ -239,11 +193,11 @@ export class JestTestGenerator {
             test: "jest --config jest.config.mjs"
         };
         if (this.writeUnitTests) {
-            scripts["test:unit"] = `jest --config jest.unit.config.mjs`;
-            scripts["test:browser"] = "jest --config jest.browser.config.mjs";
+            scripts["test:unit"] = `jest --selectProjects unit`;
+            scripts["test:browser"] = "jest --selectProjects browser";
         }
         if (this.generateWireTests) {
-            scripts["test:wire"] = `jest --config jest.wire.config.mjs`;
+            scripts["test:wire"] = `jest --selectProjects wire`;
             scripts["wire:test"] = "yarn test:wire";
         }
         return scripts;
