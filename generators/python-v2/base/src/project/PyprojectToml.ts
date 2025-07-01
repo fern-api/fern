@@ -159,7 +159,7 @@ class DependenciesBlock extends Block {
 
         lines[lines.length - 1] = lines[lines.length - 1] += '\n';
 
-        lines.push('[tool.poetry.group.dev-dependencies]');
+        lines.push('[tool.poetry.group.dev.dependencies]');
         lines.push(this.devDependencies.map(dep => dep.toProjectTomlString()).join("\n"));
 
         return lines.join("\n");

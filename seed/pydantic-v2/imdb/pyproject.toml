@@ -35,7 +35,7 @@ python = "^3.8"
 pydantic = ">=1.9.2"
 pydantic-core = ">=2.18.2"
 
-[tool.poetry.group.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 mypy = "==1.13.0"
 pytest = "^7.4.0"
 pytest-asyncio = "^0.23.5"
