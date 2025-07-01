@@ -116,7 +116,6 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
                 this.tagToDisplayName[tag.name] = tagDisplayName;
             }
         }
-        console.error(this.tagToDisplayName);
         return this.tagToDisplayName[tag] ?? tag;
     }
 }
