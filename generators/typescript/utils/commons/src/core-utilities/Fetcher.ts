@@ -2,7 +2,7 @@ import { ts } from "ts-morph";
 
 import { DependencyManager, DependencyType } from "../dependency-manager/DependencyManager";
 import { CoreUtility } from "./CoreUtility";
-import { MANIFEST as QsManifest } from "./QsUtils";
+import { MANIFEST as UrlManifest } from "./UrlUtils";
 import { MANIFEST as RuntimeManifest } from "./Runtime";
 
 export interface Fetcher {
@@ -171,7 +171,7 @@ export const MANIFEST: CoreUtility.Manifest = {
             type: DependencyType.DEV
         });
     },
-    dependsOn: [RuntimeManifest, QsManifest],
+    dependsOn: [RuntimeManifest, UrlManifest],
     getFilesPatterns: (options) => {
         const ignore: string[] = [];
         if (options.streamType !== "wrapper") {

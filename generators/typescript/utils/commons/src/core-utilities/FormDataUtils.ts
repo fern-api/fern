@@ -2,7 +2,7 @@ import { ts } from "ts-morph";
 
 import { DependencyManager } from "../dependency-manager/DependencyManager";
 import { CoreUtility } from "./CoreUtility";
-import { MANIFEST as QsManifest } from "./QsUtils";
+import { MANIFEST as UrlManifest } from "./UrlUtils";
 import { MANIFEST as RuntimeManifest } from "./Runtime";
 
 export interface FormDataUtils {
@@ -37,7 +37,7 @@ export const MANIFEST: CoreUtility.Manifest = {
             dependencyManager.addDependency("form-data-encoder", "^4.0.2");
         }
     },
-    dependsOn: [RuntimeManifest, QsManifest],
+    dependsOn: [RuntimeManifest, UrlManifest],
     getFilesPatterns: ({ formDataSupport }) => {
         const glob = {
             patterns: ["src/core/form-data-utils/**", "tests/unit/form-data-utils/**"],

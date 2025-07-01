@@ -1,12 +1,13 @@
-interface QsOptions {
+
+interface QueryStringOptions {
     arrayFormat?: "indices" | "repeat";
     encode?: boolean;
 }
 
-const defaultOptions: Required<QsOptions> = {
+const defaultQsOptions: Required<QueryStringOptions> = {
     arrayFormat: "indices",
     encode: true,
-};
+} as const;
 
 function encodeValue(value: unknown, shouldEncode: boolean): string {
     if (value === undefined) {
@@ -19,7 +20,7 @@ function encodeValue(value: unknown, shouldEncode: boolean): string {
     return shouldEncode ? encodeURIComponent(stringValue) : stringValue;
 }
 
-function stringifyObject(obj: Record<string, unknown>, prefix = "", options: Required<QsOptions>): string[] {
+function stringifyObject(obj: Record<string, unknown>, prefix = "", options: Required<QueryStringOptions>): string[] {
     const parts: string[] = [];
 
     for (const [key, value] of Object.entries(obj)) {
@@ -61,13 +62,13 @@ function stringifyObject(obj: Record<string, unknown>, prefix = "", options: Req
     return parts;
 }
 
-export function stringify(obj: unknown, options?: QsOptions): string {
+export function toQueryString(obj: unknown, options?: QueryStringOptions): string {
     if (obj == null || typeof obj !== "object") {
         return "";
     }
 
     const parts = stringifyObject(obj as Record<string, unknown>, "", {
-        ...defaultOptions,
+        ...defaultQsOptions,
         ...options,
     });
     return parts.join("&");

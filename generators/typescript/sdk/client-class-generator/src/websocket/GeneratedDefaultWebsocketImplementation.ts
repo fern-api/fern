@@ -418,7 +418,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                 )
             ),
             ts.factory.createTemplateSpan(
-                context.coreUtilities.qsUtils.stringify._invoke([ts.factory.createIdentifier("queryParams")]),
+                context.coreUtilities.urlUtils.toQueryString._invoke([ts.factory.createIdentifier("queryParams")]),
                 ts.factory.createTemplateTail("", "")
             )
         ]);

@@ -23,7 +23,6 @@ import { UrlUtilsImpl } from "./UrlUtils";
 import { UtilsImpl } from "./Utils";
 import { WebsocketImpl } from "./Websocket";
 import { ZurgImpl } from "./Zurg";
-import { QsUtilsImpl } from "./QsUtils";
 
 export declare namespace CoreUtilitiesManager {
     namespace getCoreUtilities {
@@ -100,7 +99,6 @@ export class CoreUtilitiesManager {
             websocket: new WebsocketImpl({ getReferenceToExport }),
             fileUtils: new FileUtilsImpl({ getReferenceToExport }),
             urlUtils: new UrlUtilsImpl({ getReferenceToExport }),
-            qsUtils: new QsUtilsImpl({ getReferenceToExport }),
         };
     }
 
