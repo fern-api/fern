@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+export FERN_NO_VERSION_REDIRECTION=true
+exec node ../../../../../cli/dist/prod/cli.cjs protoc-gen-fern "$@"
