@@ -198,7 +198,6 @@ export class JestTestGenerator {
         }
         if (this.generateWireTests) {
             scripts["test:wire"] = `jest --selectProjects wire`;
-            scripts["wire:test"] = "yarn test:wire";
         }
         return scripts;
     }

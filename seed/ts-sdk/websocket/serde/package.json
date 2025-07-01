@@ -46,8 +46,7 @@
         "test": "jest --config jest.config.mjs",
         "test:unit": "jest --selectProjects unit",
         "test:browser": "jest --selectProjects browser",
-        "test:wire": "jest --selectProjects wire",
-        "wire:test": "yarn test:wire"
+        "test:wire": "jest --selectProjects wire"
     },
     "dependencies": {
         "ws": "^8.16.0",
