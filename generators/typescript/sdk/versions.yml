@@ -1,11 +1,31 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 1.10.2
+- version: 1.10.5
   changelogEntry:
     - summary: |
         Add default values to request parameters.
         For example, if you have a query parameter `foo` with a default value of `bar`, the generated request parameter will have a default value of `bar`.
       type: feat
   createdAt: '2025-06-30'
+- version: 1.10.4
+  changelogEntry:
+    - summary: |
+        Add `omitFernHeaders` configuration to omit Fern headers from the generated SDK.
+      type: fix
+  createdAt: '2025-07-01'
+  irVersion: 58
+- version: 1.10.3
+  changelogEntry:
+    - summary: |
+        Remove `qs` dependency.
+      type: fix
+  createdAt: '2025-07-01'
+  irVersion: 58
+- version: 1.10.2
+  changelogEntry:
+    - summary: |
+        Remove `js-base64` dependency in favor of using native implementations.
+      type: fix
+  createdAt: '2025-07-01'
   irVersion: 58
 - version: 1.10.1
   changelogEntry:

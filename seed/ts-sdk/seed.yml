@@ -65,6 +65,9 @@ fixtures:
       outputFolder: with-partner-audience
   exhaustive:
     - customConfig:
+        omitFernHeaders: true
+      outputFolder: omit-fern-headers
+    - customConfig:
         packagePath: src/test-packagePath
       outputFolder: package-path
     - customConfig: null

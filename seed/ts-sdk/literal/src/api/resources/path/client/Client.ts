@@ -5,7 +5,6 @@
 import * as core from "../../../../core/index.js";
 import * as SeedLiteral from "../../../index.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
-import urlJoin from "url-join";
 import * as errors from "../../../../errors/index.js";
 
 export declare namespace Path {
@@ -60,7 +59,7 @@ export class Path {
         requestOptions?: Path.RequestOptions,
     ): Promise<core.WithRawResponse<SeedLiteral.SendResponse>> {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 `path/${encodeURIComponent(id)}`,

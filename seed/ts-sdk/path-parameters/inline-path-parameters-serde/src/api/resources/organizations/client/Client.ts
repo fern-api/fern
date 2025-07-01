@@ -5,7 +5,6 @@
 import * as core from "../../../../core/index.js";
 import * as SeedPathParameters from "../../../index.js";
 import { mergeHeaders } from "../../../../core/headers.js";
-import urlJoin from "url-join";
 import * as serializers from "../../../../serialization/index.js";
 import * as errors from "../../../../errors/index.js";
 
@@ -57,7 +56,7 @@ export class Organizations {
         requestOptions?: Organizations.RequestOptions,
     ): Promise<core.WithRawResponse<SeedPathParameters.Organization>> {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 `/${encodeURIComponent(this._options.tenantId)}/organizations/${encodeURIComponent(organizationId)}/`,
@@ -131,7 +130,7 @@ export class Organizations {
     ): Promise<core.WithRawResponse<SeedPathParameters.User>> {
         const { organizationId, userId } = request;
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 `/${encodeURIComponent(this._options.tenantId)}/organizations/${encodeURIComponent(organizationId)}/users/${encodeURIComponent(userId)}`,
@@ -214,7 +213,7 @@ export class Organizations {
         }
 
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 `/${encodeURIComponent(this._options.tenantId)}/organizations/${encodeURIComponent(organizationId)}/search`,
