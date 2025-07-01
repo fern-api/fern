@@ -1,6 +1,7 @@
 {
   "recommendations": [
     "ms-python.python",
-    "matangover.mypy"
+    "matangover.mypy",
+    "redhat.vscode-yaml"
   ]
 }
