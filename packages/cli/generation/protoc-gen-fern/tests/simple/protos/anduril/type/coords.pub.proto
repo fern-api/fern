@@ -1,0 +1,211 @@
+syntax = "proto3";
+
+package anduril.type;
+
+option go_package = "ghe.anduril.dev/anduril/andurilapis-go/anduril/type;atypes";
+option java_multiple_files = true;
+option java_package = "com.anduril.type";
+
+// Spherical angular coordinates
+message ThetaPhi {
+  // Angle clockwise relative to forward in degrees (Azimuth).
+  double theta = 1;
+  // Angle upward relative to forward in degrees (Elevation).
+  double phi = 2;
+}
+
+message LLA {
+  // What altitude of zero refers to.
+  enum AltitudeReference {
+    // Depending on the context its possible INVALID just means that it is
+    // clear from the context (e.g. this is LLA is named lla_hae).
+    // This also might mean AGL which would depend on what height map you are
+    // using.
+    ALTITUDE_REFERENCE_INVALID = 0;
+    ALTITUDE_REFERENCE_HEIGHT_ABOVE_WGS84 = 1; // commonly called height above ellipsoid (HAE)
+    ALTITUDE_REFERENCE_HEIGHT_ABOVE_EGM96 = 2; // commonly called mean sea level (MSL)
+    ALTITUDE_REFERENCE_UNKNOWN = 3; // Publishing an altitude with an unkown reference
+    ALTITUDE_REFERENCE_BAROMETRIC = 4; // ADSB sometimes published barometrically-measured alt
+    ALTITUDE_REFERENCE_ABOVE_SEA_FLOOR = 5; // Positive distance above sea floor (ASF) at a specific lat/lon
+    ALTITUDE_REFERENCE_BELOW_SEA_SURFACE = 6; // Positive distance below surface at a specific lat/lon
+  }
+
+  double lon = 1; // WGS84 longitude in decimal degrees
+  double lat = 2; // WGS84 geodetic latitude in decimal degrees
+  double alt = 3; // altitude in meters above either WGS84 or EGM96 (see altitude_reference)
+
+  bool is2d = 4; // [default=false] indicates that altitude is either unset or so uncertain that it is meaningless
+
+  // e.g. is2d = (alt_deviation > 10000) any aircraft would be within 3 deviations from 0
+  // e.g. is2d = (alt_deviation > 2000) any group 3 UAV would be within 3 deviations from 0
+
+  // Meaning of alt.
+  // altitude in meters above either WGS84 or EGM96, use altitude_reference to
+  // determine what zero means.
+  AltitudeReference altitude_reference = 5;
+}
+
+message ENU {
+  double e = 1;
+  double n = 2;
+  double u = 3;
+}
+
+// Holds ECI (Earth-Centered Inertial, https://en.wikipedia.org/wiki/Earth-centered_inertial)
+// coordinates.
+message ECI {
+  // Holds the x-coordinate of ECI.
+  double x = 1;
+
+  // Holds the y-coordinate of ECI.
+  double y = 2;
+
+  // Holds the z-coordinate of ECI.
+  double z = 3;
+}
+
+message Vec2 {
+  double x = 1;
+  double y = 2;
+}
+
+message Vec2f {
+  float x = 1;
+  float y = 2;
+}
+
+message Vec3 {
+  double x = 1;
+  double y = 2;
+  double z = 3;
+}
+
+message Vec3f {
+  float x = 1;
+  float y = 2;
+  float z = 3;
+}
+
+message Quaternion {
+  // x, y, z are vector portion, w is scalar
+  double x = 1;
+  double y = 2;
+  double z = 3;
+  double w = 4;
+}
+
+// Yaw-Pitch in radians
+message YawPitch {
+  double yaw = 1;
+  double pitch = 2;
+}
+
+// Yaw-Pitch-Roll in degrees.
+message YPR {
+  double yaw = 1;
+  double pitch = 2;
+  double roll = 3;
+}
+
+message Pose {
+  // Geospatial location defined by this Pose.
+  LLA pos = 1;
+  // The quaternion to transform a point in the Pose frame to the ENU frame. The Pose frame could be Body, Turret,
+  // etc and is determined by the context in which this Pose is used.
+  // The normal convention for defining orientation is to list the frames of transformation, for example
+  // att_gimbal_to_enu is the quaternion which transforms a point in the gimbal frame to the body frame, but
+  // in this case we truncate to att_enu because the Pose frame isn't defined. A potentially better name for this
+  // field would have been att_pose_to_enu.
+  //
+  // Implementations of this quaternion should left multiply this quaternion to transform a point from the Pose frame
+  // to the enu frame.
+  //
+  // Point<Pose\> posePt{1,0,0};
+  // Rotation<Enu, Pose\> attPoseToEnu{};
+  // Point<Enu\> = attPoseToEnu*posePt;
+  //
+  // This transformed point represents some vector in ENU space that is aligned with the x axis of the attPoseToEnu
+  // matrix.
+  //
+  // An alternative matrix expression is as follows:
+  // ptEnu = M x ptPose
+  Quaternion att_enu = 2;
+}
+
+message LLAPolygon {
+  // standard is that points are defined in a counter-clockwise order. this
+  // is only the exterior ring of a polygon, no holes are supported.
+  repeated LLA points = 1;
+}
+
+message AERPolygon {
+  // Azimuth-Range-Elevation
+  repeated Spherical points = 1;
+}
+
+message LLAPath {
+  // Ordered list of points on the path.
+  repeated LLA points = 1;
+  // True if the last point on the path connects to the first in a closed
+  // loop
+  bool loop = 2;
+}
+
+message Spherical {
+  // azimuth angle in radians
+  double az = 1;
+  // elevation angle in radians, we'll use 0 = XY plane
+  double el = 2;
+  // range in meters
+  double range = 3;
+}
+
+message DoubleRange {
+  double min = 1;
+  double max = 2;
+}
+
+message Uint64Range {
+  uint64 min = 1;
+  uint64 max = 2;
+}
+
+// A symmetric 4D matrix only representing the upper right triangle, useful for covariance matrices.
+message TMat4f {
+  float m00 = 1;
+  float m01 = 2;
+  float m02 = 3;
+  float m03 = 4;
+  float m11 = 5;
+  float m12 = 6;
+  float m13 = 7;
+  float m22 = 8;
+  float m23 = 9;
+  float m33 = 10;
+}
+
+// A symmetric 3D matrix only representing the upper right triangle, useful for covariance matrices.
+message TMat3 {
+  double mxx = 1;
+  double mxy = 2;
+  double mxz = 3;
+  double myy = 4;
+  double myz = 5;
+  double mzz = 6;
+}
+
+// symmetric 2d matrix only representing the upper right triangle, useful for
+// covariance matrices
+message TMat2 {
+  double mxx = 1;
+  double mxy = 2;
+  double myy = 3;
+}
+
+// Rx + t, Technically this is a duplicate of AffineTransform
+// but Affine Transform isn't really an affine transform (since it doesn't allow
+// skewing and stretching).
+message RigidTransform {
+  Quaternion rotation = 3;
+  Vec3 translation = 4;
+}

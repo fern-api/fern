@@ -1,11 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 1.10.1
+- version: 1.10.2
   changelogEntry:
     - summary: |
         Add default values to request parameters.
         For example, if you have a query parameter `foo` with a default value of `bar`, the generated request parameter will have a default value of `bar`.
       type: feat
-  createdAt: '2025-06-29'
+  createdAt: '2025-06-30'
+  irVersion: 58
+- version: 1.10.1
+  changelogEntry:
+    - summary: |
+        Remove `url-join` dependency in favor of a handwritten `joinUrl` function.
+      type: fix
+  createdAt: '2025-06-30'
   irVersion: 58
 - version: 1.10.0
   changelogEntry:
@@ -42,6 +49,9 @@
     - summary: |
         When a multipart form part is explicitly marked as JSON, serialize the data as JSON regardless of type. 
         This also means arrays, maps, etc. will not be split into multiple parts, but serialized to JSON as a single part.
+      type: fix
+  createdAt: '2025-06-22'
+  irVersion: 58
 - version: 1.8.1
   changelogEntry:
     - summary: Fix binary response README.md examples
