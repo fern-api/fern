@@ -1,0 +1,140 @@
+syntax = "proto3";
+
+package anduril.entitymanager.v1;
+
+import "anduril/entitymanager/v1/location.pub.proto";
+import "anduril/entitymanager/v1/signal.pub.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+
+option csharp_namespace = "Anduril.Entitymanager.V1";
+option go_package = "ghe.anduril.dev/anduril/andurilapis-go/anduril/entitymanager/v1;entitymanager";
+option java_multiple_files = true;
+option java_outer_classname = "SensorsProto";
+option java_package = "com.anduril.entitymanager.v1";
+option objc_class_prefix = "AEX";
+
+// List of sensors available for an entity.
+message Sensors {
+  repeated Sensor sensors = 1;
+}
+
+// Individual sensor configuration.
+message Sensor {
+  // This generally is used to indicate a specific type at a more detailed granularity. E.g. COMInt or LWIR
+  string sensor_id = 1;
+  OperationalState operational_state = 3;
+  // The type of sensor
+  SensorType sensor_type = 5;
+  // A human readable description of the sensor
+  string sensor_description = 6;
+  // RF configuration details of the sensor
+  RFConfiguration rf_configuraton = 7;
+  // Time of the latest detection from the sensor
+  google.protobuf.Timestamp last_detection_timestamp = 8;
+  // Multiple fields of view for a single sensor component
+  repeated FieldOfView fields_of_view = 9;
+
+  reserved 4;
+}
+
+// Sensor Field Of View closely resembling fov.proto SensorFieldOfView.
+message FieldOfView {
+  // The Id for one instance of a FieldOfView, persisted across multiple updates to provide continuity during
+  // smoothing. This is relevant for sensors where the dwell schedule is on the order of
+  // milliseconds, making multiple FOVs a requirement for proper display of search beams.
+  int32 fov_id = 1;
+  // The Id of the mount the sensor is on.
+  string mount_id = 2;
+  // The field of view the sensor projected onto the ground.
+  ProjectedFrustum projected_frustum = 3;
+  // Center ray of the frustum projected onto the ground.
+  Position projected_center_ray = 4;
+  // The origin and direction of the center ray for this sensor relative to the ENU frame. A ray which is aligned with
+  // the positive X axis in the sensor frame will be transformed into the ray along the sensor direction in the ENU
+  // frame when transformed by the quaternion contained in this pose.
+  Pose center_ray_pose = 5;
+  // Horizontal field of view in radians.
+  float horizontal_fov = 6;
+  // Vertical field of view in radians.
+  float vertical_fov = 7;
+  // Sensor range in meters.
+  google.protobuf.FloatValue range = 8;
+  // The mode that this sensor is currently in, used to display for context in the UI. Some sensors can emit multiple
+  // sensor field of views with different modes, for example a radar can simultaneously search broadly and perform
+  // tighter bounded tracking.
+  SensorMode mode = 9;
+}
+
+// Represents a frustum in which which all four corner points project onto the ground. All points in this message
+// are optional, if the projection to the ground fails then they will not be populated.
+message ProjectedFrustum {
+  // Upper left point of the frustum.
+  Position upper_left = 1;
+  // Upper right point of the frustum.
+  Position upper_right = 2;
+  // Bottom right point of the frustum.
+  Position bottom_right = 3;
+  // Bottom left point of the frustum.
+  Position bottom_left = 4;
+}
+
+// Represents RF configurations supported on this sensor.
+message RFConfiguration {
+  // Frequency ranges that are available for this sensor.
+  repeated FrequencyRange frequency_range_hz = 3;
+  // Bandwidth ranges that are available for this sensor.
+  repeated BandwidthRange bandwidth_range_hz = 4;
+
+  reserved 1, 2;
+}
+
+// A component that describes the min and max bandwidths of a sensor
+message BandwidthRange {
+  Bandwidth minimum_bandwidth = 1;
+  Bandwidth maximum_bandwidth = 2;
+}
+
+// Describes the bandwidth of a signal
+message Bandwidth {
+  google.protobuf.DoubleValue bandwidth_hz = 1;
+}
+
+// Describes the current operational state of a system.
+enum OperationalState {
+  OPERATIONAL_STATE_INVALID = 0;
+  // sensor exists but is deliberately turned off
+  OPERATIONAL_STATE_OFF = 1;
+  // sensor is not operational but some reason other than being "Off" (e.g., equipment malfunction)
+  OPERATIONAL_STATE_NON_OPERATIONAL = 2;
+  // sensor is receiving information but in some reduced status (e.g., off calibration)
+  OPERATIONAL_STATE_DEGRADED = 3;
+  // fully functional
+  OPERATIONAL_STATE_OPERATIONAL = 4;
+  // sensor is being actively denied
+  OPERATIONAL_STATE_DENIED = 5;
+}
+
+// Enumerates the possible sensor modes which were active for this sensor field of view.
+enum SensorMode {
+  SENSOR_MODE_INVALID = 0;
+  SENSOR_MODE_SEARCH = 1;
+  SENSOR_MODE_TRACK = 2;
+  SENSOR_MODE_WEAPON_SUPPORT = 3;
+  SENSOR_MODE_AUTO = 4;
+  SENSOR_MODE_MUTE = 5;
+}
+
+enum SensorType {
+  SENSOR_TYPE_INVALID = 0;
+  SENSOR_TYPE_RADAR = 1;
+  SENSOR_TYPE_CAMERA = 2;
+  SENSOR_TYPE_TRANSPONDER = 3;
+  SENSOR_TYPE_RF = 4;
+  SENSOR_TYPE_GPS = 5;
+  SENSOR_TYPE_PTU_POS = 6;
+  SENSOR_TYPE_PERIMETER = 8;
+  SENSOR_TYPE_SONAR = 9;
+
+  reserved 7;
+}

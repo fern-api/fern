@@ -1,7 +1,7 @@
 import { chmod, cp, writeFile } from "fs/promises";
 import tmp from "tmp-promise";
 
-import { AbsoluteFilePath, RelativeFilePath, cwd, join, resolve } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 import { createLoggingExecutable, runExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
 
