@@ -5458,6 +5458,9 @@ importers:
 
   packages/cli/cli:
     devDependencies:
+      '@bufbuild/protobuf':
+        specifier: ^2.2.5
+        version: 2.5.2
       '@fern-api/api-workspace-commons':
         specifier: workspace:*
         version: link:../workspace/commons
@@ -5569,6 +5572,9 @@ importers:
       '@fern-api/project-loader':
         specifier: workspace:*
         version: link:../project-loader
+      '@fern-api/protoc-gen-fern':
+        specifier: workspace:*
+        version: link:../generation/protoc-gen-fern
       '@fern-api/register':
         specifier: workspace:*
         version: link:../register
@@ -6513,6 +6519,9 @@ importers:
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
+      '@fern-api/logger':
+        specifier: workspace:*
+        version: link:../logger
       '@fern-api/logging-execa':
         specifier: workspace:*
         version: link:../../commons/logging-execa
