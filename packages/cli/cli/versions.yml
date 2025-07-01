@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |  
+        Revert dependency on bufbuild package.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-07-01"
+  version: 0.64.31
+
+- changelogEntry:
+    - summary: |  
         Support the `x-displayName` extension on the tag definition in OpenAPI. This allows OpenAPI
          specifications to define custom display names for tags that will be used in generated documentation.
       type: feat
