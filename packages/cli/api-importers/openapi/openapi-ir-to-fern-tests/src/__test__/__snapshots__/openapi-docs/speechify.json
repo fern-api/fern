@@ -956,6 +956,9 @@ types:
               "docs": "Create a new API key for the logged in user",
               "examples": [
                 {
+                  "headers": {
+                    "Authorization": "Authorization",
+                  },
                   "response": {
                     "body": {
                       "api_key": "api_key",
@@ -985,6 +988,9 @@ types:
               "docs": "Deletes the given API key for the logged in user",
               "examples": [
                 {
+                  "headers": {
+                    "Authorization": "Authorization",
+                  },
                   "path-parameters": {
                     "id": "id",
                   },
@@ -1008,6 +1014,9 @@ types:
               "docs": "Fetches all the API keys for the logged in user",
               "examples": [
                 {
+                  "headers": {
+                    "Authorization": "Authorization",
+                  },
                   "response": {
                     "body": [
                       {
@@ -1039,6 +1048,9 @@ types:
               "docs": "Update API key name for the logged in user",
               "examples": [
                 {
+                  "headers": {
+                    "Authorization": "Authorization",
+                  },
                   "path-parameters": {
                     "id": "id",
                   },
@@ -1101,7 +1113,9 @@ service:
         type: list<root.ApiKey>
         status-code: 200
       examples:
-        - response:
+        - headers:
+            Authorization: Authorization
+          response:
             body:
               - api_key: api_key
                 created_at: 1000000
@@ -1123,7 +1137,9 @@ service:
         type: root.ApiKey
         status-code: 200
       examples:
-        - response:
+        - headers:
+            Authorization: Authorization
+          response:
             body:
               api_key: api_key
               created_at: 1000000
@@ -1145,6 +1161,8 @@ service:
       examples:
         - path-parameters:
             id: id
+          headers:
+            Authorization: Authorization
     UpdateApiKey:
       path: /v1/token/{id}
       method: PATCH
@@ -1168,6 +1186,8 @@ service:
       examples:
         - path-parameters:
             id: id
+          headers:
+            Authorization: Authorization
           request: string
           response:
             body:
@@ -1202,6 +1222,9 @@ service:
               ],
               "examples": [
                 {
+                  "headers": {
+                    "Authorization": "Authorization",
+                  },
                   "request": {
                     "input": "input",
                     "voice_id": "voice_id",
@@ -1272,6 +1295,9 @@ simba-turbo ModelTurbo",
               ],
               "examples": [
                 {
+                  "headers": {
+                    "Authorization": "Authorization",
+                  },
                   "request": {
                     "input": "input",
                     "voice_id": "voice_id",
@@ -1364,6 +1390,7 @@ simba-turbo ModelTurbo",
                 {
                   "headers": {
                     "Accept": "audio/mpeg",
+                    "Authorization": "Authorization",
                   },
                   "request": {
                     "input": "input",
@@ -1729,7 +1756,9 @@ service:
         - root.ExperimentalStreamCreateRequestForbiddenError
         - root.ExperimentalStreamCreateRequestInternalServerError
       examples:
-        - request:
+        - headers:
+            Authorization: Authorization
+          request:
             input: input
             voice_id: voice_id
           response:
@@ -1808,7 +1837,9 @@ service:
         - root.GetSpeechRequestForbiddenError
         - root.GetSpeechRequestInternalServerError
       examples:
-        - request:
+        - headers:
+            Authorization: Authorization
+          request:
             input: input
             voice_id: voice_id
           response:
@@ -1895,6 +1926,7 @@ service:
       examples:
         - headers:
             Accept: audio/mpeg
+            Authorization: Authorization
           request:
             input: input
             voice_id: voice_id
@@ -1923,6 +1955,9 @@ service:
               ],
               "examples": [
                 {
+                  "headers": {
+                    "Authorization": "Authorization",
+                  },
                   "request": {
                     "grant_type": "client_credentials",
                   },
@@ -2074,7 +2109,9 @@ service:
       errors:
         - root.CreateAccessTokenRequestBadRequestError
       examples:
-        - request:
+        - headers:
+            Authorization: Authorization
+          request:
             grant_type: client_credentials
           response:
             body:
@@ -2106,6 +2143,9 @@ service:
               ],
               "examples": [
                 {
+                  "headers": {
+                    "Authorization": "Authorization",
+                  },
                   "request": {
                     "consent": "consent",
                     "name": "name",
@@ -2176,6 +2216,9 @@ This should include the fullName and email of the consenting individual.",
               ],
               "examples": [
                 {
+                  "headers": {
+                    "Authorization": "Authorization",
+                  },
                   "path-parameters": {
                     "id": "id",
                   },
@@ -2203,6 +2246,9 @@ This should include the fullName and email of the consenting individual.",
               ],
               "examples": [
                 {
+                  "headers": {
+                    "Authorization": "Authorization",
+                  },
                   "response": {
                     "body": [
                       {
@@ -2262,7 +2308,9 @@ service:
         - root.GetVoicesRequestNotFoundError
         - root.GetVoicesRequestInternalServerError
       examples:
-        - response:
+        - headers:
+            Authorization: Authorization
+          response:
             body:
               - avatar_image: avatar_image
                 display_name: display_name
@@ -2314,7 +2362,9 @@ service:
         - root.CreateVoiceRequestPaymentRequiredError
         - root.CreateVoiceRequestInternalServerError
       examples:
-        - request:
+        - headers:
+            Authorization: Authorization
+          request:
             name: name
             consent: consent
           response:
@@ -2344,6 +2394,8 @@ service:
       examples:
         - path-parameters:
             id: id
+          headers:
+            Authorization: Authorization
   source:
     openapi: ../openapi.json
 ",

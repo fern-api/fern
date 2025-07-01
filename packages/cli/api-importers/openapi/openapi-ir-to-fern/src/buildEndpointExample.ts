@@ -35,19 +35,19 @@ export function buildEndpointExample({
     }
 
     const hasEndpointHeaders = endpointExample.headers != null && endpointExample.headers.length > 0;
-    const hasGlobalHeaders = context.ir.globalHeaders != null && context.ir.globalHeaders.length > 0;
+    const hasGlobalHeaders = Object.keys(context.builder.getGlobalHeaders()).length > 0;
     if (hasEndpointHeaders || hasGlobalHeaders) {
         const namedFullExamples: NamedFullExample[] = [
             ...(endpointExample.headers ?? []),
-            ...(context.ir.globalHeaders?.map((header) => ({
-                name: header.header,
-                value: FullExample.primitive(PrimitiveExample.string(header.header))
+            ...(Object.entries(context.builder.getGlobalHeaders()).map(([header, schema]) => ({
+                name: header,
+                value: FullExample.primitive(PrimitiveExample.string(header))
             })) ?? [])
         ];
 
-        example.headers = convertHeaderExamples({ 
-            context, 
-            namedFullExamples 
+        example.headers = convertHeaderExamples({
+            context,
+            namedFullExamples
         });
     }
 

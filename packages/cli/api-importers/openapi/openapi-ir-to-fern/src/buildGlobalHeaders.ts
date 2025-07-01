@@ -121,25 +121,11 @@ export function buildGlobalHeaders(context: OpenApiIrConverterContext): void {
                     name: headerName,
                     schema: header.schema
                 });
-                context.ir.globalHeaders?.push({
-                    header: headerName,
-                    name: headerName,
-                    optional: undefined,
-                    env: undefined,
-                    schema: header.schema as Schema
-                })
             } else if (isOptional) {
                 context.builder.addGlobalHeader({
                     name: headerName,
                     schema: wrapTypeReferenceAsOptional(header.schema)
                 });
-                context.ir.globalHeaders?.push({
-                    header: headerName,
-                    name: headerName,
-                    optional: undefined,
-                    env: undefined,
-                    schema: wrapTypeReferenceAsOptional(header.schema) as Schema
-                })
             }
         }
     }
