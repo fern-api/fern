@@ -145,6 +145,7 @@ export declare namespace SdkGenerator {
         formDataSupport: "Node16" | "Node18";
         fetchSupport: "node-fetch" | "native";
         packagePath: string | undefined;
+        omitFernHeaders: boolean;
     }
 }
 
@@ -426,7 +427,8 @@ export class SdkGenerator {
             streamType: config.streamType,
             fileResponseType: config.fileResponseType,
             exportsManager: this.exportsManager,
-            formDataSupport: config.formDataSupport
+            formDataSupport: config.formDataSupport,
+            omitFernHeaders: config.omitFernHeaders
         });
         this.websocketGenerator = new WebsocketClassGenerator({
             intermediateRepresentation

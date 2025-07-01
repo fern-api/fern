@@ -51,7 +51,7 @@ try {
     $response = $client->imdb->createMovie(...);
 } catch (SeedApiException $e) {
     echo 'API Exception occurred: ' . $e->getMessage() . "\n";
-    echo 'Status Code: ' . $e->getCode() . "\n"; 
+    echo 'Status Code: ' . $e->getCode() . "\n";
     echo 'Response Body: ' . $e->getBody() . "\n";
     // Optionally, rethrow the exception or handle accordingly.
 }

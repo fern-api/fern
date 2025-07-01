@@ -23,9 +23,7 @@ service:
               type: string
       response: root.SendResponse
       examples: 
-        - headers:
-            X-API-Version: "02-02-2024"
-            X-API-Enable-Audit-Logging: true
+        - headers: 
             X-Endpoint-Version: "02-12-2024"
             X-Async: true
           request:
