@@ -86,7 +86,7 @@
                     "another_header": "another_header",
                     "my-api-key": "my-api-key",
                     "my-api-version": "my-api-version",
-                    "version": "2024-06-04",
+                    "version": "version",
                     "x-api-key": "x-api-key",
                   },
                   "path-parameters": {
@@ -145,7 +145,7 @@
                     "another_header": "another_header",
                     "my-api-key": "my-api-key",
                     "my-api-version": "my-api-version",
-                    "version": "2024-06-04",
+                    "version": "version",
                     "x-api-key": "x-api-key",
                   },
                   "path-parameters": {
@@ -238,7 +238,7 @@ service:
             another_header: another_header
             x-api-key: x-api-key
             my-api-version: my-api-version
-            version: '2024-06-04'
+            version: version
           request:
             stream: true
           response:
@@ -273,7 +273,7 @@ service:
             another_header: another_header
             x-api-key: x-api-key
             my-api-version: my-api-version
-            version: '2024-06-04'
+            version: version
           request:
             stream: false
           response:
