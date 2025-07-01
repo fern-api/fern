@@ -100,7 +100,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
             writer.writeLine("return nil, err");
             writer.dedent();
             writer.writeLine("}");
-            writer.writeLine(`headers.Set("Content-Type", writer.ContentType())`);
+            writer.writeLine('headers.Set("Content-Type", writer.ContentType())');
         });
     }
 
