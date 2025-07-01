@@ -125,7 +125,7 @@ class PoetryBlock extends Block {
         ];
         lines.push(`\nclassifiers = ${JSON.stringify(classifiers, null, 4)}`);
 
-        if (this.packageConfig._from != null) {
+        if (this.packageConfig._from != null && this.packageConfig._from.length > 0) {
             const packageLine = `{ include = "${this.packageConfig.include}", from = "${this.packageConfig._from}" }`;
             lines.push(`packages = [\n    ${packageLine}\n]`);
         } else {
