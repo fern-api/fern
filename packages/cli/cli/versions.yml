@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |  
+        Change @bufbuild/protobuf dependency to be a dev dependency.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-01"
+  version: 0.64.30
+
+- changelogEntry:
+    - summary: |  
         Add fern protoc-gen-fern command to CLI, used as a proxy to generate IR from proto files.
       type: feat
   irVersion: 58
