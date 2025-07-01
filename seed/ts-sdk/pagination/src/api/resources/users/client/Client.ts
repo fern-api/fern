@@ -71,7 +71,7 @@ export class Users {
                     _queryParams["starting_after"] = startingAfter;
                 }
                 const _response = await core.fetcher({
-                    url: core.joinUrl(
+                    url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
                         "/users",
@@ -158,7 +158,7 @@ export class Users {
                     _queryParams["cursor"] = cursor;
                 }
                 const _response = await core.fetcher({
-                    url: core.joinUrl(
+                    url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
                         "/users",
@@ -238,7 +238,7 @@ export class Users {
                 request: SeedPagination.ListUsersBodyCursorPaginationRequest,
             ): Promise<core.WithRawResponse<SeedPagination.ListUsersPaginationResponse>> => {
                 const _response = await core.fetcher({
-                    url: core.joinUrl(
+                    url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
                         "/users",
@@ -339,7 +339,7 @@ export class Users {
                     _queryParams["starting_after"] = startingAfter;
                 }
                 const _response = await core.fetcher({
-                    url: core.joinUrl(
+                    url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
                         "/users",
@@ -435,7 +435,7 @@ export class Users {
                     _queryParams["starting_after"] = startingAfter;
                 }
                 const _response = await core.fetcher({
-                    url: core.joinUrl(
+                    url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
                         "/users",
@@ -516,7 +516,7 @@ export class Users {
                 request: SeedPagination.ListUsersBodyOffsetPaginationRequest,
             ): Promise<core.WithRawResponse<SeedPagination.ListUsersPaginationResponse>> => {
                 const _response = await core.fetcher({
-                    url: core.joinUrl(
+                    url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
                         "/users",
@@ -610,7 +610,7 @@ export class Users {
                     _queryParams["order"] = order;
                 }
                 const _response = await core.fetcher({
-                    url: core.joinUrl(
+                    url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
                         "/users",
@@ -702,7 +702,7 @@ export class Users {
                     _queryParams["order"] = order;
                 }
                 const _response = await core.fetcher({
-                    url: core.joinUrl(
+                    url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
                         "/users",
@@ -786,7 +786,7 @@ export class Users {
                     _queryParams["cursor"] = cursor;
                 }
                 const _response = await core.fetcher({
-                    url: core.joinUrl(
+                    url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
                         "/users",
@@ -869,7 +869,7 @@ export class Users {
                     _queryParams["cursor"] = cursor;
                 }
                 const _response = await core.fetcher({
-                    url: core.joinUrl(
+                    url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
                         "/users",
@@ -952,7 +952,7 @@ export class Users {
                     _queryParams["starting_after"] = startingAfter;
                 }
                 const _response = await core.fetcher({
-                    url: core.joinUrl(
+                    url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
                         "/users",
@@ -1036,7 +1036,7 @@ export class Users {
                     _queryParams["offset"] = offset.toString();
                 }
                 const _response = await core.fetcher({
-                    url: core.joinUrl(
+                    url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
                         "/users",

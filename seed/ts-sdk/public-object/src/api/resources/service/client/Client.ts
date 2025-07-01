@@ -41,7 +41,7 @@ export class Service {
 
     private async __get(requestOptions?: Service.RequestOptions): Promise<core.WithRawResponse<stream.Readable>> {
         const _response = await core.fetcher<stream.Readable>({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/helloworld.txt",

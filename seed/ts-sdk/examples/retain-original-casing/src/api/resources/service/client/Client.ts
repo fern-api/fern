@@ -56,7 +56,7 @@ export class Service {
         requestOptions?: Service.RequestOptions,
     ): Promise<core.WithRawResponse<SeedExamples.Movie>> {
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 `/movie/${encodeURIComponent(movieId)}`,
@@ -140,7 +140,7 @@ export class Service {
         requestOptions?: Service.RequestOptions,
     ): Promise<core.WithRawResponse<SeedExamples.MovieId>> {
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/movie",
@@ -224,7 +224,7 @@ export class Service {
         }
 
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/metadata",
@@ -463,7 +463,7 @@ export class Service {
         requestOptions?: Service.RequestOptions,
     ): Promise<core.WithRawResponse<SeedExamples.Response>> {
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/big-entity",

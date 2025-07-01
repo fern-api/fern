@@ -1,3 +1,3 @@
 export * from "./fetcher/index.js";
 export * from "./runtime/index.js";
-export * from "./url.js";
+export * as url from "./url/index.js";

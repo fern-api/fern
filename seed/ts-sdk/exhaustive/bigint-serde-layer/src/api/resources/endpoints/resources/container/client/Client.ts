@@ -56,7 +56,7 @@ export class Container {
         requestOptions?: Container.RequestOptions,
     ): Promise<core.WithRawResponse<string[]>> {
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/container/list-of-primitives",
@@ -143,7 +143,7 @@ export class Container {
         requestOptions?: Container.RequestOptions,
     ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithRequiredField[]>> {
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/container/list-of-objects",
@@ -223,7 +223,7 @@ export class Container {
         requestOptions?: Container.RequestOptions,
     ): Promise<core.WithRawResponse<Set<string>>> {
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/container/set-of-primitives",
@@ -308,7 +308,7 @@ export class Container {
         requestOptions?: Container.RequestOptions,
     ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithRequiredField[]>> {
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/container/set-of-objects",
@@ -390,7 +390,7 @@ export class Container {
         requestOptions?: Container.RequestOptions,
     ): Promise<core.WithRawResponse<Record<string, string>>> {
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/container/map-prim-to-prim",
@@ -474,7 +474,7 @@ export class Container {
         requestOptions?: Container.RequestOptions,
     ): Promise<core.WithRawResponse<Record<string, SeedExhaustive.types.ObjectWithRequiredField>>> {
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/container/map-prim-to-object",
@@ -559,7 +559,7 @@ export class Container {
         requestOptions?: Container.RequestOptions,
     ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithRequiredField | undefined>> {
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/container/opt-objects",

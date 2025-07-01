@@ -61,7 +61,7 @@ export class Ec2 {
         requestOptions?: Ec2.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)).ec2,
                 "/ec2/boot",

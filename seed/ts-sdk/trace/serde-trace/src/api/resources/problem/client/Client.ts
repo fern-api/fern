@@ -135,7 +135,7 @@ export class Problem {
         requestOptions?: Problem.RequestOptions,
     ): Promise<core.WithRawResponse<SeedTrace.CreateProblemResponse>> {
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
@@ -294,7 +294,7 @@ export class Problem {
         requestOptions?: Problem.RequestOptions,
     ): Promise<core.WithRawResponse<SeedTrace.UpdateProblemResponse>> {
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
@@ -380,7 +380,7 @@ export class Problem {
         requestOptions?: Problem.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
@@ -467,7 +467,7 @@ export class Problem {
         requestOptions?: Problem.RequestOptions,
     ): Promise<core.WithRawResponse<SeedTrace.GetDefaultStarterFilesResponse>> {
         const _response = await core.fetcher({
-            url: core.joinUrl(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
