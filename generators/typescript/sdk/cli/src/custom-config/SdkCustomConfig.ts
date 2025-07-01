@@ -43,4 +43,5 @@ export interface SdkCustomConfig {
     formDataSupport: "Node16" | "Node18";
     fetchSupport: "node-fetch" | "native";
     packagePath: string | undefined;
+    omitFernHeaders: boolean | undefined;
 }

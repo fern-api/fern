@@ -80,7 +80,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             fileResponseType: parsed?.fileResponseType ?? "stream",
             formDataSupport: parsed?.formDataSupport ?? "Node16",
             fetchSupport: parsed?.fetchSupport ?? "node-fetch",
-            packagePath: parsed?.packagePath
+            packagePath: parsed?.packagePath,
+            omitFernHeaders: parsed?.omitFernHeaders ?? false,
         };
     }
 
@@ -169,7 +170,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 fileResponseType: customConfig.fileResponseType ?? "stream",
                 formDataSupport: customConfig.formDataSupport ?? "Node16",
                 fetchSupport: customConfig.fetchSupport ?? "node-fetch",
-                packagePath: customConfig.packagePath
+                packagePath: customConfig.packagePath,
+                omitFernHeaders: customConfig.omitFernHeaders ?? false
             }
         });
         const typescriptProject = await sdkGenerator.generate();
