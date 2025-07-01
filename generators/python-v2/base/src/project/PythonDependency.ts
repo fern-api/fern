@@ -1,4 +1,3 @@
-
 /**
  * Data class to represent a Python dependency.
  * Supports writing as both pyproject.toml and requirements.txt formats.
@@ -16,10 +15,10 @@ export class PythonDependency {
     }
 
     public toProjectTomlString(): string {
-        return `${this.name} = "${this.version}"`
+        return `${this.name} = "${this.version}"`;
     }
 
     public toRequirementsTxtString(): string {
-        return `${this.name}${this.version}`
+        return `${this.name}${this.version}`;
     }
 }

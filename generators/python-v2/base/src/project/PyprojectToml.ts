@@ -1,10 +1,9 @@
 import { PythonDependency } from "./PythonDependency";
 
 /**
- * Represents a pyproject.toml file and generates a string representation of it. 
+ * Represents a pyproject.toml file and generates a string representation of it.
  */
 export class PyprojectToml {
-
     private readonly name: string;
     private readonly version: string;
     private readonly pythonVersion: string;
@@ -18,7 +17,7 @@ export class PyprojectToml {
         pythonVersion: string,
         dependencies: PythonDependency[],
         devDependencies: PythonDependency[],
-        packageConfig: PackageConfig,
+        packageConfig: PackageConfig
     ) {
         this.name = name;
         this.version = version;
@@ -35,11 +34,10 @@ export class PyprojectToml {
             new DependenciesBlock(this.pythonVersion, this.dependencies, this.devDependencies).toString(),
             new PluginConfigurationBlock().toString(),
             new BuildSystemBlock().toString()
-        ]
+        ];
 
-        return blocks.join('\n\n');
+        return blocks.join("\n\n");
     }
-
 }
 
 export class PackageConfig {
@@ -87,7 +85,7 @@ class PoetryBlock extends Block {
 
     public toString(): string {
         const lines: string[] = [];
-        lines.push(`[tool.poetry]`);
+        lines.push("[tool.poetry]");
         lines.push(`name = "${this.name}"`);
         if (this.version != null) {
             lines.push(`version = "${this.version}"`);
@@ -97,7 +95,7 @@ class PoetryBlock extends Block {
         const readme = "README.md";
         const authors: string[] = [];
         const keywords: string[] = [];
-        const projectUrls: string[] = []; 
+        const projectUrls: string[] = [];
 
         lines.push(`description = "${description}"`);
         lines.push(`readme = "${readme}"`);
@@ -119,8 +117,8 @@ class PoetryBlock extends Block {
             "Operating System :: POSIX :: Linux",
             "Operating System :: Microsoft :: Windows",
             "Topic :: Software Development :: Libraries :: Python Modules",
-            "Typing :: Typed",
-        ]
+            "Typing :: Typed"
+        ];
         lines.push(`\nclassifiers = ${JSON.stringify(classifiers, null, 4)}`);
 
         if (this.packageConfig._from != null) {
@@ -132,7 +130,7 @@ class PoetryBlock extends Block {
         }
 
         if (projectUrls.length > 0) {
-            lines.push(`\n[project.urls]`);
+            lines.push("\n[project.urls]");
             lines.push(projectUrls.join("\n"));
         }
 
@@ -153,14 +151,14 @@ class DependenciesBlock extends Block {
     }
 
     public toString(): string {
-        const lines: string[] = ['[tool.poetry.dependencies]'];
+        const lines: string[] = ["[tool.poetry.dependencies]"];
         lines.push(`python = "${this.pythonVersion}"`);
-        lines.push(this.prodDependencies.map(dep => dep.toProjectTomlString()).join("\n"));
+        lines.push(this.prodDependencies.map((dep) => dep.toProjectTomlString()).join("\n"));
 
-        lines[lines.length - 1] = lines[lines.length - 1] += '\n';
+        lines[lines.length - 1] = lines[lines.length - 1] += "\n";
 
-        lines.push('[tool.poetry.group.dev.dependencies]');
-        lines.push(this.devDependencies.map(dep => dep.toProjectTomlString()).join("\n"));
+        lines.push("[tool.poetry.group.dev.dependencies]");
+        lines.push(this.devDependencies.map((dep) => dep.toProjectTomlString()).join("\n"));
 
         return lines.join("\n");
     }

@@ -7,9 +7,9 @@ import { loggingExeca } from "@fern-api/logging-execa";
 
 import { AbstractPythonGeneratorContext } from "../cli";
 import { BasePythonCustomConfigSchema } from "../custom-config";
-import { WriteablePythonFile } from "./WriteablePythonFile";
-import { PythonDependency } from "./PythonDependency";
 import { PackageConfig, PyprojectToml } from "./PyprojectToml";
+import { PythonDependency } from "./PythonDependency";
+import { WriteablePythonFile } from "./WriteablePythonFile";
 
 const AS_IS_DIRECTORY = path.join(__dirname, "asIs");
 
@@ -64,8 +64,8 @@ export class PythonProject extends AbstractProject<AbstractPythonGeneratorContex
      * Writes dependency as both pyproject.toml and requirements.txt.
      */
     private async writeDependencies(): Promise<void> {
-        const prodDependencies = this.dependencies.filter(dep => !dep.isDevDependency);
-        const devDependencies = this.dependencies.filter(dep => dep.isDevDependency);
+        const prodDependencies = this.dependencies.filter((dep) => !dep.isDevDependency);
+        const devDependencies = this.dependencies.filter((dep) => dep.isDevDependency);
 
         const requirementsTxt = getDependenciesAsRequirementsTxt(prodDependencies);
 
@@ -77,7 +77,7 @@ export class PythonProject extends AbstractProject<AbstractPythonGeneratorContex
             devDependencies,
             new PackageConfig(this.context.getPackageName(), "src") // Is this correct?
         );
-        
+
         // Write requirements.txt
         await writeFile(
             join(this.absolutePathToOutputDirectory, RelativeFilePath.of("requirements.txt")),
@@ -90,7 +90,6 @@ export class PythonProject extends AbstractProject<AbstractPythonGeneratorContex
             pyprojectToml.toString()
         );
     }
-
 }
 
 // TODO(nevil): Share code between this and CsharpProject.
@@ -103,6 +102,6 @@ function getAsIsFilepath(filename: string): AbsoluteFilePath {
  * @param dependencies - Production dependencies only.
  */
 function getDependenciesAsRequirementsTxt(dependencies: PythonDependency[]): string {
-    const textLines = dependencies.map(x => x.toRequirementsTxtString())
+    const textLines = dependencies.map((x) => x.toRequirementsTxtString());
     return textLines.join("\n");
 }

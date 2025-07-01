@@ -43,7 +43,7 @@ export class ModelGeneratorCLI extends AbstractPythonGeneratorCli<
         for (const file of files) {
             context.project.addSourceFiles(file);
         }
-        const dependencies = context.generateDependencies()
+        const dependencies = context.generateDependencies();
         for (const dependency of dependencies) {
             context.project.addDependency(dependency);
         }

@@ -92,7 +92,7 @@ export abstract class AbstractPythonGeneratorContext<
             new PythonDependency("pytest-asyncio", "^0.23.5", true),
             new PythonDependency("python-dateutil", "^2.9.0", true),
             new PythonDependency("types-python-dateutil", "^2.9.0.20240316", true),
-            new PythonDependency("ruff", "==0.11.5", true),
+            new PythonDependency("ruff", "==0.11.5", true)
         ];
     }
 
