@@ -36,16 +36,7 @@
         "test:wire": "jest tests/wire",
         "wire:test": "yarn test:wire"
     },
-    "dependencies": {
-        "form-data": "^4.0.0",
-        "formdata-node": "^6.0.3",
-        "node-fetch": "^2.7.0",
-        "readable-stream": "^4.5.2"
-    },
     "devDependencies": {
-        "@types/node-fetch": "^2.6.12",
-        "@types/qs": "^6.9.17",
-        "@types/readable-stream": "^4.0.18",
         "webpack": "^5.97.1",
         "ts-loader": "^9.5.1",
         "jest": "^29.7.0",
