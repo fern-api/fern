@@ -10,7 +10,7 @@ features:
   - id: CUSTOM_CLIENT
     advanced: true
     description: |
-      Life is unexpected more than we can antipicate, and for those special cases, you can pass your own PSR compatible HTTP Client
+      Life is unexpected more than we can anticipate, and for those special cases, you can pass your own PSR compatible HTTP Client
       with whatever middleware your heart desires, all you need to do is pass your own client implementation to our client
       constructor. Here's an example of how you can register a custom middleware on the client:
 
