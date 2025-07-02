@@ -1,4 +1,4 @@
-name: Validate versions.yml
+name: Validate versions.yml files
 
 on:
   pull_request:
@@ -6,61 +6,65 @@ on:
 
 jobs:
   validate:
-    name: ${{ matrix.generator.name }}
-    strategy:
-      fail-fast: false
-      matrix:
-        generator:
-         - name: go-sdk
-           versions-path: "generators/go/sdk/versions.yml"
-         - name: go-model
-           versions-path: "generators/go/model/versions.yml"
-         - name: go-fiber
-           versions-path: "generators/go/fiber/versions.yml"
-         - name: typescript-mcp
-           versions-path: "generators/typescript-mcp/model/versions.yml"
-         - name: python-sdk
-           versions-path: "generators/python/sdk/versions.yml"
-         - name: fastapi
-           versions-path: "generators/python/fastapi/versions.yml"
-         - name: pydantic
-           versions-path: "generators/python/pydantic/versions.yml"
-         - name: ts-express
-           versions-path: "generators/typescript/express/versions.yml"
-         - name: ts-sdk
-           versions-path: "generators/typescript/sdk/versions.yml"
-         - name: postman
-           versions-path: "generators/postman/versions.yml"
-         - name: java-sdk
-           versions-path: "generators/java/sdk/versions.yml"
-         - name: java-model
-           versions-path: "generators/java/model/versions.yml"
-         - name: java-spring
-           versions-path: "generators/java/spring/versions.yml"
-         - name: php-sdk
-           versions-path: "generators/php/sdk/versions.yml"
-         - name: php-model
-           versions-path: "generators/php/model/versions.yml"
-         - name: openapi
-           versions-path: "generators/openapi/versions.yml"
-         - name: ruby-v2
-           versions-path: "generators/ruby-v2/sdk/versions.yml"
-         - name: csharp-sdk
-           versions-path: "generators/csharp/sdk/versions.yml"
-         - name: csharp-model
-           versions-path: "generators/csharp/model/versions.yml"
-         - name: ruby
-           versions-path: "generators/ruby/sdk/versions.yml"
-         - name: ruby-model
-           versions-path: "generators/ruby/model/versions.yml"
+    name: Validate versions.yml files
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Install validator
-        run: npm install -g ajv-cli
+      - name: Validate go-sdk versions.yml
+        uses: ./.github/actions/validate-yml
+        with:
+          schema-path: "go-sdk"
+          file-path: "generators/go/sdk/versions.yml"
 
-      - name: Run validation
-        run: ajv validate -s fern-versions-yml.schema.json -d ${{ matrix.generator.versions-path }} --strict=false
+
+
+    # strategy:
+    #   fail-fast: false
+    #   matrix:
+    #     generator:
+    #      - name: go-sdk
+    #        versions-path: "generators/go/sdk/versions.yml"
+    #      - name: go-model
+    #        versions-path: "generators/go/model/versions.yml"
+    #      - name: go-fiber
+    #        versions-path: "generators/go/fiber/versions.yml"
+    #      - name: typescript-mcp
+    #        versions-path: "generators/typescript-mcp/model/versions.yml"
+    #      - name: python-sdk
+    #        versions-path: "generators/python/sdk/versions.yml"
+    #      - name: fastapi
+    #        versions-path: "generators/python/fastapi/versions.yml"
+    #      - name: pydantic
+    #        versions-path: "generators/python/pydantic/versions.yml"
+    #      - name: ts-express
+    #        versions-path: "generators/typescript/express/versions.yml"
+    #      - name: ts-sdk
+    #        versions-path: "generators/typescript/sdk/versions.yml"
+    #      - name: postman
+    #        versions-path: "generators/postman/versions.yml"
+    #      - name: java-sdk
+    #        versions-path: "generators/java/sdk/versions.yml"
+    #      - name: java-model
+    #        versions-path: "generators/java/model/versions.yml"
+    #      - name: java-spring
+    #        versions-path: "generators/java/spring/versions.yml"
+    #      - name: php-sdk
+    #        versions-path: "generators/php/sdk/versions.yml"
+    #      - name: php-model
+    #        versions-path: "generators/php/model/versions.yml"
+    #      - name: openapi
+    #        versions-path: "generators/openapi/versions.yml"
+    #      - name: ruby-v2
+    #        versions-path: "generators/ruby-v2/sdk/versions.yml"
+    #      - name: csharp-sdk
+    #        versions-path: "generators/csharp/sdk/versions.yml"
+    #      - name: csharp-model
+    #        versions-path: "generators/csharp/model/versions.yml"
+    #      - name: ruby
+    #        versions-path: "generators/ruby/sdk/versions.yml"
+    #      - name: ruby-model
+    #        versions-path: "generators/ruby/model/versions.yml"
+
 
