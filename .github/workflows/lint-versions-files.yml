@@ -14,6 +14,7 @@ on:
 jobs:
   lint:
     strategy:
+      fail-fast: false
       matrix:
         file:
          - "generators/go/sdk/versions.yml"
@@ -46,5 +47,5 @@ jobs:
         run: npm install -g ajv-cli
 
       - name: Run test validation
-        run: ajv validate -s fern-versions-yml.schema.json -d ${{ matrix.version }} --strict=false
+        run: ajv validate -s fern-versions-yml.schema.json -d ${{ matrix.file }} --strict=false
 
