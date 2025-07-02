@@ -32,7 +32,7 @@ export function convertFields({
             context,
             breadcrumbs: [...breadcrumbs, "fields", field.name],
             field,
-            sourceCodeInfoPath: [...sourceCodeInfoPath, 2, index]
+            sourceCodeInfoPath: [...sourceCodeInfoPath, PATH_FIELD_NUMBERS.MESSAGE.FIELD, index]
         });
         const convertedField = fieldConverter.convert();
         if (convertedField != null) {
@@ -42,7 +42,7 @@ export function convertFields({
                     wireValue: field.name
                 }),
                 valueType: convertedField.type,
-                docs: context.getCommentForPath([...sourceCodeInfoPath, 2, index]),
+                docs: context.getCommentForPath([...sourceCodeInfoPath, PATH_FIELD_NUMBERS.MESSAGE.FIELD, index]),
                 availability: undefined,
                 propertyAccess: undefined,
                 v2Examples: undefined
