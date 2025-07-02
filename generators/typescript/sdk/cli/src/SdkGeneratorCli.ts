@@ -40,7 +40,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
         const noSerdeLayer = parsed?.noSerdeLayer ?? true;
         return {
             useBrandedStringAliases: parsed?.useBrandedStringAliases ?? false,
-            outputSourceFiles: parsed?.outputSourceFiles ?? false,
+            outputSourceFiles: parsed?.outputSourceFiles ?? true,
             isPackagePrivate: parsed?.private ?? false,
             neverThrowErrors: parsed?.neverThrowErrors ?? false,
             namespaceExport: parsed?.namespaceExport,

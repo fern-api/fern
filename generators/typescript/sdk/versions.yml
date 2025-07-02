@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.2.0
+  changelogEntry:
+    - summary: |
+        Change the `outputSourceFiles` default from `false` to `true`.
+        This will affect the output when you generate the SDK to the local file system.
+      type: feat
+  createdAt: '2025-07-03'
+  irVersion: 58
 - version: 2.1.0
   changelogEntry:
     - summary: |
