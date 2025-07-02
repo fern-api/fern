@@ -11,6 +11,11 @@ The default is `Node16`. If you choose `Node18`, the `form-data`, `formdata-node
 * `Uint8Array`
 
 
+## 1.8.2
+**`(fix):`** When a multipart form part is explicitly marked as JSON, serialize the data as JSON regardless of type. 
+This also means arrays, maps, etc. will not be split into multiple parts, but serialized to JSON as a single part.
+
+
 ## 1.8.1
 **`(fix):`** Fix binary response README.md examples
 

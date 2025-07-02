@@ -1,3 +1,21 @@
+## 0.41.8
+**`(feat):`** The Fern generators.yml configuration now supports a new format for namespacing APIs for additional flexibility:
+
+```yml
+api:
+  specs:
+    - openapi: path/to/v1/openapi
+      overrides: path/to/v1/overrides
+      namespace: v1
+    - openapi: path/to/v2/openapi
+      overrides: path/to/v2/overrides
+      namespace: v2
+```
+
+Through namespacing your API, you can have multiple objects and endpoints with the same name across different namespaces. You can think of them
+as the equivalent to Python modules or TypeScript packages.
+
+
 ## 0.41.7
 **`(fix):`** Previously we weren't always awaiting PostHog API calls directly. Now the CLI
 awaits these calls so that we can ensure that events are sent.

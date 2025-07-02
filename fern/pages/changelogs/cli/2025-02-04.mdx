@@ -1,3 +1,21 @@
+## 0.51.28
+**`(fix):`** The IR generator now optimizes SDK generation by skipping automatic example generation when manual examples are provided.
+Previously, it would generate additional examples even when manual examples were specified for an operation.
+This change improves generation performance by avoiding unnecessary example generation work.
+
+
+## 0.51.27
+**`(fix):`** The OpenAPI parser now optimizes discriminated union example generation by using the first successful variant.
+Previously, it would continue trying other variants even after finding a valid one. Now it stops after finding
+the first valid variant, making example generation more efficient.
+
+
+## 0.51.26
+**`(fix):`** The OpenAPI parser now correctly generates examples for discriminated unions where a variant may itself be a union.
+Previously, if a discriminated union variant was itself a union (e.g. `{ type: "foo", value: { type: "bar" } }`),
+the example generation would skip. Now it recursively handles nested unions to generate valid examples.
+
+
 ## 0.51.25
 **`(fix):`** Literal property values are now accepted as deep object query parameters. Previously, if a query parameter was a deep object
 with a literal property value (e.g. `{ type: "foo" }`), the CLI would reject it as too complex. Now literal values are
@@ -17,9 +35,5 @@ the parser would fail. Now it automatically adds these path parameters as requir
 ## 0.51.22
 **`(fix):`** The OpenAPI parser now ignores request bodies on `GET` requests since Fern does not support that.
 This is not a breaking change, since previously the `fern check` would just fail.
-
-
-## 0.51.21
-**`(fix):`** The `fern init` command now respects JSON formatting when parsing from an external URL.
 
 
