@@ -235,7 +235,9 @@ function convertService(
                 openrpc: () => {
                     return { type: "openrpc", methodName: irEndpoint.id };
                 },
-                proto: () => undefined,
+                proto: () => {
+                    return { type: "grpc", methodName: irEndpoint.id };
+                },
                 _other: () => undefined
             })
         };
