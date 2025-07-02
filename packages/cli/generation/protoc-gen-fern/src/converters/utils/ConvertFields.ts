@@ -2,6 +2,7 @@ import { FieldDescriptorProto } from "@bufbuild/protobuf/wkt";
 
 import { ObjectProperty, TypeId } from "@fern-api/ir-sdk";
 
+import { PATH_FIELD_NUMBERS } from "./PathFieldNumbers";
 import { ProtofileConverterContext } from "../ProtofileConverterContext";
 import { FieldConverter } from "../message/FieldConverter";
 
@@ -26,12 +27,12 @@ export function convertFields({
     const referencedTypes: Set<TypeId> = new Set();
     const oneOfFields: Record<number, FieldDescriptorProto[]> = {};
 
-    for (const field of fields) {
+    for (const [index, field] of fields.entries()) {
         const fieldConverter = new FieldConverter({
             context,
             breadcrumbs: [...breadcrumbs, "fields", field.name],
             field,
-            sourceCodeInfoPath
+            sourceCodeInfoPath: [...sourceCodeInfoPath, 2, index]
         });
         const convertedField = fieldConverter.convert();
         if (convertedField != null) {
@@ -41,7 +42,7 @@ export function convertFields({
                     wireValue: field.name
                 }),
                 valueType: convertedField.type,
-                docs: undefined,
+                docs: context.getCommentForPath([...sourceCodeInfoPath, 2, index]),
                 availability: undefined,
                 propertyAccess: undefined,
                 v2Examples: undefined

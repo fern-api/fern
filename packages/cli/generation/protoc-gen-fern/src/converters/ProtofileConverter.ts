@@ -47,18 +47,18 @@ export class ProtofileConverter extends AbstractSpecConverter<ProtofileConverter
         }
 
         for (const [index, schema] of this.context.spec.messageType.entries()) {
-            const enumOrMessageConverter = new EnumOrMessageConverter({
+            const messageConverter = new EnumOrMessageConverter({
                 context: this.context,
                 breadcrumbs: [...this.breadcrumbs, this.context.spec.package],
                 schema,
                 sourceCodeInfoPath: [SOURCE_CODE_INFO_PATH_STARTERS.MESSAGE, index],
                 schemaIndex: index
             });
-            const convertedEnum = enumOrMessageConverter.convert();
-            if (convertedEnum != null) {
+            const convertedMessage = messageConverter.convert();
+            if (convertedMessage != null) {
                 this.addTypesToIr({
-                    ...convertedEnum.inlinedTypes,
-                    [this.context.maybePrependPackageName(schema.name)]: convertedEnum.convertedSchema
+                    ...convertedMessage.inlinedTypes,
+                    [this.context.maybePrependPackageName(schema.name)]: convertedMessage.convertedSchema
                 });
             }
         }
