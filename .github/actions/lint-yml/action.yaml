@@ -1,0 +1,21 @@
+name: Lint YML
+description: Lin a yml file
+
+inputs:
+  schema-path:
+    description: Path to the schema to validate against
+    required: true
+    type: string
+  file-path:
+    description: Path to the file being validated
+    required: true
+    type: string
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install validator
+      run: npm install -g ajv-cli
+
+    - name: Run test validation
+      run: ajv validate -s ${{ inputs.schema-path }} -d ${{ inputs.file-path }} --strict=false
