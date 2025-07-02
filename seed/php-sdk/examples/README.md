@@ -73,6 +73,16 @@ $customClient = new \GuzzleHttp\Client([
 $client = new SeedClient(options: [
     'client' => $customClient
 ]);
+
+// You can also utilize the same technique to leverage advanced customizations to the client like adding a middleware
+$handlerStack = \GuzzleHttp\HandlerStack::create();
+$handlerStack->push(MyCustomMiddleware::create());
+$customClient = new \GuzzleHttp\Client(['handler' => $handlerStack]);
+
+// Pass the custom client when creating an instance of the class.
+$client = new SeedClient(options: [
+    'client' => $customClient
+]);
 ```
 
 ### Retries
