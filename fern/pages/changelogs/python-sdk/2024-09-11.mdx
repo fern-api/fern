@@ -8,9 +8,3 @@ the current member, a field in Pydantic V1 that provides object contexts to mode
 was respected.
 
 
-## 4.0.0-rc6
-**`(fix):`** Pydantic models now call update forward refs on non-union circular references. This
-prevents runtime errors in certain cases where types self reference itself through
-a union.
-
-

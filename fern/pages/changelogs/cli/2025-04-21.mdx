@@ -1,3 +1,10 @@
+## 0.57.35
+**`(feat):`** Improve OpenAPI response handling for 204 status codes by respecting schema definitions. 
+When a 204 (No Content) response includes a schema, the importer now properly processes 
+and preserves this schema information, ensuring accurate API documentation and SDK generation 
+even for endpoints that don't return content in successful responses.
+
+
 ## 0.57.34
 **`(feat):`** Objects use property schema examples when generating examples; request and response examples are generated with
 optional properties included.
