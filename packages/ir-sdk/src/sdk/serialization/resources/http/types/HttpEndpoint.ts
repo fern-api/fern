@@ -8,6 +8,7 @@ import * as core from "../../../../core";
 import { EndpointId } from "../../commons/types/EndpointId";
 import { EndpointName } from "./EndpointName";
 import { HttpMethod } from "./HttpMethod";
+import { ProtobufMethod } from "../../proto/types/ProtobufMethod";
 import { HttpHeader } from "./HttpHeader";
 import { EnvironmentBaseUrlId } from "../../environment/types/EnvironmentBaseUrlId";
 import { HttpPath } from "./HttpPath";
@@ -34,6 +35,7 @@ export const HttpEndpoint: core.serialization.ObjectSchema<serializers.HttpEndpo
             name: EndpointName,
             displayName: core.serialization.string().optional(),
             method: HttpMethod,
+            grpcMethod: ProtobufMethod.optional(),
             headers: core.serialization.list(HttpHeader),
             baseUrl: EnvironmentBaseUrlId.optional(),
             v2BaseUrls: core.serialization.list(EnvironmentBaseUrlId).optional(),
@@ -65,6 +67,7 @@ export declare namespace HttpEndpoint {
         name: EndpointName.Raw;
         displayName?: string | null;
         method: HttpMethod.Raw;
+        grpcMethod?: ProtobufMethod.Raw | null;
         headers: HttpHeader.Raw[];
         baseUrl?: EnvironmentBaseUrlId.Raw | null;
         v2BaseUrls?: EnvironmentBaseUrlId.Raw[] | null;

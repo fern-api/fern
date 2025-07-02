@@ -146,6 +146,7 @@ export class OperationConverter extends AbstractOperationConverter {
         const baseEndpoint: OperationConverter.BaseEndpoint = {
             displayName: this.operation.summary,
             method: httpMethod,
+            grpcMethod: undefined,
             baseUrl,
             v2BaseUrls,
             path,

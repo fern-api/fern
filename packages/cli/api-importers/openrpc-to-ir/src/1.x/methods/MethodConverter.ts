@@ -165,6 +165,7 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
             basePath: undefined,
             auth: false,
             method: "POST",
+            grpcMethod: undefined,
             id: this.method.name,
             docs: this.method.description,
             name: this.context.casingsGenerator.generateName(this.method.name),

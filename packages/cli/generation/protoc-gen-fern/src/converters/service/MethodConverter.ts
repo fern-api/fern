@@ -7,7 +7,8 @@ import {
     HttpRequestBody,
     HttpResponse,
     HttpResponseBody,
-    JsonResponse
+    JsonResponse,
+    ProtobufMethod
 } from "@fern-api/ir-sdk";
 import { AbstractConverter } from "@fern-api/v2-importer-commons";
 
@@ -62,6 +63,7 @@ export class MethodConverter extends AbstractConverter<ProtofileConverterContext
                 response: convertedResponseBody,
                 displayName: this.context.maybeRemoveGrpcPackagePrefix(this.operation.name),
                 method: HttpMethod.Post,
+                grpcMethod: this.getGrpcMethodType(),
                 baseUrl: undefined,
                 v2BaseUrls: undefined,
                 v2Examples: undefined,
@@ -93,17 +95,17 @@ export class MethodConverter extends AbstractConverter<ProtofileConverterContext
         };
     }
 
-    private getMethodType(): gRPCMethodType {
+    private getGrpcMethodType(): ProtobufMethod {
         if (this.operation.clientStreaming && this.operation.serverStreaming) {
-            return "BIDI_STREAM";
+            return ProtobufMethod.BidirectionalStream;
         }
         if (this.operation.clientStreaming) {
-            return "CLIENT_STREAM";
+            return ProtobufMethod.ClientStream;
         }
         if (this.operation.serverStreaming) {
-            return "SERVER_STREAM";
+            return ProtobufMethod.ServerStream;
         }
-        return "UNARY";
+        return ProtobufMethod.Unary;
     }
 
     private convertRequestBody(): HttpRequestBody | undefined {

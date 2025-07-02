@@ -108,6 +108,7 @@ export function convertHttpService({
                 baseUrl: endpoint.url ?? serviceDefinition.url ?? rootDefaultUrl,
                 v2BaseUrls: undefined,
                 method: endpoint.method != null ? convertHttpMethod(endpoint.method) : HttpMethod.Post,
+                grpcMethod: undefined,
                 basePath: endpoint["base-path"] != null ? constructHttpPath(endpoint["base-path"]) : undefined,
                 path: constructHttpPath(endpoint.path),
                 fullPath: constructHttpPath(

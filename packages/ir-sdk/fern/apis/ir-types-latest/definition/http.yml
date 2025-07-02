@@ -44,6 +44,7 @@ types:
       name: EndpointName
       displayName: optional<string>
       method: HttpMethod
+      grpcMethod: optional<proto.ProtobufMethod>
       headers: list<HttpHeader>
       baseUrl: optional<environment.EnvironmentBaseUrlId>
       v2BaseUrls: optional<list<environment.EnvironmentBaseUrlId>>

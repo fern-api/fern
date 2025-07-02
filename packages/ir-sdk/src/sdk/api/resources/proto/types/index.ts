@@ -5,3 +5,4 @@ export * from "./WellKnownProtobufType";
 export * from "./ProtobufFile";
 export * from "./ProtobufFileOptions";
 export * from "./CsharpProtobufFileOptions";
+export * from "./ProtobufMethod";

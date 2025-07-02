@@ -9,6 +9,7 @@ export interface HttpEndpoint extends FernIr.Declaration {
     name: FernIr.EndpointName;
     displayName: string | undefined;
     method: FernIr.HttpMethod;
+    grpcMethod: FernIr.ProtobufMethod | undefined;
     headers: FernIr.HttpHeader[];
     baseUrl: FernIr.EnvironmentBaseUrlId | undefined;
     v2BaseUrls: FernIr.EnvironmentBaseUrlId[] | undefined;
