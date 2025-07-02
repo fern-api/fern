@@ -6,8 +6,7 @@ import {
     getParameterNameForPropertyPathParameterName,
     getPropertyKey,
     getTextOfTsNode,
-    maybeAddDocsNode,
-    visitJavaScriptRuntime
+    maybeAddDocsNode
 } from "@fern-typescript/commons";
 import {
     GeneratedRequestWrapper,
@@ -637,49 +636,31 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     private getFileParameterType(property: FileProperty, context: SdkContext): ts.TypeNode {
         const types: ts.TypeNode[] = [];
 
-        visitJavaScriptRuntime(context.targetRuntime, {
-            node: () => {
-                if (this.formDataSupport === "Node16") {
-                    types.push(
-                        this.maybeWrapFileArray({
-                            property,
-                            value: ts.factory.createTypeReferenceNode("File")
-                        })
-                    );
-                    types.push(
-                        this.maybeWrapFileArray({
-                            property,
-                            value: context.externalDependencies.fs.ReadStream._getReferenceToType()
-                        }),
-                        this.maybeWrapFileArray({
-                            property,
-                            value: ts.factory.createTypeReferenceNode("Blob")
-                        })
-                    );
-                } else {
-                    types.push(
-                        this.maybeWrapFileArray({
-                            property,
-                            value: context.coreUtilities.fileUtils.FileLike._getReferenceToType()
-                        })
-                    );
-                }
-            },
-            browser: () => {
-                types.push(
-                    this.maybeWrapFileArray({
-                        property,
-                        value: ts.factory.createTypeReferenceNode("File")
-                    })
-                );
-                types.push(
-                    this.maybeWrapFileArray({
-                        property,
-                        value: ts.factory.createTypeReferenceNode("Blob")
-                    })
-                );
-            }
-        });
+        if (this.formDataSupport === "Node16") {
+            types.push(
+                this.maybeWrapFileArray({
+                    property,
+                    value: ts.factory.createTypeReferenceNode("File")
+                })
+            );
+            types.push(
+                this.maybeWrapFileArray({
+                    property,
+                    value: context.externalDependencies.fs.ReadStream._getReferenceToType()
+                }),
+                this.maybeWrapFileArray({
+                    property,
+                    value: ts.factory.createTypeReferenceNode("Blob")
+                })
+            );
+        } else {
+            types.push(
+                this.maybeWrapFileArray({
+                    property,
+                    value: context.coreUtilities.fileUtils.FileLike._getReferenceToType()
+                })
+            );
+        }
 
         if (property.isOptional) {
             types.push(ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword));
