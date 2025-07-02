@@ -16,6 +16,10 @@ export function createGlobalCommentsStore(spec: FileDescriptorProto): Record<Pat
         6: {}
     };
 
+    if (spec.package?.startsWith("google.protobuf")) {
+        return commentsByStartingNodeType;
+    }
+
     spec.sourceCodeInfo?.location.forEach((sourceCodeInfoLocation) => {
         const path = sourceCodeInfoLocation.path;
 
