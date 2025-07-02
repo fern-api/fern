@@ -9,53 +9,7 @@ on:
 
 jobs:
   validate:
-    name: Validate ${{ matrix.generator.name }} versions
-    strategy:
-      fail-fast: false
-      matrix:
-        generator:
-         - name: go-sdk
-           versions-path: "generators/go/sdk/versions.yml"
-         - name: go-model
-           versions-path: "generators/go/model/versions.yml"
-         - name: go-fiber
-           versions-path: "generators/go/fiber/versions.yml"
-         - name: typescript-mcp
-           versions-path: "generators/typescript-mcp/model/versions.yml"
-         - name: python-sdk
-           versions-path: "generators/python/sdk/versions.yml"
-         - name: fastapi
-           versions-path: "generators/python/fastapi/versions.yml"
-         - name: pydantic
-           versions-path: "generators/python/pydantic/versions.yml"
-         - name: ts-express
-           versions-path: "generators/typescript/express/versions.yml"
-         - name: ts-sdk
-           versions-path: "generators/typescript/sdk/versions.yml"
-         - name: postman
-           versions-path: "generators/postman/versions.yml"
-         - name: java-sdk
-           versions-path: "generators/java/sdk/versions.yml"
-         - name: java-model
-           versions-path: "generators/java/model/versions.yml"
-         - name: java-spring
-           versions-path: "generators/java/spring/versions.yml"
-         - name: php-sdk
-           versions-path: "generators/php/sdk/versions.yml"
-         - name: php-model
-           versions-path: "generators/php/model/versions.yml"
-         - name: openapi
-           versions-path: "generators/openapi/versions.yml"
-         - name: ruby-v2
-           versions-path: "generators/ruby-v2/sdk/versions.yml"
-         - name: csharp-sdk
-           versions-path: "generators/csharp/sdk/versions.yml"
-         - name: csharp-model
-           versions-path: "generators/csharp/model/versions.yml"
-         - name: ruby
-           versions-path: "generators/ruby/sdk/versions.yml"
-         - name: ruby-model
-           versions-path: "generators/ruby/model/versions.yml"
+    name: Validate versions.yml files
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -64,6 +18,65 @@ jobs:
       - name: Install validator
         run: npm install -g ajv-cli
 
-      - name: Run test validation
-        run: ajv validate -s fern-versions-yml.schema.json -d ${{ matrix.generator.versions-path }} --strict=false
+      - name: Validate go-sdk
+        run: ajv validate -s fern-versions-yml.schema.json -d generators/go/sdk/versions.yml --strict=false
 
+      - name: Validate  go-model
+        run: ajv validate -s fern-versions-yml.schema.json -d generators/go/model/versions.yml --strict=false
+
+      - name: Validate  go-fiber
+        run: ajv validate -s fern-versions-yml.schema.json -d generators/go/fiber/versions.yml --strict=false
+
+      - name: Validate  typescript-mcp
+        run: ajv validate -s fern-versions-yml.schema.json -d generators/typescript-mcp/model/versions.yml --strict=false
+
+      - name: Validate  python-sdk
+        run: ajv validate -s fern-versions-yml.schema.json -d generators/python/sdk/versions.yml --strict=false
+
+      - name: Validate  fastapi
+        run: ajv validate -s fern-versions-yml.schema.json -d generators/python/fastapi/versions.yml --strict=false
+
+      - name: Validate  pydantic
+        run: ajv validate -s fern-versions-yml.schema.json -d generators/python/pydantic/versions.yml --strict=false
+
+      - name: Validate  ts-express
+        run: ajv validate -s fern-versions-yml.schema.json -d generators/typescript/express/versions.yml --strict=false
+
+      - name: Validate  ts-sdk
+        run: ajv validate -s fern-versions-yml.schema.json -d generators/typescript/sdk/versions.yml --strict=false
+
+      - name: Validate  postman
+        run: ajv validate -s fern-versions-yml.schema.json -d generators/postman/versions.yml --strict=false
+
+      - name: Validate  java-sdk
+        run: ajv validate -s fern-versions-yml.schema.json -d generators/java/sdk/versions.yml --strict=false
+
+      - name: Validate  java-model
+        run: ajv validate -s fern-versions-yml.schema.json -d generators/java/model/versions.yml --strict=false
+
+      - name: Validate  java-spring
+        run: ajv validate -s fern-versions-yml.schema.json -d generators/java/spring/versions.yml --strict=false
+
+      - name: Validate  php-sdk
+        run: ajv validate -s fern-versions-yml.schema.json -d generators/php/sdk/versions.yml --strict=false
+
+      - name: Validate  php-model
+        run: ajv validate -s fern-versions-yml.schema.json -d generators/php/model/versions.yml --strict=false
+
+      - name: Validate  openapi
+        run: ajv validate -s fern-versions-yml.schema.json -d generators/openapi/versions.yml --strict=false
+
+      - name: Validate  ruby-v2
+        run: ajv validate -s fern-versions-yml.schema.json -d generators/ruby-v2/sdk/versions.yml --strict=false
+
+      - name: Validate  csharp-sdk
+        run: ajv validate -s fern-versions-yml.schema.json -d generators/csharp/sdk/versions.yml --strict=false
+
+      - name: Validate  csharp-model
+        run: ajv validate -s fern-versions-yml.schema.json -d generators/csharp/model/versions.yml --strict=false
+
+      - name: Validate  ruby
+        run: ajv validate -s fern-versions-yml.schema.json -d generators/ruby/sdk/versions.yml --strict=false
+
+      - name: Validate  ruby-model
+        run: ajv validate -s fern-versions-yml.schema.json -d generators/ruby/model/versions.yml --strict=false
