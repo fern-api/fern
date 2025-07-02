@@ -32,6 +32,7 @@
     "@fern-fern/fdr-cjs-sdk": "0.138.1-818bc4be9",
     "estree-walker": "^3.0.3",
     "gray-matter": "^4.0.3",
+    "heap-js": "^2.6.0",
     "mdast-util-from-markdown": "^2.0.2",
     "mdast-util-gfm": "^3.0.0",
     "mdast-util-math": "^3.0.0",

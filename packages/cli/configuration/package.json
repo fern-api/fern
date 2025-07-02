@@ -28,20 +28,21 @@
   },
   "dependencies": {
     "@fern-api/core-utils": "workspace:*",
-    "@fern-api/path-utils": "workspace:*",
     "@fern-api/fern-definition-schema": "workspace:*",
+    "@fern-api/path-utils": "workspace:*",
     "@fern-fern/fdr-cjs-sdk": "0.138.1-818bc4be9",
     "@fern-fern/fiddle-sdk": "0.0.584",
+    "heap-js": "^2.6.0",
     "zod": "^3.22.3"
   },
   "devDependencies": {
-    "@types/jest": "^29.5.14",
     "@fern-api/configs": "workspace:*",
+    "@trivago/prettier-plugin-sort-imports": "^5.2.1",
+    "@types/jest": "^29.5.14",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
     "eslint": "^8.56.0",
     "prettier": "^3.4.2",
-    "@trivago/prettier-plugin-sort-imports": "^5.2.1",
     "typescript": "5.7.2",
     "vitest": "^2.1.9"
   }

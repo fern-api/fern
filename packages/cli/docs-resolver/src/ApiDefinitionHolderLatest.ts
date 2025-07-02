@@ -104,4 +104,8 @@ export class ApiDefinitionHolderLatest {
             this.#websocketsByLocator[`websocket_${packageId}.${locator}`]
         );
     }
+
+    get subpackageLocators(): ReadonlySet<string> {
+        return new Set(Object.keys(this.#subpackagesByLocator));
+    }
 }

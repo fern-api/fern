@@ -27,19 +27,20 @@
   },
   "dependencies": {
     "@fern-api/ir-sdk": "workspace:*",
-    "@fern-api/v2-importer-commons": "workspace:*",
-    "openapi-types": "^12.1.3",
-    "@open-rpc/meta-schema": "^1.14.9",
     "@fern-api/ir-utils": "workspace:*",
+    "@fern-api/v2-importer-commons": "workspace:*",
+    "@open-rpc/meta-schema": "^1.14.9",
+    "heap-js": "^2.6.0",
+    "openapi-types": "^12.1.3",
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@types/node": "18.15.3",
     "@fern-api/configs": "workspace:*",
+    "@trivago/prettier-plugin-sort-imports": "^5.2.1",
+    "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
     "eslint": "^8.56.0",
     "prettier": "^3.4.2",
-    "@trivago/prettier-plugin-sort-imports": "^5.2.1",
     "typescript": "5.7.2",
     "vitest": "^2.1.9"
   }
