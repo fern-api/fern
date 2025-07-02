@@ -4,3 +4,9 @@ and preserves default values from OpenAPI schemas, ensuring they are properly re
 This improvement allows API providers to specify meaningful defaults that will be respected in client implementations.
 
 
+## 0.59.3
+**`(fix):`** Improve OpenRPC importer to generate more unique schema IDs for request parameters by combining method name, 
+"Param" keyword, and parameter name. This prevents naming conflicts when different methods have parameters 
+with the same name, resulting in more reliable and consistent type generation in the SDKs.
+
+
