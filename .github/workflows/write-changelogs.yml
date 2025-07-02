@@ -52,6 +52,7 @@ jobs:
           token: ${{ secrets.FERN_GITHUB_PAT }}
           commit-message: "chore(changelog): update changelog"
           title: "chore(changelog): update changelog"
+          base: main
           branch: update-changelog
           delete-branch: true
 
