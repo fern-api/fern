@@ -13,6 +13,30 @@ on:
 
 jobs:
   lint:
+    strategy:
+      matrix:
+        file:
+         - "generators/go/sdk/versions.yml"
+         - "generators/go/model/versions.yml"
+         - "generators/go/fiber/versions.yml"
+         - "generators/typescript-mcp/model/versions.yml"
+         - "generators/python/sdk/versions.yml"
+         - "generators/python/fastapi/versions.yml"
+         - "generators/python/pydantic/versions.yml"
+         - "generators/typescript/express/versions.yml"
+         - "generators/typescript/sdk/versions.yml"
+         - "generators/postman/versions.yml"
+         - "generators/java/sdk/versions.yml"
+         - "generators/java/model/versions.yml"
+         - "generators/java/spring/versions.yml"
+         - "generators/php/sdk/versions.yml"
+         - "generators/php/model/versions.yml"
+         - "generators/openapi/versions.yml"
+         - "generators/ruby-v2/sdk/versions.yml"
+         - "generators/csharp/sdk/versions.yml"
+         - "generators/csharp/model/versions.yml"
+         - "generators/ruby/sdk/versions.yml"
+         - "generators/ruby/model/versions.yml"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -22,5 +46,5 @@ jobs:
         run: npm install -g ajv-cli
 
       - name: Run test validation
-        run: ajv validate -s fern-versions-yml.schema.json -d generators/typescript/sdk/versions.yml --strict=false
+        run: ajv validate -s fern-versions-yml.schema.json -d ${{ matrix.version }} --strict=false
 
