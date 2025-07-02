@@ -6,7 +6,6 @@ import {
     ExportedFilePath,
     ExportsManager,
     ImportsManager,
-    JavaScriptRuntime,
     NpmPackage,
     PackageId,
     SimpleTypescriptProject,
@@ -116,7 +115,6 @@ export declare namespace SdkGenerator {
         requireDefaultEnvironment: boolean;
         defaultTimeoutInSeconds: number | "infinity" | undefined;
         skipResponseValidation: boolean;
-        targetRuntime: JavaScriptRuntime;
         extraDependencies: Record<string, string>;
         extraDevDependencies: Record<string, string>;
         extraPeerDependencies: Record<string, string>;
@@ -417,7 +415,6 @@ export class SdkGenerator {
             requireDefaultEnvironment: config.requireDefaultEnvironment,
             defaultTimeoutInSeconds: config.defaultTimeoutInSeconds,
             npmPackage,
-            targetRuntime: config.targetRuntime,
             includeContentHeadersOnFileDownloadResponse: config.includeContentHeadersOnFileDownloadResponse,
             includeSerdeLayer: config.includeSerdeLayer,
             retainOriginalCasing: config.retainOriginalCasing,
@@ -1507,7 +1504,6 @@ export class SdkGenerator {
             treatUnknownAsAny: this.config.treatUnknownAsAny,
             includeSerdeLayer: this.config.includeSerdeLayer,
             retainOriginalCasing: this.config.retainOriginalCasing,
-            targetRuntime: this.config.targetRuntime,
             inlineFileProperties: this.config.inlineFileProperties,
             inlinePathParameters: this.config.inlinePathParameters,
             enableInlineTypes: this.config.enableInlineTypes,

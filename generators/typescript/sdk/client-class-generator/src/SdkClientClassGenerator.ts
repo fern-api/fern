@@ -1,4 +1,4 @@
-import { ImportsManager, JavaScriptRuntime, NpmPackage, PackageId } from "@fern-typescript/commons";
+import { ImportsManager, NpmPackage, PackageId } from "@fern-typescript/commons";
 import { ExportsManager } from "@fern-typescript/commons";
 import { GeneratedSdkClientClass } from "@fern-typescript/contexts";
 import { ErrorResolver, PackageResolver } from "@fern-typescript/resolvers";
@@ -20,7 +20,6 @@ export declare namespace SdkClientClassGenerator {
         requireDefaultEnvironment: boolean;
         defaultTimeoutInSeconds: number | "infinity" | undefined;
         npmPackage: NpmPackage | undefined;
-        targetRuntime: JavaScriptRuntime;
         includeContentHeadersOnFileDownloadResponse: boolean;
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
@@ -57,7 +56,6 @@ export class SdkClientClassGenerator {
     private requireDefaultEnvironment: boolean;
     private defaultTimeoutInSeconds: number | "infinity" | undefined;
     private npmPackage: NpmPackage | undefined;
-    private targetRuntime: JavaScriptRuntime;
     private includeContentHeadersOnFileDownloadResponse: boolean;
     private includeSerdeLayer: boolean;
     private retainOriginalCasing: boolean;
@@ -82,7 +80,6 @@ export class SdkClientClassGenerator {
         requireDefaultEnvironment,
         defaultTimeoutInSeconds,
         npmPackage,
-        targetRuntime,
         includeContentHeadersOnFileDownloadResponse,
         includeSerdeLayer,
         retainOriginalCasing,
@@ -107,7 +104,6 @@ export class SdkClientClassGenerator {
         this.requireDefaultEnvironment = requireDefaultEnvironment;
         this.defaultTimeoutInSeconds = defaultTimeoutInSeconds;
         this.npmPackage = npmPackage;
-        this.targetRuntime = targetRuntime;
         this.includeContentHeadersOnFileDownloadResponse = includeContentHeadersOnFileDownloadResponse;
         this.includeSerdeLayer = includeSerdeLayer;
         this.retainOriginalCasing = retainOriginalCasing;
@@ -145,7 +141,6 @@ export class SdkClientClassGenerator {
             requireDefaultEnvironment: this.requireDefaultEnvironment,
             defaultTimeoutInSeconds: this.defaultTimeoutInSeconds,
             npmPackage: this.npmPackage,
-            targetRuntime: this.targetRuntime,
             includeContentHeadersOnFileDownloadResponse: this.includeContentHeadersOnFileDownloadResponse,
             includeSerdeLayer: this.includeSerdeLayer,
             retainOriginalCasing: this.retainOriginalCasing,
