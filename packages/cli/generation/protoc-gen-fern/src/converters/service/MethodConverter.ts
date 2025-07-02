@@ -55,7 +55,9 @@ export class MethodConverter extends AbstractConverter<ProtofileConverterContext
             endpoint: {
                 id: this.operation.name,
                 docs: this.context.getCommentForPath(this.sourceCodeInfoPath),
-                name: this.context.casingsGenerator.generateName(this.context.maybePrependPackageName(this.operation.name)),
+                name: this.context.casingsGenerator.generateName(
+                    this.context.maybePrependPackageName(this.operation.name)
+                ),
                 requestBody: convertedRequestBody,
                 response: convertedResponseBody,
                 displayName: this.context.maybeRemoveGrpcPackagePrefix(this.operation.name),
