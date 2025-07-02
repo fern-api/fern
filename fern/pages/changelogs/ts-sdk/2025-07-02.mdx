@@ -1,3 +1,15 @@
+## 2.1.0
+**`(feat):`** Split up Jest configuration into multiple projects.
+You can now run the following command to run tests:
+* `yarn test`: runs all tests
+* `yarn test:unit`: runs unit tests (any non-browser and non-wire tests)
+* `yarn test:browser`: runs browser only tests inside of `js-dom`
+* `yarn test:wire`: runs wire tests
+
+You can now pass in paths and patterns as an argument to the above commands to filter down to specific tests.
+For example: `yarn test tests/unit/fetcher`
+
+
 ## 2.0.0
 **`(feat):`** The TypeScript generator has received a large amount of improvements, but to maintain backwards compatibility, they require you to opt in using feature flags.
 The 2.0.0 release now has these feature flags enabled by default. Here's an overview of the `config` defaults that have changed in _generators.yml_.
