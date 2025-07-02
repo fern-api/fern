@@ -15,6 +15,11 @@ jobs:
           token: ${{ secrets.FERN_GITHUB_PAT }}
           ref: main
 
+      - name: create new branch
+        run: |
+          git checkout -b update-changelog
+          git push -u origin update-changelog
+
       - name: Install
         uses: ./.github/actions/install
 
