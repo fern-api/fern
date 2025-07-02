@@ -2,7 +2,3 @@
 **`(fix):`** Fix an issue where environment URLs would be incorrectly remapped during the merge IR step.
 
 
-## 0.57.15
-**`(fix):`** Add support for handling nullable and optional references in the OpenAPI parser. When a reference is marked with `nullable: true` or is not included in the required properties list, the parser now correctly wraps the referenced type in a nullable or optional container. This ensures that references respect the same nullability and optionality rules as inline schemas.
-
-

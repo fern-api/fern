@@ -5,7 +5,6 @@
 import * as core from "../../../../core/index.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as errors from "../../../../errors/index.js";
-import * as stream from "stream";
 
 export declare namespace Service {
     export interface Options {
@@ -87,20 +86,20 @@ export class Service {
         }
     }
 
-    public downloadFile(requestOptions?: Service.RequestOptions): core.HttpResponsePromise<stream.Readable> {
+    public downloadFile(requestOptions?: Service.RequestOptions): core.HttpResponsePromise<core.BinaryResponse> {
         return core.HttpResponsePromise.fromPromise(this.__downloadFile(requestOptions));
     }
 
     private async __downloadFile(
         requestOptions?: Service.RequestOptions,
-    ): Promise<core.WithRawResponse<stream.Readable>> {
-        const _response = await core.fetcher<stream.Readable>({
+    ): Promise<core.WithRawResponse<core.BinaryResponse>> {
+        const _response = await core.fetcher<core.BinaryResponse>({
             url:
                 (await core.Supplier.get(this._options.baseUrl)) ??
                 (await core.Supplier.get(this._options.environment)),
             method: "POST",
             headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
-            responseType: "streaming",
+            responseType: "binary-response",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

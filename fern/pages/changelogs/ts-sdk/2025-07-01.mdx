@@ -1,0 +1,30 @@
+## 2.0.0
+**`(feat):`** The TypeScript generator has received a large amount of improvements, but to maintain backwards compatibility, they require you to opt in using feature flags.
+The 2.0.0 release now has these feature flags enabled by default. Here's an overview of the `config` defaults that have changed in _generators.yml_.
+
+| Option | Before | Now |
+|--------|--------|-----|
+| `streamType` | `"wrapper"` | `"web"` |
+| `fileResponseType` | `"stream"` | `"binary-response"` |
+| `formDataSupport` | `"Node16"` | `"Node18"` |
+| `fetchSupport` | `"node-fetch"` | `"native"` |
+
+To avoid breaking changes, explicitly set the options above with the `Before` values in the `config` of your generator
+in _generators.yml_.
+
+With these defaults, the generated SDKs will have _**ZERO**_ dependencies (excluding devDependencies and `ws` in case of WebSocket generation).
+As a result, the SDKs are smaller, faster, more secure, and easier to use.
+
+
+## 1.10.4
+**`(fix):`** Add `omitFernHeaders` configuration to omit Fern headers from the generated SDK.
+
+
+## 1.10.3
+**`(fix):`** Remove `qs` dependency.
+
+
+## 1.10.2
+**`(fix):`** Remove `js-base64` dependency in favor of using native implementations.
+
+

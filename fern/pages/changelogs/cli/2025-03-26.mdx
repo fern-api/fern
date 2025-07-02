@@ -1,3 +1,8 @@
+## 0.57.2
+**`(feat):`** Add support for parsing `type: enum` in OpenAPI schemas. This allows for proper conversion of enum types that use the
+non-standard `type: enum` format instead of the standard `type: string` with `enum` values.
+
+
 ## 0.57.1
 **`(feat):`** Add AI chat config block to docs.yml for model/system prompt customization. Example:
 
@@ -7,9 +12,5 @@ ai-chat:
   You are an AI assistant.
   Only respond to questions using information from the documents.
   Include markdown footnotes to the sources of your information.
-
-
-## 0.57.0
-**`(feat):`** Add `use-bytes-for-binary-response` configuration option to specify whether to use the `bytes` type for binary responses.
 
 

@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 1.10.6
+- version: 2.1.0
   changelogEntry:
     - summary: |
         Split up Jest configuration into multiple projects.
@@ -12,8 +12,38 @@
         You can now pass in paths and patterns as an argument to the above commands to filter down to specific tests.
         For example: `yarn test tests/unit/fetcher`
       type: feat
-  createdAt: '2025-07-01'
+  createdAt: '2025-07-02'
   irVersion: 58
+- version: 2.0.0
+  changelogEntry:
+    - summary: |
+        The TypeScript generator has received a large amount of improvements, but to maintain backwards compatibility, they require you to opt in using feature flags.
+        The 2.0.0 release now has these feature flags enabled by default. Here's an overview of the `config` defaults that have changed in _generators.yml_.
+
+        | Option | Before | Now |
+        |--------|--------|-----|
+        | `streamType` | `"wrapper"` | `"web"` |
+        | `fileResponseType` | `"stream"` | `"binary-response"` |
+        | `formDataSupport` | `"Node16"` | `"Node18"` |
+        | `fetchSupport` | `"node-fetch"` | `"native"` |
+
+        To avoid breaking changes, explicitly set the options above with the `Before` values in the `config` of your generator
+        in _generators.yml_.
+
+        With these defaults, the generated SDKs will have _**ZERO**_ dependencies (excluding devDependencies and `ws` in case of WebSocket generation).
+        As a result, the SDKs are smaller, faster, more secure, and easier to use.
+      type: feat
+  createdAt: '2025-07-02'
+  irVersion: 58
+
+- version: 1.10.6
+  changelogEntry:
+    - summary: |
+        Publish multi-platform builds of the TypeScript SDK docker container.
+      type: fix
+  createdAt: '2025-07-02'
+  irVersion: 58      
+  
 - version: 1.10.5
   changelogEntry:
     - summary: |

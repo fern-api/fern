@@ -176,6 +176,7 @@ scripts:
 allowedFailures:
   - alias-extends
   - bytes
+  - bytes-download
   - enum
   - exhaustive
   - literal

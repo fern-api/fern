@@ -5,7 +5,6 @@
 import * as core from "../../../../core/index.js";
 import * as SeedServerSentEvents from "../../../index.js";
 import { mergeHeaders } from "../../../../core/headers.js";
-import * as stream from "stream";
 import * as errors from "../../../../errors/index.js";
 
 export declare namespace Completions {
@@ -47,7 +46,7 @@ export class Completions {
         request: SeedServerSentEvents.StreamCompletionRequest,
         requestOptions?: Completions.RequestOptions,
     ): Promise<core.WithRawResponse<core.Stream<SeedServerSentEvents.StreamedCompletion>>> {
-        const _response = await core.fetcher<stream.Readable>({
+        const _response = await core.fetcher<ReadableStream>({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),

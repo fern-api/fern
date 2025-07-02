@@ -38,15 +38,15 @@ export class GoValueFormatter {
             };
         }
 
-        let prefix = "";
-        let suffix = "";
+        let prefix: go.AstNode | undefined;
+        let suffix: go.AstNode | undefined;
         let isOptional = false;
         let isPrimitive = false;
 
         const optionalOrNullableType = this.context.maybeUnwrapOptionalOrNullable(reference);
         if (optionalOrNullableType != null) {
             if (this.context.needsOptionalDereference(optionalOrNullableType)) {
-                prefix = "*";
+                prefix = go.codeblock("*");
             }
             isOptional = true;
         }
@@ -54,20 +54,37 @@ export class GoValueFormatter {
         const primitive = this.context.maybePrimitive(reference);
         if (primitive != null) {
             if (isOptional) {
-                prefix = "*";
+                prefix = go.codeblock("*");
             }
             switch (primitive) {
                 case PrimitiveTypeV1.DateTime:
-                    prefix = "";
-                    suffix = ".Format(time.RFC3339)";
+                    prefix = undefined;
+                    suffix = go.codeblock((writer) => {
+                        writer.write(".Format(");
+                        writer.writeNode(
+                            go.typeReference({
+                                name: "RFC3339",
+                                importPath: "time"
+                            })
+                        );
+                        writer.write(")");
+                    });
                     break;
                 case PrimitiveTypeV1.Date:
-                    prefix = "";
-                    suffix = '.Format("2006-01-02")';
+                    prefix = undefined;
+                    suffix = go.codeblock('.Format("2006-01-02")');
                     break;
                 case PrimitiveTypeV1.Base64:
-                    prefix = "base64.StdEncoding.EncodeToString(" + prefix + ")";
-                    suffix = ")";
+                    prefix = go.codeblock((writer) => {
+                        writer.writeNode(
+                            go.typeReference({
+                                name: "StdEncoding",
+                                importPath: "encoding/base64"
+                            })
+                        );
+                        writer.write(".EncodeToString(");
+                    });
+                    suffix = go.codeblock(")");
                     break;
                 case PrimitiveTypeV1.Uuid:
                 case PrimitiveTypeV1.BigInteger:
@@ -78,6 +95,17 @@ export class GoValueFormatter {
                 case PrimitiveTypeV1.Float:
                 case PrimitiveTypeV1.Double:
                 case PrimitiveTypeV1.Boolean:
+                    prefix = go.codeblock((writer) => {
+                        writer.writeNode(
+                            go.typeReference({
+                                name: "Sprintf",
+                                importPath: "fmt"
+                            })
+                        );
+                        writer.write('("%v", ');
+                    });
+                    suffix = go.codeblock(")");
+                    break;
                 case PrimitiveTypeV1.String:
                     break;
                 default:
@@ -95,11 +123,23 @@ export class GoValueFormatter {
         };
     }
 
-    private format({ prefix, suffix, value }: { prefix: string; suffix: string; value: go.AstNode }): go.AstNode {
+    private format({
+        prefix,
+        suffix,
+        value
+    }: {
+        prefix: go.AstNode | undefined;
+        suffix: go.AstNode | undefined;
+        value: go.AstNode;
+    }): go.AstNode {
         return go.codeblock((writer) => {
-            writer.write(prefix);
+            if (prefix != null) {
+                writer.writeNode(prefix);
+            }
             writer.writeNode(value);
-            writer.write(suffix);
+            if (suffix != null) {
+                writer.writeNode(suffix);
+            }
         });
     }
 }
