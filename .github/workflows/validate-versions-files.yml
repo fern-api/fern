@@ -15,7 +15,7 @@ jobs:
       - name: Validate go-sdk versions.yml
         uses: ./.github/actions/validate-yml
         with:
-          schema-path: "go-sdk"
+          schema-path: "fern-versions-yml.schema.json"
           file-path: "generators/go/sdk/versions.yml"
 
 
