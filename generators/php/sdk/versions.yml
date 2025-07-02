@@ -2,7 +2,7 @@
 - version: 1.16.4
   changelogEntry:
     - summary: |
-        Add documentation for using a custom client in the README, this makes it easier
+        Add documentation for using a custom client in the README. This makes it easier
         for our customers to visualize how they can override the default client.
       type: feat
   createdAt: '2025-07-02'
