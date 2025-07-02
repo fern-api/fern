@@ -1,4 +1,4 @@
-name: Validate YML
+name: Validate versions.yml
 
 on:
   pull_request:
@@ -6,7 +6,7 @@ on:
 
 jobs:
   validate:
-    name: ${{ matrix.generator.name }} versions.yml
+    name: ${{ matrix.generator.name }}
     strategy:
       fail-fast: false
       matrix:
