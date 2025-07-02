@@ -51,6 +51,19 @@ try {
 
 ## Advanced
 
+### Custom Client
+
+Life is unexpected more than we can antipicate, and for those special cases, you can pass your own PSR compatible HTTP Client
+with whatever middleware your heart desires, all you need to do is pass your own client implementation to our client
+constructor. Here's an example of how you can register a custom middleware on the client:
+
+```php
+$handlerStack = \GuzzleHttp\HandlerStack::create();
+$handlerStack->push(MyCustomMiddleware::create());
+$httpClient = new \GuzzleHttp\Client(['handler' => $handlerStack]);
+$client = new SeedClient(['client' => $httpClient]);
+```
+
 ### Retries
 
 The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long

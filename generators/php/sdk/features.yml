@@ -7,6 +7,13 @@ features:
     description: |
       When the API returns a non-success status code (4xx or 5xx response), an exception will be thrown.
 
+  - id: CUSTOM_CLIENT
+    advanced: true
+    description: |
+      Life is unexpected more than we can antipicate, and for those special cases, you can pass your own PSR compatible HTTP Client
+      with whatever middleware your heart desires, all you need to do is pass your own client implementation to our client
+      constructor. Here's an example of how you can register a custom middleware on the client:
+
   - id: PAGINATION
     description: |
       List endpoints return a `Pager<T>` which lets you loop over all items and the SDK will automatically make multiple HTTP requests for you.

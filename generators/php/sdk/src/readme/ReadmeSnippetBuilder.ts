@@ -45,6 +45,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         snippets[FernGeneratorCli.StructuredFeatureId.Usage] = this.buildUsageSnippets();
         snippets[FernGeneratorCli.StructuredFeatureId.Retries] = this.buildRetrySnippets();
         snippets[FernGeneratorCli.StructuredFeatureId.Timeouts] = this.buildTimeoutSnippets();
+        snippets[FernGeneratorCli.StructuredFeatureId.CustomClient] = this.buildCustomClientSnippets();
         snippets[ReadmeSnippetBuilder.EXCEPTION_HANDLING_FEATURE_ID] = this.buildExceptionHandlingSnippets();
         if (this.isPaginationEnabled) {
             snippets[FernGeneratorCli.StructuredFeatureId.Pagination] = this.buildPaginationSnippets();
@@ -119,6 +120,16 @@ $response = ${this.getMethodCall(timeoutEndpoint)}(
 );
 `)
         );
+    }
+
+    private buildCustomClientSnippets(): string[] {
+        const snippet = this.writeCode(`
+$handlerStack = \\GuzzleHttp\\HandlerStack::create();
+$handlerStack->push(MyCustomMiddleware::create());
+$httpClient = new \\GuzzleHttp\\Client(['handler' => $handlerStack]);
+$client = new ${this.context.getRootClientClassName()}(['client' => $httpClient]);
+`)
+        return [snippet];
     }
 
     private buildPaginationSnippets(): string[] {
