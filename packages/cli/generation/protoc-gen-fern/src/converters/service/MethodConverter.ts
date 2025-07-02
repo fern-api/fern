@@ -55,10 +55,12 @@ export class MethodConverter extends AbstractConverter<ProtofileConverterContext
             endpoint: {
                 id: this.operation.name,
                 docs: this.context.getCommentForPath(this.sourceCodeInfoPath),
-                name: this.context.casingsGenerator.generateName(this.operation.name),
+                name: this.context.casingsGenerator.generateName(
+                    this.context.maybePrependPackageName(this.operation.name)
+                ),
                 requestBody: convertedRequestBody,
                 response: convertedResponseBody,
-                displayName: undefined,
+                displayName: this.context.maybeRemoveGrpcPackagePrefix(this.operation.name),
                 method: HttpMethod.Post,
                 baseUrl: undefined,
                 v2BaseUrls: undefined,
@@ -106,7 +108,8 @@ export class MethodConverter extends AbstractConverter<ProtofileConverterContext
 
     private convertRequestBody(): HttpRequestBody | undefined {
         const requestBodyType = this.context.convertGrpcReferenceToTypeReference({
-            typeName: this.context.maybeRemoveGrpcPackagePrefix(this.operation.inputType)
+            typeName: this.operation.inputType,
+            displayNameOverride: this.context.maybeRemoveGrpcPackagePrefix(this.operation.inputType)
         });
         if (requestBodyType.ok) {
             return HttpRequestBody.reference({
@@ -121,7 +124,8 @@ export class MethodConverter extends AbstractConverter<ProtofileConverterContext
 
     private convertResponseBody(): HttpResponse | undefined {
         const responseBodyType = this.context.convertGrpcReferenceToTypeReference({
-            typeName: this.context.maybeRemoveGrpcPackagePrefix(this.operation.outputType)
+            typeName: this.operation.outputType,
+            displayNameOverride: this.context.maybeRemoveGrpcPackagePrefix(this.operation.outputType)
         });
 
         if (responseBodyType.ok) {

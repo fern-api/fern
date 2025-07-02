@@ -45,7 +45,7 @@ export class ServiceConverter extends AbstractConverter<ProtofileConverterContex
         }
         return {
             endpoints: rpcServiceMethods,
-            serviceName: this.service.name,
+            serviceName: this.context.maybePrependPackageName(this.service.name),
             inlinedTypes: {}
         };
     }

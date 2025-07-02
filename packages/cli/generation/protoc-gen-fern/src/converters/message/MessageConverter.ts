@@ -146,7 +146,7 @@ export class MessageConverter extends AbstractConverter<ProtofileConverterContex
                 };
 
                 const convertedOneOfTypeReference = this.context.convertGrpcReferenceToTypeReference({
-                    typeName: convertedOneOfSchema.typeDeclaration.name.typeId
+                    typeName: this.context.maybePrependPackageName(convertedOneOfSchema.typeDeclaration.name.typeId)
                 });
 
                 if (convertedOneOfTypeReference.ok === true) {
@@ -219,11 +219,12 @@ export class MessageConverter extends AbstractConverter<ProtofileConverterContex
     }
 
     public convertDeclaredTypeName(typeName: string): FernIr.DeclaredTypeName {
+        const fullyQualifiedName = this.context.maybePrependPackageName(typeName);
         return {
-            typeId: typeName,
+            typeId: fullyQualifiedName,
             fernFilepath: this.context.createFernFilepath(),
-            name: this.context.casingsGenerator.generateName(typeName),
-            displayName: undefined
+            name: this.context.casingsGenerator.generateName(fullyQualifiedName),
+            displayName: typeName
         };
     }
 
