@@ -17,54 +17,105 @@ jobs:
         with:
           schema-path: "fern-versions-yml.schema.json"
           file-path: "generators/go/sdk/versions.yml"
-
-
-
-    # strategy:
-    #   fail-fast: false
-    #   matrix:
-    #     generator:
-    #      - name: go-sdk
-    #        versions-path: "generators/go/sdk/versions.yml"
-    #      - name: go-model
-    #        versions-path: "generators/go/model/versions.yml"
-    #      - name: go-fiber
-    #        versions-path: "generators/go/fiber/versions.yml"
-    #      - name: typescript-mcp
-    #        versions-path: "generators/typescript-mcp/model/versions.yml"
-    #      - name: python-sdk
-    #        versions-path: "generators/python/sdk/versions.yml"
-    #      - name: fastapi
-    #        versions-path: "generators/python/fastapi/versions.yml"
-    #      - name: pydantic
-    #        versions-path: "generators/python/pydantic/versions.yml"
-    #      - name: ts-express
-    #        versions-path: "generators/typescript/express/versions.yml"
-    #      - name: ts-sdk
-    #        versions-path: "generators/typescript/sdk/versions.yml"
-    #      - name: postman
-    #        versions-path: "generators/postman/versions.yml"
-    #      - name: java-sdk
-    #        versions-path: "generators/java/sdk/versions.yml"
-    #      - name: java-model
-    #        versions-path: "generators/java/model/versions.yml"
-    #      - name: java-spring
-    #        versions-path: "generators/java/spring/versions.yml"
-    #      - name: php-sdk
-    #        versions-path: "generators/php/sdk/versions.yml"
-    #      - name: php-model
-    #        versions-path: "generators/php/model/versions.yml"
-    #      - name: openapi
-    #        versions-path: "generators/openapi/versions.yml"
-    #      - name: ruby-v2
-    #        versions-path: "generators/ruby-v2/sdk/versions.yml"
-    #      - name: csharp-sdk
-    #        versions-path: "generators/csharp/sdk/versions.yml"
-    #      - name: csharp-model
-    #        versions-path: "generators/csharp/model/versions.yml"
-    #      - name: ruby
-    #        versions-path: "generators/ruby/sdk/versions.yml"
-    #      - name: ruby-model
-    #        versions-path: "generators/ruby/model/versions.yml"
+      - name: Validate go-model versions.yml
+        uses: ./.github/actions/validate-yml
+        with:
+          schema-path: "fern-versions-yml.schema.json"
+          file-path: "generators/go/model/versions.yml"
+      - name: Validate go-fiber versions.yml
+        uses: ./.github/actions/validate-yml
+        with:
+          schema-path: "fern-versions-yml.schema.json"
+          file-path: "generators/go/fiber/versions.yml"
+      - name: Validate typescript-mcp versions.yml
+        uses: ./.github/actions/validate-yml
+        with:
+          schema-path: "fern-versions-yml.schema.json"
+          file-path: "generators/typescript-mcp/model/versions.yml"
+      - name: Validate python-sdk versions.yml
+        uses: ./.github/actions/validate-yml
+        with:
+          schema-path: "fern-versions-yml.schema.json"
+          file-path: "generators/python/sdk/versions.yml"
+      - name: Validate fastapi versions.yml
+        uses: ./.github/actions/validate-yml
+        with:
+          schema-path: "fern-versions-yml.schema.json"
+          file-path: "generators/python/fastapi/versions.yml"
+      - name: Validate pydantic versions.yml
+        uses: ./.github/actions/validate-yml
+        with:
+          schema-path: "fern-versions-yml.schema.json"
+          file-path: "generators/python/pydantic/versions.yml"
+      - name: Validate ts-express versions.yml
+        uses: ./.github/actions/validate-yml
+        with:
+          schema-path: "fern-versions-yml.schema.json"
+          file-path: "generators/typescript/express/versions.yml"
+      - name: Validate ts-sdk versions.yml
+        uses: ./.github/actions/validate-yml
+        with:
+          schema-path: "fern-versions-yml.schema.json"
+          file-path: "generators/typescript/sdk/versions.yml"
+      - name: Validate postman versions.yml
+        uses: ./.github/actions/validate-yml
+        with:
+          schema-path: "fern-versions-yml.schema.json"
+          file-path: "generators/postman/versions.yml"
+      - name: Validate java-sdk versions.yml
+        uses: ./.github/actions/validate-yml
+        with:
+          schema-path: "fern-versions-yml.schema.json"
+          file-path: "generators/java/sdk/versions.yml"
+      - name: Validate java-model versions.yml
+        uses: ./.github/actions/validate-yml
+        with:
+          schema-path: "fern-versions-yml.schema.json"
+          file-path: "generators/java/model/versions.yml"
+      - name: Validate java-spring versions.yml
+        uses: ./.github/actions/validate-yml
+        with:
+          schema-path: "fern-versions-yml.schema.json"
+          file-path: "generators/java/spring/versions.yml"
+      - name: Validate php-sdk versions.yml
+        uses: ./.github/actions/validate-yml
+        with:
+          schema-path: "fern-versions-yml.schema.json"
+          file-path: "generators/php/sdk/versions.yml"
+      - name: Validate php-model versions.yml
+        uses: ./.github/actions/validate-yml
+        with:
+          schema-path: "fern-versions-yml.schema.json"
+          file-path: "generators/php/model/versions.yml"
+      - name: Validate openapi versions.yml
+        uses: ./.github/actions/validate-yml
+        with:
+          schema-path: "fern-versions-yml.schema.json"
+          file-path: "generators/openapi/versions.yml"
+      - name: Validate ruby-v2 versions.yml
+        uses: ./.github/actions/validate-yml
+        with:
+          schema-path: "fern-versions-yml.schema.json"
+          file-path: "generators/ruby-v2/sdk/versions.yml"
+      - name: Validate csharp-sdk versions.yml
+        uses: ./.github/actions/validate-yml
+        with:
+          schema-path: "fern-versions-yml.schema.json"
+          file-path: "generators/csharp/sdk/versions.yml"
+      - name: Validate csharp-model versions.yml
+        uses: ./.github/actions/validate-yml
+        with:
+          schema-path: "fern-versions-yml.schema.json"
+          file-path: "generators/csharp/model/versions.yml"
+      - name: Validate ruby versions.yml
+        uses: ./.github/actions/validate-yml
+        with:
+          schema-path: "fern-versions-yml.schema.json"
+          file-path: "generators/ruby/sdk/versions.yml"
+      - name: Validate ruby-model versions.yml
+        uses: ./.github/actions/validate-yml
+        with:
+          schema-path: "fern-versions-yml.schema.json"
+          file-path: "generators/ruby/model/versions.yml"
 
 
