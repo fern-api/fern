@@ -1,7 +1,7 @@
-## 0.56.0-rc5
-**`(fix):`** Fixed duplicate validation messages in docs validation by deduplicating violations
-that have the same message, node path, file path, and severity.
+## 0.56.0-rc4
+**`(feat):`** If experimental.openapi-parser-v3 is enabled in docs.yml, OpenAPI documents will now be
+converted directly to IR, bypassing the intermediate Fern Definition step.
 
-This prevents showing the same broken link error multiple times.
+This makes sure that the old code path is completely ignored if the flag is enabled.
 
 
