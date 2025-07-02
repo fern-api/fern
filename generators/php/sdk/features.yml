@@ -10,9 +10,9 @@ features:
   - id: CUSTOM_CLIENT
     advanced: true
     description: |
-      Life is unexpected more than we can anticipate, and for those special cases, you can pass your own PSR compatible HTTP Client
-      with whatever middleware your heart desires, all you need to do is pass your own client implementation to our client
-      constructor. Here's an example of how you can register a custom middleware on the client:
+      This SDK is built to work with any HTTP client that implements Guzzle's `ClientInterface`.
+      By default, if no client is provided, the SDK will use Guzzle's default HTTP client.
+      However, you can pass your own client that adheres to `ClientInterface`:
 
   - id: PAGINATION
     description: |

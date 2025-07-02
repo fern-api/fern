@@ -124,10 +124,17 @@ $response = ${this.getMethodCall(timeoutEndpoint)}(
 
     private buildCustomClientSnippets(): string[] {
         const snippet = this.writeCode(`
-$handlerStack = \\GuzzleHttp\\HandlerStack::create();
-$handlerStack->push(MyCustomMiddleware::create());
-$httpClient = new \\GuzzleHttp\\Client(['handler' => $handlerStack]);
-$client = new ${this.context.getRootClientClassName()}(['client' => $httpClient]);
+use ${this.context.getRootNamespace()}\\${this.context.getRootClientClassName()};
+
+// Create a custom Guzzle client with specific configuration.
+$customClient = new \\GuzzleHttp\\Client([
+    'timeout' => 5.0,
+]);
+
+// Pass the custom client when creating an instance of the class.
+${this.context.getClientVariableName()} = new ${this.context.getRootClientClassName()}(options: [
+    '${this.context.getGuzzleClientOptionName()}' => $customClient
+]);
 `)
         return [snippet];
     }

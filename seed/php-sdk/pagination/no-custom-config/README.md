@@ -101,15 +101,22 @@ foreach ($items->getPages() as $page) {
 
 ### Custom Client
 
-Life is unexpected more than we can antipicate, and for those special cases, you can pass your own PSR compatible HTTP Client
-with whatever middleware your heart desires, all you need to do is pass your own client implementation to our client
-constructor. Here's an example of how you can register a custom middleware on the client:
+This SDK is built to work with any HTTP client that implements Guzzle's `ClientInterface`.
+By default, if no client is provided, the SDK will use Guzzle's default HTTP client.
+However, you can pass your own client that adheres to `ClientInterface`:
 
 ```php
-$handlerStack = \GuzzleHttp\HandlerStack::create();
-$handlerStack->push(MyCustomMiddleware::create());
-$httpClient = new \GuzzleHttp\Client(['handler' => $handlerStack]);
-$client = new SeedClient(['client' => $httpClient]);
+use Seed\SeedClient;
+
+// Create a custom Guzzle client with specific configuration.
+$customClient = new \GuzzleHttp\Client([
+    'timeout' => 5.0,
+]);
+
+// Pass the custom client when creating an instance of the class.
+$client = new SeedClient(options: [
+    'client' => $customClient
+]);
 ```
 
 ### Retries
