@@ -11,3 +11,19 @@
 Nullable properties are now correctly propagated to the JSON Schema
 
 
+## 0.45.0-rc11
+**`(fix):`** Improved JSON Schema generation for object inheritance:
+- Removed the use of `allOf` for representing object extensions
+- Properties from parent objects are now directly added to the child object in the JSON Schema
+
+
+## 0.45.0-rc10
+**`(fix):`** Added support for `additionalProperties` on export to JSON Schema.
+
+
+## 0.45.0-rc9
+**`(fix):`** Improved JSON Schema generation for object extensions and const values:
+- Object extensions are now properly represented using `allOf` in the JSON Schema
+- Literal values (string and boolean) are now correctly represented using `const` in the JSON Schema
+
+
