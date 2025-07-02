@@ -193,11 +193,11 @@ export class JestTestGenerator {
             test: "jest --config jest.config.mjs"
         };
         if (this.writeUnitTests) {
-            scripts["test:unit"] = `jest --selectProjects unit`;
+            scripts["test:unit"] = "jest --selectProjects unit";
             scripts["test:browser"] = "jest --selectProjects browser";
         }
         if (this.generateWireTests) {
-            scripts["test:wire"] = `jest --selectProjects wire`;
+            scripts["test:wire"] = "jest --selectProjects wire";
         }
         return scripts;
     }
