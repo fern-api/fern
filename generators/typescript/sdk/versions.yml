@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.10.6
+  changelogEntry:
+    - summary: |
+        Publish multi-platform builds of the TypeScript SDK docker container.
+      type: fix
+  createdAt: '2025-07-02'
+  irVersion: 58      
+  
 - version: 1.10.5
   changelogEntry:
     - summary: |
