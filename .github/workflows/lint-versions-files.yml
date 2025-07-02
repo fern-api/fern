@@ -1,0 +1,26 @@
+name: Lint versions.yml files
+
+on:
+  pull_request:
+    paths:
+      - 'generators/**/versions.yml'
+
+  push:
+    branches:
+      - 'dak/ci/versions.yml-validation'
+
+  workflow_dispatch:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install validator
+        run: npm install -g ajv-cli
+
+      - name: Run test validation
+        run: ajv validate -s fern-versions-yml.schema.json -d generators/typescript/sdk/versions.yml --strict=false
+
