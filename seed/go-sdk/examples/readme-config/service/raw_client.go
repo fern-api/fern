@@ -2,7 +2,6 @@ package service
 
 import (
 	context "context"
-	fmt "fmt"
 	fern "github.com/examples/fern"
 	core "github.com/examples/fern/core"
 	internal "github.com/examples/fern/internal"
@@ -136,7 +135,7 @@ func (r *RawClient) GetMetadata(
 		r.header.Clone(),
 		options.ToHeader(),
 	)
-	headers.Add("X-API-Version", fmt.Sprintf("%v", request.XApiVersion))
+	headers.Add("X-API-Version", request.XApiVersion)
 	var response *fern.Metadata
 	raw, err := r.caller.Call(
 		ctx,

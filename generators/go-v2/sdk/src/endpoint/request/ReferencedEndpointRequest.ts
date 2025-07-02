@@ -22,4 +22,8 @@ export class ReferencedEndpointRequest extends EndpointRequest {
     public getRequestParameterType(): go.Type {
         return this.context.goTypeMapper.convert({ reference: this.requestBodyShape });
     }
+
+    public getRequestBodyBlock(): go.AstNode | undefined {
+        return undefined;
+    }
 }

@@ -20,6 +20,34 @@
       type: feat
   createdAt: '2025-07-01'
   irVersion: 58
+
+- version: 1.10.6
+  changelogEntry:
+    - summary: |
+        Publish multi-platform builds of the TypeScript SDK docker container.
+      type: fix
+  createdAt: '2025-07-02'
+  irVersion: 58      
+  
+- version: 1.10.5
+  changelogEntry:
+    - summary: |
+        Add default values to request parameters.
+        For example, if you have a query parameter `foo` with a default value of `bar`, the generated request parameter will have a default value of `bar`.
+
+        To enable this, set `useDefaultRequestParameterValues` to `true` in the `config` of your generator configuration.
+        ```yml
+        # In generators.yml
+        groups:
+          ts-sdk:
+            generators:
+              - name: fernapi/fern-typescript-node-sdk
+                config:
+                  useDefaultRequestParameterValues: true
+        ```
+      type: feat
+  createdAt: '2025-06-30'
+  irVersion: 58
 - version: 1.10.4
   changelogEntry:
     - summary: |

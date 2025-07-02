@@ -44,4 +44,5 @@ export interface SdkCustomConfig {
     fetchSupport: "node-fetch" | "native";
     packagePath: string | undefined;
     omitFernHeaders: boolean | undefined;
+    useDefaultRequestParameterValues: boolean | undefined;
 }

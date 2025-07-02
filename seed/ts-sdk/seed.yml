@@ -1,22 +1,23 @@
-irVersion: v58
 displayName: TypeScript SDK
+irVersion: v58
 image: fernapi/fern-typescript-node-sdk
 changelogLocation: ../../generators/typescript/sdk/versions.yml
 publish:
-  workingDirectory: generators/typescript
-  versionSubstitution: $VERSION
-  command:
-    - pnpm --filter @fern-typescript/sdk-generator-cli dockerTagVersion:node $VERSION
-    - docker push fernapi/fern-typescript-node-sdk:$VERSION
+  preBuildCommands:
+    - pnpm --filter @fern-typescript/sdk-generator-cli dist:cli
+  docker:
+    file: ./generators/typescript/sdk/cli/Dockerfile
+    image: fernapi/fern-typescript-node-sdk
+    context: .
 test:
   docker:
-    image: fernapi/fern-typescript-node-sdk:local
-    command: pnpm --filter @fern-typescript/sdk-generator-cli dockerTagLocal:node
+    image: fernapi/fern-typescript-node-sdk:latest
+    command: 
+      - pnpm --filter @fern-typescript/sdk-generator-cli dockerTagLatest
   local:
     workingDirectory: generators/typescript
     buildCommand:
-      - pnpm --filter @fern-typescript/sdk-generator-cli compile
-      - pnpm --filter @fern-typescript/sdk-generator-cli build:node
+      - pnpm --filter @fern-typescript/sdk-generator-cli dist:cli
     runCommand: node sdk/cli/dist/nodeCli.cjs
     env:
       NODE_ENV: test
@@ -202,6 +203,16 @@ fixtures:
     - customConfig:
         noSerdeLayer: false
       outputFolder: serde-layer-query
+  request-parameters:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        useDefaultRequestParameterValues: true
+      outputFolder: use-default-request-parameter-values
+    - customConfig:
+        useDefaultRequestParameterValues: true
+        useBigInt: true
+      outputFolder: use-big-int-and-default-request-parameter-values
   trace:
     - customConfig: null
       outputFolder: no-custom-config

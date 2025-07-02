@@ -1,0 +1,81 @@
+syntax = "proto3";
+
+package anduril.entitymanager.v1;
+
+import "google/protobuf/wrappers.proto";
+
+option csharp_namespace = "Anduril.Entitymanager.V1";
+option go_package = "ghe.anduril.dev/anduril/andurilapis-go/anduril/entitymanager/v1;entitymanager";
+option java_multiple_files = true;
+option java_outer_classname = "PowerProto";
+option java_package = "com.anduril.entitymanager.v1";
+option objc_class_prefix = "AEX";
+
+// Represents the state of power sources connected to this entity.
+message PowerState {
+  // This is a map where the key is a unique id of the power source and the value is additional information about the
+  // power source.
+  map<string, PowerSource> source_id_to_state = 5;
+
+  reserved 1, 2, 3, 4;
+}
+
+// Represents the state of a single power source that is connected to this entity.
+message PowerSource {
+  // Status of the power source.
+  PowerStatus power_status = 1;
+  // Used to determine the type of power source.
+  PowerType power_type = 2;
+  // Power level of the system. If absent, the power level is assumed to be unknown.
+  PowerLevel power_level = 3;
+  // Set of human-readable messages with status of the power system. Typically this would be used in an error state
+  // to provide additional error information. This can also be used for informational messages.
+  repeated string messages = 4;
+  // Whether the power source is offloadable. If the value is missing (as opposed to false) then the entity does not
+  // report whether the power source is offloadable.
+  google.protobuf.BoolValue offloadable = 5;
+}
+
+enum PowerStatus {
+  POWER_STATUS_INVALID = 0;
+  // Indeterminate condition of whether the power system is present or absent.
+  POWER_STATUS_UNKNOWN = 1;
+  // Power system is not configured/present. This is considered a normal/expected condition, as opposed to the
+  // system is expected to be present but is missing.
+  POWER_STATUS_NOT_PRESENT = 2;
+  // Power system is present and operating normally.
+  POWER_STATUS_OPERATING = 3;
+  // Power system is present and is in an expected disabled state. For example, if the generator was shut off for
+  // operational reasons.
+  POWER_STATUS_DISABLED = 4;
+  // Power system is non-functional.
+  POWER_STATUS_ERROR = 5;
+}
+
+enum PowerType {
+  POWER_TYPE_INVALID = 0;
+  POWER_TYPE_UNKNOWN = 1;
+  POWER_TYPE_GAS = 2;
+  POWER_TYPE_BATTERY = 3;
+}
+
+// Represents the power level of a system.
+message PowerLevel {
+  // Total power capacity of the system.
+  float capacity = 1;
+  // Remaining power capacity of the system.
+  float remaining = 2;
+  // Percent of power remaining.
+  float percent_remaining = 3;
+  // Voltage of the power source subsystem, as reported by the power source. If the source does not report this value
+  // this field will be null.
+  google.protobuf.DoubleValue voltage = 4;
+  // Current in amps of the power source subsystem, as reported by the power source. If the source does not
+  // report this value this field will be null.
+  google.protobuf.DoubleValue current_amps = 5;
+  // Estimated minutes until empty. Calculated with consumption at the moment, as reported by the power source. If the source does not
+  // report this value this field will be null.
+  google.protobuf.DoubleValue run_time_to_empty_mins = 6;
+  // Fuel consumption rate in liters per second.
+  google.protobuf.DoubleValue consumption_rate_l_per_s = 7;
+}
