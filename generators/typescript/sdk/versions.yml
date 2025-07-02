@@ -1,4 +1,19 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.1.0
+  changelogEntry:
+    - summary: |
+        Split up Jest configuration into multiple projects.
+        You can now run the following command to run tests:
+        * `yarn test`: runs all tests
+        * `yarn test:unit`: runs unit tests (any non-browser and non-wire tests)
+        * `yarn test:browser`: runs browser only tests inside of `js-dom`
+        * `yarn test:wire`: runs wire tests
+
+        You can now pass in paths and patterns as an argument to the above commands to filter down to specific tests.
+        For example: `yarn test tests/unit/fetcher`
+      type: feat
+  createdAt: '2025-07-02'
+  irVersion: 58
 - version: 2.0.0
   changelogEntry:
     - summary: |

@@ -46,9 +46,6 @@ export class AsIsManager {
                     ["tests/mock-server/*"]: `${this.relativeTestPath}/mock-server/`
                 },
                 bigintSetup: { ["tests/bigint.setup.ts"]: `${this.relativeTestPath}/bigint.setup.ts` },
-                jestBrowserConfig: {
-                    ["tests/jest.browser.config.mjs"]: "jest.browser.config.mjs"
-                },
                 BrowserEnvironment: {
                     ["tests/BrowserTestEnvironment.ts"]: `${this.relativeTestPath}/BrowserTestEnvironment.ts`
                 }
@@ -67,7 +64,6 @@ export class AsIsManager {
 
         filesToCopy.push(asIsFiles.core.mergeHeaders);
         filesToCopy.push(asIsFiles.scripts.renameToEsmFiles);
-        filesToCopy.push(asIsFiles.tests.jestBrowserConfig);
         filesToCopy.push(asIsFiles.tests.BrowserEnvironment);
         if (this.useBigInt) {
             filesToCopy.push(asIsFiles.tests.bigintSetup);
