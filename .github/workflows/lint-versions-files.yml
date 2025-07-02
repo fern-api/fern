@@ -2,13 +2,6 @@ name: Lint versions.yml files
 
 on:
   pull_request:
-    paths:
-      - 'generators/**/versions.yml'
-
-  push:
-    branches:
-      - 'dak/ci/versions.yml-validation'
-
   workflow_dispatch:
 
 jobs:
