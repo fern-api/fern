@@ -42,7 +42,6 @@ jobs:
         with:
           commit_message: "chore: update changelog"
           add_options: -A
-          branch: update-changelog
           file_pattern: fern/pages/changelogs/
 
       - name: Create Pull Request
@@ -52,8 +51,6 @@ jobs:
           token: ${{ secrets.FERN_GITHUB_PAT }}
           commit-message: "chore(changelog): update changelog"
           title: "chore(changelog): update changelog"
-          base: main
-          branch: update-changelog
           delete-branch: true
 
       - name: Enable Pull Request Automerge
