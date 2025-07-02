@@ -64,6 +64,6 @@ jobs:
       - name: Install validator
         run: npm install -g ajv-cli
 
-      - name: Run test validation
+      - name: Run validation
         run: ajv validate -s fern-versions-yml.schema.json -d ${{ matrix.generator.versions-path }} --strict=false
 
