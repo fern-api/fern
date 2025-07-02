@@ -25,6 +25,13 @@ export class ProtofileConverterContext extends AbstractConverterContext<FileDesc
         this.comments = comments;
     }
 
+    public maybePrependPackageName(name: string): string {
+        if (this.maybeRemoveLeadingPeriod(name).startsWith(this.spec.package)) {
+            return name;
+        }
+        return this.spec.package + "." + name;
+    }
+
     public convertReferenceToTypeReference({
         reference
     }: {
@@ -53,13 +60,20 @@ export class ProtofileConverterContext extends AbstractConverterContext<FileDesc
                     packagePath: [],
                     file: undefined
                 },
-                name: this.casingsGenerator.generateName(typeName),
-                typeId: typeName,
+                name: this.casingsGenerator.generateName(this.maybeRemoveLeadingPeriod(typeName)),
+                typeId: this.maybeRemoveLeadingPeriod(typeName),
                 default: undefined,
                 inline: false,
                 displayName: displayNameOverride
             })
         };
+    }
+
+    public maybeRemoveLeadingPeriod(typeName: string): string {
+        if (typeName.startsWith(".")) {
+            return typeName.slice(1);
+        }
+        return typeName;
     }
 
     public maybeRemoveGrpcPackagePrefix(typeName: string): string {

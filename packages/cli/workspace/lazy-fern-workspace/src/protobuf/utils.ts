@@ -10,6 +10,8 @@ plugins:
   - local: ["bash", "./protoc-gen-fern"]
     out: output
     strategy: all
+    include_imports: true
+    include_wkt: true
 `;
 
 export const PROTOBUF_MODULE_PACKAGE_JSON = `{
