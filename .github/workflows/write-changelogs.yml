@@ -38,7 +38,7 @@ jobs:
           pnpm seed:local generate changelog cli -o ./fern/pages/changelogs/cli/ --clean-directory
 
       - name: Commit changes
-        uses: stefanzweifel/git-auto-commit-action@v5
+        uses: stefanzweifel/git-auto-commit-action@v6
         with:
           commit_message: "chore: update changelog"
           add_options: -A
@@ -47,7 +47,7 @@ jobs:
 
       - name: Create Pull Request
         id: cpr
-        uses: peter-evans/create-pull-request@v5
+        uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
           commit-message: "chore(changelog): update changelog"
