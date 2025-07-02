@@ -2,9 +2,6 @@ name: Validate YML
 
 on:
   pull_request:
-  push:
-    branches:
-     - "dak/ci/fix-version-lint-formatting"
   workflow_dispatch:
 
 jobs:
