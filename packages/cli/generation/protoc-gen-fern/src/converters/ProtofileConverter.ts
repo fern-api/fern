@@ -41,7 +41,7 @@ export class ProtofileConverter extends AbstractSpecConverter<ProtofileConverter
             if (convertedEnum != null) {
                 this.addTypesToIr({
                     ...convertedEnum.inlinedTypes,
-                    [schema.name]: convertedEnum.convertedSchema
+                    [this.context.maybePrependPackageName(schema.name)]: convertedEnum.convertedSchema
                 });
             }
         }
@@ -58,7 +58,7 @@ export class ProtofileConverter extends AbstractSpecConverter<ProtofileConverter
             if (convertedEnum != null) {
                 this.addTypesToIr({
                     ...convertedEnum.inlinedTypes,
-                    [schema.name]: convertedEnum.convertedSchema
+                    [this.context.maybePrependPackageName(schema.name)]: convertedEnum.convertedSchema
                 });
             }
         }

@@ -129,11 +129,12 @@ export class EnumOrMessageConverter extends AbstractConverter<
     }
 
     public convertDeclaredTypeName(): FernIr.DeclaredTypeName {
+        const fullyQualifiedName = this.context.maybePrependPackageName(this.schema.name);
         return {
-            typeId: this.schema.name,
+            typeId: fullyQualifiedName,
             fernFilepath: this.context.createFernFilepath(),
-            name: this.context.casingsGenerator.generateName(this.schema.name),
-            displayName: undefined
+            name: this.context.casingsGenerator.generateName(fullyQualifiedName),
+            displayName: this.schema.name
         };
     }
 }

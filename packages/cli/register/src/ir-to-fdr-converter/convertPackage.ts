@@ -174,10 +174,7 @@ function convertService(
                     : undefined,
             id: FdrCjsSdk.EndpointId(irEndpoint.name.originalName),
             originalEndpointId: irEndpoint.id,
-            name:
-                irEndpoint.source?.type == "proto"
-                    ? irEndpoint.name.originalName
-                    : (irEndpoint.displayName ?? startCase(irEndpoint.name.originalName)),
+            name: irEndpoint.displayName ?? startCase(irEndpoint.name.originalName),
             path:
                 irEndpoint.basePath != null
                     ? {
