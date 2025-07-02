@@ -1,3 +1,7 @@
+## 0.45.0-rc25
+**`(internal):`** The Fern CLI temporarily does not support RBAC/Audiences (they will be added in again shortly).
+
+
 ## 0.45.0-rc24
 **`(fix):`** `fern docs dev` now runs in Node 16 - Node 22 environments.
 
@@ -8,25 +12,5 @@
 
 ## 0.45.0-rc22
 **`(fix):`** Fixes bug introduced in 0.45.0-rc20 where section children were dropped from the docs definition.
-
-
-## 0.45.0-rc21
-**`(feat):`** The Fern CLI now supports orphaned pages in your docs configuration.
-
-
-**`(fix):`** The RBAC config model is now renamed to `roles` and `viewers`:
-
-```yml docs.yml
-roles:
-  - internal
-
-navigation:
-  - section: Internal Section
-    viewers:
-      - internal
-    contents:
-      - page: Internal Page
-        path: ./internal/page.mdx
-```
 
 

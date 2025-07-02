@@ -1,3 +1,11 @@
+## 0.58.3
+**`(feat):`** Enhance OpenAPI security scheme handling in the parser to support both global and endpoint-level security requirements. 
+The parser now properly converts security schemes from OpenAPI's `securitySchemes` component into appropriate authentication 
+headers, supporting bearer tokens, basic auth, and custom API key headers. Global security requirements defined at the 
+document level are applied to all endpoints, while endpoint-specific security requirements override or supplement the 
+global configuration, ensuring accurate authentication representation in generated SDKs.
+
+
 ## 0.58.2
 **`(feat):`** Enhance example generation to consider default values when generating examples for primitive types. 
 When a string primitive type has a default value specified, the example generator now uses this 
