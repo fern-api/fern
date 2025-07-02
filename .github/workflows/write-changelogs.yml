@@ -36,6 +36,7 @@ jobs:
         with:
           commit_message: "chore: update changelog"
           add_options: -A
+          branch: update-changelog
           file_pattern: fern/pages/changelogs/
 
       - name: Create Pull Request
