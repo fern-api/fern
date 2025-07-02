@@ -1,11 +1,15 @@
-name: Lint versions.yml files
+name: Validate versions.yml files
 
 on:
   pull_request:
+  push:
+    branches:
+     - "dak/ci/fix-version-lint-formatting"
   workflow_dispatch:
 
 jobs:
-  lint:
+  validate:
+    name: Validate ${{ matrix.file }}
     strategy:
       fail-fast: false
       matrix:
