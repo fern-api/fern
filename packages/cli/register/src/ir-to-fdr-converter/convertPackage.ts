@@ -174,12 +174,7 @@ function convertService(
                     : undefined,
             id: FdrCjsSdk.EndpointId(irEndpoint.name.originalName),
             originalEndpointId: irEndpoint.id,
-            name: irEndpoint.source?._visit<string>({
-                proto: () => irEndpoint.name.originalName,
-                openapi: () => irEndpoint.displayName ?? startCase(irEndpoint.name.originalName),
-                openrpc: () => irEndpoint.displayName ?? startCase(irEndpoint.name.originalName),
-                _other: () => irEndpoint.displayName ?? startCase(irEndpoint.name.originalName)
-            }),
+            name: irEndpoint.source?.type == "proto" ? irEndpoint.name.originalName : irEndpoint.displayName ?? startCase(irEndpoint.name.originalName),
             path:
                 irEndpoint.basePath != null
                     ? {
