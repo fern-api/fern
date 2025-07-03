@@ -16,6 +16,7 @@ class SeedVariables:
     base_url : str
         The base url to use for requests from the client.
 
+    root_variable : str
     headers : typing.Optional[typing.Dict[str, str]]
         Additional headers to send with every request.
 
@@ -33,6 +34,7 @@ class SeedVariables:
     from seed import SeedVariables
 
     client = SeedVariables(
+        root_variable="YOUR_ROOT_VARIABLE",
         base_url="https://yourhost.com/path/to/api",
     )
     """
@@ -41,6 +43,7 @@ class SeedVariables:
         self,
         *,
         base_url: str,
+        root_variable: str,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
@@ -51,6 +54,7 @@ class SeedVariables:
         )
         self._client_wrapper = SyncClientWrapper(
             base_url=base_url,
+            root_variable=root_variable,
             headers=headers,
             httpx_client=httpx_client
             if httpx_client is not None
@@ -71,6 +75,7 @@ class AsyncSeedVariables:
     base_url : str
         The base url to use for requests from the client.
 
+    root_variable : str
     headers : typing.Optional[typing.Dict[str, str]]
         Additional headers to send with every request.
 
@@ -88,6 +93,7 @@ class AsyncSeedVariables:
     from seed import AsyncSeedVariables
 
     client = AsyncSeedVariables(
+        root_variable="YOUR_ROOT_VARIABLE",
         base_url="https://yourhost.com/path/to/api",
     )
     """
@@ -96,6 +102,7 @@ class AsyncSeedVariables:
         self,
         *,
         base_url: str,
+        root_variable: str,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
@@ -106,6 +113,7 @@ class AsyncSeedVariables:
         )
         self._client_wrapper = AsyncClientWrapper(
             base_url=base_url,
+            root_variable=root_variable,
             headers=headers,
             httpx_client=httpx_client
             if httpx_client is not None

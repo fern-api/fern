@@ -43,6 +43,7 @@ from fern_python.generators.sdk.environment_generators.multiple_base_urls_enviro
     get_base_url_property_name,
 )
 from fern_python.snippet import SnippetWriter
+from fern_python.generators.sdk.names import get_variable_member_name
 
 import fern.ir.resources as ir_types
 
@@ -153,6 +154,7 @@ class EndpointFunctionGenerator:
 
         self._path_parameter_names = dict()
         _named_parameter_names: List[str] = [param.name for param in self._named_parameters_raw]
+
         for path_parameter in self._endpoint.all_path_parameters:
             if not self._is_type_literal(path_parameter.value_type):
                 name = self.deconflict_parameter_name(get_parameter_name(path_parameter.name), _named_parameter_names)
@@ -381,7 +383,8 @@ class EndpointFunctionGenerator:
         parameters: List[AST.FunctionParameter] = []
 
         if not self._context.custom_config.inline_path_params:
-            for path_parameter in self._endpoint.all_path_parameters:
+            non_variable_path_parameters = filter_variable_path_parameters(self._endpoint.all_path_parameters)
+            for path_parameter in non_variable_path_parameters:
                 if not self._is_type_literal(path_parameter.value_type):
                     name = self._path_parameter_names[path_parameter.name]
                     parameters.append(
@@ -938,7 +941,8 @@ class EndpointFunctionGenerator:
         self, path_parameters: List[ir_types.PathParameter]
     ) -> List[AST.NamedFunctionParameter]:
         named_parameters: List[AST.NamedFunctionParameter] = []
-        for path_parameter in path_parameters:
+        non_variable_path_params = filter_variable_path_parameters(path_parameters)
+        for path_parameter in non_variable_path_params:
             if not self._is_type_literal(path_parameter.value_type):
                 name = self._path_parameter_names[path_parameter.name]
                 named_parameters.append(
@@ -1006,7 +1010,20 @@ class EndpointFunctionGenerator:
     ) -> str:
         for path_parameter in endpoint.all_path_parameters:
             if path_parameter.name.original_name == path_parameter_name:
-                return self._path_parameter_names[path_parameter.name]
+                if path_parameter.variable is not None:
+                    # path parameter is backed by variable => reference from client wrapper
+                    variable = next(
+                        (variable
+                         for variable in self._context.ir.variables
+                         if variable.id == path_parameter.variable),
+                        None
+                    )
+                    if variable is None:
+                        raise RuntimeError(f"Variable does not exist: {path_parameter.variable}")
+                    member_name = get_variable_member_name(variable)
+                    return f"self.{self._client_wrapper_member_name}.{member_name}"
+                else:
+                    return self._path_parameter_names[path_parameter.name]
         raise RuntimeError("Path parameter does not exist: " + path_parameter_name)
 
     def _get_property_type_off_object(self) -> AST.TypeHint:
@@ -1740,12 +1757,25 @@ class EndpointFunctionSnippetGenerator:
     # TODO: It should be sufficient for this to just take in the example and client
     def generate_snippet(self) -> AST.Expression:
         args: List[AST.Expression] = []
-        all_path_parameters = (
+        all_example_path_parameters = (
             self.example.root_path_parameters
             + self.example.service_path_parameters
             + self.example.endpoint_path_parameters
         )
-        for path_parameter in all_path_parameters:
+
+        non_variable_path_parameters = filter_variable_path_parameters(
+            self.service.path_parameters + self.endpoint.path_parameters
+        )
+        variable_filtered_example_path_parameters = (
+            example_param
+            for example_param in all_example_path_parameters
+            if any(
+                example_param.name.original_name == endpoint_param.name.original_name
+                for endpoint_param in non_variable_path_parameters
+            )
+        )
+
+        for path_parameter in variable_filtered_example_path_parameters:
             path_parameter_value = self.snippet_writer.get_snippet_for_example_type_reference(
                 example_type_reference=path_parameter.value,
                 as_request=True,
@@ -2072,3 +2102,6 @@ def unwrap_optional_type(
         if container_as_union.type == "nullable":
             return unwrap_optional_type(container_as_union.nullable)
     return type_reference
+
+def filter_variable_path_parameters(path_parameters: List[ir_types.PathParameter]) -> List[ir_types.PathParameter]:
+    return [param for param in path_parameters if param.variable is None]

@@ -23,11 +23,10 @@ Instantiate and use the client with the following:
 from seed import SeedVariables
 
 client = SeedVariables(
+    root_variable="YOUR_ROOT_VARIABLE",
     base_url="https://yourhost.com/path/to/api",
 )
-client.service.post(
-    endpoint_param="endpointParam",
-)
+client.service.post()
 ```
 
 ## Async Client
@@ -40,14 +39,13 @@ import asyncio
 from seed import AsyncSeedVariables
 
 client = AsyncSeedVariables(
+    root_variable="YOUR_ROOT_VARIABLE",
     base_url="https://yourhost.com/path/to/api",
 )
 
 
 async def main() -> None:
-    await client.service.post(
-        endpoint_param="endpointParam",
-    )
+    await client.service.post()
 
 
 asyncio.run(main())
