@@ -48,6 +48,7 @@ types:
     properties:
       context: string
       image: string
+      aliases: optional<list<string>>
       file: string
 
   PublishDocker:

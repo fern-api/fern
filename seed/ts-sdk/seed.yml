@@ -8,6 +8,7 @@ publish:
   docker:
     file: ./generators/typescript/sdk/cli/Dockerfile
     image: fernapi/fern-typescript-sdk
+    aliases: [fernapi/fern-typescript-node-sdk]
     context: .
 test:
   docker:
