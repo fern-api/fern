@@ -1,5 +1,5 @@
 <% if (formDataSupport === "Node16") { %>
-import { RUNTIME } from "../runtime/index.js";
+import { RUNTIME } from "../runtime/index";
 
 <% if (streamType === "wrapper") { %>
 export async function toReadableStream(encoder: import("form-data-encoder").FormDataEncoder) {
@@ -247,8 +247,8 @@ export class WebFormData implements CrossPlatformFormData {
     }
 }
 <% } else { %>
-import { toJson } from "../../core/json.js";
-import { RUNTIME } from "../runtime/index.js";
+import { toJson } from "../../core/json";
+import { RUNTIME } from "../runtime/index";
 
 type NamedValue = {
     name: string;

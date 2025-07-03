@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.3.2
+  changelogEntry:
+    - summary: |
+        Remove ".js" extension from ESM imports in the source generator code. 
+        If `useLegacyExports` is `true`, you will not see ".js" extensions in ESM imports.
+        If `useLegacyExports` is `false` (default), a post process step will add the `.js` extension, so you won't see a difference.
+
+        We're doing this because Jest has a bug where it doesn't properly load TypeScript modules even though the TypeScript and imports are valid.
+      type: fix
+  createdAt: '2025-07-03'
+  irVersion: 58
 - version: 2.3.1
   changelogEntry:
     - summary: |
