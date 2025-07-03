@@ -1,4 +1,4 @@
-import { ExportsManager, ImportsManager, JavaScriptRuntime, NpmPackage } from "@fern-typescript/commons";
+import { ExportsManager, ImportsManager, NpmPackage } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
 
 import { GeneratorNotificationService } from "@fern-api/base-generator";
@@ -44,7 +44,6 @@ export interface SdkContext extends BaseContext {
     websocket: WebsocketClassContext;
     websocketTypeSchema: WebsocketTypeSchemaContext;
     versionContext: VersionContext;
-    targetRuntime: JavaScriptRuntime;
     includeSerdeLayer: boolean;
     retainOriginalCasing: boolean;
     generateOAuthClients: boolean;

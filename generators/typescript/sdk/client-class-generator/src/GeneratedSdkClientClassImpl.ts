@@ -1,7 +1,6 @@
 import {
     ExportsManager,
     ImportsManager,
-    JavaScriptRuntime,
     NpmPackage,
     PackageId,
     getParameterNameForRootPathParameter,
@@ -82,7 +81,6 @@ export declare namespace GeneratedSdkClientClassImpl {
         requireDefaultEnvironment: boolean;
         defaultTimeoutInSeconds: number | "infinity" | undefined;
         npmPackage: NpmPackage | undefined;
-        targetRuntime: JavaScriptRuntime;
         includeContentHeadersOnFileDownloadResponse: boolean;
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
@@ -124,7 +122,6 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private readonly packageResolver: PackageResolver;
     private readonly requireDefaultEnvironment: boolean;
     private readonly npmPackage: NpmPackage | undefined;
-    private readonly targetRuntime: JavaScriptRuntime;
     private readonly packageId: PackageId;
     private readonly retainOriginalCasing: boolean;
     private readonly inlineFileProperties: boolean;
@@ -157,7 +154,6 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         requireDefaultEnvironment,
         defaultTimeoutInSeconds,
         npmPackage,
-        targetRuntime,
         includeContentHeadersOnFileDownloadResponse,
         includeSerdeLayer,
         retainOriginalCasing,
@@ -182,7 +178,6 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         this.packageResolver = packageResolver;
         this.requireDefaultEnvironment = requireDefaultEnvironment;
         this.npmPackage = npmPackage;
-        this.targetRuntime = targetRuntime;
         this.retainOriginalCasing = retainOriginalCasing;
         this.inlineFileProperties = inlineFileProperties;
         this.includeSerdeLayer = includeSerdeLayer;
@@ -218,7 +213,6 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             endpoint,
                             requestBody,
                             generatedSdkClientClass: this,
-                            targetRuntime: this.targetRuntime,
                             retainOriginalCasing: this.retainOriginalCasing,
                             exportsManager: this.exportsManager
                         });
@@ -232,7 +226,6 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             endpoint,
                             requestBody,
                             generatedSdkClientClass: this,
-                            targetRuntime: this.targetRuntime,
                             retainOriginalCasing: this.retainOriginalCasing,
                             inlineFileProperties: this.inlineFileProperties,
                             includeSerdeLayer: this.includeSerdeLayer,
