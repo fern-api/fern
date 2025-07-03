@@ -32,36 +32,4 @@ from .triangular_repair import TriangularRepair
 from .unique_stress import UniqueStress
 from .unwilling_smoke import UnwillingSmoke
 from .vibrant_excitement import VibrantExcitement
-
-__all__ = [
-    "ActiveDiamond",
-    "AttractiveScript",
-    "BigUnion",
-    "CircularCard",
-    "ColorfulCover",
-    "DiligentDeal",
-    "DisloyalValue",
-    "DistinctFailure",
-    "FalseMirror",
-    "FrozenSleep",
-    "GaseousRoad",
-    "GruesomeCoach",
-    "HarmoniousPlay",
-    "HastyPain",
-    "HoarseMouse",
-    "JumboEnd",
-    "LimpingStep",
-    "MistySnow",
-    "NormalSweet",
-    "PopularLimit",
-    "PotableBad",
-    "PracticalPrinciple",
-    "PrimaryBlock",
-    "RotatingRatio",
-    "ThankfulFactor",
-    "TotalWork",
-    "TriangularRepair",
-    "UniqueStress",
-    "UnwillingSmoke",
-    "VibrantExcitement",
-]
+__all__ = ["ActiveDiamond", "AttractiveScript", "BigUnion", "CircularCard", "ColorfulCover", "DiligentDeal", "DisloyalValue", "DistinctFailure", "FalseMirror", "FrozenSleep", "GaseousRoad", "GruesomeCoach", "HarmoniousPlay", "HastyPain", "HoarseMouse", "JumboEnd", "LimpingStep", "MistySnow", "NormalSweet", "PopularLimit", "PotableBad", "PracticalPrinciple", "PrimaryBlock", "RotatingRatio", "ThankfulFactor", "TotalWork", "TriangularRepair", "UniqueStress", "UnwillingSmoke", "VibrantExcitement"]
