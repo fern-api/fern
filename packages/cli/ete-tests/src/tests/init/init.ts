@@ -28,6 +28,5 @@ export async function init(options: InitOptions = {}): Promise<AbsoluteFilePath>
     await runFernCli(cliArgs, {
         cwd: directory
     });
-    console.log(`Initialized Fern project in ${directory.toString()}`);
     return directory;
 }
