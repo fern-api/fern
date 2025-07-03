@@ -10,7 +10,14 @@
     "@types/node",
     "esbuild",
     "@yarnpkg/esbuild-plugin-pnp",
-    "@fern-fern/ir-sdk"
+    "@fern-fern/ir-sdk",
+    "@fern-api/base-generator",
+    "@fern-api/core-utils",
+    "@fern-api/fs-utils",
+    "@fern-api/logging-execa",
+    "@fern-api/swift-codegen",
+    "@types/lodash-es",
+    "lodash-es"
   ],
   "ignore-patterns": [
     "lib",
