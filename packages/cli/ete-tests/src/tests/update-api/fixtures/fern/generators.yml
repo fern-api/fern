@@ -1,3 +1,5 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+
 default-group: local
 api:
   path: ./openapi/openapi.json
@@ -7,6 +9,7 @@ groups:
     generators:
       - name: fernapi/fern-typescript-sdk
         version: 0.9.5
+        config: {}
         output:
           location: local-file-system
           path: ../sdks/typescript
