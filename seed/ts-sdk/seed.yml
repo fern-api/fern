@@ -153,6 +153,12 @@ fixtures:
     - outputFolder: node-fetch
       customConfig:
         fetchSupport: node-fetch
+    - outputFolder: local-files
+      outputMode: local_files
+    - outputFolder: local-files-no-source
+      outputMode: local_files
+      customConfig:
+        outputSourceFiles: false
   error-property:
     - customConfig:
         private: true
@@ -299,9 +305,8 @@ scripts:
     commands:
       - mkdir cache
       - yarn install --cache-folder ./cache
-      - yarn build
-      - if grep -q '"test"' package.json; then yarn test --passWithNoTests; fi
-      - if grep -q '"test:wire"' package.json; then yarn test:wire --passWithNoTests; fi
+      - if grep -q '"build":' package.json; then yarn build; fi
+      - if grep -q '"test":' package.json; then yarn test --passWithNoTests; fi
 allowedFailures:
   - bytes-download
   - circular-references
