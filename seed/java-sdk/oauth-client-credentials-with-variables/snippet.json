@@ -1,0 +1,44 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "9157b51a",
+            "id": {
+                "method": "POST",
+                "path": "/token",
+                "identifier_override": "endpoint_auth.getTokenWithClientCredentials"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.oauthClientCredentialsWithVariables.SeedOauthClientCredentialsWithVariablesClient;\nimport com.seed.oauthClientCredentialsWithVariables.resources.auth.requests.GetTokenRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedOauthClientCredentialsWithVariablesClient client = SeedOauthClientCredentialsWithVariablesClient\n            .builder()\n            .clientId(\"<clientId>\")\n            .clientSecret(\"<clientSecret>\")\n            .build();\n\n        client.auth().getTokenWithClientCredentials(\n            GetTokenRequest\n                .builder()\n                .clientId(\"client_id\")\n                .clientSecret(\"client_secret\")\n                .audience(\"https://api.example.com\")\n                .grantType(\"client_credentials\")\n                .scope(\"scope\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.oauthClientCredentialsWithVariables.SeedOauthClientCredentialsWithVariablesClient;\nimport com.seed.oauthClientCredentialsWithVariables.resources.auth.requests.GetTokenRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedOauthClientCredentialsWithVariablesClient client = SeedOauthClientCredentialsWithVariablesClient\n            .builder()\n            .clientId(\"<clientId>\")\n            .clientSecret(\"<clientSecret>\")\n            .build();\n\n        client.auth().getTokenWithClientCredentials(\n            GetTokenRequest\n                .builder()\n                .clientId(\"client_id\")\n                .clientSecret(\"client_secret\")\n                .audience(\"https://api.example.com\")\n                .grantType(\"client_credentials\")\n                .scope(\"scope\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "e770932b",
+            "id": {
+                "method": "POST",
+                "path": "/token",
+                "identifier_override": "endpoint_auth.refreshToken"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.oauthClientCredentialsWithVariables.SeedOauthClientCredentialsWithVariablesClient;\nimport com.seed.oauthClientCredentialsWithVariables.resources.auth.requests.RefreshTokenRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedOauthClientCredentialsWithVariablesClient client = SeedOauthClientCredentialsWithVariablesClient\n            .builder()\n            .clientId(\"<clientId>\")\n            .clientSecret(\"<clientSecret>\")\n            .build();\n\n        client.auth().refreshToken(\n            RefreshTokenRequest\n                .builder()\n                .clientId(\"client_id\")\n                .clientSecret(\"client_secret\")\n                .refreshToken(\"refresh_token\")\n                .audience(\"https://api.example.com\")\n                .grantType(\"refresh_token\")\n                .scope(\"scope\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.oauthClientCredentialsWithVariables.SeedOauthClientCredentialsWithVariablesClient;\nimport com.seed.oauthClientCredentialsWithVariables.resources.auth.requests.RefreshTokenRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedOauthClientCredentialsWithVariablesClient client = SeedOauthClientCredentialsWithVariablesClient\n            .builder()\n            .clientId(\"<clientId>\")\n            .clientSecret(\"<clientSecret>\")\n            .build();\n\n        client.auth().refreshToken(\n            RefreshTokenRequest\n                .builder()\n                .clientId(\"client_id\")\n                .clientSecret(\"client_secret\")\n                .refreshToken(\"refresh_token\")\n                .audience(\"https://api.example.com\")\n                .grantType(\"refresh_token\")\n                .scope(\"scope\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "e249ce9a",
+            "id": {
+                "method": "POST",
+                "path": "/service/{endpointParam}",
+                "identifier_override": "endpoint_service.post"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.oauthClientCredentialsWithVariables.SeedOauthClientCredentialsWithVariablesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedOauthClientCredentialsWithVariablesClient client = SeedOauthClientCredentialsWithVariablesClient\n            .builder()\n            .clientId(\"<clientId>\")\n            .clientSecret(\"<clientSecret>\")\n            .build();\n\n        client.service().post(\"endpointParam\");\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.oauthClientCredentialsWithVariables.SeedOauthClientCredentialsWithVariablesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedOauthClientCredentialsWithVariablesClient client = SeedOauthClientCredentialsWithVariablesClient\n            .builder()\n            .clientId(\"<clientId>\")\n            .clientSecret(\"<clientSecret>\")\n            .build();\n\n        client.service().post(\"endpointParam\");\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}
