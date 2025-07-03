@@ -1,14 +1,14 @@
 # Seed Python Library
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FPython)
-[![pypi](https://img.shields.io/pypi/v/fern_variables)](https://pypi.python.org/pypi/fern_variables)
+[![pypi](https://img.shields.io/pypi/v/fern_oauth-client-credentials-with-variables)](https://pypi.python.org/pypi/fern_oauth-client-credentials-with-variables)
 
 The Seed Python library provides convenient access to the Seed API from Python.
 
 ## Installation
 
 ```sh
-pip install fern_variables
+pip install fern_oauth-client-credentials-with-variables
 ```
 
 ## Reference
@@ -20,13 +20,19 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```python
-from seed import SeedVariables
+from seed import SeedOauthClientCredentialsWithVariables
 
-client = SeedVariables(
+client = SeedOauthClientCredentialsWithVariables(
     root_variable="YOUR_ROOT_VARIABLE",
     base_url="https://yourhost.com/path/to/api",
+    client_id="YOUR_CLIENT_ID",
+    client_secret="YOUR_CLIENT_SECRET",
 )
-client.service.post()
+client.auth.get_token_with_client_credentials(
+    client_id="client_id",
+    client_secret="client_secret",
+    scope="scope",
+)
 ```
 
 ## Async Client
@@ -36,16 +42,22 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 ```python
 import asyncio
 
-from seed import AsyncSeedVariables
+from seed import AsyncSeedOauthClientCredentialsWithVariables
 
-client = AsyncSeedVariables(
+client = AsyncSeedOauthClientCredentialsWithVariables(
     root_variable="YOUR_ROOT_VARIABLE",
     base_url="https://yourhost.com/path/to/api",
+    client_id="YOUR_CLIENT_ID",
+    client_secret="YOUR_CLIENT_SECRET",
 )
 
 
 async def main() -> None:
-    await client.service.post()
+    await client.auth.get_token_with_client_credentials(
+        client_id="client_id",
+        client_secret="client_secret",
+        scope="scope",
+    )
 
 
 asyncio.run(main())
@@ -60,7 +72,7 @@ will be thrown.
 from seed.core.api_error import ApiError
 
 try:
-    client.service.post()
+    client.auth.get_token_with_client_credentials(...)
 except ApiError as e:
     print(e.status_code)
     print(e.body)
@@ -74,12 +86,12 @@ The SDK provides access to raw response data, including headers, through the `.w
 The `.with_raw_response` property returns a "raw" client that can be used to access the `.headers` and `.data` attributes.
 
 ```python
-from seed import SeedVariables
+from seed import SeedOauthClientCredentialsWithVariables
 
-client = SeedVariables(
+client = SeedOauthClientCredentialsWithVariables(
     ...,
 )
-response = client.service.with_raw_response.post()
+response = client.auth.with_raw_response.get_token_with_client_credentials(...)
 print(response.headers)  # access the response headers
 print(response.data)  # access the underlying object
 ```
@@ -99,7 +111,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.service.post(request_options={
+client.auth.get_token_with_client_credentials(..., request_options={
     "max_retries": 1
 })
 ```
@@ -110,16 +122,16 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 
 ```python
 
-from seed import SeedVariables
+from seed import SeedOauthClientCredentialsWithVariables
 
-client = SeedVariables(
+client = SeedOauthClientCredentialsWithVariables(
     ...,
     timeout=20.0,
 )
 
 
 # Override timeout for a specific method
-client.service.post(request_options={
+client.auth.get_token_with_client_credentials(..., request_options={
     "timeout_in_seconds": 1
 })
 ```
@@ -131,9 +143,9 @@ and transports.
 
 ```python
 import httpx
-from seed import SeedVariables
+from seed import SeedOauthClientCredentialsWithVariables
 
-client = SeedVariables(
+client = SeedOauthClientCredentialsWithVariables(
     ...,
     httpx_client=httpx.Client(
         proxies="http://my.test.proxy.example.com",
