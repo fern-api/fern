@@ -112,6 +112,9 @@ groups:
   local:
     generators:
       - name: fernapi/fern-typescript-sdk
+        output:
+          location: local-file-system
+          path: ../sdks/typescript
         version: 2.3.2
 ",
         "name": "generators.yml",
@@ -198,6 +201,9 @@ groups:
   local:
     generators:
       - name: fernapi/fern-typescript-sdk
+        output:
+          location: local-file-system
+          path: ../sdks/typescript
         version: 2.3.2
 ",
         "name": "generators.yml",
@@ -424,6 +430,9 @@ groups:
   local:
     generators:
       - name: fernapi/fern-typescript-sdk
+        output:
+          location: local-file-system
+          path: ../sdks/typescript
         version: 2.3.2
 ",
     "name": "generators.yml",
