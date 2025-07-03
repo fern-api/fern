@@ -100,7 +100,7 @@ async function buildAndPushDockerImage(
     const aliases = [dockerConfig.image, ...(dockerConfig.aliases ?? [])].map((alias) => `${alias}:${version}`);
     const tagArgs = aliases.map((imageTag) => ["-t", imageTag]).flat();
     context.logger.debug(`Pushing Docker image ${aliases[0]} to Docker Hub...`);
-    if(aliases.length > 1) {
+    if (aliases.length > 1) {
         context.logger.debug(`Also tagging with aliases: ${aliases.slice(1).join(", ")}`);
     }
     const standardBuildOptions = [
