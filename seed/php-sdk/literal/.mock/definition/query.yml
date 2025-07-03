@@ -22,10 +22,7 @@ service:
           alias_optional_stream: optional<AliasToStream>
       response: root.SendResponse
       examples:
-        - headers:
-            X-API-Version: "02-02-2024"
-            X-API-Enable-Audit-Logging: true
-          query-parameters:
+        - query-parameters:
             prompt: "You are a helpful assistant"
             optional_prompt: "You are a helpful assistant"
             alias_prompt: "You are a helpful assistant"
