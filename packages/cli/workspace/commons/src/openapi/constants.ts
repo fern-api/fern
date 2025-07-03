@@ -10,7 +10,7 @@ export const DEFAULT_OPENAPI_BUNDLE_OPTIONS: BundleOptions = {
             styleguide: {
                 plugins: [FERN_TYPE_EXTENSIONS],
                 rules: {
-                    spec: "warn"
+                    struct: "warn"
                 }
             }
         },
