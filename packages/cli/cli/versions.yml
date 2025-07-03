@@ -1,6 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |  
+        Rename the TypeScript SDK generator image from `fernapi/fern-typescript-node-sdk` to `fernapi/fern-typescript-sdk`.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-03"
+  version: 0.65.0-rc0
+- changelogEntry:
+    - summary: |  
         Remove default docs for well known types in gRPC. Add support for field-level docs.
       type: fix
   irVersion: 58
@@ -712,7 +719,7 @@
         Add support for overriding auth in generators.yml. You can now specify auth for a specific generator by adding an `api` field with an `auth` property. For example:
 
         ```yaml
-        - name: fernapi/fern-typescript-node-sdk
+        - name: fernapi/fern-typescript-sdk
           version: 0.48.5
           api: 
             auth: bearer
