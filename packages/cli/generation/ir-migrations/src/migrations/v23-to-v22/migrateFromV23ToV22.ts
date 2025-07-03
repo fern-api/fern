@@ -20,7 +20,7 @@ export const V23_TO_V22_MIGRATION: IrMigration<
         [GeneratorName.TYPESCRIPT_NODE_SDK]: "0.7.4-rc3-4-g6cf92f81",
         [GeneratorName.TYPESCRIPT_BROWSER_SDK]: "0.7.4-rc3-4-g6cf92f81",
         [GeneratorName.TYPESCRIPT]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.TYPESCRIPT_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.TYPESCRIPT_SDK]: "0.7.4-rc3-4-g6cf92f81",
         [GeneratorName.TYPESCRIPT_EXPRESS]: "0.7.4-rc3-4-g6cf92f81",
         [GeneratorName.JAVA]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.JAVA_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,

@@ -18,7 +18,7 @@ export const V46_TO_V45_MIGRATION: IrMigration<
         [GeneratorName.TYPESCRIPT_NODE_SDK]: "0.21.0",
         [GeneratorName.TYPESCRIPT_BROWSER_SDK]: "0.21.0",
         [GeneratorName.TYPESCRIPT]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.TYPESCRIPT_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.TYPESCRIPT_SDK]: "0.21.0",
         [GeneratorName.TYPESCRIPT_EXPRESS]: "0.16.0",
         [GeneratorName.JAVA]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.JAVA_MODEL]: "0.9.0",

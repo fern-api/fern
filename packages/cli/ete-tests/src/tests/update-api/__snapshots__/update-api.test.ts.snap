@@ -11,15 +11,18 @@ exports[`fern api update > fern api update 1`] = `
     "type": "file",
   },
   {
-    "contents": "default-group: local
+    "contents": "# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+
+default-group: local
 api:
   path: ./openapi/openapi.json
   origin: http://localhost:4567/openapi.json
 groups:
   local:
     generators:
-      - name: fernapi/fern-typescript-node-sdk
+      - name: fernapi/fern-typescript-sdk
         version: 0.9.5
+        config: {}
         output:
           location: local-file-system
           path: ../sdks/typescript",
