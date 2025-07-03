@@ -2,5 +2,42 @@
 
 # isort: skip_file
 
-from .types import Bar, Foo, FooExtended, Union, UnionWithBaseProperties, UnionWithDiscriminant, UnionWithDuplicatePrimitive, UnionWithDuplicateTypes, UnionWithLiteral, UnionWithMultipleNoProperties, UnionWithNoProperties, UnionWithOptionalTime, UnionWithPrimitive, UnionWithSingleElement, UnionWithSubTypes, UnionWithTime, UnionWithoutKey
-__all__ = ["Bar", "Foo", "FooExtended", "Union", "UnionWithBaseProperties", "UnionWithDiscriminant", "UnionWithDuplicatePrimitive", "UnionWithDuplicateTypes", "UnionWithLiteral", "UnionWithMultipleNoProperties", "UnionWithNoProperties", "UnionWithOptionalTime", "UnionWithPrimitive", "UnionWithSingleElement", "UnionWithSubTypes", "UnionWithTime", "UnionWithoutKey"]
+from .types import (
+    Bar,
+    Foo,
+    FooExtended,
+    Union,
+    UnionWithBaseProperties,
+    UnionWithDiscriminant,
+    UnionWithDuplicatePrimitive,
+    UnionWithDuplicateTypes,
+    UnionWithLiteral,
+    UnionWithMultipleNoProperties,
+    UnionWithNoProperties,
+    UnionWithOptionalTime,
+    UnionWithPrimitive,
+    UnionWithSingleElement,
+    UnionWithSubTypes,
+    UnionWithTime,
+    UnionWithoutKey,
+)
+
+__all__ = [
+    "Bar",
+    "Foo",
+    "FooExtended",
+    "Union",
+    "UnionWithBaseProperties",
+    "UnionWithDiscriminant",
+    "UnionWithDuplicatePrimitive",
+    "UnionWithDuplicateTypes",
+    "UnionWithLiteral",
+    "UnionWithMultipleNoProperties",
+    "UnionWithNoProperties",
+    "UnionWithOptionalTime",
+    "UnionWithPrimitive",
+    "UnionWithSingleElement",
+    "UnionWithSubTypes",
+    "UnionWithTime",
+    "UnionWithoutKey",
+]
