@@ -4,7 +4,6 @@ import {
     ExportsManager,
     ExternalDependencies,
     ImportsManager,
-    JavaScriptRuntime,
     NpmPackage,
     createExternalDependencies
 } from "@fern-typescript/commons";
@@ -126,7 +125,6 @@ export declare namespace SdkContextImpl {
         includeSerdeLayer: boolean;
         isForSnippet: boolean;
         npmPackage: NpmPackage | undefined;
-        targetRuntime: JavaScriptRuntime;
         retainOriginalCasing: boolean;
         generateOAuthClients: boolean;
         inlineFileProperties: boolean;
@@ -174,7 +172,6 @@ export class SdkContextImpl implements SdkContext {
     public readonly environments: EnvironmentsContext;
     public readonly genericAPISdkError: GenericAPISdkErrorContext;
     public readonly timeoutSdkError: TimeoutSdkErrorContext;
-    public readonly targetRuntime: JavaScriptRuntime;
     public readonly includeSerdeLayer: boolean;
     public readonly retainOriginalCasing: boolean;
     public readonly inlineFileProperties: boolean;
@@ -239,7 +236,6 @@ export class SdkContextImpl implements SdkContext {
         fernConstants,
         includeSerdeLayer,
         retainOriginalCasing,
-        targetRuntime,
         inlineFileProperties,
         inlinePathParameters,
         generateOAuthClients,
@@ -262,7 +258,6 @@ export class SdkContextImpl implements SdkContext {
         this.omitUndefined = omitUndefined;
         this.inlineFileProperties = inlineFileProperties;
         this.inlinePathParameters = inlinePathParameters;
-        this.targetRuntime = targetRuntime;
         this.formDataSupport = formDataSupport;
         this.generateOAuthClients = generateOAuthClients;
         this.namespaceExport = typeDeclarationReferencer.namespaceExport;

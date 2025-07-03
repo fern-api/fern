@@ -111,6 +111,8 @@ fixtures:
           browser:
             command-exists: false
             execa: false
+          engines:
+            node: ">=16.0.0"
       outputFolder: custom-package-json
     - customConfig:
         retainOriginalCasing: true
