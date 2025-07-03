@@ -5,6 +5,13 @@
       type: feat
   irVersion: 58
   createdAt: "2025-07-03"
+  version: 0.65.0
+- changelogEntry:
+    - summary: |  
+        Rename the TypeScript SDK generator image from `fernapi/fern-typescript-node-sdk` to `fernapi/fern-typescript-sdk`.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-03"
   version: 0.65.0-rc0
 - changelogEntry:
     - summary: |  
