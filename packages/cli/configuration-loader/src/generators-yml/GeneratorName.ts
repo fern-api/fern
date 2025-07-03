@@ -1,7 +1,7 @@
 export const GeneratorName = {
     TYPESCRIPT: "fernapi/fern-typescript",
     TYPESCRIPT_SDK: "fernapi/fern-typescript-sdk",
-    TYPESCRIPT_NODE_SDK: "fernapi/fern-typescript-node-sdk",
+    TYPESCRIPT_NODE_SDK: "fernapi/fern-typescript-sdk",
     TYPESCRIPT_BROWSER_SDK: "fernapi/fern-typescript-browser-sdk",
     TYPESCRIPT_EXPRESS: "fernapi/fern-typescript-express",
     JAVA: "fernapi/fern-java",
