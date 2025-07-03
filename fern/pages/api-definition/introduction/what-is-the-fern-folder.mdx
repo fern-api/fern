@@ -52,7 +52,8 @@ The `generators.yml` file can include information about where your API specifica
 <Accordion title="generators.yml for Python + TypeScript SDKs">
 ```yaml
 api: 
-  path: ./path/to/openapi.yml
+  specs:
+    - openapi: ./path/to/openapi.yml
 groups:
   public:
     generators:
@@ -81,7 +82,8 @@ groups:
 <Accordion title="generators.yml for locating an API definition">
 ```yaml
 api: 
-  path: ./path/to/openapi.yml
+  specs:
+    - openapi: ./path/to/openapi.yml
 ```
 </Accordion>
 </AccordionGroup>

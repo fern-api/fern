@@ -19,8 +19,9 @@ See [Deepgram's configuration](https://github.com/deepgram/deepgram-fern-config/
 <CodeBlock title='generators.yml'>
   ```yaml
 api:
-    path: asyncapi.yml
-    origin: https://github.com/your-org/your-repo/blob/main/asyncapi.yml
+  specs:
+    - openapi: asyncapi.yml
+      origin: https://github.com/your-org/your-repo/blob/main/asyncapi.yml
   ```
 </CodeBlock>
 

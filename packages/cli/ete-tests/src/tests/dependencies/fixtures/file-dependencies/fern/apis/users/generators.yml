@@ -1,3 +1,4 @@
 api: 
-  path: openapi/openapi.json
+  specs:
+    - openapi: openapi/openapi.json
 groups: {}

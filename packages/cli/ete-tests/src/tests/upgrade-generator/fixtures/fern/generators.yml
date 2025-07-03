@@ -1,6 +1,7 @@
 api:
-  path: ./openapi/openapi.json
-  origin: https://bump.sh/bump-examples/doc/train-travel-api.json
+  specs:
+    - openapi: ./openapi/openapi.json
+      origin: https://bump.sh/bump-examples/doc/train-travel-api.json
 groups:
   local:
     generators:

@@ -1,3 +1,4 @@
 api: 
-  path: openapi/openapi.yml
+  specs:
+    - openapi: openapi/openapi.yml
 groups: {}

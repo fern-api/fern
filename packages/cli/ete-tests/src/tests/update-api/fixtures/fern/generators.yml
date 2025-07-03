@@ -1,7 +1,8 @@
 default-group: local
 api:
-  path: ./openapi/openapi.json
-  origin: http://localhost:4567/openapi.json
+  specs:
+    - openapi: ./openapi/openapi.json
+      origin: http://localhost:4567/openapi.json
 groups:
   local:
     generators:
