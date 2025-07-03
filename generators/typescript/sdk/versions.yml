@@ -1,4 +1,10 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.3.1
+  changelogEntry:
+    - summary: Bump version to test Docker image rename to `fernapi/fern-typescript-sdk`
+      type: internal
+  createdAt: '2025-07-03'
+  irVersion: 58
 - version: 2.3.0
   changelogEntry:
     - summary: |
