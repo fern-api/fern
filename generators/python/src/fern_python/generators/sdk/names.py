@@ -42,3 +42,12 @@ def get_auth_scheme_header_constructor_parameter_name(header: ir_types.HeaderAut
 
 def get_auth_scheme_header_private_member_name(header: ir_types.HeaderAuthScheme) -> str:
     return header.name.name.snake_case.safe_name
+
+def get_variable_constructor_parameter_name(variable: ir_types.VariableDeclaration) -> str:
+    return variable.name.snake_case.safe_name
+
+def get_variable_member_name(variable: ir_types.VariableDeclaration) -> str:
+    return f"_{variable.name.snake_case.safe_name}"
+
+def get_variable_getter_name(variable: ir_types.VariableDeclaration) -> str:
+    return f"get_{variable.name.snake_case.safe_name}"

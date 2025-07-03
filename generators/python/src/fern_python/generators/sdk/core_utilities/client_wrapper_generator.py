@@ -486,6 +486,23 @@ class ClientWrapperGenerator:
         parameters: List[ConstructorParameter] = []
         literal_headers: List[LiteralHeader] = []
 
+        for variable in self._context.ir.variables:
+            variable_type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+                variable.type
+            )
+            constructor_parameter_name = names.get_variable_constructor_parameter_name(variable)
+            parameters.append(
+                ConstructorParameter(
+                    constructor_parameter_name=constructor_parameter_name,
+                    private_member_name=names.get_variable_member_name(variable),
+                    type_hint=variable_type_hint,
+                    instantiation=AST.Expression(
+                        f'{constructor_parameter_name}="YOUR_{variable.name.screaming_snake_case.safe_name}"'
+                    ),
+                    docs=variable.docs,
+                )
+            )
+
         # TODO(dsinghvi): Support suppliers for global headers
         for header in self._context.ir.headers:
             type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(header.value_type)
