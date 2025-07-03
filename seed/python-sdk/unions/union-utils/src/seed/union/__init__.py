@@ -3,4 +3,5 @@
 # isort: skip_file
 
 from .types import Circle, GetShapeRequest, Shape, Square
+
 __all__ = ["Circle", "GetShapeRequest", "Shape", "Square"]
