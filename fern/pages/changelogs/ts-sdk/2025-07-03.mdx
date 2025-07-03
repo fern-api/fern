@@ -1,0 +1,21 @@
+## 2.2.0
+**`(feat):`** Improve generated package.json files:
+* Add `engines` field to specify minimum Node.js version supported as Node.js 18.
+* Add `sideEffects: false`
+* Add `README.md` and `LICENSE` to `files` array
+* Use GitHub shorthand for `repository` field.
+
+You can override these fields using the `packageJson` config:
+```yml
+# In generators.yml
+groups:
+  ts-sdk:
+    generators:
+      - name: fernapi/fern-typescript-node-sdk
+        config:
+          packageJson:
+            engines:
+              node: ">=16.0.0"
+```
+
+
