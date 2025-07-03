@@ -13,8 +13,9 @@ exports[`fern api update > fern api update 1`] = `
   {
     "contents": "default-group: local
 api:
-  path: ./openapi/openapi.json
-  origin: http://localhost:4567/openapi.json
+  specs:
+    - openapi: ./openapi/openapi.json
+      origin: http://localhost:4567/openapi.json
 groups:
   local:
     generators:
