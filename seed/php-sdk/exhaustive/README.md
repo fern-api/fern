@@ -56,6 +56,41 @@ try {
 }
 ```
 
+## Environment And Custom Urls
+
+This SDK allows you to configure different environments or custom URLs for API requests. You can either use the predefined environments or specify your own custom URL.
+#### Environments
+
+```php
+use Seed\SeedClient;
+use Seed\Environments;
+
+$client = new SeedClient(options: [
+  'baseUrl' => Environments::Production->value // Used by default
+]);
+```
+#### Custom URL
+
+```php
+use Seed\SeedClient;
+
+$client = new SeedClient(options: [
+  'baseUrl' => 'https://custom-staging.com'
+]);
+```
+
+
+## Enums
+
+This SDK leverages PHP 8.1’s first-class enums to improve type safety and usability. In order to maintain forward compatibility with the API
+—- where new enum values may be introduced in the future -— we define enum properties as string and use value-of annotations to specify the corresponding enum type.
+#### Example Usage with a PHPDoc Annotation
+
+```php
+/** @param ?value-of<ErrorCategory> $type */
+$type = Seed\Types\ErrorCategory::ApiError->value;
+```
+
 ## Advanced
 
 ### Custom Client

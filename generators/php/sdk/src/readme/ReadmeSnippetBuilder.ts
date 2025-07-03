@@ -14,6 +14,8 @@ interface EndpointWithFilepath {
 
 export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static EXCEPTION_HANDLING_FEATURE_ID: FernGeneratorCli.FeatureId = "EXCEPTION_HANDLING";
+    private static ENVIRONMENTS_FEATURE_ID: FernGeneratorCli.FeatureId = "ENVIRONMENT_AND_CUSTOM_URLS";
+    private static ENUMS_FEATURE_ID: FernGeneratorCli.FeatureId = "ENUMS";
     private static PAGINATION_FEATURE_ID: FernGeneratorCli.FeatureId = "PAGINATION";
 
     private readonly context: SdkGeneratorContext;
@@ -46,6 +48,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         snippets[FernGeneratorCli.StructuredFeatureId.Retries] = this.buildRetrySnippets();
         snippets[FernGeneratorCli.StructuredFeatureId.Timeouts] = this.buildTimeoutSnippets();
         snippets[FernGeneratorCli.StructuredFeatureId.CustomClient] = this.buildCustomClientSnippets();
+        snippets[ReadmeSnippetBuilder.ENVIRONMENTS_FEATURE_ID] = this.buildEnvironmentsSnippets();
+        snippets[ReadmeSnippetBuilder.ENUMS_FEATURE_ID] = this.buildEnumsSnippets();
         snippets[ReadmeSnippetBuilder.EXCEPTION_HANDLING_FEATURE_ID] = this.buildExceptionHandlingSnippets();
         if (this.isPaginationEnabled) {
             snippets[FernGeneratorCli.StructuredFeatureId.Pagination] = this.buildPaginationSnippets();
@@ -59,6 +63,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         if (this.isPaginationEnabled) {
             addendums[FernGeneratorCli.StructuredFeatureId.Pagination] = this.buildPaginationAddendum();
         }
+
+        addendums[ReadmeSnippetBuilder.ENVIRONMENTS_FEATURE_ID] = this.buildEnvironmentsAddendum();
 
         return Object.fromEntries(
             Object.entries(addendums).filter(([_, value]) => value != null) as [FernGeneratorCli.FeatureId, string][]
@@ -144,6 +150,18 @@ $customClient = new \\GuzzleHttp\\Client(['handler' => $handlerStack]);
 // Pass the custom client when creating an instance of the class.
 ${this.context.getClientVariableName()} = new ${this.context.getRootClientClassName()}(options: [
     '${this.context.getGuzzleClientOptionName()}' => $customClient
+]);
+`);
+        return [snippet];
+    }
+
+    private buildEnvironmentsSnippets(): string[] {
+        const snippet = this.writeCode(`
+use ${this.context.getRootNamespace()}\\${this.context.getRootClientClassName()};
+use ${this.context.getRootNamespace()}\\Environments;
+
+${this.context.getClientVariableName()} = new ${this.context.getRootClientClassName()}(options: [
+  'baseUrl' => Environments::Production->value // Used by default
 ]);
 `);
         return [snippet];
@@ -261,6 +279,71 @@ foreach ($items->getPages() as $page) {
 }
 \`\`\`
 `);
+    }
+
+    private buildEnvironmentsAddendum(): string {
+        return this.writeCode(`
+#### Custom URL
+
+\`\`\`php
+use ${this.context.getRootNamespace()}\\${this.context.getRootClientClassName()};
+
+${this.context.getClientVariableName()} = new ${this.context.getRootClientClassName()}(options: [
+  'baseUrl' => 'https://custom-staging.com'
+]);
+\`\`\``);
+    }
+
+    /**
+     * Find a suitable enum type from the IR
+     * @returns Object with enum type name and first value, or null if not found
+     */
+    private findEnumExample(): { typeName: string; value: string } | null {
+        try {
+            const enumTypes = Object.entries(this.context.ir.types)
+                .filter(([_, type]) => type.shape.type === "enum");
+
+            if (enumTypes.length === 0) {
+                return null;
+            }
+
+            const enumTypeEntry = enumTypes[0] || [];
+            const enumType = enumTypeEntry[1];
+
+            if (!enumType || !enumType.name?.name?.pascalCase?.safeName) {
+                return null;
+            }
+
+            const enumTypeName = enumType.name.name.pascalCase.safeName;
+
+            const enumValues = (enumType.shape as any).values;
+
+            if (!enumValues || enumValues.length === 0 || !enumValues[0].name?.name?.pascalCase?.safeName) {
+                return null;
+            }
+
+            const enumValue = enumValues[0].name.name.pascalCase.safeName;
+
+            return {
+                typeName: enumTypeName,
+                value: enumValue
+            };
+        } catch (error) {
+            return null;
+        }
+    }
+
+    private buildEnumsSnippets(): string[] {
+        const enumExample = this.findEnumExample();
+
+        if (!enumExample) {
+            return [];
+        }
+
+        return [this.writeCode(`
+/** @param ?value-of<${enumExample.typeName}> $type */
+$type = ${this.context.getRootNamespace()}\\Types\\${enumExample.typeName}::${enumExample.value}->value;
+`)];
     }
 
     private getEndpointWithPagination(): EndpointWithFilepath | undefined {

@@ -57,6 +57,30 @@ try {
 }
 ```
 
+## Environment And Custom Urls
+
+This SDK allows you to configure different environments or custom URLs for API requests. You can either use the predefined environments or specify your own custom URL.
+#### Environments
+
+```php
+use Fern\SeedClient;
+use Fern\Environments;
+
+$client = new SeedClient(options: [
+  'baseUrl' => Environments::Production->value // Used by default
+]);
+```
+#### Custom URL
+
+```php
+use Fern\SeedClient;
+
+$client = new SeedClient(options: [
+  'baseUrl' => 'https://custom-staging.com'
+]);
+```
+
+
 ## Advanced
 
 ### Custom Client
