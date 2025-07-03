@@ -156,21 +156,23 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                             unzipOutput: options?.unzipOutput,
                             logger
                         });
-                    } else if (this.outputSourceFiles(customConfig)) {
+                        return;
+                    }
+                    if (this.outputSourceFiles(customConfig)) {
                         await typescriptProject.copySrcTo({
                             destinationPath,
                             zipFilename: OUTPUT_ZIP_FILENAME,
                             unzipOutput: options?.unzipOutput,
                             logger
                         });
-                    } else {
-                        await typescriptProject.copyDistTo({
-                            destinationPath,
-                            zipFilename: OUTPUT_ZIP_FILENAME,
-                            unzipOutput: options?.unzipOutput,
-                            logger
-                        });
+                        return;
                     }
+                    await typescriptProject.copyDistTo({
+                        destinationPath,
+                        zipFilename: OUTPUT_ZIP_FILENAME,
+                        unzipOutput: options?.unzipOutput,
+                        logger
+                    });
                 },
                 _other: ({ type }) => {
                     throw new Error(`${type} mode is not implemented`);
