@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.1.1
+  changelogEntry:
+    - summary: |
+        Fixes an issue where OAuth clients would not compile when variables were configured
+        in the SDK. Now, the oauth client is instantiated with any global path parameters or headers. 
+      type: fix
+  createdAt: '2025-07-03'
+  irVersion: 58
+
 - version: 2.1.0
   changelogEntry:
     - summary: |

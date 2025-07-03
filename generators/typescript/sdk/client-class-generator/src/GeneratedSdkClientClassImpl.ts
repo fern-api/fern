@@ -703,6 +703,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                     ${setClientId},
                     ${setClientSecret},
                     ${OAuthTokenProviderGenerator.OAUTH_AUTH_CLIENT_PROPERTY_NAME}: new ${authClientTypeName}({
+                        ...this._options,
                         environment: this._options.environment,
                     }),
                 });
