@@ -1,6 +1,5 @@
 import {
     PackageId,
-    getParameterNameForPositionalPathParameter,
     getPropertyKey,
     getTextOfTsNode
 } from "@fern-typescript/commons";
@@ -14,18 +13,16 @@ import {
     ts
 } from "ts-morph";
 
-import { SetRequired, assertNever } from "@fern-api/core-utils";
+import { SetRequired } from "@fern-api/core-utils";
 
 import {
     IntermediateRepresentation,
-    PathParameter,
-    PathParameterLocation,
     WebSocketChannel,
     WebSocketChannelId
 } from "@fern-fern/ir-sdk/api";
 
 import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
-import { GetReferenceToPathParameterVariableFromRequest } from "../endpoints/utils/buildUrl";
+import { buildUrl } from "../endpoints/utils/buildUrl";
 
 export declare namespace GeneratedDefaultWebsocketImplementation {
     export interface Init {
@@ -36,6 +33,9 @@ export declare namespace GeneratedDefaultWebsocketImplementation {
         packageId: PackageId;
         serviceClassName: string;
         requireDefaultEnvironment: boolean;
+        includeSerdeLayer: boolean;
+        retainOriginalCasing: boolean;
+        omitUndefined: boolean;
     }
 }
 
@@ -56,6 +56,9 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
     private readonly packageId: PackageId;
     private readonly serviceClassName: string;
     private readonly requireDefaultEnvironment: boolean;
+    private readonly includeSerdeLayer: boolean;
+    private readonly retainOriginalCasing: boolean;
+    private readonly omitUndefined: boolean;
     channel: WebSocketChannel;
 
     constructor({
@@ -65,7 +68,10 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
         packageId,
         channel,
         serviceClassName,
-        requireDefaultEnvironment
+        requireDefaultEnvironment,
+        includeSerdeLayer,
+        retainOriginalCasing,
+        omitUndefined
     }: GeneratedDefaultWebsocketImplementation.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.generatedSdkClientClass = generatedSdkClientClass;
@@ -74,6 +80,9 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
         this.channel = channel;
         this.serviceClassName = serviceClassName;
         this.requireDefaultEnvironment = requireDefaultEnvironment;
+        this.includeSerdeLayer = includeSerdeLayer;
+        this.retainOriginalCasing = retainOriginalCasing;
+        this.omitUndefined = omitUndefined;
     }
 
     public getSignature(context: SdkContext): ChannelSignature {
@@ -175,7 +184,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                     type: getTextOfTsNode(
                         ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Record"), [
                             ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
-                            ts.factory.createKeywordTypeNode(ts.SyntaxKind.UnknownKeyword)
+                            ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
                         ])
                     ),
                     hasQuestionToken: true,
@@ -262,7 +271,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                             undefined,
                             ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Record"), [
                                 ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
-                                ts.factory.createKeywordTypeNode(ts.SyntaxKind.UnknownKeyword)
+                                ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
                             ]),
                             ts.factory.createObjectLiteralExpression()
                         )
@@ -371,8 +380,29 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
     }
 
     private getReferenceToWebsocket(context: SdkContext): ts.Expression {
+        let url = buildUrl({
+            endpoint: {
+                allPathParameters: [...this.intermediateRepresentation.pathParameters, ...this.channel.pathParameters],
+                fullPath: this.channel.path,
+                path: this.channel.path,
+                sdkRequest: undefined,
+            },
+            generatedClientClass: this.generatedSdkClientClass,
+            context,
+            includeSerdeLayer: this.includeSerdeLayer,
+            retainOriginalCasing: this.retainOriginalCasing,
+            omitUndefined: this.omitUndefined,
+            getReferenceToPathParameterVariableFromRequest: (pathParameter) => {
+                return ts.factory.createIdentifier(`args.${pathParameter.name.camelCase.safeName}`);
+            }
+        });
+
+        if (url == null) {
+            throw new Error(`Failed to build URL for ${this.channelId}`);
+        }
+
         return context.coreUtilities.websocket.ReconnectingWebSocket._connect({
-            url: this.buildFullUrl(this.getBaseUrl(this.channel, context), this.channel, context),
+            url,
             protocols: ts.factory.createArrayLiteralExpression([]),
             options: ts.factory.createObjectLiteralExpression([
                 ts.factory.createPropertyAssignment(
@@ -396,40 +426,19 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                     )
                 )
             ]),
-            headers: ts.factory.createIdentifier(GeneratedDefaultWebsocketImplementation.HEADERS_VARIABLE_NAME)
-        });
-    }
-
-    private buildFullUrl(url: ts.Expression, channel: WebSocketChannel, context: SdkContext): ts.Expression {
-        return ts.factory.createTemplateExpression(ts.factory.createTemplateHead("", ""), [
-            ts.factory.createTemplateSpan(
-                url,
-                ts.factory.createTemplateMiddle(`${channel.path.head}?`, `${channel.path.head}?`)
-            ),
-            ...channel.path.parts.map((part) =>
-                ts.factory.createTemplateSpan(
-                    ts.factory.createCallExpression(ts.factory.createIdentifier("encodeURIComponent"), undefined, [
-                        ts.factory.createElementAccessExpression(
-                            ts.factory.createIdentifier("args"),
-                            ts.factory.createStringLiteral(part.pathParameter)
+            headers: ts.factory.createIdentifier(GeneratedDefaultWebsocketImplementation.HEADERS_VARIABLE_NAME),
+            queryParameters: ts.factory.createObjectLiteralExpression(
+                this.channel.queryParameters.map((queryParameter) => {
+                    return ts.factory.createPropertyAssignment(
+                        ts.factory.createIdentifier(queryParameter.name.wireValue),
+                        ts.factory.createPropertyAccessExpression(
+                            ts.factory.createIdentifier(GeneratedDefaultWebsocketImplementation.CONNECT_ARGS_PRIVATE_MEMBER),
+                            ts.factory.createIdentifier(queryParameter.name.wireValue)
                         )
-                    ]),
-                    ts.factory.createTemplateMiddle(part.tail, part.tail)
-                )
-            ),
-            ts.factory.createTemplateSpan(
-                context.coreUtilities.urlUtils.toQueryString._invoke([
-                    ts.factory.createIdentifier("queryParams"),
-                    ts.factory.createObjectLiteralExpression([
-                        ts.factory.createPropertyAssignment(
-                            ts.factory.createIdentifier("arrayFormat"),
-                            ts.factory.createStringLiteral("repeat")
-                        )
-                    ])
-                ]),
-                ts.factory.createTemplateTail("", "")
+                    );
+                })
             )
-        ]);
+        });
     }
 
     private getEnvironment(channel: WebSocketChannel, context: SdkContext): ts.Expression {

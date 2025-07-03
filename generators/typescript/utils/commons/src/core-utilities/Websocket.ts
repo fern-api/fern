@@ -12,6 +12,7 @@ export interface Websocket {
             protocols: ts.Expression;
             options: ts.ObjectLiteralExpression;
             headers: ts.Expression;
+            queryParameters: ts.Expression;
         }) => ts.Expression;
     };
     readonly CloseEvent: {
@@ -61,12 +62,15 @@ export class WebsocketImpl extends CoreUtility implements Websocket {
                     protocols: ts.Expression;
                     options: ts.ObjectLiteralExpression;
                     headers: ts.Expression;
+                    queryParameters: ts.Expression;
                 }) =>
                     ts.factory.createNewExpression(ReconnectingWebSocket.getExpression(), undefined, [
-                        args.url,
-                        args.protocols,
-                        args.options,
-                        args.headers
+                        ts.factory.createObjectLiteralExpression([
+                            ts.factory.createPropertyAssignment("url", args.url),
+                            ts.factory.createPropertyAssignment("protocols", args.protocols),
+                            ts.factory.createPropertyAssignment("queryParameters", args.queryParameters),
+                            ts.factory.createPropertyAssignment("headers", args.headers)
+                        ])
                     ])
         )
     };
