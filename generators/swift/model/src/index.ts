@@ -1,3 +1,1 @@
-export function generateModels() {
-    return [];
-}
+export {};
