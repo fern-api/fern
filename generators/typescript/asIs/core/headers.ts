@@ -1,4 +1,4 @@
-import * as core from "./index.js";
+import * as core from "./index";
 
 export function mergeHeaders(
     ...headersArray: (Record<string, string | core.Supplier<string | undefined> | undefined> | undefined)[]
