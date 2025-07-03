@@ -2,7 +2,7 @@
     "name": "@fern/exhaustive",
     "version": "0.0.1",
     "private": false,
-    "repository": "https://github.com/exhaustive/fern",
+    "repository": "github:exhaustive/fern",
     "scripts": {
         "format": "prettier . --write --ignore-unknown",
         "compile": "tsc",
@@ -51,5 +51,9 @@
         "os": false,
         "path": false
     },
-    "packageManager": "yarn@1.22.22"
+    "packageManager": "yarn@1.22.22",
+    "engines": {
+        "node": ">=18.0.0"
+    },
+    "sideEffects": false
 }

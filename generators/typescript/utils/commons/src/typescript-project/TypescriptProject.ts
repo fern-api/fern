@@ -31,59 +31,61 @@ export declare namespace TypescriptProject {
 }
 
 export abstract class TypescriptProject {
-    protected static DEFAULT_SRC_DIRECTORY = "src" as const;
-    protected static TEST_DIRECTORY = "tests" as const;
-    protected static DIST_DIRECTORY = "dist" as const;
-    protected static SCRIPTS_DIRECTORY_NAME = "scripts" as const;
+    protected static readonly DEFAULT_SRC_DIRECTORY = "src";
+    protected static readonly TEST_DIRECTORY = "tests";
+    protected static readonly DIST_DIRECTORY = "dist";
+    protected static readonly SCRIPTS_DIRECTORY_NAME = "scripts";
 
-    protected static CJS_DIRECTORY = "cjs" as const;
-    protected static ESM_DIRECTORY = "esm" as const;
-    protected static TYPES_DIRECTORY = "types" as const;
+    protected static readonly CJS_DIRECTORY = "cjs";
+    protected static readonly ESM_DIRECTORY = "esm";
+    protected static readonly TYPES_DIRECTORY = "types";
 
-    protected static BUILD_SCRIPT_FILENAME = "build.js" as const;
-    protected static NODE_DIST_DIRECTORY = "node" as const;
-    protected static BROWSER_DIST_DIRECTORY = "browser" as const;
-    protected static BROWSER_ESM_DIST_DIRECTORY =
+    protected static readonly BUILD_SCRIPT_FILENAME = "build.js";
+    protected static readonly NODE_DIST_DIRECTORY = "node";
+    protected static readonly BROWSER_DIST_DIRECTORY = "browser";
+    protected static readonly BROWSER_ESM_DIST_DIRECTORY =
         `${TypescriptProject.BROWSER_DIST_DIRECTORY}/${TypescriptProject.ESM_DIRECTORY}` as const;
-    protected static BROWSER_CJS_DIST_DIRECTORY =
+    protected static readonly BROWSER_CJS_DIST_DIRECTORY =
         `${TypescriptProject.BROWSER_DIST_DIRECTORY}/${TypescriptProject.CJS_DIRECTORY}` as const;
-    protected static API_BUNDLE_FILENAME = "index.js" as const;
+    protected static readonly API_BUNDLE_FILENAME = "index.js";
 
-    protected static PRETTIER_RC_FILENAME = ".prettierrc.yml" as const;
-    protected static TS_CONFIG_BASE_FILENAME = "tsconfig.base.json" as const;
-    protected static TS_CONFIG_FILENAME = "tsconfig.json" as const;
-    protected static TS_CONFIG_ESM_FILENAME = "tsconfig.esm.json" as const;
-    protected static TS_CONFIG_CJS_FILENAME = "tsconfig.cjs.json" as const;
-    protected static PACKAGE_JSON_FILENAME = "package.json" as const;
-    protected static JSR_JSON_FILENAME = "jsr.json" as const;
-    protected static GIT_IGNORE_FILENAME = ".gitignore" as const;
-    protected static NPM_IGNORE_FILENAME = ".npmignore" as const;
-    protected static FERN_IGNORE_FILENAME = ".fernignore" as const;
-    protected static REFERENCE_FILENAME = "reference.md" as const;
+    protected static readonly PRETTIER_RC_FILENAME = ".prettierrc.yml";
+    protected static readonly TS_CONFIG_BASE_FILENAME = "tsconfig.base.json";
+    protected static readonly TS_CONFIG_FILENAME = "tsconfig.json";
+    protected static readonly TS_CONFIG_ESM_FILENAME = "tsconfig.esm.json";
+    protected static readonly TS_CONFIG_CJS_FILENAME = "tsconfig.cjs.json";
+    protected static readonly PACKAGE_JSON_FILENAME = "package.json";
+    protected static readonly JSR_JSON_FILENAME = "jsr.json";
+    protected static readonly GIT_IGNORE_FILENAME = ".gitignore";
+    protected static readonly NPM_IGNORE_FILENAME = ".npmignore";
+    protected static readonly FERN_IGNORE_FILENAME = ".fernignore";
+    protected static readonly REFERENCE_FILENAME = "reference.md";
+    protected static readonly README_FILENAME = "README.md";
+    protected static readonly LICENSE_FILENAME = "LICENSE";
 
-    protected static FORMAT_SCRIPT_NAME = "format" as const;
-    protected static COMPILE_SCRIPT_NAME = "compile" as const;
-    protected static BUNDLE_SCRIPT_NAME = "bundle" as const;
-    protected static BUILD_SCRIPT_NAME = "build" as const;
-    protected static BUILD_CJS_SCRIPT_NAME = "build:cjs" as const;
-    protected static BUILD_ESM_SCRIPT_NAME = "build:esm" as const;
+    protected static readonly FORMAT_SCRIPT_NAME = "format";
+    protected static readonly COMPILE_SCRIPT_NAME = "compile";
+    protected static readonly BUNDLE_SCRIPT_NAME = "bundle";
+    protected static readonly BUILD_SCRIPT_NAME = "build";
+    protected static readonly BUILD_CJS_SCRIPT_NAME = "build:cjs";
+    protected static readonly BUILD_ESM_SCRIPT_NAME = "build:esm";
 
-    private exportSerde: boolean;
-    protected npmPackage: NpmPackage | undefined;
-    protected dependencies: PackageDependencies;
-    protected extraConfigs: Record<string, unknown> | undefined;
-    protected outputJsr: boolean;
-    protected volume = new Volume();
-    public tsMorphProject: Project;
-    public extraFiles: Record<string, string>;
-    protected extraDependencies: Record<string, string>;
-    protected extraDevDependencies: Record<string, string>;
-    protected extraPeerDependenciesMeta: Record<string, unknown>;
-    protected extraPeerDependencies: Record<string, string>;
-    protected extraScripts: Record<string, string>;
-    protected packagePath: string;
+    private readonly exportSerde: boolean;
+    protected readonly npmPackage: NpmPackage | undefined;
+    protected readonly dependencies: PackageDependencies;
+    protected readonly extraConfigs: Record<string, unknown> | undefined;
+    protected readonly outputJsr: boolean;
+    protected readonly volume = new Volume();
+    public readonly tsMorphProject: Project;
+    public readonly extraFiles: Record<string, string>;
+    protected readonly extraDependencies: Record<string, string>;
+    protected readonly extraDevDependencies: Record<string, string>;
+    protected readonly extraPeerDependenciesMeta: Record<string, unknown>;
+    protected readonly extraPeerDependencies: Record<string, string>;
+    protected readonly extraScripts: Record<string, string>;
+    protected readonly packagePath: string;
 
-    private runScripts: boolean;
+    private readonly runScripts: boolean;
 
     constructor({
         npmPackage,
