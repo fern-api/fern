@@ -1,0 +1,5 @@
+name: idempotency-headers
+auth: bearer
+idempotency-headers:
+  Idempotency-Key: string
+  Idempotency-Expiration: integer

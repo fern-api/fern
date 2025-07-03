@@ -1,0 +1,43 @@
+types:
+  TokenResponse:
+    docs: |
+      An OAuth token response.
+    properties:
+      access_token: string
+      expires_in: integer
+      refresh_token: optional<string>
+
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    getTokenWithClientCredentials:
+      path: /token
+      method: POST
+      request:
+        name: GetTokenRequest
+        body:
+          properties:
+            cid: string
+            csr: string
+            scp: string
+            entity_id: string
+            audience: literal<"https://api.example.com">
+            grant_type: literal<"client_credentials">
+            scope: optional<string>
+      response: TokenResponse
+
+    refreshToken:
+      path: /token
+      method: POST
+      request: 
+        name: RefreshTokenRequest
+        body:
+          properties:
+            client_id: string
+            client_secret: string
+            refresh_token: string
+            audience: literal<"https://api.example.com">
+            grant_type: literal<"refresh_token">
+            scope: optional<string>
+      response: TokenResponse
