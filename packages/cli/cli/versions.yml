@@ -1,6 +1,22 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |  
+        Remove default docs for well known types in gRPC. Add support for field-level docs.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-07-02"
+  version: 0.64.37
+
+- changelogEntry:
+    - summary: |  
+        Change grpc converters to use the fully qualified name with package prefix for all conversions. Build support for well-known types.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-07-02"
+  version: 0.64.36
+
+- changelogEntry:
+    - summary: |  
         Upgrade fdr and fdr-cjs dependencies to support grpc endpoints in convertIrToFdrApi.
       type: fix
   irVersion: 58

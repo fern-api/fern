@@ -1,11 +1,5 @@
 import { AbstractGeneratorCli } from "@fern-typescript/abstract-generator-cli";
-import {
-    JavaScriptRuntime,
-    NpmPackage,
-    PersistedTypescriptProject,
-    fixImportsForEsm,
-    writeTemplateFiles
-} from "@fern-typescript/commons";
+import { NpmPackage, PersistedTypescriptProject, fixImportsForEsm, writeTemplateFiles } from "@fern-typescript/commons";
 import { GeneratorContext } from "@fern-typescript/contexts";
 import { SdkGenerator } from "@fern-typescript/sdk-generator";
 
@@ -20,18 +14,15 @@ import { SdkCustomConfigSchema } from "./custom-config/schema/SdkCustomConfigSch
 
 export declare namespace SdkGeneratorCli {
     export interface Init {
-        targetRuntime: JavaScriptRuntime;
         configOverrides?: Partial<SdkCustomConfig>;
     }
 }
 
 export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
-    private targetRuntime: JavaScriptRuntime;
     private configOverrides: Partial<SdkCustomConfig>;
 
-    constructor({ targetRuntime, configOverrides }: SdkGeneratorCli.Init) {
+    constructor({ configOverrides }: SdkGeneratorCli.Init = {}) {
         super();
-        this.targetRuntime = targetRuntime;
         this.configOverrides = configOverrides ?? {};
     }
 
@@ -40,7 +31,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
         const noSerdeLayer = parsed?.noSerdeLayer ?? true;
         return {
             useBrandedStringAliases: parsed?.useBrandedStringAliases ?? false,
-            outputSourceFiles: parsed?.outputSourceFiles ?? false,
+            outputSourceFiles: parsed?.outputSourceFiles ?? true,
             isPackagePrivate: parsed?.private ?? false,
             neverThrowErrors: parsed?.neverThrowErrors ?? false,
             namespaceExport: parsed?.namespaceExport,
@@ -144,7 +135,6 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 requireDefaultEnvironment: customConfig.requireDefaultEnvironment,
                 defaultTimeoutInSeconds: customConfig.defaultTimeoutInSeconds,
                 skipResponseValidation: customConfig.skipResponseValidation,
-                targetRuntime: this.targetRuntime,
                 extraDevDependencies: customConfig.extraDevDependencies,
                 extraDependencies: customConfig.extraDependencies,
                 extraPeerDependencies: customConfig.extraPeerDependencies ?? {},

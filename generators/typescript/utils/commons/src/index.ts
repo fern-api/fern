@@ -22,7 +22,6 @@ export { type ExpressionReferenceNode } from "./ExpressionReferenceNode";
 export * from "./external-dependencies";
 export * from "./imports-manager";
 export { getFullPathForEndpoint } from "./getFullPathForEndpoint";
-export { JavaScriptRuntime, visitJavaScriptRuntime, type JavaScriptRuntimeVisitor } from "./JavaScriptRuntime";
 export { type PackageId } from "./PackageId";
 export * from "./referencing";
 export { type TypeReferenceNode } from "./TypeReferenceNode";

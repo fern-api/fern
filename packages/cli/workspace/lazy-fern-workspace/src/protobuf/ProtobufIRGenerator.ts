@@ -77,7 +77,7 @@ export class ProtobufIRGenerator {
             stdio: "ignore"
         });
 
-        await runExeca(this.context.logger, "npm", ["install", "-g", "fern-api@0.64.32-rc0"], {
+        await runExeca(this.context.logger, "npm", ["install", "-g", "fern-api"], {
             cwd: protobufGeneratorConfigPath,
             stdio: "ignore"
         });

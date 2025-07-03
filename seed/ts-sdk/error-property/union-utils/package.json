@@ -2,7 +2,7 @@
     "name": "@fern/error-property",
     "version": "0.0.1",
     "private": true,
-    "repository": "https://github.com/error-property/fern",
+    "repository": "github:error-property/fern",
     "type": "commonjs",
     "main": "./dist/cjs/index.js",
     "module": "./dist/esm/index.mjs",
@@ -24,17 +24,19 @@
     },
     "files": [
         "dist",
-        "reference.md"
+        "reference.md",
+        "README.md",
+        "LICENSE"
     ],
     "scripts": {
         "format": "prettier . --write --ignore-unknown",
         "build": "yarn build:cjs && yarn build:esm",
         "build:cjs": "tsc --project ./tsconfig.cjs.json",
         "build:esm": "tsc --project ./tsconfig.esm.json && node scripts/rename-to-esm-files.js dist/esm",
-        "test": "jest tests/unit",
-        "test:browser": "jest --config jest.browser.config.mjs",
-        "test:wire": "jest tests/wire",
-        "wire:test": "yarn test:wire"
+        "test": "jest --config jest.config.mjs",
+        "test:unit": "jest --selectProjects unit",
+        "test:browser": "jest --selectProjects browser",
+        "test:wire": "jest --selectProjects wire"
     },
     "devDependencies": {
         "webpack": "^5.97.1",
@@ -55,5 +57,9 @@
         "path": false,
         "stream": false
     },
-    "packageManager": "yarn@1.22.22"
+    "packageManager": "yarn@1.22.22",
+    "engines": {
+        "node": ">=18.0.0"
+    },
+    "sideEffects": false
 }

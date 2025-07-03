@@ -76,7 +76,7 @@ export class FieldConverter extends AbstractConverter<ProtofileConverterContext,
 
         if (this.field.type === 11 && this.field.typeName != null) {
             const typeReference = this.context.convertGrpcReferenceToTypeReference({
-                typeName: this.context.maybeRemoveGrpcPackagePrefix(this.field.typeName),
+                typeName: this.field.typeName,
                 displayNameOverride: this.field.name
             });
             if (typeReference.ok) {

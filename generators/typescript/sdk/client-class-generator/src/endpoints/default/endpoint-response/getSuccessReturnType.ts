@@ -1,4 +1,3 @@
-import { JavaScriptRuntime, visitJavaScriptRuntime } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
@@ -32,7 +31,6 @@ export function getSuccessReturnType(
     switch (response.type) {
         case "fileDownload": {
             return getFileType({
-                targetRuntime: context.targetRuntime,
                 context,
                 includeContentHeadersOnResponse: opts.includeContentHeadersOnResponse,
                 streamType: opts.streamType,
@@ -70,35 +68,30 @@ export const CONTENT_TYPE_RESPONSE_KEY = "contentType";
 export const CONTENT_LENGTH_RESPONSE_KEY = "contentLengthInBytes";
 
 function getFileType({
-    targetRuntime,
     context,
     includeContentHeadersOnResponse,
     streamType,
     fileResponseType
 }: {
-    targetRuntime: JavaScriptRuntime;
     context: SdkContext;
     includeContentHeadersOnResponse: boolean;
     streamType: "wrapper" | "web";
     fileResponseType: "stream" | "binary-response";
 }): ts.TypeNode {
-    const fileType = visitJavaScriptRuntime(targetRuntime, {
-        browser: () => ts.factory.createTypeReferenceNode("Blob"),
-        node: () => {
-            switch (fileResponseType) {
-                case "stream":
-                    return getReadableTypeNode({
-                        typeArgument: ts.factory.createTypeReferenceNode("Uint8Array"),
-                        context,
-                        streamType
-                    });
-                case "binary-response":
-                    return context.coreUtilities.fetcher.BinaryResponse._getReferenceToType();
-                default:
-                    assertNever(fileResponseType);
-            }
+    const fileType = (() => {
+        switch (fileResponseType) {
+            case "stream":
+                return getReadableTypeNode({
+                    typeArgument: ts.factory.createTypeReferenceNode("Uint8Array"),
+                    context,
+                    streamType
+                });
+            case "binary-response":
+                return context.coreUtilities.fetcher.BinaryResponse._getReferenceToType();
+            default:
+                assertNever(fileResponseType);
         }
-    });
+    })();
     if (!includeContentHeadersOnResponse) {
         return fileType;
     }
