@@ -1,0 +1,25 @@
+imports:
+  objects: ./types/object.yml
+  errors: ./general-errors.yml
+
+# test req bodies, path params, query params, multiple query params, etc.
+# test union and enum as well
+
+service:
+  auth: false
+  base-path: /req-bodies
+  endpoints:
+    postWithObjectBodyandResponse:
+      docs: POST with custom object in request body, response is an object
+      path: /object
+      method: POST
+      request:
+        name: PostWithObjectBody
+        body:
+          properties:
+            string: string
+            integer: integer
+            NestedObject: objects.ObjectWithOptionalField
+      response: objects.ObjectWithOptionalField
+      errors:
+        - errors.BadRequestBody

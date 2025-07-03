@@ -1,0 +1,314 @@
+imports:
+  commons: commons/types.yml
+  root: __package__.yml
+
+errors:
+  NotFoundError:
+    status-code: 404
+    type: string
+
+types:
+  MovieId:
+    type: string
+    examples:
+      - name: One
+        value: movie-c06a4ad7
+
+  Movie:
+    properties:
+      id: MovieId
+      prequel: optional<MovieId>
+      title: string
+      from: string
+      rating:
+        type: double
+        docs: The rating scale is one to five stars
+      type: literal<"movie">
+      tag: commons.Tag
+      book: optional<string>
+      metadata: map<string, unknown>
+      revenue: long
+    examples:
+      - name: One
+        value:
+          id: $MovieId.One
+          prequel: "movie-cv9b914f"
+          title: The Boy and the Heron
+          from: Hayao Miyazaki
+          rating: 8.0
+          type: movie
+          tag: $commons.Tag.One
+          metadata:
+            actors:
+              - Christian Bale
+              - Florence Pugh
+              - Willem Dafoe
+            releaseDate: "2023-12-08"
+            ratings:
+              rottenTomatoes: 97
+              imdb: 7.6
+          revenue: 1000000
+  
+  CastMember: 
+    discriminated: false
+    union: 
+      - Actor
+      - Actress
+      - StuntDouble
+    examples: 
+      - name: Example0
+        value: 
+          id: actor_123
+          name: "Brad Pitt"
+      - name: Example1
+        value: $Actress.Example0
+
+  Actor: 
+    properties: 
+      name: string
+      id: string
+  
+  Actress: 
+    properties: 
+      name: string
+      id: string
+    examples: 
+      - name: Example0
+        value: 
+          name: Jennifer Lawrence
+          id: actor_456
+  
+  StuntDouble: 
+    properties: 
+      name: string
+      actorOrActressId: string
+
+  ExtendedMovie:
+    extends: Movie
+    properties:
+      cast: list<string>
+    examples:
+      - value:
+          id: movie-sda231x
+          title: Pulp Fiction
+          from: Quentin Tarantino
+          rating: 8.5
+          type: movie
+          tag: tag-12efs9dv
+          cast:
+            - John Travolta
+            - Samuel L. Jackson
+            - Uma Thurman
+            - Bruce Willis
+          metadata:
+            academyAward: true
+            releaseDate: "2023-12-08"
+            ratings:
+              rottenTomatoes: 97
+              imdb: 7.6
+          revenue: 1000000
+
+  Moment:
+    properties:
+      id: uuid
+      date: date
+      datetime: datetime
+    examples:
+      - value:
+          id: 656f12d6-f592-444c-a1d3-a3cfd46d5b39
+          date: 1994-01-01
+          datetime: 1994-01-01T01:01:01Z
+
+  File:
+    properties:
+      name: string
+      contents: string
+    examples:
+      - name: One
+        value:
+          name: file.txt
+          contents: ...
+      - name: Two
+        value:
+          name: another_file.txt
+          contents: ...
+
+  Directory:
+    properties:
+      name: string
+      files: optional<list<File>>
+      directories: optional<list<Directory>>
+    examples:
+      - name: One
+        value:
+          name: root
+          files:
+            - $File.One
+          directories:
+            - name: tmp
+              files:
+                - $File.Two
+
+  Node:
+    properties:
+      name: string
+      nodes: optional<list<Node>>
+      trees: optional<list<Tree>>
+    examples:
+      - name: Tree
+        value:
+          name: root
+          nodes:
+            - $Node.Left
+            - $Node.Right
+          trees:
+            - $Tree.Root
+      - name: Left
+        value:
+          name: left
+      - name: Right
+        value:
+          name: right
+
+  Tree:
+    properties:
+      nodes: optional<list<Node>>
+    examples:
+      - name: Root
+        value:
+          nodes:
+            - $Node.Left
+            - $Node.Right
+
+  Metadata:
+    base-properties:
+      extra: map<string, string>
+      tags: set<string>
+    union:
+      html: string
+      markdown: string
+    examples:
+      - name: One
+        value:
+          type: html
+          extra:
+            version: 0.0.1
+            tenancy: test
+          tags:
+            - development
+            - public
+          value: <head>...</head>
+
+  Exception:
+    union:
+      generic: ExceptionInfo
+      timeout: {}
+    examples:
+      - name: One
+        value:
+          type: generic
+          exceptionType: Unavailable
+          exceptionMessage: This component is unavailable!
+          exceptionStacktrace: <logs>
+
+  ExceptionInfo:
+    properties:
+      exceptionType: string
+      exceptionMessage: string
+      exceptionStacktrace: string
+    examples:
+      - name: One
+        value:
+          exceptionType: Unavailable
+          exceptionMessage: This component is unavailable!
+          exceptionStacktrace: <logs>
+
+  MigrationStatus:
+    enum:
+      - value: RUNNING
+        docs: The migration is running.
+      - value: FAILED
+        docs: The migration failed.
+      - FINISHED
+    examples:
+      - name: Running
+        value: RUNNING
+      - name: Failed
+        value: FAILED
+
+  Migration:
+    properties:
+      name: string
+      status: MigrationStatus
+    examples:
+      - value:
+          name: 001_init
+          status: $MigrationStatus.Running
+
+  Request:
+    properties:
+      request: unknown
+    examples:
+      - name: Empty
+        value:
+          request: {}
+
+  Response:
+    properties:
+      response: unknown
+      identifiers: list<root.Identifier>
+    examples:
+      - name: String
+        value:
+          response: "Initializing..."
+          identifiers:
+            - type: primitive
+              value: 'example'
+              label: Primitive
+            - type: unknown
+              value: '{}'
+              label: Unknown
+
+  ResponseType:
+    properties:
+      type: root.Type
+
+  Test:
+    union:
+      and: boolean
+      or: boolean
+    examples:
+      - name: And
+        value:
+          type: and
+          value: true
+      - name: Or
+        value:
+          type: or
+          value: true
+
+  Entity:
+    properties:
+      type: root.Type
+      name: string
+    examples:
+      - name: One
+        value:
+          type: unknown
+          name: unknown
+
+  BigEntity:
+    properties:
+      castMember: optional<CastMember>
+      extendedMovie: optional<ExtendedMovie>
+      entity: optional<Entity>
+      metadata: optional<Metadata>
+      commonMetadata: optional<commons.Metadata>
+      eventInfo: optional<commons.EventInfo>
+      data: optional<commons.Data>
+      migration: optional<Migration>
+      exception: optional<Exception>
+      test: optional<Test>
+      node: optional<Node>
+      directory: optional<Directory>
+      moment: optional<Moment>

@@ -23,9 +23,6 @@ language: swift
 generatorType: SDK
 defaultOutputMode: github
 defaultCustomConfig: {}
-scripts:
-  - docker: fernapi/swift-seed
-    commands: []
 
 fixtures:
   pagination:
