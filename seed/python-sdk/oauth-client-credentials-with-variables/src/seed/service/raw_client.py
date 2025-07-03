@@ -26,7 +26,7 @@ class RawServiceClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"{jsonable_encoder(self._client_wrapper._root_variable)}",
+            f"service/{jsonable_encoder(self._client_wrapper._root_variable)}",
             method="POST",
             request_options=request_options,
         )
@@ -55,7 +55,7 @@ class AsyncRawServiceClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"{jsonable_encoder(self._client_wrapper._root_variable)}",
+            f"service/{jsonable_encoder(self._client_wrapper._root_variable)}",
             method="POST",
             request_options=request_options,
         )

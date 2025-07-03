@@ -35,11 +35,13 @@ class ServiceClient:
 
         Examples
         --------
-        from seed import SeedVariables
+        from seed import SeedOauthClientCredentialsWithVariables
 
-        client = SeedVariables(
+        client = SeedOauthClientCredentialsWithVariables(
             root_variable="YOUR_ROOT_VARIABLE",
             base_url="https://yourhost.com/path/to/api",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
         client.service.post()
         """
@@ -77,11 +79,13 @@ class AsyncServiceClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedVariables
+        from seed import AsyncSeedOauthClientCredentialsWithVariables
 
-        client = AsyncSeedVariables(
+        client = AsyncSeedOauthClientCredentialsWithVariables(
             root_variable="YOUR_ROOT_VARIABLE",
             base_url="https://yourhost.com/path/to/api",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
 
 
