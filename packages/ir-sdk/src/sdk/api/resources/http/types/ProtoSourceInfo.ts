@@ -5,5 +5,5 @@
 import * as FernIr from "../../../index";
 
 export interface ProtoSourceInfo {
-    methodType: FernIr.ProtobufMethodType;
+    methodType: FernIr.ProtobufMethodType | undefined;
 }

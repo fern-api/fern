@@ -77,7 +77,7 @@ types:
 
   ProtoSourceInfo:
     properties:
-      methodType: proto.ProtobufMethodType
+      methodType: optional<proto.ProtobufMethodType>
 
   EndpointName: commons.Name
 

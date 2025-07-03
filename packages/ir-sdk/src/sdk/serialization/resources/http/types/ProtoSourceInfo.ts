@@ -9,11 +9,11 @@ import { ProtobufMethodType } from "../../proto/types/ProtobufMethodType";
 
 export const ProtoSourceInfo: core.serialization.ObjectSchema<serializers.ProtoSourceInfo.Raw, FernIr.ProtoSourceInfo> =
     core.serialization.objectWithoutOptionalProperties({
-        methodType: ProtobufMethodType,
+        methodType: ProtobufMethodType.optional(),
     });
 
 export declare namespace ProtoSourceInfo {
     export interface Raw {
-        methodType: ProtobufMethodType.Raw;
+        methodType?: ProtobufMethodType.Raw | null;
     }
 }
