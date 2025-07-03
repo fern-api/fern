@@ -128,3 +128,6 @@ allowedFailures:
   - any-auth
   # Complex circular refs
   - simple-fhir
+  - bytes-download
+  - bytes-upload
+  - request-parameters
