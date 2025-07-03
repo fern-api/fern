@@ -26,7 +26,6 @@ client = SeedApiWideBasePath(
     base_url="https://yourhost.com/path/to/api",
 )
 client.service.post(
-    path_param="pathParam",
     service_param="serviceParam",
     resource_param="resourceParam",
     endpoint_param=1,
@@ -49,7 +48,6 @@ client = AsyncSeedApiWideBasePath(
 
 async def main() -> None:
     await client.service.post(
-        path_param="pathParam",
         service_param="serviceParam",
         resource_param="resourceParam",
         endpoint_param=1,

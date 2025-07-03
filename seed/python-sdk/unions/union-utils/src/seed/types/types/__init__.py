@@ -19,23 +19,4 @@ from .union_with_single_element import UnionWithSingleElement
 from .union_with_sub_types import UnionWithSubTypes
 from .union_with_time import UnionWithTime
 from .union_without_key import UnionWithoutKey
-
-__all__ = [
-    "Bar",
-    "Foo",
-    "FooExtended",
-    "Union",
-    "UnionWithBaseProperties",
-    "UnionWithDiscriminant",
-    "UnionWithDuplicatePrimitive",
-    "UnionWithDuplicateTypes",
-    "UnionWithLiteral",
-    "UnionWithMultipleNoProperties",
-    "UnionWithNoProperties",
-    "UnionWithOptionalTime",
-    "UnionWithPrimitive",
-    "UnionWithSingleElement",
-    "UnionWithSubTypes",
-    "UnionWithTime",
-    "UnionWithoutKey",
-]
+__all__ = ["Bar", "Foo", "FooExtended", "Union", "UnionWithBaseProperties", "UnionWithDiscriminant", "UnionWithDuplicatePrimitive", "UnionWithDuplicateTypes", "UnionWithLiteral", "UnionWithMultipleNoProperties", "UnionWithNoProperties", "UnionWithOptionalTime", "UnionWithPrimitive", "UnionWithSingleElement", "UnionWithSubTypes", "UnionWithTime", "UnionWithoutKey"]
