@@ -25,14 +25,16 @@ Instantiate and use the client with the following:
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\User\Requests\CreateUsernameRequest;
+use Seed\Auth\Requests\GetTokenRequest;
 
 $client = new SeedClient();
-$client->user->createUsername(
-    new CreateUsernameRequest([
-        'username' => 'username',
-        'password' => 'password',
-        'name' => 'test',
+$client->auth->getTokenWithClientCredentials(
+    new GetTokenRequest([
+        'clientId' => 'client_id',
+        'clientSecret' => 'client_secret',
+        'audience' => 'https://api.example.com',
+        'grantType' => 'client_credentials',
+        'scope' => 'scope',
     ]),
 );
 
@@ -47,7 +49,7 @@ use Seed\Exceptions\SeedApiException;
 use Seed\Exceptions\SeedException;
 
 try {
-    $response = $client->user->createUsername(...);
+    $response = $client->auth->getTokenWithClientCredentials(...);
 } catch (SeedApiException $e) {
     echo 'API Exception occurred: ' . $e->getMessage() . "\n";
     echo 'Status Code: ' . $e->getCode() . "\n";
@@ -103,7 +105,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```php
-$response = $client->user->createUsername(
+$response = $client->auth->getTokenWithClientCredentials(
     ...,
     options: [
         'maxRetries' => 0 // Override maxRetries at the request level
@@ -116,7 +118,7 @@ $response = $client->user->createUsername(
 The SDK defaults to a 30 second timeout. Use the `timeout` option to configure this behavior.
 
 ```php
-$response = $client->user->createUsername(
+$response = $client->auth->getTokenWithClientCredentials(
     ...,
     options: [
         'timeout' => 3.0 // Override timeout to 3 seconds
