@@ -145,7 +145,7 @@ $customClient = new \\GuzzleHttp\\Client(['handler' => $handlerStack]);
 ${this.context.getClientVariableName()} = new ${this.context.getRootClientClassName()}(options: [
     '${this.context.getGuzzleClientOptionName()}' => $customClient
 ]);
-`)
+`);
         return [snippet];
     }
 
