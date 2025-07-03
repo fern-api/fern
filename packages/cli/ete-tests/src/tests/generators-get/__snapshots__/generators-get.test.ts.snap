@@ -2,11 +2,11 @@
 
 exports[`fern generator get > fern generator get --language 1`] = `"typescript"`;
 
-exports[`fern generator get > fern generator get --version 1`] = `"0.39.3"`;
+exports[`fern generator get > fern generator get --version 1`] = `"2.3.2"`;
 
 exports[`fern generator get > fern generator get to file 1`] = `
 "{
-  "version": "0.39.3",
+  "version": "2.3.2",
   "language": "typescript"
 }"
 `;

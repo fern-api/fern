@@ -98,11 +98,11 @@ groups:
   local:
     generators:
       - name: fernapi/fern-typescript-sdk
-        version: 0.39.3
+        version: 2.3.2
   typescript:
     generators:
       - name: fernapi/fern-typescript
-        version: 0.39.3
+        version: 0.0.247
 ",
         "name": "generators.yml",
         "type": "file",
