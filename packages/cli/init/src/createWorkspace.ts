@@ -73,7 +73,7 @@ async function getDefaultGeneratorsConfiguration({
     context: TaskContext;
     apiConfiguration?: generatorsYml.ApiConfigurationSchema;
 }): Promise<generatorsYml.GeneratorsConfigurationSchema> {
-    const defaultGeneratorName = "fernapi/fern-typescript-node-sdk";
+    const defaultGeneratorName = "fernapi/fern-typescript-sdk";
     const fallbackInvocation = GENERATOR_INVOCATIONS[defaultGeneratorName];
 
     let version = fallbackInvocation.version;

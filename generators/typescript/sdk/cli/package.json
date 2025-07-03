@@ -25,7 +25,7 @@
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../../shared/.prettierignore \"**\"",
     "depcheck": "depcheck",
     "dist:cli": "rm -rf ./lib && rm -rf ./dist && pnpm compile && tsup ./src/nodeCli.ts --format cjs",
-    "dockerTagLatest": "pnpm dist:cli && docker build -f ./Dockerfile -t fernapi/fern-typescript-node-sdk:latest ../../../.."
+    "dockerTagLatest": "pnpm dist:cli && docker build -f ./Dockerfile -t fernapi/fern-typescript-node-sdk:latest -t fernapi/fern-typescript-sdk:latest ../../../.."
   },
   "devDependencies": {
     "@fern-api/base-generator": "workspace:*",
