@@ -5,13 +5,14 @@
 import * as serializers from "../../../index";
 import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
+import { ProtoSourceInfo } from "./ProtoSourceInfo";
 
 export const HttpEndpointSource: core.serialization.Schema<
     serializers.HttpEndpointSource.Raw,
     FernIr.HttpEndpointSource
 > = core.serialization
     .union("type", {
-        proto: core.serialization.object({}),
+        proto: ProtoSourceInfo,
         openapi: core.serialization.object({}),
         openrpc: core.serialization.object({}),
     })
@@ -19,7 +20,7 @@ export const HttpEndpointSource: core.serialization.Schema<
         transform: (value) => {
             switch (value.type) {
                 case "proto":
-                    return FernIr.HttpEndpointSource.proto();
+                    return FernIr.HttpEndpointSource.proto(value);
                 case "openapi":
                     return FernIr.HttpEndpointSource.openapi();
                 case "openrpc":
@@ -34,7 +35,7 @@ export const HttpEndpointSource: core.serialization.Schema<
 export declare namespace HttpEndpointSource {
     export type Raw = HttpEndpointSource.Proto | HttpEndpointSource.Openapi | HttpEndpointSource.Openrpc;
 
-    export interface Proto {
+    export interface Proto extends ProtoSourceInfo.Raw {
         type: "proto";
     }
 
