@@ -18,7 +18,7 @@ export const V38_TO_V37_MIGRATION: IrMigration<
         [GeneratorName.TYPESCRIPT_NODE_SDK]: "0.15.0-rc0",
         [GeneratorName.TYPESCRIPT_BROWSER_SDK]: "0.15.0-rc0",
         [GeneratorName.TYPESCRIPT]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.TYPESCRIPT_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.TYPESCRIPT_SDK]: "0.15.0-rc0",
         [GeneratorName.TYPESCRIPT_EXPRESS]: "0.12.0-rc0",
         [GeneratorName.JAVA]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.JAVA_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,

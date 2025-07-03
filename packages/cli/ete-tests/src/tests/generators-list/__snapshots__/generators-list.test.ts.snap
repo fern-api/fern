@@ -3,16 +3,16 @@
 exports[`fern generator list > fern generator list 1`] = `
 "FERN_DEFAULT:
   local:
-    - fernapi/fern-typescript-node-sdk"
+    - fernapi/fern-typescript-sdk"
 `;
 
 exports[`fern generator list > fern generator list with exclude 1`] = `
 "FERN_DEFAULT:
-  local: []"
+  local:
+    - fernapi/fern-typescript-sdk"
 `;
 
 exports[`fern generator list > fern generator list with include 1`] = `
 "FERN_DEFAULT:
-  local:
-    - fernapi/fern-typescript-node-sdk"
+  local: []"
 `;

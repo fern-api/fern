@@ -7,7 +7,7 @@ Fern handles transforming an API definition -- either an OpenAPI or Fern specifi
 This generator is used via the [Fern CLI](https://github.com/fern-api/fern), by defining one of the aforementioned TypeScript artifacts as a generator:
 
 ```yml
-- name: fernapi/fern-typescript-node-sdk
+- name: fernapi/fern-typescript-sdk
   version: 0.7.1
   output:
     location: local-file-system
@@ -23,7 +23,7 @@ default-group: local
 groups:
   local:
     generators:
-      - name: fernapi/fern-typescript-node-sdk
+      - name: fernapi/fern-typescript-sdk
         version: 0.7.1
         config: # <--
           useBrandedStringAliases: true
@@ -421,7 +421,7 @@ default-group: local
 groups:
   local:
     generators:
-      - name: fernapi/fern-typescript-node-sdk
+      - name: fernapi/fern-typescript-sdk
         version: 0.7.1
         output:
           location: local-file-system
