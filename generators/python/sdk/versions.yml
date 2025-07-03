@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
 
+- version: 4.24.0
+  changelogEntry:
+    - summary: |
+        Add support for path parameters backed by variables supplied to the client constructor.
+      type: feat
+  createdAt: '2025-07-03'
+  irVersion: 58
+
 - version: 4.23.2
   changelogEntry:
     - summary: |
