@@ -16,7 +16,8 @@
     "@fern-api/fs-utils",
     "@fern-api/logging-execa",
     "@fern-api/swift-codegen",
-    "@types/lodash-es"
+    "@types/lodash-es",
+    "lodash-es"
   ],
   "ignore-patterns": [
     "lib",
