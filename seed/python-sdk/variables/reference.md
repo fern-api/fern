@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="src/seed/service/client.py">post</a>(...)</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">post</a>()</code></summary>
 <dl>
 <dd>
 
@@ -16,11 +16,10 @@
 from seed import SeedVariables
 
 client = SeedVariables(
+    root_variable="YOUR_ROOT_VARIABLE",
     base_url="https://yourhost.com/path/to/api",
 )
-client.service.post(
-    endpoint_param="endpointParam",
-)
+client.service.post()
 
 ```
 </dd>
@@ -32,14 +31,6 @@ client.service.post(
 
 <dl>
 <dd>
-
-<dl>
-<dd>
-
-**endpoint_param:** `str` 
-    
-</dd>
-</dl>
 
 <dl>
 <dd>
