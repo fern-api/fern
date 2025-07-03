@@ -920,6 +920,11 @@ export class SdkGenerator {
 
     private generateTestFiles() {
         this.context.logger.debug("Generating test files...");
+        if(this.config.generateWireTests) {
+            // make sure folder is always created, even if no wire tests are generated
+            this.jestTestGenerator.createWireTestDirectory();
+
+        }
         this.forEachService((service, packageId) => {
             if (service.endpoints.length === 0) {
                 return;

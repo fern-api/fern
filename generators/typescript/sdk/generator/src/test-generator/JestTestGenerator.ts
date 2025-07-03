@@ -240,6 +240,12 @@ describe("test", () => {
         };
     }
 
+    public createWireTestDirectory(): void {
+        const wireTestPath = `${this.relativeTestPath}/wire`;
+        this.rootDirectory.createDirectory(wireTestPath);
+        this.rootDirectory.createSourceFile(`${wireTestPath}/.gitkeep`, "", { overwrite: true });
+    }
+
     public buildFile(
         serviceName: string,
         service: IR.HttpService,
