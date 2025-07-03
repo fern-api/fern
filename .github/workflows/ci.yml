@@ -16,7 +16,7 @@ env:
   TURBO_TEAM: "buildwithfern"
 
 jobs:
-  lint:
+  depcheck:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -27,6 +27,15 @@ jobs:
 
       - name: Check dependencies
         run: pnpm depcheck
+  
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install
+        uses: ./.github/actions/install
 
       - name: Lint
         run: pnpm lint:style
