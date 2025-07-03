@@ -1,0 +1,118 @@
+types:
+  Organization:
+    properties:
+      name: string
+    examples:
+      - name: One
+        value:
+          name: orgName
+
+  User:
+    properties:
+      userName: string
+      metadata_tags: list<string>
+      EXTRA_PROPERTIES: map<string, string>
+    examples:
+      - name: One
+        value:
+          userName: username
+          metadata_tags:
+            - tag1
+            - tag2
+          EXTRA_PROPERTIES:
+            foo: bar
+            baz: qux
+
+  NestedUser:
+    properties:
+      Name: string
+      NestedUser: User
+    examples:
+      - name: One
+        value:
+          Name: username
+          NestedUser:
+            userName: nestedUsername
+            metadata_tags:
+              - tag1
+              - tag2
+            EXTRA_PROPERTIES:
+              foo: bar
+              baz: qux
+
+  ResourceStatus:
+    enum:
+      - ACTIVE
+      - INACTIVE
+
+  Resource:
+    discriminant:
+      value: resource_type
+      name: resourceType
+    base-properties:
+      status: ResourceStatus
+    union:
+      user: User
+      Organization: Organization
+    examples:
+      - value:
+          status: ACTIVE
+          resource_type: user
+          userName: username
+          metadata_tags:
+            - tag1
+            - tag2
+          EXTRA_PROPERTIES:
+            foo: bar
+            baz: qux
+
+service:
+  base-path: /resource
+  auth: false
+  endpoints:
+    getResource:
+      path: "/{ResourceID}"
+      method: GET
+      path-parameters:
+        ResourceID: string
+      response: Resource
+      examples:
+        - path-parameters:
+            ResourceID: "rsc-xyz"
+          response:
+            body:
+              status: ACTIVE
+              resource_type: user
+              userName: username
+              metadata_tags:
+                - tag1
+                - tag2
+              EXTRA_PROPERTIES:
+                foo: bar
+                baz: qux
+
+    listResources:
+      path: ""
+      method: GET
+      request:
+        name: ListResourcesRequest
+        query-parameters:
+          page_limit: integer
+          beforeDate: date
+      response: list<Resource>
+      examples:
+        - name: One
+          query-parameters:
+            page_limit: 10
+            beforeDate: "2023-01-01"
+          response:
+            body:
+              - resource_type: user
+                status: ACTIVE
+                userName: username
+                metadata_tags:
+                  - tag1
+                  - tag2
+                EXTRA_PROPERTIES:
+                  foo: bar
+                  baz: qux
