@@ -254,7 +254,7 @@ describe("test", () => {
         context: SdkContext
     ): Code | undefined {
         context.importsManager.addImportFromRoot(
-            "mock-server/MockServerPool.js",
+            "mock-server/MockServerPool",
             {
                 namedImports: ["mockServerPool"]
             },

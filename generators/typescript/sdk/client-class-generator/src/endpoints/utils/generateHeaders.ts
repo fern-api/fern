@@ -87,7 +87,7 @@ export function generateHeaders({
         );
     }
 
-    context.importsManager.addImportFromRoot("core/headers.js", {
+    context.importsManager.addImportFromRoot("core/headers", {
         namedImports: ["mergeHeaders"]
     });
 
@@ -104,7 +104,7 @@ export function generateHeaders({
         )
     );
     if (onlyDefinedHeaders.length > 0) {
-        context.importsManager.addImportFromRoot("core/headers.js", {
+        context.importsManager.addImportFromRoot("core/headers", {
             namedImports: ["mergeOnlyDefinedHeaders"]
         });
         mergeHeadersArgs.push(

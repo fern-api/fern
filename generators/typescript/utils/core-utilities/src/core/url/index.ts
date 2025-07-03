@@ -1,2 +1,2 @@
-export { join } from "./join.js";
-export { toQueryString } from "./qs.js";
+export { join } from "./join";
+export { toQueryString } from "./qs";
