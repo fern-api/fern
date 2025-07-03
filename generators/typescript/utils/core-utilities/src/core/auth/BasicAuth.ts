@@ -1,4 +1,4 @@
-import { base64Decode, base64Encode } from "../base64.js";
+import { base64Decode, base64Encode } from "../base64";
 
 export interface BasicAuth {
     username: string;

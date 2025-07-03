@@ -696,6 +696,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                     ${setClientId},
                     ${setClientSecret},
                     ${OAuthTokenProviderGenerator.OAUTH_AUTH_CLIENT_PROPERTY_NAME}: new ${authClientTypeName}({
+                        ...this._options,
                         environment: this._options.environment,
                     }),
                 });
@@ -886,7 +887,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         const rootHeaders = this.isRoot ? this.getRootHeaders(context) : [];
         const shouldGenerateRootHeaders = this.isRoot && rootHeaders.length > 0;
         if (shouldGenerateRootHeaders) {
-            context.importsManager.addImportFromRoot("core/headers.js", {
+            context.importsManager.addImportFromRoot("core/headers", {
                 namedImports: ["mergeHeaders"]
             });
             return code`this._options = {
