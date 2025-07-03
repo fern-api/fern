@@ -1,17 +1,17 @@
 displayName: TypeScript SDK
 irVersion: v58
-image: fernapi/fern-typescript-node-sdk
+image: fernapi/fern-typescript-sdk
 changelogLocation: ../../generators/typescript/sdk/versions.yml
 publish:
   preBuildCommands:
     - pnpm --filter @fern-typescript/sdk-generator-cli dist:cli
   docker:
     file: ./generators/typescript/sdk/cli/Dockerfile
-    image: fernapi/fern-typescript-node-sdk
+    image: fernapi/fern-typescript-sdk
     context: .
 test:
   docker:
-    image: fernapi/fern-typescript-node-sdk:latest
+    image: fernapi/fern-typescript-sdk:latest
     command: 
       - pnpm --filter @fern-typescript/sdk-generator-cli dockerTagLatest
   local:

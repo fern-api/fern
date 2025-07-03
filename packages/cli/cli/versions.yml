@@ -712,7 +712,7 @@
         Add support for overriding auth in generators.yml. You can now specify auth for a specific generator by adding an `api` field with an `auth` property. For example:
 
         ```yaml
-        - name: fernapi/fern-typescript-node-sdk
+        - name: fernapi/fern-typescript-sdk
           version: 0.48.5
           api: 
             auth: bearer

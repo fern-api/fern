@@ -30,7 +30,7 @@
         groups:
           ts-sdk:
             generators:
-              - name: fernapi/fern-typescript-node-sdk
+              - name: fernapi/fern-typescript-sdk
                 config:
                   packageJson:
                     engines:
@@ -96,7 +96,7 @@
         groups:
           ts-sdk:
             generators:
-              - name: fernapi/fern-typescript-node-sdk
+              - name: fernapi/fern-typescript-sdk
                 config:
                   useDefaultRequestParameterValues: true
         ```
@@ -222,7 +222,7 @@
         groups:
           ts-sdk:
             generators:
-              - name: fernapi/fern-typescript-node-sdk
+              - name: fernapi/fern-typescript-sdk
                 config:
                   packagePath: src/package-path
         ```
@@ -1144,7 +1144,7 @@
         ```yml
         groups:
           ts-sdk:
-            name: fernapi/fern-typescript-node-sdk
+            name: fernapi/fern-typescript-sdk
             version: 0.40.0
             config:
               useBigInt: true
@@ -1289,7 +1289,7 @@
         cause errors, toggling this option will allow you to receive the generated code.
 
         ```
-        - name: fernapi/fern-typescript-node-sdk
+        - name: fernapi/fern-typescript-sdk
           version: 0.38.1
           config:
             noScripts: true
@@ -1313,7 +1313,7 @@
         The business plan Typescript SDK will now generate wire tests if the feature flag in the configuration is turned on.
 
         ```
-        - name: fernapi/fern-typescript-node-sdk
+        - name: fernapi/fern-typescript-sdk
           version: 0.37.0-rc0
           config:
             generateWireTests: true
