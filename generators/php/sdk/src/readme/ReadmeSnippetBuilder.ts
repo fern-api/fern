@@ -136,7 +136,7 @@ ${this.context.getClientVariableName()} = new ${this.context.getRootClientClassN
     '${this.context.getGuzzleClientOptionName()}' => $customClient
 ]);
 
-// You can also utilize the same technique to leverage advanced customizations to the client like adding a middleware
+// You can also utilize the same technique to leverage advanced customizations to the client such as adding middleware
 $handlerStack = \\GuzzleHttp\\HandlerStack::create();
 $handlerStack->push(MyCustomMiddleware::create());
 $customClient = new \\GuzzleHttp\\Client(['handler' => $handlerStack]);
