@@ -2,8 +2,8 @@
 - version: 2.2.1
   changelogEntry:
     - summary: |
-        Ensure _tests/wire_ is generated even when there's no wire tests generated.
-        Otherwise Jest throws an error because the wire test project `roots` doesn't exist.
+        Ensure _tests/wire_ is generated even when there are no wire tests generated.
+        Otherwise, Jest throws an error because the wire test project `roots` doesn't exist.
       type: fix
   createdAt: '2025-07-03'
   irVersion: 58
