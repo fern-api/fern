@@ -4,7 +4,7 @@ import { ts } from "ts-morph";
 
 import { assertNever } from "@fern-api/core-utils";
 
-import { HttpEndpoint, PathParameter, PathParameterLocation } from "@fern-fern/ir-sdk/api";
+import { HttpPath, PathParameter, PathParameterLocation, SdkRequest } from "@fern-fern/ir-sdk/api";
 
 import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl";
 
@@ -19,7 +19,7 @@ export function buildUrl({
     omitUndefined,
     getReferenceToPathParameterVariableFromRequest
 }: {
-    endpoint: HttpEndpoint;
+    endpoint: { sdkRequest: SdkRequest | undefined; fullPath: HttpPath; allPathParameters: PathParameter[]; path: HttpPath };
     generatedClientClass: GeneratedSdkClientClassImpl;
     context: SdkContext;
     includeSerdeLayer: boolean;

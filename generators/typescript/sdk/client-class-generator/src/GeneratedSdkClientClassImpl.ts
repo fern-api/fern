@@ -384,7 +384,10 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 serviceClassName: this.serviceClassName,
                 requireDefaultEnvironment: this.requireDefaultEnvironment,
                 intermediateRepresentation: this.intermediateRepresentation,
-                generatedSdkClientClass: this
+                generatedSdkClientClass: this,
+                includeSerdeLayer: this.includeSerdeLayer,
+                retainOriginalCasing: this.retainOriginalCasing,
+                omitUndefined: this.omitUndefined
             });
         } else {
             this.generatedWebsocketImplementation = undefined;
