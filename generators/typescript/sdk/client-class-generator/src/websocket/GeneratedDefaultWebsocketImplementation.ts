@@ -444,7 +444,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                 ts.factory.createPropertyAssignment(
                     "debug",
                     ts.factory.createBinaryExpression(
-                        this.getReferenceToArg(GeneratedDefaultWebsocketImplementation.DEBUG_PROPERTY_NAME),
+                        ts.factory.createIdentifier(GeneratedDefaultWebsocketImplementation.DEBUG_PROPERTY_NAME),
                         ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
                         ts.factory.createFalse()
                     )
@@ -452,7 +452,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                 ts.factory.createPropertyAssignment(
                     "maxRetries",
                     ts.factory.createBinaryExpression(
-                        this.getReferenceToArg(
+                        ts.factory.createIdentifier(
                             GeneratedDefaultWebsocketImplementation.RECONNECT_ATTEMPTS_PROPERTY_NAME
                         ),
                         ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),

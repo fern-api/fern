@@ -69,7 +69,8 @@ export class WebsocketImpl extends CoreUtility implements Websocket {
                             ts.factory.createPropertyAssignment("url", args.url),
                             ts.factory.createPropertyAssignment("protocols", args.protocols),
                             ts.factory.createPropertyAssignment("queryParameters", args.queryParameters),
-                            ts.factory.createPropertyAssignment("headers", args.headers)
+                            ts.factory.createPropertyAssignment("headers", args.headers),
+                            ts.factory.createPropertyAssignment("options", args.options)
                         ])
                     ])
         )

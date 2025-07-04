@@ -57,6 +57,7 @@ export class Realtime {
             protocols: [],
             queryParameters: _queryParams,
             headers: _headers,
+            options: { debug: debug ?? false, maxRetries: reconnectAttempts ?? 30 },
         });
         return new RealtimeSocket({ socket });
     }
