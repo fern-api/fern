@@ -85,9 +85,6 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
                 sdkRequest: this.endpoint.sdkRequest
             });
 
-            this.queryParams = new GeneratedQueryParams({
-                requestParameter: this.requestParameter
-            });
         }
     }
 
@@ -198,8 +195,9 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
             statements.push(...this.requestParameter.getInitialStatements());
         }
 
-        if (this.queryParams != null) {
-            statements.push(...this.queryParams.getBuildStatements(context));
+        const queryParams = this.getQueryParams(context);
+        if (queryParams != null) {
+            statements.push(...queryParams.getBuildStatements(context));
         }
 
         return statements;
@@ -208,9 +206,10 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
     public getFetcherRequestArgs(
         context: SdkContext
     ): Pick<Fetcher.Args, "headers" | "queryParameters" | "body" | "contentType" | "requestType" | "duplex"> {
+        const queryParams = this.getQueryParams(context);
         return {
             headers: this.getHeaders(context),
-            queryParameters: this.queryParams != null ? this.queryParams.getReferenceTo(context) : undefined,
+            queryParameters: queryParams != null ? queryParams.getReferenceTo() : undefined,
             contentType: this.requestBody.contentType,
             requestType: "bytes",
             body: ts.factory.createIdentifier(GeneratedBytesEndpointRequest.BYTES_VARIABLE_NAME),
@@ -246,5 +245,15 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
             throw new Error("Cannot get reference to query parameter because request parameter is not defined.");
         }
         return this.requestParameter.getReferenceToQueryParameter(queryParameterKey, context);
+    }
+
+    public getQueryParams(context: SdkContext): GeneratedQueryParams {
+        if (this.queryParams == null) {
+            this.queryParams = new GeneratedQueryParams({
+                queryParameters: this.requestParameter?.getAllQueryParameters(context),
+                referenceToQueryParameterProperty: (key, context) => this.getReferenceToQueryParameter(key, context)
+            });
+        }
+        return this.queryParams;
     }
 }
