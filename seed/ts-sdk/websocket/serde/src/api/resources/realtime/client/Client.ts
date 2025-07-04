@@ -19,7 +19,7 @@ export declare namespace Realtime {
         model?: string | undefined;
         temperature?: number | undefined;
         /** Arbitrary headers to send with the websocket connect request. */
-        headers?: Record<string, unknown>;
+        headers?: Record<string, string>;
         /** Enable debug mode on the websocket. Defaults to false. */
         debug?: boolean;
         /** Number of reconnect attempts. Defaults to 30. */
@@ -35,26 +35,29 @@ export class Realtime {
     }
 
     public async connect(args: Realtime.ConnectArgs): Promise<RealtimeSocket> {
-        const queryParams: Record<string, unknown> = {};
-        if (args["model"] != null) {
-            queryParams["model"] = args["model"];
+        const { id, model, temperature, headers, debug, reconnectAttempts } = args;
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+        if (model != null) {
+            _queryParams["model"] = model;
         }
 
-        if (args["temperature"] != null) {
-            queryParams["temperature"] = args["temperature"];
+        if (temperature != null) {
+            _queryParams["temperature"] = temperature.toString();
         }
 
-        let websocketHeaders: Record<string, unknown> = {};
-        websocketHeaders = {
-            ...websocketHeaders,
-            ...args["headers"],
+        let _headers: Record<string, string> = {
+            ...headers,
         };
-        const socket = new core.ReconnectingWebSocket(
-            `${(await core.Supplier.get(this._options["baseUrl"])) ?? (await core.Supplier.get(this._options["environment"]))}/realtime/?${encodeURIComponent(args["id"])}${core.url.toQueryString(queryParams, { arrayFormat: "repeat" })}`,
-            [],
-            { debug: args["debug"] ?? false, maxRetries: args["reconnectAttempts"] ?? 30 },
-            websocketHeaders,
-        );
+        const socket = new core.ReconnectingWebSocket({
+            url: core.url.join(
+                (await core.Supplier.get(this._options["baseUrl"])) ??
+                    (await core.Supplier.get(this._options["environment"])),
+                `/realtime/${encodeURIComponent(id)}`,
+            ),
+            protocols: [],
+            queryParameters: _queryParams,
+            headers: _headers,
+        });
         return new RealtimeSocket({ socket });
     }
 }
