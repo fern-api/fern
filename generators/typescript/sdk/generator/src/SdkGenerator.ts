@@ -430,7 +430,10 @@ export class SdkGenerator {
             useDefaultRequestParameterValues: config.useDefaultRequestParameterValues
         });
         this.websocketGenerator = new WebsocketClassGenerator({
-            intermediateRepresentation
+            intermediateRepresentation,
+            retainOriginalCasing: config.retainOriginalCasing,
+            omitUndefined: config.omitUndefined,
+            skipResponseValidation: config.skipResponseValidation
         });
         this.genericAPISdkErrorGenerator = new GenericAPISdkErrorGenerator();
         this.timeoutSdkErrorGenerator = new TimeoutSdkErrorGenerator();

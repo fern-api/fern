@@ -85,10 +85,11 @@ export class RealtimeSocket {
     public sendSend(message: SeedWebsocket.SendEvent): void {
         this.assertSocketIsOpen();
         const jsonPayload = SendEvent.jsonOrThrow(message, {
-            unrecognizedObjectKeys: "strip",
+            unrecognizedObjectKeys: "passthrough",
             allowUnrecognizedUnionMembers: true,
             allowUnrecognizedEnumValues: true,
             skipValidation: true,
+            omitUndefined: true,
         });
         this.socket.send(JSON.stringify(jsonPayload));
     }
@@ -96,10 +97,11 @@ export class RealtimeSocket {
     public sendSendSnakeCase(message: SeedWebsocket.SendSnakeCase): void {
         this.assertSocketIsOpen();
         const jsonPayload = SendSnakeCase.jsonOrThrow(message, {
-            unrecognizedObjectKeys: "strip",
+            unrecognizedObjectKeys: "passthrough",
             allowUnrecognizedUnionMembers: true,
             allowUnrecognizedEnumValues: true,
             skipValidation: true,
+            omitUndefined: true,
         });
         this.socket.send(JSON.stringify(jsonPayload));
     }
@@ -107,10 +109,11 @@ export class RealtimeSocket {
     public sendSend2(message: SeedWebsocket.SendEvent2): void {
         this.assertSocketIsOpen();
         const jsonPayload = SendEvent2.jsonOrThrow(message, {
-            unrecognizedObjectKeys: "strip",
+            unrecognizedObjectKeys: "passthrough",
             allowUnrecognizedUnionMembers: true,
             allowUnrecognizedEnumValues: true,
             skipValidation: true,
+            omitUndefined: true,
         });
         this.socket.send(JSON.stringify(jsonPayload));
     }

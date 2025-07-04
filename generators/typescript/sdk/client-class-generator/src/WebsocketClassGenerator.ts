@@ -8,6 +8,9 @@ import { GeneratedWebsocketSocketClassImpl } from "./GeneratedWebsocketSocketCla
 export declare namespace WebsocketClassGenerator {
     export interface Init {
         intermediateRepresentation: IntermediateRepresentation;
+        retainOriginalCasing: boolean;
+        omitUndefined: boolean;
+        skipResponseValidation: boolean;
     }
 
     export namespace generateWebsocketSocket {
@@ -22,9 +25,15 @@ export declare namespace WebsocketClassGenerator {
 
 export class WebsocketClassGenerator {
     private intermediateRepresentation: IntermediateRepresentation;
+    private retainOriginalCasing: boolean;
+    private omitUndefined: boolean;
+    private skipResponseValidation: boolean;
 
-    constructor({ intermediateRepresentation }: WebsocketClassGenerator.Init) {
+    constructor({ intermediateRepresentation, retainOriginalCasing, omitUndefined, skipResponseValidation }: WebsocketClassGenerator.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
+        this.retainOriginalCasing = retainOriginalCasing;
+        this.omitUndefined = omitUndefined;
+        this.skipResponseValidation = skipResponseValidation;
     }
 
     public generateWebsocketSocket({
@@ -37,7 +46,10 @@ export class WebsocketClassGenerator {
             packageId,
             channel,
             serviceClassName,
-            includeSerdeLayer
+            includeSerdeLayer,
+            retainOriginalCasing: this.retainOriginalCasing,
+            omitUndefined: this.omitUndefined,
+            skipResponseValidation: this.skipResponseValidation,
         });
     }
 }
