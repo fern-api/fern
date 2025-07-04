@@ -166,7 +166,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                 }),
                 ...(this.channel.queryParameters ?? []).map((queryParameter) => {
                     return {
-                        name: getPropertyKey(queryParameter.name.wireValue),
+                        name: this.getPropertyNameOfQueryParameter(queryParameter).propertyName,
                         type: getTextOfTsNode(context.type.getReferenceToType(queryParameter.valueType).typeNode),
                         hasQuestionToken: context.type.isOptional(queryParameter.valueType)
                     };
@@ -241,7 +241,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                 ts.factory.createBindingElement(
                     undefined,
                     undefined,
-                    ts.factory.createIdentifier(queryParameter.name.wireValue)
+                    ts.factory.createIdentifier(this.getPropertyNameOfQueryParameter(queryParameter).propertyName)
                 )
             );
         }

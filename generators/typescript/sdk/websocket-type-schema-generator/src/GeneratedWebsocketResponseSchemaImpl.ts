@@ -12,6 +12,7 @@ export declare namespace GeneratedWebsocketResponseSchemaImpl {
         receiveMessages: WebSocketMessageBodyReference[];
         includeSerdeLayer: boolean;
         omitUndefined: boolean;
+        skipResponseValidation: boolean;
     }
 }
 
@@ -24,6 +25,7 @@ export class GeneratedWebsocketResponseSchemaImpl
     private receiveMessages: WebSocketMessageBodyReference[];
     private includeSerdeLayer: boolean;
     private omitUndefined: boolean;
+    private skipResponseValidation: boolean;
 
     constructor({
         packageId,
@@ -31,6 +33,7 @@ export class GeneratedWebsocketResponseSchemaImpl
         receiveMessages,
         includeSerdeLayer,
         omitUndefined,
+        skipResponseValidation,
         ...superInit
     }: GeneratedWebsocketResponseSchemaImpl.Init) {
         super(superInit);
@@ -39,6 +42,7 @@ export class GeneratedWebsocketResponseSchemaImpl
         this.receiveMessages = receiveMessages;
         this.includeSerdeLayer = includeSerdeLayer;
         this.omitUndefined = omitUndefined;
+        this.skipResponseValidation = skipResponseValidation;
     }
 
     public writeToFile(context: SdkContext): void {
@@ -51,7 +55,8 @@ export class GeneratedWebsocketResponseSchemaImpl
         }
         return this.getReferenceToZurgSchema(context).parse(referenceToRawResponse, {
             ...getSchemaOptions({
-                allowExtraFields: false,
+                allowExtraFields: true,
+                skipValidation: this.skipResponseValidation,
                 omitUndefined: this.omitUndefined
             })
         });

@@ -38,7 +38,10 @@ export class RealtimeSocket {
         const data = fromJson(event.data);
 
         const parsedResponse = serializers.RealtimeSocketResponse.parse(data, {
-            unrecognizedObjectKeys: "strip",
+            unrecognizedObjectKeys: "passthrough",
+            allowUnrecognizedUnionMembers: true,
+            allowUnrecognizedEnumValues: true,
+            skipValidation: true,
             omitUndefined: true,
         });
         if (parsedResponse.ok) {
@@ -171,7 +174,7 @@ export class RealtimeSocket {
     }
 
     /** Send a binary payload to the websocket. */
-    private sendBinary(payload: ArrayBufferLike | Blob | ArrayBufferView): void {
+    protected sendBinary(payload: ArrayBufferLike | Blob | ArrayBufferView): void {
         this.socket.send(payload);
     }
 }
