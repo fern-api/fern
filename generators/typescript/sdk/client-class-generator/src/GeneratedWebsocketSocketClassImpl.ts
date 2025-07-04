@@ -46,7 +46,15 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
     private readonly omitUndefined: boolean;
     private readonly skipResponseValidation: boolean;
 
-    constructor({ packageId, includeSerdeLayer, channel, serviceClassName, retainOriginalCasing, omitUndefined, skipResponseValidation }: GeneratedWebsocketSocketClassImpl.Init) {
+    constructor({
+        packageId,
+        includeSerdeLayer,
+        channel,
+        serviceClassName,
+        retainOriginalCasing,
+        omitUndefined,
+        skipResponseValidation
+    }: GeneratedWebsocketSocketClassImpl.Init) {
         this.includeSerdeLayer = includeSerdeLayer;
         this.channel = channel;
         this.packageId = packageId;

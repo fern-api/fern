@@ -19,7 +19,12 @@ export function buildUrl({
     omitUndefined,
     getReferenceToPathParameterVariableFromRequest
 }: {
-    endpoint: { sdkRequest: SdkRequest | undefined; fullPath: HttpPath; allPathParameters: PathParameter[]; path: HttpPath };
+    endpoint: {
+        sdkRequest: SdkRequest | undefined;
+        fullPath: HttpPath;
+        allPathParameters: PathParameter[];
+        path: HttpPath;
+    };
     generatedClientClass: GeneratedSdkClientClassImpl;
     context: SdkContext;
     includeSerdeLayer: boolean;

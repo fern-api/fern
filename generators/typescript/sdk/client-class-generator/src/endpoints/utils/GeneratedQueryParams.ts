@@ -59,7 +59,10 @@ export class GeneratedQueryParams {
                     statements.push(
                         ...this.withQueryParameter({
                             queryParameter,
-                            referenceToQueryParameterProperty: this.referenceToQueryParameterProperty(queryParameter.name.wireValue, context),
+                            referenceToQueryParameterProperty: this.referenceToQueryParameterProperty(
+                                queryParameter.name.wireValue,
+                                context
+                            ),
                             context,
                             queryParamSetter: (referenceToQueryParameter) => {
                                 let assignmentExpression: ts.Expression;

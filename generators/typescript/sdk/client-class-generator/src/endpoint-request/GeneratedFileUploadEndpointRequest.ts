@@ -108,7 +108,6 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
                 endpoint,
                 sdkRequest: this.endpoint.sdkRequest
             });
-
         }
     }
 

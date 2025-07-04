@@ -1,8 +1,4 @@
-import {
-    PackageId,
-    getPropertyKey,
-    getTextOfTsNode
-} from "@fern-typescript/commons";
+import { PackageId, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
 import { ChannelSignature, GeneratedWebsocketImplementation, SdkContext } from "@fern-typescript/contexts";
 import {
     ClassDeclarationStructure,
@@ -23,9 +19,9 @@ import {
     WebSocketChannelId
 } from "@fern-fern/ir-sdk/api";
 
-import { buildUrl } from "../endpoints/utils/buildUrl";
-import { GeneratedQueryParams } from "../endpoints/utils/GeneratedQueryParams";
 import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
+import { GeneratedQueryParams } from "../endpoints/utils/GeneratedQueryParams";
+import { buildUrl } from "../endpoints/utils/buildUrl";
 
 export declare namespace GeneratedDefaultWebsocketImplementation {
     export interface Init {
@@ -223,11 +219,13 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
     }
 
     private generateConnectMethodStatements(context: SdkContext): ts.Statement[] {
-
         const bindingElements: ts.BindingElement[] = [];
-        
+
         // Add path parameters binding
-        for (const pathParameter of [...this.intermediateRepresentation.pathParameters, ...this.channel.pathParameters]) {
+        for (const pathParameter of [
+            ...this.intermediateRepresentation.pathParameters,
+            ...this.channel.pathParameters
+        ]) {
             bindingElements.push(
                 ts.factory.createBindingElement(
                     undefined,
@@ -236,7 +234,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                 )
             );
         }
-        
+
         // Add query parameters binding
         for (const queryParameter of this.channel.queryParameters ?? []) {
             bindingElements.push(
@@ -247,7 +245,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                 )
             );
         }
-        
+
         // Add headers binding
         bindingElements.push(
             ts.factory.createBindingElement(
@@ -256,7 +254,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                 ts.factory.createIdentifier(GeneratedDefaultWebsocketImplementation.HEADERS_PROPERTY_NAME)
             )
         );
-        
+
         // Add other optional parameters
         bindingElements.push(
             ts.factory.createBindingElement(
@@ -270,7 +268,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                 ts.factory.createIdentifier(GeneratedDefaultWebsocketImplementation.RECONNECT_ATTEMPTS_PROPERTY_NAME)
             )
         );
-        
+
         // Add generated version if available
         const generatedVersion = context.versionContext.getGeneratedVersion();
         if (generatedVersion != null) {
@@ -282,7 +280,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                 )
             );
         }
-        
+
         // Create the destructuring statement
         const destructuringStatement = ts.factory.createVariableStatement(
             undefined,
@@ -301,8 +299,8 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
 
         const queryParameters = new GeneratedQueryParams({
             queryParameters: this.channel.queryParameters,
-            referenceToQueryParameterProperty: (key, context) =>  {
-                return this.getReferenceToQueryParameter(key, context)
+            referenceToQueryParameterProperty: (key, context) => {
+                return this.getReferenceToQueryParameter(key, context);
             }
         });
 
@@ -323,7 +321,9 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                             ts.factory.createObjectLiteralExpression(
                                 [
                                     ts.factory.createSpreadAssignment(
-                                        ts.factory.createIdentifier(GeneratedDefaultWebsocketImplementation.HEADERS_PROPERTY_NAME)
+                                        ts.factory.createIdentifier(
+                                            GeneratedDefaultWebsocketImplementation.HEADERS_PROPERTY_NAME
+                                        )
                                     )
                                 ],
                                 true
@@ -421,7 +421,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                 allPathParameters: [...this.intermediateRepresentation.pathParameters, ...this.channel.pathParameters],
                 fullPath: this.channel.path,
                 path: this.channel.path,
-                sdkRequest: undefined,
+                sdkRequest: undefined
             },
             generatedClientClass: this.generatedSdkClientClass,
             context,
@@ -560,16 +560,14 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
         if (queryParameter == null) {
             throw new Error("Query parameter does not exist: " + queryParameterKey);
         }
-        return ts.factory.createIdentifier(
-            this.getPropertyNameOfQueryParameter(queryParameter).propertyName
-        );
+        return ts.factory.createIdentifier(this.getPropertyNameOfQueryParameter(queryParameter).propertyName);
     }
 
-    public getPropertyNameOfQueryParameter(queryParameter: QueryParameter): { safeName: string, propertyName: string } {
+    public getPropertyNameOfQueryParameter(queryParameter: QueryParameter): { safeName: string; propertyName: string } {
         return this.getPropertyNameOfQueryParameterFromName(queryParameter.name);
     }
 
-    public getPropertyNameOfQueryParameterFromName(name: NameAndWireValue): { safeName: string, propertyName: string } {
+    public getPropertyNameOfQueryParameterFromName(name: NameAndWireValue): { safeName: string; propertyName: string } {
         return {
             safeName: name.name.camelCase.safeName,
             propertyName:

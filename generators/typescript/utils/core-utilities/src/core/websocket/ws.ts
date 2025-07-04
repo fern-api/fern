@@ -24,7 +24,6 @@ export type ErrorEvent = Events.ErrorEvent;
 export type CloseEvent = Events.CloseEvent;
 
 export declare namespace ReconnectingWebSocket {
-
     export interface Args {
         url: string;
         protocols?: string | string[];
