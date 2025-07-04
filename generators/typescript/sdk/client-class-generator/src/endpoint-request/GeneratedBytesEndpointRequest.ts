@@ -77,7 +77,6 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
                 endpoint,
                 sdkRequest: this.endpoint.sdkRequest
             });
-
         }
     }
 

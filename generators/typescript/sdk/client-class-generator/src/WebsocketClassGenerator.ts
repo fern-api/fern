@@ -29,7 +29,12 @@ export class WebsocketClassGenerator {
     private omitUndefined: boolean;
     private skipResponseValidation: boolean;
 
-    constructor({ intermediateRepresentation, retainOriginalCasing, omitUndefined, skipResponseValidation }: WebsocketClassGenerator.Init) {
+    constructor({
+        intermediateRepresentation,
+        retainOriginalCasing,
+        omitUndefined,
+        skipResponseValidation
+    }: WebsocketClassGenerator.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.retainOriginalCasing = retainOriginalCasing;
         this.omitUndefined = omitUndefined;
@@ -49,7 +54,7 @@ export class WebsocketClassGenerator {
             includeSerdeLayer,
             retainOriginalCasing: this.retainOriginalCasing,
             omitUndefined: this.omitUndefined,
-            skipResponseValidation: this.skipResponseValidation,
+            skipResponseValidation: this.skipResponseValidation
         });
     }
 }
