@@ -20,7 +20,7 @@ export const V20_TO_V19_MIGRATION: IrMigration<
         [GeneratorName.TYPESCRIPT_NODE_SDK]: "0.5.26-rc0-3-gdfabd674",
         [GeneratorName.TYPESCRIPT_BROWSER_SDK]: "0.5.26-rc0-3-gdfabd674",
         [GeneratorName.TYPESCRIPT]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.TYPESCRIPT_SDK]: "0.5.20-3-g2505487f",
+        [GeneratorName.TYPESCRIPT_SDK]: "0.5.26-rc0-3-gdfabd674",
         [GeneratorName.TYPESCRIPT_EXPRESS]: "0.5.20-3-g2505487f",
         [GeneratorName.JAVA]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.JAVA_MODEL]: "0.3.10-rc2-1-g1c0d853",

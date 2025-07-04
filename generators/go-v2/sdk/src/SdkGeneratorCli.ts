@@ -54,7 +54,7 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
     }
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
-        this.writeGoMod(context);
+        await this.writeGoMod(context);
         this.generateRawClients(context);
 
         if (this.shouldGenerateReadme(context)) {
@@ -72,14 +72,14 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
         await context.project.persist();
     }
 
-    private writeGoMod(context: SdkGeneratorContext) {
+    private async writeGoMod(context: SdkGeneratorContext): Promise<void> {
         const moduleConfig = context.getModuleConfig({ outputMode: context.config.output.mode });
         if (moduleConfig == null) {
             return;
         }
         // We write the go.mod file to disk upfront so that 'go fmt' can be run on the project.
         const moduleConfigWriter = new ModuleConfigWriter({ context, moduleConfig });
-        context.project.writeRawFile(moduleConfigWriter.generate());
+        await context.project.writeRawFile(moduleConfigWriter.generate());
     }
 
     private generateRawClients(context: SdkGeneratorContext) {

@@ -2,7 +2,7 @@
     "name": "@fern/file-upload",
     "version": "0.0.1",
     "private": false,
-    "repository": "https://github.com/file-upload/fern",
+    "repository": "github:file-upload/fern",
     "type": "commonjs",
     "main": "./dist/cjs/index.js",
     "module": "./dist/esm/index.mjs",
@@ -24,7 +24,9 @@
     },
     "files": [
         "dist",
-        "reference.md"
+        "reference.md",
+        "README.md",
+        "LICENSE"
     ],
     "scripts": {
         "format": "prettier . --write --ignore-unknown",
@@ -60,5 +62,9 @@
         "path": false,
         "stream": false
     },
-    "packageManager": "yarn@1.22.22"
+    "packageManager": "yarn@1.22.22",
+    "engines": {
+        "node": ">=18.0.0"
+    },
+    "sideEffects": false
 }

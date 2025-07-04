@@ -2,11 +2,9 @@ import {
     Fetcher,
     GetReferenceOpts,
     ImportsManager,
-    JavaScriptRuntime,
     PackageId,
     getParameterNameForPositionalPathParameter,
-    getTextOfTsNode,
-    visitJavaScriptRuntime
+    getTextOfTsNode
 } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
@@ -37,7 +35,6 @@ export declare namespace GeneratedFileUploadEndpointRequest {
         endpoint: HttpEndpoint;
         requestBody: HttpRequestBody.FileUpload;
         generatedSdkClientClass: GeneratedSdkClientClassImpl;
-        targetRuntime: JavaScriptRuntime;
         retainOriginalCasing: boolean;
         inlineFileProperties: boolean;
         importsManager: ImportsManager;
@@ -60,7 +57,6 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
     private endpoint: HttpEndpoint;
     private requestBody: HttpRequestBody.FileUpload;
     private generatedSdkClientClass: GeneratedSdkClientClassImpl;
-    private targetRuntime: JavaScriptRuntime;
     private retainOriginalCasing: boolean;
     private inlineFileProperties: boolean;
     private includeSerdeLayer: boolean;
@@ -75,7 +71,6 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         endpoint,
         requestBody,
         generatedSdkClientClass,
-        targetRuntime,
         retainOriginalCasing,
         inlineFileProperties,
         importsManager,
@@ -89,7 +84,6 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         this.endpoint = endpoint;
         this.requestBody = requestBody;
         this.generatedSdkClientClass = generatedSdkClientClass;
-        this.targetRuntime = targetRuntime;
         this.retainOriginalCasing = retainOriginalCasing;
         this.inlineFileProperties = inlineFileProperties;
         this.importsManager = importsManager;
@@ -220,46 +214,34 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
     private getFileParameterType(property: FileProperty, context: SdkContext): ts.TypeNode {
         const types: ts.TypeNode[] = [];
 
-        visitJavaScriptRuntime(this.targetRuntime, {
-            node: () => {
-                if (this.formDataSupport === "Node16") {
-                    types.push(
-                        this.maybeWrapFileArray({
-                            property,
-                            value: ts.factory.createTypeReferenceNode("File")
-                        })
-                    );
-                    types.push(
-                        this.maybeWrapFileArray({
-                            property,
-                            value: context.externalDependencies.fs.ReadStream._getReferenceToType()
-                        })
-                    );
+        if (this.formDataSupport === "Node16") {
+            types.push(
+                this.maybeWrapFileArray({
+                    property,
+                    value: ts.factory.createTypeReferenceNode("File")
+                })
+            );
+            types.push(
+                this.maybeWrapFileArray({
+                    property,
+                    value: context.externalDependencies.fs.ReadStream._getReferenceToType()
+                })
+            );
 
-                    types.push(
-                        this.maybeWrapFileArray({
-                            property,
-                            value: context.externalDependencies.blob.Blob._getReferenceToType()
-                        })
-                    );
-                } else {
-                    types.push(
-                        this.maybeWrapFileArray({
-                            property,
-                            value: context.coreUtilities.fileUtils.FileLike._getReferenceToType()
-                        })
-                    );
-                }
-            },
-            browser: () => {
-                types.push(
-                    this.maybeWrapFileArray({
-                        property,
-                        value: ts.factory.createTypeReferenceNode("Blob")
-                    })
-                );
-            }
-        });
+            types.push(
+                this.maybeWrapFileArray({
+                    property,
+                    value: context.externalDependencies.blob.Blob._getReferenceToType()
+                })
+            );
+        } else {
+            types.push(
+                this.maybeWrapFileArray({
+                    property,
+                    value: context.coreUtilities.fileUtils.FileLike._getReferenceToType()
+                })
+            );
+        }
 
         if (property.isOptional) {
             types.push(ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword));

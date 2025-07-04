@@ -111,11 +111,11 @@ default-group: local
 groups:
   local:
     generators:
-      - name: fernapi/fern-typescript-node-sdk
+      - name: fernapi/fern-typescript-sdk
         output:
           location: local-file-system
           path: ../sdks/typescript
-        version: 0.49.1
+        version: 2.3.2
 ",
         "name": "generators.yml",
         "type": "file",
@@ -200,11 +200,11 @@ default-group: local
 groups:
   local:
     generators:
-      - name: fernapi/fern-typescript-node-sdk
+      - name: fernapi/fern-typescript-sdk
         output:
           location: local-file-system
           path: ../sdks/typescript
-        version: 0.49.1
+        version: 2.3.2
 ",
         "name": "generators.yml",
         "type": "file",
@@ -429,11 +429,11 @@ default-group: local
 groups:
   local:
     generators:
-      - name: fernapi/fern-typescript-node-sdk
+      - name: fernapi/fern-typescript-sdk
         output:
           location: local-file-system
           path: ../sdks/typescript
-        version: 0.49.1
+        version: 2.3.2
 ",
     "name": "generators.yml",
     "type": "file",

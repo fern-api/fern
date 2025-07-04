@@ -1,0 +1,24 @@
+{
+  "ignores": [
+    "@types/jest",
+    "globals",
+    "@trivago/prettier-plugin-sort-imports",
+    "@trivago/prettier-plugin-sort-imports",
+    "globals",
+    "@trivago/prettier-plugin-sort-imports",
+    "@trivago/prettier-plugin-sort-imports",
+    "@types/node",
+    "esbuild",
+    "@yarnpkg/esbuild-plugin-pnp",
+    "@fern-fern/ir-sdk",
+    "@fern-api/base-generator",
+    "@fern-api/fs-utils",
+    "@fern-api/swift-base",
+    "@fern-api/swift-codegen",
+    "zod"
+  ],
+  "ignore-patterns": [
+    "lib",
+    "dist"
+  ]
+}

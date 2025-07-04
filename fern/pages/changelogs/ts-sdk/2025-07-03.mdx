@@ -1,0 +1,47 @@
+## 2.3.3
+**`(internal):`** Bump version to test Docker image rename to `fernapi/fern-typescript-sdk`
+
+## 2.3.2
+**`(fix):`** Remove ".js" extension from ESM imports in the source generator code. 
+If `useLegacyExports` is `true`, you will not see ".js" extensions in ESM imports.
+If `useLegacyExports` is `false` (default), a post process step will add the `.js` extension, so you won't see a difference.
+
+We're doing this because Jest has a bug where it doesn't properly load TypeScript modules even though the TypeScript and imports are valid.
+
+
+## 2.3.1
+**`(fix):`** Fixes an issue where OAuth clients would not compile when variables were configured
+in the SDK. Now, the oauth client is instantiated with any global path parameters or headers. 
+
+
+## 2.3.0
+**`(feat):`** Change the `outputSourceFiles` default from `false` to `true`.
+This will affect the output when you generate the SDK to the local file system.
+
+
+## 2.2.1
+**`(fix):`** Ensure _tests/wire_ is generated even when there are no wire tests generated.
+Otherwise, Jest throws an error because the wire test project `roots` doesn't exist.
+
+
+## 2.2.0
+**`(feat):`** Improve generated package.json files:
+* Add `engines` field to specify minimum Node.js version supported as Node.js 18.
+* Add `sideEffects: false`
+* Add `README.md` and `LICENSE` to `files` array
+* Use GitHub shorthand for `repository` field.
+
+You can override these fields using the `packageJson` config:
+```yml
+# In generators.yml
+groups:
+  ts-sdk:
+    generators:
+      - name: fernapi/fern-typescript-sdk
+        config:
+          packageJson:
+            engines:
+              node: ">=16.0.0"
+```
+
+

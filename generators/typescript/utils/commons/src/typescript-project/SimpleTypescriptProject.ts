@@ -273,7 +273,12 @@ export class SimpleTypescriptProject extends TypescriptProject {
                     }, {}),
                     "./package.json": "./package.json"
                 },
-                files: [SimpleTypescriptProject.DIST_DIRECTORY, SimpleTypescriptProject.REFERENCE_FILENAME],
+                files: [
+                    SimpleTypescriptProject.DIST_DIRECTORY,
+                    SimpleTypescriptProject.REFERENCE_FILENAME,
+                    SimpleTypescriptProject.README_FILENAME,
+                    SimpleTypescriptProject.LICENSE_FILENAME
+                ],
                 scripts: {
                     [SimpleTypescriptProject.FORMAT_SCRIPT_NAME]: "prettier . --write --ignore-unknown",
                     [SimpleTypescriptProject.BUILD_SCRIPT_NAME]: `yarn ${SimpleTypescriptProject.BUILD_CJS_SCRIPT_NAME} && yarn ${SimpleTypescriptProject.BUILD_ESM_SCRIPT_NAME}`,
@@ -330,6 +335,10 @@ export class SimpleTypescriptProject extends TypescriptProject {
             } as any;
 
             draft["packageManager"] = "yarn@1.22.22";
+            draft["engines"] = {
+                node: ">=18.0.0"
+            };
+            draft["sideEffects"] = false;
         });
 
         packageJson = mergeExtraConfigs(packageJson, this.extraConfigs);

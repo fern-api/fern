@@ -2413,6 +2413,66 @@ importers:
         specifier: ^3.22.3
         version: 3.25.67
 
+  generators/swift/base:
+    devDependencies:
+      '@fern-api/base-generator':
+        specifier: workspace:*
+        version: link:../../base
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../../packages/configs
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../../packages/commons/core-utils
+      '@fern-api/fs-utils':
+        specifier: workspace:*
+        version: link:../../../packages/commons/fs-utils
+      '@fern-api/logging-execa':
+        specifier: workspace:*
+        version: link:../../../packages/commons/logging-execa
+      '@fern-api/swift-codegen':
+        specifier: workspace:*
+        version: link:../codegen
+      '@fern-fern/ir-sdk':
+        specifier: ^58.2.0
+        version: 58.2.0
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.2(@vue/compiler-sfc@3.5.17)(prettier@3.5.3)
+      '@types/lodash-es':
+        specifier: ^4.17.12
+        version: 4.17.12
+      '@types/node':
+        specifier: 18.15.3
+        version: 18.15.3
+      '@yarnpkg/esbuild-plugin-pnp':
+        specifier: ^3.0.0-rc.14
+        version: 3.0.0-rc.15(esbuild@0.25.5)
+      depcheck:
+        specifier: ^1.4.7
+        version: 1.4.7
+      esbuild:
+        specifier: ^0.25.0
+        version: 0.25.5
+      eslint:
+        specifier: ^8.56.0
+        version: 8.57.1
+      lodash-es:
+        specifier: ^4.17.21
+        version: 4.17.21
+      prettier:
+        specifier: ^3.4.2
+        version: 3.5.3
+      tsup:
+        specifier: ^8.0.2
+        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(typescript@5.7.2)(yaml@2.3.3)
+      typescript:
+        specifier: 5.7.2
+        version: 5.7.2
+      vitest:
+        specifier: ^2.1.9
+        version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
+
   generators/swift/codegen:
     dependencies:
       '@fern-api/base-generator':
@@ -2452,12 +2512,156 @@ importers:
       prettier:
         specifier: ^3.4.2
         version: 3.5.3
+      sort-package-json:
+        specifier: 3.3.1
+        version: 3.3.1
       typescript:
         specifier: 5.7.2
         version: 5.7.2
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
+
+  generators/swift/model:
+    devDependencies:
+      '@fern-api/base-generator':
+        specifier: workspace:*
+        version: link:../../base
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../../packages/configs
+      '@fern-api/fs-utils':
+        specifier: workspace:*
+        version: link:../../../packages/commons/fs-utils
+      '@fern-api/swift-base':
+        specifier: workspace:*
+        version: link:../base
+      '@fern-api/swift-codegen':
+        specifier: workspace:*
+        version: link:../codegen
+      '@fern-fern/ir-sdk':
+        specifier: ^58.2.0
+        version: 58.2.0
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.2(@vue/compiler-sfc@3.5.17)(prettier@3.5.3)
+      '@types/jest':
+        specifier: ^29.5.14
+        version: 29.5.14
+      '@types/node':
+        specifier: 18.15.3
+        version: 18.15.3
+      '@yarnpkg/esbuild-plugin-pnp':
+        specifier: ^3.0.0-rc.14
+        version: 3.0.0-rc.15(esbuild@0.25.5)
+      depcheck:
+        specifier: ^1.4.7
+        version: 1.4.7
+      esbuild:
+        specifier: ^0.25.0
+        version: 0.25.5
+      eslint:
+        specifier: ^8.56.0
+        version: 8.57.1
+      prettier:
+        specifier: ^3.4.2
+        version: 3.5.3
+      sort-package-json:
+        specifier: 3.3.1
+        version: 3.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(typescript@5.7.2)(yaml@2.3.3)
+      typescript:
+        specifier: 5.7.2
+        version: 5.7.2
+      vitest:
+        specifier: ^2.1.9
+        version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
+      zod:
+        specifier: ^3.22.3
+        version: 3.25.67
+
+  generators/swift/sdk:
+    devDependencies:
+      '@fern-api/base-generator':
+        specifier: workspace:*
+        version: link:../../base
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../../packages/configs
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../../packages/commons/core-utils
+      '@fern-api/fs-utils':
+        specifier: workspace:*
+        version: link:../../../packages/commons/fs-utils
+      '@fern-api/logger':
+        specifier: workspace:*
+        version: link:../../../packages/cli/logger
+      '@fern-api/swift-base':
+        specifier: workspace:*
+        version: link:../base
+      '@fern-api/swift-codegen':
+        specifier: workspace:*
+        version: link:../codegen
+      '@fern-api/swift-model':
+        specifier: workspace:*
+        version: link:../model
+      '@fern-fern/generator-cli-sdk':
+        specifier: 0.0.28
+        version: 0.0.28
+      '@fern-fern/generator-exec-sdk':
+        specifier: ^0.0.1045
+        version: 0.0.1045
+      '@fern-fern/ir-sdk':
+        specifier: ^58.2.0
+        version: 58.2.0
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.2(@vue/compiler-sfc@3.5.17)(prettier@3.5.3)
+      '@types/jest':
+        specifier: ^29.5.14
+        version: 29.5.14
+      '@types/lodash-es':
+        specifier: ^4.17.12
+        version: 4.17.12
+      '@types/node':
+        specifier: 18.15.3
+        version: 18.15.3
+      '@yarnpkg/esbuild-plugin-pnp':
+        specifier: ^3.0.0-rc.14
+        version: 3.0.0-rc.15(esbuild@0.25.5)
+      depcheck:
+        specifier: ^1.4.7
+        version: 1.4.7
+      esbuild:
+        specifier: ^0.25.0
+        version: 0.25.5
+      eslint:
+        specifier: ^8.56.0
+        version: 8.57.1
+      lodash-es:
+        specifier: ^4.17.21
+        version: 4.17.21
+      prettier:
+        specifier: ^3.4.2
+        version: 3.5.3
+      sort-package-json:
+        specifier: 3.3.1
+        version: 3.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(typescript@5.7.2)(yaml@2.3.3)
+      typescript:
+        specifier: 5.7.2
+        version: 5.7.2
+      vitest:
+        specifier: ^2.1.9
+        version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
+      zod:
+        specifier: ^3.22.3
+        version: 3.25.67
 
   generators/typescript-mcp/base:
     devDependencies:
@@ -5900,8 +6104,8 @@ importers:
         specifier: workspace:*
         version: link:../../commons/path-utils
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.138.3-0e06cb2c9
-        version: 0.138.3-0e06cb2c9
+        specifier: 0.138.4-984b82706
+        version: 0.138.4-984b82706
       '@fern-fern/fiddle-sdk':
         specifier: 0.0.584
         version: 0.0.584
@@ -5955,8 +6159,8 @@ importers:
         specifier: workspace:*
         version: link:../task-context
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.138.3-0e06cb2c9
-        version: 0.138.3-0e06cb2c9
+        specifier: 0.138.4-984b82706
+        version: 0.138.4-984b82706
       '@fern-fern/fiddle-sdk':
         specifier: 0.0.584
         version: 0.0.584
@@ -6040,8 +6244,8 @@ importers:
         specifier: workspace:*
         version: link:../../task-context
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.138.3-0e06cb2c9
-        version: 0.138.3-0e06cb2c9
+        specifier: 0.138.4-984b82706
+        version: 0.138.4-984b82706
       js-yaml:
         specifier: ^4.1.0
         version: 4.1.0
@@ -6095,8 +6299,8 @@ importers:
         specifier: workspace:*
         version: link:../../task-context
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.138.3-0e06cb2c9
-        version: 0.138.3-0e06cb2c9
+        specifier: 0.138.4-984b82706
+        version: 0.138.4-984b82706
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3
@@ -6147,8 +6351,8 @@ importers:
         specifier: workspace:*
         version: link:../../task-context
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.138.3-0e06cb2c9
-        version: 0.138.3-0e06cb2c9
+        specifier: 0.138.4-984b82706
+        version: 0.138.4-984b82706
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3
@@ -6223,8 +6427,8 @@ importers:
         specifier: workspace:*
         version: link:../task-context
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.138.3-0e06cb2c9
-        version: 0.138.3-0e06cb2c9
+        specifier: 0.138.4-984b82706
+        version: 0.138.4-984b82706
       estree-walker:
         specifier: ^3.0.3
         version: 3.0.3
@@ -6314,8 +6518,8 @@ importers:
         specifier: workspace:*
         version: link:../docs-resolver
       '@fern-api/fdr-sdk':
-        specifier: 0.138.3-0e06cb2c9
-        version: 0.138.3-0e06cb2c9(typescript@5.7.2)
+        specifier: 0.138.4-984b82706
+        version: 0.138.4-984b82706(typescript@5.7.2)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
@@ -6432,8 +6636,8 @@ importers:
         specifier: 0.0.65
         version: 0.0.65(typescript@5.7.2)
       '@fern-api/fdr-sdk':
-        specifier: 0.138.3-0e06cb2c9
-        version: 0.138.3-0e06cb2c9(typescript@5.7.2)
+        specifier: 0.138.4-984b82706
+        version: 0.138.4-984b82706(typescript@5.7.2)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
@@ -6459,8 +6663,8 @@ importers:
         specifier: 0.129.4-b6c699ad2
         version: 0.129.4-b6c699ad2
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.138.3-0e06cb2c9
-        version: 0.138.3-0e06cb2c9
+        specifier: 0.138.4-984b82706
+        version: 0.138.4-984b82706
       '@open-rpc/meta-schema':
         specifier: ^1.14.9
         version: 1.14.9
@@ -6526,8 +6730,8 @@ importers:
         specifier: workspace:*
         version: link:../../commons/logging-execa
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.138.3-0e06cb2c9
-        version: 0.138.3-0e06cb2c9
+        specifier: 0.138.4-984b82706
+        version: 0.138.4-984b82706
       execa:
         specifier: ^5.1.1
         version: 5.1.1
@@ -7498,8 +7702,8 @@ importers:
         specifier: workspace:*
         version: link:../../../workspace/loader
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.138.3-0e06cb2c9
-        version: 0.138.3-0e06cb2c9
+        specifier: 0.138.4-984b82706
+        version: 0.138.4-984b82706
       '@fern-fern/fiddle-sdk':
         specifier: 0.0.584
         version: 0.0.584
@@ -8007,8 +8211,8 @@ importers:
         specifier: workspace:*
         version: link:../task-context
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.138.3-0e06cb2c9
-        version: 0.138.3-0e06cb2c9
+        specifier: 0.138.4-984b82706
+        version: 0.138.4-984b82706
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -8531,8 +8735,8 @@ importers:
         specifier: workspace:*
         version: link:../../docs-resolver
       '@fern-api/fdr-sdk':
-        specifier: 0.138.3-0e06cb2c9
-        version: 0.138.3-0e06cb2c9(typescript@5.7.2)
+        specifier: 0.138.4-984b82706
+        version: 0.138.4-984b82706(typescript@5.7.2)
       '@fern-api/fern-definition-schema':
         specifier: workspace:*
         version: link:../../fern-definition/schema
@@ -9042,8 +9246,8 @@ importers:
         specifier: 0.14.3-1-g14981f0
         version: 0.14.3-1-g14981f0
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.138.3-0e06cb2c9
-        version: 0.138.3-0e06cb2c9
+        specifier: 0.138.4-984b82706
+        version: 0.138.4-984b82706
       '@fern-fern/fdr-test-sdk':
         specifier: ^0.0.5297
         version: 0.0.5297
@@ -10617,8 +10821,8 @@ packages:
   '@fern-api/dynamic-ir-sdk@58.2.0':
     resolution: {integrity: sha512-b5uJwu4nbQ+Jj8DoRMJNyI7A8oureAj0I7n55DS78HPadK0AxQnINboGBfhvwE365mkvwu6KM2FrQIZ3RQdI7A==}
 
-  '@fern-api/fdr-sdk@0.138.3-0e06cb2c9':
-    resolution: {integrity: sha512-UVjAK+/F1CrYHgX6/8YfeoNRYVuShqHLLSovYQGiG75LUr6dwi7m3ePG6moWUPPuXZxPLmW1BnQZToZzi6T5BQ==}
+  '@fern-api/fdr-sdk@0.138.4-984b82706':
+    resolution: {integrity: sha512-O3/gNs22n6l4iOXutjx8tUtiyqBnvOWKvK9ctvqVPUbncwPwPCVZdpnqlVeG4GyQ2IZdn4buxx//5dqDBFLvdA==}
 
   '@fern-api/logger@0.4.24-rc1':
     resolution: {integrity: sha512-yh0E2F3K3IPnJZcE4dv+u8I51iKgTgv/reinKo4K5YmYEG1iLtw5vBEYMOPkQmsYFPAKIh++OMB/6TrsahMWew==}
@@ -10635,8 +10839,8 @@ packages:
   '@fern-api/ui-core-utils@0.129.4-b6c699ad2':
     resolution: {integrity: sha512-V1jfV4u5fhpWEoLqCIA1QtRGpRR0NXyk68VGEHmEsezwA/gNF4587MJp5FWN59YsZmRt2hozODnp/umJ/iwkPg==}
 
-  '@fern-api/ui-core-utils@0.138.3-0e06cb2c9':
-    resolution: {integrity: sha512-KGBDWS/xa/dsVENzhj0tjf4ahcXM2KydNUeyoZM1AcM9FlFRYdkyXI7IHXOQ8ZK45uVeHNrMMNlux5yXg6Uv+Q==}
+  '@fern-api/ui-core-utils@0.138.4-984b82706':
+    resolution: {integrity: sha512-NrYSxg1dZkSwSl8EQfP8Zd1kKhYhLwYvtg0wbXhs51Ecp+CUj92rb662bEucBp9QW0yDvk74Uy4gsfxgJy/LyQ==}
 
   '@fern-api/venus-api-sdk@0.14.3-1-g14981f0':
     resolution: {integrity: sha512-sOQH36HUDznonYxtdPvXiGrURqLcSBE4DvY5CMfbLd+qCxgkuGQnx88VUB8AXKdr5g04NqJsh4OWs48fgt4Lag==}
@@ -10644,8 +10848,8 @@ packages:
   '@fern-fern/docs-config@0.0.80':
     resolution: {integrity: sha512-wAZCNxwM4qIPn3idoIihPP65KWPjNuoTSfdP4+5f8K2jJLgs5cdkY0pm4cQlGWvi5K6b+lfbUWDaslnXscJ2gQ==}
 
-  '@fern-fern/fdr-cjs-sdk@0.138.3-0e06cb2c9':
-    resolution: {integrity: sha512-FZT3si8rqKnVAM2cCwR2mhsBFrfNI3VquMHbEKisg9eGmyBuA1IIXhF+fzki0gKGW+068bBeNf0y1fzZrflqGw==}
+  '@fern-fern/fdr-cjs-sdk@0.138.4-984b82706':
+    resolution: {integrity: sha512-EeZPeTdbuTPKrMTjut+FeKF/aOgNvL4WvFV/A57OgDeqV00fqXVA0dI1U0gY2MqWiDo8SthdtwlSpEJKrHkVOg==}
 
   '@fern-fern/fdr-test-sdk@0.0.5297':
     resolution: {integrity: sha512-jrZUZ6oIA64LHtrv77xEq0X7qJhT9xRMGWhKcLjIUArMsD7h6KMWUHVdoB/1MP0Mz/uL/E2xmM31SOgJicpIcA==}
@@ -12962,6 +13166,10 @@ packages:
     resolution: {integrity: sha512-DtCOLG98P007x7wiiOmfI0fi3eIKyWiLTGJ2MDnVi/E04lWGbf+JzrRHMm0rgIIZJGtHpKpbVgLWHrv8xXpc3Q==}
     engines: {node: '>=0.10.0'}
 
+  detect-indent@7.0.1:
+    resolution: {integrity: sha512-Mc7QhQ8s+cLrnUfU/Ji94vG/r8M26m8f++vyres4ZoojaRDpZ1eSIh/EpzLNwlWuvzSZ3UbDFspjFvTDXe6e/g==}
+    engines: {node: '>=12.20'}
+
   detect-libc@1.0.3:
     resolution: {integrity: sha512-pGjwhsmsp4kL2RTz08wcOlGN83otlqHeD/Z5T8GXZB+/YcpQ/dgo+lbU8ZsGxV0HIvqqxo9l7mqYwyYMD9bKDg==}
     engines: {node: '>=0.10'}
@@ -12970,6 +13178,10 @@ packages:
   detect-newline@3.1.0:
     resolution: {integrity: sha512-TLz+x/vEXm/Y7P7wn1EJFNLxYpUD4TgMosxY6fAVJUnJMbupHBOncxyWUG9OpTaH9EBD7uFI5LfEgmMOc54DsA==}
     engines: {node: '>=8'}
+
+  detect-newline@4.0.1:
+    resolution: {integrity: sha512-qE3Veg1YXzGHQhlA6jzebZN2qVf6NX+A7m7qlhCGG30dJixrAQhYOsJjsnBjJkCSmuOPpCk30145fr8FV0bzog==}
+    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
 
   dettle@1.0.5:
     resolution: {integrity: sha512-ZVyjhAJ7sCe1PNXEGveObOH9AC8QvMga3HJIghHawtG7mE4K5pW9nz/vDGAr/U7a3LWgdOzEE7ac9MURnyfaTA==}
@@ -13653,6 +13865,9 @@ packages:
   get-symbol-description@1.1.0:
     resolution: {integrity: sha512-w9UMqWwJxHNOvoNzSJ2oPF5wvYcvP7jUvYzhp67yEhTi17ZDBBC1z9pTdGuzjD+EFIqLSYRweZjqfiPzQ06Ebg==}
     engines: {node: '>= 0.4'}
+
+  git-hooks-list@4.1.1:
+    resolution: {integrity: sha512-cmP497iLq54AZnv4YRAEMnEyQ1eIn4tGKbmswqwmFV4GBnAqE8NLtWxxdXa++AalfgL5EBH4IxTPyquEuGY/jA==}
 
   glob-parent@5.1.2:
     resolution: {integrity: sha512-AOIgSQCepiJYwP3ARnGx+5VnTu2HBYdzbGP45eLw1vr3zB3vZLeyed1sC9hnbcOc9/SrMyM5RPQrkGz4aS9Zow==}
@@ -15979,6 +16194,14 @@ packages:
   slice-ansi@4.0.0:
     resolution: {integrity: sha512-qMCMfhY040cVHT43K9BFygqYbUPFZKHOg7K73mtTWJRb8pyP3fzf4Ixd5SzdEJQ6MRUg/WBnOLxghZtKKurENQ==}
     engines: {node: '>=10'}
+
+  sort-object-keys@1.1.3:
+    resolution: {integrity: sha512-855pvK+VkU7PaKYPc+Jjnmt4EzejQHyhhF33q31qG8x7maDzkeFhAAThdCYay11CISO+qAMwjOBP+fPZe0IPyg==}
+
+  sort-package-json@3.3.1:
+    resolution: {integrity: sha512-awjhQR2Iy5UN3NuguAK5+RezcEuUg9Ra4O8y2Aj+DlJa7MywyHaipAPf9bu4qqFj0hsYHHoT9sS3aV7Ucu728g==}
+    engines: {node: '>=20'}
+    hasBin: true
 
   source-map-js@1.2.1:
     resolution: {integrity: sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==}
@@ -18429,9 +18652,9 @@ snapshots:
 
   '@fern-api/dynamic-ir-sdk@58.2.0': {}
 
-  '@fern-api/fdr-sdk@0.138.3-0e06cb2c9(typescript@5.7.2)':
+  '@fern-api/fdr-sdk@0.138.4-984b82706(typescript@5.7.2)':
     dependencies:
-      '@fern-api/ui-core-utils': 0.138.3-0e06cb2c9
+      '@fern-api/ui-core-utils': 0.138.4-984b82706
       '@ungap/structured-clone': 1.3.0
       dayjs: 1.11.13
       es-toolkit: 1.39.3
@@ -18484,7 +18707,7 @@ snapshots:
       title: 3.5.3
       ua-parser-js: 1.0.40
 
-  '@fern-api/ui-core-utils@0.138.3-0e06cb2c9':
+  '@fern-api/ui-core-utils@0.138.4-984b82706':
     dependencies:
       date-fns: 4.1.0
       date-fns-tz: 3.2.0(date-fns@4.1.0)
@@ -18506,7 +18729,7 @@ snapshots:
 
   '@fern-fern/docs-config@0.0.80': {}
 
-  '@fern-fern/fdr-cjs-sdk@0.138.3-0e06cb2c9':
+  '@fern-fern/fdr-cjs-sdk@0.138.4-984b82706':
     dependencies:
       form-data: 4.0.1
       formdata-node: 6.0.3
@@ -21156,9 +21379,13 @@ snapshots:
 
   detect-file@1.0.0: {}
 
+  detect-indent@7.0.1: {}
+
   detect-libc@1.0.3: {}
 
   detect-newline@3.1.0: {}
+
+  detect-newline@4.0.1: {}
 
   dettle@1.0.5: {}
 
@@ -22090,6 +22317,8 @@ snapshots:
       call-bound: 1.0.4
       es-errors: 1.3.0
       get-intrinsic: 1.3.0
+
+  git-hooks-list@4.1.1: {}
 
   glob-parent@5.1.2:
     dependencies:
@@ -25190,6 +25419,18 @@ snapshots:
       ansi-styles: 4.3.0
       astral-regex: 2.0.0
       is-fullwidth-code-point: 3.0.0
+
+  sort-object-keys@1.1.3: {}
+
+  sort-package-json@3.3.1:
+    dependencies:
+      detect-indent: 7.0.1
+      detect-newline: 4.0.1
+      git-hooks-list: 4.1.1
+      is-plain-obj: 4.1.0
+      semver: 7.7.2
+      sort-object-keys: 1.1.3
+      tinyglobby: 0.2.14
 
   source-map-js@1.2.1: {}
 

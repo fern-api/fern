@@ -193,11 +193,11 @@ export class JestTestGenerator {
             test: "jest --config jest.config.mjs"
         };
         if (this.writeUnitTests) {
-            scripts["test:unit"] = `jest --selectProjects unit`;
+            scripts["test:unit"] = "jest --selectProjects unit";
             scripts["test:browser"] = "jest --selectProjects browser";
         }
         if (this.generateWireTests) {
-            scripts["test:wire"] = `jest --selectProjects wire`;
+            scripts["test:wire"] = "jest --selectProjects wire";
         }
         return scripts;
     }
@@ -240,6 +240,12 @@ describe("test", () => {
         };
     }
 
+    public createWireTestDirectory(): void {
+        const wireTestPath = `${this.relativeTestPath}/wire`;
+        this.rootDirectory.createDirectory(wireTestPath);
+        this.rootDirectory.createSourceFile(`${wireTestPath}/.gitkeep`, "", { overwrite: true });
+    }
+
     public buildFile(
         serviceName: string,
         service: IR.HttpService,
@@ -248,7 +254,7 @@ describe("test", () => {
         context: SdkContext
     ): Code | undefined {
         context.importsManager.addImportFromRoot(
-            "mock-server/MockServerPool.js",
+            "mock-server/MockServerPool",
             {
                 namedImports: ["mockServerPool"]
             },

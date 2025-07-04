@@ -2,12 +2,9 @@ import {
     ExportsManager,
     Fetcher,
     GetReferenceOpts,
-    ImportsManager,
-    JavaScriptRuntime,
     PackageId,
     getParameterNameForPositionalPathParameter,
-    getTextOfTsNode,
-    visitJavaScriptRuntime
+    getTextOfTsNode
 } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
@@ -35,7 +32,6 @@ export declare namespace GeneratedBytesEndpointRequest {
         endpoint: HttpEndpoint;
         requestBody: HttpRequestBody.Bytes;
         generatedSdkClientClass: GeneratedSdkClientClassImpl;
-        targetRuntime: JavaScriptRuntime;
         retainOriginalCasing: boolean;
         exportsManager: ExportsManager;
     }
@@ -51,7 +47,6 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
     private endpoint: HttpEndpoint;
     private requestBody: HttpRequestBody.Bytes;
     private generatedSdkClientClass: GeneratedSdkClientClassImpl;
-    private targetRuntime: JavaScriptRuntime;
     private retainOriginalCasing: boolean;
 
     constructor({
@@ -61,7 +56,6 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
         endpoint,
         requestBody,
         generatedSdkClientClass,
-        targetRuntime,
         retainOriginalCasing
     }: GeneratedBytesEndpointRequest.Init) {
         this.ir = ir;
@@ -69,7 +63,6 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
         this.endpoint = endpoint;
         this.requestBody = requestBody;
         this.generatedSdkClientClass = generatedSdkClientClass;
-        this.targetRuntime = targetRuntime;
         this.retainOriginalCasing = retainOriginalCasing;
 
         if (this.endpoint.sdkRequest == null) {
@@ -170,16 +163,8 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
     private getFileParameterType(context: SdkContext): ts.TypeNode {
         const types: ts.TypeNode[] = [ts.factory.createTypeReferenceNode("File")];
 
-        visitJavaScriptRuntime(this.targetRuntime, {
-            node: () => {
-                types.push(context.externalDependencies.fs.ReadStream._getReferenceToType());
-
-                types.push(context.externalDependencies.blob.Blob._getReferenceToType());
-            },
-            browser: () => {
-                types.push(ts.factory.createTypeReferenceNode("Blob"));
-            }
-        });
+        types.push(context.externalDependencies.fs.ReadStream._getReferenceToType());
+        types.push(context.externalDependencies.blob.Blob._getReferenceToType());
 
         if (this.requestBody.isOptional) {
             types.push(ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword));

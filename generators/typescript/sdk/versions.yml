@@ -1,10 +1,76 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 2.1.1
+
+- version: 2.4.0
+  changelogEntry:
+    - summary: Fixes bug with query parameter and path paramter serialization in URL for WebSocket channels.
+      type: fix
+  createdAt: '2025-07-03'
+  irVersion: 58     
+
+- version: 2.3.3
+  changelogEntry:
+    - summary: Bump version to test Docker image rename to `fernapi/fern-typescript-sdk`
+      type: internal
+  createdAt: '2025-07-03'
+  irVersion: 58      
+- version: 2.3.2
+  changelogEntry:
+    - summary: |
+        Remove ".js" extension from ESM imports in the source generator code. 
+        If `useLegacyExports` is `true`, you will not see ".js" extensions in ESM imports.
+        If `useLegacyExports` is `false` (default), a post process step will add the `.js` extension, so you won't see a difference.
+
+        We're doing this because Jest has a bug where it doesn't properly load TypeScript modules even though the TypeScript and imports are valid.
+      type: fix
+  createdAt: '2025-07-03'
+  irVersion: 58
+- version: 2.3.1
   changelogEntry:
     - summary: |
         Fixes an issue where OAuth clients would not compile when variables were configured
         in the SDK. Now, the oauth client is instantiated with any global path parameters or headers. 
       type: fix
+  createdAt: '2025-07-03'
+  irVersion: 58
+
+- version: 2.3.0
+  changelogEntry:
+    - summary: |
+        Change the `outputSourceFiles` default from `false` to `true`.
+        This will affect the output when you generate the SDK to the local file system.
+      type: feat
+  createdAt: '2025-07-03'
+  irVersion: 58
+- version: 2.2.1
+  changelogEntry:
+    - summary: |
+        Ensure _tests/wire_ is generated even when there are no wire tests generated.
+        Otherwise, Jest throws an error because the wire test project `roots` doesn't exist.
+      type: fix
+  createdAt: '2025-07-03'
+  irVersion: 58
+- version: 2.2.0
+  changelogEntry:
+    - summary: |
+        Improve generated package.json files:
+        * Add `engines` field to specify minimum Node.js version supported as Node.js 18.
+        * Add `sideEffects: false`
+        * Add `README.md` and `LICENSE` to `files` array
+        * Use GitHub shorthand for `repository` field.
+
+        You can override these fields using the `packageJson` config:
+        ```yml
+        # In generators.yml
+        groups:
+          ts-sdk:
+            generators:
+              - name: fernapi/fern-typescript-sdk
+                config:
+                  packageJson:
+                    engines:
+                      node: ">=16.0.0"
+        ```
+      type: feat
   createdAt: '2025-07-03'
   irVersion: 58
 
@@ -65,7 +131,7 @@
         groups:
           ts-sdk:
             generators:
-              - name: fernapi/fern-typescript-node-sdk
+              - name: fernapi/fern-typescript-sdk
                 config:
                   useDefaultRequestParameterValues: true
         ```
@@ -191,7 +257,7 @@
         groups:
           ts-sdk:
             generators:
-              - name: fernapi/fern-typescript-node-sdk
+              - name: fernapi/fern-typescript-sdk
                 config:
                   packagePath: src/package-path
         ```
@@ -1113,7 +1179,7 @@
         ```yml
         groups:
           ts-sdk:
-            name: fernapi/fern-typescript-node-sdk
+            name: fernapi/fern-typescript-sdk
             version: 0.40.0
             config:
               useBigInt: true
@@ -1258,7 +1324,7 @@
         cause errors, toggling this option will allow you to receive the generated code.
 
         ```
-        - name: fernapi/fern-typescript-node-sdk
+        - name: fernapi/fern-typescript-sdk
           version: 0.38.1
           config:
             noScripts: true
@@ -1282,7 +1348,7 @@
         The business plan Typescript SDK will now generate wire tests if the feature flag in the configuration is turned on.
 
         ```
-        - name: fernapi/fern-typescript-node-sdk
+        - name: fernapi/fern-typescript-sdk
           version: 0.37.0-rc0
           config:
             generateWireTests: true

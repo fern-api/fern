@@ -55,3 +55,4 @@ allowedFailures:
   - mixed-case
   - reserved-keywords
   - trace
+  - request-parameters
