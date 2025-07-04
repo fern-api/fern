@@ -1,4 +1,4 @@
-class ForceMultipartDict(dict):
+class ForceMultipartDict(dict[str, str]):
     """
     A dictionary subclass that always evaluates to True in boolean contexts.
 
@@ -6,7 +6,7 @@ class ForceMultipartDict(dict):
     the dictionary is empty, which would normally evaluate to False.
     """
 
-    def __bool__(self):
+    def __bool__(self) -> bool:
         return True
 
 
