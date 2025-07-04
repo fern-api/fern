@@ -453,7 +453,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
         return {
             kind: StructureKind.Method,
             name: "sendJson",
-            scope: Scope.Private,
+            scope: Scope.Protected,
             returnType: "void",
             parameters: [
                 {
@@ -477,7 +477,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
         return {
             kind: StructureKind.Method,
             name: "sendBinary",
-            scope: Scope.Private,
+            scope: Scope.Protected,
             returnType: "void",
             parameters: [
                 {

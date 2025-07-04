@@ -444,7 +444,8 @@ export class SdkGenerator {
         });
         this.websocketTypeSchemaGenerator = new WebsocketTypeSchemaGenerator({
             includeSerdeLayer: config.includeSerdeLayer,
-            omitUndefined: config.omitUndefined
+            omitUndefined: config.omitUndefined,
+            skipResponseValidation: config.skipResponseValidation
         });
         this.jestTestGenerator = new JestTestGenerator({
             ir: intermediateRepresentation,
