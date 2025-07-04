@@ -45,7 +45,7 @@ export class WebsocketTypeSchemaGenerator {
             typeName,
             includeSerdeLayer: this.includeSerdeLayer,
             omitUndefined: this.omitUndefined,
-            skipResponseValidation: this.skipResponseValidation,
+            skipResponseValidation: this.skipResponseValidation
         });
     }
 }
