@@ -43,7 +43,8 @@ If you're using OpenAPI, your `generators.yml` file should point to your OpenAPI
 
 ```yml generators.yml
 api:
-  path: openapi/openapi.yml
+  specs:
+    - openapi: openapi/openapi.yml
 ```
 
 You can read more about how to define webhooks in your OpenAPI specification [here](/learn/api-definition/openapi/webhooks).

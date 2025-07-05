@@ -64,8 +64,9 @@ paths:
 
 ```yml generators.yml
 api: 
-  path: ../openapi.yml
-  overrides: ../overrides.yml 
+  specs:
+    - openapi: ../openapi.yml
+      overrides: ../overrides.yml 
 ```
 
 <Note> The format of the overrides file is independent from the spec. For example, even if your OpenAPI spec is in JSON format, you can write the overrides in yaml. </Note>

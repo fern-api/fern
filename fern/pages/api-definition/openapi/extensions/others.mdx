@@ -280,8 +280,9 @@ shown in the third tab.
 <CodeBlocks>
     ```yaml title="generators.yml" {3}
     api:
-      path: ./openapi/openapi.yaml
-      overrides: ./openapi/overrides.yaml
+      specs:
+        - openapi: ./openapi/openapi.yml
+          overrides: ./openapi/overrides.yaml
     default-group: sdk
     groups:
       sdk:
