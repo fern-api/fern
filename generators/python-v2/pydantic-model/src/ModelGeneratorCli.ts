@@ -43,12 +43,17 @@ export class ModelGeneratorCLI extends AbstractPythonGeneratorCli<
         for (const file of files) {
             context.project.addSourceFiles(file);
         }
+        const dependencies = context.getDependencies();
+        for (const dependency of dependencies) {
+            context.project.addDependency(dependency);
+        }
         await context.project.persist();
     }
 
     protected publishPackage(context: PydanticModelGeneratorContext): Promise<void> {
         throw new Error("Method not implemented.");
     }
+
     protected writeForGithub(context: PydanticModelGeneratorContext): Promise<void> {
         throw new Error("Method not implemented.");
     }
