@@ -2,6 +2,7 @@ import { AccessLevel } from "./AccessLevel";
 import { DeclarationType } from "./DeclarationType";
 import { Type } from "./Type";
 import { AstNode, Writer } from "./core";
+import { isReservedKeyword } from "./syntax";
 
 export declare namespace Property {
     interface Args {
@@ -42,7 +43,11 @@ export class Property extends AstNode {
         }
         writer.write(this.declarationType);
         writer.write(" ");
-        writer.write(this.name); // TODO: Handle reserved words
+        if (isReservedKeyword(this.name)) {
+            writer.write(`\`${this.name}\``);
+        } else {
+            writer.write(this.name);
+        }
         writer.write(": ");
         this.type.write(writer);
         if (this.optional) {
