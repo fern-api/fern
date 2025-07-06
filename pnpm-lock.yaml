@@ -2484,9 +2484,6 @@ importers:
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/fs-utils
-      zod:
-        specifier: ^3.25.74
-        version: 3.25.74
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
@@ -17345,9 +17342,6 @@ packages:
   zod@3.25.67:
     resolution: {integrity: sha512-idA2YXwpCdqUSKRCACDE6ItZD9TZzy3OZMtpfLoh6oPR47lipysRrJfjzMqFxQ3uJuUPyUeWe1r9vLH33xO/Qw==}
 
-  zod@3.25.74:
-    resolution: {integrity: sha512-J8poo92VuhKjNknViHRAIuuN6li/EwFbAC8OedzI8uxpEPGiXHGQu9wemIAioIpqgfB4SySaJhdk0mH5Y4ICBg==}
-
   zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
 
@@ -26829,7 +26823,5 @@ snapshots:
   yoctocolors-cjs@2.1.2: {}
 
   zod@3.25.67: {}
-
-  zod@3.25.74: {}
 
   zwitch@2.0.4: {}

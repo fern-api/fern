@@ -30,8 +30,7 @@
   "dependencies": {
     "@fern-api/base-generator": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
-    "@fern-api/fs-utils": "workspace:*",
-    "zod": "^3.25.74"
+    "@fern-api/fs-utils": "workspace:*"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
