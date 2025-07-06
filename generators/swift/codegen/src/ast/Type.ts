@@ -1,6 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 
-import { AstNode, Writer } from "../core";
+import { AstNode, Writer } from "./core";
 
 type String = {
     type: "string";
