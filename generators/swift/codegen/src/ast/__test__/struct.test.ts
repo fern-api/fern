@@ -4,12 +4,10 @@ import { swift } from "../..";
 import { AccessLevel } from "../AccessLevel";
 import { DeclarationType } from "../DeclarationType";
 import { Type } from "../Type";
-import { Writer } from "../core";
 
 describe("Struct", () => {
     describe("write", () => {
         it("should write struct with all features", () => {
-            const writer = new Writer();
             const properties = [
                 swift.property({
                     name: "id",
@@ -31,9 +29,7 @@ describe("Struct", () => {
                 properties
             });
 
-            struct.write(writer);
-
-            expect(writer.toString()).toMatchInlineSnapshot(`
+            expect(struct.toString()).toMatchInlineSnapshot(`
               "public struct User: Codable, Equatable {
                   let id: Int
                   public let name: String
@@ -42,23 +38,19 @@ describe("Struct", () => {
         });
 
         it("should write struct with multiple conformances", () => {
-            const writer = new Writer();
             const struct = swift.struct({
                 name: "TestStruct",
                 conformances: ["Codable", "Equatable", "Hashable"],
                 properties: []
             });
 
-            struct.write(writer);
-
-            expect(writer.toString()).toMatchInlineSnapshot(`
+            expect(struct.toString()).toMatchInlineSnapshot(`
               "struct TestStruct: Codable, Equatable, Hashable {
               }"
             `);
         });
 
         it("should write struct with complex properties", () => {
-            const writer = new Writer();
             const properties = [
                 swift.property({
                     name: "staticProperty",
@@ -85,9 +77,7 @@ describe("Struct", () => {
                 properties
             });
 
-            struct.write(writer);
-
-            expect(writer.toString()).toMatchInlineSnapshot(`
+            expect(struct.toString()).toMatchInlineSnapshot(`
               "struct ComplexStruct {
                   static let staticProperty: String
                   var optionalProperty: Int?
@@ -97,7 +87,6 @@ describe("Struct", () => {
         });
 
         it("should write struct with reserved keyword properties", () => {
-            const writer = new Writer();
             const properties = [
                 swift.property({
                     name: "class",
@@ -116,9 +105,7 @@ describe("Struct", () => {
                 properties
             });
 
-            struct.write(writer);
-
-            expect(writer.toString()).toMatchInlineSnapshot(`
+            expect(struct.toString()).toMatchInlineSnapshot(`
               "struct ReservedStruct {
                   let \`class\`: String
                   let \`enum\`: Int
@@ -127,7 +114,6 @@ describe("Struct", () => {
         });
 
         it("should handle complex type properties", () => {
-            const writer = new Writer();
             const properties = [
                 swift.property({
                     name: "arrayProperty",
@@ -156,9 +142,7 @@ describe("Struct", () => {
                 properties
             });
 
-            struct.write(writer);
-
-            expect(writer.toString()).toMatchInlineSnapshot(`
+            expect(struct.toString()).toMatchInlineSnapshot(`
               "struct ComplexTypeStruct {
                   let arrayProperty: [String]
                   let dictProperty: [String: Int]
@@ -169,7 +153,6 @@ describe("Struct", () => {
         });
 
         it("should handle mixed property access levels", () => {
-            const writer = new Writer();
             const properties = [
                 swift.property({
                     name: "publicStatic",
@@ -199,9 +182,7 @@ describe("Struct", () => {
                 properties
             });
 
-            struct.write(writer);
-
-            expect(writer.toString()).toMatchInlineSnapshot(`
+            expect(struct.toString()).toMatchInlineSnapshot(`
               "internal struct AccessLevelStruct {
                   public static let publicStatic: String
                   private var privateOptional: Int?

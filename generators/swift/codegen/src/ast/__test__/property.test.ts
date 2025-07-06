@@ -4,12 +4,10 @@ import { swift } from "../..";
 import { AccessLevel } from "../AccessLevel";
 import { DeclarationType } from "../DeclarationType";
 import { Type } from "../Type";
-import { Writer } from "../core";
 
 describe("Property", () => {
     describe("write", () => {
         it("should write property with all modifiers", () => {
-            const writer = new Writer();
             const property = swift.property({
                 name: "fullProperty",
                 accessLevel: AccessLevel.Private,
@@ -19,9 +17,7 @@ describe("Property", () => {
                 optional: true
             });
 
-            property.write(writer);
-
-            expect(writer.toString()).toBe("private static let fullProperty: String?");
+            expect(property.toString()).toBe("private static let fullProperty: String?");
         });
 
         it("should write property with different types", () => {
@@ -36,16 +32,13 @@ describe("Property", () => {
             ];
 
             testCases.forEach(({ type, expected }) => {
-                const writer = new Writer();
                 const property = swift.property({
                     name: "testProperty",
                     declarationType: DeclarationType.Let,
                     type
                 });
 
-                property.write(writer);
-
-                expect(writer.toString()).toBe(`let testProperty: ${expected}`);
+                expect(property.toString()).toBe(`let testProperty: ${expected}`);
             });
         });
 
@@ -53,34 +46,27 @@ describe("Property", () => {
             const reservedKeywords = ["class", "enum", "static", "private", "protocol"];
 
             reservedKeywords.forEach((keyword) => {
-                const writer = new Writer();
                 const property = swift.property({
                     name: keyword,
                     declarationType: DeclarationType.Let,
                     type: Type.string()
                 });
 
-                property.write(writer);
-
-                expect(writer.toString()).toBe(`let \`${keyword}\`: String`);
+                expect(property.toString()).toBe(`let \`${keyword}\`: String`);
             });
         });
 
         it("should not add backticks to non-reserved keywords", () => {
-            const writer = new Writer();
             const property = swift.property({
                 name: "myProperty",
                 declarationType: DeclarationType.Let,
                 type: Type.string()
             });
 
-            property.write(writer);
-
-            expect(writer.toString()).toBe("let myProperty: String");
+            expect(property.toString()).toBe("let myProperty: String");
         });
 
         it("should handle complex nested types", () => {
-            const writer = new Writer();
             const property = swift.property({
                 name: "complexProperty",
                 accessLevel: AccessLevel.Public,
@@ -90,13 +76,10 @@ describe("Property", () => {
                 optional: true
             });
 
-            property.write(writer);
-
-            expect(writer.toString()).toBe("public static var complexProperty: [[String: (Int, Bool)]]?");
+            expect(property.toString()).toBe("public static var complexProperty: [[String: (Int, Bool)]]?");
         });
 
         it("should handle reserved keyword with all modifiers", () => {
-            const writer = new Writer();
             const property = swift.property({
                 name: "class",
                 accessLevel: AccessLevel.Private,
@@ -106,9 +89,7 @@ describe("Property", () => {
                 optional: true
             });
 
-            property.write(writer);
-
-            expect(writer.toString()).toBe("private static let `class`: String?");
+            expect(property.toString()).toBe("private static let `class`: String?");
         });
     });
 });
