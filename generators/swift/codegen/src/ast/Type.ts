@@ -66,6 +66,7 @@ export class Type extends AstNode {
                     }
                     elementType.write(writer);
                 });
+                writer.write(")");
                 break;
             case "array":
                 writer.write("[");
