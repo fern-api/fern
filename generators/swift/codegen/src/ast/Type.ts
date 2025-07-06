@@ -2,7 +2,7 @@ import { assertNever } from "@fern-api/core-utils";
 
 import { AstNode, Writer } from "./core";
 
-type String = {
+type String_ = {
     type: "string";
 };
 
@@ -34,7 +34,7 @@ type Dictionary = {
     valueType: Type;
 };
 
-type InternalType = String | Bool | Int | Double | Tuple | Array | Dictionary;
+type InternalType = String_ | Bool | Int | Double | Tuple | Array | Dictionary;
 
 export class Type extends AstNode {
     private internalType: InternalType;
@@ -44,7 +44,7 @@ export class Type extends AstNode {
         this.internalType = internalType;
     }
 
-    public write(writer: Writer) {
+    public write(writer: Writer): void {
         switch (this.internalType.type) {
             case "string":
                 writer.write("String");
@@ -85,31 +85,31 @@ export class Type extends AstNode {
         }
     }
 
-    public static string() {
+    public static string(): Type {
         return new this({ type: "string" });
     }
 
-    public static bool() {
+    public static bool(): Type {
         return new this({ type: "bool" });
     }
 
-    public static int() {
+    public static int(): Type {
         return new this({ type: "int" });
     }
 
-    public static double() {
+    public static double(): Type {
         return new this({ type: "double" });
     }
 
-    public static tuple(elements: [Type, ...Type[]]) {
+    public static tuple(elements: [Type, ...Type[]]): Type {
         return new this({ type: "tuple", elements });
     }
 
-    public static array(elementType: Type) {
+    public static array(elementType: Type): Type {
         return new this({ type: "array", elementType });
     }
 
-    public static dictionary(keyType: Type, valueType: Type) {
+    public static dictionary(keyType: Type, valueType: Type): Type {
         // TODO: keyType needs to conform to Hashable. We may want to enforce this as a constraint.
         return new this({ type: "dictionary", keyType, valueType });
     }
