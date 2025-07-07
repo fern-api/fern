@@ -1,4 +1,4 @@
-const reservedKeywordsAsList = [
+const reservedKeywords = [
     "Any",
     "as",
     "associatedtype",
@@ -56,9 +56,9 @@ const reservedKeywordsAsList = [
     "while"
 ] as const;
 
-const reservedKeywordsSet = new Set(reservedKeywordsAsList);
+const reservedKeywordsSet = new Set(reservedKeywords);
 
-export type ReservedKeyword = (typeof reservedKeywordsAsList)[number];
+export type ReservedKeyword = (typeof reservedKeywords)[number];
 
 export function isReservedKeyword(word: string): word is ReservedKeyword {
     return reservedKeywordsSet.has(word as ReservedKeyword);
