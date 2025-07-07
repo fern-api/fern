@@ -198,7 +198,6 @@ export async function loadAPIWorkspace({
     });
 
     let changelog = undefined;
-
     try {
         changelog = await loadAPIChangelog({ absolutePathToWorkspace });
     } catch (err) {}
@@ -294,7 +293,7 @@ export async function loadAPIWorkspace({
             cliVersion,
             loadAPIWorkspace
         });
-        
+
         return {
             didSucceed: true,
             workspace: fernWorkspace
