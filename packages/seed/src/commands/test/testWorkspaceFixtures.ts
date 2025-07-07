@@ -26,7 +26,6 @@ export async function testGenerator({
 }): Promise<boolean> {
     const testCases: Promise<TestRunner.TestResult>[] = [];
     for (const fixture of fixtures) {
-        console.log(fixture)
         const config = generator.workspaceConfig.fixtures?.[fixture];
         const matchingPrefix = LANGUAGE_SPECIFIC_FIXTURE_PREFIXES.filter((prefix) => fixture.startsWith(prefix))[0];
         if (matchingPrefix != null && !generator.workspaceName.startsWith(matchingPrefix)) {

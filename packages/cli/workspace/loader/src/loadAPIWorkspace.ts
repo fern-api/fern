@@ -304,6 +304,8 @@ export async function loadAPIWorkspace({
         };
     }
 
+    console.log("FAILURE HERE")
+
     return {
         didSucceed: false,
         failures: {
