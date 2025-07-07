@@ -301,7 +301,10 @@ export async function loadAPIWorkspace({
             loadAPIWorkspace
         });
 
-        console.log("Success path 3")
+        console.log("Success HERE")
+        console.log(absolutePathToWorkspace)
+        console.log(RelativeFilePath.of(DEFINITION_DIRECTORY))
+        console.log(fernWorkspace)
 
 
         return {
