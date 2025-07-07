@@ -21,6 +21,7 @@ export class ProtofileConverter extends AbstractSpecConverter<ProtofileConverter
         this.convertOptions();
         this.convertEnumsAndMessages();
         this.convertServices();
+        this.generateExamplesForServices();
         return this.finalizeIr();
     }
 
@@ -84,6 +85,10 @@ export class ProtofileConverter extends AbstractSpecConverter<ProtofileConverter
                 }
             }
         }
+    }
+
+    private generateExamplesForServices() {
+        
     }
 
     protected addEndpointToIr({

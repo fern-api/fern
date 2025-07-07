@@ -105,12 +105,10 @@ export class EnumOrMessageConverter extends AbstractConverter<
     public createTypeDeclaration({
         shape,
         referencedTypes,
-        omitV2Examples,
         docs
     }: {
         shape: FernIr.Type;
         referencedTypes: Set<TypeId>;
-        omitV2Examples?: boolean;
         docs?: string;
     }): FernIr.TypeDeclaration {
         return {
