@@ -51,7 +51,7 @@ export class Func extends AstNode {
     constructor({ accessLevel, modifier, name, params, async, throws, returnType }: Func.Args) {
         super();
         this.accessLevel = accessLevel;
-        ((this.modifier = modifier), (this.name = name), (this.params = params));
+        (this.modifier = modifier), (this.name = name), (this.params = params);
         this.async = async ?? false;
         this.throws = throws ?? false;
         this.returnType = returnType;
