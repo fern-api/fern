@@ -27,7 +27,9 @@ Add a movie to the database using the movies/* /... path.
 <dd>
 
 ```php
-
+$client->imdb->createMovie(
+    $request,
+);
 ```
 </dd>
 </dl>
@@ -67,7 +69,9 @@ Add a movie to the database using the movies/* /... path.
 <dd>
 
 ```php
-
+$client->imdb->getMovie(
+    '$movieId',
+);
 ```
 </dd>
 </dl>
