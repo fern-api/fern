@@ -198,6 +198,10 @@ export async function loadAPIWorkspace({
     });
 
     let changelog = undefined;
+
+    console.log("DAK TEST")
+    console.log(absolutePathToWorkspace)
+
     try {
         changelog = await loadAPIChangelog({ absolutePathToWorkspace });
     } catch (err) {}
@@ -299,8 +303,6 @@ export async function loadAPIWorkspace({
             workspace: fernWorkspace
         };
     }
-
-    console.log("DAK TEST")
 
     return {
         didSucceed: false,
