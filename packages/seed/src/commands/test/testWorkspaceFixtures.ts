@@ -11,7 +11,9 @@ import { TestRunner } from "./test-runner";
 
 export const LANGUAGE_SPECIFIC_FIXTURE_PREFIXES = ["csharp", "go", "java", "python", "ruby", "ts"];
 
-export const FIXTURES = readDirectories(path.join(__dirname, FERN_DIRECTORY, APIS_DIRECTORY));
+export const FIXTURES = readDirectories(
+    path.join(__dirname, "../../../test-definitions", FERN_DIRECTORY, APIS_DIRECTORY)
+);
 
 export async function testGenerator({
     runner,
