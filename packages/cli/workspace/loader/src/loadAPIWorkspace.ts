@@ -197,8 +197,8 @@ export async function loadAPIWorkspace({
         context
     });
 
-    console.log("DAK TEST1")
-
+    console.log("DAK TEST")
+    console.log(absolutePathToWorkspace)
 
     let changelog = undefined;
     try {
@@ -303,7 +303,6 @@ export async function loadAPIWorkspace({
         };
     }
 
-    console.log("DAK TEST")
     return {
         didSucceed: false,
         failures: {
