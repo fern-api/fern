@@ -1,6 +1,6 @@
 # Reference
 ## Imdb
-<details><summary><code>$client-><a href="/Seed/Imdb/ImdbClient.php">createMovie</a>($request) -> _Type</code></summary>
+<details><summary><code>$client-><a href="/Seed/Imdb/ImdbClient.php">createMovie</a>($request) -> string</code></summary>
 <dl>
 <dd>
 
@@ -27,9 +27,21 @@ Add a movie to the database using the movies/* /... path.
 <dd>
 
 ```php
-$client->imdb->createMovie(
-    $request,
+<?php
+
+use Seed;
+
+// Initialize the client
+$client = new FernClient(
+    token: '<YOUR_TOKEN>'
 );
+
+// Call the createMovie endpoint
+$response = $client->imdb->createMovie(
+    $request, // Request object
+);
+
+// $response is of type: string
 ```
 </dd>
 </dl>
@@ -44,7 +56,7 @@ $client->imdb->createMovie(
 <dl>
 <dd>
 
-**$request:** `_Type` 
+**$request:** `\Seed\Imdb\Types\CreateMovieRequest` 
     
 </dd>
 </dl>
@@ -56,7 +68,7 @@ $client->imdb->createMovie(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Imdb/ImdbClient.php">getMovie</a>($$movieId) -> _Type</code></summary>
+<details><summary><code>$client-><a href="/Seed/Imdb/ImdbClient.php">getMovie</a>($$movieId) -> \Seed\Imdb\Types\Movie</code></summary>
 <dl>
 <dd>
 
@@ -69,9 +81,21 @@ $client->imdb->createMovie(
 <dd>
 
 ```php
-$client->imdb->getMovie(
-    '$movieId',
+<?php
+
+use Seed;
+
+// Initialize the client
+$client = new FernClient(
+    token: '<YOUR_TOKEN>'
 );
+
+// Call the getMovie endpoint
+$response = $client->imdb->getMovie(
+    movieId: 'example-id', // string
+);
+
+// $response is of type: \Seed\Imdb\Types\Movie
 ```
 </dd>
 </dl>
@@ -86,7 +110,7 @@ $client->imdb->getMovie(
 <dl>
 <dd>
 
-**$movieId:** `_Type` 
+**$movieId:** `string` 
     
 </dd>
 </dl>

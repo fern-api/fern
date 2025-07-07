@@ -12,20 +12,41 @@ import { EndpointSignatureInfo } from "../endpoint/EndpointSignatureInfo";
  * Gets a safe type representation without calling toString()
  */
 function getSafeTypeRepresentation(type: any): string {
-    if (type == null) {
-        return "any";
+    if (type === null || type === undefined) {
+        return "mixed";
     }
-
-    // Instead of calling toString(), which might access undefined properties,
-    // we'll return a simplified type representation
+    
+    // Handle PHP _Type objects with internalType
+    if (type.internalType) {
+        if (type.internalType.type === 'string') {
+            return 'string';
+        } else if (type.internalType.type === 'reference' && type.internalType.value) {
+            // Handle class references
+            const ref = type.internalType.value;
+            if (ref.name && ref.namespace) {
+                return `\\${ref.namespace}\\${ref.name}`;
+            } else if (ref.name) {
+                return ref.name;
+            }
+        } else if (type.internalType.type) {
+            // Return the basic type
+            return type.internalType.type;
+        }
+    }
+    
+    // Handle Parameter objects
+    if (type.type && typeof type.type === 'object') {
+        return getSafeTypeRepresentation(type.type);
+    }
+    
+    // Fallback for other objects
     if (typeof type === 'object') {
-        // For PHP types, try to get a simple representation
         if (type.constructor && type.constructor.name) {
-            return `${type.constructor.name}`;
+            return type.constructor.name;
         }
         return "object";
     }
-
+    
     return String(type);
 }
 
@@ -45,23 +66,49 @@ function getEndpointSnippet({
     endpoint: HttpEndpoint;
     endpointSignatureInfo: EndpointSignatureInfo;
 }): string {
-    let snippet = "";
+    // Start with client initialization
+    let snippet = "<?php\n\n";
+    
+    // Add namespace for the client
+    const rootNamespace = context.getRootNamespace();
+    snippet += `use ${rootNamespace};\n\n`;
+    
+    // Add client initialization
+    const clientClass = context.getRootClientClassName();
+    snippet += `// Initialize the client\n$client = new ${clientClass}(\n    token: '<YOUR_TOKEN>'\n);\n\n`;
+    
+    // Add comment for the API call
+    snippet += `// Call the ${endpoint.name.originalName} endpoint\n`;
+    
+    // Get the service path for accessing the endpoint
     const servicePath = isRootServiceId({ context, serviceId })
         ? ""
         : service.name.fernFilepath.allParts.map(part => part.camelCase.safeName).join("->")+"->";
 
-    snippet += `$client->${servicePath}${context.getEndpointMethodName(endpoint)}(\n`;
+    // Start building the method call
+    snippet += `$response = $client->${servicePath}${context.getEndpointMethodName(endpoint)}(\n`;
 
-    endpointSignatureInfo.pathParameters.forEach((param, index) => {
-        snippet += `    '${param.name}',\n`;
+    // Add path parameters with proper types
+    endpointSignatureInfo.pathParameters.forEach((param) => {
+        const paramName = param.name.replace('$', '');
+        const paramType = getSafeTypeRepresentation(param.type);
+        snippet += `    ${paramName}: '${paramType === 'string' ? 'example-id' : '123'}', // ${paramType}\n`;
     });
 
+    // Add request body if present
     if (endpointSignatureInfo.requestParameter) {
-        snippet += `    $request,\n`;
+        snippet += `    $request, // Request object\n`;
     }
 
-    snippet += ");";
-
+    // Close the method call
+    snippet += ");\n\n";
+    
+    // Add comment about the response
+    if (endpointSignatureInfo.returnType) {
+        const returnType = getSafeTypeRepresentation(endpointSignatureInfo.returnType);
+        snippet += `// $response is of type: ${returnType}\n`;
+    }
+    
     return snippet;
 }
 
