@@ -197,6 +197,9 @@ export async function loadAPIWorkspace({
         context
     });
 
+    console.log("DAK TEST1")
+
+
     let changelog = undefined;
     try {
         changelog = await loadAPIChangelog({ absolutePathToWorkspace });
