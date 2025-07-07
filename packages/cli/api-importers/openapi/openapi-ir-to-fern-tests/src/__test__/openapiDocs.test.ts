@@ -19,6 +19,7 @@ describe("openapi-ir-to-fern docs", async () => {
             async () => {
                 const fixturePath = join(FIXTURES_DIR, RelativeFilePath.of(fixture.name), RelativeFilePath.of("fern"));
                 const context = createMockTaskContext();
+                console.log("openapiDocs.test.ts")
                 const workspace = await loadAPIWorkspace({
                     absolutePathToWorkspace: fixturePath,
                     context,
