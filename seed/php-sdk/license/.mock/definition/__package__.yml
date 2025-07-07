@@ -1,0 +1,13 @@
+types:
+  Type:
+    docs: A simple type with just a name.
+    properties:
+      name: string
+
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    get:
+      path: "/"
+      method: GET

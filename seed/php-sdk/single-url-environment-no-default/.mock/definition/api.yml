@@ -1,0 +1,8 @@
+name: single-url-environment-no-default
+auth: bearer
+environments:
+  Production: https://production.com/api
+  Staging: https://staging.com/api
+default-environment: null
+error-discrimination:
+  strategy: status-code

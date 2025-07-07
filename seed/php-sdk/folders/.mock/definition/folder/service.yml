@@ -1,0 +1,17 @@
+service:
+  base-path: /service
+  auth: false
+  endpoints:
+    endpoint:
+      method: GET
+      path: ""
+    unknownRequest:
+      method: POST
+      path: ""
+      request: unknown
+      errors:
+        - NotFoundError
+errors:
+  NotFoundError:
+    status-code: 404
+    type: string
