@@ -307,6 +307,9 @@ export async function loadAPIWorkspace({
 
     console.log("FAILURE HERE")
     console.log(absolutePathToWorkspace)
+    console.log(context)
+    console.log(cliVersion)
+    console.log(workspaceName)
     console.log(RelativeFilePath.of(DEFINITION_DIRECTORY))
 
     return {
