@@ -416,7 +416,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
 
     private getReferenceToWebsocket(context: SdkContext): ts.Expression {
         const baseUrl = this.getBaseUrl(this.channel, context);
-        let url = buildUrl({
+        const url = buildUrl({
             endpoint: {
                 allPathParameters: [...this.intermediateRepresentation.pathParameters, ...this.channel.pathParameters],
                 fullPath: this.channel.path,
