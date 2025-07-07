@@ -206,6 +206,7 @@ export async function loadAPIWorkspace({
     } catch (err) {}
 
     if (generatorsConfiguration?.api != null && generatorsConfiguration?.api.type === "conjure") {
+        console.log("Success path 1")
         return {
             didSucceed: true,
             workspace: new ConjureWorkspace({
@@ -264,6 +265,9 @@ export async function loadAPIWorkspace({
             }
         }
 
+        console.log("Success path 2")
+
+
         return {
             didSucceed: true,
             workspace: new OSSWorkspace({
@@ -296,6 +300,9 @@ export async function loadAPIWorkspace({
             cliVersion,
             loadAPIWorkspace
         });
+
+        console.log("Success path 3")
+
 
         return {
             didSucceed: true,
