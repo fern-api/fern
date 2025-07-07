@@ -199,9 +199,6 @@ export async function loadAPIWorkspace({
 
     let changelog = undefined;
 
-    console.log("DAK TEST")
-    console.log(absolutePathToWorkspace)
-
     try {
         changelog = await loadAPIChangelog({ absolutePathToWorkspace });
     } catch (err) {}
@@ -298,19 +295,11 @@ export async function loadAPIWorkspace({
             loadAPIWorkspace
         });
         
-
         return {
             didSucceed: true,
             workspace: fernWorkspace
         };
     }
-
-    console.log("FAILURE HERE")
-    console.log(absolutePathToWorkspace)
-    console.log(context)
-    console.log(cliVersion)
-    console.log(workspaceName)
-    console.log(RelativeFilePath.of(DEFINITION_DIRECTORY))
 
     return {
         didSucceed: false,

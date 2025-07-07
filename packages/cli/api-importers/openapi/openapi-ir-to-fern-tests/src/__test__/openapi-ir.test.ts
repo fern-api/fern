@@ -23,7 +23,6 @@ describe("openapi-ir", async () => {
             async () => {
                 const fixturePath = join(FIXTURES_DIR, RelativeFilePath.of(fixture.name), RelativeFilePath.of("fern"));
                 const context = createMockTaskContext();
-                console.log("openapi-ir.test.ts")
                 const workspace = await loadAPIWorkspace({
                     absolutePathToWorkspace: fixturePath,
                     context,
