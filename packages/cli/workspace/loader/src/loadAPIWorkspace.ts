@@ -297,6 +297,7 @@ export async function loadAPIWorkspace({
             cliVersion,
             loadAPIWorkspace
         });
+        
 
         return {
             didSucceed: true,
@@ -305,6 +306,8 @@ export async function loadAPIWorkspace({
     }
 
     console.log("FAILURE HERE")
+    console.log(absolutePathToWorkspace)
+    console.log(RelativeFilePath.of(DEFINITION_DIRECTORY))
 
     return {
         didSucceed: false,
