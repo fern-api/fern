@@ -300,6 +300,7 @@ export async function loadAPIWorkspace({
         };
     }
 
+    console.log("DAK TEST")
     return {
         didSucceed: false,
         failures: {
