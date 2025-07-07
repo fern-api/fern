@@ -9,5 +9,5 @@ export * from "./stream/index";
 export * from "./utils/index";
 export * from "./websocket/index";
 export * from "./utils/index";
-export * as url from "./url/index.js";
-export * from "./base64.js";
+export * as url from "./url/index";
+export * from "./base64";

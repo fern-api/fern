@@ -45,7 +45,6 @@ class ServiceClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.service.nop(
-            id="id-a2ijs82",
             nested_id="id-219xca8",
         )
         """
@@ -96,7 +95,6 @@ class AsyncServiceClient:
 
         async def main() -> None:
             await client.service.nop(
-                id="id-a2ijs82",
                 nested_id="id-219xca8",
             )
 

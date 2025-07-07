@@ -384,7 +384,10 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 serviceClassName: this.serviceClassName,
                 requireDefaultEnvironment: this.requireDefaultEnvironment,
                 intermediateRepresentation: this.intermediateRepresentation,
-                generatedSdkClientClass: this
+                generatedSdkClientClass: this,
+                includeSerdeLayer: this.includeSerdeLayer,
+                retainOriginalCasing: this.retainOriginalCasing,
+                omitUndefined: this.omitUndefined
             });
         } else {
             this.generatedWebsocketImplementation = undefined;
@@ -887,7 +890,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         const rootHeaders = this.isRoot ? this.getRootHeaders(context) : [];
         const shouldGenerateRootHeaders = this.isRoot && rootHeaders.length > 0;
         if (shouldGenerateRootHeaders) {
-            context.importsManager.addImportFromRoot("core/headers.js", {
+            context.importsManager.addImportFromRoot("core/headers", {
                 namedImports: ["mergeHeaders"]
             });
             return code`this._options = {

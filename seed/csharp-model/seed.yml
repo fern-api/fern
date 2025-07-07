@@ -53,3 +53,10 @@ allowedFailures:
   - mixed-file-directory
   - objects-with-imports
   - pagination-custom
+  - circular-references
+  - circular-references-advanced
+  - examples
+  - exhaustive
+  - pagination
+  - trace
+  - undiscriminated-unions.

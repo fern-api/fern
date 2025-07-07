@@ -1,3 +1,14 @@
+## 2.3.3
+**`(internal):`** Bump version to test Docker image rename to `fernapi/fern-typescript-sdk`
+
+## 2.3.2
+**`(fix):`** Remove ".js" extension from ESM imports in the source generator code. 
+If `useLegacyExports` is `true`, you will not see ".js" extensions in ESM imports.
+If `useLegacyExports` is `false` (default), a post process step will add the `.js` extension, so you won't see a difference.
+
+We're doing this because Jest has a bug where it doesn't properly load TypeScript modules even though the TypeScript and imports are valid.
+
+
 ## 2.3.1
 **`(fix):`** Fixes an issue where OAuth clients would not compile when variables were configured
 in the SDK. Now, the oauth client is instantiated with any global path parameters or headers. 
@@ -26,7 +37,7 @@ You can override these fields using the `packageJson` config:
 groups:
   ts-sdk:
     generators:
-      - name: fernapi/fern-typescript-node-sdk
+      - name: fernapi/fern-typescript-sdk
         config:
           packageJson:
             engines:

@@ -21,6 +21,9 @@ export declare namespace GeneratedWebsocketSocketClassImpl {
         includeSerdeLayer: boolean;
         channel: WebSocketChannel;
         serviceClassName: string;
+        retainOriginalCasing: boolean;
+        omitUndefined: boolean;
+        skipResponseValidation: boolean;
     }
 }
 
@@ -39,12 +42,26 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
     private readonly includeSerdeLayer: boolean;
     private readonly serviceClassName: string;
     private readonly packageId: PackageId;
+    private readonly retainOriginalCasing: boolean;
+    private readonly omitUndefined: boolean;
+    private readonly skipResponseValidation: boolean;
 
-    constructor({ packageId, includeSerdeLayer, channel, serviceClassName }: GeneratedWebsocketSocketClassImpl.Init) {
+    constructor({
+        packageId,
+        includeSerdeLayer,
+        channel,
+        serviceClassName,
+        retainOriginalCasing,
+        omitUndefined,
+        skipResponseValidation
+    }: GeneratedWebsocketSocketClassImpl.Init) {
         this.includeSerdeLayer = includeSerdeLayer;
         this.channel = channel;
         this.packageId = packageId;
         this.serviceClassName = serviceClassName;
+        this.retainOriginalCasing = retainOriginalCasing;
+        this.omitUndefined = omitUndefined;
+        this.skipResponseValidation = skipResponseValidation;
     }
 
     public writeToFile(context: SdkContext): void {
@@ -436,7 +453,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
         return {
             kind: StructureKind.Method,
             name: "sendJson",
-            scope: Scope.Private,
+            scope: Scope.Protected,
             returnType: "void",
             parameters: [
                 {
@@ -460,7 +477,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
         return {
             kind: StructureKind.Method,
             name: "sendBinary",
-            scope: Scope.Private,
+            scope: Scope.Protected,
             returnType: "void",
             parameters: [
                 {
@@ -560,12 +577,12 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
                 return context.typeSchema
                     .getSchemaOfTypeReference(subscribeMessage.bodyType)
                     .jsonOrThrow(referenceToRequestBody, {
-                        unrecognizedObjectKeys: "strip",
+                        unrecognizedObjectKeys: "passthrough",
                         allowUnrecognizedEnumValues: true,
                         allowUnrecognizedUnionMembers: true,
-                        skipValidation: true,
+                        skipValidation: this.skipResponseValidation,
                         breadcrumbsPrefix: [],
-                        omitUndefined: false
+                        omitUndefined: this.omitUndefined
                     });
         }
     }
