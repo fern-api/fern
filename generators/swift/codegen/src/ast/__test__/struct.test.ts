@@ -10,12 +10,12 @@ describe("Struct", () => {
         it("should write struct with all features", () => {
             const properties = [
                 swift.property({
-                    name: "id",
+                    unsafeName: "id",
                     declarationType: DeclarationType.Let,
                     type: Type.int()
                 }),
                 swift.property({
-                    name: "name",
+                    unsafeName: "name",
                     accessLevel: AccessLevel.Public,
                     declarationType: DeclarationType.Let,
                     type: Type.string()
@@ -53,19 +53,19 @@ describe("Struct", () => {
         it("should write struct with complex properties", () => {
             const properties = [
                 swift.property({
-                    name: "staticProperty",
+                    unsafeName: "staticProperty",
                     static_: true,
                     declarationType: DeclarationType.Let,
                     type: Type.string()
                 }),
                 swift.property({
-                    name: "optionalProperty",
+                    unsafeName: "optionalProperty",
                     declarationType: DeclarationType.Var,
                     type: Type.int(),
                     optional: true
                 }),
                 swift.property({
-                    name: "privateProperty",
+                    unsafeName: "privateProperty",
                     accessLevel: AccessLevel.Private,
                     declarationType: DeclarationType.Let,
                     type: Type.array(Type.string())
@@ -89,12 +89,12 @@ describe("Struct", () => {
         it("should write struct with reserved keyword properties", () => {
             const properties = [
                 swift.property({
-                    name: "class",
+                    unsafeName: "class",
                     declarationType: DeclarationType.Let,
                     type: Type.string()
                 }),
                 swift.property({
-                    name: "enum",
+                    unsafeName: "enum",
                     declarationType: DeclarationType.Let,
                     type: Type.int()
                 })
@@ -116,22 +116,22 @@ describe("Struct", () => {
         it("should handle complex type properties", () => {
             const properties = [
                 swift.property({
-                    name: "arrayProperty",
+                    unsafeName: "arrayProperty",
                     declarationType: DeclarationType.Let,
                     type: Type.array(Type.string())
                 }),
                 swift.property({
-                    name: "dictProperty",
+                    unsafeName: "dictProperty",
                     declarationType: DeclarationType.Let,
                     type: Type.dictionary(Type.string(), Type.int())
                 }),
                 swift.property({
-                    name: "tupleProperty",
+                    unsafeName: "tupleProperty",
                     declarationType: DeclarationType.Let,
                     type: Type.tuple([Type.string(), Type.int()])
                 }),
                 swift.property({
-                    name: "nestedProperty",
+                    unsafeName: "nestedProperty",
                     declarationType: DeclarationType.Let,
                     type: Type.array(Type.dictionary(Type.string(), Type.int()))
                 })
@@ -155,21 +155,21 @@ describe("Struct", () => {
         it("should handle mixed property access levels", () => {
             const properties = [
                 swift.property({
-                    name: "publicStatic",
+                    unsafeName: "publicStatic",
                     accessLevel: AccessLevel.Public,
                     static_: true,
                     declarationType: DeclarationType.Let,
                     type: Type.string()
                 }),
                 swift.property({
-                    name: "privateOptional",
+                    unsafeName: "privateOptional",
                     accessLevel: AccessLevel.Private,
                     declarationType: DeclarationType.Var,
                     type: Type.int(),
                     optional: true
                 }),
                 swift.property({
-                    name: "fileprivateArray",
+                    unsafeName: "fileprivateArray",
                     accessLevel: AccessLevel.Fileprivate,
                     declarationType: DeclarationType.Let,
                     type: Type.array(Type.double())
