@@ -6,7 +6,7 @@ import { isReservedKeyword } from "./syntax";
 
 export declare namespace Property {
     interface Args {
-        name: string;
+        unsafeName: string;
         accessLevel?: AccessLevel;
         static_?: boolean;
         declarationType: DeclarationType;
@@ -16,16 +16,16 @@ export declare namespace Property {
 }
 
 export class Property extends AstNode {
-    public readonly name: string;
+    public readonly unsafeName: string;
     public readonly accessLevel?: AccessLevel;
     public readonly static_?: boolean;
     public readonly declarationType: DeclarationType;
     public readonly type: Type;
     public readonly optional?: boolean;
 
-    constructor({ name, accessLevel, static_, declarationType, type, optional }: Property.Args) {
+    constructor({ unsafeName, accessLevel, static_, declarationType, type, optional }: Property.Args) {
         super();
-        this.name = name;
+        this.unsafeName = unsafeName;
         this.accessLevel = accessLevel;
         this.static_ = static_;
         this.declarationType = declarationType;
@@ -43,10 +43,10 @@ export class Property extends AstNode {
         }
         writer.write(this.declarationType);
         writer.write(" ");
-        if (isReservedKeyword(this.name)) {
-            writer.write(`\`${this.name}\``);
+        if (isReservedKeyword(this.unsafeName)) {
+            writer.write(`\`${this.unsafeName}\``);
         } else {
-            writer.write(this.name);
+            writer.write(this.unsafeName);
         }
         writer.write(": ");
         this.type.write(writer);

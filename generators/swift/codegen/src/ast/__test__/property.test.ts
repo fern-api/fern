@@ -9,7 +9,7 @@ describe("Property", () => {
     describe("write", () => {
         it("should write property with all modifiers", () => {
             const property = swift.property({
-                name: "fullProperty",
+                unsafeName: "fullProperty",
                 accessLevel: AccessLevel.Private,
                 static_: true,
                 declarationType: DeclarationType.Let,
@@ -33,7 +33,7 @@ describe("Property", () => {
 
             testCases.forEach(({ type, expected }) => {
                 const property = swift.property({
-                    name: "testProperty",
+                    unsafeName: "testProperty",
                     declarationType: DeclarationType.Let,
                     type
                 });
@@ -47,7 +47,7 @@ describe("Property", () => {
 
             reservedKeywords.forEach((keyword) => {
                 const property = swift.property({
-                    name: keyword,
+                    unsafeName: keyword,
                     declarationType: DeclarationType.Let,
                     type: Type.string()
                 });
@@ -58,7 +58,7 @@ describe("Property", () => {
 
         it("should not add backticks to non-reserved keywords", () => {
             const property = swift.property({
-                name: "myProperty",
+                unsafeName: "myProperty",
                 declarationType: DeclarationType.Let,
                 type: Type.string()
             });
@@ -68,7 +68,7 @@ describe("Property", () => {
 
         it("should handle complex nested types", () => {
             const property = swift.property({
-                name: "complexProperty",
+                unsafeName: "complexProperty",
                 accessLevel: AccessLevel.Public,
                 static_: true,
                 declarationType: DeclarationType.Var,
@@ -81,7 +81,7 @@ describe("Property", () => {
 
         it("should handle reserved keyword with all modifiers", () => {
             const property = swift.property({
-                name: "class",
+                unsafeName: "class",
                 accessLevel: AccessLevel.Private,
                 static_: true,
                 declarationType: DeclarationType.Let,
