@@ -1,116 +1,116 @@
-import Swift, { AccessLevel, ClassLevel, Enum, Func } from "..";
-import { Field } from "./Field";
+import { assertNever } from "@fern-api/core-utils";
+
 import { AstNode, Writer } from "./core";
 
-/*
+type String_ = {
+    type: "string";
+};
 
-Builds Swift Types (Classes, Structs, etc)
-==========================================
+type Bool = {
+    type: "bool";
+};
 
-Example:
+type Int = {
+    type: "int";
+};
 
-private class Mike: Person {
+type Double = {
+    type: "double";
+};
 
-    class Snowboard {
-        ...
-    }
-    
-    func wave() {
-        print("👋")
-    }
+type Tuple = {
+    type: "tuple";
+    elements: [Type, ...Type[]];
+};
 
-}
+type Array = {
+    type: "array";
+    elementType: Type;
+};
 
-Breakdown:
+type Dictionary = {
+    type: "dictionary";
+    keyType: Type;
+    valueType: Type;
+};
 
-{accessLevel} {classLevel} {name}: {inheritance} {
-
-    {subclasses}
-    
-    {functions}
-
-}
-
-*/
-
-export declare namespace Type {
-    interface Args {
-        /* The access level of the type */
-        accessLevel?: AccessLevel;
-        /* The class level of the type, such as class or struct */
-        classLevel?: ClassLevel;
-        /* The name of the type */
-        name: string;
-        /* The subclasses of this type, which can be other types or enums */
-        subclasses?: (Type | Enum)[];
-        /* The field variables in the class */
-        fields?: Field[];
-        /* The functions associated with this type */
-        functions?: Func[];
-        /* The inheritance hierarchy of this type */
-        inheritance?: Type[];
-    }
-}
+type InternalType = String_ | Bool | Int | Double | Tuple | Array | Dictionary;
 
 export class Type extends AstNode {
-    public readonly accessLevel?: AccessLevel;
-    public readonly classLevel?: ClassLevel;
-    public readonly name: string;
-    public readonly subclasses?: (Type | Enum)[];
-    public readonly fields?: Field[];
-    public readonly functions?: Func[];
-    public readonly inheritance?: Type[];
+    private internalType: InternalType;
 
-    constructor({ accessLevel, classLevel, name, subclasses, fields, functions, inheritance }: Type.Args) {
+    private constructor(internalType: InternalType) {
         super();
-        this.accessLevel = accessLevel;
-        this.classLevel = classLevel;
-        this.name = name;
-        this.subclasses = subclasses;
-        this.fields = fields;
-        this.functions = functions;
-        this.inheritance = inheritance;
-    }
-
-    private buildTitle(): string | undefined {
-        if (!this.inheritance) {
-            return this.name;
-        }
-
-        const names = this.inheritance.map((obj) => obj.name).join(", ");
-        return `${this.name}: ${names}`;
+        this.internalType = internalType;
     }
 
     public write(writer: Writer): void {
-        // example: public class Name {
-        writer.openBlock(
-            [this.accessLevel, this.classLevel, this.buildTitle()],
-            "{",
-            () => {
-                writer.newLine();
+        switch (this.internalType.type) {
+            case "string":
+                writer.write("String");
+                break;
+            case "bool":
+                writer.write("Bool");
+                break;
+            case "int":
+                writer.write("Int");
+                break;
+            case "double":
+                writer.write("Double");
+                break;
+            case "tuple":
+                writer.write("(");
+                this.internalType.elements.forEach((elementType, index) => {
+                    if (index > 0) {
+                        writer.write(", ");
+                    }
+                    elementType.write(writer);
+                });
+                writer.write(")");
+                break;
+            case "array":
+                writer.write("[");
+                this.internalType.elementType.write(writer);
+                writer.write("]");
+                break;
+            case "dictionary":
+                writer.write("[");
+                this.internalType.keyType.write(writer);
+                writer.write(": ");
+                this.internalType.valueType.write(writer);
+                writer.write("]");
+                break;
+            default:
+                assertNever(this.internalType);
+        }
+    }
 
-                if (this.subclasses) {
-                    this.subclasses.forEach((sub) => {
-                        writer.writeNode(sub);
-                        writer.newLine();
-                    });
-                }
+    public static string(): Type {
+        return new this({ type: "string" });
+    }
 
-                if (this.fields) {
-                    this.fields.forEach((field) => {
-                        writer.writeNode(field);
-                    });
-                    writer.newLine();
-                }
+    public static bool(): Type {
+        return new this({ type: "bool" });
+    }
 
-                if (this.functions) {
-                    this.functions.forEach((func) => {
-                        writer.writeNode(func);
-                        writer.newLine();
-                    });
-                }
-            },
-            "}"
-        );
+    public static int(): Type {
+        return new this({ type: "int" });
+    }
+
+    public static double(): Type {
+        return new this({ type: "double" });
+    }
+
+    public static tuple(elements: [Type, ...Type[]]): Type {
+        return new this({ type: "tuple", elements });
+    }
+
+    public static array(elementType: Type): Type {
+        return new this({ type: "array", elementType });
+    }
+
+    public static dictionary(keyType: Type, valueType: Type): Type {
+        // TODO: keyType needs to conform to Hashable. We may want to enforce this as a constraint.
+        return new this({ type: "dictionary", keyType, valueType });
     }
 }
