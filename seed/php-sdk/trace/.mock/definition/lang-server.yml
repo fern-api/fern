@@ -1,0 +1,7 @@
+types:
+  LangServerRequest:
+    properties:
+      request: unknown
+  LangServerResponse:
+    properties:
+      response: unknown

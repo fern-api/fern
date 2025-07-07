@@ -1,0 +1,37 @@
+imports:
+  user: user.yml
+
+types:
+  Organization:
+    properties:
+      name: string
+      tags: list<string>
+
+service:
+  base-path: "/organizations/{organization_id}"
+  auth: false
+  path-parameters:
+    organization_id: string
+  endpoints:
+    getOrganization:
+      path: "/"
+      method: GET
+      response: Organization
+
+    getOrganizationUser:
+      path: "/users/{user_id}"
+      method: GET
+      request:
+        name: GetOrganizationUserRequest
+        path-parameters:
+          user_id: string
+      response: user.User
+
+    searchOrganizations:
+      path: "/search"
+      method: GET
+      request:
+        name: SearchOrganizationsRequest
+        query-parameters:
+          limit: optional<integer>
+      response: list<Organization>

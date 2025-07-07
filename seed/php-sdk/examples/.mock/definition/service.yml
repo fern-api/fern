@@ -1,0 +1,56 @@
+imports:
+  types: types.yml
+
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    getMovie:
+      method: GET
+      path: /movie/{movieId}
+      path-parameters:
+        movieId: types.MovieId
+      response: types.Movie
+      examples:
+        - path-parameters:
+            movieId: $types.MovieId.One
+          response:
+            body: $types.Movie.One
+
+    createMovie:
+      method: POST
+      path: /movie
+      request: types.Movie
+      response: types.MovieId
+      examples:
+        - request: $types.Movie.One
+          response:
+            body: $types.MovieId.One
+
+    getMetadata:
+      method: GET
+      path: /metadata
+      request:
+        name: GetMetadataRequest
+        query-parameters:
+          shallow: optional<boolean>
+          tag:
+            type: optional<string>
+            allow-multiple: true
+        headers:
+          X-API-Version: string
+      response: types.Metadata
+      examples:
+        - query-parameters:
+            shallow: false
+            tag: development
+          headers:
+            X-API-Version: 0.0.1
+          response:
+            body: $types.Metadata.One
+
+    createBigEntity:
+      method: POST
+      path: /big-entity
+      request: types.BigEntity
+      response: types.Response
