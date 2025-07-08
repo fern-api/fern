@@ -11,7 +11,7 @@ WEBSOCKETS_MODULE = AST.Module.external(
 )
 
 WEBSOCKETS_LEGACY_CLIENT_MODULE = AST.Module.external(
-    # allows use of websockets<14
+    # allows use of websockets>=14 alongside earlier
     # see https://websockets.readthedocs.io/en/stable/howto/upgrade.html to migrate away
     module_path=("websockets", "legacy", "client"),
     dependency=AST.Dependency(
