@@ -43,6 +43,9 @@ importers:
       '@babel/preset-typescript':
         specifier: ^7.26.0
         version: 7.27.1(@babel/core@7.27.4)
+      '@biomejs/biome':
+        specifier: 2.1.0
+        version: 2.1.0
       '@blueprintjs/eslint-plugin':
         specifier: ^6.1.6
         version: 6.1.12(eslint@8.57.1)(typescript@5.7.2)
@@ -10172,6 +10175,59 @@ packages:
   '@bcoe/v8-coverage@0.2.3':
     resolution: {integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==}
 
+  '@biomejs/biome@2.1.0':
+    resolution: {integrity: sha512-K2UDr1dCiaOWegp4yQLMC4Evgl85ze1O7r+WxPeO7cNl0XrIcTshvdQGMDB23c/2afXz6RsOKYfWLErNbBbjmA==}
+    engines: {node: '>=14.21.3'}
+    hasBin: true
+
+  '@biomejs/cli-darwin-arm64@2.1.0':
+    resolution: {integrity: sha512-RDXEUGSCvUx3PKWRt95WRtwH+l01slm7r2zaotDwWERn/RITMcdet21rI5q5cYhL4XJiAvLHG8qyLNSXqIOCwQ==}
+    engines: {node: '>=14.21.3'}
+    cpu: [arm64]
+    os: [darwin]
+
+  '@biomejs/cli-darwin-x64@2.1.0':
+    resolution: {integrity: sha512-epLFRbMjYS/Cu9Kc5gM3wzUExsKj2Z0oxIiuxlI4ZterIqm19yvTOtJoqSec8gjUXOTNvPVoEIfSSXg37yepow==}
+    engines: {node: '>=14.21.3'}
+    cpu: [x64]
+    os: [darwin]
+
+  '@biomejs/cli-linux-arm64-musl@2.1.0':
+    resolution: {integrity: sha512-J7z6s/M50wt5lhSkivAs2GJHPhiah3hkdg1LipM6wlK6cVC3YeIA/X6pgWBfjEwyfsFlpc3nRM+pQ17DI8FpDQ==}
+    engines: {node: '>=14.21.3'}
+    cpu: [arm64]
+    os: [linux]
+
+  '@biomejs/cli-linux-arm64@2.1.0':
+    resolution: {integrity: sha512-HZys1/TeIH5lagwtf9yKSO+gtA+cYMJW22ckDGuKt2xIvPu7VqgTNjJtTdRcetXe0+benlMMo+KFs3xL2b/2QA==}
+    engines: {node: '>=14.21.3'}
+    cpu: [arm64]
+    os: [linux]
+
+  '@biomejs/cli-linux-x64-musl@2.1.0':
+    resolution: {integrity: sha512-uj8felYcBeXh32kznnKrAQoZ9pLqta/6qvwLJ4AZtUmY6cSUUa5c+VLnFtxMfuhvps/M4D55VGnwSINOEblPQg==}
+    engines: {node: '>=14.21.3'}
+    cpu: [x64]
+    os: [linux]
+
+  '@biomejs/cli-linux-x64@2.1.0':
+    resolution: {integrity: sha512-nAVAP1ov/zcXMhNq3WCbYZmlU/YTF3ZT+LeXR1CEJnDgunPC/Srp7j1LWlrIx6wxNOCDOFow8fmyfC7c/BKLig==}
+    engines: {node: '>=14.21.3'}
+    cpu: [x64]
+    os: [linux]
+
+  '@biomejs/cli-win32-arm64@2.1.0':
+    resolution: {integrity: sha512-eGGqGs+8Q34n1zp/rEadFRKjzwFszpZ2+p6B1Dmi7dn1DNEYhNXoRWLcjyca+ZSTrdV7COx0scyjgF9Tg73kBw==}
+    engines: {node: '>=14.21.3'}
+    cpu: [arm64]
+    os: [win32]
+
+  '@biomejs/cli-win32-x64@2.1.0':
+    resolution: {integrity: sha512-pkp6jucyvE8DJSXXwSKs+Mxx1KXkMJ2d8GbBu4Lf0nAQHl40TZjjp1RuNEo9Z7NNXPQzbLACDtK6/vDalO2WRg==}
+    engines: {node: '>=14.21.3'}
+    cpu: [x64]
+    os: [win32]
+
   '@blueprintjs/colors@5.1.8':
     resolution: {integrity: sha512-rCl+NZwR6xjJeCB6yWglbqWU2zOdVgeI5unBASalzMXWpRO0UXIjx0pA/Vtii4cB2kIdk8PaHTlGmZnLTu/MSg==}
 
@@ -18119,6 +18175,41 @@ snapshots:
       '@babel/helper-validator-identifier': 7.27.1
 
   '@bcoe/v8-coverage@0.2.3': {}
+
+  '@biomejs/biome@2.1.0':
+    optionalDependencies:
+      '@biomejs/cli-darwin-arm64': 2.1.0
+      '@biomejs/cli-darwin-x64': 2.1.0
+      '@biomejs/cli-linux-arm64': 2.1.0
+      '@biomejs/cli-linux-arm64-musl': 2.1.0
+      '@biomejs/cli-linux-x64': 2.1.0
+      '@biomejs/cli-linux-x64-musl': 2.1.0
+      '@biomejs/cli-win32-arm64': 2.1.0
+      '@biomejs/cli-win32-x64': 2.1.0
+
+  '@biomejs/cli-darwin-arm64@2.1.0':
+    optional: true
+
+  '@biomejs/cli-darwin-x64@2.1.0':
+    optional: true
+
+  '@biomejs/cli-linux-arm64-musl@2.1.0':
+    optional: true
+
+  '@biomejs/cli-linux-arm64@2.1.0':
+    optional: true
+
+  '@biomejs/cli-linux-x64-musl@2.1.0':
+    optional: true
+
+  '@biomejs/cli-linux-x64@2.1.0':
+    optional: true
+
+  '@biomejs/cli-win32-arm64@2.1.0':
+    optional: true
+
+  '@biomejs/cli-win32-x64@2.1.0':
+    optional: true
 
   '@blueprintjs/colors@5.1.8':
     dependencies:

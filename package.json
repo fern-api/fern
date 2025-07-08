@@ -66,6 +66,7 @@
     "@babel/core": "^7.26.0",
     "@babel/preset-env": "^7.26.0",
     "@babel/preset-typescript": "^7.26.0",
+    "@biomejs/biome": "2.1.0",
     "@blueprintjs/eslint-plugin": "^6.1.6",
     "@blueprintjs/stylelint-plugin": "^4.1.14",
     "@fern-api/configs": "workspace:*",
