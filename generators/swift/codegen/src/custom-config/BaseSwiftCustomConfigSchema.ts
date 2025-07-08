@@ -1,7 +1,5 @@
 import { z } from "zod";
 
-export const BaseSwiftCustomConfigSchema = z.object({
-    "use-discriminated-unions": z.boolean().optional()
-});
+export const BaseSwiftCustomConfigSchema = z.object({});
 
 export type BaseSwiftCustomConfigSchema = z.infer<typeof BaseSwiftCustomConfigSchema>;
