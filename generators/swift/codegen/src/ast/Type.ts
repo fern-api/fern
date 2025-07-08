@@ -58,6 +58,15 @@ type Dictionary = {
     valueType: Type;
 };
 
+/**
+ * A reference to a custom type.
+ */
+type Custom = {
+    type: "custom";
+    /** The name of the custom type. */
+    name: string;
+};
+
 type Any = {
     type: "any";
 };
@@ -76,6 +85,7 @@ type InternalType =
     | Tuple
     | Array_
     | Dictionary
+    | Custom
     | Any;
 
 export class Type extends AstNode {
@@ -140,6 +150,9 @@ export class Type extends AstNode {
                 this.internalType.valueType.write(writer);
                 writer.write("]");
                 break;
+            case "custom":
+                writer.write(this.internalType.name);
+                break;
             case "any":
                 writer.write("Any");
                 break;
@@ -199,6 +212,10 @@ export class Type extends AstNode {
     public static dictionary(keyType: Type, valueType: Type): Type {
         // TODO: keyType needs to conform to Hashable. We may want to enforce this as a constraint.
         return new this({ type: "dictionary", keyType, valueType });
+    }
+
+    public static custom(name: string): Type {
+        return new this({ type: "custom", name });
     }
 
     public static any(): Type {

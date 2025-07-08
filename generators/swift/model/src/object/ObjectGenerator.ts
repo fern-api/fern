@@ -98,7 +98,7 @@ export class ObjectGenerator {
                     _other: () => swift.Type.any()
                 });
             case "named":
-                return swift.Type.any();
+                return swift.Type.custom(typeReference.name.pascalCase.unsafeName);
             case "unknown":
                 return swift.Type.any();
             default:
