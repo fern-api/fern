@@ -5,5 +5,4 @@
 from . import service
 from .client import AsyncSeedVariables, SeedVariables
 from .version import __version__
-
 __all__ = ["AsyncSeedVariables", "SeedVariables", "__version__", "service"]
