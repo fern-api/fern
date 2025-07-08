@@ -79,8 +79,6 @@ export async function generateDocsWorkspace({
 
         const ossWorkspaces = await filterOssWorkspaces(project);
 
-        console.log(project.apiWorkspaces);
-
         await runRemoteGenerationForDocsWorkspace({
             organization: project.config.organization,
             apiWorkspaces: project.apiWorkspaces,
