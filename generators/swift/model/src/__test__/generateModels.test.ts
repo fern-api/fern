@@ -1,13 +1,14 @@
 import { generateModels } from "../generateModels";
 import { createSampleGeneratorContext } from "./util/createSampleGeneratorContext";
 
-describe("generateModels", () => {
-    it("should generate models", async () => {
-        const testDefinitionName = "basic-object";
+const testDefinitions = ["basic-object", "nested-objects"] as const;
+
+describe.each(testDefinitions)("generateModels - %s", (testDefinitionName) => {
+    it("should correctly generate model files", async () => {
         const context = await createSampleGeneratorContext(testDefinitionName);
         const files = generateModels({ context });
         for (const file of files) {
-            expect(file.fileContents).toMatchFileSnapshot(`snapshots/${testDefinitionName}/${file.filename}`);
+            await expect(file.fileContents).toMatchFileSnapshot(`snapshots/${testDefinitionName}/${file.filename}`);
         }
     });
 });
