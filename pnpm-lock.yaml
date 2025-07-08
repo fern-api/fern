@@ -2463,6 +2463,9 @@ importers:
       prettier:
         specifier: ^3.4.2
         version: 3.5.3
+      sort-package-json:
+        specifier: 3.3.1
+        version: 3.3.1
       tsup:
         specifier: ^8.0.2
         version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(typescript@5.7.2)(yaml@2.3.3)
@@ -2590,22 +2593,13 @@ importers:
         version: 3.25.67
 
   generators/swift/sdk:
-    devDependencies:
+    dependencies:
       '@fern-api/base-generator':
         specifier: workspace:*
         version: link:../../base
-      '@fern-api/configs':
-        specifier: workspace:*
-        version: link:../../../packages/configs
-      '@fern-api/core-utils':
-        specifier: workspace:*
-        version: link:../../../packages/commons/core-utils
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/fs-utils
-      '@fern-api/logger':
-        specifier: workspace:*
-        version: link:../../../packages/cli/logger
       '@fern-api/swift-base':
         specifier: workspace:*
         version: link:../base
@@ -2615,15 +2609,28 @@ importers:
       '@fern-api/swift-model':
         specifier: workspace:*
         version: link:../model
-      '@fern-fern/generator-cli-sdk':
-        specifier: 0.0.28
-        version: 0.0.28
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1045
         version: 0.0.1045
       '@fern-fern/ir-sdk':
         specifier: ^58.2.0
         version: 58.2.0
+      zod:
+        specifier: ^3.25.75
+        version: 3.25.75
+    devDependencies:
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../../packages/configs
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../../packages/commons/core-utils
+      '@fern-api/logger':
+        specifier: workspace:*
+        version: link:../../../packages/cli/logger
+      '@fern-fern/generator-cli-sdk':
+        specifier: 0.0.28
+        version: 0.0.28
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.2(@vue/compiler-sfc@3.5.17)(prettier@3.5.3)
@@ -2666,9 +2673,6 @@ importers:
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
-      zod:
-        specifier: ^3.22.3
-        version: 3.25.67
 
   generators/typescript-mcp/base:
     devDependencies:
