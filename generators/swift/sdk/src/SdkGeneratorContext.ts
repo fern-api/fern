@@ -5,7 +5,6 @@ import { swift } from "@fern-api/swift-codegen";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import {
-    DeclaredErrorName,
     EndpointId,
     ExampleEndpointCall,
     FernFilepath,
@@ -19,9 +18,6 @@ import {
 } from "@fern-fern/ir-sdk/api";
 
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
-
-const EXCEPTIONS_FOLDER_NAME = "Exceptions";
-export const MOCK_SERVER_TEST_FOLDER = RelativeFilePath.of("Unit/MockServer");
 
 export class SdkGeneratorContext extends AbstractSwiftGeneratorContext<SdkCustomConfigSchema> {
     public constructor(
@@ -56,15 +52,6 @@ export class SdkGeneratorContext extends AbstractSwiftGeneratorContext<SdkCustom
             throw new Error(`Subpackage with id ${subpackageId} not found`);
         }
         return subpackage;
-    }
-
-    public getDirectoryForError(declaredErrorName: DeclaredErrorName): RelativeFilePath {
-        return RelativeFilePath.of(
-            [
-                ...declaredErrorName.fernFilepath.allParts.map((path) => path.pascalCase.safeName),
-                EXCEPTIONS_FOLDER_NAME
-            ].join("/")
-        );
     }
 
     public getExampleEndpointCallOrThrow(endpoint: HttpEndpoint): ExampleEndpointCall {
