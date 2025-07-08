@@ -1,5 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 2.4.3
+  changelogEntry:
+    - summary: |
+        Fix an issue where a property set to `undefined` would not match with a property that is missing in the `withJson` MSW predicate.
+      type: fix
+  irVersion: 58
+
 - version: 2.4.2
   changelogEntry:
     - summary: |
