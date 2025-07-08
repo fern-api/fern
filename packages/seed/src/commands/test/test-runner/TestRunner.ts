@@ -118,7 +118,7 @@ export abstract class TestRunner {
 
             const id = configuration != null ? `${fixture}:${configuration.outputFolder}` : `${fixture}`;
             const absolutePathToAPIDefinition = AbsoluteFilePath.of(
-                path.join(__dirname, FERN_DIRECTORY, APIS_DIRECTORY, fixture)
+                path.join(__dirname, "../../../test-definitions", FERN_DIRECTORY, APIS_DIRECTORY, fixture)
             );
             const taskContext = this.taskContextFactory.create(`${this.generator.workspaceName}:${id}`);
             const outputFolder = configuration?.outputFolder ?? fixture;

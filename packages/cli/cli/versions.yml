@@ -1,11 +1,28 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |  
+        Global header examples are only used when a corresponding endpoint header with the same name is not present.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-07-08"
+  version: 0.65.2
+
+- changelogEntry:
+    - summary: |  
+        Re-release changes from 0.65.0.
+      type: chore
+  irVersion: 58
+  createdAt: "2025-07-07"
+  version: 0.65.1
+
+- changelogEntry:
+    - summary: |  
         Rename the TypeScript SDK generator image from `fernapi/fern-typescript-node-sdk` to `fernapi/fern-typescript-sdk`.
       type: feat
   irVersion: 58
   createdAt: "2025-07-03"
   version: 0.65.0
+  
 - changelogEntry:
     - summary: |  
         Rename the TypeScript SDK generator image from `fernapi/fern-typescript-node-sdk` to `fernapi/fern-typescript-sdk`.
