@@ -210,9 +210,11 @@ class SocketClientGenerator:
                     writer.write_reference(self._context.core_utilities.get_event_type())
                     writer.write(".MESSAGE, parsed)")
                     writer.write_line()
-            writer.write("except ")
+            writer.write("except (")
             writer.write_reference(Websockets.get_websocket_exception())
-            writer.write(" as exc:")
+            writer.write(", ")
+            writer.write_reference(Json.JSONDecodeError())
+            writer.write(") as exc:")
             writer.write_line()
             with writer.indent():
                 writer.write("self._emit(")
