@@ -78,22 +78,15 @@ function getEndpointSnippet({
     endpointSignatureInfo.pathParameters.forEach((param) => {
         const paramName = param.name.replace('$', '');
         const paramType = getSafeTypeRepresentation(param.type);
-        snippet += `    ${paramName}: '${paramType === 'string' ? 'param' : '123'}', // ${paramType}\n`;
+        snippet += `    ${paramName}: $${paramName},\n`;
     });
 
-    // Add request body if present
     if (endpointSignatureInfo.requestParameter) {
-        snippet += `    $request, // Request object\n`;
+        snippet += `    $request,\n`;
     }
 
     // Close the method call
     snippet += ");\n\n";
-
-    // Add comment about the response
-    if (endpointSignatureInfo.returnType) {
-        const returnType = getSafeTypeRepresentation(endpointSignatureInfo.returnType);
-        snippet += `// $response is of type: ${returnType}\n`;
-    }
 
     return snippet;
 }

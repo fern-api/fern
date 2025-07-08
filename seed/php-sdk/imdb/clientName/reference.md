@@ -28,10 +28,8 @@ Add a movie to the database using the movies/* /... path.
 
 ```php
 $client->imdb->createMovie(
-    $request, // Request object
+    $request,
 );
-
-// $response is of type: string
 ```
 </dd>
 </dl>
@@ -72,10 +70,8 @@ $client->imdb->createMovie(
 
 ```php
 $client->imdb->getMovie(
-    movieId: 'param', // string
+    movieId: $movieId,
 );
-
-// $response is of type: \Seed\Imdb\Types\Movie
 ```
 </dd>
 </dl>
