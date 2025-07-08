@@ -37,7 +37,7 @@ export function buildEndpointExample({
     const hasEndpointHeaders = endpointExample.headers != null && endpointExample.headers.length > 0;
     const hasGlobalHeaders = Object.keys(context.builder.getGlobalHeaders()).length > 0;
 
-    const endpointHeaderNames = new Set(endpointExample.headers?.map(header => header.name) ?? []);
+    const endpointHeaderNames = new Set(endpointExample.headers?.map((header) => header.name) ?? []);
 
     if (hasEndpointHeaders || hasGlobalHeaders) {
         const namedFullExamples: NamedFullExample[] = [
