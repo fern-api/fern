@@ -4,7 +4,7 @@ import { SwiftFile } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
 
 import { ObjectProperty } from "@fern-fern/ir-sdk/api";
-import { TypeDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
+import { PrimitiveTypeV1, TypeDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
 
 export class ObjectGenerator {
     private readonly typeDeclaration: TypeDeclaration;
@@ -79,29 +79,23 @@ export class ObjectGenerator {
                         assertNever(typeReference.container);
                 }
             case "primitive":
-                // TODO: Do we look at v2?
-                switch (typeReference.primitive.v1) {
-                    case "BASE_64":
-                    case "BIG_INTEGER":
-                    case "DATE":
-                    case "DATE_TIME":
-                    case "FLOAT":
-                    case "LONG":
-                    case "UINT":
-                    case "UINT_64":
-                    case "UUID":
-                        return swift.Type.any();
-                    case "BOOLEAN":
-                        return swift.Type.bool();
-                    case "DOUBLE":
-                        return swift.Type.double();
-                    case "INTEGER":
-                        return swift.Type.int();
-                    case "STRING":
-                        return swift.Type.string();
-                    default:
-                        assertNever(typeReference.primitive.v1);
-                }
+                // TODO: Do we not look at typeReference.primitive.v2?
+                return PrimitiveTypeV1._visit(typeReference.primitive.v1, {
+                    long: () => swift.Type.any(),
+                    uint: () => swift.Type.any(),
+                    uint64: () => swift.Type.any(),
+                    float: () => swift.Type.any(),
+                    date: () => swift.Type.any(),
+                    dateTime: () => swift.Type.any(),
+                    uuid: () => swift.Type.any(),
+                    base64: () => swift.Type.any(),
+                    bigInteger: () => swift.Type.any(),
+                    boolean: () => swift.Type.bool(),
+                    double: () => swift.Type.double(),
+                    integer: () => swift.Type.int(),
+                    string: () => swift.Type.string(),
+                    _other: () => swift.Type.any()
+                });
             case "named":
                 return swift.Type.any();
             case "unknown":
