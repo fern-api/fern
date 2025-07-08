@@ -1,0 +1,42 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": [
+    "typescript",
+    "jest",
+    "react"
+  ],
+  "categories": {
+    "correctness": "off"
+  },
+  "env": {
+    "builtin": true
+  },
+  "rules": {
+    "no-empty": [
+      "error",
+      {
+        "allowEmptyCatch": true
+      }
+    ],
+    "@typescript-eslint/no-namespace": "off",
+    "jest/valid-describe-callback": "off",
+    "jest/valid-title": "off",
+    "no-unused-vars": "off",
+    "eqeqeq": "off",
+    "curly": "error",
+    "react/react-in-jsx-scope": "off",
+    "@typescript-eslint/no-empty-interface": "off",
+    "jest/expect-expect": "off",
+    "jest/no-conditional-expect": "off",
+    "no-empty-function": [
+      "error",
+      {
+        "allow": [
+          "private-constructors",
+          "protected-constructors",
+          "decoratedFunctions"
+        ]
+      }
+    ]
+  }
+}
