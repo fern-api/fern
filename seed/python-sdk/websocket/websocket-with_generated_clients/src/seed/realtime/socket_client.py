@@ -16,11 +16,16 @@ from .types.send_event import SendEvent
 from .types.send_event_2 import SendEvent2
 from .types.send_snake_case import SendSnakeCase
 
+try:
+    from websockets.legacy.client import WebSocketClientProtocol  # type: ignore
+except ImportError:
+    from websockets import WebSocketClientProtocol  # type: ignore
+
 RealtimeSocketClientResponse = typing.Union[ReceiveEvent, ReceiveSnakeCase, ReceiveEvent2, ReceiveEvent3]
 
 
 class AsyncRealtimeSocketClient(EventEmitterMixin):
-    def __init__(self, *, websocket: websockets.WebSocketClientProtocol):
+    def __init__(self, *, websocket: WebSocketClientProtocol):
         super().__init__()
         self._websocket = websocket
 
