@@ -2534,9 +2534,6 @@ importers:
         specifier: ^58.2.0
         version: 58.2.0
     devDependencies:
-      '@fern-api/api-workspace-commons':
-        specifier: workspace:*
-        version: link:../../../packages/cli/workspace/commons
       '@fern-api/cli-source-resolver':
         specifier: workspace:*
         version: link:../../../packages/cli/cli-source-resolver

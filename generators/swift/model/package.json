@@ -36,7 +36,6 @@
     "@fern-fern/ir-sdk": "^58.2.0"
   },
   "devDependencies": {
-    "@fern-api/api-workspace-commons": "workspace:*",
     "@fern-api/cli-source-resolver": "workspace:*",
     "@fern-api/configs": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
