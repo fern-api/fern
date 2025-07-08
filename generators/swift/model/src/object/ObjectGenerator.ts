@@ -55,8 +55,10 @@ export class ObjectGenerator {
     private generateAstNodeForProperty(property: ObjectProperty): swift.Property {
         return swift.property({
             unsafeName: property.name.name.camelCase.unsafeName,
+            accessLevel: swift.AccessLevel.Public,
             declarationType: swift.DeclarationType.Let,
-            type: this.generateAstNodeForTypeReference(property.valueType)
+            type: this.generateAstNodeForTypeReference(property.valueType),
+            optional: property.valueType.type === "container" && property.valueType.container.type === "optional"
         });
     }
 
@@ -68,8 +70,9 @@ export class ObjectGenerator {
                     case "map":
                     case "set":
                     case "nullable":
-                    case "optional":
                         return swift.Type.any();
+                    case "optional":
+                        return this.generateAstNodeForTypeReference(typeReference.container.optional);
                     case "list":
                         return swift.Type.array(this.generateAstNodeForTypeReference(typeReference.container.list));
                     default:

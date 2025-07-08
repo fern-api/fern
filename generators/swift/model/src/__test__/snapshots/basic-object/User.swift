@@ -1,9 +1,9 @@
 public struct User {
-    let id: String
-    let name: String
-    let email: String
-    let age: Any
-    let isActive: Bool
-    let balance: Double
-    let tags: [String]
+    public let id: String
+    public let name: String
+    public let email: String
+    public let age: Int?
+    public let isActive: Bool
+    public let balance: Double
+    public let tags: [String]
 }
