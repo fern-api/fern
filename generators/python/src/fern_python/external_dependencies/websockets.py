@@ -89,8 +89,17 @@ class Websockets:
         def write(writer: AST.NodeWriter) -> None:
             writer.write_reference(
                 AST.Reference(
-                    import_=AST.ReferenceImport(module=WEBSOCKETS_LEGACY_CLIENT_MODULE),
-                    qualified_name_excluding_import=("connect",),
+                    import_=AST.ReferenceImport(
+                        module=WEBSOCKETS_LEGACY_CLIENT_MODULE,
+                        named_import="connect",
+                        alias="websockets_client_connect",
+                        alternative_import=AST.ReferenceImport(
+                            module=WEBSOCKETS_MODULE,
+                            named_import="connect",
+                            alias="websockets_client_connect",
+                        ),
+                    ),
+                    qualified_name_excluding_import=(),
                 )
             )
             writer.write(f"({url}, extra_headers={headers})")
