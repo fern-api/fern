@@ -5,7 +5,7 @@ import { ModelCustomConfigSchema } from "../../_ModelCustomConfig";
 import { ModelGeneratorContext } from "../../_ModelGeneratorContext";
 import { createSampleIrForTestDefinition } from "./createSampleIrForTestDefinition";
 
-export async function createSampleGeneratorContext(testDefinitionName: string) {
+export async function createSampleGeneratorContext(testDefinitionName: string): Promise<ModelGeneratorContext> {
     const ir = await createSampleIrForTestDefinition(testDefinitionName);
     const generatorConfig = createSampleGeneratorConfig();
     const customConfig: ModelCustomConfigSchema = {};

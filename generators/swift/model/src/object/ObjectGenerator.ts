@@ -65,19 +65,16 @@ export class ObjectGenerator {
     private generateAstNodeForTypeReference(typeReference: TypeReference): swift.Type {
         switch (typeReference.type) {
             case "container":
-                switch (typeReference.container.type) {
-                    case "literal":
-                    case "map":
-                    case "set":
-                    case "nullable":
-                        return swift.Type.any();
-                    case "optional":
-                        return this.generateAstNodeForTypeReference(typeReference.container.optional);
-                    case "list":
-                        return swift.Type.array(this.generateAstNodeForTypeReference(typeReference.container.list));
-                    default:
-                        assertNever(typeReference.container);
-                }
+                return typeReference.container._visit({
+                    // TODO: Handle these cases
+                    literal: () => swift.Type.any(),
+                    map: () => swift.Type.any(),
+                    set: () => swift.Type.any(),
+                    nullable: () => swift.Type.any(),
+                    optional: (ref) => this.generateAstNodeForTypeReference(ref),
+                    list: (ref) => swift.Type.array(this.generateAstNodeForTypeReference(ref)),
+                    _other: () => swift.Type.any()
+                });
             case "primitive":
                 // TODO: Do we not look at typeReference.primitive.v2?
                 return PrimitiveTypeV1._visit(typeReference.primitive.v1, {
