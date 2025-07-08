@@ -40,7 +40,8 @@ class AsyncRealtimeSocketClient(EventEmitterMixin):
         self._emit(EventType.OPEN, None)
         try:
             async for raw_message in self._websocket:
-                parsed = parse_obj_as(RealtimeSocketClientResponse, raw_message)  # type: ignore
+                json_data = json.loads(raw_message)
+                parsed = parse_obj_as(RealtimeSocketClientResponse, json_data)  # type: ignore
                 self._emit(EventType.MESSAGE, parsed)
         except websockets.WebSocketException as exc:
             self._emit(EventType.ERROR, exc)
@@ -73,7 +74,8 @@ class AsyncRealtimeSocketClient(EventEmitterMixin):
         Receive a message from the websocket connection.
         """
         data = await self._websocket.recv()
-        return parse_obj_as(RealtimeSocketClientResponse, data)  # type: ignore
+        json_data = json.loads(data)
+        return parse_obj_as(RealtimeSocketClientResponse, json_data)  # type: ignore
 
     async def _send(self, data: typing.Any) -> None:
         """
@@ -112,7 +114,8 @@ class RealtimeSocketClient(EventEmitterMixin):
         self._emit(EventType.OPEN, None)
         try:
             for raw_message in self._websocket:
-                parsed = parse_obj_as(RealtimeSocketClientResponse, raw_message)  # type: ignore
+                json_data = json.loads(raw_message)
+                parsed = parse_obj_as(RealtimeSocketClientResponse, json_data)  # type: ignore
                 self._emit(EventType.MESSAGE, parsed)
         except websockets.WebSocketException as exc:
             self._emit(EventType.ERROR, exc)
@@ -145,7 +148,8 @@ class RealtimeSocketClient(EventEmitterMixin):
         Receive a message from the websocket connection.
         """
         data = self._websocket.recv()
-        return parse_obj_as(RealtimeSocketClientResponse, data)  # type: ignore
+        json_data = json.loads(data)
+        return parse_obj_as(RealtimeSocketClientResponse, json_data)  # type: ignore
 
     def _send(self, data: typing.Any) -> None:
         """
