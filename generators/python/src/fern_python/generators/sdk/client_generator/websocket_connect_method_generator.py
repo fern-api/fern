@@ -261,9 +261,13 @@ class WebsocketConnectMethodGenerator:
         parameters: List[AST.NamedFunctionParameter],
     ) -> AST.CodeWriter:
         def write(writer: AST.NodeWriter) -> None:
-            writer.write_line(
-                f'{self.WS_URL_VARIABLE} = {self._get_environment_as_str(websocket=websocket)} + "{websocket.path.head}"'
+            environment_url = self._get_environment_as_str(websocket=websocket)
+            url_prefix = (
+                environment_url
+                if environment_url
+                else f"self.{self._client_wrapper_member_name}.{ClientWrapperGenerator.GET_BASE_URL_METHOD_NAME}()"
             )
+            writer.write_line(f'{self.WS_URL_VARIABLE} = {url_prefix} + "{websocket.path.head}"')
             if len(parameters) > 0:
                 writer.write("query_params = ")
                 writer.write_node(HttpX.query_params())
@@ -615,7 +619,7 @@ class WebsocketConnectMethodGenerator:
             context=self._context, object_=reference, type_reference=query_parameter.value_type
         )
 
-    def _get_environment_as_str(self, *, websocket: ir_types.WebSocketChannel) -> str:
+    def _get_environment_as_str(self, *, websocket: ir_types.WebSocketChannel) -> Optional[str]:
         if self._context.ir.environments is not None:
             environments_as_union = self._context.ir.environments.environments.get_as_union()
             if environments_as_union.type == "multipleBaseUrls":
@@ -626,7 +630,7 @@ class WebsocketConnectMethodGenerator:
                     get_base_url(environments=environments_as_union, base_url_id=base_url)
                 )
                 return f"self.{self._client_wrapper_member_name}.{ClientWrapperGenerator.GET_ENVIRONMENT_METHOD_NAME}().{url_reference}"
-        return ""
+        return None  # single base URL or no environment
 
     def _get_client_wrapper_headers_expression(self) -> str:
         return f"self.{self._client_wrapper_member_name}.{ClientWrapperGenerator.GET_HEADERS_METHOD_NAME}()"
