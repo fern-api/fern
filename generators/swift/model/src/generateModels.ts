@@ -1,6 +1,6 @@
 import { SwiftFile } from "@fern-api/swift-base";
 
-import { ModelGeneratorContext } from "./_ModelGeneratorContext";
+import { ModelGeneratorContext } from "./ModelGeneratorContext";
 import { ObjectGenerator } from "./object/ObjectGenerator";
 
 export function generateModels({ context }: { context: ModelGeneratorContext }): SwiftFile[] {

@@ -3,7 +3,7 @@ import { AbstractSwiftGeneratorContext } from "@fern-api/swift-base";
 
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
-import { ModelCustomConfigSchema } from "./_ModelCustomConfig";
+import { ModelCustomConfigSchema } from "./ModelCustomConfig";
 
 export class ModelGeneratorContext extends AbstractSwiftGeneratorContext<ModelCustomConfigSchema> {
     public constructor(

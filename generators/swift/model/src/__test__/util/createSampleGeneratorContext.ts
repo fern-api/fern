@@ -1,8 +1,8 @@
 import { FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 
-import { ModelCustomConfigSchema } from "../../_ModelCustomConfig";
-import { ModelGeneratorContext } from "../../_ModelGeneratorContext";
+import { ModelCustomConfigSchema } from "../../ModelCustomConfig";
+import { ModelGeneratorContext } from "../../ModelGeneratorContext";
 import { createSampleIrForTestDefinition } from "./createSampleIrForTestDefinition";
 
 export async function createSampleGeneratorContext(testDefinitionName: string): Promise<ModelGeneratorContext> {
