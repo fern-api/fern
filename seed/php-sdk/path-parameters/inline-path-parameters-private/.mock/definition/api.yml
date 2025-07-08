@@ -1,0 +1,4 @@
+name: path-parameters
+base-path: "/{tenant_id}"
+path-parameters:
+  tenant_id: string

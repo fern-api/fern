@@ -1,0 +1,43 @@
+# Reference
+## Auth
+<details><summary><code>$client-><a href="/Seed/Auth/ClientClient.php">getToken</a>($request) -> \Seed\Auth\Types\TokenResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->auth->getToken(
+    $request,
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$request:** `\Seed\Auth\Requests\GetTokenRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
