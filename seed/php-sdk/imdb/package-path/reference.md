@@ -27,17 +27,7 @@ Add a movie to the database using the movies/* /... path.
 <dd>
 
 ```php
-<?php
-
-use Custom\Package\Path;
-
-// Initialize the client
-$client = new SeedClient(
-    token: '<YOUR_TOKEN>'
-);
-
-// Call the createMovie endpoint
-$response = $client->imdb->createMovie(
+$client->imdb->createMovie(
     $request, // Request object
 );
 
@@ -81,18 +71,8 @@ $response = $client->imdb->createMovie(
 <dd>
 
 ```php
-<?php
-
-use Custom\Package\Path;
-
-// Initialize the client
-$client = new SeedClient(
-    token: '<YOUR_TOKEN>'
-);
-
-// Call the getMovie endpoint
-$response = $client->imdb->getMovie(
-    movieId: 'example-id', // string
+$client->imdb->getMovie(
+    movieId: 'param', // string
 );
 
 // $response is of type: \Custom\Package\Path\Imdb\Types\Movie
