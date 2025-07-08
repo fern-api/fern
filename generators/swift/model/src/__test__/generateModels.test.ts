@@ -1,7 +1,7 @@
 import { generateModels } from "../generateModels";
 import { createSampleGeneratorContext } from "./util/createSampleGeneratorContext";
 
-const testDefinitions = ["basic-object", "nested-objects"] as const;
+const testDefinitions = ["basic-object", "linked-objects"] as const;
 
 describe.each(testDefinitions)("generateModels - %s", (testDefinitionName) => {
     it("should correctly generate model files", async () => {
