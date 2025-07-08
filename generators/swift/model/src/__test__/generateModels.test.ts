@@ -3,8 +3,11 @@ import { createSampleGeneratorContext } from "./createSampleGeneratorContext";
 
 describe("generateModels", () => {
     it("should generate models", async () => {
-        const context = await createSampleGeneratorContext("basic-object");
+        const fixtureName = "basic-object";
+        const context = await createSampleGeneratorContext(fixtureName);
         const files = generateModels({ context });
-        expect(files).toMatchSnapshot();
+        for (const file of files) {
+            expect(file.fileContents).toMatchFileSnapshot(`snapshots/${fixtureName}/${file.filename}`);
+        }
     });
 });

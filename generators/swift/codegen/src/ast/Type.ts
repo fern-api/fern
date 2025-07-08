@@ -34,7 +34,11 @@ type Dictionary = {
     valueType: Type;
 };
 
-type InternalType = String_ | Bool | Int | Double | Tuple | Array | Dictionary;
+type Any = {
+    type: "any";
+};
+
+type InternalType = String_ | Bool | Int | Double | Tuple | Array | Dictionary | Any;
 
 export class Type extends AstNode {
     private internalType: InternalType;
@@ -80,6 +84,9 @@ export class Type extends AstNode {
                 this.internalType.valueType.write(writer);
                 writer.write("]");
                 break;
+            case "any":
+                writer.write("Any");
+                break;
             default:
                 assertNever(this.internalType);
         }
@@ -112,5 +119,9 @@ export class Type extends AstNode {
     public static dictionary(keyType: Type, valueType: Type): Type {
         // TODO: keyType needs to conform to Hashable. We may want to enforce this as a constraint.
         return new this({ type: "dictionary", keyType, valueType });
+    }
+
+    public static any(): Type {
+        return new this({ type: "any" });
     }
 }

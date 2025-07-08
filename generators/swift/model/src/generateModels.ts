@@ -1,14 +1,15 @@
 import { SwiftFile } from "@fern-api/swift-base";
 
 import { ModelGeneratorContext } from "./_ModelGeneratorContext";
+import { ObjectGenerator } from "./object/ObjectGenerator";
 
 export function generateModels({ context }: { context: ModelGeneratorContext }): SwiftFile[] {
     const files: SwiftFile[] = [];
-    for (const [typeId, typeDeclaration] of Object.entries(context.ir.types)) {
+    for (const [_typeId, typeDeclaration] of Object.entries(context.ir.types)) {
         const file = typeDeclaration.shape._visit<SwiftFile | undefined>({
             alias: () => undefined,
             enum: () => undefined,
-            object: () => undefined,
+            object: () => new ObjectGenerator(typeDeclaration).generate(),
             undiscriminatedUnion: () => undefined,
             union: () => undefined,
             _other: () => undefined

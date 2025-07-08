@@ -476,6 +476,9 @@ importers:
       '@fern-api/base-generator':
         specifier: workspace:*
         version: link:../../base
+      '@fern-api/cli-source-resolver':
+        specifier: workspace:*
+        version: link:../../../packages/cli/cli-source-resolver
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../../packages/configs
@@ -494,6 +497,15 @@ importers:
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/fs-utils
+      '@fern-api/ir-generator':
+        specifier: workspace:*
+        version: link:../../../packages/cli/generation/ir-generator
+      '@fern-api/task-context':
+        specifier: workspace:*
+        version: link:../../../packages/cli/task-context
+      '@fern-api/workspace-loader':
+        specifier: workspace:*
+        version: link:../../../packages/cli/workspace/loader
       '@fern-fern/ir-sdk':
         specifier: ^58.2.0
         version: 58.2.0
@@ -2543,6 +2555,9 @@ importers:
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../../packages/configs
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../../packages/commons/core-utils
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/fs-utils
