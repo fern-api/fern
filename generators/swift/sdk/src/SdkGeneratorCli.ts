@@ -23,7 +23,23 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
         return new SdkGeneratorContext(ir, generatorConfig, customConfig, generatorNotificationService);
     }
 
+    protected parseCustomConfigOrThrow(customConfig: unknown): SdkCustomConfigSchema {
+        const parsed = customConfig != null ? SdkCustomConfigSchema.parse(customConfig) : undefined;
+        if (parsed != null) {
+            return this.validateCustomConfig(parsed);
+        }
+        return {};
+    }
+
+    private validateCustomConfig(customConfig: SdkCustomConfigSchema): SdkCustomConfigSchema {
+        return customConfig;
+    }
+
     protected async publishPackage(_context: SdkGeneratorContext): Promise<void> {
+        throw new Error("Method not implemented.");
+    }
+
+    protected async writeForGithub(_context: SdkGeneratorContext): Promise<void> {
         throw new Error("Method not implemented.");
     }
 
@@ -32,10 +48,8 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
     }
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
-        const models = generateModels({ context });
-        for (const file of models) {
-            context.project.addSourceFiles(file);
-        }
+        const files = generateModels({ context });
+        context.project.addSourceFiles(...files);
         await context.project.persist();
     }
 }
