@@ -81,19 +81,20 @@ export class ObjectGenerator {
             case "primitive":
                 // TODO: Do we not look at typeReference.primitive.v2?
                 return PrimitiveTypeV1._visit(typeReference.primitive.v1, {
-                    long: () => swift.Type.any(),
-                    uint: () => swift.Type.any(),
-                    uint64: () => swift.Type.any(),
-                    float: () => swift.Type.any(),
-                    date: () => swift.Type.any(),
-                    dateTime: () => swift.Type.any(),
-                    uuid: () => swift.Type.any(),
-                    base64: () => swift.Type.any(),
-                    bigInteger: () => swift.Type.any(),
-                    boolean: () => swift.Type.bool(),
-                    double: () => swift.Type.double(),
-                    integer: () => swift.Type.int(),
                     string: () => swift.Type.string(),
+                    boolean: () => swift.Type.bool(),
+                    integer: () => swift.Type.int(),
+                    uint: () => swift.Type.uint(),
+                    uint64: () => swift.Type.uint64(),
+                    long: () => swift.Type.int64(),
+                    float: () => swift.Type.float(),
+                    double: () => swift.Type.double(),
+                    // TODO: We may need to implement our own value type for this
+                    bigInteger: () => swift.Type.string(),
+                    date: () => swift.Type.date(),
+                    dateTime: () => swift.Type.date(),
+                    base64: () => swift.Type.string(),
+                    uuid: () => swift.Type.uuid(),
                     _other: () => swift.Type.any()
                 });
             case "named":

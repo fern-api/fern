@@ -14,8 +14,32 @@ type Int = {
     type: "int";
 };
 
+type UInt = {
+    type: "uint";
+};
+
+type UInt64 = {
+    type: "uint64";
+};
+
+type Int64 = {
+    type: "int64";
+};
+
+type Float = {
+    type: "float";
+};
+
 type Double = {
     type: "double";
+};
+
+type Date_ = {
+    type: "date";
+};
+
+type UUID = {
+    type: "uuid";
 };
 
 type Tuple = {
@@ -23,7 +47,7 @@ type Tuple = {
     elements: [Type, ...Type[]];
 };
 
-type Array = {
+type Array_ = {
     type: "array";
     elementType: Type;
 };
@@ -38,7 +62,21 @@ type Any = {
     type: "any";
 };
 
-type InternalType = String_ | Bool | Int | Double | Tuple | Array | Dictionary | Any;
+type InternalType =
+    | String_
+    | Bool
+    | Int
+    | UInt
+    | UInt64
+    | Int64
+    | Float
+    | Double
+    | Date_
+    | UUID
+    | Tuple
+    | Array_
+    | Dictionary
+    | Any;
 
 export class Type extends AstNode {
     private internalType: InternalType;
@@ -59,8 +97,26 @@ export class Type extends AstNode {
             case "int":
                 writer.write("Int");
                 break;
+            case "uint":
+                writer.write("UInt");
+                break;
+            case "uint64":
+                writer.write("UInt64");
+                break;
+            case "int64":
+                writer.write("Int64");
+                break;
+            case "float":
+                writer.write("Float");
+                break;
             case "double":
                 writer.write("Double");
+                break;
+            case "date":
+                writer.write("Date");
+                break;
+            case "uuid":
+                writer.write("UUID");
                 break;
             case "tuple":
                 writer.write("(");
@@ -104,8 +160,32 @@ export class Type extends AstNode {
         return new this({ type: "int" });
     }
 
+    public static uint(): Type {
+        return new this({ type: "uint" });
+    }
+
+    public static uint64(): Type {
+        return new this({ type: "uint64" });
+    }
+
+    public static int64(): Type {
+        return new this({ type: "int64" });
+    }
+
+    public static float(): Type {
+        return new this({ type: "float" });
+    }
+
     public static double(): Type {
         return new this({ type: "double" });
+    }
+
+    public static date(): Type {
+        return new this({ type: "date" });
+    }
+
+    public static uuid(): Type {
+        return new this({ type: "uuid" });
     }
 
     public static tuple(elements: [Type, ...Type[]]): Type {
