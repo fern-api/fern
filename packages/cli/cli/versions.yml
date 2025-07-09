@@ -1,10 +1,36 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |  
+        Previously if the OpenAPI parser v3 was enabled where the CLI would skip parsing any additional Fern Definitions
+        along the OpenAPI spec. With the fix, you can use whatever combination of OpenAPI Spec(s) and Fern Definitions that 
+        you would like.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-07-08"
+  version: 0.65.4
+
+- changelogEntry:
+    - summary: |  
+        Update `fern init` for java and go SDKs.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-07-08"
+  version: 0.65.3
+
+- changelogEntry:
+    - summary: |  
+        Global header examples are only used when a corresponding endpoint header with the same name is not present.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-07-08"
+  version: 0.65.2
+
+- changelogEntry:
+    - summary: |  
         Re-release changes from 0.65.0.
       type: chore
   irVersion: 58
-  createdAt: "2025-07-07"
+  createdAt: "2025-07-03"
   version: 0.65.1
 
 - changelogEntry:

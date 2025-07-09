@@ -3,4 +3,5 @@
 # isort: skip_file
 
 from .stream_response import StreamResponse
+
 __all__ = ["StreamResponse"]

@@ -2,6 +2,7 @@
 
 import json
 import typing
+from json.decoder import JSONDecodeError
 
 import websockets
 import websockets.sync.connection as websockets_sync_connection
@@ -15,11 +16,16 @@ from .types.send_event import SendEvent
 from .types.send_event_2 import SendEvent2
 from .types.send_snake_case import SendSnakeCase
 
+try:
+    from websockets.legacy.client import WebSocketClientProtocol  # type: ignore
+except ImportError:
+    from websockets import WebSocketClientProtocol  # type: ignore
+
 RealtimeSocketClientResponse = typing.Union[ReceiveEvent, ReceiveSnakeCase, ReceiveEvent2, ReceiveEvent3]
 
 
 class AsyncRealtimeSocketClient(EventEmitterMixin):
-    def __init__(self, *, websocket: websockets.WebSocketClientProtocol):
+    def __init__(self, *, websocket: WebSocketClientProtocol):
         super().__init__()
         self._websocket = websocket
 
@@ -37,16 +43,16 @@ class AsyncRealtimeSocketClient(EventEmitterMixin):
         - EventType.ERROR if an error occurs
         - EventType.CLOSE when connection is closed
         """
-        self._emit(EventType.OPEN, None)
+        await self._emit_async(EventType.OPEN, None)
         try:
             async for raw_message in self._websocket:
                 json_data = json.loads(raw_message)
                 parsed = parse_obj_as(RealtimeSocketClientResponse, json_data)  # type: ignore
-                self._emit(EventType.MESSAGE, parsed)
-        except websockets.WebSocketException as exc:
-            self._emit(EventType.ERROR, exc)
+                await self._emit_async(EventType.MESSAGE, parsed)
+        except (websockets.WebSocketException, JSONDecodeError) as exc:
+            await self._emit_async(EventType.ERROR, exc)
         finally:
-            self._emit(EventType.CLOSE, None)
+            await self._emit_async(EventType.CLOSE, None)
 
     async def send_send(self, message: SendEvent) -> None:
         """
@@ -117,7 +123,7 @@ class RealtimeSocketClient(EventEmitterMixin):
                 json_data = json.loads(raw_message)
                 parsed = parse_obj_as(RealtimeSocketClientResponse, json_data)  # type: ignore
                 self._emit(EventType.MESSAGE, parsed)
-        except websockets.WebSocketException as exc:
+        except (websockets.WebSocketException, JSONDecodeError) as exc:
             self._emit(EventType.ERROR, exc)
         finally:
             self._emit(EventType.CLOSE, None)
