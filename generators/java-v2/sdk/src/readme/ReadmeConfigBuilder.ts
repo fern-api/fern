@@ -61,9 +61,15 @@ export class ReadmeConfigBuilder {
                 return FernGeneratorCli.LanguageInfo.java({ publishInfo: { group, artifact, version } });
             } else {
                 const missingFields: string[] = [];
-                if (!group) {missingFields.push("group");}
-                if (!artifact) {missingFields.push("artifact");}
-                if (!version) {missingFields.push("version");}
+                if (!group) {
+                    missingFields.push("group");
+                }
+                if (!artifact) {
+                    missingFields.push("artifact");
+                }
+                if (!version) {
+                    missingFields.push("version");
+                }
                 context.logger.debug(
                     `Unable to populate Java language info. Missing required fields: ${missingFields.join(", ")}`
                 );
