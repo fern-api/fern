@@ -135,13 +135,14 @@ export class PhpTypeMapper {
             case "union":
                 return php.Type.reference(classReference);
             case "undiscriminatedUnion": {
-                const memberTypes = typeDeclaration.shape.members.map((member) =>
-                    this.convert({ reference: member.type, preserveEnums })
+                return php.Type.union(
+                    uniqWith(
+                        typeDeclaration.shape.members.map((member) =>
+                            this.convert({ reference: member.type, preserveEnums })
+                        ),
+                        isEqual
+                    )
                 );
-                
-                const uniqueTypes = uniqWith(memberTypes, isEqual);
-                
-                return php.Type.union(uniqueTypes);
             }
             default:
                 assertNever(typeDeclaration.shape);
