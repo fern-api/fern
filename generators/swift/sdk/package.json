@@ -8,9 +8,9 @@
   },
   "sideEffects": false,
   "type": "module",
-  "main": "lib/index.js",
-  "source": "src/index.ts",
-  "types": "lib/index.d.ts",
+  "main": "lib/cli.js",
+  "source": "src/cli.ts",
+  "types": "lib/cli.d.ts",
   "files": [
     "lib"
   ],
