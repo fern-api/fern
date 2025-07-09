@@ -1,4 +1,4 @@
-FROM node:20.19.0
+FROM node:20.19.0-alpine3.20
 
 RUN apk --no-cache add git zip
 RUN git config --global user.name "fern" && git config --global user.email "hey@buildwithfern.com"
