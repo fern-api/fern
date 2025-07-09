@@ -67,7 +67,7 @@ find . -name build.gradle | while read -r gradle; do
       continue
     fi
     echo "[Java] $proj_name: Running Gradle Jacoco coverage..."
-    (cd "$proj_dir" && ( [ -f gradlew ] && ./gradlew test jacocoTestReport || gradle test jacocoTestReport ) || failures=$((failures+1)))
+    (cd "$proj_dir" && (if [ -f gradlew ]; then ./gradlew test jacocoTestReport; else gradle test jacocoTestReport; fi)) || failures=$((failures+1))
     jacoco_xml=$(find "$proj_dir" -name jacocoTestReport.xml | head -n1)
     if [ -f "$jacoco_xml" ]; then
       cp "$jacoco_xml" "$COVERAGE_DIR/${proj_name}-jacoco.xml"
