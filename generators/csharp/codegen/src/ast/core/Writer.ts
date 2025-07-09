@@ -24,6 +24,8 @@ export declare namespace Writer {
         rootNamespace: string;
         /* Custom generator config */
         customConfig: BaseCsharpCustomConfigSchema;
+        /* Whether or not to skip writing imports */
+        skipImports?: boolean;
     }
 }
 
@@ -43,13 +45,17 @@ export class Writer extends AbstractWriter {
     /* Whether or not dictionary<string, object?> should be simplified to just objects */
     private customConfig: BaseCsharpCustomConfigSchema;
 
-    constructor({ namespace, allNamespaceSegments, allTypeClassReferences, rootNamespace, customConfig }: Writer.Args) {
+    /* Whether or not to skip writing imports */
+    public readonly skipImports: boolean;
+
+    constructor({ namespace, allNamespaceSegments, allTypeClassReferences, rootNamespace, customConfig, skipImports = false }: Writer.Args) {
         super();
         this.namespace = namespace;
         this.allNamespaceSegments = allNamespaceSegments;
         this.allTypeClassReferences = allTypeClassReferences;
         this.rootNamespace = rootNamespace;
         this.customConfig = customConfig;
+        this.skipImports = skipImports;
     }
 
     public addReference(reference: ClassReference): void {
