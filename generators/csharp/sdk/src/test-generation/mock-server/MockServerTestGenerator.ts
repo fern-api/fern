@@ -38,7 +38,7 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
         super(context);
 
         this.classReference = csharp.classReference({
-            name: this.endpoint.name.pascalCase.safeName,
+            name: this.endpoint.name.pascalCase.safeName + "Test",
             namespace: this.getTestNamespace()
         });
 
@@ -58,6 +58,7 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
         if (!subpackage) {
             return this.context.getMockServerTestNamespace();
         }
+        
         return [
             this.context.getMockServerTestNamespace(),
             ...this.context.getChildNamespaceSegments(subpackage.fernFilepath)
@@ -242,7 +243,7 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
     }
 
     private getTestClassName(): string {
-        return `${this.classReference.name}Test`;
+        return this.classReference.name;
     }
 
     private getDateTime(exampleTypeReference: ExampleTypeReference): Date | undefined {
@@ -302,8 +303,7 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
                     if (exampleResponse.value.value) {
                         const typeReference = convertExampleTypeReferenceToTypeReference(exampleResponse.value.value);
                         const type = this.context.csharpTypeMapper.convert({
-                            reference: typeReference,
-                            fullyQualified: true
+                            reference: typeReference
                         });
                         return type;
                     }
@@ -313,8 +313,7 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
                 if (exampleResponse.body) {
                     const typeReference = convertExampleTypeReferenceToTypeReference(exampleResponse.body);
                     const type = this.context.csharpTypeMapper.convert({
-                        reference: typeReference,
-                        fullyQualified: true
+                        reference: typeReference
                     });
                     return type;
                 }
