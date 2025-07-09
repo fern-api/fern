@@ -1,6 +1,7 @@
 import { CONSOLE_LOGGER, LogLevel, Logger, createLogger } from "@fern-api/logger";
 
 import { FernGeneratorExec, GeneratorNotificationService } from "./GeneratorNotificationService";
+import { AbstractGeneratorNotificationService } from "./AbstractGeneratorNotificationService";
 import { getSdkVersion } from "./utils";
 
 const LOG_LEVEL_CONVERSIONS: Record<LogLevel, FernGeneratorExec.logging.LogLevel> = {
@@ -17,7 +18,7 @@ export abstract class AbstractGeneratorContext {
 
     public constructor(
         public readonly config: FernGeneratorExec.config.GeneratorConfig,
-        public readonly generatorNotificationService: GeneratorNotificationService
+        public readonly generatorNotificationService: AbstractGeneratorNotificationService
     ) {
         this.logger = createLogger((level, ...message) => {
             CONSOLE_LOGGER.log(level, ...message);
