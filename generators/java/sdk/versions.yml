@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.38.2
+  changelogEntry:
+    - summary: |
+        Fix JavaDoc generation to properly create maven shield.
+      type: fix
+  createdAt: '2025-07-09'
+  irVersion: 58
+
 - version: 2.38.1
   changelogEntry:
     - summary: |

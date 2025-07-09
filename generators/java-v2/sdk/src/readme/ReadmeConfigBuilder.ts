@@ -51,29 +51,25 @@ export class ReadmeConfigBuilder {
     }
 
     private getLanguageInfo({ context }: { context: SdkGeneratorContext }): FernGeneratorCli.LanguageInfo {
-        context.logger.debug(
-            "[jsklan-debug]: FernGeneratorExec.config.GeneratorConfig: " + JSON.stringify(context.config)
-        );
         const config = context.config;
-        if (config) {
-            const outputMode = config.output.mode;
-            let group = JSON.stringify(config);
-            let artifact = JSON.stringify(config);
-            let version = JSON.stringify(config);
-            if (outputMode.type == "github") {
-                version = outputMode.version;
-                if (outputMode.publishInfo?.type == "maven") {
-                    group = outputMode.publishInfo.coordinate.split(":")[0] || group;
-                    artifact = outputMode.publishInfo.coordinate.split(":")[1] || group;
-                }
+        if (config.output.mode.type === "github" && config.output.mode.publishInfo?.type === "maven") {
+            const coordinates = config.output.mode.publishInfo.coordinate.split(":");
+            const group = coordinates[0];
+            const artifact = coordinates[1];
+            const version = config.output.mode.version;
+            if (group && artifact && version) {
+                return FernGeneratorCli.LanguageInfo.java({ publishInfo: { group, artifact, version } });
+            } else {
+                const missingFields: string[] = [];
+                if (!group) {missingFields.push("group");}
+                if (!artifact) {missingFields.push("artifact");}
+                if (!version) {missingFields.push("version");}
+                context.logger.debug(
+                    `Unable to populate Java language info. Missing required fields: ${missingFields.join(", ")}`
+                );
             }
-            return FernGeneratorCli.LanguageInfo.java({
-                publishInfo: {
-                    group,
-                    artifact,
-                    version
-                }
-            });
+        } else {
+            context.logger.debug("Unable to populate Java language info.");
         }
         return FernGeneratorCli.LanguageInfo.java({});
     }
