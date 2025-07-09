@@ -23,6 +23,16 @@
                 "type": "integer"
               }
             }
+          },
+          {
+            "key": "sendVersion",
+            "valueType": {
+              "type": "literal",
+              "value": {
+                "type": "stringLiteral",
+                "value": "v1"
+              }
+            }
           }
         ]
       }
@@ -395,7 +405,8 @@
                   "type": "send",
                   "body": {
                     "sendText": "sendText",
-                    "sendParam": 1
+                    "sendParam": 1,
+                    "sendVersion": "v1"
                   }
                 },
                 {

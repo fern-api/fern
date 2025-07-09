@@ -123,6 +123,37 @@
                         "type": "primitive",
                         "value": "INTEGER"
                     }
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "sendVersion",
+                            "camelCase": {
+                                "unsafeName": "sendVersion",
+                                "safeName": "sendVersion"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "send_version",
+                                "safeName": "send_version"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SEND_VERSION",
+                                "safeName": "SEND_VERSION"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "SendVersion",
+                                "safeName": "SendVersion"
+                            }
+                        },
+                        "wireValue": "sendVersion"
+                    },
+                    "typeReference": {
+                        "type": "literal",
+                        "value": {
+                            "type": "string",
+                            "value": "v1"
+                        }
+                    }
                 }
             ],
             "additionalProperties": false
