@@ -9250,6 +9250,9 @@ importers:
       '@fern-api/cli-source-resolver':
         specifier: workspace:*
         version: link:../../cli/cli-source-resolver
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../configs
       '@fern-api/configuration':
         specifier: workspace:*
         version: link:../../cli/configuration
