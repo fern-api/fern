@@ -2,7 +2,7 @@ default-group: local
 groups:
   local:
     generators:
-      - name: fernapi/fern-typescript-node-sdk
+      - name: fernapi/fern-typescript-sdk
         version: 0.45.1
         output:
           location: local-file-system
@@ -15,7 +15,7 @@ groups:
     audiences:
       - dynamic
     generators:
-      - name: fernapi/fern-typescript-node-sdk
+      - name: fernapi/fern-typescript-sdk
         version: 0.38.6
         output:
           location: npm
@@ -26,7 +26,7 @@ groups:
           noSerdeLayer: true
   node:
     generators:
-      - name: fernapi/fern-typescript-node-sdk
+      - name: fernapi/fern-typescript-sdk
         version: 0.51.4
         output:
           location: npm

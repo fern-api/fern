@@ -31,7 +31,7 @@
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/docs-markdown-utils": "workspace:*",
     "@fern-api/docs-resolver": "workspace:*",
-    "@fern-api/fdr-sdk": "0.138.1-9a1be9c78",
+    "@fern-api/fdr-sdk": "0.138.4-984b82706",
     "@fern-api/fern-definition-schema": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/ir-generator": "workspace:*",

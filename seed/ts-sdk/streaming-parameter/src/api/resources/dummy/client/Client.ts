@@ -5,8 +5,6 @@
 import * as core from "../../../../core/index.js";
 import * as SeedStreaming from "../../../index.js";
 import { mergeHeaders } from "../../../../core/headers.js";
-import urlJoin from "url-join";
-import * as stream from "stream";
 import * as errors from "../../../../errors/index.js";
 
 export declare namespace Dummy {
@@ -48,8 +46,8 @@ export class Dummy {
         request: SeedStreaming.GenerateRequest,
         requestOptions?: Dummy.RequestOptions,
     ): Promise<core.WithRawResponse<core.Stream<SeedStreaming.StreamResponse>>> {
-        const _response = await core.fetcher<stream.Readable>({
-            url: urlJoin(
+        const _response = await core.fetcher<ReadableStream>({
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "generate",

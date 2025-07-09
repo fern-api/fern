@@ -7,7 +7,6 @@ import * as SeedQueryParameters from "../../../index.js";
 import * as serializers from "../../../../serialization/index.js";
 import { toJson } from "../../../../core/json.js";
 import { mergeHeaders } from "../../../../core/headers.js";
-import urlJoin from "url-join";
 import * as errors from "../../../../errors/index.js";
 
 export declare namespace User {
@@ -179,7 +178,7 @@ export class User {
         }
 
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/user",

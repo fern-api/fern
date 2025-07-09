@@ -101,6 +101,7 @@ cname
 cobo
 COBQKQ
 colorama
+conformances
 connormahon34
 Contoso
 Convolutional
@@ -381,6 +382,7 @@ ngrok
 nint
 noauth
 nodets
+nodir
 nofocus
 noindex
 NOLOGO

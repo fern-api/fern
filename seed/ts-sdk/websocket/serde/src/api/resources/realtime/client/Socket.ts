@@ -38,7 +38,10 @@ export class RealtimeSocket {
         const data = fromJson(event.data);
 
         const parsedResponse = serializers.RealtimeSocketResponse.parse(data, {
-            unrecognizedObjectKeys: "strip",
+            unrecognizedObjectKeys: "passthrough",
+            allowUnrecognizedUnionMembers: true,
+            allowUnrecognizedEnumValues: true,
+            skipValidation: true,
             omitUndefined: true,
         });
         if (parsedResponse.ok) {
@@ -85,10 +88,11 @@ export class RealtimeSocket {
     public sendSend(message: SeedWebsocket.SendEvent): void {
         this.assertSocketIsOpen();
         const jsonPayload = SendEvent.jsonOrThrow(message, {
-            unrecognizedObjectKeys: "strip",
+            unrecognizedObjectKeys: "passthrough",
             allowUnrecognizedUnionMembers: true,
             allowUnrecognizedEnumValues: true,
             skipValidation: true,
+            omitUndefined: true,
         });
         this.socket.send(JSON.stringify(jsonPayload));
     }
@@ -96,10 +100,11 @@ export class RealtimeSocket {
     public sendSendSnakeCase(message: SeedWebsocket.SendSnakeCase): void {
         this.assertSocketIsOpen();
         const jsonPayload = SendSnakeCase.jsonOrThrow(message, {
-            unrecognizedObjectKeys: "strip",
+            unrecognizedObjectKeys: "passthrough",
             allowUnrecognizedUnionMembers: true,
             allowUnrecognizedEnumValues: true,
             skipValidation: true,
+            omitUndefined: true,
         });
         this.socket.send(JSON.stringify(jsonPayload));
     }
@@ -107,10 +112,11 @@ export class RealtimeSocket {
     public sendSend2(message: SeedWebsocket.SendEvent2): void {
         this.assertSocketIsOpen();
         const jsonPayload = SendEvent2.jsonOrThrow(message, {
-            unrecognizedObjectKeys: "strip",
+            unrecognizedObjectKeys: "passthrough",
             allowUnrecognizedUnionMembers: true,
             allowUnrecognizedEnumValues: true,
             skipValidation: true,
+            omitUndefined: true,
         });
         this.socket.send(JSON.stringify(jsonPayload));
     }
@@ -168,7 +174,7 @@ export class RealtimeSocket {
     }
 
     /** Send a binary payload to the websocket. */
-    private sendBinary(payload: ArrayBufferLike | Blob | ArrayBufferView): void {
+    protected sendBinary(payload: ArrayBufferLike | Blob | ArrayBufferView): void {
         this.socket.send(payload);
     }
 }

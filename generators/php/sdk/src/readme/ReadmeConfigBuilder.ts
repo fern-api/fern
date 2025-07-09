@@ -26,17 +26,26 @@ export class ReadmeConfigBuilder {
             endpointSnippets
         });
         const snippets = readmeSnippetBuilder.buildReadmeSnippets();
+        const addendums = readmeSnippetBuilder.buildReadmeAddendums();
         const features: FernGeneratorCli.ReadmeFeature[] = [];
         for (const feature of featureConfig.features) {
             const featureSnippets = snippets[feature.id];
             if (!featureSnippets) {
                 continue;
             }
+
+            const addendumForFeature = addendums[feature.id];
+
+            if (addendumForFeature != null) {
+                feature.addendum = addendumForFeature;
+            }
+
             features.push({
                 id: feature.id,
                 advanced: feature.advanced,
                 description: feature.description,
                 snippets: featureSnippets,
+                addendum: feature.addendum,
                 snippetsAreOptional: false
             });
         }

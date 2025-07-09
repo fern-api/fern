@@ -1,0 +1,24 @@
+name: Validate YML
+description: Validate a yml file against a schema
+
+inputs:
+  schema-path:
+    description: "Path to the schema file used for validation."
+    required: true
+    type: string
+  file-path:
+    description: "Path to the file being validated."
+    required: true
+    type: string
+
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install validator
+      shell: bash
+      run: npm install -g ajv-cli
+
+    - name: Run validation
+      shell: bash
+      run: ajv validate -s ${{ inputs.schema-path }} -d ${{ inputs.file-path }} --strict=false

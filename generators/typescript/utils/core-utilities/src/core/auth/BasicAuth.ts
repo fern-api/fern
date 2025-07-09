@@ -1,4 +1,4 @@
-import { Base64 } from "js-base64";
+import { base64Decode, base64Encode } from "../base64";
 
 export interface BasicAuth {
     username: string;
@@ -12,12 +12,12 @@ export const BasicAuth = {
         if (basicAuth == null) {
             return undefined;
         }
-        const token = Base64.encode(`${basicAuth.username}:${basicAuth.password}`);
+        const token = base64Encode(`${basicAuth.username}:${basicAuth.password}`);
         return `Basic ${token}`;
     },
     fromAuthorizationHeader: (header: string): BasicAuth => {
         const credentials = header.replace(BASIC_AUTH_HEADER_PREFIX, "");
-        const decoded = Base64.decode(credentials);
+        const decoded = base64Decode(credentials);
         const [username, password] = decoded.split(":", 2);
 
         if (username == null || password == null) {

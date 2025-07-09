@@ -5,7 +5,6 @@
 import * as core from "./core/index.js";
 import { mergeHeaders } from "./core/headers.js";
 import * as SeedObject from "./api/index.js";
-import urlJoin from "url-join";
 import * as errors from "./errors/index.js";
 
 export declare namespace SeedObjectClient {
@@ -73,7 +72,7 @@ export class SeedObjectClient {
         requestOptions?: SeedObjectClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedObject.RootType1>> {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/root/root",
@@ -150,7 +149,7 @@ export class SeedObjectClient {
         requestOptions?: SeedObjectClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/root/discriminated-union",
@@ -228,7 +227,7 @@ export class SeedObjectClient {
         requestOptions?: SeedObjectClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/root/undiscriminated-union",

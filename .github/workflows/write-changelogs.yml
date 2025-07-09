@@ -13,6 +13,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
+          ref: main
 
       - name: Install
         uses: ./.github/actions/install
@@ -31,16 +32,9 @@ jobs:
           echo "Generating changelogs for CLI"
           pnpm seed:local generate changelog cli -o ./fern/pages/changelogs/cli/ --clean-directory
 
-      - name: Commit changes
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: "chore: update changelog"
-          add_options: -A
-          file_pattern: fern/pages/changelogs/
-
       - name: Create Pull Request
         id: cpr
-        uses: peter-evans/create-pull-request@v5
+        uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
           commit-message: "chore(changelog): update changelog"

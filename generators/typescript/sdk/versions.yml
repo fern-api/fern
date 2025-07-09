@@ -1,4 +1,211 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+
+- version: 2.4.3
+  changelogEntry:
+    - summary: |
+        Fix an issue where a property set to `undefined` would not match with a property that is missing in the `withJson` MSW predicate.
+      type: fix
+  createdAt: '2025-07-08'
+  irVersion: 58
+
+- version: 2.4.2
+  changelogEntry:
+    - summary: |
+        Fixes a compile issue when WebSocket connect methods require query parameters with special characters. 
+        Fixes response deserialization in websockets to respect skipping validation. 
+      type: fix
+  createdAt: '2025-07-04'
+  irVersion: 58
+
+- version: 2.4.1
+  changelogEntry:
+    - summary: |
+        When serde layer is enabled, WebSocket channels now pass through unrecognized properties 
+        instead of stripping them to preserve forwards compatibility.
+      type: fix
+  createdAt: '2025-07-04'
+  irVersion: 58   
+
+- version: 2.4.0
+  changelogEntry:
+    - summary: Fixes bug with query parameter and path paramter serialization in URL for WebSocket channels.
+      type: fix
+  createdAt: '2025-07-03'
+  irVersion: 58     
+
+- version: 2.3.3
+  changelogEntry:
+    - summary: Bump version to test Docker image rename to `fernapi/fern-typescript-sdk`
+      type: internal
+  createdAt: '2025-07-03'
+  irVersion: 58      
+- version: 2.3.2
+  changelogEntry:
+    - summary: |
+        Remove ".js" extension from ESM imports in the source generator code. 
+        If `useLegacyExports` is `true`, you will not see ".js" extensions in ESM imports.
+        If `useLegacyExports` is `false` (default), a post process step will add the `.js` extension, so you won't see a difference.
+
+        We're doing this because Jest has a bug where it doesn't properly load TypeScript modules even though the TypeScript and imports are valid.
+      type: fix
+  createdAt: '2025-07-03'
+  irVersion: 58
+- version: 2.3.1
+  changelogEntry:
+    - summary: |
+        Fixes an issue where OAuth clients would not compile when variables were configured
+        in the SDK. Now, the oauth client is instantiated with any global path parameters or headers. 
+      type: fix
+  createdAt: '2025-07-03'
+  irVersion: 58
+
+- version: 2.3.0
+  changelogEntry:
+    - summary: |
+        Change the `outputSourceFiles` default from `false` to `true`.
+        This will affect the output when you generate the SDK to the local file system.
+      type: feat
+  createdAt: '2025-07-03'
+  irVersion: 58
+- version: 2.2.1
+  changelogEntry:
+    - summary: |
+        Ensure _tests/wire_ is generated even when there are no wire tests generated.
+        Otherwise, Jest throws an error because the wire test project `roots` doesn't exist.
+      type: fix
+  createdAt: '2025-07-03'
+  irVersion: 58
+- version: 2.2.0
+  changelogEntry:
+    - summary: |
+        Improve generated package.json files:
+        * Add `engines` field to specify minimum Node.js version supported as Node.js 18.
+        * Add `sideEffects: false`
+        * Add `README.md` and `LICENSE` to `files` array
+        * Use GitHub shorthand for `repository` field.
+
+        You can override these fields using the `packageJson` config:
+        ```yml
+        # In generators.yml
+        groups:
+          ts-sdk:
+            generators:
+              - name: fernapi/fern-typescript-sdk
+                config:
+                  packageJson:
+                    engines:
+                      node: ">=16.0.0"
+        ```
+      type: feat
+  createdAt: '2025-07-03'
+  irVersion: 58
+
+- version: 2.1.0
+  changelogEntry:
+    - summary: |
+        Split up Jest configuration into multiple projects.
+        You can now run the following command to run tests:
+        * `yarn test`: runs all tests
+        * `yarn test:unit`: runs unit tests (any non-browser and non-wire tests)
+        * `yarn test:browser`: runs browser only tests inside of `js-dom`
+        * `yarn test:wire`: runs wire tests
+
+        You can now pass in paths and patterns as an argument to the above commands to filter down to specific tests.
+        For example: `yarn test tests/unit/fetcher`
+      type: feat
+  createdAt: '2025-07-02'
+  irVersion: 58
+- version: 2.0.0
+  changelogEntry:
+    - summary: |
+        The TypeScript generator has received a large amount of improvements, but to maintain backwards compatibility, they require you to opt in using feature flags.
+        The 2.0.0 release now has these feature flags enabled by default. Here's an overview of the `config` defaults that have changed in _generators.yml_.
+
+        | Option | Before | Now |
+        |--------|--------|-----|
+        | `streamType` | `"wrapper"` | `"web"` |
+        | `fileResponseType` | `"stream"` | `"binary-response"` |
+        | `formDataSupport` | `"Node16"` | `"Node18"` |
+        | `fetchSupport` | `"node-fetch"` | `"native"` |
+
+        To avoid breaking changes, explicitly set the options above with the `Before` values in the `config` of your generator
+        in _generators.yml_.
+
+        With these defaults, the generated SDKs will have _**ZERO**_ dependencies (excluding devDependencies and `ws` in case of WebSocket generation).
+        As a result, the SDKs are smaller, faster, more secure, and easier to use.
+      type: feat
+  createdAt: '2025-07-02'
+  irVersion: 58
+
+- version: 1.10.6
+  changelogEntry:
+    - summary: |
+        Publish multi-platform builds of the TypeScript SDK docker container.
+      type: fix
+  createdAt: '2025-07-02'
+  irVersion: 58      
+  
+- version: 1.10.5
+  changelogEntry:
+    - summary: |
+        Add default values to request parameters.
+        For example, if you have a query parameter `foo` with a default value of `bar`, the generated request parameter will have a default value of `bar`.
+
+        To enable this, set `useDefaultRequestParameterValues` to `true` in the `config` of your generator configuration.
+        ```yml
+        # In generators.yml
+        groups:
+          ts-sdk:
+            generators:
+              - name: fernapi/fern-typescript-sdk
+                config:
+                  useDefaultRequestParameterValues: true
+        ```
+      type: feat
+  createdAt: '2025-06-30'
+  irVersion: 58
+- version: 1.10.4
+  changelogEntry:
+    - summary: |
+        Add `omitFernHeaders` configuration to omit Fern headers from the generated SDK.
+      type: fix
+  createdAt: '2025-07-01'
+  irVersion: 58
+- version: 1.10.3
+  changelogEntry:
+    - summary: |
+        Remove `qs` dependency.
+      type: fix
+  createdAt: '2025-07-01'
+  irVersion: 58
+- version: 1.10.2
+  changelogEntry:
+    - summary: |
+        Remove `js-base64` dependency in favor of using native implementations.
+      type: fix
+  createdAt: '2025-07-01'
+  irVersion: 58
+- version: 1.10.1
+  changelogEntry:
+    - summary: |
+        Remove `url-join` dependency in favor of a handwritten `joinUrl` function.
+      type: fix
+  createdAt: '2025-06-30'
+  irVersion: 58
+- version: 1.10.0
+  changelogEntry:
+    - summary: |
+        Add `fetchSupport` configuration which lets you choose between `node-fetch` and `native`.
+        The default is `node-fetch`. If you choose `native`, the `node-fetch` dependency will be removed.
+      type: feat
+  createdAt: '2025-06-27'
+  irVersion: 58
+- version: 1.9.1
+  changelogEntry:
+    - summary: Improve auto-pagination logic to consider empty strings in response as null cursors and stop paging.
+      type: fix
+  createdAt: '2025-06-27'
+  irVersion: 58
 - version: 1.9.0
   changelogEntry:
     - summary: |
@@ -21,7 +228,7 @@
         When a multipart form part is explicitly marked as JSON, serialize the data as JSON regardless of type. 
         This also means arrays, maps, etc. will not be split into multiple parts, but serialized to JSON as a single part.
       type: fix
-  createdAt: '2025-06-27'
+  createdAt: '2025-06-22'
   irVersion: 58
 - version: 1.8.1
   changelogEntry:
@@ -76,7 +283,7 @@
         groups:
           ts-sdk:
             generators:
-              - name: fernapi/fern-typescript-node-sdk
+              - name: fernapi/fern-typescript-sdk
                 config:
                   packagePath: src/package-path
         ```
@@ -998,7 +1205,7 @@
         ```yml
         groups:
           ts-sdk:
-            name: fernapi/fern-typescript-node-sdk
+            name: fernapi/fern-typescript-sdk
             version: 0.40.0
             config:
               useBigInt: true
@@ -1143,7 +1350,7 @@
         cause errors, toggling this option will allow you to receive the generated code.
 
         ```
-        - name: fernapi/fern-typescript-node-sdk
+        - name: fernapi/fern-typescript-sdk
           version: 0.38.1
           config:
             noScripts: true
@@ -1167,7 +1374,7 @@
         The business plan Typescript SDK will now generate wire tests if the feature flag in the configuration is turned on.
 
         ```
-        - name: fernapi/fern-typescript-node-sdk
+        - name: fernapi/fern-typescript-sdk
           version: 0.37.0-rc0
           config:
             generateWireTests: true

@@ -19,7 +19,7 @@ export const V29_TO_V28_MIGRATION: IrMigration<
         [GeneratorName.TYPESCRIPT_NODE_SDK]: "0.8.6-1-g3d8d8591",
         [GeneratorName.TYPESCRIPT_BROWSER_SDK]: "0.8.6-1-g3d8d8591",
         [GeneratorName.TYPESCRIPT]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.TYPESCRIPT_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.TYPESCRIPT_SDK]: "0.8.6-1-g3d8d8591",
         [GeneratorName.TYPESCRIPT_EXPRESS]: "0.8.6-1-g3d8d8591",
         [GeneratorName.JAVA]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.JAVA_MODEL]: "0.5.14-1-ge4bcd98",

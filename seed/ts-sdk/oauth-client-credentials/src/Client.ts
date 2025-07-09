@@ -54,6 +54,7 @@ export class SeedOauthClientCredentialsClient {
             clientId: this._options.clientId,
             clientSecret: this._options.clientSecret,
             authClient: new Auth({
+                ...this._options,
                 environment: this._options.environment,
             }),
         });

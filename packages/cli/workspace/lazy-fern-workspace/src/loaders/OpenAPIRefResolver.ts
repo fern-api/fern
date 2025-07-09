@@ -1,4 +1,3 @@
-import { isAbsoluteUrl } from "@redocly/openapi-core";
 import { BaseResolver } from "@redocly/openapi-core";
 import path from "path";
 

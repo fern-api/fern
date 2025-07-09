@@ -1,0 +1,71 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/token",
+                "method": "POST",
+                "identifierOverride": "endpoint_auth.getTokenWithClientCredentials"
+            },
+            "snippet": {
+                "client": "require \"fern_oauth_client_credentials_with_variables\"\n\noauth_client_credentials_with_variables = SeedOauthClientCredentialsWithVariablesClient::Client.new(base_url: \"https://api.example.com\")\noauth_client_credentials_with_variables.auth.get_token_with_client_credentials(\n  client_id: \"client_id\",\n  client_secret: \"client_secret\",\n  scope: \"scope\"\n)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/token",
+                "method": "POST",
+                "identifierOverride": "endpoint_auth.refreshToken"
+            },
+            "snippet": {
+                "client": "require \"fern_oauth_client_credentials_with_variables\"\n\noauth_client_credentials_with_variables = SeedOauthClientCredentialsWithVariablesClient::Client.new(base_url: \"https://api.example.com\")\noauth_client_credentials_with_variables.auth.refresh_token(\n  client_id: \"client_id\",\n  client_secret: \"client_secret\",\n  refresh_token: \"refresh_token\",\n  scope: \"scope\"\n)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/token",
+                "method": "POST",
+                "identifierOverride": "endpoint_auth.getTokenWithClientCredentials"
+            },
+            "snippet": {
+                "client": "require \"fern_oauth_client_credentials_with_variables\"\n\noauth_client_credentials_with_variables = SeedOauthClientCredentialsWithVariablesClient::Client.new(base_url: \"https://api.example.com\")\noauth_client_credentials_with_variables.auth.get_token_with_client_credentials(\n  client_id: \"client_id\",\n  client_secret: \"client_secret\",\n  scope: \"scope\"\n)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/token",
+                "method": "POST",
+                "identifierOverride": "endpoint_auth.refreshToken"
+            },
+            "snippet": {
+                "client": "require \"fern_oauth_client_credentials_with_variables\"\n\noauth_client_credentials_with_variables = SeedOauthClientCredentialsWithVariablesClient::Client.new(base_url: \"https://api.example.com\")\noauth_client_credentials_with_variables.auth.refresh_token(\n  client_id: \"client_id\",\n  client_secret: \"client_secret\",\n  refresh_token: \"refresh_token\",\n  scope: \"scope\"\n)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/service/{endpointParam}",
+                "method": "POST",
+                "identifierOverride": "endpoint_service.post"
+            },
+            "snippet": {
+                "client": "require \"fern_oauth_client_credentials_with_variables\"\n\noauth_client_credentials_with_variables = SeedOauthClientCredentialsWithVariablesClient::Client.new(base_url: \"https://api.example.com\")\noauth_client_credentials_with_variables.service.post(endpoint_param: \"endpointParam\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/service/{endpointParam}",
+                "method": "POST",
+                "identifierOverride": "endpoint_service.post"
+            },
+            "snippet": {
+                "client": "require \"fern_oauth_client_credentials_with_variables\"\n\noauth_client_credentials_with_variables = SeedOauthClientCredentialsWithVariablesClient::Client.new(base_url: \"https://api.example.com\")\noauth_client_credentials_with_variables.service.post(endpoint_param: \"endpointParam\")",
+                "type": "ruby"
+            }
+        }
+    ],
+    "types": {}
+}

@@ -1,5 +1,3 @@
-import { JavaScriptRuntime } from "@fern-typescript/commons";
-
 import { SdkGeneratorCli } from "./SdkGeneratorCli";
 
-void new SdkGeneratorCli({ targetRuntime: JavaScriptRuntime.NODE }).runCli();
+void new SdkGeneratorCli().runCli();

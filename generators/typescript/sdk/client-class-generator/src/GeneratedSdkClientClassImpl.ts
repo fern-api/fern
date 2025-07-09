@@ -1,7 +1,6 @@
 import {
     ExportsManager,
     ImportsManager,
-    JavaScriptRuntime,
     NpmPackage,
     PackageId,
     getParameterNameForRootPathParameter,
@@ -82,7 +81,6 @@ export declare namespace GeneratedSdkClientClassImpl {
         requireDefaultEnvironment: boolean;
         defaultTimeoutInSeconds: number | "infinity" | undefined;
         npmPackage: NpmPackage | undefined;
-        targetRuntime: JavaScriptRuntime;
         includeContentHeadersOnFileDownloadResponse: boolean;
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
@@ -93,6 +91,8 @@ export declare namespace GeneratedSdkClientClassImpl {
         streamType: "wrapper" | "web";
         fileResponseType: "stream" | "binary-response";
         formDataSupport: "Node16" | "Node18";
+        omitFernHeaders: boolean;
+        useDefaultRequestParameterValues: boolean;
     }
 }
 
@@ -122,7 +122,6 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private readonly packageResolver: PackageResolver;
     private readonly requireDefaultEnvironment: boolean;
     private readonly npmPackage: NpmPackage | undefined;
-    private readonly targetRuntime: JavaScriptRuntime;
     private readonly packageId: PackageId;
     private readonly retainOriginalCasing: boolean;
     private readonly inlineFileProperties: boolean;
@@ -138,6 +137,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private basicAuthScheme: BasicAuthScheme | undefined;
     private readonly authHeaders: HeaderAuthScheme[];
     private readonly service: HttpService | undefined;
+    private readonly omitFernHeaders: boolean;
+    private readonly useDefaultRequestParameterValues: boolean;
 
     constructor({
         isRoot,
@@ -153,7 +154,6 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         requireDefaultEnvironment,
         defaultTimeoutInSeconds,
         npmPackage,
-        targetRuntime,
         includeContentHeadersOnFileDownloadResponse,
         includeSerdeLayer,
         retainOriginalCasing,
@@ -165,7 +165,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         exportsManager,
         streamType,
         fileResponseType,
-        formDataSupport
+        formDataSupport,
+        omitFernHeaders,
+        useDefaultRequestParameterValues
     }: GeneratedSdkClientClassImpl.Init) {
         this.isRoot = isRoot;
         this.intermediateRepresentation = intermediateRepresentation;
@@ -176,7 +178,6 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         this.packageResolver = packageResolver;
         this.requireDefaultEnvironment = requireDefaultEnvironment;
         this.npmPackage = npmPackage;
-        this.targetRuntime = targetRuntime;
         this.retainOriginalCasing = retainOriginalCasing;
         this.inlineFileProperties = inlineFileProperties;
         this.includeSerdeLayer = includeSerdeLayer;
@@ -186,6 +187,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         this.importsManager = importsManager;
         this.exportsManager = exportsManager;
         this.oauthTokenProviderGenerator = oauthTokenProviderGenerator;
+        this.omitFernHeaders = omitFernHeaders;
+        this.useDefaultRequestParameterValues = useDefaultRequestParameterValues;
 
         const package_ = packageResolver.resolvePackage(packageId);
         this.package_ = package_;
@@ -210,7 +213,6 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             endpoint,
                             requestBody,
                             generatedSdkClientClass: this,
-                            targetRuntime: this.targetRuntime,
                             retainOriginalCasing: this.retainOriginalCasing,
                             exportsManager: this.exportsManager
                         });
@@ -224,7 +226,6 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             endpoint,
                             requestBody,
                             generatedSdkClientClass: this,
-                            targetRuntime: this.targetRuntime,
                             retainOriginalCasing: this.retainOriginalCasing,
                             inlineFileProperties: this.inlineFileProperties,
                             includeSerdeLayer: this.includeSerdeLayer,
@@ -383,7 +384,10 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 serviceClassName: this.serviceClassName,
                 requireDefaultEnvironment: this.requireDefaultEnvironment,
                 intermediateRepresentation: this.intermediateRepresentation,
-                generatedSdkClientClass: this
+                generatedSdkClientClass: this,
+                includeSerdeLayer: this.includeSerdeLayer,
+                retainOriginalCasing: this.retainOriginalCasing,
+                omitUndefined: this.omitUndefined
             });
         } else {
             this.generatedWebsocketImplementation = undefined;
@@ -695,6 +699,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                     ${setClientId},
                     ${setClientSecret},
                     ${OAuthTokenProviderGenerator.OAUTH_AUTH_CLIENT_PROPERTY_NAME}: new ${authClientTypeName}({
+                        ...this._options,
                         environment: this._options.environment,
                     }),
                 });
@@ -885,7 +890,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         const rootHeaders = this.isRoot ? this.getRootHeaders(context) : [];
         const shouldGenerateRootHeaders = this.isRoot && rootHeaders.length > 0;
         if (shouldGenerateRootHeaders) {
-            context.importsManager.addImportFromRoot("core/headers.js", {
+            context.importsManager.addImportFromRoot("core/headers", {
                 namedImports: ["mergeHeaders"]
             });
             return code`this._options = {
@@ -1046,72 +1051,76 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                         header: header.name.wireValue,
                         value
                     };
-                }),
-            {
-                header: this.intermediateRepresentation.sdkConfig.platformHeaders.language,
-                value: ts.factory.createStringLiteral("JavaScript")
-            }
+                })
         ];
 
-        if (this.npmPackage != null) {
+        const includeFernHeaders = !this.omitFernHeaders;
+        if (includeFernHeaders) {
+            headers.push({
+                header: this.intermediateRepresentation.sdkConfig.platformHeaders.language,
+                value: ts.factory.createStringLiteral("JavaScript")
+            });
+
+            if (this.npmPackage != null) {
+                headers.push(
+                    {
+                        header: this.intermediateRepresentation.sdkConfig.platformHeaders.sdkName,
+                        value: ts.factory.createStringLiteral(this.npmPackage.packageName)
+                    },
+                    {
+                        header: this.intermediateRepresentation.sdkConfig.platformHeaders.sdkVersion,
+                        value: ts.factory.createStringLiteral(this.npmPackage.version)
+                    }
+                );
+            }
+
+            if (context.ir.sdkConfig.platformHeaders.userAgent != null) {
+                headers.push({
+                    header: context.ir.sdkConfig.platformHeaders.userAgent.header,
+                    value: ts.factory.createStringLiteral(context.ir.sdkConfig.platformHeaders.userAgent.value)
+                });
+            }
+
+            const generatedVersion = context.versionContext.getGeneratedVersion();
+            if (generatedVersion != null) {
+                const header = generatedVersion.getHeader();
+                const headerName = this.getOptionKeyForHeader(header);
+                const defaultVersion = generatedVersion.getDefaultVersion();
+
+                let value: ts.Expression;
+                if (defaultVersion != null) {
+                    value = ts.factory.createBinaryExpression(
+                        ts.factory.createPropertyAccessChain(
+                            ts.factory.createIdentifier(GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER),
+                            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                            ts.factory.createIdentifier(headerName)
+                        ),
+                        ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                        ts.factory.createStringLiteral(defaultVersion)
+                    );
+                } else {
+                    value = ts.factory.createPropertyAccessExpression(
+                        ts.factory.createIdentifier(GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER),
+                        ts.factory.createIdentifier(headerName)
+                    );
+                }
+                headers.push({
+                    header: header.name.wireValue,
+                    value
+                });
+            }
+
             headers.push(
                 {
-                    header: this.intermediateRepresentation.sdkConfig.platformHeaders.sdkName,
-                    value: ts.factory.createStringLiteral(this.npmPackage.packageName)
+                    header: "X-Fern-Runtime",
+                    value: context.coreUtilities.runtime.type._getReferenceTo()
                 },
                 {
-                    header: this.intermediateRepresentation.sdkConfig.platformHeaders.sdkVersion,
-                    value: ts.factory.createStringLiteral(this.npmPackage.version)
+                    header: "X-Fern-Runtime-Version",
+                    value: context.coreUtilities.runtime.version._getReferenceTo()
                 }
             );
         }
-
-        if (context.ir.sdkConfig.platformHeaders.userAgent != null) {
-            headers.push({
-                header: context.ir.sdkConfig.platformHeaders.userAgent.header,
-                value: ts.factory.createStringLiteral(context.ir.sdkConfig.platformHeaders.userAgent.value)
-            });
-        }
-
-        const generatedVersion = context.versionContext.getGeneratedVersion();
-        if (generatedVersion != null) {
-            const header = generatedVersion.getHeader();
-            const headerName = this.getOptionKeyForHeader(header);
-            const defaultVersion = generatedVersion.getDefaultVersion();
-
-            let value: ts.Expression;
-            if (defaultVersion != null) {
-                value = ts.factory.createBinaryExpression(
-                    ts.factory.createPropertyAccessChain(
-                        ts.factory.createIdentifier(GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER),
-                        ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                        ts.factory.createIdentifier(headerName)
-                    ),
-                    ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                    ts.factory.createStringLiteral(defaultVersion)
-                );
-            } else {
-                value = ts.factory.createPropertyAccessExpression(
-                    ts.factory.createIdentifier(GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER),
-                    ts.factory.createIdentifier(headerName)
-                );
-            }
-            headers.push({
-                header: header.name.wireValue,
-                value
-            });
-        }
-
-        headers.push(
-            {
-                header: "X-Fern-Runtime",
-                value: context.coreUtilities.runtime.type._getReferenceTo()
-            },
-            {
-                header: "X-Fern-Runtime-Version",
-                value: context.coreUtilities.runtime.version._getReferenceTo()
-            }
-        );
 
         return headers;
     }

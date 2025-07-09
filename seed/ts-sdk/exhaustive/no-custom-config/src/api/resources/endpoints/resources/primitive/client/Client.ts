@@ -4,7 +4,6 @@
 
 import * as core from "../../../../../../core/index.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/headers.js";
-import urlJoin from "url-join";
 import * as errors from "../../../../../../errors/index.js";
 
 export declare namespace Primitive {
@@ -55,7 +54,7 @@ export class Primitive {
         requestOptions?: Primitive.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/primitive/string",
@@ -121,7 +120,7 @@ export class Primitive {
         requestOptions?: Primitive.RequestOptions,
     ): Promise<core.WithRawResponse<number>> {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/primitive/integer",
@@ -187,7 +186,7 @@ export class Primitive {
         requestOptions?: Primitive.RequestOptions,
     ): Promise<core.WithRawResponse<number>> {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/primitive/long",
@@ -253,7 +252,7 @@ export class Primitive {
         requestOptions?: Primitive.RequestOptions,
     ): Promise<core.WithRawResponse<number>> {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/primitive/double",
@@ -319,7 +318,7 @@ export class Primitive {
         requestOptions?: Primitive.RequestOptions,
     ): Promise<core.WithRawResponse<boolean>> {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/primitive/boolean",
@@ -385,7 +384,7 @@ export class Primitive {
         requestOptions?: Primitive.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/primitive/datetime",
@@ -451,7 +450,7 @@ export class Primitive {
         requestOptions?: Primitive.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/primitive/date",
@@ -517,7 +516,7 @@ export class Primitive {
         requestOptions?: Primitive.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/primitive/uuid",
@@ -583,7 +582,7 @@ export class Primitive {
         requestOptions?: Primitive.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/primitive/base64",

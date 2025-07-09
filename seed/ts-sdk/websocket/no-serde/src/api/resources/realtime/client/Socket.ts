@@ -138,12 +138,14 @@ export class RealtimeSocket {
     }
 
     /** Send a binary payload to the websocket. */
-    private sendBinary(payload: ArrayBufferLike | Blob | ArrayBufferView): void {
+    protected sendBinary(payload: ArrayBufferLike | Blob | ArrayBufferView): void {
         this.socket.send(payload);
     }
 
     /** Send a JSON payload to the websocket. */
-    private sendJson(payload: SeedWebsocket.SendEvent | SeedWebsocket.SendSnakeCase | SeedWebsocket.SendEvent2): void {
+    protected sendJson(
+        payload: SeedWebsocket.SendEvent | SeedWebsocket.SendSnakeCase | SeedWebsocket.SendEvent2,
+    ): void {
         const jsonPayload = toJson(payload);
         this.socket.send(jsonPayload);
     }

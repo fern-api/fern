@@ -1,5 +1,8 @@
 #!/usr/bin/env node
+import { fromBinary, toBinary } from "@bufbuild/protobuf";
+import { CodeGeneratorRequestSchema, CodeGeneratorResponseSchema } from "@bufbuild/protobuf/wkt";
 import getPort from "get-port";
+import type { ReadStream, WriteStream } from "node:tty";
 import { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
@@ -16,6 +19,7 @@ import { AbsoluteFilePath, cwd, doesPathExist, isURL, resolve } from "@fern-api/
 import { initializeAPI, initializeDocs, initializeWithMintlify, initializeWithReadme } from "@fern-api/init";
 import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
 import { askToLogin, login } from "@fern-api/login";
+import { protocGenFern } from "@fern-api/protoc-gen-fern";
 import { FernCliError, LoggableFernCliError } from "@fern-api/task-context";
 
 import { LoadOpenAPIStatus, loadOpenAPIFromUrl } from "../../init/src/utils/loadOpenApiFromUrl";
@@ -188,6 +192,8 @@ async function tryRunCli(cliContext: CliContext) {
     // CLI V2 Sanctioned Commands
     addGetOrganizationCommand(cli, cliContext);
     addGeneratorCommands(cli, cliContext);
+
+    addProtocGenFernCommand(cli, cliContext);
 
     cli.middleware(async (argv) => {
         cliContext.setLogLevel(argv["log-level"]);
@@ -1375,4 +1381,46 @@ function addExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
             });
         }
     );
+}
+
+function addProtocGenFernCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "protoc-gen-fern",
+        false,
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        (yargs) => {},
+        async () => {
+            const plugin = protocGenFern;
+            const data = await readBytes(process.stdin);
+            const req = fromBinary(CodeGeneratorRequestSchema, data);
+            const res = plugin.run(req);
+            await writeBytes(process.stdout, toBinary(CodeGeneratorResponseSchema, res));
+            process.exit(0);
+        }
+    );
+}
+
+function readBytes(stream: ReadStream): Promise<Uint8Array> {
+    return new Promise<Uint8Array>((resolve, reject) => {
+        const chunks: Uint8Array[] = [];
+        stream.on("data", (chunk: Uint8Array) => chunks.push(chunk));
+        stream.on("end", () => {
+            resolve(new Uint8Array(Buffer.concat(chunks)));
+        });
+        stream.on("error", (err) => {
+            reject(err);
+        });
+    });
+}
+
+function writeBytes(stream: WriteStream, data: Uint8Array): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+        stream.write(data, (err) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve();
+            }
+        });
+    });
 }

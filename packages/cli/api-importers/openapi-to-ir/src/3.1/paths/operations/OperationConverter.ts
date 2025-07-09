@@ -574,7 +574,10 @@ export class OperationConverter extends AbstractOperationConverter {
     }
 
     private getGroupDisplayName(group: string[] | undefined): string | undefined {
-        const rawOperationTag = this.operation.tags?.[0];
+        let rawOperationTag = this.operation.tags?.[0];
+        if (rawOperationTag != null) {
+            rawOperationTag = this.context.getDisplayNameForTag(rawOperationTag);
+        }
         const baseGroupName = group?.[group.length - 1];
         if (baseGroupName != null && rawOperationTag != null) {
             const lowerCaseRawOperationTag = rawOperationTag.toLowerCase().replaceAll(" ", "");

@@ -5,7 +5,6 @@
 import * as core from "../../../../core/index.js";
 import * as SeedPagination from "../../../index.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
-import urlJoin from "url-join";
 import * as errors from "../../../../errors/index.js";
 
 export declare namespace Complex {
@@ -65,7 +64,7 @@ export class Complex {
                 request: SeedPagination.SearchRequest,
             ): Promise<core.WithRawResponse<SeedPagination.PaginatedConversationResponse>> => {
                 const _response = await core.fetcher({
-                    url: urlJoin(
+                    url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
                         `${encodeURIComponent(index)}/conversations/search`,
@@ -120,7 +119,12 @@ export class Complex {
         return new core.Pageable<SeedPagination.PaginatedConversationResponse, SeedPagination.Conversation>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
-            hasNextPage: (response) => response?.pages?.next?.starting_after != null,
+            hasNextPage: (response) =>
+                response?.pages?.next?.starting_after != null &&
+                !(
+                    typeof response?.pages?.next?.starting_after === "string" &&
+                    response?.pages?.next?.starting_after === ""
+                ),
             getItems: (response) => response?.conversations ?? [],
             loadPage: (response) => {
                 return list(

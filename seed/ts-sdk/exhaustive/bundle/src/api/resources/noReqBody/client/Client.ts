@@ -5,7 +5,6 @@
 import * as core from "../../../../core/index.js";
 import * as Fiddle from "../../../index.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
-import urlJoin from "url-join";
 
 export declare namespace NoReqBody {
     export interface Options {
@@ -58,7 +57,7 @@ export class NoReqBody {
         >
     > {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/no-req-body",
@@ -111,7 +110,7 @@ export class NoReqBody {
         requestOptions?: NoReqBody.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<string, Fiddle.noReqBody.postWithNoRequestBody.Error>>> {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/no-req-body",

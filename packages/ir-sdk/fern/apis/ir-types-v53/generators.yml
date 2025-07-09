@@ -4,7 +4,7 @@ groups:
     audiences:
       - dynamic
     generators:
-      - name: fernapi/fern-typescript-node-sdk
+      - name: fernapi/fern-typescript-sdk
         version: 0.38.6
         output:
           location: npm
@@ -15,7 +15,7 @@ groups:
           noSerdeLayer: true
   node:
     generators:
-      - name: fernapi/fern-typescript-node-sdk
+      - name: fernapi/fern-typescript-sdk
         version: 0.8.13
         output:
           location: npm

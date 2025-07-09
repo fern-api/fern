@@ -13,6 +13,7 @@ export declare namespace FieldConverter {
     export interface Args extends AbstractConverter.Args<ProtofileConverterContext> {
         field: FieldDescriptorProto;
         wrapAsOptional?: boolean;
+        sourceCodeInfoPath: number[];
     }
 
     export interface Output {
@@ -25,11 +26,13 @@ export declare namespace FieldConverter {
 export class FieldConverter extends AbstractConverter<ProtofileConverterContext, FieldConverter.Output> {
     private readonly field: FieldDescriptorProto;
     private readonly wrapAsOptional: boolean;
+    private readonly sourceCodeInfoPath: number[];
 
-    constructor({ context, breadcrumbs, field, wrapAsOptional }: FieldConverter.Args) {
+    constructor({ context, breadcrumbs, field, wrapAsOptional, sourceCodeInfoPath }: FieldConverter.Args) {
         super({ context, breadcrumbs });
         this.field = field;
         this.wrapAsOptional = wrapAsOptional ?? true;
+        this.sourceCodeInfoPath = sourceCodeInfoPath;
     }
 
     public convert(): FieldConverter.Output | undefined {
@@ -41,7 +44,8 @@ export class FieldConverter extends AbstractConverter<ProtofileConverterContext,
             const arrayFieldConverter = new ArrayFieldConverter({
                 context: this.context,
                 breadcrumbs: this.breadcrumbs,
-                field: this.field
+                field: this.field,
+                sourceCodeInfoPath: this.sourceCodeInfoPath
             });
             const convertedArrayField = arrayFieldConverter.convert();
             if (convertedArrayField != null) {
@@ -58,7 +62,8 @@ export class FieldConverter extends AbstractConverter<ProtofileConverterContext,
             const primitiveFieldConverter = new PrimitiveFieldConverter({
                 context: this.context,
                 breadcrumbs: this.breadcrumbs,
-                field: this.field
+                field: this.field,
+                sourceCodeInfoPath: this.sourceCodeInfoPath
             });
             const convertedType = primitiveFieldConverter.convert();
             if (convertedType != null) {
@@ -71,7 +76,7 @@ export class FieldConverter extends AbstractConverter<ProtofileConverterContext,
 
         if (this.field.type === 11 && this.field.typeName != null) {
             const typeReference = this.context.convertGrpcReferenceToTypeReference({
-                typeName: this.context.maybeRemoveGrpcPackagePrefix(this.field.typeName),
+                typeName: this.field.typeName,
                 displayNameOverride: this.field.name
             });
             if (typeReference.ok) {

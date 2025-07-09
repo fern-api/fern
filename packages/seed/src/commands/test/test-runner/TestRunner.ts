@@ -118,7 +118,7 @@ export abstract class TestRunner {
 
             const id = configuration != null ? `${fixture}:${configuration.outputFolder}` : `${fixture}`;
             const absolutePathToAPIDefinition = AbsoluteFilePath.of(
-                path.join(__dirname, FERN_DIRECTORY, APIS_DIRECTORY, fixture)
+                path.join(__dirname, "../../../test-definitions", FERN_DIRECTORY, APIS_DIRECTORY, fixture)
             );
             const taskContext = this.taskContextFactory.create(`${this.generator.workspaceName}:${id}`);
             const outputFolder = configuration?.outputFolder ?? fixture;
@@ -191,12 +191,6 @@ export abstract class TestRunner {
                 });
                 generationStopwatch.stop();
                 metrics.generationTime = generationStopwatch.duration();
-                taskContext.logger.info("Writing .mock directory...");
-                await writeDotMock({
-                    absolutePathToDotMockDirectory: outputDir,
-                    absolutePathToFernDefinition: absolutePathToAPIDefinition
-                });
-                taskContext.logger.info("Successfully wrote .mock directory...");
             } catch (error) {
                 taskContext.logger.error(`Generation failed: ${(error as Error)?.message ?? "Unknown error"}`);
                 taskContext.logger.error(`${(error as Error)?.stack}`);
@@ -254,24 +248,4 @@ export abstract class TestRunner {
     protected getParsedDockerName(): ParsedDockerName {
         return parseDockerOrThrow(this.generator.workspaceConfig.test.docker.image);
     }
-}
-
-// Copy Fern definition to output directory
-export async function writeDotMock({
-    absolutePathToDotMockDirectory,
-    absolutePathToFernDefinition
-}: {
-    absolutePathToDotMockDirectory: AbsoluteFilePath;
-    absolutePathToFernDefinition: AbsoluteFilePath;
-}): Promise<void> {
-    if (absolutePathToFernDefinition != null) {
-        await cp(`${absolutePathToFernDefinition}`, `${absolutePathToDotMockDirectory}/.mock`, {
-            recursive: true
-        });
-    }
-    await mkdir(`${absolutePathToDotMockDirectory}/.mock`, { recursive: true });
-    await writeFile(
-        `${absolutePathToDotMockDirectory}/.mock/fern.config.json`,
-        '{"organization": "fern-test", "version": "*"}'
-    );
 }

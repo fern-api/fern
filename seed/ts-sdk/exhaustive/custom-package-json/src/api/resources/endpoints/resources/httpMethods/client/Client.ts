@@ -5,7 +5,6 @@
 import * as core from "../../../../../../core/index.js";
 import * as Fiddle from "../../../../../index.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/headers.js";
-import urlJoin from "url-join";
 
 export declare namespace HttpMethods {
     export interface Options {
@@ -55,7 +54,7 @@ export class HttpMethods {
         requestOptions?: HttpMethods.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<string, Fiddle.endpoints.httpMethods.testGet.Error>>> {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 `/http-methods/${encodeURIComponent(id)}`,
@@ -119,7 +118,7 @@ export class HttpMethods {
         >
     > {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/http-methods",
@@ -189,7 +188,7 @@ export class HttpMethods {
         >
     > {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 `/http-methods/${encodeURIComponent(id)}`,
@@ -273,7 +272,7 @@ export class HttpMethods {
         >
     > {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 `/http-methods/${encodeURIComponent(id)}`,
@@ -332,7 +331,7 @@ export class HttpMethods {
         requestOptions?: HttpMethods.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<boolean, Fiddle.endpoints.httpMethods.testDelete.Error>>> {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 `/http-methods/${encodeURIComponent(id)}`,

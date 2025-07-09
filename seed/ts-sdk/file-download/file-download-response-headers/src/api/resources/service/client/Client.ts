@@ -4,9 +4,7 @@
 
 import * as core from "../../../../core/index.js";
 import { mergeHeaders } from "../../../../core/headers.js";
-import urlJoin from "url-join";
 import * as errors from "../../../../errors/index.js";
-import * as stream from "stream";
 
 export declare namespace Service {
     export interface Options {
@@ -48,7 +46,7 @@ export class Service {
 
     private async __simple(requestOptions?: Service.RequestOptions): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/snippet",
@@ -89,7 +87,7 @@ export class Service {
     }
 
     public downloadFile(requestOptions?: Service.RequestOptions): core.HttpResponsePromise<{
-        data: stream.Readable;
+        data: core.BinaryResponse;
         contentLengthInBytes?: number;
         contentType?: string;
     }> {
@@ -98,18 +96,18 @@ export class Service {
 
     private async __downloadFile(requestOptions?: Service.RequestOptions): Promise<
         core.WithRawResponse<{
-            data: stream.Readable;
+            data: core.BinaryResponse;
             contentLengthInBytes?: number;
             contentType?: string;
         }>
     > {
-        const _response = await core.fetcher<stream.Readable>({
+        const _response = await core.fetcher<core.BinaryResponse>({
             url:
                 (await core.Supplier.get(this._options.baseUrl)) ??
                 (await core.Supplier.get(this._options.environment)),
             method: "POST",
             headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
-            responseType: "streaming",
+            responseType: "binary-response",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

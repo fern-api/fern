@@ -1,0 +1,37 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/service/{endpointParam}",
+                "method": "POST",
+                "identifier_override": "endpoint_service.post"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/oauth-client-credentials-with-variables/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.Service.Post(\n\tcontext.TODO(),\n\t\"endpointParam\",\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/token",
+                "method": "POST",
+                "identifier_override": "endpoint_auth.getTokenWithClientCredentials"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/oauth-client-credentials-with-variables/fern\"\n\tfernclient \"github.com/oauth-client-credentials-with-variables/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Auth.GetTokenWithClientCredentials(\n\tcontext.TODO(),\n\t\u0026fern.GetTokenRequest{\n\t\tClientId:     \"client_id\",\n\t\tClientSecret: \"client_secret\",\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/token",
+                "method": "POST",
+                "identifier_override": "endpoint_auth.refreshToken"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/oauth-client-credentials-with-variables/fern\"\n\tfernclient \"github.com/oauth-client-credentials-with-variables/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Auth.RefreshToken(\n\tcontext.TODO(),\n\t\u0026fern.RefreshTokenRequest{\n\t\tClientId:     \"client_id\",\n\t\tClientSecret: \"client_secret\",\n\t\tRefreshToken: \"refresh_token\",\n\t},\n)\n"
+            }
+        }
+    ]
+}
