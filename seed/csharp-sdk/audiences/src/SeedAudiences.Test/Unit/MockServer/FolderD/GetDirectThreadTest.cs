@@ -30,8 +30,7 @@ public class GetDirectThreadTest : BaseMockServerTest
         var response = await Client.FolderD.Service.GetDirectThreadAsync();
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<SeedAudiences.FolderD.Response>(mockResponse))
-                .UsingDefaults()
+            Is.EqualTo(JsonUtils.Deserialize<Response>(mockResponse)).UsingDefaults()
         );
     }
 }

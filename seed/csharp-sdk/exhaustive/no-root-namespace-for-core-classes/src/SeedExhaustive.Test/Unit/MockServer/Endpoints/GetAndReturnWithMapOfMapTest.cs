@@ -61,8 +61,7 @@ public class GetAndReturnWithMapOfMapTest : BaseMockServerTest
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<SeedExhaustive.Types.ObjectWithMapOfMap>(mockResponse))
-                .UsingDefaults()
+            Is.EqualTo(JsonUtils.Deserialize<ObjectWithMapOfMap>(mockResponse)).UsingDefaults()
         );
     }
 }

@@ -206,8 +206,7 @@ public class CreateProblemTest : BaseMockServerTest
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<SeedTrace.CreateProblemResponse>(mockResponse))
-                .UsingDefaults()
+            Is.EqualTo(JsonUtils.Deserialize<CreateProblemResponse>(mockResponse)).UsingDefaults()
         );
     }
 }

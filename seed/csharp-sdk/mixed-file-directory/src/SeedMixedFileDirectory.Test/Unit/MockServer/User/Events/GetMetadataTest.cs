@@ -41,10 +41,7 @@ public class GetMetadataTest : BaseMockServerTest
         );
         Assert.That(
             response,
-            Is.EqualTo(
-                    JsonUtils.Deserialize<SeedMixedFileDirectory.User.Events.Metadata>(mockResponse)
-                )
-                .UsingDefaults()
+            Is.EqualTo(JsonUtils.Deserialize<Metadata>(mockResponse)).UsingDefaults()
         );
     }
 }

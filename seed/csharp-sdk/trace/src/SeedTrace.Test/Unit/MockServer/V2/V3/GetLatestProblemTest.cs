@@ -325,8 +325,7 @@ public class GetLatestProblemTest : BaseMockServerTest
         var response = await Client.V2.V3.Problem.GetLatestProblemAsync("problemId");
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<SeedTrace.V2.V3.ProblemInfoV2>(mockResponse))
-                .UsingDefaults()
+            Is.EqualTo(JsonUtils.Deserialize<ProblemInfoV2>(mockResponse)).UsingDefaults()
         );
     }
 }

@@ -41,8 +41,7 @@ public class GetOrganizationTest : BaseMockServerTest
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<SeedPathParameters.Organization>(mockResponse))
-                .UsingDefaults()
+            Is.EqualTo(JsonUtils.Deserialize<Organization>(mockResponse)).UsingDefaults()
         );
     }
 }

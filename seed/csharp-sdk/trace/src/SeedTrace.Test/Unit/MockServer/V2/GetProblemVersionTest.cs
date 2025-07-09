@@ -325,8 +325,7 @@ public class GetProblemVersionTest : BaseMockServerTest
         var response = await Client.V2.Problem.GetProblemVersionAsync("problemId", 1);
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<SeedTrace.V2.ProblemInfoV2>(mockResponse))
-                .UsingDefaults()
+            Is.EqualTo(JsonUtils.Deserialize<ProblemInfoV2>(mockResponse)).UsingDefaults()
         );
     }
 }

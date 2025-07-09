@@ -94,9 +94,7 @@ public class GetDefaultStarterFilesTest : BaseMockServerTest
         );
         Assert.That(
             response,
-            Is.EqualTo(
-                    JsonUtils.Deserialize<SeedTrace.GetDefaultStarterFilesResponse>(mockResponse)
-                )
+            Is.EqualTo(JsonUtils.Deserialize<GetDefaultStarterFilesResponse>(mockResponse))
                 .UsingDefaults()
         );
     }

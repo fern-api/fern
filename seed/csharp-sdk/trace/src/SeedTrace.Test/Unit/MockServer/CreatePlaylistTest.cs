@@ -74,7 +74,7 @@ public class CreatePlaylistTest : BaseMockServerTest
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<SeedTrace.Playlist>(mockResponse)).UsingDefaults()
+            Is.EqualTo(JsonUtils.Deserialize<Playlist>(mockResponse)).UsingDefaults()
         );
     }
 }

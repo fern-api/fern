@@ -37,7 +37,7 @@ public class CreateExecutionSessionTest : BaseMockServerTest
         var response = await Client.Submission.CreateExecutionSessionAsync(Language.Java);
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<SeedTrace.ExecutionSessionResponse>(mockResponse))
+            Is.EqualTo(JsonUtils.Deserialize<ExecutionSessionResponse>(mockResponse))
                 .UsingDefaults()
         );
     }

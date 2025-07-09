@@ -166,11 +166,7 @@ public class GetAndReturnNestedWithRequiredFieldAsListTest : BaseMockServerTest
         );
         Assert.That(
             response,
-            Is.EqualTo(
-                    JsonUtils.Deserialize<SeedExhaustive.Types.NestedObjectWithRequiredField>(
-                        mockResponse
-                    )
-                )
+            Is.EqualTo(JsonUtils.Deserialize<NestedObjectWithRequiredField>(mockResponse))
                 .UsingDefaults()
         );
     }

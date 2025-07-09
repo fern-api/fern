@@ -2,6 +2,7 @@ using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedTrace.Core;
 using SeedTrace.Test.Unit.MockServer;
+using SeedTrace.V2;
 
 namespace SeedTrace.Test.Unit.MockServer.V2;
 
@@ -615,7 +616,7 @@ public class GetProblemsTest : BaseMockServerTest
         var response = await Client.V2.Problem.GetProblemsAsync();
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<IEnumerable<V2.ProblemInfoV2>>(mockResponse))
+            Is.EqualTo(JsonUtils.Deserialize<IEnumerable<ProblemInfoV2>>(mockResponse))
                 .UsingDefaults()
         );
     }

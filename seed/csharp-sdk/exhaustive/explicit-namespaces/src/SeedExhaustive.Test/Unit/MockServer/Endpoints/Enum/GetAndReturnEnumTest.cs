@@ -38,8 +38,7 @@ public class GetAndReturnEnumTest : BaseMockServerTest
         var response = await Client.Endpoints.Enum.GetAndReturnEnumAsync(WeatherReport.Sunny);
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<SeedExhaustive.Types.Enum.WeatherReport>(mockResponse))
-                .UsingDefaults()
+            Is.EqualTo(JsonUtils.Deserialize<WeatherReport>(mockResponse)).UsingDefaults()
         );
     }
 }

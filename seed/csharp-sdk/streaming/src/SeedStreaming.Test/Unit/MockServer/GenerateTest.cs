@@ -45,8 +45,7 @@ public class GenerateTest : BaseMockServerTest
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<SeedStreaming.StreamResponse>(mockResponse))
-                .UsingDefaults()
+            Is.EqualTo(JsonUtils.Deserialize<StreamResponse>(mockResponse)).UsingDefaults()
         );
     }
 
@@ -87,8 +86,7 @@ public class GenerateTest : BaseMockServerTest
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<SeedStreaming.StreamResponse>(mockResponse))
-                .UsingDefaults()
+            Is.EqualTo(JsonUtils.Deserialize<StreamResponse>(mockResponse)).UsingDefaults()
         );
     }
 }

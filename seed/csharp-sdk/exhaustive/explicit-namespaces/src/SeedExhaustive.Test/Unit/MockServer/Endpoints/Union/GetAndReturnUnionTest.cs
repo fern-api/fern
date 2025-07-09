@@ -48,8 +48,7 @@ public class GetAndReturnUnionTest : BaseMockServerTest
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<SeedExhaustive.Types.Union.Animal>(mockResponse))
-                .UsingDefaults()
+            Is.EqualTo(JsonUtils.Deserialize<Animal>(mockResponse)).UsingDefaults()
         );
     }
 }

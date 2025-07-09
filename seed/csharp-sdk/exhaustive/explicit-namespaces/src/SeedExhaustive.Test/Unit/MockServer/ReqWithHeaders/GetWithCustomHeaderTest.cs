@@ -27,7 +27,7 @@ public class GetWithCustomHeaderTest : BaseMockServerTest
 
         Assert.DoesNotThrowAsync(async () =>
             await Client.ReqWithHeaders.GetWithCustomHeaderAsync(
-                new ReqWithHeaders.ReqWithHeaders
+                new SeedExhaustive.ReqWithHeaders.ReqWithHeaders
                 {
                     XTestEndpointHeader = "X-TEST-ENDPOINT-HEADER",
                     XTestServiceHeader = "X-TEST-SERVICE-HEADER",

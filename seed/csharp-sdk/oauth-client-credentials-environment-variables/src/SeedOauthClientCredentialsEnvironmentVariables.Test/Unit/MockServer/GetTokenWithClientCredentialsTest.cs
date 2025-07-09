@@ -56,12 +56,7 @@ public class GetTokenWithClientCredentialsTest : BaseMockServerTest
         );
         Assert.That(
             response,
-            Is.EqualTo(
-                    JsonUtils.Deserialize<SeedOauthClientCredentialsEnvironmentVariables.TokenResponse>(
-                        mockResponse
-                    )
-                )
-                .UsingDefaults()
+            Is.EqualTo(JsonUtils.Deserialize<TokenResponse>(mockResponse)).UsingDefaults()
         );
     }
 }

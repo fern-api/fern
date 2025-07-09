@@ -30,7 +30,7 @@ public class GetUserTest : BaseMockServerTest
         var response = await Client.User.GetUserAsync("userId");
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<SeedVersion.User>(mockResponse)).UsingDefaults()
+            Is.EqualTo(JsonUtils.Deserialize<User>(mockResponse)).UsingDefaults()
         );
     }
 }
