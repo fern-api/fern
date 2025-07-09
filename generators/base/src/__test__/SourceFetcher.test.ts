@@ -2,6 +2,7 @@ import path from "path";
 
 import { AbstractGeneratorContext } from "@fern-api/browser-compatible-base-generator";
 import { AbsoluteFilePath, getDirectoryContents, getDirectoryContentsForSnapshot } from "@fern-api/fs-utils";
+import { NopGeneratorNotificationService } from "@fern-api/browser-compatible-base-generator";
 
 import { SourceFetcher } from "../SourceFetcher";
 
@@ -13,8 +14,8 @@ const FIXTURES = AbsoluteFilePath.of(path.join(__dirname, "fixtures"));
 class DummyAbstractGeneratorContext extends AbstractGeneratorContext {}
 
 it("fetch proto.zip", async () => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const context = new DummyAbstractGeneratorContext(undefined as any, undefined as any);
+    // Use a no-op notification service to avoid runtime errors
+    const context = new DummyAbstractGeneratorContext(undefined as any, new NopGeneratorNotificationService());
     const sourceFetcher = new SourceFetcher({
         context,
         sourceConfig: {
