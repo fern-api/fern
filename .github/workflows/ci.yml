@@ -325,6 +325,13 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
 
+      - name: Build generators/base
+        run: |
+          cd generators/base
+          pnpm compile
+          cd ..
+          cd ..
+
       - name: Run coverage for generators/base and check threshold
         run: bash scripts/ci-coverage-check.sh
 
