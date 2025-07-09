@@ -57,7 +57,7 @@ export class ClassReference extends AstNode {
                 isAttribute
             });
             writer.write(`${typeQualification}${this.name}`);
-        } else if(writer.skipImports) {
+        } else if (writer.skipImports) {
             const typeQualification = this.getTypeQualification({
                 classReferenceNamespace: this.namespace,
                 namespaceToBeWrittenTo: writer.getNamespace(),
@@ -95,9 +95,9 @@ export class ClassReference extends AstNode {
      */
     private hasNamespaceConflict(className: string, currentNamespace: string): boolean {
         // Fast path: check last segment first (most common case)
-        const lastDotIndex = currentNamespace.lastIndexOf('.');
+        const lastDotIndex = currentNamespace.lastIndexOf(".");
         const lastSegment = lastDotIndex === -1 ? currentNamespace : currentNamespace.substring(lastDotIndex + 1);
-        
+
         if (lastSegment === className) {
             return true;
         }
@@ -133,11 +133,11 @@ export class ClassReference extends AstNode {
         // Check for sibling namespaces with common root - use minimal qualification
         const nameToCheck = isAttribute && !this.name.endsWith("Attribute") ? `${this.name}Attribute` : this.name;
         const hasConflict = this.hasNamespaceConflict(nameToCheck, namespaceToBeWrittenTo);
-        
+
         if (hasConflict) {
             // If there's a namespace conflict, use full qualification
             // Only use global:: when the entire namespace is just the class name
-            if (namespaceToBeWrittenTo.indexOf('.') === -1 && namespaceToBeWrittenTo === nameToCheck) {
+            if (namespaceToBeWrittenTo.indexOf(".") === -1 && namespaceToBeWrittenTo === nameToCheck) {
                 return `global::${classReferenceNamespace}.`;
             }
             return `${classReferenceNamespace}.`;
@@ -149,16 +149,19 @@ export class ClassReference extends AstNode {
 
         let commonPrefixLength = 0;
         const minLength = Math.min(classReferenceSegments.length, namespaceToBeWrittenSegments.length);
-        while (commonPrefixLength < minLength && classReferenceSegments[commonPrefixLength] === namespaceToBeWrittenSegments[commonPrefixLength]) {
+        while (
+            commonPrefixLength < minLength &&
+            classReferenceSegments[commonPrefixLength] === namespaceToBeWrittenSegments[commonPrefixLength]
+        ) {
             commonPrefixLength++;
         }
-        
+
         // If we have a common root, use qualification from divergence point
         if (commonPrefixLength > 0 && commonPrefixLength < classReferenceSegments.length) {
             const remainingSegments = classReferenceSegments.slice(commonPrefixLength);
             return `${remainingSegments.join(".")}.`;
         }
-        
+
         // No common prefix or we're referencing the exact namespace, use full qualification
         return `${classReferenceNamespace}.`;
     }
@@ -187,13 +190,13 @@ export class ClassReference extends AstNode {
      */
     private qualifiedTypeNameRequired(writer: Writer, isAttribute: boolean): boolean {
         const currentNamespace = writer.getNamespace();
-        
+
         if (this.namespace === currentNamespace) {
             return false;
         }
 
         const nameToDeconflict = isAttribute && !this.name.endsWith("Attribute") ? `${this.name}Attribute` : this.name;
-        
+
         // Check for direct namespace conflicts first
         if (this.hasNamespaceConflict(nameToDeconflict, currentNamespace)) {
             return true;
@@ -216,29 +219,28 @@ export class ClassReference extends AstNode {
         if (matchingNamespaces == null) {
             return false;
         }
-        
+
         // If there's a ClassReference besides the one that we're writing with the same name,
         // then there may be conflict, so return true
         const matchingNamespacesCopy = new Set(matchingNamespaces);
         matchingNamespacesCopy.delete(this.namespace);
-        
+
         if (matchingNamespacesCopy.size === 0) {
             // Even if there's no type conflict, check for namespace conflicts
             // This handles cases like class "A" conflicting with namespace "A"
             return this.hasProjectNamespaceConflict(writer);
         }
-        
+
         const currentNamespace = writer.getNamespace();
         // Check if any of the conflicting namespaces would actually cause ambiguity
         for (const conflictingNamespace of matchingNamespacesCopy) {
             // Only consider it a real conflict if the conflicting type is in the same namespace
             // or a parent namespace that would make qualification ambiguous
-            if (conflictingNamespace === currentNamespace || 
-                currentNamespace.startsWith(conflictingNamespace + ".")) {
+            if (conflictingNamespace === currentNamespace || currentNamespace.startsWith(conflictingNamespace + ".")) {
                 return true;
             }
         }
-        
+
         // Also check if the class name matches any namespace segment in the project
         return this.hasProjectNamespaceConflict(writer);
     }
