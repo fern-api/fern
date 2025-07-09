@@ -74,3 +74,4 @@ seed/python-sdk/**/output.prof
 
 # Preview
 **/.preview/
+generators/base/coverage/
