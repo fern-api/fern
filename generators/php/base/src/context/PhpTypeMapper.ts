@@ -135,15 +135,13 @@ export class PhpTypeMapper {
             case "union":
                 return php.Type.reference(classReference);
             case "undiscriminatedUnion": {
-                return php.Type.union(
-                    // Need to dedupe because lists and sets are both represented as array.
-                    uniqWith(
-                        typeDeclaration.shape.members.map((member) =>
-                            this.convert({ reference: member.type, preserveEnums })
-                        ),
-                        isEqual
-                    )
+                const memberTypes = typeDeclaration.shape.members.map((member) =>
+                    this.convert({ reference: member.type, preserveEnums })
                 );
+                
+                const uniqueTypes = uniqWith(memberTypes, isEqual);
+                
+                return php.Type.union(uniqueTypes);
             }
             default:
                 assertNever(typeDeclaration.shape);

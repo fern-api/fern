@@ -1,4 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
+import { isEqual, uniqWith } from "lodash-es";
 
 import { BasePhpCustomConfigSchema } from "../custom-config/BasePhpCustomConfigSchema";
 import { ClassReference } from "./ClassReference";
@@ -411,10 +412,31 @@ export class Type extends AstNode {
     }
 
     public static union(types: Type[]): Type {
+        // Recursively flatten nested unions and deduplicate
+        const flattenedTypes = this.flattenUnionTypes(types);
+        
+        // Deduplicate types to avoid duplicates like array|array
+        const uniqueTypes = uniqWith(flattenedTypes, isEqual);
+        
         return new this({
             type: "union",
-            types
+            types: uniqueTypes
         });
+    }
+
+    private static flattenUnionTypes(types: Type[]): Type[] {
+        const flattened: Type[] = [];
+        
+        for (const type of types) {
+            if (type.internalType.type === "union") {
+                // Recursively flatten nested unions
+                flattened.push(...this.flattenUnionTypes(type.internalType.types));
+            } else {
+                flattened.push(type);
+            }
+        }
+        
+        return flattened;
     }
 
     public static optional(value: Type): Type {
@@ -541,14 +563,20 @@ export class Type extends AstNode {
         types: Type[];
         comment: boolean | undefined;
     }): Type[] {
+        // First, do semantic deduplication using lodash isEqual
+        const semanticallyUnique = uniqWith(types, isEqual);
+        
+        // Then, do string-based deduplication for cases where different semantic types 
+        // render to the same string (e.g., array<string,mixed> and array<Recipient> both become "array")
         const typeStrings = new Set();
-        return types.filter((type) => {
+        return semanticallyUnique.filter((type) => {
             const typeString = type.toString({
                 namespace: writer.namespace,
                 rootNamespace: writer.rootNamespace,
                 customConfig: writer.customConfig,
                 comment
             });
+            
             // Handle potential duplicates, such as strings (due to enums) and arrays.
             if (typeStrings.has(typeString)) {
                 return false;
