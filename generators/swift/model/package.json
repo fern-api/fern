@@ -43,6 +43,7 @@
     "@fern-api/ir-generator": "workspace:*",
     "@fern-api/swift-codegen": "workspace:*",
     "@fern-api/task-context": "workspace:*",
+    "@fern-api/test-utils": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
     "@trivago/prettier-plugin-sort-imports": "^5.2.1",
     "@types/jest": "^29.5.14",

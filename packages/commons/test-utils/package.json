@@ -1,0 +1,40 @@
+{
+  "name": "@fern-api/test-utils",
+  "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fern-api/fern.git",
+    "directory": "packages/commons/test-utils"
+  },
+  "sideEffects": false,
+  "type": "module",
+  "main": "lib/index.js",
+  "source": "src/index.ts",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "clean": "rm -rf ./lib && tsc --build --clean",
+    "compile": "tsc --build",
+    "depcheck": "depcheck",
+    "format": "pnpm format:package-json && pnpm format:src",
+    "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
+    "format:package-json": "sort-package-json \"package.json\"",
+    "format:src": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
+    "lint:eslint": "eslint --max-warnings 0 . --ignore-pattern=../../../.eslintignore",
+    "lint:eslint:fix": "yarn lint:eslint --fix",
+    "test": "vitest --run",
+    "test:update": "vitest --run -u"
+  },
+  "devDependencies": {
+    "@trivago/prettier-plugin-sort-imports": "^5.2.1",
+    "@types/node": "18.15.3",
+    "depcheck": "^1.4.7",
+    "eslint": "^8.56.0",
+    "prettier": "^3.4.2",
+    "sort-package-json": "3.3.1",
+    "typescript": "5.7.2",
+    "vitest": "^2.1.9"
+  }
+}
