@@ -6,11 +6,15 @@
     },
     "sendParam": {
       "type": "integer"
+    },
+    "sendVersion": {
+      "const": "v1"
     }
   },
   "required": [
     "sendText",
-    "sendParam"
+    "sendParam",
+    "sendVersion"
   ],
   "additionalProperties": false,
   "definitions": {}

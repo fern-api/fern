@@ -64,6 +64,7 @@ types:
     properties:
       sendText: string
       sendParam: integer
+      sendVersion: literal<"v1">
   send_snake_case:
     properties:
       send_text: string
