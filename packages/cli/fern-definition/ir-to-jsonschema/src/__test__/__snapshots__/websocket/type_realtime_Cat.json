@@ -1,0 +1,13 @@
+{
+  "type": "object",
+  "properties": {
+    "likesToMeow": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "likesToMeow"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

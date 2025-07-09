@@ -5,3 +5,8 @@ export * from "./ReceiveSnakeCase.js";
 export * from "./SendEvent2.js";
 export * from "./ReceiveEvent2.js";
 export * from "./ReceiveEvent3.js";
+export * from "./Person.js";
+export * from "./Address.js";
+export * from "./Animal.js";
+export * from "./Dog.js";
+export * from "./Cat.js";

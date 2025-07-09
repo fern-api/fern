@@ -7,6 +7,8 @@ import * as SeedWebsocket from "../../../index.js";
 import { SendEvent } from "../../../../serialization/resources/realtime/types/SendEvent.js";
 import { SendSnakeCase } from "../../../../serialization/resources/realtime/types/SendSnakeCase.js";
 import { SendEvent2 } from "../../../../serialization/resources/realtime/types/SendEvent2.js";
+import { Person } from "../../../../serialization/resources/realtime/types/Person.js";
+import { Animal } from "../../../../serialization/resources/realtime/types/Animal.js";
 import { fromJson } from "../../../../core/json.js";
 import * as serializers from "../../../../serialization/index.js";
 
@@ -112,6 +114,30 @@ export class RealtimeSocket {
     public sendSend2(message: SeedWebsocket.SendEvent2): void {
         this.assertSocketIsOpen();
         const jsonPayload = SendEvent2.jsonOrThrow(message, {
+            unrecognizedObjectKeys: "passthrough",
+            allowUnrecognizedUnionMembers: true,
+            allowUnrecognizedEnumValues: true,
+            skipValidation: true,
+            omitUndefined: true,
+        });
+        this.socket.send(JSON.stringify(jsonPayload));
+    }
+
+    public sendPerson(message: SeedWebsocket.Person): void {
+        this.assertSocketIsOpen();
+        const jsonPayload = Person.jsonOrThrow(message, {
+            unrecognizedObjectKeys: "passthrough",
+            allowUnrecognizedUnionMembers: true,
+            allowUnrecognizedEnumValues: true,
+            skipValidation: true,
+            omitUndefined: true,
+        });
+        this.socket.send(JSON.stringify(jsonPayload));
+    }
+
+    public sendAnimal(message: SeedWebsocket.Animal): void {
+        this.assertSocketIsOpen();
+        const jsonPayload = Animal.jsonOrThrow(message, {
             unrecognizedObjectKeys: "passthrough",
             allowUnrecognizedUnionMembers: true,
             allowUnrecognizedEnumValues: true,

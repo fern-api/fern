@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "properties": {
+    "line1": {
+      "type": "string"
+    },
+    "city": {
+      "type": "string"
+    },
+    "zip": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "line1",
+    "city",
+    "zip"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

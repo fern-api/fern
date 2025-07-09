@@ -21,6 +21,14 @@ channel:
       display-name: Send2
       origin: client
       body: SendEvent2
+    person:
+      display-name: Person
+      origin: client
+      body: Person
+    animal:
+      display-name: Animal
+      origin: client
+      body: Animal
     receive:
       display-name: Receive
       origin: server
@@ -89,3 +97,22 @@ types:
   ReceiveEvent3:
     properties:
       receiveText3: string
+  Person:
+    properties:
+      name: string
+      address: Address
+  Address:
+    properties:
+      line1: string
+      city: string
+      zip: string
+  Animal:
+    union:
+      dog: Dog
+      cat: Cat
+  Dog:
+    properties:
+      likesToWoof: boolean
+  Cat:
+    properties:
+      likesToMeow: boolean
