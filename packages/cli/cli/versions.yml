@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |  
+        Support response error examples in the v3 parser.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-09"
+  version: 0.65.6
+
+- changelogEntry:
+    - summary: |  
         Fix how multipart encoding is handled in the v3 parser
       type: fix
   irVersion: 58
