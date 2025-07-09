@@ -215,8 +215,8 @@ public partial class ServiceClient
     ///             Revenue = 1000000,
     ///         },
     ///         Entity = new Entity { Type = BasicType.Primitive, Name = "name" },
-    ///         Metadata = new SeedExamples.Metadata(new Metadata.Html("metadata")),
-    ///         CommonMetadata = new SeedExamples.Commons.Metadata
+    ///         Metadata = new Metadata(new Metadata.Html("metadata")),
+    ///         CommonMetadata = new Metadata
     ///         {
     ///             Id = "id",
     ///             Data = new Dictionary&lt;string, string&gt;() { { "data", "data" } },
@@ -224,7 +224,7 @@ public partial class ServiceClient
     ///         },
     ///         EventInfo = new EventInfo(
     ///             new EventInfo.Metadata(
-    ///                 new SeedExamples.Commons.Metadata
+    ///                 new Metadata
     ///                 {
     ///                     Id = "id",
     ///                     Data = new Dictionary&lt;string, string&gt;() { { "data", "data" } },

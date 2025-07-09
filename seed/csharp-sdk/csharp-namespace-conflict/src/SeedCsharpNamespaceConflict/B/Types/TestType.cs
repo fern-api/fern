@@ -16,7 +16,7 @@ public record TestType : IJsonOnDeserialized
     public required A.Aa.A A { get; set; }
 
     [JsonPropertyName("b")]
-    public required A.Aa.B B { get; set; }
+    public required SeedCsharpNamespaceConflict.A.Aa.B B { get; set; }
 
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();

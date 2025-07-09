@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.0.3
+  changelogEntry:
+    - summary: |
+        Mockserver tests were generated based on the endpoint name being tested.
+        When multiple endpoints have the same name, they would override each other, resulting in only one of them being tested.
+        Mockserver tests are now namespaced and written to the filesystem following the same structure as the generated endpoints are.
+      type: fix
+    - summary: |
+        Update the type referencing logic to take into account the current namespace, other namespaces, and more scenarios where it could conflicts.
+      type: fix
+  createdAt: '2025-07-09'
+  irVersion: 58
 - version: 2.0.2
   changelogEntry:
     - summary: Improve auto-pagination logic to consider empty strings in response as null cursors and stop paging.

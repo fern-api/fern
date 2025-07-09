@@ -7,9 +7,5 @@
     "types": ["vitest/globals"]
   },
   "include": ["./src/**/*"],
-  "references": [
-    { "path": "../../../packages/commons/core-utils" },
-    { "path": "../../base" },
-    { "path": "../../../packages/commons/fs-utils" }
-  ]
+  "references": [{ "path": "../../../packages/commons/core-utils" }, { "path": "../../base" }]
 }

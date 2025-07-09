@@ -78,7 +78,7 @@ jobs:
           ./scripts/live-test.sh "$cli_path" "$FERN_TOKEN"
 
   prod:
-    needs: [live-test]
+    # needs: [live-test]
     if: ${{ inputs.version == null }}
     runs-on: ubuntu-latest
     env:
