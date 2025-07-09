@@ -315,3 +315,34 @@ jobs:
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
+
+  coverage-base-generator:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Run coverage for generators/base
+        run: |
+          cd generators/base
+          npx vitest run --coverage
+
+      - name: Fail if coverage is too low (example: <20%)
+        run: |
+          cd generators/base
+          COVERAGE=$(npx vitest run --coverage | grep 'All files' | awk '{print $4}' | tr -d '|')
+          COVERAGE_NUM=$(echo $COVERAGE | sed 's/%//')
+          echo "Coverage: $COVERAGE_NUM%"
+          if [ "$(echo "$COVERAGE_NUM < 20" | bc)" -eq 1 ]; then
+            echo "Coverage is below threshold!"
+            exit 1
+          fi
+        shell: bash
