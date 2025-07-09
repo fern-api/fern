@@ -330,19 +330,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Run coverage for generators/base
-        run: |
-          cd generators/base
-          npx vitest run --coverage
+      - name: Run coverage for generators/base and check threshold
+        run: bash scripts/ci-coverage-check.sh
 
-      - name: Fail if coverage is too low (example: <20%)
-        run: |
-          cd generators/base
-          COVERAGE=$(npx vitest run --coverage | grep 'All files' | awk '{print $4}' | tr -d '|')
-          COVERAGE_NUM=$(echo $COVERAGE | sed 's/%//')
-          echo "Coverage: $COVERAGE_NUM%"
-          if [ "$(echo "$COVERAGE_NUM < 20" | bc)" -eq 1 ]; then
-            echo "Coverage is below threshold!"
-            exit 1
-          fi
-        shell: bash
+      - name: Clean up coverage files
+        run: rm -rf generators/base/coverage
+
+      - name: Ensure no changes to git-tracked files
+        run: git --no-pager diff --exit-code
