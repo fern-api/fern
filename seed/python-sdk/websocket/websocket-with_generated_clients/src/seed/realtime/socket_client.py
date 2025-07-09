@@ -8,6 +8,8 @@ import websockets
 import websockets.sync.connection as websockets_sync_connection
 from ..core.events import EventEmitterMixin, EventType
 from ..core.pydantic_utilities import parse_obj_as
+from .types.animal import Animal
+from .types.person import Person
 from .types.receive_event import ReceiveEvent
 from .types.receive_event_2 import ReceiveEvent2
 from .types.receive_event_3 import ReceiveEvent3
@@ -72,6 +74,20 @@ class AsyncRealtimeSocketClient(EventEmitterMixin):
         """
         Send a message to the websocket connection.
         The message will be sent as a SendEvent2.
+        """
+        await self._send_model(message)
+
+    async def send_person(self, message: Person) -> None:
+        """
+        Send a message to the websocket connection.
+        The message will be sent as a Person.
+        """
+        await self._send_model(message)
+
+    async def send_animal(self, message: Animal) -> None:
+        """
+        Send a message to the websocket connection.
+        The message will be sent as a Animal.
         """
         await self._send_model(message)
 
@@ -146,6 +162,20 @@ class RealtimeSocketClient(EventEmitterMixin):
         """
         Send a message to the websocket connection.
         The message will be sent as a SendEvent2.
+        """
+        self._send_model(message)
+
+    def send_person(self, message: Person) -> None:
+        """
+        Send a message to the websocket connection.
+        The message will be sent as a Person.
+        """
+        self._send_model(message)
+
+    def send_animal(self, message: Animal) -> None:
+        """
+        Send a message to the websocket connection.
+        The message will be sent as a Animal.
         """
         self._send_model(message)
 

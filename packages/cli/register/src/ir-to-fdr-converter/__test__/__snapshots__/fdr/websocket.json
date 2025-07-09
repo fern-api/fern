@@ -198,6 +198,130 @@
           }
         ]
       }
+    },
+    "type_realtime:Person": {
+      "name": "Person",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "name",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "address",
+            "valueType": {
+              "type": "id",
+              "value": "type_realtime:Address"
+            }
+          }
+        ]
+      }
+    },
+    "type_realtime:Address": {
+      "name": "Address",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "line1",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "city",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "zip",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_realtime:Animal": {
+      "name": "Animal",
+      "shape": {
+        "type": "discriminatedUnion",
+        "discriminant": "type",
+        "variants": [
+          {
+            "discriminantValue": "dog",
+            "additionalProperties": {
+              "extends": [
+                "type_realtime:Dog"
+              ],
+              "properties": []
+            }
+          },
+          {
+            "discriminantValue": "cat",
+            "additionalProperties": {
+              "extends": [
+                "type_realtime:Cat"
+              ],
+              "properties": []
+            }
+          }
+        ]
+      }
+    },
+    "type_realtime:Dog": {
+      "name": "Dog",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "likesToWoof",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_realtime:Cat": {
+      "name": "Cat",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "likesToMeow",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
+            }
+          }
+        ]
+      }
     }
   },
   "subpackages": {
@@ -300,6 +424,30 @@
                 "value": {
                   "type": "id",
                   "value": "type_realtime:SendEvent2"
+                }
+              }
+            },
+            {
+              "type": "person",
+              "displayName": "Person",
+              "origin": "client",
+              "body": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "type_realtime:Person"
+                }
+              }
+            },
+            {
+              "type": "animal",
+              "displayName": "Animal",
+              "origin": "client",
+              "body": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "type_realtime:Animal"
                 }
               }
             },
@@ -428,7 +576,12 @@
         "type_realtime:receive_snake_case",
         "type_realtime:SendEvent2",
         "type_realtime:ReceiveEvent2",
-        "type_realtime:ReceiveEvent3"
+        "type_realtime:ReceiveEvent3",
+        "type_realtime:Person",
+        "type_realtime:Address",
+        "type_realtime:Animal",
+        "type_realtime:Dog",
+        "type_realtime:Cat"
       ],
       "subpackages": []
     }
