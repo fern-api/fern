@@ -22,7 +22,8 @@ module.exports = {
         "plugin:@blueprintjs/recommended",
         "plugin:react/recommended",
         "plugin:react-hooks/recommended",
-        "plugin:tailwindcss/recommended"
+        "plugin:tailwindcss/recommended",
+        "plugin:oxlint/recommended",
     ],
     settings: {
         react: {

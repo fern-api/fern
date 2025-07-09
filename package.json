@@ -18,6 +18,7 @@
     "test:update": "turbo test:update --filter=!@fern-api/ete-tests",
     "test:ete": "pnpm --filter @fern-api/cli dist:cli:dev && pnpm --filter @fern-api/seed-cli dist:cli && pnpm --filter @fern-api/ete-tests test",
     "test:ete:update": "pnpm --filter @fern-api/cli dist:cli:dev && pnpm --filter @fern-api/seed-cli dist:cli && pnpm --filter @fern-api/ete-tests test -- -u",
+    "lint": "oxlint && eslint",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path .eslintignore",
     "lint:oxlint": "oxlint",
     "lint:eslint:fix": "pnpm lint:eslint --fix",
@@ -117,6 +118,7 @@
     "@fern-api/logging-execa": "workspace:*",
     "@fern-fern/generator-exec-sdk": "^0.0.1045",
     "@fern-fern/ir-v39-sdk": "^0.0.1",
+    "eslint-plugin-oxlint": "^1.6.0",
     "import-local": "^3.2.0",
     "oxlint": "^1.6.0",
     "terminal-link": "^3.0.0"

@@ -5,9 +5,7 @@
     "jest",
     "react"
   ],
-  "categories": {
-    "correctness": "off"
-  },
+
   "env": {
     "builtin": true
   },
@@ -22,6 +20,12 @@
     "jest/valid-describe-callback": "off",
     "jest/valid-title": "off",
     "no-unused-vars": "off",
+    "no-export": "off",
+    "no-unsafe-optional-chaining": "off",
+    "require-to-throw-message": "off",
+    "no-useless-rename": "off",
+    "no-unnecessary-parameter-property-assignment": "off",
+    "no-standalone-expect": "off",
     "eqeqeq": "off",
     "curly": "error",
     "react/react-in-jsx-scope": "off",

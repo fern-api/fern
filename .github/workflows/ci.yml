@@ -51,7 +51,8 @@ jobs:
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
 
-  eslint:
+  oxlint-eslint:
+    name: oxlint & eslint
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -60,8 +61,8 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
 
-      - name: lint:eslint
-        run: pnpm lint:eslint
+      - name: lint
+        run: pnpm lint
 
   test:
     if: github.repository == 'fern-api/fern'

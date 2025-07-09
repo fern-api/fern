@@ -27,6 +27,9 @@ importers:
       '@fern-fern/ir-v39-sdk':
         specifier: ^0.0.1
         version: 0.0.1
+      eslint-plugin-oxlint:
+        specifier: ^1.6.0
+        version: 1.6.0
       import-local:
         specifier: ^3.2.0
         version: 3.2.0
@@ -13493,6 +13496,9 @@ packages:
       jest:
         optional: true
 
+  eslint-plugin-oxlint@1.6.0:
+    resolution: {integrity: sha512-DH5p3sCf0nIAPscl3yGnBWXXraV0bdl66hpLxvfnabvg/GzpgXf+pOCWpGK3qDb0+AIUkh1R/7A8GkOXtlj0oA==}
+
   eslint-plugin-react-hooks@5.2.0:
     resolution: {integrity: sha512-+f15FfK64YQwZdJNELETdn5ibXEUQmW1DZL6KXhNnc2heoy/sg9VJJeT7n8TlMWouzWqSWavFkIhHyIbIAEapg==}
     engines: {node: '>=10'}
@@ -21833,6 +21839,10 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
       - typescript
+
+  eslint-plugin-oxlint@1.6.0:
+    dependencies:
+      jsonc-parser: 3.3.1
 
   eslint-plugin-react-hooks@5.2.0(eslint@8.57.1):
     dependencies:
