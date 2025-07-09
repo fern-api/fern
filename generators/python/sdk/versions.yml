@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
 
+- version: 4.24.2
+  changelogEntry:
+    - summary: |
+        Emit ERROR events for JSON parsing errors in websocket connections.
+      type: fix
+  createdAt: '2025-07-09'
+  irVersion: 58
+
 - version: 4.24.1
   changelogEntry:
     - summary: |

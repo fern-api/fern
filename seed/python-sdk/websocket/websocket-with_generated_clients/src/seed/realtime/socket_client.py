@@ -2,6 +2,7 @@
 
 import json
 import typing
+from json.decoder import JSONDecodeError
 
 import websockets
 import websockets.sync.connection as websockets_sync_connection
@@ -43,7 +44,7 @@ class AsyncRealtimeSocketClient(EventEmitterMixin):
                 json_data = json.loads(raw_message)
                 parsed = parse_obj_as(RealtimeSocketClientResponse, json_data)  # type: ignore
                 self._emit(EventType.MESSAGE, parsed)
-        except websockets.WebSocketException as exc:
+        except (websockets.WebSocketException, JSONDecodeError) as exc:
             self._emit(EventType.ERROR, exc)
         finally:
             self._emit(EventType.CLOSE, None)
@@ -117,7 +118,7 @@ class RealtimeSocketClient(EventEmitterMixin):
                 json_data = json.loads(raw_message)
                 parsed = parse_obj_as(RealtimeSocketClientResponse, json_data)  # type: ignore
                 self._emit(EventType.MESSAGE, parsed)
-        except websockets.WebSocketException as exc:
+        except (websockets.WebSocketException, JSONDecodeError) as exc:
             self._emit(EventType.ERROR, exc)
         finally:
             self._emit(EventType.CLOSE, None)
