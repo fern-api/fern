@@ -3,7 +3,8 @@ import {
     EnumDescriptorProto,
     FieldDescriptorProto,
     FieldDescriptorProto_Label,
-    FieldDescriptorProto_Type
+    FieldDescriptorProto_Type,
+    FileDescriptorProto
 } from "@bufbuild/protobuf/wkt";
 import { AbstractConverter } from "@fern-api/v2-importer-commons";
 import { ProtofileConverterContext } from "../ProtofileConverterContext";
@@ -11,6 +12,7 @@ import { ProtofileConverterContext } from "../ProtofileConverterContext";
 export declare namespace ExampleConverter {
     export interface Args extends AbstractConverter.Args<ProtofileConverterContext> {
         message: DescriptorProto;
+        type: "request" | "response";
         depth?: number;
         seenMessages?: Set<string>;
     }
@@ -29,11 +31,9 @@ export class ExampleConverter extends AbstractConverter<ProtofileConverterContex
     private readonly EXAMPLE_NUMBER = 42;
     private readonly EXAMPLE_BOOL = true;
     private readonly EXAMPLE_BYTES = "bytes";
-    private readonly EXAMPLE_EMAIL = "user@example.com";
-    private readonly EXAMPLE_DATE = "2024-01-01";
-    private readonly EXAMPLE_ID = "123e4567-e89b-12d3-a456-426614174000";
 
     private readonly message: DescriptorProto;
+    private readonly type: "request" | "response";
     private readonly depth: number;
     private readonly seenMessages: Set<string>;
 
@@ -41,11 +41,13 @@ export class ExampleConverter extends AbstractConverter<ProtofileConverterContex
         breadcrumbs,
         context,
         message,
+        type,
         depth = 0,
         seenMessages = new Set()
     }: ExampleConverter.Args) {
         super({ context, breadcrumbs });
         this.message = message;
+        this.type = type;
         this.depth = depth;
         this.seenMessages = seenMessages;
     }
@@ -60,7 +62,9 @@ export class ExampleConverter extends AbstractConverter<ProtofileConverterContex
             };
         }
 
-        const messageName = this.message.name ?? "";
+        // Get fully qualified message name
+        const messageName = this.getFullyQualifiedMessageName(this.message);
+        
         if (this.seenMessages.has(messageName)) {
             return {
                 isValid: true,
@@ -83,6 +87,17 @@ export class ExampleConverter extends AbstractConverter<ProtofileConverterContex
                 errors: [`Failed to convert message ${messageName}: ${error}`]
             };
         }
+    }
+
+    private getFullyQualifiedMessageName(message: DescriptorProto): string {
+        // Get the package name from the current file
+        const packageName = this.context.spec.package || "";
+        const messageName = message.name || "";
+        
+        if (packageName) {
+            return `${packageName}.${messageName}`;
+        }
+        return messageName;
     }
 
     private convertMessage(seenMessages: Set<string>): ExampleConverter.Output {
@@ -184,9 +199,9 @@ export class ExampleConverter extends AbstractConverter<ProtofileConverterContex
         });
         
         return {
-            isValid: true,
+            isValid: singleResult.isValid,
             coerced: false,
-            validExample: [singleResult.validExample],
+            validExample: singleResult.isValid ? [singleResult.validExample] : [],
             errors: singleResult.errors
         };
     }
@@ -200,19 +215,6 @@ export class ExampleConverter extends AbstractConverter<ProtofileConverterContex
         seenMessages: Set<string>;
         fieldName: string;
     }): ExampleConverter.Output {
-        // Generate contextual examples based on field name
-        if (field.type === FieldDescriptorProto_Type.STRING) {
-            if (fieldName.toLowerCase().includes('email')) {
-                return this.convertString(this.EXAMPLE_EMAIL);
-            }
-            if (fieldName.toLowerCase().includes('id')) {
-                return this.convertString(this.EXAMPLE_ID);
-            }
-            if (fieldName.toLowerCase().includes('date') || fieldName.toLowerCase().includes('time')) {
-                return this.convertString(this.EXAMPLE_DATE);
-            }
-        }
-
         switch (field.type) {
             case FieldDescriptorProto_Type.DOUBLE:
             case FieldDescriptorProto_Type.FLOAT:
@@ -240,8 +242,8 @@ export class ExampleConverter extends AbstractConverter<ProtofileConverterContex
             case FieldDescriptorProto_Type.ENUM:
                 return this.convertEnum(field, fieldName);
 
-            case FieldDescriptorProto_Type.MESSAGE:
-                return this.convertMessage_Field(field, seenMessages, fieldName);
+            // case FieldDescriptorProto_Type.MESSAGE:
+            //     return this.convertMessage_Field(field, seenMessages, fieldName);
 
             default:
                 return {
@@ -290,8 +292,12 @@ export class ExampleConverter extends AbstractConverter<ProtofileConverterContex
     }
 
     private convertEnum(field: FieldDescriptorProto, fieldName: string): ExampleConverter.Output {
-        // Find enum in file descriptors
-        const enumType = this.findEnumType(field.typeName ?? "");
+        const typeName = field.typeName ?? "";
+        const normalizedTypeName = this.context.maybeRemoveLeadingPeriod(typeName);
+        
+        // Find the enum descriptor directly
+        const enumType = this.findEnumType(normalizedTypeName);
+        
         if (!enumType) {
             return {
                 isValid: false,
@@ -320,51 +326,182 @@ export class ExampleConverter extends AbstractConverter<ProtofileConverterContex
         };
     }
 
-    private convertMessage_Field(
-        field: FieldDescriptorProto,
-        seenMessages: Set<string>,
-        fieldName: string
-    ): ExampleConverter.Output {
-        const messageType = this.findMessageType(field.typeName ?? "");
-        if (!messageType) {
-            return {
-                isValid: false,
-                coerced: false,
-                validExample: {},
-                errors: [`Message type ${field.typeName} not found`]
-            };
-        }
+    // private convertMessage_Field(
+    //     field: FieldDescriptorProto,
+    //     seenMessages: Set<string>,
+    //     fieldName: string
+    // ): ExampleConverter.Output {
+    //     const typeName = field.typeName;
+    //     if (!typeName) {
+    //         return {
+    //             isValid: false,
+    //             coerced: false,
+    //             validExample: null,
+    //             errors: [`Missing type name for message field ${fieldName}`]
+    //         };
+    //     }
 
-        const converter = new ExampleConverter({
-            breadcrumbs: [...this.breadcrumbs, fieldName],
-            context: this.context,
-            message: messageType,
-            depth: this.depth + 1,
-            seenMessages
-        });
+    //     const normalizedTypeName = this.context.maybeRemoveLeadingPeriod(typeName);
+        
+    //     // Try to find message type in current file first
+    //     let messageType = this.findMessageInFile(normalizedTypeName, this.context.spec);
+    //     let targetContext = this.context;
+        
+    //     // If not found, search in all files from codeGeneratorRequest
+    //     if (!messageType && this.context.getCodeGeneratorRequest()) {
+    //         for (const file of this.context.getCodeGeneratorRequest().protoFile) {
+    //             messageType = this.findMessageInFile(normalizedTypeName, file);
+    //             if (messageType) {
+    //                 // Create a new context for the target file if needed
+    //                 if (file !== this.context.spec) {
+    //                     targetContext = {
+    //                         ...this.context,
+    //                         spec: file
+    //                     };
+    //                 }
+    //                 break;
+    //             }
+    //         }
+    //     }
+        
+    //     if (!messageType) {
+    //         return {
+    //             isValid: false,
+    //             coerced: false,
+    //             validExample: null,
+    //             errors: [`Could not find message type ${normalizedTypeName}`]
+    //         };
+    //     }
 
-        return converter.convert();
-    }
+    //     const converter = new ExampleConverter({
+    //         context: targetContext,
+    //         breadcrumbs: [...this.breadcrumbs, fieldName],
+    //         message: messageType,
+    //         type: this.type,
+    //         depth: this.depth + 1,
+    //         seenMessages
+    //     });
+
+    //     return converter.convert();
+    // }
 
     private findEnumType(typeName: string): EnumDescriptorProto | undefined {
-        // Look up enum in the file descriptors
-        const fileDescriptor = this.context.spec;
-        for (const enumType of fileDescriptor.enumType) {
-            if (enumType.name === typeName) {
-                return enumType;
+        // First try to find in current file
+        let enumType = this.findEnumInFile(typeName, this.context.spec);
+        
+        // If not found and we have codeGeneratorRequest, search all files
+        if (!enumType && this.context.getCodeGeneratorRequest()) {
+            for (const file of this.context.getCodeGeneratorRequest().protoFile) {
+                enumType = this.findEnumInFile(typeName, file);
+                if (enumType) break;
             }
         }
-        return undefined;
+        
+        return enumType;
     }
 
     private findMessageType(typeName: string): DescriptorProto | undefined {
-        // Look up message in the file descriptors
-        const fileDescriptor = this.context.spec;
-        for (const messageType of fileDescriptor.messageType) {
-            if (messageType.name === typeName) {
+        // First try to find in current file
+        let messageType = this.findMessageInFile(typeName, this.context.spec);
+        
+        // If not found and we have codeGeneratorRequest, search all files
+        if (!messageType && this.context.getCodeGeneratorRequest()) {
+            for (const file of this.context.getCodeGeneratorRequest().protoFile) {
+                messageType = this.findMessageInFile(typeName, file);
+                if (messageType) break;
+            }
+        }
+        
+        return messageType;
+    }
+
+    private findEnumInFile(typeName: string, file: FileDescriptorProto): EnumDescriptorProto | undefined {
+        const packageName = file.package || "";
+        
+        // Check top-level enums
+        for (const enumType of file.enumType) {
+            const fullName = packageName ? `${packageName}.${enumType.name}` : enumType.name || "";
+            if (fullName === typeName || enumType.name === typeName) {
+                return enumType;
+            }
+        }
+        
+        // Check nested enums in messages
+        for (const message of file.messageType) {
+            const enum_ = this.findEnumInMessage(typeName, message, packageName);
+            if (enum_) return enum_;
+        }
+        
+        return undefined;
+    }
+
+    private findEnumInMessage(
+        typeName: string, 
+        message: DescriptorProto, 
+        packagePrefix: string
+    ): EnumDescriptorProto | undefined {
+        const messagePrefix = packagePrefix 
+            ? `${packagePrefix}.${message.name}` 
+            : message.name || "";
+            
+        // Check enums in this message
+        for (const enumType of message.enumType) {
+            const fullName = `${messagePrefix}.${enumType.name}`;
+            if (fullName === typeName || enumType.name === typeName) {
+                return enumType;
+            }
+        }
+        
+        // Check nested messages
+        for (const nestedMessage of message.nestedType) {
+            const enum_ = this.findEnumInMessage(typeName, nestedMessage, messagePrefix);
+            if (enum_) return enum_;
+        }
+        
+        return undefined;
+    }
+
+    private findMessageInFile(typeName: string, file: FileDescriptorProto): DescriptorProto | undefined {
+        const packageName = file.package || "";
+        
+        // Check top-level messages
+        for (const messageType of file.messageType) {
+            const fullName = packageName ? `${packageName}.${messageType.name}` : messageType.name || "";
+            if (fullName === typeName || messageType.name === typeName) {
                 return messageType;
             }
         }
+        
+        // Check nested messages
+        for (const message of file.messageType) {
+            const nestedMessage = this.findNestedMessage(typeName, message, packageName);
+            if (nestedMessage) return nestedMessage;
+        }
+        
+        return undefined;
+    }
+
+    private findNestedMessage(
+        typeName: string, 
+        message: DescriptorProto, 
+        packagePrefix: string
+    ): DescriptorProto | undefined {
+        const messagePrefix = packagePrefix 
+            ? `${packagePrefix}.${message.name}` 
+            : message.name || "";
+            
+        // Check nested messages
+        for (const nestedMessage of message.nestedType) {
+            const fullName = `${messagePrefix}.${nestedMessage.name}`;
+            if (fullName === typeName || nestedMessage.name === typeName) {
+                return nestedMessage;
+            }
+            
+            // Recursively check deeper nested messages
+            const deeperNested = this.findNestedMessage(typeName, nestedMessage, messagePrefix);
+            if (deeperNested) return deeperNested;
+        }
+        
         return undefined;
     }
 }
