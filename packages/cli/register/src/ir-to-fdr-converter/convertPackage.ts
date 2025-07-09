@@ -718,13 +718,13 @@ function convertResponseErrorsV2(
                     description: errorDeclaration.docs ?? undefined,
                     name: errorDeclaration.displayName ?? errorDeclaration.name.name.originalName,
                     availability: undefined,
-                    examples: errorDeclaration.examples.map((irExample) => {
-                        return {
-                            name: irExample.name?.originalName,
-                            responseBody: { type: "json", value: irExample.jsonExample },
-                            description: irExample.docs
-                        };
-                    })
+                    examples: Object.entries(errorDeclaration.v2Examples?.userSpecifiedExamples ?? {}).map(
+                        ([name, example]) => ({
+                            name,
+                            responseBody: { type: "json", value: example },
+                            description: undefined
+                        })
+                    )
                 });
             }
         }
