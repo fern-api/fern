@@ -47,21 +47,10 @@ module.exports = {
     ignorePatterns: ["*.js", "*.jsx"],
     rules: {
         "linebreak-style": ["error", "unix"],
-        quotes: [
-            "error",
-            "double",
-            {
-                avoidEscape: true
-            }
-        ],
-        semi: ["error", "always"],
+        quotes: "off",
+        semi: "off",
         indent: "off",
-        "no-empty": [
-            "error",
-            {
-                allowEmptyCatch: true
-            }
-        ],
+        "no-empty": "off",
         "@typescript-eslint/no-unused-vars": [
             "warn",
             {
@@ -77,12 +66,7 @@ module.exports = {
         ],
         "@typescript-eslint/no-floating-promises": ["error"],
         "@typescript-eslint/no-misused-promises": ["error"],
-        "@typescript-eslint/no-empty-function": [
-            "error",
-            {
-                allow: ["private-constructors", "protected-constructors", "decoratedFunctions"]
-            }
-        ],
+        "@typescript-eslint/no-empty-function": "off",
         "jest/unbound-method": ["error"],
         "jest/valid-describe-callback": "off",
         "jest/valid-title": "off",
@@ -100,11 +84,11 @@ module.exports = {
         ],
         "@typescript-eslint/no-base-to-string": "error",
         eqeqeq: "off",
-        curly: "error",
-        "no-console": "error",
+        curly: "off",
+        "no-console": "off",
         "react/react-in-jsx-scope": "off",
         "react/prop-types": "off",
-        "@typescript-eslint/await-thenable": "error",
+        "@typescript-eslint/await-thenable": "off",
         "@blueprintjs/classes-constants": "off",
         "tailwindcss/no-custom-classname": "off",
         "@blueprintjs/html-components": "off",

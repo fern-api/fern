@@ -17,6 +17,7 @@
       }
     ],
     "@typescript-eslint/no-namespace": "off",
+    "@typescript-eslint/await-thenable": "error",
     "jest/valid-describe-callback": "off",
     "jest/valid-title": "off",
     "no-unused-vars": "off",
@@ -28,6 +29,7 @@
     "no-standalone-expect": "off",
     "eqeqeq": "off",
     "curly": "error",
+    "no-console": "error",
     "react/react-in-jsx-scope": "off",
     "@typescript-eslint/no-empty-interface": "off",
     "jest/expect-expect": "off",
@@ -42,5 +44,13 @@
         ]
       }
     ]
-  }
+  },
+  "overrides": [
+    {
+        "files": ["**/*.test.ts", "**/*.spec.ts", "love_fern.js","fern/pages/docs/components/snippets/example-code.js", "packages/cli/ete-tests/src/tests/generate/fixtures/docs/fern/js/custom.js", "packages/cli/docs-resolver/src/__test__/fixtures/dry/fern/fibonacci.js"],
+        "rules": {
+            "no-console": "off"
+        }
+    }
+  ]
 }
