@@ -111,7 +111,12 @@ public class PostWithObjectBodyandResponseTest : BaseMockServerTest
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<ObjectWithOptionalField>(mockResponse)).UsingDefaults()
+            Is.EqualTo(
+                    JsonUtils.Deserialize<SeedExhaustive.Types.ObjectWithOptionalField>(
+                        mockResponse
+                    )
+                )
+                .UsingDefaults()
         );
     }
 }

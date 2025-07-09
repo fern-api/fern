@@ -58,7 +58,12 @@ public class RefreshTokenTest : BaseMockServerTest
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<TokenResponse>(mockResponse)).UsingDefaults()
+            Is.EqualTo(
+                    JsonUtils.Deserialize<SeedOauthClientCredentialsWithVariables.TokenResponse>(
+                        mockResponse
+                    )
+                )
+                .UsingDefaults()
         );
     }
 }

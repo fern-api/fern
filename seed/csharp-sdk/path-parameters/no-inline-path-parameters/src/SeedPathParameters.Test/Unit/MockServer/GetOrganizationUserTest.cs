@@ -43,7 +43,7 @@ public class GetOrganizationUserTest : BaseMockServerTest
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<User>(mockResponse)).UsingDefaults()
+            Is.EqualTo(JsonUtils.Deserialize<SeedPathParameters.User>(mockResponse)).UsingDefaults()
         );
     }
 }

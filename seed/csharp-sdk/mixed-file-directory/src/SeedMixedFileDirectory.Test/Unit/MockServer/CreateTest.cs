@@ -56,7 +56,8 @@ public class CreateTest : BaseMockServerTest
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<Organization>(mockResponse)).UsingDefaults()
+            Is.EqualTo(JsonUtils.Deserialize<SeedMixedFileDirectory.Organization>(mockResponse))
+                .UsingDefaults()
         );
     }
 }

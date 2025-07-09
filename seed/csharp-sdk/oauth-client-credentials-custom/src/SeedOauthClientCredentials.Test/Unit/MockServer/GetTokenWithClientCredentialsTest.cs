@@ -60,7 +60,10 @@ public class GetTokenWithClientCredentialsTest : BaseMockServerTest
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<TokenResponse>(mockResponse)).UsingDefaults()
+            Is.EqualTo(
+                    JsonUtils.Deserialize<SeedOauthClientCredentials.TokenResponse>(mockResponse)
+                )
+                .UsingDefaults()
         );
     }
 }

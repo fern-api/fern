@@ -111,7 +111,7 @@ public class CreateUserTest : BaseMockServerTest
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<User>(mockResponse)).UsingDefaults()
+            Is.EqualTo(JsonUtils.Deserialize<SeedNullable.User>(mockResponse)).UsingDefaults()
         );
     }
 }

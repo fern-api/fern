@@ -50,7 +50,8 @@ public class FindTest : BaseMockServerTest
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<ImportingType>(mockResponse)).UsingDefaults()
+            Is.EqualTo(JsonUtils.Deserialize<SeedAudiences.ImportingType>(mockResponse))
+                .UsingDefaults()
         );
     }
 }

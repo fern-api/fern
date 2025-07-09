@@ -48,7 +48,9 @@ public class GetExecutionSessionsStateTest : BaseMockServerTest
         var response = await Client.Submission.GetExecutionSessionsStateAsync();
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<GetExecutionSessionStateResponse>(mockResponse))
+            Is.EqualTo(
+                    JsonUtils.Deserialize<SeedTrace.GetExecutionSessionStateResponse>(mockResponse)
+                )
                 .UsingDefaults()
         );
     }

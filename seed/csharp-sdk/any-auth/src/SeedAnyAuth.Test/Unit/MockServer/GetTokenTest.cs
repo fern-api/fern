@@ -56,7 +56,8 @@ public class GetTokenTest : BaseMockServerTest
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<TokenResponse>(mockResponse)).UsingDefaults()
+            Is.EqualTo(JsonUtils.Deserialize<SeedAnyAuth.TokenResponse>(mockResponse))
+                .UsingDefaults()
         );
     }
 }
