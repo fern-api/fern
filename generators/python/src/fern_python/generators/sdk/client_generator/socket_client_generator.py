@@ -253,9 +253,24 @@ class SocketClientGenerator:
                 docstring=AST.CodeWriter(self._get_send_message_docstring(message_type=AST.TypeHint.any())),
             )
 
-        message_type = union.body_type
+        message_type = union.body_type  # type: ignore
         message_type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(message_type)
 
+        # inline parameters if possible
+        inlined_params = self._get_inlined_parameters_for_message_type(message_type)
+        if inlined_params is not None:
+            return AST.FunctionDeclaration(
+                name=fn_name,
+                is_async=is_async,
+                signature=AST.FunctionSignature(
+                    named_parameters=inlined_params,
+                    return_type=AST.TypeHint.none(),
+                ),
+                body=AST.CodeWriter(self._get_inlined_send_message_method_body(message_type, inlined_params, is_async)),
+                docstring=AST.CodeWriter(self._get_inlined_send_message_docstring(message_type, inlined_params)),
+            )
+
+        # otherwise, use a single message parameter
         param_name = snake_case(message.type)
         return AST.FunctionDeclaration(
             name=fn_name,
@@ -272,6 +287,116 @@ class SocketClientGenerator:
             body=AST.CodeWriter(self._get_send_message_method_body(param_name, is_async=is_async)),
             docstring=AST.CodeWriter(self._get_send_message_docstring(message_type=message_type_hint)),
         )
+
+    def _get_property_name(self, property: ir_types.ObjectProperty) -> str:
+        return property.name.name.snake_case.safe_name
+
+    def _get_inlined_parameters_for_message_type(self, message_type: ir_types.TypeReference) -> Optional[List[AST.NamedFunctionParameter]]:
+        # to inline, must be a named type ref to an object type
+        union = message_type.get_as_union()
+        if union.type != "named":
+            return None
+
+        type_declaration = self._context.pydantic_generator_context.get_declaration_for_type_id(
+            union.type_id)
+        shape_union = type_declaration.shape.get_as_union()
+        if shape_union.type != "object":
+            return None
+
+        # extract object properties for inlined parameters
+        parameters = []
+        for prop in shape_union.properties:
+            # skip literal properties (they will be set automatically)
+            if self._is_type_literal(prop.value_type):
+                continue
+
+            param_type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+                prop.value_type, in_endpoint=True
+            )
+            initializer = self._context.pydantic_generator_context.get_initializer_for_type_reference(
+                prop.value_type
+            )
+
+            parameters.append(
+                AST.NamedFunctionParameter(
+                    name=self._get_property_name(prop),
+                    type_hint=param_type_hint,
+                    docs=prop.docs,
+                    initializer=initializer,
+                    raw_type=prop.value_type,
+                    raw_name=prop.name.wire_value,
+                )
+            )
+
+        return parameters if parameters else None
+
+    def _get_inlined_send_message_docstring(
+        self,
+        message_type: ir_types.TypeReference,
+        parameters: List[AST.NamedFunctionParameter],
+    ) -> CodeWriterFunction:
+        def _write_docstring(writer: AST.NodeWriter) -> None:
+            writer.write_line("Send a message to the websocket connection.")
+            if len(parameters) == 0:
+                return
+            writer.write_line()
+            writer.write_line("Parameters")
+            writer.write_line("----------")
+            for i, param in enumerate(parameters):
+                if i > 0:
+                    writer.write_line()
+                    writer.write_line()
+
+                writer.write(f"{param.name} : ")
+                if param.type_hint is not None:
+                    writer.write_node(param.type_hint)
+            writer.write_line()
+
+        return _write_docstring
+
+    def _get_inlined_send_message_method_body(
+        self,
+        message_type: ir_types.TypeReference,
+        parameters: List[AST.NamedFunctionParameter],
+        is_async: bool,
+    ) -> CodeWriterFunction:
+        def _get_method_body(writer: AST.NodeWriter) -> None:
+            union = message_type.get_as_union()
+            if union.type != "named":
+                raise ValueError(f"Expected named type reference, got {union.type}")
+
+            # construct the message object from individual parameters
+            type_declaration = self._context.pydantic_generator_context.get_declaration_for_type_id(
+                union.type_id)
+            message_type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+                message_type)
+
+            writer.write("message = ")
+            writer.write_node(message_type_hint)
+            writer.write("(")
+
+            param_assignments = []
+            for param in parameters:
+                param_assignments.append(f"{param.name}={param.name}")
+
+            # add any literal properties
+            shape_union = type_declaration.shape.get_as_union()
+            if shape_union.type == "object":
+                for prop in shape_union.properties:
+                    prop_name = self._get_property_name(prop)
+                    if self._is_type_literal(prop.value_type):
+                        literal_value = self._context.get_literal_value(prop.value_type)
+                        if isinstance(literal_value, str):
+                            param_assignments.append(f'{prop_name}="{literal_value}"')
+                        else:
+                            param_assignments.append(f"{prop_name}={literal_value}")
+
+            writer.write(", ".join(param_assignments))
+            writer.write(")")
+            writer.write_line()
+            writer.write_line(f"{'await ' if is_async else ''}self._send_model(message)")
+
+        return _get_method_body
 
     def _get_send_message_docstring(self, message_type: AST.TypeHint) -> CodeWriterFunction:
         def _write_docstring(writer: AST.NodeWriter) -> None:
@@ -377,3 +502,6 @@ class SocketClientGenerator:
             writer.write_line(f"{'await ' if is_async else ''}self._send(data.dict())")
 
         return _get_send_model_method_body
+
+    def _is_type_literal(self, type_reference: ir_types.TypeReference) -> bool:
+        return self._context.get_literal_value(reference=type_reference) is not None
