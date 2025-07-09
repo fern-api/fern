@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
 
+- version: 4.24.1
+  changelogEntry:
+    - summary: |
+        Automatically switch any tabs in the generated code to spaces, following PEP8 standards.
+      type: fix
+  createdAt: '2025-07-09'
+  irVersion: 58
+
 - version: 4.24.0
   changelogEntry:
     - summary: |
