@@ -16,7 +16,6 @@ import { workspaceShouldGenerateDynamicSnippetTests } from "../../workspaceShoul
 import { ScriptRunner } from "../test/ScriptRunner";
 import { TaskContextFactory } from "../test/TaskContextFactory";
 import { DockerTestRunner } from "../test/test-runner";
-import { writeDotMock } from "../test/test-runner/TestRunner";
 
 export async function runWithCustomFixture({
     pathToFixture,
@@ -84,10 +83,6 @@ export async function runWithCustomFixture({
             irVersion: workspace.workspaceConfig.irVersion,
             group: generatorGroup.group,
             shouldGenerateDynamicSnippetTests: workspaceShouldGenerateDynamicSnippetTests(workspace)
-        });
-        await writeDotMock({
-            absolutePathToDotMockDirectory: absolutePathToOutput,
-            absolutePathToFernDefinition: pathToFixture
         });
         taskContext.logger.info(`Wrote files to ${absolutePathToOutput}`);
     } catch (error) {

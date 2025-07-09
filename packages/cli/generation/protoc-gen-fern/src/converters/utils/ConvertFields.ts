@@ -1,34 +1,38 @@
 import { FieldDescriptorProto } from "@bufbuild/protobuf/wkt";
 
-import { ObjectProperty } from "@fern-api/ir-sdk";
+import { ObjectProperty, TypeId } from "@fern-api/ir-sdk";
 
 import { ProtofileConverterContext } from "../ProtofileConverterContext";
 import { FieldConverter } from "../message/FieldConverter";
+import { PATH_FIELD_NUMBERS } from "./PathFieldNumbers";
 
 export function convertFields({
     fields,
     breadcrumbs,
-    context
+    context,
+    sourceCodeInfoPath
 }: {
     fields: FieldDescriptorProto[];
     breadcrumbs: string[];
     context: ProtofileConverterContext;
+    sourceCodeInfoPath: number[];
 }): {
     convertedFields: ObjectProperty[];
-    referencedTypes: Set<string>;
+    referencedTypes: Set<TypeId>;
     propertiesByAudience: Record<string, Set<string>>;
     oneOfFields: Record<number, FieldDescriptorProto[]>;
 } {
     const convertedFields: ObjectProperty[] = [];
     const propertiesByAudience: Record<string, Set<string>> = {};
-    const referencedTypes: Set<string> = new Set();
+    const referencedTypes: Set<TypeId> = new Set();
     const oneOfFields: Record<number, FieldDescriptorProto[]> = {};
 
-    for (const field of fields) {
+    for (const [index, field] of fields.entries()) {
         const fieldConverter = new FieldConverter({
             context,
             breadcrumbs: [...breadcrumbs, "fields", field.name],
-            field
+            field,
+            sourceCodeInfoPath: [...sourceCodeInfoPath, PATH_FIELD_NUMBERS.MESSAGE.FIELD, index]
         });
         const convertedField = fieldConverter.convert();
         if (convertedField != null) {
@@ -38,7 +42,7 @@ export function convertFields({
                     wireValue: field.name
                 }),
                 valueType: convertedField.type,
-                docs: undefined,
+                docs: context.getCommentForPath([...sourceCodeInfoPath, PATH_FIELD_NUMBERS.MESSAGE.FIELD, index]),
                 availability: undefined,
                 propertyAccess: undefined,
                 v2Examples: undefined

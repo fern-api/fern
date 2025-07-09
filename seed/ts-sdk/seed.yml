@@ -1,22 +1,24 @@
-irVersion: v58
 displayName: TypeScript SDK
-image: fernapi/fern-typescript-node-sdk
+irVersion: v58
+image: fernapi/fern-typescript-sdk
 changelogLocation: ../../generators/typescript/sdk/versions.yml
 publish:
-  workingDirectory: generators/typescript
-  versionSubstitution: $VERSION
-  command:
-    - pnpm --filter @fern-typescript/sdk-generator-cli dockerTagVersion:node $VERSION
-    - docker push fernapi/fern-typescript-node-sdk:$VERSION
+  preBuildCommands:
+    - pnpm --filter @fern-typescript/sdk-generator-cli dist:cli
+  docker:
+    file: ./generators/typescript/sdk/cli/Dockerfile
+    image: fernapi/fern-typescript-sdk
+    aliases: [fernapi/fern-typescript-node-sdk]
+    context: .
 test:
   docker:
-    image: fernapi/fern-typescript-node-sdk:local
-    command: pnpm --filter @fern-typescript/sdk-generator-cli dockerTagLocal:node
+    image: fernapi/fern-typescript-sdk:latest
+    command: 
+      - pnpm --filter @fern-typescript/sdk-generator-cli dockerTagLatest
   local:
     workingDirectory: generators/typescript
     buildCommand:
-      - pnpm --filter @fern-typescript/sdk-generator-cli compile
-      - pnpm --filter @fern-typescript/sdk-generator-cli build:node
+      - pnpm --filter @fern-typescript/sdk-generator-cli dist:cli
     runCommand: node sdk/cli/dist/nodeCli.cjs
     env:
       NODE_ENV: test
@@ -53,9 +55,9 @@ fixtures:
         allowCustomFetcher: true
         timeoutInSeconds: 2
       outputFolder: allow-custom-fetcher
-    - outputFolder: web-stream-wrapper
+    - outputFolder: wrapper
       customConfig:
-        streamType: "web"
+        streamType: "wrapper"
   audiences:
     - customConfig: null
       outputFolder: no-custom-config
@@ -64,6 +66,9 @@ fixtures:
         - partner
       outputFolder: with-partner-audience
   exhaustive:
+    - customConfig:
+        omitFernHeaders: true
+      outputFolder: omit-fern-headers
     - customConfig:
         packagePath: src/test-packagePath
       outputFolder: package-path
@@ -107,6 +112,8 @@ fixtures:
           browser:
             command-exists: false
             execa: false
+          engines:
+            node: ">=16.0.0"
       outputFolder: custom-package-json
     - customConfig:
         retainOriginalCasing: true
@@ -143,7 +150,16 @@ fixtures:
         noSerdeLayer: false
     - outputFolder: web-stream-wrapper
       customConfig:
-        streamType: "web"
+        streamType: web
+    - outputFolder: node-fetch
+      customConfig:
+        fetchSupport: node-fetch
+    - outputFolder: local-files
+      outputMode: local_files
+    - outputFolder: local-files-no-source
+      outputMode: local_files
+      customConfig:
+        outputSourceFiles: false
   error-property:
     - customConfig:
         private: true
@@ -162,16 +178,12 @@ fixtures:
     - customConfig:
         includeContentHeadersOnFileDownloadResponse: true
       outputFolder: file-download-response-headers
-    - outputFolder: web-stream-wrapper
+    - outputFolder: wrapper
       customConfig:
-        streamType: "web"
+        streamType: "wrapper"
     - customConfig:
-        fileResponseType: "binary-response"
-      outputFolder: binary-response
-    - customConfig:
-        streamType: "web"
-        fileResponseType: "binary-response"
-      outputFolder: binary-response-web-stream-wrapper
+        fileResponseType: "stream"
+      outputFolder: stream
   file-upload:
     - customConfig: null
       outputFolder: no-custom-config
@@ -182,12 +194,12 @@ fixtures:
     - customConfig:
         noSerdeLayer: false
       outputFolder: serde
-    - outputFolder: web-stream-wrapper
+    - outputFolder: wrapper
       customConfig:
-        streamType: "web"
-    - outputFolder: form-data-node18
+        streamType: "wrapper"
+    - outputFolder: form-data-node16
       customConfig:
-        formDataSupport: "Node18"
+        formDataSupport: "Node16"
   unknown:
     - customConfig: null
       outputFolder: no-custom-config
@@ -200,6 +212,16 @@ fixtures:
     - customConfig:
         noSerdeLayer: false
       outputFolder: serde-layer-query
+  request-parameters:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        useDefaultRequestParameterValues: true
+      outputFolder: use-default-request-parameter-values
+    - customConfig:
+        useDefaultRequestParameterValues: true
+        useBigInt: true
+      outputFolder: use-big-int-and-default-request-parameter-values
   trace:
     - customConfig: null
       outputFolder: no-custom-config
@@ -284,9 +306,8 @@ scripts:
     commands:
       - mkdir cache
       - yarn install --cache-folder ./cache
-      - yarn build
-      - if grep -q '"test"' package.json; then yarn test --passWithNoTests; fi
-      - if grep -q '"test:wire"' package.json; then yarn test:wire --passWithNoTests; fi
+      - if grep -q '"build":' package.json; then yarn build; fi
+      - if grep -q '"test":' package.json; then yarn test --passWithNoTests; fi
 allowedFailures:
   - bytes-download
   - circular-references

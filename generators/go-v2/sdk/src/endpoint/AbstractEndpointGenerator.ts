@@ -1,7 +1,17 @@
 import { assertNever } from "@fern-api/core-utils";
 import { go } from "@fern-api/go-ast";
 
-import { HttpEndpoint, HttpService, PathParameter, SdkRequest, ServiceId } from "@fern-fern/ir-sdk/api";
+import {
+    FilePropertyArray,
+    FilePropertySingle,
+    FileUploadRequestProperty,
+    HttpEndpoint,
+    HttpRequestBody,
+    HttpService,
+    PathParameter,
+    SdkRequest,
+    ServiceId
+} from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { EndpointSignatureInfo } from "./EndpointSignatureInfo";
@@ -29,10 +39,12 @@ export abstract class AbstractEndpointGenerator {
     }): EndpointSignatureInfo {
         const { pathParameters, pathParameterReferences } = this.getAllPathParameters({ serviceId, endpoint });
         const request = getEndpointRequest({ context: this.context, endpoint, serviceId, service });
-        const requestParameter = request != null ? this.getRequestParameter({ request }) : undefined;
+        const requestParameter = this.getRequestParameter({ endpoint, request });
+        const fileParameters = this.getEndpointFileParameters({ endpoint });
         const allParameters = [
             this.context.getContextParameter(),
             ...pathParameters,
+            ...fileParameters,
             requestParameter,
             endpoint.idempotent
                 ? this.context.getVariadicIdempotentRequestOptionParameter()
@@ -91,7 +103,89 @@ export abstract class AbstractEndpointGenerator {
         };
     }
 
-    private getRequestParameter({ request }: { request: EndpointRequest }): go.Parameter {
+    private getEndpointFileParameters({ endpoint }: { endpoint: HttpEndpoint }): go.Parameter[] {
+        const requestBody = endpoint.requestBody;
+        if (requestBody == null || this.context.customConfig.inlineFileProperties) {
+            return [];
+        }
+        return this.getFileParametersFromRequestBody({ requestBody });
+    }
+
+    private getFileParametersFromRequestBody({ requestBody }: { requestBody: HttpRequestBody }): go.Parameter[] {
+        switch (requestBody.type) {
+            case "fileUpload":
+                return this.getFileParametersFromFileUpload({ properties: requestBody.properties });
+            case "reference":
+            case "inlinedRequestBody":
+            case "bytes":
+                return [];
+            default:
+                assertNever(requestBody);
+        }
+    }
+
+    private getFileParametersFromFileUpload({
+        properties
+    }: {
+        properties: FileUploadRequestProperty[];
+    }): go.Parameter[] {
+        const fileParameters: go.Parameter[] = [];
+        for (const property of properties) {
+            switch (property.type) {
+                case "file":
+                    fileParameters.push(this.getFileParameterFromProperty({ property }));
+                    break;
+                case "bodyProperty":
+                    break;
+                default: {
+                    assertNever(property);
+                }
+            }
+        }
+        return fileParameters;
+    }
+
+    private getFileParameterFromProperty({ property }: { property: FileUploadRequestProperty.File_ }): go.Parameter {
+        const filePropertyType = property.value.type;
+        switch (filePropertyType) {
+            case "file":
+                return this.getSingleFileParameter({ fileProperty: property.value });
+            case "fileArray":
+                return this.getFileArrayParameter({ fileProperty: property.value });
+            default:
+                assertNever(filePropertyType);
+        }
+    }
+
+    private getSingleFileParameter({ fileProperty }: { fileProperty: FilePropertySingle }): go.Parameter {
+        return go.parameter({
+            type: go.Type.reference(this.context.getIoReaderTypeReference()),
+            name: this.context.getParameterName(fileProperty.key.name)
+        });
+    }
+
+    private getFileArrayParameter({ fileProperty }: { fileProperty: FilePropertyArray }): go.Parameter {
+        return go.parameter({
+            type: go.Type.slice(go.Type.reference(this.context.getIoReaderTypeReference())),
+            name: this.context.getParameterName(fileProperty.key.name)
+        });
+    }
+
+    private getRequestParameter({
+        endpoint,
+        request
+    }: {
+        endpoint: HttpEndpoint;
+        request: EndpointRequest | undefined;
+    }): go.Parameter | undefined {
+        if (request == null) {
+            return undefined;
+        }
+        if (endpoint.sdkRequest?.shape.type === "wrapper") {
+            if (this.context.shouldSkipWrappedRequest({ endpoint, wrapper: endpoint.sdkRequest.shape })) {
+                return undefined;
+            }
+        }
         return go.parameter({
             type: request.getRequestParameterType(),
             name: request.getRequestParameterName()

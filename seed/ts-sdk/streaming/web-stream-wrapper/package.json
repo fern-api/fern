@@ -31,21 +31,17 @@
         "build": "yarn build:cjs && yarn build:esm",
         "build:cjs": "tsc --project ./tsconfig.cjs.json",
         "build:esm": "tsc --project ./tsconfig.esm.json && node scripts/rename-to-esm-files.js dist/esm",
-        "test": "jest tests/unit",
-        "test:browser": "jest --config jest.browser.config.mjs",
-        "test:wire": "jest tests/wire",
-        "wire:test": "yarn test:wire"
+        "test": "jest --config jest.config.mjs",
+        "test:unit": "jest --selectProjects unit",
+        "test:browser": "jest --selectProjects browser",
+        "test:wire": "jest --selectProjects wire"
     },
     "dependencies": {
-        "url-join": "4.0.1",
         "form-data": "^4.0.0",
         "formdata-node": "^6.0.3",
-        "node-fetch": "^2.7.0",
-        "qs": "^6.13.1"
+        "node-fetch": "^2.7.0"
     },
     "devDependencies": {
-        "@types/url-join": "4.0.1",
-        "@types/qs": "^6.9.17",
         "@types/node-fetch": "^2.6.12",
         "webpack": "^5.97.1",
         "ts-loader": "^9.5.1",

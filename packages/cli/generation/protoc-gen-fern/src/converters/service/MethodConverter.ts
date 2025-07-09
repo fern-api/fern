@@ -7,20 +7,22 @@ import {
     HttpRequestBody,
     HttpResponse,
     HttpResponseBody,
-    JsonResponse
+    JsonResponse,
+    ProtobufMethodType
 } from "@fern-api/ir-sdk";
 import { AbstractConverter } from "@fern-api/v2-importer-commons";
 
 import { ProtofileConverterContext } from "../ProtofileConverterContext";
 
-export type gRPCMethodType = "UNARY" | "CLIENT_STREAM" | "SERVER_STREAM" | "BIDI_STREAM";
-
 export declare namespace MethodConverter {
     export interface Args extends AbstractConverter.Args<ProtofileConverterContext> {
         operation: MethodDescriptorProto;
+        serviceName: string;
+        sourceCodeInfoPath: number[];
     }
 
     export interface Output {
+        group: string[];
         endpoint: HttpEndpoint;
     }
 
@@ -29,26 +31,35 @@ export declare namespace MethodConverter {
 
 export class MethodConverter extends AbstractConverter<ProtofileConverterContext, MethodConverter.Output> {
     private readonly operation: MethodDescriptorProto;
-
-    constructor({ context, breadcrumbs, operation }: MethodConverter.Args) {
+    private readonly serviceName: string;
+    private readonly sourceCodeInfoPath: number[];
+    constructor({ context, breadcrumbs, operation, serviceName, sourceCodeInfoPath }: MethodConverter.Args) {
         super({ context, breadcrumbs });
         this.operation = operation;
+        this.serviceName = serviceName;
+        this.sourceCodeInfoPath = sourceCodeInfoPath;
     }
 
     public convert(): MethodConverter.Output | undefined {
         // TODO: convert method by parsing name, request type, and response type
+
+        const packageName = this.context.spec.package;
+
         const convertedRequestBody = this.convertRequestBody();
 
         const convertedResponseBody = this.convertResponseBody();
 
         return {
+            group: [packageName, this.serviceName],
             endpoint: {
                 id: this.operation.name,
-                docs: undefined,
-                name: this.context.casingsGenerator.generateName(this.operation.name),
+                docs: this.context.getCommentForPath(this.sourceCodeInfoPath),
+                name: this.context.casingsGenerator.generateName(
+                    this.context.maybePrependPackageName(this.operation.name)
+                ),
                 requestBody: convertedRequestBody,
                 response: convertedResponseBody,
-                displayName: undefined,
+                displayName: this.context.maybeRemoveGrpcPackagePrefix(this.operation.name),
                 method: HttpMethod.Post,
                 baseUrl: undefined,
                 v2BaseUrls: undefined,
@@ -75,32 +86,35 @@ export class MethodConverter extends AbstractConverter<ProtofileConverterContext
                 allPathParameters: [],
                 pagination: undefined,
                 transport: undefined,
-                source: HttpEndpointSource.proto(),
+                source: HttpEndpointSource.proto({
+                    methodType: this.getGrpcMethodType()
+                }),
                 audiences: []
             }
         };
     }
 
-    private getMethodType(): gRPCMethodType {
+    private getGrpcMethodType(): ProtobufMethodType {
         if (this.operation.clientStreaming && this.operation.serverStreaming) {
-            return "BIDI_STREAM";
+            return ProtobufMethodType.BidirectionalStream;
         }
         if (this.operation.clientStreaming) {
-            return "CLIENT_STREAM";
+            return ProtobufMethodType.ClientStream;
         }
         if (this.operation.serverStreaming) {
-            return "SERVER_STREAM";
+            return ProtobufMethodType.ServerStream;
         }
-        return "UNARY";
+        return ProtobufMethodType.Unary;
     }
 
     private convertRequestBody(): HttpRequestBody | undefined {
         const requestBodyType = this.context.convertGrpcReferenceToTypeReference({
-            typeName: this.context.maybeRemoveGrpcPackagePrefix(this.operation.inputType)
+            typeName: this.operation.inputType,
+            displayNameOverride: this.context.maybeRemoveGrpcPackagePrefix(this.operation.inputType)
         });
         if (requestBodyType.ok) {
             return HttpRequestBody.reference({
-                contentType: "application/protobuf",
+                contentType: "application/proto",
                 docs: undefined,
                 requestBodyType: requestBodyType.reference,
                 v2Examples: undefined
@@ -111,7 +125,8 @@ export class MethodConverter extends AbstractConverter<ProtofileConverterContext
 
     private convertResponseBody(): HttpResponse | undefined {
         const responseBodyType = this.context.convertGrpcReferenceToTypeReference({
-            typeName: this.context.maybeRemoveGrpcPackagePrefix(this.operation.outputType)
+            typeName: this.operation.outputType,
+            displayNameOverride: this.context.maybeRemoveGrpcPackagePrefix(this.operation.outputType)
         });
 
         if (responseBodyType.ok) {

@@ -599,6 +599,7 @@ function getRequest({
             value: {
                 body: "bytes",
                 "content-type": MediaType.APPLICATION_OCTET_STREAM,
+                "query-parameters": queryParameters,
                 ...(request.description ? { docs: request.description } : {})
             }
         };

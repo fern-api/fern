@@ -5,7 +5,6 @@
 import * as core from "./core/index.js";
 import { mergeHeaders } from "./core/headers.js";
 import * as SeedExtends from "./api/index.js";
-import urlJoin from "url-join";
 import * as errors from "./errors/index.js";
 
 export declare namespace SeedExtendsClient {
@@ -72,7 +71,7 @@ export class SeedExtendsClient {
         requestOptions?: SeedExtendsClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/extends/extended-inline-request-body",

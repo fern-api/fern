@@ -1,0 +1,328 @@
+{
+  "info": {
+    "name": "Request Parameters",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": null
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "auth": null,
+  "item": [
+    {
+      "_type": "container",
+      "description": null,
+      "name": "User",
+      "item": [
+        {
+          "_type": "endpoint",
+          "name": "Create Username",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/user/username",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "user",
+                "username"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"username\",\n    \"password\": \"password\",\n    \"name\": \"test\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/user/username",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "user",
+                    "username"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"username\": \"username\",\n    \"password\": \"password\",\n    \"name\": \"test\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
+        {
+          "_type": "endpoint",
+          "name": "Get Username",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/user?limit=1&id=d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32&date=2023-01-15&deadline=2024-01-15T09%3A30%3A00Z&bytes=SGVsbG8gd29ybGQh&user=%7B%22name%22%3A%22name%22%2C%22tags%22%3A%5B%22tags%22%2C%22tags%22%5D%7D&userList=%5B%7B%22name%22%3A%22name%22%2C%22tags%22%3A%5B%22tags%22%2C%22tags%22%5D%7D%2C%7B%22name%22%3A%22name%22%2C%22tags%22%3A%5B%22tags%22%2C%22tags%22%5D%7D%5D&optionalDeadline=2024-01-15T09%3A30%3A00Z&keyValue=%7B%22keyValue%22%3A%22keyValue%22%7D&optionalString=optionalString&nestedUser=%7B%22name%22%3A%22name%22%2C%22user%22%3A%7B%22name%22%3A%22name%22%2C%22tags%22%3A%5B%22tags%22%2C%22tags%22%5D%7D%7D&optionalUser=%7B%22name%22%3A%22name%22%2C%22tags%22%3A%5B%22tags%22%2C%22tags%22%5D%7D&excludeUser=%7B%22name%22%3A%22name%22%2C%22tags%22%3A%5B%22tags%22%2C%22tags%22%5D%7D&filter=filter&longParam=1000000&bigIntParam=1000000",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "user"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "description": null,
+                  "value": "1"
+                },
+                {
+                  "key": "id",
+                  "description": null,
+                  "value": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+                },
+                {
+                  "key": "date",
+                  "description": null,
+                  "value": "2023-01-15"
+                },
+                {
+                  "key": "deadline",
+                  "description": null,
+                  "value": "2024-01-15T09:30:00Z"
+                },
+                {
+                  "key": "bytes",
+                  "description": null,
+                  "value": "SGVsbG8gd29ybGQh"
+                },
+                {
+                  "key": "user",
+                  "description": null,
+                  "value": "{\"name\":\"name\",\"tags\":[\"tags\",\"tags\"]}"
+                },
+                {
+                  "key": "userList",
+                  "description": null,
+                  "value": "[{\"name\":\"name\",\"tags\":[\"tags\",\"tags\"]},{\"name\":\"name\",\"tags\":[\"tags\",\"tags\"]}]"
+                },
+                {
+                  "key": "optionalDeadline",
+                  "description": null,
+                  "value": "2024-01-15T09:30:00Z"
+                },
+                {
+                  "key": "keyValue",
+                  "description": null,
+                  "value": "{\"keyValue\":\"keyValue\"}"
+                },
+                {
+                  "key": "optionalString",
+                  "description": null,
+                  "value": "optionalString"
+                },
+                {
+                  "key": "nestedUser",
+                  "description": null,
+                  "value": "{\"name\":\"name\",\"user\":{\"name\":\"name\",\"tags\":[\"tags\",\"tags\"]}}"
+                },
+                {
+                  "key": "optionalUser",
+                  "description": null,
+                  "value": "{\"name\":\"name\",\"tags\":[\"tags\",\"tags\"]}"
+                },
+                {
+                  "key": "excludeUser",
+                  "description": null,
+                  "value": "{\"name\":\"name\",\"tags\":[\"tags\",\"tags\"]}"
+                },
+                {
+                  "key": "filter",
+                  "description": null,
+                  "value": "filter"
+                },
+                {
+                  "key": "longParam",
+                  "description": null,
+                  "value": "1000000"
+                },
+                {
+                  "key": "bigIntParam",
+                  "description": null,
+                  "value": "1000000"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null,
+            "body": null
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/user?limit=1&id=d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32&date=2023-01-15&deadline=2024-01-15T09%3A30%3A00Z&bytes=SGVsbG8gd29ybGQh&user=%7B%22name%22%3A%22name%22%2C%22tags%22%3A%5B%22tags%22%2C%22tags%22%5D%7D&userList=%5B%7B%22name%22%3A%22name%22%2C%22tags%22%3A%5B%22tags%22%2C%22tags%22%5D%7D%2C%7B%22name%22%3A%22name%22%2C%22tags%22%3A%5B%22tags%22%2C%22tags%22%5D%7D%5D&optionalDeadline=2024-01-15T09%3A30%3A00Z&keyValue=%7B%22keyValue%22%3A%22keyValue%22%7D&optionalString=optionalString&nestedUser=%7B%22name%22%3A%22name%22%2C%22user%22%3A%7B%22name%22%3A%22name%22%2C%22tags%22%3A%5B%22tags%22%2C%22tags%22%5D%7D%7D&optionalUser=%7B%22name%22%3A%22name%22%2C%22tags%22%3A%5B%22tags%22%2C%22tags%22%5D%7D&excludeUser=%7B%22name%22%3A%22name%22%2C%22tags%22%3A%5B%22tags%22%2C%22tags%22%5D%7D&filter=filter&longParam=1000000&bigIntParam=1000000",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "user"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "description": null,
+                      "value": "1"
+                    },
+                    {
+                      "key": "id",
+                      "description": null,
+                      "value": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+                    },
+                    {
+                      "key": "date",
+                      "description": null,
+                      "value": "2023-01-15"
+                    },
+                    {
+                      "key": "deadline",
+                      "description": null,
+                      "value": "2024-01-15T09:30:00Z"
+                    },
+                    {
+                      "key": "bytes",
+                      "description": null,
+                      "value": "SGVsbG8gd29ybGQh"
+                    },
+                    {
+                      "key": "user",
+                      "description": null,
+                      "value": "{\"name\":\"name\",\"tags\":[\"tags\",\"tags\"]}"
+                    },
+                    {
+                      "key": "userList",
+                      "description": null,
+                      "value": "[{\"name\":\"name\",\"tags\":[\"tags\",\"tags\"]},{\"name\":\"name\",\"tags\":[\"tags\",\"tags\"]}]"
+                    },
+                    {
+                      "key": "optionalDeadline",
+                      "description": null,
+                      "value": "2024-01-15T09:30:00Z"
+                    },
+                    {
+                      "key": "keyValue",
+                      "description": null,
+                      "value": "{\"keyValue\":\"keyValue\"}"
+                    },
+                    {
+                      "key": "optionalString",
+                      "description": null,
+                      "value": "optionalString"
+                    },
+                    {
+                      "key": "nestedUser",
+                      "description": null,
+                      "value": "{\"name\":\"name\",\"user\":{\"name\":\"name\",\"tags\":[\"tags\",\"tags\"]}}"
+                    },
+                    {
+                      "key": "optionalUser",
+                      "description": null,
+                      "value": "{\"name\":\"name\",\"tags\":[\"tags\",\"tags\"]}"
+                    },
+                    {
+                      "key": "excludeUser",
+                      "description": null,
+                      "value": "{\"name\":\"name\",\"tags\":[\"tags\",\"tags\"]}"
+                    },
+                    {
+                      "key": "filter",
+                      "description": null,
+                      "value": "filter"
+                    },
+                    {
+                      "key": "longParam",
+                      "description": null,
+                      "value": "1000000"
+                    },
+                    {
+                      "key": "bigIntParam",
+                      "description": null,
+                      "value": "1000000"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "{\n    \"name\": \"name\",\n    \"tags\": [\n        \"tags\",\n        \"tags\"\n    ]\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -9814,6 +9814,9 @@ service:
               "docs": "Returns the account token for the end user with the provided public token.",
               "examples": [
                 {
+                  "headers": {
+                    "X-Account-Token": "X-Account-Token",
+                  },
                   "path-parameters": {
                     "public_token": "public_token",
                   },
@@ -9883,6 +9886,8 @@ service:
       examples:
         - path-parameters:
             public_token: public_token
+          headers:
+            X-Account-Token: X-Account-Token
           response:
             body:
               account_token: T9klMDQrcHdm9jrtHuOS2Nf06BIHwMNjpPXPMB
@@ -17157,6 +17162,9 @@ service:
               "docs": "Create a remote key.",
               "examples": [
                 {
+                  "headers": {
+                    "X-Account-Token": "X-Account-Token",
+                  },
                   "request": {
                     "name": "Remote Deployment Key 1",
                   },
@@ -17233,7 +17241,9 @@ service:
         type: root.RemoteKey
         status-code: 200
       examples:
-        - request:
+        - headers:
+            X-Account-Token: X-Account-Token
+          request:
             name: Remote Deployment Key 1
           response:
             body:
@@ -17600,6 +17610,9 @@ service:
               "docs": "Gets issues.",
               "examples": [
                 {
+                  "headers": {
+                    "X-Account-Token": "X-Account-Token",
+                  },
                   "response": {
                     "body": {
                       "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
@@ -17693,6 +17706,9 @@ service:
               "docs": "Get a specific issue.",
               "examples": [
                 {
+                  "headers": {
+                    "X-Account-Token": "X-Account-Token",
+                  },
                   "path-parameters": {
                     "id": "id",
                   },
@@ -17825,7 +17841,9 @@ service:
         type: root.PaginatedIssueList
         status-code: 200
       examples:
-        - response:
+        - headers:
+            X-Account-Token: X-Account-Token
+          response:
             body:
               next: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
               previous: cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ
@@ -17857,6 +17875,8 @@ service:
       examples:
         - path-parameters:
             id: id
+          headers:
+            X-Account-Token: X-Account-Token
           response:
             body:
               id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
@@ -17889,6 +17909,9 @@ service:
               "docs": "Creates a link token to be used when linking a new end user.",
               "examples": [
                 {
+                  "headers": {
+                    "X-Account-Token": "X-Account-Token",
+                  },
                   "request": {
                     "categories": [
                       "hris",
@@ -18083,7 +18106,9 @@ service:
         type: root.LinkToken
         status-code: 200
       examples:
-        - request:
+        - headers:
+            X-Account-Token: X-Account-Token
+          request:
             end_user_email_address: end_user_email_address
             end_user_organization_name: end_user_organization_name
             end_user_origin_id: end_user_origin_id
@@ -18113,6 +18138,9 @@ service:
               "docs": "List linked accounts for your organization.",
               "examples": [
                 {
+                  "headers": {
+                    "X-Account-Token": "X-Account-Token",
+                  },
                   "response": {
                     "body": {
                       "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
@@ -18375,7 +18403,9 @@ service:
         type: root.PaginatedAccountDetailsAndActionsList
         status-code: 200
       examples:
-        - response:
+        - headers:
+            X-Account-Token: X-Account-Token
+          response:
             body:
               next: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
               previous: cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ
@@ -19789,6 +19819,9 @@ service:
               "docs": "Exchange remote keys.",
               "examples": [
                 {
+                  "headers": {
+                    "X-Account-Token": "X-Account-Token",
+                  },
                   "request": {
                     "name": "Remote Deployment Key 1",
                   },
@@ -19865,7 +19898,9 @@ service:
         type: root.RemoteKey
         status-code: 200
       examples:
-        - request:
+        - headers:
+            X-Account-Token: X-Account-Token
+          request:
             name: Remote Deployment Key 1
           response:
             body:

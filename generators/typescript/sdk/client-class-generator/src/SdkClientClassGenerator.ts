@@ -1,4 +1,4 @@
-import { ImportsManager, JavaScriptRuntime, NpmPackage, PackageId } from "@fern-typescript/commons";
+import { ImportsManager, NpmPackage, PackageId } from "@fern-typescript/commons";
 import { ExportsManager } from "@fern-typescript/commons";
 import { GeneratedSdkClientClass } from "@fern-typescript/contexts";
 import { ErrorResolver, PackageResolver } from "@fern-typescript/resolvers";
@@ -20,7 +20,6 @@ export declare namespace SdkClientClassGenerator {
         requireDefaultEnvironment: boolean;
         defaultTimeoutInSeconds: number | "infinity" | undefined;
         npmPackage: NpmPackage | undefined;
-        targetRuntime: JavaScriptRuntime;
         includeContentHeadersOnFileDownloadResponse: boolean;
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
@@ -32,6 +31,8 @@ export declare namespace SdkClientClassGenerator {
         fileResponseType: "stream" | "binary-response";
         formDataSupport: "Node16" | "Node18";
         exportsManager: ExportsManager;
+        omitFernHeaders: boolean;
+        useDefaultRequestParameterValues: boolean;
     }
 
     export namespace generateService {
@@ -55,7 +56,6 @@ export class SdkClientClassGenerator {
     private requireDefaultEnvironment: boolean;
     private defaultTimeoutInSeconds: number | "infinity" | undefined;
     private npmPackage: NpmPackage | undefined;
-    private targetRuntime: JavaScriptRuntime;
     private includeContentHeadersOnFileDownloadResponse: boolean;
     private includeSerdeLayer: boolean;
     private retainOriginalCasing: boolean;
@@ -67,7 +67,8 @@ export class SdkClientClassGenerator {
     private readonly formDataSupport: "Node16" | "Node18";
     private readonly fileResponseType: "stream" | "binary-response";
     private exportsManager: ExportsManager;
-
+    private omitFernHeaders: boolean;
+    private useDefaultRequestParameterValues: boolean;
     constructor({
         intermediateRepresentation,
         errorResolver,
@@ -79,7 +80,6 @@ export class SdkClientClassGenerator {
         requireDefaultEnvironment,
         defaultTimeoutInSeconds,
         npmPackage,
-        targetRuntime,
         includeContentHeadersOnFileDownloadResponse,
         includeSerdeLayer,
         retainOriginalCasing,
@@ -90,7 +90,9 @@ export class SdkClientClassGenerator {
         streamType,
         fileResponseType,
         exportsManager,
-        formDataSupport
+        formDataSupport,
+        omitFernHeaders,
+        useDefaultRequestParameterValues
     }: SdkClientClassGenerator.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.errorResolver = errorResolver;
@@ -102,7 +104,6 @@ export class SdkClientClassGenerator {
         this.requireDefaultEnvironment = requireDefaultEnvironment;
         this.defaultTimeoutInSeconds = defaultTimeoutInSeconds;
         this.npmPackage = npmPackage;
-        this.targetRuntime = targetRuntime;
         this.includeContentHeadersOnFileDownloadResponse = includeContentHeadersOnFileDownloadResponse;
         this.includeSerdeLayer = includeSerdeLayer;
         this.retainOriginalCasing = retainOriginalCasing;
@@ -114,6 +115,8 @@ export class SdkClientClassGenerator {
         this.fileResponseType = fileResponseType;
         this.exportsManager = exportsManager;
         this.formDataSupport = formDataSupport;
+        this.omitFernHeaders = omitFernHeaders;
+        this.useDefaultRequestParameterValues = useDefaultRequestParameterValues;
     }
 
     public generateService({
@@ -138,7 +141,6 @@ export class SdkClientClassGenerator {
             requireDefaultEnvironment: this.requireDefaultEnvironment,
             defaultTimeoutInSeconds: this.defaultTimeoutInSeconds,
             npmPackage: this.npmPackage,
-            targetRuntime: this.targetRuntime,
             includeContentHeadersOnFileDownloadResponse: this.includeContentHeadersOnFileDownloadResponse,
             includeSerdeLayer: this.includeSerdeLayer,
             retainOriginalCasing: this.retainOriginalCasing,
@@ -148,7 +150,9 @@ export class SdkClientClassGenerator {
             allowExtraFields: this.allowExtraFields,
             streamType: this.streamType,
             fileResponseType: this.fileResponseType,
-            formDataSupport: this.formDataSupport
+            formDataSupport: this.formDataSupport,
+            omitFernHeaders: this.omitFernHeaders,
+            useDefaultRequestParameterValues: this.useDefaultRequestParameterValues
         });
     }
 }

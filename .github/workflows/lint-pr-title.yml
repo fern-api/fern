@@ -49,6 +49,7 @@ jobs:
             fiber
             pydantic
             ai-search
+            swift
           requireScope: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

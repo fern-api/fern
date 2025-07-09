@@ -25,7 +25,7 @@ export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfi
             noSerdeLayer,
             requestValidationStatusCode: parsed?.requestValidationStatusCode ?? 422,
             outputEsm: parsed?.outputEsm ?? false,
-            outputSourceFiles: parsed?.outputSourceFiles ?? false,
+            outputSourceFiles: parsed?.outputSourceFiles ?? true,
             retainOriginalCasing: parsed?.retainOriginalCasing ?? false,
             allowExtraFields: parsed?.allowExtraFields ?? false,
             skipRequestValidation: parsed?.skipRequestValidation ?? false,

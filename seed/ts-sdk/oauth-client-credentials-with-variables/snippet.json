@@ -1,0 +1,38 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/token",
+                "method": "POST",
+                "identifier_override": "endpoint_auth.getTokenWithClientCredentials"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedOauthClientCredentialsWithVariablesClient } from \"@fern/oauth-client-credentials-with-variables\";\n\nconst client = new SeedOauthClientCredentialsWithVariablesClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait client.auth.getTokenWithClientCredentials({\n    client_id: \"client_id\",\n    client_secret: \"client_secret\",\n    scope: \"scope\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/token",
+                "method": "POST",
+                "identifier_override": "endpoint_auth.refreshToken"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedOauthClientCredentialsWithVariablesClient } from \"@fern/oauth-client-credentials-with-variables\";\n\nconst client = new SeedOauthClientCredentialsWithVariablesClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait client.auth.refreshToken({\n    client_id: \"client_id\",\n    client_secret: \"client_secret\",\n    refresh_token: \"refresh_token\",\n    scope: \"scope\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/service/{endpointParam}",
+                "method": "POST",
+                "identifier_override": "endpoint_service.post"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedOauthClientCredentialsWithVariablesClient } from \"@fern/oauth-client-credentials-with-variables\";\n\nconst client = new SeedOauthClientCredentialsWithVariablesClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait client.service.post();\n"
+            }
+        }
+    ],
+    "types": {}
+}

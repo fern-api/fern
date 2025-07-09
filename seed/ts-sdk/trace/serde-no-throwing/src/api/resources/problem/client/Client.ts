@@ -7,7 +7,6 @@ import * as core from "../../../../core/index.js";
 import * as SeedTrace from "../../../index.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as serializers from "../../../../serialization/index.js";
-import urlJoin from "url-join";
 
 export declare namespace Problem {
     export interface Options {
@@ -139,7 +138,7 @@ export class Problem {
         core.WithRawResponse<core.APIResponse<SeedTrace.CreateProblemResponse, SeedTrace.problem.createProblem.Error>>
     > {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
@@ -292,7 +291,7 @@ export class Problem {
         core.WithRawResponse<core.APIResponse<SeedTrace.UpdateProblemResponse, SeedTrace.problem.updateProblem.Error>>
     > {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
@@ -366,7 +365,7 @@ export class Problem {
         requestOptions?: Problem.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.problem.deleteProblem.Error>>> {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
@@ -450,7 +449,7 @@ export class Problem {
         >
     > {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,

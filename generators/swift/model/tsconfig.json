@@ -1,0 +1,16 @@
+{
+  "extends": "@fern-api/configs/tsconfig/main.json",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "lib",
+    "rootDir": "src",
+    "types": ["vitest/globals"]
+  },
+  "include": ["./src/**/*"],
+  "references": [
+    { "path": "../../../packages/commons/fs-utils" },
+    { "path": "../../base" },
+    { "path": "../base" },
+    { "path": "../codegen" }
+  ]
+}

@@ -446,9 +446,13 @@ internal sealed class CursorPager<TRequest, TRequestOptions, TResponse, TCursor,
             var items = getItems(response);
             var page = items is not null ? new Page<TItem>(items) : Page<TItem>.Empty;
             var cursor = getNextCursor(response);
-            var hasNextPage = cursor is not null;
+            var hasNextPage = cursor switch
+            {
+                null or "" => false,
+                _ => true,
+            };
             setCursor(request, cursor);
-            if (cursor is null)
+            if (!hasNextPage)
             {
                 return (default, false, page);
             }

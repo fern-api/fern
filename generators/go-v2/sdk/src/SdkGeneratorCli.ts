@@ -1,5 +1,6 @@
 import { File, GeneratorNotificationService } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
+import { DefaultBaseGoCustomConfigSchema } from "@fern-api/go-ast";
 import { AbstractGoGeneratorCli } from "@fern-api/go-base";
 import { DynamicSnippetsGenerator } from "@fern-api/go-dynamic-snippets";
 
@@ -32,9 +33,12 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
     protected parseCustomConfigOrThrow(customConfig: unknown): SdkCustomConfigSchema {
         const parsed = customConfig != null ? SdkCustomConfigSchema.parse(customConfig) : undefined;
         if (parsed != null) {
-            return parsed;
+            return {
+                ...DefaultBaseGoCustomConfigSchema,
+                ...parsed
+            };
         }
-        return {};
+        return DefaultBaseGoCustomConfigSchema;
     }
 
     protected async publishPackage(context: SdkGeneratorContext): Promise<void> {
@@ -50,7 +54,7 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
     }
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
-        this.writeGoMod(context);
+        await this.writeGoMod(context);
         this.generateRawClients(context);
 
         if (this.shouldGenerateReadme(context)) {
@@ -68,14 +72,14 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
         await context.project.persist();
     }
 
-    private writeGoMod(context: SdkGeneratorContext) {
+    private async writeGoMod(context: SdkGeneratorContext): Promise<void> {
         const moduleConfig = context.getModuleConfig({ outputMode: context.config.output.mode });
         if (moduleConfig == null) {
             return;
         }
         // We write the go.mod file to disk upfront so that 'go fmt' can be run on the project.
         const moduleConfigWriter = new ModuleConfigWriter({ context, moduleConfig });
-        context.project.writeRawFile(moduleConfigWriter.generate());
+        await context.project.writeRawFile(moduleConfigWriter.generate());
     }
 
     private generateRawClients(context: SdkGeneratorContext) {

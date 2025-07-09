@@ -70,6 +70,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: ^7.18.0
         version: 7.18.0(eslint@8.57.1)(typescript@5.7.2)
+      ajv-cli:
+        specifier: ^5.0.0
+        version: 5.0.0(ts-node@10.9.2(@types/node@18.15.3)(typescript@5.7.2))
       chalk:
         specifier: ^5.3.0
         version: 5.4.1
@@ -115,9 +118,6 @@ importers:
       jsonc-parser:
         specifier: ~3.3.1
         version: 3.3.1
-      lint-staged:
-        specifier: ^13.3.0
-        version: 13.3.0
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -2413,6 +2413,66 @@ importers:
         specifier: ^3.22.3
         version: 3.25.67
 
+  generators/swift/base:
+    devDependencies:
+      '@fern-api/base-generator':
+        specifier: workspace:*
+        version: link:../../base
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../../packages/configs
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../../packages/commons/core-utils
+      '@fern-api/fs-utils':
+        specifier: workspace:*
+        version: link:../../../packages/commons/fs-utils
+      '@fern-api/logging-execa':
+        specifier: workspace:*
+        version: link:../../../packages/commons/logging-execa
+      '@fern-api/swift-codegen':
+        specifier: workspace:*
+        version: link:../codegen
+      '@fern-fern/ir-sdk':
+        specifier: ^58.2.0
+        version: 58.2.0
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.2(@vue/compiler-sfc@3.5.17)(prettier@3.5.3)
+      '@types/lodash-es':
+        specifier: ^4.17.12
+        version: 4.17.12
+      '@types/node':
+        specifier: 18.15.3
+        version: 18.15.3
+      '@yarnpkg/esbuild-plugin-pnp':
+        specifier: ^3.0.0-rc.14
+        version: 3.0.0-rc.15(esbuild@0.25.5)
+      depcheck:
+        specifier: ^1.4.7
+        version: 1.4.7
+      esbuild:
+        specifier: ^0.25.0
+        version: 0.25.5
+      eslint:
+        specifier: ^8.56.0
+        version: 8.57.1
+      lodash-es:
+        specifier: ^4.17.21
+        version: 4.17.21
+      prettier:
+        specifier: ^3.4.2
+        version: 3.5.3
+      tsup:
+        specifier: ^8.0.2
+        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(typescript@5.7.2)(yaml@2.3.3)
+      typescript:
+        specifier: 5.7.2
+        version: 5.7.2
+      vitest:
+        specifier: ^2.1.9
+        version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
+
   generators/swift/codegen:
     dependencies:
       '@fern-api/base-generator':
@@ -2421,9 +2481,9 @@ importers:
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
-      '@fern-api/fs-utils':
-        specifier: workspace:*
-        version: link:../../../packages/commons/fs-utils
+      zod:
+        specifier: ^3.25.75
+        version: 3.25.75
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
@@ -2452,12 +2512,172 @@ importers:
       prettier:
         specifier: ^3.4.2
         version: 3.5.3
+      sort-package-json:
+        specifier: 3.3.1
+        version: 3.3.1
       typescript:
         specifier: 5.7.2
         version: 5.7.2
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
+
+  generators/swift/model:
+    dependencies:
+      '@fern-api/base-generator':
+        specifier: workspace:*
+        version: link:../../base
+      '@fern-api/swift-base':
+        specifier: workspace:*
+        version: link:../base
+      '@fern-fern/ir-sdk':
+        specifier: ^58.2.0
+        version: 58.2.0
+    devDependencies:
+      '@fern-api/cli-source-resolver':
+        specifier: workspace:*
+        version: link:../../../packages/cli/cli-source-resolver
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../../packages/configs
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../../packages/commons/core-utils
+      '@fern-api/fs-utils':
+        specifier: workspace:*
+        version: link:../../../packages/commons/fs-utils
+      '@fern-api/ir-generator':
+        specifier: workspace:*
+        version: link:../../../packages/cli/generation/ir-generator
+      '@fern-api/swift-codegen':
+        specifier: workspace:*
+        version: link:../codegen
+      '@fern-api/task-context':
+        specifier: workspace:*
+        version: link:../../../packages/cli/task-context
+      '@fern-api/workspace-loader':
+        specifier: workspace:*
+        version: link:../../../packages/cli/workspace/loader
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.2(@vue/compiler-sfc@3.5.17)(prettier@3.5.3)
+      '@types/jest':
+        specifier: ^29.5.14
+        version: 29.5.14
+      '@types/node':
+        specifier: 18.15.3
+        version: 18.15.3
+      '@yarnpkg/esbuild-plugin-pnp':
+        specifier: ^3.0.0-rc.14
+        version: 3.0.0-rc.15(esbuild@0.25.5)
+      depcheck:
+        specifier: ^1.4.7
+        version: 1.4.7
+      esbuild:
+        specifier: ^0.25.0
+        version: 0.25.5
+      eslint:
+        specifier: ^8.56.0
+        version: 8.57.1
+      prettier:
+        specifier: ^3.4.2
+        version: 3.5.3
+      sort-package-json:
+        specifier: 3.3.1
+        version: 3.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(typescript@5.7.2)(yaml@2.3.3)
+      typescript:
+        specifier: 5.7.2
+        version: 5.7.2
+      vitest:
+        specifier: ^2.1.9
+        version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
+      zod:
+        specifier: ^3.22.3
+        version: 3.25.67
+
+  generators/swift/sdk:
+    devDependencies:
+      '@fern-api/base-generator':
+        specifier: workspace:*
+        version: link:../../base
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../../packages/configs
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../../packages/commons/core-utils
+      '@fern-api/fs-utils':
+        specifier: workspace:*
+        version: link:../../../packages/commons/fs-utils
+      '@fern-api/logger':
+        specifier: workspace:*
+        version: link:../../../packages/cli/logger
+      '@fern-api/swift-base':
+        specifier: workspace:*
+        version: link:../base
+      '@fern-api/swift-codegen':
+        specifier: workspace:*
+        version: link:../codegen
+      '@fern-api/swift-model':
+        specifier: workspace:*
+        version: link:../model
+      '@fern-fern/generator-cli-sdk':
+        specifier: 0.0.28
+        version: 0.0.28
+      '@fern-fern/generator-exec-sdk':
+        specifier: ^0.0.1045
+        version: 0.0.1045
+      '@fern-fern/ir-sdk':
+        specifier: ^58.2.0
+        version: 58.2.0
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.2(@vue/compiler-sfc@3.5.17)(prettier@3.5.3)
+      '@types/jest':
+        specifier: ^29.5.14
+        version: 29.5.14
+      '@types/lodash-es':
+        specifier: ^4.17.12
+        version: 4.17.12
+      '@types/node':
+        specifier: 18.15.3
+        version: 18.15.3
+      '@yarnpkg/esbuild-plugin-pnp':
+        specifier: ^3.0.0-rc.14
+        version: 3.0.0-rc.15(esbuild@0.25.5)
+      depcheck:
+        specifier: ^1.4.7
+        version: 1.4.7
+      esbuild:
+        specifier: ^0.25.0
+        version: 0.25.5
+      eslint:
+        specifier: ^8.56.0
+        version: 8.57.1
+      lodash-es:
+        specifier: ^4.17.21
+        version: 4.17.21
+      prettier:
+        specifier: ^3.4.2
+        version: 3.5.3
+      sort-package-json:
+        specifier: 3.3.1
+        version: 3.3.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(typescript@5.7.2)(yaml@2.3.3)
+      typescript:
+        specifier: 5.7.2
+        version: 5.7.2
+      vitest:
+        specifier: ^2.1.9
+        version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
+      zod:
+        specifier: ^3.22.3
+        version: 3.25.67
 
   generators/typescript-mcp/base:
     devDependencies:
@@ -5458,6 +5678,9 @@ importers:
 
   packages/cli/cli:
     devDependencies:
+      '@bufbuild/protobuf':
+        specifier: ^2.2.5
+        version: 2.5.2
       '@fern-api/api-workspace-commons':
         specifier: workspace:*
         version: link:../workspace/commons
@@ -5569,6 +5792,9 @@ importers:
       '@fern-api/project-loader':
         specifier: workspace:*
         version: link:../project-loader
+      '@fern-api/protoc-gen-fern':
+        specifier: workspace:*
+        version: link:../generation/protoc-gen-fern
       '@fern-api/register':
         specifier: workspace:*
         version: link:../register
@@ -5894,8 +6120,8 @@ importers:
         specifier: workspace:*
         version: link:../../commons/path-utils
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.138.1-818bc4be9
-        version: 0.138.1-818bc4be9
+        specifier: 0.138.4-984b82706
+        version: 0.138.4-984b82706
       '@fern-fern/fiddle-sdk':
         specifier: 0.0.584
         version: 0.0.584
@@ -5949,8 +6175,8 @@ importers:
         specifier: workspace:*
         version: link:../task-context
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.138.1-818bc4be9
-        version: 0.138.1-818bc4be9
+        specifier: 0.138.4-984b82706
+        version: 0.138.4-984b82706
       '@fern-fern/fiddle-sdk':
         specifier: 0.0.584
         version: 0.0.584
@@ -6034,8 +6260,8 @@ importers:
         specifier: workspace:*
         version: link:../../task-context
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.138.1-818bc4be9
-        version: 0.138.1-818bc4be9
+        specifier: 0.138.4-984b82706
+        version: 0.138.4-984b82706
       js-yaml:
         specifier: ^4.1.0
         version: 4.1.0
@@ -6089,8 +6315,8 @@ importers:
         specifier: workspace:*
         version: link:../../task-context
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.138.1-818bc4be9
-        version: 0.138.1-818bc4be9
+        specifier: 0.138.4-984b82706
+        version: 0.138.4-984b82706
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3
@@ -6141,8 +6367,8 @@ importers:
         specifier: workspace:*
         version: link:../../task-context
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.138.1-818bc4be9
-        version: 0.138.1-818bc4be9
+        specifier: 0.138.4-984b82706
+        version: 0.138.4-984b82706
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3
@@ -6217,8 +6443,8 @@ importers:
         specifier: workspace:*
         version: link:../task-context
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.138.1-818bc4be9
-        version: 0.138.1-818bc4be9
+        specifier: 0.138.4-984b82706
+        version: 0.138.4-984b82706
       estree-walker:
         specifier: ^3.0.3
         version: 3.0.3
@@ -6308,8 +6534,8 @@ importers:
         specifier: workspace:*
         version: link:../docs-resolver
       '@fern-api/fdr-sdk':
-        specifier: 0.138.1-818bc4be9
-        version: 0.138.1-818bc4be9(typescript@5.7.2)
+        specifier: 0.138.4-984b82706
+        version: 0.138.4-984b82706(typescript@5.7.2)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
@@ -6426,8 +6652,8 @@ importers:
         specifier: 0.0.65
         version: 0.0.65(typescript@5.7.2)
       '@fern-api/fdr-sdk':
-        specifier: 0.138.1-9a1be9c78
-        version: 0.138.1-9a1be9c78(typescript@5.7.2)
+        specifier: 0.138.4-984b82706
+        version: 0.138.4-984b82706(typescript@5.7.2)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
@@ -6453,8 +6679,8 @@ importers:
         specifier: 0.129.4-b6c699ad2
         version: 0.129.4-b6c699ad2
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.138.1-818bc4be9
-        version: 0.138.1-818bc4be9
+        specifier: 0.138.4-984b82706
+        version: 0.138.4-984b82706
       '@open-rpc/meta-schema':
         specifier: ^1.14.9
         version: 1.14.9
@@ -6513,12 +6739,15 @@ importers:
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
+      '@fern-api/logger':
+        specifier: workspace:*
+        version: link:../logger
       '@fern-api/logging-execa':
         specifier: workspace:*
         version: link:../../commons/logging-execa
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.138.1-818bc4be9
-        version: 0.138.1-818bc4be9
+        specifier: 0.138.4-984b82706
+        version: 0.138.4-984b82706
       execa:
         specifier: ^5.1.1
         version: 5.1.1
@@ -7404,6 +7633,9 @@ importers:
       '@fern-api/v2-importer-commons':
         specifier: workspace:*
         version: link:../../api-importers/v2-importer-commons
+      lodash-es:
+        specifier: ^4.17.21
+        version: 4.17.21
       openapi-types:
         specifier: ^12.1.3
         version: 12.1.3
@@ -7414,6 +7646,9 @@ importers:
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
+      '@types/lodash-es':
+        specifier: ^4.17.12
+        version: 4.17.12
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
@@ -7483,8 +7718,8 @@ importers:
         specifier: workspace:*
         version: link:../../../workspace/loader
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.138.1-818bc4be9
-        version: 0.138.1-818bc4be9
+        specifier: 0.138.4-984b82706
+        version: 0.138.4-984b82706
       '@fern-fern/fiddle-sdk':
         specifier: 0.0.584
         version: 0.0.584
@@ -7992,8 +8227,8 @@ importers:
         specifier: workspace:*
         version: link:../task-context
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.138.1-818bc4be9
-        version: 0.138.1-818bc4be9
+        specifier: 0.138.4-984b82706
+        version: 0.138.4-984b82706
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -8516,8 +8751,8 @@ importers:
         specifier: workspace:*
         version: link:../../docs-resolver
       '@fern-api/fdr-sdk':
-        specifier: 0.138.1-9a1be9c78
-        version: 0.138.1-9a1be9c78(typescript@5.7.2)
+        specifier: 0.138.4-984b82706
+        version: 0.138.4-984b82706(typescript@5.7.2)
       '@fern-api/fern-definition-schema':
         specifier: workspace:*
         version: link:../../fern-definition/schema
@@ -9027,8 +9262,8 @@ importers:
         specifier: 0.14.3-1-g14981f0
         version: 0.14.3-1-g14981f0
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.138.1-818bc4be9
-        version: 0.138.1-818bc4be9
+        specifier: 0.138.4-984b82706
+        version: 0.138.4-984b82706
       '@fern-fern/fdr-test-sdk':
         specifier: ^0.0.5297
         version: 0.0.5297
@@ -10602,11 +10837,8 @@ packages:
   '@fern-api/dynamic-ir-sdk@58.2.0':
     resolution: {integrity: sha512-b5uJwu4nbQ+Jj8DoRMJNyI7A8oureAj0I7n55DS78HPadK0AxQnINboGBfhvwE365mkvwu6KM2FrQIZ3RQdI7A==}
 
-  '@fern-api/fdr-sdk@0.138.1-818bc4be9':
-    resolution: {integrity: sha512-mhKmsv5MRWU039NObpAQCN/Z5HZTABCpMAtnWG5ycZo80NdmMrc0XX7hIEKqwREigLDlxQbx0Zq0IjXoEzgmqQ==}
-
-  '@fern-api/fdr-sdk@0.138.1-9a1be9c78':
-    resolution: {integrity: sha512-9P0ewdJTWVGLtWlKmsMNxxCwgKphfPniicY7NXyU33+ColrHu8mrVK0RdzMgncUFYpCS8u/liaLwL9mxPHswkg==}
+  '@fern-api/fdr-sdk@0.138.4-984b82706':
+    resolution: {integrity: sha512-O3/gNs22n6l4iOXutjx8tUtiyqBnvOWKvK9ctvqVPUbncwPwPCVZdpnqlVeG4GyQ2IZdn4buxx//5dqDBFLvdA==}
 
   '@fern-api/logger@0.4.24-rc1':
     resolution: {integrity: sha512-yh0E2F3K3IPnJZcE4dv+u8I51iKgTgv/reinKo4K5YmYEG1iLtw5vBEYMOPkQmsYFPAKIh++OMB/6TrsahMWew==}
@@ -10623,11 +10855,8 @@ packages:
   '@fern-api/ui-core-utils@0.129.4-b6c699ad2':
     resolution: {integrity: sha512-V1jfV4u5fhpWEoLqCIA1QtRGpRR0NXyk68VGEHmEsezwA/gNF4587MJp5FWN59YsZmRt2hozODnp/umJ/iwkPg==}
 
-  '@fern-api/ui-core-utils@0.138.1-818bc4be9':
-    resolution: {integrity: sha512-B+/cAvyS5FsWYxloKLzS7ZShZVKnAse1PRetBLJC97x4WcSwD23JZVng4lYI1v+97w2vStNyBvoUtqcTg16wNw==}
-
-  '@fern-api/ui-core-utils@0.138.1-9a1be9c78':
-    resolution: {integrity: sha512-UTqnQzaxBMFz+hdpmOC3GICVQyhX3YPN1Vvb+GlxNbs8l9EuHqG5VH7V0aNlrECEL3UdFbr4b+S6SEN6uMEriQ==}
+  '@fern-api/ui-core-utils@0.138.4-984b82706':
+    resolution: {integrity: sha512-NrYSxg1dZkSwSl8EQfP8Zd1kKhYhLwYvtg0wbXhs51Ecp+CUj92rb662bEucBp9QW0yDvk74Uy4gsfxgJy/LyQ==}
 
   '@fern-api/venus-api-sdk@0.14.3-1-g14981f0':
     resolution: {integrity: sha512-sOQH36HUDznonYxtdPvXiGrURqLcSBE4DvY5CMfbLd+qCxgkuGQnx88VUB8AXKdr5g04NqJsh4OWs48fgt4Lag==}
@@ -10635,8 +10864,8 @@ packages:
   '@fern-fern/docs-config@0.0.80':
     resolution: {integrity: sha512-wAZCNxwM4qIPn3idoIihPP65KWPjNuoTSfdP4+5f8K2jJLgs5cdkY0pm4cQlGWvi5K6b+lfbUWDaslnXscJ2gQ==}
 
-  '@fern-fern/fdr-cjs-sdk@0.138.1-818bc4be9':
-    resolution: {integrity: sha512-QPcV20N0IEiLkgMFiaFguCqylzpXDpP+qMLqrr5+C/IMIUPB/b/Y4gMWLkE3nfl0xoY46Selin2oKR9pTcL01A==}
+  '@fern-fern/fdr-cjs-sdk@0.138.4-984b82706':
+    resolution: {integrity: sha512-EeZPeTdbuTPKrMTjut+FeKF/aOgNvL4WvFV/A57OgDeqV00fqXVA0dI1U0gY2MqWiDo8SthdtwlSpEJKrHkVOg==}
 
   '@fern-fern/fdr-test-sdk@0.0.5297':
     resolution: {integrity: sha512-jrZUZ6oIA64LHtrv77xEq0X7qJhT9xRMGWhKcLjIUArMsD7h6KMWUHVdoB/1MP0Mz/uL/E2xmM31SOgJicpIcA==}
@@ -12118,6 +12347,15 @@ packages:
     resolution: {integrity: sha512-jRR5wdylq8CkOe6hei19GGZnxM6rBGwFl3Bg0YItGDimvjGtAvdZk4Pu6Cl4u4Igsws4a1fd1Vq3ezrhn4KmFw==}
     engines: {node: '>= 14'}
 
+  ajv-cli@5.0.0:
+    resolution: {integrity: sha512-LY4m6dUv44HTyhV+u2z5uX4EhPYTM38Iv1jdgDJJJCyOOuqB8KtZEGjPZ2T+sh5ZIJrXUfgErYx/j3gLd3+PlQ==}
+    hasBin: true
+    peerDependencies:
+      ts-node: '>=9.0.0'
+    peerDependenciesMeta:
+      ts-node:
+        optional: true
+
   ajv-formats@2.1.1:
     resolution: {integrity: sha512-Wx0Kx52hxE7C18hkMEggYlEifqWZtYaRgouJor+WMdPnQyEK13vgEWyVNup7SoeeoLMsr4kf5h6dOW11I15MUA==}
     peerDependencies:
@@ -12485,10 +12723,6 @@ packages:
     resolution: {integrity: sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA==}
     engines: {node: '>=10'}
 
-  chalk@5.3.0:
-    resolution: {integrity: sha512-dLitG79d+GV1Nb/VYcCDFivJeK1hiukt9QjRNVOsUtTy1rR1YJsmpGGTZ3qJos+uw7WmWF4wUwBd9jxjocFC2w==}
-    engines: {node: ^12.17.0 || ^14.13 || >=16.0.0}
-
   chalk@5.4.1:
     resolution: {integrity: sha512-zgVZuo2WcZgfUEmsn6eO3kINexW8RAE4maiQ8QNs8CtpPCSyMiYsULR3HQYkm3w8FIA3SberyMJMSldGsW+U3w==}
     engines: {node: ^12.17.0 || ^14.13 || >=16.0.0}
@@ -12574,10 +12808,6 @@ packages:
     resolution: {integrity: sha512-ywqV+5MmyL4E7ybXgKys4DugZbX0FC6LnwrhjuykIjnK9k8OQacQ7axGKnjDXWNhns0xot3bZI5h55H8yo9cJg==}
     engines: {node: '>=6'}
 
-  cli-truncate@3.1.0:
-    resolution: {integrity: sha512-wfOBkjXteqSnI59oPcJkcPl/ZmwvMMOj340qUIY1SKZCv0B9Cf4D4fAucRkIKQmsIuYK3x1rrgU7MeGRruiuiA==}
-    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
-
   cli-width@4.1.0:
     resolution: {integrity: sha512-ouuZd4/dm2Sw5Gmqy6bGyNNNe1qt9RpmxveLSO7KcgsTnU7RXfsw+/bukWGo1abgBiMAic068rclZsO4IWmmxQ==}
     engines: {node: '>= 12'}
@@ -12629,19 +12859,12 @@ packages:
   colorette@1.4.0:
     resolution: {integrity: sha512-Y2oEozpomLn7Q3HFP7dpww7AtMJplbM9lGZP6RDfHqmbeRjiwRg4n6VM6j4KLmRke85uWEI7JqF17f3pqdRA0g==}
 
-  colorette@2.0.20:
-    resolution: {integrity: sha512-IfEDxwoWIjkeXL1eXcDiow4UbKjhLdq6/EuSVR9GMN7KVH3r9gQ83e73hsz1Nd1T3ijd5xv1wcWRYO+D6kCI2w==}
-
   combined-stream@1.0.8:
     resolution: {integrity: sha512-FQN4MRfuJeHf7cBbBMJFXhKSDq+2kAArBlmRBvcvFE5BB1HZKXtSFASDhdlz9zOYwxh8lDdnvmMOe/+5cdoEdg==}
     engines: {node: '>= 0.8'}
 
   comma-separated-tokens@2.0.3:
     resolution: {integrity: sha512-Fu4hJdvzeylCfQPp9SGWidpzrMs7tTrlu6Vb8XGaRGck8QSNZJJp538Wrb60Lax4fPwR64ViY468OIUTbRlGZg==}
-
-  commander@11.0.0:
-    resolution: {integrity: sha512-9HMlXtt/BNoYr8ooyjjNRdIilOTkVJXB+GhxMTtOKwk0R4j4lS4NpjuqmRxroBfnfTSHQIHQB7wryHhXarNjmQ==}
-    engines: {node: '>=16'}
 
   commander@13.1.0:
     resolution: {integrity: sha512-/rFeCpNJQbhSZjGVwO9RFV3xPqbnERS8MmIQzCtD/zl6gpJuV/bMLuN92oG3F7d8oDEHHRrujSXNUr8fpjntKw==}
@@ -12962,6 +13185,10 @@ packages:
     resolution: {integrity: sha512-DtCOLG98P007x7wiiOmfI0fi3eIKyWiLTGJ2MDnVi/E04lWGbf+JzrRHMm0rgIIZJGtHpKpbVgLWHrv8xXpc3Q==}
     engines: {node: '>=0.10.0'}
 
+  detect-indent@7.0.1:
+    resolution: {integrity: sha512-Mc7QhQ8s+cLrnUfU/Ji94vG/r8M26m8f++vyres4ZoojaRDpZ1eSIh/EpzLNwlWuvzSZ3UbDFspjFvTDXe6e/g==}
+    engines: {node: '>=12.20'}
+
   detect-libc@1.0.3:
     resolution: {integrity: sha512-pGjwhsmsp4kL2RTz08wcOlGN83otlqHeD/Z5T8GXZB+/YcpQ/dgo+lbU8ZsGxV0HIvqqxo9l7mqYwyYMD9bKDg==}
     engines: {node: '>=0.10'}
@@ -12970,6 +13197,10 @@ packages:
   detect-newline@3.1.0:
     resolution: {integrity: sha512-TLz+x/vEXm/Y7P7wn1EJFNLxYpUD4TgMosxY6fAVJUnJMbupHBOncxyWUG9OpTaH9EBD7uFI5LfEgmMOc54DsA==}
     engines: {node: '>=8'}
+
+  detect-newline@4.0.1:
+    resolution: {integrity: sha512-qE3Veg1YXzGHQhlA6jzebZN2qVf6NX+A7m7qlhCGG30dJixrAQhYOsJjsnBjJkCSmuOPpCk30145fr8FV0bzog==}
+    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
 
   dettle@1.0.5:
     resolution: {integrity: sha512-ZVyjhAJ7sCe1PNXEGveObOH9AC8QvMga3HJIghHawtG7mE4K5pW9nz/vDGAr/U7a3LWgdOzEE7ac9MURnyfaTA==}
@@ -13344,9 +13575,6 @@ packages:
     resolution: {integrity: sha512-i/2XbnSz/uxRCU6+NdVJgKWDTM427+MqYbkQzD321DuCQJUqOuJKIA0IM2+W2xtYHdKOmZ4dR6fExsd4SXL+WQ==}
     engines: {node: '>=6'}
 
-  eventemitter3@5.0.1:
-    resolution: {integrity: sha512-GWkBvjiSZK87ELrYOSESUYeVIc9mvLLf/nXalMOS5dYrgZq9o5OVkbZAVM06CVxYsCwH9BDZFPlQTlPA1j4ahA==}
-
   events@3.3.0:
     resolution: {integrity: sha512-mQw+2fkQbALzQ7V0MY0IqdnXNOeTtP4r0lN9z7AAawCXgqea7bDii20AYrIBrFd/Hx0M2Ocz6S111CaFkUcb0Q==}
     engines: {node: '>=0.8.x'}
@@ -13358,10 +13586,6 @@ packages:
   execa@5.1.1:
     resolution: {integrity: sha512-8uSpZZocAZRBAPIEINJj3Lo9HyGitllczc27Eh5YYojjMFMn8yHMDMaUHE2Jqfq05D/wucwI4JGURyXt1vchyg==}
     engines: {node: '>=10'}
-
-  execa@7.2.0:
-    resolution: {integrity: sha512-UduyVP7TLB5IcAQl+OzLyLcS/l32W/GLg+AhHJ+ow40FOk2U3SAllPwR44v4vmdFwIWqpdwxxpQbF1n5ta9seA==}
-    engines: {node: ^14.18.0 || ^16.14.0 || >=18.0.0}
 
   exit-x@0.2.2:
     resolution: {integrity: sha512-+I6B/IkJc1o/2tiURyz/ivu/O0nKNEArIUB5O7zBrlDVJr22SCLH3xTeEry428LvFhRzIA1g8izguxJ/gbNcVQ==}
@@ -13403,6 +13627,9 @@ packages:
     engines: {node: '>= 10.17.0'}
     hasBin: true
 
+  fast-deep-equal@2.0.1:
+    resolution: {integrity: sha512-bCK/2Z4zLidyB4ReuIsvALH6w31YfAQDmXMqMx6FyfHqvBxtjC0eRumeSu4Bs3XtXwpyIywtSTrVT99BxY1f9w==}
+
   fast-deep-equal@3.1.3:
     resolution: {integrity: sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==}
 
@@ -13416,6 +13643,10 @@ packages:
 
   fast-json-parse@1.0.3:
     resolution: {integrity: sha512-FRWsaZRWEJ1ESVNbDWmsAlqDk96gPQezzLghafp5J4GUKjbCz3OkAHuZs5TuPEtkbVQERysLp9xv6c24fBm8Aw==}
+
+  fast-json-patch@2.2.1:
+    resolution: {integrity: sha512-4j5uBaTnsYAV5ebkidvxiLUYOwjQ+JSFljeqfTxCrH9bDmlCQaOJFS84oDJ2rAXZq2yskmk3ORfoP9DCwqFNig==}
+    engines: {node: '>= 0.4.0'}
 
   fast-json-stable-stringify@2.1.0:
     resolution: {integrity: sha512-lhd/wF+Lk98HZoTCtlVraHtfh5XYijIjalXck7saUtuanSDyLMxnHhSXEDJqHxD7msR8D0uCmqlkwjCV8xvwHw==}
@@ -13654,6 +13885,9 @@ packages:
     resolution: {integrity: sha512-w9UMqWwJxHNOvoNzSJ2oPF5wvYcvP7jUvYzhp67yEhTi17ZDBBC1z9pTdGuzjD+EFIqLSYRweZjqfiPzQ06Ebg==}
     engines: {node: '>= 0.4'}
 
+  git-hooks-list@4.1.1:
+    resolution: {integrity: sha512-cmP497iLq54AZnv4YRAEMnEyQ1eIn4tGKbmswqwmFV4GBnAqE8NLtWxxdXa++AalfgL5EBH4IxTPyquEuGY/jA==}
+
   glob-parent@5.1.2:
     resolution: {integrity: sha512-AOIgSQCepiJYwP3ARnGx+5VnTu2HBYdzbGP45eLw1vr3zB3vZLeyed1sC9hnbcOc9/SrMyM5RPQrkGz4aS9Zow==}
     engines: {node: '>= 6'}
@@ -13886,10 +14120,6 @@ packages:
     resolution: {integrity: sha512-B4FFZ6q/T2jhhksgkbEW3HBvWIfDW85snkQgawt07S7J5QXTk6BkNV+0yAeZrM5QpMAdYlocGoljn0sJ/WQkFw==}
     engines: {node: '>=10.17.0'}
 
-  human-signals@4.3.1:
-    resolution: {integrity: sha512-nZXjEF2nbo7lIw3mgYjItAfgQXog3OjJogSbKa2CQIIvSGWcKgeJnQlNXip6NglNzYH45nSRiEVimMvYL8DDqQ==}
-    engines: {node: '>=14.18.0'}
-
   husky@9.1.7:
     resolution: {integrity: sha512-5gs5ytaNjBrh5Ow3zrvdUUY+0VxIuWVL4i9irt6friV+BqdCfmV11CQTWMiBYWHbXhco+J1kHfTOUkePhCDvMA==}
     engines: {node: '>=18'}
@@ -14055,10 +14285,6 @@ packages:
     resolution: {integrity: sha512-zymm5+u+sCsSWyD9qNaejV3DFvhCKclKdizYaJUuHA83RLjb7nSuGnddCHGv0hk+KY7BMAlsWeK4Ueg6EV6XQg==}
     engines: {node: '>=8'}
 
-  is-fullwidth-code-point@4.0.0:
-    resolution: {integrity: sha512-O4L094N2/dZ7xqVdrXhh9r1KODPJpFms8B5sGdJLPy664AgvXsreZUyCQQNItZRDlYug4xStLjNp/sz3HvBowQ==}
-    engines: {node: '>=12'}
-
   is-generator-fn@2.1.0:
     resolution: {integrity: sha512-cTIB4yPYL/Grw0EaSzASzg6bBy9gqCofvWN8okThAYIxKJZC+udlRAmGbM0XLeniEJSs8uEgHPGuHSe1XsOLSQ==}
     engines: {node: '>=6'}
@@ -14147,10 +14373,6 @@ packages:
   is-stream@2.0.1:
     resolution: {integrity: sha512-hFoiJiTl63nn+kstHGBtewWSKnQLpyb155KHheA1l39uvtO9nWIop1p3udqPcUd/xbF1VLMO4n7OI6p7RbngDg==}
     engines: {node: '>=8'}
-
-  is-stream@3.0.0:
-    resolution: {integrity: sha512-LnQR4bZ9IADDRSkvpqMGvt/tEJWclzklNgSw48V5EAaAeDd6qGvN8ei6k5p0tvxSR171VmGyHuTiAOfxAbr8kA==}
-    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
 
   is-stream@4.0.1:
     resolution: {integrity: sha512-Dnz92NInDqYckGEUJv689RbRiTSEHCQ7wOVeALbkOz999YpqT46yMRIGtSNl2iCL1waAZSx40+h59NV/EwzV/A==}
@@ -14491,6 +14713,9 @@ packages:
   json-parse-even-better-errors@2.3.1:
     resolution: {integrity: sha512-xyFwyhro/JEof6Ghe2iz2NcXoj2sloNsWr/XsERDK/oiPCfaNhl5ONfp+jQdAZRQQ0IJWNzH9zIZF7li91kh2w==}
 
+  json-schema-migrate@2.0.0:
+    resolution: {integrity: sha512-r38SVTtojDRp4eD6WsCqiE0eNDt4v1WalBXb9cyZYw9ai5cGtBwzRNWjHzJl38w6TxFkXAIA7h+fyX3tnrAFhQ==}
+
   json-schema-traverse@0.4.1:
     resolution: {integrity: sha512-xbbCH5dCYU5T8LcEhhuh7HJ88HXuW3qsI3Y0zOZFKfZEHcpWiHU/Jxzk629Brsab/mMiHQti9wMP+845RPe3Vg==}
 
@@ -14572,10 +14797,6 @@ packages:
     resolution: {integrity: sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ==}
     engines: {node: '>= 0.8.0'}
 
-  lilconfig@2.1.0:
-    resolution: {integrity: sha512-utWOt/GHzuUxnLKxB6dk81RoOeoNeHgbrXiuGk4yyF5qlRz+iIVWu56E2fqGHFrXz0QNUhLB/8nKqvRH66JKGQ==}
-    engines: {node: '>=10'}
-
   lilconfig@3.1.3:
     resolution: {integrity: sha512-/vlFKAoH5Cgt3Ie+JLhRbwOsCQePABiU3tJ1egGvyQ+33R/vcwM2Zl2QR/LzjsBeItPt3oSVXapn+m4nQDvpzw==}
     engines: {node: '>=14'}
@@ -14585,20 +14806,6 @@ packages:
 
   lines-and-columns@1.2.4:
     resolution: {integrity: sha512-7ylylesZQ/PV29jhEDl3Ufjo6ZX7gCqJr5F7PKrqc93v7fzSymt1BpwEU8nAUXs8qzzvqhbjhK5QZg6Mt/HkBg==}
-
-  lint-staged@13.3.0:
-    resolution: {integrity: sha512-mPRtrYnipYYv1FEE134ufbWpeggNTo+O/UPzngoaKzbzHAthvR55am+8GfHTnqNRQVRRrYQLGW9ZyUoD7DsBHQ==}
-    engines: {node: ^16.14.0 || >=18.0.0}
-    hasBin: true
-
-  listr2@6.6.1:
-    resolution: {integrity: sha512-+rAXGHh0fkEWdXBmX+L6mmfmXmXvDGEKzkjxO+8mP3+nI/r/CWznVBvsibXdxda9Zz0OW2e2ikphN3OwCT/jSg==}
-    engines: {node: '>=16.0.0'}
-    peerDependencies:
-      enquirer: '>= 2.3.0 < 3'
-    peerDependenciesMeta:
-      enquirer:
-        optional: true
 
   load-tsconfig@0.2.5:
     resolution: {integrity: sha512-IXO6OCs9yg8tMKzfPZ1YmheJbZCiEsnBdcB03l0OcfK9prKnJb96siuHCr5Fl37/yo9DnKU+TLpxzTUspw9shg==}
@@ -14669,10 +14876,6 @@ packages:
   log-symbols@5.1.0:
     resolution: {integrity: sha512-l0x2DvrW294C9uDCoQe1VSU4gf529FkSZ6leBl4TiqZH/e+0R7hSfHQBNut2mNygDgHwvYHfFLn6Oxb3VWj2rA==}
     engines: {node: '>=12'}
-
-  log-update@5.0.1:
-    resolution: {integrity: sha512-5UtUDQ/6edw4ofyljDNcOVJQ4c7OjDro4h3y8e1GQL5iYElYclVHJ3zeWchylvMaKnDbDilC8irOVyexnA/Slw==}
-    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
 
   longest-streak@3.1.0:
     resolution: {integrity: sha512-9Ri+o0JYgehTaVBBDoMqIl8GXtbWg711O3srftcHhZ0dqnETqLaoIK0x17fUw9rFSlK/0NlsKe0Ahhyl5pXE2g==}
@@ -14960,10 +15163,6 @@ packages:
     resolution: {integrity: sha512-OqbOk5oEQeAZ8WXWydlu9HJjz9WVdEIvamMCcXmuqUYjTknH/sqsWvhQ3vgwKFRR1HpjvNBKQ37nbJgYzGqGcg==}
     engines: {node: '>=6'}
 
-  mimic-fn@4.0.0:
-    resolution: {integrity: sha512-vqiC06CuhBTUdZH+RYl8sFrL096vA45Ok5ISO6sE/Mr1jRbGH4Csnhi8f3wKVl7x8mO4Au7Ir9D3Oyv1VYMFJw==}
-    engines: {node: '>=12'}
-
   min-indent@1.0.1:
     resolution: {integrity: sha512-I9jwMn07Sy/IwOj3zVkVik2JTvgpaykDZEigL6Rx6N9LbMywwUSMtxET+7lVoDLLd3O3IXwJwvuuns8UB/HeAg==}
     engines: {node: '>=4'}
@@ -15139,10 +15338,6 @@ packages:
     resolution: {integrity: sha512-S48WzZW777zhNIrn7gxOlISNAqi9ZC/uQFnRdbeIHhZhCA6UqpkOT8T1G7BvfdgP4Er8gF4sUbaS0i7QvIfCWw==}
     engines: {node: '>=8'}
 
-  npm-run-path@5.3.0:
-    resolution: {integrity: sha512-ppwTtiJZq0O/ai0z7yfudtBpWIoxM8yE6nHi1X47eFR2EWORqfbu6CnPlNsjeN683eT0qG6H/Pyf9fCcvjnnnQ==}
-    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
-
   nwsapi@2.2.20:
     resolution: {integrity: sha512-/ieB+mDe4MrrKMT8z+mQL8klXydZWGR5Dowt4RAGKbJ3kIGEx3X4ljUo+6V73IXtUPWgfOlU5B9MlGxFO5T+cA==}
 
@@ -15211,10 +15406,6 @@ packages:
   onetime@5.1.2:
     resolution: {integrity: sha512-kbpaSSGJTWdAY5KPVeMOKXSrPtr8C8C7wodJbcsd51jRnmD+GZu8Y0VoU6Dm5Z4vWr0Ig/1NKuWRKf7j5aaYSg==}
     engines: {node: '>=6'}
-
-  onetime@6.0.0:
-    resolution: {integrity: sha512-1FlR+gjXK7X+AsAHso35MnyN5KqGwJRi/31ft6x0M194ht7S+rWAvd7PHss9xSKMzE0asv1pyIHaJYq+BbacAQ==}
-    engines: {node: '>=12'}
 
   open@8.4.2:
     resolution: {integrity: sha512-7x81NCL719oNbsq/3mh+hVrAWmFuEYUqrq/Iw3kUzH8ReypT9QQ0BLoJS7/G9k6N81XjW4qHWtjWwe/9eLy1EQ==}
@@ -15338,10 +15529,6 @@ packages:
     resolution: {integrity: sha512-ojmeN0qd+y0jszEtoY48r0Peq5dwMEkIlCOu6Q5f41lfkswXuKtYrhgoTpLnyIcHm24Uhqx+5Tqm2InSwLhE6Q==}
     engines: {node: '>=8'}
 
-  path-key@4.0.0:
-    resolution: {integrity: sha512-haREypq7xkM7ErfgIyA0z+Bj4AGKlMSdlQE2jvJo6huWD1EdkKYV+G/T4nq0YEF2vgTT8kqMFKo1uHn950r4SQ==}
-    engines: {node: '>=12'}
-
   path-parse@1.0.7:
     resolution: {integrity: sha512-LDJzPVEEEPR+y48z93A0Ed0yXb8pAByGWo/k5YYdYgpY2/2EsOsksJrq7lOHxryrVOn1ejG6oAp8ahvOIQD8sw==}
 
@@ -15390,11 +15577,6 @@ packages:
   picomatch@4.0.2:
     resolution: {integrity: sha512-M7BAV6Rlcy5u+m6oPhAPFgJTzAioX/6B0DxyvDlo9l8+T3nLKbrczg2WLUyzd45L8RqfUMyGPzekbMvX2Ldkwg==}
     engines: {node: '>=12'}
-
-  pidtree@0.6.0:
-    resolution: {integrity: sha512-eG2dWTVw5bzqGRztnHExczNxt5VGsE6OwTeCG3fdUf9KBsZzO3R5OIIIzWR+iZA0NtZ+RDVdaoE2dK1cn6jH4g==}
-    engines: {node: '>=0.10'}
-    hasBin: true
 
   pify@2.3.0:
     resolution: {integrity: sha512-udgsAY+fTnvv7kI7aaxbqwWNb0AHiB0qBO89PZKPkoTmGOgdbrHDKD+0B2X4uTfJ/FT1R09r9gTsjUjNJotuog==}
@@ -15845,9 +16027,6 @@ packages:
     resolution: {integrity: sha512-g6QUff04oZpHs0eG5p83rFLhHeV00ug/Yf9nZM6fLeUrPguBTkTQOdpAWWspMh55TZfVQDPaN3NQJfbVRAxdIw==}
     engines: {iojs: '>=1.0.0', node: '>=0.10.0'}
 
-  rfdc@1.4.1:
-    resolution: {integrity: sha512-q1b3N5QkRUWUl7iyylaaj3kOpIT0N2i9MqIEQXP73GVsN9cw3fdx8X63cEmWhJGi2PPCF23Ijp7ktmd39rawIA==}
-
   rimraf@3.0.2:
     resolution: {integrity: sha512-JZkJMZkAGFFPP2YqXZXPbMlMBgsxzE8ILs4lMIX/2o0L9UBw9O/Y3o6wFw/i9YLapcUJWwqbi3kdxIPdC62TIA==}
     deprecated: Rimraf versions prior to v4 are no longer supported
@@ -16035,9 +16214,13 @@ packages:
     resolution: {integrity: sha512-qMCMfhY040cVHT43K9BFygqYbUPFZKHOg7K73mtTWJRb8pyP3fzf4Ixd5SzdEJQ6MRUg/WBnOLxghZtKKurENQ==}
     engines: {node: '>=10'}
 
-  slice-ansi@5.0.0:
-    resolution: {integrity: sha512-FC+lgizVPfie0kkhqUScwRu1O/lF6NOgJmlCgK+/LYxDCTk8sGelYaHDhFcDN+Sn3Cv+3VSa4Byeo+IMCzpMgQ==}
-    engines: {node: '>=12'}
+  sort-object-keys@1.1.3:
+    resolution: {integrity: sha512-855pvK+VkU7PaKYPc+Jjnmt4EzejQHyhhF33q31qG8x7maDzkeFhAAThdCYay11CISO+qAMwjOBP+fPZe0IPyg==}
+
+  sort-package-json@3.3.1:
+    resolution: {integrity: sha512-awjhQR2Iy5UN3NuguAK5+RezcEuUg9Ra4O8y2Aj+DlJa7MywyHaipAPf9bu4qqFj0hsYHHoT9sS3aV7Ucu728g==}
+    engines: {node: '>=20'}
+    hasBin: true
 
   source-map-js@1.2.1:
     resolution: {integrity: sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==}
@@ -16110,10 +16293,6 @@ packages:
 
   stream-json@1.9.1:
     resolution: {integrity: sha512-uWkjJ+2Nt/LO9Z/JyKZbMusL8Dkh97uUBTv3AJQ74y07lVahLY4eEFsPsE97pxYBwr8nnjMAIch5eqI0gPShyw==}
-
-  string-argv@0.3.2:
-    resolution: {integrity: sha512-aqD2Q0144Z+/RqG52NeHEkZauTAUWJO8c6yTftGJKO3Tja5tUgIfmIl6kExvhtxSDP7fXB6DvzkfMpCd/F3G+Q==}
-    engines: {node: '>=0.6.19'}
 
   string-length@4.0.2:
     resolution: {integrity: sha512-+l6rNN5fYHNhZZy41RXsYptCjA2Igmq4EG7kZAYFQI1E1VTXarr6ZPXBg6eq7Y6eK4FEhY6AJlyuFIb/v/S0VQ==}
@@ -16197,10 +16376,6 @@ packages:
   strip-final-newline@2.0.0:
     resolution: {integrity: sha512-BrpvfNAE3dcvq7ll3xVumzjKjZQ5tI1sEUIKr3Uoks0XUl45St3FlatVqef9prk4jRDzhW6WZg+3bk93y6pLjA==}
     engines: {node: '>=6'}
-
-  strip-final-newline@3.0.0:
-    resolution: {integrity: sha512-dOESqjYr96iWYylGObzd39EuNTa5VJxyvVAEm5Jnh7KGo75V43Hk1odPQkNDyXNmUR6k+gEiDVXnjB8HJ3crXw==}
-    engines: {node: '>=12'}
 
   strip-indent@3.0.0:
     resolution: {integrity: sha512-laJTa3Jb+VQpaC6DseHhF7dXVqHTfJPCRDaEbid/drOhgitgYku/letMUqOXFoWV0zIIUbjpdH2t+tYj4bQMRQ==}
@@ -17185,6 +17360,9 @@ packages:
 
   zod@3.25.67:
     resolution: {integrity: sha512-idA2YXwpCdqUSKRCACDE6ItZD9TZzy3OZMtpfLoh6oPR47lipysRrJfjzMqFxQ3uJuUPyUeWe1r9vLH33xO/Qw==}
+
+  zod@3.25.75:
+    resolution: {integrity: sha512-OhpzAmVzabPOL6C3A3gpAifqr9MqihV/Msx3gor2b2kviCgcb+HM9SEOpMWwwNp9MRunWnhtAKUoo0AHhjyPPg==}
 
   zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
@@ -18496,29 +18674,9 @@ snapshots:
 
   '@fern-api/dynamic-ir-sdk@58.2.0': {}
 
-  '@fern-api/fdr-sdk@0.138.1-818bc4be9(typescript@5.7.2)':
+  '@fern-api/fdr-sdk@0.138.4-984b82706(typescript@5.7.2)':
     dependencies:
-      '@fern-api/ui-core-utils': 0.138.1-818bc4be9
-      '@ungap/structured-clone': 1.3.0
-      dayjs: 1.11.13
-      es-toolkit: 1.39.3
-      escape-string-regexp: 5.0.0
-      fast-deep-equal: 3.1.3
-      form-data: 4.0.0
-      httpsnippet-lite: 3.0.5
-      js-base64: 3.7.7
-      node-fetch: 2.7.0
-      qs: 6.12.0
-      tinycolor2: 1.6.0
-      ts-essentials: 10.1.1(typescript@5.7.2)
-      url-join: 5.0.0
-    transitivePeerDependencies:
-      - encoding
-      - typescript
-
-  '@fern-api/fdr-sdk@0.138.1-9a1be9c78(typescript@5.7.2)':
-    dependencies:
-      '@fern-api/ui-core-utils': 0.138.1-9a1be9c78
+      '@fern-api/ui-core-utils': 0.138.4-984b82706
       '@ungap/structured-clone': 1.3.0
       dayjs: 1.11.13
       es-toolkit: 1.39.3
@@ -18571,15 +18729,7 @@ snapshots:
       title: 3.5.3
       ua-parser-js: 1.0.40
 
-  '@fern-api/ui-core-utils@0.138.1-818bc4be9':
-    dependencies:
-      date-fns: 4.1.0
-      date-fns-tz: 3.2.0(date-fns@4.1.0)
-      strip-ansi: 7.1.0
-      title: 3.5.3
-      ua-parser-js: 1.0.40
-
-  '@fern-api/ui-core-utils@0.138.1-9a1be9c78':
+  '@fern-api/ui-core-utils@0.138.4-984b82706':
     dependencies:
       date-fns: 4.1.0
       date-fns-tz: 3.2.0(date-fns@4.1.0)
@@ -18601,7 +18751,7 @@ snapshots:
 
   '@fern-fern/docs-config@0.0.80': {}
 
-  '@fern-fern/fdr-cjs-sdk@0.138.1-818bc4be9':
+  '@fern-fern/fdr-cjs-sdk@0.138.4-984b82706':
     dependencies:
       form-data: 4.0.1
       formdata-node: 6.0.3
@@ -20316,6 +20466,18 @@ snapshots:
 
   agent-base@7.1.3: {}
 
+  ajv-cli@5.0.0(ts-node@10.9.2(@types/node@18.15.3)(typescript@5.7.2)):
+    dependencies:
+      ajv: 8.17.1
+      fast-json-patch: 2.2.1
+      glob: 7.2.3
+      js-yaml: 3.14.1
+      json-schema-migrate: 2.0.0
+      json5: 2.2.2
+      minimist: 1.2.8
+    optionalDependencies:
+      ts-node: 10.9.2(@types/node@18.15.3)(typescript@5.7.2)
+
   ajv-formats@2.1.1(ajv@8.17.1):
     optionalDependencies:
       ajv: 8.17.1
@@ -20763,8 +20925,6 @@ snapshots:
       ansi-styles: 4.3.0
       supports-color: 7.2.0
 
-  chalk@5.3.0: {}
-
   chalk@5.4.1: {}
 
   char-regex@1.0.2: {}
@@ -20833,11 +20993,6 @@ snapshots:
 
   cli-spinners@2.9.2: {}
 
-  cli-truncate@3.1.0:
-    dependencies:
-      slice-ansi: 5.0.0
-      string-width: 5.1.2
-
   cli-width@4.1.0: {}
 
   clipboardy@1.2.2:
@@ -20883,15 +21038,11 @@ snapshots:
 
   colorette@1.4.0: {}
 
-  colorette@2.0.20: {}
-
   combined-stream@1.0.8:
     dependencies:
       delayed-stream: 1.0.0
 
   comma-separated-tokens@2.0.3: {}
-
-  commander@11.0.0: {}
 
   commander@13.1.0: {}
 
@@ -21260,9 +21411,13 @@ snapshots:
 
   detect-file@1.0.0: {}
 
+  detect-indent@7.0.1: {}
+
   detect-libc@1.0.3: {}
 
   detect-newline@3.1.0: {}
+
+  detect-newline@4.0.1: {}
 
   dettle@1.0.5: {}
 
@@ -21825,8 +21980,6 @@ snapshots:
 
   event-target-shim@5.0.1: {}
 
-  eventemitter3@5.0.1: {}
-
   events@3.3.0: {}
 
   execa@0.8.0:
@@ -21850,18 +22003,6 @@ snapshots:
       onetime: 5.1.2
       signal-exit: 3.0.7
       strip-final-newline: 2.0.0
-
-  execa@7.2.0:
-    dependencies:
-      cross-spawn: 7.0.5
-      get-stream: 6.0.1
-      human-signals: 4.3.1
-      is-stream: 3.0.0
-      merge-stream: 2.0.0
-      npm-run-path: 5.3.0
-      onetime: 6.0.0
-      signal-exit: 3.0.7
-      strip-final-newline: 3.0.0
 
   exit-x@0.2.2: {}
 
@@ -21938,13 +22079,15 @@ snapshots:
 
   extract-zip@2.0.1:
     dependencies:
-      debug: 4.3.4
+      debug: 4.4.1
       get-stream: 5.2.0
       yauzl: 2.10.0
     optionalDependencies:
       '@types/yauzl': 2.10.3
     transitivePeerDependencies:
       - supports-color
+
+  fast-deep-equal@2.0.1: {}
 
   fast-deep-equal@3.1.3: {}
 
@@ -21959,6 +22102,10 @@ snapshots:
       micromatch: 4.0.8
 
   fast-json-parse@1.0.3: {}
+
+  fast-json-patch@2.2.1:
+    dependencies:
+      fast-deep-equal: 2.0.1
 
   fast-json-stable-stringify@2.1.0: {}
 
@@ -22202,6 +22349,8 @@ snapshots:
       call-bound: 1.0.4
       es-errors: 1.3.0
       get-intrinsic: 1.3.0
+
+  git-hooks-list@4.1.1: {}
 
   glob-parent@5.1.2:
     dependencies:
@@ -22558,8 +22707,6 @@ snapshots:
 
   human-signals@2.1.0: {}
 
-  human-signals@4.3.1: {}
-
   husky@9.1.7: {}
 
   iconv-lite@0.4.24:
@@ -22713,8 +22860,6 @@ snapshots:
 
   is-fullwidth-code-point@3.0.0: {}
 
-  is-fullwidth-code-point@4.0.0: {}
-
   is-generator-fn@2.1.0: {}
 
   is-generator-function@1.1.0:
@@ -22777,8 +22922,6 @@ snapshots:
   is-stream@1.1.0: {}
 
   is-stream@2.0.1: {}
-
-  is-stream@3.0.0: {}
 
   is-stream@4.0.1: {}
 
@@ -23387,6 +23530,10 @@ snapshots:
 
   json-parse-even-better-errors@2.3.1: {}
 
+  json-schema-migrate@2.0.0:
+    dependencies:
+      ajv: 8.17.1
+
   json-schema-traverse@0.4.1: {}
 
   json-schema-traverse@1.0.0: {}
@@ -23480,38 +23627,11 @@ snapshots:
       prelude-ls: 1.2.1
       type-check: 0.4.0
 
-  lilconfig@2.1.0: {}
-
   lilconfig@3.1.3: {}
 
   limiter@1.1.5: {}
 
   lines-and-columns@1.2.4: {}
-
-  lint-staged@13.3.0:
-    dependencies:
-      chalk: 5.3.0
-      commander: 11.0.0
-      debug: 4.3.4
-      execa: 7.2.0
-      lilconfig: 2.1.0
-      listr2: 6.6.1
-      micromatch: 4.0.8
-      pidtree: 0.6.0
-      string-argv: 0.3.2
-      yaml: 2.3.3
-    transitivePeerDependencies:
-      - enquirer
-      - supports-color
-
-  listr2@6.6.1:
-    dependencies:
-      cli-truncate: 3.1.0
-      colorette: 2.0.20
-      eventemitter3: 5.0.1
-      log-update: 5.0.1
-      rfdc: 1.4.1
-      wrap-ansi: 8.1.0
 
   load-tsconfig@0.2.5: {}
 
@@ -23566,14 +23686,6 @@ snapshots:
     dependencies:
       chalk: 5.4.1
       is-unicode-supported: 1.3.0
-
-  log-update@5.0.1:
-    dependencies:
-      ansi-escapes: 5.0.0
-      cli-cursor: 4.0.0
-      slice-ansi: 5.0.0
-      strip-ansi: 7.1.0
-      wrap-ansi: 8.1.0
 
   longest-streak@3.1.0: {}
 
@@ -24139,8 +24251,6 @@ snapshots:
 
   mimic-fn@2.1.0: {}
 
-  mimic-fn@4.0.0: {}
-
   min-indent@1.0.1: {}
 
   minimatch@10.0.3:
@@ -24298,10 +24408,6 @@ snapshots:
     dependencies:
       path-key: 3.1.1
 
-  npm-run-path@5.3.0:
-    dependencies:
-      path-key: 4.0.0
-
   nwsapi@2.2.20: {}
 
   oas-kit-common@1.0.8:
@@ -24392,10 +24498,6 @@ snapshots:
   onetime@5.1.2:
     dependencies:
       mimic-fn: 2.1.0
-
-  onetime@6.0.0:
-    dependencies:
-      mimic-fn: 4.0.0
 
   open@8.4.2:
     dependencies:
@@ -24532,8 +24634,6 @@ snapshots:
 
   path-key@3.1.1: {}
 
-  path-key@4.0.0: {}
-
   path-parse@1.0.7: {}
 
   path-scurry@1.11.1:
@@ -24567,8 +24667,6 @@ snapshots:
   picomatch@2.3.1: {}
 
   picomatch@4.0.2: {}
-
-  pidtree@0.6.0: {}
 
   pify@2.3.0: {}
 
@@ -25098,8 +25196,6 @@ snapshots:
 
   reusify@1.1.0: {}
 
-  rfdc@1.4.1: {}
-
   rimraf@3.0.2:
     dependencies:
       glob: 7.2.3
@@ -25356,10 +25452,17 @@ snapshots:
       astral-regex: 2.0.0
       is-fullwidth-code-point: 3.0.0
 
-  slice-ansi@5.0.0:
+  sort-object-keys@1.1.3: {}
+
+  sort-package-json@3.3.1:
     dependencies:
-      ansi-styles: 6.2.1
-      is-fullwidth-code-point: 4.0.0
+      detect-indent: 7.0.1
+      detect-newline: 4.0.1
+      git-hooks-list: 4.1.1
+      is-plain-obj: 4.1.0
+      semver: 7.7.2
+      sort-object-keys: 1.1.3
+      tinyglobby: 0.2.14
 
   source-map-js@1.2.1: {}
 
@@ -25425,8 +25528,6 @@ snapshots:
   stream-json@1.9.1:
     dependencies:
       stream-chain: 2.2.5
-
-  string-argv@0.3.2: {}
 
   string-length@4.0.2:
     dependencies:
@@ -25546,8 +25647,6 @@ snapshots:
   strip-eof@1.0.0: {}
 
   strip-final-newline@2.0.0: {}
-
-  strip-final-newline@3.0.0: {}
 
   strip-indent@3.0.0:
     dependencies:
@@ -26756,5 +26855,7 @@ snapshots:
   yoctocolors-cjs@2.1.2: {}
 
   zod@3.25.67: {}
+
+  zod@3.25.75: {}
 
   zwitch@2.0.4: {}

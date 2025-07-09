@@ -9,6 +9,8 @@ import { GithubOutputMode, OutputMode } from "@fern-fern/generator-exec-sdk/api"
 import {
     EnvironmentId,
     EnvironmentUrl,
+    FileUploadBodyProperty,
+    FileUploadRequest,
     HttpEndpoint,
     HttpMethod,
     HttpService,
@@ -412,6 +414,10 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         return this.callInternalFunc("NewErrorDecoder", arguments_, false);
     }
 
+    public callNewMultipartWriter(arguments_: go.AstNode[]): go.FuncInvocation {
+        return this.callInternalFunc("NewMultipartWriter", arguments_, false);
+    }
+
     public callQueryValues(arguments_: go.AstNode[]): go.FuncInvocation {
         return this.callInternalFunc("QueryValues", arguments_, false);
     }
@@ -498,6 +504,31 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         endpoint: HttpEndpoint;
         wrapper: SdkRequestWrapper;
     }): boolean {
+        if (endpoint.sdkRequest == null) {
+            return true;
+        }
+        if (this.includePathParametersInWrappedRequest({ endpoint, wrapper })) {
+            return false;
+        }
+        if (endpoint.queryParameters.length > 0) {
+            return false;
+        }
+        if (endpoint.headers.length > 0) {
+            return false;
+        }
+        if (endpoint.requestBody != null) {
+            const requestBody = endpoint.requestBody;
+            switch (requestBody.type) {
+                case "fileUpload":
+                    return !this.fileUploadRequestHasProperties(requestBody);
+                case "reference":
+                case "inlinedRequestBody":
+                case "bytes":
+                    return false;
+                default:
+                    assertNever(requestBody);
+            }
+        }
         return (
             (wrapper.onlyPathParameters ?? false) && !this.includePathParametersInWrappedRequest({ endpoint, wrapper })
         );
@@ -516,6 +547,13 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         }
         const wrapperShouldIncludePathParameters = wrapper.includePathParameters ?? false;
         return endpoint.allPathParameters.length > 0 && inlinePathParameters && wrapperShouldIncludePathParameters;
+    }
+
+    private fileUploadRequestHasProperties(fileUploadRequest: FileUploadRequest): boolean {
+        if (this.customConfig.inlineFileProperties) {
+            return true;
+        }
+        return fileUploadRequest.properties.some((property) => property.type === "bodyProperty");
     }
 
     public accessRequestProperty({

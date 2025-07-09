@@ -1,4 +1,4 @@
-import { Fetcher, GetReferenceOpts, visitJavaScriptRuntime } from "@fern-typescript/commons";
+import { Fetcher, GetReferenceOpts } from "@fern-typescript/commons";
 import { GeneratedEndpointImplementation, SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
@@ -174,7 +174,7 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
         });
 
         if (url != null) {
-            return context.externalDependencies.urlJoin.invoke([baseUrl, url]);
+            return context.coreUtilities.urlUtils.join._invoke([baseUrl, url]);
         } else {
             return baseUrl;
         }
@@ -202,19 +202,16 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
                 )
             }),
             withCredentials: this.includeCredentialsOnCrossOriginRequests,
-            responseType: visitJavaScriptRuntime(context.targetRuntime, {
-                browser: () => "blob",
-                node: () => {
-                    switch (this.fileResponseType) {
-                        case "stream":
-                            return "streaming";
-                        case "binary-response":
-                            return "binary-response";
-                        default:
-                            assertNever(this.fileResponseType);
-                    }
+            responseType: (() => {
+                switch (this.fileResponseType) {
+                    case "stream":
+                        return "streaming";
+                    case "binary-response":
+                        return "binary-response";
+                    default:
+                        assertNever(this.fileResponseType);
                 }
-            })
+            })()
         };
 
         return [
@@ -228,23 +225,20 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
                             undefined,
                             context.coreUtilities.fetcher.fetcher._invoke(fetcherArgs, {
                                 referenceToFetcher: this.generatedSdkClientClass.getReferenceToFetcher(context),
-                                cast: visitJavaScriptRuntime(context.targetRuntime, {
-                                    browser: () => ts.factory.createTypeReferenceNode("Blob"),
-                                    node: () => {
-                                        switch (this.fileResponseType) {
-                                            case "stream":
-                                                return getReadableTypeNode({
-                                                    typeArgument: ts.factory.createTypeReferenceNode("Uint8Array"),
-                                                    context,
-                                                    streamType: this.streamType
-                                                });
-                                            case "binary-response":
-                                                return context.coreUtilities.fetcher.BinaryResponse._getReferenceToType();
-                                            default:
-                                                assertNever(this.fileResponseType);
-                                        }
+                                cast: (() => {
+                                    switch (this.fileResponseType) {
+                                        case "stream":
+                                            return getReadableTypeNode({
+                                                typeArgument: ts.factory.createTypeReferenceNode("Uint8Array"),
+                                                context,
+                                                streamType: this.streamType
+                                            });
+                                        case "binary-response":
+                                            return context.coreUtilities.fetcher.BinaryResponse._getReferenceToType();
+                                        default:
+                                            assertNever(this.fileResponseType);
                                     }
-                                })
+                                })()
                             })
                         )
                     ],

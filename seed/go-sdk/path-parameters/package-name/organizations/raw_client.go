@@ -75,9 +75,7 @@ func (r *RawClient) GetOrganization(
 
 func (r *RawClient) GetOrganizationUser(
 	ctx context.Context,
-	tenantId string,
-	organizationId string,
-	userId string,
+	request *path.GetOrganizationUserRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[*path.User], error) {
 	options := core.NewRequestOptions(opts...)
@@ -88,9 +86,9 @@ func (r *RawClient) GetOrganizationUser(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/%v/organizations/%v/users/%v",
-		tenantId,
-		organizationId,
-		userId,
+		request.TenantId,
+		request.OrganizationId,
+		request.UserId,
 	)
 	headers := internal.MergeHeaders(
 		r.header.Clone(),

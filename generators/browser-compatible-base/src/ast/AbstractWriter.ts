@@ -155,35 +155,6 @@ export class AbstractWriter {
         this.indent();
     }
 
-    /**
-     * Please try to not use this. It is here for swift.
-     * @param titles
-     * @param openingCharacter
-     * @param callback
-     * @param closingCharacter
-     */
-    public openBlock(
-        titles: (string | undefined)[],
-        openingCharacter: string | undefined = "{",
-        callback: () => void,
-        closingCharacter: string | undefined = "}"
-    ): void {
-        const filteredTitles = titles.filter((title) => title !== undefined).join(" ");
-        if (filteredTitles) {
-            this.write(`${filteredTitles} ${openingCharacter ?? ""}`);
-        } else {
-            this.write(openingCharacter ?? "");
-        }
-
-        try {
-            this.indent();
-            callback();
-            this.dedent();
-        } finally {
-            this.write(closingCharacter ?? "");
-        }
-    }
-
     /* Only writes a newline if last line in the buffer is not a newline */
     public writeLine(text = ""): void {
         this.write(text);

@@ -285,6 +285,10 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
             } as any;
 
             draft["packageManager"] = "yarn@1.22.22";
+            draft["engines"] = {
+                node: ">=18.0.0"
+            };
+            draft["sideEffects"] = false;
         });
 
         packageJson = mergeExtraConfigs(packageJson, this.extraConfigs);

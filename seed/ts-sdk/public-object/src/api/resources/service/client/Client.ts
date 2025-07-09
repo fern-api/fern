@@ -3,9 +3,7 @@
  */
 
 import * as core from "../../../../core/index.js";
-import * as stream from "stream";
 import { mergeHeaders } from "../../../../core/headers.js";
-import urlJoin from "url-join";
 import * as errors from "../../../../errors/index.js";
 
 export declare namespace Service {
@@ -36,20 +34,20 @@ export class Service {
         this._options = _options;
     }
 
-    public get(requestOptions?: Service.RequestOptions): core.HttpResponsePromise<stream.Readable> {
+    public get(requestOptions?: Service.RequestOptions): core.HttpResponsePromise<core.BinaryResponse> {
         return core.HttpResponsePromise.fromPromise(this.__get(requestOptions));
     }
 
-    private async __get(requestOptions?: Service.RequestOptions): Promise<core.WithRawResponse<stream.Readable>> {
-        const _response = await core.fetcher<stream.Readable>({
-            url: urlJoin(
+    private async __get(requestOptions?: Service.RequestOptions): Promise<core.WithRawResponse<core.BinaryResponse>> {
+        const _response = await core.fetcher<core.BinaryResponse>({
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/helloworld.txt",
             ),
             method: "GET",
             headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
-            responseType: "streaming",
+            responseType: "binary-response",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

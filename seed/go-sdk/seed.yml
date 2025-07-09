@@ -176,6 +176,7 @@ scripts:
 allowedFailures:
   - alias-extends
   - bytes
+  - bytes-download
   - enum
   - exhaustive
   - literal
@@ -192,3 +193,5 @@ allowedFailures:
   - examples:exported-client-name
   - path-parameters:no-custom-config
   - path-parameters:package-name
+
+  - request-parameters

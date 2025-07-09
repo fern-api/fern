@@ -51,7 +51,6 @@ class UserClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.user.get_user(
-            tenant_id="tenant_id",
             user_id="user_id",
         )
         """
@@ -90,7 +89,6 @@ class UserClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.user.create_user(
-            tenant_id="tenant_id",
             name="name",
             tags=["tags", "tags"],
         )
@@ -133,7 +131,6 @@ class UserClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.user.update_user(
-            tenant_id="tenant_id",
             user_id="user_id",
             name="name",
             tags=["tags", "tags"],
@@ -176,7 +173,6 @@ class UserClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.user.search_users(
-            tenant_id="tenant_id",
             user_id="user_id",
             limit=1,
         )
@@ -230,7 +226,6 @@ class AsyncUserClient:
 
         async def main() -> None:
             await client.user.get_user(
-                tenant_id="tenant_id",
                 user_id="user_id",
             )
 
@@ -277,7 +272,6 @@ class AsyncUserClient:
 
         async def main() -> None:
             await client.user.create_user(
-                tenant_id="tenant_id",
                 name="name",
                 tags=["tags", "tags"],
             )
@@ -328,7 +322,6 @@ class AsyncUserClient:
 
         async def main() -> None:
             await client.user.update_user(
-                tenant_id="tenant_id",
                 user_id="user_id",
                 name="name",
                 tags=["tags", "tags"],
@@ -379,7 +372,6 @@ class AsyncUserClient:
 
         async def main() -> None:
             await client.user.search_users(
-                tenant_id="tenant_id",
                 user_id="user_id",
                 limit=1,
             )

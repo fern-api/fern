@@ -18,4 +18,8 @@ export class BytesRequest extends EndpointRequest {
     public getRequestParameterType(): go.Type {
         return go.Type.bytes();
     }
+
+    public getRequestBodyBlock(): go.AstNode | undefined {
+        return undefined;
+    }
 }

@@ -129,6 +129,7 @@ export class ExpressGenerator {
         this.coreUtilitiesManager = new CoreUtilitiesManager({
             streamType: "wrapper",
             formDataSupport: "Node16",
+            fetchSupport: "node-fetch",
             relativePackagePath: this.getRelativePackagePath(),
             relativeTestPath: this.getRelativeTestPath()
         });
