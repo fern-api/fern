@@ -4,13 +4,17 @@ import typing
 from contextlib import asynccontextmanager, contextmanager
 
 import httpx
-import websockets
 import websockets.sync.client as websockets_sync_client
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
 from .raw_client import AsyncRawRealtimeClient, RawRealtimeClient
 from .socket_client import AsyncRealtimeSocketClient, RealtimeSocketClient
+
+try:
+    from websockets.legacy.client import connect as websockets_client_connect  # type: ignore
+except ImportError:
+    from websockets import connect as websockets_client_connect  # type: ignore
 
 
 class RealtimeClient:
@@ -132,7 +136,7 @@ class AsyncRealtimeClient:
         if request_options and "additional_headers" in request_options:
             headers.update(request_options["additional_headers"])
         try:
-            async with websockets.connect(ws_url, extra_headers=headers) as protocol:
+            async with websockets_client_connect(ws_url, extra_headers=headers) as protocol:
                 yield AsyncRealtimeSocketClient(websocket=protocol)
         except websockets.exceptions.InvalidStatusCode as exc:
             status_code: int = exc.status_code

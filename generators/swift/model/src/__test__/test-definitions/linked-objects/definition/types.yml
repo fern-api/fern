@@ -1,0 +1,16 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+types:
+  Address:
+    properties:
+      street: string
+      city: string
+      state: string
+      zipCode: integer
+
+  User:
+    properties:
+      id: string
+      name: string
+      address: Address
+      billingAddress: optional<Address>

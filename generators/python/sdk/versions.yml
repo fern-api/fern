@@ -4,9 +4,41 @@
 - version: 4.24.1
   changelogEntry:
     - summary: |
-        Automatically switch any tabs in the generated code to spaces, following PEP8 standards.
+        Generator fix: automatically switch tabs to spaces, following PEP8 standards.
       type: fix
   createdAt: '2025-07-09'
+  irVersion: 58
+
+- version: 4.25.0
+  changelogEntry:
+    - summary: |
+        Support async functions as websocket callback handlers.
+      type: feat
+  createdAt: '2025-07-09'
+  irVersion: 58
+
+- version: 4.24.3
+  changelogEntry:
+    - summary: |
+        Support websockets>=14 by using legacy client.
+      type: fix
+  createdAt: '2025-07-09'
+  irVersion: 58
+
+- version: 4.24.2
+  changelogEntry:
+    - summary: |
+        Emit ERROR events for JSON parsing errors in websocket connections.
+      type: fix
+  createdAt: '2025-07-09'
+  irVersion: 58
+
+- version: 4.24.1
+  changelogEntry:
+    - summary: |
+        Parse websocket messages as JSON before Pydantic parsing.
+      type: fix
+  createdAt: '2025-07-07'
   irVersion: 58
 
 - version: 4.24.0

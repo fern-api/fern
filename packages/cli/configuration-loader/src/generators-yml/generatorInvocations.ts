@@ -17,16 +17,17 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<generatorsYml.Gen
         version: "1.0.0"
     },
     [GeneratorName.JAVA_SDK]: {
-        version: "2.38.1"
+        version: "2.38.1",
+        output: {
+            location: "local-file-system",
+            path: "../sdks/java/src/main/java/"
+        }
     },
     [GeneratorName.JAVA_SPRING]: {
         version: "0.9.2",
         output: {
             location: "local-file-system",
             path: "../src/main/java/com/fern"
-        },
-        config: {
-            "package-prefix": "com.fern"
         }
     },
     [GeneratorName.TYPESCRIPT]: {
@@ -83,7 +84,9 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<generatorsYml.Gen
             path: "../sdks/go"
         },
         config: {
-            importPath: "go-mod-path/generated/go"
+            module: {
+                path: "sdk"
+            }
         }
     },
     [GeneratorName.RUBY_MODEL]: {
