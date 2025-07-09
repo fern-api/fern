@@ -222,7 +222,7 @@ export class ApiReferenceNodeConverterLatest {
             this.#topLevelSubpackages.set(subpackage.id, subpackageNode);
             return subpackageNode;
         } else {
-            this.taskContext.logger.warn(`Cannot find component ${pkg.title}, treating it as a section`);
+            this.taskContext.logger.warn(cannotFindSubpackageByLocatorError(pkg.title || pkg.package, this.#apiDefinitionHolder.subpackageLocators));
             const urlSlug = pkg.slug ?? kebabCase(pkg.package);
             const slug = parentSlug.apply({
                 fullSlug: maybeFullSlug?.split("/"),
