@@ -9258,6 +9258,28 @@ importers:
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
 
   packages/commons/test-utils:
+    dependencies:
+      '@fern-api/cli-source-resolver':
+        specifier: workspace:*
+        version: link:../../cli/cli-source-resolver
+      '@fern-api/configuration':
+        specifier: workspace:*
+        version: link:../../cli/configuration
+      '@fern-api/fs-utils':
+        specifier: workspace:*
+        version: link:../fs-utils
+      '@fern-api/ir-generator':
+        specifier: workspace:*
+        version: link:../../cli/generation/ir-generator
+      '@fern-api/task-context':
+        specifier: workspace:*
+        version: link:../../cli/task-context
+      '@fern-api/workspace-loader':
+        specifier: workspace:*
+        version: link:../../cli/workspace/loader
+      '@fern-fern/ir-sdk':
+        specifier: ^58.2.0
+        version: 58.2.0
     devDependencies:
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1

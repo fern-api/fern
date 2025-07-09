@@ -27,6 +27,15 @@
     "test": "vitest --run",
     "test:update": "vitest --run -u"
   },
+  "dependencies": {
+    "@fern-api/cli-source-resolver": "workspace:*",
+    "@fern-api/configuration": "workspace:*",
+    "@fern-api/fs-utils": "workspace:*",
+    "@fern-api/ir-generator": "workspace:*",
+    "@fern-api/task-context": "workspace:*",
+    "@fern-api/workspace-loader": "workspace:*",
+    "@fern-fern/ir-sdk": "^58.2.0"
+  },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^5.2.1",
     "@types/node": "18.15.3",
