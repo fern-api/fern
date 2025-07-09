@@ -459,9 +459,9 @@ function getMultipartPartEncoding({
     if (!encoding) {
         return undefined;
     }
-    
+
     if (encoding.explode) {
-        return "exploded"; 
+        return "exploded";
     }
 
     if (encoding.style === "form") {
@@ -474,4 +474,3 @@ function getMultipartPartEncoding({
 
     return undefined;
 }
-
