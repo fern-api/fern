@@ -48,7 +48,7 @@ find . -name package.json | while read -r pkg; do
       (cd "$proj_dir" && npx vitest run --coverage --outputFile "../$COVERAGE_DIR/${proj_name}-after.lcov")
       restore_file "$src_file"
       echo "[JS/TS] $proj_name: See $PROOF_DIR/${proj_name}.md"
-      echo "# $proj_name\n\nBefore: $COVERAGE_DIR/${proj_name}-before.lcov\nAfter: $COVERAGE_DIR/${proj_name}-after.lcov" > "$PROOF_DIR/${proj_name}.md"
+      echo -e "# $proj_name\n\nBefore: $COVERAGE_DIR/${proj_name}-before.lcov\nAfter: $COVERAGE_DIR/${proj_name}-after.lcov" > "$PROOF_DIR/${proj_name}.md"
     fi
   fi
 done
