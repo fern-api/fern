@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |  
+        Fix how multipart encoding is handled in the v3 parser
+      type: fix
+  irVersion: 58
+  createdAt: "2025-07-09"
+  version: 0.65.5
+
+- changelogEntry:
+    - summary: |  
         Previously if the OpenAPI parser v3 was enabled where the CLI would skip parsing any additional Fern Definitions
         along the OpenAPI spec. With the fix, you can use whatever combination of OpenAPI Spec(s) and Fern Definitions that 
         you would like.
