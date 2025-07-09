@@ -28,8 +28,7 @@
   },
   "dependencies": {
     "@fern-api/fern-definition-schema": "workspace:*",
-    "@fern-api/path-utils": "workspace:*",
-    "heap-js": "^2.6.0"
+    "@fern-api/path-utils": "workspace:*"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",

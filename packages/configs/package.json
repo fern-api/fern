@@ -2,8 +2,5 @@
   "name": "@fern-api/configs",
   "version": "0.0.0",
   "private": true,
-  "license": "MIT",
-  "dependencies": {
-    "heap-js": "^2.6.0"
-  }
+  "license": "MIT"
 }

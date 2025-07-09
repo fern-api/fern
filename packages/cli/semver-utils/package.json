@@ -27,7 +27,6 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "heap-js": "^2.6.0",
     "semver-diff": "^4.0.0"
   },
   "devDependencies": {

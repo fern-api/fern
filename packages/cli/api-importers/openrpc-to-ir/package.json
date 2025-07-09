@@ -30,7 +30,6 @@
     "@fern-api/ir-utils": "workspace:*",
     "@fern-api/v2-importer-commons": "workspace:*",
     "@open-rpc/meta-schema": "^1.14.9",
-    "heap-js": "^2.6.0",
     "openapi-types": "^12.1.3",
     "zod": "^3.22.4"
   },

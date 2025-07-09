@@ -37,7 +37,6 @@
     "@fern-api/logger": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "chalk": "^5.3.0",
-    "heap-js": "^2.6.0",
     "js-yaml": "^4.1.0",
     "zod": "^3.22.3"
   },

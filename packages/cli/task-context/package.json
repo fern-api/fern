@@ -27,8 +27,7 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-api/logger": "workspace:*",
-    "heap-js": "^2.6.0"
+    "@fern-api/logger": "workspace:*"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",

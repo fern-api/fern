@@ -28,7 +28,6 @@
     "generate": "fern generate --local"
   },
   "dependencies": {
-    "heap-js": "^2.6.0",
     "lodash-es": "^4.17.21"
   },
   "devDependencies": {

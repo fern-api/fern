@@ -28,8 +28,7 @@
   },
   "dependencies": {
     "@fern-api/core-utils": "workspace:*",
-    "@fern-api/ir-sdk": "workspace:*",
-    "heap-js": "^2.6.0"
+    "@fern-api/ir-sdk": "workspace:*"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",

@@ -32,8 +32,7 @@
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
-    "chalk": "^5.3.0",
-    "heap-js": "^2.6.0"
+    "chalk": "^5.3.0"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",

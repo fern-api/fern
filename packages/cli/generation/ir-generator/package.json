@@ -54,8 +54,5 @@
     "url-join": "^5.0.0",
     "uuid": "^9.0.1",
     "vitest": "^2.1.9"
-  },
-  "dependencies": {
-    "heap-js": "^2.6.0"
   }
 }

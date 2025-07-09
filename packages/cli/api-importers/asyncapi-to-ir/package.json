@@ -29,7 +29,6 @@
     "@fern-api/ir-sdk": "workspace:*",
     "@fern-api/ir-utils": "workspace:*",
     "@fern-api/v2-importer-commons": "workspace:*",
-    "heap-js": "^2.6.0",
     "lodash-es": "^4.17.21",
     "openapi-types": "^12.1.3",
     "zod": "^3.22.3"

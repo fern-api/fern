@@ -29,15 +29,15 @@
     "dockerTagLatest": "pnpm dist:cli && docker build -f ./Dockerfile -t fernapi/fern-go-model:latest ../../.."
   },
   "devDependencies": {
-    "@yarnpkg/esbuild-plugin-pnp": "^3.0.0-rc.14",
-    "esbuild": "^0.25.0",
-    "tsup": "^8.0.2",
     "@fern-api/configs": "workspace:*",
+    "@trivago/prettier-plugin-sort-imports": "^5.2.1",
     "@types/node": "18.15.3",
+    "@yarnpkg/esbuild-plugin-pnp": "^3.0.0-rc.14",
     "depcheck": "^1.4.7",
+    "esbuild": "^0.25.0",
     "eslint": "^8.56.0",
     "prettier": "^3.4.2",
-    "@trivago/prettier-plugin-sort-imports": "^5.2.1",
+    "tsup": "^8.0.2",
     "typescript": "5.7.2",
     "vitest": "^2.1.9"
   }

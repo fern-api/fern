@@ -37,8 +37,5 @@
     "prettier": "^3.4.2",
     "typescript": "5.7.2",
     "vitest": "^2.1.9"
-  },
-  "dependencies": {
-    "heap-js": "^2.6.0"
   }
 }

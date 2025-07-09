@@ -32,7 +32,6 @@
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/venus-api-sdk": "0.14.3-1-g14981f0",
-    "heap-js": "^2.6.0",
     "jsonwebtoken": "^9.0.2",
     "jwks-rsa": "^3.1.0"
   },
