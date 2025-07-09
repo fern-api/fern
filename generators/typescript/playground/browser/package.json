@@ -41,23 +41,23 @@
     "url-join": "^5.0.0"
   },
   "devDependencies": {
-    "@fern-api/configs": "workspace:*",
-    "@trivago/prettier-plugin-sort-imports": "^5.2.1",
-    "@types/node": "18.15.3",
     "@types/node-fetch": "2.6.9",
     "@types/qs": "6.9.15",
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",
     "@types/url-join": "4.0.1",
     "@vitejs/plugin-react": "^4.2.1",
+    "sass": "^1.72.0",
+    "stylelint": "^16.2.1",
+    "vite": "^5.4.12",
+    "vite-plugin-checker": "^0.6.4",
+    "@fern-api/configs": "workspace:*",
+    "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
     "eslint": "^8.56.0",
     "prettier": "^3.4.2",
-    "sass": "^1.72.0",
-    "stylelint": "^16.2.1",
+    "@trivago/prettier-plugin-sort-imports": "^5.2.1",
     "typescript": "5.7.2",
-    "vite": "^5.4.12",
-    "vite-plugin-checker": "^0.6.4",
     "vitest": "^2.1.9"
   }
 }
