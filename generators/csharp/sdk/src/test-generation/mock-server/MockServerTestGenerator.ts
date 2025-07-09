@@ -302,7 +302,8 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
                     if (exampleResponse.value.value) {
                         const typeReference = convertExampleTypeReferenceToTypeReference(exampleResponse.value.value);
                         const type = this.context.csharpTypeMapper.convert({
-                            reference: typeReference
+                            reference: typeReference,
+                            fullyQualified: true
                         });
                         return type;
                     }
@@ -312,7 +313,8 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
                 if (exampleResponse.body) {
                     const typeReference = convertExampleTypeReferenceToTypeReference(exampleResponse.body);
                     const type = this.context.csharpTypeMapper.convert({
-                        reference: typeReference
+                        reference: typeReference,
+                        fullyQualified: true
                     });
                     return type;
                 }
