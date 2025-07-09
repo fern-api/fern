@@ -43,16 +43,16 @@ class AsyncRealtimeSocketClient(EventEmitterMixin):
         - EventType.ERROR if an error occurs
         - EventType.CLOSE when connection is closed
         """
-        self._emit(EventType.OPEN, None)
+        await self._emit_async(EventType.OPEN, None)
         try:
             async for raw_message in self._websocket:
                 json_data = json.loads(raw_message)
                 parsed = parse_obj_as(RealtimeSocketClientResponse, json_data)  # type: ignore
-                self._emit(EventType.MESSAGE, parsed)
+                await self._emit_async(EventType.MESSAGE, parsed)
         except (websockets.WebSocketException, JSONDecodeError) as exc:
-            self._emit(EventType.ERROR, exc)
+            await self._emit_async(EventType.ERROR, exc)
         finally:
-            self._emit(EventType.CLOSE, None)
+            await self._emit_async(EventType.CLOSE, None)
 
     async def send_send(self, message: SendEvent) -> None:
         """
