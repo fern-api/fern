@@ -104,7 +104,18 @@ export class ExampleConverter extends AbstractConverter<ProtofileConverterContex
     private convertMessage(seenMessages: Set<string>): ExampleConverter.Output {
         const resultsByFieldName = new Map<string, { field: FieldDescriptorProto; result: ExampleConverter.Output }>();
         const oneofChoices = new Map<number, FieldDescriptorProto>();
+        const oneofGroups = new Map<number, string>(); // Track oneof group names
 
+        // Get oneof group names from the message descriptor
+        if (this.message.oneofDecl) {
+            this.message.oneofDecl.forEach((oneof, index) => {
+                if (oneof.name) {
+                    oneofGroups.set(index, oneof.name);
+                }
+            });
+        }
+
+        // Select one field per oneof
         for (const field of this.message.field) {
             const hasOneofIndex = Object.prototype.hasOwnProperty.call(field, "oneofIndex");
             if (hasOneofIndex && field.oneofIndex != null) {
@@ -117,7 +128,6 @@ export class ExampleConverter extends AbstractConverter<ProtofileConverterContex
         for (const field of this.message.field) {
             const fieldName = field.name ?? "";
             if (!fieldName) continue;
-
 
             const hasOneofIndex = Object.prototype.hasOwnProperty.call(field, "oneofIndex");
             if (hasOneofIndex && field.oneofIndex != null) {
@@ -151,11 +161,30 @@ export class ExampleConverter extends AbstractConverter<ProtofileConverterContex
         const isValid = allResults.every(({ result }) => result.isValid);
         const allErrors = allResults.flatMap(({ result }) => result.errors);
 
-        const validExample = Object.fromEntries(
-            Array.from(resultsByFieldName.entries())
-                .filter(([_, { result }]) => result.isValid && result.validExample !== null && result.validExample !== undefined)
-                .map(([fieldName, { result }]) => [fieldName, result.validExample])
-        );
+        const validExample: Record<string, any> = {};
+        
+        const oneofFieldsByGroup = new Map<string, { fieldName: string; value: any }>();
+        
+        for (const [fieldName, { field, result }] of resultsByFieldName.entries()) {
+            if (!result.isValid || result.validExample === null || result.validExample === undefined) {
+                continue;
+            }
+
+            const hasOneofIndex = Object.prototype.hasOwnProperty.call(field, "oneofIndex");
+            if (hasOneofIndex && field.oneofIndex != null && oneofGroups.has(field.oneofIndex)) {
+                const groupName = oneofGroups.get(field.oneofIndex)!;
+                oneofFieldsByGroup.set(groupName, { fieldName, value: result.validExample });
+            } else {
+                validExample[fieldName] = result.validExample;
+            }
+        }
+
+        // Add oneof groups as nested objects with single field
+        for (const [groupName, { fieldName, value }] of oneofFieldsByGroup.entries()) {
+            validExample[groupName] = {
+                [fieldName]: value
+            };
+        }
 
         return {
             isValid,
@@ -366,7 +395,7 @@ export class ExampleConverter extends AbstractConverter<ProtofileConverterContex
         
         if (!messageType || !newMessageContext) {
             return {
-                // HACKHACK: This is a hack to get around not showing any example
+                // HACKHACK: This is a hack to get around showing full examples
                 isValid: true,
                 coerced: false,
                 validExample: null,
