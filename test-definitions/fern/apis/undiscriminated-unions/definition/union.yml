@@ -36,6 +36,12 @@ service:
       method: POST
       request: UnionWithDuplicateTypes
       response: UnionWithDuplicateTypes
+    
+    nestedUnions:
+      path: "/nested"
+      method: POST
+      request: NestedUnionRoot
+      response: string
 
 types:
   Request:
@@ -57,6 +63,35 @@ types:
       - list<integer>
       - list<list<integer>>
       - set<string>
+
+
+  NestedUnionL2:
+    docs: |
+      Nested layer 2.
+    discriminated: false
+    union:
+      - boolean
+      - set<string>
+      - list<string>
+
+  NestedUnionL1:
+    docs: |
+      Nested layer 1.
+    discriminated: false
+    union:
+      - integer
+      - set<string>
+      - list<string>
+      - NestedUnionL2
+
+  NestedUnionRoot:
+    docs: |
+      Nested union root.
+    discriminated: false
+    union:
+      - string
+      - list<string>
+      - NestedUnionL1
 
   UnionWithDuplicateTypes:
     docs: |
