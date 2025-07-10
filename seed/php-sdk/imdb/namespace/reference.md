@@ -56,7 +56,7 @@ $client->imdb->createMovie(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Fern/Imdb/ImdbClient.php">getMovie</a>($$movieId) -> \Fern\Imdb\Types\Movie</code></summary>
+<details><summary><code>$client-><a href="/Fern/Imdb/ImdbClient.php">getMovie</a>($movieId) -> \Fern\Imdb\Types\Movie</code></summary>
 <dl>
 <dd>
 

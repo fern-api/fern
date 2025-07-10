@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>$client-><a href="/Seed/ClientClient.php">get</a>($$typeId)</code></summary>
+<details><summary><code>$client-><a href="/Seed/ClientClient.php">get</a>($typeId)</code></summary>
 <dl>
 <dd>
 

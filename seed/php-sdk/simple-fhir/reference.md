@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>$client-><a href="/Seed/ClientClient.php">getAccount</a>($$accountId) -> \Seed\Types\Account</code></summary>
+<details><summary><code>$client-><a href="/Seed/ClientClient.php">getAccount</a>($accountId) -> \Seed\Types\Account</code></summary>
 <dl>
 <dd>
 

@@ -168,7 +168,7 @@ $client->service->getMovieMetadata(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Service/ServiceClient.php">getOptionalMovie</a>($request) -> optional</code></summary>
+<details><summary><code>$client-><a href="/Seed/Service/ServiceClient.php">getOptionalMovie</a>($request) -> ?\Seed\Service\Types\Response</code></summary>
 <dl>
 <dd>
 
@@ -210,7 +210,7 @@ $client->service->getOptionalMovie(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Service/ServiceClient.php">getOptionalMovieDocs</a>($request) -> optional</code></summary>
+<details><summary><code>$client-><a href="/Seed/Service/ServiceClient.php">getOptionalMovieDocs</a>($request) -> ?\Seed\Service\Types\WithDocs</code></summary>
 <dl>
 <dd>
 
@@ -252,7 +252,7 @@ $client->service->getOptionalMovieDocs(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Service/ServiceClient.php">getOptionalMovieName</a>($request) -> optional</code></summary>
+<details><summary><code>$client-><a href="/Seed/Service/ServiceClient.php">getOptionalMovieName</a>($request) -> ?\Seed\Types\StringResponse</code></summary>
 <dl>
 <dd>
 

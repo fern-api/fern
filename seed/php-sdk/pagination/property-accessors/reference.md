@@ -1,6 +1,6 @@
 # Reference
 ## Conversations
-<details><summary><code>$client-><a href="/Seed/Complex/ComplexClient.php">search</a>($$index, $request) -> \Seed\Complex\Types\PaginatedConversationResponse</code></summary>
+<details><summary><code>$client-><a href="/Seed/Complex/ComplexClient.php">search</a>($index, $request) -> \Seed\Complex\Types\PaginatedConversationResponse</code></summary>
 <dl>
 <dd>
 

@@ -27,8 +27,7 @@ GET request with custom api key
 <dd>
 
 ```php
-$client->service->getWithApiKey(
-);
+$client->service->getWithApiKey();
 ```
 </dd>
 </dl>

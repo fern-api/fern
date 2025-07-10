@@ -1,6 +1,6 @@
 # Reference
 ## Organizations
-<details><summary><code>$client-><a href="/Seed/Organizations/OrganizationsClient.php">getOrganization</a>($$tenantId, $$organizationId) -> \Seed\Organizations\Types\Organization</code></summary>
+<details><summary><code>$client-><a href="/Seed/Organizations/OrganizationsClient.php">getOrganization</a>($tenantId, $organizationId) -> \Seed\Organizations\Types\Organization</code></summary>
 <dl>
 <dd>
 
@@ -93,7 +93,7 @@ $client->organizations->getOrganizationUser(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Organizations/OrganizationsClient.php">searchOrganizations</a>($$tenantId, $$organizationId, $request) -> array</code></summary>
+<details><summary><code>$client-><a href="/Seed/Organizations/OrganizationsClient.php">searchOrganizations</a>($tenantId, $organizationId, $request) -> array</code></summary>
 <dl>
 <dd>
 
@@ -196,7 +196,7 @@ $client->user->getUser(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/User/UserClient.php">createUser</a>($$tenantId, $request) -> \Seed\User\Types\User</code></summary>
+<details><summary><code>$client-><a href="/Seed/User/UserClient.php">createUser</a>($tenantId, $request) -> \Seed\User\Types\User</code></summary>
 <dl>
 <dd>
 

@@ -13,8 +13,7 @@
 <dd>
 
 ```php
-$client->service->simple(
-);
+$client->service->simple();
 ```
 </dd>
 </dl>
@@ -39,8 +38,7 @@ $client->service->simple(
 <dd>
 
 ```php
-$client->service->downloadFile(
-);
+$client->service->downloadFile();
 ```
 </dd>
 </dl>

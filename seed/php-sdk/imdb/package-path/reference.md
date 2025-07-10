@@ -56,7 +56,7 @@ $client->imdb->createMovie(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Custom/Package/Path/Imdb/ImdbClient.php">getMovie</a>($$movieId) -> \Custom\Package\Path\Imdb\Types\Movie</code></summary>
+<details><summary><code>$client-><a href="/Custom/Package/Path/Imdb/ImdbClient.php">getMovie</a>($movieId) -> \Custom\Package\Path\Imdb\Types\Movie</code></summary>
 <dl>
 <dd>
 

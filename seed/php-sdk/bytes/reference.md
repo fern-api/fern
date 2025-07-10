@@ -13,8 +13,7 @@
 <dd>
 
 ```php
-$client->service->upload(
-);
+$client->service->upload();
 ```
 </dd>
 </dl>
@@ -26,7 +25,7 @@ $client->service->upload(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Service/ServiceClient.php">download</a>($$id)</code></summary>
+<details><summary><code>$client-><a href="/Seed/Service/ServiceClient.php">download</a>($id)</code></summary>
 <dl>
 <dd>
 

@@ -27,8 +27,7 @@ GET request with custom auth scheme
 <dd>
 
 ```php
-$client->customAuth->getWithCustomAuth(
-);
+$client->customAuth->getWithCustomAuth();
 ```
 </dd>
 </dl>

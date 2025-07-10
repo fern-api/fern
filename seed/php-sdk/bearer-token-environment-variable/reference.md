@@ -27,8 +27,7 @@ GET request with custom api key
 <dd>
 
 ```php
-$client->service->getWithBearerToken(
-);
+$client->service->getWithBearerToken();
 ```
 </dd>
 </dl>

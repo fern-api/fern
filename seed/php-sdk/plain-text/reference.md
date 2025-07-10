@@ -13,8 +13,7 @@
 <dd>
 
 ```php
-$client->service->getText(
-);
+$client->service->getText();
 ```
 </dd>
 </dl>

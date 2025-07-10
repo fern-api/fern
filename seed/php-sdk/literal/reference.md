@@ -86,7 +86,7 @@ $client->inlined->send(
 </details>
 
 ## Path
-<details><summary><code>$client-><a href="/Seed/Path/PathClient.php">send</a>($$id) -> \Seed\Types\SendResponse</code></summary>
+<details><summary><code>$client-><a href="/Seed/Path/PathClient.php">send</a>($id) -> \Seed\Types\SendResponse</code></summary>
 <dl>
 <dd>
 

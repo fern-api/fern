@@ -12,8 +12,7 @@
 <dd>
 
 ```php
-$client->get(
-);
+$client->get();
 ```
 </dd>
 </dl>

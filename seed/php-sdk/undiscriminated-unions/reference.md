@@ -42,7 +42,7 @@ $client->union->get(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Union/UnionClient.php">getMetadata</a>() -> map</code></summary>
+<details><summary><code>$client-><a href="/Seed/Union/UnionClient.php">getMetadata</a>() -> array</code></summary>
 <dl>
 <dd>
 
@@ -55,8 +55,7 @@ $client->union->get(
 <dd>
 
 ```php
-$client->union->getMetadata(
-);
+$client->union->getMetadata();
 ```
 </dd>
 </dl>

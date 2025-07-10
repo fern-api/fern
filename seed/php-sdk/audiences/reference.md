@@ -13,8 +13,7 @@
 <dd>
 
 ```php
-$client->folderA->service->getDirectThread(
-);
+$client->folderA->service->getDirectThread();
 ```
 </dd>
 </dl>
@@ -40,8 +39,7 @@ $client->folderA->service->getDirectThread(
 <dd>
 
 ```php
-$client->folderD->service->getDirectThread(
-);
+$client->folderD->service->getDirectThread();
 ```
 </dd>
 </dl>

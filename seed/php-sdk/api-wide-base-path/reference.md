@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>$client-><a href="/Seed/Service/ServiceClient.php">post</a>($$pathParam, $$serviceParam, $$resourceParam, $$endpointParam)</code></summary>
+<details><summary><code>$client-><a href="/Seed/Service/ServiceClient.php">post</a>($pathParam, $serviceParam, $resourceParam, $endpointParam)</code></summary>
 <dl>
 <dd>
 

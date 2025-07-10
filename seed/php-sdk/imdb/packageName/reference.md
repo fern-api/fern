@@ -56,7 +56,7 @@ $client->imdb->createMovie(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Imdb/ImdbClient.php">getMovie</a>($$movieId) -> \Seed\Imdb\Types\Movie</code></summary>
+<details><summary><code>$client-><a href="/Seed/Imdb/ImdbClient.php">getMovie</a>($movieId) -> \Seed\Imdb\Types\Movie</code></summary>
 <dl>
 <dd>
 

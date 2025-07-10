@@ -84,7 +84,7 @@ $client->createType(
 </details>
 
 ## File Notification Service
-<details><summary><code>$client-><a href="/Seed/File/Notification/Service/ServiceClient.php">getException</a>($$notificationId) -> \Seed\Types\Types\Exception</code></summary>
+<details><summary><code>$client-><a href="/Seed/File/Notification/Service/ServiceClient.php">getException</a>($notificationId) -> \Seed\Types\Types\Exception</code></summary>
 <dl>
 <dd>
 
@@ -127,7 +127,7 @@ $client->file->notification->service->getException(
 </details>
 
 ## File Service
-<details><summary><code>$client-><a href="/Seed/File/Service/ServiceClient.php">getFile</a>($$filename, $request) -> \Seed\Types\Types\File</code></summary>
+<details><summary><code>$client-><a href="/Seed/File/Service/ServiceClient.php">getFile</a>($filename, $request) -> \Seed\Types\Types\File</code></summary>
 <dl>
 <dd>
 
@@ -193,7 +193,7 @@ $client->file->service->getFile(
 </details>
 
 ## Health Service
-<details><summary><code>$client-><a href="/Seed/Health/Service/ServiceClient.php">check</a>($$id)</code></summary>
+<details><summary><code>$client-><a href="/Seed/Health/Service/ServiceClient.php">check</a>($id)</code></summary>
 <dl>
 <dd>
 
@@ -276,8 +276,7 @@ This endpoint checks the health of the service.
 <dd>
 
 ```php
-$client->health->service->ping(
-);
+$client->health->service->ping();
 ```
 </dd>
 </dl>
@@ -290,7 +289,7 @@ $client->health->service->ping(
 </details>
 
 ## Service
-<details><summary><code>$client-><a href="/Seed/Service/ServiceClient.php">getMovie</a>($$movieId) -> \Seed\Types\Types\Movie</code></summary>
+<details><summary><code>$client-><a href="/Seed/Service/ServiceClient.php">getMovie</a>($movieId) -> \Seed\Types\Types\Movie</code></summary>
 <dl>
 <dd>
 

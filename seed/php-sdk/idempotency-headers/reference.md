@@ -42,7 +42,7 @@ $client->payment->create(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Payment/PaymentClient.php">delete</a>($$paymentId)</code></summary>
+<details><summary><code>$client-><a href="/Seed/Payment/PaymentClient.php">delete</a>($paymentId)</code></summary>
 <dl>
 <dd>
 

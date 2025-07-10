@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>$client-><a href="/Seed/ClientClient.php">echo_</a>($$id, $request) -> string</code></summary>
+<details><summary><code>$client-><a href="/Seed/ClientClient.php">echo_</a>($id, $request) -> string</code></summary>
 <dl>
 <dd>
 
@@ -51,7 +51,7 @@ $client->echo_(
 </details>
 
 ## Service
-<details><summary><code>$client-><a href="/Seed/Service/ServiceClient.php">nop</a>($$id, $$nestedId)</code></summary>
+<details><summary><code>$client-><a href="/Seed/Service/ServiceClient.php">nop</a>($id, $nestedId)</code></summary>
 <dl>
 <dd>
 

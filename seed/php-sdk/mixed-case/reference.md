@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>$client-><a href="/Seed/Service/ServiceClient.php">getResource</a>($$resourceId) -> \Seed\Service\Types\Resource</code></summary>
+<details><summary><code>$client-><a href="/Seed/Service/ServiceClient.php">getResource</a>($resourceId) -> \Seed\Service\Types\Resource</code></summary>
 <dl>
 <dd>
 

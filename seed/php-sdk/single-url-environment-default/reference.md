@@ -13,8 +13,7 @@
 <dd>
 
 ```php
-$client->dummy->getDummy(
-);
+$client->dummy->getDummy();
 ```
 </dd>
 </dl>

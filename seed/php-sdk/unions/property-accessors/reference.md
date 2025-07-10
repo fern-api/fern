@@ -1,6 +1,6 @@
 # Reference
 ## Bigunion
-<details><summary><code>$client-><a href="/Seed/Bigunion/BigunionClient.php">get</a>($$id) -> \Seed\Bigunion\Types\BigUnion</code></summary>
+<details><summary><code>$client-><a href="/Seed/Bigunion/BigunionClient.php">get</a>($id) -> \Seed\Bigunion\Types\BigUnion</code></summary>
 <dl>
 <dd>
 
@@ -84,7 +84,7 @@ $client->bigunion->update(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Bigunion/BigunionClient.php">updateMany</a>($request) -> map</code></summary>
+<details><summary><code>$client-><a href="/Seed/Bigunion/BigunionClient.php">updateMany</a>($request) -> array</code></summary>
 <dl>
 <dd>
 
@@ -127,7 +127,7 @@ $client->bigunion->updateMany(
 </details>
 
 ## Union
-<details><summary><code>$client-><a href="/Seed/Union/UnionClient.php">get</a>($$id) -> \Seed\Union\Types\Shape</code></summary>
+<details><summary><code>$client-><a href="/Seed/Union/UnionClient.php">get</a>($id) -> \Seed\Union\Types\Shape</code></summary>
 <dl>
 <dd>
 

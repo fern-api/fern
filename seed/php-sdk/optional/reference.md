@@ -30,7 +30,7 @@ $client->optional->sendOptionalBody(
 <dl>
 <dd>
 
-**$request:** `optional` 
+**$request:** `?array` 
     
 </dd>
 </dl>

@@ -1,6 +1,6 @@
 # Reference
 ## Organizations
-<details><summary><code>$client-><a href="/Seed/Organizations/OrganizationsClient.php">getOrganization</a>($$tenantId, $$organizationId) -> \Seed\Organizations\Types\Organization</code></summary>
+<details><summary><code>$client-><a href="/Seed/Organizations/OrganizationsClient.php">getOrganization</a>($tenantId, $organizationId) -> \Seed\Organizations\Types\Organization</code></summary>
 <dl>
 <dd>
 
@@ -51,7 +51,7 @@ $client->organizations->getOrganization(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Organizations/OrganizationsClient.php">getOrganizationUser</a>($$tenantId, $$organizationId, $$userId) -> \Seed\User\Types\User</code></summary>
+<details><summary><code>$client-><a href="/Seed/Organizations/OrganizationsClient.php">getOrganizationUser</a>($tenantId, $organizationId, $userId) -> \Seed\User\Types\User</code></summary>
 <dl>
 <dd>
 
@@ -111,7 +111,7 @@ $client->organizations->getOrganizationUser(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Organizations/OrganizationsClient.php">searchOrganizations</a>($$tenantId, $$organizationId, $request) -> array</code></summary>
+<details><summary><code>$client-><a href="/Seed/Organizations/OrganizationsClient.php">searchOrganizations</a>($tenantId, $organizationId, $request) -> array</code></summary>
 <dl>
 <dd>
 
@@ -172,7 +172,7 @@ $client->organizations->searchOrganizations(
 </details>
 
 ## User
-<details><summary><code>$client-><a href="/Seed/User/UserClient.php">getUser</a>($$tenantId, $$userId) -> \Seed\User\Types\User</code></summary>
+<details><summary><code>$client-><a href="/Seed/User/UserClient.php">getUser</a>($tenantId, $userId) -> \Seed\User\Types\User</code></summary>
 <dl>
 <dd>
 
@@ -223,7 +223,7 @@ $client->user->getUser(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/User/UserClient.php">createUser</a>($$tenantId, $request) -> \Seed\User\Types\User</code></summary>
+<details><summary><code>$client-><a href="/Seed/User/UserClient.php">createUser</a>($tenantId, $request) -> \Seed\User\Types\User</code></summary>
 <dl>
 <dd>
 
@@ -274,7 +274,7 @@ $client->user->createUser(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/User/UserClient.php">updateUser</a>($$tenantId, $$userId, $request) -> \Seed\User\Types\User</code></summary>
+<details><summary><code>$client-><a href="/Seed/User/UserClient.php">updateUser</a>($tenantId, $userId, $request) -> \Seed\User\Types\User</code></summary>
 <dl>
 <dd>
 
@@ -334,7 +334,7 @@ $client->user->updateUser(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/User/UserClient.php">searchUsers</a>($$tenantId, $$userId, $request) -> array</code></summary>
+<details><summary><code>$client-><a href="/Seed/User/UserClient.php">searchUsers</a>($tenantId, $userId, $request) -> array</code></summary>
 <dl>
 <dd>
 

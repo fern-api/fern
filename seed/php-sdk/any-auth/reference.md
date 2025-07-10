@@ -56,8 +56,7 @@ $client->auth->getToken(
 <dd>
 
 ```php
-$client->user->get(
-);
+$client->user->get();
 ```
 </dd>
 </dl>

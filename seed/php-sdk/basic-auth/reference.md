@@ -27,8 +27,7 @@ GET request with basic auth scheme
 <dd>
 
 ```php
-$client->basicAuth->getWithBasicAuth(
-);
+$client->basicAuth->getWithBasicAuth();
 ```
 </dd>
 </dl>

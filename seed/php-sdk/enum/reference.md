@@ -43,7 +43,7 @@ $client->inlinedRequest->send(
 </details>
 
 ## PathParam
-<details><summary><code>$client-><a href="/Seed/PathParam/PathParamClient.php">send</a>($$operand, $$operandOrColor)</code></summary>
+<details><summary><code>$client-><a href="/Seed/PathParam/PathParamClient.php">send</a>($operand, $operandOrColor)</code></summary>
 <dl>
 <dd>
 

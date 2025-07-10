@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>$client-><a href="/Seed/User/UserClient.php">getUser</a>($$userId) -> \Seed\User\Types\User</code></summary>
+<details><summary><code>$client-><a href="/Seed/User/UserClient.php">getUser</a>($userId) -> \Seed\User\Types\User</code></summary>
 <dl>
 <dd>
 

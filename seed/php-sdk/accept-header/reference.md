@@ -13,8 +13,7 @@
 <dd>
 
 ```php
-$client->service->endpoint(
-);
+$client->service->endpoint();
 ```
 </dd>
 </dl>

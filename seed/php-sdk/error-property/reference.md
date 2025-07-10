@@ -27,8 +27,7 @@ GET request that always throws an error
 <dd>
 
 ```php
-$client->propertyBasedError->throwError(
-);
+$client->propertyBasedError->throwError();
 ```
 </dd>
 </dl>

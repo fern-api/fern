@@ -13,8 +13,7 @@
 <dd>
 
 ```php
-$client->user->head(
-);
+$client->user->head();
 ```
 </dd>
 </dl>
