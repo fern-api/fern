@@ -7,6 +7,14 @@
       type: fix
   createdAt: "2025-07-09"
   irVersion: 58
+  
+- version: 2.4.4
+  changelogEntry:
+    - summary: |
+        Make the `BinaryResponse.bytes` function optional because some versions of runtimes do not support the function on fetch `Response`.
+      type: fix
+  createdAt: '2025-07-09'
+  irVersion: 58
 
 - version: 2.4.3
   changelogEntry:
