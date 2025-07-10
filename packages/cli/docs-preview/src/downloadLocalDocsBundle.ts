@@ -156,6 +156,23 @@ export async function downloadBundle({
                 return true;
             }
         });
+
+        if (app) {
+            logger.debug("Installing dependencies without symlinks");
+            try {
+                await loggingExeca(logger, "pnpm", ["install", "--shamefully-hoist"], {
+                    cwd: absolutePathToBundleFolder,
+                    doNotPipeOutput: true
+                });
+                logger.debug("Dependencies installed successfully with --shamefully-hoist");
+            } catch (error) {
+                logger.debug("pnpm install failed, trying npm");
+                await loggingExeca(logger, "npm", ["install"], {
+                    cwd: absolutePathToBundleFolder,
+                    doNotPipeOutput: true
+                });
+            }
+        }
         
         // write etag
         await writeFile(eTagFilepath, eTag);
