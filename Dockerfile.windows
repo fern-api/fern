@@ -1,0 +1,32 @@
+FROM mcr.microsoft.com/windows/servercore:ltsc2019
+
+# Install Node.js
+RUN powershell -Command \
+    Invoke-WebRequest -Uri https://nodejs.org/dist/v18.19.0/node-v18.19.0-x64.msi -OutFile node.msi && \
+    Start-Process msiexec.exe -ArgumentList '/i', 'node.msi', '/quiet', '/norestart' -NoNewWindow -Wait && \
+    Remove-Item node.msi
+
+# Install npm and pnpm
+RUN npm install -g npm@latest pnpm
+
+# Set working directory
+WORKDIR C:\workspace
+
+# Copy package files
+COPY package.json pnpm-lock.yaml ./
+
+# Copy source code
+COPY packages/ ./packages/
+COPY .github/ ./.github/
+COPY scripts/ ./scripts/
+
+# Install dependencies
+RUN pnpm install
+
+# Build the CLI
+RUN pnpm --filter @fern-api/cli dist:cli:dev
+
+# Copy test script
+COPY test-windows.ps1 .
+
+CMD ["powershell", "-File", "test-windows.ps1"]

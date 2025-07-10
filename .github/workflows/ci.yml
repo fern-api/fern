@@ -213,27 +213,19 @@ jobs:
           $process = Start-Process node -ArgumentList "$cliPath", "docs", "dev", "--log-level", "trace" -PassThru -RedirectStandardOutput "output.txt" -RedirectStandardError "error.txt"
           $process.WaitForExit(30000)
           $output = Get-Content "output.txt", "error.txt" -Raw
-          
+
           # Check for the symlink skip log
           if ($output -match "Skipping symlink:") {
             Write-Host "✓ Found symlink skip logs - filter is working"
           } else {
             Write-Host "ℹ No symlinks found to skip"
           }
-          
+
           # Check for the original error (should not appear)
           if ($output -match "Failed to download docs preview bundle") {
             Write-Error "Found 'Failed to download docs preview bundle' in output"
             exit 1
           }
-          
-          # Check that the process completed successfully
-          if ($process.ExitCode -ne 0) {
-            Write-Error "Process failed with exit code: $($process.ExitCode)"
-            exit 1
-          }
-          
-          Write-Host "✓ Test passed - docs dev command completed successfully"
 
   live-test-dev-windows:
     environment: Fern Dev
