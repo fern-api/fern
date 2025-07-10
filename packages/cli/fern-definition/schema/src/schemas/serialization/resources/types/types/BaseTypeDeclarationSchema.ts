@@ -8,6 +8,7 @@ import * as core from "../../../../core";
 import { ExampleTypeSchema } from "../../examples/types/ExampleTypeSchema";
 import { EncodingSchema } from "../../encoding/types/EncodingSchema";
 import { SourceSchema } from "../../source/types/SourceSchema";
+import { TypeDeclarationName } from "./TypeDeclarationName";
 import { WithDocsSchema } from "../../commons/types/WithDocsSchema";
 import { WithAvailability } from "../../commons/types/WithAvailability";
 import { WithAudiences } from "../../commons/types/WithAudiences";
@@ -21,6 +22,7 @@ export const BaseTypeDeclarationSchema: core.serialization.ObjectSchema<
         encoding: EncodingSchema.optional(),
         source: SourceSchema.optional(),
         inline: core.serialization.boolean().optional(),
+        name: TypeDeclarationName,
     })
     .extend(WithDocsSchema)
     .extend(WithAvailability)
@@ -32,5 +34,6 @@ export declare namespace BaseTypeDeclarationSchema {
         encoding?: EncodingSchema.Raw | null;
         source?: SourceSchema.Raw | null;
         inline?: boolean | null;
+        name: TypeDeclarationName.Raw;
     }
 }
