@@ -12,50 +12,66 @@ import { EndpointSignatureInfo } from "../endpoint/EndpointSignatureInfo";
 /**
  * Gets a safe type representation without calling toString()
  */
-function getSafeTypeRepresentation(type: any): string {
+// Define a type for PHP internal type objects
+interface PhpTypeObject {
+    internalType?: {
+        type: string;
+        value?: PhpReferenceValue | unknown;
+    };
+    type?: unknown;
+    constructor?: { name: string };
+}
+
+interface PhpReferenceValue {
+    name?: string;
+    namespace?: string;
+}
+
+function getSafeTypeRepresentation(type: unknown): string {
     if (type === null || type === undefined) {
         return "mixed";
     }
 
     // Handle PHP _Type objects with internalType
-    if (type.internalType) {
-        if (type.internalType.type === "string") {
+    const typeObj = type as PhpTypeObject;
+    if (typeObj.internalType) {
+        if (typeObj.internalType.type === "string") {
             return "string";
-        } else if (type.internalType.type === "reference" && type.internalType.value) {
+        } else if (typeObj.internalType.type === "reference" && typeObj.internalType.value) {
             // Handle class references
-            const ref = type.internalType.value;
+            const ref = typeObj.internalType.value as PhpReferenceValue;
             if (ref.name && ref.namespace) {
                 return `\\${ref.namespace}\\${ref.name}`;
             } else if (ref.name) {
                 return ref.name;
             }
-        } else if (type.internalType.type === "map") {
+        } else if (typeObj.internalType.type === "map") {
             // Handle map types - in PHP these are associative arrays
             return "array";
-        } else if (type.internalType.type === "optional") {
+        } else if (typeObj.internalType.type === "optional") {
             // Handle optional types - in PHP these could be nullable or a wrapper class
             // Get the inner type if available, otherwise use mixed
-            if (type.internalType.value) {
-                const innerType = getSafeTypeRepresentation(type.internalType.value);
+            if (typeObj.internalType.value) {
+                const innerType = getSafeTypeRepresentation(typeObj.internalType.value);
                 return `?${innerType}`; // Use nullable type syntax
             }
             return "mixed";
-        } else if (type.internalType.type) {
+        } else if (typeObj.internalType.type) {
             // Return the basic type
-            return type.internalType.type;
+            return typeObj.internalType.type;
         }
     }
 
     // Handle Parameter objects
-    if (type.type && typeof type.type === "object") {
-        return getSafeTypeRepresentation(type.type);
+    if (typeObj.type && typeof typeObj.type === "object") {
+        return getSafeTypeRepresentation(typeObj.type);
     }
 
     // Handle specific type strings
     if (typeof type === "string") {
         // Convert known type strings to PHP equivalents
-        if (type === "map") return "array";
-        if (type === "optional") return "mixed";
+        if (type === "map") { return "array"; }
+        if (type === "optional") { return "mixed"; }
         return type;
     }
 
@@ -110,7 +126,7 @@ function getEndpointSnippet({
         });
 
         if (endpointSignatureInfo.requestParameter) {
-            snippet += `    $request,\n`;
+            snippet += "    $request,\n";
         }
 
         // Close the method call with a newline before the closing parenthesis
@@ -236,25 +252,24 @@ function getReferenceEndpointInvocationParameters({
     endpointSignatureInfo: EndpointSignatureInfo;
 }): string {
     let result = "";
+    let first = true;
     endpointSignatureInfo.pathParameters.forEach((pathParameter, index) => {
-        if (index > 0) {
-            result += ", ";
-        }
+        if (first) { first = false; } else { result += ", "; }
         // Ensure we have a $ prefix but avoid double $$ in the output
         const paramName = pathParameter.name.replace(/^\$/, "");
         result += `$${paramName}`;
     });
     if (endpointSignatureInfo.requestParameter != null) {
-        if (result.length > 0) {
+        if (!first) {
             result += ", ";
         }
-        result += `$request`;
+        result += "$request";
     }
     // Return the parameters wrapped in parentheses
     return `(${result})`;
 }
 
-function getServiceFilepath({
+export function getServiceFilepath({
     context,
     serviceId,
     service
@@ -280,10 +295,10 @@ function getServiceFilepath({
     }
 }
 
-function isRootServiceId({ context, serviceId }: { context: SdkGeneratorContext; serviceId: ServiceId }): boolean {
+export function isRootServiceId({ context, serviceId }: { context: SdkGeneratorContext; serviceId: ServiceId }): boolean {
     return context.ir.rootPackage.service === serviceId;
 }
 
-function getSectionTitle({ service }: { service: HttpService }): string {
+export function getSectionTitle({ service }: { service: HttpService }): string {
     return service.displayName ?? service.name.fernFilepath.allParts.map((part) => part.pascalCase.safeName).join(" ");
 }
