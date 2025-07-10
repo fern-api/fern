@@ -147,8 +147,10 @@ export async function downloadBundle({
 
         const absolutePathToBundleFolder = getPathToBundleFolder({ app });
         await mkdir(absolutePathToBundleFolder, { recursive: true });
-        await decompress(outputZipPath, absolutePathToBundleFolder);
-
+        await decompress(outputZipPath, absolutePathToBundleFolder, {
+            filter: (file) => file.type !== 'symlink' // Skip symlinks for Windows compatibility
+        });
+        
         // write etag
         await writeFile(eTagFilepath, eTag);
         logger.debug(`Downloaded bundle to ${absolutePathToBundleFolder}`);

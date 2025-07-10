@@ -211,10 +211,7 @@ jobs:
           }
           cd windows
           $process = Start-Process node -ArgumentList "$cliPath", "docs", "dev", "--log-level", "trace" -PassThru -RedirectStandardOutput "output.txt" -RedirectStandardError "error.txt"
-          Start-Sleep -Seconds 10
-          if (-not $process.HasExited) {
-            Stop-Process -Id $process.Id -Force
-          }
+          $process.WaitForExit(30000)
           $output = Get-Content "output.txt", "error.txt" -Raw
           if ($output -match "Failed to download docs preview bundle") {
             Write-Error "Found 'Failed to download docs preview bundle' in output"
