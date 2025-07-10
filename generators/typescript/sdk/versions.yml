@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.4.6
+  changelogEntry:
+    - summary: |
+        Parse HTTP error bodies as JSON if the response content-type header is JSON, otherwise fallback to text.
+      type: fix
+    - summary: |
+        Fix `bytes` fetcher test.
+      type: fix
+    - summary: |
+        Fix Jest configuration when a `packagePath` is specified in _generators.yml_ config.
+      type: fix
+  createdAt: "2025-07-09"
+  irVersion: 58
 
 - version: 2.4.5
   changelogEntry:
@@ -7,13 +20,13 @@
       type: fix
   createdAt: "2025-07-09"
   irVersion: 58
-  
+
 - version: 2.4.4
   changelogEntry:
     - summary: |
         Make the `BinaryResponse.bytes` function optional because some versions of runtimes do not support the function on fetch `Response`.
       type: fix
-  createdAt: '2025-07-09'
+  createdAt: "2025-07-09"
   irVersion: 58
 
 - version: 2.4.3
