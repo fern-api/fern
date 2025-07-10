@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
 
+- version: 4.25.1
+  changelogEntry:
+    - summary: |
+        Correctly import websockets exceptions.
+      type: fix
+  createdAt: '2025-07-10'
+  irVersion: 58
+
 - version: 4.25.0
   changelogEntry:
     - summary: |
