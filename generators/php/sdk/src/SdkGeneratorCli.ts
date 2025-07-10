@@ -14,11 +14,11 @@ import { WrappedEndpointRequestGenerator } from "./endpoint/request/WrappedEndpo
 import { EnvironmentGenerator } from "./environment/EnvironmentGenerator";
 import { BaseApiExceptionGenerator } from "./error/BaseApiExceptionGenerator";
 import { BaseExceptionGenerator } from "./error/BaseExceptionGenerator";
+import { buildReference } from "./reference/buildReference";
 import { RootClientGenerator } from "./root-client/RootClientGenerator";
 import { SubPackageClientGenerator } from "./subpackage-client/SubPackageClientGenerator";
 import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest";
 import { convertIr } from "./utils/convertIr";
-import { buildReference } from "./reference/buildReference";
 
 export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     protected constructContext({

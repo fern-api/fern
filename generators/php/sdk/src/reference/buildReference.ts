@@ -8,6 +8,7 @@ import { HttpEndpoint, HttpService, ServiceId } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { EndpointSignatureInfo } from "../endpoint/EndpointSignatureInfo";
+
 /**
  * Gets a safe type representation without calling toString()
  */
@@ -18,9 +19,9 @@ function getSafeTypeRepresentation(type: any): string {
 
     // Handle PHP _Type objects with internalType
     if (type.internalType) {
-        if (type.internalType.type === 'string') {
-            return 'string';
-        } else if (type.internalType.type === 'reference' && type.internalType.value) {
+        if (type.internalType.type === "string") {
+            return "string";
+        } else if (type.internalType.type === "reference" && type.internalType.value) {
             // Handle class references
             const ref = type.internalType.value;
             if (ref.name && ref.namespace) {
@@ -28,17 +29,17 @@ function getSafeTypeRepresentation(type: any): string {
             } else if (ref.name) {
                 return ref.name;
             }
-        } else if (type.internalType.type === 'map') {
+        } else if (type.internalType.type === "map") {
             // Handle map types - in PHP these are associative arrays
-            return 'array';
-        } else if (type.internalType.type === 'optional') {
+            return "array";
+        } else if (type.internalType.type === "optional") {
             // Handle optional types - in PHP these could be nullable or a wrapper class
             // Get the inner type if available, otherwise use mixed
             if (type.internalType.value) {
                 const innerType = getSafeTypeRepresentation(type.internalType.value);
                 return `?${innerType}`; // Use nullable type syntax
             }
-            return 'mixed';
+            return "mixed";
         } else if (type.internalType.type) {
             // Return the basic type
             return type.internalType.type;
@@ -46,20 +47,20 @@ function getSafeTypeRepresentation(type: any): string {
     }
 
     // Handle Parameter objects
-    if (type.type && typeof type.type === 'object') {
+    if (type.type && typeof type.type === "object") {
         return getSafeTypeRepresentation(type.type);
     }
 
     // Handle specific type strings
-    if (typeof type === 'string') {
+    if (typeof type === "string") {
         // Convert known type strings to PHP equivalents
-        if (type === 'map') return 'array';
-        if (type === 'optional') return 'mixed';
+        if (type === "map") return "array";
+        if (type === "optional") return "mixed";
         return type;
     }
 
     // Fallback for other objects
-    if (typeof type === 'object') {
+    if (typeof type === "object") {
         if (type.constructor && type.constructor.name) {
             return type.constructor.name;
         }
@@ -89,21 +90,21 @@ function getEndpointSnippet({
 
     const servicePath = isRootServiceId({ context, serviceId })
         ? ""
-        : service.name.fernFilepath.allParts.map(part => part.camelCase.safeName).join("->")+"->";
+        : service.name.fernFilepath.allParts.map((part) => part.camelCase.safeName).join("->") + "->";
 
     // Start building the method call
     snippet += `$client->${servicePath}${context.getEndpointMethodName(endpoint)}(`;
-    
+
     // Check if we have any parameters to add
     const hasParameters = endpointSignatureInfo.pathParameters.length > 0 || endpointSignatureInfo.requestParameter;
-    
+
     if (hasParameters) {
         // Add a newline after the opening parenthesis if we have parameters
-        snippet += '\n';
-        
+        snippet += "\n";
+
         // Add path parameters with proper types
         endpointSignatureInfo.pathParameters.forEach((param) => {
-            const paramName = param.name.replace('$', '');
+            const paramName = param.name.replace("$", "");
             const paramType = getSafeTypeRepresentation(param.type);
             snippet += `    ${paramName}: $${paramName},\n`;
         });
@@ -111,7 +112,7 @@ function getEndpointSnippet({
         if (endpointSignatureInfo.requestParameter) {
             snippet += `    $request,\n`;
         }
-        
+
         // Close the method call with a newline before the closing parenthesis
         snippet += ");\n\n";
     } else {
@@ -190,7 +191,6 @@ function getEndpointReference({
     endpointSignatureInfo: EndpointSignatureInfo;
     snippet: string;
 }): FernGeneratorCli.EndpointReference {
-
     return {
         title: {
             snippetParts: [
@@ -241,7 +241,7 @@ function getReferenceEndpointInvocationParameters({
             result += ", ";
         }
         // Ensure we have a $ prefix but avoid double $$ in the output
-        const paramName = pathParameter.name.replace(/^\$/, '');
+        const paramName = pathParameter.name.replace(/^\$/, "");
         result += `$${paramName}`;
     });
     if (endpointSignatureInfo.requestParameter != null) {
@@ -272,7 +272,7 @@ function getServiceFilepath({
             return `/${serviceName}Client.php`;
         }
 
-        return `/${location.namespace.replace(/\\/g, '/')}/${serviceName}Client.php`;
+        return `/${location.namespace.replace(/\\/g, "/")}/${serviceName}Client.php`;
     } catch (error) {
         // Fallback to a simple path if there's an error
         const serviceName = service.name.fernFilepath.file?.pascalCase.safeName || "Client";
