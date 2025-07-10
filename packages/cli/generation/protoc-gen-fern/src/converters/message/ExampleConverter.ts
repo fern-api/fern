@@ -6,10 +6,12 @@ import {
     FieldDescriptorProto_Type,
     FileDescriptorProto
 } from "@bufbuild/protobuf/wkt";
+
 import { AbstractConverter } from "@fern-api/v2-importer-commons";
+
+import { Logger } from "../../commons/logging";
 import { ProtofileConverterContext } from "../ProtofileConverterContext";
 import { initializeGlobalCommentsStore } from "../utils/CreateGlobalCommentsStore";
-import { Logger } from "../../commons/logging";
 
 export declare namespace ExampleConverter {
     export interface Args extends AbstractConverter.Args<ProtofileConverterContext> {
@@ -29,7 +31,7 @@ export declare namespace ExampleConverter {
 
 export class ExampleConverter extends AbstractConverter<ProtofileConverterContext, ExampleConverter.Output> {
     private readonly MAX_DEPTH = 12;
-    private readonly EXAMPLE_STRING = "example"; 
+    private readonly EXAMPLE_STRING = "example";
     private readonly EXAMPLE_NUMBER = 42;
     private readonly EXAMPLE_BOOL = true;
     private readonly EXAMPLE_BYTES = "bytes";
@@ -39,14 +41,7 @@ export class ExampleConverter extends AbstractConverter<ProtofileConverterContex
     private readonly depth: number;
     private readonly seenMessages: Set<string>;
 
-    constructor({
-        breadcrumbs,
-        context,
-        message,
-        type,
-        depth = 0,
-        seenMessages = new Set()
-    }: ExampleConverter.Args) {
+    constructor({ breadcrumbs, context, message, type, depth = 0, seenMessages = new Set() }: ExampleConverter.Args) {
         super({ context, breadcrumbs });
         this.message = message;
         this.type = type;
@@ -65,7 +60,7 @@ export class ExampleConverter extends AbstractConverter<ProtofileConverterContex
         }
 
         const messageName = this.getFullyQualifiedMessageName(this.message);
-        
+
         if (this.seenMessages.has(messageName)) {
             return {
                 isValid: true,
@@ -94,7 +89,7 @@ export class ExampleConverter extends AbstractConverter<ProtofileConverterContex
     private getFullyQualifiedMessageName(message: DescriptorProto): string {
         const packageName = this.context.spec.package || "";
         const messageName = message.name || "";
-        
+
         if (packageName) {
             return `${packageName}.${messageName}`;
         }
@@ -162,9 +157,9 @@ export class ExampleConverter extends AbstractConverter<ProtofileConverterContex
         const allErrors = allResults.flatMap(({ result }) => result.errors);
 
         const validExample: Record<string, any> = {};
-        
+
         const oneofFieldsByGroup = new Map<string, { fieldName: string; value: any }>();
-        
+
         for (const [fieldName, { field, result }] of resultsByFieldName.entries()) {
             if (!result.isValid || result.validExample === null || result.validExample === undefined) {
                 continue;
@@ -226,7 +221,7 @@ export class ExampleConverter extends AbstractConverter<ProtofileConverterContex
             seenMessages,
             fieldName
         });
-        
+
         return {
             isValid: singleResult.isValid,
             coerced: false,
@@ -323,9 +318,9 @@ export class ExampleConverter extends AbstractConverter<ProtofileConverterContex
     private convertEnum(field: FieldDescriptorProto): ExampleConverter.Output {
         const typeName = field.typeName ?? "";
         const normalizedTypeName = this.context.maybeRemoveLeadingPeriod(typeName);
-        
+
         const enumType = this.findEnumType(normalizedTypeName);
-        
+
         if (!enumType) {
             return {
                 isValid: false,
@@ -384,7 +379,7 @@ export class ExampleConverter extends AbstractConverter<ProtofileConverterContex
                             codeGeneratorRequest: this.context.getCodeGeneratorRequest(),
                             spec: file,
                             logger: new Logger()
-                        })
+                        });
                     } else {
                         newMessageContext = this.context;
                     }
@@ -392,7 +387,7 @@ export class ExampleConverter extends AbstractConverter<ProtofileConverterContex
                 }
             }
         }
-        
+
         if (!messageType || !newMessageContext) {
             return {
                 // HACKHACK: This is a hack to get around showing full examples
@@ -417,56 +412,54 @@ export class ExampleConverter extends AbstractConverter<ProtofileConverterContex
 
     private findEnumType(typeName: string): EnumDescriptorProto | undefined {
         let enumType = this.findEnumInFile(typeName, this.context.spec);
-        
+
         if (!enumType && this.context.getCodeGeneratorRequest()) {
             for (const file of this.context.getCodeGeneratorRequest().protoFile) {
                 enumType = this.findEnumInFile(typeName, file);
                 if (enumType) break;
             }
         }
-        
+
         return enumType;
     }
 
     private findEnumInFile(typeName: string, file: FileDescriptorProto): EnumDescriptorProto | undefined {
         const packageName = file.package || "";
-        
+
         for (const enumType of file.enumType) {
             const fullName = packageName ? `${packageName}.${enumType.name}` : enumType.name || "";
             if (fullName === typeName || enumType.name === typeName) {
                 return enumType;
             }
         }
-        
+
         for (const message of file.messageType) {
             const enum_ = this.findEnumInMessage(typeName, message, packageName);
             if (enum_) return enum_;
         }
-        
+
         return undefined;
     }
 
     private findEnumInMessage(
-        typeName: string, 
-        message: DescriptorProto, 
+        typeName: string,
+        message: DescriptorProto,
         packagePrefix: string
     ): EnumDescriptorProto | undefined {
-        const messagePrefix = packagePrefix 
-            ? `${packagePrefix}.${message.name}` 
-            : message.name || "";
-            
+        const messagePrefix = packagePrefix ? `${packagePrefix}.${message.name}` : message.name || "";
+
         for (const enumType of message.enumType) {
             const fullName = `${messagePrefix}.${enumType.name}`;
             if (fullName === typeName || enumType.name === typeName) {
                 return enumType;
             }
         }
-        
+
         for (const nestedMessage of message.nestedType) {
             const enum_ = this.findEnumInMessage(typeName, nestedMessage, messagePrefix);
             if (enum_) return enum_;
         }
-        
+
         return undefined;
     }
 }

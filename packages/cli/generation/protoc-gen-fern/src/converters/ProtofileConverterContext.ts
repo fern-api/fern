@@ -1,4 +1,4 @@
-import { CodeGeneratorRequest, FileDescriptorProto, DescriptorProto } from "@bufbuild/protobuf/wkt";
+import { CodeGeneratorRequest, DescriptorProto, FileDescriptorProto } from "@bufbuild/protobuf/wkt";
 import { OpenAPIV3_1 } from "openapi-types";
 
 import { TypeReference } from "@fern-api/ir-sdk";
@@ -28,7 +28,9 @@ export class ProtofileConverterContext extends AbstractConverterContext<FileDesc
         this.codeGeneratorRequest = codeGeneratorRequest;
     }
 
-    public resolveTypeIdToProtoFile(typeId: string): { ok: true; message: DescriptorProto; protoFileName: string } | { ok: false } {
+    public resolveTypeIdToProtoFile(
+        typeId: string
+    ): { ok: true; message: DescriptorProto; protoFileName: string } | { ok: false } {
         // Check the current spec
         if (typeId.startsWith(this.spec.package)) {
             for (const message of this.spec.messageType) {
@@ -39,7 +41,7 @@ export class ProtofileConverterContext extends AbstractConverterContext<FileDesc
         }
 
         // Check all specs in the code generator request
-        for (const protoFile of this.codeGeneratorRequest.protoFile.filter(file => file.name !== this.spec.name)) {
+        for (const protoFile of this.codeGeneratorRequest.protoFile.filter((file) => file.name !== this.spec.name)) {
             if (typeId.startsWith(protoFile.package)) {
                 for (const message of protoFile.messageType) {
                     if (`${protoFile.package}.${message.name}` === this.maybeRemoveLeadingPeriod(typeId)) {

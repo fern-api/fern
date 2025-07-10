@@ -1,4 +1,4 @@
-import { V2HttpEndpointExample, V2EndpointLocationHttpMethod, FernIr } from "@fern-api/ir-sdk";
+import { FernIr, V2EndpointLocationHttpMethod, V2HttpEndpointExample } from "@fern-api/ir-sdk";
 
 export function initializeEmptyServiceExample(): V2HttpEndpointExample {
     return {
@@ -21,6 +21,6 @@ export function initializeEmptyServiceExample(): V2HttpEndpointExample {
             body: FernIr.V2HttpEndpointResponseBody.json({}),
             docs: undefined
         },
-            codeSamples: []
-    }
+        codeSamples: []
+    };
 }
