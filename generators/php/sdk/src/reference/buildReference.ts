@@ -28,6 +28,17 @@ function getSafeTypeRepresentation(type: any): string {
             } else if (ref.name) {
                 return ref.name;
             }
+        } else if (type.internalType.type === 'map') {
+            // Handle map types - in PHP these are associative arrays
+            return 'array';
+        } else if (type.internalType.type === 'optional') {
+            // Handle optional types - in PHP these could be nullable or a wrapper class
+            // Get the inner type if available, otherwise use mixed
+            if (type.internalType.value) {
+                const innerType = getSafeTypeRepresentation(type.internalType.value);
+                return `?${innerType}`; // Use nullable type syntax
+            }
+            return 'mixed';
         } else if (type.internalType.type) {
             // Return the basic type
             return type.internalType.type;
@@ -37,6 +48,14 @@ function getSafeTypeRepresentation(type: any): string {
     // Handle Parameter objects
     if (type.type && typeof type.type === 'object') {
         return getSafeTypeRepresentation(type.type);
+    }
+
+    // Handle specific type strings
+    if (typeof type === 'string') {
+        // Convert known type strings to PHP equivalents
+        if (type === 'map') return 'array';
+        if (type === 'optional') return 'mixed';
+        return type;
     }
 
     // Fallback for other objects
