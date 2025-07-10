@@ -11,8 +11,6 @@ import { PATH_FIELD_NUMBERS } from "../utils/PathFieldNumbers";
 import { EnumOrMessageConverter } from "./EnumOrMessageConverter";
 import { OneOfFieldConverter } from "./OneOfFieldConverter";
 
-// import { ExampleConverter } from "./ExampleConverter"
-
 export declare namespace MessageConverter {
     export interface Args extends AbstractConverter.Args<ProtofileConverterContext> {
         message: DescriptorProto;
@@ -35,8 +33,6 @@ export class MessageConverter extends AbstractConverter<ProtofileConverterContex
     }
 
     public convert(): MessageConverter.Output | undefined {
-        // TODO: convert message (i.e. convert schema)
-
         let inlinedTypes: Record<FernIr.TypeId, EnumOrMessageConverter.ConvertedSchema> = {};
         const allReferencedTypes: Set<TypeId> = new Set();
 
