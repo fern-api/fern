@@ -327,6 +327,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             writer.newLine();
             writer.writeLine("// Operate on instance of UnionType");
             writer.writeNode(methodDoSomething);
+            writer.newLine();
         });
 
         return this.renderSnippet(snippet);

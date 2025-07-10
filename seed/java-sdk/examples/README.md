@@ -134,9 +134,10 @@ client.echo(
 
 ### Union Types
 
-Union types represent values that can be one of several possible types. Use the `visit()` method with a visitor
-pattern to handle different union variants type-safely, or use static factory methods like `Type.of(value)` to
-create union instances.
+Union types represent values that can be one of several possible types.
+- To consume an instance of a union type, use the `visit()` method with a visitor pattern to handle different union
+  variants type-safely
+- To create instances of a union type, use static factory methods like `Type.of(value)`
 
 ```java
 import UnionPackage.UnionSubType1;
