@@ -5,13 +5,15 @@ import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationServi
 import { IntermediateRepresentation, Name, TypeDeclaration, TypeId, TypeReference } from "@fern-fern/ir-sdk/api";
 
 import { BasePythonCustomConfigSchema } from "../custom-config/BasePythonCustomConfigSchema";
-import { PythonProject } from "../project";
+import { PythonDependency, PythonDependencyType, PythonProject } from "../project";
 import { PythonTypeMapper } from "./PythonTypeMapper";
 
 export abstract class AbstractPythonGeneratorContext<
     CustomConfig extends BasePythonCustomConfigSchema
 > extends AbstractGeneratorContext {
-    private packageName: string;
+    private readonly packageName: string;
+    private readonly packageVersion: string;
+    private readonly pythonVersion: string;
     public readonly pythonTypeMapper: PythonTypeMapper;
     public readonly project: PythonProject;
 
@@ -23,6 +25,8 @@ export abstract class AbstractPythonGeneratorContext<
     ) {
         super(config, generatorNotificationService);
         this.packageName = snakeCase(`${this.config.organization}_${this.ir.apiName.snakeCase.unsafeName}`);
+        this.packageVersion = "0.0.0";
+        this.pythonVersion = "^3.8";
         this.pythonTypeMapper = new PythonTypeMapper(this);
         this.project = new PythonProject({ context: this });
     }
@@ -48,6 +52,18 @@ export abstract class AbstractPythonGeneratorContext<
         return false;
     }
 
+    public getPackageName(): string {
+        return this.packageName;
+    }
+
+    public getPackageVersion(): string {
+        return this.packageVersion;
+    }
+
+    public getPythonVersion(): string {
+        return this.pythonVersion;
+    }
+
     public getClassName(name: Name): string {
         return name.pascalCase.safeName;
     }
@@ -64,6 +80,20 @@ export abstract class AbstractPythonGeneratorContext<
         const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
         const fernFilepath = typeDeclaration.name.fernFilepath;
         return [...fernFilepath.allParts.flatMap((part) => ["resources", this.getSnakeCaseSafeName(part)]), "types"];
+    }
+
+    public getDependencies(): PythonDependency[] {
+        // Include both dependencies and dev-dependencies.
+        return [
+            { package: "pydantic", version: ">=1.9.2", type: PythonDependencyType.PROD },
+            { package: "pydantic-core", version: ">=2.18.2", type: PythonDependencyType.PROD },
+            { package: "mypy", version: "==1.13.0", type: PythonDependencyType.DEV },
+            { package: "pytest", version: "^7.4.0", type: PythonDependencyType.DEV },
+            { package: "pytest-asyncio", version: "^0.23.5", type: PythonDependencyType.DEV },
+            { package: "python-dateutil", version: "^2.9.0", type: PythonDependencyType.DEV },
+            { package: "types-python-dateutil", version: "^2.9.0.20240316", type: PythonDependencyType.DEV },
+            { package: "ruff", version: "==0.11.5", type: PythonDependencyType.DEV }
+        ];
     }
 
     public abstract getRawAsIsFiles(): string[];
