@@ -1,116 +1,224 @@
-import Swift, { AccessLevel, ClassLevel, Enum, Func } from "..";
-import { Field } from "./Field";
+import { assertNever } from "@fern-api/core-utils";
+
 import { AstNode, Writer } from "./core";
 
-/*
+type String_ = {
+    type: "string";
+};
 
-Builds Swift Types (Classes, Structs, etc)
-==========================================
+type Bool = {
+    type: "bool";
+};
 
-Example:
+type Int = {
+    type: "int";
+};
 
-private class Mike: Person {
+type UInt = {
+    type: "uint";
+};
 
-    class Snowboard {
-        ...
-    }
-    
-    func wave() {
-        print("👋")
-    }
+type UInt64 = {
+    type: "uint64";
+};
 
-}
+type Int64 = {
+    type: "int64";
+};
 
-Breakdown:
+type Float = {
+    type: "float";
+};
 
-{accessLevel} {classLevel} {name}: {inheritance} {
+type Double = {
+    type: "double";
+};
 
-    {subclasses}
-    
-    {functions}
+type Date_ = {
+    type: "date";
+};
 
-}
+type UUID = {
+    type: "uuid";
+};
 
-*/
+type Tuple = {
+    type: "tuple";
+    elements: [Type, ...Type[]];
+};
 
-export declare namespace Type {
-    interface Args {
-        /* The access level of the type */
-        accessLevel?: AccessLevel;
-        /* The class level of the type, such as class or struct */
-        classLevel?: ClassLevel;
-        /* The name of the type */
-        name: string;
-        /* The subclasses of this type, which can be other types or enums */
-        subclasses?: (Type | Enum)[];
-        /* The field variables in the class */
-        fields?: Field[];
-        /* The functions associated with this type */
-        functions?: Func[];
-        /* The inheritance hierarchy of this type */
-        inheritance?: Type[];
-    }
-}
+type Array_ = {
+    type: "array";
+    elementType: Type;
+};
+
+type Dictionary = {
+    type: "dictionary";
+    keyType: Type;
+    valueType: Type;
+};
+
+/**
+ * A reference to a custom type.
+ */
+type Custom = {
+    type: "custom";
+    /** The name of the custom type. */
+    name: string;
+};
+
+type Any = {
+    type: "any";
+};
+
+type InternalType =
+    | String_
+    | Bool
+    | Int
+    | UInt
+    | UInt64
+    | Int64
+    | Float
+    | Double
+    | Date_
+    | UUID
+    | Tuple
+    | Array_
+    | Dictionary
+    | Custom
+    | Any;
 
 export class Type extends AstNode {
-    public readonly accessLevel?: AccessLevel;
-    public readonly classLevel?: ClassLevel;
-    public readonly name: string;
-    public readonly subclasses?: (Type | Enum)[];
-    public readonly fields?: Field[];
-    public readonly functions?: Func[];
-    public readonly inheritance?: Type[];
+    private internalType: InternalType;
 
-    constructor({ accessLevel, classLevel, name, subclasses, fields, functions, inheritance }: Type.Args) {
+    private constructor(internalType: InternalType) {
         super();
-        this.accessLevel = accessLevel;
-        this.classLevel = classLevel;
-        this.name = name;
-        this.subclasses = subclasses;
-        this.fields = fields;
-        this.functions = functions;
-        this.inheritance = inheritance;
-    }
-
-    private buildTitle(): string | undefined {
-        if (!this.inheritance) {
-            return this.name;
-        }
-
-        const names = this.inheritance.map((obj) => obj.name).join(", ");
-        return `${this.name}: ${names}`;
+        this.internalType = internalType;
     }
 
     public write(writer: Writer): void {
-        // example: public class Name {
-        writer.openBlock(
-            [this.accessLevel, this.classLevel, this.buildTitle()],
-            "{",
-            () => {
-                writer.newLine();
+        switch (this.internalType.type) {
+            case "string":
+                writer.write("String");
+                break;
+            case "bool":
+                writer.write("Bool");
+                break;
+            case "int":
+                writer.write("Int");
+                break;
+            case "uint":
+                writer.write("UInt");
+                break;
+            case "uint64":
+                writer.write("UInt64");
+                break;
+            case "int64":
+                writer.write("Int64");
+                break;
+            case "float":
+                writer.write("Float");
+                break;
+            case "double":
+                writer.write("Double");
+                break;
+            case "date":
+                writer.write("Date");
+                break;
+            case "uuid":
+                writer.write("UUID");
+                break;
+            case "tuple":
+                writer.write("(");
+                this.internalType.elements.forEach((elementType, index) => {
+                    if (index > 0) {
+                        writer.write(", ");
+                    }
+                    elementType.write(writer);
+                });
+                writer.write(")");
+                break;
+            case "array":
+                writer.write("[");
+                this.internalType.elementType.write(writer);
+                writer.write("]");
+                break;
+            case "dictionary":
+                writer.write("[");
+                this.internalType.keyType.write(writer);
+                writer.write(": ");
+                this.internalType.valueType.write(writer);
+                writer.write("]");
+                break;
+            case "custom":
+                writer.write(this.internalType.name);
+                break;
+            case "any":
+                writer.write("Any");
+                break;
+            default:
+                assertNever(this.internalType);
+        }
+    }
 
-                if (this.subclasses) {
-                    this.subclasses.forEach((sub) => {
-                        writer.writeNode(sub);
-                        writer.newLine();
-                    });
-                }
+    public static string(): Type {
+        return new this({ type: "string" });
+    }
 
-                if (this.fields) {
-                    this.fields.forEach((field) => {
-                        writer.writeNode(field);
-                    });
-                    writer.newLine();
-                }
+    public static bool(): Type {
+        return new this({ type: "bool" });
+    }
 
-                if (this.functions) {
-                    this.functions.forEach((func) => {
-                        writer.writeNode(func);
-                        writer.newLine();
-                    });
-                }
-            },
-            "}"
-        );
+    public static int(): Type {
+        return new this({ type: "int" });
+    }
+
+    public static uint(): Type {
+        return new this({ type: "uint" });
+    }
+
+    public static uint64(): Type {
+        return new this({ type: "uint64" });
+    }
+
+    public static int64(): Type {
+        return new this({ type: "int64" });
+    }
+
+    public static float(): Type {
+        return new this({ type: "float" });
+    }
+
+    public static double(): Type {
+        return new this({ type: "double" });
+    }
+
+    public static date(): Type {
+        return new this({ type: "date" });
+    }
+
+    public static uuid(): Type {
+        return new this({ type: "uuid" });
+    }
+
+    public static tuple(elements: [Type, ...Type[]]): Type {
+        return new this({ type: "tuple", elements });
+    }
+
+    public static array(elementType: Type): Type {
+        return new this({ type: "array", elementType });
+    }
+
+    public static dictionary(keyType: Type, valueType: Type): Type {
+        // TODO: keyType needs to conform to Hashable. We may want to enforce this as a constraint.
+        return new this({ type: "dictionary", keyType, valueType });
+    }
+
+    public static custom(name: string): Type {
+        return new this({ type: "custom", name });
+    }
+
+    public static any(): Type {
+        return new this({ type: "any" });
     }
 }

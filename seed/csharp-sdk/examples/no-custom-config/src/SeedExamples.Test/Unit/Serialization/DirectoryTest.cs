@@ -36,18 +36,18 @@ public class DirectoryTest
         var expectedObject = new Directory
         {
             Name = "root",
-            Files = new List<File>()
+            Files = new List<SeedExamples.File>()
             {
-                new File { Name = "file.txt", Contents = "..." },
+                new SeedExamples.File { Name = "file.txt", Contents = "..." },
             },
             Directories = new List<Directory>()
             {
                 new Directory
                 {
                     Name = "tmp",
-                    Files = new List<File>()
+                    Files = new List<SeedExamples.File>()
                     {
-                        new File { Name = "another_file.txt", Contents = "..." },
+                        new SeedExamples.File { Name = "another_file.txt", Contents = "..." },
                     },
                 },
             },
@@ -84,18 +84,18 @@ public class DirectoryTest
         var actualObj = new Directory
         {
             Name = "root",
-            Files = new List<File>()
+            Files = new List<SeedExamples.File>()
             {
-                new File { Name = "file.txt", Contents = "..." },
+                new SeedExamples.File { Name = "file.txt", Contents = "..." },
             },
             Directories = new List<Directory>()
             {
                 new Directory
                 {
                     Name = "tmp",
-                    Files = new List<File>()
+                    Files = new List<SeedExamples.File>()
                     {
-                        new File { Name = "another_file.txt", Contents = "..." },
+                        new SeedExamples.File { Name = "another_file.txt", Contents = "..." },
                     },
                 },
             },

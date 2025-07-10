@@ -17,7 +17,7 @@ export default {
         {
             displayName: "browser",
             preset: "ts-jest",
-            testEnvironment: "<rootDir>/tests/BrowserTestEnvironment.ts",
+            testEnvironment: "<rootDir>/src/test-packagePath/tests/BrowserTestEnvironment.ts",
             moduleNameMapper: {
                 "^(\.{1,2}/.*)\.js$": "$1",
             },
@@ -34,7 +34,7 @@ export default {
                 "^(\.{1,2}/.*)\.js$": "$1",
             },
             roots: ["<rootDir>/src/test-packagePath/tests/wire"],
-            setupFilesAfterEnv: ["<rootDir>/tests/mock-server/setup.ts"],
+            setupFilesAfterEnv: ["<rootDir>/src/test-packagePath/tests/mock-server/setup.ts"],
         },
     ],
     workerThreads: false,

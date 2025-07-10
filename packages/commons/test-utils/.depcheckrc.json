@@ -1,0 +1,4 @@
+{
+  "ignores": ["@trivago/prettier-plugin-sort-imports", "@types/node", "globals"],
+  "ignore-patterns": ["lib"]
+}

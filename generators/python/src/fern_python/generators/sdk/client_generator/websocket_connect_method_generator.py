@@ -344,7 +344,11 @@ class WebsocketConnectMethodGenerator:
                     body=body,
                     handlers=[
                         AST.ExceptHandler(
-                            exception_type="websockets.exceptions.InvalidStatusCode",
+                            exception_type=AST.Expression(
+                                AST.ReferenceNode(
+                                    reference=Websockets.get_invalid_status_code_exception()
+                                ),
+                            ),
                             name="exc",
                             body=[
                                 AST.VariableDeclaration(

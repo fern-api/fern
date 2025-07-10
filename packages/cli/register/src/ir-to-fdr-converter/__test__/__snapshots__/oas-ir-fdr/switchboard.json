@@ -2055,27 +2055,27 @@
               "responseBody": {
                 "data": [
                   {
-                    "date_created": "foo",
+                    "date_created": "2024-01-15T09:30:00Z",
                     "id": "73df0106-1781-4b03-a288-e749e1a43481",
                     "name": "Special Widget",
-                    "upload_uri": "foo"
+                    "upload_uri": "string"
                   }
                 ],
                 "errors": [
                   {
-                    "code": "foo",
+                    "code": "string",
                     "details": {},
-                    "message": "foo"
+                    "message": "string"
                   }
                 ],
                 "meta": {
-                  "requestId": "foo"
+                  "requestId": "string"
                 },
                 "warnings": [
                   {
-                    "code": "foo",
+                    "code": "string",
                     "details": {},
-                    "message": "foo"
+                    "message": "string"
                   }
                 ]
               },
@@ -2084,27 +2084,27 @@
                 "value": {
                   "data": [
                     {
-                      "date_created": "foo",
+                      "date_created": "2024-01-15T09:30:00Z",
                       "id": "73df0106-1781-4b03-a288-e749e1a43481",
                       "name": "Special Widget",
-                      "upload_uri": "foo"
+                      "upload_uri": "string"
                     }
                   ],
                   "errors": [
                     {
-                      "code": "foo",
+                      "code": "string",
                       "details": {},
-                      "message": "foo"
+                      "message": "string"
                     }
                   ],
                   "meta": {
-                    "requestId": "foo"
+                    "requestId": "string"
                   },
                   "warnings": [
                     {
-                      "code": "foo",
+                      "code": "string",
                       "details": {},
-                      "message": "foo"
+                      "message": "string"
                     }
                   ]
                 }
@@ -2187,26 +2187,26 @@
               "responseStatusCode": 201,
               "responseBody": {
                 "data": {
-                  "date_created": "foo",
+                  "date_created": "2024-01-15T09:30:00Z",
                   "id": "73df0106-1781-4b03-a288-e749e1a43481",
                   "name": "Special Widget",
-                  "upload_uri": "foo"
+                  "upload_uri": "string"
                 },
                 "errors": [
                   {
-                    "code": "foo",
+                    "code": "string",
                     "details": {},
-                    "message": "foo"
+                    "message": "string"
                   }
                 ],
                 "meta": {
-                  "requestId": "foo"
+                  "requestId": "string"
                 },
                 "warnings": [
                   {
-                    "code": "foo",
+                    "code": "string",
                     "details": {},
-                    "message": "foo"
+                    "message": "string"
                   }
                 ]
               },
@@ -2214,26 +2214,26 @@
                 "type": "json",
                 "value": {
                   "data": {
-                    "date_created": "foo",
+                    "date_created": "2024-01-15T09:30:00Z",
                     "id": "73df0106-1781-4b03-a288-e749e1a43481",
                     "name": "Special Widget",
-                    "upload_uri": "foo"
+                    "upload_uri": "string"
                   },
                   "errors": [
                     {
-                      "code": "foo",
+                      "code": "string",
                       "details": {},
-                      "message": "foo"
+                      "message": "string"
                     }
                   ],
                   "meta": {
-                    "requestId": "foo"
+                    "requestId": "string"
                   },
                   "warnings": [
                     {
-                      "code": "foo",
+                      "code": "string",
                       "details": {},
-                      "message": "foo"
+                      "message": "string"
                     }
                   ]
                 }
@@ -2417,26 +2417,26 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "data": {
-                  "date_created": "foo",
+                  "date_created": "2024-01-15T09:30:00Z",
                   "id": "73df0106-1781-4b03-a288-e749e1a43481",
                   "name": "Special Widget",
-                  "upload_uri": "foo"
+                  "upload_uri": "string"
                 },
                 "errors": [
                   {
-                    "code": "foo",
+                    "code": "string",
                     "details": {},
-                    "message": "foo"
+                    "message": "string"
                   }
                 ],
                 "meta": {
-                  "requestId": "foo"
+                  "requestId": "string"
                 },
                 "warnings": [
                   {
-                    "code": "foo",
+                    "code": "string",
                     "details": {},
-                    "message": "foo"
+                    "message": "string"
                   }
                 ]
               },
@@ -2444,26 +2444,26 @@
                 "type": "json",
                 "value": {
                   "data": {
-                    "date_created": "foo",
+                    "date_created": "2024-01-15T09:30:00Z",
                     "id": "73df0106-1781-4b03-a288-e749e1a43481",
                     "name": "Special Widget",
-                    "upload_uri": "foo"
+                    "upload_uri": "string"
                   },
                   "errors": [
                     {
-                      "code": "foo",
+                      "code": "string",
                       "details": {},
-                      "message": "foo"
+                      "message": "string"
                     }
                   ],
                   "meta": {
-                    "requestId": "foo"
+                    "requestId": "string"
                   },
                   "warnings": [
                     {
-                      "code": "foo",
+                      "code": "string",
                       "details": {},
-                      "message": "foo"
+                      "message": "string"
                     }
                   ]
                 }
@@ -2573,29 +2573,29 @@
                 "data": [
                   {
                     "name": "Acme corp login",
-                    "status": "foo",
+                    "status": "string",
                     "tags": [
                       "blue",
                       "red"
                     ],
-                    "upload_uri": "foo"
+                    "upload_uri": "string"
                   }
                 ],
                 "errors": [
                   {
-                    "code": "foo",
+                    "code": "string",
                     "details": {},
-                    "message": "foo"
+                    "message": "string"
                   }
                 ],
                 "meta": {
-                  "requestId": "foo"
+                  "requestId": "string"
                 },
                 "warnings": [
                   {
-                    "code": "foo",
+                    "code": "string",
                     "details": {},
-                    "message": "foo"
+                    "message": "string"
                   }
                 ]
               },
@@ -2605,29 +2605,29 @@
                   "data": [
                     {
                       "name": "Acme corp login",
-                      "status": "foo",
+                      "status": "string",
                       "tags": [
                         "blue",
                         "red"
                       ],
-                      "upload_uri": "foo"
+                      "upload_uri": "string"
                     }
                   ],
                   "errors": [
                     {
-                      "code": "foo",
+                      "code": "string",
                       "details": {},
-                      "message": "foo"
+                      "message": "string"
                     }
                   ],
                   "meta": {
-                    "requestId": "foo"
+                    "requestId": "string"
                   },
                   "warnings": [
                     {
-                      "code": "foo",
+                      "code": "string",
                       "details": {},
-                      "message": "foo"
+                      "message": "string"
                     }
                   ]
                 }
@@ -2711,28 +2711,28 @@
               "responseBody": {
                 "data": {
                   "name": "Acme corp login",
-                  "status": "foo",
+                  "status": "string",
                   "tags": [
                     "blue",
                     "red"
                   ],
-                  "upload_uri": "foo"
+                  "upload_uri": "string"
                 },
                 "errors": [
                   {
-                    "code": "foo",
+                    "code": "string",
                     "details": {},
-                    "message": "foo"
+                    "message": "string"
                   }
                 ],
                 "meta": {
-                  "requestId": "foo"
+                  "requestId": "string"
                 },
                 "warnings": [
                   {
-                    "code": "foo",
+                    "code": "string",
                     "details": {},
-                    "message": "foo"
+                    "message": "string"
                   }
                 ]
               },
@@ -2741,28 +2741,28 @@
                 "value": {
                   "data": {
                     "name": "Acme corp login",
-                    "status": "foo",
+                    "status": "string",
                     "tags": [
                       "blue",
                       "red"
                     ],
-                    "upload_uri": "foo"
+                    "upload_uri": "string"
                   },
                   "errors": [
                     {
-                      "code": "foo",
+                      "code": "string",
                       "details": {},
-                      "message": "foo"
+                      "message": "string"
                     }
                   ],
                   "meta": {
-                    "requestId": "foo"
+                    "requestId": "string"
                   },
                   "warnings": [
                     {
-                      "code": "foo",
+                      "code": "string",
                       "details": {},
-                      "message": "foo"
+                      "message": "string"
                     }
                   ]
                 }
@@ -2966,28 +2966,28 @@
               "responseBody": {
                 "data": {
                   "name": "Acme corp login",
-                  "status": "foo",
+                  "status": "string",
                   "tags": [
                     "blue",
                     "red"
                   ],
-                  "upload_uri": "foo"
+                  "upload_uri": "string"
                 },
                 "errors": [
                   {
-                    "code": "foo",
+                    "code": "string",
                     "details": {},
-                    "message": "foo"
+                    "message": "string"
                   }
                 ],
                 "meta": {
-                  "requestId": "foo"
+                  "requestId": "string"
                 },
                 "warnings": [
                   {
-                    "code": "foo",
+                    "code": "string",
                     "details": {},
-                    "message": "foo"
+                    "message": "string"
                   }
                 ]
               },
@@ -2996,28 +2996,28 @@
                 "value": {
                   "data": {
                     "name": "Acme corp login",
-                    "status": "foo",
+                    "status": "string",
                     "tags": [
                       "blue",
                       "red"
                     ],
-                    "upload_uri": "foo"
+                    "upload_uri": "string"
                   },
                   "errors": [
                     {
-                      "code": "foo",
+                      "code": "string",
                       "details": {},
-                      "message": "foo"
+                      "message": "string"
                     }
                   ],
                   "meta": {
-                    "requestId": "foo"
+                    "requestId": "string"
                   },
                   "warnings": [
                     {
-                      "code": "foo",
+                      "code": "string",
                       "details": {},
-                      "message": "foo"
+                      "message": "string"
                     }
                   ]
                 }
@@ -3194,57 +3194,57 @@
               "responseBody": {
                 "data": {
                   "pagination": {
-                    "currentLimit": 42,
-                    "currentPage": 42,
-                    "finalCount": 42,
+                    "currentLimit": 1,
+                    "currentPage": 1,
+                    "finalCount": 1,
                     "hasMore": true,
-                    "initialCount": 42,
-                    "nextOffset": 42,
-                    "numberOfPages": 42,
-                    "totalItems": 42
+                    "initialCount": 1,
+                    "nextOffset": 1,
+                    "numberOfPages": 1,
+                    "totalItems": 1
                   },
                   "sessions": [
                     {
-                      "cdp_url": "foo",
-                      "cdp_ws_url": "foo",
-                      "chromedriver_url": "foo",
+                      "cdp_url": "string",
+                      "cdp_ws_url": "string",
+                      "chromedriver_url": "string",
                       "configuration": {
                         "persist_profile": true,
                         "persist_profile_name": "default",
                         "persist_profile_tags": [
-                          "foo"
+                          "string"
                         ],
                         "profile_id": "linkedin",
                         "timeoutMinutes": 10
                       },
-                      "current_usage": 42,
-                      "date_created": "foo",
+                      "current_usage": 1,
+                      "date_created": "2024-01-15T09:30:00Z",
                       "id": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
-                      "last_activity": "foo",
+                      "last_activity": "2024-01-15T09:30:00Z",
                       "live_view": {
-                        "airtop_browser_url": "foo",
-                        "token": "foo"
+                        "airtop_browser_url": "string",
+                        "token": "string"
                       },
                       "status": "active",
-                      "url": "foo"
+                      "url": "string"
                     }
                   ]
                 },
                 "errors": [
                   {
-                    "code": "foo",
+                    "code": "string",
                     "details": {},
-                    "message": "foo"
+                    "message": "string"
                   }
                 ],
                 "meta": {
-                  "requestId": "foo"
+                  "requestId": "string"
                 },
                 "warnings": [
                   {
-                    "code": "foo",
+                    "code": "string",
                     "details": {},
-                    "message": "foo"
+                    "message": "string"
                   }
                 ]
               },
@@ -3253,57 +3253,57 @@
                 "value": {
                   "data": {
                     "pagination": {
-                      "currentLimit": 42,
-                      "currentPage": 42,
-                      "finalCount": 42,
+                      "currentLimit": 1,
+                      "currentPage": 1,
+                      "finalCount": 1,
                       "hasMore": true,
-                      "initialCount": 42,
-                      "nextOffset": 42,
-                      "numberOfPages": 42,
-                      "totalItems": 42
+                      "initialCount": 1,
+                      "nextOffset": 1,
+                      "numberOfPages": 1,
+                      "totalItems": 1
                     },
                     "sessions": [
                       {
-                        "cdp_url": "foo",
-                        "cdp_ws_url": "foo",
-                        "chromedriver_url": "foo",
+                        "cdp_url": "string",
+                        "cdp_ws_url": "string",
+                        "chromedriver_url": "string",
                         "configuration": {
                           "persist_profile": true,
                           "persist_profile_name": "default",
                           "persist_profile_tags": [
-                            "foo"
+                            "string"
                           ],
                           "profile_id": "linkedin",
                           "timeoutMinutes": 10
                         },
-                        "current_usage": 42,
-                        "date_created": "foo",
+                        "current_usage": 1,
+                        "date_created": "2024-01-15T09:30:00Z",
                         "id": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
-                        "last_activity": "foo",
+                        "last_activity": "2024-01-15T09:30:00Z",
                         "live_view": {
-                          "airtop_browser_url": "foo",
-                          "token": "foo"
+                          "airtop_browser_url": "string",
+                          "token": "string"
                         },
                         "status": "active",
-                        "url": "foo"
+                        "url": "string"
                       }
                     ]
                   },
                   "errors": [
                     {
-                      "code": "foo",
+                      "code": "string",
                       "details": {},
-                      "message": "foo"
+                      "message": "string"
                     }
                   ],
                   "meta": {
-                    "requestId": "foo"
+                    "requestId": "string"
                   },
                   "warnings": [
                     {
-                      "code": "foo",
+                      "code": "string",
                       "details": {},
-                      "message": "foo"
+                      "message": "string"
                     }
                   ]
                 }
@@ -3382,44 +3382,44 @@
               "responseStatusCode": 201,
               "responseBody": {
                 "data": {
-                  "cdp_url": "foo",
-                  "cdp_ws_url": "foo",
-                  "chromedriver_url": "foo",
+                  "cdp_url": "string",
+                  "cdp_ws_url": "string",
+                  "chromedriver_url": "string",
                   "configuration": {
                     "persist_profile": true,
                     "persist_profile_name": "default",
                     "persist_profile_tags": [
-                      "foo"
+                      "string"
                     ],
                     "profile_id": "linkedin",
                     "timeoutMinutes": 10
                   },
-                  "current_usage": 42,
-                  "date_created": "foo",
+                  "current_usage": 1,
+                  "date_created": "2024-01-15T09:30:00Z",
                   "id": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
-                  "last_activity": "foo",
+                  "last_activity": "2024-01-15T09:30:00Z",
                   "live_view": {
-                    "airtop_browser_url": "foo",
-                    "token": "foo"
+                    "airtop_browser_url": "string",
+                    "token": "string"
                   },
                   "status": "active",
-                  "url": "foo"
+                  "url": "string"
                 },
                 "errors": [
                   {
-                    "code": "foo",
+                    "code": "string",
                     "details": {},
-                    "message": "foo"
+                    "message": "string"
                   }
                 ],
                 "meta": {
-                  "requestId": "foo"
+                  "requestId": "string"
                 },
                 "warnings": [
                   {
-                    "code": "foo",
+                    "code": "string",
                     "details": {},
-                    "message": "foo"
+                    "message": "string"
                   }
                 ]
               },
@@ -3427,44 +3427,44 @@
                 "type": "json",
                 "value": {
                   "data": {
-                    "cdp_url": "foo",
-                    "cdp_ws_url": "foo",
-                    "chromedriver_url": "foo",
+                    "cdp_url": "string",
+                    "cdp_ws_url": "string",
+                    "chromedriver_url": "string",
                     "configuration": {
                       "persist_profile": true,
                       "persist_profile_name": "default",
                       "persist_profile_tags": [
-                        "foo"
+                        "string"
                       ],
                       "profile_id": "linkedin",
                       "timeoutMinutes": 10
                     },
-                    "current_usage": 42,
-                    "date_created": "foo",
+                    "current_usage": 1,
+                    "date_created": "2024-01-15T09:30:00Z",
                     "id": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
-                    "last_activity": "foo",
+                    "last_activity": "2024-01-15T09:30:00Z",
                     "live_view": {
-                      "airtop_browser_url": "foo",
-                      "token": "foo"
+                      "airtop_browser_url": "string",
+                      "token": "string"
                     },
                     "status": "active",
-                    "url": "foo"
+                    "url": "string"
                   },
                   "errors": [
                     {
-                      "code": "foo",
+                      "code": "string",
                       "details": {},
-                      "message": "foo"
+                      "message": "string"
                     }
                   ],
                   "meta": {
-                    "requestId": "foo"
+                    "requestId": "string"
                   },
                   "warnings": [
                     {
-                      "code": "foo",
+                      "code": "string",
                       "details": {},
-                      "message": "foo"
+                      "message": "string"
                     }
                   ]
                 }
@@ -3588,44 +3588,44 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "data": {
-                  "cdp_url": "foo",
-                  "cdp_ws_url": "foo",
-                  "chromedriver_url": "foo",
+                  "cdp_url": "string",
+                  "cdp_ws_url": "string",
+                  "chromedriver_url": "string",
                   "configuration": {
                     "persist_profile": true,
                     "persist_profile_name": "default",
                     "persist_profile_tags": [
-                      "foo"
+                      "string"
                     ],
                     "profile_id": "linkedin",
                     "timeoutMinutes": 10
                   },
-                  "current_usage": 42,
-                  "date_created": "foo",
+                  "current_usage": 1,
+                  "date_created": "2024-01-15T09:30:00Z",
                   "id": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
-                  "last_activity": "foo",
+                  "last_activity": "2024-01-15T09:30:00Z",
                   "live_view": {
-                    "airtop_browser_url": "foo",
-                    "token": "foo"
+                    "airtop_browser_url": "string",
+                    "token": "string"
                   },
                   "status": "active",
-                  "url": "foo"
+                  "url": "string"
                 },
                 "errors": [
                   {
-                    "code": "foo",
+                    "code": "string",
                     "details": {},
-                    "message": "foo"
+                    "message": "string"
                   }
                 ],
                 "meta": {
-                  "requestId": "foo"
+                  "requestId": "string"
                 },
                 "warnings": [
                   {
-                    "code": "foo",
+                    "code": "string",
                     "details": {},
-                    "message": "foo"
+                    "message": "string"
                   }
                 ]
               },
@@ -3633,44 +3633,44 @@
                 "type": "json",
                 "value": {
                   "data": {
-                    "cdp_url": "foo",
-                    "cdp_ws_url": "foo",
-                    "chromedriver_url": "foo",
+                    "cdp_url": "string",
+                    "cdp_ws_url": "string",
+                    "chromedriver_url": "string",
                     "configuration": {
                       "persist_profile": true,
                       "persist_profile_name": "default",
                       "persist_profile_tags": [
-                        "foo"
+                        "string"
                       ],
                       "profile_id": "linkedin",
                       "timeoutMinutes": 10
                     },
-                    "current_usage": 42,
-                    "date_created": "foo",
+                    "current_usage": 1,
+                    "date_created": "2024-01-15T09:30:00Z",
                     "id": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
-                    "last_activity": "foo",
+                    "last_activity": "2024-01-15T09:30:00Z",
                     "live_view": {
-                      "airtop_browser_url": "foo",
-                      "token": "foo"
+                      "airtop_browser_url": "string",
+                      "token": "string"
                     },
                     "status": "active",
-                    "url": "foo"
+                    "url": "string"
                   },
                   "errors": [
                     {
-                      "code": "foo",
+                      "code": "string",
                       "details": {},
-                      "message": "foo"
+                      "message": "string"
                     }
                   ],
                   "meta": {
-                    "requestId": "foo"
+                    "requestId": "string"
                   },
                   "warnings": [
                     {
-                      "code": "foo",
+                      "code": "string",
                       "details": {},
-                      "message": "foo"
+                      "message": "string"
                     }
                   ]
                 }
@@ -4008,25 +4008,25 @@
               "responseStatusCode": 201,
               "responseBody": {
                 "data": {
-                  "liveViewUrl": "foo",
-                  "token": "foo",
-                  "windowId": "foo"
+                  "liveViewUrl": "string",
+                  "token": "string",
+                  "windowId": "string"
                 },
                 "errors": [
                   {
-                    "code": "foo",
+                    "code": "string",
                     "details": {},
-                    "message": "foo"
+                    "message": "string"
                   }
                 ],
                 "meta": {
-                  "requestId": "foo"
+                  "requestId": "string"
                 },
                 "warnings": [
                   {
-                    "code": "foo",
+                    "code": "string",
                     "details": {},
-                    "message": "foo"
+                    "message": "string"
                   }
                 ]
               },
@@ -4034,25 +4034,25 @@
                 "type": "json",
                 "value": {
                   "data": {
-                    "liveViewUrl": "foo",
-                    "token": "foo",
-                    "windowId": "foo"
+                    "liveViewUrl": "string",
+                    "token": "string",
+                    "windowId": "string"
                   },
                   "errors": [
                     {
-                      "code": "foo",
+                      "code": "string",
                       "details": {},
-                      "message": "foo"
+                      "message": "string"
                     }
                   ],
                   "meta": {
-                    "requestId": "foo"
+                    "requestId": "string"
                   },
                   "warnings": [
                     {
-                      "code": "foo",
+                      "code": "string",
                       "details": {},
-                      "message": "foo"
+                      "message": "string"
                     }
                   ]
                 }
@@ -4177,32 +4177,32 @@
               "responseStatusCode": 201,
               "responseBody": {
                 "data": {
-                  "modelResponse": "foo"
+                  "modelResponse": "string"
                 },
                 "errors": [
                   {
-                    "code": "foo",
+                    "code": "string",
                     "details": {},
-                    "message": "foo"
+                    "message": "string"
                   }
                 ],
                 "meta": {
                   "clientProvided": {
-                    "clientRequestId": "foo",
-                    "timeThresholdMs": 42
+                    "clientRequestId": "string",
+                    "timeThresholdMs": 1
                   },
-                  "requestId": "foo",
+                  "requestId": "string",
                   "status": "success",
                   "usage": {
-                    "credits": 42,
-                    "id": "foo"
+                    "credits": 1,
+                    "id": "string"
                   }
                 },
                 "warnings": [
                   {
-                    "code": "foo",
+                    "code": "string",
                     "details": {},
-                    "message": "foo"
+                    "message": "string"
                   }
                 ]
               },
@@ -4210,32 +4210,32 @@
                 "type": "json",
                 "value": {
                   "data": {
-                    "modelResponse": "foo"
+                    "modelResponse": "string"
                   },
                   "errors": [
                     {
-                      "code": "foo",
+                      "code": "string",
                       "details": {},
-                      "message": "foo"
+                      "message": "string"
                     }
                   ],
                   "meta": {
                     "clientProvided": {
-                      "clientRequestId": "foo",
-                      "timeThresholdMs": 42
+                      "clientRequestId": "string",
+                      "timeThresholdMs": 1
                     },
-                    "requestId": "foo",
+                    "requestId": "string",
                     "status": "success",
                     "usage": {
-                      "credits": 42,
-                      "id": "foo"
+                      "credits": 1,
+                      "id": "string"
                     }
                   },
                   "warnings": [
                     {
-                      "code": "foo",
+                      "code": "string",
                       "details": {},
-                      "message": "foo"
+                      "message": "string"
                     }
                   ]
                 }
@@ -4340,37 +4340,37 @@
                 "data": {
                   "modelResponse": {
                     "scrapedContent": {
-                      "contentType": "foo",
-                      "text": "foo"
+                      "contentType": "string",
+                      "text": "string"
                     },
-                    "selectedText": "foo",
-                    "title": "foo"
+                    "selectedText": "string",
+                    "title": "string"
                   }
                 },
                 "errors": [
                   {
-                    "code": "foo",
+                    "code": "string",
                     "details": {},
-                    "message": "foo"
+                    "message": "string"
                   }
                 ],
                 "meta": {
                   "clientProvided": {
-                    "clientRequestId": "foo",
-                    "timeThresholdMs": 42
+                    "clientRequestId": "string",
+                    "timeThresholdMs": 1
                   },
-                  "requestId": "foo",
+                  "requestId": "string",
                   "status": "success",
                   "usage": {
-                    "credits": 42,
-                    "id": "foo"
+                    "credits": 1,
+                    "id": "string"
                   }
                 },
                 "warnings": [
                   {
-                    "code": "foo",
+                    "code": "string",
                     "details": {},
-                    "message": "foo"
+                    "message": "string"
                   }
                 ]
               },
@@ -4380,37 +4380,37 @@
                   "data": {
                     "modelResponse": {
                       "scrapedContent": {
-                        "contentType": "foo",
-                        "text": "foo"
+                        "contentType": "string",
+                        "text": "string"
                       },
-                      "selectedText": "foo",
-                      "title": "foo"
+                      "selectedText": "string",
+                      "title": "string"
                     }
                   },
                   "errors": [
                     {
-                      "code": "foo",
+                      "code": "string",
                       "details": {},
-                      "message": "foo"
+                      "message": "string"
                     }
                   ],
                   "meta": {
                     "clientProvided": {
-                      "clientRequestId": "foo",
-                      "timeThresholdMs": 42
+                      "clientRequestId": "string",
+                      "timeThresholdMs": 1
                     },
-                    "requestId": "foo",
+                    "requestId": "string",
                     "status": "success",
                     "usage": {
-                      "credits": 42,
-                      "id": "foo"
+                      "credits": 1,
+                      "id": "string"
                     }
                   },
                   "warnings": [
                     {
-                      "code": "foo",
+                      "code": "string",
                       "details": {},
-                      "message": "foo"
+                      "message": "string"
                     }
                   ]
                 }
@@ -4531,32 +4531,32 @@
               "responseStatusCode": 201,
               "responseBody": {
                 "data": {
-                  "modelResponse": "foo"
+                  "modelResponse": "string"
                 },
                 "errors": [
                   {
-                    "code": "foo",
+                    "code": "string",
                     "details": {},
-                    "message": "foo"
+                    "message": "string"
                   }
                 ],
                 "meta": {
                   "clientProvided": {
-                    "clientRequestId": "foo",
-                    "timeThresholdMs": 42
+                    "clientRequestId": "string",
+                    "timeThresholdMs": 1
                   },
-                  "requestId": "foo",
+                  "requestId": "string",
                   "status": "success",
                   "usage": {
-                    "credits": 42,
-                    "id": "foo"
+                    "credits": 1,
+                    "id": "string"
                   }
                 },
                 "warnings": [
                   {
-                    "code": "foo",
+                    "code": "string",
                     "details": {},
-                    "message": "foo"
+                    "message": "string"
                   }
                 ]
               },
@@ -4564,32 +4564,32 @@
                 "type": "json",
                 "value": {
                   "data": {
-                    "modelResponse": "foo"
+                    "modelResponse": "string"
                   },
                   "errors": [
                     {
-                      "code": "foo",
+                      "code": "string",
                       "details": {},
-                      "message": "foo"
+                      "message": "string"
                     }
                   ],
                   "meta": {
                     "clientProvided": {
-                      "clientRequestId": "foo",
-                      "timeThresholdMs": 42
+                      "clientRequestId": "string",
+                      "timeThresholdMs": 1
                     },
-                    "requestId": "foo",
+                    "requestId": "string",
                     "status": "success",
                     "usage": {
-                      "credits": 42,
-                      "id": "foo"
+                      "credits": 1,
+                      "id": "string"
                     }
                   },
                   "warnings": [
                     {
-                      "code": "foo",
+                      "code": "string",
                       "details": {},
-                      "message": "foo"
+                      "message": "string"
                     }
                   ]
                 }

@@ -243,7 +243,10 @@ describe("Test fetcherImpl", () => {
             const body = result.body as BinaryResponse;
             expect(body).toBeDefined();
             expect(body.bodyUsed).toBe(false);
-            expect(typeof body.bytes).toBe("function");
+            expect(typeof body.bytes).toBe("function");            
+            if(!body.bytes) {
+                return;
+            }
             const bytes = await body.bytes();
             expect(bytes).toBeInstanceOf(Uint8Array);
             const decoder = new TextDecoder();

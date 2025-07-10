@@ -3054,10 +3054,10 @@
           "examples": [
             {
               "description": "",
-              "path": "/v0/evi/tools/id/version/42",
+              "path": "/v0/evi/tools/id/version/1",
               "pathParameters": {
                 "id": "id",
-                "version": 42
+                "version": 1
               },
               "queryParameters": {},
               "headers": {},
@@ -3138,10 +3138,10 @@
           "examples": [
             {
               "description": "",
-              "path": "/v0/evi/tools/id/version/42",
+              "path": "/v0/evi/tools/id/version/1",
               "pathParameters": {
                 "id": "id",
-                "version": 42
+                "version": 1
               },
               "queryParameters": {},
               "headers": {},
@@ -3244,10 +3244,10 @@
           "examples": [
             {
               "description": "",
-              "path": "/v0/evi/tools/id/version/42",
+              "path": "/v0/evi/tools/id/version/1",
               "pathParameters": {
                 "id": "id",
-                "version": 42
+                "version": 1
               },
               "queryParameters": {},
               "headers": {},
@@ -3887,10 +3887,10 @@
           "examples": [
             {
               "description": "",
-              "path": "/v0/evi/prompts/id/version/42",
+              "path": "/v0/evi/prompts/id/version/1",
               "pathParameters": {
                 "id": "id",
-                "version": 42
+                "version": 1
               },
               "queryParameters": {},
               "headers": {},
@@ -3971,10 +3971,10 @@
           "examples": [
             {
               "description": "",
-              "path": "/v0/evi/prompts/id/version/42",
+              "path": "/v0/evi/prompts/id/version/1",
               "pathParameters": {
                 "id": "id",
-                "version": 42
+                "version": 1
               },
               "queryParameters": {},
               "headers": {},
@@ -4077,10 +4077,10 @@
           "examples": [
             {
               "description": "",
-              "path": "/v0/evi/prompts/id/version/42",
+              "path": "/v0/evi/prompts/id/version/1",
               "pathParameters": {
                 "id": "id",
-                "version": 42
+                "version": 1
               },
               "queryParameters": {},
               "headers": {},
@@ -5215,10 +5215,10 @@
           "examples": [
             {
               "description": "",
-              "path": "/v0/evi/configs/id/version/42",
+              "path": "/v0/evi/configs/id/version/1",
               "pathParameters": {
                 "id": "id",
-                "version": 42
+                "version": 1
               },
               "queryParameters": {},
               "headers": {},
@@ -5299,10 +5299,10 @@
           "examples": [
             {
               "description": "",
-              "path": "/v0/evi/configs/id/version/42",
+              "path": "/v0/evi/configs/id/version/1",
               "pathParameters": {
                 "id": "id",
-                "version": 42
+                "version": 1
               },
               "queryParameters": {},
               "headers": {},
@@ -5405,10 +5405,10 @@
           "examples": [
             {
               "description": "",
-              "path": "/v0/evi/configs/id/version/42",
+              "path": "/v0/evi/configs/id/version/1",
               "pathParameters": {
                 "id": "id",
-                "version": 42
+                "version": 1
               },
               "queryParameters": {},
               "headers": {},
