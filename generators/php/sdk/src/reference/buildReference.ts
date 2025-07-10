@@ -72,21 +72,33 @@ function getEndpointSnippet({
         ? ""
         : service.name.fernFilepath.allParts.map(part => part.camelCase.safeName).join("->")+"->";
 
-    snippet += `$client->${servicePath}${context.getEndpointMethodName(endpoint)}(\n`;
+    // Start building the method call
+    snippet += `$client->${servicePath}${context.getEndpointMethodName(endpoint)}(`;
+    
+    // Check if we have any parameters to add
+    const hasParameters = endpointSignatureInfo.pathParameters.length > 0 || endpointSignatureInfo.requestParameter;
+    
+    if (hasParameters) {
+        // Add a newline after the opening parenthesis if we have parameters
+        snippet += '\n';
+        
+        // Add path parameters with proper types
+        endpointSignatureInfo.pathParameters.forEach((param) => {
+            const paramName = param.name.replace('$', '');
+            const paramType = getSafeTypeRepresentation(param.type);
+            snippet += `    ${paramName}: $${paramName},\n`;
+        });
 
-    // Add path parameters with proper types
-    endpointSignatureInfo.pathParameters.forEach((param) => {
-        const paramName = param.name.replace('$', '');
-        const paramType = getSafeTypeRepresentation(param.type);
-        snippet += `    ${paramName}: $${paramName},\n`;
-    });
-
-    if (endpointSignatureInfo.requestParameter) {
-        snippet += `    $request,\n`;
+        if (endpointSignatureInfo.requestParameter) {
+            snippet += `    $request,\n`;
+        }
+        
+        // Close the method call with a newline before the closing parenthesis
+        snippet += ");\n\n";
+    } else {
+        // If no parameters, close the parentheses on the same line
+        snippet += ");\n\n";
     }
-
-    // Close the method call
-    snippet += ");\n\n";
 
     return snippet;
 }
