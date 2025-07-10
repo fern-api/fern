@@ -556,7 +556,7 @@
               "requestBody": {
                 "name": "doggie",
                 "photoUrls": [
-                  "foo"
+                  "string"
                 ]
               },
               "requestBodyV3": {
@@ -564,7 +564,7 @@
                 "value": {
                   "name": "doggie",
                   "photoUrls": [
-                    "foo"
+                    "string"
                   ]
                 }
               },
@@ -577,12 +577,12 @@
                   "name": "Dogs"
                 },
                 "photoUrls": [
-                  "foo"
+                  "string"
                 ],
                 "tags": [
                   {
-                    "id": 42,
-                    "name": "foo"
+                    "id": 1,
+                    "name": "string"
                   }
                 ],
                 "status": "available"
@@ -597,12 +597,12 @@
                     "name": "Dogs"
                   },
                   "photoUrls": [
-                    "foo"
+                    "string"
                   ],
                   "tags": [
                     {
-                      "id": 42,
-                      "name": "foo"
+                      "id": 1,
+                      "name": "string"
                     }
                   ],
                   "status": "available"
@@ -717,7 +717,7 @@
               "requestBody": {
                 "name": "doggie",
                 "photoUrls": [
-                  "foo"
+                  "string"
                 ]
               },
               "requestBodyV3": {
@@ -725,7 +725,7 @@
                 "value": {
                   "name": "doggie",
                   "photoUrls": [
-                    "foo"
+                    "string"
                   ]
                 }
               },
@@ -738,12 +738,12 @@
                   "name": "Dogs"
                 },
                 "photoUrls": [
-                  "foo"
+                  "string"
                 ],
                 "tags": [
                   {
-                    "id": 42,
-                    "name": "foo"
+                    "id": 1,
+                    "name": "string"
                   }
                 ],
                 "status": "available"
@@ -758,12 +758,12 @@
                     "name": "Dogs"
                   },
                   "photoUrls": [
-                    "foo"
+                    "string"
                   ],
                   "tags": [
                     {
-                      "id": 42,
-                      "name": "foo"
+                      "id": 1,
+                      "name": "string"
                     }
                   ],
                   "status": "available"
@@ -861,12 +861,12 @@
                     "name": "Dogs"
                   },
                   "photoUrls": [
-                    "foo"
+                    "string"
                   ],
                   "tags": [
                     {
-                      "id": 42,
-                      "name": "foo"
+                      "id": 1,
+                      "name": "string"
                     }
                   ],
                   "status": "available"
@@ -883,12 +883,12 @@
                       "name": "Dogs"
                     },
                     "photoUrls": [
-                      "foo"
+                      "string"
                     ],
                     "tags": [
                       {
-                        "id": 42,
-                        "name": "foo"
+                        "id": 1,
+                        "name": "string"
                       }
                     ],
                     "status": "available"
@@ -992,12 +992,12 @@
                     "name": "Dogs"
                   },
                   "photoUrls": [
-                    "foo"
+                    "string"
                   ],
                   "tags": [
                     {
-                      "id": 42,
-                      "name": "foo"
+                      "id": 1,
+                      "name": "string"
                     }
                   ],
                   "status": "available"
@@ -1014,12 +1014,12 @@
                       "name": "Dogs"
                     },
                     "photoUrls": [
-                      "foo"
+                      "string"
                     ],
                     "tags": [
                       {
-                        "id": 42,
-                        "name": "foo"
+                        "id": 1,
+                        "name": "string"
                       }
                     ],
                     "status": "available"
@@ -1120,9 +1120,9 @@
           "examples": [
             {
               "description": "",
-              "path": "/pet/42",
+              "path": "/pet/1",
               "pathParameters": {
-                "petId": 42
+                "petId": 1
               },
               "queryParameters": {},
               "headers": {},
@@ -1135,12 +1135,12 @@
                   "name": "Dogs"
                 },
                 "photoUrls": [
-                  "foo"
+                  "string"
                 ],
                 "tags": [
                   {
-                    "id": 42,
-                    "name": "foo"
+                    "id": 1,
+                    "name": "string"
                   }
                 ],
                 "status": "available"
@@ -1155,12 +1155,12 @@
                     "name": "Dogs"
                   },
                   "photoUrls": [
-                    "foo"
+                    "string"
                   ],
                   "tags": [
                     {
-                      "id": 42,
-                      "name": "foo"
+                      "id": 1,
+                      "name": "string"
                     }
                   ],
                   "status": "available"
@@ -1275,9 +1275,9 @@
           "examples": [
             {
               "description": "",
-              "path": "/pet/42",
+              "path": "/pet/1",
               "pathParameters": {
-                "petId": 42
+                "petId": 1
               },
               "queryParameters": {},
               "headers": {},
@@ -1290,12 +1290,12 @@
                   "name": "Dogs"
                 },
                 "photoUrls": [
-                  "foo"
+                  "string"
                 ],
                 "tags": [
                   {
-                    "id": 42,
-                    "name": "foo"
+                    "id": 1,
+                    "name": "string"
                   }
                 ],
                 "status": "available"
@@ -1310,12 +1310,12 @@
                     "name": "Dogs"
                   },
                   "photoUrls": [
-                    "foo"
+                    "string"
                   ],
                   "tags": [
                     {
-                      "id": 42,
-                      "name": "foo"
+                      "id": 1,
+                      "name": "string"
                     }
                   ],
                   "status": "available"
@@ -1406,9 +1406,9 @@
           "examples": [
             {
               "description": "",
-              "path": "/pet/42",
+              "path": "/pet/1",
               "pathParameters": {
-                "petId": 42
+                "petId": 1
               },
               "queryParameters": {},
               "headers": {},
@@ -1528,24 +1528,24 @@
           "examples": [
             {
               "description": "",
-              "path": "/pet/42/uploadImage",
+              "path": "/pet/1/uploadImage",
               "pathParameters": {
-                "petId": 42
+                "petId": 1
               },
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "code": 42,
-                "type": "foo",
-                "message": "foo"
+                "code": 1,
+                "type": "string",
+                "message": "string"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "code": 42,
-                  "type": "foo",
-                  "message": "foo"
+                  "code": 1,
+                  "type": "string",
+                  "message": "string"
                 }
               }
             }
@@ -1732,7 +1732,7 @@
                 "id": 10,
                 "petId": 198772,
                 "quantity": 7,
-                "shipDate": "foo",
+                "shipDate": "2024-01-15T09:30:00Z",
                 "status": "placed",
                 "complete": true
               },
@@ -1742,7 +1742,7 @@
                   "id": 10,
                   "petId": 198772,
                   "quantity": 7,
-                  "shipDate": "foo",
+                  "shipDate": "2024-01-15T09:30:00Z",
                   "status": "placed",
                   "complete": true
                 }
@@ -1841,9 +1841,9 @@
           "examples": [
             {
               "description": "",
-              "path": "/store/order/42",
+              "path": "/store/order/1",
               "pathParameters": {
-                "orderId": 42
+                "orderId": 1
               },
               "queryParameters": {},
               "headers": {},
@@ -1852,7 +1852,7 @@
                 "id": 10,
                 "petId": 198772,
                 "quantity": 7,
-                "shipDate": "foo",
+                "shipDate": "2024-01-15T09:30:00Z",
                 "status": "placed",
                 "complete": true
               },
@@ -1862,7 +1862,7 @@
                   "id": 10,
                   "petId": 198772,
                   "quantity": 7,
-                  "shipDate": "foo",
+                  "shipDate": "2024-01-15T09:30:00Z",
                   "status": "placed",
                   "complete": true
                 }
@@ -1950,9 +1950,9 @@
           "examples": [
             {
               "description": "",
-              "path": "/store/order/42",
+              "path": "/store/order/1",
               "pathParameters": {
-                "orderId": 42
+                "orderId": 1
               },
               "queryParameters": {},
               "headers": {},
@@ -2266,10 +2266,10 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": "foo",
+              "responseBody": "string",
               "responseBodyV3": {
                 "type": "json",
-                "value": "foo"
+                "value": "string"
               }
             }
           ],
@@ -2777,7 +2777,7 @@
               "requestBody": {
                 "name": "doggie",
                 "photoUrls": [
-                  "foo"
+                  "string"
                 ]
               },
               "requestBodyV3": {
@@ -2785,7 +2785,7 @@
                 "value": {
                   "name": "doggie",
                   "photoUrls": [
-                    "foo"
+                    "string"
                   ]
                 }
               },
@@ -2798,12 +2798,12 @@
                   "name": "Dogs"
                 },
                 "photoUrls": [
-                  "foo"
+                  "string"
                 ],
                 "tags": [
                   {
-                    "id": 42,
-                    "name": "foo"
+                    "id": 1,
+                    "name": "string"
                   }
                 ],
                 "status": "available"
@@ -2818,12 +2818,12 @@
                     "name": "Dogs"
                   },
                   "photoUrls": [
-                    "foo"
+                    "string"
                   ],
                   "tags": [
                     {
-                      "id": 42,
-                      "name": "foo"
+                      "id": 1,
+                      "name": "string"
                     }
                   ],
                   "status": "available"
@@ -2938,7 +2938,7 @@
               "requestBody": {
                 "name": "doggie",
                 "photoUrls": [
-                  "foo"
+                  "string"
                 ]
               },
               "requestBodyV3": {
@@ -2946,7 +2946,7 @@
                 "value": {
                   "name": "doggie",
                   "photoUrls": [
-                    "foo"
+                    "string"
                   ]
                 }
               },
@@ -2959,12 +2959,12 @@
                   "name": "Dogs"
                 },
                 "photoUrls": [
-                  "foo"
+                  "string"
                 ],
                 "tags": [
                   {
-                    "id": 42,
-                    "name": "foo"
+                    "id": 1,
+                    "name": "string"
                   }
                 ],
                 "status": "available"
@@ -2979,12 +2979,12 @@
                     "name": "Dogs"
                   },
                   "photoUrls": [
-                    "foo"
+                    "string"
                   ],
                   "tags": [
                     {
-                      "id": 42,
-                      "name": "foo"
+                      "id": 1,
+                      "name": "string"
                     }
                   ],
                   "status": "available"
@@ -3082,12 +3082,12 @@
                     "name": "Dogs"
                   },
                   "photoUrls": [
-                    "foo"
+                    "string"
                   ],
                   "tags": [
                     {
-                      "id": 42,
-                      "name": "foo"
+                      "id": 1,
+                      "name": "string"
                     }
                   ],
                   "status": "available"
@@ -3104,12 +3104,12 @@
                       "name": "Dogs"
                     },
                     "photoUrls": [
-                      "foo"
+                      "string"
                     ],
                     "tags": [
                       {
-                        "id": 42,
-                        "name": "foo"
+                        "id": 1,
+                        "name": "string"
                       }
                     ],
                     "status": "available"
@@ -3213,12 +3213,12 @@
                     "name": "Dogs"
                   },
                   "photoUrls": [
-                    "foo"
+                    "string"
                   ],
                   "tags": [
                     {
-                      "id": 42,
-                      "name": "foo"
+                      "id": 1,
+                      "name": "string"
                     }
                   ],
                   "status": "available"
@@ -3235,12 +3235,12 @@
                       "name": "Dogs"
                     },
                     "photoUrls": [
-                      "foo"
+                      "string"
                     ],
                     "tags": [
                       {
-                        "id": 42,
-                        "name": "foo"
+                        "id": 1,
+                        "name": "string"
                       }
                     ],
                     "status": "available"
@@ -3341,9 +3341,9 @@
           "examples": [
             {
               "description": "",
-              "path": "/pet/42",
+              "path": "/pet/1",
               "pathParameters": {
-                "petId": 42
+                "petId": 1
               },
               "queryParameters": {},
               "headers": {},
@@ -3356,12 +3356,12 @@
                   "name": "Dogs"
                 },
                 "photoUrls": [
-                  "foo"
+                  "string"
                 ],
                 "tags": [
                   {
-                    "id": 42,
-                    "name": "foo"
+                    "id": 1,
+                    "name": "string"
                   }
                 ],
                 "status": "available"
@@ -3376,12 +3376,12 @@
                     "name": "Dogs"
                   },
                   "photoUrls": [
-                    "foo"
+                    "string"
                   ],
                   "tags": [
                     {
-                      "id": 42,
-                      "name": "foo"
+                      "id": 1,
+                      "name": "string"
                     }
                   ],
                   "status": "available"
@@ -3496,9 +3496,9 @@
           "examples": [
             {
               "description": "",
-              "path": "/pet/42",
+              "path": "/pet/1",
               "pathParameters": {
-                "petId": 42
+                "petId": 1
               },
               "queryParameters": {},
               "headers": {},
@@ -3511,12 +3511,12 @@
                   "name": "Dogs"
                 },
                 "photoUrls": [
-                  "foo"
+                  "string"
                 ],
                 "tags": [
                   {
-                    "id": 42,
-                    "name": "foo"
+                    "id": 1,
+                    "name": "string"
                   }
                 ],
                 "status": "available"
@@ -3531,12 +3531,12 @@
                     "name": "Dogs"
                   },
                   "photoUrls": [
-                    "foo"
+                    "string"
                   ],
                   "tags": [
                     {
-                      "id": 42,
-                      "name": "foo"
+                      "id": 1,
+                      "name": "string"
                     }
                   ],
                   "status": "available"
@@ -3627,9 +3627,9 @@
           "examples": [
             {
               "description": "",
-              "path": "/pet/42",
+              "path": "/pet/1",
               "pathParameters": {
-                "petId": 42
+                "petId": 1
               },
               "queryParameters": {},
               "headers": {},
@@ -3749,24 +3749,24 @@
           "examples": [
             {
               "description": "",
-              "path": "/pet/42/uploadImage",
+              "path": "/pet/1/uploadImage",
               "pathParameters": {
-                "petId": 42
+                "petId": 1
               },
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "code": 42,
-                "type": "foo",
-                "message": "foo"
+                "code": 1,
+                "type": "string",
+                "message": "string"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "code": 42,
-                  "type": "foo",
-                  "message": "foo"
+                  "code": 1,
+                  "type": "string",
+                  "message": "string"
                 }
               }
             }
@@ -3953,7 +3953,7 @@
                 "id": 10,
                 "petId": 198772,
                 "quantity": 7,
-                "shipDate": "foo",
+                "shipDate": "2024-01-15T09:30:00Z",
                 "status": "placed",
                 "complete": true
               },
@@ -3963,7 +3963,7 @@
                   "id": 10,
                   "petId": 198772,
                   "quantity": 7,
-                  "shipDate": "foo",
+                  "shipDate": "2024-01-15T09:30:00Z",
                   "status": "placed",
                   "complete": true
                 }
@@ -4062,9 +4062,9 @@
           "examples": [
             {
               "description": "",
-              "path": "/store/order/42",
+              "path": "/store/order/1",
               "pathParameters": {
-                "orderId": 42
+                "orderId": 1
               },
               "queryParameters": {},
               "headers": {},
@@ -4073,7 +4073,7 @@
                 "id": 10,
                 "petId": 198772,
                 "quantity": 7,
-                "shipDate": "foo",
+                "shipDate": "2024-01-15T09:30:00Z",
                 "status": "placed",
                 "complete": true
               },
@@ -4083,7 +4083,7 @@
                   "id": 10,
                   "petId": 198772,
                   "quantity": 7,
-                  "shipDate": "foo",
+                  "shipDate": "2024-01-15T09:30:00Z",
                   "status": "placed",
                   "complete": true
                 }
@@ -4171,9 +4171,9 @@
           "examples": [
             {
               "description": "",
-              "path": "/store/order/42",
+              "path": "/store/order/1",
               "pathParameters": {
-                "orderId": 42
+                "orderId": 1
               },
               "queryParameters": {},
               "headers": {},
@@ -4487,10 +4487,10 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": "foo",
+              "responseBody": "string",
               "responseBodyV3": {
                 "type": "json",
-                "value": "foo"
+                "value": "string"
               }
             }
           ],

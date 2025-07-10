@@ -12559,14 +12559,14 @@
               "responseBody": {
                 "account_token": "T9klMDQrcHdm9jrtHuOS2Nf06BIHwMNjpPXPMB",
                 "integration": {
-                  "name": "foo",
+                  "name": "string",
                   "categories": [
                     "hris"
                   ],
-                  "image": "foo",
-                  "square_image": "foo",
-                  "color": "foo",
-                  "slug": "foo",
+                  "image": "string",
+                  "square_image": "string",
+                  "color": "string",
+                  "slug": "string",
                   "is_in_beta": true,
                   "api_endpoints_to_documentation_urls": {}
                 }
@@ -12576,14 +12576,14 @@
                 "value": {
                   "account_token": "T9klMDQrcHdm9jrtHuOS2Nf06BIHwMNjpPXPMB",
                   "integration": {
-                    "name": "foo",
+                    "name": "string",
                     "categories": [
                       "hris"
                     ],
-                    "image": "foo",
-                    "square_image": "foo",
-                    "color": "foo",
-                    "slug": "foo",
+                    "image": "string",
+                    "square_image": "string",
+                    "color": "string",
+                    "slug": "string",
                     "is_in_beta": true,
                     "api_endpoints_to_documentation_urls": {}
                   }
@@ -12674,14 +12674,14 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "integration": {
-                  "name": "foo",
+                  "name": "string",
                   "categories": [
                     "hris"
                   ],
-                  "image": "foo",
-                  "square_image": "foo",
-                  "color": "foo",
-                  "slug": "foo",
+                  "image": "string",
+                  "square_image": "string",
+                  "color": "string",
+                  "slug": "string",
                   "is_in_beta": true,
                   "api_endpoints_to_documentation_urls": {}
                 },
@@ -12709,14 +12709,14 @@
                 "type": "json",
                 "value": {
                   "integration": {
-                    "name": "foo",
+                    "name": "string",
                     "categories": [
                       "hris"
                     ],
-                    "image": "foo",
-                    "square_image": "foo",
-                    "color": "foo",
-                    "slug": "foo",
+                    "image": "string",
+                    "square_image": "string",
+                    "color": "string",
+                    "slug": "string",
                     "is_in_beta": true,
                     "api_endpoints_to_documentation_urls": {}
                   },
@@ -13521,7 +13521,7 @@
                     "remote_id": "19202938",
                     "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
                     "provider_name": "Blue Shield of California",
-                    "benefit_plan_type": "foo",
+                    "benefit_plan_type": "string",
                     "employee_contribution": 23.65,
                     "company_contribution": 150,
                     "start_date": "2020-11-15 00:59:25.309761+00:00",
@@ -13551,7 +13551,7 @@
                       "remote_id": "19202938",
                       "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
                       "provider_name": "Blue Shield of California",
-                      "benefit_plan_type": "foo",
+                      "benefit_plan_type": "string",
                       "employee_contribution": 23.65,
                       "company_contribution": 150,
                       "start_date": "2020-11-15 00:59:25.309761+00:00",
@@ -13696,7 +13696,7 @@
                 "remote_id": "19202938",
                 "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
                 "provider_name": "Blue Shield of California",
-                "benefit_plan_type": "foo",
+                "benefit_plan_type": "string",
                 "employee_contribution": 23.65,
                 "company_contribution": 150,
                 "start_date": "2020-11-15 00:59:25.309761+00:00",
@@ -13720,7 +13720,7 @@
                   "remote_id": "19202938",
                   "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
                   "provider_name": "Blue Shield of California",
-                  "benefit_plan_type": "foo",
+                  "benefit_plan_type": "string",
                   "employee_contribution": 23.65,
                   "company_contribution": 150,
                   "start_date": "2020-11-15 00:59:25.309761+00:00",
@@ -15625,7 +15625,7 @@
                 "warnings": [
                   {
                     "source": {
-                      "pointer": "foo"
+                      "pointer": "string"
                     },
                     "title": "Unrecognized Field",
                     "detail": "An unrecognized field, age, was passed in with request data.",
@@ -15635,7 +15635,7 @@
                 "errors": [
                   {
                     "source": {
-                      "pointer": "foo"
+                      "pointer": "string"
                     },
                     "title": "Missing Required Field",
                     "detail": "custom_fields is a required field on model.",
@@ -15707,7 +15707,7 @@
                   "warnings": [
                     {
                       "source": {
-                        "pointer": "foo"
+                        "pointer": "string"
                       },
                       "title": "Unrecognized Field",
                       "detail": "An unrecognized field, age, was passed in with request data.",
@@ -15717,7 +15717,7 @@
                   "errors": [
                     {
                       "source": {
-                        "pointer": "foo"
+                        "pointer": "string"
                       },
                       "title": "Missing Required Field",
                       "detail": "custom_fields is a required field on model.",
@@ -16171,7 +16171,7 @@
                 "request_schema": {},
                 "remote_field_classes": {},
                 "status": {
-                  "linked_account_status": "foo",
+                  "linked_account_status": "string",
                   "can_make_request": true
                 },
                 "has_conditional_params": true,
@@ -16183,7 +16183,7 @@
                   "request_schema": {},
                   "remote_field_classes": {},
                   "status": {
-                    "linked_account_status": "foo",
+                    "linked_account_status": "string",
                     "can_make_request": true
                   },
                   "has_conditional_params": true,
@@ -17763,9 +17763,9 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "end_user_email_address": "foo",
-                "end_user_organization_name": "foo",
-                "end_user_origin_id": "foo",
+                "end_user_email_address": "string",
+                "end_user_organization_name": "string",
+                "end_user_origin_id": "string",
                 "categories": [
                   "hris"
                 ]
@@ -17773,9 +17773,9 @@
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "end_user_email_address": "foo",
-                  "end_user_organization_name": "foo",
-                  "end_user_origin_id": "foo",
+                  "end_user_email_address": "string",
+                  "end_user_organization_name": "string",
+                  "end_user_origin_id": "string",
                   "categories": [
                     "hris"
                   ]
@@ -18043,21 +18043,21 @@
                     "id": "e59b1821-f85c-4e28-a6b3-1804156f3563",
                     "category": "hris",
                     "status": "COMPLETE",
-                    "status_detail": "foo",
+                    "status_detail": "string",
                     "end_user_origin_id": "3ac95cde-6c7f-4eef-afec-be710b42308d",
                     "end_user_organization_name": "Foo Bar, LLC",
                     "end_user_email_address": "hradmin@foobar.dev",
                     "webhook_listener_url": "https://api.merge.dev/api/integrations/webhook-listener/7fc3mee0UW8ecV4",
                     "is_duplicate": true,
                     "integration": {
-                      "name": "foo",
+                      "name": "string",
                       "categories": [
                         "hris"
                       ],
-                      "image": "foo",
-                      "square_image": "foo",
-                      "color": "foo",
-                      "slug": "foo",
+                      "image": "string",
+                      "square_image": "string",
+                      "color": "string",
+                      "slug": "string",
                       "passthrough_available": true,
                       "available_model_operations": [
                         {
@@ -18091,21 +18091,21 @@
                       "id": "e59b1821-f85c-4e28-a6b3-1804156f3563",
                       "category": "hris",
                       "status": "COMPLETE",
-                      "status_detail": "foo",
+                      "status_detail": "string",
                       "end_user_origin_id": "3ac95cde-6c7f-4eef-afec-be710b42308d",
                       "end_user_organization_name": "Foo Bar, LLC",
                       "end_user_email_address": "hradmin@foobar.dev",
                       "webhook_listener_url": "https://api.merge.dev/api/integrations/webhook-listener/7fc3mee0UW8ecV4",
                       "is_duplicate": true,
                       "integration": {
-                        "name": "foo",
+                        "name": "string",
                         "categories": [
                           "hris"
                         ],
-                        "image": "foo",
-                        "square_image": "foo",
-                        "color": "foo",
-                        "slug": "foo",
+                        "image": "string",
+                        "square_image": "string",
+                        "color": "string",
+                        "slug": "string",
                         "passthrough_available": true,
                         "available_model_operations": [
                           {
@@ -19971,8 +19971,8 @@
                   {
                     "linked_account_conditions": [
                       {
-                        "condition_schema_id": "foo",
-                        "operator": "foo",
+                        "condition_schema_id": "string",
+                        "operator": "string",
                         "value": null
                       }
                     ]
@@ -19993,8 +19993,8 @@
                     {
                       "linked_account_conditions": [
                         {
-                          "condition_schema_id": "foo",
-                          "operator": "foo",
+                          "condition_schema_id": "string",
+                          "operator": "string",
                           "value": null
                         }
                       ]
@@ -21405,7 +21405,7 @@
                 "warnings": [
                   {
                     "source": {
-                      "pointer": "foo"
+                      "pointer": "string"
                     },
                     "title": "Unrecognized Field",
                     "detail": "An unrecognized field, age, was passed in with request data.",
@@ -21415,7 +21415,7 @@
                 "errors": [
                   {
                     "source": {
-                      "pointer": "foo"
+                      "pointer": "string"
                     },
                     "title": "Missing Required Field",
                     "detail": "custom_fields is a required field on model.",
@@ -21464,7 +21464,7 @@
                   "warnings": [
                     {
                       "source": {
-                        "pointer": "foo"
+                        "pointer": "string"
                       },
                       "title": "Unrecognized Field",
                       "detail": "An unrecognized field, age, was passed in with request data.",
@@ -21474,7 +21474,7 @@
                   "errors": [
                     {
                       "source": {
-                        "pointer": "foo"
+                        "pointer": "string"
                       },
                       "title": "Missing Required Field",
                       "detail": "custom_fields is a required field on model.",
@@ -21765,7 +21765,7 @@
                 "request_schema": {},
                 "remote_field_classes": {},
                 "status": {
-                  "linked_account_status": "foo",
+                  "linked_account_status": "string",
                   "can_make_request": true
                 },
                 "has_conditional_params": true,
@@ -21777,7 +21777,7 @@
                   "request_schema": {},
                   "remote_field_classes": {},
                   "status": {
-                    "linked_account_status": "foo",
+                    "linked_account_status": "string",
                     "can_make_request": true
                   },
                   "has_conditional_params": true,
@@ -22378,18 +22378,18 @@
               "responseStatusCode": 200,
               "responseBody": [
                 {
-                  "event": "foo",
+                  "event": "string",
                   "is_active": true,
-                  "key": "foo"
+                  "key": "string"
                 }
               ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
                   {
-                    "event": "foo",
+                    "event": "string",
                     "is_active": true,
-                    "key": "foo"
+                    "key": "string"
                   }
                 ]
               }
@@ -22478,28 +22478,28 @@
                 "X-Account-Token": "X-Account-Token"
               },
               "requestBody": {
-                "event": "foo",
+                "event": "string",
                 "is_active": true
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "event": "foo",
+                  "event": "string",
                   "is_active": true
                 }
               },
               "responseStatusCode": 201,
               "responseBody": {
-                "event": "foo",
+                "event": "string",
                 "is_active": true,
-                "key": "foo"
+                "key": "string"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "event": "foo",
+                  "event": "string",
                   "is_active": true,
-                  "key": "foo"
+                  "key": "string"
                 }
               }
             }

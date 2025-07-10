@@ -2398,14 +2398,14 @@
             "responseBody": {
               "id": 1,
               "jsonrpc": "2.0",
-              "result": "foo"
+              "result": "string"
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
                 "id": 1,
                 "jsonrpc": "2.0",
-                "result": "foo"
+                "result": "string"
               }
             }
           }
@@ -2623,14 +2623,14 @@
             "responseBody": {
               "id": 1,
               "jsonrpc": "2.0",
-              "result": "foo"
+              "result": "string"
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
                 "id": 1,
                 "jsonrpc": "2.0",
-                "result": "foo"
+                "result": "string"
               }
             }
           }
@@ -2687,14 +2687,14 @@
             "responseBody": {
               "id": 1,
               "jsonrpc": "2.0",
-              "result": "foo"
+              "result": "string"
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
                 "id": 1,
                 "jsonrpc": "2.0",
-                "result": "foo"
+                "result": "string"
               }
             }
           }
@@ -2746,14 +2746,14 @@
             "responseBody": {
               "id": 1,
               "jsonrpc": "2.0",
-              "result": "foo"
+              "result": "string"
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
                 "id": 1,
                 "jsonrpc": "2.0",
-                "result": "foo"
+                "result": "string"
               }
             }
           }
@@ -2886,14 +2886,14 @@
             "responseBody": {
               "id": 1,
               "jsonrpc": "2.0",
-              "result": "foo"
+              "result": "string"
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
                 "id": 1,
                 "jsonrpc": "2.0",
-                "result": "foo"
+                "result": "string"
               }
             }
           }
@@ -4250,8 +4250,8 @@
               "id": 1,
               "jsonrpc": "2.0",
               "result": {
-                "gas": "foo",
-                "gasPrice": "foo",
+                "gas": "string",
+                "gasPrice": "string",
                 "nonce": null
               }
             },
@@ -4261,8 +4261,8 @@
                 "id": 1,
                 "jsonrpc": "2.0",
                 "result": {
-                  "gas": "foo",
-                  "gasPrice": "foo",
+                  "gas": "string",
+                  "gasPrice": "string",
                   "nonce": null
                 }
               }
@@ -4340,8 +4340,8 @@
               "id": 1,
               "jsonrpc": "2.0",
               "result": {
-                "gas": "foo",
-                "gasPrice": "foo",
+                "gas": "string",
+                "gasPrice": "string",
                 "nonce": null
               }
             },
@@ -4351,8 +4351,8 @@
                 "id": 1,
                 "jsonrpc": "2.0",
                 "result": {
-                  "gas": "foo",
-                  "gasPrice": "foo",
+                  "gas": "string",
+                  "gasPrice": "string",
                   "nonce": null
                 }
               }
@@ -4518,18 +4518,18 @@
               "id": 1,
               "jsonrpc": "2.0",
               "result": {
-                "blockHash": "foo",
-                "blockNumber": "foo",
-                "contractAddress": "foo",
-                "cumulativeGasUsed": "foo",
+                "blockHash": "string",
+                "blockNumber": "string",
+                "contractAddress": "string",
+                "cumulativeGasUsed": "string",
                 "from": null,
-                "gasUsed": "foo",
+                "gasUsed": "string",
                 "logs": [
                   {}
                 ],
-                "logsBloom": "foo",
-                "to": "foo",
-                "transactionHash": "foo",
+                "logsBloom": "string",
+                "to": "string",
+                "transactionHash": "string",
                 "transactionIndex": null
               }
             },
@@ -4539,18 +4539,18 @@
                 "id": 1,
                 "jsonrpc": "2.0",
                 "result": {
-                  "blockHash": "foo",
-                  "blockNumber": "foo",
-                  "contractAddress": "foo",
-                  "cumulativeGasUsed": "foo",
+                  "blockHash": "string",
+                  "blockNumber": "string",
+                  "contractAddress": "string",
+                  "cumulativeGasUsed": "string",
                   "from": null,
-                  "gasUsed": "foo",
+                  "gasUsed": "string",
                   "logs": [
                     {}
                   ],
-                  "logsBloom": "foo",
-                  "to": "foo",
-                  "transactionHash": "foo",
+                  "logsBloom": "string",
+                  "to": "string",
+                  "transactionHash": "string",
                   "transactionIndex": null
                 }
               }

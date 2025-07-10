@@ -30151,7 +30151,7 @@
               "responseBody": {
                 "count": 130,
                 "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
-                "previous": "foo",
+                "previous": "string",
                 "results": [
                   {
                     "id": "30cb4806-6e00-48a4-91c9-ca55968576c8",
@@ -30172,7 +30172,7 @@
                 "value": {
                   "count": 130,
                   "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
-                  "previous": "foo",
+                  "previous": "string",
                   "results": [
                     {
                       "id": "30cb4806-6e00-48a4-91c9-ca55968576c8",
@@ -31956,7 +31956,7 @@
               "responseBody": {
                 "count": 130,
                 "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
-                "previous": "foo",
+                "previous": "string",
                 "results": [
                   {
                     "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
@@ -31988,9 +31988,9 @@
                       "minimum_payment": 2400.3,
                       "no_interest_payment": 2690.83,
                       "interest_rate": 4,
-                      "end_date": "foo",
-                      "monthly_payment": 42,
-                      "last_payment_date": "foo"
+                      "end_date": "string",
+                      "monthly_payment": 1.1,
+                      "last_payment_date": "string"
                     },
                     "loan_data": {
                       "collected_at": "2022-02-09T08:45:50.406032Z",
@@ -32019,14 +32019,14 @@
                       "contract_start_date": "2020-03-01",
                       "contract_end_date": "2027-10-01",
                       "contract_number": "890ASLDJF87SD00",
-                      "credit_limit": 42,
-                      "last_period_balance": 42,
-                      "interest_rate": 42,
-                      "limit_day": "foo",
-                      "cutting_day": "foo",
-                      "cutting_date": "foo",
-                      "last_payment_date": "foo",
-                      "no_interest_payment": 42
+                      "credit_limit": 1.1,
+                      "last_period_balance": 1.1,
+                      "interest_rate": 1.1,
+                      "limit_day": "string",
+                      "cutting_day": "string",
+                      "cutting_date": "string",
+                      "last_payment_date": "string",
+                      "no_interest_payment": 1.1
                     },
                     "funds_data": [
                       {
@@ -32049,8 +32049,8 @@
                       "anticipated": 1393.46,
                       "collected_at": "2022-02-09T08:45:50.406032Z"
                     },
-                    "bank_product_id": "foo",
-                    "internal_identification": "foo"
+                    "bank_product_id": "string",
+                    "internal_identification": "string"
                   }
                 ]
               },
@@ -32059,7 +32059,7 @@
                 "value": {
                   "count": 130,
                   "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
-                  "previous": "foo",
+                  "previous": "string",
                   "results": [
                     {
                       "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
@@ -32091,9 +32091,9 @@
                         "minimum_payment": 2400.3,
                         "no_interest_payment": 2690.83,
                         "interest_rate": 4,
-                        "end_date": "foo",
-                        "monthly_payment": 42,
-                        "last_payment_date": "foo"
+                        "end_date": "string",
+                        "monthly_payment": 1.1,
+                        "last_payment_date": "string"
                       },
                       "loan_data": {
                         "collected_at": "2022-02-09T08:45:50.406032Z",
@@ -32122,14 +32122,14 @@
                         "contract_start_date": "2020-03-01",
                         "contract_end_date": "2027-10-01",
                         "contract_number": "890ASLDJF87SD00",
-                        "credit_limit": 42,
-                        "last_period_balance": 42,
-                        "interest_rate": 42,
-                        "limit_day": "foo",
-                        "cutting_day": "foo",
-                        "cutting_date": "foo",
-                        "last_payment_date": "foo",
-                        "no_interest_payment": 42
+                        "credit_limit": 1.1,
+                        "last_period_balance": 1.1,
+                        "interest_rate": 1.1,
+                        "limit_day": "string",
+                        "cutting_day": "string",
+                        "cutting_date": "string",
+                        "last_payment_date": "string",
+                        "no_interest_payment": 1.1
                       },
                       "funds_data": [
                         {
@@ -32152,8 +32152,8 @@
                         "anticipated": 1393.46,
                         "collected_at": "2022-02-09T08:45:50.406032Z"
                       },
-                      "bank_product_id": "foo",
-                      "internal_identification": "foo"
+                      "bank_product_id": "string",
+                      "internal_identification": "string"
                     }
                   ]
                 }
@@ -39137,7 +39137,7 @@
               "responseBody": {
                 "count": 130,
                 "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
-                "previous": "foo",
+                "previous": "string",
                 "results": [
                   {
                     "id": 1003,
@@ -39196,7 +39196,7 @@
                 "value": {
                   "count": 130,
                   "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
-                  "previous": "foo",
+                  "previous": "string",
                   "results": [
                     {
                       "id": 1003,
@@ -43035,14 +43035,14 @@
                   "receiver_id": "BBB222222BB22",
                   "receiver_name": "BELVO CORP",
                   "receiver_tax_fraud_status": "NO_TAX_FRAUD_STATUS",
-                  "cancelation_status": "foo",
+                  "cancelation_status": "string",
                   "cancelation_update_date": "2019-12-02",
                   "certification_date": "2019-12-01",
                   "certification_authority": "CCC333333CC33",
                   "payment_type": "99",
-                  "payment_type_description": "foo",
+                  "payment_type_description": "string",
                   "payment_method": "PUE",
-                  "payment_method_description": "foo",
+                  "payment_method_description": "string",
                   "usage": "P01",
                   "version": "3.3",
                   "place_of_issue": "01165",
@@ -43054,7 +43054,7 @@
                       "unit_code": "E48",
                       "unit_description": "Unidad de servicio",
                       "unit_amount": 200,
-                      "tax_type": "foo",
+                      "tax_type": "string",
                       "pre_tax_amount": 400,
                       "tax_percentage": 16,
                       "tax_amount": 64,
@@ -43062,7 +43062,7 @@
                       "retained_taxes": [
                         {
                           "collected_at": "2019-09-27T13:01:41.941Z",
-                          "tax_type": "foo",
+                          "tax_type": "string",
                           "tax": "ISR",
                           "tax_percentage": 10,
                           "retained_tax_amount": 209.79
@@ -43111,16 +43111,16 @@
                     "date_from": "2018-07-01",
                     "date_to": "2018-07-31",
                     "collected_at": "2019-09-27T13:01:41.941Z",
-                    "payment_date": "foo"
+                    "payment_date": "2023-01-15"
                   },
                   "folio": "26",
-                  "xml": "foo",
+                  "xml": "string",
                   "warnings": {
                     "code": "sat_xml_limit_reached",
                     "message": "The daily limit for XML downloads set by SAT was reached so this invoice might be missing data. Please check https://tinyurl.com/yydzhy5d for more information on this error."
                   },
-                  "sender_blacklist_status": "foo",
-                  "receiver_blacklist_status": "foo"
+                  "sender_blacklist_status": "string",
+                  "receiver_blacklist_status": "string"
                 }
               ],
               "responseBodyV3": {
@@ -43142,14 +43142,14 @@
                     "receiver_id": "BBB222222BB22",
                     "receiver_name": "BELVO CORP",
                     "receiver_tax_fraud_status": "NO_TAX_FRAUD_STATUS",
-                    "cancelation_status": "foo",
+                    "cancelation_status": "string",
                     "cancelation_update_date": "2019-12-02",
                     "certification_date": "2019-12-01",
                     "certification_authority": "CCC333333CC33",
                     "payment_type": "99",
-                    "payment_type_description": "foo",
+                    "payment_type_description": "string",
                     "payment_method": "PUE",
-                    "payment_method_description": "foo",
+                    "payment_method_description": "string",
                     "usage": "P01",
                     "version": "3.3",
                     "place_of_issue": "01165",
@@ -43161,7 +43161,7 @@
                         "unit_code": "E48",
                         "unit_description": "Unidad de servicio",
                         "unit_amount": 200,
-                        "tax_type": "foo",
+                        "tax_type": "string",
                         "pre_tax_amount": 400,
                         "tax_percentage": 16,
                         "tax_amount": 64,
@@ -43169,7 +43169,7 @@
                         "retained_taxes": [
                           {
                             "collected_at": "2019-09-27T13:01:41.941Z",
-                            "tax_type": "foo",
+                            "tax_type": "string",
                             "tax": "ISR",
                             "tax_percentage": 10,
                             "retained_tax_amount": 209.79
@@ -43218,16 +43218,16 @@
                       "date_from": "2018-07-01",
                       "date_to": "2018-07-31",
                       "collected_at": "2019-09-27T13:01:41.941Z",
-                      "payment_date": "foo"
+                      "payment_date": "2023-01-15"
                     },
                     "folio": "26",
-                    "xml": "foo",
+                    "xml": "string",
                     "warnings": {
                       "code": "sat_xml_limit_reached",
                       "message": "The daily limit for XML downloads set by SAT was reached so this invoice might be missing data. Please check https://tinyurl.com/yydzhy5d for more information on this error."
                     },
-                    "sender_blacklist_status": "foo",
-                    "receiver_blacklist_status": "foo"
+                    "sender_blacklist_status": "string",
+                    "receiver_blacklist_status": "string"
                   }
                 ]
               }
@@ -53448,7 +53448,7 @@
               "responseBody": {
                 "count": 130,
                 "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
-                "previous": "foo",
+                "previous": "string",
                 "results": [
                   {
                     "id": "91106968-1abd-4d64-85c1-4e73d96fb997",
@@ -53466,7 +53466,7 @@
                 "value": {
                   "count": 130,
                   "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
-                  "previous": "foo",
+                  "previous": "string",
                   "results": [
                     {
                       "id": "91106968-1abd-4d64-85c1-4e73d96fb997",
@@ -54153,7 +54153,7 @@
               "responseBody": {
                 "count": 130,
                 "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
-                "previous": "foo",
+                "previous": "string",
                 "results": [
                   {
                     "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
@@ -54204,7 +54204,7 @@
                 "value": {
                   "count": 130,
                   "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
-                  "previous": "foo",
+                  "previous": "string",
                   "results": [
                     {
                       "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
@@ -55395,7 +55395,7 @@
               "responseBody": {
                 "count": 130,
                 "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
-                "previous": "foo",
+                "previous": "string",
                 "results": [
                   {
                     "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
@@ -55429,9 +55429,9 @@
                         "minimum_payment": 2400.3,
                         "no_interest_payment": 2690.83,
                         "interest_rate": 4,
-                        "end_date": "foo",
-                        "monthly_payment": 42,
-                        "last_payment_date": "foo"
+                        "end_date": "string",
+                        "monthly_payment": 1.1,
+                        "last_payment_date": "string"
                       },
                       "loan_data": {
                         "collected_at": "2022-02-09T08:45:50.406032Z",
@@ -55460,14 +55460,14 @@
                         "contract_start_date": "2020-03-01",
                         "contract_end_date": "2027-10-01",
                         "contract_number": "890ASLDJF87SD00",
-                        "credit_limit": 42,
-                        "last_period_balance": 42,
-                        "interest_rate": 42,
-                        "limit_day": "foo",
-                        "cutting_day": "foo",
-                        "cutting_date": "foo",
-                        "last_payment_date": "foo",
-                        "no_interest_payment": 42
+                        "credit_limit": 1.1,
+                        "last_period_balance": 1.1,
+                        "interest_rate": 1.1,
+                        "limit_day": "string",
+                        "cutting_day": "string",
+                        "cutting_date": "string",
+                        "last_payment_date": "string",
+                        "no_interest_payment": 1.1
                       },
                       "funds_data": [
                         {
@@ -55490,8 +55490,8 @@
                         "anticipated": 1393.46,
                         "collected_at": "2022-02-09T08:45:50.406032Z"
                       },
-                      "bank_product_id": "foo",
-                      "internal_identification": "foo"
+                      "bank_product_id": "string",
+                      "internal_identification": "string"
                     },
                     "name": "Netflix",
                     "transactions": [
@@ -55515,7 +55515,7 @@
                 "value": {
                   "count": 130,
                   "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
-                  "previous": "foo",
+                  "previous": "string",
                   "results": [
                     {
                       "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
@@ -55549,9 +55549,9 @@
                           "minimum_payment": 2400.3,
                           "no_interest_payment": 2690.83,
                           "interest_rate": 4,
-                          "end_date": "foo",
-                          "monthly_payment": 42,
-                          "last_payment_date": "foo"
+                          "end_date": "string",
+                          "monthly_payment": 1.1,
+                          "last_payment_date": "string"
                         },
                         "loan_data": {
                           "collected_at": "2022-02-09T08:45:50.406032Z",
@@ -55580,14 +55580,14 @@
                           "contract_start_date": "2020-03-01",
                           "contract_end_date": "2027-10-01",
                           "contract_number": "890ASLDJF87SD00",
-                          "credit_limit": 42,
-                          "last_period_balance": 42,
-                          "interest_rate": 42,
-                          "limit_day": "foo",
-                          "cutting_day": "foo",
-                          "cutting_date": "foo",
-                          "last_payment_date": "foo",
-                          "no_interest_payment": 42
+                          "credit_limit": 1.1,
+                          "last_period_balance": 1.1,
+                          "interest_rate": 1.1,
+                          "limit_day": "string",
+                          "cutting_day": "string",
+                          "cutting_date": "string",
+                          "last_payment_date": "string",
+                          "no_interest_payment": 1.1
                         },
                         "funds_data": [
                           {
@@ -55610,8 +55610,8 @@
                           "anticipated": 1393.46,
                           "collected_at": "2022-02-09T08:45:50.406032Z"
                         },
-                        "bank_product_id": "foo",
-                        "internal_identification": "foo"
+                        "bank_product_id": "string",
+                        "internal_identification": "string"
                       },
                       "name": "Netflix",
                       "transactions": [
@@ -55860,9 +55860,9 @@
                       "minimum_payment": 2400.3,
                       "no_interest_payment": 2690.83,
                       "interest_rate": 4,
-                      "end_date": "foo",
-                      "monthly_payment": 42,
-                      "last_payment_date": "foo"
+                      "end_date": "string",
+                      "monthly_payment": 1.1,
+                      "last_payment_date": "string"
                     },
                     "loan_data": {
                       "collected_at": "2022-02-09T08:45:50.406032Z",
@@ -55891,14 +55891,14 @@
                       "contract_start_date": "2020-03-01",
                       "contract_end_date": "2027-10-01",
                       "contract_number": "890ASLDJF87SD00",
-                      "credit_limit": 42,
-                      "last_period_balance": 42,
-                      "interest_rate": 42,
-                      "limit_day": "foo",
-                      "cutting_day": "foo",
-                      "cutting_date": "foo",
-                      "last_payment_date": "foo",
-                      "no_interest_payment": 42
+                      "credit_limit": 1.1,
+                      "last_period_balance": 1.1,
+                      "interest_rate": 1.1,
+                      "limit_day": "string",
+                      "cutting_day": "string",
+                      "cutting_date": "string",
+                      "last_payment_date": "string",
+                      "no_interest_payment": 1.1
                     },
                     "funds_data": [
                       {
@@ -55921,8 +55921,8 @@
                       "anticipated": 1393.46,
                       "collected_at": "2022-02-09T08:45:50.406032Z"
                     },
-                    "bank_product_id": "foo",
-                    "internal_identification": "foo"
+                    "bank_product_id": "string",
+                    "internal_identification": "string"
                   },
                   "name": "Netflix",
                   "transactions": [
@@ -55975,9 +55975,9 @@
                         "minimum_payment": 2400.3,
                         "no_interest_payment": 2690.83,
                         "interest_rate": 4,
-                        "end_date": "foo",
-                        "monthly_payment": 42,
-                        "last_payment_date": "foo"
+                        "end_date": "string",
+                        "monthly_payment": 1.1,
+                        "last_payment_date": "string"
                       },
                       "loan_data": {
                         "collected_at": "2022-02-09T08:45:50.406032Z",
@@ -56006,14 +56006,14 @@
                         "contract_start_date": "2020-03-01",
                         "contract_end_date": "2027-10-01",
                         "contract_number": "890ASLDJF87SD00",
-                        "credit_limit": 42,
-                        "last_period_balance": 42,
-                        "interest_rate": 42,
-                        "limit_day": "foo",
-                        "cutting_day": "foo",
-                        "cutting_date": "foo",
-                        "last_payment_date": "foo",
-                        "no_interest_payment": 42
+                        "credit_limit": 1.1,
+                        "last_period_balance": 1.1,
+                        "interest_rate": 1.1,
+                        "limit_day": "string",
+                        "cutting_day": "string",
+                        "cutting_date": "string",
+                        "last_payment_date": "string",
+                        "no_interest_payment": 1.1
                       },
                       "funds_data": [
                         {
@@ -56036,8 +56036,8 @@
                         "anticipated": 1393.46,
                         "collected_at": "2022-02-09T08:45:50.406032Z"
                       },
-                      "bank_product_id": "foo",
-                      "internal_identification": "foo"
+                      "bank_product_id": "string",
+                      "internal_identification": "string"
                     },
                     "name": "Netflix",
                     "transactions": [
@@ -56287,9 +56287,9 @@
                       "minimum_payment": 2400.3,
                       "no_interest_payment": 2690.83,
                       "interest_rate": 4,
-                      "end_date": "foo",
-                      "monthly_payment": 42,
-                      "last_payment_date": "foo"
+                      "end_date": "string",
+                      "monthly_payment": 1.1,
+                      "last_payment_date": "string"
                     },
                     "loan_data": {
                       "collected_at": "2022-02-09T08:45:50.406032Z",
@@ -56318,14 +56318,14 @@
                       "contract_start_date": "2020-03-01",
                       "contract_end_date": "2027-10-01",
                       "contract_number": "890ASLDJF87SD00",
-                      "credit_limit": 42,
-                      "last_period_balance": 42,
-                      "interest_rate": 42,
-                      "limit_day": "foo",
-                      "cutting_day": "foo",
-                      "cutting_date": "foo",
-                      "last_payment_date": "foo",
-                      "no_interest_payment": 42
+                      "credit_limit": 1.1,
+                      "last_period_balance": 1.1,
+                      "interest_rate": 1.1,
+                      "limit_day": "string",
+                      "cutting_day": "string",
+                      "cutting_date": "string",
+                      "last_payment_date": "string",
+                      "no_interest_payment": 1.1
                     },
                     "funds_data": [
                       {
@@ -56348,8 +56348,8 @@
                       "anticipated": 1393.46,
                       "collected_at": "2022-02-09T08:45:50.406032Z"
                     },
-                    "bank_product_id": "foo",
-                    "internal_identification": "foo"
+                    "bank_product_id": "string",
+                    "internal_identification": "string"
                   },
                   "name": "Netflix",
                   "transactions": [
@@ -56402,9 +56402,9 @@
                         "minimum_payment": 2400.3,
                         "no_interest_payment": 2690.83,
                         "interest_rate": 4,
-                        "end_date": "foo",
-                        "monthly_payment": 42,
-                        "last_payment_date": "foo"
+                        "end_date": "string",
+                        "monthly_payment": 1.1,
+                        "last_payment_date": "string"
                       },
                       "loan_data": {
                         "collected_at": "2022-02-09T08:45:50.406032Z",
@@ -56433,14 +56433,14 @@
                         "contract_start_date": "2020-03-01",
                         "contract_end_date": "2027-10-01",
                         "contract_number": "890ASLDJF87SD00",
-                        "credit_limit": 42,
-                        "last_period_balance": 42,
-                        "interest_rate": 42,
-                        "limit_day": "foo",
-                        "cutting_day": "foo",
-                        "cutting_date": "foo",
-                        "last_payment_date": "foo",
-                        "no_interest_payment": 42
+                        "credit_limit": 1.1,
+                        "last_period_balance": 1.1,
+                        "interest_rate": 1.1,
+                        "limit_day": "string",
+                        "cutting_day": "string",
+                        "cutting_date": "string",
+                        "last_payment_date": "string",
+                        "no_interest_payment": 1.1
                       },
                       "funds_data": [
                         {
@@ -56463,8 +56463,8 @@
                         "anticipated": 1393.46,
                         "collected_at": "2022-02-09T08:45:50.406032Z"
                       },
-                      "bank_product_id": "foo",
-                      "internal_identification": "foo"
+                      "bank_product_id": "string",
+                      "internal_identification": "string"
                     },
                     "name": "Netflix",
                     "transactions": [
@@ -56663,9 +56663,9 @@
                       "minimum_payment": 2400.3,
                       "no_interest_payment": 2690.83,
                       "interest_rate": 4,
-                      "end_date": "foo",
-                      "monthly_payment": 42,
-                      "last_payment_date": "foo"
+                      "end_date": "string",
+                      "monthly_payment": 1.1,
+                      "last_payment_date": "string"
                     },
                     "loan_data": {
                       "collected_at": "2022-02-09T08:45:50.406032Z",
@@ -56694,14 +56694,14 @@
                       "contract_start_date": "2020-03-01",
                       "contract_end_date": "2027-10-01",
                       "contract_number": "890ASLDJF87SD00",
-                      "credit_limit": 42,
-                      "last_period_balance": 42,
-                      "interest_rate": 42,
-                      "limit_day": "foo",
-                      "cutting_day": "foo",
-                      "cutting_date": "foo",
-                      "last_payment_date": "foo",
-                      "no_interest_payment": 42
+                      "credit_limit": 1.1,
+                      "last_period_balance": 1.1,
+                      "interest_rate": 1.1,
+                      "limit_day": "string",
+                      "cutting_day": "string",
+                      "cutting_date": "string",
+                      "last_payment_date": "string",
+                      "no_interest_payment": 1.1
                     },
                     "funds_data": [
                       {
@@ -56724,8 +56724,8 @@
                       "anticipated": 1393.46,
                       "collected_at": "2022-02-09T08:45:50.406032Z"
                     },
-                    "bank_product_id": "foo",
-                    "internal_identification": "foo"
+                    "bank_product_id": "string",
+                    "internal_identification": "string"
                   },
                   "name": "Netflix",
                   "transactions": [
@@ -56778,9 +56778,9 @@
                         "minimum_payment": 2400.3,
                         "no_interest_payment": 2690.83,
                         "interest_rate": 4,
-                        "end_date": "foo",
-                        "monthly_payment": 42,
-                        "last_payment_date": "foo"
+                        "end_date": "string",
+                        "monthly_payment": 1.1,
+                        "last_payment_date": "string"
                       },
                       "loan_data": {
                         "collected_at": "2022-02-09T08:45:50.406032Z",
@@ -56809,14 +56809,14 @@
                         "contract_start_date": "2020-03-01",
                         "contract_end_date": "2027-10-01",
                         "contract_number": "890ASLDJF87SD00",
-                        "credit_limit": 42,
-                        "last_period_balance": 42,
-                        "interest_rate": 42,
-                        "limit_day": "foo",
-                        "cutting_day": "foo",
-                        "cutting_date": "foo",
-                        "last_payment_date": "foo",
-                        "no_interest_payment": 42
+                        "credit_limit": 1.1,
+                        "last_period_balance": 1.1,
+                        "interest_rate": 1.1,
+                        "limit_day": "string",
+                        "cutting_day": "string",
+                        "cutting_date": "string",
+                        "last_payment_date": "string",
+                        "no_interest_payment": 1.1
                       },
                       "funds_data": [
                         {
@@ -56839,8 +56839,8 @@
                         "anticipated": 1393.46,
                         "collected_at": "2022-02-09T08:45:50.406032Z"
                       },
-                      "bank_product_id": "foo",
-                      "internal_identification": "foo"
+                      "bank_product_id": "string",
+                      "internal_identification": "string"
                     },
                     "name": "Netflix",
                     "transactions": [
@@ -57200,7 +57200,7 @@
               "responseBody": {
                 "count": 130,
                 "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
-                "previous": "foo",
+                "previous": "string",
                 "results": [
                   {
                     "id": "30cb4806-6e00-48a4-91c9-ca55968576c8",
@@ -57259,7 +57259,7 @@
                 "value": {
                   "count": 130,
                   "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
-                  "previous": "foo",
+                  "previous": "string",
                   "results": [
                     {
                       "id": "30cb4806-6e00-48a4-91c9-ca55968576c8",
@@ -58577,7 +58577,7 @@
               "responseBody": {
                 "count": 130,
                 "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
-                "previous": "foo",
+                "previous": "string",
                 "results": [
                   {
                     "id": "30cb4806-6e00-48a4-91c9-ca55968576c8",
@@ -58616,7 +58616,7 @@
                 "value": {
                   "count": 130,
                   "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
-                  "previous": "foo",
+                  "previous": "string",
                   "results": [
                     {
                       "id": "30cb4806-6e00-48a4-91c9-ca55968576c8",
@@ -59412,7 +59412,7 @@
               "responseBody": {
                 "count": 130,
                 "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
-                "previous": "foo",
+                "previous": "string",
                 "results": [
                   {
                     "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
@@ -59498,7 +59498,7 @@
                 "value": {
                   "count": 130,
                   "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
-                  "previous": "foo",
+                  "previous": "string",
                   "results": [
                     {
                       "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
@@ -60953,7 +60953,7 @@
               "responseBody": {
                 "count": 130,
                 "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
-                "previous": "foo",
+                "previous": "string",
                 "results": [
                   {
                     "id": "c749315b-eec2-435d-a458-06912878564f",
@@ -60965,7 +60965,7 @@
                     "code": 25,
                     "issued_at": "2019-01-03T21:10:40.000Z",
                     "certified_at": "2019-01-03T21:10:41.000Z",
-                    "cancelled_at": "foo",
+                    "cancelled_at": "2024-01-15T09:30:00Z",
                     "sender_id": "JKUF980404P0",
                     "sender_name": "Roberto Nunez Batman",
                     "receiver_nationality": "NATIONAL",
@@ -60992,7 +60992,7 @@
                 "value": {
                   "count": 130,
                   "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
-                  "previous": "foo",
+                  "previous": "string",
                   "results": [
                     {
                       "id": "c749315b-eec2-435d-a458-06912878564f",
@@ -61004,7 +61004,7 @@
                       "code": 25,
                       "issued_at": "2019-01-03T21:10:40.000Z",
                       "certified_at": "2019-01-03T21:10:41.000Z",
-                      "cancelled_at": "foo",
+                      "cancelled_at": "2024-01-15T09:30:00Z",
                       "sender_id": "JKUF980404P0",
                       "sender_name": "Roberto Nunez Batman",
                       "receiver_nationality": "NATIONAL",
@@ -61224,7 +61224,7 @@
                   "code": 25,
                   "issued_at": "2019-01-03T21:10:40.000Z",
                   "certified_at": "2019-01-03T21:10:41.000Z",
-                  "cancelled_at": "foo",
+                  "cancelled_at": "2024-01-15T09:30:00Z",
                   "sender_id": "JKUF980404P0",
                   "sender_name": "Roberto Nunez Batman",
                   "receiver_nationality": "NATIONAL",
@@ -61258,7 +61258,7 @@
                     "code": 25,
                     "issued_at": "2019-01-03T21:10:40.000Z",
                     "certified_at": "2019-01-03T21:10:41.000Z",
-                    "cancelled_at": "foo",
+                    "cancelled_at": "2024-01-15T09:30:00Z",
                     "sender_id": "JKUF980404P0",
                     "sender_name": "Roberto Nunez Batman",
                     "receiver_nationality": "NATIONAL",
@@ -61435,7 +61435,7 @@
                 "code": 25,
                 "issued_at": "2019-01-03T21:10:40.000Z",
                 "certified_at": "2019-01-03T21:10:41.000Z",
-                "cancelled_at": "foo",
+                "cancelled_at": "2024-01-15T09:30:00Z",
                 "sender_id": "JKUF980404P0",
                 "sender_name": "Roberto Nunez Batman",
                 "receiver_nationality": "NATIONAL",
@@ -61467,7 +61467,7 @@
                   "code": 25,
                   "issued_at": "2019-01-03T21:10:40.000Z",
                   "certified_at": "2019-01-03T21:10:41.000Z",
-                  "cancelled_at": "foo",
+                  "cancelled_at": "2024-01-15T09:30:00Z",
                   "sender_id": "JKUF980404P0",
                   "sender_name": "Roberto Nunez Batman",
                   "receiver_nationality": "NATIONAL",
@@ -61940,7 +61940,7 @@
               "responseBody": {
                 "count": 130,
                 "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
-                "previous": "foo",
+                "previous": "string",
                 "results": [
                   {
                     "id": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
@@ -62024,7 +62024,7 @@
                 "value": {
                   "count": 130,
                   "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
-                  "previous": "foo",
+                  "previous": "string",
                   "results": [
                     {
                       "id": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
@@ -62981,7 +62981,7 @@
               "responseBody": {
                 "count": 130,
                 "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
-                "previous": "foo",
+                "previous": "string",
                 "results": [
                   {
                     "id": "fef05fc8-7357-4a4a-9d29-55038ea31a04",
@@ -62999,7 +62999,7 @@
                       "entitlements": {
                         "entitled_to_health_insurance": true,
                         "entitled_to_company_benefits": true,
-                        "valid_until": "foo",
+                        "valid_until": "2023-01-15",
                         "status": "EMPLOYED"
                       },
                       "document_ids": [
@@ -63024,7 +63024,7 @@
                         "weeks_employed": 12,
                         "state": "DISTRITO FEDERAL",
                         "most_recent_base_salary": 762.54,
-                        "monthly_salary": 42,
+                        "monthly_salary": 1.1,
                         "currency": "MXN",
                         "employment_status_updates": [
                           {
@@ -63049,7 +63049,7 @@
                 "value": {
                   "count": 130,
                   "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
-                  "previous": "foo",
+                  "previous": "string",
                   "results": [
                     {
                       "id": "fef05fc8-7357-4a4a-9d29-55038ea31a04",
@@ -63067,7 +63067,7 @@
                         "entitlements": {
                           "entitled_to_health_insurance": true,
                           "entitled_to_company_benefits": true,
-                          "valid_until": "foo",
+                          "valid_until": "2023-01-15",
                           "status": "EMPLOYED"
                         },
                         "document_ids": [
@@ -63092,7 +63092,7 @@
                           "weeks_employed": 12,
                           "state": "DISTRITO FEDERAL",
                           "most_recent_base_salary": 762.54,
-                          "monthly_salary": 42,
+                          "monthly_salary": 1.1,
                           "currency": "MXN",
                           "employment_status_updates": [
                             {
@@ -63326,7 +63326,7 @@
                     "entitlements": {
                       "entitled_to_health_insurance": true,
                       "entitled_to_company_benefits": true,
-                      "valid_until": "foo",
+                      "valid_until": "2023-01-15",
                       "status": "EMPLOYED"
                     },
                     "document_ids": [
@@ -63351,7 +63351,7 @@
                       "weeks_employed": 12,
                       "state": "DISTRITO FEDERAL",
                       "most_recent_base_salary": 762.54,
-                      "monthly_salary": 42,
+                      "monthly_salary": 1.1,
                       "currency": "MXN",
                       "employment_status_updates": [
                         {
@@ -63389,7 +63389,7 @@
                       "entitlements": {
                         "entitled_to_health_insurance": true,
                         "entitled_to_company_benefits": true,
-                        "valid_until": "foo",
+                        "valid_until": "2023-01-15",
                         "status": "EMPLOYED"
                       },
                       "document_ids": [
@@ -63414,7 +63414,7 @@
                         "weeks_employed": 12,
                         "state": "DISTRITO FEDERAL",
                         "most_recent_base_salary": 762.54,
-                        "monthly_salary": 42,
+                        "monthly_salary": 1.1,
                         "currency": "MXN",
                         "employment_status_updates": [
                           {
@@ -63595,7 +63595,7 @@
                   "entitlements": {
                     "entitled_to_health_insurance": true,
                     "entitled_to_company_benefits": true,
-                    "valid_until": "foo",
+                    "valid_until": "2023-01-15",
                     "status": "EMPLOYED"
                   },
                   "document_ids": [
@@ -63620,7 +63620,7 @@
                     "weeks_employed": 12,
                     "state": "DISTRITO FEDERAL",
                     "most_recent_base_salary": 762.54,
-                    "monthly_salary": 42,
+                    "monthly_salary": 1.1,
                     "currency": "MXN",
                     "employment_status_updates": [
                       {
@@ -63656,7 +63656,7 @@
                     "entitlements": {
                       "entitled_to_health_insurance": true,
                       "entitled_to_company_benefits": true,
-                      "valid_until": "foo",
+                      "valid_until": "2023-01-15",
                       "status": "EMPLOYED"
                     },
                     "document_ids": [
@@ -63681,7 +63681,7 @@
                       "weeks_employed": 12,
                       "state": "DISTRITO FEDERAL",
                       "most_recent_base_salary": 762.54,
-                      "monthly_salary": 42,
+                      "monthly_salary": 1.1,
                       "currency": "MXN",
                       "employment_status_updates": [
                         {
@@ -64507,7 +64507,7 @@
               "responseBody": {
                 "count": 130,
                 "next": "https://api.belvo.com/payments/{endpoint}/?page=2",
-                "previous": "foo",
+                "previous": "string",
                 "results": [
                   {
                     "id": "fc6694b5-ced2-47db-8d14-f15c9e942f31",
@@ -64522,7 +64522,7 @@
                 "value": {
                   "count": 130,
                   "next": "https://api.belvo.com/payments/{endpoint}/?page=2",
-                  "previous": "foo",
+                  "previous": "string",
                   "results": [
                     {
                       "id": "fc6694b5-ced2-47db-8d14-f15c9e942f31",
@@ -64744,7 +64744,7 @@
               "responseBody": {
                 "count": 130,
                 "next": "https://api.belvo.com/payments/{endpoint}/?page=2",
-                "previous": "foo",
+                "previous": "string",
                 "results": [
                   {
                     "id": "32ab6809-6253-4fb0-be0f-94cce6ebb692",
@@ -64762,7 +64762,7 @@
                 "value": {
                   "count": 130,
                   "next": "https://api.belvo.com/payments/{endpoint}/?page=2",
-                  "previous": "foo",
+                  "previous": "string",
                   "results": [
                     {
                       "id": "32ab6809-6253-4fb0-be0f-94cce6ebb692",
@@ -65413,7 +65413,7 @@
               "responseBody": {
                 "count": 130,
                 "next": "https://belvo.com/payments/{endpoint}/?page=2",
-                "previous": "foo",
+                "previous": "string",
                 "results": [
                   {
                     "id": "bbaceead-7b96-46d8-9354-38dec9707004",
@@ -65456,7 +65456,7 @@
                 "value": {
                   "count": 130,
                   "next": "https://belvo.com/payments/{endpoint}/?page=2",
-                  "previous": "foo",
+                  "previous": "string",
                   "results": [
                     {
                       "id": "bbaceead-7b96-46d8-9354-38dec9707004",
@@ -68055,7 +68055,7 @@
               "responseBody": {
                 "count": 130,
                 "next": "https://api.belvo.com/payments/{endpoint}/?page=2",
-                "previous": "foo",
+                "previous": "string",
                 "results": [
                   {
                     "id": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
@@ -68080,7 +68080,7 @@
                 "value": {
                   "count": 130,
                   "next": "https://api.belvo.com/payments/{endpoint}/?page=2",
-                  "previous": "foo",
+                  "previous": "string",
                   "results": [
                     {
                       "id": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
@@ -68294,8 +68294,8 @@
                   "amount": "1234.12",
                   "currency": "BRL",
                   "description": "Training shoes",
-                  "failure_code": "foo",
-                  "failure_message": "foo",
+                  "failure_code": "string",
+                  "failure_message": "string",
                   "metadata": {},
                   "next_step": {
                     "type": "open_finance_display_payment_method_information",
@@ -68364,8 +68364,8 @@
                       "created_at": "2022-02-09T08:45:50.406032Z",
                       "created_by": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
                       "customer": "531aa631-70a0-4eeb-ab97-51dea3e90c89",
-                      "failure_code": "foo",
-                      "failure_message": "foo",
+                      "failure_code": "string",
+                      "failure_message": "string",
                       "status": "PENDING",
                       "amount": "100.12",
                       "currency": "BRL",
@@ -68440,8 +68440,8 @@
                     "amount": "1234.12",
                     "currency": "BRL",
                     "description": "Training shoes",
-                    "failure_code": "foo",
-                    "failure_message": "foo",
+                    "failure_code": "string",
+                    "failure_message": "string",
                     "metadata": {},
                     "next_step": {
                       "type": "open_finance_display_payment_method_information",
@@ -68510,8 +68510,8 @@
                         "created_at": "2022-02-09T08:45:50.406032Z",
                         "created_by": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
                         "customer": "531aa631-70a0-4eeb-ab97-51dea3e90c89",
-                        "failure_code": "foo",
-                        "failure_message": "foo",
+                        "failure_code": "string",
+                        "failure_message": "string",
                         "status": "PENDING",
                         "amount": "100.12",
                         "currency": "BRL",
@@ -68702,8 +68702,8 @@
                   "amount": "1234.12",
                   "currency": "BRL",
                   "description": "Training shoes",
-                  "failure_code": "foo",
-                  "failure_message": "foo",
+                  "failure_code": "string",
+                  "failure_message": "string",
                   "metadata": {},
                   "next_step": {
                     "type": "open_finance_display_payment_method_information",
@@ -68772,8 +68772,8 @@
                       "created_at": "2022-02-09T08:45:50.406032Z",
                       "created_by": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
                       "customer": "531aa631-70a0-4eeb-ab97-51dea3e90c89",
-                      "failure_code": "foo",
-                      "failure_message": "foo",
+                      "failure_code": "string",
+                      "failure_message": "string",
                       "status": "PENDING",
                       "amount": "100.12",
                       "currency": "BRL",
@@ -68848,8 +68848,8 @@
                     "amount": "1234.12",
                     "currency": "BRL",
                     "description": "Training shoes",
-                    "failure_code": "foo",
-                    "failure_message": "foo",
+                    "failure_code": "string",
+                    "failure_message": "string",
                     "metadata": {},
                     "next_step": {
                       "type": "open_finance_display_payment_method_information",
@@ -68918,8 +68918,8 @@
                         "created_at": "2022-02-09T08:45:50.406032Z",
                         "created_by": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
                         "customer": "531aa631-70a0-4eeb-ab97-51dea3e90c89",
-                        "failure_code": "foo",
-                        "failure_message": "foo",
+                        "failure_code": "string",
+                        "failure_message": "string",
                         "status": "PENDING",
                         "amount": "100.12",
                         "currency": "BRL",
@@ -69313,7 +69313,7 @@
               "responseBody": {
                 "count": 130,
                 "next": "https://api.belvo.com/payments/{endpoint}/?page=2",
-                "previous": "foo",
+                "previous": "string",
                 "results": [
                   {
                     "id": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
@@ -69326,8 +69326,8 @@
                     "amount": "350000.00",
                     "currency": "BRL",
                     "description": "Training shoes",
-                    "failure_code": "foo",
-                    "failure_message": "foo",
+                    "failure_code": "string",
+                    "failure_message": "string",
                     "metadata": {},
                     "next_step": {
                       "type": "pse_display_payment_method_information",
@@ -69452,8 +69452,8 @@
                         "created_at": "2022-02-09T08:45:50.406032Z",
                         "created_by": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
                         "customer": "531aa631-70a0-4eeb-ab97-51dea3e90c89",
-                        "failure_code": "foo",
-                        "failure_message": "foo",
+                        "failure_code": "string",
+                        "failure_message": "string",
                         "status": "PENDING",
                         "amount": "100.12",
                         "currency": "BRL",
@@ -69507,7 +69507,7 @@
                 "value": {
                   "count": 130,
                   "next": "https://api.belvo.com/payments/{endpoint}/?page=2",
-                  "previous": "foo",
+                  "previous": "string",
                   "results": [
                     {
                       "id": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
@@ -69520,8 +69520,8 @@
                       "amount": "350000.00",
                       "currency": "BRL",
                       "description": "Training shoes",
-                      "failure_code": "foo",
-                      "failure_message": "foo",
+                      "failure_code": "string",
+                      "failure_message": "string",
                       "metadata": {},
                       "next_step": {
                         "type": "pse_display_payment_method_information",
@@ -69646,8 +69646,8 @@
                           "created_at": "2022-02-09T08:45:50.406032Z",
                           "created_by": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
                           "customer": "531aa631-70a0-4eeb-ab97-51dea3e90c89",
-                          "failure_code": "foo",
-                          "failure_message": "foo",
+                          "failure_code": "string",
+                          "failure_message": "string",
                           "status": "PENDING",
                           "amount": "100.12",
                           "currency": "BRL",
@@ -69882,8 +69882,8 @@
                 "amount": "350000.00",
                 "currency": "BRL",
                 "description": "Training shoes",
-                "failure_code": "foo",
-                "failure_message": "foo",
+                "failure_code": "string",
+                "failure_message": "string",
                 "metadata": {},
                 "next_step": {
                   "type": "pse_display_payment_method_information",
@@ -70008,8 +70008,8 @@
                     "created_at": "2022-02-09T08:45:50.406032Z",
                     "created_by": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
                     "customer": "531aa631-70a0-4eeb-ab97-51dea3e90c89",
-                    "failure_code": "foo",
-                    "failure_message": "foo",
+                    "failure_code": "string",
+                    "failure_message": "string",
                     "status": "PENDING",
                     "amount": "100.12",
                     "currency": "BRL",
@@ -70069,8 +70069,8 @@
                   "amount": "350000.00",
                   "currency": "BRL",
                   "description": "Training shoes",
-                  "failure_code": "foo",
-                  "failure_message": "foo",
+                  "failure_code": "string",
+                  "failure_message": "string",
                   "metadata": {},
                   "next_step": {
                     "type": "pse_display_payment_method_information",
@@ -70195,8 +70195,8 @@
                       "created_at": "2022-02-09T08:45:50.406032Z",
                       "created_by": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
                       "customer": "531aa631-70a0-4eeb-ab97-51dea3e90c89",
-                      "failure_code": "foo",
-                      "failure_message": "foo",
+                      "failure_code": "string",
+                      "failure_message": "string",
                       "status": "PENDING",
                       "amount": "100.12",
                       "currency": "BRL",
@@ -70373,8 +70373,8 @@
                 "amount": "350000.00",
                 "currency": "BRL",
                 "description": "Training shoes",
-                "failure_code": "foo",
-                "failure_message": "foo",
+                "failure_code": "string",
+                "failure_message": "string",
                 "metadata": {},
                 "next_step": {
                   "type": "pse_display_payment_method_information",
@@ -70499,8 +70499,8 @@
                     "created_at": "2022-02-09T08:45:50.406032Z",
                     "created_by": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
                     "customer": "531aa631-70a0-4eeb-ab97-51dea3e90c89",
-                    "failure_code": "foo",
-                    "failure_message": "foo",
+                    "failure_code": "string",
+                    "failure_message": "string",
                     "status": "PENDING",
                     "amount": "100.12",
                     "currency": "BRL",
@@ -70560,8 +70560,8 @@
                   "amount": "350000.00",
                   "currency": "BRL",
                   "description": "Training shoes",
-                  "failure_code": "foo",
-                  "failure_message": "foo",
+                  "failure_code": "string",
+                  "failure_message": "string",
                   "metadata": {},
                   "next_step": {
                     "type": "pse_display_payment_method_information",
@@ -70686,8 +70686,8 @@
                       "created_at": "2022-02-09T08:45:50.406032Z",
                       "created_by": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
                       "customer": "531aa631-70a0-4eeb-ab97-51dea3e90c89",
-                      "failure_code": "foo",
-                      "failure_message": "foo",
+                      "failure_code": "string",
+                      "failure_message": "string",
                       "status": "PENDING",
                       "amount": "100.12",
                       "currency": "BRL",
@@ -70886,8 +70886,8 @@
                 "amount": "350000.00",
                 "currency": "BRL",
                 "description": "Training shoes",
-                "failure_code": "foo",
-                "failure_message": "foo",
+                "failure_code": "string",
+                "failure_message": "string",
                 "metadata": {},
                 "next_step": {
                   "type": "pse_display_payment_method_information",
@@ -71012,8 +71012,8 @@
                     "created_at": "2022-02-09T08:45:50.406032Z",
                     "created_by": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
                     "customer": "531aa631-70a0-4eeb-ab97-51dea3e90c89",
-                    "failure_code": "foo",
-                    "failure_message": "foo",
+                    "failure_code": "string",
+                    "failure_message": "string",
                     "status": "PENDING",
                     "amount": "100.12",
                     "currency": "BRL",
@@ -71073,8 +71073,8 @@
                   "amount": "350000.00",
                   "currency": "BRL",
                   "description": "Training shoes",
-                  "failure_code": "foo",
-                  "failure_message": "foo",
+                  "failure_code": "string",
+                  "failure_message": "string",
                   "metadata": {},
                   "next_step": {
                     "type": "pse_display_payment_method_information",
@@ -71199,8 +71199,8 @@
                       "created_at": "2022-02-09T08:45:50.406032Z",
                       "created_by": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
                       "customer": "531aa631-70a0-4eeb-ab97-51dea3e90c89",
-                      "failure_code": "foo",
-                      "failure_message": "foo",
+                      "failure_code": "string",
+                      "failure_message": "string",
                       "status": "PENDING",
                       "amount": "100.12",
                       "currency": "BRL",
@@ -71641,7 +71641,7 @@
               "responseBody": {
                 "count": 130,
                 "next": "https://api.belvo.com/payments/{endpoint}/?page=2",
-                "previous": "foo",
+                "previous": "string",
                 "results": [
                   {
                     "id": "fd0f3303-cafb-47ea-9753-21155cb144ab",
@@ -71663,7 +71663,7 @@
                 "value": {
                   "count": 130,
                   "next": "https://api.belvo.com/payments/{endpoint}/?page=2",
-                  "previous": "foo",
+                  "previous": "string",
                   "results": [
                     {
                       "id": "fd0f3303-cafb-47ea-9753-21155cb144ab",

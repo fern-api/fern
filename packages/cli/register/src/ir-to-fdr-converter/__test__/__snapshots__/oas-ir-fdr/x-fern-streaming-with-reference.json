@@ -154,13 +154,13 @@
               "headers": {},
               "requestBody": {
                 "stream": true,
-                "prompt": "foo"
+                "prompt": "string"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
                   "stream": true,
-                  "prompt": "foo"
+                  "prompt": "string"
                 }
               },
               "responseStatusCode": 200
@@ -243,13 +243,13 @@
               "headers": {},
               "requestBody": {
                 "stream": false,
-                "prompt": "foo"
+                "prompt": "string"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
                   "stream": false,
-                  "prompt": "foo"
+                  "prompt": "string"
                 }
               },
               "responseStatusCode": 200
