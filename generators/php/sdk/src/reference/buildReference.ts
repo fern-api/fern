@@ -70,8 +70,12 @@ function getSafeTypeRepresentation(type: unknown): string {
     // Handle specific type strings
     if (typeof type === "string") {
         // Convert known type strings to PHP equivalents
-        if (type === "map") { return "array"; }
-        if (type === "optional") { return "mixed"; }
+        if (type === "map") {
+            return "array";
+        }
+        if (type === "optional") {
+            return "mixed";
+        }
         return type;
     }
 
@@ -254,7 +258,11 @@ function getReferenceEndpointInvocationParameters({
     let result = "";
     let first = true;
     endpointSignatureInfo.pathParameters.forEach((pathParameter, index) => {
-        if (first) { first = false; } else { result += ", "; }
+        if (first) {
+            first = false;
+        } else {
+            result += ", ";
+        }
         // Ensure we have a $ prefix but avoid double $$ in the output
         const paramName = pathParameter.name.replace(/^\$/, "");
         result += `$${paramName}`;
@@ -295,7 +303,13 @@ export function getServiceFilepath({
     }
 }
 
-export function isRootServiceId({ context, serviceId }: { context: SdkGeneratorContext; serviceId: ServiceId }): boolean {
+export function isRootServiceId({
+    context,
+    serviceId
+}: {
+    context: SdkGeneratorContext;
+    serviceId: ServiceId;
+}): boolean {
     return context.ir.rootPackage.service === serviceId;
 }
 
