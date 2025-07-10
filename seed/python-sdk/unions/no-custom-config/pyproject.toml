@@ -50,7 +50,9 @@ ruff = "==0.11.5"
 
 [tool.pytest.ini_options]
 testpaths = [ "tests" ]
-asyncio_mode = "auto"
+
+[tool.pytest-asyncio]
+asyncio_mode = "strict"
 
 [tool.mypy]
 plugins = ["pydantic.mypy"]
