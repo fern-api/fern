@@ -25,6 +25,11 @@
         "./package.json": "./package.json"
     },
     "types": "./types/index.d.ts",
+    "dependencies": {
+        "lodash-es": "^4.17.21",
+        "stream": "^0.0.2",
+        "qs": "^6.11.2"
+    },
     "devDependencies": {
         "webpack": "^5.97.1",
         "ts-loader": "^9.5.1",
@@ -50,9 +55,5 @@
     "engines": {
         "node": ">=16.0.0"
     },
-    "sideEffects": false,
-    "dependencies": {
-        "stream": "^0.0.2",
-        "qs": "^6.11.2"
-    }
+    "sideEffects": false
 }
