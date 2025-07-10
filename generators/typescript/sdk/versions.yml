@@ -28,7 +28,7 @@
 
 - version: 2.4.0
   changelogEntry:
-    - summary: Fixes bug with query parameter and path paramter serialization in URL for WebSocket channels.
+    - summary: Fixes bug with query parameter and path parameter serialization in URL for WebSocket channels.
       type: fix
   createdAt: '2025-07-03'
   irVersion: 58     

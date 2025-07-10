@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.1.0
+  changelogEntry:
+    - summary: |
+        Pass in custom pager context to the custom pager factory. The context contains the send request method, initial HTTP request, client options, and request options.
+        SDK authors can improve their custom pagination implementation with this context available to them.
+      type: feat
+  createdAt: '2025-07-09'
+  irVersion: 58
 - version: 2.0.3
   changelogEntry:
     - summary: |

@@ -18,7 +18,8 @@ export abstract class AbstractSwiftGeneratorContext<
     ) {
         super(config, generatorNotificationService);
         this.project = new SwiftProject({
-            context: this
+            context: this,
+            name: this.ir.apiName.pascalCase.unsafeName
         });
     }
 }

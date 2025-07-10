@@ -2,6 +2,7 @@ displayName: Swift SDK
 irVersion: v58
 image: fernapi/fern-swift-sdk
 changelogLocation: ../../generators/swift/sdk/versions.yml
+
 publish:
   preBuildCommands:
     - pnpm --filter @fern-api/fern-swift-sdk dist:cli
@@ -9,6 +10,7 @@ publish:
     file: ./generators/swift/sdk/Dockerfile
     image: fernapi/fern-swift-sdk
     context: .
+
 test:
   docker:
     image: fernapi/fern-swift-sdk:latest
