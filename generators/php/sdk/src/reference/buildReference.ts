@@ -221,7 +221,9 @@ function getReferenceEndpointInvocationParameters({
         if (index > 0) {
             result += ", ";
         }
-        result += "$" + pathParameter.name;
+        // Ensure we have a $ prefix but avoid double $$ in the output
+        const paramName = pathParameter.name.replace(/^\$/, '');
+        result += `$${paramName}`;
     });
     if (endpointSignatureInfo.requestParameter != null) {
         if (result.length > 0) {
@@ -229,6 +231,7 @@ function getReferenceEndpointInvocationParameters({
         }
         result += `$request`;
     }
+    // Return the parameters wrapped in parentheses
     return `(${result})`;
 }
 
