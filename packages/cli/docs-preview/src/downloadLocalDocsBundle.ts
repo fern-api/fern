@@ -148,7 +148,13 @@ export async function downloadBundle({
         const absolutePathToBundleFolder = getPathToBundleFolder({ app });
         await mkdir(absolutePathToBundleFolder, { recursive: true });
         await decompress(outputZipPath, absolutePathToBundleFolder, {
-            // filter: (file) => file.type !== 'symlink' // Skip symlinks for Windows compatibility
+            filter: (file) => {
+                if (file.type === 'symlink') {
+                    logger.debug(`Skipping symlink: ${file.path}`);
+                    return false;
+                }
+                return true;
+            }
         });
         
         // write etag
