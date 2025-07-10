@@ -48,7 +48,14 @@ export class Writer extends AbstractWriter {
     /* Whether or not to skip writing imports */
     public readonly skipImports: boolean;
 
-    constructor({ namespace, allNamespaceSegments, allTypeClassReferences, rootNamespace, customConfig, skipImports = false }: Writer.Args) {
+    constructor({
+        namespace,
+        allNamespaceSegments,
+        allTypeClassReferences,
+        rootNamespace,
+        customConfig,
+        skipImports = false
+    }: Writer.Args) {
         super();
         this.namespace = namespace;
         this.allNamespaceSegments = allNamespaceSegments;

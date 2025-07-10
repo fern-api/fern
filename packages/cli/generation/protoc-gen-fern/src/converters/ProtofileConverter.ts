@@ -100,15 +100,15 @@ export class ProtofileConverter extends AbstractSpecConverter<ProtofileConverter
     private generateExamplesForServices() {
         for (const [serviceName, service] of Object.entries(this.ir.services)) {
             for (const [endpointName, endpoint] of Object.entries(service.endpoints)) {
-                let endpointExample = initializeEmptyServiceExample();
+                const endpointExample = initializeEmptyServiceExample();
 
                 const requestBodyExample = this.constructRequestBodyExample(endpoint);
                 const responseBodyExample = this.constructResponseBodyExample(endpoint);
-                if (requestBodyExample != null) {
-                    endpointExample.request!.requestBody = requestBodyExample;
+                if (requestBodyExample != null && endpointExample.request != null) {
+                    endpointExample.request.requestBody = requestBodyExample;
                 }
-                if (responseBodyExample != null) {
-                    endpointExample.response!.body = V2HttpEndpointResponseBody.json(responseBodyExample);
+                if (responseBodyExample != null && endpointExample.response != null) {
+                    endpointExample.response.body = V2HttpEndpointResponseBody.json(responseBodyExample);
                 }
                 endpoint.v2Examples = {
                     userSpecifiedExamples: {},
@@ -120,7 +120,7 @@ export class ProtofileConverter extends AbstractSpecConverter<ProtofileConverter
         }
     }
 
-    private constructRequestBodyExample(endpoint: any): unknown | undefined {
+    private constructRequestBodyExample(endpoint: FernIr.HttpEndpoint): unknown | undefined {
         const requestBodyTypeId = (
             (endpoint.requestBody as HttpRequestBodyReference).requestBodyType as FernIr.TypeReference.Named
         ).typeId;
@@ -139,7 +139,7 @@ export class ProtofileConverter extends AbstractSpecConverter<ProtofileConverter
         return undefined;
     }
 
-    private constructResponseBodyExample(endpoint: any): unknown | undefined {
+    private constructResponseBodyExample(endpoint: FernIr.HttpEndpoint): unknown | undefined {
         const responseBodyTypeId = (
             (endpoint.response?.body as FernIr.HttpResponseBody.Json).value
                 .responseBodyType as FernIr.TypeReference.Named

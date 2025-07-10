@@ -122,7 +122,9 @@ export class ExampleConverter extends AbstractConverter<ProtofileConverterContex
 
         for (const field of this.message.field) {
             const fieldName = field.name ?? "";
-            if (!fieldName) continue;
+            if (!fieldName) {
+                continue;
+            }
 
             const hasOneofIndex = Object.prototype.hasOwnProperty.call(field, "oneofIndex");
             if (hasOneofIndex && field.oneofIndex != null) {
@@ -156,9 +158,9 @@ export class ExampleConverter extends AbstractConverter<ProtofileConverterContex
         const isValid = allResults.every(({ result }) => result.isValid);
         const allErrors = allResults.flatMap(({ result }) => result.errors);
 
-        const validExample: Record<string, any> = {};
+        const validExample: Record<string, unknown> = {};
 
-        const oneofFieldsByGroup = new Map<string, { fieldName: string; value: any }>();
+        const oneofFieldsByGroup = new Map<string, { fieldName: string; value: unknown }>();
 
         for (const [fieldName, { field, result }] of resultsByFieldName.entries()) {
             if (!result.isValid || result.validExample === null || result.validExample === undefined) {
@@ -167,8 +169,10 @@ export class ExampleConverter extends AbstractConverter<ProtofileConverterContex
 
             const hasOneofIndex = Object.prototype.hasOwnProperty.call(field, "oneofIndex");
             if (hasOneofIndex && field.oneofIndex != null && oneofGroups.has(field.oneofIndex)) {
-                const groupName = oneofGroups.get(field.oneofIndex)!;
-                oneofFieldsByGroup.set(groupName, { fieldName, value: result.validExample });
+                const groupName = oneofGroups.get(field.oneofIndex) ?? undefined;
+                if (groupName != null) {
+                    oneofFieldsByGroup.set(groupName, { fieldName, value: result.validExample });
+                }
             } else {
                 validExample[fieldName] = result.validExample;
             }
@@ -406,8 +410,7 @@ export class ExampleConverter extends AbstractConverter<ProtofileConverterContex
             depth: this.depth + 1,
             seenMessages
         });
-        const result = converter.convert();
-        return result;
+        return converter.convert();
     }
 
     private findEnumType(typeName: string): EnumDescriptorProto | undefined {
@@ -416,7 +419,9 @@ export class ExampleConverter extends AbstractConverter<ProtofileConverterContex
         if (!enumType && this.context.getCodeGeneratorRequest()) {
             for (const file of this.context.getCodeGeneratorRequest().protoFile) {
                 enumType = this.findEnumInFile(typeName, file);
-                if (enumType) break;
+                if (enumType != null) {
+                    break;
+                }
             }
         }
 
@@ -434,8 +439,10 @@ export class ExampleConverter extends AbstractConverter<ProtofileConverterContex
         }
 
         for (const message of file.messageType) {
-            const enum_ = this.findEnumInMessage(typeName, message, packageName);
-            if (enum_) return enum_;
+            const nestedEnum = this.findEnumInMessage(typeName, message, packageName);
+            if (nestedEnum != null) {
+                return nestedEnum;
+            }
         }
 
         return undefined;
@@ -456,8 +463,10 @@ export class ExampleConverter extends AbstractConverter<ProtofileConverterContex
         }
 
         for (const nestedMessage of message.nestedType) {
-            const enum_ = this.findEnumInMessage(typeName, nestedMessage, messagePrefix);
-            if (enum_) return enum_;
+            const nestedEnum = this.findEnumInMessage(typeName, nestedMessage, messagePrefix);
+            if (nestedEnum != null) {
+                return nestedEnum;
+            }
         }
 
         return undefined;

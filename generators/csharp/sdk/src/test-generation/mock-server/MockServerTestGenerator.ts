@@ -58,7 +58,7 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
         if (!subpackage) {
             return this.context.getMockServerTestNamespace();
         }
-        
+
         return [
             this.context.getMockServerTestNamespace(),
             ...this.context.getChildNamespaceSegments(subpackage.fernFilepath)
