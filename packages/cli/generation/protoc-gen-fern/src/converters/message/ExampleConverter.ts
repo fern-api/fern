@@ -367,7 +367,7 @@ export class ExampleConverter extends AbstractConverter<ProtofileConverterContex
         if (!messageType || !newMessageContext) {
             return {
                 // HACKHACK: This is a hack to get around not showing any example
-                isValid: false,
+                isValid: true,
                 coerced: false,
                 validExample: null,
                 errors: [`Could not find message type ${normalizedTypeName}`]
