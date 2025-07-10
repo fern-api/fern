@@ -28,12 +28,12 @@ export class ProtofileConverterContext extends AbstractConverterContext<FileDesc
         this.codeGeneratorRequest = codeGeneratorRequest;
     }
 
-    public resolveTypeIdToProtoFile(typeId: string): DescriptorProto | undefined {
+    public resolveTypeIdToProtoFile(typeId: string): { ok: true; message: DescriptorProto; protoFileName: string } | { ok: false } {
         // Check the current spec
         if (typeId.startsWith(this.spec.package)) {
             for (const message of this.spec.messageType) {
                 if (`${this.spec.package}.${message.name}` === this.maybeRemoveLeadingPeriod(typeId)) {
-                    return message;
+                    return { ok: true, message, protoFileName: this.spec.name };
                 }
             }
         }
@@ -43,12 +43,12 @@ export class ProtofileConverterContext extends AbstractConverterContext<FileDesc
             if (typeId.startsWith(protoFile.package)) {
                 for (const message of protoFile.messageType) {
                     if (`${protoFile.package}.${message.name}` === this.maybeRemoveLeadingPeriod(typeId)) {
-                        return message;
+                        return { ok: true, message, protoFileName: protoFile.name };
                     }
                 }
             }
         }
-        return undefined;
+        return { ok: false };
     }
 
     public getCodeGeneratorRequest(): CodeGeneratorRequest {
