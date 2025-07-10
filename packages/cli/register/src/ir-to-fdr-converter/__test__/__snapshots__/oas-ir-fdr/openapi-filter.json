@@ -18264,9 +18264,9 @@
             {
               "name": "Successful response",
               "description": "",
-              "path": "/admins/42/away",
+              "path": "/admins/1/away",
               "pathParameters": {
-                "id": 42
+                "id": 1
               },
               "queryParameters": {},
               "headers": {},
@@ -18309,9 +18309,9 @@
             {
               "name": "Admin not found",
               "description": "",
-              "path": "/admins/42/away",
+              "path": "/admins/1/away",
               "pathParameters": {
-                "id": 42
+                "id": 1
               },
               "queryParameters": {},
               "headers": {},
@@ -18331,9 +18331,9 @@
             {
               "name": "Unauthorized",
               "description": "",
-              "path": "/admins/42/away",
+              "path": "/admins/1/away",
               "pathParameters": {
-                "id": 42
+                "id": 1
               },
               "queryParameters": {},
               "headers": {},
@@ -26953,9 +26953,9 @@
           "examples": [
             {
               "description": "",
-              "path": "/contacts/42/notes",
+              "path": "/contacts/1/notes",
               "pathParameters": {
-                "id": 42
+                "id": 1
               },
               "queryParameters": {},
               "headers": {},
@@ -36938,7 +36938,7 @@
                 "data_type": "string",
                 "description": "Just a plain old ring",
                 "options": [
-                  "foo"
+                  "string"
                 ],
                 "archived": false
               },
@@ -36950,7 +36950,7 @@
                   "data_type": "string",
                   "description": "Just a plain old ring",
                   "options": [
-                    "foo"
+                    "string"
                   ],
                   "archived": false
                 }
@@ -37197,8 +37197,8 @@
                 "archived": false,
                 "description": "Just a plain old ring",
                 "options": [
-                  "foo",
-                  "foo"
+                  "string",
+                  "string"
                 ]
               },
               "requestBodyV3": {
@@ -37207,8 +37207,8 @@
                   "archived": false,
                   "description": "Just a plain old ring",
                   "options": [
-                    "foo",
-                    "foo"
+                    "string",
+                    "string"
                   ]
                 }
               },
@@ -37274,7 +37274,7 @@
                 "archived": false,
                 "description": "Too few options",
                 "options": [
-                  "foo"
+                  "string"
                 ]
               },
               "requestBodyV3": {
@@ -37283,7 +37283,7 @@
                   "archived": false,
                   "description": "Too few options",
                   "options": [
-                    "foo"
+                    "string"
                   ]
                 }
               },
@@ -37302,8 +37302,8 @@
                 "archived": false,
                 "description": "Just a plain old ring",
                 "options": [
-                  "foo",
-                  "foo"
+                  "string",
+                  "string"
                 ]
               },
               "requestBodyV3": {
@@ -37312,8 +37312,8 @@
                   "archived": false,
                   "description": "Just a plain old ring",
                   "options": [
-                    "foo",
-                    "foo"
+                    "string",
+                    "string"
                   ]
                 }
               },
@@ -37487,7 +37487,7 @@
               "pathParameters": {},
               "queryParameters": {
                 "filter": {
-                  "user_id": "foo"
+                  "user_id": "string"
                 },
                 "type": "type"
               },
