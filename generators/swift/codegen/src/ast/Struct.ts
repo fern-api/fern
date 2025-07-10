@@ -1,75 +1,52 @@
-import Swift, { AccessLevel, Type } from "..";
-import { Field } from "./Field";
+import { AccessLevel } from "./AccessLevel";
+import { Property } from "./Property";
 import { AstNode, Writer } from "./core";
-
-/*
-
-Builds Swift Structs
-====================
-
-Example:
-
-private struct TopGun: Movie {
-    let description: String
-}
-
-Breakdown:
-
-{accessLevel} struct {name}: {inheritance} {
-    {fields}
-}
-
-*/
 
 export declare namespace Struct {
     interface Args {
-        /* The access level of the type */
-        accessLevel?: AccessLevel;
-        /* The name of the struct */
         name: string;
-        /* The inheritance hierarchy of this type */
-        inheritance?: Type[];
-        /* The field variables in the class */
-        fields?: Field[];
+        accessLevel?: AccessLevel;
+        conformances?: string[];
+        properties: Property[];
     }
 }
 
 export class Struct extends AstNode {
-    public readonly accessLevel?: AccessLevel;
     public readonly name: string;
-    public readonly fields?: Field[];
-    public readonly inheritance?: Type[];
+    public readonly accessLevel?: AccessLevel;
+    public readonly conformances?: string[];
+    public readonly properties: Property[];
 
-    constructor({ accessLevel, name, inheritance, fields }: Struct.Args) {
+    public constructor({ accessLevel, name, conformances, properties }: Struct.Args) {
         super();
-        this.accessLevel = accessLevel;
         this.name = name;
-        this.inheritance = inheritance;
-        this.fields = fields;
-    }
-
-    private buildTitle(): string | undefined {
-        if (!this.inheritance) {
-            return this.name;
-        }
-
-        const names = this.inheritance.map((obj) => obj.name).join(", ");
-        return `${this.name}: ${names}`;
+        this.accessLevel = accessLevel;
+        this.conformances = conformances;
+        this.properties = properties;
     }
 
     public write(writer: Writer): void {
-        // example: public struct Name {
-        writer.openBlock(
-            [this.accessLevel, "struct", this.buildTitle()],
-            "{",
-            () => {
-                if (this.fields) {
-                    this.fields.forEach((field) => {
-                        writer.writeNode(field);
-                    });
-                }
-            },
-            "}"
-        );
+        if (this.accessLevel != null) {
+            writer.write(this.accessLevel);
+            writer.write(" ");
+        }
+        writer.write(`struct ${this.name}`); // TODO: Handle reserved words
+        this.conformances?.forEach((conformance, index) => {
+            if (index === 0) {
+                writer.write(": ");
+            } else if (index > 0) {
+                writer.write(", ");
+            }
+            writer.write(conformance);
+        });
+        writer.write(" {");
+        writer.newLine();
+        writer.indent();
+        this.properties.forEach((property) => {
+            property.write(writer);
+            writer.newLine();
+        });
+        writer.dedent();
+        writer.write("}");
     }
 }

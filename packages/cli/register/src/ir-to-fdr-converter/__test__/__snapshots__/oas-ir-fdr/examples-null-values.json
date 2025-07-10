@@ -295,36 +295,36 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "id": "foo",
-              "name": "foo",
-              "email": "foo",
-              "createdAt": "foo",
+              "id": "string",
+              "name": "string",
+              "email": "string",
+              "createdAt": "2024-01-15T09:30:00Z",
               "settings": {
-                "theme": "foo",
+                "theme": "string",
                 "notifications": true,
-                "lastModified": "foo"
+                "lastModified": "2024-01-15T09:30:00Z"
               },
               "stats": {
-                "totalLogins": 42,
-                "lastLoginTime": "foo",
+                "totalLogins": 1,
+                "lastLoginTime": "2024-01-15T09:30:00Z",
                 "accountStatus": "active"
               }
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
-                "id": "foo",
-                "name": "foo",
-                "email": "foo",
-                "createdAt": "foo",
+                "id": "string",
+                "name": "string",
+                "email": "string",
+                "createdAt": "2024-01-15T09:30:00Z",
                 "settings": {
-                  "theme": "foo",
+                  "theme": "string",
                   "notifications": true,
-                  "lastModified": "foo"
+                  "lastModified": "2024-01-15T09:30:00Z"
                 },
                 "stats": {
-                  "totalLogins": 42,
-                  "lastLoginTime": "foo",
+                  "totalLogins": 1,
+                  "lastLoginTime": "2024-01-15T09:30:00Z",
                   "accountStatus": "active"
                 }
               }
