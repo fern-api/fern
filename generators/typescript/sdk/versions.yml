@@ -7,7 +7,7 @@
         This was previously fixed for `shouldBundle: true`, but not for `shouldBundle: false` (default).
         All dependencies should now come through.
       type: fix
-  createdAt: "2025-07-09"
+  createdAt: "2025-07-10"
   irVersion: 58
 
 - version: 2.4.6
