@@ -3,12 +3,12 @@ title: The Fern Folder
 description: Describes the Fern folder structure
 ---
 
-Configuring fern starts with the `fern` folder. The fern folder contains your API definitions,
-generators, and your CLI version.
+Configuring fern starts with the `fern` folder. The fern folder contains your API definitions, generators, and your CLI version.
 
 ## Directory structure
 
 When you run `fern init`, your Fern folder will be initialized with the following files:
+
 ```bash
 fern/
   ├─ fern.config.json
@@ -19,6 +19,7 @@ fern/
 ```
 
 If you want to initialize Fern with an OpenAPI Specification, run `fern init --openapi path/to/openapi` instead.
+
 ```yaml
 fern/
   ├─ fern.config.json
@@ -29,8 +30,7 @@ fern/
 
 ### `fern.config.json`
 
-Every fern folder has a single `fern.config.json` file. This file stores the organization and
-the version of the Fern CLI that you are using. 
+Every fern folder has a single `fern.config.json` file. This file stores the organization and the version of the Fern CLI that you are using.
 
 ```json
 {
@@ -39,14 +39,13 @@ the version of the Fern CLI that you are using.
 }
 ```
 
-Every time you run a fern CLI command, the CLI downloads itself at the correct version to ensure 
-determinism. 
+Every time you run a fern CLI command, the CLI downloads itself at the correct version to ensure determinism.
 
 <Note>To upgrade the CLI, run `fern upgrade`. This will update the version field in `fern.config.json` </Note>
 
 ### `generators.yml`
 
-The `generators.yml` file can include information about where your API specification is located, along with which generators you are using, where each package gets published, as well as configuration specific to each generator. 
+The `generators.yml` file can include information about where your API specification is located, along with which generators you are using, where each package gets published, as well as configuration specific to each generator.
 
 <AccordionGroup>
 <Accordion title="generators.yml for Python + TypeScript SDKs">
@@ -88,7 +87,7 @@ api:
 
 ## Multiple APIs
 
-The Fern folder is capable of housing multiple API definitions. Instead of placing your API definition at the top-level, you can nest them within an `apis` folder. Be sure to include a `generators.yml` file within each API folder that specifies the location of the API definition. 
+The Fern folder is capable of housing multiple API definitions. Instead of placing your API definition at the top-level, you can nest them within an `apis` folder. Be sure to include a `generators.yml` file within each API folder that specifies the location of the API definition.
 
 <Tabs>
 <Tab title="OpenAPI Definition">
