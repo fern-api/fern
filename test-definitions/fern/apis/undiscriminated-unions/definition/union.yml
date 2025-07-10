@@ -30,6 +30,12 @@ service:
       method: POST
       request: Request
       response: boolean
+  
+    duplicateTypesUnion:
+      path: "/duplicate"
+      method: POST
+      request: UnionWithDuplicateTypes
+      response: UnionWithDuplicateTypes
 
 types:
   Request:
@@ -50,6 +56,17 @@ types:
       - integer
       - list<integer>
       - list<list<integer>>
+      - set<string>
+
+  UnionWithDuplicateTypes:
+    docs: |
+      Duplicate types.
+    discriminated: false
+    union:
+      - string
+      - list<string>
+      - integer
+      - list<string>
       - set<string>
 
   MetadataUnion:
@@ -77,7 +94,6 @@ types:
           name: exampleName
           value: exampleValue
           default: exampleDefault
-
 
   Key:
     discriminated: false
