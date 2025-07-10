@@ -12,8 +12,8 @@ export type BinaryResponse = {
     arrayBuffer: () => Promise<ArrayBuffer>;
     /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Request/blob) */
     blob: () => Promise<Blob>;
-    /** 
-     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Request/bytes) 
+    /**
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Request/bytes)
      * Some versions of the Fetch API may not support this method.
      */
     bytes?(): Promise<Uint8Array>;
@@ -26,7 +26,7 @@ export function getBinaryResponse(response: ResponseWithBody): BinaryResponse {
         },
         stream: () => response.body,
         arrayBuffer: response.arrayBuffer.bind(response),
-        blob: response.blob.bind(response),
+        blob: response.blob.bind(response)
     };
     if ("bytes" in response && typeof response.bytes === "function") {
         binaryResponse.bytes = response.bytes.bind(response);
