@@ -192,7 +192,7 @@ export class ApiReferenceNodeConverter {
             const subpackageNodeId = this.#idgen.get(overviewPageId ?? `${this.apiDefinitionId}:${subpackageId}`);
 
             if (this.#visitedSubpackages.has(subpackageId)) {
-                this.taskContext.logger.warn(packageReuseError(pkg.title || pkg.package));
+                this.taskContext.logger.warn(packageReuseError(pkg.package));
             }
 
             this.#visitedSubpackages.add(subpackageId);
@@ -233,7 +233,7 @@ export class ApiReferenceNodeConverter {
             };
         } else {
             this.taskContext.logger.warn(
-                cannotFindSubpackageByLocatorError(pkg.title || pkg.package, this.#holder.subpackageLocators)
+                cannotFindSubpackageByLocatorError(pkg.package, this.#holder.subpackageLocators)
             );
             const urlSlug = pkg.slug ?? kebabCase(pkg.package);
             const slug = parentSlug.apply({
