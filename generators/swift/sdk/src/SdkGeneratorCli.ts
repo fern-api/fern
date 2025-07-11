@@ -1,4 +1,5 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
+import { noop } from "@fern-api/core-utils";
 import { AbstractSwiftGeneratorCli } from "@fern-api/swift-base";
 import { generateModels } from "@fern-api/swift-model";
 
@@ -40,7 +41,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
     }
 
     protected async writeForGithub(_context: SdkGeneratorContext): Promise<void> {
-        throw new Error("Method not implemented.");
+        noop();
     }
 
     protected async writeForDownload(context: SdkGeneratorContext): Promise<void> {
