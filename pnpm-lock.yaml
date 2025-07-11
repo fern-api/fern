@@ -27,9 +27,15 @@ importers:
       '@fern-fern/ir-v39-sdk':
         specifier: ^0.0.1
         version: 0.0.1
+      eslint-plugin-oxlint:
+        specifier: ^1.6.0
+        version: 1.6.0
       import-local:
         specifier: ^3.2.0
         version: 3.2.0
+      oxlint:
+        specifier: ^1.6.0
+        version: 1.6.0
       terminal-link:
         specifier: ^3.0.0
         version: 3.0.0
@@ -11451,6 +11457,46 @@ packages:
   '@open-rpc/meta-schema@1.14.9':
     resolution: {integrity: sha512-2/CbDzOVpcaSnMs28TsRv8MKJwJi0TTYFlQ6q6qobAH26oIuhYgcZooKf4l71emgntU6MMcFQCA0h4mJ4dBCdA==}
 
+  '@oxlint/darwin-arm64@1.6.0':
+    resolution: {integrity: sha512-m3wyqBh1TOHjpr/dXeIZY7OoX+MQazb+bMHQdDtwUvefrafUx+5YHRvulYh1sZSQ449nQ3nk3qj5qj535vZRjg==}
+    cpu: [arm64]
+    os: [darwin]
+
+  '@oxlint/darwin-x64@1.6.0':
+    resolution: {integrity: sha512-75fJfF/9xNypr7cnOYoZBhfmG1yP7ex3pUOeYGakmtZRffO9z1i1quLYhjZsmaDXsAIZ3drMhenYHMmFKS3SRg==}
+    cpu: [x64]
+    os: [darwin]
+
+  '@oxlint/linux-arm64-gnu@1.6.0':
+    resolution: {integrity: sha512-YhXGf0FXa72bEt4F7eTVKx5X3zWpbAOPnaA/dZ6/g8tGhw1m9IFjrabVHFjzcx3dQny4MgA59EhyElkDvpUe8A==}
+    cpu: [arm64]
+    os: [linux]
+
+  '@oxlint/linux-arm64-musl@1.6.0':
+    resolution: {integrity: sha512-T3JDhx8mjGjvh5INsPZJrlKHmZsecgDYvtvussKRdkc1Nnn7WC+jH9sh5qlmYvwzvmetlPVNezAoNvmGO9vtMg==}
+    cpu: [arm64]
+    os: [linux]
+
+  '@oxlint/linux-x64-gnu@1.6.0':
+    resolution: {integrity: sha512-Dx7ghtAl8aXBdqofJpi338At6lkeCtTfoinTYQXd9/TEJx+f+zCGNlQO6nJz3ydJBX48FDuOFKkNC+lUlWrd8w==}
+    cpu: [x64]
+    os: [linux]
+
+  '@oxlint/linux-x64-musl@1.6.0':
+    resolution: {integrity: sha512-7KvMGdWmAZtAtg6IjoEJHKxTXdAcrHnUnqfgs0JpXst7trquV2mxBeRZusQXwxpu4HCSomKMvJfsp1qKaqSFDg==}
+    cpu: [x64]
+    os: [linux]
+
+  '@oxlint/win32-arm64@1.6.0':
+    resolution: {integrity: sha512-iSGC9RwX+dl7o5KFr5aH7Gq3nFbkq/3Gda6mxNPMvNkWrgXdIyiINxpyD8hJu566M+QSv1wEAu934BZotFDyoQ==}
+    cpu: [arm64]
+    os: [win32]
+
+  '@oxlint/win32-x64@1.6.0':
+    resolution: {integrity: sha512-jOj3L/gfLc0IwgOTkZMiZ5c673i/hbAmidlaylT0gE6H18hln9HxPgp5GCf4E4y6mwEJlW8QC5hQi221+9otdA==}
+    cpu: [x64]
+    os: [win32]
+
   '@parcel/watcher-android-arm64@2.5.1':
     resolution: {integrity: sha512-KF8+j9nNbUN8vzOFDpRMsaKBHZ/mcjEjMToVMJOhTozkDonQFFrRcfdLWn6yWKCmJKmdVxSgHiYvTCef4/qcBA==}
     engines: {node: '>= 10.0.0'}
@@ -13500,6 +13546,9 @@ packages:
       jest:
         optional: true
 
+  eslint-plugin-oxlint@1.6.0:
+    resolution: {integrity: sha512-DH5p3sCf0nIAPscl3yGnBWXXraV0bdl66hpLxvfnabvg/GzpgXf+pOCWpGK3qDb0+AIUkh1R/7A8GkOXtlj0oA==}
+
   eslint-plugin-react-hooks@5.2.0:
     resolution: {integrity: sha512-+f15FfK64YQwZdJNELETdn5ibXEUQmW1DZL6KXhNnc2heoy/sg9VJJeT7n8TlMWouzWqSWavFkIhHyIbIAEapg==}
     engines: {node: '>=10'}
@@ -15480,6 +15529,11 @@ packages:
   own-keys@1.0.1:
     resolution: {integrity: sha512-qFOyK5PjiWZd+QQIh+1jhdb9LpxTF0qs7Pm8o5QHYZ0M3vKqSqzsZaEB6oWlxZ+q2sJBMI/Ktgd2N5ZwQoRHfg==}
     engines: {node: '>= 0.4'}
+
+  oxlint@1.6.0:
+    resolution: {integrity: sha512-jtaD65PqzIa1udvSxxscTKBxYKuZoFXyKGLiU1Qjo1ulq3uv/fQDtoV1yey1FrQZrQjACGPi1Widsy1TucC7Jg==}
+    engines: {node: '>=8.*'}
+    hasBin: true
 
   p-finally@1.0.0:
     resolution: {integrity: sha512-LICb2p9CB7FS+0eR1oqWnHhp0FljGLZCWBE9aix0Uye9W8LTQPwMTYVGWQWIw9RdQiDg4+epXQODwIYJtSJaow==}
@@ -19513,6 +19567,30 @@ snapshots:
 
   '@open-rpc/meta-schema@1.14.9': {}
 
+  '@oxlint/darwin-arm64@1.6.0':
+    optional: true
+
+  '@oxlint/darwin-x64@1.6.0':
+    optional: true
+
+  '@oxlint/linux-arm64-gnu@1.6.0':
+    optional: true
+
+  '@oxlint/linux-arm64-musl@1.6.0':
+    optional: true
+
+  '@oxlint/linux-x64-gnu@1.6.0':
+    optional: true
+
+  '@oxlint/linux-x64-musl@1.6.0':
+    optional: true
+
+  '@oxlint/win32-arm64@1.6.0':
+    optional: true
+
+  '@oxlint/win32-x64@1.6.0':
+    optional: true
+
   '@parcel/watcher-android-arm64@2.5.1':
     optional: true
 
@@ -21821,6 +21899,10 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
       - typescript
+
+  eslint-plugin-oxlint@1.6.0:
+    dependencies:
+      jsonc-parser: 3.3.1
 
   eslint-plugin-react-hooks@5.2.0(eslint@8.57.1):
     dependencies:
@@ -24594,6 +24676,17 @@ snapshots:
       get-intrinsic: 1.3.0
       object-keys: 1.1.1
       safe-push-apply: 1.0.0
+
+  oxlint@1.6.0:
+    optionalDependencies:
+      '@oxlint/darwin-arm64': 1.6.0
+      '@oxlint/darwin-x64': 1.6.0
+      '@oxlint/linux-arm64-gnu': 1.6.0
+      '@oxlint/linux-arm64-musl': 1.6.0
+      '@oxlint/linux-x64-gnu': 1.6.0
+      '@oxlint/linux-x64-musl': 1.6.0
+      '@oxlint/win32-arm64': 1.6.0
+      '@oxlint/win32-x64': 1.6.0
 
   p-finally@1.0.0: {}
 
