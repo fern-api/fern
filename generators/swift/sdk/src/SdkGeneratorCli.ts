@@ -1,5 +1,4 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
-import { noop } from "@fern-api/core-utils";
 import { AbstractSwiftGeneratorCli } from "@fern-api/swift-base";
 import { generateModels } from "@fern-api/swift-model";
 
