@@ -1095,8 +1095,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/cli/logger
       '@fern-fern/generator-cli-sdk':
-        specifier: 0.0.28
-        version: 0.0.28
+        specifier: 0.0.30
+        version: 0.0.30
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1045
         version: 0.0.1045
@@ -2463,6 +2463,9 @@ importers:
       prettier:
         specifier: ^3.4.2
         version: 3.5.3
+      sort-package-json:
+        specifier: 3.3.1
+        version: 3.3.1
       tsup:
         specifier: ^8.0.2
         version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(typescript@5.7.2)(yaml@2.3.3)
@@ -2534,9 +2537,6 @@ importers:
         specifier: ^58.2.0
         version: 58.2.0
     devDependencies:
-      '@fern-api/cli-source-resolver':
-        specifier: workspace:*
-        version: link:../../../packages/cli/cli-source-resolver
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../../packages/configs
@@ -2546,18 +2546,12 @@ importers:
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/fs-utils
-      '@fern-api/ir-generator':
-        specifier: workspace:*
-        version: link:../../../packages/cli/generation/ir-generator
       '@fern-api/swift-codegen':
         specifier: workspace:*
         version: link:../codegen
-      '@fern-api/task-context':
+      '@fern-api/test-utils':
         specifier: workspace:*
-        version: link:../../../packages/cli/task-context
-      '@fern-api/workspace-loader':
-        specifier: workspace:*
-        version: link:../../../packages/cli/workspace/loader
+        version: link:../../../packages/commons/test-utils
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.2(@vue/compiler-sfc@3.5.17)(prettier@3.5.3)
@@ -2599,22 +2593,13 @@ importers:
         version: 3.25.67
 
   generators/swift/sdk:
-    devDependencies:
+    dependencies:
       '@fern-api/base-generator':
         specifier: workspace:*
         version: link:../../base
-      '@fern-api/configs':
-        specifier: workspace:*
-        version: link:../../../packages/configs
-      '@fern-api/core-utils':
-        specifier: workspace:*
-        version: link:../../../packages/commons/core-utils
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/fs-utils
-      '@fern-api/logger':
-        specifier: workspace:*
-        version: link:../../../packages/cli/logger
       '@fern-api/swift-base':
         specifier: workspace:*
         version: link:../base
@@ -2624,15 +2609,28 @@ importers:
       '@fern-api/swift-model':
         specifier: workspace:*
         version: link:../model
-      '@fern-fern/generator-cli-sdk':
-        specifier: 0.0.28
-        version: 0.0.28
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1045
         version: 0.0.1045
       '@fern-fern/ir-sdk':
         specifier: ^58.2.0
         version: 58.2.0
+      zod:
+        specifier: ^3.25.75
+        version: 3.25.75
+    devDependencies:
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../../packages/configs
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../../packages/commons/core-utils
+      '@fern-api/logger':
+        specifier: workspace:*
+        version: link:../../../packages/cli/logger
+      '@fern-fern/generator-cli-sdk':
+        specifier: 0.0.28
+        version: 0.0.28
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.2(@vue/compiler-sfc@3.5.17)(prettier@3.5.3)
@@ -2675,9 +2673,6 @@ importers:
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
-      zod:
-        specifier: ^3.22.3
-        version: 3.25.67
 
   generators/typescript-mcp/base:
     devDependencies:
@@ -9254,6 +9249,58 @@ importers:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
 
+  packages/commons/test-utils:
+    dependencies:
+      '@fern-api/cli-source-resolver':
+        specifier: workspace:*
+        version: link:../../cli/cli-source-resolver
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../configs
+      '@fern-api/configuration':
+        specifier: workspace:*
+        version: link:../../cli/configuration
+      '@fern-api/fs-utils':
+        specifier: workspace:*
+        version: link:../fs-utils
+      '@fern-api/ir-generator':
+        specifier: workspace:*
+        version: link:../../cli/generation/ir-generator
+      '@fern-api/task-context':
+        specifier: workspace:*
+        version: link:../../cli/task-context
+      '@fern-api/workspace-loader':
+        specifier: workspace:*
+        version: link:../../cli/workspace/loader
+      '@fern-fern/ir-sdk':
+        specifier: ^58.2.0
+        version: 58.2.0
+    devDependencies:
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^5.2.1
+        version: 5.2.2(@vue/compiler-sfc@3.5.17)(prettier@3.5.3)
+      '@types/node':
+        specifier: 18.15.3
+        version: 18.15.3
+      depcheck:
+        specifier: ^1.4.7
+        version: 1.4.7
+      eslint:
+        specifier: ^8.56.0
+        version: 8.57.1
+      prettier:
+        specifier: ^3.4.2
+        version: 3.5.3
+      sort-package-json:
+        specifier: 3.3.1
+        version: 3.3.1
+      typescript:
+        specifier: 5.7.2
+        version: 5.7.2
+      vitest:
+        specifier: ^2.1.9
+        version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
+
   packages/configs: {}
 
   packages/core:
@@ -10875,6 +10922,9 @@ packages:
 
   '@fern-fern/generator-cli-sdk@0.0.28':
     resolution: {integrity: sha512-KNf9vBkFAV8oEmD/U4ss75d3JIm50fpa+Pq5cVs0fr/e8m1xWVuG189gzfQ9wrkH3Z85B2U/Pxl3cb7KPB4qrw==}
+
+  '@fern-fern/generator-cli-sdk@0.0.30':
+    resolution: {integrity: sha512-H5BFDqMuBRpDSi0qivVStYHCXxRp369Y8Z7xuQsXFu+tmvIFeqXMyLy/viT1pSu0ZN7UR9rbxkdJIQmbRL0T9w==}
 
   '@fern-fern/generator-exec-sdk@0.0.1045':
     resolution: {integrity: sha512-V9SXkuyY/LdrwBYh9MYNny4CaAc8o9i7DgYYiL2yzoMA/FR9AUcBOl1I/ykJH1CRs0oGycp5zBZrO0qmLHpPVA==}
@@ -18781,6 +18831,16 @@ snapshots:
       - encoding
 
   '@fern-fern/generator-cli-sdk@0.0.28':
+    dependencies:
+      form-data: 4.0.1
+      formdata-node: 6.0.3
+      node-fetch: 2.7.0
+      qs: 6.14.0
+      readable-stream: 4.7.0
+    transitivePeerDependencies:
+      - encoding
+
+  '@fern-fern/generator-cli-sdk@0.0.30':
     dependencies:
       form-data: 4.0.1
       formdata-node: 6.0.3

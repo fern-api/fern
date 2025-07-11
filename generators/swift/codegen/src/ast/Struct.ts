@@ -30,7 +30,7 @@ export class Struct extends AstNode {
             writer.write(this.accessLevel);
             writer.write(" ");
         }
-        writer.write(`struct ${this.name}`); // TODO: Handle reserved words
+        writer.write(`struct ${this.name}`);
         this.conformances?.forEach((conformance, index) => {
             if (index === 0) {
                 writer.write(": ");

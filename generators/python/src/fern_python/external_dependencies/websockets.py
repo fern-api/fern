@@ -39,6 +39,15 @@ WEBSOCKETS_SYNC_CONNECTION_MODULE = AST.Module.external(
     ),
 )
 
+WEBSOCKETS_EXCEPTIONS_MODULE = AST.Module.external(
+    module_path=("websockets", "exceptions"),
+    dependency=AST.Dependency(
+        name="websockets",
+        version=">=12.0",
+        compatibility=DependencyCompatibility.EXACT,
+    ),
+)
+
 WEBSOCKETS_SYNC_EXCEPTION_MODULE = AST.Module.external(
     module_path=("websockets", "sync", "exceptions"),
     dependency=AST.Dependency(
@@ -82,6 +91,13 @@ class Websockets:
         return AST.ClassReference(
             qualified_name_excluding_import=("WebSocketException",),
             import_=AST.ReferenceImport(module=WEBSOCKETS_MODULE),
+        )
+
+    @staticmethod
+    def get_invalid_status_code_exception() -> AST.ClassReference:
+        return AST.ClassReference(
+            qualified_name_excluding_import=("InvalidStatusCode",),
+            import_=AST.ReferenceImport(module=WEBSOCKETS_EXCEPTIONS_MODULE),
         )
 
     @staticmethod
