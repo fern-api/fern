@@ -1,5 +1,6 @@
-import { assertNever } from "@fern-api/core-utils";
 import { isEqual, uniqWith } from "lodash-es";
+
+import { assertNever } from "@fern-api/core-utils";
 
 import { BasePhpCustomConfigSchema } from "../custom-config/BasePhpCustomConfigSchema";
 import { ClassReference } from "./ClassReference";
@@ -414,10 +415,10 @@ export class Type extends AstNode {
     public static union(types: Type[]): Type {
         // Recursively flatten nested unions and deduplicate
         const flattenedTypes = this.flattenUnionTypes(types);
-        
+
         // Deduplicate types to avoid duplicates like array|array
         const uniqueTypes = uniqWith(flattenedTypes, isEqual);
-        
+
         return new this({
             type: "union",
             types: uniqueTypes
@@ -426,7 +427,7 @@ export class Type extends AstNode {
 
     private static flattenUnionTypes(types: Type[]): Type[] {
         const flattened: Type[] = [];
-        
+
         for (const type of types) {
             if (type.internalType.type === "union") {
                 // Recursively flatten nested unions
@@ -435,7 +436,7 @@ export class Type extends AstNode {
                 flattened.push(type);
             }
         }
-        
+
         return flattened;
     }
 
@@ -565,8 +566,8 @@ export class Type extends AstNode {
     }): Type[] {
         // First, do semantic deduplication using lodash isEqual
         const semanticallyUnique = uniqWith(types, isEqual);
-        
-        // Then, do string-based deduplication for cases where different semantic types 
+
+        // Then, do string-based deduplication for cases where different semantic types
         // render to the same string (e.g., array<string,mixed> and array<Recipient> both become "array")
         const typeStrings = new Set();
         return semanticallyUnique.filter((type) => {
@@ -576,7 +577,7 @@ export class Type extends AstNode {
                 customConfig: writer.customConfig,
                 comment
             });
-            
+
             // Handle potential duplicates, such as strings (due to enums) and arrays.
             if (typeStrings.has(typeString)) {
                 return false;
