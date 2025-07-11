@@ -22,7 +22,7 @@ export function getLexicallyNearestNeighbors(
     for (const neighbor of neighbors) {
         const distance = levenshtein.get(norm(target), norm(neighbor));
 
-        if (threshold && distance > threshold) {
+        if (threshold != null && distance > threshold) {
             continue;
         }
 
