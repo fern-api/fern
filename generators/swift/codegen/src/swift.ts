@@ -1,4 +1,8 @@
-import { Property, Struct } from "./ast";
+import { Enum, Property, Struct } from "./ast";
+
+export function enum_(args: Enum.Args): Enum {
+    return new Enum(args);
+}
 
 export function struct(args: Struct.Args): Struct {
     return new Struct(args);
