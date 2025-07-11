@@ -11,11 +11,11 @@ export function cannotFindSubpackageByLocatorError(locator: string, existingLoca
         normalizeLocatorString,
         LEVENSHTEIN_THRESHOLD
     );
+    const availableSections = Array.from(existingLocators);
     let msg = `Failed to locate API section ${locator}.`;
     switch (nearestThreeMatches.length) {
         case 0:
             msg = `${msg} No similar API sections found. Available API sections:`;
-            const availableSections = Array.from(existingLocators);
             return availableSections.length === 0
                 ? `${msg} []`
                 : `${msg} [\n${availableSections.map((s) => `\t${s}`).join(",\n")}\n]`;
