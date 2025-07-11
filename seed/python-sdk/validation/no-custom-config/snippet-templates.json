@@ -24,7 +24,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.create(\n\t$FERN_INPUT\n)",
+                "templateString": "client.create(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -113,7 +113,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.create(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.create(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -214,7 +214,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.get(\n\t$FERN_INPUT\n)",
+                "templateString": "client.get(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -285,7 +285,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.get(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.get(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",

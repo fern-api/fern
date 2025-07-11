@@ -24,7 +24,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.nullable.get_users(\n\t$FERN_INPUT\n)",
+                "templateString": "client.nullable.get_users(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -127,7 +127,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.nullable.get_users(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.nullable.get_users(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -242,7 +242,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.nullable.create_user(\n\t$FERN_INPUT\n)",
+                "templateString": "client.nullable.create_user(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -519,7 +519,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.nullable.create_user(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.nullable.create_user(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -808,7 +808,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.nullable.delete_user(\n\t$FERN_INPUT\n)",
+                "templateString": "client.nullable.delete_user(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -847,7 +847,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.nullable.delete_user(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.nullable.delete_user(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",

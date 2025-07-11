@@ -41,7 +41,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.echo(\n\t$FERN_INPUT\n)",
+                "templateString": "client.echo(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -97,7 +97,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.echo(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.echo(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -165,7 +165,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.create_type(\n\t$FERN_INPUT\n)",
+                "templateString": "client.create_type(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -261,7 +261,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.create_type(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.create_type(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -369,7 +369,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.file.notification.service.get_exception(\n\t$FERN_INPUT\n)",
+                "templateString": "client.file.notification.service.get_exception(\n    $FERN_INPUT\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",\n\t",
                 "type": "generic"
@@ -408,7 +408,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.file.notification.service.get_exception(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.file.notification.service.get_exception(\n    $FERN_INPUT\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",\n\t",
                     "type": "generic"
@@ -459,7 +459,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.file.service.get_file(\n\t$FERN_INPUT\n)",
+                "templateString": "client.file.service.get_file(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -515,7 +515,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.file.service.get_file(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.file.service.get_file(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -583,7 +583,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.health.service.check(\n\t$FERN_INPUT\n)",
+                "templateString": "client.health.service.check(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -639,7 +639,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.health.service.check(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.health.service.check(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -707,7 +707,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.health.service.ping(\n\t$FERN_INPUT\n)",
+                "templateString": "client.health.service.ping(\n    $FERN_INPUT\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",\n\t",
                 "type": "generic"
@@ -746,7 +746,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.health.service.ping(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.health.service.ping(\n    $FERN_INPUT\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",\n\t",
                     "type": "generic"
@@ -797,7 +797,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.service.get_movie(\n\t$FERN_INPUT\n)",
+                "templateString": "client.service.get_movie(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -853,7 +853,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.service.get_movie(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.service.get_movie(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -921,7 +921,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.service.create_movie(\n\t$FERN_INPUT\n)",
+                "templateString": "client.service.create_movie(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -1130,7 +1130,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.service.create_movie(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.service.create_movie(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -1351,7 +1351,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.service.get_metadata(\n\t$FERN_INPUT\n)",
+                "templateString": "client.service.get_metadata(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -1439,7 +1439,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.service.get_metadata(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.service.get_metadata(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -1539,7 +1539,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.service.create_big_entity(\n\t$FERN_INPUT\n)",
+                "templateString": "client.service.create_big_entity(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -5965,7 +5965,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.service.create_big_entity(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.service.create_big_entity(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",

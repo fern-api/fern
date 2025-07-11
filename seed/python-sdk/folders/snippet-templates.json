@@ -24,7 +24,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.foo(\n\t$FERN_INPUT\n)",
+                "templateString": "client.foo(\n    $FERN_INPUT\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",\n\t",
                 "type": "generic"
@@ -46,7 +46,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.foo(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.foo(\n    $FERN_INPUT\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",\n\t",
                     "type": "generic"
@@ -80,7 +80,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.a.b.foo(\n\t$FERN_INPUT\n)",
+                "templateString": "client.a.b.foo(\n    $FERN_INPUT\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",\n\t",
                 "type": "generic"
@@ -102,7 +102,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.a.b.foo(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.a.b.foo(\n    $FERN_INPUT\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",\n\t",
                     "type": "generic"
@@ -136,7 +136,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.a.c.foo(\n\t$FERN_INPUT\n)",
+                "templateString": "client.a.c.foo(\n    $FERN_INPUT\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",\n\t",
                 "type": "generic"
@@ -158,7 +158,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.a.c.foo(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.a.c.foo(\n    $FERN_INPUT\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",\n\t",
                     "type": "generic"
@@ -192,7 +192,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.folder.foo(\n\t$FERN_INPUT\n)",
+                "templateString": "client.folder.foo(\n    $FERN_INPUT\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",\n\t",
                 "type": "generic"
@@ -214,7 +214,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.folder.foo(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.folder.foo(\n    $FERN_INPUT\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",\n\t",
                     "type": "generic"
@@ -248,7 +248,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.folder.service.endpoint(\n\t$FERN_INPUT\n)",
+                "templateString": "client.folder.service.endpoint(\n    $FERN_INPUT\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",\n\t",
                 "type": "generic"
@@ -270,7 +270,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.folder.service.endpoint(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.folder.service.endpoint(\n    $FERN_INPUT\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",\n\t",
                     "type": "generic"
@@ -304,7 +304,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.folder.service.unknown_request(\n\t$FERN_INPUT\n)",
+                "templateString": "client.folder.service.unknown_request(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -343,7 +343,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.folder.service.unknown_request(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.folder.service.unknown_request(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",

@@ -24,7 +24,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.get_account(\n\t$FERN_INPUT\n)",
+                "templateString": "client.get_account(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -63,7 +63,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.get_account(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.get_account(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",

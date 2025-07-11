@@ -5,7 +5,7 @@ client = SeedNullable(
     base_url="https://yourhost.com/path/to/api",
 )        
 client.nullable.get_users(
-	usernames="usernames",
+    usernames="usernames",
 	avatar="avatar",
 	activated=true,
 	tags="tags",
@@ -22,7 +22,7 @@ client = SeedNullable(
     base_url="https://yourhost.com/path/to/api",
 )        
 client.nullable.create_user(
-	username="username",
+    username="username",
 	tags=[
 		"tags",
 		"tags"
@@ -49,7 +49,7 @@ client = SeedNullable(
     base_url="https://yourhost.com/path/to/api",
 )        
 client.nullable.delete_user(
-	username="xy"
+    username="xy"
 )
 
 ```
