@@ -24,7 +24,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.inlined_request.send(\n\t$FERN_INPUT\n)",
+                "templateString": "client.inlined_request.send(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -195,7 +195,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.inlined_request.send(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.inlined_request.send(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -378,7 +378,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.path_param.send(\n\t$FERN_INPUT\n)",
+                "templateString": "client.path_param.send(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -475,7 +475,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.path_param.send(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.path_param.send(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -584,7 +584,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.query_param.send(\n\t$FERN_INPUT\n)",
+                "templateString": "client.query_param.send(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -755,7 +755,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.query_param.send(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.query_param.send(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -938,7 +938,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.query_param.send_list(\n\t$FERN_INPUT\n)",
+                "templateString": "client.query_param.send_list(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -1109,7 +1109,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.query_param.send_list(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.query_param.send_list(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",

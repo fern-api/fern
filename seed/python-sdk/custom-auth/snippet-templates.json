@@ -24,7 +24,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.custom_auth.get_with_custom_auth(\n\t$FERN_INPUT\n)",
+                "templateString": "client.custom_auth.get_with_custom_auth(\n    $FERN_INPUT\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",\n\t",
                 "type": "generic"
@@ -46,7 +46,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.custom_auth.get_with_custom_auth(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.custom_auth.get_with_custom_auth(\n    $FERN_INPUT\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",\n\t",
                     "type": "generic"
@@ -80,7 +80,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.custom_auth.post_with_custom_auth(\n\t$FERN_INPUT\n)",
+                "templateString": "client.custom_auth.post_with_custom_auth(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -119,7 +119,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.custom_auth.post_with_custom_auth(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.custom_auth.post_with_custom_auth(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
