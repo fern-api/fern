@@ -54,5 +54,31 @@ describe("Enum", () => {
               }"
             `);
         });
+
+        it("should handle complex associated values", () => {
+            const enum_ = swift.enum_({
+                name: "ComplexEnum",
+                cases: [
+                    {
+                        name: "complex",
+                        associatedValues: [
+                            swift.Type.array(swift.Type.string()),
+                            swift.Type.dictionary(swift.Type.string(), swift.Type.int()),
+                            swift.Type.tuple([swift.Type.string(), swift.Type.bool()])
+                        ]
+                    },
+                    {
+                        name: "simple"
+                    }
+                ]
+            });
+
+            expect(enum_.toString()).toMatchInlineSnapshot(`
+              "enum ComplexEnum {
+                  case complex([String], [String: Int], (String, Bool))
+                  case simple
+              }"
+            `);
+        });
     });
 });
