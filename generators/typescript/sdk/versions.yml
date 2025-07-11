@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.4.8
+  changelogEntry:
+    - summary: |
+        Fix ts readme snippet where const was reassigned. Changed to let.
+      type: fix
+  createdAt: "2025-07-10"
+  irVersion: 58
 
 - version: 2.4.7
   changelogEntry:
