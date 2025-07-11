@@ -1,5 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 
+import { csharp } from "..";
 import { ClassInstantiation } from "./ClassInstantiation";
 import { ClassReference } from "./ClassReference";
 import { Type } from "./Type";
@@ -202,7 +203,7 @@ export class TypeLiteral extends AstNode {
                 break;
             }
             case "string": {
-                writer.write(`"${this.escapeString(this.internalType.value)}"`);
+                writer.writeNode(csharp.string_({ string: this.internalType.value }));
                 break;
             }
             case "unknown": {
@@ -433,7 +434,7 @@ export class TypeLiteral extends AstNode {
                 writer.write(value.toString());
                 return;
             case "string":
-                writer.write(`"${this.escapeString(value)}"`);
+                writer.writeNode(csharp.string_({ string: value }));
                 return;
             case "number":
                 writer.write(value.toString());
@@ -490,15 +491,6 @@ export class TypeLiteral extends AstNode {
         }
         writer.dedent();
         writer.write("}");
-    }
-
-    private escapeString(input: string): string {
-        return input
-            .replace(/\\/g, "\\\\") // Escape backslashes
-            .replace(/"/g, '\\"') // Escape double quotes
-            .replace(/\n/g, "\\n") // Escape newlines
-            .replace(/\r/g, "\\r") // Escape carriage returns
-            .replace(/\t/g, "\\t"); // Escape tabs
     }
 }
 

@@ -26,7 +26,6 @@ client = SeedPathParameters(
     base_url="https://yourhost.com/path/to/api",
 )
 client.user.create_user(
-    tenant_id="tenant_id",
     name="name",
     tags=["tags", "tags"],
 )
@@ -48,7 +47,6 @@ client = AsyncSeedPathParameters(
 
 async def main() -> None:
     await client.user.create_user(
-        tenant_id="tenant_id",
         name="name",
         tags=["tags", "tags"],
     )

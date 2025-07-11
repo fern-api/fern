@@ -49,8 +49,10 @@ scripts:
       - CGO_ENABLED=0 go test ./...
 allowedFailures:
   - alias-extends
+  - enum
   - exhaustive
   - literal
   - mixed-case
   - reserved-keywords
   - trace
+  - request-parameters

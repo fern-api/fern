@@ -251,31 +251,33 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
         };
 
         packageJson = produce(packageJson, (draft) => {
-            if (Object.keys(this.dependencies[DependencyType.PROD]).length > 0) {
-                draft.dependencies = {
-                    ...this.dependencies[DependencyType.PROD],
-                    ...this.extraDependencies
-                };
+            const dependencies = {
+                ...this.dependencies[DependencyType.PROD],
+                ...this.extraDependencies
+            };
+            if (Object.keys(dependencies).length > 0) {
+                draft.dependencies = dependencies;
             }
-            if (
-                Object.keys(this.dependencies[DependencyType.PEER]).length > 0 ||
-                Object.keys(this.extraPeerDependencies).length > 0
-            ) {
-                draft.peerDependencies = {
-                    ...this.dependencies[DependencyType.PEER],
-                    ...this.extraPeerDependencies
-                };
+            const peerDependencies = {
+                ...this.dependencies[DependencyType.PEER],
+                ...this.extraPeerDependencies
+            };
+            if (Object.keys(peerDependencies).length > 0) {
+                draft.peerDependencies = peerDependencies;
             }
+
             if (Object.keys(this.extraPeerDependenciesMeta).length > 0) {
-                draft.peerDependenciesMeta = {
-                    ...this.extraPeerDependenciesMeta
-                };
+                draft.peerDependenciesMeta = { ...this.extraPeerDependenciesMeta };
             }
-            draft.devDependencies = {
+
+            const devDependencies = {
                 ...this.dependencies[DependencyType.DEV],
                 ...this.getDevDependencies(),
                 ...this.extraDevDependencies
             };
+            if (Object.keys(devDependencies).length > 0) {
+                draft.devDependencies = devDependencies;
+            }
 
             draft.browser = {
                 fs: false,
@@ -285,6 +287,10 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
             } as any;
 
             draft["packageManager"] = "yarn@1.22.22";
+            draft["engines"] = {
+                node: ">=18.0.0"
+            };
+            draft["sideEffects"] = false;
         });
 
         packageJson = mergeExtraConfigs(packageJson, this.extraConfigs);

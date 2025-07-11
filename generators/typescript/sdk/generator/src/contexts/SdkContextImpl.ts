@@ -4,7 +4,6 @@ import {
     ExportsManager,
     ExternalDependencies,
     ImportsManager,
-    JavaScriptRuntime,
     NpmPackage,
     createExternalDependencies
 } from "@fern-typescript/commons";
@@ -126,7 +125,6 @@ export declare namespace SdkContextImpl {
         includeSerdeLayer: boolean;
         isForSnippet: boolean;
         npmPackage: NpmPackage | undefined;
-        targetRuntime: JavaScriptRuntime;
         retainOriginalCasing: boolean;
         generateOAuthClients: boolean;
         inlineFileProperties: boolean;
@@ -138,6 +136,8 @@ export declare namespace SdkContextImpl {
         useBigInt: boolean;
         relativePackagePath: string;
         relativeTestPath: string;
+        formDataSupport: "Node16" | "Node18";
+        useDefaultRequestParameterValues: boolean;
     }
 }
 
@@ -172,11 +172,11 @@ export class SdkContextImpl implements SdkContext {
     public readonly environments: EnvironmentsContext;
     public readonly genericAPISdkError: GenericAPISdkErrorContext;
     public readonly timeoutSdkError: TimeoutSdkErrorContext;
-    public readonly targetRuntime: JavaScriptRuntime;
     public readonly includeSerdeLayer: boolean;
     public readonly retainOriginalCasing: boolean;
     public readonly inlineFileProperties: boolean;
     public readonly inlinePathParameters: boolean;
+    public readonly formDataSupport: "Node16" | "Node18";
     public readonly generateOAuthClients: boolean;
     public readonly omitUndefined: boolean;
     public readonly neverThrowErrors: boolean;
@@ -236,7 +236,6 @@ export class SdkContextImpl implements SdkContext {
         fernConstants,
         includeSerdeLayer,
         retainOriginalCasing,
-        targetRuntime,
         inlineFileProperties,
         inlinePathParameters,
         generateOAuthClients,
@@ -246,7 +245,9 @@ export class SdkContextImpl implements SdkContext {
         neverThrowErrors,
         enableInlineTypes,
         relativePackagePath,
-        relativeTestPath
+        relativeTestPath,
+        formDataSupport,
+        useDefaultRequestParameterValues
     }: SdkContextImpl.Init) {
         this.logger = logger;
         this.ir = ir;
@@ -257,7 +258,7 @@ export class SdkContextImpl implements SdkContext {
         this.omitUndefined = omitUndefined;
         this.inlineFileProperties = inlineFileProperties;
         this.inlinePathParameters = inlinePathParameters;
-        this.targetRuntime = targetRuntime;
+        this.formDataSupport = formDataSupport;
         this.generateOAuthClients = generateOAuthClients;
         this.namespaceExport = typeDeclarationReferencer.namespaceExport;
         this.rootClientVariableName = ROOT_CLIENT_VARIABLE_NAME;
@@ -313,6 +314,7 @@ export class SdkContextImpl implements SdkContext {
             enableInlineTypes,
             allowExtraFields,
             omitUndefined,
+            useDefaultRequestParameterValues,
             context: this
         });
         this.typeSchema = new TypeSchemaContextImpl({
@@ -369,7 +371,8 @@ export class SdkContextImpl implements SdkContext {
             retainOriginalCasing,
             inlineFileProperties,
             inlinePathParameters,
-            enableInlineTypes
+            enableInlineTypes,
+            formDataSupport
         });
         this.sdkInlinedRequestBodySchema = new SdkInlinedRequestBodySchemaContextImpl({
             importsManager,

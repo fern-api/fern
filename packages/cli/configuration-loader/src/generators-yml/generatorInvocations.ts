@@ -4,82 +4,89 @@ import { GeneratorName } from "./GeneratorName";
 
 export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<generatorsYml.GeneratorInvocationSchema, "name">> = {
     [GeneratorName.JAVA]: {
-        version: "1.0.5"
+        version: "2.38.1"
     },
     [GeneratorName.TYPESCRIPT_EXPRESS]: {
-        version: "0.17.3",
+        version: "0.18.4",
         output: {
             location: "local-file-system",
             path: "../src/fern"
         }
     },
     [GeneratorName.JAVA_MODEL]: {
-        version: "0.9.2"
+        version: "1.0.0"
     },
     [GeneratorName.JAVA_SDK]: {
-        version: "1.0.5"
+        version: "2.38.1",
+        output: {
+            location: "local-file-system",
+            path: "../sdks/java/src/main/java/"
+        }
     },
     [GeneratorName.JAVA_SPRING]: {
         version: "0.9.2",
         output: {
             location: "local-file-system",
             path: "../src/main/java/com/fern"
-        },
-        config: {
-            "package-prefix": "com.fern"
         }
     },
     [GeneratorName.TYPESCRIPT]: {
-        version: "0.39.3"
+        version: "0.0.247"
     },
     [GeneratorName.TYPESCRIPT_SDK]: {
-        version: "0.39.3"
+        version: "2.3.2",
+        output: {
+            location: "local-file-system",
+            path: "../sdks/typescript"
+        }
     },
     [GeneratorName.TYPESCRIPT_NODE_SDK]: {
-        version: "0.49.1",
+        version: "2.3.2",
         output: {
             location: "local-file-system",
             path: "../sdks/typescript"
         }
     },
     [GeneratorName.TYPESCRIPT_BROWSER_SDK]: {
-        version: "0.39.3",
+        version: "1.0.0",
         output: {
             location: "local-file-system",
             path: "../sdks/typescript"
         }
     },
     [GeneratorName.PYTHON_PYDANTIC]: {
-        version: "1.4.3"
+        version: "1.4.7"
     },
     [GeneratorName.PYTHON_FASTAPI]: {
-        version: "1.4.6",
+        version: "1.7.0",
         output: {
             location: "local-file-system",
             path: "../src/fern"
         }
     },
     [GeneratorName.PYTHON_SDK]: {
-        version: "3.10.6",
+        version: "4.23.2",
         output: {
             location: "local-file-system",
             path: "../sdks/python"
         }
     },
     [GeneratorName.GO_FIBER]: {
-        version: "0.23.0"
+        version: "0.23.5"
     },
     [GeneratorName.GO_MODEL]: {
-        version: "0.23.0"
+        version: "0.23.5"
     },
     [GeneratorName.GO_SDK]: {
-        version: "0.23.0",
+        version: "1.4.0",
         output: {
             location: "local-file-system",
             path: "../sdks/go"
         },
         config: {
-            importPath: "go-mod-path/generated/go"
+            module: {
+                path: "sdk"
+            }
         }
     },
     [GeneratorName.RUBY_MODEL]: {
@@ -93,7 +100,7 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<generatorsYml.Gen
         }
     },
     [GeneratorName.OPENAPI]: {
-        version: "0.0.31",
+        version: "0.1.7",
         config: {
             format: "yaml"
         },
@@ -103,20 +110,20 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<generatorsYml.Gen
         }
     },
     [GeneratorName.STOPLIGHT]: {
-        version: "0.0.24",
+        version: "0.0.28",
         config: {
             format: "yaml"
         }
     },
     [GeneratorName.POSTMAN]: {
-        version: "0.1.1",
+        version: "0.4.0",
         output: {
             location: "local-file-system",
             path: "../postman"
         }
     },
     [GeneratorName.OPENAPI_PYTHON_CLIENT]: {
-        version: "0.0.11",
+        version: "0.0.0",
         output: {
             location: "local-file-system",
             path: "../sdks/python"
@@ -126,10 +133,10 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<generatorsYml.Gen
         }
     },
     [GeneratorName.CSHARP_MODEL]: {
-        version: "0.0.2"
+        version: "0.0.1"
     },
     [GeneratorName.CSHARP_SDK]: {
-        version: "1.2.1",
+        version: "2.0.2",
         output: {
             location: "local-file-system",
             path: "../sdks/csharp"
@@ -149,7 +156,7 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<generatorsYml.Gen
         version: "0.0.0"
     },
     [GeneratorName.PHP_SDK]: {
-        version: "0.1.0",
+        version: "1.16.3",
         output: {
             location: "local-file-system",
             path: "../sdks/php/sdk"

@@ -16,7 +16,7 @@
                     "from seed import SeedVariables"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedVariables(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "templateString": "client = SeedVariables(\n    root_variable=\"YOUR_ROOT_VARIABLE\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -24,7 +24,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.service.post(\n\t$FERN_INPUT\n)",
+                "templateString": "client.service.post(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -55,7 +55,7 @@
                         "from seed import AsyncSeedVariables"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedVariables(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                    "templateString": "client = AsyncSeedVariables(\n    root_variable=\"YOUR_ROOT_VARIABLE\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"
@@ -63,7 +63,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.service.post(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.service.post(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",

@@ -36,7 +36,8 @@ export abstract class AstNode extends AbstractAstNode {
             allNamespaceSegments,
             allTypeClassReferences,
             rootNamespace,
-            customConfig
+            customConfig,
+            skipImports
         });
         this.write(writer);
         const stringNode = writer.toString(skipImports);
@@ -64,7 +65,8 @@ export abstract class AstNode extends AbstractAstNode {
             allNamespaceSegments,
             allTypeClassReferences,
             rootNamespace,
-            customConfig
+            customConfig,
+            skipImports
         });
         this.write(writer);
         const stringNode = writer.toString(skipImports);
@@ -76,20 +78,23 @@ export abstract class AstNode extends AbstractAstNode {
         allTypeClassReferences,
         rootNamespace,
         customConfig,
-        formatter
+        formatter,
+        skipImports = false
     }: {
         allNamespaceSegments: Set<string>;
         allTypeClassReferences: Map<string, Set<Namespace>>;
         rootNamespace: string;
         customConfig: BaseCsharpCustomConfigSchema;
         formatter: AbstractFormatter;
+        skipImports: boolean;
     }): FormattedAstNodeSnippet {
         const writer = new Writer({
             namespace: "",
             allNamespaceSegments,
             allTypeClassReferences,
             rootNamespace,
-            customConfig
+            customConfig,
+            skipImports
         });
         this.write(writer);
         return {
@@ -103,20 +108,23 @@ export abstract class AstNode extends AbstractAstNode {
         allTypeClassReferences,
         rootNamespace,
         customConfig,
-        formatter
+        formatter,
+        skipImports = false
     }: {
         allNamespaceSegments: Set<string>;
         allTypeClassReferences: Map<string, Set<Namespace>>;
         rootNamespace: string;
         customConfig: BaseCsharpCustomConfigSchema;
         formatter: AbstractFormatter;
+        skipImports?: boolean;
     }): Promise<FormattedAstNodeSnippet> {
         const writer = new Writer({
             namespace: "",
             allNamespaceSegments,
             allTypeClassReferences,
             rootNamespace,
-            customConfig
+            customConfig,
+            skipImports
         });
         this.write(writer);
         return {

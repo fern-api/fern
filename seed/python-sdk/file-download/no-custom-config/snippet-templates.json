@@ -6,9 +6,9 @@
             "type": "python"
         },
         "endpointId": {
-            "path": "/",
+            "path": "/snippet",
             "method": "POST",
-            "identifierOverride": "endpoint_service.downloadFile"
+            "identifierOverride": "endpoint_service.simple"
         },
         "snippetTemplate": {
             "clientInstantiation": {
@@ -24,7 +24,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.service.download_file(\n\t$FERN_INPUT\n)",
+                "templateString": "client.service.simple(\n    $FERN_INPUT\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",\n\t",
                 "type": "generic"
@@ -46,7 +46,63 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.service.download_file(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.service.simple(\n    $FERN_INPUT\n)",
+                    "templateInputs": [],
+                    "inputDelimiter": ",\n\t",
+                    "type": "generic"
+                },
+                "type": "v1"
+            }
+        }
+    },
+    {
+        "sdk": {
+            "package": "fern_file-download",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/",
+            "method": "POST",
+            "identifierOverride": "endpoint_service.downloadFile"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": {
+                "imports": [
+                    "from seed import SeedFileDownload"
+                ],
+                "isOptional": true,
+                "templateString": "client = SeedFileDownload(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "templateInputs": [],
+                "inputDelimiter": ",",
+                "type": "generic"
+            },
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "client.service.download_file(\n    $FERN_INPUT\n)",
+                "templateInputs": [],
+                "inputDelimiter": ",\n\t",
+                "type": "generic"
+            },
+            "type": "v1"
+        },
+        "additionalTemplates": {
+            "async": {
+                "clientInstantiation": {
+                    "imports": [
+                        "from seed import AsyncSeedFileDownload"
+                    ],
+                    "isOptional": true,
+                    "templateString": "client = AsyncSeedFileDownload(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                    "templateInputs": [],
+                    "inputDelimiter": ",",
+                    "type": "generic"
+                },
+                "functionInvocation": {
+                    "imports": [],
+                    "isOptional": true,
+                    "templateString": "await client.service.download_file(\n    $FERN_INPUT\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",\n\t",
                     "type": "generic"

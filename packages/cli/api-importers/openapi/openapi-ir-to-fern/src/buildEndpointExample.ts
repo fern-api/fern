@@ -1,6 +1,7 @@
 import { isNonNullish } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { EndpointExample, FullExample, PathParameterExample } from "@fern-api/openapi-ir";
+import { EndpointExample, FullExample, PathParameterExample, PrimitiveExample } from "@fern-api/openapi-ir";
+import { Schema } from "@fern-api/openapi-ir";
 
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { convertEndpointResponseExample, convertFullExample } from "./utils/convertFullExample";
@@ -33,8 +34,26 @@ export function buildEndpointExample({
         example["query-parameters"] = convertQueryParameterExample(endpointExample.queryParameters);
     }
 
-    if (endpointExample.headers != null && endpointExample.headers.length > 0) {
-        example.headers = convertHeaderExamples({ context, namedFullExamples: endpointExample.headers });
+    const hasEndpointHeaders = endpointExample.headers != null && endpointExample.headers.length > 0;
+    const hasGlobalHeaders = Object.keys(context.builder.getGlobalHeaders()).length > 0;
+
+    const endpointHeaderNames = new Set(endpointExample.headers?.map((header) => header.name) ?? []);
+
+    if (hasEndpointHeaders || hasGlobalHeaders) {
+        const namedFullExamples: NamedFullExample[] = [
+            ...(endpointExample.headers ?? []),
+            ...(Object.entries(context.builder.getGlobalHeaders())
+                .filter(([header]) => !endpointHeaderNames.has(header))
+                .map(([header, schema]) => ({
+                    name: header,
+                    value: FullExample.primitive(PrimitiveExample.string(header))
+                })) ?? [])
+        ];
+
+        example.headers = convertHeaderExamples({
+            context,
+            namedFullExamples
+        });
     }
 
     if (endpointExample.request != null) {
@@ -111,13 +130,10 @@ function convertHeaderExamples({
     context: OpenApiIrConverterContext;
     namedFullExamples: NamedFullExample[];
 }): Record<string, RawSchemas.ExampleTypeReferenceSchema> {
-    const globalHeaderNames = context.builder.getGlobalHeaderNames();
     const result: Record<string, RawSchemas.ExampleTypeReferenceSchema> = {};
     namedFullExamples.forEach((namedFullExample) => {
         const convertedExample = convertFullExample(namedFullExample.value);
-        if (globalHeaderNames.has(namedFullExample.name)) {
-            return;
-        } else if (convertedExample != null) {
+        if (convertedExample != null) {
             result[namedFullExample.name] = convertedExample;
         }
     });

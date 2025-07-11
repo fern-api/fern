@@ -1,15 +1,18 @@
 import { DescriptorProto, EnumDescriptorProto } from "@bufbuild/protobuf/wkt";
 
-import { FernIr } from "@fern-api/ir-sdk";
+import { FernIr, TypeId } from "@fern-api/ir-sdk";
 import { AbstractConverter, AbstractConverterContext } from "@fern-api/v2-importer-commons";
 
 import { ProtofileConverterContext } from "../ProtofileConverterContext";
+import { SOURCE_CODE_INFO_PATH_STARTERS } from "../utils/PathFieldNumbers";
 import { EnumConverter } from "./EnumConverter";
 import { MessageConverter } from "./MessageConverter";
 
 export declare namespace EnumOrMessageConverter {
     export interface Args extends AbstractConverter.Args<ProtofileConverterContext> {
         schema: EnumDescriptorProto | DescriptorProto;
+        sourceCodeInfoPath: number[];
+        schemaIndex: number;
     }
 
     export interface ConvertedSchema {
@@ -30,9 +33,14 @@ export class EnumOrMessageConverter extends AbstractConverter<
 > {
     private readonly schema: EnumDescriptorProto | DescriptorProto;
     private readonly audiences: string[];
-    constructor({ context, breadcrumbs, schema }: EnumOrMessageConverter.Args) {
+    private readonly sourceCodeInfoPath: number[];
+    private readonly schemaIndex: number;
+
+    constructor({ context, breadcrumbs, schema, sourceCodeInfoPath, schemaIndex }: EnumOrMessageConverter.Args) {
         super({ context, breadcrumbs });
         this.schema = schema;
+        this.sourceCodeInfoPath = sourceCodeInfoPath;
+        this.schemaIndex = schemaIndex;
         this.audiences = [];
     }
 
@@ -53,7 +61,8 @@ export class EnumOrMessageConverter extends AbstractConverter<
             const enumConverter = new EnumConverter({
                 context: this.context,
                 breadcrumbs: [...this.breadcrumbs, this.schema.name],
-                enum: this.schema
+                enum: this.schema,
+                sourceCodeInfoPath: this.sourceCodeInfoPath
             });
             const convertedGrpcEnum = enumConverter.convert();
             if (convertedGrpcEnum != null) {
@@ -61,7 +70,8 @@ export class EnumOrMessageConverter extends AbstractConverter<
                     convertedSchema: {
                         typeDeclaration: this.createTypeDeclaration({
                             shape: convertedGrpcEnum.type,
-                            referencedTypes: new Set()
+                            referencedTypes: new Set(),
+                            docs: this.context.getCommentForPath(this.sourceCodeInfoPath)
                         }),
                         audiences: this.audiences,
                         propertiesByAudience: {}
@@ -78,7 +88,8 @@ export class EnumOrMessageConverter extends AbstractConverter<
             const messageConverter = new MessageConverter({
                 context: this.context,
                 breadcrumbs: [...this.breadcrumbs, this.schema.name],
-                message: this.schema
+                message: this.schema,
+                sourceCodeInfoPath: this.sourceCodeInfoPath
             });
             const convertedGrpcMessage = messageConverter.convert();
             if (convertedGrpcMessage != null) {
@@ -94,11 +105,11 @@ export class EnumOrMessageConverter extends AbstractConverter<
     public createTypeDeclaration({
         shape,
         referencedTypes,
-        omitV2Examples
+        docs
     }: {
         shape: FernIr.Type;
-        referencedTypes: Set<string>;
-        omitV2Examples?: boolean;
+        referencedTypes: Set<TypeId>;
+        docs?: string;
     }): FernIr.TypeDeclaration {
         return {
             name: this.convertDeclaredTypeName(),
@@ -107,7 +118,7 @@ export class EnumOrMessageConverter extends AbstractConverter<
             userProvidedExamples: [],
             encoding: undefined,
             availability: undefined,
-            docs: undefined,
+            docs,
             referencedTypes,
             source: undefined,
             inline: undefined,
@@ -116,11 +127,12 @@ export class EnumOrMessageConverter extends AbstractConverter<
     }
 
     public convertDeclaredTypeName(): FernIr.DeclaredTypeName {
+        const fullyQualifiedName = this.context.maybePrependPackageName(this.schema.name);
         return {
-            typeId: this.schema.name,
+            typeId: fullyQualifiedName,
             fernFilepath: this.context.createFernFilepath(),
-            name: this.context.casingsGenerator.generateName(this.schema.name),
-            displayName: undefined
+            name: this.context.casingsGenerator.generateName(fullyQualifiedName),
+            displayName: this.schema.name
         };
     }
 }

@@ -5,7 +5,7 @@ client = SeedHttpHead(
     base_url="https://yourhost.com/path/to/api",
 )        
 client.user.head(
-	
+    
 )
 
 ```
@@ -18,7 +18,7 @@ client = SeedHttpHead(
     base_url="https://yourhost.com/path/to/api",
 )        
 client.user.list(
-	limit=1
+    limit=1
 )
 
 ```

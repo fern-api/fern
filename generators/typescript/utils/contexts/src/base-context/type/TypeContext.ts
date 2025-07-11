@@ -37,4 +37,5 @@ export interface TypeContext {
     getGeneratedExample: (example: ExampleTypeReference) => GeneratedTypeReferenceExample;
     isNullable: (typeReference: TypeReference) => boolean;
     isOptional: (typeReference: TypeReference) => boolean;
+    hasDefaultValue: (typeReference: TypeReference) => boolean;
 }

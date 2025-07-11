@@ -15,6 +15,8 @@ type Client struct {
 	baseURL string
 	caller  *internal.Caller
 	header  http.Header
+
+	WithRawResponse *RawClient
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
@@ -27,7 +29,8 @@ func NewClient(opts ...option.RequestOption) *Client {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header: options.ToHeader(),
+		header:          options.ToHeader(),
+		WithRawResponse: NewRawClient(options),
 	}
 }
 
@@ -49,7 +52,7 @@ func (c *Client) GetMovie(
 	)
 
 	var response *fern.Response
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,
@@ -86,7 +89,7 @@ func (c *Client) GetMovieDocs(
 	)
 
 	var response *fern.Response
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,
@@ -123,7 +126,7 @@ func (c *Client) GetMovieName(
 	)
 
 	var response *fern.StringResponse
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,
@@ -160,7 +163,7 @@ func (c *Client) GetMovieMetadata(
 	)
 
 	var response *fern.Response
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,
@@ -197,7 +200,7 @@ func (c *Client) GetOptionalMovie(
 	)
 
 	var response *fern.Response
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:                endpointURL,
@@ -235,7 +238,7 @@ func (c *Client) GetOptionalMovieDocs(
 	)
 
 	var response fern.OptionalWithDocs
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,
@@ -272,7 +275,7 @@ func (c *Client) GetOptionalMovieName(
 	)
 
 	var response fern.OptionalStringResponse
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,

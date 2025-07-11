@@ -78,6 +78,9 @@ fixtures:
         inline-path-parameters: true
         enable-public-constructors: true
       outputFolder: enable-public-constructors
+    - customConfig:
+        publish-to: central
+      outputFolder: publish-to
     - publishConfig:
         type: maven
         coordinate: com.fern:exhaustive

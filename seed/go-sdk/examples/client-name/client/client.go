@@ -19,9 +19,10 @@ type Acme struct {
 	caller  *internal.Caller
 	header  http.Header
 
-	File    *fileclient.Client
-	Health  *healthclient.Client
-	Service *service.Client
+	WithRawResponse *RawAcme
+	File            *fileclient.Client
+	Health          *healthclient.Client
+	Service         *service.Client
 }
 
 func NewAcme(opts ...option.RequestOption) *Acme {
@@ -34,10 +35,11 @@ func NewAcme(opts ...option.RequestOption) *Acme {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header:  options.ToHeader(),
-		File:    fileclient.NewClient(opts...),
-		Health:  healthclient.NewClient(opts...),
-		Service: service.NewClient(opts...),
+		header:          options.ToHeader(),
+		WithRawResponse: NewRawAcme(options),
+		File:            fileclient.NewClient(opts...),
+		Health:          healthclient.NewClient(opts...),
+		Service:         service.NewClient(opts...),
 	}
 }
 
@@ -59,7 +61,7 @@ func (a *Acme) Echo(
 	)
 
 	var response string
-	if err := a.caller.Call(
+	if _, err := a.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,
@@ -96,7 +98,7 @@ func (a *Acme) CreateType(
 	)
 
 	var response *fern.Identifier
-	if err := a.caller.Call(
+	if _, err := a.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,

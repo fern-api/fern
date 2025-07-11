@@ -4,7 +4,6 @@
 
 import * as core from "../../../../core/index.js";
 import { mergeHeaders } from "../../../../core/headers.js";
-import urlJoin from "url-join";
 import * as errors from "../../../../errors/index.js";
 import * as SeedHttpHead from "../../../index.js";
 
@@ -48,7 +47,7 @@ export class User {
 
     private async __head(requestOptions?: User.RequestOptions): Promise<core.WithRawResponse<Headers>> {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/users",
@@ -112,7 +111,7 @@ export class User {
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         _queryParams["limit"] = limit.toString();
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/users",

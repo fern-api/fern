@@ -5,7 +5,7 @@ client = SeedMultiLineDocs(
     base_url="https://yourhost.com/path/to/api",
 )        
 client.user.get_user(
-	user_id="userId"
+    user_id="userId"
 )
 
 ```
@@ -18,7 +18,7 @@ client = SeedMultiLineDocs(
     base_url="https://yourhost.com/path/to/api",
 )        
 client.user.create_user(
-	name="name",
+    name="name",
 	age=1
 )
 

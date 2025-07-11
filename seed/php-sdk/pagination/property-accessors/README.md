@@ -62,13 +62,72 @@ try {
     $response = $client->complex->search(...);
 } catch (SeedApiException $e) {
     echo 'API Exception occurred: ' . $e->getMessage() . "\n";
-    echo 'Status Code: ' . $e->getCode() . "\n"; 
+    echo 'Status Code: ' . $e->getCode() . "\n";
     echo 'Response Body: ' . $e->getBody() . "\n";
     // Optionally, rethrow the exception or handle accordingly.
 }
 ```
 
+## Pagination
+
+List endpoints return a `Pager<T>` which lets you loop over all items and the SDK will automatically make multiple HTTP requests for you.
+
+```php
+use Seed\SeedClient;
+
+$client = new SeedClient(
+    '<token>',
+    ['baseUrl' => 'https://api.example.com'],
+);
+
+$items = $client->complex->search(['limit' => 10]);
+
+foreach ($items as $item) {
+    var_dump($item);
+}
+```
+You can also iterate page-by-page:
+
+```php
+foreach ($items->getPages() as $page) {
+    foreach ($page->getItems() as $pageItem) {
+        var_dump($pageItem);
+    }
+}
+```
+
+
 ## Advanced
+
+### Custom Client
+
+This SDK is built to work with any HTTP client that implements Guzzle's `ClientInterface`.
+By default, if no client is provided, the SDK will use Guzzle's default HTTP client.
+However, you can pass your own client that adheres to `ClientInterface`:
+
+```php
+use Seed\SeedClient;
+
+// Create a custom Guzzle client with specific configuration.
+$customClient = new \GuzzleHttp\Client([
+    'timeout' => 5.0,
+]);
+
+// Pass the custom client when creating an instance of the class.
+$client = new SeedClient(options: [
+    'client' => $customClient
+]);
+
+// You can also utilize the same technique to leverage advanced customizations to the client such as adding middleware
+$handlerStack = \GuzzleHttp\HandlerStack::create();
+$handlerStack->push(MyCustomMiddleware::create());
+$customClient = new \GuzzleHttp\Client(['handler' => $handlerStack]);
+
+// Pass the custom client when creating an instance of the class.
+$client = new SeedClient(options: [
+    'client' => $customClient
+]);
+```
 
 ### Retries
 

@@ -109,7 +109,7 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
         }
 
         if (this.context.shouldCreateCustomPagination()) {
-            this.coreFiles.push(await this.createCustomPagerAsIsFile());
+            this.coreFiles.push(...(await this.createCustomPagerAsIsFiles()));
         }
 
         for (const filename of this.context.getCoreTestAsIsFiles()) {
@@ -403,23 +403,44 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
         );
     }
 
-    private async createCustomPagerAsIsFile(): Promise<File> {
-        const fileName = AsIsFiles.CustomPager;
+    private async createCustomPagerAsIsFiles(): Promise<File[]> {
+        const customPagerFileName = AsIsFiles.CustomPager;
         const customPagerName = this.context.getCustomPagerName();
-        const contents = (await readFile(getAsIsFilepath(fileName))).toString();
-        return new File(
-            fileName.replace(".Template", "").replace("CustomPager", customPagerName),
-            RelativeFilePath.of(""),
-            replaceTemplate({
-                contents,
-                variables: getTemplateVariables({
-                    grpc: this.context.hasGrpcEndpoints(),
-                    idempotencyHeaders: this.context.hasIdempotencyHeaders(),
-                    namespace: this.context.getCoreNamespace(),
-                    additionalProperties: this.context.generateNewAdditionalProperties()
-                })
-            }).replaceAll("CustomPager", customPagerName)
-        );
+        const customPagerContents = await readFile(getAsIsFilepath(customPagerFileName), {
+            encoding: "utf-8"
+        });
+        const customPagerContextFileName = AsIsFiles.CustomPagerContext;
+        const customPagerContextContents = await readFile(getAsIsFilepath(customPagerContextFileName), {
+            encoding: "utf-8"
+        });
+        return [
+            new File(
+                customPagerFileName.replace(".Template", "").replace("CustomPager", customPagerName),
+                RelativeFilePath.of(""),
+                replaceTemplate({
+                    contents: customPagerContents,
+                    variables: getTemplateVariables({
+                        grpc: this.context.hasGrpcEndpoints(),
+                        idempotencyHeaders: this.context.hasIdempotencyHeaders(),
+                        namespace: this.context.getCoreNamespace(),
+                        additionalProperties: this.context.generateNewAdditionalProperties()
+                    })
+                }).replaceAll("CustomPager", customPagerName)
+            ),
+            new File(
+                customPagerContextFileName.replace(".Template", "").replace("CustomPager", customPagerName),
+                RelativeFilePath.of(""),
+                replaceTemplate({
+                    contents: customPagerContextContents,
+                    variables: getTemplateVariables({
+                        grpc: this.context.hasGrpcEndpoints(),
+                        idempotencyHeaders: this.context.hasIdempotencyHeaders(),
+                        namespace: this.context.getCoreNamespace(),
+                        additionalProperties: this.context.generateNewAdditionalProperties()
+                    })
+                }).replaceAll("CustomPager", customPagerName)
+            )
+        ];
     }
 
     private async createTestUtilsAsIsFile(filename: string): Promise<File> {

@@ -17,6 +17,8 @@ type Client struct {
 	baseURL string
 	caller  *internal.Caller
 	header  http.Header
+
+	WithRawResponse *RawClient
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
@@ -29,7 +31,8 @@ func NewClient(opts ...option.RequestOption) *Client {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header: options.ToHeader(),
+		header:          options.ToHeader(),
+		WithRawResponse: NewRawClient(options),
 	}
 }
 
@@ -128,7 +131,7 @@ func (c *Client) Post(
 	}
 	headers.Set("Content-Type", writer.ContentType())
 
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,
@@ -171,7 +174,7 @@ func (c *Client) JustFile(
 	}
 	headers.Set("Content-Type", writer.ContentType())
 
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,
@@ -222,7 +225,7 @@ func (c *Client) JustFileWithQueryParams(
 	}
 	headers.Set("Content-Type", writer.ContentType())
 
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,
@@ -277,7 +280,7 @@ func (c *Client) WithContentType(
 	}
 	headers.Set("Content-Type", writer.ContentType())
 
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,
@@ -327,7 +330,7 @@ func (c *Client) WithFormEncoding(
 	}
 	headers.Set("Content-Type", writer.ContentType())
 
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,
@@ -445,7 +448,7 @@ func (c *Client) WithFormEncodedContainers(
 	}
 	headers.Set("Content-Type", writer.ContentType())
 
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,
@@ -497,7 +500,7 @@ func (c *Client) OptionalArgs(
 	headers.Set("Content-Type", writer.ContentType())
 
 	var response string
-	if err := c.caller.Call(
+	if _, err := c.caller.Call(
 		ctx,
 		&internal.CallParams{
 			URL:             endpointURL,
@@ -514,4 +517,37 @@ func (c *Client) OptionalArgs(
 		return "", err
 	}
 	return response, nil
+}
+
+func (c *Client) Simple(
+	ctx context.Context,
+	opts ...option.RequestOption,
+) error {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
+	)
+	endpointURL := baseURL + "/snippet"
+	headers := internal.MergeHeaders(
+		c.header.Clone(),
+		options.ToHeader(),
+	)
+
+	if _, err := c.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+		},
+	); err != nil {
+		return err
+	}
+	return nil
 }

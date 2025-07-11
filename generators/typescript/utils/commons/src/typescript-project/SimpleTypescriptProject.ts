@@ -273,7 +273,12 @@ export class SimpleTypescriptProject extends TypescriptProject {
                     }, {}),
                     "./package.json": "./package.json"
                 },
-                files: [SimpleTypescriptProject.DIST_DIRECTORY, SimpleTypescriptProject.REFERENCE_FILENAME],
+                files: [
+                    SimpleTypescriptProject.DIST_DIRECTORY,
+                    SimpleTypescriptProject.REFERENCE_FILENAME,
+                    SimpleTypescriptProject.README_FILENAME,
+                    SimpleTypescriptProject.LICENSE_FILENAME
+                ],
                 scripts: {
                     [SimpleTypescriptProject.FORMAT_SCRIPT_NAME]: "prettier . --write --ignore-unknown",
                     [SimpleTypescriptProject.BUILD_SCRIPT_NAME]: `yarn ${SimpleTypescriptProject.BUILD_CJS_SCRIPT_NAME} && yarn ${SimpleTypescriptProject.BUILD_ESM_SCRIPT_NAME}`,
@@ -295,40 +300,50 @@ export class SimpleTypescriptProject extends TypescriptProject {
         };
 
         packageJson = produce(packageJson, (draft) => {
-            if (Object.keys(this.dependencies[DependencyType.PROD]).length > 0) {
-                draft.dependencies = {
-                    ...this.dependencies[DependencyType.PROD],
-                    ...this.extraDependencies
-                };
+            const dependencies = {
+                ...this.dependencies[DependencyType.PROD],
+                ...this.extraDependencies
+            };
+            if (Object.keys(dependencies).length > 0) {
+                draft.dependencies = dependencies;
             }
-            if (
-                Object.keys(this.dependencies[DependencyType.PEER]).length > 0 ||
-                Object.keys(this.extraPeerDependencies).length > 0
-            ) {
-                draft.peerDependencies = {
-                    ...this.dependencies[DependencyType.PEER],
-                    ...this.extraPeerDependencies
-                };
+
+            const peerDependencies = {
+                ...this.dependencies[DependencyType.PEER],
+                ...this.extraPeerDependencies
+            };
+            if (Object.keys(peerDependencies).length > 0) {
+                draft.peerDependencies = peerDependencies;
             }
+
             if (Object.keys(this.extraPeerDependenciesMeta).length > 0) {
                 draft.peerDependenciesMeta = {
                     ...this.extraPeerDependenciesMeta
                 };
             }
-            draft.devDependencies = {
+
+            const devDependencies = {
                 ...this.dependencies[DependencyType.DEV],
                 ...this.getDevDependencies(),
                 ...this.extraDevDependencies
             };
+            if (Object.keys(devDependencies).length > 0) {
+                draft.devDependencies = devDependencies;
+            }
 
             draft.browser = {
                 fs: false,
                 os: false,
-                path: false
+                path: false,
+                stream: false
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
             } as any;
 
             draft["packageManager"] = "yarn@1.22.22";
+            draft["engines"] = {
+                node: ">=18.0.0"
+            };
+            draft["sideEffects"] = false;
         });
 
         packageJson = mergeExtraConfigs(packageJson, this.extraConfigs);

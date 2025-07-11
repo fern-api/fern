@@ -45,7 +45,10 @@ export class AsIsManager {
                 mockServer: {
                     ["tests/mock-server/*"]: `${this.relativeTestPath}/mock-server/`
                 },
-                bigintSetup: { ["tests/bigint.setup.ts"]: `${this.relativeTestPath}/bigint.setup.ts` }
+                bigintSetup: { ["tests/bigint.setup.ts"]: `${this.relativeTestPath}/bigint.setup.ts` },
+                BrowserEnvironment: {
+                    ["tests/BrowserTestEnvironment.ts"]: `${this.relativeTestPath}/BrowserTestEnvironment.ts`
+                }
             },
             scripts: {
                 renameToEsmFiles: {
@@ -61,6 +64,7 @@ export class AsIsManager {
 
         filesToCopy.push(asIsFiles.core.mergeHeaders);
         filesToCopy.push(asIsFiles.scripts.renameToEsmFiles);
+        filesToCopy.push(asIsFiles.tests.BrowserEnvironment);
         if (this.useBigInt) {
             filesToCopy.push(asIsFiles.tests.bigintSetup);
             filesToCopy.push(asIsFiles.core.json.bigint);

@@ -336,8 +336,8 @@ public final class BuilderGenerator {
                 .addModifiers(Modifier.PUBLIC)
                 .returns(returnClass);
         if (enrichedObjectProperty.enrichedObjectProperty.docs().isPresent()) {
-            methodBuilder.addJavadoc(
-                    enrichedObjectProperty.enrichedObjectProperty.docs().get());
+            methodBuilder.addJavadoc(JavaDocUtils.render(
+                    enrichedObjectProperty.enrichedObjectProperty.docs().get()));
         }
         methodBuilder.addParameter(parameterSpecBuilder.build());
         return methodBuilder;

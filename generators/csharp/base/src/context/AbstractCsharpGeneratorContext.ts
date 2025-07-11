@@ -698,7 +698,9 @@ export abstract class AbstractCsharpGeneratorContext<
         const literalValue = this.getLiteralValue(typeReference);
         if (literalValue != null) {
             return csharp.codeblock(
-                typeof literalValue === "boolean" ? `${literalValue.toString().toLowerCase()}` : `"${literalValue}"`
+                typeof literalValue === "boolean"
+                    ? `${literalValue.toString().toLowerCase()}`
+                    : csharp.string_({ string: literalValue })
             );
         }
         return undefined;
@@ -752,22 +754,57 @@ export abstract class AbstractCsharpGeneratorContext<
         });
     }
 
+    public getCustomPagerContextClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: `${this.getCustomPagerName()}Context`,
+            namespace: this.getCoreNamespace()
+        });
+    }
+
     public invokeCustomPagerFactoryMethod({
         itemType,
         sendRequestMethod,
         initialRequest,
+        clientOptions,
+        requestOptions,
         cancellationToken
     }: {
         itemType: csharp.Type;
         sendRequestMethod: csharp.CodeBlock;
         initialRequest: csharp.CodeBlock;
+        clientOptions: csharp.CodeBlock;
+        requestOptions: csharp.CodeBlock;
         cancellationToken: csharp.CodeBlock;
     }): csharp.MethodInvocation {
         return csharp.invokeMethod({
             on: this.getCustomPagerFactoryClassReference(),
             method: "CreateAsync",
             async: true,
-            arguments_: [sendRequestMethod, initialRequest, cancellationToken],
+            arguments_: [
+                csharp.instantiateClass({
+                    classReference: this.getCustomPagerContextClassReference(),
+                    arguments_: [],
+                    properties: [
+                        {
+                            name: "SendRequest",
+                            value: sendRequestMethod
+                        },
+                        {
+                            name: "InitialHttpRequest",
+                            value: initialRequest
+                        },
+                        {
+                            name: "ClientOptions",
+                            value: clientOptions
+                        },
+                        {
+                            name: "RequestOptions",
+                            value: requestOptions
+                        }
+                    ]
+                }),
+                cancellationToken
+            ],
             generics: [itemType]
         });
     }

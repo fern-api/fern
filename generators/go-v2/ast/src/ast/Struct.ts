@@ -1,6 +1,9 @@
+import { CodeBlock } from "@fern-api/browser-compatible-base-generator";
+
 import { Comment } from "./Comment";
 import { Field } from "./Field";
 import { Method } from "./Method";
+import { Parameter } from "./Parameter";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 
@@ -13,6 +16,11 @@ export declare namespace Struct {
         /* Docs associated with the class */
         docs?: string;
     }
+
+    interface Constructor {
+        parameters: Parameter[];
+        body: AstNode;
+    }
 }
 
 export class Struct extends AstNode {
@@ -20,6 +28,7 @@ export class Struct extends AstNode {
     public readonly importPath: string;
     public readonly docs: string | undefined;
 
+    public constructor_: Struct.Constructor | undefined;
     public readonly fields: Field[] = [];
     public readonly methods: Method[] = [];
 
@@ -30,12 +39,16 @@ export class Struct extends AstNode {
         this.docs = docs;
     }
 
-    public addField(field: Field): void {
-        this.fields.push(field);
+    public addConstructor(constructor: Struct.Constructor): void {
+        this.constructor_ = constructor;
     }
 
-    public addMethod(method: Method): void {
-        this.methods.push(method);
+    public addField(...fields: Field[]): void {
+        this.fields.push(...fields);
+    }
+
+    public addMethod(...methods: Method[]): void {
+        this.methods.push(...methods);
     }
 
     public write(writer: Writer): void {
@@ -54,12 +67,34 @@ export class Struct extends AstNode {
             writer.writeLine("}");
         }
 
-        if (this.methods.length > 0) {
+        if (this.constructor_ != null) {
             writer.newLine();
+            this.writeConstructor({ writer, constructor: this.constructor_ });
+        }
+
+        if (this.methods.length > 0) {
             for (const method of this.methods) {
+                writer.newLine();
                 writer.writeNode(method);
                 writer.newLine();
             }
         }
+    }
+
+    private writeConstructor({ writer, constructor }: { writer: Writer; constructor: Struct.Constructor }): void {
+        writer.write(`func New${this.name}(`);
+        constructor.parameters.forEach((parameter, index) => {
+            if (index > 0) {
+                writer.write(", ");
+            }
+            writer.writeNode(parameter);
+        });
+        writer.write(`) *${this.name} {`);
+        writer.newLine();
+        writer.indent();
+        writer.writeNode(constructor.body);
+        writer.writeNewLineIfLastLineNot();
+        writer.dedent();
+        writer.writeLine("}");
     }
 }

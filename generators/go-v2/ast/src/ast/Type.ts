@@ -11,6 +11,7 @@ type InternalType =
     | Float64
     | Date
     | DateTime
+    | Error_
     | Int
     | Int64
     | Map
@@ -18,7 +19,8 @@ type InternalType =
     | Reference
     | Slice
     | String_
-    | Uuid;
+    | Uuid
+    | Variadic;
 
 interface Any_ {
     type: "any";
@@ -38,6 +40,10 @@ interface Float64 {
 
 interface Date {
     type: "date";
+}
+
+interface Error_ {
+    type: "error";
 }
 
 interface DateTime {
@@ -81,6 +87,11 @@ interface Uuid {
     type: "uuid";
 }
 
+interface Variadic {
+    type: "variadic";
+    value: Type;
+}
+
 const NILABLE_TYPES = new Set<string>(["any", "bytes", "map", "slice"]);
 
 export class Type extends AstNode {
@@ -91,7 +102,7 @@ export class Type extends AstNode {
     public write(writer: Writer, { comment }: { comment?: boolean } = {}): void {
         switch (this.internalType.type) {
             case "any":
-                writer.write("interface{}");
+                writer.write("any");
                 break;
             case "bool":
                 writer.write("bool");
@@ -102,6 +113,9 @@ export class Type extends AstNode {
             case "date":
             case "dateTime":
                 writer.writeNode(TimeTypeReference);
+                break;
+            case "error":
+                writer.write("error");
                 break;
             case "float64":
                 writer.write("float64");
@@ -136,6 +150,10 @@ export class Type extends AstNode {
                 break;
             case "uuid":
                 writer.writeNode(UuidTypeReference);
+                break;
+            case "variadic":
+                writer.write("...");
+                this.internalType.value.write(writer);
                 break;
             default:
                 assertNever(this.internalType);
@@ -177,6 +195,12 @@ export class Type extends AstNode {
         });
     }
 
+    public static error(): Type {
+        return new this({
+            type: "error"
+        });
+    }
+
     public static float64(): Type {
         return new this({
             type: "float64"
@@ -204,8 +228,8 @@ export class Type extends AstNode {
     }
 
     public static optional(value: Type): Type {
-        // Avoids double optional.
         if (this.isAlreadyOptional(value)) {
+            // Avoids double optional.
             return value;
         }
         return new this({
@@ -245,8 +269,23 @@ export class Type extends AstNode {
         });
     }
 
+    public static variadic(value: Type): Type {
+        if (this.isAlreadyVariadic(value)) {
+            // Avoids double variadic.
+            return value;
+        }
+        return new this({
+            type: "variadic",
+            value
+        });
+    }
+
     private static isAlreadyOptional(value: Type) {
         return value.internalType.type === "optional" || NILABLE_TYPES.has(value.internalType.type);
+    }
+
+    private static isAlreadyVariadic(value: Type) {
+        return value.internalType.type === "variadic";
     }
 }
 
@@ -258,4 +297,9 @@ export const TimeTypeReference = new GoTypeReference({
 export const UuidTypeReference = new GoTypeReference({
     importPath: "github.com/google/uuid",
     name: "UUID"
+});
+
+export const IoReaderTypeReference = new GoTypeReference({
+    importPath: "io",
+    name: "Reader"
 });

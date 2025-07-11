@@ -6,9 +6,12 @@
   "references": [
     { "path": "../../../../packages/commons/fs-utils" },
     { "path": "../../../base" },
+    { "path": "../../utils/abstract-error-class-generator" },
     { "path": "../../utils/abstract-generator-cli" },
+    { "path": "../../utils/abstract-schema-generator" },
     { "path": "../../utils/commons" },
     { "path": "../../utils/contexts" },
+    { "path": "../../utils/resolvers" },
     { "path": "../generator" }
   ]
 }

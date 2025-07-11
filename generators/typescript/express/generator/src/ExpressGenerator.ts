@@ -128,6 +128,8 @@ export class ExpressGenerator {
         this.exportsManager = new ExportsManager({ packagePath: config.packagePath });
         this.coreUtilitiesManager = new CoreUtilitiesManager({
             streamType: "wrapper",
+            formDataSupport: "Node16",
+            fetchSupport: "node-fetch",
             relativePackagePath: this.getRelativePackagePath(),
             relativeTestPath: this.getRelativeTestPath()
         });

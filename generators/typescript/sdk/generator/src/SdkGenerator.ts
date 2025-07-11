@@ -6,7 +6,6 @@ import {
     ExportedFilePath,
     ExportsManager,
     ImportsManager,
-    JavaScriptRuntime,
     NpmPackage,
     PackageId,
     SimpleTypescriptProject,
@@ -116,7 +115,6 @@ export declare namespace SdkGenerator {
         requireDefaultEnvironment: boolean;
         defaultTimeoutInSeconds: number | "infinity" | undefined;
         skipResponseValidation: boolean;
-        targetRuntime: JavaScriptRuntime;
         extraDependencies: Record<string, string>;
         extraDevDependencies: Record<string, string>;
         extraPeerDependencies: Record<string, string>;
@@ -142,7 +140,11 @@ export declare namespace SdkGenerator {
         generateWireTests: boolean;
         streamType: "wrapper" | "web";
         fileResponseType: "stream" | "binary-response";
+        formDataSupport: "Node16" | "Node18";
+        fetchSupport: "node-fetch" | "native";
         packagePath: string | undefined;
+        omitFernHeaders: boolean;
+        useDefaultRequestParameterValues: boolean;
     }
 }
 
@@ -261,6 +263,8 @@ export class SdkGenerator {
         });
         this.coreUtilitiesManager = new CoreUtilitiesManager({
             streamType: this.config.streamType,
+            formDataSupport: this.config.formDataSupport,
+            fetchSupport: this.config.fetchSupport,
             relativePackagePath: this.relativePackagePath,
             relativeTestPath: this.relativeTestPath
         });
@@ -411,7 +415,6 @@ export class SdkGenerator {
             requireDefaultEnvironment: config.requireDefaultEnvironment,
             defaultTimeoutInSeconds: config.defaultTimeoutInSeconds,
             npmPackage,
-            targetRuntime: config.targetRuntime,
             includeContentHeadersOnFileDownloadResponse: config.includeContentHeadersOnFileDownloadResponse,
             includeSerdeLayer: config.includeSerdeLayer,
             retainOriginalCasing: config.retainOriginalCasing,
@@ -421,10 +424,16 @@ export class SdkGenerator {
             allowExtraFields: config.allowExtraFields,
             streamType: config.streamType,
             fileResponseType: config.fileResponseType,
-            exportsManager: this.exportsManager
+            exportsManager: this.exportsManager,
+            formDataSupport: config.formDataSupport,
+            omitFernHeaders: config.omitFernHeaders,
+            useDefaultRequestParameterValues: config.useDefaultRequestParameterValues
         });
         this.websocketGenerator = new WebsocketClassGenerator({
-            intermediateRepresentation
+            intermediateRepresentation,
+            retainOriginalCasing: config.retainOriginalCasing,
+            omitUndefined: config.omitUndefined,
+            skipResponseValidation: config.skipResponseValidation
         });
         this.genericAPISdkErrorGenerator = new GenericAPISdkErrorGenerator();
         this.timeoutSdkErrorGenerator = new TimeoutSdkErrorGenerator();
@@ -435,7 +444,8 @@ export class SdkGenerator {
         });
         this.websocketTypeSchemaGenerator = new WebsocketTypeSchemaGenerator({
             includeSerdeLayer: config.includeSerdeLayer,
-            omitUndefined: config.omitUndefined
+            omitUndefined: config.omitUndefined,
+            skipResponseValidation: config.skipResponseValidation
         });
         this.jestTestGenerator = new JestTestGenerator({
             ir: intermediateRepresentation,
@@ -562,7 +572,7 @@ export class SdkGenerator {
         if (this.generateJestTests && this.config.writeUnitTests) {
             this.generateTestFiles();
         }
-        this.jestTestGenerator.addExtras();
+        await this.jestTestGenerator.addExtras();
         this.extraScripts = {
             ...this.extraScripts,
             ...this.jestTestGenerator.scripts
@@ -914,6 +924,10 @@ export class SdkGenerator {
 
     private generateTestFiles() {
         this.context.logger.debug("Generating test files...");
+        if (this.config.generateWireTests) {
+            // make sure folder is always created, even if no wire tests are generated
+            this.jestTestGenerator.createWireTestDirectory();
+        }
         this.forEachService((service, packageId) => {
             if (service.endpoints.length === 0) {
                 return;
@@ -1498,7 +1512,6 @@ export class SdkGenerator {
             treatUnknownAsAny: this.config.treatUnknownAsAny,
             includeSerdeLayer: this.config.includeSerdeLayer,
             retainOriginalCasing: this.config.retainOriginalCasing,
-            targetRuntime: this.config.targetRuntime,
             inlineFileProperties: this.config.inlineFileProperties,
             inlinePathParameters: this.config.inlinePathParameters,
             enableInlineTypes: this.config.enableInlineTypes,
@@ -1508,7 +1521,9 @@ export class SdkGenerator {
             neverThrowErrors: this.config.neverThrowErrors,
             allowExtraFields: this.config.allowExtraFields,
             relativePackagePath: this.relativePackagePath,
-            relativeTestPath: this.relativeTestPath
+            relativeTestPath: this.relativeTestPath,
+            formDataSupport: this.config.formDataSupport,
+            useDefaultRequestParameterValues: this.config.useDefaultRequestParameterValues
         });
     }
 

@@ -118,12 +118,12 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "value": 42
+              "value": 1.1
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
-                "value": 42
+                "value": 1.1
               }
             }
           }

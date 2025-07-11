@@ -73,30 +73,88 @@ export class JestTestGenerator {
         this.relativeTestPath = relativeTestPath;
     }
 
-    private addJestConfig(): void {
+    private async addJestConfigs(): Promise<void> {
         const setupFilesAfterEnv = [];
         if (this.useBigInt) {
             setupFilesAfterEnv.push(`<rootDir>/${this.relativeTestPath}/bigint.setup.ts`);
         }
-        if (this.generateWireTests) {
-            setupFilesAfterEnv.push(`<rootDir>/${this.relativeTestPath}/mock-server/setup.ts`);
+        if (this.generateWireTests || this.writeUnitTests) {
+            const jestConfig = this.rootDirectory.createSourceFile(
+                "jest.config.mjs",
+                code`
+                /** @type {import('jest').Config} */
+                export default {
+                    preset: "ts-jest",
+                    testEnvironment: "node",
+                    projects: [
+                        ${
+                            this.writeUnitTests
+                                ? code`{
+                            displayName: "unit",
+                            preset: "ts-jest",
+                            testEnvironment: "node",
+                            moduleNameMapper: {
+                                "^(\\.{1,2}/.*)\\.js$": "$1",
+                            },
+                            roots: ["<rootDir>/${this.relativeTestPath}"],
+                            testPathIgnorePatterns: ["\\.browser\\.(spec|test)\\.[jt]sx?$", "/tests/wire/"],
+                            setupFilesAfterEnv: ${arrayOf(...setupFilesAfterEnv)},
+                        },
+                        {
+                            displayName: "browser",
+                            preset: "ts-jest",
+                            testEnvironment: "<rootDir>/${this.relativeTestPath}/BrowserTestEnvironment.ts",
+                            moduleNameMapper: {
+                                "^(\\.{1,2}/.*)\\.js$": "$1",
+                            },
+                            roots: ["<rootDir>/${this.relativeTestPath}"],
+                            testMatch: ["<rootDir>/tests/unit/**/?(*.)+(browser).(spec|test).[jt]s?(x)"],
+                            setupFilesAfterEnv: ${arrayOf(...setupFilesAfterEnv)},
+                        },`
+                                : ""
+                        },
+                        ${
+                            this.generateWireTests
+                                ? code`{
+                            displayName: "wire",
+                            preset: "ts-jest",
+                            testEnvironment: "node",
+                            moduleNameMapper: {
+                                "^(\\.{1,2}/.*)\\.js$": "$1",
+                            },
+                            roots: ["<rootDir>/${this.relativeTestPath}/wire"],
+                            setupFilesAfterEnv: ${arrayOf(...setupFilesAfterEnv, `<rootDir>/${this.relativeTestPath}/mock-server/setup.ts`)},
+                        }`
+                                : ""
+                        }
+                    ],
+                    workerThreads: ${this.useBigInt ? "true" : "false"},
+                    passWithNoTests: true,
+                };
+                `.toString({ dprintOptions: { indentWidth: 4 } })
+            );
+            await jestConfig.save();
+        } else {
+            const jestConfig = this.rootDirectory.createSourceFile(
+                "jest.config.mjs",
+                code`
+                /** @type {import('jest').Config} */
+                export default {
+                    preset: "ts-jest",
+                    testEnvironment: "node",
+                    moduleNameMapper: {
+                        "^(\\.{1,2}/.*)\\.js$": "$1"
+                    },
+                    roots: ["<rootDir>/${this.relativeTestPath}"],
+                    testPathIgnorePatterns: ["\\.browser\\.(spec|test)\\.[jt]sx?$", "/tests/wire/"],
+                    setupFilesAfterEnv: ${arrayOf(...setupFilesAfterEnv)},
+                    workerThreads: ${this.useBigInt ? "true" : "false"},
+                    passWithNoTests: true
+                };
+                `.toString({ dprintOptions: { indentWidth: 4 } })
+            );
+            await jestConfig.save();
         }
-        const jestConfig = this.rootDirectory.createSourceFile(
-            "jest.config.mjs",
-            code`
-            /** @type {import('jest').Config} */
-            export default {
-                preset: "ts-jest",
-                testEnvironment: "node",
-                moduleNameMapper: {
-                    "^(\\.{1,2}/.*)\\.js$": "$1"
-                },
-                setupFilesAfterEnv: ${arrayOf(...setupFilesAfterEnv)},
-                ${this.useBigInt ? code`workerThreads: true,` : code``}
-            };
-            `.toString({ dprintOptions: { indentWidth: 4 } })
-        );
-        jestConfig.saveSync();
     }
 
     public getTestFile(service: IR.HttpService): ExportedFilePath {
@@ -125,21 +183,21 @@ export class JestTestGenerator {
         }
     }
 
-    public addExtras(): void {
-        this.addJestConfig();
+    public async addExtras(): Promise<void> {
+        await this.addJestConfigs();
         this.addDependencies();
     }
 
     public get scripts(): Record<string, string> {
-        const scripts: Record<string, string> = {};
+        const scripts: Record<string, string> = {
+            test: "jest --config jest.config.mjs"
+        };
         if (this.writeUnitTests) {
-            scripts.test = `jest ${this.relativeTestPath}/unit --passWithNoTests`;
-        } else {
-            scripts.test = "jest --passWithNoTests";
+            scripts["test:unit"] = "jest --selectProjects unit";
+            scripts["test:browser"] = "jest --selectProjects browser";
         }
         if (this.generateWireTests) {
-            scripts["test:wire"] = `jest ${this.relativeTestPath}/wire --passWithNoTests`;
-            scripts["wire:test"] = "yarn test:wire";
+            scripts["test:wire"] = "jest --selectProjects wire";
         }
         return scripts;
     }
@@ -182,6 +240,12 @@ describe("test", () => {
         };
     }
 
+    public createWireTestDirectory(): void {
+        const wireTestPath = `${this.relativeTestPath}/wire`;
+        this.rootDirectory.createDirectory(wireTestPath);
+        this.rootDirectory.createSourceFile(`${wireTestPath}/.gitkeep`, "", { overwrite: true });
+    }
+
     public buildFile(
         serviceName: string,
         service: IR.HttpService,
@@ -190,7 +254,7 @@ describe("test", () => {
         context: SdkContext
     ): Code | undefined {
         context.importsManager.addImportFromRoot(
-            "mock-server/MockServerPool.js",
+            "mock-server/MockServerPool",
             {
                 namedImports: ["mockServerPool"]
             },

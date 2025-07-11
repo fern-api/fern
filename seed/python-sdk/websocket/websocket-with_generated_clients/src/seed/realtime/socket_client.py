@@ -2,6 +2,7 @@
 
 import json
 import typing
+from json.decoder import JSONDecodeError
 
 import websockets
 import websockets.sync.connection as websockets_sync_connection
@@ -10,14 +11,21 @@ from ..core.pydantic_utilities import parse_obj_as
 from .types.receive_event import ReceiveEvent
 from .types.receive_event_2 import ReceiveEvent2
 from .types.receive_event_3 import ReceiveEvent3
+from .types.receive_snake_case import ReceiveSnakeCase
 from .types.send_event import SendEvent
 from .types.send_event_2 import SendEvent2
+from .types.send_snake_case import SendSnakeCase
 
-RealtimeSocketClientResponse = typing.Union[ReceiveEvent, ReceiveEvent2, ReceiveEvent3]
+try:
+    from websockets.legacy.client import WebSocketClientProtocol  # type: ignore
+except ImportError:
+    from websockets import WebSocketClientProtocol  # type: ignore
+
+RealtimeSocketClientResponse = typing.Union[ReceiveEvent, ReceiveSnakeCase, ReceiveEvent2, ReceiveEvent3]
 
 
 class AsyncRealtimeSocketClient(EventEmitterMixin):
-    def __init__(self, *, websocket: websockets.WebSocketClientProtocol):
+    def __init__(self, *, websocket: WebSocketClientProtocol):
         super().__init__()
         self._websocket = websocket
 
@@ -35,20 +43,28 @@ class AsyncRealtimeSocketClient(EventEmitterMixin):
         - EventType.ERROR if an error occurs
         - EventType.CLOSE when connection is closed
         """
-        self._emit(EventType.OPEN, None)
+        await self._emit_async(EventType.OPEN, None)
         try:
             async for raw_message in self._websocket:
-                parsed = parse_obj_as(RealtimeSocketClientResponse, raw_message)  # type: ignore
-                self._emit(EventType.MESSAGE, parsed)
-        except websockets.WebSocketException as exc:
-            self._emit(EventType.ERROR, exc)
+                json_data = json.loads(raw_message)
+                parsed = parse_obj_as(RealtimeSocketClientResponse, json_data)  # type: ignore
+                await self._emit_async(EventType.MESSAGE, parsed)
+        except (websockets.WebSocketException, JSONDecodeError) as exc:
+            await self._emit_async(EventType.ERROR, exc)
         finally:
-            self._emit(EventType.CLOSE, None)
+            await self._emit_async(EventType.CLOSE, None)
 
     async def send_send(self, message: SendEvent) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a SendEvent.
+        """
+        await self._send_model(message)
+
+    async def send_send_snake_case(self, message: SendSnakeCase) -> None:
+        """
+        Send a message to the websocket connection.
+        The message will be sent as a SendSnakeCase.
         """
         await self._send_model(message)
 
@@ -64,7 +80,8 @@ class AsyncRealtimeSocketClient(EventEmitterMixin):
         Receive a message from the websocket connection.
         """
         data = await self._websocket.recv()
-        return parse_obj_as(RealtimeSocketClientResponse, data)  # type: ignore
+        json_data = json.loads(data)
+        return parse_obj_as(RealtimeSocketClientResponse, json_data)  # type: ignore
 
     async def _send(self, data: typing.Any) -> None:
         """
@@ -103,9 +120,10 @@ class RealtimeSocketClient(EventEmitterMixin):
         self._emit(EventType.OPEN, None)
         try:
             for raw_message in self._websocket:
-                parsed = parse_obj_as(RealtimeSocketClientResponse, raw_message)  # type: ignore
+                json_data = json.loads(raw_message)
+                parsed = parse_obj_as(RealtimeSocketClientResponse, json_data)  # type: ignore
                 self._emit(EventType.MESSAGE, parsed)
-        except websockets.WebSocketException as exc:
+        except (websockets.WebSocketException, JSONDecodeError) as exc:
             self._emit(EventType.ERROR, exc)
         finally:
             self._emit(EventType.CLOSE, None)
@@ -114,6 +132,13 @@ class RealtimeSocketClient(EventEmitterMixin):
         """
         Send a message to the websocket connection.
         The message will be sent as a SendEvent.
+        """
+        self._send_model(message)
+
+    def send_send_snake_case(self, message: SendSnakeCase) -> None:
+        """
+        Send a message to the websocket connection.
+        The message will be sent as a SendSnakeCase.
         """
         self._send_model(message)
 
@@ -129,7 +154,8 @@ class RealtimeSocketClient(EventEmitterMixin):
         Receive a message from the websocket connection.
         """
         data = self._websocket.recv()
-        return parse_obj_as(RealtimeSocketClientResponse, data)  # type: ignore
+        json_data = json.loads(data)
+        return parse_obj_as(RealtimeSocketClientResponse, json_data)  # type: ignore
 
     def _send(self, data: typing.Any) -> None:
         """

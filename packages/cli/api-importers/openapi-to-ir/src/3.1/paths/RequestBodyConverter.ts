@@ -3,6 +3,7 @@ import { OpenAPIV3_1 } from "openapi-types";
 import { MediaType } from "@fern-api/core-utils";
 import {
     FileProperty,
+    FileUploadBodyPropertyEncoding,
     FileUploadRequestProperty,
     HttpRequestBody,
     ObjectProperty,
@@ -180,7 +181,8 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
                     docs: this.requestBody.description,
                     name: this.context.casingsGenerator.generateName(this.schemaId),
                     properties: requestBodyTypeShape.properties.map((property) => {
-                        return this.convertRequestBodyProperty({ property, contentType });
+                        const encoding = mediaTypeObject.encoding?.[property.name.wireValue];
+                        return this.convertRequestBodyProperty({ property, contentType, encoding });
                     }),
                     v2Examples: this.convertMediaTypeObjectExamples({
                         mediaTypeObject,
@@ -228,10 +230,19 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
         };
     }
 
-    private convertRequestBodyProperty({ property, contentType }: { property: ObjectProperty; contentType: string }) {
+    private convertRequestBodyProperty({
+        property,
+        contentType,
+        encoding
+    }: {
+        property: ObjectProperty;
+        contentType: string;
+        encoding: OpenAPIV3_1.EncodingObject | undefined;
+    }): FileUploadRequestProperty {
         const { isFile, isOptional, isArray } = this.recursivelyCheckTypeReferenceIsFile({
             typeReference: property.valueType
         });
+
         if (isFile) {
             if (isArray) {
                 return FileUploadRequestProperty.file(
@@ -255,8 +266,8 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
         }
         return FileUploadRequestProperty.bodyProperty({
             ...property,
-            contentType,
-            style: undefined,
+            contentType: encoding?.contentType ?? contentType,
+            style: getMultipartPartEncoding({ encoding }),
             name: property.name
         });
     }
@@ -434,4 +445,32 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
             isArray: isArray ?? false
         };
     }
+}
+
+const CONTENT_TYPE_TO_ENCODING_MAP: Record<string, FileUploadBodyPropertyEncoding> = {
+    "application/json": "json"
+};
+
+function getMultipartPartEncoding({
+    encoding
+}: {
+    encoding: OpenAPIV3_1.EncodingObject | undefined;
+}): FileUploadBodyPropertyEncoding | undefined {
+    if (!encoding) {
+        return undefined;
+    }
+
+    if (encoding.explode) {
+        return "exploded";
+    }
+
+    if (encoding.style === "form") {
+        return "form";
+    }
+
+    if (encoding.contentType) {
+        return CONTENT_TYPE_TO_ENCODING_MAP[encoding.contentType];
+    }
+
+    return undefined;
 }

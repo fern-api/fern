@@ -5,7 +5,6 @@
 import * as core from "../../../../../../core/index.js";
 import * as SeedExhaustive from "../../../../../index.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/headers.js";
-import urlJoin from "url-join";
 import * as errors from "../../../../../../errors/index.js";
 
 export declare namespace ContentType {
@@ -72,7 +71,7 @@ export class ContentType {
         requestOptions?: ContentType.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/foo/bar",
@@ -156,7 +155,7 @@ export class ContentType {
         requestOptions?: ContentType.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/foo/baz",

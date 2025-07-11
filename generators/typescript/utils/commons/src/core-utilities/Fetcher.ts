@@ -3,6 +3,7 @@ import { ts } from "ts-morph";
 import { DependencyManager, DependencyType } from "../dependency-manager/DependencyManager";
 import { CoreUtility } from "./CoreUtility";
 import { MANIFEST as RuntimeManifest } from "./Runtime";
+import { MANIFEST as UrlManifest } from "./UrlUtils";
 
 export interface Fetcher {
     readonly Fetcher: {
@@ -141,21 +142,24 @@ export declare namespace Fetcher {
 export const MANIFEST: CoreUtility.Manifest = {
     name: "fetcher",
     pathInCoreUtilities: { nameOnDisk: "fetcher", exportDeclaration: { exportAll: true } },
-    addDependencies: (dependencyManager: DependencyManager, options): void => {
-        dependencyManager.addDependency("form-data", "^4.0.0");
-        dependencyManager.addDependency("formdata-node", "^6.0.3");
-        dependencyManager.addDependency("node-fetch", "^2.7.0");
-        dependencyManager.addDependency("qs", "^6.13.1");
-        if (options.streamType === "wrapper") {
+    addDependencies: (dependencyManager: DependencyManager, { formDataSupport, streamType, fetchSupport }): void => {
+        if (formDataSupport === "Node16") {
+            dependencyManager.addDependency("form-data", "^4.0.0");
+            dependencyManager.addDependency("formdata-node", "^6.0.3");
+        }
+
+        if (fetchSupport === "node-fetch") {
+            dependencyManager.addDependency("node-fetch", "^2.7.0");
+            dependencyManager.addDependency("@types/node-fetch", "^2.6.12", {
+                type: DependencyType.DEV
+            });
+        }
+
+        if (streamType === "wrapper") {
             dependencyManager.addDependency("readable-stream", "^4.5.2");
         }
-        dependencyManager.addDependency("@types/qs", "^6.9.17", {
-            type: DependencyType.DEV
-        });
-        dependencyManager.addDependency("@types/node-fetch", "^2.6.12", {
-            type: DependencyType.DEV
-        });
-        if (options.streamType === "wrapper") {
+
+        if (streamType === "wrapper") {
             dependencyManager.addDependency("@types/readable-stream", "^4.0.18", {
                 type: DependencyType.DEV
             });
@@ -167,14 +171,18 @@ export const MANIFEST: CoreUtility.Manifest = {
             type: DependencyType.DEV
         });
     },
-    dependsOn: [RuntimeManifest],
+    dependsOn: [RuntimeManifest, UrlManifest],
     getFilesPatterns: (options) => {
+        const ignore: string[] = [];
+        if (options.streamType !== "wrapper") {
+            ignore.push("src/core/fetcher/stream-wrappers/**", "tests/unit/fetcher/stream-wrappers/**");
+        }
+        if (options.fetchSupport === "native") {
+            ignore.push("tests/unit/fetcher/getFetchFn.test.ts");
+        }
         return {
             patterns: ["src/core/fetcher/**", "tests/unit/fetcher/**"],
-            ignore:
-                options.streamType !== "wrapper"
-                    ? ["src/core/fetcher/stream-wrappers/**", "tests/unit/fetcher/stream-wrappers/**"]
-                    : undefined
+            ignore
         };
     }
 };

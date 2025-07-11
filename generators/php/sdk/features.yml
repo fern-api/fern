@@ -7,6 +7,13 @@ features:
     description: |
       When the API returns a non-success status code (4xx or 5xx response), an exception will be thrown.
 
+  - id: CUSTOM_CLIENT
+    advanced: true
+    description: |
+      This SDK is built to work with any HTTP client that implements Guzzle's `ClientInterface`.
+      By default, if no client is provided, the SDK will use Guzzle's default HTTP client.
+      However, you can pass your own client that adheres to `ClientInterface`:
+
   - id: PAGINATION
     description: |
       List endpoints return a `Pager<T>` which lets you loop over all items and the SDK will automatically make multiple HTTP requests for you.

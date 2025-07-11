@@ -38,7 +38,6 @@
     "@fern-api/dynamic-ir-sdk": "^58.2.0",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/logger": "workspace:*",
-    "@fern-api/path-utils": "workspace:*",
     "@fern-fern/generator-cli-sdk": "0.0.28",
     "@fern-fern/generator-exec-sdk": "^0.0.1045",
     "@fern-fern/ir-sdk": "^58.2.0",
@@ -52,7 +51,6 @@
     "eslint": "^8.56.0",
     "prettier": "^3.4.2",
     "typescript": "5.7.2",
-    "url-join": "^5.0.0",
     "vitest": "^2.1.9"
   }
 }

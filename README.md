@@ -87,7 +87,7 @@ Postman Collections, Server boilerplate, etc.). To add a generator run `fern add
 
 | Generator ID                       | Latest Version                                                                                    | Entrypoint                                                                    |
 | ---------------------------------- | ------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
-| `fernapi/fern-typescript-node-sdk` | ![Typescript Generator Version](https://img.shields.io/docker/v/fernapi/fern-typescript-node-sdk) | [cli.ts](./generators/typescript/sdk/cli/src/nodeCli.ts)                      |
+| `fernapi/fern-typescript-sdk` | ![Typescript Generator Version](https://img.shields.io/docker/v/fernapi/fern-typescript-sdk) | [cli.ts](./generators/typescript/sdk/cli/src/nodeCli.ts)                      |
 | `fernapi/fern-python-sdk`          | ![Python Generator Version](https://img.shields.io/docker/v/fernapi/fern-python-sdk)              | [cli.py](./generators/python/src/fern_python/generators/sdk/cli.py)           |
 | `fernapi/fern-java-sdk`            | ![Java Generator Version](https://img.shields.io/docker/v/fernapi/fern-java-sdk)                  | [Cli.java](./generators/java/sdk/src/main/java/com/fern/java/client/Cli.java) |
 | `fernapi/fern-ruby-sdk`            | ![Ruby Generator Version](https://img.shields.io/docker/v/fernapi/fern-ruby-sdk)                  | [cli.ts](./generators/ruby/sdk/src/cli.ts)                                    |

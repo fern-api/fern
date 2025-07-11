@@ -3,6 +3,7 @@ import { ts } from "ts-morph";
 import { DependencyManager } from "../dependency-manager/DependencyManager";
 import { CoreUtility } from "./CoreUtility";
 import { MANIFEST as RuntimeManifest } from "./Runtime";
+import { MANIFEST as UrlManifest } from "./UrlUtils";
 
 export interface FormDataUtils {
     newFormData: () => ts.AwaitExpression;
@@ -29,14 +30,23 @@ export interface FormDataUtils {
 export const MANIFEST: CoreUtility.Manifest = {
     name: "form-data-utils",
     pathInCoreUtilities: { nameOnDisk: "form-data-utils", exportDeclaration: { exportAll: true } },
-    addDependencies: (dependencyManager: DependencyManager): void => {
-        dependencyManager.addDependency("form-data", "^4.0.0");
-        dependencyManager.addDependency("form-data-encoder", "^4.0.2");
-        dependencyManager.addDependency("formdata-node", "^6.0.3");
+    addDependencies: (dependencyManager: DependencyManager, { formDataSupport }): void => {
+        if (formDataSupport === "Node16") {
+            dependencyManager.addDependency("form-data", "^4.0.0");
+            dependencyManager.addDependency("formdata-node", "^6.0.3");
+            dependencyManager.addDependency("form-data-encoder", "^4.0.2");
+        }
     },
-    dependsOn: [RuntimeManifest],
-    getFilesPatterns: () => {
-        return { patterns: ["src/core/form-data-utils/**", "tests/form-data-utils/**"] };
+    dependsOn: [RuntimeManifest, UrlManifest],
+    getFilesPatterns: ({ formDataSupport }) => {
+        const glob = {
+            patterns: ["src/core/form-data-utils/**", "tests/unit/form-data-utils/**"],
+            ignore: [] as string[]
+        };
+        if (formDataSupport === "Node16") {
+            glob.ignore.push("tests/unit/form-data-utils/formDataWrapper.browser.test.ts");
+        }
+        return glob;
     }
 };
 

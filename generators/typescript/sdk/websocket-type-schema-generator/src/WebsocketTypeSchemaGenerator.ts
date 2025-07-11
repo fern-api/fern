@@ -8,6 +8,7 @@ export declare namespace WebsocketTypeSchemaGenerator {
     export interface Init {
         includeSerdeLayer: boolean;
         omitUndefined: boolean;
+        skipResponseValidation: boolean;
     }
 
     export namespace GeneratedWebsocketMessageBodySchema {
@@ -23,10 +24,12 @@ export declare namespace WebsocketTypeSchemaGenerator {
 export class WebsocketTypeSchemaGenerator {
     private includeSerdeLayer: boolean;
     private omitUndefined: boolean;
+    private skipResponseValidation: boolean;
 
-    constructor({ includeSerdeLayer, omitUndefined }: WebsocketTypeSchemaGenerator.Init) {
+    constructor({ includeSerdeLayer, omitUndefined, skipResponseValidation }: WebsocketTypeSchemaGenerator.Init) {
         this.includeSerdeLayer = includeSerdeLayer;
         this.omitUndefined = omitUndefined;
+        this.skipResponseValidation = skipResponseValidation;
     }
 
     public generateInlinedWebsocketMessageBodySchema({
@@ -41,7 +44,8 @@ export class WebsocketTypeSchemaGenerator {
             receiveMessages,
             typeName,
             includeSerdeLayer: this.includeSerdeLayer,
-            omitUndefined: this.omitUndefined
+            omitUndefined: this.omitUndefined,
+            skipResponseValidation: this.skipResponseValidation
         });
     }
 }

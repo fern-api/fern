@@ -179,7 +179,10 @@ export class DocsDefinitionResolver {
             });
         }
 
-        const filesToUploadSet = collectFilesFromDocsConfig(this.parsedDocsConfig);
+        const filesToUploadSet = await collectFilesFromDocsConfig({
+            parsedDocsConfig: this.parsedDocsConfig,
+            docsWorkspace: this.docsWorkspace
+        });
 
         // preprocess markdown files to extract image paths
         for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
@@ -463,15 +466,15 @@ export class DocsDefinitionResolver {
     private getFernWorkspaceForApiSection(
         apiSection: docsYml.DocsNavigationItem.ApiSection
     ): AbstractAPIWorkspace<unknown> {
-        if (this.apiWorkspaces.length === 1 && this.apiWorkspaces[0] != null) {
-            return this.apiWorkspaces[0];
-        } else if (apiSection.apiName != null) {
+        if (apiSection.apiName != null) {
             const apiWorkspace = this.apiWorkspaces.find((workspace) => {
                 return workspace.workspaceName === apiSection.apiName;
             });
             if (apiWorkspace != null) {
                 return apiWorkspace;
             }
+        } else if (this.apiWorkspaces.length === 1 && this.apiWorkspaces[0] != null) {
+            return this.apiWorkspaces[0];
         }
         const errorMessage = apiSection.apiName
             ? `Failed to load API Definition '${apiSection.apiName}' referenced in docs`
@@ -480,13 +483,13 @@ export class DocsDefinitionResolver {
     }
 
     private getOpenApiWorkspaceForApiSection(apiSection: docsYml.DocsNavigationItem.ApiSection): OSSWorkspace {
-        if (this.ossWorkspaces.length === 1 && this.ossWorkspaces[0] != null) {
-            return this.ossWorkspaces[0];
-        } else if (apiSection.apiName != null) {
+        if (apiSection.apiName != null) {
             const ossWorkspace = this.ossWorkspaces.find((workspace) => workspace.workspaceName === apiSection.apiName);
             if (ossWorkspace != null) {
                 return ossWorkspace;
             }
+        } else if (this.ossWorkspaces.length === 1 && this.ossWorkspaces[0] != null) {
+            return this.ossWorkspaces[0];
         }
         const errorMessage = apiSection.apiName
             ? `Failed to load API Definition '${apiSection.apiName}' referenced in docs`

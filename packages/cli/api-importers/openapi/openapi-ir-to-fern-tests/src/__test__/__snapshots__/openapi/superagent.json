@@ -112,6 +112,9 @@ types:
               ],
               "examples": [
                 {
+                  "headers": {
+                    "X_SUPERAGENT_API_KEY": "X_SUPERAGENT_API_KEY",
+                  },
                   "request": {
                     "name": "name",
                     "type": "type",
@@ -173,6 +176,9 @@ types:
               ],
               "examples": [
                 {
+                  "headers": {
+                    "X_SUPERAGENT_API_KEY": "X_SUPERAGENT_API_KEY",
+                  },
                   "path-parameters": {
                     "agentId": "agentId",
                   },
@@ -207,6 +213,9 @@ types:
               ],
               "examples": [
                 {
+                  "headers": {
+                    "X_SUPERAGENT_API_KEY": "X_SUPERAGENT_API_KEY",
+                  },
                   "path-parameters": {
                     "agentId": "agentId",
                   },
@@ -238,6 +247,9 @@ types:
               "docs": "List all agents",
               "examples": [
                 {
+                  "headers": {
+                    "X_SUPERAGENT_API_KEY": "X_SUPERAGENT_API_KEY",
+                  },
                   "response": {
                     "body": {
                       "key": "value",
@@ -266,6 +278,9 @@ types:
               ],
               "examples": [
                 {
+                  "headers": {
+                    "X_SUPERAGENT_API_KEY": "X_SUPERAGENT_API_KEY",
+                  },
                   "path-parameters": {
                     "agentId": "agentId",
                   },
@@ -309,6 +324,9 @@ types:
               ],
               "examples": [
                 {
+                  "headers": {
+                    "X_SUPERAGENT_API_KEY": "X_SUPERAGENT_API_KEY",
+                  },
                   "path-parameters": {
                     "agentId": "agentId",
                   },
@@ -380,7 +398,9 @@ types:
         type: unknown
         status-code: 200
       examples:
-        - response:
+        - headers:
+            X_SUPERAGENT_API_KEY: X_SUPERAGENT_API_KEY
+          response:
             body:
               key: value
     createAgent:
@@ -416,7 +436,9 @@ types:
       errors:
         - root.UnprocessableEntityError
       examples:
-        - request:
+        - headers:
+            X_SUPERAGENT_API_KEY: X_SUPERAGENT_API_KEY
+          request:
             name: name
             type: type
           response:
@@ -441,6 +463,8 @@ types:
       examples:
         - path-parameters:
             agentId: agentId
+          headers:
+            X_SUPERAGENT_API_KEY: X_SUPERAGENT_API_KEY
           response:
             body:
               key: value
@@ -463,6 +487,8 @@ types:
       examples:
         - path-parameters:
             agentId: agentId
+          headers:
+            X_SUPERAGENT_API_KEY: X_SUPERAGENT_API_KEY
           response:
             body:
               key: value
@@ -489,6 +515,8 @@ types:
       examples:
         - path-parameters:
             agentId: agentId
+          headers:
+            X_SUPERAGENT_API_KEY: X_SUPERAGENT_API_KEY
           request:
             key: value
           response:
@@ -523,6 +551,8 @@ types:
       examples:
         - path-parameters:
             agentId: agentId
+          headers:
+            X_SUPERAGENT_API_KEY: X_SUPERAGENT_API_KEY
           request:
             input:
               key: value
@@ -554,6 +584,9 @@ imports:
               ],
               "examples": [
                 {
+                  "headers": {
+                    "X_SUPERAGENT_API_KEY": "X_SUPERAGENT_API_KEY",
+                  },
                   "request": {
                     "description": "description",
                   },
@@ -597,6 +630,9 @@ imports:
               ],
               "examples": [
                 {
+                  "headers": {
+                    "X_SUPERAGENT_API_KEY": "X_SUPERAGENT_API_KEY",
+                  },
                   "path-parameters": {
                     "tokenId": "tokenId",
                   },
@@ -631,6 +667,9 @@ imports:
               ],
               "examples": [
                 {
+                  "headers": {
+                    "X_SUPERAGENT_API_KEY": "X_SUPERAGENT_API_KEY",
+                  },
                   "path-parameters": {
                     "tokenId": "tokenId",
                   },
@@ -662,6 +701,9 @@ imports:
               "docs": "List all API tokens",
               "examples": [
                 {
+                  "headers": {
+                    "X_SUPERAGENT_API_KEY": "X_SUPERAGENT_API_KEY",
+                  },
                   "response": {
                     "body": {
                       "key": "value",
@@ -704,7 +746,9 @@ imports:
         type: unknown
         status-code: 200
       examples:
-        - response:
+        - headers:
+            X_SUPERAGENT_API_KEY: X_SUPERAGENT_API_KEY
+          response:
             body:
               key: value
     createApiToken:
@@ -728,7 +772,9 @@ imports:
       errors:
         - root.UnprocessableEntityError
       examples:
-        - request:
+        - headers:
+            X_SUPERAGENT_API_KEY: X_SUPERAGENT_API_KEY
+          request:
             description: description
           response:
             body:
@@ -752,6 +798,8 @@ imports:
       examples:
         - path-parameters:
             tokenId: tokenId
+          headers:
+            X_SUPERAGENT_API_KEY: X_SUPERAGENT_API_KEY
           response:
             body:
               key: value
@@ -774,6 +822,8 @@ imports:
       examples:
         - path-parameters:
             tokenId: tokenId
+          headers:
+            X_SUPERAGENT_API_KEY: X_SUPERAGENT_API_KEY
           response:
             body:
               key: value
@@ -802,6 +852,9 @@ imports:
               ],
               "examples": [
                 {
+                  "headers": {
+                    "X_SUPERAGENT_API_KEY": "X_SUPERAGENT_API_KEY",
+                  },
                   "request": {
                     "email": "email",
                     "password": "password",
@@ -847,6 +900,9 @@ imports:
               ],
               "examples": [
                 {
+                  "headers": {
+                    "X_SUPERAGENT_API_KEY": "X_SUPERAGENT_API_KEY",
+                  },
                   "request": {
                     "email": "email",
                     "password": "password",
@@ -922,7 +978,9 @@ service:
       errors:
         - root.UnprocessableEntityError
       examples:
-        - request:
+        - headers:
+            X_SUPERAGENT_API_KEY: X_SUPERAGENT_API_KEY
+          request:
             email: email
             password: password
           response:
@@ -953,7 +1011,9 @@ service:
       errors:
         - root.UnprocessableEntityError
       examples:
-        - request:
+        - headers:
+            X_SUPERAGENT_API_KEY: X_SUPERAGENT_API_KEY
+          request:
             email: email
             password: password
           response:
@@ -982,6 +1042,9 @@ service:
               ],
               "examples": [
                 {
+                  "headers": {
+                    "X_SUPERAGENT_API_KEY": "X_SUPERAGENT_API_KEY",
+                  },
                   "request": {
                     "name": "name",
                     "type": "type",
@@ -1044,6 +1107,9 @@ service:
               ],
               "examples": [
                 {
+                  "headers": {
+                    "X_SUPERAGENT_API_KEY": "X_SUPERAGENT_API_KEY",
+                  },
                   "path-parameters": {
                     "documentId": "documentId",
                   },
@@ -1078,6 +1144,9 @@ service:
               ],
               "examples": [
                 {
+                  "headers": {
+                    "X_SUPERAGENT_API_KEY": "X_SUPERAGENT_API_KEY",
+                  },
                   "path-parameters": {
                     "documentId": "documentId",
                   },
@@ -1109,6 +1178,9 @@ service:
               "docs": "List all documents",
               "examples": [
                 {
+                  "headers": {
+                    "X_SUPERAGENT_API_KEY": "X_SUPERAGENT_API_KEY",
+                  },
                   "response": {
                     "body": {
                       "key": "value",
@@ -1151,7 +1223,9 @@ service:
         type: unknown
         status-code: 200
       examples:
-        - response:
+        - headers:
+            X_SUPERAGENT_API_KEY: X_SUPERAGENT_API_KEY
+          response:
             body:
               key: value
     createDocument:
@@ -1187,7 +1261,9 @@ service:
       errors:
         - root.UnprocessableEntityError
       examples:
-        - request:
+        - headers:
+            X_SUPERAGENT_API_KEY: X_SUPERAGENT_API_KEY
+          request:
             type: type
             url: url
             name: name
@@ -1213,6 +1289,8 @@ service:
       examples:
         - path-parameters:
             documentId: documentId
+          headers:
+            X_SUPERAGENT_API_KEY: X_SUPERAGENT_API_KEY
           response:
             body:
               key: value
@@ -1235,6 +1313,8 @@ service:
       examples:
         - path-parameters:
             documentId: documentId
+          headers:
+            X_SUPERAGENT_API_KEY: X_SUPERAGENT_API_KEY
           response:
             body:
               key: value
@@ -1263,6 +1343,9 @@ imports:
               ],
               "examples": [
                 {
+                  "headers": {
+                    "X_SUPERAGENT_API_KEY": "X_SUPERAGENT_API_KEY",
+                  },
                   "request": {
                     "input_variables": [],
                     "name": "name",
@@ -1312,6 +1395,9 @@ imports:
               ],
               "examples": [
                 {
+                  "headers": {
+                    "X_SUPERAGENT_API_KEY": "X_SUPERAGENT_API_KEY",
+                  },
                   "path-parameters": {
                     "promptId": "promptId",
                   },
@@ -1346,6 +1432,9 @@ imports:
               ],
               "examples": [
                 {
+                  "headers": {
+                    "X_SUPERAGENT_API_KEY": "X_SUPERAGENT_API_KEY",
+                  },
                   "path-parameters": {
                     "promptId": "promptId",
                   },
@@ -1377,6 +1466,9 @@ imports:
               "docs": "List all prompts",
               "examples": [
                 {
+                  "headers": {
+                    "X_SUPERAGENT_API_KEY": "X_SUPERAGENT_API_KEY",
+                  },
                   "response": {
                     "body": {
                       "key": "value",
@@ -1405,6 +1497,9 @@ imports:
               ],
               "examples": [
                 {
+                  "headers": {
+                    "X_SUPERAGENT_API_KEY": "X_SUPERAGENT_API_KEY",
+                  },
                   "path-parameters": {
                     "promptId": "promptId",
                   },
@@ -1462,7 +1557,9 @@ imports:
         type: unknown
         status-code: 200
       examples:
-        - response:
+        - headers:
+            X_SUPERAGENT_API_KEY: X_SUPERAGENT_API_KEY
+          response:
             body:
               key: value
     createAPrompt:
@@ -1489,7 +1586,9 @@ imports:
       errors:
         - root.UnprocessableEntityError
       examples:
-        - request:
+        - headers:
+            X_SUPERAGENT_API_KEY: X_SUPERAGENT_API_KEY
+          request:
             name: name
             input_variables: []
             template: template
@@ -1515,6 +1614,8 @@ imports:
       examples:
         - path-parameters:
             promptId: promptId
+          headers:
+            X_SUPERAGENT_API_KEY: X_SUPERAGENT_API_KEY
           response:
             body:
               key: value
@@ -1537,6 +1638,8 @@ imports:
       examples:
         - path-parameters:
             promptId: promptId
+          headers:
+            X_SUPERAGENT_API_KEY: X_SUPERAGENT_API_KEY
           response:
             body:
               key: value
@@ -1563,6 +1666,8 @@ imports:
       examples:
         - path-parameters:
             promptId: promptId
+          headers:
+            X_SUPERAGENT_API_KEY: X_SUPERAGENT_API_KEY
           request:
             key: value
           response:
@@ -1593,6 +1698,9 @@ imports:
               ],
               "examples": [
                 {
+                  "headers": {
+                    "X_SUPERAGENT_API_KEY": "X_SUPERAGENT_API_KEY",
+                  },
                   "request": {
                     "name": "name",
                     "type": "type",
@@ -1641,6 +1749,9 @@ imports:
               ],
               "examples": [
                 {
+                  "headers": {
+                    "X_SUPERAGENT_API_KEY": "X_SUPERAGENT_API_KEY",
+                  },
                   "path-parameters": {
                     "toolId": "toolId",
                   },
@@ -1675,6 +1786,9 @@ imports:
               ],
               "examples": [
                 {
+                  "headers": {
+                    "X_SUPERAGENT_API_KEY": "X_SUPERAGENT_API_KEY",
+                  },
                   "path-parameters": {
                     "toolId": "toolId",
                   },
@@ -1706,6 +1820,9 @@ imports:
               "docs": "List all tools",
               "examples": [
                 {
+                  "headers": {
+                    "X_SUPERAGENT_API_KEY": "X_SUPERAGENT_API_KEY",
+                  },
                   "response": {
                     "body": {
                       "key": "value",
@@ -1748,7 +1865,9 @@ imports:
         type: unknown
         status-code: 200
       examples:
-        - response:
+        - headers:
+            X_SUPERAGENT_API_KEY: X_SUPERAGENT_API_KEY
+          response:
             body:
               key: value
     createATool:
@@ -1775,7 +1894,9 @@ imports:
       errors:
         - root.UnprocessableEntityError
       examples:
-        - request:
+        - headers:
+            X_SUPERAGENT_API_KEY: X_SUPERAGENT_API_KEY
+          request:
             name: name
             type: type
           response:
@@ -1800,6 +1921,8 @@ imports:
       examples:
         - path-parameters:
             toolId: toolId
+          headers:
+            X_SUPERAGENT_API_KEY: X_SUPERAGENT_API_KEY
           response:
             body:
               key: value
@@ -1822,6 +1945,8 @@ imports:
       examples:
         - path-parameters:
             toolId: toolId
+          headers:
+            X_SUPERAGENT_API_KEY: X_SUPERAGENT_API_KEY
           response:
             body:
               key: value
@@ -1844,6 +1969,9 @@ imports:
               "docs": "List all agent traces",
               "examples": [
                 {
+                  "headers": {
+                    "X_SUPERAGENT_API_KEY": "X_SUPERAGENT_API_KEY",
+                  },
                   "response": {
                     "body": {
                       "key": "value",
@@ -1886,7 +2014,9 @@ imports:
         type: unknown
         status-code: 200
       examples:
-        - response:
+        - headers:
+            X_SUPERAGENT_API_KEY: X_SUPERAGENT_API_KEY
+          response:
             body:
               key: value
   source:
@@ -1912,6 +2042,9 @@ imports:
               ],
               "examples": [
                 {
+                  "headers": {
+                    "X_SUPERAGENT_API_KEY": "X_SUPERAGENT_API_KEY",
+                  },
                   "path-parameters": {
                     "userId": "userId",
                   },
@@ -1943,6 +2076,9 @@ imports:
               "docs": undefined,
               "examples": [
                 {
+                  "headers": {
+                    "X_SUPERAGENT_API_KEY": "X_SUPERAGENT_API_KEY",
+                  },
                   "response": {
                     "body": {
                       "key": "value",
@@ -1984,7 +2120,9 @@ imports:
         type: unknown
         status-code: 200
       examples:
-        - response:
+        - headers:
+            X_SUPERAGENT_API_KEY: X_SUPERAGENT_API_KEY
+          response:
             body:
               key: value
     readUser:
@@ -2005,6 +2143,8 @@ imports:
       examples:
         - path-parameters:
             userId: userId
+          headers:
+            X_SUPERAGENT_API_KEY: X_SUPERAGENT_API_KEY
           response:
             body:
               key: value

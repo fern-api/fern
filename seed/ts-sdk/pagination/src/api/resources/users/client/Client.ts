@@ -5,7 +5,6 @@
 import * as core from "../../../../core/index.js";
 import * as SeedPagination from "../../../index.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
-import urlJoin from "url-join";
 import * as errors from "../../../../errors/index.js";
 
 export declare namespace Users {
@@ -72,7 +71,7 @@ export class Users {
                     _queryParams["starting_after"] = startingAfter;
                 }
                 const _response = await core.fetcher({
-                    url: urlJoin(
+                    url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
                         "/users",
@@ -123,7 +122,12 @@ export class Users {
         return new core.Pageable<SeedPagination.ListUsersPaginationResponse, SeedPagination.User>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
-            hasNextPage: (response) => response?.page?.next?.starting_after != null,
+            hasNextPage: (response) =>
+                response?.page?.next?.starting_after != null &&
+                !(
+                    typeof response?.page?.next?.starting_after === "string" &&
+                    response?.page?.next?.starting_after === ""
+                ),
             getItems: (response) => response?.data ?? [],
             loadPage: (response) => {
                 return list(core.setObjectProperty(request, "starting_after", response?.page?.next?.starting_after));
@@ -154,7 +158,7 @@ export class Users {
                     _queryParams["cursor"] = cursor;
                 }
                 const _response = await core.fetcher({
-                    url: urlJoin(
+                    url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
                         "/users",
@@ -205,7 +209,8 @@ export class Users {
         return new core.Pageable<SeedPagination.ListUsersMixedTypePaginationResponse, SeedPagination.User>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
-            hasNextPage: (response) => response?.next != null,
+            hasNextPage: (response) =>
+                response?.next != null && !(typeof response?.next === "string" && response?.next === ""),
             getItems: (response) => response?.data ?? [],
             loadPage: (response) => {
                 return list(core.setObjectProperty(request, "cursor", response?.next));
@@ -233,7 +238,7 @@ export class Users {
                 request: SeedPagination.ListUsersBodyCursorPaginationRequest,
             ): Promise<core.WithRawResponse<SeedPagination.ListUsersPaginationResponse>> => {
                 const _response = await core.fetcher({
-                    url: urlJoin(
+                    url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
                         "/users",
@@ -286,7 +291,12 @@ export class Users {
         return new core.Pageable<SeedPagination.ListUsersPaginationResponse, SeedPagination.User>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
-            hasNextPage: (response) => response?.page?.next?.starting_after != null,
+            hasNextPage: (response) =>
+                response?.page?.next?.starting_after != null &&
+                !(
+                    typeof response?.page?.next?.starting_after === "string" &&
+                    response?.page?.next?.starting_after === ""
+                ),
             getItems: (response) => response?.data ?? [],
             loadPage: (response) => {
                 return list(core.setObjectProperty(request, "pagination.cursor", response?.page?.next?.starting_after));
@@ -329,7 +339,7 @@ export class Users {
                     _queryParams["starting_after"] = startingAfter;
                 }
                 const _response = await core.fetcher({
-                    url: urlJoin(
+                    url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
                         "/users",
@@ -425,7 +435,7 @@ export class Users {
                     _queryParams["starting_after"] = startingAfter;
                 }
                 const _response = await core.fetcher({
-                    url: urlJoin(
+                    url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
                         "/users",
@@ -506,7 +516,7 @@ export class Users {
                 request: SeedPagination.ListUsersBodyOffsetPaginationRequest,
             ): Promise<core.WithRawResponse<SeedPagination.ListUsersPaginationResponse>> => {
                 const _response = await core.fetcher({
-                    url: urlJoin(
+                    url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
                         "/users",
@@ -600,7 +610,7 @@ export class Users {
                     _queryParams["order"] = order;
                 }
                 const _response = await core.fetcher({
-                    url: urlJoin(
+                    url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
                         "/users",
@@ -692,7 +702,7 @@ export class Users {
                     _queryParams["order"] = order;
                 }
                 const _response = await core.fetcher({
-                    url: urlJoin(
+                    url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
                         "/users",
@@ -776,7 +786,7 @@ export class Users {
                     _queryParams["cursor"] = cursor;
                 }
                 const _response = await core.fetcher({
-                    url: urlJoin(
+                    url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
                         "/users",
@@ -827,7 +837,8 @@ export class Users {
         return new core.Pageable<SeedPagination.ListUsersExtendedResponse, SeedPagination.User>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
-            hasNextPage: (response) => response?.next != null,
+            hasNextPage: (response) =>
+                response?.next != null && !(typeof response?.next === "string" && response?.next === ""),
             getItems: (response) => response?.data?.users ?? [],
             loadPage: (response) => {
                 return list(core.setObjectProperty(request, "cursor", response?.next));
@@ -858,7 +869,7 @@ export class Users {
                     _queryParams["cursor"] = cursor;
                 }
                 const _response = await core.fetcher({
-                    url: urlJoin(
+                    url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
                         "/users",
@@ -909,7 +920,8 @@ export class Users {
         return new core.Pageable<SeedPagination.ListUsersExtendedOptionalListResponse, SeedPagination.User>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
-            hasNextPage: (response) => response?.next != null,
+            hasNextPage: (response) =>
+                response?.next != null && !(typeof response?.next === "string" && response?.next === ""),
             getItems: (response) => response?.data?.users ?? [],
             loadPage: (response) => {
                 return list(core.setObjectProperty(request, "cursor", response?.next));
@@ -940,7 +952,7 @@ export class Users {
                     _queryParams["starting_after"] = startingAfter;
                 }
                 const _response = await core.fetcher({
-                    url: urlJoin(
+                    url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
                         "/users",
@@ -991,7 +1003,9 @@ export class Users {
         return new core.Pageable<SeedPagination.UsernameCursor, string>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
-            hasNextPage: (response) => response?.cursor?.after != null,
+            hasNextPage: (response) =>
+                response?.cursor?.after != null &&
+                !(typeof response?.cursor?.after === "string" && response?.cursor?.after === ""),
             getItems: (response) => response?.cursor?.data ?? [],
             loadPage: (response) => {
                 return list(core.setObjectProperty(request, "starting_after", response?.cursor?.after));
@@ -1022,7 +1036,7 @@ export class Users {
                     _queryParams["offset"] = offset.toString();
                 }
                 const _response = await core.fetcher({
-                    url: urlJoin(
+                    url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
                         "/users",

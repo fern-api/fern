@@ -1,34 +1,9 @@
 name: Write Changelogs
 
 on:
-  pull_request:
-    paths:
-      # Source code
-      - "packages/seed/src/commands/generate/**/*"
-      # Changelogs
-      - "packages/cli/cli/versions.yml"
-      - "generators/csharp/model/versions.yml"
-      - "generators/csharp/sdk/versions.yml"
-      - "generators/python/fastapi/versions.yml"
-      - "generators/go/model/versions.yml"
-      - "generators/go/sdk/versions.yml"
-      - "generators/java/model/versions.yml"
-      - "generators/java/sdk/versions.yml"
-      - "generators/java/spring/versions.yml"
-      - "generators/openapi/versions.yml"
-      - "generators/postman/versions.yml"
-      - "generators/python/pydantic/versions.yml"
-      - "generators/python/sdk/versions.yml"
-      - "generators/ruby/model/versions.yml"
-      - "generators/ruby/sdk/versions.yml"
-      - "generators/php/sdk/versions.yml"
-      - "generators/php/model/versions.yml"
-      - "generators/typescript/sdk/versions.yml"
-      - "generators/typescript/express/versions.yml"
-      # This file
-      - ".github/workflows/write-changelogs.yml"
-  schedule:
-  - cron: "0 0 * * *"
+  push:
+    branches:
+      - "main"
   workflow_dispatch:
 jobs:
   write-changelogs:
@@ -37,9 +12,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          repository: ${{ github.event.pull_request.head.repo.full_name }}
-          ref: ${{ github.event.pull_request.head.ref }}
           token: ${{ secrets.FERN_GITHUB_PAT }}
+          ref: main
 
       - name: Install
         uses: ./.github/actions/install
@@ -58,17 +32,9 @@ jobs:
           echo "Generating changelogs for CLI"
           pnpm seed:local generate changelog cli -o ./fern/pages/changelogs/cli/ --clean-directory
 
-      - uses: stefanzweifel/git-auto-commit-action@v5
-        if: ${{ github.event_name == 'pull_request' }}
-        with:
-          commit_message: "chore: update changelog"
-          add_options: -A
-          file_pattern: fern/pages/changelogs/
-
       - name: Create Pull Request
-        if: ${{ github.event_name != 'pull_request' }}
         id: cpr
-        uses: peter-evans/create-pull-request@v5
+        uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
           commit-message: "chore(changelog): update changelog"

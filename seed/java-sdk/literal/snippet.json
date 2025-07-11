@@ -1,7 +1,7 @@
 {
     "endpoints": [
         {
-            "example_identifier": "973e1804",
+            "example_identifier": "ba6be479",
             "id": {
                 "method": "POST",
                 "path": "/headers",
@@ -27,7 +27,7 @@
             }
         },
         {
-            "example_identifier": "4400cce9",
+            "example_identifier": "27d83728",
             "id": {
                 "method": "POST",
                 "path": "/inlined",
@@ -53,7 +53,7 @@
             }
         },
         {
-            "example_identifier": "6e94d4eb",
+            "example_identifier": "3cc091c0",
             "id": {
                 "method": "POST",
                 "path": "/path/{id}",
@@ -79,7 +79,7 @@
             }
         },
         {
-            "example_identifier": "c0851fed",
+            "example_identifier": "940c64ce",
             "id": {
                 "method": "POST",
                 "path": "/query",
@@ -105,7 +105,7 @@
             }
         },
         {
-            "example_identifier": "2874f920",
+            "example_identifier": "34be908d",
             "id": {
                 "method": "POST",
                 "path": "/reference",

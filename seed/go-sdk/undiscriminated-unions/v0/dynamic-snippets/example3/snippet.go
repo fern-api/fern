@@ -7,7 +7,7 @@ import (
     fern "github.com/undiscriminated-unions/fern"
 )
 
-func do() () {
+func do() {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -16,8 +16,8 @@ func do() () {
     client.Union.UpdateMetadata(
         context.TODO(),
         &fern.MetadataUnion{
-            OptionalMetadata: map[string]interface{}{
-                "string": map[string]interface{}{
+            OptionalMetadata: map[string]any{
+                "string": map[string]any{
                     "key": "value",
                 },
             },

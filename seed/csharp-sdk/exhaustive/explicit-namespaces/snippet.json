@@ -538,7 +538,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.ReqWithHeaders.GetWithCustomHeaderAsync(\n    new SeedExhaustive.ReqWithHeaders.ReqWithHeaders\n    {\n        XTestEndpointHeader = \"X-TEST-ENDPOINT-HEADER\",\n        XTestServiceHeader = \"X-TEST-SERVICE-HEADER\",\n        Body = \"string\",\n    }\n);\n"
+                "client": "using SeedExhaustive.ReqWithHeaders;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.ReqWithHeaders.GetWithCustomHeaderAsync(\n    new ReqWithHeaders\n    {\n        XTestEndpointHeader = \"X-TEST-ENDPOINT-HEADER\",\n        XTestServiceHeader = \"X-TEST-SERVICE-HEADER\",\n        Body = \"string\",\n    }\n);\n"
             }
         }
     ]

@@ -1,5 +1,268 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
+    - summary: |  
+        Convert relevant endpoints to GrpcNode type in ApiReferenceNodeConverter
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-11"
+  version: 0.65.9
+
+- changelogEntry:
+    - summary: |  
+        Support date and date-time in v3 example generation. Change fallback string example to use "string" instead of "foo".
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-10"
+  version: 0.65.8
+
+- changelogEntry:
+    - summary: |  
+        Support example generation for gRPC docs.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-09"
+  version: 0.65.7
+
+- changelogEntry:
+    - summary: |  
+        Support response error examples in the v3 parser.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-09"
+  version: 0.65.6
+
+- changelogEntry:
+    - summary: |  
+        Fix how multipart encoding is handled in the v3 parser
+      type: fix
+  irVersion: 58
+  createdAt: "2025-07-09"
+  version: 0.65.5
+
+- changelogEntry:
+    - summary: |  
+        Previously if the OpenAPI parser v3 was enabled where the CLI would skip parsing any additional Fern Definitions
+        along the OpenAPI spec. With the fix, you can use whatever combination of OpenAPI Spec(s) and Fern Definitions that 
+        you would like.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-07-08"
+  version: 0.65.4
+
+- changelogEntry:
+    - summary: |  
+        Update `fern init` for java and go SDKs.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-07-08"
+  version: 0.65.3
+
+- changelogEntry:
+    - summary: |  
+        Global header examples are only used when a corresponding endpoint header with the same name is not present.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-07-08"
+  version: 0.65.2
+
+- changelogEntry:
+    - summary: |  
+        Re-release changes from 0.65.0.
+      type: chore
+  irVersion: 58
+  createdAt: "2025-07-03"
+  version: 0.65.1
+
+- changelogEntry:
+    - summary: |  
+        Rename the TypeScript SDK generator image from `fernapi/fern-typescript-node-sdk` to `fernapi/fern-typescript-sdk`.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-03"
+  version: 0.65.0
+  
+- changelogEntry:
+    - summary: |  
+        Rename the TypeScript SDK generator image from `fernapi/fern-typescript-node-sdk` to `fernapi/fern-typescript-sdk`.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-03"
+  version: 0.65.0-rc0
+- changelogEntry:
+    - summary: |  
+        Remove default docs for well known types in gRPC. Add support for field-level docs.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-07-02"
+  version: 0.64.37
+
+- changelogEntry:
+    - summary: |  
+        Change grpc converters to use the fully qualified name with package prefix for all conversions. Build support for well-known types.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-07-02"
+  version: 0.64.36
+
+- changelogEntry:
+    - summary: |  
+        Upgrade fdr and fdr-cjs dependencies to support grpc endpoints in convertIrToFdrApi.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-07-01"
+  version: 0.64.35
+
+- changelogEntry:
+    - summary: |  
+        Add global headers in endpoint example generation.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-07-01"
+  version: 0.64.34
+
+- changelogEntry:
+    - summary: |  
+        GA release with support for protobuf generation
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-01"
+  version: 0.64.33
+
+- changelogEntry:
+    - summary: |  
+        Use 'fern protoc-gen-fern' in buf shell proxy instead of local cli build.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-01"
+  version: 0.64.32-rc1
+
+- changelogEntry:
+    - summary: |  
+        Reintroduce buf command/dependency.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-01"
+  version: 0.64.32-rc0
+
+- changelogEntry:
+    - summary: |  
+        Revert dependency on bufbuild package.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-07-01"
+  version: 0.64.31
+
+- changelogEntry:
+    - summary: |  
+        Support the `x-displayName` extension on the tag definition in OpenAPI. This allows OpenAPI
+         specifications to define custom display names for tags that will be used in generated documentation.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-01"
+  version: 0.64.28
+
+- changelogEntry:
+    - summary: |  
+        Fixes the OpenAPI parser to correctly include query parameters in `Content-Type: application/octet-stream` requests.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-06-28"
+  version: 0.64.26
+
+- changelogEntry:
+    - summary: |  
+        Remove all org-specific legacy preview pins.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-06-27"
+  version: 0.64.25
+
+- changelogEntry:
+    - summary: |  
+        Added Server-Sent Events (SSE) support to Java stream implementation. The Java SDK generator now 
+        supports SSE streaming alongside existing JSON streaming, enabling real-time incremental responses 
+        for chat applications and live data feeds.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-06-27"
+  version: 0.64.24
+
+- changelogEntry:
+    - summary: |
+        When a part in a multipart form request has `Content-Type: application/json` in OpenAPI or Fern Definition, interpret it as `style: json`.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-06-26"
+  version: 0.64.25
+
+- changelogEntry:
+    - summary: |
+        Global headers are now used to create endpoint examples. When building endpoint examples, global headers 
+        are automatically included in the headers section of each example. This ensures that all endpoints have consistent 
+        header examples that match the global header configuration.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-06-25"
+  version: 0.64.23
+
+- changelogEntry:
+    - summary: |
+        Make proto file target field optional in generators.yml
+      type: feat
+  irVersion: 58
+  createdAt: "2025-06-25"
+  version: 0.64.22
+
+- changelogEntry:
+    - summary: |
+        Introduce `x-fern-discriminated` extension to configure oneOf union behavior in OpenAPI specs.
+
+        ```yaml
+        # Example usage in OpenAPI schema
+        oneOf:
+          - $ref: '#/components/schemas/Circle'
+          - $ref: '#/components/schemas/Square'
+        x-fern-discriminated: false  # Treat as undiscriminated union
+        ```
+        
+        When `x-fern-discriminated` is set to `false`, the oneOf will be treated as an undiscriminated union instead of a discriminated union.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-06-24"
+  version: 0.64.21
+
+
+- changelogEntry:
+    - summary: |
+        Remove 'fern-check' error for global header examples included with 'x-fern-examples'
+      type: fix
+  irVersion: 58
+  createdAt: "2025-06-24"
+  version: 0.64.20
+
+- changelogEntry:
+    - summary: |
+        Pin Windows to legacy preview mode.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-06-24"
+  version: 0.64.19
+
+- changelogEntry:
+    - summary: |
+      type: fix
+  irVersion: 58
+  createdAt: "2025-06-24"
+  version: 0.64.18
+
+- changelogEntry:
+    - summary: |
+      type: feat
+  irVersion: 58
+  createdAt: "2025-06-23"
+  version: 0.64.17-rc0
+
+- changelogEntry:
     - summary: |
         Add `fern export` command to export API to an OpenAPI spec.
       type: feat
@@ -538,7 +801,7 @@
         Add support for overriding auth in generators.yml. You can now specify auth for a specific generator by adding an `api` field with an `auth` property. For example:
 
         ```yaml
-        - name: fernapi/fern-typescript-node-sdk
+        - name: fernapi/fern-typescript-sdk
           version: 0.48.5
           api: 
             auth: bearer

@@ -20,6 +20,9 @@ class SeedBasicAuthEnvironmentVariables:
 
     username : typing.Optional[typing.Union[str, typing.Callable[[], str]]]
     access_token : typing.Optional[typing.Union[str, typing.Callable[[], str]]]
+    headers : typing.Optional[typing.Dict[str, str]]
+        Additional headers to send with every request.
+
     timeout : typing.Optional[float]
         The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
 
@@ -46,6 +49,7 @@ class SeedBasicAuthEnvironmentVariables:
         base_url: str,
         username: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("USERNAME"),
         access_token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("PASSWORD"),
+        headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
@@ -61,6 +65,7 @@ class SeedBasicAuthEnvironmentVariables:
             base_url=base_url,
             username=username,
             access_token=access_token,
+            headers=headers,
             httpx_client=httpx_client
             if httpx_client is not None
             else httpx.Client(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
@@ -82,6 +87,9 @@ class AsyncSeedBasicAuthEnvironmentVariables:
 
     username : typing.Optional[typing.Union[str, typing.Callable[[], str]]]
     access_token : typing.Optional[typing.Union[str, typing.Callable[[], str]]]
+    headers : typing.Optional[typing.Dict[str, str]]
+        Additional headers to send with every request.
+
     timeout : typing.Optional[float]
         The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
 
@@ -108,6 +116,7 @@ class AsyncSeedBasicAuthEnvironmentVariables:
         base_url: str,
         username: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("USERNAME"),
         access_token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("PASSWORD"),
+        headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
@@ -123,6 +132,7 @@ class AsyncSeedBasicAuthEnvironmentVariables:
             base_url=base_url,
             username=username,
             access_token=access_token,
+            headers=headers,
             httpx_client=httpx_client
             if httpx_client is not None
             else httpx.AsyncClient(timeout=_defaulted_timeout, follow_redirects=follow_redirects)

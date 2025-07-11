@@ -1,11 +1,5 @@
 import { AbstractGeneratorCli } from "@fern-typescript/abstract-generator-cli";
-import {
-    JavaScriptRuntime,
-    NpmPackage,
-    PersistedTypescriptProject,
-    fixImportsForEsm,
-    writeTemplateFiles
-} from "@fern-typescript/commons";
+import { NpmPackage, PersistedTypescriptProject, fixImportsForEsm, writeTemplateFiles } from "@fern-typescript/commons";
 import { GeneratorContext } from "@fern-typescript/contexts";
 import { SdkGenerator } from "@fern-typescript/sdk-generator";
 
@@ -20,18 +14,15 @@ import { SdkCustomConfigSchema } from "./custom-config/schema/SdkCustomConfigSch
 
 export declare namespace SdkGeneratorCli {
     export interface Init {
-        targetRuntime: JavaScriptRuntime;
         configOverrides?: Partial<SdkCustomConfig>;
     }
 }
 
 export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
-    private targetRuntime: JavaScriptRuntime;
     private configOverrides: Partial<SdkCustomConfig>;
 
-    constructor({ targetRuntime, configOverrides }: SdkGeneratorCli.Init) {
+    constructor({ configOverrides }: SdkGeneratorCli.Init = {}) {
         super();
-        this.targetRuntime = targetRuntime;
         this.configOverrides = configOverrides ?? {};
     }
 
@@ -40,7 +31,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
         const noSerdeLayer = parsed?.noSerdeLayer ?? true;
         return {
             useBrandedStringAliases: parsed?.useBrandedStringAliases ?? false,
-            outputSourceFiles: parsed?.outputSourceFiles ?? false,
+            outputSourceFiles: parsed?.outputSourceFiles ?? true,
             isPackagePrivate: parsed?.private ?? false,
             neverThrowErrors: parsed?.neverThrowErrors ?? false,
             namespaceExport: parsed?.namespaceExport,
@@ -76,9 +67,13 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             noScripts: parsed?.noScripts ?? false,
             useBigInt: parsed?.useBigInt ?? false,
             useLegacyExports: parsed?.useLegacyExports ?? false,
-            streamType: parsed?.streamType ?? "wrapper",
-            fileResponseType: parsed?.fileResponseType ?? "stream",
-            packagePath: parsed?.packagePath
+            streamType: parsed?.streamType ?? "web",
+            fileResponseType: parsed?.fileResponseType ?? "binary-response",
+            formDataSupport: parsed?.formDataSupport ?? "Node18",
+            fetchSupport: parsed?.fetchSupport ?? "native",
+            packagePath: parsed?.packagePath,
+            omitFernHeaders: parsed?.omitFernHeaders ?? false,
+            useDefaultRequestParameterValues: parsed?.useDefaultRequestParameterValues ?? false
         };
     }
 
@@ -140,7 +135,6 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 requireDefaultEnvironment: customConfig.requireDefaultEnvironment,
                 defaultTimeoutInSeconds: customConfig.defaultTimeoutInSeconds,
                 skipResponseValidation: customConfig.skipResponseValidation,
-                targetRuntime: this.targetRuntime,
                 extraDevDependencies: customConfig.extraDevDependencies,
                 extraDependencies: customConfig.extraDependencies,
                 extraPeerDependencies: customConfig.extraPeerDependencies ?? {},
@@ -163,9 +157,13 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 enableInlineTypes: customConfig.enableInlineTypes ?? true,
                 useLegacyExports,
                 generateWireTests: customConfig.generateWireTests ?? false,
-                streamType: customConfig.streamType ?? "wrapper",
-                fileResponseType: customConfig.fileResponseType ?? "stream",
-                packagePath: customConfig.packagePath
+                streamType: customConfig.streamType ?? "web",
+                fileResponseType: customConfig.fileResponseType ?? "binary-response",
+                formDataSupport: customConfig.formDataSupport ?? "Node18",
+                fetchSupport: customConfig.fetchSupport ?? "native",
+                packagePath: customConfig.packagePath,
+                omitFernHeaders: customConfig.omitFernHeaders ?? false,
+                useDefaultRequestParameterValues: customConfig.useDefaultRequestParameterValues ?? false
             }
         });
         const typescriptProject = await sdkGenerator.generate();
@@ -184,7 +182,9 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
     private getTemplateVariables(customConfig: SdkCustomConfig): Record<string, unknown> {
         return {
             streamType: customConfig.streamType,
-            fileResponseType: customConfig.fileResponseType
+            fileResponseType: customConfig.fileResponseType,
+            formDataSupport: customConfig.formDataSupport,
+            fetchSupport: customConfig.fetchSupport
         };
     }
 

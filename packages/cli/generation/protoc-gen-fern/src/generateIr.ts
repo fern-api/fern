@@ -4,12 +4,14 @@ import { FileInfo, Printable } from "@bufbuild/protoplugin";
 
 import { constructCasingsGenerator } from "@fern-api/casings-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
+import { serialization } from "@fern-api/ir-sdk";
 import { mergeIntermediateRepresentation } from "@fern-api/ir-utils";
 import { ErrorCollector } from "@fern-api/v2-importer-commons";
 
 import { Logger } from "./commons/logging";
 import { ProtofileConverter } from "./converters/ProtofileConverter";
 import { ProtofileConverterContext } from "./converters/ProtofileConverterContext";
+import { createGlobalCommentsStore } from "./converters/utils/CreateGlobalCommentsStore";
 import { Options } from "./parseOptions";
 
 export function generateIr({ req, options }: { req: CodeGeneratorRequest; options: Options }): FileInfo {
@@ -24,6 +26,7 @@ export function generateIr({ req, options }: { req: CodeGeneratorRequest; option
     for (const protoFile of req.protoFile) {
         const protoFileConverter = new ProtofileConverter({
             context: new ProtofileConverterContext({
+                codeGeneratorRequest: req,
                 spec: protoFile,
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 settings: {} as any,
@@ -41,7 +44,8 @@ export function generateIr({ req, options }: { req: CodeGeneratorRequest; option
                     disabled: true
                 },
                 enableUniqueErrorsPerEndpoint: false,
-                generateV1Examples: false
+                generateV1Examples: false,
+                comments: createGlobalCommentsStore(protoFile)
             }),
             breadcrumbs: [],
             audiences: {
@@ -57,10 +61,22 @@ export function generateIr({ req, options }: { req: CodeGeneratorRequest; option
         }
     }
 
-    return {
-        name: "ir.json",
-        content: `${JSON.stringify(mergedIr, null, 2)}`
-    };
+    const serializedIr = serialization.IntermediateRepresentation.json(mergedIr, {
+        allowUnrecognizedEnumValues: true,
+        skipValidation: true
+    });
+
+    if (serializedIr.ok) {
+        return {
+            name: "ir.json",
+            content: JSON.stringify(serializedIr.value, null, 2)
+        };
+    } else {
+        return {
+            name: "ir.json",
+            content: JSON.stringify(serializedIr.errors, null, 2)
+        };
+    }
 }
 
 function getPrintableFromMessage(message: DescMessage): Printable {

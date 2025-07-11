@@ -1,18 +1,20 @@
 import { DescriptorProto } from "@bufbuild/protobuf/wkt";
 
 import * as FernIr from "@fern-api/ir-sdk";
-import { Type } from "@fern-api/ir-sdk";
+import { Type, TypeId } from "@fern-api/ir-sdk";
 import { AbstractConverter } from "@fern-api/v2-importer-commons";
 
 import { ProtofileConverterContext } from "../ProtofileConverterContext";
 import { capitalizeFirstLetter } from "../utils/CapitalizeFirstLetter";
 import { convertFields } from "../utils/ConvertFields";
+import { PATH_FIELD_NUMBERS } from "../utils/PathFieldNumbers";
 import { EnumOrMessageConverter } from "./EnumOrMessageConverter";
 import { OneOfFieldConverter } from "./OneOfFieldConverter";
 
 export declare namespace MessageConverter {
     export interface Args extends AbstractConverter.Args<ProtofileConverterContext> {
         message: DescriptorProto;
+        sourceCodeInfoPath: number[];
     }
 
     export interface Output {
@@ -23,32 +25,51 @@ export declare namespace MessageConverter {
 
 export class MessageConverter extends AbstractConverter<ProtofileConverterContext, MessageConverter.Output> {
     private readonly message: DescriptorProto;
-    constructor({ context, breadcrumbs, message }: MessageConverter.Args) {
+    private readonly sourceCodeInfoPath: number[];
+    constructor({ context, breadcrumbs, message, sourceCodeInfoPath }: MessageConverter.Args) {
         super({ context, breadcrumbs });
         this.message = message;
+        this.sourceCodeInfoPath = sourceCodeInfoPath;
     }
 
     public convert(): MessageConverter.Output | undefined {
-        // TODO: convert message (i.e. convert schema)
-
         let inlinedTypes: Record<FernIr.TypeId, EnumOrMessageConverter.ConvertedSchema> = {};
+        const allReferencedTypes: Set<TypeId> = new Set();
 
         // Step 1: Convert all fields
         const { convertedFields, referencedTypes, propertiesByAudience, oneOfFields } = convertFields({
             fields: this.message.field,
             breadcrumbs: this.breadcrumbs,
-            context: this.context
+            context: this.context,
+            sourceCodeInfoPath: this.sourceCodeInfoPath
         });
 
+        // Merge referenced types from fields
+        for (const referencedType of referencedTypes) {
+            allReferencedTypes.add(referencedType);
+        }
+
         // Step 2: Convert all nested messages and enums
-        for (const nestedEnumOrMessage of [...this.message.nestedType, ...this.message.enumType]) {
+        for (const [nestedMessageIndex, nestedEnumOrMessage] of this.message.nestedType.entries()) {
             const enumOrMessageConverter = new EnumOrMessageConverter({
                 context: this.context,
                 breadcrumbs: this.breadcrumbs,
-                schema: nestedEnumOrMessage
+                schema: nestedEnumOrMessage,
+                sourceCodeInfoPath: [
+                    ...this.sourceCodeInfoPath,
+                    PATH_FIELD_NUMBERS.MESSAGE.NESTED_TYPE,
+                    nestedMessageIndex
+                ],
+                schemaIndex: nestedMessageIndex
             });
             const convertedNestedEnumOrMessage = enumOrMessageConverter.convert();
             if (convertedNestedEnumOrMessage != null) {
+                // Add referenced types from nested types
+                for (const referencedType of convertedNestedEnumOrMessage.convertedSchema.typeDeclaration
+                    .referencedTypes) {
+                    allReferencedTypes.add(referencedType);
+                }
+
                 inlinedTypes = {
                     ...inlinedTypes,
                     ...Object.fromEntries(
@@ -64,15 +85,54 @@ export class MessageConverter extends AbstractConverter<ProtofileConverterContex
                 };
             }
         }
+
+        for (const [nestedEnumIndex, nestedEnumOrMessage] of this.message.enumType.entries()) {
+            const enumOrMessageConverter = new EnumOrMessageConverter({
+                context: this.context,
+                breadcrumbs: this.breadcrumbs,
+                schema: nestedEnumOrMessage,
+                sourceCodeInfoPath: [...this.sourceCodeInfoPath, PATH_FIELD_NUMBERS.MESSAGE.ENUM_TYPE, nestedEnumIndex],
+                schemaIndex: nestedEnumIndex
+            });
+            const convertedNestedEnumOrMessage = enumOrMessageConverter.convert();
+            if (convertedNestedEnumOrMessage != null) {
+                // Add referenced types from nested types
+                for (const referencedType of convertedNestedEnumOrMessage.convertedSchema.typeDeclaration
+                    .referencedTypes) {
+                    allReferencedTypes.add(referencedType);
+                }
+
+                inlinedTypes = {
+                    ...inlinedTypes,
+                    ...Object.fromEntries(
+                        Object.entries(convertedNestedEnumOrMessage.inlinedTypes).map(([key, value]) => [
+                            this.prependDelimitedParentMessageName(key),
+                            this.context.updateTypeId(value, this.prependDelimitedParentMessageName(key))
+                        ])
+                    ),
+                    [this.prependDelimitedParentMessageName(nestedEnumOrMessage.name)]: this.context.updateTypeId(
+                        convertedNestedEnumOrMessage.convertedSchema,
+                        this.prependDelimitedParentMessageName(nestedEnumOrMessage.name)
+                    )
+                };
+            }
+        }
+
         // Step 3: Convert all oneofs
         for (const [index, oneof] of this.message.oneofDecl.entries()) {
             const oneOfFieldConverter = new OneOfFieldConverter({
                 context: this.context,
                 breadcrumbs: this.breadcrumbs,
-                oneOfFields: oneOfFields[index] ?? []
+                oneOfFields: oneOfFields[index] ?? [],
+                sourceCodeInfoPath: [...this.sourceCodeInfoPath, PATH_FIELD_NUMBERS.MESSAGE.ONEOF_DECL, index]
             });
             const convertedOneOfField = oneOfFieldConverter.convert();
             if (convertedOneOfField != null) {
+                // Add referenced types from oneof
+                for (const referencedType of convertedOneOfField.referencedTypes) {
+                    allReferencedTypes.add(referencedType);
+                }
+
                 const convertedOneOfSchema = {
                     typeDeclaration: this.createTypeDeclaration({
                         shape: convertedOneOfField.type,
@@ -84,7 +144,7 @@ export class MessageConverter extends AbstractConverter<ProtofileConverterContex
                 };
 
                 const convertedOneOfTypeReference = this.context.convertGrpcReferenceToTypeReference({
-                    typeName: convertedOneOfSchema.typeDeclaration.name.typeId
+                    typeName: this.context.maybePrependPackageName(convertedOneOfSchema.typeDeclaration.name.typeId)
                 });
 
                 if (convertedOneOfTypeReference.ok === true) {
@@ -117,8 +177,9 @@ export class MessageConverter extends AbstractConverter<ProtofileConverterContex
                         extendedProperties: [],
                         extraProperties: false
                     }),
-                    referencedTypes,
-                    typeName: this.message.name
+                    referencedTypes: allReferencedTypes,
+                    typeName: this.message.name,
+                    docs: this.context.getCommentForPath(this.sourceCodeInfoPath)
                 }),
                 audiences: [],
                 propertiesByAudience
@@ -131,12 +192,12 @@ export class MessageConverter extends AbstractConverter<ProtofileConverterContex
         shape,
         referencedTypes,
         typeName,
-        omitV2Examples
+        docs
     }: {
         shape: FernIr.Type;
-        referencedTypes: Set<string>;
+        referencedTypes: Set<TypeId>;
         typeName: string;
-        omitV2Examples?: boolean;
+        docs?: string;
     }): FernIr.TypeDeclaration {
         return {
             name: this.convertDeclaredTypeName(typeName),
@@ -145,20 +206,24 @@ export class MessageConverter extends AbstractConverter<ProtofileConverterContex
             userProvidedExamples: [],
             encoding: undefined,
             availability: undefined,
-            docs: undefined,
+            docs,
             referencedTypes,
             source: undefined,
             inline: false,
-            v2Examples: undefined
+            v2Examples: {
+                userSpecifiedExamples: {},
+                autogeneratedExamples: {}
+            }
         };
     }
 
     public convertDeclaredTypeName(typeName: string): FernIr.DeclaredTypeName {
+        const fullyQualifiedName = this.context.maybePrependPackageName(typeName);
         return {
-            typeId: typeName,
+            typeId: fullyQualifiedName,
             fernFilepath: this.context.createFernFilepath(),
-            name: this.context.casingsGenerator.generateName(typeName),
-            displayName: undefined
+            name: this.context.casingsGenerator.generateName(fullyQualifiedName),
+            displayName: typeName
         };
     }
 

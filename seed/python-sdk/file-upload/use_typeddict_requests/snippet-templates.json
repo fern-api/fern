@@ -24,7 +24,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.service.post(\n\t$FERN_INPUT\n)",
+                "templateString": "client.service.post(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -402,7 +402,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.service.post(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.service.post(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -792,7 +792,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.service.just_file(\n\t$FERN_INPUT\n)",
+                "templateString": "client.service.just_file(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -831,7 +831,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.service.just_file(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.service.just_file(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -882,7 +882,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.service.just_file_with_query_params(\n\t$FERN_INPUT\n)",
+                "templateString": "client.service.just_file_with_query_params(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -1001,7 +1001,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.service.just_file_with_query_params(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.service.just_file_with_query_params(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -1132,7 +1132,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.service.with_content_type(\n\t$FERN_INPUT\n)",
+                "templateString": "client.service.with_content_type(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -1243,7 +1243,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.service.with_content_type(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.service.with_content_type(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -1366,7 +1366,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.service.with_form_encoding(\n\t$FERN_INPUT\n)",
+                "templateString": "client.service.with_form_encoding(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -1449,7 +1449,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.service.with_form_encoding(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.service.with_form_encoding(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -1544,7 +1544,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.service.with_form_encoded_containers(\n\t$FERN_INPUT\n)",
+                "templateString": "client.service.with_form_encoded_containers(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -1977,7 +1977,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.service.with_form_encoded_containers(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.service.with_form_encoded_containers(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -2422,7 +2422,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.service.optional_args(\n\t$FERN_INPUT\n)",
+                "templateString": "client.service.optional_args(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -2477,7 +2477,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.service.optional_args(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.service.optional_args(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -2512,6 +2512,62 @@
                             }
                         }
                     ],
+                    "inputDelimiter": ",\n\t",
+                    "type": "generic"
+                },
+                "type": "v1"
+            }
+        }
+    },
+    {
+        "sdk": {
+            "package": "fern_file-upload",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/snippet",
+            "method": "POST",
+            "identifierOverride": "endpoint_service.simple"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": {
+                "imports": [
+                    "from seed import SeedFileUpload"
+                ],
+                "isOptional": true,
+                "templateString": "client = SeedFileUpload(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "templateInputs": [],
+                "inputDelimiter": ",",
+                "type": "generic"
+            },
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "client.service.simple(\n    $FERN_INPUT\n)",
+                "templateInputs": [],
+                "inputDelimiter": ",\n\t",
+                "type": "generic"
+            },
+            "type": "v1"
+        },
+        "additionalTemplates": {
+            "async": {
+                "clientInstantiation": {
+                    "imports": [
+                        "from seed import AsyncSeedFileUpload"
+                    ],
+                    "isOptional": true,
+                    "templateString": "client = AsyncSeedFileUpload(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                    "templateInputs": [],
+                    "inputDelimiter": ",",
+                    "type": "generic"
+                },
+                "functionInvocation": {
+                    "imports": [],
+                    "isOptional": true,
+                    "templateString": "await client.service.simple(\n    $FERN_INPUT\n)",
+                    "templateInputs": [],
                     "inputDelimiter": ",\n\t",
                     "type": "generic"
                 },

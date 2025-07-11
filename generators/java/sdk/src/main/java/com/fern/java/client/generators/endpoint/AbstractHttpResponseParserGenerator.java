@@ -611,18 +611,53 @@ public abstract class AbstractHttpResponseParserGenerator {
             endpointMethodBuilder.returns(ParameterizedTypeName.get(ClassName.get(Iterable.class), bodyTypeName));
 
             String terminator =
-                    streaming.visit(new GetStreamingResponseTerminator()).orElse("\n");
+                    streaming.visit(new GetStreamingResponseTerminator()).orElse(null);
 
-            handleSuccessfulResult(
-                    httpResponseBuilder,
-                    CodeBlock.of(
-                            "new $T<$T>($T.class, new $T($L), $S)",
+            CodeBlock streamCreation = streaming.visit(new StreamingResponse.Visitor<CodeBlock>() {
+                @Override
+                public CodeBlock visitJson(JsonStreamChunk json) {
+                    String delimiter = terminator != null ? terminator : "\\n";
+                    return CodeBlock.of(
+                            "$T.fromJson($T.class, new $T($L), $S)",
                             clientGeneratorContext.getPoetClassNameFactory().getStreamClassName(),
-                            bodyTypeName,
                             bodyTypeName,
                             clientGeneratorContext.getPoetClassNameFactory().getResponseBodyReaderClassName(),
                             variables.getResponseName(),
-                            terminator));
+                            delimiter);
+                }
+
+                @Override
+                public CodeBlock visitText(TextStreamChunk text) {
+                    throw new RuntimeException("Returning streamed text is not supported.");
+                }
+
+                @Override
+                public CodeBlock visitSse(SseStreamChunk sse) {
+                    if (terminator != null) {
+                        return CodeBlock.of(
+                                "$T.fromSse($T.class, new $T($L), $S)",
+                                clientGeneratorContext.getPoetClassNameFactory().getStreamClassName(),
+                                bodyTypeName,
+                                clientGeneratorContext.getPoetClassNameFactory().getResponseBodyReaderClassName(),
+                                variables.getResponseName(),
+                                terminator);
+                    } else {
+                        return CodeBlock.of(
+                                "$T.fromSse($T.class, new $T($L))",
+                                clientGeneratorContext.getPoetClassNameFactory().getStreamClassName(),
+                                bodyTypeName,
+                                clientGeneratorContext.getPoetClassNameFactory().getResponseBodyReaderClassName(),
+                                variables.getResponseName());
+                    }
+                }
+
+                @Override
+                public CodeBlock _visitUnknown(Object unknownType) {
+                    throw new RuntimeException("Encountered unknown streaming response type: " + unknownType);
+                }
+            });
+
+            handleSuccessfulResult(httpResponseBuilder, streamCreation);
 
             return null;
         }

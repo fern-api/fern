@@ -5,7 +5,7 @@ client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )        
 client.foo(
-	
+    
 )
 
 ```
@@ -18,7 +18,7 @@ client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )        
 client.a.b.foo(
-	
+    
 )
 
 ```
@@ -31,7 +31,7 @@ client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )        
 client.a.c.foo(
-	
+    
 )
 
 ```
@@ -44,7 +44,7 @@ client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )        
 client.folder.foo(
-	
+    
 )
 
 ```
@@ -57,7 +57,7 @@ client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )        
 client.folder.service.endpoint(
-	
+    
 )
 
 ```
@@ -70,7 +70,7 @@ client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )        
 client.folder.service.unknown_request(
-	request={"key":"value"}
+    request={"key":"value"}
 )
 
 ```

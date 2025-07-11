@@ -4,10 +4,12 @@ import { Type } from "@fern-api/ir-sdk";
 import { AbstractConverter } from "@fern-api/v2-importer-commons";
 
 import { ProtofileConverterContext } from "../ProtofileConverterContext";
+import { PATH_FIELD_NUMBERS } from "../utils/PathFieldNumbers";
 
 export declare namespace EnumConverter {
     export interface Args extends AbstractConverter.Args<ProtofileConverterContext> {
         enum: EnumDescriptorProto;
+        sourceCodeInfoPath: number[];
     }
 
     export interface Output {
@@ -17,23 +19,27 @@ export declare namespace EnumConverter {
 
 export class EnumConverter extends AbstractConverter<ProtofileConverterContext, EnumConverter.Output> {
     private readonly enum: EnumDescriptorProto;
-
-    constructor({ context, breadcrumbs, enum: enumType }: EnumConverter.Args) {
+    private readonly sourceCodeInfoPath: number[];
+    constructor({ context, breadcrumbs, enum: enumType, sourceCodeInfoPath }: EnumConverter.Args) {
         super({ context, breadcrumbs });
         this.enum = enumType;
+        this.sourceCodeInfoPath = sourceCodeInfoPath;
     }
 
     public convert(): EnumConverter.Output | undefined {
-        const values = this.enum.value.map((value) => {
+        const values = this.enum.value.map((value, index) => {
             const name = value.name;
             return {
-                name: this.context.casingsGenerator.generateNameAndWireValue({
-                    name,
+                name: {
+                    name: this.context.casingsGenerator.generateName(name),
                     wireValue: name
-                }),
-                docs: undefined,
-                availability: undefined,
-                casing: undefined
+                },
+                docs: this.context.getCommentForPath([
+                    ...this.sourceCodeInfoPath,
+                    PATH_FIELD_NUMBERS.ENUM.VALUE,
+                    index
+                ]),
+                availability: undefined
             };
         });
 

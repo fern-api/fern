@@ -8,7 +8,6 @@ import * as serializers from "../../../../serialization/index.js";
 import { toJson } from "../../../../core/json.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as errors from "../../../../errors/index.js";
-import urlJoin from "url-join";
 
 export declare namespace Service {
     export interface Options {
@@ -216,7 +215,7 @@ export class Service {
         await _request.appendFile("file", request.file);
         const _maybeEncodedRequest = await _request.getRequest();
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/just-file",
@@ -306,7 +305,7 @@ export class Service {
         await _request.appendFile("file", request.file);
         const _maybeEncodedRequest = await _request.getRequest();
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/just-file-with-query-params",
@@ -374,27 +373,14 @@ export class Service {
         const _request = await core.newFormData();
         await _request.appendFile("file", request.file);
         _request.append("foo", request.foo);
-        _request.append(
-            "bar",
-            toJson(
-                serializers.MyObject.jsonOrThrow(request.bar, { unrecognizedObjectKeys: "strip", omitUndefined: true }),
-            ),
-        );
+        _request.append("bar", toJson(request.bar));
         if (request.fooBar != null) {
-            _request.append(
-                "foo_bar",
-                toJson(
-                    serializers.MyObject.jsonOrThrow(request.fooBar, {
-                        unrecognizedObjectKeys: "strip",
-                        omitUndefined: true,
-                    }),
-                ),
-            );
+            _request.append("foo_bar", toJson(request.fooBar));
         }
 
         const _maybeEncodedRequest = await _request.getRequest();
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/with-content-type",
@@ -468,7 +454,7 @@ export class Service {
 
         const _maybeEncodedRequest = await _request.getRequest();
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/with-form-encoding",
@@ -694,15 +680,12 @@ export class Service {
         }
 
         if (request.request != null) {
-            if (Array.isArray(request.request) || request.request instanceof Set)
-                for (const _item of request.request) {
-                    _request.append("request", typeof _item === "string" ? _item : toJson(_item));
-                }
+            _request.append("request", toJson(request.request));
         }
 
         const _maybeEncodedRequest = await _request.getRequest();
         const _response = await core.fetcher({
-            url: urlJoin(
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "/optional-args",
@@ -750,6 +733,58 @@ export class Service {
                 });
             case "timeout":
                 throw new errors.SeedFileUploadTimeoutError("Timeout exceeded when calling POST /optional-args.");
+            case "unknown":
+                throw new errors.SeedFileUploadError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
+    }
+
+    /**
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.service.simple()
+     */
+    public simple(requestOptions?: Service.RequestOptions): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__simple(requestOptions));
+    }
+
+    private async __simple(requestOptions?: Service.RequestOptions): Promise<core.WithRawResponse<void>> {
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/snippet",
+            ),
+            method: "POST",
+            headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return { data: undefined, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedFileUploadError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedFileUploadError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedFileUploadTimeoutError("Timeout exceeded when calling POST /snippet.");
             case "unknown":
                 throw new errors.SeedFileUploadError({
                     message: _response.error.errorMessage,

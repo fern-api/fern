@@ -40,5 +40,9 @@ export interface SdkCustomConfig {
     useLegacyExports: boolean | undefined;
     streamType: "wrapper" | "web";
     fileResponseType: "stream" | "binary-response";
+    formDataSupport: "Node16" | "Node18";
+    fetchSupport: "node-fetch" | "native";
     packagePath: string | undefined;
+    omitFernHeaders: boolean | undefined;
+    useDefaultRequestParameterValues: boolean | undefined;
 }

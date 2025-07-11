@@ -254,7 +254,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                             invocation
                         )
                     ],
-                    ts.NodeFlags.Const
+                    ts.NodeFlags.Let
                 )
             ),
             ts.factory.createWhileStatement(
@@ -435,7 +435,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             }
         });
         if (url != null) {
-            return context.externalDependencies.urlJoin.invoke([baseUrl, url]);
+            return context.coreUtilities.urlUtils.join._invoke([baseUrl, url]);
         } else {
             return baseUrl;
         }

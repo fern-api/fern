@@ -4250,7 +4250,9 @@ navigation:
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Tenant-Name": "copiloteu",
+                  },
                   "path-parameters": {
                     "id": "id",
                   },
@@ -4333,7 +4335,9 @@ navigation:
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Tenant-Name": "copiloteu",
+                  },
                   "path-parameters": {
                     "id": "id",
                   },
@@ -4386,7 +4390,9 @@ navigation:
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Tenant-Name": "copiloteu",
+                  },
                   "path-parameters": {
                     "id": "id",
                   },
@@ -4500,7 +4506,8 @@ service:
       examples:
         - path-parameters:
             id: id
-          headers: {}
+          headers:
+            Tenant-Name: copiloteu
           response:
             body:
               codes:
@@ -4551,7 +4558,8 @@ service:
       examples:
         - path-parameters:
             id: id
-          headers: {}
+          headers:
+            Tenant-Name: copiloteu
           request:
             modelName: '"geography_modelName (Latest)" | "geography_modelName_version"'
             context:
@@ -4600,7 +4608,8 @@ service:
       examples:
         - path-parameters:
             id: id
-          headers: {}
+          headers:
+            Tenant-Name: copiloteu
           request: {}
           response:
             body:
@@ -4649,7 +4658,9 @@ types:
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Tenant-Name": "copiloteu",
+                  },
                   "path-parameters": {
                     "documentId": "documentId",
                     "id": "id",
@@ -4793,7 +4804,9 @@ types:
                       "name": "from string",
                     },
                   ],
-                  "headers": {},
+                  "headers": {
+                    "Tenant-Name": "copiloteu",
+                  },
                   "path-parameters": {
                     "id": "id",
                   },
@@ -4897,7 +4910,9 @@ types:
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Tenant-Name": "copiloteu",
+                  },
                   "path-parameters": {
                     "documentId": "documentId",
                     "id": "id",
@@ -4968,7 +4983,9 @@ types:
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Tenant-Name": "copiloteu",
+                  },
                   "path-parameters": {
                     "id": "id",
                   },
@@ -5022,7 +5039,9 @@ types:
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Tenant-Name": "copiloteu",
+                  },
                   "path-parameters": {
                     "documentId": "documentId",
                     "id": "id",
@@ -5159,7 +5178,8 @@ service:
       examples:
         - path-parameters:
             id: id
-          headers: {}
+          headers:
+            Tenant-Name: copiloteu
           response:
             body:
               data:
@@ -5225,7 +5245,8 @@ service:
       examples:
         - path-parameters:
             id: id
-          headers: {}
+          headers:
+            Tenant-Name: copiloteu
           request:
             context:
               - type: facts
@@ -5375,7 +5396,8 @@ service:
         - path-parameters:
             id: id
             documentId: documentId
-          headers: {}
+          headers:
+            Tenant-Name: copiloteu
           response:
             body:
               id: id
@@ -5423,7 +5445,8 @@ service:
         - path-parameters:
             id: id
             documentId: documentId
-          headers: {}
+          headers:
+            Tenant-Name: copiloteu
           response:
             body:
               key: value
@@ -5467,7 +5490,8 @@ service:
         - path-parameters:
             id: id
             documentId: documentId
-          headers: {}
+          headers:
+            Tenant-Name: copiloteu
           request: {}
           response:
             body:
@@ -5531,7 +5555,9 @@ types:
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Tenant-Name": "copiloteu",
+                  },
                   "path-parameters": {
                     "id": "id",
                   },
@@ -5602,7 +5628,9 @@ types:
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Tenant-Name": "copiloteu",
+                  },
                   "response": {
                     "body": {
                       "data": [
@@ -5639,7 +5667,9 @@ types:
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Tenant-Name": "copiloteu",
+                  },
                   "path-parameters": {
                     "id": "id",
                   },
@@ -5691,7 +5721,9 @@ types:
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Tenant-Name": "copiloteu",
+                  },
                   "path-parameters": {
                     "factId": "factId",
                     "id": "id",
@@ -5772,7 +5804,9 @@ types:
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Tenant-Name": "copiloteu",
+                  },
                   "path-parameters": {
                     "id": "id",
                   },
@@ -5908,7 +5942,8 @@ service:
       errors:
         - root.InternalServerError
       examples:
-        - headers: {}
+        - headers:
+            Tenant-Name: copiloteu
           response:
             body:
               data:
@@ -5939,7 +5974,8 @@ service:
       examples:
         - path-parameters:
             id: id
-          headers: {}
+          headers:
+            Tenant-Name: copiloteu
           response:
             body:
               facts:
@@ -5986,7 +6022,8 @@ service:
       examples:
         - path-parameters:
             id: id
-          headers: {}
+          headers:
+            Tenant-Name: copiloteu
           request:
             facts:
               - text: text
@@ -6032,7 +6069,8 @@ service:
       examples:
         - path-parameters:
             id: id
-          headers: {}
+          headers:
+            Tenant-Name: copiloteu
           request:
             facts:
               - factId: factId
@@ -6091,7 +6129,8 @@ service:
         - path-parameters:
             id: id
             factId: factId
-          headers: {}
+          headers:
+            Tenant-Name: copiloteu
           request:
             text: text
             source: core
@@ -6163,7 +6202,9 @@ types:
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Tenant-Name": "copiloteu",
+                  },
                   "request": {
                     "encounter": {
                       "identifier": "identifier",
@@ -6227,7 +6268,9 @@ types:
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Tenant-Name": "copiloteu",
+                  },
                   "path-parameters": {
                     "id": "id",
                   },
@@ -6266,7 +6309,9 @@ types:
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Tenant-Name": "copiloteu",
+                  },
                   "path-parameters": {
                     "id": "id",
                   },
@@ -6328,7 +6373,9 @@ types:
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Tenant-Name": "copiloteu",
+                  },
                   "response": {
                     "body": {
                       "interactions": [
@@ -6408,7 +6455,9 @@ types:
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Tenant-Name": "copiloteu",
+                  },
                   "path-parameters": {
                     "id": "id",
                   },
@@ -6542,7 +6591,8 @@ service:
         - root.ForbiddenError
         - root.GatewayTimeoutError
       examples:
-        - headers: {}
+        - headers:
+            Tenant-Name: copiloteu
           response:
             body:
               interactions:
@@ -6597,7 +6647,8 @@ service:
         - root.InternalServerError
         - root.GatewayTimeoutError
       examples:
-        - headers: {}
+        - headers:
+            Tenant-Name: copiloteu
           request:
             encounter:
               identifier: identifier
@@ -6633,7 +6684,8 @@ service:
       examples:
         - path-parameters:
             id: id
-          headers: {}
+          headers:
+            Tenant-Name: copiloteu
           response:
             body:
               id: id
@@ -6683,7 +6735,8 @@ service:
       examples:
         - path-parameters:
             id: id
-          headers: {}
+          headers:
+            Tenant-Name: copiloteu
           response:
             body:
               key: value
@@ -6727,7 +6780,8 @@ service:
       examples:
         - path-parameters:
             id: id
-          headers: {}
+          headers:
+            Tenant-Name: copiloteu
           request: {}
           response:
             body:
@@ -6778,7 +6832,9 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Tenant-Name": "copiloteu",
+                  },
                   "path-parameters": {
                     "id": "id",
                     "recordingId": "recordingId",
@@ -6857,7 +6913,9 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Tenant-Name": "copiloteu",
+                  },
                   "path-parameters": {
                     "id": "id",
                   },
@@ -6910,6 +6968,7 @@ service:
               "request": {
                 "body": "bytes",
                 "content-type": "application/octet-stream",
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Returns the recording ID in the response.",
@@ -6958,7 +7017,8 @@ service:
       examples:
         - path-parameters:
             id: id
-          headers: {}
+          headers:
+            Tenant-Name: copiloteu
           response:
             body:
               recordings:
@@ -7050,7 +7110,8 @@ service:
         - path-parameters:
             id: id
             recordingId: recordingId
-          headers: {}
+          headers:
+            Tenant-Name: copiloteu
           response:
             body:
               key: value
@@ -7612,7 +7673,9 @@ imports:
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Tenant-Name": "copiloteu",
+                  },
                   "path-parameters": {
                     "key": "key",
                   },
@@ -7667,7 +7730,9 @@ imports:
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Tenant-Name": "copiloteu",
+                  },
                   "response": {
                     "body": {
                       "data": [
@@ -7724,7 +7789,9 @@ imports:
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Tenant-Name": "copiloteu",
+                  },
                   "response": {
                     "body": {
                       "data": [
@@ -7812,7 +7879,8 @@ service:
         - root.UnauthorizedError
         - root.InternalServerError
       examples:
-        - headers: {}
+        - headers:
+            Tenant-Name: copiloteu
           response:
             body:
               data:
@@ -7853,7 +7921,8 @@ service:
         - root.UnauthorizedError
         - root.InternalServerError
       examples:
-        - headers: {}
+        - headers:
+            Tenant-Name: copiloteu
           response:
             body:
               data:
@@ -7888,7 +7957,8 @@ service:
       examples:
         - path-parameters:
             key: key
-          headers: {}
+          headers:
+            Tenant-Name: copiloteu
           response:
             body:
               date_updated: '2024-01-15T09:30:00Z'
@@ -7929,7 +7999,9 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Tenant-Name": "copiloteu",
+                  },
                   "path-parameters": {
                     "id": "id",
                   },
@@ -8030,7 +8102,9 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Tenant-Name": "copiloteu",
+                  },
                   "path-parameters": {
                     "id": "id",
                     "transcriptId": "transcriptId",
@@ -8077,7 +8151,9 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Tenant-Name": "copiloteu",
+                  },
                   "path-parameters": {
                     "id": "id",
                     "transcriptId": "transcriptId",
@@ -8139,7 +8215,9 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Tenant-Name": "copiloteu",
+                  },
                   "path-parameters": {
                     "id": "id",
                   },
@@ -8275,7 +8353,8 @@ service:
       examples:
         - path-parameters:
             id: id
-          headers: {}
+          headers:
+            Tenant-Name: copiloteu
           response:
             body:
               transcripts:
@@ -8348,7 +8427,8 @@ service:
       examples:
         - path-parameters:
             id: id
-          headers: {}
+          headers:
+            Tenant-Name: copiloteu
           request:
             recordingId: recordingId
             primaryLanguage: primaryLanguage
@@ -8399,7 +8479,8 @@ service:
         - path-parameters:
             id: id
             transcriptId: transcriptId
-          headers: {}
+          headers:
+            Tenant-Name: copiloteu
           response:
             body:
               id: id
@@ -8446,7 +8527,8 @@ service:
         - path-parameters:
             id: id
             transcriptId: transcriptId
-          headers: {}
+          headers:
+            Tenant-Name: copiloteu
           response:
             body:
               key: value

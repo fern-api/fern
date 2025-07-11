@@ -5,7 +5,18 @@ WEBSOCKETS_MODULE = AST.Module.external(
     module_path=("websockets",),
     dependency=AST.Dependency(
         name="websockets",
-        version="12.0",
+        version=">=12.0",
+        compatibility=DependencyCompatibility.EXACT,
+    ),
+)
+
+WEBSOCKETS_LEGACY_CLIENT_MODULE = AST.Module.external(
+    # allows use of websockets>=14 alongside earlier
+    # see https://websockets.readthedocs.io/en/stable/howto/upgrade.html to migrate away
+    module_path=("websockets", "legacy", "client"),
+    dependency=AST.Dependency(
+        name="websockets",
+        version=">=12.0",
         compatibility=DependencyCompatibility.EXACT,
     ),
 )
@@ -14,7 +25,7 @@ WEBSOCKETS_SYNC_CLIENT_MODULE = AST.Module.external(
     module_path=("websockets", "sync", "client"),
     dependency=AST.Dependency(
         name="websockets",
-        version="12.0",
+        version=">=12.0",
         compatibility=DependencyCompatibility.EXACT,
     ),
 )
@@ -23,7 +34,16 @@ WEBSOCKETS_SYNC_CONNECTION_MODULE = AST.Module.external(
     module_path=("websockets", "sync", "connection"),
     dependency=AST.Dependency(
         name="websockets",
-        version="12.0",
+        version=">=12.0",
+        compatibility=DependencyCompatibility.EXACT,
+    ),
+)
+
+WEBSOCKETS_EXCEPTIONS_MODULE = AST.Module.external(
+    module_path=("websockets", "exceptions"),
+    dependency=AST.Dependency(
+        name="websockets",
+        version=">=12.0",
         compatibility=DependencyCompatibility.EXACT,
     ),
 )
@@ -32,7 +52,7 @@ WEBSOCKETS_SYNC_EXCEPTION_MODULE = AST.Module.external(
     module_path=("websockets", "sync", "exceptions"),
     dependency=AST.Dependency(
         name="websockets",
-        version="12.0",
+        version=">=12.0",
         compatibility=DependencyCompatibility.EXACT,
     ),
 )
@@ -48,8 +68,15 @@ class Websockets:
     @staticmethod
     def get_async_websocket_client_protocol() -> AST.ClassReference:
         return AST.ClassReference(
-            qualified_name_excluding_import=("WebSocketClientProtocol",),
-            import_=AST.ReferenceImport(module=WEBSOCKETS_MODULE),
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=WEBSOCKETS_LEGACY_CLIENT_MODULE,
+                named_import="WebSocketClientProtocol",
+                alternative_import=AST.ReferenceImport(
+                    module=WEBSOCKETS_MODULE,
+                    named_import="WebSocketClientProtocol",
+                ),
+            ),
         )
 
     @staticmethod
@@ -67,12 +94,28 @@ class Websockets:
         )
 
     @staticmethod
+    def get_invalid_status_code_exception() -> AST.ClassReference:
+        return AST.ClassReference(
+            qualified_name_excluding_import=("InvalidStatusCode",),
+            import_=AST.ReferenceImport(module=WEBSOCKETS_EXCEPTIONS_MODULE),
+        )
+
+    @staticmethod
     def async_connect(url: str, headers: str) -> AST.Expression:
         def write(writer: AST.NodeWriter) -> None:
             writer.write_reference(
                 AST.Reference(
-                    import_=AST.ReferenceImport(module=WEBSOCKETS_MODULE),
-                    qualified_name_excluding_import=("connect",),
+                    import_=AST.ReferenceImport(
+                        module=WEBSOCKETS_LEGACY_CLIENT_MODULE,
+                        named_import="connect",
+                        alias="websockets_client_connect",
+                        alternative_import=AST.ReferenceImport(
+                            module=WEBSOCKETS_MODULE,
+                            named_import="connect",
+                            alias="websockets_client_connect",
+                        ),
+                    ),
+                    qualified_name_excluding_import=(),
                 )
             )
             writer.write(f"({url}, extra_headers={headers})")

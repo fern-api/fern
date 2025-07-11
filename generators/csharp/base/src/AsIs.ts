@@ -31,6 +31,7 @@ export const AsIsFiles = {
     RawGrpcClient: "RawGrpcClient.Template.cs",
     // Pagination
     CustomPager: "CustomPager.Template.cs",
+    CustomPagerContext: "CustomPagerContext.Template.cs",
     Page: "Page.Template.cs",
     Pager: "Pager.Template.cs",
     // HTTP
