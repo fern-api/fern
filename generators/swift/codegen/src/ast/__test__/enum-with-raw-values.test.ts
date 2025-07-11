@@ -7,10 +7,10 @@ describe("Enum", () => {
                 name: "Direction",
                 conformances: ["String"],
                 cases: [
-                    { name: "north", rawValue: "north" },
-                    { name: "south", rawValue: "south" },
-                    { name: "east", rawValue: "east" },
-                    { name: "west", rawValue: "west" }
+                    { unsafeName: "north", rawValue: "north" },
+                    { unsafeName: "south", rawValue: "south" },
+                    { unsafeName: "east", rawValue: "east" },
+                    { unsafeName: "west", rawValue: "west" }
                 ]
             });
 
@@ -29,10 +29,10 @@ describe("Enum", () => {
                 name: "Direction",
                 conformances: ["String"],
                 cases: [
-                    { name: "northWest", rawValue: "north-west" },
-                    { name: "southWest", rawValue: "south-west" },
-                    { name: "east", rawValue: "east" },
-                    { name: "west", rawValue: "west" }
+                    { unsafeName: "northWest", rawValue: "north-west" },
+                    { unsafeName: "southWest", rawValue: "south-west" },
+                    { unsafeName: "east", rawValue: "east" },
+                    { unsafeName: "west", rawValue: "west" }
                 ]
             });
 
@@ -42,6 +42,25 @@ describe("Enum", () => {
                   case southWest = "south-west"
                   case east
                   case west
+              }"
+            `);
+        });
+
+        it("should handle reserved keywords in case names", () => {
+            const enum_ = swift.enumWithRawValues({
+                name: "KeywordEnum",
+                cases: [
+                    { unsafeName: "class", rawValue: "class" },
+                    { unsafeName: "associatedtype", rawValue: "associated-type" },
+                    { unsafeName: "north", rawValue: "north" }
+                ]
+            });
+
+            expect(enum_.toString()).toMatchInlineSnapshot(`
+              "enum KeywordEnum {
+                  case \`class\`
+                  case \`associatedtype\` = "associated-type"
+                  case north
               }"
             `);
         });

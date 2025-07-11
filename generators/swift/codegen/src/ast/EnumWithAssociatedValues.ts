@@ -1,10 +1,11 @@
 import { AccessLevel } from "./AccessLevel";
 import { Type } from "./Type";
 import { AstNode, Writer } from "./core";
+import { isReservedKeyword } from "./syntax";
 
 export declare namespace EnumWithAssociatedValues {
     interface Case {
-        name: string;
+        unsafeName: string;
         associatedValue: [Type, ...Type[]];
     }
 
@@ -49,7 +50,11 @@ export class EnumWithAssociatedValues extends AstNode {
         writer.indent();
         this.cases.forEach((case_) => {
             writer.write("case ");
-            writer.write(case_.name);
+            if (isReservedKeyword(case_.unsafeName)) {
+                writer.write(`\`${case_.unsafeName}\``);
+            } else {
+                writer.write(case_.unsafeName);
+            }
             writer.write("(");
             case_.associatedValue.forEach((type, index) => {
                 if (index > 0) {

@@ -1,9 +1,10 @@
 import { AccessLevel } from "./AccessLevel";
 import { AstNode, Writer } from "./core";
+import { isReservedKeyword } from "./syntax";
 
 export declare namespace EnumWithRawValues {
     interface Case {
-        name: string;
+        unsafeName: string;
         rawValue: string;
     }
 
@@ -48,8 +49,12 @@ export class EnumWithRawValues extends AstNode {
         writer.indent();
         this.cases.forEach((case_) => {
             writer.write("case ");
-            writer.write(case_.name);
-            if (case_.rawValue !== case_.name) {
+            if (isReservedKeyword(case_.unsafeName)) {
+                writer.write(`\`${case_.unsafeName}\``);
+            } else {
+                writer.write(case_.unsafeName);
+            }
+            if (case_.rawValue !== case_.unsafeName) {
                 writer.write(" = ");
                 writer.write(`"${case_.rawValue}"`);
             }

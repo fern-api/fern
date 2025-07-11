@@ -7,8 +7,8 @@ describe("EnumWithAssociatedValues", () => {
             const enum_ = swift.enumWithAssociatedValues({
                 name: "NetworkResponse",
                 cases: [
-                    { name: "success", associatedValue: [swift.Type.string()] },
-                    { name: "error", associatedValue: [swift.Type.int(), swift.Type.string()] }
+                    { unsafeName: "success", associatedValue: [swift.Type.string()] },
+                    { unsafeName: "error", associatedValue: [swift.Type.int(), swift.Type.string()] }
                 ]
             });
 
@@ -26,8 +26,8 @@ describe("EnumWithAssociatedValues", () => {
                 accessLevel: AccessLevel.Public,
                 conformances: ["Codable", "Equatable"],
                 cases: [
-                    { name: "success", associatedValue: [swift.Type.string()] },
-                    { name: "failure", associatedValue: [swift.Type.string()] }
+                    { unsafeName: "success", associatedValue: [swift.Type.string()] },
+                    { unsafeName: "failure", associatedValue: [swift.Type.string()] }
                 ]
             });
 
@@ -44,7 +44,7 @@ describe("EnumWithAssociatedValues", () => {
                 name: "ComplexEnum",
                 cases: [
                     {
-                        name: "complex",
+                        unsafeName: "complex",
                         associatedValue: [
                             swift.Type.array(swift.Type.string()),
                             swift.Type.dictionary(swift.Type.string(), swift.Type.int()),
@@ -57,6 +57,23 @@ describe("EnumWithAssociatedValues", () => {
             expect(enum_.toString()).toMatchInlineSnapshot(`
               "enum ComplexEnum {
                   case complex([String], [String: Int], (String, Bool))
+              }"
+            `);
+        });
+
+        it("should handle reserved keywords in case names", () => {
+            const enum_ = swift.enumWithAssociatedValues({
+                name: "KeywordEnum",
+                cases: [
+                    { unsafeName: "class", associatedValue: [swift.Type.string()] },
+                    { unsafeName: "struct", associatedValue: [swift.Type.int()] }
+                ]
+            });
+
+            expect(enum_.toString()).toMatchInlineSnapshot(`
+              "enum KeywordEnum {
+                  case \`class\`(String)
+                  case \`struct\`(Int)
               }"
             `);
         });
