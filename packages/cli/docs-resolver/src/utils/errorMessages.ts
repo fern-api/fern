@@ -1,11 +1,22 @@
 import { getLexicallyNearestNeighbors } from "./getLexicallyNearestNeighbors";
 
+const NUM_MATCH_CANDIDATES = 3;
+const LEVENSHTEIN_THRESHOLD = 5;
+
 export function cannotFindSubpackageByLocatorError(locator: string, existingLocators: Iterable<string>): string {
-    const nearestThreeMatches = getLexicallyNearestNeighbors(locator, existingLocators, 3, normalizeLocatorString);
+    const nearestThreeMatches = getLexicallyNearestNeighbors(
+        locator,
+        existingLocators,
+        NUM_MATCH_CANDIDATES,
+        normalizeLocatorString,
+        LEVENSHTEIN_THRESHOLD
+    );
     const msg = `Failed to locate API section ${locator}.`;
     switch (nearestThreeMatches.length) {
         case 0:
-            return msg;
+            return `${msg} No similar API sections found. Available API sections: [\n${Array.from(existingLocators)
+                .map((s) => `\t${s}`)
+                .join(",\n")}\n]`;
         case 1:
             return `${msg} Did you mean ${nearestThreeMatches[0]}?`;
         case 2:

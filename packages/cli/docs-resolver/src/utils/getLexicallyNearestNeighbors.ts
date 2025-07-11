@@ -10,7 +10,8 @@ export function getLexicallyNearestNeighbors(
     target: string,
     neighbors: Iterable<string>,
     numNeighbors: number,
-    normalize?: (s: string) => string
+    normalize?: (s: string) => string,
+    threshold?: number
 ): Array<string> {
     if (numNeighbors <= 0) {
         return [];
@@ -20,6 +21,11 @@ export function getLexicallyNearestNeighbors(
     const maxHeap = new Heap<{ neighbor: string; distance: number }>(maxHeapComparator);
     for (const neighbor of neighbors) {
         const distance = levenshtein.get(norm(target), norm(neighbor));
+
+        if (threshold && distance > threshold) {
+            continue;
+        }
+
         maxHeap.push({ neighbor, distance });
         if (maxHeap.size() > numNeighbors) {
             maxHeap.pop(); // Remove the worst
