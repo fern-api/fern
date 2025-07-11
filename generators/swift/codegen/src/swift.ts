@@ -1,7 +1,7 @@
-import { Enum, Property, Struct } from "./ast";
+import { EnumWithAssociatedValues, Property, Struct } from "./ast";
 
-export function enum_(args: Enum.Args): Enum {
-    return new Enum(args);
+export function enumWithAssociatedValues(args: EnumWithAssociatedValues.Args): EnumWithAssociatedValues {
+    return new EnumWithAssociatedValues(args);
 }
 
 export function struct(args: Struct.Args): Struct {

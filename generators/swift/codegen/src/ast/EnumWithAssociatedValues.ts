@@ -2,10 +2,10 @@ import { AccessLevel } from "./AccessLevel";
 import { Type } from "./Type";
 import { AstNode, Writer } from "./core";
 
-export declare namespace Enum {
+export declare namespace EnumWithAssociatedValues {
     interface Case {
         name: string;
-        associatedValues?: Type[];
+        associatedValue: [Type, ...Type[]];
     }
 
     interface Args {
@@ -16,13 +16,13 @@ export declare namespace Enum {
     }
 }
 
-export class Enum extends AstNode {
+export class EnumWithAssociatedValues extends AstNode {
     public readonly name: string;
     public readonly accessLevel?: AccessLevel;
     public readonly conformances?: string[];
-    public readonly cases: Enum.Case[];
+    public readonly cases: EnumWithAssociatedValues.Case[];
 
-    public constructor({ accessLevel, name, conformances, cases }: Enum.Args) {
+    public constructor({ accessLevel, name, conformances, cases }: EnumWithAssociatedValues.Args) {
         super();
         this.name = name;
         this.accessLevel = accessLevel;
@@ -50,16 +50,14 @@ export class Enum extends AstNode {
         this.cases.forEach((case_) => {
             writer.write("case ");
             writer.write(case_.name);
-            if (case_.associatedValues?.length) {
-                writer.write("(");
-                case_.associatedValues.forEach((type, index) => {
-                    if (index > 0) {
-                        writer.write(", ");
-                    }
-                    type.write(writer);
-                });
-                writer.write(")");
-            }
+            writer.write("(");
+            case_.associatedValue.forEach((type, index) => {
+                if (index > 0) {
+                    writer.write(", ");
+                }
+                type.write(writer);
+            });
+            writer.write(")");
             writer.newLine();
         });
         writer.dedent();

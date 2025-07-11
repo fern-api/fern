@@ -1,30 +1,14 @@
 import { swift } from "../..";
 import { AccessLevel } from "../AccessLevel";
 
-describe("Enum", () => {
+describe("EnumWithAssociatedValues", () => {
     describe("write", () => {
-        it("should write basic enum", () => {
-            const enum_ = swift.enum_({
-                name: "Direction",
-                cases: [{ name: "north" }, { name: "south" }, { name: "east" }, { name: "west" }]
-            });
-
-            expect(enum_.toString()).toMatchInlineSnapshot(`
-              "enum Direction {
-                  case north
-                  case south
-                  case east
-                  case west
-              }"
-            `);
-        });
-
-        it("should write enum with associated values", () => {
-            const enum_ = swift.enum_({
+        it("should write basic enum with associated values", () => {
+            const enum_ = swift.enumWithAssociatedValues({
                 name: "NetworkResponse",
                 cases: [
-                    { name: "success", associatedValues: [swift.Type.string()] },
-                    { name: "error", associatedValues: [swift.Type.int(), swift.Type.string()] }
+                    { name: "success", associatedValue: [swift.Type.string()] },
+                    { name: "error", associatedValue: [swift.Type.int(), swift.Type.string()] }
                 ]
             });
 
@@ -37,13 +21,13 @@ describe("Enum", () => {
         });
 
         it("should write enum with access level and conformances", () => {
-            const enum_ = swift.enum_({
+            const enum_ = swift.enumWithAssociatedValues({
                 name: "Result",
                 accessLevel: AccessLevel.Public,
                 conformances: ["Codable", "Equatable"],
                 cases: [
-                    { name: "success", associatedValues: [swift.Type.string()] },
-                    { name: "failure", associatedValues: [swift.Type.string()] }
+                    { name: "success", associatedValue: [swift.Type.string()] },
+                    { name: "failure", associatedValue: [swift.Type.string()] }
                 ]
             });
 
@@ -56,19 +40,16 @@ describe("Enum", () => {
         });
 
         it("should handle complex associated values", () => {
-            const enum_ = swift.enum_({
+            const enum_ = swift.enumWithAssociatedValues({
                 name: "ComplexEnum",
                 cases: [
                     {
                         name: "complex",
-                        associatedValues: [
+                        associatedValue: [
                             swift.Type.array(swift.Type.string()),
                             swift.Type.dictionary(swift.Type.string(), swift.Type.int()),
                             swift.Type.tuple([swift.Type.string(), swift.Type.bool()])
                         ]
-                    },
-                    {
-                        name: "simple"
                     }
                 ]
             });
@@ -76,7 +57,6 @@ describe("Enum", () => {
             expect(enum_.toString()).toMatchInlineSnapshot(`
               "enum ComplexEnum {
                   case complex([String], [String: Int], (String, Bool))
-                  case simple
               }"
             `);
         });
