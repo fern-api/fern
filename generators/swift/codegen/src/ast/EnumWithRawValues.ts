@@ -53,7 +53,6 @@ export class EnumWithRawValues extends AstNode {
                 writer.write(" = ");
                 writer.write(`"${case_.rawValue}"`);
             }
-
             writer.newLine();
         });
         writer.dedent();
