@@ -25,7 +25,7 @@ public enum SpecialEnum: String, Codable, Hashable, Sendable, CaseIterable {
     case y = "\\"
     case z = "{\"name\": \"John\", \"age\": 30, \"city\": \"New York\"}"
     case aa = "SELECT * FROM users WHERE name = 'John O\\'Reilly'"
-    case bb = "C:\\Users\\John\\Documents\\u{000C}ile.txt"
+    case bb = "C:\\Users\\John\\Documents\\file.txt"
     case cc = "/usr/local/bin/app"
     case dd = "\\d{3}-\\d{2}-\\d{4}"
     case ee = "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}"
