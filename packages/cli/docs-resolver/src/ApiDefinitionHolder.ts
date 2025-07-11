@@ -13,6 +13,7 @@ export interface SubpackageHolder {
     readonly endpoints: ReadonlyMap<APIV1Read.EndpointId, APIV1Read.EndpointDefinition>;
     readonly webSockets: ReadonlyMap<APIV1Read.WebSocketId, APIV1Read.WebSocketChannel>;
     readonly webhooks: ReadonlyMap<APIV1Read.WebhookId, APIV1Read.WebhookDefinition>;
+    readonly grpcs: ReadonlyMap<APIV1Read.GrpcId, APIV1Read.EndpointDefinition>;
 }
 
 export const ROOT_PACKAGE_ID = "__package__" as const;
@@ -34,14 +35,20 @@ export class ApiDefinitionHolder {
     #endpoints = new Map<FernNavigation.EndpointId, APIV1Read.EndpointDefinition>();
     #webSockets = new Map<FernNavigation.WebSocketId, APIV1Read.WebSocketChannel>();
     #webhooks = new Map<FernNavigation.WebhookId, APIV1Read.WebhookDefinition>();
+    #grpcs = new Map<FernNavigation.GrpcId, APIV1Read.EndpointDefinition>();
+
     #endpointsInverted = new Map<APIV1Read.EndpointDefinition, FernNavigation.EndpointId>();
     #webSocketsInverted = new Map<APIV1Read.WebSocketChannel, FernNavigation.WebSocketId>();
     #webhooksInverted = new Map<APIV1Read.WebhookDefinition, FernNavigation.WebhookId>();
+    #grpcsInverted = new Map<APIV1Read.EndpointDefinition, FernNavigation.GrpcId>();
 
     #subpackages = new Map<APIV1Read.SubpackageId, SubpackageHolder>();
+
     #endpointsByLocator = new Map<string, APIV1Read.EndpointDefinition>();
     #webSocketsByLocator = new Map<string, APIV1Read.WebSocketChannel>();
     #webhooksByLocator = new Map<string, APIV1Read.WebhookDefinition>();
+    #grpcsByLocator = new Map<string, APIV1Read.EndpointDefinition>();
+
     #subpackagesByLocator = new Map<string, APIV1Read.ApiDefinitionPackage>();
 
     public static getSubpackageId(pkg: APIV1Read.ApiDefinitionPackage): string {
@@ -87,51 +94,58 @@ export class ApiDefinitionHolder {
             const subpackageHolder = {
                 endpoints: new Map<APIV1Read.EndpointId, APIV1Read.EndpointDefinition>(),
                 webSockets: new Map<APIV1Read.WebSocketId, APIV1Read.WebSocketChannel>(),
-                webhooks: new Map<APIV1Read.WebhookId, APIV1Read.WebhookDefinition>()
+                webhooks: new Map<APIV1Read.WebhookId, APIV1Read.WebhookDefinition>(),
+                grpcs: new Map<APIV1Read.GrpcId, APIV1Read.EndpointDefinition>()
             };
             this.#subpackages.set(subpackageId, subpackageHolder);
             pkg.endpoints.forEach((endpoint) => {
-                subpackageHolder.endpoints.set(endpoint.id, endpoint);
-                const endpointId = ApiDefinitionHolder.createEndpointId(endpoint, subpackageId);
-                this.#endpoints.set(endpointId, endpoint);
-                const locators: string[] = [];
+                if (endpoint.protocol?.type === "grpc") {
+                    subpackageHolder.grpcs.set(endpoint.id as unknown as APIV1Read.GrpcId, endpoint);
+                    const grpcId = ApiDefinitionHolder.createGrpcId(endpoint, subpackageId);
+                    this.#grpcs.set(grpcId, endpoint);
+                } else {
+                    subpackageHolder.endpoints.set(endpoint.id, endpoint);
+                    const endpointId = ApiDefinitionHolder.createEndpointId(endpoint, subpackageId);
+                    this.#endpoints.set(endpointId, endpoint);
+                    const locators: string[] = [];
 
-                const methods: string[] = [endpoint.method];
+                    const methods: string[] = [endpoint.method];
 
-                if (endpoint.response?.type.type === "stream") {
-                    methods.push("STREAM");
-                }
+                    if (endpoint.response?.type.type === "stream") {
+                        methods.push("STREAM");
+                    }
 
-                methods.forEach((method) => {
-                    locators.push(`${method} ${stringifyEndpointPathParts(endpoint.path.parts)}`);
-                    locators.push(`${method} ${stringifyEndpointPathParts2(endpoint.path.parts)}`);
+                    methods.forEach((method) => {
+                        locators.push(`${method} ${stringifyEndpointPathParts(endpoint.path.parts)}`);
+                        locators.push(`${method} ${stringifyEndpointPathParts2(endpoint.path.parts)}`);
 
-                    endpoint.environments.forEach((environment) => {
-                        locators.push(
-                            `${method} ${urlJoin(environment.baseUrl, stringifyEndpointPathParts(endpoint.path.parts))}`
-                        );
-                        locators.push(
-                            `${method} ${urlJoin(
-                                environment.baseUrl,
-                                stringifyEndpointPathParts2(endpoint.path.parts)
-                            )}`
-                        );
-                        const basePath = getBasePath(environment);
-                        if (basePath != null) {
+                        endpoint.environments.forEach((environment) => {
                             locators.push(
-                                `${method} ${urlJoin(basePath, stringifyEndpointPathParts(endpoint.path.parts))}`
+                                `${method} ${urlJoin(environment.baseUrl, stringifyEndpointPathParts(endpoint.path.parts))}`
                             );
                             locators.push(
-                                `${method} ${urlJoin(basePath, stringifyEndpointPathParts2(endpoint.path.parts))}`
+                                `${method} ${urlJoin(
+                                    environment.baseUrl,
+                                    stringifyEndpointPathParts2(endpoint.path.parts)
+                                )}`
                             );
-                        }
+                            const basePath = getBasePath(environment);
+                            if (basePath != null) {
+                                locators.push(
+                                    `${method} ${urlJoin(basePath, stringifyEndpointPathParts(endpoint.path.parts))}`
+                                );
+                                locators.push(
+                                    `${method} ${urlJoin(basePath, stringifyEndpointPathParts2(endpoint.path.parts))}`
+                                );
+                            }
+                        });
                     });
-                });
 
-                locators.forEach((locator) => {
-                    this.context?.logger.trace(`Registering endpoint locator: ${locator}`);
-                    this.#endpointsByLocator.set(locator, endpoint);
-                });
+                    locators.forEach((locator) => {
+                        this.context?.logger.trace(`Registering endpoint locator: ${locator}`);
+                        this.#endpointsByLocator.set(locator, endpoint);
+                    });
+                }
             });
             pkg.websockets.forEach((webSocket) => {
                 subpackageHolder.webSockets.set(webSocket.id, webSocket);
@@ -192,6 +206,9 @@ export class ApiDefinitionHolder {
         this.#webhooks.forEach((webhook, webhookId) => {
             this.#webhooksInverted.set(webhook, webhookId);
         });
+        this.#grpcs.forEach((grpc, grpcId) => {
+            this.#grpcsInverted.set(grpc, grpcId);
+        });
 
         this.#constructSubpackageLocators(api.rootPackage, []);
     }
@@ -215,6 +232,10 @@ export class ApiDefinitionHolder {
         }
 
         pkg.endpoints.forEach((endpoint) => {
+            // TODO
+            if (endpoint.protocol?.type === "grpc") {
+                return;
+            }
             const path = [...packageList, endpoint.id];
             const locators = [path.join("."), path.join("/")];
             locators.forEach((locator) => {
@@ -258,6 +279,10 @@ export class ApiDefinitionHolder {
         return this.#webhooks;
     }
 
+    get grpcs(): ReadonlyMap<FernNavigation.GrpcId, APIV1Read.EndpointDefinition> {
+        return this.#grpcs;
+    }
+
     get endpointsByLocator(): ReadonlyMap<string, APIV1Read.EndpointDefinition> {
         return this.#endpointsByLocator;
     }
@@ -268,6 +293,10 @@ export class ApiDefinitionHolder {
 
     get webhooksByLocator(): ReadonlyMap<string, APIV1Read.WebhookDefinition> {
         return this.#webhooksByLocator;
+    }
+
+    get grpcsByLocator(): ReadonlyMap<string, APIV1Read.EndpointDefinition> {
+        return this.#grpcsByLocator;
     }
 
     get subpackages(): ReadonlyMap<APIV1Read.SubpackageId, SubpackageHolder> {
@@ -294,6 +323,10 @@ export class ApiDefinitionHolder {
         return this.#webhooksInverted.get(webhook);
     }
 
+    public getGrpcId(grpc: APIV1Read.EndpointDefinition): FernNavigation.GrpcId | undefined {
+        return this.#grpcsInverted.get(grpc);
+    }
+
     // get webhooksByPath(): ReadonlyMap<string, APIV1Read.WebhookDefinition> {
     //     return this.#webhooksByPath;
     // }
@@ -317,6 +350,10 @@ export class ApiDefinitionHolder {
         subpackageId: string
     ): FernNavigation.WebhookId {
         return FernNavigation.WebhookId(`${subpackageId}.${webhook.id}`);
+    }
+
+    public static createGrpcId(grpc: APIV1Read.EndpointDefinition, subpackageId: string): FernNavigation.GrpcId {
+        return FernNavigation.GrpcId(`${subpackageId}.${grpc.id}`);
     }
 }
 
