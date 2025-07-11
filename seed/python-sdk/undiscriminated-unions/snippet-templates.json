@@ -24,7 +24,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.union.get(\n\t$FERN_INPUT\n)",
+                "templateString": "client.union.get(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -223,7 +223,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.union.get(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.union.get(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -434,7 +434,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.union.get_metadata(\n\t$FERN_INPUT\n)",
+                "templateString": "client.union.get_metadata(\n    $FERN_INPUT\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",\n\t",
                 "type": "generic"
@@ -456,7 +456,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.union.get_metadata(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.union.get_metadata(\n    $FERN_INPUT\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",\n\t",
                     "type": "generic"
@@ -490,7 +490,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.union.update_metadata(\n\t$FERN_INPUT\n)",
+                "templateString": "client.union.update_metadata(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -646,7 +646,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.union.update_metadata(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.union.update_metadata(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -814,7 +814,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.union.call(\n\t$FERN_INPUT\n)",
+                "templateString": "client.union.call(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -970,7 +970,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.union.call(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.union.call(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",

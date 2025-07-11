@@ -37,6 +37,9 @@ class WriterImpl(AST.Writer):
         return len(self._content)
 
     def write(self, content: str) -> None:
+        # Replace all tabs in the content with spaces
+        content = content.replace("\t", " " * TAB_LENGTH)
+
         content_ends_in_newline = len(content) > 0 and content[-1] == "\n"
 
         # temporarily remove the trailing newline, since we don't want to add the prefix after it

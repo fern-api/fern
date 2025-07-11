@@ -720,6 +720,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 itemType,
                 sendRequestMethod: csharp.codeblock(SEND_REQUEST_LAMBDA_VARIABLE_NAME),
                 initialRequest: csharp.codeblock(HTTP_REQUEST_VARIABLE_NAME),
+                clientOptions: csharp.codeblock(`${rawClientReference}.Options`),
+                requestOptions: csharp.codeblock(optionsParamName),
                 cancellationToken: csharp.codeblock(this.context.getCancellationTokenParameterName())
             })
         );

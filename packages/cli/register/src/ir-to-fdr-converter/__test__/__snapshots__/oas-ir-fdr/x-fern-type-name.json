@@ -220,34 +220,34 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "string_primitive": "foo",
-              "number_primitive": 42,
+              "string_primitive": "string",
+              "number_primitive": 1.1,
               "boolean_primitive": true,
               "object_type": {
-                "id": "foo",
-                "name": "foo"
+                "id": "string",
+                "name": "string"
               },
               "array_type": [
-                "foo"
+                "string"
               ],
               "enum_type": "VALUE_1",
-              "anyof_type": "foo"
+              "anyof_type": "string"
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
-                "string_primitive": "foo",
-                "number_primitive": 42,
+                "string_primitive": "string",
+                "number_primitive": 1.1,
                 "boolean_primitive": true,
                 "object_type": {
-                  "id": "foo",
-                  "name": "foo"
+                  "id": "string",
+                  "name": "string"
                 },
                 "array_type": [
-                  "foo"
+                  "string"
                 ],
                 "enum_type": "VALUE_1",
-                "anyof_type": "foo"
+                "anyof_type": "string"
               }
             }
           }

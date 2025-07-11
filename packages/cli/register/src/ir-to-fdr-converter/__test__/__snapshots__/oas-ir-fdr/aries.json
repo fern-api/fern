@@ -28011,8 +28011,8 @@
                 "doc": {
                   "credential": {},
                   "options": {
-                    "proofPurpose": "foo",
-                    "verificationMethod": "foo"
+                    "proofPurpose": "string",
+                    "verificationMethod": "string"
                   }
                 },
                 "verkey": "verkey"
@@ -28023,8 +28023,8 @@
                   "doc": {
                     "credential": {},
                     "options": {
-                      "proofPurpose": "foo",
-                      "verificationMethod": "foo"
+                      "proofPurpose": "string",
+                      "verificationMethod": "string"
                     }
                   },
                   "verkey": "verkey"
@@ -28111,8 +28111,8 @@
               "requestBody": {
                 "doc": {
                   "proof": {
-                    "proofPurpose": "foo",
-                    "verificationMethod": "foo"
+                    "proofPurpose": "string",
+                    "verificationMethod": "string"
                   }
                 },
                 "verkey": "verkey"
@@ -28122,8 +28122,8 @@
                 "value": {
                   "doc": {
                     "proof": {
-                      "proofPurpose": "foo",
-                      "verificationMethod": "foo"
+                      "proofPurpose": "string",
+                      "verificationMethod": "string"
                     }
                   },
                   "verkey": "verkey"

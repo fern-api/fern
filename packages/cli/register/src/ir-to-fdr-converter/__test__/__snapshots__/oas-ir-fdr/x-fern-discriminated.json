@@ -175,25 +175,25 @@
             "headers": {},
             "requestBody": {
               "type": "circle",
-              "radius": 42
+              "radius": 1.1
             },
             "requestBodyV3": {
               "type": "json",
               "value": {
                 "type": "circle",
-                "radius": 42
+                "radius": 1.1
               }
             },
             "responseStatusCode": 200,
             "responseBody": {
               "type": "circle",
-              "radius": 42
+              "radius": 1.1
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
                 "type": "circle",
-                "radius": 42
+                "radius": 1.1
               }
             }
           }

@@ -24,7 +24,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.service.get_resource(\n\t$FERN_INPUT\n)",
+                "templateString": "client.service.get_resource(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -63,7 +63,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.service.get_resource(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.service.get_resource(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -114,7 +114,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.service.list_resources(\n\t$FERN_INPUT\n)",
+                "templateString": "client.service.list_resources(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -169,7 +169,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.service.list_resources(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.service.list_resources(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
