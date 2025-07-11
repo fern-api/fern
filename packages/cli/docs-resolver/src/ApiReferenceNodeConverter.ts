@@ -569,7 +569,6 @@ export class ApiReferenceNodeConverter {
 
         pkg.endpoints.forEach((endpoint) => {
             if (endpoint.protocol?.type === "grpc") {
-                
                 const grpcId = this.#holder.getGrpcId(endpoint);
                 if (grpcId == null) {
                     this.taskContext.logger.error(
@@ -580,7 +579,7 @@ export class ApiReferenceNodeConverter {
                 if (this.#visitedGrpcs.has(grpcId)) {
                     return;
                 }
-    
+
                 const grpcSlug = parentSlug.apply(endpoint);
                 additionalChildren.push({
                     id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${grpcId}`),
@@ -598,7 +597,6 @@ export class ApiReferenceNodeConverter {
                     orphaned: undefined,
                     featureFlags: undefined
                 });
-    
             } else {
                 const endpointId = this.#holder.getEndpointId(endpoint);
                 if (endpointId == null) {
@@ -610,7 +608,7 @@ export class ApiReferenceNodeConverter {
                 if (this.#visitedEndpoints.has(endpointId)) {
                     return;
                 }
-    
+
                 const endpointSlug = parentSlug.apply(endpoint);
                 additionalChildren.push({
                     id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${endpointId}`),
@@ -630,7 +628,6 @@ export class ApiReferenceNodeConverter {
                     orphaned: undefined,
                     featureFlags: undefined
                 });
-
             }
         });
 

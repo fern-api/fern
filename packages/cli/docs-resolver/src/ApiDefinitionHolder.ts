@@ -108,17 +108,17 @@ export class ApiDefinitionHolder {
                     const endpointId = ApiDefinitionHolder.createEndpointId(endpoint, subpackageId);
                     this.#endpoints.set(endpointId, endpoint);
                     const locators: string[] = [];
-    
+
                     const methods: string[] = [endpoint.method];
-    
+
                     if (endpoint.response?.type.type === "stream") {
                         methods.push("STREAM");
                     }
-    
+
                     methods.forEach((method) => {
                         locators.push(`${method} ${stringifyEndpointPathParts(endpoint.path.parts)}`);
                         locators.push(`${method} ${stringifyEndpointPathParts2(endpoint.path.parts)}`);
-    
+
                         endpoint.environments.forEach((environment) => {
                             locators.push(
                                 `${method} ${urlJoin(environment.baseUrl, stringifyEndpointPathParts(endpoint.path.parts))}`
@@ -140,11 +140,11 @@ export class ApiDefinitionHolder {
                             }
                         });
                     });
-    
+
                     locators.forEach((locator) => {
                         this.context?.logger.trace(`Registering endpoint locator: ${locator}`);
                         this.#endpointsByLocator.set(locator, endpoint);
-                    });        
+                    });
                 }
             });
             pkg.websockets.forEach((webSocket) => {
