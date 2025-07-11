@@ -1,28 +1,34 @@
 import { AccessLevel } from "./AccessLevel";
-import { Property } from "./Property";
+import { Type } from "./Type";
 import { AstNode, Writer } from "./core";
+import { isReservedKeyword } from "./syntax";
 
-export declare namespace Struct {
+export declare namespace EnumWithAssociatedValues {
+    interface Case {
+        unsafeName: string;
+        associatedValue: [Type, ...Type[]];
+    }
+
     interface Args {
         name: string;
         accessLevel?: AccessLevel;
         conformances?: string[];
-        properties: Property[];
+        cases: Case[];
     }
 }
 
-export class Struct extends AstNode {
+export class EnumWithAssociatedValues extends AstNode {
     public readonly name: string;
     public readonly accessLevel?: AccessLevel;
     public readonly conformances?: string[];
-    public readonly properties: Property[];
+    public readonly cases: EnumWithAssociatedValues.Case[];
 
-    public constructor({ accessLevel, name, conformances, properties }: Struct.Args) {
+    public constructor({ accessLevel, name, conformances, cases }: EnumWithAssociatedValues.Args) {
         super();
         this.name = name;
         this.accessLevel = accessLevel;
         this.conformances = conformances;
-        this.properties = properties;
+        this.cases = cases;
     }
 
     public write(writer: Writer): void {
@@ -30,7 +36,7 @@ export class Struct extends AstNode {
             writer.write(this.accessLevel);
             writer.write(" ");
         }
-        writer.write(`struct ${this.name}`);
+        writer.write(`enum ${this.name}`);
         this.conformances?.forEach((conformance, index) => {
             if (index === 0) {
                 writer.write(": ");
@@ -42,8 +48,21 @@ export class Struct extends AstNode {
         writer.write(" {");
         writer.newLine();
         writer.indent();
-        this.properties.forEach((property) => {
-            property.write(writer);
+        this.cases.forEach((case_) => {
+            writer.write("case ");
+            if (isReservedKeyword(case_.unsafeName)) {
+                writer.write(`\`${case_.unsafeName}\``);
+            } else {
+                writer.write(case_.unsafeName);
+            }
+            writer.write("(");
+            case_.associatedValue.forEach((type, index) => {
+                if (index > 0) {
+                    writer.write(", ");
+                }
+                type.write(writer);
+            });
+            writer.write(")");
             writer.newLine();
         });
         writer.dedent();
