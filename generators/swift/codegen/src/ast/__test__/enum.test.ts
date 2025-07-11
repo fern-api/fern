@@ -35,5 +35,24 @@ describe("Enum", () => {
               }"
             `);
         });
+
+        it("should write enum with access level and conformances", () => {
+            const enum_ = swift.enum_({
+                name: "Result",
+                accessLevel: AccessLevel.Public,
+                conformances: ["Codable", "Equatable"],
+                cases: [
+                    { name: "success", associatedValues: [swift.Type.string()] },
+                    { name: "failure", associatedValues: [swift.Type.string()] }
+                ]
+            });
+
+            expect(enum_.toString()).toMatchInlineSnapshot(`
+              "public enum Result: Codable, Equatable {
+                  case success(String)
+                  case failure(String)
+              }"
+            `);
+        });
     });
 });
