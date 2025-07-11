@@ -27,6 +27,7 @@ export class ApiReferenceNodeConverter {
     #visitedEndpoints = new Set<FernNavigation.V1.EndpointId>();
     #visitedWebSockets = new Set<FernNavigation.V1.WebSocketId>();
     #visitedWebhooks = new Set<FernNavigation.V1.WebhookId>();
+    #visitedGrpcs = new Set<FernNavigation.V1.GrpcId>();
     #visitedSubpackages = new Set<string>();
     #nodeIdToSubpackageId = new Map<string, string[]>();
     #children: FernNavigation.V1.ApiPackageChild[] = [];
@@ -567,36 +568,67 @@ export class ApiReferenceNodeConverter {
         let additionalChildren: FernNavigation.V1.ApiPackageChild[] = [];
 
         pkg.endpoints.forEach((endpoint) => {
-            const endpointId = this.#holder.getEndpointId(endpoint);
-            if (endpointId == null) {
-                this.taskContext.logger.error(
-                    `Expected Endpoint ID for ${endpoint.id} at path: ${stringifyEndpointPathPartsWithMethod(endpoint.method, endpoint.path.parts)}. Got undefined.`
-                );
-                return;
-            }
-            if (this.#visitedEndpoints.has(endpointId)) {
-                return;
-            }
+            if (endpoint.protocol?.type === "grpc") {
+                const grpcId = this.#holder.getGrpcId(endpoint);
+                if (grpcId == null) {
+                    this.taskContext.logger.error(
+                        `Expected Grpc ID for ${endpoint.id} at path: ${stringifyEndpointPathPartsWithMethod(endpoint.method, endpoint.path.parts)}. Got undefined.`
+                    );
+                    return;
+                }
+                if (this.#visitedGrpcs.has(grpcId)) {
+                    return;
+                }
 
-            const endpointSlug = parentSlug.apply(endpoint);
-            additionalChildren.push({
-                id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${endpointId}`),
-                type: "endpoint",
-                method: endpoint.method,
-                endpointId,
-                apiDefinitionId: this.apiDefinitionId,
-                availability: FernNavigation.V1.convertAvailability(endpoint.availability),
-                isResponseStream: endpoint.response?.type.type === "stream",
-                title: endpoint.name ?? stringifyEndpointPathParts(endpoint.path.parts),
-                slug: endpointSlug.get(),
-                icon: undefined,
-                hidden: this.hideChildren,
-                playground: undefined,
-                authed: undefined,
-                viewers: undefined,
-                orphaned: undefined,
-                featureFlags: undefined
-            });
+                const grpcSlug = parentSlug.apply(endpoint);
+                additionalChildren.push({
+                    id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${grpcId}`),
+                    type: "grpc",
+                    grpcId,
+                    title: endpoint.name ?? stringifyEndpointPathParts(endpoint.path.parts),
+                    method: endpoint.protocol?.methodType ?? "UNARY",
+                    apiDefinitionId: this.apiDefinitionId,
+                    availability: undefined,
+                    slug: grpcSlug.get(),
+                    icon: undefined,
+                    hidden: undefined,
+                    authed: undefined,
+                    viewers: undefined,
+                    orphaned: undefined,
+                    featureFlags: undefined
+                });
+            } else {
+                const endpointId = this.#holder.getEndpointId(endpoint);
+                if (endpointId == null) {
+                    this.taskContext.logger.error(
+                        `Expected Endpoint ID for ${endpoint.id} at path: ${stringifyEndpointPathPartsWithMethod(endpoint.method, endpoint.path.parts)}. Got undefined.`
+                    );
+                    return;
+                }
+                if (this.#visitedEndpoints.has(endpointId)) {
+                    return;
+                }
+
+                const endpointSlug = parentSlug.apply(endpoint);
+                additionalChildren.push({
+                    id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${endpointId}`),
+                    type: "endpoint",
+                    method: endpoint.method,
+                    endpointId,
+                    apiDefinitionId: this.apiDefinitionId,
+                    availability: FernNavigation.V1.convertAvailability(endpoint.availability),
+                    isResponseStream: endpoint.response?.type.type === "stream",
+                    title: endpoint.name ?? stringifyEndpointPathParts(endpoint.path.parts),
+                    slug: endpointSlug.get(),
+                    icon: undefined,
+                    hidden: this.hideChildren,
+                    playground: undefined,
+                    authed: undefined,
+                    viewers: undefined,
+                    orphaned: undefined,
+                    featureFlags: undefined
+                });
+            }
         });
 
         pkg.websockets.forEach((webSocket) => {
