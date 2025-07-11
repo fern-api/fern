@@ -3,7 +3,9 @@ import { cannotFindSubpackageByLocatorError, normalizeLocatorString } from "../e
 describe("cannotFindSubpackageByLocatorError", () => {
     it("returns base error when no matches", () => {
         const result = cannotFindSubpackageByLocatorError("foo.bar", []);
-        expect(result).toBe("Failed to locate API section foo.bar.");
+        expect(result).toBe(
+            "Failed to locate API section foo.bar. No similar API sections found. Available API sections: []"
+        );
     });
     it("returns suggestion for one match", () => {
         const result = cannotFindSubpackageByLocatorError("foo.bar", ["foo.baz"]);
