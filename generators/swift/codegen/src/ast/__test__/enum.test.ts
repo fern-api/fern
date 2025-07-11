@@ -1,8 +1,5 @@
-import { describe, expect, it } from "vitest";
-
 import { swift } from "../..";
 import { AccessLevel } from "../AccessLevel";
-import { Type } from "../Type";
 
 describe("Enum", () => {
     describe("write", () => {
@@ -18,6 +15,23 @@ describe("Enum", () => {
                   case south
                   case east
                   case west
+              }"
+            `);
+        });
+
+        it("should write enum with associated values", () => {
+            const enum_ = swift.enum_({
+                name: "NetworkResponse",
+                cases: [
+                    { name: "success", associatedValues: [swift.Type.string()] },
+                    { name: "error", associatedValues: [swift.Type.int(), swift.Type.string()] }
+                ]
+            });
+
+            expect(enum_.toString()).toMatchInlineSnapshot(`
+              "enum NetworkResponse {
+                  case success(String)
+                  case error(Int, String)
               }"
             `);
         });
