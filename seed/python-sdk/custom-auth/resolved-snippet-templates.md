@@ -6,7 +6,7 @@ client = SeedCustomAuth(
     base_url="https://yourhost.com/path/to/api",
 )        
 client.custom_auth.get_with_custom_auth(
-	
+    
 )
 
 ```
@@ -20,7 +20,7 @@ client = SeedCustomAuth(
     base_url="https://yourhost.com/path/to/api",
 )        
 client.custom_auth.post_with_custom_auth(
-	request={"key":"value"}
+    request={"key":"value"}
 )
 
 ```

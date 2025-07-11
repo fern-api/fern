@@ -4,7 +4,7 @@ from seed.environment import SeedExamplesEnvironment
 
 client = SeedExamples(environment=SeedExamplesEnvironment.PRODUCTION, token="YOUR_TOKEN", )        
 client.echo(
-	request="Hello world!\\n\\nwith\\n\\tnewlines"
+    request="Hello world!\\n\\nwith\\n\\tnewlines"
 )
 
 ```
@@ -16,7 +16,7 @@ from seed.environment import SeedExamplesEnvironment
 
 client = SeedExamples(environment=SeedExamplesEnvironment.PRODUCTION, token="YOUR_TOKEN", )        
 client.echo(
-	request="string"
+    request="string"
 )
 
 ```
@@ -38,7 +38,7 @@ from seed.environment import SeedExamplesEnvironment
 
 client = SeedExamples(environment=SeedExamplesEnvironment.PRODUCTION, token="YOUR_TOKEN", )        
 client.file.notification.service.get_exception(
-	
+    
 )
 
 ```
@@ -50,7 +50,7 @@ from seed.environment import SeedExamplesEnvironment
 
 client = SeedExamples(environment=SeedExamplesEnvironment.PRODUCTION, token="YOUR_TOKEN", )        
 client.file.notification.service.get_exception(
-	
+    
 )
 
 ```
@@ -62,7 +62,7 @@ from seed.environment import SeedExamplesEnvironment
 
 client = SeedExamples(environment=SeedExamplesEnvironment.PRODUCTION, token="YOUR_TOKEN", )        
 client.file.service.get_file(
-	filename="file.txt"
+    filename="file.txt"
 )
 
 ```
@@ -74,7 +74,7 @@ from seed.environment import SeedExamplesEnvironment
 
 client = SeedExamples(environment=SeedExamplesEnvironment.PRODUCTION, token="YOUR_TOKEN", )        
 client.file.service.get_file(
-	filename="filename"
+    filename="filename"
 )
 
 ```
@@ -86,7 +86,7 @@ from seed.environment import SeedExamplesEnvironment
 
 client = SeedExamples(environment=SeedExamplesEnvironment.PRODUCTION, token="YOUR_TOKEN", )        
 client.health.service.check(
-	id="id-2sdx82h"
+    id="id-2sdx82h"
 )
 
 ```
@@ -98,7 +98,7 @@ from seed.environment import SeedExamplesEnvironment
 
 client = SeedExamples(environment=SeedExamplesEnvironment.PRODUCTION, token="YOUR_TOKEN", )        
 client.health.service.check(
-	id="id-3tey93i"
+    id="id-3tey93i"
 )
 
 ```
@@ -110,7 +110,7 @@ from seed.environment import SeedExamplesEnvironment
 
 client = SeedExamples(environment=SeedExamplesEnvironment.PRODUCTION, token="YOUR_TOKEN", )        
 client.health.service.check(
-	id="id"
+    id="id"
 )
 
 ```
@@ -122,7 +122,7 @@ from seed.environment import SeedExamplesEnvironment
 
 client = SeedExamples(environment=SeedExamplesEnvironment.PRODUCTION, token="YOUR_TOKEN", )        
 client.health.service.ping(
-	
+    
 )
 
 ```
@@ -134,7 +134,7 @@ from seed.environment import SeedExamplesEnvironment
 
 client = SeedExamples(environment=SeedExamplesEnvironment.PRODUCTION, token="YOUR_TOKEN", )        
 client.health.service.ping(
-	
+    
 )
 
 ```
@@ -146,7 +146,7 @@ from seed.environment import SeedExamplesEnvironment
 
 client = SeedExamples(environment=SeedExamplesEnvironment.PRODUCTION, token="YOUR_TOKEN", )        
 client.service.get_movie(
-	movie_id="movie-c06a4ad7"
+    movie_id="movie-c06a4ad7"
 )
 
 ```
@@ -158,7 +158,7 @@ from seed.environment import SeedExamplesEnvironment
 
 client = SeedExamples(environment=SeedExamplesEnvironment.PRODUCTION, token="YOUR_TOKEN", )        
 client.service.get_movie(
-	movie_id="movieId"
+    movie_id="movieId"
 )
 
 ```
@@ -170,7 +170,7 @@ from seed.environment import SeedExamplesEnvironment
 
 client = SeedExamples(environment=SeedExamplesEnvironment.PRODUCTION, token="YOUR_TOKEN", )        
 client.service.create_movie(
-	id="movie-c06a4ad7",
+    id="movie-c06a4ad7",
 	prequel="movie-cv9b914f",
 	title="The Boy and the Heron",
 	from_="Hayao Miyazaki",
@@ -193,7 +193,7 @@ from seed.environment import SeedExamplesEnvironment
 
 client = SeedExamples(environment=SeedExamplesEnvironment.PRODUCTION, token="YOUR_TOKEN", )        
 client.service.create_movie(
-	id="id",
+    id="id",
 	prequel="prequel",
 	title="title",
 	from_="from",
@@ -215,7 +215,7 @@ from seed.environment import SeedExamplesEnvironment
 
 client = SeedExamples(environment=SeedExamplesEnvironment.PRODUCTION, token="YOUR_TOKEN", )        
 client.service.get_metadata(
-	x_api_version="0.0.1",
+    x_api_version="0.0.1",
 	shallow=false,
 	tag="development"
 )
@@ -229,7 +229,7 @@ from seed.environment import SeedExamplesEnvironment
 
 client = SeedExamples(environment=SeedExamplesEnvironment.PRODUCTION, token="YOUR_TOKEN", )        
 client.service.get_metadata(
-	x_api_version="X-API-Version",
+    x_api_version="X-API-Version",
 	shallow=true,
 	tag="tag"
 )
@@ -251,7 +251,7 @@ from seed.types import Moment
 
 client = SeedExamples(environment=SeedExamplesEnvironment.PRODUCTION, token="YOUR_TOKEN", )        
 client.service.create_big_entity(
-	extended_movie=ExtendedMovie(
+    extended_movie=ExtendedMovie(
 		cast=[
 			"cast",
 			"cast"

@@ -39,8 +39,8 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
         throw new Error("Method not implemented.");
     }
 
-    protected async writeForGithub(_context: SdkGeneratorContext): Promise<void> {
-        throw new Error("Method not implemented.");
+    protected async writeForGithub(context: SdkGeneratorContext): Promise<void> {
+        await this.writeForDownload(context);
     }
 
     protected async writeForDownload(context: SdkGeneratorContext): Promise<void> {

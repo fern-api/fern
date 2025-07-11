@@ -24,7 +24,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.package.test(\n\t$FERN_INPUT\n)",
+                "templateString": "client.package.test(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -63,7 +63,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.package.test(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.package.test(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
