@@ -315,3 +315,28 @@ jobs:
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
+
+  coverage-base-generator:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Build generators/base
+        run: |
+          cd generators/base
+          pnpm compile
+          cd ..
+          cd ..
+
+      - name: Run coverage for generators/base and check threshold
+        run: bash scripts/ci-coverage-check.sh
+
+      - name: Clean up coverage files
+        run: rm -rf generators/base/coverage
+
+      - name: Ensure no changes to git-tracked files
+        run: git --no-pager diff --exit-code
