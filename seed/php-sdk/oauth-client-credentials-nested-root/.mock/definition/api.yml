@@ -1,0 +1,14 @@
+name: oauth-client-credentials
+imports:
+  auth: auth/__package__.yml
+
+auth: OAuthScheme
+auth-schemes:
+  OAuthScheme:
+    scheme: oauth
+    type: client-credentials
+    get-token:
+      endpoint: auth.getToken
+      response-properties: 
+        access-token: $response.access_token
+        expires-in: $response.expires_in

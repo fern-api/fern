@@ -1,0 +1,12 @@
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    # add one non-file endpoint to force snippet generation
+    simple:
+      path: "/snippet"
+      method: POST
+    downloadFile:
+      path: ""
+      method: POST
+      response: file
