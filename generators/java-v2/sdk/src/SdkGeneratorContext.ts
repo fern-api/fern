@@ -113,6 +113,51 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
         return this.getCorePackageName() + ".pagination";
     }
 
+    public getUnionTypeClassReference(): java.ClassReference {
+        return java.classReference({
+            name: this.getUnionTypeClassName(),
+            packageName: this.getUnionTypePackageName()
+        });
+    }
+
+    public getUnionTypeClassName(): string {
+        return "UnionType"; // TODO: get actual uniontype class
+    }
+
+    public getUnionTypePackageName(): string {
+        return "UnionPackage"; // TODO: get actual uniontype package
+    }
+
+    public getUnionSubType1ClassReference(): java.ClassReference {
+        return java.classReference({
+            name: this.getUnionSubType1ClassName(),
+            packageName: this.getUnionSubType1PackageName()
+        });
+    }
+
+    public getUnionSubType1ClassName(): string {
+        return "UnionSubType1"; // TODO: get actual uniontype class
+    }
+
+    public getUnionSubType1PackageName(): string {
+        return "UnionPackage"; // TODO: get actual uniontype package
+    }
+
+    public getUnionSubType2ClassReference(): java.ClassReference {
+        return java.classReference({
+            name: this.getUnionSubType2ClassName(),
+            packageName: this.getUnionSubType2PackageName()
+        });
+    }
+
+    public getUnionSubType2ClassName(): string {
+        return "UnionSubType2"; // TODO: get actual uniontype class
+    }
+
+    public getUnionSubType2PackageName(): string {
+        return "UnionPackage"; // TODO: get actual uniontype package
+    }
+
     public getPackageLayout(): string {
         return this.customConfig?.["package-layout"] ?? "nested";
     }

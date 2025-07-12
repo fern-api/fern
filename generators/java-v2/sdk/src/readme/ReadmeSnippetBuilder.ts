@@ -7,10 +7,28 @@ import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { EndpointId, FeatureId, FernFilepath, HttpEndpoint, Name } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { IntermediateRepresentation, TypeDeclaration, Type, TypeId, TypeReference, SingleUnionType, SingleUnionTypeProperties } from "@fern-fern/ir-sdk/api";
+import { union } from "@fern-fern/generator-cli-sdk/core/schemas";
 
 interface EndpointWithFilepath {
     endpoint: HttpEndpoint;
     fernFilepath: FernFilepath;
+}
+
+type DiscriminatedUnionTypeSnippetInfo = {
+    unionType: java.ClassReference;
+    subType1KeyCamelCase: string;
+    subType1KeyPascalCase: string;
+    subType1: java.ClassReference | string;
+    subType2KeyCamelCase: string;
+    subType2KeyPascalCase: string;
+    subType2: java.ClassReference | string;
+}
+
+type UndiscriminatedUnionTypeSnippetInfo = {
+    unionType: java.ClassReference;
+    subType1: java.ClassReference | string;
+    subType2: java.ClassReference | string;
 }
 
 export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
@@ -20,6 +38,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static BASE_URL_FEATURE_ID: FernGeneratorCli.FeatureId = "BASE_URL";
     private static SNIPPET_PACKAGE_NAME = "com.example.usage";
     private static ELLIPSES = java.codeblock("...");
+    private static DISCRIMINATED_UNION_TYPES_FEATURE_ID: string = "DISCRIMINATED_UNION_TYPES";
+    private static UNDISCRIMINATED_UNION_TYPES_FEATURE_ID: string = "UNDISCRIMINATED_UNION_TYPES";
 
     private readonly context: SdkGeneratorContext;
     private readonly endpointsById: Record<EndpointId, EndpointWithFilepath> = {};
@@ -27,6 +47,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private readonly defaultEndpointId: EndpointId;
     private readonly rootPackageClientName: string;
     private readonly isPaginationEnabled: boolean;
+    private readonly sampleDiscriminatedUnionType: DiscriminatedUnionTypeSnippetInfo | undefined;
+    private readonly sampleUndiscriminatedUnionType: UndiscriminatedUnionTypeSnippetInfo | undefined;
 
     constructor({
         context,
@@ -38,7 +60,11 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         super({ endpointSnippets });
         this.context = context;
 
+        this.context.getJavaClassReferenceFromTypeId
+
         this.isPaginationEnabled = context.config.generatePaginatedClients ?? false;
+        // this.sampleDiscriminatedUnionType = this.context.findSampleDiscriminatedUnionTypeInIr(this.context.ir);
+        // this.sampleUndiscriminatedUnionType = this.context.findSampleUndiscriminatedUnionTypeInIr(this.context.ir);
         this.endpointsById = this.buildEndpointsById();
         this.prerenderedSnippetsByEndpointId = this.buildPrerenderedSnippetsByEndpointId(endpointSnippets);
         this.defaultEndpointId = this.getDefaultEndpointIdWithMaybeEmptySnippets(endpointSnippets);
@@ -80,6 +106,21 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             },
             [FernGeneratorCli.StructuredFeatureId.Retries]: { renderer: this.renderRetriesSnippet.bind(this) },
             [FernGeneratorCli.StructuredFeatureId.Timeouts]: { renderer: this.renderTimeoutsSnippet.bind(this) },
+            // [ReadmeSnippetBuilder.UNION_TYPES_FEATURE_ID]: { renderer: this.renderUnionTypesSnippet.bind(this) },
+            // ...(this.sampleDiscriminatedUnionType !== undefined
+            //     ? {
+            //         [ReadmeSnippetBuilder.DISCRIMINATED_UNION_TYPES_FEATURE_ID]: {
+            //             renderer: this.renderDiscriminatedUnionTypesSnippet.bind(this),
+            //         }
+            //     }
+            //     : undefined),
+            // ...(this.sampleUndiscriminatedUnionType !== undefined
+            //     ? {
+            //         [ReadmeSnippetBuilder.UNDISCRIMINATED_UNION_TYPES_FEATURE_ID]: {
+            //             renderer: this.renderUndiscriminatedUnionTypesSnippetProvider(this.sampleUndiscriminatedUnionType).bind(this),
+            //         }
+            //     }
+            //     : undefined),
             ...(this.isPaginationEnabled
                 ? {
                       [FernGeneratorCli.StructuredFeatureId.Pagination]: {
@@ -103,7 +144,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         for (const [featureId, { renderer, predicate }] of Object.entries(templatedSnippetsConfig)) {
             snippetsByFeatureId[featureId] = this.renderSnippetsTemplateForFeature(featureId, renderer, predicate);
         }
-
+        this.context.logger.debug("snippetsByFeatureId: ", JSON.stringify(snippetsByFeatureId, null, 2));
         return snippetsByFeatureId;
     }
 
@@ -231,6 +272,153 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         });
 
         return this.renderSnippet(snippet);
+    }
+
+    private renderDiscriminatedUnionTypesSnippetProvider(unionType: java.ClassReference): (_endpoint: EndpointWithFilepath) => string {
+        return (endpoint: EndpointWithFilepath) => {
+            return this.renderDiscriminatedUnionTypesSnippet(unionType);
+        }
+    }
+
+    private renderDiscriminatedUnionTypesSnippet(unionType: java.ClassReference): string {
+        return this.renderUndiscriminatedUnionTypesSnippet(unionType);
+    }
+
+    private renderUndiscriminatedUnionTypesSnippetProvider(unionType: java.ClassReference): (_endpoint: EndpointWithFilepath) => string {
+        return (endpoint: EndpointWithFilepath) => {
+            return this.renderUndiscriminatedUnionTypesSnippet(unionType);
+        }
+    }
+
+    private renderUndiscriminatedUnionTypesSnippet(unionType: java.ClassReference): string {
+        const unionTypeClassReference = this.context.getUnionTypeClassReference();
+        const unionSubType1ClassReference = this.context.getUnionSubType1ClassReference();
+        const unionSubType2ClassReference = this.context.getUnionSubType2ClassReference();
+
+        const unionTypeNameLower = ReadmeSnippetBuilder.firstLower(unionTypeClassReference.name);
+        const unionSubType1NameLower = ReadmeSnippetBuilder.firstLower(unionSubType1ClassReference.name);
+        const unionSubType2NameLower = ReadmeSnippetBuilder.firstLower(unionSubType2ClassReference.name);
+
+        // Method: UnionType unionTypeFromUnionSubType1(UnionSubType1 unionSubType1) { return UnionType.of(unionSubType1); }
+        const methodFromSubType1 = this.unionTypeFromSubTypeMethod(
+            unionTypeClassReference,
+            unionSubType1ClassReference
+        );
+        const methodFromSubType2 = this.unionTypeFromSubTypeMethod(
+            unionTypeClassReference,
+            unionSubType2ClassReference
+        );
+
+        // Method: String doSomethingWithUnionType(UnionType unionType) { ... visitor ... }
+        const methodDoSomething = java.method({
+            name: "doSomethingWithUnionType",
+            access: java.Access.Public,
+            parameters: [
+                java.parameter({
+                    name: "unionType",
+                    type: java.Type.reference(unionTypeClassReference)
+                })
+            ],
+            return_: java.Type.string(),
+            body: java.codeblock((writer) => {
+                writer.write("String result = ");
+                writer.write("unionType.visit(new ");
+                writer.writeNode(unionTypeClassReference);
+                writer.write(".Visitor<String>() {");
+                writer.newLine();
+                writer.indent();
+                // visit(UnionSubType1 value)
+                writer.writeLine("@Override");
+                writer.write("public String visit(");
+                writer.writeNode(unionSubType1ClassReference);
+                writer.write(" value) {");
+                writer.newLine();
+                writer.indent();
+                writer.write("// do something with instance of UnionSubType1");
+                writer.newLine();
+                writer.write('return "Did something with UnionSubType1";');
+                writer.newLine();
+                writer.dedent();
+                writer.write("}");
+                writer.newLine();
+                // visit(UnionSubType2 value)
+                writer.writeLine("@Override");
+                writer.write("public String visit(");
+                writer.writeNode(unionSubType2ClassReference);
+                writer.write(" value) {");
+                writer.newLine();
+                writer.indent();
+                writer.write("// do something with instance of UnionSubType2");
+                writer.newLine();
+                writer.write('return "Did something with UnionSubType2";');
+                // writer.writeNode(this.visitSubTypeMethod(unionSubType2ClassReference))
+                writer.newLine();
+                writer.dedent();
+                writer.write("}");
+                writer.newLine();
+                writer.dedent();
+                writer.write("});");
+                writer.newLine();
+                writer.write("return result;");
+            })
+        });
+
+        // Compose all methods in a codeblock
+        const snippet = java.codeblock((writer) => {
+            writer.writeLine("// Instantiate instance of UnionSubType1");
+            writer.writeNode(methodFromSubType1);
+            writer.newLine();
+            writer.writeLine("// Instantiate instance of UnionSubType2");
+            writer.writeNode(methodFromSubType2);
+            writer.newLine();
+            writer.writeLine("// Operate on instance of UnionType");
+            writer.writeNode(methodDoSomething);
+            writer.newLine();
+        });
+
+        return this.renderSnippet(snippet);
+    }
+
+    private visitSubTypeMethod(subType: java.ClassReference): java.Method {
+        return java.method({
+            name: "visit",
+            access: java.Access.Public,
+            parameters: [
+                java.parameter({
+                    name: "value",
+                    type: java.Type.reference(subType)
+                })
+            ],
+            return_: java.Type.string(),
+            body: java.codeblock((writer) => {
+                writer.writeLine("// do something with instance of " + subType.name);
+                writer.write('return "Did something with ' + subType.name + '";');
+            })
+        });
+    }
+
+    private unionTypeFromSubTypeMethod(unionType: java.ClassReference, subType: java.ClassReference): java.Method {
+        const unionTypeNameLower = ReadmeSnippetBuilder.firstLower(unionType.name);
+        const subTypeNameLower = ReadmeSnippetBuilder.firstLower(subType.name);
+
+        return java.method({
+            name: unionTypeNameLower + "From" + subType.name,
+            access: java.Access.Public,
+            parameters: [
+                java.parameter({
+                    name: subTypeNameLower,
+                    type: java.Type.reference(subType)
+                })
+            ],
+            return_: java.Type.reference(unionType),
+            body: java.codeblock((writer) => {
+                writer.write("return ");
+                writer.writeNode(unionType);
+                writer.write(".of(");
+                writer.write(subTypeNameLower);
+                writer.write(");");
+            })
+        });
     }
 
     private renderCustomClientSnippet(_endpoint: EndpointWithFilepath): string {
@@ -536,4 +724,115 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             return asString.split("\n").slice(2).join("\n");
         }
     }
+
+    private static firstLower(name: string): string {
+        if (!name) {
+            return name;
+        }
+        return name.charAt(0).toLowerCase() + name.slice(1);
+    }
+
+    // private static foo(classReference: java.ClassReference, typeDeclaration: TypeDeclaration): void {
+    //     const bar = typeDeclaration.shape._visit(typeDeclaration.shape, {
+    //         union: () => {
+    //             return typeDeclaration.shape.union.subTypes[0].name;
+    //         },
+    //         _other: () => {
+    //             return undefined;
+    //         }
+    //     })
+
+    // }
+
+    private typeFromTypeReference(typeReference: TypeReference): java.ClassReference | string | undefined {
+        return TypeReference._visit(typeReference, {
+            container: (value) => undefined,
+            named: (value) => undefined,
+            primitive: (value) => undefined,
+            unknown: () => undefined,
+            _other: () => undefined,
+        })
+    }
+
+    private typeFromSingleUnionType(singleUnionType: SingleUnionType | undefined): java.ClassReference | string | undefined {
+        if (singleUnionType == null) {
+            return undefined;
+        }
+        const typeId = SingleUnionTypeProperties._visit(singleUnionType.shape, {
+            singleProperty: (singleProperty) => undefined,
+            samePropertiesAsObject: (val) => val.name.pascalCase.safeName,
+            noProperties: () => undefined,
+            _other: () => undefined,
+        })
+        return typeId;
+    }
+
+    private findDiscriminatedUnionTypeSnippetInfo(): DiscriminatedUnionTypeSnippetInfo | undefined {
+        for (const typeDeclaration of Object.values(this.context.ir.types)) {
+            const unionTypeInfo = Type._visit(typeDeclaration.shape, {
+                object: () => undefined,
+                enum: () => undefined,
+                union: (unionTypeDeclaration) => {
+                    if (unionTypeDeclaration.types.length >= 2 || unionTypeDeclaration.types[0] === undefined || unionTypeDeclaration.types[1] === undefined) {
+                        return undefined;
+                    }
+                    const subType1 = this.typeFromSingleUnionType(unionTypeDeclaration.types[0]);
+                    const subType2 = this.typeFromSingleUnionType(unionTypeDeclaration.types[1]);
+                    if (subType1 === undefined || subType2 === undefined) {
+                        return undefined;
+                    }
+                    return {
+                        unionType: this.context.getJavaClassReferenceFromDeclaration({ typeDeclaration }),
+                        subType1,
+                        subType1KeyCamelCase: unionTypeDeclaration.types[0].discriminantValue.name.camelCase.safeName,
+                        subType1KeyPascalCase: unionTypeDeclaration.types[0].discriminantValue.name.pascalCase.safeName,
+                        subType2,
+                        subType2KeyCamelCase: unionTypeDeclaration.types[1].discriminantValue.name.camelCase.safeName,
+                        subType2KeyPascalCase: unionTypeDeclaration.types[1].discriminantValue.name.pascalCase.safeName,
+                    }
+                },
+                alias: () => undefined,
+                undiscriminatedUnion: () => undefined,
+                _other: () => undefined
+
+            });
+            if (unionTypeInfo !== undefined) {
+                return unionTypeInfo;
+            }
+        }
+        return undefined;
+    }
+
+
+    private findUndiscriminatedUnionTypeSnippetInfo(): UndiscriminatedUnionTypeSnippetInfo | undefined {
+        for (const typeDeclaration of Object.values(this.context.ir.types)) {
+            const unionTypeInfo = Type._visit(typeDeclaration.shape, {
+                object: () => undefined,
+                enum: () => undefined,
+                union: () => undefined,
+                alias: () => undefined,
+                undiscriminatedUnion: ({members}) => {
+                    if (members.length < 2 || members[0] === undefined || members[1] === undefined) {
+                        return undefined;
+                    }
+                    const subType1 = this.typeFromTypeReference(members[0].type);
+                    const subType2 = this.typeFromTypeReference(members[1].type);
+                    if (subType1 === undefined || subType2 === undefined) {
+                        return undefined;
+                    }
+                    return {
+                        unionType: this.context.getJavaClassReferenceFromDeclaration({ typeDeclaration }),
+                        subType1,
+                        subType2,
+                    }
+                },
+                _other: () => undefined
+            });
+            if (unionTypeInfo !== undefined) {
+                return unionTypeInfo;
+            }
+        }
+        return undefined;
+    }
+
 }
