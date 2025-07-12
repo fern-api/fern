@@ -38,5 +38,8 @@
     "typescript": "5.7.2",
     "vitest": "^2.1.9",
     "zod": "^3.22.3"
+  },
+  "dependencies": {
+    "lodash-es": "4.17.21"
   }
 }

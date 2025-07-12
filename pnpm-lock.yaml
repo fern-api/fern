@@ -1261,6 +1261,10 @@ importers:
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
 
   generators/php/codegen:
+    dependencies:
+      lodash-es:
+        specifier: 4.17.21
+        version: 4.17.21
     devDependencies:
       '@fern-api/browser-compatible-base-generator':
         specifier: workspace:*

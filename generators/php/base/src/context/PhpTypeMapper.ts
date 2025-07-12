@@ -136,7 +136,6 @@ export class PhpTypeMapper {
                 return php.Type.reference(classReference);
             case "undiscriminatedUnion": {
                 return php.Type.union(
-                    // Need to dedupe because lists and sets are both represented as array.
                     uniqWith(
                         typeDeclaration.shape.members.map((member) =>
                             this.convert({ reference: member.type, preserveEnums })
