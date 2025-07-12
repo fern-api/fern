@@ -194,7 +194,30 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
     }
 
     public setApiVersion(apiVersionScheme: unknown): void {
-        this.rootApiFile.version = apiVersionScheme as RawSchemas.VersionDeclarationSchema;
+        // TODO: Validate the apiVersionSchema since it's being set incorrectly
+        // IR looks something like this:
+
+        //     "apiVersion": {
+        //         "version": {
+        //             "header": "X-API-Version",
+        //             "default": "2024-10-25",
+        //             "values": [
+        //                 "2024-10-25",
+        //                 "2025-07-30"
+        //             ]
+        //     }
+        // },   
+
+        // So we should set this.rootApiFile.version to apiVersionSchema[<version-param-name>] instead of apiVersionScheme
+
+        try {
+            const versionKey = Object.keys(apiVersionScheme as Record<string, RawSchemas.VersionDeclarationSchema>)[0];
+            if (versionKey != null) {
+                this.rootApiFile.version = (apiVersionScheme as Record<string, RawSchemas.VersionDeclarationSchema>)[versionKey];
+            }
+        } catch (err) {
+            return;
+        }
     }
 
     public getEnvironmentType(): "single" | "multi" | undefined {
