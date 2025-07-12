@@ -12777,20 +12777,20 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "data": [
-                  42
+                  1.1
                 ],
                 "timestamps": [
-                  42
+                  1
                 ]
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
                   "data": [
-                    42
+                    1.1
                   ],
                   "timestamps": [
-                    42
+                    1
                   ]
                 }
               }
@@ -12991,26 +12991,26 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "account": "foo",
+                "account": "string",
                 "configs": [
                   {
-                    "isolated_margin_leverage": 42,
-                    "leverage": 42,
-                    "margin_type": "foo",
-                    "market": "foo"
+                    "isolated_margin_leverage": 1,
+                    "leverage": 1,
+                    "margin_type": "string",
+                    "market": "string"
                   }
                 ]
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "account": "foo",
+                  "account": "string",
                   "configs": [
                     {
-                      "isolated_margin_leverage": 42,
-                      "leverage": 42,
-                      "margin_type": "foo",
-                      "market": "foo"
+                      "isolated_margin_leverage": 1,
+                      "leverage": 1,
+                      "margin_type": "string",
+                      "market": "string"
                     }
                   ]
                 }
@@ -13132,18 +13132,18 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "account": "foo",
-                "leverage": 42,
-                "margin_type": "foo",
-                "market": "foo"
+                "account": "string",
+                "leverage": 1,
+                "margin_type": "string",
+                "market": "string"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "account": "foo",
-                  "leverage": 42,
-                  "margin_type": "foo",
-                  "market": "foo"
+                  "account": "string",
+                  "leverage": 1,
+                  "margin_type": "string",
+                  "market": "string"
                 }
               }
             }
@@ -13230,20 +13230,20 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "discord": {
-                  "id": "foo",
-                  "image_url": "foo",
-                  "username": "foo"
+                  "id": "string",
+                  "image_url": "string",
+                  "username": "string"
                 },
                 "is_username_private": true,
                 "market_max_slippage": {},
                 "nfts": [
                   {
-                    "collection_address": "foo",
-                    "collection_name": "foo",
-                    "description": "foo",
-                    "id": "foo",
-                    "image_url": "foo",
-                    "name": "foo"
+                    "collection_address": "string",
+                    "collection_name": "string",
+                    "description": "string",
+                    "id": "string",
+                    "image_url": "string",
+                    "name": "string"
                   }
                 ],
                 "programs_eligibility": {
@@ -13266,9 +13266,9 @@
                 "referral_code": "cryptofox8",
                 "referred_by": "maxDegen",
                 "twitter": {
-                  "id": "foo",
-                  "image_url": "foo",
-                  "username": "foo"
+                  "id": "string",
+                  "image_url": "string",
+                  "username": "string"
                 },
                 "username": "username"
               },
@@ -13276,20 +13276,20 @@
                 "type": "json",
                 "value": {
                   "discord": {
-                    "id": "foo",
-                    "image_url": "foo",
-                    "username": "foo"
+                    "id": "string",
+                    "image_url": "string",
+                    "username": "string"
                   },
                   "is_username_private": true,
                   "market_max_slippage": {},
                   "nfts": [
                     {
-                      "collection_address": "foo",
-                      "collection_name": "foo",
-                      "description": "foo",
-                      "id": "foo",
-                      "image_url": "foo",
-                      "name": "foo"
+                      "collection_address": "string",
+                      "collection_name": "string",
+                      "description": "string",
+                      "id": "string",
+                      "image_url": "string",
+                      "name": "string"
                     }
                   ],
                   "programs_eligibility": {
@@ -13312,9 +13312,9 @@
                   "referral_code": "cryptofox8",
                   "referred_by": "maxDegen",
                   "twitter": {
-                    "id": "foo",
-                    "image_url": "foo",
-                    "username": "foo"
+                    "id": "string",
+                    "image_url": "string",
+                    "username": "string"
                   },
                   "username": "username"
                 }
@@ -13437,31 +13437,31 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "max_slippage": "foo"
+                "max_slippage": "string"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "max_slippage": "foo"
+                  "max_slippage": "string"
                 }
               },
               "responseStatusCode": 200,
               "responseBody": {
                 "discord": {
-                  "id": "foo",
-                  "image_url": "foo",
-                  "username": "foo"
+                  "id": "string",
+                  "image_url": "string",
+                  "username": "string"
                 },
                 "is_username_private": true,
                 "market_max_slippage": {},
                 "nfts": [
                   {
-                    "collection_address": "foo",
-                    "collection_name": "foo",
-                    "description": "foo",
-                    "id": "foo",
-                    "image_url": "foo",
-                    "name": "foo"
+                    "collection_address": "string",
+                    "collection_name": "string",
+                    "description": "string",
+                    "id": "string",
+                    "image_url": "string",
+                    "name": "string"
                   }
                 ],
                 "programs_eligibility": {
@@ -13484,9 +13484,9 @@
                 "referral_code": "cryptofox8",
                 "referred_by": "maxDegen",
                 "twitter": {
-                  "id": "foo",
-                  "image_url": "foo",
-                  "username": "foo"
+                  "id": "string",
+                  "image_url": "string",
+                  "username": "string"
                 },
                 "username": "username"
               },
@@ -13494,20 +13494,20 @@
                 "type": "json",
                 "value": {
                   "discord": {
-                    "id": "foo",
-                    "image_url": "foo",
-                    "username": "foo"
+                    "id": "string",
+                    "image_url": "string",
+                    "username": "string"
                   },
                   "is_username_private": true,
                   "market_max_slippage": {},
                   "nfts": [
                     {
-                      "collection_address": "foo",
-                      "collection_name": "foo",
-                      "description": "foo",
-                      "id": "foo",
-                      "image_url": "foo",
-                      "name": "foo"
+                      "collection_address": "string",
+                      "collection_name": "string",
+                      "description": "string",
+                      "id": "string",
+                      "image_url": "string",
+                      "name": "string"
                     }
                   ],
                   "programs_eligibility": {
@@ -13530,9 +13530,9 @@
                   "referral_code": "cryptofox8",
                   "referred_by": "maxDegen",
                   "twitter": {
-                    "id": "foo",
-                    "image_url": "foo",
-                    "username": "foo"
+                    "id": "string",
+                    "image_url": "string",
+                    "username": "string"
                   },
                   "username": "username"
                 }
@@ -13621,20 +13621,20 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "discord": {
-                  "id": "foo",
-                  "image_url": "foo",
-                  "username": "foo"
+                  "id": "string",
+                  "image_url": "string",
+                  "username": "string"
                 },
                 "is_username_private": true,
                 "market_max_slippage": {},
                 "nfts": [
                   {
-                    "collection_address": "foo",
-                    "collection_name": "foo",
-                    "description": "foo",
-                    "id": "foo",
-                    "image_url": "foo",
-                    "name": "foo"
+                    "collection_address": "string",
+                    "collection_name": "string",
+                    "description": "string",
+                    "id": "string",
+                    "image_url": "string",
+                    "name": "string"
                   }
                 ],
                 "programs_eligibility": {
@@ -13657,9 +13657,9 @@
                 "referral_code": "cryptofox8",
                 "referred_by": "maxDegen",
                 "twitter": {
-                  "id": "foo",
-                  "image_url": "foo",
-                  "username": "foo"
+                  "id": "string",
+                  "image_url": "string",
+                  "username": "string"
                 },
                 "username": "username"
               },
@@ -13667,20 +13667,20 @@
                 "type": "json",
                 "value": {
                   "discord": {
-                    "id": "foo",
-                    "image_url": "foo",
-                    "username": "foo"
+                    "id": "string",
+                    "image_url": "string",
+                    "username": "string"
                   },
                   "is_username_private": true,
                   "market_max_slippage": {},
                   "nfts": [
                     {
-                      "collection_address": "foo",
-                      "collection_name": "foo",
-                      "description": "foo",
-                      "id": "foo",
-                      "image_url": "foo",
-                      "name": "foo"
+                      "collection_address": "string",
+                      "collection_name": "string",
+                      "description": "string",
+                      "id": "string",
+                      "image_url": "string",
+                      "name": "string"
                     }
                   ],
                   "programs_eligibility": {
@@ -13703,9 +13703,9 @@
                   "referral_code": "cryptofox8",
                   "referred_by": "maxDegen",
                   "twitter": {
-                    "id": "foo",
-                    "image_url": "foo",
-                    "username": "foo"
+                    "id": "string",
+                    "image_url": "string",
+                    "username": "string"
                   },
                   "username": "username"
                 }
@@ -13794,20 +13794,20 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "discord": {
-                  "id": "foo",
-                  "image_url": "foo",
-                  "username": "foo"
+                  "id": "string",
+                  "image_url": "string",
+                  "username": "string"
                 },
                 "is_username_private": true,
                 "market_max_slippage": {},
                 "nfts": [
                   {
-                    "collection_address": "foo",
-                    "collection_name": "foo",
-                    "description": "foo",
-                    "id": "foo",
-                    "image_url": "foo",
-                    "name": "foo"
+                    "collection_address": "string",
+                    "collection_name": "string",
+                    "description": "string",
+                    "id": "string",
+                    "image_url": "string",
+                    "name": "string"
                   }
                 ],
                 "programs_eligibility": {
@@ -13830,9 +13830,9 @@
                 "referral_code": "cryptofox8",
                 "referred_by": "maxDegen",
                 "twitter": {
-                  "id": "foo",
-                  "image_url": "foo",
-                  "username": "foo"
+                  "id": "string",
+                  "image_url": "string",
+                  "username": "string"
                 },
                 "username": "username"
               },
@@ -13840,20 +13840,20 @@
                 "type": "json",
                 "value": {
                   "discord": {
-                    "id": "foo",
-                    "image_url": "foo",
-                    "username": "foo"
+                    "id": "string",
+                    "image_url": "string",
+                    "username": "string"
                   },
                   "is_username_private": true,
                   "market_max_slippage": {},
                   "nfts": [
                     {
-                      "collection_address": "foo",
-                      "collection_name": "foo",
-                      "description": "foo",
-                      "id": "foo",
-                      "image_url": "foo",
-                      "name": "foo"
+                      "collection_address": "string",
+                      "collection_name": "string",
+                      "description": "string",
+                      "id": "string",
+                      "image_url": "string",
+                      "name": "string"
                     }
                   ],
                   "programs_eligibility": {
@@ -13876,9 +13876,9 @@
                   "referral_code": "cryptofox8",
                   "referred_by": "maxDegen",
                   "twitter": {
-                    "id": "foo",
-                    "image_url": "foo",
-                    "username": "foo"
+                    "id": "string",
+                    "image_url": "string",
+                    "username": "string"
                   },
                   "username": "username"
                 }
@@ -14071,31 +14071,31 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "trading_value_display": "foo"
+                "trading_value_display": "string"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "trading_value_display": "foo"
+                  "trading_value_display": "string"
                 }
               },
               "responseStatusCode": 200,
               "responseBody": {
                 "discord": {
-                  "id": "foo",
-                  "image_url": "foo",
-                  "username": "foo"
+                  "id": "string",
+                  "image_url": "string",
+                  "username": "string"
                 },
                 "is_username_private": true,
                 "market_max_slippage": {},
                 "nfts": [
                   {
-                    "collection_address": "foo",
-                    "collection_name": "foo",
-                    "description": "foo",
-                    "id": "foo",
-                    "image_url": "foo",
-                    "name": "foo"
+                    "collection_address": "string",
+                    "collection_name": "string",
+                    "description": "string",
+                    "id": "string",
+                    "image_url": "string",
+                    "name": "string"
                   }
                 ],
                 "programs_eligibility": {
@@ -14118,9 +14118,9 @@
                 "referral_code": "cryptofox8",
                 "referred_by": "maxDegen",
                 "twitter": {
-                  "id": "foo",
-                  "image_url": "foo",
-                  "username": "foo"
+                  "id": "string",
+                  "image_url": "string",
+                  "username": "string"
                 },
                 "username": "username"
               },
@@ -14128,20 +14128,20 @@
                 "type": "json",
                 "value": {
                   "discord": {
-                    "id": "foo",
-                    "image_url": "foo",
-                    "username": "foo"
+                    "id": "string",
+                    "image_url": "string",
+                    "username": "string"
                   },
                   "is_username_private": true,
                   "market_max_slippage": {},
                   "nfts": [
                     {
-                      "collection_address": "foo",
-                      "collection_name": "foo",
-                      "description": "foo",
-                      "id": "foo",
-                      "image_url": "foo",
-                      "name": "foo"
+                      "collection_address": "string",
+                      "collection_name": "string",
+                      "description": "string",
+                      "id": "string",
+                      "image_url": "string",
+                      "name": "string"
                     }
                   ],
                   "programs_eligibility": {
@@ -14164,9 +14164,9 @@
                   "referral_code": "cryptofox8",
                   "referred_by": "maxDegen",
                   "twitter": {
-                    "id": "foo",
-                    "image_url": "foo",
-                    "username": "foo"
+                    "id": "string",
+                    "image_url": "string",
+                    "username": "string"
                   },
                   "username": "username"
                 }
@@ -14735,7 +14735,7 @@
                 "prev": "eyJmaWx0ZXIiOnsiTGltaXQiOjkwfSwidGltZSI6MTY4MTY3OTgzNzk3MTMwOTk1MywibWFya2VyIjp7Im1zMjExMD==",
                 "results": [
                   {
-                    "account": "foo",
+                    "account": "string",
                     "created_at": 1681375481000,
                     "fill_id": "8615262148007718462",
                     "id": "1681375578221101699352320000",
@@ -14752,7 +14752,7 @@
                   "prev": "eyJmaWx0ZXIiOnsiTGltaXQiOjkwfSwidGltZSI6MTY4MTY3OTgzNzk3MTMwOTk1MywibWFya2VyIjp7Im1zMjExMD==",
                   "results": [
                     {
-                      "account": "foo",
+                      "account": "string",
                       "created_at": 1681375481000,
                       "fill_id": "8615262148007718462",
                       "id": "1681375578221101699352320000",
@@ -14821,7 +14821,7 @@
               "responseBody": {
                 "results": [
                   {
-                    "account": "foo",
+                    "account": "string",
                     "average_entry_price": "29001.34",
                     "average_entry_price_usd": "29001.34",
                     "average_exit_price": "29001.34",
@@ -14833,8 +14833,8 @@
                     "id": "1234234",
                     "last_fill_id": "1234234",
                     "last_updated_at": 1681493939981,
-                    "leverage": "foo",
-                    "liquidation_price": "foo",
+                    "leverage": "string",
+                    "liquidation_price": "string",
                     "market": "BTC-USD-PERP",
                     "realized_positional_funding_pnl": "12.234",
                     "realized_positional_pnl": "-123.23",
@@ -14852,7 +14852,7 @@
                 "value": {
                   "results": [
                     {
-                      "account": "foo",
+                      "account": "string",
                       "average_entry_price": "29001.34",
                       "average_entry_price_usd": "29001.34",
                       "average_exit_price": "29001.34",
@@ -14864,8 +14864,8 @@
                       "id": "1234234",
                       "last_fill_id": "1234234",
                       "last_updated_at": 1681493939981,
-                      "leverage": "foo",
-                      "liquidation_price": "foo",
+                      "leverage": "string",
+                      "liquidation_price": "string",
                       "market": "BTC-USD-PERP",
                       "realized_positional_funding_pnl": "12.234",
                       "realized_positional_pnl": "-123.23",
@@ -15159,8 +15159,8 @@
                 "prev": "eyJmaWx0ZXIiOnsiTGltaXQiOjkwfSwidGltZSI6MTY4MTY3OTgzNzk3MTMwOTk1MywibWFya2VyIjp7Im1zMjExMD==",
                 "results": [
                   {
-                    "completed_at": 42,
-                    "created_at": 42,
+                    "completed_at": 1,
+                    "created_at": 1,
                     "hash": "0x445c05d6bfb899e39338440d199971c4d7f4cde7878ed3888df3f716efb8df2",
                     "id": "12342423",
                     "state": "ACCEPTED_ON_L1",
@@ -15175,8 +15175,8 @@
                   "prev": "eyJmaWx0ZXIiOnsiTGltaXQiOjkwfSwidGltZSI6MTY4MTY3OTgzNzk3MTMwOTk1MywibWFya2VyIjp7Im1zMjExMD==",
                   "results": [
                     {
-                      "completed_at": 42,
-                      "created_at": 42,
+                      "completed_at": 1,
+                      "created_at": 1,
                       "hash": "0x445c05d6bfb899e39338440d199971c4d7f4cde7878ed3888df3f716efb8df2",
                       "id": "12342423",
                       "state": "ACCEPTED_ON_L1",
@@ -15488,8 +15488,8 @@
                 "duration_seconds": 3600,
                 "market": "BTC-USD-PERP",
                 "side": "BUY",
-                "signature": "foo",
-                "signature_timestamp": 42,
+                "signature": "string",
+                "signature_timestamp": 1,
                 "size": "1.213",
                 "type": "MARKET"
               },
@@ -15500,8 +15500,8 @@
                   "duration_seconds": 3600,
                   "market": "BTC-USD-PERP",
                   "side": "BUY",
-                  "signature": "foo",
-                  "signature_timestamp": 42,
+                  "signature": "string",
+                  "signature_timestamp": 1,
                   "size": "1.213",
                   "type": "MARKET"
                 }
@@ -16525,11 +16525,11 @@
                 "prev": "eyJmaWx0ZXIiOnsiTGltaXQiOjkwfSwidGltZSI6MTY4MTY3OTgzNzk3MTMwOTk1MywibWFya2VyIjp7Im1zMjExMD==",
                 "results": [
                   {
-                    "created_at": 42,
-                    "funding_index": "foo",
-                    "funding_premium": "foo",
-                    "funding_rate": "foo",
-                    "market": "foo"
+                    "created_at": 1,
+                    "funding_index": "string",
+                    "funding_premium": "string",
+                    "funding_rate": "string",
+                    "market": "string"
                   }
                 ]
               },
@@ -16540,11 +16540,11 @@
                   "prev": "eyJmaWx0ZXIiOnsiTGltaXQiOjkwfSwidGltZSI6MTY4MTY3OTgzNzk3MTMwOTk1MywibWFya2VyIjp7Im1zMjExMD==",
                   "results": [
                     {
-                      "created_at": 42,
-                      "funding_index": "foo",
-                      "funding_premium": "foo",
-                      "funding_rate": "foo",
-                      "market": "foo"
+                      "created_at": 1,
+                      "funding_index": "string",
+                      "funding_premium": "string",
+                      "funding_rate": "string",
+                      "market": "string"
                     }
                   ]
                 }
@@ -16881,9 +16881,9 @@
               "path": "/markets/klines",
               "pathParameters": {},
               "queryParameters": {
-                "end_at": 42,
+                "end_at": 1,
                 "resolution": "resolution",
-                "start_at": 42,
+                "start_at": 1,
                 "symbol": "symbol"
               },
               "headers": {},
@@ -17003,7 +17003,7 @@
                     "ask_iv": "0.2",
                     "bid": "30112.22",
                     "bid_iv": "0.2",
-                    "created_at": 42,
+                    "created_at": 1,
                     "delta": "1",
                     "funding_rate": "0.3",
                     "future_funding_rate": "0.3",
@@ -17037,7 +17037,7 @@
                       "ask_iv": "0.2",
                       "bid": "30112.22",
                       "bid_iv": "0.2",
-                      "created_at": 42,
+                      "created_at": 1,
                       "delta": "1",
                       "funding_rate": "0.3",
                       "future_funding_rate": "0.3",
@@ -17171,12 +17171,12 @@
               "responseBody": {
                 "asks": [
                   [
-                    "foo"
+                    "string"
                   ]
                 ],
                 "bids": [
                   [
-                    "foo"
+                    "string"
                   ]
                 ],
                 "last_updated_at": 1681462770114,
@@ -17188,12 +17188,12 @@
                 "value": {
                   "asks": [
                     [
-                      "foo"
+                      "string"
                     ]
                   ],
                   "bids": [
                     [
-                      "foo"
+                      "string"
                     ]
                   ],
                   "last_updated_at": 1681462770114,
@@ -17519,10 +17519,10 @@
                     "received_at": 1681493746016,
                     "remaining_size": "0",
                     "request_info": {
-                      "id": "foo",
-                      "message": "foo",
-                      "request_type": "foo",
-                      "status": "foo"
+                      "id": "string",
+                      "message": "string",
+                      "request_type": "string",
+                      "status": "string"
                     },
                     "seq_no": 1681471234972000000,
                     "side": "BUY",
@@ -17557,10 +17557,10 @@
                       "received_at": 1681493746016,
                       "remaining_size": "0",
                       "request_info": {
-                        "id": "foo",
-                        "message": "foo",
-                        "request_type": "foo",
-                        "status": "foo"
+                        "id": "string",
+                        "message": "string",
+                        "request_type": "string",
+                        "status": "string"
                       },
                       "seq_no": 1681471234972000000,
                       "side": "BUY",
@@ -17658,24 +17658,24 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "instruction": "foo",
+                "instruction": "string",
                 "market": "BTC-USD-PERP",
                 "price": "29500.12",
                 "side": "BUY",
-                "signature": "foo",
-                "signature_timestamp": 42,
+                "signature": "string",
+                "signature_timestamp": 1,
                 "size": "1.213",
                 "type": "MARKET"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "instruction": "foo",
+                  "instruction": "string",
                   "market": "BTC-USD-PERP",
                   "price": "29500.12",
                   "side": "BUY",
-                  "signature": "foo",
-                  "signature_timestamp": 42,
+                  "signature": "string",
+                  "signature_timestamp": 1,
                   "size": "1.213",
                   "type": "MARKET"
                 }
@@ -17699,10 +17699,10 @@
                 "received_at": 1681493746016,
                 "remaining_size": "0",
                 "request_info": {
-                  "id": "foo",
-                  "message": "foo",
-                  "request_type": "foo",
-                  "status": "foo"
+                  "id": "string",
+                  "message": "string",
+                  "request_type": "string",
+                  "status": "string"
                 },
                 "seq_no": 1681471234972000000,
                 "side": "BUY",
@@ -17733,10 +17733,10 @@
                   "received_at": 1681493746016,
                   "remaining_size": "0",
                   "request_info": {
-                    "id": "foo",
-                    "message": "foo",
-                    "request_type": "foo",
-                    "status": "foo"
+                    "id": "string",
+                    "message": "string",
+                    "request_type": "string",
+                    "status": "string"
                   },
                   "seq_no": 1681471234972000000,
                   "side": "BUY",
@@ -18028,10 +18028,10 @@
                     "received_at": 1681493746016,
                     "remaining_size": "0",
                     "request_info": {
-                      "id": "foo",
-                      "message": "foo",
-                      "request_type": "foo",
-                      "status": "foo"
+                      "id": "string",
+                      "message": "string",
+                      "request_type": "string",
+                      "status": "string"
                     },
                     "seq_no": 1681471234972000000,
                     "side": "BUY",
@@ -18068,10 +18068,10 @@
                       "received_at": 1681493746016,
                       "remaining_size": "0",
                       "request_info": {
-                        "id": "foo",
-                        "message": "foo",
-                        "request_type": "foo",
-                        "status": "foo"
+                        "id": "string",
+                        "message": "string",
+                        "request_type": "string",
+                        "status": "string"
                       },
                       "seq_no": 1681471234972000000,
                       "side": "BUY",
@@ -18173,12 +18173,12 @@
               "headers": {},
               "requestBody": [
                 {
-                  "instruction": "foo",
+                  "instruction": "string",
                   "market": "BTC-USD-PERP",
                   "price": "29500.12",
                   "side": "BUY",
-                  "signature": "foo",
-                  "signature_timestamp": 42,
+                  "signature": "string",
+                  "signature_timestamp": 1,
                   "size": "1.213",
                   "type": "MARKET"
                 }
@@ -18187,12 +18187,12 @@
                 "type": "json",
                 "value": [
                   {
-                    "instruction": "foo",
+                    "instruction": "string",
                     "market": "BTC-USD-PERP",
                     "price": "29500.12",
                     "side": "BUY",
-                    "signature": "foo",
-                    "signature_timestamp": 42,
+                    "signature": "string",
+                    "signature_timestamp": 1,
                     "size": "1.213",
                     "type": "MARKET"
                   }
@@ -18203,7 +18203,7 @@
                 "errors": [
                   {
                     "error": "VALIDATION_ERROR",
-                    "message": "foo"
+                    "message": "string"
                   }
                 ],
                 "orders": [
@@ -18225,10 +18225,10 @@
                     "received_at": 1681493746016,
                     "remaining_size": "0",
                     "request_info": {
-                      "id": "foo",
-                      "message": "foo",
-                      "request_type": "foo",
-                      "status": "foo"
+                      "id": "string",
+                      "message": "string",
+                      "request_type": "string",
+                      "status": "string"
                     },
                     "seq_no": 1681471234972000000,
                     "side": "BUY",
@@ -18247,7 +18247,7 @@
                   "errors": [
                     {
                       "error": "VALIDATION_ERROR",
-                      "message": "foo"
+                      "message": "string"
                     }
                   ],
                   "orders": [
@@ -18269,10 +18269,10 @@
                       "received_at": 1681493746016,
                       "remaining_size": "0",
                       "request_info": {
-                        "id": "foo",
-                        "message": "foo",
-                        "request_type": "foo",
-                        "status": "foo"
+                        "id": "string",
+                        "message": "string",
+                        "request_type": "string",
+                        "status": "string"
                       },
                       "seq_no": 1681471234972000000,
                       "side": "BUY",
@@ -18378,11 +18378,11 @@
               "responseBody": {
                 "results": [
                   {
-                    "account": "foo",
-                    "client_id": "foo",
-                    "id": "foo",
-                    "market": "foo",
-                    "status": "foo"
+                    "account": "string",
+                    "client_id": "string",
+                    "id": "string",
+                    "market": "string",
+                    "status": "string"
                   }
                 ]
               },
@@ -18391,11 +18391,11 @@
                 "value": {
                   "results": [
                     {
-                      "account": "foo",
-                      "client_id": "foo",
-                      "id": "foo",
-                      "market": "foo",
-                      "status": "foo"
+                      "account": "string",
+                      "client_id": "string",
+                      "id": "string",
+                      "market": "string",
+                      "status": "string"
                     }
                   ]
                 }
@@ -18508,10 +18508,10 @@
                 "received_at": 1681493746016,
                 "remaining_size": "0",
                 "request_info": {
-                  "id": "foo",
-                  "message": "foo",
-                  "request_type": "foo",
-                  "status": "foo"
+                  "id": "string",
+                  "message": "string",
+                  "request_type": "string",
+                  "status": "string"
                 },
                 "seq_no": 1681471234972000000,
                 "side": "BUY",
@@ -18542,10 +18542,10 @@
                   "received_at": 1681493746016,
                   "remaining_size": "0",
                   "request_info": {
-                    "id": "foo",
-                    "message": "foo",
-                    "request_type": "foo",
-                    "status": "foo"
+                    "id": "string",
+                    "message": "string",
+                    "request_type": "string",
+                    "status": "string"
                   },
                   "seq_no": 1681471234972000000,
                   "side": "BUY",
@@ -18743,10 +18743,10 @@
                 "received_at": 1681493746016,
                 "remaining_size": "0",
                 "request_info": {
-                  "id": "foo",
-                  "message": "foo",
-                  "request_type": "foo",
-                  "status": "foo"
+                  "id": "string",
+                  "message": "string",
+                  "request_type": "string",
+                  "status": "string"
                 },
                 "seq_no": 1681471234972000000,
                 "side": "BUY",
@@ -18777,10 +18777,10 @@
                   "received_at": 1681493746016,
                   "remaining_size": "0",
                   "request_info": {
-                    "id": "foo",
-                    "message": "foo",
-                    "request_type": "foo",
-                    "status": "foo"
+                    "id": "string",
+                    "message": "string",
+                    "request_type": "string",
+                    "status": "string"
                   },
                   "seq_no": 1681471234972000000,
                   "side": "BUY",
@@ -18897,24 +18897,24 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "id": "foo",
+                "id": "string",
                 "market": "BTC-USD-PERP",
                 "price": "29500.12",
                 "side": "BUY",
-                "signature": "foo",
-                "signature_timestamp": 42,
+                "signature": "string",
+                "signature_timestamp": 1,
                 "size": "1.213",
                 "type": "LIMIT"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "id": "foo",
+                  "id": "string",
                   "market": "BTC-USD-PERP",
                   "price": "29500.12",
                   "side": "BUY",
-                  "signature": "foo",
-                  "signature_timestamp": 42,
+                  "signature": "string",
+                  "signature_timestamp": 1,
                   "size": "1.213",
                   "type": "LIMIT"
                 }
@@ -18938,10 +18938,10 @@
                 "received_at": 1681493746016,
                 "remaining_size": "0",
                 "request_info": {
-                  "id": "foo",
-                  "message": "foo",
-                  "request_type": "foo",
-                  "status": "foo"
+                  "id": "string",
+                  "message": "string",
+                  "request_type": "string",
+                  "status": "string"
                 },
                 "seq_no": 1681471234972000000,
                 "side": "BUY",
@@ -18972,10 +18972,10 @@
                   "received_at": 1681493746016,
                   "remaining_size": "0",
                   "request_info": {
-                    "id": "foo",
-                    "message": "foo",
-                    "request_type": "foo",
-                    "status": "foo"
+                    "id": "string",
+                    "message": "string",
+                    "request_type": "string",
+                    "status": "string"
                   },
                   "seq_no": 1681471234972000000,
                   "side": "BUY",
@@ -19328,7 +19328,7 @@
               "responseBody": {
                 "results": [
                   {
-                    "address": "foo",
+                    "address": "string",
                     "created_at": 1715592690488,
                     "referral_code": "maxdegen01",
                     "referral_rewards": "0.123",
@@ -19341,7 +19341,7 @@
                 "value": {
                   "results": [
                     {
-                      "address": "foo",
+                      "address": "string",
                       "created_at": 1715592690488,
                       "referral_code": "maxdegen01",
                       "referral_rewards": "0.123",
@@ -19419,13 +19419,13 @@
                 "block_explorer_url": "https://voyager.testnet.paradex.trade/",
                 "bridged_tokens": [
                   {
-                    "decimals": 42,
-                    "l1_bridge_address": "foo",
-                    "l1_token_address": "foo",
-                    "l2_bridge_address": "foo",
-                    "l2_token_address": "foo",
-                    "name": "foo",
-                    "symbol": "foo"
+                    "decimals": 1,
+                    "l1_bridge_address": "string",
+                    "l1_token_address": "string",
+                    "l2_bridge_address": "string",
+                    "l2_token_address": "string",
+                    "name": "string",
+                    "symbol": "string"
                   }
                 ],
                 "environment": "local",
@@ -19439,7 +19439,7 @@
                 "paraclear_account_hash": "0x033434ad846cdd5f23eb73ff09fe6fddd568284a0fb7d1be20ee482f044dabe2",
                 "paraclear_account_proxy_hash": "0x3530cc4759d78042f1b543bf797f5f3d647cde0388c33734cf91b7f7b9314a9",
                 "paraclear_address": "0x4638e3041366aa71720be63e32e53e1223316c7f0d56f7aa617542ed1e7554d",
-                "paraclear_decimals": 42,
+                "paraclear_decimals": 1,
                 "partial_liquidation_buffer": "0.2",
                 "partial_liquidation_share_increment": "0.05",
                 "starknet_chain_id": "SN_CHAIN_ID",
@@ -19453,13 +19453,13 @@
                   "block_explorer_url": "https://voyager.testnet.paradex.trade/",
                   "bridged_tokens": [
                     {
-                      "decimals": 42,
-                      "l1_bridge_address": "foo",
-                      "l1_token_address": "foo",
-                      "l2_bridge_address": "foo",
-                      "l2_token_address": "foo",
-                      "name": "foo",
-                      "symbol": "foo"
+                      "decimals": 1,
+                      "l1_bridge_address": "string",
+                      "l1_token_address": "string",
+                      "l2_bridge_address": "string",
+                      "l2_token_address": "string",
+                      "name": "string",
+                      "symbol": "string"
                     }
                   ],
                   "environment": "local",
@@ -19473,7 +19473,7 @@
                   "paraclear_account_hash": "0x033434ad846cdd5f23eb73ff09fe6fddd568284a0fb7d1be20ee482f044dabe2",
                   "paraclear_account_proxy_hash": "0x3530cc4759d78042f1b543bf797f5f3d647cde0388c33734cf91b7f7b9314a9",
                   "paraclear_address": "0x4638e3041366aa71720be63e32e53e1223316c7f0d56f7aa617542ed1e7554d",
-                  "paraclear_decimals": 42,
+                  "paraclear_decimals": 1,
                   "partial_liquidation_buffer": "0.2",
                   "partial_liquidation_share_increment": "0.05",
                   "starknet_chain_id": "SN_CHAIN_ID",
@@ -20031,7 +20031,7 @@
                         "name": "Alpha Strategy"
                       }
                     ],
-                    "token_address": "foo"
+                    "token_address": "string"
                   }
                 ]
               },
@@ -20058,7 +20058,7 @@
                           "name": "Alpha Strategy"
                         }
                       ],
-                      "token_address": "foo"
+                      "token_address": "string"
                     }
                   ]
                 }
@@ -20217,7 +20217,7 @@
                     "name": "Alpha Strategy"
                   }
                 ],
-                "token_address": "foo"
+                "token_address": "string"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -20240,7 +20240,7 @@
                       "name": "Alpha Strategy"
                     }
                   ],
-                  "token_address": "foo"
+                  "token_address": "string"
                 }
               }
             }
@@ -20675,10 +20675,10 @@
                   {
                     "address": "0x1234567890abcdef",
                     "data": [
-                      42
+                      1.1
                     ],
                     "timestamps": [
-                      42
+                      1
                     ]
                   }
                 ]
@@ -20690,10 +20690,10 @@
                     {
                       "address": "0x1234567890abcdef",
                       "data": [
-                        42
+                        1.1
                       ],
                       "timestamps": [
-                        42
+                        1
                       ]
                     }
                   ]
@@ -20797,7 +20797,7 @@
               "responseBody": {
                 "results": [
                   {
-                    "account": "foo",
+                    "account": "string",
                     "average_entry_price": "29001.34",
                     "average_entry_price_usd": "29001.34",
                     "average_exit_price": "29001.34",
@@ -20809,8 +20809,8 @@
                     "id": "1234234",
                     "last_fill_id": "1234234",
                     "last_updated_at": 1681493939981,
-                    "leverage": "foo",
-                    "liquidation_price": "foo",
+                    "leverage": "string",
+                    "liquidation_price": "string",
                     "market": "BTC-USD-PERP",
                     "realized_positional_funding_pnl": "12.234",
                     "realized_positional_pnl": "-123.23",
@@ -20828,7 +20828,7 @@
                 "value": {
                   "results": [
                     {
-                      "account": "foo",
+                      "account": "string",
                       "average_entry_price": "29001.34",
                       "average_entry_price_usd": "29001.34",
                       "average_exit_price": "29001.34",
@@ -20840,8 +20840,8 @@
                       "id": "1234234",
                       "last_fill_id": "1234234",
                       "last_updated_at": 1681493939981,
-                      "leverage": "foo",
-                      "liquidation_price": "foo",
+                      "leverage": "string",
+                      "liquidation_price": "string",
                       "market": "BTC-USD-PERP",
                       "realized_positional_funding_pnl": "12.234",
                       "realized_positional_pnl": "-123.23",

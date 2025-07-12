@@ -122,14 +122,14 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "id": 42,
-              "value": 42
+              "id": 1.1,
+              "value": 1.1
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
-                "id": 42,
-                "value": 42
+                "id": 1.1,
+                "value": 1.1
               }
             }
           }

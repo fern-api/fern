@@ -5,7 +5,7 @@ client = SeedServerSentEvents(
     base_url="https://yourhost.com/path/to/api",
 )        
 client.completions.stream(
-	query="foo"
+    query="foo"
 )
 
 ```
@@ -18,7 +18,7 @@ client = SeedServerSentEvents(
     base_url="https://yourhost.com/path/to/api",
 )        
 client.completions.stream(
-	query="query"
+    query="query"
 )
 
 ```

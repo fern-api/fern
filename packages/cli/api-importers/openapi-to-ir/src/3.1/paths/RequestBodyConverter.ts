@@ -242,6 +242,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
         const { isFile, isOptional, isArray } = this.recursivelyCheckTypeReferenceIsFile({
             typeReference: property.valueType
         });
+
         if (isFile) {
             if (isArray) {
                 return FileUploadRequestProperty.file(
@@ -266,7 +267,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
         return FileUploadRequestProperty.bodyProperty({
             ...property,
             contentType: encoding?.contentType ?? contentType,
-            style: getMultipartPartEncoding({ property, encoding }),
+            style: getMultipartPartEncoding({ encoding }),
             name: property.name
         });
     }
@@ -449,20 +450,27 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
 const CONTENT_TYPE_TO_ENCODING_MAP: Record<string, FileUploadBodyPropertyEncoding> = {
     "application/json": "json"
 };
+
 function getMultipartPartEncoding({
-    property,
     encoding
 }: {
-    property: ObjectProperty;
     encoding: OpenAPIV3_1.EncodingObject | undefined;
 }): FileUploadBodyPropertyEncoding | undefined {
-    let style: FileUploadBodyPropertyEncoding | undefined = undefined;
-    if (encoding?.contentType) {
-        style = CONTENT_TYPE_TO_ENCODING_MAP[encoding?.contentType];
+    if (!encoding) {
+        return undefined;
     }
-    if (style) {
-        return style;
+
+    if (encoding.explode) {
+        return "exploded";
     }
-    // TODO: Handle other encoding styles as in older parser
+
+    if (encoding.style === "form") {
+        return "form";
+    }
+
+    if (encoding.contentType) {
+        return CONTENT_TYPE_TO_ENCODING_MAP[encoding.contentType];
+    }
+
     return undefined;
 }

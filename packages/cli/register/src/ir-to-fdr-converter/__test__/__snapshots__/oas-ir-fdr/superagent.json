@@ -614,14 +614,14 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "name": "foo",
-                "type": "foo"
+                "name": "string",
+                "type": "string"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "name": "foo",
-                  "type": "foo"
+                  "name": "string",
+                  "type": "string"
                 }
               },
               "responseStatusCode": 200
@@ -1070,14 +1070,14 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "email": "foo",
-                "password": "foo"
+                "email": "string",
+                "password": "string"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "email": "foo",
-                  "password": "foo"
+                  "email": "string",
+                  "password": "string"
                 }
               },
               "responseStatusCode": 200
@@ -1154,14 +1154,14 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "email": "foo",
-                "password": "foo"
+                "email": "string",
+                "password": "string"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "email": "foo",
-                  "password": "foo"
+                  "email": "string",
+                  "password": "string"
                 }
               },
               "responseStatusCode": 200
@@ -1432,12 +1432,12 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "description": "foo"
+                "description": "string"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "description": "foo"
+                  "description": "string"
                 }
               },
               "responseStatusCode": 200
@@ -1734,16 +1734,16 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "type": "foo",
-                "url": "foo",
-                "name": "foo"
+                "type": "string",
+                "url": "string",
+                "name": "string"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "type": "foo",
-                  "url": "foo",
-                  "name": "foo"
+                  "type": "string",
+                  "url": "string",
+                  "name": "string"
                 }
               },
               "responseStatusCode": 200
@@ -2040,20 +2040,20 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "name": "foo",
+                "name": "string",
                 "input_variables": [
                   null
                 ],
-                "template": "foo"
+                "template": "string"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "name": "foo",
+                  "name": "string",
                   "input_variables": [
                     null
                   ],
-                  "template": "foo"
+                  "template": "string"
                 }
               },
               "responseStatusCode": 200
@@ -2447,14 +2447,14 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "name": "foo",
-                "type": "foo"
+                "name": "string",
+                "type": "string"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "name": "foo",
-                  "type": "foo"
+                  "name": "string",
+                  "type": "string"
                 }
               },
               "responseStatusCode": 200

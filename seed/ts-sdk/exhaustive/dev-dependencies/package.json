@@ -24,6 +24,9 @@
         "./package.json": "./package.json"
     },
     "types": "./types/index.d.ts",
+    "dependencies": {
+        "lodash-es": "^4.17.21"
+    },
     "peerDependencies": {
         "openai": "^4.47.1"
     },

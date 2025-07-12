@@ -65325,14 +65325,14 @@
               "headers": {},
               "requestBody": {
                 "itemIds": [
-                  "foo"
+                  "string"
                 ]
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
                   "itemIds": [
-                    "foo"
+                    "string"
                   ]
                 }
               },
@@ -68117,11 +68117,11 @@
                     "hostedUrl": "example.com/hostedimage.png",
                     "originalFileName": "image.png",
                     "displayName": "A brown dog",
-                    "format": "foo",
+                    "format": "string",
                     "width": 1500,
                     "height": 900,
-                    "quality": 42,
-                    "error": "foo"
+                    "quality": 1,
+                    "error": "string"
                   }
                 ],
                 "altText": "A red chair"
@@ -68143,11 +68143,11 @@
                       "hostedUrl": "example.com/hostedimage.png",
                       "originalFileName": "image.png",
                       "displayName": "A brown dog",
-                      "format": "foo",
+                      "format": "string",
                       "width": 1500,
                       "height": 900,
-                      "quality": 42,
-                      "error": "foo"
+                      "quality": 1,
+                      "error": "string"
                     }
                   ],
                   "altText": "A red chair"
@@ -68467,11 +68467,11 @@
                     "hostedUrl": "example.com/hostedimage.png",
                     "originalFileName": "image.png",
                     "displayName": "A brown dog",
-                    "format": "foo",
+                    "format": "string",
                     "width": 1500,
                     "height": 900,
-                    "quality": 42,
-                    "error": "foo"
+                    "quality": 1,
+                    "error": "string"
                   }
                 ],
                 "altText": "A red chair"
@@ -68493,11 +68493,11 @@
                       "hostedUrl": "example.com/hostedimage.png",
                       "originalFileName": "image.png",
                       "displayName": "A brown dog",
-                      "format": "foo",
+                      "format": "string",
                       "width": 1500,
                       "height": 900,
-                      "quality": 42,
-                      "error": "foo"
+                      "quality": 1,
+                      "error": "string"
                     }
                   ],
                   "altText": "A red chair"
@@ -70379,10 +70379,10 @@
                           }
                         ],
                         "categories": [
-                          "foo"
+                          "string"
                         ],
                         "tax-category": "standard-taxable",
-                        "default-sku": "foo",
+                        "default-sku": "string",
                         "ec-product-type": "ff42fee0113744f693a764e3431a9cc2"
                       }
                     },
@@ -70413,7 +70413,7 @@
                             "plans": [
                               {
                                 "platform": "stripe",
-                                "id": "foo",
+                                "id": "string",
                                 "status": "active"
                               }
                             ]
@@ -70467,10 +70467,10 @@
                             }
                           ],
                           "categories": [
-                            "foo"
+                            "string"
                           ],
                           "tax-category": "standard-taxable",
-                          "default-sku": "foo",
+                          "default-sku": "string",
                           "ec-product-type": "ff42fee0113744f693a764e3431a9cc2"
                         }
                       },
@@ -70501,7 +70501,7 @@
                               "plans": [
                                 {
                                   "platform": "stripe",
-                                  "id": "foo",
+                                  "id": "string",
                                   "status": "active"
                                 }
                               ]
@@ -70889,10 +70889,10 @@
                       }
                     ],
                     "categories": [
-                      "foo"
+                      "string"
                     ],
                     "tax-category": "standard-taxable",
-                    "default-sku": "foo",
+                    "default-sku": "string",
                     "ec-product-type": "ff42fee0113744f693a764e3431a9cc2"
                   }
                 },
@@ -70923,7 +70923,7 @@
                         "plans": [
                           {
                             "platform": "stripe",
-                            "id": "foo",
+                            "id": "string",
                             "status": "active"
                           }
                         ]
@@ -70968,10 +70968,10 @@
                         }
                       ],
                       "categories": [
-                        "foo"
+                        "string"
                       ],
                       "tax-category": "standard-taxable",
-                      "default-sku": "foo",
+                      "default-sku": "string",
                       "ec-product-type": "ff42fee0113744f693a764e3431a9cc2"
                     }
                   },
@@ -71002,7 +71002,7 @@
                           "plans": [
                             {
                               "platform": "stripe",
-                              "id": "foo",
+                              "id": "string",
                               "status": "active"
                             }
                           ]
@@ -71231,10 +71231,10 @@
                       }
                     ],
                     "categories": [
-                      "foo"
+                      "string"
                     ],
                     "tax-category": "standard-taxable",
-                    "default-sku": "foo",
+                    "default-sku": "string",
                     "ec-product-type": "ff42fee0113744f693a764e3431a9cc2"
                   }
                 },
@@ -71265,7 +71265,7 @@
                         "plans": [
                           {
                             "platform": "stripe",
-                            "id": "foo",
+                            "id": "string",
                             "status": "active"
                           }
                         ]
@@ -71310,10 +71310,10 @@
                         }
                       ],
                       "categories": [
-                        "foo"
+                        "string"
                       ],
                       "tax-category": "standard-taxable",
-                      "default-sku": "foo",
+                      "default-sku": "string",
                       "ec-product-type": "ff42fee0113744f693a764e3431a9cc2"
                     }
                   },
@@ -71344,7 +71344,7 @@
                           "plans": [
                             {
                               "platform": "stripe",
-                              "id": "foo",
+                              "id": "string",
                               "status": "active"
                             }
                           ]
@@ -72102,7 +72102,7 @@
                         "plans": [
                           {
                             "platform": "stripe",
-                            "id": "foo",
+                            "id": "string",
                             "status": "active"
                           }
                         ]
@@ -72143,7 +72143,7 @@
                           "plans": [
                             {
                               "platform": "stripe",
-                              "id": "foo",
+                              "id": "string",
                               "status": "active"
                             }
                           ]
@@ -72427,7 +72427,7 @@
                     "plans": [
                       {
                         "platform": "stripe",
-                        "id": "foo",
+                        "id": "string",
                         "status": "active"
                       }
                     ]
@@ -72464,7 +72464,7 @@
                       "plans": [
                         {
                           "platform": "stripe",
-                          "id": "foo",
+                          "id": "string",
                           "status": "active"
                         }
                       ]

@@ -236,31 +236,31 @@
               "headers": {},
               "requestBody": {
                 "grant_type": "password",
-                "client_id": "foo",
-                "client_secret": "foo"
+                "client_id": "string",
+                "client_secret": "string"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
                   "grant_type": "password",
-                  "client_id": "foo",
-                  "client_secret": "foo"
+                  "client_id": "string",
+                  "client_secret": "string"
                 }
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "access_token": "foo",
+                "access_token": "string",
                 "token_type": "Bearer",
-                "expires_in": 42,
-                "refresh_token": "foo"
+                "expires_in": 1,
+                "refresh_token": "string"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "access_token": "foo",
+                  "access_token": "string",
                   "token_type": "Bearer",
-                  "expires_in": 42,
-                  "refresh_token": "foo"
+                  "expires_in": 1,
+                  "refresh_token": "string"
                 }
               }
             }

@@ -6378,32 +6378,32 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "id": "foo",
-                "created": "foo",
-                "label": "foo",
-                "name": "foo",
+                "id": "string",
+                "created": "2024-01-15T09:30:00Z",
+                "label": "string",
+                "name": "string",
                 "status": "ACTIVE",
                 "environment": "DEVELOPMENT",
                 "model_type": "GENERATE",
                 "active_model_version_ids": [
-                  "foo"
+                  "string"
                 ],
-                "last_deployed_on": "foo"
+                "last_deployed_on": "2024-01-15T09:30:00Z"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "id": "foo",
-                  "created": "foo",
-                  "label": "foo",
-                  "name": "foo",
+                  "id": "string",
+                  "created": "2024-01-15T09:30:00Z",
+                  "label": "string",
+                  "name": "string",
                   "status": "ACTIVE",
                   "environment": "DEVELOPMENT",
                   "model_type": "GENERATE",
                   "active_model_version_ids": [
-                    "foo"
+                    "string"
                   ],
-                  "last_deployed_on": "foo"
+                  "last_deployed_on": "2024-01-15T09:30:00Z"
                 }
               }
             }
@@ -6534,10 +6534,10 @@
               },
               "responseStatusCode": 201,
               "responseBody": {
-                "id": "foo",
-                "created": "foo",
-                "label": "foo",
-                "name": "foo",
+                "id": "string",
+                "created": "2024-01-15T09:30:00Z",
+                "label": "string",
+                "name": "string",
                 "status": "ACTIVE",
                 "environment": "DEVELOPMENT",
                 "indexing_config": {}
@@ -6545,10 +6545,10 @@
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "id": "foo",
-                  "created": "foo",
-                  "label": "foo",
-                  "name": "foo",
+                  "id": "string",
+                  "created": "2024-01-15T09:30:00Z",
+                  "label": "string",
+                  "name": "string",
                   "status": "ACTIVE",
                   "environment": "DEVELOPMENT",
                   "indexing_config": {}
@@ -6603,10 +6603,10 @@
               },
               "responseStatusCode": 201,
               "responseBody": {
-                "id": "foo",
-                "created": "foo",
-                "label": "foo",
-                "name": "foo",
+                "id": "string",
+                "created": "2024-01-15T09:30:00Z",
+                "label": "string",
+                "name": "string",
                 "status": "ACTIVE",
                 "environment": "DEVELOPMENT",
                 "indexing_config": {}
@@ -6614,10 +6614,10 @@
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "id": "foo",
-                  "created": "foo",
-                  "label": "foo",
-                  "name": "foo",
+                  "id": "string",
+                  "created": "2024-01-15T09:30:00Z",
+                  "label": "string",
+                  "name": "string",
                   "status": "ACTIVE",
                   "environment": "DEVELOPMENT",
                   "indexing_config": {}
@@ -6676,10 +6676,10 @@
               },
               "responseStatusCode": 201,
               "responseBody": {
-                "id": "foo",
-                "created": "foo",
-                "label": "foo",
-                "name": "foo",
+                "id": "string",
+                "created": "2024-01-15T09:30:00Z",
+                "label": "string",
+                "name": "string",
                 "status": "ACTIVE",
                 "environment": "DEVELOPMENT",
                 "indexing_config": {}
@@ -6687,10 +6687,10 @@
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "id": "foo",
-                  "created": "foo",
-                  "label": "foo",
-                  "name": "foo",
+                  "id": "string",
+                  "created": "2024-01-15T09:30:00Z",
+                  "label": "string",
+                  "name": "string",
                   "status": "ACTIVE",
                   "environment": "DEVELOPMENT",
                   "indexing_config": {}
@@ -6822,20 +6822,20 @@
                 "previous": "http://api.example.org/accounts/?offset=200&limit=100",
                 "results": [
                   {
-                    "id": "foo",
-                    "external_id": "foo",
-                    "last_uploaded_at": "foo",
-                    "label": "foo",
+                    "id": "string",
+                    "external_id": "string",
+                    "last_uploaded_at": "2024-01-15T09:30:00Z",
+                    "label": "string",
                     "processing_state": "QUEUED",
                     "processing_failure_reason": "EXCEEDED_CHARACTER_LIMIT",
                     "status": "ACTIVE",
                     "keywords": [
-                      "foo"
+                      "string"
                     ],
                     "document_to_document_indexes": [
                       {
-                        "id": "foo",
-                        "document_index_id": "foo",
+                        "id": "string",
+                        "document_index_id": "string",
                         "indexing_state": "AWAITING_PROCESSING"
                       }
                     ]
@@ -6850,20 +6850,20 @@
                   "previous": "http://api.example.org/accounts/?offset=200&limit=100",
                   "results": [
                     {
-                      "id": "foo",
-                      "external_id": "foo",
-                      "last_uploaded_at": "foo",
-                      "label": "foo",
+                      "id": "string",
+                      "external_id": "string",
+                      "last_uploaded_at": "2024-01-15T09:30:00Z",
+                      "label": "string",
                       "processing_state": "QUEUED",
                       "processing_failure_reason": "EXCEEDED_CHARACTER_LIMIT",
                       "status": "ACTIVE",
                       "keywords": [
-                        "foo"
+                        "string"
                       ],
                       "document_to_document_indexes": [
                         {
-                          "id": "foo",
-                          "document_index_id": "foo",
+                          "id": "string",
+                          "document_index_id": "string",
                           "indexing_state": "AWAITING_PROCESSING"
                         }
                       ]
@@ -6979,24 +6979,24 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "label": "foo",
-                "contents": "foo"
+                "label": "string",
+                "contents": "string"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "label": "foo",
-                  "contents": "foo"
+                  "label": "string",
+                  "contents": "string"
                 }
               },
               "responseStatusCode": 201,
               "responseBody": {
-                "document_id": "foo"
+                "document_id": "string"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "document_id": "foo"
+                  "document_id": "string"
                 }
               }
             }
@@ -7088,53 +7088,53 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "id": "foo",
-                "created": "foo",
-                "label": "foo",
+                "id": "string",
+                "created": "2024-01-15T09:30:00Z",
+                "label": "string",
                 "model_type": "GENERATE",
                 "provider": "ANTHROPIC",
-                "external_id": "foo",
+                "external_id": "string",
                 "build_config": {
-                  "base_model": "foo",
+                  "base_model": "string",
                   "sandbox_snapshot": {
-                    "id": "foo",
-                    "prompt_index": 42,
-                    "prompt_id": "foo",
-                    "sandbox_id": "foo"
+                    "id": "string",
+                    "prompt_index": 1,
+                    "prompt_id": "string",
+                    "sandbox_id": "string"
                   }
                 },
                 "exec_config": {
                   "parameters": {
-                    "temperature": 42,
-                    "max_tokens": 42,
-                    "top_p": 42,
-                    "frequency_penalty": 42,
-                    "presence_penalty": 42,
+                    "temperature": 1.1,
+                    "max_tokens": 1,
+                    "top_p": 1.1,
+                    "frequency_penalty": 1.1,
+                    "presence_penalty": 1.1,
                     "logit_bias": {},
                     "stop": [
-                      "foo"
+                      "string"
                     ],
-                    "top_k": 42
+                    "top_k": 1.1
                   },
                   "input_variables": [
                     {
-                      "key": "foo"
+                      "key": "string"
                     }
                   ],
-                  "prompt_template": "foo",
+                  "prompt_template": "string",
                   "prompt_block_data": {
-                    "version": 42,
+                    "version": 1,
                     "blocks": [
                       {
-                        "id": "foo",
+                        "id": "string",
                         "block_type": "CHAT_MESSAGE",
                         "properties": {
                           "chat_role": "SYSTEM",
                           "chat_message_unterminated": false,
-                          "template": "foo",
+                          "template": "string",
                           "template_type": "STRING",
-                          "function_name": "foo",
-                          "function_description": "foo",
+                          "function_name": "string",
+                          "function_description": "string",
                           "function_parameters": {},
                           "blocks": [
                             null
@@ -7143,60 +7143,60 @@
                       }
                     ]
                   },
-                  "prompt_syntax_version": 42
+                  "prompt_syntax_version": 1
                 },
                 "status": "CREATING"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "id": "foo",
-                  "created": "foo",
-                  "label": "foo",
+                  "id": "string",
+                  "created": "2024-01-15T09:30:00Z",
+                  "label": "string",
                   "model_type": "GENERATE",
                   "provider": "ANTHROPIC",
-                  "external_id": "foo",
+                  "external_id": "string",
                   "build_config": {
-                    "base_model": "foo",
+                    "base_model": "string",
                     "sandbox_snapshot": {
-                      "id": "foo",
-                      "prompt_index": 42,
-                      "prompt_id": "foo",
-                      "sandbox_id": "foo"
+                      "id": "string",
+                      "prompt_index": 1,
+                      "prompt_id": "string",
+                      "sandbox_id": "string"
                     }
                   },
                   "exec_config": {
                     "parameters": {
-                      "temperature": 42,
-                      "max_tokens": 42,
-                      "top_p": 42,
-                      "frequency_penalty": 42,
-                      "presence_penalty": 42,
+                      "temperature": 1.1,
+                      "max_tokens": 1,
+                      "top_p": 1.1,
+                      "frequency_penalty": 1.1,
+                      "presence_penalty": 1.1,
                       "logit_bias": {},
                       "stop": [
-                        "foo"
+                        "string"
                       ],
-                      "top_k": 42
+                      "top_k": 1.1
                     },
                     "input_variables": [
                       {
-                        "key": "foo"
+                        "key": "string"
                       }
                     ],
-                    "prompt_template": "foo",
+                    "prompt_template": "string",
                     "prompt_block_data": {
-                      "version": 42,
+                      "version": 1,
                       "blocks": [
                         {
-                          "id": "foo",
+                          "id": "string",
                           "block_type": "CHAT_MESSAGE",
                           "properties": {
                             "chat_role": "SYSTEM",
                             "chat_message_unterminated": false,
-                            "template": "foo",
+                            "template": "string",
                             "template_type": "STRING",
-                            "function_name": "foo",
-                            "function_description": "foo",
+                            "function_name": "string",
+                            "function_description": "string",
                             "function_parameters": {},
                             "blocks": [
                               null
@@ -7205,7 +7205,7 @@
                         }
                       ]
                     },
-                    "prompt_syntax_version": 42
+                    "prompt_syntax_version": 1
                   },
                   "status": "CREATING"
                 }
@@ -7311,16 +7311,16 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "prompt": {
-                  "text": "foo",
-                  "num_tokens": 42
+                  "text": "string",
+                  "num_tokens": 1
                 }
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
                   "prompt": {
-                    "text": "foo",
-                    "num_tokens": 42
+                    "text": "string",
+                    "num_tokens": 1
                   }
                 }
               }
@@ -7417,14 +7417,14 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "label": "foo",
-                "name": "foo",
+                "label": "string",
+                "name": "string",
                 "prompt": {
                   "prompt_block_data": {
-                    "version": 42,
+                    "version": 1,
                     "blocks": [
                       {
-                        "id": "foo",
+                        "id": "string",
                         "block_type": "CHAT_MESSAGE",
                         "properties": {}
                       }
@@ -7432,34 +7432,34 @@
                   },
                   "input_variables": [
                     {
-                      "key": "foo"
+                      "key": "string"
                     }
                   ]
                 },
                 "provider": "ANTHROPIC",
-                "model": "foo",
+                "model": "string",
                 "parameters": {
-                  "temperature": 42,
-                  "max_tokens": 42,
+                  "temperature": 1.1,
+                  "max_tokens": 1,
                   "stop": [
-                    "foo"
+                    "string"
                   ],
-                  "top_p": 42,
-                  "frequency_penalty": 42,
-                  "presence_penalty": 42
+                  "top_p": 1.1,
+                  "frequency_penalty": 1.1,
+                  "presence_penalty": 1.1
                 }
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "label": "foo",
-                  "name": "foo",
+                  "label": "string",
+                  "name": "string",
                   "prompt": {
                     "prompt_block_data": {
-                      "version": 42,
+                      "version": 1,
                       "blocks": [
                         {
-                          "id": "foo",
+                          "id": "string",
                           "block_type": "CHAT_MESSAGE",
                           "properties": {}
                         }
@@ -7467,69 +7467,69 @@
                     },
                     "input_variables": [
                       {
-                        "key": "foo"
+                        "key": "string"
                       }
                     ]
                   },
                   "provider": "ANTHROPIC",
-                  "model": "foo",
+                  "model": "string",
                   "parameters": {
-                    "temperature": 42,
-                    "max_tokens": 42,
+                    "temperature": 1.1,
+                    "max_tokens": 1,
                     "stop": [
-                      "foo"
+                      "string"
                     ],
-                    "top_p": 42,
-                    "frequency_penalty": 42,
-                    "presence_penalty": 42
+                    "top_p": 1.1,
+                    "frequency_penalty": 1.1,
+                    "presence_penalty": 1.1
                   }
                 }
               },
               "responseStatusCode": 200,
               "responseBody": {
                 "prompt": {
-                  "id": "foo",
-                  "label": "foo"
+                  "id": "string",
+                  "label": "string"
                 },
                 "sandbox_snapshot": {
-                  "id": "foo"
+                  "id": "string"
                 },
                 "sandbox": {
-                  "id": "foo",
-                  "label": "foo"
+                  "id": "string",
+                  "label": "string"
                 },
                 "model_version": {
-                  "id": "foo",
-                  "label": "foo"
+                  "id": "string",
+                  "label": "string"
                 },
                 "deployment": {
-                  "id": "foo",
-                  "name": "foo",
-                  "label": "foo"
+                  "id": "string",
+                  "name": "string",
+                  "label": "string"
                 }
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
                   "prompt": {
-                    "id": "foo",
-                    "label": "foo"
+                    "id": "string",
+                    "label": "string"
                   },
                   "sandbox_snapshot": {
-                    "id": "foo"
+                    "id": "string"
                   },
                   "sandbox": {
-                    "id": "foo",
-                    "label": "foo"
+                    "id": "string",
+                    "label": "string"
                   },
                   "model_version": {
-                    "id": "foo",
-                    "label": "foo"
+                    "id": "string",
+                    "label": "string"
                   },
                   "deployment": {
-                    "id": "foo",
-                    "name": "foo",
-                    "label": "foo"
+                    "id": "string",
+                    "name": "string",
+                    "label": "string"
                   }
                 }
               }
@@ -7680,21 +7680,21 @@
                 "label": "Untitled Scenario",
                 "inputs": [
                   {
-                    "key": "foo",
+                    "key": "string",
                     "type": "TEXT",
-                    "value": "foo",
+                    "value": "string",
                     "chat_history": [
                       {
-                        "text": "foo",
+                        "text": "string",
                         "role": "SYSTEM"
                       }
                     ]
                   }
                 ],
-                "id": "foo",
+                "id": "string",
                 "metric_input_params": {
                   "params": {
-                    "target": "foo"
+                    "target": "string"
                   }
                 }
               },
@@ -7704,21 +7704,21 @@
                   "label": "Untitled Scenario",
                   "inputs": [
                     {
-                      "key": "foo",
+                      "key": "string",
                       "type": "TEXT",
-                      "value": "foo",
+                      "value": "string",
                       "chat_history": [
                         {
-                          "text": "foo",
+                          "text": "string",
                           "role": "SYSTEM"
                         }
                       ]
                     }
                   ],
-                  "id": "foo",
+                  "id": "string",
                   "metric_input_params": {
                     "params": {
-                      "target": "foo"
+                      "target": "string"
                     }
                   }
                 }
@@ -7787,21 +7787,21 @@
                 "label": "Untitled Scenario",
                 "inputs": [
                   {
-                    "key": "foo",
+                    "key": "string",
                     "type": "TEXT",
-                    "value": "foo",
+                    "value": "string",
                     "chat_history": [
                       {
-                        "text": "foo",
+                        "text": "string",
                         "role": "SYSTEM"
                       }
                     ]
                   }
                 ],
-                "id": "foo",
+                "id": "string",
                 "metric_input_params": {
                   "params": {
-                    "target": "foo"
+                    "target": "string"
                   }
                 }
               },
@@ -7811,21 +7811,21 @@
                   "label": "Untitled Scenario",
                   "inputs": [
                     {
-                      "key": "foo",
+                      "key": "string",
                       "type": "TEXT",
-                      "value": "foo",
+                      "value": "string",
                       "chat_history": [
                         {
-                          "text": "foo",
+                          "text": "string",
                           "role": "SYSTEM"
                         }
                       ]
                     }
                   ],
-                  "id": "foo",
+                  "id": "string",
                   "metric_input_params": {
                     "params": {
-                      "target": "foo"
+                      "target": "string"
                     }
                   }
                 }
@@ -8028,21 +8028,21 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "test_case_id": "foo",
-                "label": "foo",
+                "test_case_id": "string",
+                "label": "string",
                 "input_values": {},
                 "evaluation_params": {
-                  "target": "foo"
+                  "target": "string"
                 }
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "test_case_id": "foo",
-                  "label": "foo",
+                  "test_case_id": "string",
+                  "label": "string",
                   "input_values": {},
                   "evaluation_params": {
-                    "target": "foo"
+                    "target": "string"
                   }
                 }
               }
@@ -8266,14 +8266,14 @@
             "headers": {},
             "requestBody": {
               "inputs": [
-                "foo"
+                "string"
               ]
             },
             "requestBodyV3": {
               "type": "json",
               "value": {
                 "inputs": [
-                  "foo"
+                  "string"
                 ]
               }
             },
@@ -8282,12 +8282,12 @@
               {
                 "state": "INITIATED",
                 "meta": {
-                  "model_name": "foo",
-                  "latency": 42,
-                  "deployment_release_tag": "foo",
-                  "prompt_version_id": "foo"
+                  "model_name": "string",
+                  "latency": 1,
+                  "deployment_release_tag": "string",
+                  "prompt_version_id": "string"
                 },
-                "execution_id": "foo"
+                "execution_id": "string"
               }
             ],
             "responseBodyV3": {
@@ -8298,12 +8298,12 @@
                   "value": {
                     "state": "INITIATED",
                     "meta": {
-                      "model_name": "foo",
-                      "latency": 42,
-                      "deployment_release_tag": "foo",
-                      "prompt_version_id": "foo"
+                      "model_name": "string",
+                      "latency": 1,
+                      "deployment_release_tag": "string",
+                      "prompt_version_id": "string"
                     },
-                    "execution_id": "foo"
+                    "execution_id": "string"
                   }
                 }
               ]
@@ -8381,8 +8381,8 @@
             "requestBody": {
               "inputs": [
                 {
-                  "name": "foo",
-                  "value": "foo"
+                  "name": "string",
+                  "value": "string"
                 }
               ]
             },
@@ -8391,8 +8391,8 @@
               "value": {
                 "inputs": [
                   {
-                    "name": "foo",
-                    "value": "foo"
+                    "name": "string",
+                    "value": "string"
                   }
                 ]
               }
@@ -8400,23 +8400,23 @@
             "responseStatusCode": 200,
             "responseBody": [
               {
-                "run_id": "foo",
-                "external_id": "foo",
-                "type": "foo",
+                "run_id": "string",
+                "external_id": "string",
+                "type": "string",
                 "data": {
-                  "id": "foo",
+                  "id": "string",
                   "state": "INITIATED",
-                  "ts": "foo",
+                  "ts": "2024-01-15T09:30:00Z",
                   "output": {
-                    "name": "foo",
+                    "name": "string",
                     "state": "INITIATED",
-                    "node_id": "foo",
-                    "type": "foo",
-                    "delta": "foo",
-                    "value": "foo"
+                    "node_id": "string",
+                    "type": "string",
+                    "delta": "string",
+                    "value": "string"
                   },
                   "error": {
-                    "message": "foo",
+                    "message": "string",
                     "code": "WORKFLOW_INITIALIZATION"
                   }
                 }
@@ -8428,23 +8428,23 @@
                 {
                   "type": "json",
                   "value": {
-                    "run_id": "foo",
-                    "external_id": "foo",
-                    "type": "foo",
+                    "run_id": "string",
+                    "external_id": "string",
+                    "type": "string",
                     "data": {
-                      "id": "foo",
+                      "id": "string",
                       "state": "INITIATED",
-                      "ts": "foo",
+                      "ts": "2024-01-15T09:30:00Z",
                       "output": {
-                        "name": "foo",
+                        "name": "string",
                         "state": "INITIATED",
-                        "node_id": "foo",
-                        "type": "foo",
-                        "delta": "foo",
-                        "value": "foo"
+                        "node_id": "string",
+                        "type": "string",
+                        "delta": "string",
+                        "value": "string"
                       },
                       "error": {
-                        "message": "foo",
+                        "message": "string",
                         "code": "WORKFLOW_INITIALIZATION"
                       }
                     }
@@ -8596,28 +8596,28 @@
                   "data": {
                     "completions": [
                       {
-                        "id": "foo",
-                        "external_id": "foo",
-                        "text": "foo",
+                        "id": "string",
+                        "external_id": "string",
+                        "text": "string",
                         "finish_reason": "LENGTH",
                         "logprobs": {
                           "tokens": [
                             {
-                              "token": "foo",
-                              "logprob": 42,
+                              "token": "string",
+                              "logprob": 1.1,
                               "top_logprobs": {},
-                              "text_offset": 42
+                              "text_offset": 1
                             }
                           ],
-                          "likelihood": 42
+                          "likelihood": 1.1
                         },
-                        "model_version_id": "foo",
+                        "model_version_id": "string",
                         "type": "STRING"
                       }
                     ]
                   },
                   "error": {
-                    "message": "foo"
+                    "message": "string"
                   }
                 }
               ]
@@ -8630,28 +8630,28 @@
                     "data": {
                       "completions": [
                         {
-                          "id": "foo",
-                          "external_id": "foo",
-                          "text": "foo",
+                          "id": "string",
+                          "external_id": "string",
+                          "text": "string",
                           "finish_reason": "LENGTH",
                           "logprobs": {
                             "tokens": [
                               {
-                                "token": "foo",
-                                "logprob": 42,
+                                "token": "string",
+                                "logprob": 1.1,
                                 "top_logprobs": {},
-                                "text_offset": 42
+                                "text_offset": 1
                               }
                             ],
-                            "likelihood": 42
+                            "likelihood": 1.1
                           },
-                          "model_version_id": "foo",
+                          "model_version_id": "string",
                           "type": "STRING"
                         }
                       ]
                     },
                     "error": {
-                      "message": "foo"
+                      "message": "string"
                     }
                   }
                 ]
@@ -8801,31 +8801,31 @@
             "responseBody": [
               {
                 "delta": {
-                  "request_index": 42,
+                  "request_index": 1,
                   "data": {
-                    "completion_index": 42,
+                    "completion_index": 1,
                     "completion": {
-                      "id": "foo",
-                      "external_id": "foo",
-                      "text": "foo",
+                      "id": "string",
+                      "external_id": "string",
+                      "text": "string",
                       "finish_reason": "LENGTH",
                       "logprobs": {
                         "tokens": [
                           {
-                            "token": "foo",
-                            "logprob": 42,
+                            "token": "string",
+                            "logprob": 1.1,
                             "top_logprobs": {},
-                            "text_offset": 42
+                            "text_offset": 1
                           }
                         ],
-                        "likelihood": 42
+                        "likelihood": 1.1
                       },
-                      "model_version_id": "foo",
+                      "model_version_id": "string",
                       "type": "STRING"
                     }
                   },
                   "error": {
-                    "message": "foo"
+                    "message": "string"
                   }
                 }
               }
@@ -8837,31 +8837,31 @@
                   "type": "json",
                   "value": {
                     "delta": {
-                      "request_index": 42,
+                      "request_index": 1,
                       "data": {
-                        "completion_index": 42,
+                        "completion_index": 1,
                         "completion": {
-                          "id": "foo",
-                          "external_id": "foo",
-                          "text": "foo",
+                          "id": "string",
+                          "external_id": "string",
+                          "text": "string",
                           "finish_reason": "LENGTH",
                           "logprobs": {
                             "tokens": [
                               {
-                                "token": "foo",
-                                "logprob": 42,
+                                "token": "string",
+                                "logprob": 1.1,
                                 "top_logprobs": {},
-                                "text_offset": 42
+                                "text_offset": 1
                               }
                             ],
-                            "likelihood": 42
+                            "likelihood": 1.1
                           },
-                          "model_version_id": "foo",
+                          "model_version_id": "string",
                           "type": "STRING"
                         }
                       },
                       "error": {
-                        "message": "foo"
+                        "message": "string"
                       }
                     }
                   }
@@ -8976,12 +8976,12 @@
             "queryParameters": {},
             "headers": {},
             "requestBody": {
-              "query": "foo"
+              "query": "string"
             },
             "requestBodyV3": {
               "type": "json",
               "value": {
-                "query": "foo"
+                "query": "string"
               }
             },
             "responseStatusCode": 200,
@@ -8989,15 +8989,15 @@
               "results": [
                 {
                   "document": {
-                    "id": "foo",
-                    "label": "foo",
-                    "external_id": "foo"
+                    "id": "string",
+                    "label": "string",
+                    "external_id": "string"
                   },
-                  "text": "foo",
+                  "text": "string",
                   "keywords": [
-                    "foo"
+                    "string"
                   ],
-                  "score": 42
+                  "score": 1.1
                 }
               ]
             },
@@ -9007,15 +9007,15 @@
                 "results": [
                   {
                     "document": {
-                      "id": "foo",
-                      "label": "foo",
-                      "external_id": "foo"
+                      "id": "string",
+                      "label": "string",
+                      "external_id": "string"
                     },
-                    "text": "foo",
+                    "text": "string",
                     "keywords": [
-                      "foo"
+                      "string"
                     ],
-                    "score": 42
+                    "score": 1.1
                   }
                 ]
               }

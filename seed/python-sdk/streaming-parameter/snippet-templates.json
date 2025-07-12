@@ -24,7 +24,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.dummy.generate(\n\t$FERN_INPUT\n)",
+                "templateString": "client.dummy.generate(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -79,7 +79,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.dummy.generate(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.dummy.generate(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",

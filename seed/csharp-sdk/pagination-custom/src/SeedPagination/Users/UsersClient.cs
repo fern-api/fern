@@ -62,7 +62,16 @@ public partial class UsersClient
             }
         };
         return await SeedPaginationPagerFactory
-            .CreateAsync<string>(sendRequest, httpRequest, cancellationToken)
+            .CreateAsync<string>(
+                new SeedPaginationPagerContext()
+                {
+                    SendRequest = sendRequest,
+                    InitialHttpRequest = httpRequest,
+                    ClientOptions = _client.Options,
+                    RequestOptions = options,
+                },
+                cancellationToken
+            )
             .ConfigureAwait(false);
     }
 }

@@ -17,7 +17,7 @@ public partial class ReqWithHeadersClient
 
     /// <example><code>
     /// await client.ReqWithHeaders.GetWithCustomHeaderAsync(
-    ///     new SeedExhaustive.ReqWithHeaders.ReqWithHeaders
+    ///     new ReqWithHeaders
     ///     {
     ///         XTestEndpointHeader = "X-TEST-ENDPOINT-HEADER",
     ///         XTestServiceHeader = "X-TEST-SERVICE-HEADER",
@@ -26,7 +26,7 @@ public partial class ReqWithHeadersClient
     /// );
     /// </code></example>
     public async global::System.Threading.Tasks.Task GetWithCustomHeaderAsync(
-        SeedExhaustive.ReqWithHeaders.ReqWithHeaders request,
+        ReqWithHeaders request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

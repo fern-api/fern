@@ -14,8 +14,32 @@ type Int = {
     type: "int";
 };
 
+type UInt = {
+    type: "uint";
+};
+
+type UInt64 = {
+    type: "uint64";
+};
+
+type Int64 = {
+    type: "int64";
+};
+
+type Float = {
+    type: "float";
+};
+
 type Double = {
     type: "double";
+};
+
+type Date_ = {
+    type: "date";
+};
+
+type UUID = {
+    type: "uuid";
 };
 
 type Tuple = {
@@ -23,7 +47,7 @@ type Tuple = {
     elements: [Type, ...Type[]];
 };
 
-type Array = {
+type Array_ = {
     type: "array";
     elementType: Type;
 };
@@ -34,7 +58,35 @@ type Dictionary = {
     valueType: Type;
 };
 
-type InternalType = String_ | Bool | Int | Double | Tuple | Array | Dictionary;
+/**
+ * A reference to a custom type.
+ */
+type Custom = {
+    type: "custom";
+    /** The name of the custom type. */
+    name: string;
+};
+
+type Any = {
+    type: "any";
+};
+
+type InternalType =
+    | String_
+    | Bool
+    | Int
+    | UInt
+    | UInt64
+    | Int64
+    | Float
+    | Double
+    | Date_
+    | UUID
+    | Tuple
+    | Array_
+    | Dictionary
+    | Custom
+    | Any;
 
 export class Type extends AstNode {
     private internalType: InternalType;
@@ -55,8 +107,26 @@ export class Type extends AstNode {
             case "int":
                 writer.write("Int");
                 break;
+            case "uint":
+                writer.write("UInt");
+                break;
+            case "uint64":
+                writer.write("UInt64");
+                break;
+            case "int64":
+                writer.write("Int64");
+                break;
+            case "float":
+                writer.write("Float");
+                break;
             case "double":
                 writer.write("Double");
+                break;
+            case "date":
+                writer.write("Date");
+                break;
+            case "uuid":
+                writer.write("UUID");
                 break;
             case "tuple":
                 writer.write("(");
@@ -80,6 +150,12 @@ export class Type extends AstNode {
                 this.internalType.valueType.write(writer);
                 writer.write("]");
                 break;
+            case "custom":
+                writer.write(this.internalType.name);
+                break;
+            case "any":
+                writer.write("Any");
+                break;
             default:
                 assertNever(this.internalType);
         }
@@ -97,8 +173,32 @@ export class Type extends AstNode {
         return new this({ type: "int" });
     }
 
+    public static uint(): Type {
+        return new this({ type: "uint" });
+    }
+
+    public static uint64(): Type {
+        return new this({ type: "uint64" });
+    }
+
+    public static int64(): Type {
+        return new this({ type: "int64" });
+    }
+
+    public static float(): Type {
+        return new this({ type: "float" });
+    }
+
     public static double(): Type {
         return new this({ type: "double" });
+    }
+
+    public static date(): Type {
+        return new this({ type: "date" });
+    }
+
+    public static uuid(): Type {
+        return new this({ type: "uuid" });
     }
 
     public static tuple(elements: [Type, ...Type[]]): Type {
@@ -112,5 +212,13 @@ export class Type extends AstNode {
     public static dictionary(keyType: Type, valueType: Type): Type {
         // TODO: keyType needs to conform to Hashable. We may want to enforce this as a constraint.
         return new this({ type: "dictionary", keyType, valueType });
+    }
+
+    public static custom(name: string): Type {
+        return new this({ type: "custom", name });
+    }
+
+    public static any(): Type {
+        return new this({ type: "any" });
     }
 }

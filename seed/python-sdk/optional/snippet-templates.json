@@ -24,7 +24,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.optional.send_optional_body(\n\t$FERN_INPUT\n)",
+                "templateString": "client.optional.send_optional_body(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -88,7 +88,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.optional.send_optional_body(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.optional.send_optional_body(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",

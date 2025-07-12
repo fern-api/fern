@@ -30,13 +30,17 @@
     "test": "vitest --passWithNoTests --run",
     "test:update": "vitest --passWithNoTests --run -u"
   },
-  "devDependencies": {
+  "dependencies": {
     "@fern-api/base-generator": "workspace:*",
-    "@fern-api/configs": "workspace:*",
-    "@fern-api/fs-utils": "workspace:*",
     "@fern-api/swift-base": "workspace:*",
+    "@fern-fern/ir-sdk": "^58.2.0"
+  },
+  "devDependencies": {
+    "@fern-api/configs": "workspace:*",
+    "@fern-api/core-utils": "workspace:*",
+    "@fern-api/fs-utils": "workspace:*",
     "@fern-api/swift-codegen": "workspace:*",
-    "@fern-fern/ir-sdk": "^58.2.0",
+    "@fern-api/test-utils": "workspace:*",
     "@trivago/prettier-plugin-sort-imports": "^5.2.1",
     "@types/jest": "^29.5.14",
     "@types/node": "18.15.3",

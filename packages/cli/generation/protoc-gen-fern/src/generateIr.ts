@@ -26,6 +26,7 @@ export function generateIr({ req, options }: { req: CodeGeneratorRequest; option
     for (const protoFile of req.protoFile) {
         const protoFileConverter = new ProtofileConverter({
             context: new ProtofileConverterContext({
+                codeGeneratorRequest: req,
                 spec: protoFile,
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 settings: {} as any,

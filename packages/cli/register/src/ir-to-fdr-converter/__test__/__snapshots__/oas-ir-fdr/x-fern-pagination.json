@@ -176,10 +176,10 @@
               },
               "users": [
                 {
-                  "id": "foo",
-                  "name": "foo",
-                  "email": "foo",
-                  "age": 42
+                  "id": "string",
+                  "name": "string",
+                  "email": "string",
+                  "age": 1
                 }
               ]
             },
@@ -191,10 +191,10 @@
                 },
                 "users": [
                   {
-                    "id": "foo",
-                    "name": "foo",
-                    "email": "foo",
-                    "age": 42
+                    "id": "string",
+                    "name": "string",
+                    "email": "string",
+                    "age": 1
                   }
                 ]
               }
@@ -278,10 +278,10 @@
               },
               "users": [
                 {
-                  "id": "foo",
-                  "name": "foo",
-                  "email": "foo",
-                  "age": 42
+                  "id": "string",
+                  "name": "string",
+                  "email": "string",
+                  "age": 1
                 }
               ]
             },
@@ -293,10 +293,10 @@
                 },
                 "users": [
                   {
-                    "id": "foo",
-                    "name": "foo",
-                    "email": "foo",
-                    "age": 42
+                    "id": "string",
+                    "name": "string",
+                    "email": "string",
+                    "age": 1
                   }
                 ]
               }

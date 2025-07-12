@@ -169,21 +169,21 @@
             "queryParameters": {},
             "headers": {},
             "requestBody": {
-              "age": "foo",
+              "age": "string",
               "location": {}
             },
             "requestBodyV3": {
               "type": "json",
               "value": {
-                "age": "foo",
+                "age": "string",
                 "location": {}
               }
             },
             "responseStatusCode": 201,
-            "responseBody": "foo",
+            "responseBody": "string",
             "responseBodyV3": {
               "type": "json",
-              "value": "foo"
+              "value": "string"
             }
           }
         ],

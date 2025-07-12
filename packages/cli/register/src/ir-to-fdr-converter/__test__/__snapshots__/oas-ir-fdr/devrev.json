@@ -8048,14 +8048,14 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "expires_at": "foo",
-                "url": "foo"
+                "expires_at": "2024-01-15T09:30:00Z",
+                "url": "string"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "expires_at": "foo",
-                  "url": "foo"
+                  "expires_at": "2024-01-15T09:30:00Z",
+                  "url": "string"
                 }
               }
             }
@@ -8205,36 +8205,36 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "file_name": "foo"
+                "file_name": "string"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "file_name": "foo"
+                  "file_name": "string"
                 }
               },
               "responseStatusCode": 200,
               "responseBody": {
                 "form_data": [
                   {
-                    "key": "foo",
-                    "value": "foo"
+                    "key": "string",
+                    "value": "string"
                   }
                 ],
                 "id": "don:<partition>:core:devo/<dev-org-id>:artifact/<artifact-id>",
-                "url": "foo"
+                "url": "string"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
                   "form_data": [
                     {
-                      "key": "foo",
-                      "value": "foo"
+                      "key": "string",
+                      "value": "string"
                     }
                   ],
                   "id": "don:<partition>:core:devo/<dev-org-id>:artifact/<artifact-id>",
-                  "url": "foo"
+                  "url": "string"
                 }
               }
             }
@@ -8401,21 +8401,21 @@
               },
               "responseStatusCode": 201,
               "responseBody": {
-                "access_token": "foo",
-                "client_id": "foo",
-                "expires_in": 42,
-                "refresh_token": "foo",
-                "scope": "foo",
+                "access_token": "string",
+                "client_id": "string",
+                "expires_in": 1,
+                "refresh_token": "string",
+                "scope": "string",
                 "token_type": "bearer"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "access_token": "foo",
-                  "client_id": "foo",
-                  "expires_in": 42,
-                  "refresh_token": "foo",
-                  "scope": "foo",
+                  "access_token": "string",
+                  "client_id": "string",
+                  "expires_in": 1,
+                  "refresh_token": "string",
+                  "scope": "string",
                   "token_type": "bearer"
                 }
               }
@@ -8736,43 +8736,43 @@
               "responseBody": {
                 "token": {
                   "created_by": {
-                    "display_id": "foo",
-                    "id": "foo",
-                    "display_name": "foo",
+                    "display_id": "string",
+                    "id": "string",
+                    "display_name": "string",
                     "display_picture": {
-                      "display_id": "foo",
-                      "id": "foo"
+                      "display_id": "string",
+                      "id": "string"
                     },
-                    "email": "foo",
-                    "full_name": "foo",
+                    "email": "string",
+                    "full_name": "string",
                     "state": "active"
                   },
-                  "created_date": "foo",
-                  "display_id": "foo",
-                  "id": "foo",
+                  "created_date": "2024-01-15T09:30:00Z",
+                  "display_id": "string",
+                  "id": "string",
                   "modified_by": {
-                    "display_id": "foo",
-                    "id": "foo",
-                    "display_name": "foo",
+                    "display_id": "string",
+                    "id": "string",
+                    "display_name": "string",
                     "display_picture": {
-                      "display_id": "foo",
-                      "id": "foo"
+                      "display_id": "string",
+                      "id": "string"
                     },
-                    "email": "foo",
-                    "full_name": "foo",
+                    "email": "string",
+                    "full_name": "string",
                     "state": "active"
                   },
-                  "modified_date": "foo",
-                  "client_id": "foo",
-                  "expires_at": "foo",
-                  "issued_at": "foo",
+                  "modified_date": "2024-01-15T09:30:00Z",
+                  "client_id": "string",
+                  "expires_at": "2024-01-15T09:30:00Z",
+                  "issued_at": "2024-01-15T09:30:00Z",
                   "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
                   "scopes": [
-                    "foo"
+                    "string"
                   ],
                   "status": "active",
-                  "subject": "foo",
-                  "token_hint": "foo"
+                  "subject": "string",
+                  "token_hint": "string"
                 }
               },
               "responseBodyV3": {
@@ -8780,43 +8780,43 @@
                 "value": {
                   "token": {
                     "created_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     },
-                    "created_date": "foo",
-                    "display_id": "foo",
-                    "id": "foo",
+                    "created_date": "2024-01-15T09:30:00Z",
+                    "display_id": "string",
+                    "id": "string",
                     "modified_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     },
-                    "modified_date": "foo",
-                    "client_id": "foo",
-                    "expires_at": "foo",
-                    "issued_at": "foo",
+                    "modified_date": "2024-01-15T09:30:00Z",
+                    "client_id": "string",
+                    "expires_at": "2024-01-15T09:30:00Z",
+                    "issued_at": "2024-01-15T09:30:00Z",
                     "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
                     "scopes": [
-                      "foo"
+                      "string"
                     ],
                     "status": "active",
-                    "subject": "foo",
-                    "token_hint": "foo"
+                    "subject": "string",
+                    "token_hint": "string"
                   }
                 }
               }
@@ -9009,43 +9009,43 @@
                 "tokens": [
                   {
                     "created_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     },
-                    "created_date": "foo",
-                    "display_id": "foo",
-                    "id": "foo",
+                    "created_date": "2024-01-15T09:30:00Z",
+                    "display_id": "string",
+                    "id": "string",
                     "modified_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     },
-                    "modified_date": "foo",
-                    "client_id": "foo",
-                    "expires_at": "foo",
-                    "issued_at": "foo",
+                    "modified_date": "2024-01-15T09:30:00Z",
+                    "client_id": "string",
+                    "expires_at": "2024-01-15T09:30:00Z",
+                    "issued_at": "2024-01-15T09:30:00Z",
                     "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
                     "scopes": [
-                      "foo"
+                      "string"
                     ],
                     "status": "active",
-                    "subject": "foo",
-                    "token_hint": "foo"
+                    "subject": "string",
+                    "token_hint": "string"
                   }
                 ]
               },
@@ -9055,43 +9055,43 @@
                   "tokens": [
                     {
                       "created_by": {
-                        "display_id": "foo",
-                        "id": "foo",
-                        "display_name": "foo",
+                        "display_id": "string",
+                        "id": "string",
+                        "display_name": "string",
                         "display_picture": {
-                          "display_id": "foo",
-                          "id": "foo"
+                          "display_id": "string",
+                          "id": "string"
                         },
-                        "email": "foo",
-                        "full_name": "foo",
+                        "email": "string",
+                        "full_name": "string",
                         "state": "active"
                       },
-                      "created_date": "foo",
-                      "display_id": "foo",
-                      "id": "foo",
+                      "created_date": "2024-01-15T09:30:00Z",
+                      "display_id": "string",
+                      "id": "string",
                       "modified_by": {
-                        "display_id": "foo",
-                        "id": "foo",
-                        "display_name": "foo",
+                        "display_id": "string",
+                        "id": "string",
+                        "display_name": "string",
                         "display_picture": {
-                          "display_id": "foo",
-                          "id": "foo"
+                          "display_id": "string",
+                          "id": "string"
                         },
-                        "email": "foo",
-                        "full_name": "foo",
+                        "email": "string",
+                        "full_name": "string",
                         "state": "active"
                       },
-                      "modified_date": "foo",
-                      "client_id": "foo",
-                      "expires_at": "foo",
-                      "issued_at": "foo",
+                      "modified_date": "2024-01-15T09:30:00Z",
+                      "client_id": "string",
+                      "expires_at": "2024-01-15T09:30:00Z",
+                      "issued_at": "2024-01-15T09:30:00Z",
                       "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
                       "scopes": [
-                        "foo"
+                        "string"
                       ],
                       "status": "active",
-                      "subject": "foo",
-                      "token_hint": "foo"
+                      "subject": "string",
+                      "token_hint": "string"
                     }
                   ]
                 }
@@ -9410,57 +9410,57 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "token_hint": "foo",
-                "token_id": "foo"
+                "token_hint": "string",
+                "token_id": "string"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "token_hint": "foo",
-                  "token_id": "foo"
+                  "token_hint": "string",
+                  "token_id": "string"
                 }
               },
               "responseStatusCode": 200,
               "responseBody": {
                 "token": {
                   "created_by": {
-                    "display_id": "foo",
-                    "id": "foo",
-                    "display_name": "foo",
+                    "display_id": "string",
+                    "id": "string",
+                    "display_name": "string",
                     "display_picture": {
-                      "display_id": "foo",
-                      "id": "foo"
+                      "display_id": "string",
+                      "id": "string"
                     },
-                    "email": "foo",
-                    "full_name": "foo",
+                    "email": "string",
+                    "full_name": "string",
                     "state": "active"
                   },
-                  "created_date": "foo",
-                  "display_id": "foo",
-                  "id": "foo",
+                  "created_date": "2024-01-15T09:30:00Z",
+                  "display_id": "string",
+                  "id": "string",
                   "modified_by": {
-                    "display_id": "foo",
-                    "id": "foo",
-                    "display_name": "foo",
+                    "display_id": "string",
+                    "id": "string",
+                    "display_name": "string",
                     "display_picture": {
-                      "display_id": "foo",
-                      "id": "foo"
+                      "display_id": "string",
+                      "id": "string"
                     },
-                    "email": "foo",
-                    "full_name": "foo",
+                    "email": "string",
+                    "full_name": "string",
                     "state": "active"
                   },
-                  "modified_date": "foo",
-                  "client_id": "foo",
-                  "expires_at": "foo",
-                  "issued_at": "foo",
+                  "modified_date": "2024-01-15T09:30:00Z",
+                  "client_id": "string",
+                  "expires_at": "2024-01-15T09:30:00Z",
+                  "issued_at": "2024-01-15T09:30:00Z",
                   "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
                   "scopes": [
-                    "foo"
+                    "string"
                   ],
                   "status": "active",
-                  "subject": "foo",
-                  "token_hint": "foo"
+                  "subject": "string",
+                  "token_hint": "string"
                 }
               },
               "responseBodyV3": {
@@ -9468,43 +9468,43 @@
                 "value": {
                   "token": {
                     "created_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     },
-                    "created_date": "foo",
-                    "display_id": "foo",
-                    "id": "foo",
+                    "created_date": "2024-01-15T09:30:00Z",
+                    "display_id": "string",
+                    "id": "string",
                     "modified_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     },
-                    "modified_date": "foo",
-                    "client_id": "foo",
-                    "expires_at": "foo",
-                    "issued_at": "foo",
+                    "modified_date": "2024-01-15T09:30:00Z",
+                    "client_id": "string",
+                    "expires_at": "2024-01-15T09:30:00Z",
+                    "issued_at": "2024-01-15T09:30:00Z",
                     "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
                     "scopes": [
-                      "foo"
+                      "string"
                     ],
                     "status": "active",
-                    "subject": "foo",
-                    "token_hint": "foo"
+                    "subject": "string",
+                    "token_hint": "string"
                   }
                 }
               }
@@ -9829,12 +9829,12 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "id": "foo"
+                "id": "string"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "id": "foo"
+                  "id": "string"
                 }
               },
               "responseStatusCode": 200
@@ -10303,12 +10303,12 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "id": "foo"
+                "id": "string"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "id": "foo"
+                  "id": "string"
                 }
               },
               "responseStatusCode": 200
@@ -10719,42 +10719,42 @@
                 "dev_users": [
                   {
                     "created_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     },
-                    "created_date": "foo",
-                    "display_id": "foo",
-                    "id": "foo",
+                    "created_date": "2024-01-15T09:30:00Z",
+                    "display_id": "string",
+                    "id": "string",
                     "modified_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     },
-                    "modified_date": "foo",
-                    "display_name": "foo",
+                    "modified_date": "2024-01-15T09:30:00Z",
+                    "display_name": "string",
                     "display_picture": {
-                      "display_id": "foo",
-                      "id": "foo"
+                      "display_id": "string",
+                      "id": "string"
                     },
-                    "email": "foo",
-                    "full_name": "foo",
+                    "email": "string",
+                    "full_name": "string",
                     "phone_numbers": [
-                      "foo"
+                      "string"
                     ],
                     "state": "active",
                     "external_identities": [
@@ -10762,8 +10762,8 @@
                     ]
                   }
                 ],
-                "next_cursor": "foo",
-                "prev_cursor": "foo"
+                "next_cursor": "string",
+                "prev_cursor": "string"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -10771,42 +10771,42 @@
                   "dev_users": [
                     {
                       "created_by": {
-                        "display_id": "foo",
-                        "id": "foo",
-                        "display_name": "foo",
+                        "display_id": "string",
+                        "id": "string",
+                        "display_name": "string",
                         "display_picture": {
-                          "display_id": "foo",
-                          "id": "foo"
+                          "display_id": "string",
+                          "id": "string"
                         },
-                        "email": "foo",
-                        "full_name": "foo",
+                        "email": "string",
+                        "full_name": "string",
                         "state": "active"
                       },
-                      "created_date": "foo",
-                      "display_id": "foo",
-                      "id": "foo",
+                      "created_date": "2024-01-15T09:30:00Z",
+                      "display_id": "string",
+                      "id": "string",
                       "modified_by": {
-                        "display_id": "foo",
-                        "id": "foo",
-                        "display_name": "foo",
+                        "display_id": "string",
+                        "id": "string",
+                        "display_name": "string",
                         "display_picture": {
-                          "display_id": "foo",
-                          "id": "foo"
+                          "display_id": "string",
+                          "id": "string"
                         },
-                        "email": "foo",
-                        "full_name": "foo",
+                        "email": "string",
+                        "full_name": "string",
                         "state": "active"
                       },
-                      "modified_date": "foo",
-                      "display_name": "foo",
+                      "modified_date": "2024-01-15T09:30:00Z",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "phone_numbers": [
-                        "foo"
+                        "string"
                       ],
                       "state": "active",
                       "external_identities": [
@@ -10814,8 +10814,8 @@
                       ]
                     }
                   ],
-                  "next_cursor": "foo",
-                  "prev_cursor": "foo"
+                  "next_cursor": "string",
+                  "prev_cursor": "string"
                 }
               }
             }
@@ -10955,42 +10955,42 @@
               "responseBody": {
                 "dev_user": {
                   "created_by": {
-                    "display_id": "foo",
-                    "id": "foo",
-                    "display_name": "foo",
+                    "display_id": "string",
+                    "id": "string",
+                    "display_name": "string",
                     "display_picture": {
-                      "display_id": "foo",
-                      "id": "foo"
+                      "display_id": "string",
+                      "id": "string"
                     },
-                    "email": "foo",
-                    "full_name": "foo",
+                    "email": "string",
+                    "full_name": "string",
                     "state": "active"
                   },
-                  "created_date": "foo",
-                  "display_id": "foo",
-                  "id": "foo",
+                  "created_date": "2024-01-15T09:30:00Z",
+                  "display_id": "string",
+                  "id": "string",
                   "modified_by": {
-                    "display_id": "foo",
-                    "id": "foo",
-                    "display_name": "foo",
+                    "display_id": "string",
+                    "id": "string",
+                    "display_name": "string",
                     "display_picture": {
-                      "display_id": "foo",
-                      "id": "foo"
+                      "display_id": "string",
+                      "id": "string"
                     },
-                    "email": "foo",
-                    "full_name": "foo",
+                    "email": "string",
+                    "full_name": "string",
                     "state": "active"
                   },
-                  "modified_date": "foo",
-                  "display_name": "foo",
+                  "modified_date": "2024-01-15T09:30:00Z",
+                  "display_name": "string",
                   "display_picture": {
-                    "display_id": "foo",
-                    "id": "foo"
+                    "display_id": "string",
+                    "id": "string"
                   },
-                  "email": "foo",
-                  "full_name": "foo",
+                  "email": "string",
+                  "full_name": "string",
                   "phone_numbers": [
-                    "foo"
+                    "string"
                   ],
                   "state": "active",
                   "external_identities": [
@@ -11003,42 +11003,42 @@
                 "value": {
                   "dev_user": {
                     "created_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     },
-                    "created_date": "foo",
-                    "display_id": "foo",
-                    "id": "foo",
+                    "created_date": "2024-01-15T09:30:00Z",
+                    "display_id": "string",
+                    "id": "string",
                     "modified_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     },
-                    "modified_date": "foo",
-                    "display_name": "foo",
+                    "modified_date": "2024-01-15T09:30:00Z",
+                    "display_name": "string",
                     "display_picture": {
-                      "display_id": "foo",
-                      "id": "foo"
+                      "display_id": "string",
+                      "id": "string"
                     },
-                    "email": "foo",
-                    "full_name": "foo",
+                    "email": "string",
+                    "full_name": "string",
                     "phone_numbers": [
-                      "foo"
+                      "string"
                     ],
                     "state": "active",
                     "external_identities": [
@@ -11213,63 +11213,63 @@
               "responseBody": {
                 "part": {
                   "created_by": {
-                    "display_id": "foo",
-                    "id": "foo",
-                    "display_name": "foo",
+                    "display_id": "string",
+                    "id": "string",
+                    "display_name": "string",
                     "display_picture": {
-                      "display_id": "foo",
-                      "id": "foo"
+                      "display_id": "string",
+                      "id": "string"
                     },
-                    "email": "foo",
-                    "full_name": "foo",
+                    "email": "string",
+                    "full_name": "string",
                     "state": "active"
                   },
-                  "created_date": "foo",
-                  "display_id": "foo",
-                  "id": "foo",
+                  "created_date": "2024-01-15T09:30:00Z",
+                  "display_id": "string",
+                  "id": "string",
                   "modified_by": {
-                    "display_id": "foo",
-                    "id": "foo",
-                    "display_name": "foo",
+                    "display_id": "string",
+                    "id": "string",
+                    "display_name": "string",
                     "display_picture": {
-                      "display_id": "foo",
-                      "id": "foo"
+                      "display_id": "string",
+                      "id": "string"
                     },
-                    "email": "foo",
-                    "full_name": "foo",
+                    "email": "string",
+                    "full_name": "string",
                     "state": "active"
                   },
-                  "modified_date": "foo",
+                  "modified_date": "2024-01-15T09:30:00Z",
                   "artifacts": [
                     {
-                      "display_id": "foo",
-                      "id": "foo"
+                      "display_id": "string",
+                      "id": "string"
                     }
                   ],
-                  "description": "foo",
-                  "name": "foo",
+                  "description": "string",
+                  "name": "string",
                   "owned_by": [
                     {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     }
                   ],
                   "tags": [
                     {
                       "tag": {
-                        "display_id": "foo",
-                        "id": "foo",
-                        "name": "foo"
+                        "display_id": "string",
+                        "id": "string",
+                        "name": "string"
                       },
-                      "value": "foo"
+                      "value": "string"
                     }
                   ]
                 }
@@ -11279,63 +11279,63 @@
                 "value": {
                   "part": {
                     "created_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     },
-                    "created_date": "foo",
-                    "display_id": "foo",
-                    "id": "foo",
+                    "created_date": "2024-01-15T09:30:00Z",
+                    "display_id": "string",
+                    "id": "string",
                     "modified_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     },
-                    "modified_date": "foo",
+                    "modified_date": "2024-01-15T09:30:00Z",
                     "artifacts": [
                       {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       }
                     ],
-                    "description": "foo",
-                    "name": "foo",
+                    "description": "string",
+                    "name": "string",
                     "owned_by": [
                       {
-                        "display_id": "foo",
-                        "id": "foo",
-                        "display_name": "foo",
+                        "display_id": "string",
+                        "id": "string",
+                        "display_name": "string",
                         "display_picture": {
-                          "display_id": "foo",
-                          "id": "foo"
+                          "display_id": "string",
+                          "id": "string"
                         },
-                        "email": "foo",
-                        "full_name": "foo",
+                        "email": "string",
+                        "full_name": "string",
                         "state": "active"
                       }
                     ],
                     "tags": [
                       {
                         "tag": {
-                          "display_id": "foo",
-                          "id": "foo",
-                          "name": "foo"
+                          "display_id": "string",
+                          "id": "string",
+                          "name": "string"
                         },
-                        "value": "foo"
+                        "value": "string"
                       }
                     ]
                   }
@@ -11678,63 +11678,63 @@
               "responseBody": {
                 "part": {
                   "created_by": {
-                    "display_id": "foo",
-                    "id": "foo",
-                    "display_name": "foo",
+                    "display_id": "string",
+                    "id": "string",
+                    "display_name": "string",
                     "display_picture": {
-                      "display_id": "foo",
-                      "id": "foo"
+                      "display_id": "string",
+                      "id": "string"
                     },
-                    "email": "foo",
-                    "full_name": "foo",
+                    "email": "string",
+                    "full_name": "string",
                     "state": "active"
                   },
-                  "created_date": "foo",
-                  "display_id": "foo",
-                  "id": "foo",
+                  "created_date": "2024-01-15T09:30:00Z",
+                  "display_id": "string",
+                  "id": "string",
                   "modified_by": {
-                    "display_id": "foo",
-                    "id": "foo",
-                    "display_name": "foo",
+                    "display_id": "string",
+                    "id": "string",
+                    "display_name": "string",
                     "display_picture": {
-                      "display_id": "foo",
-                      "id": "foo"
+                      "display_id": "string",
+                      "id": "string"
                     },
-                    "email": "foo",
-                    "full_name": "foo",
+                    "email": "string",
+                    "full_name": "string",
                     "state": "active"
                   },
-                  "modified_date": "foo",
+                  "modified_date": "2024-01-15T09:30:00Z",
                   "artifacts": [
                     {
-                      "display_id": "foo",
-                      "id": "foo"
+                      "display_id": "string",
+                      "id": "string"
                     }
                   ],
-                  "description": "foo",
-                  "name": "foo",
+                  "description": "string",
+                  "name": "string",
                   "owned_by": [
                     {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     }
                   ],
                   "tags": [
                     {
                       "tag": {
-                        "display_id": "foo",
-                        "id": "foo",
-                        "name": "foo"
+                        "display_id": "string",
+                        "id": "string",
+                        "name": "string"
                       },
-                      "value": "foo"
+                      "value": "string"
                     }
                   ]
                 }
@@ -11744,63 +11744,63 @@
                 "value": {
                   "part": {
                     "created_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     },
-                    "created_date": "foo",
-                    "display_id": "foo",
-                    "id": "foo",
+                    "created_date": "2024-01-15T09:30:00Z",
+                    "display_id": "string",
+                    "id": "string",
                     "modified_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     },
-                    "modified_date": "foo",
+                    "modified_date": "2024-01-15T09:30:00Z",
                     "artifacts": [
                       {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       }
                     ],
-                    "description": "foo",
-                    "name": "foo",
+                    "description": "string",
+                    "name": "string",
                     "owned_by": [
                       {
-                        "display_id": "foo",
-                        "id": "foo",
-                        "display_name": "foo",
+                        "display_id": "string",
+                        "id": "string",
+                        "display_name": "string",
                         "display_picture": {
-                          "display_id": "foo",
-                          "id": "foo"
+                          "display_id": "string",
+                          "id": "string"
                         },
-                        "email": "foo",
-                        "full_name": "foo",
+                        "email": "string",
+                        "full_name": "string",
                         "state": "active"
                       }
                     ],
                     "tags": [
                       {
                         "tag": {
-                          "display_id": "foo",
-                          "id": "foo",
-                          "name": "foo"
+                          "display_id": "string",
+                          "id": "string",
+                          "name": "string"
                         },
-                        "value": "foo"
+                        "value": "string"
                       }
                     ]
                   }
@@ -12041,142 +12041,142 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "next_cursor": "foo",
+                "next_cursor": "string",
                 "parts": [
                   {
                     "created_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     },
-                    "created_date": "foo",
-                    "display_id": "foo",
-                    "id": "foo",
+                    "created_date": "2024-01-15T09:30:00Z",
+                    "display_id": "string",
+                    "id": "string",
                     "modified_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     },
-                    "modified_date": "foo",
+                    "modified_date": "2024-01-15T09:30:00Z",
                     "artifacts": [
                       {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       }
                     ],
-                    "description": "foo",
-                    "name": "foo",
+                    "description": "string",
+                    "name": "string",
                     "owned_by": [
                       {
-                        "display_id": "foo",
-                        "id": "foo",
-                        "display_name": "foo",
+                        "display_id": "string",
+                        "id": "string",
+                        "display_name": "string",
                         "display_picture": {
-                          "display_id": "foo",
-                          "id": "foo"
+                          "display_id": "string",
+                          "id": "string"
                         },
-                        "email": "foo",
-                        "full_name": "foo",
+                        "email": "string",
+                        "full_name": "string",
                         "state": "active"
                       }
                     ],
                     "tags": [
                       {
                         "tag": {
-                          "display_id": "foo",
-                          "id": "foo",
-                          "name": "foo"
+                          "display_id": "string",
+                          "id": "string",
+                          "name": "string"
                         },
-                        "value": "foo"
+                        "value": "string"
                       }
                     ]
                   }
                 ],
-                "prev_cursor": "foo"
+                "prev_cursor": "string"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "next_cursor": "foo",
+                  "next_cursor": "string",
                   "parts": [
                     {
                       "created_by": {
-                        "display_id": "foo",
-                        "id": "foo",
-                        "display_name": "foo",
+                        "display_id": "string",
+                        "id": "string",
+                        "display_name": "string",
                         "display_picture": {
-                          "display_id": "foo",
-                          "id": "foo"
+                          "display_id": "string",
+                          "id": "string"
                         },
-                        "email": "foo",
-                        "full_name": "foo",
+                        "email": "string",
+                        "full_name": "string",
                         "state": "active"
                       },
-                      "created_date": "foo",
-                      "display_id": "foo",
-                      "id": "foo",
+                      "created_date": "2024-01-15T09:30:00Z",
+                      "display_id": "string",
+                      "id": "string",
                       "modified_by": {
-                        "display_id": "foo",
-                        "id": "foo",
-                        "display_name": "foo",
+                        "display_id": "string",
+                        "id": "string",
+                        "display_name": "string",
                         "display_picture": {
-                          "display_id": "foo",
-                          "id": "foo"
+                          "display_id": "string",
+                          "id": "string"
                         },
-                        "email": "foo",
-                        "full_name": "foo",
+                        "email": "string",
+                        "full_name": "string",
                         "state": "active"
                       },
-                      "modified_date": "foo",
+                      "modified_date": "2024-01-15T09:30:00Z",
                       "artifacts": [
                         {
-                          "display_id": "foo",
-                          "id": "foo"
+                          "display_id": "string",
+                          "id": "string"
                         }
                       ],
-                      "description": "foo",
-                      "name": "foo",
+                      "description": "string",
+                      "name": "string",
                       "owned_by": [
                         {
-                          "display_id": "foo",
-                          "id": "foo",
-                          "display_name": "foo",
+                          "display_id": "string",
+                          "id": "string",
+                          "display_name": "string",
                           "display_picture": {
-                            "display_id": "foo",
-                            "id": "foo"
+                            "display_id": "string",
+                            "id": "string"
                           },
-                          "email": "foo",
-                          "full_name": "foo",
+                          "email": "string",
+                          "full_name": "string",
                           "state": "active"
                         }
                       ],
                       "tags": [
                         {
                           "tag": {
-                            "display_id": "foo",
-                            "id": "foo",
-                            "name": "foo"
+                            "display_id": "string",
+                            "id": "string",
+                            "name": "string"
                           },
-                          "value": "foo"
+                          "value": "string"
                         }
                       ]
                     }
                   ],
-                  "prev_cursor": "foo"
+                  "prev_cursor": "string"
                 }
               }
             }
@@ -12347,63 +12347,63 @@
               "responseBody": {
                 "part": {
                   "created_by": {
-                    "display_id": "foo",
-                    "id": "foo",
-                    "display_name": "foo",
+                    "display_id": "string",
+                    "id": "string",
+                    "display_name": "string",
                     "display_picture": {
-                      "display_id": "foo",
-                      "id": "foo"
+                      "display_id": "string",
+                      "id": "string"
                     },
-                    "email": "foo",
-                    "full_name": "foo",
+                    "email": "string",
+                    "full_name": "string",
                     "state": "active"
                   },
-                  "created_date": "foo",
-                  "display_id": "foo",
-                  "id": "foo",
+                  "created_date": "2024-01-15T09:30:00Z",
+                  "display_id": "string",
+                  "id": "string",
                   "modified_by": {
-                    "display_id": "foo",
-                    "id": "foo",
-                    "display_name": "foo",
+                    "display_id": "string",
+                    "id": "string",
+                    "display_name": "string",
                     "display_picture": {
-                      "display_id": "foo",
-                      "id": "foo"
+                      "display_id": "string",
+                      "id": "string"
                     },
-                    "email": "foo",
-                    "full_name": "foo",
+                    "email": "string",
+                    "full_name": "string",
                     "state": "active"
                   },
-                  "modified_date": "foo",
+                  "modified_date": "2024-01-15T09:30:00Z",
                   "artifacts": [
                     {
-                      "display_id": "foo",
-                      "id": "foo"
+                      "display_id": "string",
+                      "id": "string"
                     }
                   ],
-                  "description": "foo",
-                  "name": "foo",
+                  "description": "string",
+                  "name": "string",
                   "owned_by": [
                     {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     }
                   ],
                   "tags": [
                     {
                       "tag": {
-                        "display_id": "foo",
-                        "id": "foo",
-                        "name": "foo"
+                        "display_id": "string",
+                        "id": "string",
+                        "name": "string"
                       },
-                      "value": "foo"
+                      "value": "string"
                     }
                   ]
                 }
@@ -12413,63 +12413,63 @@
                 "value": {
                   "part": {
                     "created_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     },
-                    "created_date": "foo",
-                    "display_id": "foo",
-                    "id": "foo",
+                    "created_date": "2024-01-15T09:30:00Z",
+                    "display_id": "string",
+                    "id": "string",
                     "modified_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     },
-                    "modified_date": "foo",
+                    "modified_date": "2024-01-15T09:30:00Z",
                     "artifacts": [
                       {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       }
                     ],
-                    "description": "foo",
-                    "name": "foo",
+                    "description": "string",
+                    "name": "string",
                     "owned_by": [
                       {
-                        "display_id": "foo",
-                        "id": "foo",
-                        "display_name": "foo",
+                        "display_id": "string",
+                        "id": "string",
+                        "display_name": "string",
                         "display_picture": {
-                          "display_id": "foo",
-                          "id": "foo"
+                          "display_id": "string",
+                          "id": "string"
                         },
-                        "email": "foo",
-                        "full_name": "foo",
+                        "email": "string",
+                        "full_name": "string",
                         "state": "active"
                       }
                     ],
                     "tags": [
                       {
                         "tag": {
-                          "display_id": "foo",
-                          "id": "foo",
-                          "name": "foo"
+                          "display_id": "string",
+                          "id": "string",
+                          "name": "string"
                         },
-                        "value": "foo"
+                        "value": "string"
                       }
                     ]
                   }
@@ -12633,49 +12633,49 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "display_name": "foo"
+                "display_name": "string"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "display_name": "foo"
+                  "display_name": "string"
                 }
               },
               "responseStatusCode": 201,
               "responseBody": {
                 "rev_org": {
                   "created_by": {
-                    "display_id": "foo",
-                    "id": "foo",
-                    "display_name": "foo",
+                    "display_id": "string",
+                    "id": "string",
+                    "display_name": "string",
                     "display_picture": {
-                      "display_id": "foo",
-                      "id": "foo"
+                      "display_id": "string",
+                      "id": "string"
                     },
-                    "email": "foo",
-                    "full_name": "foo",
+                    "email": "string",
+                    "full_name": "string",
                     "state": "active"
                   },
-                  "created_date": "foo",
-                  "display_id": "foo",
-                  "id": "foo",
+                  "created_date": "2024-01-15T09:30:00Z",
+                  "display_id": "string",
+                  "id": "string",
                   "modified_by": {
-                    "display_id": "foo",
-                    "id": "foo",
-                    "display_name": "foo",
+                    "display_id": "string",
+                    "id": "string",
+                    "display_name": "string",
                     "display_picture": {
-                      "display_id": "foo",
-                      "id": "foo"
+                      "display_id": "string",
+                      "id": "string"
                     },
-                    "email": "foo",
-                    "full_name": "foo",
+                    "email": "string",
+                    "full_name": "string",
                     "state": "active"
                   },
-                  "modified_date": "foo",
-                  "display_name": "foo",
-                  "description": "foo",
-                  "domain": "foo",
-                  "external_ref": "foo"
+                  "modified_date": "2024-01-15T09:30:00Z",
+                  "display_name": "string",
+                  "description": "string",
+                  "domain": "string",
+                  "external_ref": "string"
                 }
               },
               "responseBodyV3": {
@@ -12683,37 +12683,37 @@
                 "value": {
                   "rev_org": {
                     "created_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     },
-                    "created_date": "foo",
-                    "display_id": "foo",
-                    "id": "foo",
+                    "created_date": "2024-01-15T09:30:00Z",
+                    "display_id": "string",
+                    "id": "string",
                     "modified_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     },
-                    "modified_date": "foo",
-                    "display_name": "foo",
-                    "description": "foo",
-                    "domain": "foo",
-                    "external_ref": "foo"
+                    "modified_date": "2024-01-15T09:30:00Z",
+                    "display_name": "string",
+                    "description": "string",
+                    "domain": "string",
+                    "external_ref": "string"
                   }
                 }
               }
@@ -13054,37 +13054,37 @@
               "responseBody": {
                 "rev_org": {
                   "created_by": {
-                    "display_id": "foo",
-                    "id": "foo",
-                    "display_name": "foo",
+                    "display_id": "string",
+                    "id": "string",
+                    "display_name": "string",
                     "display_picture": {
-                      "display_id": "foo",
-                      "id": "foo"
+                      "display_id": "string",
+                      "id": "string"
                     },
-                    "email": "foo",
-                    "full_name": "foo",
+                    "email": "string",
+                    "full_name": "string",
                     "state": "active"
                   },
-                  "created_date": "foo",
-                  "display_id": "foo",
-                  "id": "foo",
+                  "created_date": "2024-01-15T09:30:00Z",
+                  "display_id": "string",
+                  "id": "string",
                   "modified_by": {
-                    "display_id": "foo",
-                    "id": "foo",
-                    "display_name": "foo",
+                    "display_id": "string",
+                    "id": "string",
+                    "display_name": "string",
                     "display_picture": {
-                      "display_id": "foo",
-                      "id": "foo"
+                      "display_id": "string",
+                      "id": "string"
                     },
-                    "email": "foo",
-                    "full_name": "foo",
+                    "email": "string",
+                    "full_name": "string",
                     "state": "active"
                   },
-                  "modified_date": "foo",
-                  "display_name": "foo",
-                  "description": "foo",
-                  "domain": "foo",
-                  "external_ref": "foo"
+                  "modified_date": "2024-01-15T09:30:00Z",
+                  "display_name": "string",
+                  "description": "string",
+                  "domain": "string",
+                  "external_ref": "string"
                 }
               },
               "responseBodyV3": {
@@ -13092,37 +13092,37 @@
                 "value": {
                   "rev_org": {
                     "created_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     },
-                    "created_date": "foo",
-                    "display_id": "foo",
-                    "id": "foo",
+                    "created_date": "2024-01-15T09:30:00Z",
+                    "display_id": "string",
+                    "id": "string",
                     "modified_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     },
-                    "modified_date": "foo",
-                    "display_name": "foo",
-                    "description": "foo",
-                    "domain": "foo",
-                    "external_ref": "foo"
+                    "modified_date": "2024-01-15T09:30:00Z",
+                    "display_name": "string",
+                    "description": "string",
+                    "domain": "string",
+                    "external_ref": "string"
                   }
                 }
               }
@@ -13416,84 +13416,84 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "next_cursor": "foo",
-                "prev_cursor": "foo",
+                "next_cursor": "string",
+                "prev_cursor": "string",
                 "rev_orgs": [
                   {
                     "created_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     },
-                    "created_date": "foo",
-                    "display_id": "foo",
-                    "id": "foo",
+                    "created_date": "2024-01-15T09:30:00Z",
+                    "display_id": "string",
+                    "id": "string",
                     "modified_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     },
-                    "modified_date": "foo",
-                    "display_name": "foo",
-                    "description": "foo",
-                    "domain": "foo",
-                    "external_ref": "foo"
+                    "modified_date": "2024-01-15T09:30:00Z",
+                    "display_name": "string",
+                    "description": "string",
+                    "domain": "string",
+                    "external_ref": "string"
                   }
                 ]
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "next_cursor": "foo",
-                  "prev_cursor": "foo",
+                  "next_cursor": "string",
+                  "prev_cursor": "string",
                   "rev_orgs": [
                     {
                       "created_by": {
-                        "display_id": "foo",
-                        "id": "foo",
-                        "display_name": "foo",
+                        "display_id": "string",
+                        "id": "string",
+                        "display_name": "string",
                         "display_picture": {
-                          "display_id": "foo",
-                          "id": "foo"
+                          "display_id": "string",
+                          "id": "string"
                         },
-                        "email": "foo",
-                        "full_name": "foo",
+                        "email": "string",
+                        "full_name": "string",
                         "state": "active"
                       },
-                      "created_date": "foo",
-                      "display_id": "foo",
-                      "id": "foo",
+                      "created_date": "2024-01-15T09:30:00Z",
+                      "display_id": "string",
+                      "id": "string",
                       "modified_by": {
-                        "display_id": "foo",
-                        "id": "foo",
-                        "display_name": "foo",
+                        "display_id": "string",
+                        "id": "string",
+                        "display_name": "string",
                         "display_picture": {
-                          "display_id": "foo",
-                          "id": "foo"
+                          "display_id": "string",
+                          "id": "string"
                         },
-                        "email": "foo",
-                        "full_name": "foo",
+                        "email": "string",
+                        "full_name": "string",
                         "state": "active"
                       },
-                      "modified_date": "foo",
-                      "display_name": "foo",
-                      "description": "foo",
-                      "domain": "foo",
-                      "external_ref": "foo"
+                      "modified_date": "2024-01-15T09:30:00Z",
+                      "display_name": "string",
+                      "description": "string",
+                      "domain": "string",
+                      "external_ref": "string"
                     }
                   ]
                 }
@@ -13670,37 +13670,37 @@
               "responseBody": {
                 "rev_org": {
                   "created_by": {
-                    "display_id": "foo",
-                    "id": "foo",
-                    "display_name": "foo",
+                    "display_id": "string",
+                    "id": "string",
+                    "display_name": "string",
                     "display_picture": {
-                      "display_id": "foo",
-                      "id": "foo"
+                      "display_id": "string",
+                      "id": "string"
                     },
-                    "email": "foo",
-                    "full_name": "foo",
+                    "email": "string",
+                    "full_name": "string",
                     "state": "active"
                   },
-                  "created_date": "foo",
-                  "display_id": "foo",
-                  "id": "foo",
+                  "created_date": "2024-01-15T09:30:00Z",
+                  "display_id": "string",
+                  "id": "string",
                   "modified_by": {
-                    "display_id": "foo",
-                    "id": "foo",
-                    "display_name": "foo",
+                    "display_id": "string",
+                    "id": "string",
+                    "display_name": "string",
                     "display_picture": {
-                      "display_id": "foo",
-                      "id": "foo"
+                      "display_id": "string",
+                      "id": "string"
                     },
-                    "email": "foo",
-                    "full_name": "foo",
+                    "email": "string",
+                    "full_name": "string",
                     "state": "active"
                   },
-                  "modified_date": "foo",
-                  "display_name": "foo",
-                  "description": "foo",
-                  "domain": "foo",
-                  "external_ref": "foo"
+                  "modified_date": "2024-01-15T09:30:00Z",
+                  "display_name": "string",
+                  "description": "string",
+                  "domain": "string",
+                  "external_ref": "string"
                 }
               },
               "responseBodyV3": {
@@ -13708,37 +13708,37 @@
                 "value": {
                   "rev_org": {
                     "created_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     },
-                    "created_date": "foo",
-                    "display_id": "foo",
-                    "id": "foo",
+                    "created_date": "2024-01-15T09:30:00Z",
+                    "display_id": "string",
+                    "id": "string",
                     "modified_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     },
-                    "modified_date": "foo",
-                    "display_name": "foo",
-                    "description": "foo",
-                    "domain": "foo",
-                    "external_ref": "foo"
+                    "modified_date": "2024-01-15T09:30:00Z",
+                    "display_name": "string",
+                    "description": "string",
+                    "domain": "string",
+                    "external_ref": "string"
                   }
                 }
               }
@@ -13900,50 +13900,50 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "name": "foo"
+                "name": "string"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "name": "foo"
+                  "name": "string"
                 }
               },
               "responseStatusCode": 201,
               "responseBody": {
                 "tag": {
                   "created_by": {
-                    "display_id": "foo",
-                    "id": "foo",
-                    "display_name": "foo",
+                    "display_id": "string",
+                    "id": "string",
+                    "display_name": "string",
                     "display_picture": {
-                      "display_id": "foo",
-                      "id": "foo"
+                      "display_id": "string",
+                      "id": "string"
                     },
-                    "email": "foo",
-                    "full_name": "foo",
+                    "email": "string",
+                    "full_name": "string",
                     "state": "active"
                   },
-                  "created_date": "foo",
-                  "display_id": "foo",
-                  "id": "foo",
+                  "created_date": "2024-01-15T09:30:00Z",
+                  "display_id": "string",
+                  "id": "string",
                   "modified_by": {
-                    "display_id": "foo",
-                    "id": "foo",
-                    "display_name": "foo",
+                    "display_id": "string",
+                    "id": "string",
+                    "display_name": "string",
                     "display_picture": {
-                      "display_id": "foo",
-                      "id": "foo"
+                      "display_id": "string",
+                      "id": "string"
                     },
-                    "email": "foo",
-                    "full_name": "foo",
+                    "email": "string",
+                    "full_name": "string",
                     "state": "active"
                   },
-                  "modified_date": "foo",
+                  "modified_date": "2024-01-15T09:30:00Z",
                   "allowed_values": [
-                    "foo"
+                    "string"
                   ],
-                  "description": "foo",
-                  "name": "foo"
+                  "description": "string",
+                  "name": "string"
                 }
               },
               "responseBodyV3": {
@@ -13951,38 +13951,38 @@
                 "value": {
                   "tag": {
                     "created_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     },
-                    "created_date": "foo",
-                    "display_id": "foo",
-                    "id": "foo",
+                    "created_date": "2024-01-15T09:30:00Z",
+                    "display_id": "string",
+                    "id": "string",
                     "modified_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     },
-                    "modified_date": "foo",
+                    "modified_date": "2024-01-15T09:30:00Z",
                     "allowed_values": [
-                      "foo"
+                      "string"
                     ],
-                    "description": "foo",
-                    "name": "foo"
+                    "description": "string",
+                    "name": "string"
                   }
                 }
               }
@@ -14323,38 +14323,38 @@
               "responseBody": {
                 "tag": {
                   "created_by": {
-                    "display_id": "foo",
-                    "id": "foo",
-                    "display_name": "foo",
+                    "display_id": "string",
+                    "id": "string",
+                    "display_name": "string",
                     "display_picture": {
-                      "display_id": "foo",
-                      "id": "foo"
+                      "display_id": "string",
+                      "id": "string"
                     },
-                    "email": "foo",
-                    "full_name": "foo",
+                    "email": "string",
+                    "full_name": "string",
                     "state": "active"
                   },
-                  "created_date": "foo",
-                  "display_id": "foo",
-                  "id": "foo",
+                  "created_date": "2024-01-15T09:30:00Z",
+                  "display_id": "string",
+                  "id": "string",
                   "modified_by": {
-                    "display_id": "foo",
-                    "id": "foo",
-                    "display_name": "foo",
+                    "display_id": "string",
+                    "id": "string",
+                    "display_name": "string",
                     "display_picture": {
-                      "display_id": "foo",
-                      "id": "foo"
+                      "display_id": "string",
+                      "id": "string"
                     },
-                    "email": "foo",
-                    "full_name": "foo",
+                    "email": "string",
+                    "full_name": "string",
                     "state": "active"
                   },
-                  "modified_date": "foo",
+                  "modified_date": "2024-01-15T09:30:00Z",
                   "allowed_values": [
-                    "foo"
+                    "string"
                   ],
-                  "description": "foo",
-                  "name": "foo"
+                  "description": "string",
+                  "name": "string"
                 }
               },
               "responseBodyV3": {
@@ -14362,38 +14362,38 @@
                 "value": {
                   "tag": {
                     "created_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     },
-                    "created_date": "foo",
-                    "display_id": "foo",
-                    "id": "foo",
+                    "created_date": "2024-01-15T09:30:00Z",
+                    "display_id": "string",
+                    "id": "string",
                     "modified_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     },
-                    "modified_date": "foo",
+                    "modified_date": "2024-01-15T09:30:00Z",
                     "allowed_values": [
-                      "foo"
+                      "string"
                     ],
-                    "description": "foo",
-                    "name": "foo"
+                    "description": "string",
+                    "name": "string"
                   }
                 }
               }
@@ -14570,86 +14570,86 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "next_cursor": "foo",
-                "prev_cursor": "foo",
+                "next_cursor": "string",
+                "prev_cursor": "string",
                 "tags": [
                   {
                     "created_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     },
-                    "created_date": "foo",
-                    "display_id": "foo",
-                    "id": "foo",
+                    "created_date": "2024-01-15T09:30:00Z",
+                    "display_id": "string",
+                    "id": "string",
                     "modified_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     },
-                    "modified_date": "foo",
+                    "modified_date": "2024-01-15T09:30:00Z",
                     "allowed_values": [
-                      "foo"
+                      "string"
                     ],
-                    "description": "foo",
-                    "name": "foo"
+                    "description": "string",
+                    "name": "string"
                   }
                 ]
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "next_cursor": "foo",
-                  "prev_cursor": "foo",
+                  "next_cursor": "string",
+                  "prev_cursor": "string",
                   "tags": [
                     {
                       "created_by": {
-                        "display_id": "foo",
-                        "id": "foo",
-                        "display_name": "foo",
+                        "display_id": "string",
+                        "id": "string",
+                        "display_name": "string",
                         "display_picture": {
-                          "display_id": "foo",
-                          "id": "foo"
+                          "display_id": "string",
+                          "id": "string"
                         },
-                        "email": "foo",
-                        "full_name": "foo",
+                        "email": "string",
+                        "full_name": "string",
                         "state": "active"
                       },
-                      "created_date": "foo",
-                      "display_id": "foo",
-                      "id": "foo",
+                      "created_date": "2024-01-15T09:30:00Z",
+                      "display_id": "string",
+                      "id": "string",
                       "modified_by": {
-                        "display_id": "foo",
-                        "id": "foo",
-                        "display_name": "foo",
+                        "display_id": "string",
+                        "id": "string",
+                        "display_name": "string",
                         "display_picture": {
-                          "display_id": "foo",
-                          "id": "foo"
+                          "display_id": "string",
+                          "id": "string"
                         },
-                        "email": "foo",
-                        "full_name": "foo",
+                        "email": "string",
+                        "full_name": "string",
                         "state": "active"
                       },
-                      "modified_date": "foo",
+                      "modified_date": "2024-01-15T09:30:00Z",
                       "allowed_values": [
-                        "foo"
+                        "string"
                       ],
-                      "description": "foo",
-                      "name": "foo"
+                      "description": "string",
+                      "name": "string"
                     }
                   ]
                 }
@@ -14826,38 +14826,38 @@
               "responseBody": {
                 "tag": {
                   "created_by": {
-                    "display_id": "foo",
-                    "id": "foo",
-                    "display_name": "foo",
+                    "display_id": "string",
+                    "id": "string",
+                    "display_name": "string",
                     "display_picture": {
-                      "display_id": "foo",
-                      "id": "foo"
+                      "display_id": "string",
+                      "id": "string"
                     },
-                    "email": "foo",
-                    "full_name": "foo",
+                    "email": "string",
+                    "full_name": "string",
                     "state": "active"
                   },
-                  "created_date": "foo",
-                  "display_id": "foo",
-                  "id": "foo",
+                  "created_date": "2024-01-15T09:30:00Z",
+                  "display_id": "string",
+                  "id": "string",
                   "modified_by": {
-                    "display_id": "foo",
-                    "id": "foo",
-                    "display_name": "foo",
+                    "display_id": "string",
+                    "id": "string",
+                    "display_name": "string",
                     "display_picture": {
-                      "display_id": "foo",
-                      "id": "foo"
+                      "display_id": "string",
+                      "id": "string"
                     },
-                    "email": "foo",
-                    "full_name": "foo",
+                    "email": "string",
+                    "full_name": "string",
                     "state": "active"
                   },
-                  "modified_date": "foo",
+                  "modified_date": "2024-01-15T09:30:00Z",
                   "allowed_values": [
-                    "foo"
+                    "string"
                   ],
-                  "description": "foo",
-                  "name": "foo"
+                  "description": "string",
+                  "name": "string"
                 }
               },
               "responseBodyV3": {
@@ -14865,38 +14865,38 @@
                 "value": {
                   "tag": {
                     "created_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     },
-                    "created_date": "foo",
-                    "display_id": "foo",
-                    "id": "foo",
+                    "created_date": "2024-01-15T09:30:00Z",
+                    "display_id": "string",
+                    "id": "string",
                     "modified_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     },
-                    "modified_date": "foo",
+                    "modified_date": "2024-01-15T09:30:00Z",
                     "allowed_values": [
-                      "foo"
+                      "string"
                     ],
-                    "description": "foo",
-                    "name": "foo"
+                    "description": "string",
+                    "name": "string"
                   }
                 }
               }
@@ -15066,40 +15066,40 @@
               "responseBody": {
                 "timeline_entry": {
                   "created_by": {
-                    "display_id": "foo",
-                    "id": "foo",
-                    "display_name": "foo",
+                    "display_id": "string",
+                    "id": "string",
+                    "display_name": "string",
                     "display_picture": {
-                      "display_id": "foo",
-                      "id": "foo"
+                      "display_id": "string",
+                      "id": "string"
                     },
-                    "email": "foo",
-                    "full_name": "foo",
+                    "email": "string",
+                    "full_name": "string",
                     "state": "active"
                   },
-                  "created_date": "foo",
-                  "display_id": "foo",
-                  "id": "foo",
+                  "created_date": "2024-01-15T09:30:00Z",
+                  "display_id": "string",
+                  "id": "string",
                   "modified_by": {
-                    "display_id": "foo",
-                    "id": "foo",
-                    "display_name": "foo",
+                    "display_id": "string",
+                    "id": "string",
+                    "display_name": "string",
                     "display_picture": {
-                      "display_id": "foo",
-                      "id": "foo"
+                      "display_id": "string",
+                      "id": "string"
                     },
-                    "email": "foo",
-                    "full_name": "foo",
+                    "email": "string",
+                    "full_name": "string",
                     "state": "active"
                   },
-                  "modified_date": "foo",
+                  "modified_date": "2024-01-15T09:30:00Z",
                   "artifacts": [
                     {
-                      "display_id": "foo",
-                      "id": "foo"
+                      "display_id": "string",
+                      "id": "string"
                     }
                   ],
-                  "body": "foo",
+                  "body": "string",
                   "body_type": "snap_kit",
                   "snap_kit_body": {}
                 }
@@ -15109,40 +15109,40 @@
                 "value": {
                   "timeline_entry": {
                     "created_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     },
-                    "created_date": "foo",
-                    "display_id": "foo",
-                    "id": "foo",
+                    "created_date": "2024-01-15T09:30:00Z",
+                    "display_id": "string",
+                    "id": "string",
                     "modified_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     },
-                    "modified_date": "foo",
+                    "modified_date": "2024-01-15T09:30:00Z",
                     "artifacts": [
                       {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       }
                     ],
-                    "body": "foo",
+                    "body": "string",
                     "body_type": "snap_kit",
                     "snap_kit_body": {}
                   }
@@ -15311,40 +15311,40 @@
               "responseBody": {
                 "timeline_entry": {
                   "created_by": {
-                    "display_id": "foo",
-                    "id": "foo",
-                    "display_name": "foo",
+                    "display_id": "string",
+                    "id": "string",
+                    "display_name": "string",
                     "display_picture": {
-                      "display_id": "foo",
-                      "id": "foo"
+                      "display_id": "string",
+                      "id": "string"
                     },
-                    "email": "foo",
-                    "full_name": "foo",
+                    "email": "string",
+                    "full_name": "string",
                     "state": "active"
                   },
-                  "created_date": "foo",
-                  "display_id": "foo",
-                  "id": "foo",
+                  "created_date": "2024-01-15T09:30:00Z",
+                  "display_id": "string",
+                  "id": "string",
                   "modified_by": {
-                    "display_id": "foo",
-                    "id": "foo",
-                    "display_name": "foo",
+                    "display_id": "string",
+                    "id": "string",
+                    "display_name": "string",
                     "display_picture": {
-                      "display_id": "foo",
-                      "id": "foo"
+                      "display_id": "string",
+                      "id": "string"
                     },
-                    "email": "foo",
-                    "full_name": "foo",
+                    "email": "string",
+                    "full_name": "string",
                     "state": "active"
                   },
-                  "modified_date": "foo",
+                  "modified_date": "2024-01-15T09:30:00Z",
                   "artifacts": [
                     {
-                      "display_id": "foo",
-                      "id": "foo"
+                      "display_id": "string",
+                      "id": "string"
                     }
                   ],
-                  "body": "foo",
+                  "body": "string",
                   "body_type": "snap_kit",
                   "snap_kit_body": {}
                 }
@@ -15354,40 +15354,40 @@
                 "value": {
                   "timeline_entry": {
                     "created_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     },
-                    "created_date": "foo",
-                    "display_id": "foo",
-                    "id": "foo",
+                    "created_date": "2024-01-15T09:30:00Z",
+                    "display_id": "string",
+                    "id": "string",
                     "modified_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     },
-                    "modified_date": "foo",
+                    "modified_date": "2024-01-15T09:30:00Z",
                     "artifacts": [
                       {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       }
                     ],
-                    "body": "foo",
+                    "body": "string",
                     "body_type": "snap_kit",
                     "snap_kit_body": {}
                   }
@@ -15591,45 +15591,45 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "next_cursor": "foo",
-                "prev_cursor": "foo",
+                "next_cursor": "string",
+                "prev_cursor": "string",
                 "timeline_entries": [
                   {
                     "created_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     },
-                    "created_date": "foo",
-                    "display_id": "foo",
-                    "id": "foo",
+                    "created_date": "2024-01-15T09:30:00Z",
+                    "display_id": "string",
+                    "id": "string",
                     "modified_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     },
-                    "modified_date": "foo",
+                    "modified_date": "2024-01-15T09:30:00Z",
                     "artifacts": [
                       {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       }
                     ],
-                    "body": "foo",
+                    "body": "string",
                     "body_type": "snap_kit",
                     "snap_kit_body": {}
                   }
@@ -15638,45 +15638,45 @@
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "next_cursor": "foo",
-                  "prev_cursor": "foo",
+                  "next_cursor": "string",
+                  "prev_cursor": "string",
                   "timeline_entries": [
                     {
                       "created_by": {
-                        "display_id": "foo",
-                        "id": "foo",
-                        "display_name": "foo",
+                        "display_id": "string",
+                        "id": "string",
+                        "display_name": "string",
                         "display_picture": {
-                          "display_id": "foo",
-                          "id": "foo"
+                          "display_id": "string",
+                          "id": "string"
                         },
-                        "email": "foo",
-                        "full_name": "foo",
+                        "email": "string",
+                        "full_name": "string",
                         "state": "active"
                       },
-                      "created_date": "foo",
-                      "display_id": "foo",
-                      "id": "foo",
+                      "created_date": "2024-01-15T09:30:00Z",
+                      "display_id": "string",
+                      "id": "string",
                       "modified_by": {
-                        "display_id": "foo",
-                        "id": "foo",
-                        "display_name": "foo",
+                        "display_id": "string",
+                        "id": "string",
+                        "display_name": "string",
                         "display_picture": {
-                          "display_id": "foo",
-                          "id": "foo"
+                          "display_id": "string",
+                          "id": "string"
                         },
-                        "email": "foo",
-                        "full_name": "foo",
+                        "email": "string",
+                        "full_name": "string",
                         "state": "active"
                       },
-                      "modified_date": "foo",
+                      "modified_date": "2024-01-15T09:30:00Z",
                       "artifacts": [
                         {
-                          "display_id": "foo",
-                          "id": "foo"
+                          "display_id": "string",
+                          "id": "string"
                         }
                       ],
-                      "body": "foo",
+                      "body": "string",
                       "body_type": "snap_kit",
                       "snap_kit_body": {}
                     }
@@ -15838,40 +15838,40 @@
               "responseBody": {
                 "timeline_entry": {
                   "created_by": {
-                    "display_id": "foo",
-                    "id": "foo",
-                    "display_name": "foo",
+                    "display_id": "string",
+                    "id": "string",
+                    "display_name": "string",
                     "display_picture": {
-                      "display_id": "foo",
-                      "id": "foo"
+                      "display_id": "string",
+                      "id": "string"
                     },
-                    "email": "foo",
-                    "full_name": "foo",
+                    "email": "string",
+                    "full_name": "string",
                     "state": "active"
                   },
-                  "created_date": "foo",
-                  "display_id": "foo",
-                  "id": "foo",
+                  "created_date": "2024-01-15T09:30:00Z",
+                  "display_id": "string",
+                  "id": "string",
                   "modified_by": {
-                    "display_id": "foo",
-                    "id": "foo",
-                    "display_name": "foo",
+                    "display_id": "string",
+                    "id": "string",
+                    "display_name": "string",
                     "display_picture": {
-                      "display_id": "foo",
-                      "id": "foo"
+                      "display_id": "string",
+                      "id": "string"
                     },
-                    "email": "foo",
-                    "full_name": "foo",
+                    "email": "string",
+                    "full_name": "string",
                     "state": "active"
                   },
-                  "modified_date": "foo",
+                  "modified_date": "2024-01-15T09:30:00Z",
                   "artifacts": [
                     {
-                      "display_id": "foo",
-                      "id": "foo"
+                      "display_id": "string",
+                      "id": "string"
                     }
                   ],
-                  "body": "foo",
+                  "body": "string",
                   "body_type": "snap_kit",
                   "snap_kit_body": {}
                 }
@@ -15881,40 +15881,40 @@
                 "value": {
                   "timeline_entry": {
                     "created_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     },
-                    "created_date": "foo",
-                    "display_id": "foo",
-                    "id": "foo",
+                    "created_date": "2024-01-15T09:30:00Z",
+                    "display_id": "string",
+                    "id": "string",
                     "modified_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     },
-                    "modified_date": "foo",
+                    "modified_date": "2024-01-15T09:30:00Z",
                     "artifacts": [
                       {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       }
                     ],
-                    "body": "foo",
+                    "body": "string",
                     "body_type": "snap_kit",
                     "snap_kit_body": {}
                   }
@@ -16078,51 +16078,51 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "url": "foo"
+                "url": "string"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "url": "foo"
+                  "url": "string"
                 }
               },
               "responseStatusCode": 201,
               "responseBody": {
                 "webhook": {
                   "created_by": {
-                    "display_id": "foo",
-                    "id": "foo",
-                    "display_name": "foo",
+                    "display_id": "string",
+                    "id": "string",
+                    "display_name": "string",
                     "display_picture": {
-                      "display_id": "foo",
-                      "id": "foo"
+                      "display_id": "string",
+                      "id": "string"
                     },
-                    "email": "foo",
-                    "full_name": "foo",
+                    "email": "string",
+                    "full_name": "string",
                     "state": "active"
                   },
-                  "created_date": "foo",
-                  "display_id": "foo",
-                  "id": "foo",
+                  "created_date": "2024-01-15T09:30:00Z",
+                  "display_id": "string",
+                  "id": "string",
                   "modified_by": {
-                    "display_id": "foo",
-                    "id": "foo",
-                    "display_name": "foo",
+                    "display_id": "string",
+                    "id": "string",
+                    "display_name": "string",
                     "display_picture": {
-                      "display_id": "foo",
-                      "id": "foo"
+                      "display_id": "string",
+                      "id": "string"
                     },
-                    "email": "foo",
-                    "full_name": "foo",
+                    "email": "string",
+                    "full_name": "string",
                     "state": "active"
                   },
-                  "modified_date": "foo",
+                  "modified_date": "2024-01-15T09:30:00Z",
                   "event_types": [
                     "part_created"
                   ],
-                  "secret": "foo",
+                  "secret": "string",
                   "status": "active",
-                  "url": "foo"
+                  "url": "string"
                 }
               },
               "responseBodyV3": {
@@ -16130,39 +16130,39 @@
                 "value": {
                   "webhook": {
                     "created_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     },
-                    "created_date": "foo",
-                    "display_id": "foo",
-                    "id": "foo",
+                    "created_date": "2024-01-15T09:30:00Z",
+                    "display_id": "string",
+                    "id": "string",
                     "modified_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     },
-                    "modified_date": "foo",
+                    "modified_date": "2024-01-15T09:30:00Z",
                     "event_types": [
                       "part_created"
                     ],
-                    "secret": "foo",
+                    "secret": "string",
                     "status": "active",
-                    "url": "foo"
+                    "url": "string"
                   }
                 }
               }
@@ -16503,39 +16503,39 @@
               "responseBody": {
                 "webhook": {
                   "created_by": {
-                    "display_id": "foo",
-                    "id": "foo",
-                    "display_name": "foo",
+                    "display_id": "string",
+                    "id": "string",
+                    "display_name": "string",
                     "display_picture": {
-                      "display_id": "foo",
-                      "id": "foo"
+                      "display_id": "string",
+                      "id": "string"
                     },
-                    "email": "foo",
-                    "full_name": "foo",
+                    "email": "string",
+                    "full_name": "string",
                     "state": "active"
                   },
-                  "created_date": "foo",
-                  "display_id": "foo",
-                  "id": "foo",
+                  "created_date": "2024-01-15T09:30:00Z",
+                  "display_id": "string",
+                  "id": "string",
                   "modified_by": {
-                    "display_id": "foo",
-                    "id": "foo",
-                    "display_name": "foo",
+                    "display_id": "string",
+                    "id": "string",
+                    "display_name": "string",
                     "display_picture": {
-                      "display_id": "foo",
-                      "id": "foo"
+                      "display_id": "string",
+                      "id": "string"
                     },
-                    "email": "foo",
-                    "full_name": "foo",
+                    "email": "string",
+                    "full_name": "string",
                     "state": "active"
                   },
-                  "modified_date": "foo",
+                  "modified_date": "2024-01-15T09:30:00Z",
                   "event_types": [
                     "part_created"
                   ],
-                  "secret": "foo",
+                  "secret": "string",
                   "status": "active",
-                  "url": "foo"
+                  "url": "string"
                 }
               },
               "responseBodyV3": {
@@ -16543,39 +16543,39 @@
                 "value": {
                   "webhook": {
                     "created_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     },
-                    "created_date": "foo",
-                    "display_id": "foo",
-                    "id": "foo",
+                    "created_date": "2024-01-15T09:30:00Z",
+                    "display_id": "string",
+                    "id": "string",
                     "modified_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     },
-                    "modified_date": "foo",
+                    "modified_date": "2024-01-15T09:30:00Z",
                     "event_types": [
                       "part_created"
                     ],
-                    "secret": "foo",
+                    "secret": "string",
                     "status": "active",
-                    "url": "foo"
+                    "url": "string"
                   }
                 }
               }
@@ -16717,39 +16717,39 @@
                 "webhooks": [
                   {
                     "created_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     },
-                    "created_date": "foo",
-                    "display_id": "foo",
-                    "id": "foo",
+                    "created_date": "2024-01-15T09:30:00Z",
+                    "display_id": "string",
+                    "id": "string",
                     "modified_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     },
-                    "modified_date": "foo",
+                    "modified_date": "2024-01-15T09:30:00Z",
                     "event_types": [
                       "part_created"
                     ],
-                    "secret": "foo",
+                    "secret": "string",
                     "status": "active",
-                    "url": "foo"
+                    "url": "string"
                   }
                 ]
               },
@@ -16759,39 +16759,39 @@
                   "webhooks": [
                     {
                       "created_by": {
-                        "display_id": "foo",
-                        "id": "foo",
-                        "display_name": "foo",
+                        "display_id": "string",
+                        "id": "string",
+                        "display_name": "string",
                         "display_picture": {
-                          "display_id": "foo",
-                          "id": "foo"
+                          "display_id": "string",
+                          "id": "string"
                         },
-                        "email": "foo",
-                        "full_name": "foo",
+                        "email": "string",
+                        "full_name": "string",
                         "state": "active"
                       },
-                      "created_date": "foo",
-                      "display_id": "foo",
-                      "id": "foo",
+                      "created_date": "2024-01-15T09:30:00Z",
+                      "display_id": "string",
+                      "id": "string",
                       "modified_by": {
-                        "display_id": "foo",
-                        "id": "foo",
-                        "display_name": "foo",
+                        "display_id": "string",
+                        "id": "string",
+                        "display_name": "string",
                         "display_picture": {
-                          "display_id": "foo",
-                          "id": "foo"
+                          "display_id": "string",
+                          "id": "string"
                         },
-                        "email": "foo",
-                        "full_name": "foo",
+                        "email": "string",
+                        "full_name": "string",
                         "state": "active"
                       },
-                      "modified_date": "foo",
+                      "modified_date": "2024-01-15T09:30:00Z",
                       "event_types": [
                         "part_created"
                       ],
-                      "secret": "foo",
+                      "secret": "string",
                       "status": "active",
-                      "url": "foo"
+                      "url": "string"
                     }
                   ]
                 }
@@ -16968,39 +16968,39 @@
               "responseBody": {
                 "webhook": {
                   "created_by": {
-                    "display_id": "foo",
-                    "id": "foo",
-                    "display_name": "foo",
+                    "display_id": "string",
+                    "id": "string",
+                    "display_name": "string",
                     "display_picture": {
-                      "display_id": "foo",
-                      "id": "foo"
+                      "display_id": "string",
+                      "id": "string"
                     },
-                    "email": "foo",
-                    "full_name": "foo",
+                    "email": "string",
+                    "full_name": "string",
                     "state": "active"
                   },
-                  "created_date": "foo",
-                  "display_id": "foo",
-                  "id": "foo",
+                  "created_date": "2024-01-15T09:30:00Z",
+                  "display_id": "string",
+                  "id": "string",
                   "modified_by": {
-                    "display_id": "foo",
-                    "id": "foo",
-                    "display_name": "foo",
+                    "display_id": "string",
+                    "id": "string",
+                    "display_name": "string",
                     "display_picture": {
-                      "display_id": "foo",
-                      "id": "foo"
+                      "display_id": "string",
+                      "id": "string"
                     },
-                    "email": "foo",
-                    "full_name": "foo",
+                    "email": "string",
+                    "full_name": "string",
                     "state": "active"
                   },
-                  "modified_date": "foo",
+                  "modified_date": "2024-01-15T09:30:00Z",
                   "event_types": [
                     "part_created"
                   ],
-                  "secret": "foo",
+                  "secret": "string",
                   "status": "active",
-                  "url": "foo"
+                  "url": "string"
                 }
               },
               "responseBodyV3": {
@@ -17008,39 +17008,39 @@
                 "value": {
                   "webhook": {
                     "created_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     },
-                    "created_date": "foo",
-                    "display_id": "foo",
-                    "id": "foo",
+                    "created_date": "2024-01-15T09:30:00Z",
+                    "display_id": "string",
+                    "id": "string",
                     "modified_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     },
-                    "modified_date": "foo",
+                    "modified_date": "2024-01-15T09:30:00Z",
                     "event_types": [
                       "part_created"
                     ],
-                    "secret": "foo",
+                    "secret": "string",
                     "status": "active",
-                    "url": "foo"
+                    "url": "string"
                   }
                 }
               }
@@ -17210,88 +17210,88 @@
               "responseBody": {
                 "work": {
                   "created_by": {
-                    "display_id": "foo",
-                    "id": "foo",
-                    "display_name": "foo",
+                    "display_id": "string",
+                    "id": "string",
+                    "display_name": "string",
                     "display_picture": {
-                      "display_id": "foo",
-                      "id": "foo"
+                      "display_id": "string",
+                      "id": "string"
                     },
-                    "email": "foo",
-                    "full_name": "foo",
+                    "email": "string",
+                    "full_name": "string",
                     "state": "active"
                   },
-                  "created_date": "foo",
-                  "display_id": "foo",
-                  "id": "foo",
+                  "created_date": "2024-01-15T09:30:00Z",
+                  "display_id": "string",
+                  "id": "string",
                   "modified_by": {
-                    "display_id": "foo",
-                    "id": "foo",
-                    "display_name": "foo",
+                    "display_id": "string",
+                    "id": "string",
+                    "display_name": "string",
                     "display_picture": {
-                      "display_id": "foo",
-                      "id": "foo"
+                      "display_id": "string",
+                      "id": "string"
                     },
-                    "email": "foo",
-                    "full_name": "foo",
+                    "email": "string",
+                    "full_name": "string",
                     "state": "active"
                   },
-                  "modified_date": "foo",
+                  "modified_date": "2024-01-15T09:30:00Z",
                   "applies_to_part": {
-                    "display_id": "foo",
-                    "id": "foo",
-                    "name": "foo"
+                    "display_id": "string",
+                    "id": "string",
+                    "name": "string"
                   },
                   "artifacts": [
                     {
-                      "display_id": "foo",
-                      "id": "foo"
+                      "display_id": "string",
+                      "id": "string"
                     }
                   ],
-                  "body": "foo",
+                  "body": "string",
                   "owned_by": [
                     {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     }
                   ],
                   "reported_by": [
                     {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     }
                   ],
                   "stage": {
-                    "name": "foo"
+                    "name": "string"
                   },
                   "tags": [
                     {
                       "tag": {
-                        "display_id": "foo",
-                        "id": "foo",
-                        "name": "foo"
+                        "display_id": "string",
+                        "id": "string",
+                        "name": "string"
                       },
-                      "value": "foo"
+                      "value": "string"
                     }
                   ],
-                  "target_close_date": "foo",
-                  "title": "foo",
+                  "target_close_date": "2024-01-15T09:30:00Z",
+                  "title": "string",
                   "priority": "p0"
                 }
               },
@@ -17300,88 +17300,88 @@
                 "value": {
                   "work": {
                     "created_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     },
-                    "created_date": "foo",
-                    "display_id": "foo",
-                    "id": "foo",
+                    "created_date": "2024-01-15T09:30:00Z",
+                    "display_id": "string",
+                    "id": "string",
                     "modified_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     },
-                    "modified_date": "foo",
+                    "modified_date": "2024-01-15T09:30:00Z",
                     "applies_to_part": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "name": "foo"
+                      "display_id": "string",
+                      "id": "string",
+                      "name": "string"
                     },
                     "artifacts": [
                       {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       }
                     ],
-                    "body": "foo",
+                    "body": "string",
                     "owned_by": [
                       {
-                        "display_id": "foo",
-                        "id": "foo",
-                        "display_name": "foo",
+                        "display_id": "string",
+                        "id": "string",
+                        "display_name": "string",
                         "display_picture": {
-                          "display_id": "foo",
-                          "id": "foo"
+                          "display_id": "string",
+                          "id": "string"
                         },
-                        "email": "foo",
-                        "full_name": "foo",
+                        "email": "string",
+                        "full_name": "string",
                         "state": "active"
                       }
                     ],
                     "reported_by": [
                       {
-                        "display_id": "foo",
-                        "id": "foo",
-                        "display_name": "foo",
+                        "display_id": "string",
+                        "id": "string",
+                        "display_name": "string",
                         "display_picture": {
-                          "display_id": "foo",
-                          "id": "foo"
+                          "display_id": "string",
+                          "id": "string"
                         },
-                        "email": "foo",
-                        "full_name": "foo",
+                        "email": "string",
+                        "full_name": "string",
                         "state": "active"
                       }
                     ],
                     "stage": {
-                      "name": "foo"
+                      "name": "string"
                     },
                     "tags": [
                       {
                         "tag": {
-                          "display_id": "foo",
-                          "id": "foo",
-                          "name": "foo"
+                          "display_id": "string",
+                          "id": "string",
+                          "name": "string"
                         },
-                        "value": "foo"
+                        "value": "string"
                       }
                     ],
-                    "target_close_date": "foo",
-                    "title": "foo",
+                    "target_close_date": "2024-01-15T09:30:00Z",
+                    "title": "string",
                     "priority": "p0"
                   }
                 }
@@ -17850,88 +17850,88 @@
                 "works": [
                   {
                     "created_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     },
-                    "created_date": "foo",
-                    "display_id": "foo",
-                    "id": "foo",
+                    "created_date": "2024-01-15T09:30:00Z",
+                    "display_id": "string",
+                    "id": "string",
                     "modified_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     },
-                    "modified_date": "foo",
+                    "modified_date": "2024-01-15T09:30:00Z",
                     "applies_to_part": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "name": "foo"
+                      "display_id": "string",
+                      "id": "string",
+                      "name": "string"
                     },
                     "artifacts": [
                       {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       }
                     ],
-                    "body": "foo",
+                    "body": "string",
                     "owned_by": [
                       {
-                        "display_id": "foo",
-                        "id": "foo",
-                        "display_name": "foo",
+                        "display_id": "string",
+                        "id": "string",
+                        "display_name": "string",
                         "display_picture": {
-                          "display_id": "foo",
-                          "id": "foo"
+                          "display_id": "string",
+                          "id": "string"
                         },
-                        "email": "foo",
-                        "full_name": "foo",
+                        "email": "string",
+                        "full_name": "string",
                         "state": "active"
                       }
                     ],
                     "reported_by": [
                       {
-                        "display_id": "foo",
-                        "id": "foo",
-                        "display_name": "foo",
+                        "display_id": "string",
+                        "id": "string",
+                        "display_name": "string",
                         "display_picture": {
-                          "display_id": "foo",
-                          "id": "foo"
+                          "display_id": "string",
+                          "id": "string"
                         },
-                        "email": "foo",
-                        "full_name": "foo",
+                        "email": "string",
+                        "full_name": "string",
                         "state": "active"
                       }
                     ],
                     "stage": {
-                      "name": "foo"
+                      "name": "string"
                     },
                     "tags": [
                       {
                         "tag": {
-                          "display_id": "foo",
-                          "id": "foo",
-                          "name": "foo"
+                          "display_id": "string",
+                          "id": "string",
+                          "name": "string"
                         },
-                        "value": "foo"
+                        "value": "string"
                       }
                     ],
-                    "target_close_date": "foo",
-                    "title": "foo",
+                    "target_close_date": "2024-01-15T09:30:00Z",
+                    "title": "string",
                     "priority": "p0"
                   }
                 ]
@@ -17942,88 +17942,88 @@
                   "works": [
                     {
                       "created_by": {
-                        "display_id": "foo",
-                        "id": "foo",
-                        "display_name": "foo",
+                        "display_id": "string",
+                        "id": "string",
+                        "display_name": "string",
                         "display_picture": {
-                          "display_id": "foo",
-                          "id": "foo"
+                          "display_id": "string",
+                          "id": "string"
                         },
-                        "email": "foo",
-                        "full_name": "foo",
+                        "email": "string",
+                        "full_name": "string",
                         "state": "active"
                       },
-                      "created_date": "foo",
-                      "display_id": "foo",
-                      "id": "foo",
+                      "created_date": "2024-01-15T09:30:00Z",
+                      "display_id": "string",
+                      "id": "string",
                       "modified_by": {
-                        "display_id": "foo",
-                        "id": "foo",
-                        "display_name": "foo",
+                        "display_id": "string",
+                        "id": "string",
+                        "display_name": "string",
                         "display_picture": {
-                          "display_id": "foo",
-                          "id": "foo"
+                          "display_id": "string",
+                          "id": "string"
                         },
-                        "email": "foo",
-                        "full_name": "foo",
+                        "email": "string",
+                        "full_name": "string",
                         "state": "active"
                       },
-                      "modified_date": "foo",
+                      "modified_date": "2024-01-15T09:30:00Z",
                       "applies_to_part": {
-                        "display_id": "foo",
-                        "id": "foo",
-                        "name": "foo"
+                        "display_id": "string",
+                        "id": "string",
+                        "name": "string"
                       },
                       "artifacts": [
                         {
-                          "display_id": "foo",
-                          "id": "foo"
+                          "display_id": "string",
+                          "id": "string"
                         }
                       ],
-                      "body": "foo",
+                      "body": "string",
                       "owned_by": [
                         {
-                          "display_id": "foo",
-                          "id": "foo",
-                          "display_name": "foo",
+                          "display_id": "string",
+                          "id": "string",
+                          "display_name": "string",
                           "display_picture": {
-                            "display_id": "foo",
-                            "id": "foo"
+                            "display_id": "string",
+                            "id": "string"
                           },
-                          "email": "foo",
-                          "full_name": "foo",
+                          "email": "string",
+                          "full_name": "string",
                           "state": "active"
                         }
                       ],
                       "reported_by": [
                         {
-                          "display_id": "foo",
-                          "id": "foo",
-                          "display_name": "foo",
+                          "display_id": "string",
+                          "id": "string",
+                          "display_name": "string",
                           "display_picture": {
-                            "display_id": "foo",
-                            "id": "foo"
+                            "display_id": "string",
+                            "id": "string"
                           },
-                          "email": "foo",
-                          "full_name": "foo",
+                          "email": "string",
+                          "full_name": "string",
                           "state": "active"
                         }
                       ],
                       "stage": {
-                        "name": "foo"
+                        "name": "string"
                       },
                       "tags": [
                         {
                           "tag": {
-                            "display_id": "foo",
-                            "id": "foo",
-                            "name": "foo"
+                            "display_id": "string",
+                            "id": "string",
+                            "name": "string"
                           },
-                          "value": "foo"
+                          "value": "string"
                         }
                       ],
-                      "target_close_date": "foo",
-                      "title": "foo",
+                      "target_close_date": "2024-01-15T09:30:00Z",
+                      "title": "string",
                       "priority": "p0"
                     }
                   ]
@@ -18192,88 +18192,88 @@
               "responseBody": {
                 "work": {
                   "created_by": {
-                    "display_id": "foo",
-                    "id": "foo",
-                    "display_name": "foo",
+                    "display_id": "string",
+                    "id": "string",
+                    "display_name": "string",
                     "display_picture": {
-                      "display_id": "foo",
-                      "id": "foo"
+                      "display_id": "string",
+                      "id": "string"
                     },
-                    "email": "foo",
-                    "full_name": "foo",
+                    "email": "string",
+                    "full_name": "string",
                     "state": "active"
                   },
-                  "created_date": "foo",
-                  "display_id": "foo",
-                  "id": "foo",
+                  "created_date": "2024-01-15T09:30:00Z",
+                  "display_id": "string",
+                  "id": "string",
                   "modified_by": {
-                    "display_id": "foo",
-                    "id": "foo",
-                    "display_name": "foo",
+                    "display_id": "string",
+                    "id": "string",
+                    "display_name": "string",
                     "display_picture": {
-                      "display_id": "foo",
-                      "id": "foo"
+                      "display_id": "string",
+                      "id": "string"
                     },
-                    "email": "foo",
-                    "full_name": "foo",
+                    "email": "string",
+                    "full_name": "string",
                     "state": "active"
                   },
-                  "modified_date": "foo",
+                  "modified_date": "2024-01-15T09:30:00Z",
                   "applies_to_part": {
-                    "display_id": "foo",
-                    "id": "foo",
-                    "name": "foo"
+                    "display_id": "string",
+                    "id": "string",
+                    "name": "string"
                   },
                   "artifacts": [
                     {
-                      "display_id": "foo",
-                      "id": "foo"
+                      "display_id": "string",
+                      "id": "string"
                     }
                   ],
-                  "body": "foo",
+                  "body": "string",
                   "owned_by": [
                     {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     }
                   ],
                   "reported_by": [
                     {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     }
                   ],
                   "stage": {
-                    "name": "foo"
+                    "name": "string"
                   },
                   "tags": [
                     {
                       "tag": {
-                        "display_id": "foo",
-                        "id": "foo",
-                        "name": "foo"
+                        "display_id": "string",
+                        "id": "string",
+                        "name": "string"
                       },
-                      "value": "foo"
+                      "value": "string"
                     }
                   ],
-                  "target_close_date": "foo",
-                  "title": "foo",
+                  "target_close_date": "2024-01-15T09:30:00Z",
+                  "title": "string",
                   "priority": "p0"
                 }
               },
@@ -18282,88 +18282,88 @@
                 "value": {
                   "work": {
                     "created_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     },
-                    "created_date": "foo",
-                    "display_id": "foo",
-                    "id": "foo",
+                    "created_date": "2024-01-15T09:30:00Z",
+                    "display_id": "string",
+                    "id": "string",
                     "modified_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     },
-                    "modified_date": "foo",
+                    "modified_date": "2024-01-15T09:30:00Z",
                     "applies_to_part": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "name": "foo"
+                      "display_id": "string",
+                      "id": "string",
+                      "name": "string"
                     },
                     "artifacts": [
                       {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       }
                     ],
-                    "body": "foo",
+                    "body": "string",
                     "owned_by": [
                       {
-                        "display_id": "foo",
-                        "id": "foo",
-                        "display_name": "foo",
+                        "display_id": "string",
+                        "id": "string",
+                        "display_name": "string",
                         "display_picture": {
-                          "display_id": "foo",
-                          "id": "foo"
+                          "display_id": "string",
+                          "id": "string"
                         },
-                        "email": "foo",
-                        "full_name": "foo",
+                        "email": "string",
+                        "full_name": "string",
                         "state": "active"
                       }
                     ],
                     "reported_by": [
                       {
-                        "display_id": "foo",
-                        "id": "foo",
-                        "display_name": "foo",
+                        "display_id": "string",
+                        "id": "string",
+                        "display_name": "string",
                         "display_picture": {
-                          "display_id": "foo",
-                          "id": "foo"
+                          "display_id": "string",
+                          "id": "string"
                         },
-                        "email": "foo",
-                        "full_name": "foo",
+                        "email": "string",
+                        "full_name": "string",
                         "state": "active"
                       }
                     ],
                     "stage": {
-                      "name": "foo"
+                      "name": "string"
                     },
                     "tags": [
                       {
                         "tag": {
-                          "display_id": "foo",
-                          "id": "foo",
-                          "name": "foo"
+                          "display_id": "string",
+                          "id": "string",
+                          "name": "string"
                         },
-                        "value": "foo"
+                        "value": "string"
                       }
                     ],
-                    "target_close_date": "foo",
-                    "title": "foo",
+                    "target_close_date": "2024-01-15T09:30:00Z",
+                    "title": "string",
                     "priority": "p0"
                   }
                 }
@@ -18679,93 +18679,93 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "next_cursor": "foo",
-                "prev_cursor": "foo",
+                "next_cursor": "string",
+                "prev_cursor": "string",
                 "works": [
                   {
                     "created_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     },
-                    "created_date": "foo",
-                    "display_id": "foo",
-                    "id": "foo",
+                    "created_date": "2024-01-15T09:30:00Z",
+                    "display_id": "string",
+                    "id": "string",
                     "modified_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     },
-                    "modified_date": "foo",
+                    "modified_date": "2024-01-15T09:30:00Z",
                     "applies_to_part": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "name": "foo"
+                      "display_id": "string",
+                      "id": "string",
+                      "name": "string"
                     },
                     "artifacts": [
                       {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       }
                     ],
-                    "body": "foo",
+                    "body": "string",
                     "owned_by": [
                       {
-                        "display_id": "foo",
-                        "id": "foo",
-                        "display_name": "foo",
+                        "display_id": "string",
+                        "id": "string",
+                        "display_name": "string",
                         "display_picture": {
-                          "display_id": "foo",
-                          "id": "foo"
+                          "display_id": "string",
+                          "id": "string"
                         },
-                        "email": "foo",
-                        "full_name": "foo",
+                        "email": "string",
+                        "full_name": "string",
                         "state": "active"
                       }
                     ],
                     "reported_by": [
                       {
-                        "display_id": "foo",
-                        "id": "foo",
-                        "display_name": "foo",
+                        "display_id": "string",
+                        "id": "string",
+                        "display_name": "string",
                         "display_picture": {
-                          "display_id": "foo",
-                          "id": "foo"
+                          "display_id": "string",
+                          "id": "string"
                         },
-                        "email": "foo",
-                        "full_name": "foo",
+                        "email": "string",
+                        "full_name": "string",
                         "state": "active"
                       }
                     ],
                     "stage": {
-                      "name": "foo"
+                      "name": "string"
                     },
                     "tags": [
                       {
                         "tag": {
-                          "display_id": "foo",
-                          "id": "foo",
-                          "name": "foo"
+                          "display_id": "string",
+                          "id": "string",
+                          "name": "string"
                         },
-                        "value": "foo"
+                        "value": "string"
                       }
                     ],
-                    "target_close_date": "foo",
-                    "title": "foo",
+                    "target_close_date": "2024-01-15T09:30:00Z",
+                    "title": "string",
                     "priority": "p0"
                   }
                 ]
@@ -18773,93 +18773,93 @@
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "next_cursor": "foo",
-                  "prev_cursor": "foo",
+                  "next_cursor": "string",
+                  "prev_cursor": "string",
                   "works": [
                     {
                       "created_by": {
-                        "display_id": "foo",
-                        "id": "foo",
-                        "display_name": "foo",
+                        "display_id": "string",
+                        "id": "string",
+                        "display_name": "string",
                         "display_picture": {
-                          "display_id": "foo",
-                          "id": "foo"
+                          "display_id": "string",
+                          "id": "string"
                         },
-                        "email": "foo",
-                        "full_name": "foo",
+                        "email": "string",
+                        "full_name": "string",
                         "state": "active"
                       },
-                      "created_date": "foo",
-                      "display_id": "foo",
-                      "id": "foo",
+                      "created_date": "2024-01-15T09:30:00Z",
+                      "display_id": "string",
+                      "id": "string",
                       "modified_by": {
-                        "display_id": "foo",
-                        "id": "foo",
-                        "display_name": "foo",
+                        "display_id": "string",
+                        "id": "string",
+                        "display_name": "string",
                         "display_picture": {
-                          "display_id": "foo",
-                          "id": "foo"
+                          "display_id": "string",
+                          "id": "string"
                         },
-                        "email": "foo",
-                        "full_name": "foo",
+                        "email": "string",
+                        "full_name": "string",
                         "state": "active"
                       },
-                      "modified_date": "foo",
+                      "modified_date": "2024-01-15T09:30:00Z",
                       "applies_to_part": {
-                        "display_id": "foo",
-                        "id": "foo",
-                        "name": "foo"
+                        "display_id": "string",
+                        "id": "string",
+                        "name": "string"
                       },
                       "artifacts": [
                         {
-                          "display_id": "foo",
-                          "id": "foo"
+                          "display_id": "string",
+                          "id": "string"
                         }
                       ],
-                      "body": "foo",
+                      "body": "string",
                       "owned_by": [
                         {
-                          "display_id": "foo",
-                          "id": "foo",
-                          "display_name": "foo",
+                          "display_id": "string",
+                          "id": "string",
+                          "display_name": "string",
                           "display_picture": {
-                            "display_id": "foo",
-                            "id": "foo"
+                            "display_id": "string",
+                            "id": "string"
                           },
-                          "email": "foo",
-                          "full_name": "foo",
+                          "email": "string",
+                          "full_name": "string",
                           "state": "active"
                         }
                       ],
                       "reported_by": [
                         {
-                          "display_id": "foo",
-                          "id": "foo",
-                          "display_name": "foo",
+                          "display_id": "string",
+                          "id": "string",
+                          "display_name": "string",
                           "display_picture": {
-                            "display_id": "foo",
-                            "id": "foo"
+                            "display_id": "string",
+                            "id": "string"
                           },
-                          "email": "foo",
-                          "full_name": "foo",
+                          "email": "string",
+                          "full_name": "string",
                           "state": "active"
                         }
                       ],
                       "stage": {
-                        "name": "foo"
+                        "name": "string"
                       },
                       "tags": [
                         {
                           "tag": {
-                            "display_id": "foo",
-                            "id": "foo",
-                            "name": "foo"
+                            "display_id": "string",
+                            "id": "string",
+                            "name": "string"
                           },
-                          "value": "foo"
+                          "value": "string"
                         }
                       ],
-                      "target_close_date": "foo",
-                      "title": "foo",
+                      "target_close_date": "2024-01-15T09:30:00Z",
+                      "title": "string",
                       "priority": "p0"
                     }
                   ]
@@ -19033,88 +19033,88 @@
               "responseBody": {
                 "work": {
                   "created_by": {
-                    "display_id": "foo",
-                    "id": "foo",
-                    "display_name": "foo",
+                    "display_id": "string",
+                    "id": "string",
+                    "display_name": "string",
                     "display_picture": {
-                      "display_id": "foo",
-                      "id": "foo"
+                      "display_id": "string",
+                      "id": "string"
                     },
-                    "email": "foo",
-                    "full_name": "foo",
+                    "email": "string",
+                    "full_name": "string",
                     "state": "active"
                   },
-                  "created_date": "foo",
-                  "display_id": "foo",
-                  "id": "foo",
+                  "created_date": "2024-01-15T09:30:00Z",
+                  "display_id": "string",
+                  "id": "string",
                   "modified_by": {
-                    "display_id": "foo",
-                    "id": "foo",
-                    "display_name": "foo",
+                    "display_id": "string",
+                    "id": "string",
+                    "display_name": "string",
                     "display_picture": {
-                      "display_id": "foo",
-                      "id": "foo"
+                      "display_id": "string",
+                      "id": "string"
                     },
-                    "email": "foo",
-                    "full_name": "foo",
+                    "email": "string",
+                    "full_name": "string",
                     "state": "active"
                   },
-                  "modified_date": "foo",
+                  "modified_date": "2024-01-15T09:30:00Z",
                   "applies_to_part": {
-                    "display_id": "foo",
-                    "id": "foo",
-                    "name": "foo"
+                    "display_id": "string",
+                    "id": "string",
+                    "name": "string"
                   },
                   "artifacts": [
                     {
-                      "display_id": "foo",
-                      "id": "foo"
+                      "display_id": "string",
+                      "id": "string"
                     }
                   ],
-                  "body": "foo",
+                  "body": "string",
                   "owned_by": [
                     {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     }
                   ],
                   "reported_by": [
                     {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     }
                   ],
                   "stage": {
-                    "name": "foo"
+                    "name": "string"
                   },
                   "tags": [
                     {
                       "tag": {
-                        "display_id": "foo",
-                        "id": "foo",
-                        "name": "foo"
+                        "display_id": "string",
+                        "id": "string",
+                        "name": "string"
                       },
-                      "value": "foo"
+                      "value": "string"
                     }
                   ],
-                  "target_close_date": "foo",
-                  "title": "foo",
+                  "target_close_date": "2024-01-15T09:30:00Z",
+                  "title": "string",
                   "priority": "p0"
                 }
               },
@@ -19123,88 +19123,88 @@
                 "value": {
                   "work": {
                     "created_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     },
-                    "created_date": "foo",
-                    "display_id": "foo",
-                    "id": "foo",
+                    "created_date": "2024-01-15T09:30:00Z",
+                    "display_id": "string",
+                    "id": "string",
                     "modified_by": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "display_name": "foo",
+                      "display_id": "string",
+                      "id": "string",
+                      "display_name": "string",
                       "display_picture": {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       },
-                      "email": "foo",
-                      "full_name": "foo",
+                      "email": "string",
+                      "full_name": "string",
                       "state": "active"
                     },
-                    "modified_date": "foo",
+                    "modified_date": "2024-01-15T09:30:00Z",
                     "applies_to_part": {
-                      "display_id": "foo",
-                      "id": "foo",
-                      "name": "foo"
+                      "display_id": "string",
+                      "id": "string",
+                      "name": "string"
                     },
                     "artifacts": [
                       {
-                        "display_id": "foo",
-                        "id": "foo"
+                        "display_id": "string",
+                        "id": "string"
                       }
                     ],
-                    "body": "foo",
+                    "body": "string",
                     "owned_by": [
                       {
-                        "display_id": "foo",
-                        "id": "foo",
-                        "display_name": "foo",
+                        "display_id": "string",
+                        "id": "string",
+                        "display_name": "string",
                         "display_picture": {
-                          "display_id": "foo",
-                          "id": "foo"
+                          "display_id": "string",
+                          "id": "string"
                         },
-                        "email": "foo",
-                        "full_name": "foo",
+                        "email": "string",
+                        "full_name": "string",
                         "state": "active"
                       }
                     ],
                     "reported_by": [
                       {
-                        "display_id": "foo",
-                        "id": "foo",
-                        "display_name": "foo",
+                        "display_id": "string",
+                        "id": "string",
+                        "display_name": "string",
                         "display_picture": {
-                          "display_id": "foo",
-                          "id": "foo"
+                          "display_id": "string",
+                          "id": "string"
                         },
-                        "email": "foo",
-                        "full_name": "foo",
+                        "email": "string",
+                        "full_name": "string",
                         "state": "active"
                       }
                     ],
                     "stage": {
-                      "name": "foo"
+                      "name": "string"
                     },
                     "tags": [
                       {
                         "tag": {
-                          "display_id": "foo",
-                          "id": "foo",
-                          "name": "foo"
+                          "display_id": "string",
+                          "id": "string",
+                          "name": "string"
                         },
-                        "value": "foo"
+                        "value": "string"
                       }
                     ],
-                    "target_close_date": "foo",
-                    "title": "foo",
+                    "target_close_date": "2024-01-15T09:30:00Z",
+                    "title": "string",
                     "priority": "p0"
                   }
                 }

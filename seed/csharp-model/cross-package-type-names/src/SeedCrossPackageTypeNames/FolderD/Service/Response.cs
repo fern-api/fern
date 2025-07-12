@@ -2,6 +2,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using SeedCrossPackageTypeNames;
 using SeedCrossPackageTypeNames.Core;
+using SeedCrossPackageTypeNames.FolderB;
 
 namespace SeedCrossPackageTypeNames.FolderD;
 
@@ -13,7 +14,7 @@ public record Response : IJsonOnDeserialized
         new Dictionary<string, JsonElement>();
 
     [JsonPropertyName("foo")]
-    public FolderB.Foo? Foo { get; set; }
+    public Foo? Foo { get; set; }
 
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();

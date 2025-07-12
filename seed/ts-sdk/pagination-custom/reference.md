@@ -23,7 +23,7 @@ for await (const item of response) {
 }
 
 // Or you can manually iterate page-by-page
-const page = await client.users.listUsernamesCustom({
+let page = await client.users.listUsernamesCustom({
     starting_after: "starting_after",
 });
 while (page.hasNextPage()) {

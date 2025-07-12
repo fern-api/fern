@@ -53,10 +53,10 @@
             "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200,
-            "responseBody": "foo",
+            "responseBody": "string",
             "responseBodyV3": {
               "type": "json",
-              "value": "foo"
+              "value": "string"
             }
           }
         ],

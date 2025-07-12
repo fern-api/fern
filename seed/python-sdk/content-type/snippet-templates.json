@@ -24,7 +24,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.service.patch(\n\t$FERN_INPUT\n)",
+                "templateString": "client.service.patch(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -79,7 +79,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.service.patch(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.service.patch(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",

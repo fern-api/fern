@@ -41,7 +41,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.imdb.create_movie(\n\t$FERN_INPUT\n)",
+                "templateString": "client.imdb.create_movie(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -113,7 +113,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.imdb.create_movie(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.imdb.create_movie(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -197,7 +197,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.imdb.get_movie(\n\t$FERN_INPUT\n)",
+                "templateString": "client.imdb.get_movie(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -253,7 +253,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.imdb.get_movie(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.imdb.get_movie(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",

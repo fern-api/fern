@@ -1808,8 +1808,8 @@
                 "previous": "http://api.example.org/accounts/?page=2",
                 "results": [
                   {
-                    "id": 42,
-                    "name": "foo",
+                    "id": 1,
+                    "name": "string",
                     "hidden": true
                   }
                 ]
@@ -1822,8 +1822,8 @@
                   "previous": "http://api.example.org/accounts/?page=2",
                   "results": [
                     {
-                      "id": 42,
-                      "name": "foo",
+                      "id": 1,
+                      "name": "string",
                       "hidden": true
                     }
                   ]
@@ -1899,15 +1899,15 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "id": 42,
-                "name": "foo",
+                "id": 1,
+                "name": "string",
                 "hidden": true
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "id": 42,
-                  "name": "foo",
+                  "id": 1,
+                  "name": "string",
                   "hidden": true
                 }
               }
@@ -2031,37 +2031,37 @@
                 "previous": "http://api.example.org/accounts/?page=2",
                 "results": [
                   {
-                    "id": 42,
-                    "added_at": "foo",
-                    "updated_at": "foo",
-                    "name": "foo",
-                    "date": "foo",
-                    "time": "foo",
-                    "start_at": "foo",
-                    "group": "foo",
-                    "room": "foo",
+                    "id": 1,
+                    "added_at": "2024-01-15T09:30:00Z",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                    "name": "string",
+                    "date": "2023-01-15",
+                    "time": "string",
+                    "start_at": "2024-01-15T09:30:00Z",
+                    "group": "string",
+                    "room": "string",
                     "photos": [
                       {
-                        "added_at": "foo",
-                        "photo": "foo",
-                        "processed_image": "foo",
-                        "ready": "foo"
+                        "added_at": "2024-01-15T09:30:00Z",
+                        "photo": "string",
+                        "processed_image": "string",
+                        "ready": "string"
                       }
                     ],
                     "extra_fields": [
                       {
-                        "key": "foo",
-                        "label": "foo",
+                        "key": "string",
+                        "label": "string",
                         "value": {},
                         "present": true
                       }
                     ],
                     "complete": {
-                      "completed_at": "foo",
+                      "completed_at": "2024-01-15T09:30:00Z",
                       "did_win": true,
-                      "hints": 42,
-                      "score": 42,
-                      "completion_time": 42
+                      "hints": 1,
+                      "score": 1,
+                      "completion_time": 1
                     }
                   }
                 ]
@@ -2074,37 +2074,37 @@
                   "previous": "http://api.example.org/accounts/?page=2",
                   "results": [
                     {
-                      "id": 42,
-                      "added_at": "foo",
-                      "updated_at": "foo",
-                      "name": "foo",
-                      "date": "foo",
-                      "time": "foo",
-                      "start_at": "foo",
-                      "group": "foo",
-                      "room": "foo",
+                      "id": 1,
+                      "added_at": "2024-01-15T09:30:00Z",
+                      "updated_at": "2024-01-15T09:30:00Z",
+                      "name": "string",
+                      "date": "2023-01-15",
+                      "time": "string",
+                      "start_at": "2024-01-15T09:30:00Z",
+                      "group": "string",
+                      "room": "string",
                       "photos": [
                         {
-                          "added_at": "foo",
-                          "photo": "foo",
-                          "processed_image": "foo",
-                          "ready": "foo"
+                          "added_at": "2024-01-15T09:30:00Z",
+                          "photo": "string",
+                          "processed_image": "string",
+                          "ready": "string"
                         }
                       ],
                       "extra_fields": [
                         {
-                          "key": "foo",
-                          "label": "foo",
+                          "key": "string",
+                          "label": "string",
                           "value": {},
                           "present": true
                         }
                       ],
                       "complete": {
-                        "completed_at": "foo",
+                        "completed_at": "2024-01-15T09:30:00Z",
                         "did_win": true,
-                        "hints": 42,
-                        "score": 42,
-                        "completion_time": 42
+                        "hints": 1,
+                        "score": 1,
+                        "completion_time": 1
                       }
                     }
                   ]
@@ -2233,73 +2233,73 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "id": 42,
-                "added_at": "foo",
-                "updated_at": "foo",
-                "name": "foo",
-                "date": "foo",
-                "time": "foo",
-                "start_at": "foo",
-                "group": "foo",
-                "room": "foo",
+                "id": 1,
+                "added_at": "2024-01-15T09:30:00Z",
+                "updated_at": "2024-01-15T09:30:00Z",
+                "name": "string",
+                "date": "2023-01-15",
+                "time": "string",
+                "start_at": "2024-01-15T09:30:00Z",
+                "group": "string",
+                "room": "string",
                 "photos": [
                   {
-                    "added_at": "foo",
-                    "photo": "foo",
-                    "processed_image": "foo",
-                    "ready": "foo"
+                    "added_at": "2024-01-15T09:30:00Z",
+                    "photo": "string",
+                    "processed_image": "string",
+                    "ready": "string"
                   }
                 ],
                 "extra_fields": [
                   {
-                    "key": "foo",
-                    "label": "foo",
+                    "key": "string",
+                    "label": "string",
                     "value": {},
                     "present": true
                   }
                 ],
                 "complete": {
-                  "completed_at": "foo",
+                  "completed_at": "2024-01-15T09:30:00Z",
                   "did_win": true,
-                  "hints": 42,
-                  "score": 42,
-                  "completion_time": 42
+                  "hints": 1,
+                  "score": 1,
+                  "completion_time": 1
                 }
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "id": 42,
-                  "added_at": "foo",
-                  "updated_at": "foo",
-                  "name": "foo",
-                  "date": "foo",
-                  "time": "foo",
-                  "start_at": "foo",
-                  "group": "foo",
-                  "room": "foo",
+                  "id": 1,
+                  "added_at": "2024-01-15T09:30:00Z",
+                  "updated_at": "2024-01-15T09:30:00Z",
+                  "name": "string",
+                  "date": "2023-01-15",
+                  "time": "string",
+                  "start_at": "2024-01-15T09:30:00Z",
+                  "group": "string",
+                  "room": "string",
                   "photos": [
                     {
-                      "added_at": "foo",
-                      "photo": "foo",
-                      "processed_image": "foo",
-                      "ready": "foo"
+                      "added_at": "2024-01-15T09:30:00Z",
+                      "photo": "string",
+                      "processed_image": "string",
+                      "ready": "string"
                     }
                   ],
                   "extra_fields": [
                     {
-                      "key": "foo",
-                      "label": "foo",
+                      "key": "string",
+                      "label": "string",
                       "value": {},
                       "present": true
                     }
                   ],
                   "complete": {
-                    "completed_at": "foo",
+                    "completed_at": "2024-01-15T09:30:00Z",
                     "did_win": true,
-                    "hints": 42,
-                    "score": 42,
-                    "completion_time": 42
+                    "hints": 1,
+                    "score": 1,
+                    "completion_time": 1
                   }
                 }
               }
@@ -2397,68 +2397,68 @@
                 "previous": "http://api.example.org/accounts/?page=2",
                 "results": [
                   {
-                    "id": 42,
-                    "added_at": "foo",
-                    "updated_at": "foo",
+                    "id": 1,
+                    "added_at": "2024-01-15T09:30:00Z",
+                    "updated_at": "2024-01-15T09:30:00Z",
                     "is_event": true,
-                    "name": "foo",
-                    "date": "foo",
-                    "time": "foo",
-                    "start_at": "foo",
+                    "name": "string",
+                    "date": "2023-01-15",
+                    "time": "string",
+                    "start_at": "2024-01-15T09:30:00Z",
                     "games": [
                       {
-                        "id": 42,
-                        "added_at": "foo",
-                        "updated_at": "foo",
-                        "name": "foo",
-                        "date": "foo",
-                        "time": "foo",
-                        "start_at": "foo",
-                        "room": "foo",
+                        "id": 1,
+                        "added_at": "2024-01-15T09:30:00Z",
+                        "updated_at": "2024-01-15T09:30:00Z",
+                        "name": "string",
+                        "date": "2023-01-15",
+                        "time": "string",
+                        "start_at": "2024-01-15T09:30:00Z",
+                        "room": "string",
                         "extra_fields": [
                           {
-                            "key": "foo",
-                            "label": "foo",
+                            "key": "string",
+                            "label": "string",
                             "value": {},
                             "present": true
                           }
                         ],
                         "complete": {
-                          "completed_at": "foo",
+                          "completed_at": "2024-01-15T09:30:00Z",
                           "did_win": true,
-                          "hints": 42,
-                          "score": 42,
-                          "completion_time": 42
+                          "hints": 1,
+                          "score": 1,
+                          "completion_time": 1
                         }
                       }
                     ],
                     "players": [
                       {
-                        "added_at": "foo",
-                        "updated_at": "foo",
-                        "player": "foo",
-                        "first_name": "foo",
-                        "last_name": "foo",
-                        "email": "foo",
-                        "phone": "foo",
+                        "added_at": "2024-01-15T09:30:00Z",
+                        "updated_at": "2024-01-15T09:30:00Z",
+                        "player": "string",
+                        "first_name": "string",
+                        "last_name": "string",
+                        "email": "string",
+                        "phone": "string",
                         "extra_fields": [
                           {
-                            "key": "foo",
-                            "label": "foo",
+                            "key": "string",
+                            "label": "string",
                             "value": {},
                             "present": true
                           }
                         ],
-                        "signature": "foo"
+                        "signature": "string"
                       }
                     ],
                     "photos": [
                       {
-                        "added_at": "foo",
-                        "game": "foo",
-                        "photo": "foo",
-                        "processed_image": "foo",
-                        "ready": "foo"
+                        "added_at": "2024-01-15T09:30:00Z",
+                        "game": "string",
+                        "photo": "string",
+                        "processed_image": "string",
+                        "ready": "string"
                       }
                     ]
                   }
@@ -2472,68 +2472,68 @@
                   "previous": "http://api.example.org/accounts/?page=2",
                   "results": [
                     {
-                      "id": 42,
-                      "added_at": "foo",
-                      "updated_at": "foo",
+                      "id": 1,
+                      "added_at": "2024-01-15T09:30:00Z",
+                      "updated_at": "2024-01-15T09:30:00Z",
                       "is_event": true,
-                      "name": "foo",
-                      "date": "foo",
-                      "time": "foo",
-                      "start_at": "foo",
+                      "name": "string",
+                      "date": "2023-01-15",
+                      "time": "string",
+                      "start_at": "2024-01-15T09:30:00Z",
                       "games": [
                         {
-                          "id": 42,
-                          "added_at": "foo",
-                          "updated_at": "foo",
-                          "name": "foo",
-                          "date": "foo",
-                          "time": "foo",
-                          "start_at": "foo",
-                          "room": "foo",
+                          "id": 1,
+                          "added_at": "2024-01-15T09:30:00Z",
+                          "updated_at": "2024-01-15T09:30:00Z",
+                          "name": "string",
+                          "date": "2023-01-15",
+                          "time": "string",
+                          "start_at": "2024-01-15T09:30:00Z",
+                          "room": "string",
                           "extra_fields": [
                             {
-                              "key": "foo",
-                              "label": "foo",
+                              "key": "string",
+                              "label": "string",
                               "value": {},
                               "present": true
                             }
                           ],
                           "complete": {
-                            "completed_at": "foo",
+                            "completed_at": "2024-01-15T09:30:00Z",
                             "did_win": true,
-                            "hints": 42,
-                            "score": 42,
-                            "completion_time": 42
+                            "hints": 1,
+                            "score": 1,
+                            "completion_time": 1
                           }
                         }
                       ],
                       "players": [
                         {
-                          "added_at": "foo",
-                          "updated_at": "foo",
-                          "player": "foo",
-                          "first_name": "foo",
-                          "last_name": "foo",
-                          "email": "foo",
-                          "phone": "foo",
+                          "added_at": "2024-01-15T09:30:00Z",
+                          "updated_at": "2024-01-15T09:30:00Z",
+                          "player": "string",
+                          "first_name": "string",
+                          "last_name": "string",
+                          "email": "string",
+                          "phone": "string",
                           "extra_fields": [
                             {
-                              "key": "foo",
-                              "label": "foo",
+                              "key": "string",
+                              "label": "string",
                               "value": {},
                               "present": true
                             }
                           ],
-                          "signature": "foo"
+                          "signature": "string"
                         }
                       ],
                       "photos": [
                         {
-                          "added_at": "foo",
-                          "game": "foo",
-                          "photo": "foo",
-                          "processed_image": "foo",
-                          "ready": "foo"
+                          "added_at": "2024-01-15T09:30:00Z",
+                          "game": "string",
+                          "photo": "string",
+                          "processed_image": "string",
+                          "ready": "string"
                         }
                       ]
                     }
@@ -2637,136 +2637,136 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "id": 42,
-                "added_at": "foo",
-                "updated_at": "foo",
+                "id": 1,
+                "added_at": "2024-01-15T09:30:00Z",
+                "updated_at": "2024-01-15T09:30:00Z",
                 "is_event": true,
-                "name": "foo",
-                "date": "foo",
-                "time": "foo",
-                "start_at": "foo",
+                "name": "string",
+                "date": "2023-01-15",
+                "time": "string",
+                "start_at": "2024-01-15T09:30:00Z",
                 "games": [
                   {
-                    "id": 42,
-                    "added_at": "foo",
-                    "updated_at": "foo",
-                    "name": "foo",
-                    "date": "foo",
-                    "time": "foo",
-                    "start_at": "foo",
-                    "room": "foo",
+                    "id": 1,
+                    "added_at": "2024-01-15T09:30:00Z",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                    "name": "string",
+                    "date": "2023-01-15",
+                    "time": "string",
+                    "start_at": "2024-01-15T09:30:00Z",
+                    "room": "string",
                     "extra_fields": [
                       {
-                        "key": "foo",
-                        "label": "foo",
+                        "key": "string",
+                        "label": "string",
                         "value": {},
                         "present": true
                       }
                     ],
                     "complete": {
-                      "completed_at": "foo",
+                      "completed_at": "2024-01-15T09:30:00Z",
                       "did_win": true,
-                      "hints": 42,
-                      "score": 42,
-                      "completion_time": 42
+                      "hints": 1,
+                      "score": 1,
+                      "completion_time": 1
                     }
                   }
                 ],
                 "players": [
                   {
-                    "added_at": "foo",
-                    "updated_at": "foo",
-                    "player": "foo",
-                    "first_name": "foo",
-                    "last_name": "foo",
-                    "email": "foo",
-                    "phone": "foo",
+                    "added_at": "2024-01-15T09:30:00Z",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                    "player": "string",
+                    "first_name": "string",
+                    "last_name": "string",
+                    "email": "string",
+                    "phone": "string",
                     "extra_fields": [
                       {
-                        "key": "foo",
-                        "label": "foo",
+                        "key": "string",
+                        "label": "string",
                         "value": {},
                         "present": true
                       }
                     ],
-                    "signature": "foo"
+                    "signature": "string"
                   }
                 ],
                 "photos": [
                   {
-                    "added_at": "foo",
-                    "game": "foo",
-                    "photo": "foo",
-                    "processed_image": "foo",
-                    "ready": "foo"
+                    "added_at": "2024-01-15T09:30:00Z",
+                    "game": "string",
+                    "photo": "string",
+                    "processed_image": "string",
+                    "ready": "string"
                   }
                 ]
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "id": 42,
-                  "added_at": "foo",
-                  "updated_at": "foo",
+                  "id": 1,
+                  "added_at": "2024-01-15T09:30:00Z",
+                  "updated_at": "2024-01-15T09:30:00Z",
                   "is_event": true,
-                  "name": "foo",
-                  "date": "foo",
-                  "time": "foo",
-                  "start_at": "foo",
+                  "name": "string",
+                  "date": "2023-01-15",
+                  "time": "string",
+                  "start_at": "2024-01-15T09:30:00Z",
                   "games": [
                     {
-                      "id": 42,
-                      "added_at": "foo",
-                      "updated_at": "foo",
-                      "name": "foo",
-                      "date": "foo",
-                      "time": "foo",
-                      "start_at": "foo",
-                      "room": "foo",
+                      "id": 1,
+                      "added_at": "2024-01-15T09:30:00Z",
+                      "updated_at": "2024-01-15T09:30:00Z",
+                      "name": "string",
+                      "date": "2023-01-15",
+                      "time": "string",
+                      "start_at": "2024-01-15T09:30:00Z",
+                      "room": "string",
                       "extra_fields": [
                         {
-                          "key": "foo",
-                          "label": "foo",
+                          "key": "string",
+                          "label": "string",
                           "value": {},
                           "present": true
                         }
                       ],
                       "complete": {
-                        "completed_at": "foo",
+                        "completed_at": "2024-01-15T09:30:00Z",
                         "did_win": true,
-                        "hints": 42,
-                        "score": 42,
-                        "completion_time": 42
+                        "hints": 1,
+                        "score": 1,
+                        "completion_time": 1
                       }
                     }
                   ],
                   "players": [
                     {
-                      "added_at": "foo",
-                      "updated_at": "foo",
-                      "player": "foo",
-                      "first_name": "foo",
-                      "last_name": "foo",
-                      "email": "foo",
-                      "phone": "foo",
+                      "added_at": "2024-01-15T09:30:00Z",
+                      "updated_at": "2024-01-15T09:30:00Z",
+                      "player": "string",
+                      "first_name": "string",
+                      "last_name": "string",
+                      "email": "string",
+                      "phone": "string",
                       "extra_fields": [
                         {
-                          "key": "foo",
-                          "label": "foo",
+                          "key": "string",
+                          "label": "string",
                           "value": {},
                           "present": true
                         }
                       ],
-                      "signature": "foo"
+                      "signature": "string"
                     }
                   ],
                   "photos": [
                     {
-                      "added_at": "foo",
-                      "game": "foo",
-                      "photo": "foo",
-                      "processed_image": "foo",
-                      "ready": "foo"
+                      "added_at": "2024-01-15T09:30:00Z",
+                      "game": "string",
+                      "photo": "string",
+                      "processed_image": "string",
+                      "ready": "string"
                     }
                   ]
                 }
@@ -2839,17 +2839,17 @@
                 "previous": "http://api.example.org/accounts/?page=2",
                 "results": [
                   {
-                    "id": 42,
-                    "added_at": "foo",
-                    "updated_at": "foo",
-                    "first_name": "foo",
-                    "last_name": "foo",
-                    "email": "foo",
-                    "phone": "foo",
+                    "id": 1,
+                    "added_at": "2024-01-15T09:30:00Z",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                    "first_name": "string",
+                    "last_name": "string",
+                    "email": "string",
+                    "phone": "string",
                     "extra_fields": [
                       {
-                        "key": "foo",
-                        "label": "foo",
+                        "key": "string",
+                        "label": "string",
                         "value": {},
                         "present": true
                       }
@@ -2866,17 +2866,17 @@
                   "previous": "http://api.example.org/accounts/?page=2",
                   "results": [
                     {
-                      "id": 42,
-                      "added_at": "foo",
-                      "updated_at": "foo",
-                      "first_name": "foo",
-                      "last_name": "foo",
-                      "email": "foo",
-                      "phone": "foo",
+                      "id": 1,
+                      "added_at": "2024-01-15T09:30:00Z",
+                      "updated_at": "2024-01-15T09:30:00Z",
+                      "first_name": "string",
+                      "last_name": "string",
+                      "email": "string",
+                      "phone": "string",
                       "extra_fields": [
                         {
-                          "key": "foo",
-                          "label": "foo",
+                          "key": "string",
+                          "label": "string",
                           "value": {},
                           "present": true
                         }
@@ -2956,17 +2956,17 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "id": 42,
-                "added_at": "foo",
-                "updated_at": "foo",
-                "first_name": "foo",
-                "last_name": "foo",
-                "email": "foo",
-                "phone": "foo",
+                "id": 1,
+                "added_at": "2024-01-15T09:30:00Z",
+                "updated_at": "2024-01-15T09:30:00Z",
+                "first_name": "string",
+                "last_name": "string",
+                "email": "string",
+                "phone": "string",
                 "extra_fields": [
                   {
-                    "key": "foo",
-                    "label": "foo",
+                    "key": "string",
+                    "label": "string",
                     "value": {},
                     "present": true
                   }
@@ -2976,17 +2976,17 @@
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "id": 42,
-                  "added_at": "foo",
-                  "updated_at": "foo",
-                  "first_name": "foo",
-                  "last_name": "foo",
-                  "email": "foo",
-                  "phone": "foo",
+                  "id": 1,
+                  "added_at": "2024-01-15T09:30:00Z",
+                  "updated_at": "2024-01-15T09:30:00Z",
+                  "first_name": "string",
+                  "last_name": "string",
+                  "email": "string",
+                  "phone": "string",
                   "extra_fields": [
                     {
-                      "key": "foo",
-                      "label": "foo",
+                      "key": "string",
+                      "label": "string",
                       "value": {},
                       "present": true
                     }
@@ -3062,8 +3062,8 @@
                 "previous": "http://api.example.org/accounts/?page=2",
                 "results": [
                   {
-                    "id": 42,
-                    "name": "foo",
+                    "id": 1,
+                    "name": "string",
                     "hidden": true
                   }
                 ]
@@ -3076,8 +3076,8 @@
                   "previous": "http://api.example.org/accounts/?page=2",
                   "results": [
                     {
-                      "id": 42,
-                      "name": "foo",
+                      "id": 1,
+                      "name": "string",
                       "hidden": true
                     }
                   ]
@@ -3153,15 +3153,15 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "id": 42,
-                "name": "foo",
+                "id": 1,
+                "name": "string",
                 "hidden": true
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "id": 42,
-                  "name": "foo",
+                  "id": 1,
+                  "name": "string",
                   "hidden": true
                 }
               }
@@ -3233,17 +3233,17 @@
                 "previous": "http://api.example.org/accounts/?page=2",
                 "results": [
                   {
-                    "id": "foo",
-                    "added_at": "foo",
-                    "original_image": "foo",
+                    "id": "string",
+                    "added_at": "2024-01-15T09:30:00Z",
+                    "original_image": "string",
                     "processed": [
                       {
-                        "added_at": "foo",
-                        "game": "foo",
-                        "group": "foo",
-                        "photo": "foo",
-                        "processed_image": "foo",
-                        "ready": "foo"
+                        "added_at": "2024-01-15T09:30:00Z",
+                        "game": "string",
+                        "group": "string",
+                        "photo": "string",
+                        "processed_image": "string",
+                        "ready": "string"
                       }
                     ]
                   }
@@ -3257,17 +3257,17 @@
                   "previous": "http://api.example.org/accounts/?page=2",
                   "results": [
                     {
-                      "id": "foo",
-                      "added_at": "foo",
-                      "original_image": "foo",
+                      "id": "string",
+                      "added_at": "2024-01-15T09:30:00Z",
+                      "original_image": "string",
                       "processed": [
                         {
-                          "added_at": "foo",
-                          "game": "foo",
-                          "group": "foo",
-                          "photo": "foo",
-                          "processed_image": "foo",
-                          "ready": "foo"
+                          "added_at": "2024-01-15T09:30:00Z",
+                          "game": "string",
+                          "group": "string",
+                          "photo": "string",
+                          "processed_image": "string",
+                          "ready": "string"
                         }
                       ]
                     }
@@ -3344,34 +3344,34 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "id": "foo",
-                "added_at": "foo",
-                "original_image": "foo",
+                "id": "string",
+                "added_at": "2024-01-15T09:30:00Z",
+                "original_image": "string",
                 "processed": [
                   {
-                    "added_at": "foo",
-                    "game": "foo",
-                    "group": "foo",
-                    "photo": "foo",
-                    "processed_image": "foo",
-                    "ready": "foo"
+                    "added_at": "2024-01-15T09:30:00Z",
+                    "game": "string",
+                    "group": "string",
+                    "photo": "string",
+                    "processed_image": "string",
+                    "ready": "string"
                   }
                 ]
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "id": "foo",
-                  "added_at": "foo",
-                  "original_image": "foo",
+                  "id": "string",
+                  "added_at": "2024-01-15T09:30:00Z",
+                  "original_image": "string",
                   "processed": [
                     {
-                      "added_at": "foo",
-                      "game": "foo",
-                      "group": "foo",
-                      "photo": "foo",
-                      "processed_image": "foo",
-                      "ready": "foo"
+                      "added_at": "2024-01-15T09:30:00Z",
+                      "game": "string",
+                      "group": "string",
+                      "photo": "string",
+                      "processed_image": "string",
+                      "ready": "string"
                     }
                   ]
                 }

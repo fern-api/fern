@@ -178,11 +178,11 @@
                 "height": 25.4,
                 "age": 50,
                 "location": {
-                  "latitude": 42,
-                  "longitude": 42
+                  "latitude": 1.1,
+                  "longitude": 1.1
                 },
-                "id": "foo",
-                "plantedDate": "foo"
+                "id": "string",
+                "plantedDate": "2024-01-15T09:30:00Z"
               }
             ],
             "responseBodyV3": {
@@ -193,11 +193,11 @@
                   "height": 25.4,
                   "age": 50,
                   "location": {
-                    "latitude": 42,
-                    "longitude": 42
+                    "latitude": 1.1,
+                    "longitude": 1.1
                   },
-                  "id": "foo",
-                  "plantedDate": "foo"
+                  "id": "string",
+                  "plantedDate": "2024-01-15T09:30:00Z"
                 }
               ]
             }
@@ -286,7 +286,7 @@
               "species": "Ferntacular",
               "height": 25.4,
               "$ref": "#/components/examples/oakTree",
-              "id": "foo"
+              "id": "string"
             },
             "responseBodyV3": {
               "type": "json",
@@ -294,7 +294,7 @@
                 "species": "Ferntacular",
                 "height": 25.4,
                 "$ref": "#/components/examples/oakTree",
-                "id": "foo"
+                "id": "string"
               }
             }
           }
@@ -369,7 +369,7 @@
               "species": "Ferntacular",
               "height": 25.4,
               "$ref": "#/components/examples/oakTree",
-              "id": "foo"
+              "id": "string"
             },
             "responseBodyV3": {
               "type": "json",
@@ -377,7 +377,7 @@
                 "species": "Ferntacular",
                 "height": 25.4,
                 "$ref": "#/components/examples/oakTree",
-                "id": "foo"
+                "id": "string"
               }
             }
           }
@@ -476,10 +476,10 @@
               }
             },
             "responseStatusCode": 201,
-            "responseBody": "foo",
+            "responseBody": "string",
             "responseBodyV3": {
               "type": "json",
-              "value": "foo"
+              "value": "string"
             }
           }
         ],

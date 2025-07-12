@@ -2,21 +2,23 @@ displayName: Swift SDK
 irVersion: v58
 image: fernapi/fern-swift-sdk
 changelogLocation: ../../generators/swift/sdk/versions.yml
+
 publish:
   preBuildCommands:
-    - pnpm --filter @fern-api/fern-swift-sdk dist:cli
+    - pnpm --filter @fern-api/swift-sdk dist:cli
   docker:
     file: ./generators/swift/sdk/Dockerfile
     image: fernapi/fern-swift-sdk
     context: .
+
 test:
   docker:
     image: fernapi/fern-swift-sdk:latest
-    command: pnpm --filter @fern-api/fern-swift-sdk dockerTagLatest
+    command: pnpm --filter @fern-api/swift-sdk dockerTagLatest
   local:
     workingDirectory: generators/swift
     buildCommand:
-      - pnpm --filter @fern-api/fern-swift-sdk dist:cli
+      - pnpm --filter @fern-api/swift-sdk dist:cli
     runCommand: node sdk/dist/cli.cjs
 
 language: swift

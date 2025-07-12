@@ -739,57 +739,57 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "$anchor": "foo",
-              "$comment": "foo",
+              "$anchor": "string",
+              "$comment": "string",
               "$defs": null,
-              "$dynamicRef": "foo",
-              "$id": "foo",
-              "$ref": "foo",
-              "$schema": "foo",
+              "$dynamicRef": "string",
+              "$id": "string",
+              "$ref": "string",
+              "$schema": "string",
               "additionalProperties": {
-                "$anchor": "foo",
-                "$comment": "foo",
+                "$anchor": "string",
+                "$comment": "string",
                 "$defs": null,
-                "$dynamicRef": "foo",
-                "$id": "foo",
-                "$ref": "foo",
-                "$schema": "foo",
+                "$dynamicRef": "string",
+                "$id": "string",
+                "$ref": "string",
+                "$schema": "string",
                 "allOf": [
                   null
                 ],
                 "anyOf": [
                   null
                 ],
-                "contentEncoding": "foo",
-                "contentMediaType": "foo",
+                "contentEncoding": "string",
+                "contentMediaType": "string",
                 "dependentRequired": {},
                 "dependentSchemas": {},
                 "deprecated": true,
-                "description": "foo",
+                "description": "string",
                 "enum": [
                   null
                 ],
                 "examples": [
                   null
                 ],
-                "exclusiveMaximum": "foo",
-                "exclusiveMinimum": "foo",
-                "format": "foo",
-                "maxContains": 42,
-                "maxItems": 42,
-                "maxLength": 42,
-                "maxProperties": 42,
-                "maximum": "foo",
-                "minContains": 42,
-                "minItems": 42,
-                "minLength": 42,
-                "minProperties": 42,
-                "minimum": "foo",
-                "multipleOf": "foo",
+                "exclusiveMaximum": "string",
+                "exclusiveMinimum": "string",
+                "format": "string",
+                "maxContains": 1,
+                "maxItems": 1,
+                "maxLength": 1,
+                "maxProperties": 1,
+                "maximum": "string",
+                "minContains": 1,
+                "minItems": 1,
+                "minLength": 1,
+                "minProperties": 1,
+                "minimum": "string",
+                "multipleOf": "string",
                 "oneOf": [
                   null
                 ],
-                "pattern": "foo",
+                "pattern": "string",
                 "patternProperties": {},
                 "prefixItems": [
                   null
@@ -797,58 +797,58 @@
                 "properties": null,
                 "readOnly": true,
                 "required": [
-                  "foo"
+                  "string"
                 ],
-                "title": "foo",
-                "type": "foo",
+                "title": "string",
+                "type": "string",
                 "uniqueItems": true,
                 "writeOnly": true
               },
               "allOf": [
                 {
-                  "$anchor": "foo",
-                  "$comment": "foo",
+                  "$anchor": "string",
+                  "$comment": "string",
                   "$defs": null,
-                  "$dynamicRef": "foo",
-                  "$id": "foo",
-                  "$ref": "foo",
-                  "$schema": "foo",
+                  "$dynamicRef": "string",
+                  "$id": "string",
+                  "$ref": "string",
+                  "$schema": "string",
                   "allOf": [
                     null
                   ],
                   "anyOf": [
                     null
                   ],
-                  "contentEncoding": "foo",
-                  "contentMediaType": "foo",
+                  "contentEncoding": "string",
+                  "contentMediaType": "string",
                   "dependentRequired": {},
                   "dependentSchemas": {},
                   "deprecated": true,
-                  "description": "foo",
+                  "description": "string",
                   "enum": [
                     null
                   ],
                   "examples": [
                     null
                   ],
-                  "exclusiveMaximum": "foo",
-                  "exclusiveMinimum": "foo",
-                  "format": "foo",
-                  "maxContains": 42,
-                  "maxItems": 42,
-                  "maxLength": 42,
-                  "maxProperties": 42,
-                  "maximum": "foo",
-                  "minContains": 42,
-                  "minItems": 42,
-                  "minLength": 42,
-                  "minProperties": 42,
-                  "minimum": "foo",
-                  "multipleOf": "foo",
+                  "exclusiveMaximum": "string",
+                  "exclusiveMinimum": "string",
+                  "format": "string",
+                  "maxContains": 1,
+                  "maxItems": 1,
+                  "maxLength": 1,
+                  "maxProperties": 1,
+                  "maximum": "string",
+                  "minContains": 1,
+                  "minItems": 1,
+                  "minLength": 1,
+                  "minProperties": 1,
+                  "minimum": "string",
+                  "multipleOf": "string",
                   "oneOf": [
                     null
                   ],
-                  "pattern": "foo",
+                  "pattern": "string",
                   "patternProperties": {},
                   "prefixItems": [
                     null
@@ -856,59 +856,59 @@
                   "properties": null,
                   "readOnly": true,
                   "required": [
-                    "foo"
+                    "string"
                   ],
-                  "title": "foo",
-                  "type": "foo",
+                  "title": "string",
+                  "type": "string",
                   "uniqueItems": true,
                   "writeOnly": true
                 }
               ],
               "anyOf": [
                 {
-                  "$anchor": "foo",
-                  "$comment": "foo",
+                  "$anchor": "string",
+                  "$comment": "string",
                   "$defs": null,
-                  "$dynamicRef": "foo",
-                  "$id": "foo",
-                  "$ref": "foo",
-                  "$schema": "foo",
+                  "$dynamicRef": "string",
+                  "$id": "string",
+                  "$ref": "string",
+                  "$schema": "string",
                   "allOf": [
                     null
                   ],
                   "anyOf": [
                     null
                   ],
-                  "contentEncoding": "foo",
-                  "contentMediaType": "foo",
+                  "contentEncoding": "string",
+                  "contentMediaType": "string",
                   "dependentRequired": {},
                   "dependentSchemas": {},
                   "deprecated": true,
-                  "description": "foo",
+                  "description": "string",
                   "enum": [
                     null
                   ],
                   "examples": [
                     null
                   ],
-                  "exclusiveMaximum": "foo",
-                  "exclusiveMinimum": "foo",
-                  "format": "foo",
-                  "maxContains": 42,
-                  "maxItems": 42,
-                  "maxLength": 42,
-                  "maxProperties": 42,
-                  "maximum": "foo",
-                  "minContains": 42,
-                  "minItems": 42,
-                  "minLength": 42,
-                  "minProperties": 42,
-                  "minimum": "foo",
-                  "multipleOf": "foo",
+                  "exclusiveMaximum": "string",
+                  "exclusiveMinimum": "string",
+                  "format": "string",
+                  "maxContains": 1,
+                  "maxItems": 1,
+                  "maxLength": 1,
+                  "maxProperties": 1,
+                  "maximum": "string",
+                  "minContains": 1,
+                  "minItems": 1,
+                  "minLength": 1,
+                  "minProperties": 1,
+                  "minimum": "string",
+                  "multipleOf": "string",
                   "oneOf": [
                     null
                   ],
-                  "pattern": "foo",
+                  "pattern": "string",
                   "patternProperties": {},
                   "prefixItems": [
                     null
@@ -916,58 +916,58 @@
                   "properties": null,
                   "readOnly": true,
                   "required": [
-                    "foo"
+                    "string"
                   ],
-                  "title": "foo",
-                  "type": "foo",
+                  "title": "string",
+                  "type": "string",
                   "uniqueItems": true,
                   "writeOnly": true
                 }
               ],
               "contains": {
-                "$anchor": "foo",
-                "$comment": "foo",
+                "$anchor": "string",
+                "$comment": "string",
                 "$defs": null,
-                "$dynamicRef": "foo",
-                "$id": "foo",
-                "$ref": "foo",
-                "$schema": "foo",
+                "$dynamicRef": "string",
+                "$id": "string",
+                "$ref": "string",
+                "$schema": "string",
                 "allOf": [
                   null
                 ],
                 "anyOf": [
                   null
                 ],
-                "contentEncoding": "foo",
-                "contentMediaType": "foo",
+                "contentEncoding": "string",
+                "contentMediaType": "string",
                 "dependentRequired": {},
                 "dependentSchemas": {},
                 "deprecated": true,
-                "description": "foo",
+                "description": "string",
                 "enum": [
                   null
                 ],
                 "examples": [
                   null
                 ],
-                "exclusiveMaximum": "foo",
-                "exclusiveMinimum": "foo",
-                "format": "foo",
-                "maxContains": 42,
-                "maxItems": 42,
-                "maxLength": 42,
-                "maxProperties": 42,
-                "maximum": "foo",
-                "minContains": 42,
-                "minItems": 42,
-                "minLength": 42,
-                "minProperties": 42,
-                "minimum": "foo",
-                "multipleOf": "foo",
+                "exclusiveMaximum": "string",
+                "exclusiveMinimum": "string",
+                "format": "string",
+                "maxContains": 1,
+                "maxItems": 1,
+                "maxLength": 1,
+                "maxProperties": 1,
+                "maximum": "string",
+                "minContains": 1,
+                "minItems": 1,
+                "minLength": 1,
+                "minProperties": 1,
+                "minimum": "string",
+                "multipleOf": "string",
                 "oneOf": [
                   null
                 ],
-                "pattern": "foo",
+                "pattern": "string",
                 "patternProperties": {},
                 "prefixItems": [
                   null
@@ -975,59 +975,59 @@
                 "properties": null,
                 "readOnly": true,
                 "required": [
-                  "foo"
+                  "string"
                 ],
-                "title": "foo",
-                "type": "foo",
+                "title": "string",
+                "type": "string",
                 "uniqueItems": true,
                 "writeOnly": true
               },
-              "contentEncoding": "foo",
-              "contentMediaType": "foo",
+              "contentEncoding": "string",
+              "contentMediaType": "string",
               "contentSchema": {
-                "$anchor": "foo",
-                "$comment": "foo",
+                "$anchor": "string",
+                "$comment": "string",
                 "$defs": null,
-                "$dynamicRef": "foo",
-                "$id": "foo",
-                "$ref": "foo",
-                "$schema": "foo",
+                "$dynamicRef": "string",
+                "$id": "string",
+                "$ref": "string",
+                "$schema": "string",
                 "allOf": [
                   null
                 ],
                 "anyOf": [
                   null
                 ],
-                "contentEncoding": "foo",
-                "contentMediaType": "foo",
+                "contentEncoding": "string",
+                "contentMediaType": "string",
                 "dependentRequired": {},
                 "dependentSchemas": {},
                 "deprecated": true,
-                "description": "foo",
+                "description": "string",
                 "enum": [
                   null
                 ],
                 "examples": [
                   null
                 ],
-                "exclusiveMaximum": "foo",
-                "exclusiveMinimum": "foo",
-                "format": "foo",
-                "maxContains": 42,
-                "maxItems": 42,
-                "maxLength": 42,
-                "maxProperties": 42,
-                "maximum": "foo",
-                "minContains": 42,
-                "minItems": 42,
-                "minLength": 42,
-                "minProperties": 42,
-                "minimum": "foo",
-                "multipleOf": "foo",
+                "exclusiveMaximum": "string",
+                "exclusiveMinimum": "string",
+                "format": "string",
+                "maxContains": 1,
+                "maxItems": 1,
+                "maxLength": 1,
+                "maxProperties": 1,
+                "maximum": "string",
+                "minContains": 1,
+                "minItems": 1,
+                "minLength": 1,
+                "minProperties": 1,
+                "minimum": "string",
+                "multipleOf": "string",
                 "oneOf": [
                   null
                 ],
-                "pattern": "foo",
+                "pattern": "string",
                 "patternProperties": {},
                 "prefixItems": [
                   null
@@ -1035,61 +1035,61 @@
                 "properties": null,
                 "readOnly": true,
                 "required": [
-                  "foo"
+                  "string"
                 ],
-                "title": "foo",
-                "type": "foo",
+                "title": "string",
+                "type": "string",
                 "uniqueItems": true,
                 "writeOnly": true
               },
               "dependentRequired": {},
               "dependentSchemas": {},
               "deprecated": true,
-              "description": "foo",
+              "description": "string",
               "else": {
-                "$anchor": "foo",
-                "$comment": "foo",
+                "$anchor": "string",
+                "$comment": "string",
                 "$defs": null,
-                "$dynamicRef": "foo",
-                "$id": "foo",
-                "$ref": "foo",
-                "$schema": "foo",
+                "$dynamicRef": "string",
+                "$id": "string",
+                "$ref": "string",
+                "$schema": "string",
                 "allOf": [
                   null
                 ],
                 "anyOf": [
                   null
                 ],
-                "contentEncoding": "foo",
-                "contentMediaType": "foo",
+                "contentEncoding": "string",
+                "contentMediaType": "string",
                 "dependentRequired": {},
                 "dependentSchemas": {},
                 "deprecated": true,
-                "description": "foo",
+                "description": "string",
                 "enum": [
                   null
                 ],
                 "examples": [
                   null
                 ],
-                "exclusiveMaximum": "foo",
-                "exclusiveMinimum": "foo",
-                "format": "foo",
-                "maxContains": 42,
-                "maxItems": 42,
-                "maxLength": 42,
-                "maxProperties": 42,
-                "maximum": "foo",
-                "minContains": 42,
-                "minItems": 42,
-                "minLength": 42,
-                "minProperties": 42,
-                "minimum": "foo",
-                "multipleOf": "foo",
+                "exclusiveMaximum": "string",
+                "exclusiveMinimum": "string",
+                "format": "string",
+                "maxContains": 1,
+                "maxItems": 1,
+                "maxLength": 1,
+                "maxProperties": 1,
+                "maximum": "string",
+                "minContains": 1,
+                "minItems": 1,
+                "minLength": 1,
+                "minProperties": 1,
+                "minimum": "string",
+                "multipleOf": "string",
                 "oneOf": [
                   null
                 ],
-                "pattern": "foo",
+                "pattern": "string",
                 "patternProperties": {},
                 "prefixItems": [
                   null
@@ -1097,10 +1097,10 @@
                 "properties": null,
                 "readOnly": true,
                 "required": [
-                  "foo"
+                  "string"
                 ],
-                "title": "foo",
-                "type": "foo",
+                "title": "string",
+                "type": "string",
                 "uniqueItems": true,
                 "writeOnly": true
               },
@@ -1110,53 +1110,53 @@
               "examples": [
                 null
               ],
-              "exclusiveMaximum": "foo",
-              "exclusiveMinimum": "foo",
-              "format": "foo",
+              "exclusiveMaximum": "string",
+              "exclusiveMinimum": "string",
+              "format": "string",
               "if": {
-                "$anchor": "foo",
-                "$comment": "foo",
+                "$anchor": "string",
+                "$comment": "string",
                 "$defs": null,
-                "$dynamicRef": "foo",
-                "$id": "foo",
-                "$ref": "foo",
-                "$schema": "foo",
+                "$dynamicRef": "string",
+                "$id": "string",
+                "$ref": "string",
+                "$schema": "string",
                 "allOf": [
                   null
                 ],
                 "anyOf": [
                   null
                 ],
-                "contentEncoding": "foo",
-                "contentMediaType": "foo",
+                "contentEncoding": "string",
+                "contentMediaType": "string",
                 "dependentRequired": {},
                 "dependentSchemas": {},
                 "deprecated": true,
-                "description": "foo",
+                "description": "string",
                 "enum": [
                   null
                 ],
                 "examples": [
                   null
                 ],
-                "exclusiveMaximum": "foo",
-                "exclusiveMinimum": "foo",
-                "format": "foo",
-                "maxContains": 42,
-                "maxItems": 42,
-                "maxLength": 42,
-                "maxProperties": 42,
-                "maximum": "foo",
-                "minContains": 42,
-                "minItems": 42,
-                "minLength": 42,
-                "minProperties": 42,
-                "minimum": "foo",
-                "multipleOf": "foo",
+                "exclusiveMaximum": "string",
+                "exclusiveMinimum": "string",
+                "format": "string",
+                "maxContains": 1,
+                "maxItems": 1,
+                "maxLength": 1,
+                "maxProperties": 1,
+                "maximum": "string",
+                "minContains": 1,
+                "minItems": 1,
+                "minLength": 1,
+                "minProperties": 1,
+                "minimum": "string",
+                "multipleOf": "string",
                 "oneOf": [
                   null
                 ],
-                "pattern": "foo",
+                "pattern": "string",
                 "patternProperties": {},
                 "prefixItems": [
                   null
@@ -1164,57 +1164,57 @@
                 "properties": null,
                 "readOnly": true,
                 "required": [
-                  "foo"
+                  "string"
                 ],
-                "title": "foo",
-                "type": "foo",
+                "title": "string",
+                "type": "string",
                 "uniqueItems": true,
                 "writeOnly": true
               },
               "items": {
-                "$anchor": "foo",
-                "$comment": "foo",
+                "$anchor": "string",
+                "$comment": "string",
                 "$defs": null,
-                "$dynamicRef": "foo",
-                "$id": "foo",
-                "$ref": "foo",
-                "$schema": "foo",
+                "$dynamicRef": "string",
+                "$id": "string",
+                "$ref": "string",
+                "$schema": "string",
                 "allOf": [
                   null
                 ],
                 "anyOf": [
                   null
                 ],
-                "contentEncoding": "foo",
-                "contentMediaType": "foo",
+                "contentEncoding": "string",
+                "contentMediaType": "string",
                 "dependentRequired": {},
                 "dependentSchemas": {},
                 "deprecated": true,
-                "description": "foo",
+                "description": "string",
                 "enum": [
                   null
                 ],
                 "examples": [
                   null
                 ],
-                "exclusiveMaximum": "foo",
-                "exclusiveMinimum": "foo",
-                "format": "foo",
-                "maxContains": 42,
-                "maxItems": 42,
-                "maxLength": 42,
-                "maxProperties": 42,
-                "maximum": "foo",
-                "minContains": 42,
-                "minItems": 42,
-                "minLength": 42,
-                "minProperties": 42,
-                "minimum": "foo",
-                "multipleOf": "foo",
+                "exclusiveMaximum": "string",
+                "exclusiveMinimum": "string",
+                "format": "string",
+                "maxContains": 1,
+                "maxItems": 1,
+                "maxLength": 1,
+                "maxProperties": 1,
+                "maximum": "string",
+                "minContains": 1,
+                "minItems": 1,
+                "minLength": 1,
+                "minProperties": 1,
+                "minimum": "string",
+                "multipleOf": "string",
                 "oneOf": [
                   null
                 ],
-                "pattern": "foo",
+                "pattern": "string",
                 "patternProperties": {},
                 "prefixItems": [
                   null
@@ -1222,68 +1222,68 @@
                 "properties": null,
                 "readOnly": true,
                 "required": [
-                  "foo"
+                  "string"
                 ],
-                "title": "foo",
-                "type": "foo",
+                "title": "string",
+                "type": "string",
                 "uniqueItems": true,
                 "writeOnly": true
               },
-              "maxContains": 42,
-              "maxItems": 42,
-              "maxLength": 42,
-              "maxProperties": 42,
-              "maximum": "foo",
-              "minContains": 42,
-              "minItems": 42,
-              "minLength": 42,
-              "minProperties": 42,
-              "minimum": "foo",
-              "multipleOf": "foo",
+              "maxContains": 1,
+              "maxItems": 1,
+              "maxLength": 1,
+              "maxProperties": 1,
+              "maximum": "string",
+              "minContains": 1,
+              "minItems": 1,
+              "minLength": 1,
+              "minProperties": 1,
+              "minimum": "string",
+              "multipleOf": "string",
               "not": {
-                "$anchor": "foo",
-                "$comment": "foo",
+                "$anchor": "string",
+                "$comment": "string",
                 "$defs": null,
-                "$dynamicRef": "foo",
-                "$id": "foo",
-                "$ref": "foo",
-                "$schema": "foo",
+                "$dynamicRef": "string",
+                "$id": "string",
+                "$ref": "string",
+                "$schema": "string",
                 "allOf": [
                   null
                 ],
                 "anyOf": [
                   null
                 ],
-                "contentEncoding": "foo",
-                "contentMediaType": "foo",
+                "contentEncoding": "string",
+                "contentMediaType": "string",
                 "dependentRequired": {},
                 "dependentSchemas": {},
                 "deprecated": true,
-                "description": "foo",
+                "description": "string",
                 "enum": [
                   null
                 ],
                 "examples": [
                   null
                 ],
-                "exclusiveMaximum": "foo",
-                "exclusiveMinimum": "foo",
-                "format": "foo",
-                "maxContains": 42,
-                "maxItems": 42,
-                "maxLength": 42,
-                "maxProperties": 42,
-                "maximum": "foo",
-                "minContains": 42,
-                "minItems": 42,
-                "minLength": 42,
-                "minProperties": 42,
-                "minimum": "foo",
-                "multipleOf": "foo",
+                "exclusiveMaximum": "string",
+                "exclusiveMinimum": "string",
+                "format": "string",
+                "maxContains": 1,
+                "maxItems": 1,
+                "maxLength": 1,
+                "maxProperties": 1,
+                "maximum": "string",
+                "minContains": 1,
+                "minItems": 1,
+                "minLength": 1,
+                "minProperties": 1,
+                "minimum": "string",
+                "multipleOf": "string",
                 "oneOf": [
                   null
                 ],
-                "pattern": "foo",
+                "pattern": "string",
                 "patternProperties": {},
                 "prefixItems": [
                   null
@@ -1291,58 +1291,58 @@
                 "properties": null,
                 "readOnly": true,
                 "required": [
-                  "foo"
+                  "string"
                 ],
-                "title": "foo",
-                "type": "foo",
+                "title": "string",
+                "type": "string",
                 "uniqueItems": true,
                 "writeOnly": true
               },
               "oneOf": [
                 {
-                  "$anchor": "foo",
-                  "$comment": "foo",
+                  "$anchor": "string",
+                  "$comment": "string",
                   "$defs": null,
-                  "$dynamicRef": "foo",
-                  "$id": "foo",
-                  "$ref": "foo",
-                  "$schema": "foo",
+                  "$dynamicRef": "string",
+                  "$id": "string",
+                  "$ref": "string",
+                  "$schema": "string",
                   "allOf": [
                     null
                   ],
                   "anyOf": [
                     null
                   ],
-                  "contentEncoding": "foo",
-                  "contentMediaType": "foo",
+                  "contentEncoding": "string",
+                  "contentMediaType": "string",
                   "dependentRequired": {},
                   "dependentSchemas": {},
                   "deprecated": true,
-                  "description": "foo",
+                  "description": "string",
                   "enum": [
                     null
                   ],
                   "examples": [
                     null
                   ],
-                  "exclusiveMaximum": "foo",
-                  "exclusiveMinimum": "foo",
-                  "format": "foo",
-                  "maxContains": 42,
-                  "maxItems": 42,
-                  "maxLength": 42,
-                  "maxProperties": 42,
-                  "maximum": "foo",
-                  "minContains": 42,
-                  "minItems": 42,
-                  "minLength": 42,
-                  "minProperties": 42,
-                  "minimum": "foo",
-                  "multipleOf": "foo",
+                  "exclusiveMaximum": "string",
+                  "exclusiveMinimum": "string",
+                  "format": "string",
+                  "maxContains": 1,
+                  "maxItems": 1,
+                  "maxLength": 1,
+                  "maxProperties": 1,
+                  "maximum": "string",
+                  "minContains": 1,
+                  "minItems": 1,
+                  "minLength": 1,
+                  "minProperties": 1,
+                  "minimum": "string",
+                  "multipleOf": "string",
                   "oneOf": [
                     null
                   ],
-                  "pattern": "foo",
+                  "pattern": "string",
                   "patternProperties": {},
                   "prefixItems": [
                     null
@@ -1350,61 +1350,61 @@
                   "properties": null,
                   "readOnly": true,
                   "required": [
-                    "foo"
+                    "string"
                   ],
-                  "title": "foo",
-                  "type": "foo",
+                  "title": "string",
+                  "type": "string",
                   "uniqueItems": true,
                   "writeOnly": true
                 }
               ],
-              "pattern": "foo",
+              "pattern": "string",
               "patternProperties": {},
               "prefixItems": [
                 {
-                  "$anchor": "foo",
-                  "$comment": "foo",
+                  "$anchor": "string",
+                  "$comment": "string",
                   "$defs": null,
-                  "$dynamicRef": "foo",
-                  "$id": "foo",
-                  "$ref": "foo",
-                  "$schema": "foo",
+                  "$dynamicRef": "string",
+                  "$id": "string",
+                  "$ref": "string",
+                  "$schema": "string",
                   "allOf": [
                     null
                   ],
                   "anyOf": [
                     null
                   ],
-                  "contentEncoding": "foo",
-                  "contentMediaType": "foo",
+                  "contentEncoding": "string",
+                  "contentMediaType": "string",
                   "dependentRequired": {},
                   "dependentSchemas": {},
                   "deprecated": true,
-                  "description": "foo",
+                  "description": "string",
                   "enum": [
                     null
                   ],
                   "examples": [
                     null
                   ],
-                  "exclusiveMaximum": "foo",
-                  "exclusiveMinimum": "foo",
-                  "format": "foo",
-                  "maxContains": 42,
-                  "maxItems": 42,
-                  "maxLength": 42,
-                  "maxProperties": 42,
-                  "maximum": "foo",
-                  "minContains": 42,
-                  "minItems": 42,
-                  "minLength": 42,
-                  "minProperties": 42,
-                  "minimum": "foo",
-                  "multipleOf": "foo",
+                  "exclusiveMaximum": "string",
+                  "exclusiveMinimum": "string",
+                  "format": "string",
+                  "maxContains": 1,
+                  "maxItems": 1,
+                  "maxLength": 1,
+                  "maxProperties": 1,
+                  "maximum": "string",
+                  "minContains": 1,
+                  "minItems": 1,
+                  "minLength": 1,
+                  "minProperties": 1,
+                  "minimum": "string",
+                  "multipleOf": "string",
                   "oneOf": [
                     null
                   ],
-                  "pattern": "foo",
+                  "pattern": "string",
                   "patternProperties": {},
                   "prefixItems": [
                     null
@@ -1412,59 +1412,59 @@
                   "properties": null,
                   "readOnly": true,
                   "required": [
-                    "foo"
+                    "string"
                   ],
-                  "title": "foo",
-                  "type": "foo",
+                  "title": "string",
+                  "type": "string",
                   "uniqueItems": true,
                   "writeOnly": true
                 }
               ],
               "properties": null,
               "propertyNames": {
-                "$anchor": "foo",
-                "$comment": "foo",
+                "$anchor": "string",
+                "$comment": "string",
                 "$defs": null,
-                "$dynamicRef": "foo",
-                "$id": "foo",
-                "$ref": "foo",
-                "$schema": "foo",
+                "$dynamicRef": "string",
+                "$id": "string",
+                "$ref": "string",
+                "$schema": "string",
                 "allOf": [
                   null
                 ],
                 "anyOf": [
                   null
                 ],
-                "contentEncoding": "foo",
-                "contentMediaType": "foo",
+                "contentEncoding": "string",
+                "contentMediaType": "string",
                 "dependentRequired": {},
                 "dependentSchemas": {},
                 "deprecated": true,
-                "description": "foo",
+                "description": "string",
                 "enum": [
                   null
                 ],
                 "examples": [
                   null
                 ],
-                "exclusiveMaximum": "foo",
-                "exclusiveMinimum": "foo",
-                "format": "foo",
-                "maxContains": 42,
-                "maxItems": 42,
-                "maxLength": 42,
-                "maxProperties": 42,
-                "maximum": "foo",
-                "minContains": 42,
-                "minItems": 42,
-                "minLength": 42,
-                "minProperties": 42,
-                "minimum": "foo",
-                "multipleOf": "foo",
+                "exclusiveMaximum": "string",
+                "exclusiveMinimum": "string",
+                "format": "string",
+                "maxContains": 1,
+                "maxItems": 1,
+                "maxLength": 1,
+                "maxProperties": 1,
+                "maximum": "string",
+                "minContains": 1,
+                "minItems": 1,
+                "minLength": 1,
+                "minProperties": 1,
+                "minimum": "string",
+                "multipleOf": "string",
                 "oneOf": [
                   null
                 ],
-                "pattern": "foo",
+                "pattern": "string",
                 "patternProperties": {},
                 "prefixItems": [
                   null
@@ -1472,61 +1472,61 @@
                 "properties": null,
                 "readOnly": true,
                 "required": [
-                  "foo"
+                  "string"
                 ],
-                "title": "foo",
-                "type": "foo",
+                "title": "string",
+                "type": "string",
                 "uniqueItems": true,
                 "writeOnly": true
               },
               "readOnly": true,
               "required": [
-                "foo"
+                "string"
               ],
               "then": {
-                "$anchor": "foo",
-                "$comment": "foo",
+                "$anchor": "string",
+                "$comment": "string",
                 "$defs": null,
-                "$dynamicRef": "foo",
-                "$id": "foo",
-                "$ref": "foo",
-                "$schema": "foo",
+                "$dynamicRef": "string",
+                "$id": "string",
+                "$ref": "string",
+                "$schema": "string",
                 "allOf": [
                   null
                 ],
                 "anyOf": [
                   null
                 ],
-                "contentEncoding": "foo",
-                "contentMediaType": "foo",
+                "contentEncoding": "string",
+                "contentMediaType": "string",
                 "dependentRequired": {},
                 "dependentSchemas": {},
                 "deprecated": true,
-                "description": "foo",
+                "description": "string",
                 "enum": [
                   null
                 ],
                 "examples": [
                   null
                 ],
-                "exclusiveMaximum": "foo",
-                "exclusiveMinimum": "foo",
-                "format": "foo",
-                "maxContains": 42,
-                "maxItems": 42,
-                "maxLength": 42,
-                "maxProperties": 42,
-                "maximum": "foo",
-                "minContains": 42,
-                "minItems": 42,
-                "minLength": 42,
-                "minProperties": 42,
-                "minimum": "foo",
-                "multipleOf": "foo",
+                "exclusiveMaximum": "string",
+                "exclusiveMinimum": "string",
+                "format": "string",
+                "maxContains": 1,
+                "maxItems": 1,
+                "maxLength": 1,
+                "maxProperties": 1,
+                "maximum": "string",
+                "minContains": 1,
+                "minItems": 1,
+                "minLength": 1,
+                "minProperties": 1,
+                "minimum": "string",
+                "multipleOf": "string",
                 "oneOf": [
                   null
                 ],
-                "pattern": "foo",
+                "pattern": "string",
                 "patternProperties": {},
                 "prefixItems": [
                   null
@@ -1534,72 +1534,72 @@
                 "properties": null,
                 "readOnly": true,
                 "required": [
-                  "foo"
+                  "string"
                 ],
-                "title": "foo",
-                "type": "foo",
+                "title": "string",
+                "type": "string",
                 "uniqueItems": true,
                 "writeOnly": true
               },
-              "title": "foo",
-              "type": "foo",
+              "title": "string",
+              "type": "string",
               "uniqueItems": true,
               "writeOnly": true
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
-                "$anchor": "foo",
-                "$comment": "foo",
+                "$anchor": "string",
+                "$comment": "string",
                 "$defs": null,
-                "$dynamicRef": "foo",
-                "$id": "foo",
-                "$ref": "foo",
-                "$schema": "foo",
+                "$dynamicRef": "string",
+                "$id": "string",
+                "$ref": "string",
+                "$schema": "string",
                 "additionalProperties": {
-                  "$anchor": "foo",
-                  "$comment": "foo",
+                  "$anchor": "string",
+                  "$comment": "string",
                   "$defs": null,
-                  "$dynamicRef": "foo",
-                  "$id": "foo",
-                  "$ref": "foo",
-                  "$schema": "foo",
+                  "$dynamicRef": "string",
+                  "$id": "string",
+                  "$ref": "string",
+                  "$schema": "string",
                   "allOf": [
                     null
                   ],
                   "anyOf": [
                     null
                   ],
-                  "contentEncoding": "foo",
-                  "contentMediaType": "foo",
+                  "contentEncoding": "string",
+                  "contentMediaType": "string",
                   "dependentRequired": {},
                   "dependentSchemas": {},
                   "deprecated": true,
-                  "description": "foo",
+                  "description": "string",
                   "enum": [
                     null
                   ],
                   "examples": [
                     null
                   ],
-                  "exclusiveMaximum": "foo",
-                  "exclusiveMinimum": "foo",
-                  "format": "foo",
-                  "maxContains": 42,
-                  "maxItems": 42,
-                  "maxLength": 42,
-                  "maxProperties": 42,
-                  "maximum": "foo",
-                  "minContains": 42,
-                  "minItems": 42,
-                  "minLength": 42,
-                  "minProperties": 42,
-                  "minimum": "foo",
-                  "multipleOf": "foo",
+                  "exclusiveMaximum": "string",
+                  "exclusiveMinimum": "string",
+                  "format": "string",
+                  "maxContains": 1,
+                  "maxItems": 1,
+                  "maxLength": 1,
+                  "maxProperties": 1,
+                  "maximum": "string",
+                  "minContains": 1,
+                  "minItems": 1,
+                  "minLength": 1,
+                  "minProperties": 1,
+                  "minimum": "string",
+                  "multipleOf": "string",
                   "oneOf": [
                     null
                   ],
-                  "pattern": "foo",
+                  "pattern": "string",
                   "patternProperties": {},
                   "prefixItems": [
                     null
@@ -1607,58 +1607,58 @@
                   "properties": null,
                   "readOnly": true,
                   "required": [
-                    "foo"
+                    "string"
                   ],
-                  "title": "foo",
-                  "type": "foo",
+                  "title": "string",
+                  "type": "string",
                   "uniqueItems": true,
                   "writeOnly": true
                 },
                 "allOf": [
                   {
-                    "$anchor": "foo",
-                    "$comment": "foo",
+                    "$anchor": "string",
+                    "$comment": "string",
                     "$defs": null,
-                    "$dynamicRef": "foo",
-                    "$id": "foo",
-                    "$ref": "foo",
-                    "$schema": "foo",
+                    "$dynamicRef": "string",
+                    "$id": "string",
+                    "$ref": "string",
+                    "$schema": "string",
                     "allOf": [
                       null
                     ],
                     "anyOf": [
                       null
                     ],
-                    "contentEncoding": "foo",
-                    "contentMediaType": "foo",
+                    "contentEncoding": "string",
+                    "contentMediaType": "string",
                     "dependentRequired": {},
                     "dependentSchemas": {},
                     "deprecated": true,
-                    "description": "foo",
+                    "description": "string",
                     "enum": [
                       null
                     ],
                     "examples": [
                       null
                     ],
-                    "exclusiveMaximum": "foo",
-                    "exclusiveMinimum": "foo",
-                    "format": "foo",
-                    "maxContains": 42,
-                    "maxItems": 42,
-                    "maxLength": 42,
-                    "maxProperties": 42,
-                    "maximum": "foo",
-                    "minContains": 42,
-                    "minItems": 42,
-                    "minLength": 42,
-                    "minProperties": 42,
-                    "minimum": "foo",
-                    "multipleOf": "foo",
+                    "exclusiveMaximum": "string",
+                    "exclusiveMinimum": "string",
+                    "format": "string",
+                    "maxContains": 1,
+                    "maxItems": 1,
+                    "maxLength": 1,
+                    "maxProperties": 1,
+                    "maximum": "string",
+                    "minContains": 1,
+                    "minItems": 1,
+                    "minLength": 1,
+                    "minProperties": 1,
+                    "minimum": "string",
+                    "multipleOf": "string",
                     "oneOf": [
                       null
                     ],
-                    "pattern": "foo",
+                    "pattern": "string",
                     "patternProperties": {},
                     "prefixItems": [
                       null
@@ -1666,59 +1666,59 @@
                     "properties": null,
                     "readOnly": true,
                     "required": [
-                      "foo"
+                      "string"
                     ],
-                    "title": "foo",
-                    "type": "foo",
+                    "title": "string",
+                    "type": "string",
                     "uniqueItems": true,
                     "writeOnly": true
                   }
                 ],
                 "anyOf": [
                   {
-                    "$anchor": "foo",
-                    "$comment": "foo",
+                    "$anchor": "string",
+                    "$comment": "string",
                     "$defs": null,
-                    "$dynamicRef": "foo",
-                    "$id": "foo",
-                    "$ref": "foo",
-                    "$schema": "foo",
+                    "$dynamicRef": "string",
+                    "$id": "string",
+                    "$ref": "string",
+                    "$schema": "string",
                     "allOf": [
                       null
                     ],
                     "anyOf": [
                       null
                     ],
-                    "contentEncoding": "foo",
-                    "contentMediaType": "foo",
+                    "contentEncoding": "string",
+                    "contentMediaType": "string",
                     "dependentRequired": {},
                     "dependentSchemas": {},
                     "deprecated": true,
-                    "description": "foo",
+                    "description": "string",
                     "enum": [
                       null
                     ],
                     "examples": [
                       null
                     ],
-                    "exclusiveMaximum": "foo",
-                    "exclusiveMinimum": "foo",
-                    "format": "foo",
-                    "maxContains": 42,
-                    "maxItems": 42,
-                    "maxLength": 42,
-                    "maxProperties": 42,
-                    "maximum": "foo",
-                    "minContains": 42,
-                    "minItems": 42,
-                    "minLength": 42,
-                    "minProperties": 42,
-                    "minimum": "foo",
-                    "multipleOf": "foo",
+                    "exclusiveMaximum": "string",
+                    "exclusiveMinimum": "string",
+                    "format": "string",
+                    "maxContains": 1,
+                    "maxItems": 1,
+                    "maxLength": 1,
+                    "maxProperties": 1,
+                    "maximum": "string",
+                    "minContains": 1,
+                    "minItems": 1,
+                    "minLength": 1,
+                    "minProperties": 1,
+                    "minimum": "string",
+                    "multipleOf": "string",
                     "oneOf": [
                       null
                     ],
-                    "pattern": "foo",
+                    "pattern": "string",
                     "patternProperties": {},
                     "prefixItems": [
                       null
@@ -1726,58 +1726,58 @@
                     "properties": null,
                     "readOnly": true,
                     "required": [
-                      "foo"
+                      "string"
                     ],
-                    "title": "foo",
-                    "type": "foo",
+                    "title": "string",
+                    "type": "string",
                     "uniqueItems": true,
                     "writeOnly": true
                   }
                 ],
                 "contains": {
-                  "$anchor": "foo",
-                  "$comment": "foo",
+                  "$anchor": "string",
+                  "$comment": "string",
                   "$defs": null,
-                  "$dynamicRef": "foo",
-                  "$id": "foo",
-                  "$ref": "foo",
-                  "$schema": "foo",
+                  "$dynamicRef": "string",
+                  "$id": "string",
+                  "$ref": "string",
+                  "$schema": "string",
                   "allOf": [
                     null
                   ],
                   "anyOf": [
                     null
                   ],
-                  "contentEncoding": "foo",
-                  "contentMediaType": "foo",
+                  "contentEncoding": "string",
+                  "contentMediaType": "string",
                   "dependentRequired": {},
                   "dependentSchemas": {},
                   "deprecated": true,
-                  "description": "foo",
+                  "description": "string",
                   "enum": [
                     null
                   ],
                   "examples": [
                     null
                   ],
-                  "exclusiveMaximum": "foo",
-                  "exclusiveMinimum": "foo",
-                  "format": "foo",
-                  "maxContains": 42,
-                  "maxItems": 42,
-                  "maxLength": 42,
-                  "maxProperties": 42,
-                  "maximum": "foo",
-                  "minContains": 42,
-                  "minItems": 42,
-                  "minLength": 42,
-                  "minProperties": 42,
-                  "minimum": "foo",
-                  "multipleOf": "foo",
+                  "exclusiveMaximum": "string",
+                  "exclusiveMinimum": "string",
+                  "format": "string",
+                  "maxContains": 1,
+                  "maxItems": 1,
+                  "maxLength": 1,
+                  "maxProperties": 1,
+                  "maximum": "string",
+                  "minContains": 1,
+                  "minItems": 1,
+                  "minLength": 1,
+                  "minProperties": 1,
+                  "minimum": "string",
+                  "multipleOf": "string",
                   "oneOf": [
                     null
                   ],
-                  "pattern": "foo",
+                  "pattern": "string",
                   "patternProperties": {},
                   "prefixItems": [
                     null
@@ -1785,59 +1785,59 @@
                   "properties": null,
                   "readOnly": true,
                   "required": [
-                    "foo"
+                    "string"
                   ],
-                  "title": "foo",
-                  "type": "foo",
+                  "title": "string",
+                  "type": "string",
                   "uniqueItems": true,
                   "writeOnly": true
                 },
-                "contentEncoding": "foo",
-                "contentMediaType": "foo",
+                "contentEncoding": "string",
+                "contentMediaType": "string",
                 "contentSchema": {
-                  "$anchor": "foo",
-                  "$comment": "foo",
+                  "$anchor": "string",
+                  "$comment": "string",
                   "$defs": null,
-                  "$dynamicRef": "foo",
-                  "$id": "foo",
-                  "$ref": "foo",
-                  "$schema": "foo",
+                  "$dynamicRef": "string",
+                  "$id": "string",
+                  "$ref": "string",
+                  "$schema": "string",
                   "allOf": [
                     null
                   ],
                   "anyOf": [
                     null
                   ],
-                  "contentEncoding": "foo",
-                  "contentMediaType": "foo",
+                  "contentEncoding": "string",
+                  "contentMediaType": "string",
                   "dependentRequired": {},
                   "dependentSchemas": {},
                   "deprecated": true,
-                  "description": "foo",
+                  "description": "string",
                   "enum": [
                     null
                   ],
                   "examples": [
                     null
                   ],
-                  "exclusiveMaximum": "foo",
-                  "exclusiveMinimum": "foo",
-                  "format": "foo",
-                  "maxContains": 42,
-                  "maxItems": 42,
-                  "maxLength": 42,
-                  "maxProperties": 42,
-                  "maximum": "foo",
-                  "minContains": 42,
-                  "minItems": 42,
-                  "minLength": 42,
-                  "minProperties": 42,
-                  "minimum": "foo",
-                  "multipleOf": "foo",
+                  "exclusiveMaximum": "string",
+                  "exclusiveMinimum": "string",
+                  "format": "string",
+                  "maxContains": 1,
+                  "maxItems": 1,
+                  "maxLength": 1,
+                  "maxProperties": 1,
+                  "maximum": "string",
+                  "minContains": 1,
+                  "minItems": 1,
+                  "minLength": 1,
+                  "minProperties": 1,
+                  "minimum": "string",
+                  "multipleOf": "string",
                   "oneOf": [
                     null
                   ],
-                  "pattern": "foo",
+                  "pattern": "string",
                   "patternProperties": {},
                   "prefixItems": [
                     null
@@ -1845,61 +1845,61 @@
                   "properties": null,
                   "readOnly": true,
                   "required": [
-                    "foo"
+                    "string"
                   ],
-                  "title": "foo",
-                  "type": "foo",
+                  "title": "string",
+                  "type": "string",
                   "uniqueItems": true,
                   "writeOnly": true
                 },
                 "dependentRequired": {},
                 "dependentSchemas": {},
                 "deprecated": true,
-                "description": "foo",
+                "description": "string",
                 "else": {
-                  "$anchor": "foo",
-                  "$comment": "foo",
+                  "$anchor": "string",
+                  "$comment": "string",
                   "$defs": null,
-                  "$dynamicRef": "foo",
-                  "$id": "foo",
-                  "$ref": "foo",
-                  "$schema": "foo",
+                  "$dynamicRef": "string",
+                  "$id": "string",
+                  "$ref": "string",
+                  "$schema": "string",
                   "allOf": [
                     null
                   ],
                   "anyOf": [
                     null
                   ],
-                  "contentEncoding": "foo",
-                  "contentMediaType": "foo",
+                  "contentEncoding": "string",
+                  "contentMediaType": "string",
                   "dependentRequired": {},
                   "dependentSchemas": {},
                   "deprecated": true,
-                  "description": "foo",
+                  "description": "string",
                   "enum": [
                     null
                   ],
                   "examples": [
                     null
                   ],
-                  "exclusiveMaximum": "foo",
-                  "exclusiveMinimum": "foo",
-                  "format": "foo",
-                  "maxContains": 42,
-                  "maxItems": 42,
-                  "maxLength": 42,
-                  "maxProperties": 42,
-                  "maximum": "foo",
-                  "minContains": 42,
-                  "minItems": 42,
-                  "minLength": 42,
-                  "minProperties": 42,
-                  "minimum": "foo",
-                  "multipleOf": "foo",
+                  "exclusiveMaximum": "string",
+                  "exclusiveMinimum": "string",
+                  "format": "string",
+                  "maxContains": 1,
+                  "maxItems": 1,
+                  "maxLength": 1,
+                  "maxProperties": 1,
+                  "maximum": "string",
+                  "minContains": 1,
+                  "minItems": 1,
+                  "minLength": 1,
+                  "minProperties": 1,
+                  "minimum": "string",
+                  "multipleOf": "string",
                   "oneOf": [
                     null
                   ],
-                  "pattern": "foo",
+                  "pattern": "string",
                   "patternProperties": {},
                   "prefixItems": [
                     null
@@ -1907,10 +1907,10 @@
                   "properties": null,
                   "readOnly": true,
                   "required": [
-                    "foo"
+                    "string"
                   ],
-                  "title": "foo",
-                  "type": "foo",
+                  "title": "string",
+                  "type": "string",
                   "uniqueItems": true,
                   "writeOnly": true
                 },
@@ -1920,53 +1920,53 @@
                 "examples": [
                   null
                 ],
-                "exclusiveMaximum": "foo",
-                "exclusiveMinimum": "foo",
-                "format": "foo",
+                "exclusiveMaximum": "string",
+                "exclusiveMinimum": "string",
+                "format": "string",
                 "if": {
-                  "$anchor": "foo",
-                  "$comment": "foo",
+                  "$anchor": "string",
+                  "$comment": "string",
                   "$defs": null,
-                  "$dynamicRef": "foo",
-                  "$id": "foo",
-                  "$ref": "foo",
-                  "$schema": "foo",
+                  "$dynamicRef": "string",
+                  "$id": "string",
+                  "$ref": "string",
+                  "$schema": "string",
                   "allOf": [
                     null
                   ],
                   "anyOf": [
                     null
                   ],
-                  "contentEncoding": "foo",
-                  "contentMediaType": "foo",
+                  "contentEncoding": "string",
+                  "contentMediaType": "string",
                   "dependentRequired": {},
                   "dependentSchemas": {},
                   "deprecated": true,
-                  "description": "foo",
+                  "description": "string",
                   "enum": [
                     null
                   ],
                   "examples": [
                     null
                   ],
-                  "exclusiveMaximum": "foo",
-                  "exclusiveMinimum": "foo",
-                  "format": "foo",
-                  "maxContains": 42,
-                  "maxItems": 42,
-                  "maxLength": 42,
-                  "maxProperties": 42,
-                  "maximum": "foo",
-                  "minContains": 42,
-                  "minItems": 42,
-                  "minLength": 42,
-                  "minProperties": 42,
-                  "minimum": "foo",
-                  "multipleOf": "foo",
+                  "exclusiveMaximum": "string",
+                  "exclusiveMinimum": "string",
+                  "format": "string",
+                  "maxContains": 1,
+                  "maxItems": 1,
+                  "maxLength": 1,
+                  "maxProperties": 1,
+                  "maximum": "string",
+                  "minContains": 1,
+                  "minItems": 1,
+                  "minLength": 1,
+                  "minProperties": 1,
+                  "minimum": "string",
+                  "multipleOf": "string",
                   "oneOf": [
                     null
                   ],
-                  "pattern": "foo",
+                  "pattern": "string",
                   "patternProperties": {},
                   "prefixItems": [
                     null
@@ -1974,57 +1974,57 @@
                   "properties": null,
                   "readOnly": true,
                   "required": [
-                    "foo"
+                    "string"
                   ],
-                  "title": "foo",
-                  "type": "foo",
+                  "title": "string",
+                  "type": "string",
                   "uniqueItems": true,
                   "writeOnly": true
                 },
                 "items": {
-                  "$anchor": "foo",
-                  "$comment": "foo",
+                  "$anchor": "string",
+                  "$comment": "string",
                   "$defs": null,
-                  "$dynamicRef": "foo",
-                  "$id": "foo",
-                  "$ref": "foo",
-                  "$schema": "foo",
+                  "$dynamicRef": "string",
+                  "$id": "string",
+                  "$ref": "string",
+                  "$schema": "string",
                   "allOf": [
                     null
                   ],
                   "anyOf": [
                     null
                   ],
-                  "contentEncoding": "foo",
-                  "contentMediaType": "foo",
+                  "contentEncoding": "string",
+                  "contentMediaType": "string",
                   "dependentRequired": {},
                   "dependentSchemas": {},
                   "deprecated": true,
-                  "description": "foo",
+                  "description": "string",
                   "enum": [
                     null
                   ],
                   "examples": [
                     null
                   ],
-                  "exclusiveMaximum": "foo",
-                  "exclusiveMinimum": "foo",
-                  "format": "foo",
-                  "maxContains": 42,
-                  "maxItems": 42,
-                  "maxLength": 42,
-                  "maxProperties": 42,
-                  "maximum": "foo",
-                  "minContains": 42,
-                  "minItems": 42,
-                  "minLength": 42,
-                  "minProperties": 42,
-                  "minimum": "foo",
-                  "multipleOf": "foo",
+                  "exclusiveMaximum": "string",
+                  "exclusiveMinimum": "string",
+                  "format": "string",
+                  "maxContains": 1,
+                  "maxItems": 1,
+                  "maxLength": 1,
+                  "maxProperties": 1,
+                  "maximum": "string",
+                  "minContains": 1,
+                  "minItems": 1,
+                  "minLength": 1,
+                  "minProperties": 1,
+                  "minimum": "string",
+                  "multipleOf": "string",
                   "oneOf": [
                     null
                   ],
-                  "pattern": "foo",
+                  "pattern": "string",
                   "patternProperties": {},
                   "prefixItems": [
                     null
@@ -2032,68 +2032,68 @@
                   "properties": null,
                   "readOnly": true,
                   "required": [
-                    "foo"
+                    "string"
                   ],
-                  "title": "foo",
-                  "type": "foo",
+                  "title": "string",
+                  "type": "string",
                   "uniqueItems": true,
                   "writeOnly": true
                 },
-                "maxContains": 42,
-                "maxItems": 42,
-                "maxLength": 42,
-                "maxProperties": 42,
-                "maximum": "foo",
-                "minContains": 42,
-                "minItems": 42,
-                "minLength": 42,
-                "minProperties": 42,
-                "minimum": "foo",
-                "multipleOf": "foo",
+                "maxContains": 1,
+                "maxItems": 1,
+                "maxLength": 1,
+                "maxProperties": 1,
+                "maximum": "string",
+                "minContains": 1,
+                "minItems": 1,
+                "minLength": 1,
+                "minProperties": 1,
+                "minimum": "string",
+                "multipleOf": "string",
                 "not": {
-                  "$anchor": "foo",
-                  "$comment": "foo",
+                  "$anchor": "string",
+                  "$comment": "string",
                   "$defs": null,
-                  "$dynamicRef": "foo",
-                  "$id": "foo",
-                  "$ref": "foo",
-                  "$schema": "foo",
+                  "$dynamicRef": "string",
+                  "$id": "string",
+                  "$ref": "string",
+                  "$schema": "string",
                   "allOf": [
                     null
                   ],
                   "anyOf": [
                     null
                   ],
-                  "contentEncoding": "foo",
-                  "contentMediaType": "foo",
+                  "contentEncoding": "string",
+                  "contentMediaType": "string",
                   "dependentRequired": {},
                   "dependentSchemas": {},
                   "deprecated": true,
-                  "description": "foo",
+                  "description": "string",
                   "enum": [
                     null
                   ],
                   "examples": [
                     null
                   ],
-                  "exclusiveMaximum": "foo",
-                  "exclusiveMinimum": "foo",
-                  "format": "foo",
-                  "maxContains": 42,
-                  "maxItems": 42,
-                  "maxLength": 42,
-                  "maxProperties": 42,
-                  "maximum": "foo",
-                  "minContains": 42,
-                  "minItems": 42,
-                  "minLength": 42,
-                  "minProperties": 42,
-                  "minimum": "foo",
-                  "multipleOf": "foo",
+                  "exclusiveMaximum": "string",
+                  "exclusiveMinimum": "string",
+                  "format": "string",
+                  "maxContains": 1,
+                  "maxItems": 1,
+                  "maxLength": 1,
+                  "maxProperties": 1,
+                  "maximum": "string",
+                  "minContains": 1,
+                  "minItems": 1,
+                  "minLength": 1,
+                  "minProperties": 1,
+                  "minimum": "string",
+                  "multipleOf": "string",
                   "oneOf": [
                     null
                   ],
-                  "pattern": "foo",
+                  "pattern": "string",
                   "patternProperties": {},
                   "prefixItems": [
                     null
@@ -2101,58 +2101,58 @@
                   "properties": null,
                   "readOnly": true,
                   "required": [
-                    "foo"
+                    "string"
                   ],
-                  "title": "foo",
-                  "type": "foo",
+                  "title": "string",
+                  "type": "string",
                   "uniqueItems": true,
                   "writeOnly": true
                 },
                 "oneOf": [
                   {
-                    "$anchor": "foo",
-                    "$comment": "foo",
+                    "$anchor": "string",
+                    "$comment": "string",
                     "$defs": null,
-                    "$dynamicRef": "foo",
-                    "$id": "foo",
-                    "$ref": "foo",
-                    "$schema": "foo",
+                    "$dynamicRef": "string",
+                    "$id": "string",
+                    "$ref": "string",
+                    "$schema": "string",
                     "allOf": [
                       null
                     ],
                     "anyOf": [
                       null
                     ],
-                    "contentEncoding": "foo",
-                    "contentMediaType": "foo",
+                    "contentEncoding": "string",
+                    "contentMediaType": "string",
                     "dependentRequired": {},
                     "dependentSchemas": {},
                     "deprecated": true,
-                    "description": "foo",
+                    "description": "string",
                     "enum": [
                       null
                     ],
                     "examples": [
                       null
                     ],
-                    "exclusiveMaximum": "foo",
-                    "exclusiveMinimum": "foo",
-                    "format": "foo",
-                    "maxContains": 42,
-                    "maxItems": 42,
-                    "maxLength": 42,
-                    "maxProperties": 42,
-                    "maximum": "foo",
-                    "minContains": 42,
-                    "minItems": 42,
-                    "minLength": 42,
-                    "minProperties": 42,
-                    "minimum": "foo",
-                    "multipleOf": "foo",
+                    "exclusiveMaximum": "string",
+                    "exclusiveMinimum": "string",
+                    "format": "string",
+                    "maxContains": 1,
+                    "maxItems": 1,
+                    "maxLength": 1,
+                    "maxProperties": 1,
+                    "maximum": "string",
+                    "minContains": 1,
+                    "minItems": 1,
+                    "minLength": 1,
+                    "minProperties": 1,
+                    "minimum": "string",
+                    "multipleOf": "string",
                     "oneOf": [
                       null
                     ],
-                    "pattern": "foo",
+                    "pattern": "string",
                     "patternProperties": {},
                     "prefixItems": [
                       null
@@ -2160,61 +2160,61 @@
                     "properties": null,
                     "readOnly": true,
                     "required": [
-                      "foo"
+                      "string"
                     ],
-                    "title": "foo",
-                    "type": "foo",
+                    "title": "string",
+                    "type": "string",
                     "uniqueItems": true,
                     "writeOnly": true
                   }
                 ],
-                "pattern": "foo",
+                "pattern": "string",
                 "patternProperties": {},
                 "prefixItems": [
                   {
-                    "$anchor": "foo",
-                    "$comment": "foo",
+                    "$anchor": "string",
+                    "$comment": "string",
                     "$defs": null,
-                    "$dynamicRef": "foo",
-                    "$id": "foo",
-                    "$ref": "foo",
-                    "$schema": "foo",
+                    "$dynamicRef": "string",
+                    "$id": "string",
+                    "$ref": "string",
+                    "$schema": "string",
                     "allOf": [
                       null
                     ],
                     "anyOf": [
                       null
                     ],
-                    "contentEncoding": "foo",
-                    "contentMediaType": "foo",
+                    "contentEncoding": "string",
+                    "contentMediaType": "string",
                     "dependentRequired": {},
                     "dependentSchemas": {},
                     "deprecated": true,
-                    "description": "foo",
+                    "description": "string",
                     "enum": [
                       null
                     ],
                     "examples": [
                       null
                     ],
-                    "exclusiveMaximum": "foo",
-                    "exclusiveMinimum": "foo",
-                    "format": "foo",
-                    "maxContains": 42,
-                    "maxItems": 42,
-                    "maxLength": 42,
-                    "maxProperties": 42,
-                    "maximum": "foo",
-                    "minContains": 42,
-                    "minItems": 42,
-                    "minLength": 42,
-                    "minProperties": 42,
-                    "minimum": "foo",
-                    "multipleOf": "foo",
+                    "exclusiveMaximum": "string",
+                    "exclusiveMinimum": "string",
+                    "format": "string",
+                    "maxContains": 1,
+                    "maxItems": 1,
+                    "maxLength": 1,
+                    "maxProperties": 1,
+                    "maximum": "string",
+                    "minContains": 1,
+                    "minItems": 1,
+                    "minLength": 1,
+                    "minProperties": 1,
+                    "minimum": "string",
+                    "multipleOf": "string",
                     "oneOf": [
                       null
                     ],
-                    "pattern": "foo",
+                    "pattern": "string",
                     "patternProperties": {},
                     "prefixItems": [
                       null
@@ -2222,59 +2222,59 @@
                     "properties": null,
                     "readOnly": true,
                     "required": [
-                      "foo"
+                      "string"
                     ],
-                    "title": "foo",
-                    "type": "foo",
+                    "title": "string",
+                    "type": "string",
                     "uniqueItems": true,
                     "writeOnly": true
                   }
                 ],
                 "properties": null,
                 "propertyNames": {
-                  "$anchor": "foo",
-                  "$comment": "foo",
+                  "$anchor": "string",
+                  "$comment": "string",
                   "$defs": null,
-                  "$dynamicRef": "foo",
-                  "$id": "foo",
-                  "$ref": "foo",
-                  "$schema": "foo",
+                  "$dynamicRef": "string",
+                  "$id": "string",
+                  "$ref": "string",
+                  "$schema": "string",
                   "allOf": [
                     null
                   ],
                   "anyOf": [
                     null
                   ],
-                  "contentEncoding": "foo",
-                  "contentMediaType": "foo",
+                  "contentEncoding": "string",
+                  "contentMediaType": "string",
                   "dependentRequired": {},
                   "dependentSchemas": {},
                   "deprecated": true,
-                  "description": "foo",
+                  "description": "string",
                   "enum": [
                     null
                   ],
                   "examples": [
                     null
                   ],
-                  "exclusiveMaximum": "foo",
-                  "exclusiveMinimum": "foo",
-                  "format": "foo",
-                  "maxContains": 42,
-                  "maxItems": 42,
-                  "maxLength": 42,
-                  "maxProperties": 42,
-                  "maximum": "foo",
-                  "minContains": 42,
-                  "minItems": 42,
-                  "minLength": 42,
-                  "minProperties": 42,
-                  "minimum": "foo",
-                  "multipleOf": "foo",
+                  "exclusiveMaximum": "string",
+                  "exclusiveMinimum": "string",
+                  "format": "string",
+                  "maxContains": 1,
+                  "maxItems": 1,
+                  "maxLength": 1,
+                  "maxProperties": 1,
+                  "maximum": "string",
+                  "minContains": 1,
+                  "minItems": 1,
+                  "minLength": 1,
+                  "minProperties": 1,
+                  "minimum": "string",
+                  "multipleOf": "string",
                   "oneOf": [
                     null
                   ],
-                  "pattern": "foo",
+                  "pattern": "string",
                   "patternProperties": {},
                   "prefixItems": [
                     null
@@ -2282,61 +2282,61 @@
                   "properties": null,
                   "readOnly": true,
                   "required": [
-                    "foo"
+                    "string"
                   ],
-                  "title": "foo",
-                  "type": "foo",
+                  "title": "string",
+                  "type": "string",
                   "uniqueItems": true,
                   "writeOnly": true
                 },
                 "readOnly": true,
                 "required": [
-                  "foo"
+                  "string"
                 ],
                 "then": {
-                  "$anchor": "foo",
-                  "$comment": "foo",
+                  "$anchor": "string",
+                  "$comment": "string",
                   "$defs": null,
-                  "$dynamicRef": "foo",
-                  "$id": "foo",
-                  "$ref": "foo",
-                  "$schema": "foo",
+                  "$dynamicRef": "string",
+                  "$id": "string",
+                  "$ref": "string",
+                  "$schema": "string",
                   "allOf": [
                     null
                   ],
                   "anyOf": [
                     null
                   ],
-                  "contentEncoding": "foo",
-                  "contentMediaType": "foo",
+                  "contentEncoding": "string",
+                  "contentMediaType": "string",
                   "dependentRequired": {},
                   "dependentSchemas": {},
                   "deprecated": true,
-                  "description": "foo",
+                  "description": "string",
                   "enum": [
                     null
                   ],
                   "examples": [
                     null
                   ],
-                  "exclusiveMaximum": "foo",
-                  "exclusiveMinimum": "foo",
-                  "format": "foo",
-                  "maxContains": 42,
-                  "maxItems": 42,
-                  "maxLength": 42,
-                  "maxProperties": 42,
-                  "maximum": "foo",
-                  "minContains": 42,
-                  "minItems": 42,
-                  "minLength": 42,
-                  "minProperties": 42,
-                  "minimum": "foo",
-                  "multipleOf": "foo",
+                  "exclusiveMaximum": "string",
+                  "exclusiveMinimum": "string",
+                  "format": "string",
+                  "maxContains": 1,
+                  "maxItems": 1,
+                  "maxLength": 1,
+                  "maxProperties": 1,
+                  "maximum": "string",
+                  "minContains": 1,
+                  "minItems": 1,
+                  "minLength": 1,
+                  "minProperties": 1,
+                  "minimum": "string",
+                  "multipleOf": "string",
                   "oneOf": [
                     null
                   ],
-                  "pattern": "foo",
+                  "pattern": "string",
                   "patternProperties": {},
                   "prefixItems": [
                     null
@@ -2344,15 +2344,15 @@
                   "properties": null,
                   "readOnly": true,
                   "required": [
-                    "foo"
+                    "string"
                   ],
-                  "title": "foo",
-                  "type": "foo",
+                  "title": "string",
+                  "type": "string",
                   "uniqueItems": true,
                   "writeOnly": true
                 },
-                "title": "foo",
-                "type": "foo",
+                "title": "string",
+                "type": "string",
                 "uniqueItems": true,
                 "writeOnly": true
               }

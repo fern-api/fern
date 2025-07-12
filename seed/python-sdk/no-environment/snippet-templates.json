@@ -41,7 +41,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.dummy.get_dummy(\n\t$FERN_INPUT\n)",
+                "templateString": "client.dummy.get_dummy(\n    $FERN_INPUT\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",\n\t",
                 "type": "generic"
@@ -80,7 +80,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.dummy.get_dummy(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.dummy.get_dummy(\n    $FERN_INPUT\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",\n\t",
                     "type": "generic"

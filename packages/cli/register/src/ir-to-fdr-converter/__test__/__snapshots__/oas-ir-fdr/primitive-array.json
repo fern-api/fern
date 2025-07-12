@@ -112,16 +112,16 @@
             "pathParameters": {},
             "queryParameters": {},
             "headers": {},
-            "requestBody": "foo",
+            "requestBody": "string",
             "requestBodyV3": {
               "type": "json",
-              "value": "foo"
+              "value": "string"
             },
             "responseStatusCode": 200,
-            "responseBody": "foo",
+            "responseBody": "string",
             "responseBodyV3": {
               "type": "json",
-              "value": "foo"
+              "value": "string"
             }
           }
         ],
@@ -184,16 +184,16 @@
             "pathParameters": {},
             "queryParameters": {},
             "headers": {},
-            "requestBody": "foo",
+            "requestBody": "string",
             "requestBodyV3": {
               "type": "json",
-              "value": "foo"
+              "value": "string"
             },
             "responseStatusCode": 200,
-            "responseBody": "foo",
+            "responseBody": "string",
             "responseBodyV3": {
               "type": "json",
-              "value": "foo"
+              "value": "string"
             }
           }
         ],
@@ -259,16 +259,16 @@
             "pathParameters": {},
             "queryParameters": {},
             "headers": {},
-            "requestBody": "foo",
+            "requestBody": "string",
             "requestBodyV3": {
               "type": "json",
-              "value": "foo"
+              "value": "string"
             },
             "responseStatusCode": 200,
-            "responseBody": "foo",
+            "responseBody": "string",
             "responseBodyV3": {
               "type": "json",
-              "value": "foo"
+              "value": "string"
             }
           }
         ],

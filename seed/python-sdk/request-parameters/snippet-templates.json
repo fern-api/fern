@@ -24,7 +24,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.user.create_username(\n\t$FERN_INPUT\n)",
+                "templateString": "client.user.create_username(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -95,7 +95,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.user.create_username(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.user.create_username(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -178,7 +178,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.user.get_username(\n\t$FERN_INPUT\n)",
+                "templateString": "client.user.get_username(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -728,7 +728,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.user.get_username(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.user.get_username(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",

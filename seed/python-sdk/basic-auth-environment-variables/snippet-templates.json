@@ -57,7 +57,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.basic_auth.get_with_basic_auth(\n\t$FERN_INPUT\n)",
+                "templateString": "client.basic_auth.get_with_basic_auth(\n    $FERN_INPUT\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",\n\t",
                 "type": "generic"
@@ -112,7 +112,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.basic_auth.get_with_basic_auth(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.basic_auth.get_with_basic_auth(\n    $FERN_INPUT\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",\n\t",
                     "type": "generic"
@@ -179,7 +179,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.basic_auth.post_with_basic_auth(\n\t$FERN_INPUT\n)",
+                "templateString": "client.basic_auth.post_with_basic_auth(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -251,7 +251,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.basic_auth.post_with_basic_auth(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.basic_auth.post_with_basic_auth(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",

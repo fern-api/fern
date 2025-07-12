@@ -5,24 +5,21 @@ namespace <%= namespace%>;
 
 internal static class CustomPagerFactory
 {
-    public static async Task<CustomPager<TItem>> CreateAsync<TItem>(
-        Func<HttpRequestMessage, CancellationToken,
-            Task<HttpResponseMessage>> sendRequest,
-        HttpRequestMessage initialRequest,
+    internal static async Task<CustomPager<TItem>> CreateAsync<TItem>(CustomPagerContext context,
         CancellationToken cancellationToken = default
     )
     {
-        var response = await sendRequest(initialRequest, cancellationToken).ConfigureAwait(false);
+        var response = await context.SendRequest(context.InitialHttpRequest, cancellationToken).ConfigureAwait(false);
         var (
             nextPageRequest,
             hasNextPage,
             previousPageRequest,
             hasPreviousPage,
             page
-            ) = await CustomPager<TItem>.ParseHttpCallAsync(initialRequest, response, cancellationToken)
+            ) = await CustomPager<TItem>.ParseHttpCallAsync(context.InitialHttpRequest, response, cancellationToken)
             .ConfigureAwait(false);
         return new CustomPager<TItem>(
-            sendRequest,
+            context,
             nextPageRequest,
             hasNextPage,
             previousPageRequest,
@@ -37,14 +34,14 @@ public class CustomPager<TItem> : BiPager<TItem>, IAsyncEnumerable<TItem>
     private HttpRequestMessage? _nextPageRequest;
     private HttpRequestMessage? _previousPageRequest;
 
-    private readonly Func<HttpRequestMessage, CancellationToken, Task<HttpResponseMessage>> _sendRequest;
+    private readonly CustomPagerContext _context;
 
     public bool HasNextPage { get; private set; }
     public bool HasPreviousPage { get; private set; }
     public Page<TItem> CurrentPage { get; private set; }
 
-    public CustomPager(
-        Func<HttpRequestMessage, CancellationToken, Task<HttpResponseMessage>> sendRequest,
+    internal CustomPager(
+        CustomPagerContext context,
         HttpRequestMessage? nextPageRequest,
         bool hasNextPage,
         HttpRequestMessage? previousPageRequest,
@@ -52,7 +49,7 @@ public class CustomPager<TItem> : BiPager<TItem>, IAsyncEnumerable<TItem>
         Page<TItem> page
     )
     {
-        _sendRequest = sendRequest;
+        _context = context;
         _nextPageRequest = nextPageRequest;
         HasNextPage = hasNextPage;
         _previousPageRequest = previousPageRequest;
@@ -86,7 +83,7 @@ public class CustomPager<TItem> : BiPager<TItem>, IAsyncEnumerable<TItem>
         HttpRequestMessage request,
         CancellationToken cancellationToken = default)
     {
-        var response = await _sendRequest(request, cancellationToken).ConfigureAwait(false);
+        var response = await _context.SendRequest(request, cancellationToken).ConfigureAwait(false);
         var (
             nextPageRequest,
             hasNextPage,

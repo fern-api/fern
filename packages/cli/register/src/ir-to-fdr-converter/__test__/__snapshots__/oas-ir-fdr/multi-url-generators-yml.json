@@ -182,18 +182,18 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "id": "foo",
-              "username": "foo",
-              "email": "foo",
-              "createdAt": "foo"
+              "id": "string",
+              "username": "string",
+              "email": "string",
+              "createdAt": "2024-01-15T09:30:00Z"
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
-                "id": "foo",
-                "username": "foo",
-                "email": "foo",
-                "createdAt": "foo"
+                "id": "string",
+                "username": "string",
+                "email": "string",
+                "createdAt": "2024-01-15T09:30:00Z"
               }
             }
           }
@@ -297,18 +297,18 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "id": "foo",
-              "username": "foo",
-              "email": "foo",
-              "createdAt": "foo"
+              "id": "string",
+              "username": "string",
+              "email": "string",
+              "createdAt": "2024-01-15T09:30:00Z"
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
-                "id": "foo",
-                "username": "foo",
-                "email": "foo",
-                "createdAt": "foo"
+                "id": "string",
+                "username": "string",
+                "email": "string",
+                "createdAt": "2024-01-15T09:30:00Z"
               }
             }
           }
@@ -380,16 +380,16 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "accessToken": "foo",
-              "tokenType": "foo",
-              "expiresIn": 42
+              "accessToken": "string",
+              "tokenType": "string",
+              "expiresIn": 1
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
-                "accessToken": "foo",
-                "tokenType": "foo",
-                "expiresIn": 42
+                "accessToken": "string",
+                "tokenType": "string",
+                "expiresIn": 1
               }
             }
           }

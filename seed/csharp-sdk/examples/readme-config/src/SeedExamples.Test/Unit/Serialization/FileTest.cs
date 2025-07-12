@@ -16,8 +16,8 @@ public class FileTest
               "contents": "..."
             }
             """;
-        var expectedObject = new File { Name = "file.txt", Contents = "..." };
-        var deserializedObject = JsonUtils.Deserialize<File>(json);
+        var expectedObject = new SeedExamples.File { Name = "file.txt", Contents = "..." };
+        var deserializedObject = JsonUtils.Deserialize<SeedExamples.File>(json);
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
@@ -30,7 +30,7 @@ public class FileTest
               "contents": "..."
             }
             """;
-        var actualObj = new File { Name = "file.txt", Contents = "..." };
+        var actualObj = new SeedExamples.File { Name = "file.txt", Contents = "..." };
         var actualElement = JsonUtils.SerializeToElement(actualObj);
         var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
         Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
@@ -45,8 +45,8 @@ public class FileTest
               "contents": "..."
             }
             """;
-        var expectedObject = new File { Name = "another_file.txt", Contents = "..." };
-        var deserializedObject = JsonUtils.Deserialize<File>(json);
+        var expectedObject = new SeedExamples.File { Name = "another_file.txt", Contents = "..." };
+        var deserializedObject = JsonUtils.Deserialize<SeedExamples.File>(json);
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
@@ -59,7 +59,7 @@ public class FileTest
               "contents": "..."
             }
             """;
-        var actualObj = new File { Name = "another_file.txt", Contents = "..." };
+        var actualObj = new SeedExamples.File { Name = "another_file.txt", Contents = "..." };
         var actualElement = JsonUtils.SerializeToElement(actualObj);
         var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
         Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());

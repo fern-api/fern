@@ -56,7 +56,7 @@
             {
               "name": "statusUpdateExample",
               "payload": {
-                "message": "foo"
+                "message": "string"
               }
             }
           ]

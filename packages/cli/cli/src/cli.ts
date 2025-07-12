@@ -938,7 +938,7 @@ function addUpgradeCommand({
 }) {
     cli.command(
         "upgrade",
-        `Upgrades version in ${PROJECT_CONFIG_FILENAME}. Also upgrades generators in ${GENERATORS_CONFIGURATION_FILENAME} to their minimum-compatible versions.`,
+        `Upgrades Fern CLI version in ${PROJECT_CONFIG_FILENAME}`,
         (yargs) =>
             yargs
                 .option("rc", {

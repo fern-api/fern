@@ -1,4 +1,5 @@
 import typing
+import inspect
 from enum import Enum
 
 
@@ -17,7 +18,7 @@ class EventEmitterMixin:
     def __init__(self) -> None:
         self._callbacks: typing.Dict[EventType, typing.List[typing.Callable]] = {}
 
-    def on(self, event_name: EventType, callback: typing.Callable[[typing.Any], None]) -> None:
+    def on(self, event_name: EventType, callback: typing.Callable[[typing.Any], typing.Any]) -> None:
         if event_name not in self._callbacks:
             self._callbacks[event_name] = []
         self._callbacks[event_name].append(callback)
@@ -26,3 +27,10 @@ class EventEmitterMixin:
         if event_name in self._callbacks:
             for cb in self._callbacks[event_name]:
                 cb(data)
+
+    async def _emit_async(self, event_name: EventType, data: typing.Any) -> None:
+        if event_name in self._callbacks:
+            for cb in self._callbacks[event_name]:
+                res = cb(data)
+                if inspect.isawaitable(res):
+                    await res

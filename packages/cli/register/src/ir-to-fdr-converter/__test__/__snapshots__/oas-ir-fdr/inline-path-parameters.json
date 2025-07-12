@@ -171,14 +171,14 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "results": [
-                  "foo"
+                  "string"
                 ]
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
                   "results": [
-                    "foo"
+                    "string"
                   ]
                 }
               }
@@ -342,20 +342,20 @@
               "user_id": "user_id"
             },
             "queryParameters": {
-              "limit": 42
+              "limit": 1
             },
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
               "results": [
-                "foo"
+                "string"
               ]
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
                 "results": [
-                  "foo"
+                  "string"
                 ]
               }
             }

@@ -47,5 +47,8 @@
   "dotnet.projects.enableAutomaticRestore": false,
   "cSpell.import": [
     "cspell.json"
-  ]
+  ],
+  "[yaml]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }

@@ -134,19 +134,19 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "prompt": "foo"
+                "prompt": "string"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "prompt": "foo"
+                  "prompt": "string"
                 }
               },
               "responseStatusCode": 200,
-              "responseBody": "foo",
+              "responseBody": "string",
               "responseBodyV3": {
                 "type": "json",
-                "value": "foo"
+                "value": "string"
               }
             }
           ],

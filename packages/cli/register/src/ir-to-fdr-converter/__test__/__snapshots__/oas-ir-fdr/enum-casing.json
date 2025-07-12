@@ -127,14 +127,14 @@
             "responseStatusCode": 200,
             "responseBody": {
               "status": "success",
-              "message": "foo",
+              "message": "string",
               "custom_fields": {}
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
                 "status": "success",
-                "message": "foo",
+                "message": "string",
                 "custom_fields": {}
               }
             }

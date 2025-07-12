@@ -9,12 +9,16 @@ export type CommentNode = {
     [key: number]: CommentNode;
 };
 
-export function createGlobalCommentsStore(spec: FileDescriptorProto): Record<PathStarterValues, CommentNode> {
-    const commentsByStartingNodeType: Record<PathStarterValues, CommentNode> = {
+export function initializeGlobalCommentsStore(): Record<PathStarterValues, CommentNode> {
+    return {
         4: {},
         5: {},
         6: {}
     };
+}
+
+export function createGlobalCommentsStore(spec: FileDescriptorProto): Record<PathStarterValues, CommentNode> {
+    const commentsByStartingNodeType = initializeGlobalCommentsStore();
 
     if (spec.package?.startsWith("google.protobuf")) {
         return commentsByStartingNodeType;

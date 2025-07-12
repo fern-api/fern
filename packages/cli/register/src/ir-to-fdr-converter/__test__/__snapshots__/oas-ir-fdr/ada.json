@@ -871,7 +871,24 @@
               "statusCode": 401,
               "description": "Unauthorized",
               "name": "UnauthorizedError",
-              "examples": []
+              "examples": [
+                {
+                  "name": "UnauthorizedError",
+                  "responseBody": {
+                    "type": "json",
+                    "value": {
+                      "value": {
+                        "errors": [
+                          {
+                            "msg": "unauthorized",
+                            "details": "You are not authorized to access this resource"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              ]
             },
             {
               "type": {
@@ -884,7 +901,24 @@
               "statusCode": 404,
               "description": "Not Found",
               "name": "NotFoundError",
-              "examples": []
+              "examples": [
+                {
+                  "name": "NotFoundError",
+                  "responseBody": {
+                    "type": "json",
+                    "value": {
+                      "value": {
+                        "errors": [
+                          {
+                            "msg": "resource_not_found",
+                            "details": "The requested resource with ID 5f7e0e2c1e7c7e000f0f9c3a was not found"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              ]
             },
             {
               "type": {
@@ -897,7 +931,24 @@
               "statusCode": 429,
               "description": "Too Many Requests",
               "name": "TooManyRequestsError",
-              "examples": []
+              "examples": [
+                {
+                  "name": "TooManyRequestsError",
+                  "responseBody": {
+                    "type": "json",
+                    "value": {
+                      "value": {
+                        "errors": [
+                          {
+                            "msg": "rate_limit_exceeded",
+                            "details": "50 requests allowed per second"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              ]
             },
             {
               "type": {
@@ -910,7 +961,24 @@
               "statusCode": 500,
               "description": "Internal Server Error",
               "name": "InternalServerError",
-              "examples": []
+              "examples": [
+                {
+                  "name": "InternalServerError",
+                  "responseBody": {
+                    "type": "json",
+                    "value": {
+                      "value": {
+                        "errors": [
+                          {
+                            "msg": "internal_server_error",
+                            "details": "An unknown error occurred. error_id: 91d435a7-e0b4-4c56-a097-8907e9ed851e"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              ]
             }
           ],
           "examples": [
@@ -1076,7 +1144,24 @@
               "statusCode": 400,
               "description": "Bad Request",
               "name": "BadRequestError",
-              "examples": []
+              "examples": [
+                {
+                  "name": "BadRequestError",
+                  "responseBody": {
+                    "type": "json",
+                    "value": {
+                      "value": {
+                        "errors": [
+                          {
+                            "msg": "bad_request",
+                            "details": "{'profile': {'system_properties': ['Unknown field.']}}"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              ]
             },
             {
               "type": {
@@ -1089,7 +1174,24 @@
               "statusCode": 401,
               "description": "Unauthorized",
               "name": "UnauthorizedError",
-              "examples": []
+              "examples": [
+                {
+                  "name": "UnauthorizedError",
+                  "responseBody": {
+                    "type": "json",
+                    "value": {
+                      "value": {
+                        "errors": [
+                          {
+                            "msg": "unauthorized",
+                            "details": "You are not authorized to access this resource"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              ]
             },
             {
               "type": {
@@ -1102,7 +1204,24 @@
               "statusCode": 404,
               "description": "Not Found",
               "name": "NotFoundError",
-              "examples": []
+              "examples": [
+                {
+                  "name": "NotFoundError",
+                  "responseBody": {
+                    "type": "json",
+                    "value": {
+                      "value": {
+                        "errors": [
+                          {
+                            "msg": "resource_not_found",
+                            "details": "The requested resource with ID 5f7e0e2c1e7c7e000f0f9c3a was not found"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              ]
             },
             {
               "type": {
@@ -1115,7 +1234,24 @@
               "statusCode": 413,
               "description": "Content Too Large",
               "name": "ContentTooLargeError",
-              "examples": []
+              "examples": [
+                {
+                  "name": "ContentTooLargeError",
+                  "responseBody": {
+                    "type": "json",
+                    "value": {
+                      "value": {
+                        "errors": [
+                          {
+                            "msg": "content_too_large",
+                            "details": "Maximum request size of 4.0 MB exceeded. Content length: 5.0 MB."
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              ]
             },
             {
               "type": {
@@ -1128,7 +1264,24 @@
               "statusCode": 429,
               "description": "Too Many Requests",
               "name": "TooManyRequestsError",
-              "examples": []
+              "examples": [
+                {
+                  "name": "TooManyRequestsError",
+                  "responseBody": {
+                    "type": "json",
+                    "value": {
+                      "value": {
+                        "errors": [
+                          {
+                            "msg": "rate_limit_exceeded",
+                            "details": "50 requests allowed per second"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              ]
             },
             {
               "type": {
@@ -1141,7 +1294,24 @@
               "statusCode": 500,
               "description": "Internal Server Error",
               "name": "InternalServerError",
-              "examples": []
+              "examples": [
+                {
+                  "name": "InternalServerError",
+                  "responseBody": {
+                    "type": "json",
+                    "value": {
+                      "value": {
+                        "errors": [
+                          {
+                            "msg": "internal_server_error",
+                            "details": "An unknown error occurred. error_id: 91d435a7-e0b4-4c56-a097-8907e9ed851e"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              ]
             }
           ],
           "examples": [
@@ -1333,7 +1503,24 @@
               "statusCode": 400,
               "description": "Bad Request",
               "name": "BadRequestError",
-              "examples": []
+              "examples": [
+                {
+                  "name": "BadRequestError",
+                  "responseBody": {
+                    "type": "json",
+                    "value": {
+                      "value": {
+                        "errors": [
+                          {
+                            "msg": "bad_request",
+                            "details": "{'profile': {'system_properties': ['Unknown field.']}}"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              ]
             },
             {
               "type": {
@@ -1346,7 +1533,24 @@
               "statusCode": 401,
               "description": "Unauthorized",
               "name": "UnauthorizedError",
-              "examples": []
+              "examples": [
+                {
+                  "name": "UnauthorizedError",
+                  "responseBody": {
+                    "type": "json",
+                    "value": {
+                      "value": {
+                        "errors": [
+                          {
+                            "msg": "unauthorized",
+                            "details": "You are not authorized to access this resource"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              ]
             },
             {
               "type": {
@@ -1359,7 +1563,24 @@
               "statusCode": 429,
               "description": "Too Many Requests",
               "name": "TooManyRequestsError",
-              "examples": []
+              "examples": [
+                {
+                  "name": "TooManyRequestsError",
+                  "responseBody": {
+                    "type": "json",
+                    "value": {
+                      "value": {
+                        "errors": [
+                          {
+                            "msg": "rate_limit_exceeded",
+                            "details": "50 requests allowed per second"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              ]
             },
             {
               "type": {
@@ -1372,7 +1593,24 @@
               "statusCode": 500,
               "description": "Internal Server Error",
               "name": "InternalServerError",
-              "examples": []
+              "examples": [
+                {
+                  "name": "InternalServerError",
+                  "responseBody": {
+                    "type": "json",
+                    "value": {
+                      "value": {
+                        "errors": [
+                          {
+                            "msg": "internal_server_error",
+                            "details": "An unknown error occurred. error_id: 91d435a7-e0b4-4c56-a097-8907e9ed851e"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              ]
             }
           ],
           "examples": [

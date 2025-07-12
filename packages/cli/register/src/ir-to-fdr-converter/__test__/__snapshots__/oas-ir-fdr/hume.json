@@ -5002,8 +5002,8 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "user_id": "foo",
-                "job_id": "foo",
+                "user_id": "string",
+                "job_id": "string",
                 "request": {
                   "models": {
                     "face": {
@@ -5039,28 +5039,28 @@
                     "language": "zh"
                   },
                   "urls": [
-                    "foo"
+                    "string"
                   ],
-                  "callback_url": "foo",
+                  "callback_url": "string",
                   "notify": false,
                   "files": [
                     {
-                      "filename": "foo",
-                      "content_type": "foo",
-                      "md5sum": "foo"
+                      "filename": "string",
+                      "content_type": "string",
+                      "md5sum": "string"
                     }
                   ]
                 },
                 "state": {
                   "status": "QUEUED",
-                  "created_timestamp_ms": 42
+                  "created_timestamp_ms": 1
                 }
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "user_id": "foo",
-                  "job_id": "foo",
+                  "user_id": "string",
+                  "job_id": "string",
                   "request": {
                     "models": {
                       "face": {
@@ -5096,21 +5096,21 @@
                       "language": "zh"
                     },
                     "urls": [
-                      "foo"
+                      "string"
                     ],
-                    "callback_url": "foo",
+                    "callback_url": "string",
                     "notify": false,
                     "files": [
                       {
-                        "filename": "foo",
-                        "content_type": "foo",
-                        "md5sum": "foo"
+                        "filename": "string",
+                        "content_type": "string",
+                        "md5sum": "string"
                       }
                     ]
                   },
                   "state": {
                     "status": "QUEUED",
-                    "created_timestamp_ms": 42
+                    "created_timestamp_ms": 1
                   }
                 }
               }
@@ -5409,8 +5409,8 @@
             "responseStatusCode": 200,
             "responseBody": [
               {
-                "user_id": "foo",
-                "job_id": "foo",
+                "user_id": "string",
+                "job_id": "string",
                 "request": {
                   "models": {
                     "face": {
@@ -5446,21 +5446,21 @@
                     "language": "zh"
                   },
                   "urls": [
-                    "foo"
+                    "string"
                   ],
-                  "callback_url": "foo",
+                  "callback_url": "string",
                   "notify": false,
                   "files": [
                     {
-                      "filename": "foo",
-                      "content_type": "foo",
-                      "md5sum": "foo"
+                      "filename": "string",
+                      "content_type": "string",
+                      "md5sum": "string"
                     }
                   ]
                 },
                 "state": {
                   "status": "QUEUED",
-                  "created_timestamp_ms": 42
+                  "created_timestamp_ms": 1
                 }
               }
             ],
@@ -5468,8 +5468,8 @@
               "type": "json",
               "value": [
                 {
-                  "user_id": "foo",
-                  "job_id": "foo",
+                  "user_id": "string",
+                  "job_id": "string",
                   "request": {
                     "models": {
                       "face": {
@@ -5505,21 +5505,21 @@
                       "language": "zh"
                     },
                     "urls": [
-                      "foo"
+                      "string"
                     ],
-                    "callback_url": "foo",
+                    "callback_url": "string",
                     "notify": false,
                     "files": [
                       {
-                        "filename": "foo",
-                        "content_type": "foo",
-                        "md5sum": "foo"
+                        "filename": "string",
+                        "content_type": "string",
+                        "md5sum": "string"
                       }
                     ]
                   },
                   "state": {
                     "status": "QUEUED",
-                    "created_timestamp_ms": 42
+                    "created_timestamp_ms": 1
                   }
                 }
               ]
@@ -5598,12 +5598,12 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "job_id": "foo"
+              "job_id": "string"
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
-                "job_id": "foo"
+                "job_id": "string"
               }
             }
           }
@@ -5689,45 +5689,45 @@
               {
                 "source": {
                   "type": "url",
-                  "url": "foo"
+                  "url": "string"
                 },
                 "results": {
                   "predictions": [
                     {
-                      "file": "foo",
+                      "file": "string",
                       "models": {
                         "face": {
                           "metadata": {},
                           "grouped_predictions": [
                             {
-                              "id": "foo",
+                              "id": "string",
                               "predictions": [
                                 {
-                                  "frame": 42,
-                                  "time": 42,
-                                  "prob": 42,
+                                  "frame": 1,
+                                  "time": 1.1,
+                                  "prob": 1.1,
                                   "box": {
-                                    "x": 42,
-                                    "y": 42,
-                                    "w": 42,
-                                    "h": 42
+                                    "x": 1.1,
+                                    "y": 1.1,
+                                    "w": 1.1,
+                                    "h": 1.1
                                   },
                                   "emotions": [
                                     {
-                                      "name": "foo",
-                                      "score": "foo"
+                                      "name": "string",
+                                      "score": "string"
                                     }
                                   ],
                                   "facs": [
                                     {
-                                      "name": "foo",
-                                      "score": "foo"
+                                      "name": "string",
+                                      "score": "string"
                                     }
                                   ],
                                   "descriptions": [
                                     {
-                                      "name": "foo",
-                                      "score": "foo"
+                                      "name": "string",
+                                      "score": "string"
                                     }
                                   ]
                                 }
@@ -5739,23 +5739,23 @@
                           "metadata": {},
                           "grouped_predictions": [
                             {
-                              "id": "foo",
+                              "id": "string",
                               "predictions": [
                                 {
                                   "time": {
-                                    "begin": 42,
-                                    "end": 42
+                                    "begin": 1.1,
+                                    "end": 1.1
                                   },
                                   "emotions": [
                                     {
-                                      "name": "foo",
-                                      "score": "foo"
+                                      "name": "string",
+                                      "score": "string"
                                     }
                                   ],
                                   "descriptions": [
                                     {
-                                      "name": "foo",
-                                      "score": "foo"
+                                      "name": "string",
+                                      "score": "string"
                                     }
                                   ]
                                 }
@@ -5765,25 +5765,25 @@
                         },
                         "prosody": {
                           "metadata": {
-                            "confidence": 42,
+                            "confidence": 1.1,
                             "detected_language": "zh"
                           },
                           "grouped_predictions": [
                             {
-                              "id": "foo",
+                              "id": "string",
                               "predictions": [
                                 {
-                                  "text": "foo",
+                                  "text": "string",
                                   "time": {
-                                    "begin": 42,
-                                    "end": 42
+                                    "begin": 1.1,
+                                    "end": 1.1
                                   },
-                                  "confidence": 42,
-                                  "speaker_confidence": 42,
+                                  "confidence": 1.1,
+                                  "speaker_confidence": 1.1,
                                   "emotions": [
                                     {
-                                      "name": "foo",
-                                      "score": "foo"
+                                      "name": "string",
+                                      "score": "string"
                                     }
                                   ]
                                 }
@@ -5793,41 +5793,41 @@
                         },
                         "language": {
                           "metadata": {
-                            "confidence": 42,
+                            "confidence": 1.1,
                             "detected_language": "zh"
                           },
                           "grouped_predictions": [
                             {
-                              "id": "foo",
+                              "id": "string",
                               "predictions": [
                                 {
-                                  "text": "foo",
+                                  "text": "string",
                                   "position": {
-                                    "begin": 42,
-                                    "end": 42
+                                    "begin": 1,
+                                    "end": 1
                                   },
                                   "time": {
-                                    "begin": 42,
-                                    "end": 42
+                                    "begin": 1.1,
+                                    "end": 1.1
                                   },
-                                  "confidence": 42,
-                                  "speaker_confidence": 42,
+                                  "confidence": 1.1,
+                                  "speaker_confidence": 1.1,
                                   "emotions": [
                                     {
-                                      "name": "foo",
-                                      "score": "foo"
+                                      "name": "string",
+                                      "score": "string"
                                     }
                                   ],
                                   "sentiment": [
                                     {
-                                      "name": "foo",
-                                      "score": "foo"
+                                      "name": "string",
+                                      "score": "string"
                                     }
                                   ],
                                   "toxicity": [
                                     {
-                                      "name": "foo",
-                                      "score": "foo"
+                                      "name": "string",
+                                      "score": "string"
                                     }
                                   ]
                                 }
@@ -5837,33 +5837,33 @@
                         },
                         "ner": {
                           "metadata": {
-                            "confidence": 42,
+                            "confidence": 1.1,
                             "detected_language": "zh"
                           },
                           "grouped_predictions": [
                             {
-                              "id": "foo",
+                              "id": "string",
                               "predictions": [
                                 {
-                                  "entity": "foo",
+                                  "entity": "string",
                                   "position": {
-                                    "begin": 42,
-                                    "end": 42
+                                    "begin": 1,
+                                    "end": 1
                                   },
-                                  "entity_confidence": 42,
-                                  "support": 42,
-                                  "uri": "foo",
-                                  "link_word": "foo",
+                                  "entity_confidence": 1.1,
+                                  "support": 1.1,
+                                  "uri": "string",
+                                  "link_word": "string",
                                   "time": {
-                                    "begin": 42,
-                                    "end": 42
+                                    "begin": 1.1,
+                                    "end": 1.1
                                   },
-                                  "confidence": 42,
-                                  "speaker_confidence": 42,
+                                  "confidence": 1.1,
+                                  "speaker_confidence": 1.1,
                                   "emotions": [
                                     {
-                                      "name": "foo",
-                                      "score": "foo"
+                                      "name": "string",
+                                      "score": "string"
                                     }
                                   ]
                                 }
@@ -5875,13 +5875,13 @@
                           "metadata": {},
                           "grouped_predictions": [
                             {
-                              "id": "foo",
+                              "id": "string",
                               "predictions": [
                                 {
                                   "emotions": [
                                     {
-                                      "name": "foo",
-                                      "score": "foo"
+                                      "name": "string",
+                                      "score": "string"
                                     }
                                   ]
                                 }
@@ -5894,12 +5894,12 @@
                   ],
                   "errors": [
                     {
-                      "message": "foo",
-                      "file": "foo"
+                      "message": "string",
+                      "file": "string"
                     }
                   ]
                 },
-                "error": "foo"
+                "error": "string"
               }
             ],
             "responseBodyV3": {
@@ -5908,45 +5908,45 @@
                 {
                   "source": {
                     "type": "url",
-                    "url": "foo"
+                    "url": "string"
                   },
                   "results": {
                     "predictions": [
                       {
-                        "file": "foo",
+                        "file": "string",
                         "models": {
                           "face": {
                             "metadata": {},
                             "grouped_predictions": [
                               {
-                                "id": "foo",
+                                "id": "string",
                                 "predictions": [
                                   {
-                                    "frame": 42,
-                                    "time": 42,
-                                    "prob": 42,
+                                    "frame": 1,
+                                    "time": 1.1,
+                                    "prob": 1.1,
                                     "box": {
-                                      "x": 42,
-                                      "y": 42,
-                                      "w": 42,
-                                      "h": 42
+                                      "x": 1.1,
+                                      "y": 1.1,
+                                      "w": 1.1,
+                                      "h": 1.1
                                     },
                                     "emotions": [
                                       {
-                                        "name": "foo",
-                                        "score": "foo"
+                                        "name": "string",
+                                        "score": "string"
                                       }
                                     ],
                                     "facs": [
                                       {
-                                        "name": "foo",
-                                        "score": "foo"
+                                        "name": "string",
+                                        "score": "string"
                                       }
                                     ],
                                     "descriptions": [
                                       {
-                                        "name": "foo",
-                                        "score": "foo"
+                                        "name": "string",
+                                        "score": "string"
                                       }
                                     ]
                                   }
@@ -5958,23 +5958,23 @@
                             "metadata": {},
                             "grouped_predictions": [
                               {
-                                "id": "foo",
+                                "id": "string",
                                 "predictions": [
                                   {
                                     "time": {
-                                      "begin": 42,
-                                      "end": 42
+                                      "begin": 1.1,
+                                      "end": 1.1
                                     },
                                     "emotions": [
                                       {
-                                        "name": "foo",
-                                        "score": "foo"
+                                        "name": "string",
+                                        "score": "string"
                                       }
                                     ],
                                     "descriptions": [
                                       {
-                                        "name": "foo",
-                                        "score": "foo"
+                                        "name": "string",
+                                        "score": "string"
                                       }
                                     ]
                                   }
@@ -5984,25 +5984,25 @@
                           },
                           "prosody": {
                             "metadata": {
-                              "confidence": 42,
+                              "confidence": 1.1,
                               "detected_language": "zh"
                             },
                             "grouped_predictions": [
                               {
-                                "id": "foo",
+                                "id": "string",
                                 "predictions": [
                                   {
-                                    "text": "foo",
+                                    "text": "string",
                                     "time": {
-                                      "begin": 42,
-                                      "end": 42
+                                      "begin": 1.1,
+                                      "end": 1.1
                                     },
-                                    "confidence": 42,
-                                    "speaker_confidence": 42,
+                                    "confidence": 1.1,
+                                    "speaker_confidence": 1.1,
                                     "emotions": [
                                       {
-                                        "name": "foo",
-                                        "score": "foo"
+                                        "name": "string",
+                                        "score": "string"
                                       }
                                     ]
                                   }
@@ -6012,41 +6012,41 @@
                           },
                           "language": {
                             "metadata": {
-                              "confidence": 42,
+                              "confidence": 1.1,
                               "detected_language": "zh"
                             },
                             "grouped_predictions": [
                               {
-                                "id": "foo",
+                                "id": "string",
                                 "predictions": [
                                   {
-                                    "text": "foo",
+                                    "text": "string",
                                     "position": {
-                                      "begin": 42,
-                                      "end": 42
+                                      "begin": 1,
+                                      "end": 1
                                     },
                                     "time": {
-                                      "begin": 42,
-                                      "end": 42
+                                      "begin": 1.1,
+                                      "end": 1.1
                                     },
-                                    "confidence": 42,
-                                    "speaker_confidence": 42,
+                                    "confidence": 1.1,
+                                    "speaker_confidence": 1.1,
                                     "emotions": [
                                       {
-                                        "name": "foo",
-                                        "score": "foo"
+                                        "name": "string",
+                                        "score": "string"
                                       }
                                     ],
                                     "sentiment": [
                                       {
-                                        "name": "foo",
-                                        "score": "foo"
+                                        "name": "string",
+                                        "score": "string"
                                       }
                                     ],
                                     "toxicity": [
                                       {
-                                        "name": "foo",
-                                        "score": "foo"
+                                        "name": "string",
+                                        "score": "string"
                                       }
                                     ]
                                   }
@@ -6056,33 +6056,33 @@
                           },
                           "ner": {
                             "metadata": {
-                              "confidence": 42,
+                              "confidence": 1.1,
                               "detected_language": "zh"
                             },
                             "grouped_predictions": [
                               {
-                                "id": "foo",
+                                "id": "string",
                                 "predictions": [
                                   {
-                                    "entity": "foo",
+                                    "entity": "string",
                                     "position": {
-                                      "begin": 42,
-                                      "end": 42
+                                      "begin": 1,
+                                      "end": 1
                                     },
-                                    "entity_confidence": 42,
-                                    "support": 42,
-                                    "uri": "foo",
-                                    "link_word": "foo",
+                                    "entity_confidence": 1.1,
+                                    "support": 1.1,
+                                    "uri": "string",
+                                    "link_word": "string",
                                     "time": {
-                                      "begin": 42,
-                                      "end": 42
+                                      "begin": 1.1,
+                                      "end": 1.1
                                     },
-                                    "confidence": 42,
-                                    "speaker_confidence": 42,
+                                    "confidence": 1.1,
+                                    "speaker_confidence": 1.1,
                                     "emotions": [
                                       {
-                                        "name": "foo",
-                                        "score": "foo"
+                                        "name": "string",
+                                        "score": "string"
                                       }
                                     ]
                                   }
@@ -6094,13 +6094,13 @@
                             "metadata": {},
                             "grouped_predictions": [
                               {
-                                "id": "foo",
+                                "id": "string",
                                 "predictions": [
                                   {
                                     "emotions": [
                                       {
-                                        "name": "foo",
-                                        "score": "foo"
+                                        "name": "string",
+                                        "score": "string"
                                       }
                                     ]
                                   }
@@ -6113,12 +6113,12 @@
                     ],
                     "errors": [
                       {
-                        "message": "foo",
-                        "file": "foo"
+                        "message": "string",
+                        "file": "string"
                       }
                     ]
                   },
-                  "error": "foo"
+                  "error": "string"
                 }
               ]
             }

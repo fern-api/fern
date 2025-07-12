@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import { getBinaryResponse } from "./BinaryResponse.mjs";
 import { isResponseWithBody } from "./ResponseWithBody.mjs";
+import { fromJson } from "../json.mjs";
 export function getResponseBody(response, responseType) {
     return __awaiter(this, void 0, void 0, function* () {
         if (!isResponseWithBody(response)) {
@@ -32,7 +33,7 @@ export function getResponseBody(response, responseType) {
         const text = yield response.text();
         if (text.length > 0) {
             try {
-                let responseBody = JSON.parse(text);
+                let responseBody = fromJson(text);
                 return responseBody;
             }
             catch (err) {

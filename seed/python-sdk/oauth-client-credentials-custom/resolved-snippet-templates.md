@@ -7,7 +7,7 @@ client = SeedOauthClientCredentials(
     client_secret="YOUR_CLIENT_SECRET",
 )        
 client.auth.get_token_with_client_credentials(
-	cid="cid",
+    cid="cid",
 	csr="csr",
 	scp="scp",
 	entity_id="entity_id",
@@ -26,7 +26,7 @@ client = SeedOauthClientCredentials(
     client_secret="YOUR_CLIENT_SECRET",
 )        
 client.auth.refresh_token(
-	client_id="client_id",
+    client_id="client_id",
 	client_secret="client_secret",
 	refresh_token="refresh_token",
 	scope="scope"

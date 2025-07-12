@@ -1432,14 +1432,14 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "input": "foo",
-                "voice_id": "foo"
+                "input": "string",
+                "voice_id": "string"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "input": "foo",
-                  "voice_id": "foo"
+                  "input": "string",
+                  "voice_id": "string"
                 }
               },
               "responseStatusCode": 200
@@ -1549,14 +1549,14 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "input": "foo",
-                "voice_id": "foo"
+                "input": "string",
+                "voice_id": "string"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "input": "foo",
-                  "voice_id": "foo"
+                  "input": "string",
+                  "voice_id": "string"
                 }
               },
               "responseStatusCode": 200
@@ -1676,14 +1676,14 @@
                 "Accept": "audio/mpeg"
               },
               "requestBody": {
-                "input": "foo",
-                "voice_id": "foo"
+                "input": "string",
+                "voice_id": "string"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "input": "foo",
-                  "voice_id": "foo"
+                  "input": "string",
+                  "voice_id": "string"
                 }
               },
               "responseStatusCode": 200
@@ -2007,10 +2007,10 @@
               },
               "queryParameters": {},
               "headers": {},
-              "requestBody": "foo",
+              "requestBody": "string",
               "requestBodyV3": {
                 "type": "json",
-                "value": "foo"
+                "value": "string"
               },
               "responseStatusCode": 200
             }
@@ -2221,24 +2221,24 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "name": "foo",
-                "sample": "foo",
-                "consent": "foo"
+                "name": "string",
+                "sample": "string",
+                "consent": "string"
               },
               "requestBodyV3": {
                 "type": "form",
                 "value": {
                   "name": {
                     "type": "json",
-                    "value": "foo"
+                    "value": "string"
                   },
                   "sample": {
                     "type": "filename",
-                    "value": "foo"
+                    "value": "string"
                   },
                   "consent": {
                     "type": "json",
-                    "value": "foo"
+                    "value": "string"
                   }
                 }
               },

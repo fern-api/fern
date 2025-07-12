@@ -39,7 +39,7 @@ for await (const item of response) {
 }
 
 // Or you can manually iterate page-by-page
-const page = await client.complex.search("index", {
+let page = await client.complex.search("index", {
     pagination: {
         per_page: 1,
         starting_after: "starting_after",
@@ -112,7 +112,7 @@ for await (const item of response) {
 }
 
 // Or you can manually iterate page-by-page
-const page = await client.complex.search("index", {
+let page = await client.complex.search("index", {
     pagination: {
         per_page: 1,
         starting_after: "starting_after",

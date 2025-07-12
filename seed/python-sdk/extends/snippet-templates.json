@@ -24,7 +24,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.extended_inline_request_body(\n\t$FERN_INPUT\n)",
+                "templateString": "client.extended_inline_request_body(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -95,7 +95,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.extended_inline_request_body(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.extended_inline_request_body(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",

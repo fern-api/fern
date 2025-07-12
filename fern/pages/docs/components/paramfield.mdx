@@ -27,6 +27,12 @@ The `ParamField` component helps document API parameters and properties with con
   Marks the parameter as deprecated. Shows a "Deprecated" warning when true.
 </ParamField>
 
+<ParamField path="last" type="boolean" required={false}>
+  Removes the bottom border from the parameter. 
+
+  Best used for the last element in a list of `<ParamField />` components.
+</ParamField>
+
 <Aside>
 ## Example
   <Tabs>
@@ -39,7 +45,7 @@ The `ParamField` component helps document API parameters and properties with con
         Maximum number of items to return
       </ParamField>
 
-      <ParamField path="api_key" type="string" deprecated={true}>
+      <ParamField path="api_key" type="string" deprecated={true} last={true}>
         Use OAuth authentication instead
       </ParamField>
     </Tab>
@@ -53,7 +59,7 @@ The `ParamField` component helps document API parameters and properties with con
         Maximum number of items to return
       </ParamField>
 
-      <ParamField path="api_key" type="string" deprecated={true}>
+      <ParamField path="api_key" type="string" deprecated={true} last={true}>
         Use OAuth authentication instead
       </ParamField>
       ```

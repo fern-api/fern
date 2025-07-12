@@ -121,7 +121,7 @@ await client.File.Notification.Service.GetExceptionAsync("notification-hsy129x")
 </details>
 
 ## File Service
-<details><summary><code>client.File.Service.<a href="/src/SeedExamples/File/Service/ServiceClient.cs">GetFileAsync</a>(filename, GetFileRequest { ... }) -> File</code></summary>
+<details><summary><code>client.File.Service.<a href="/src/SeedExamples/File/Service/ServiceClient.cs">GetFileAsync</a>(filename, File.GetFileRequest { ... }) -> File</code></summary>
 <dl>
 <dd>
 
@@ -174,7 +174,7 @@ await client.File.Service.GetFileAsync(
 <dl>
 <dd>
 
-**request:** `GetFileRequest` 
+**request:** `File.GetFileRequest` 
     
 </dd>
 </dl>
@@ -470,8 +470,8 @@ await client.Service.CreateBigEntityAsync(
             Revenue = 1000000,
         },
         Entity = new Entity { Type = BasicType.Primitive, Name = "name" },
-        Metadata = new SeedExamples.Metadata(new Metadata.Html("metadata")),
-        CommonMetadata = new SeedExamples.Commons.Metadata
+        Metadata = new Metadata(new Metadata.Html("metadata")),
+        CommonMetadata = new Metadata
         {
             Id = "id",
             Data = new Dictionary<string, string>() { { "data", "data" } },
@@ -479,7 +479,7 @@ await client.Service.CreateBigEntityAsync(
         },
         EventInfo = new EventInfo(
             new EventInfo.Metadata(
-                new SeedExamples.Commons.Metadata
+                new Metadata
                 {
                     Id = "id",
                     Data = new Dictionary<string, string>() { { "data", "data" } },

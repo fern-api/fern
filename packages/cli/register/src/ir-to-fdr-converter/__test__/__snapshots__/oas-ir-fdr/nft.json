@@ -18790,8 +18790,8 @@
                     "ownerAddress": "0xe785E82358879F061BC3dcAC6f0444462D4b5330",
                     "tokenBalances": [
                       {
-                        "tokenId": "foo",
-                        "balance": 42
+                        "tokenId": "string",
+                        "balance": 1
                       }
                     ]
                   }
@@ -18805,8 +18805,8 @@
                       "ownerAddress": "0xe785E82358879F061BC3dcAC6f0444462D4b5330",
                       "tokenBalances": [
                         {
-                          "tokenId": "foo",
-                          "balance": 42
+                          "tokenId": "string",
+                          "balance": 1
                         }
                       ]
                     }
@@ -20237,71 +20237,71 @@
                 "nfts": [
                   {
                     "contract": {
-                      "address": "foo",
-                      "name": "foo",
-                      "symbol": "foo",
-                      "totalSupply": "foo",
+                      "address": "string",
+                      "name": "string",
+                      "symbol": "string",
+                      "totalSupply": "string",
                       "tokenType": "ERC721",
-                      "contractDeployer": "foo",
-                      "deployedBlockNumber": 42,
+                      "contractDeployer": "string",
+                      "deployedBlockNumber": 1.1,
                       "openseaMetadata": {
-                        "floorPrice": 42,
-                        "collectionName": "foo",
-                        "safelistRequestStatus": "foo",
-                        "imageUrl": "foo",
-                        "description": "foo",
-                        "externalUrl": "foo",
-                        "twitterUsername": "foo",
-                        "discordUrl": "foo",
-                        "lastIngestedAt": "foo"
+                        "floorPrice": 1.1,
+                        "collectionName": "string",
+                        "safelistRequestStatus": "string",
+                        "imageUrl": "string",
+                        "description": "string",
+                        "externalUrl": "string",
+                        "twitterUsername": "string",
+                        "discordUrl": "string",
+                        "lastIngestedAt": "string"
                       },
-                      "isSpam": "foo",
+                      "isSpam": "string",
                       "spamClassifications": [
-                        "foo"
+                        "string"
                       ]
                     },
                     "tokenId": "44",
-                    "tokenType": "foo",
-                    "name": "foo",
-                    "description": "foo",
+                    "tokenType": "string",
+                    "name": "string",
+                    "description": "string",
                     "image": {
-                      "cachedUrl": "foo",
-                      "thumbnailUrl": "foo",
-                      "pngUrl": "foo",
-                      "contentType": "foo",
-                      "size": 42,
-                      "originalUrl": "foo"
+                      "cachedUrl": "string",
+                      "thumbnailUrl": "string",
+                      "pngUrl": "string",
+                      "contentType": "string",
+                      "size": 1,
+                      "originalUrl": "string"
                     },
                     "raw": {
-                      "tokenUri": "foo",
+                      "tokenUri": "string",
                       "metadata": {
-                        "image": "foo",
-                        "name": "foo",
-                        "description": "foo",
+                        "image": "string",
+                        "name": "string",
+                        "description": "string",
                         "attributes": [
                           {
-                            "value": "foo",
-                            "trait_type": "foo"
+                            "value": "string",
+                            "trait_type": "string"
                           }
                         ]
                       },
-                      "error": "foo"
+                      "error": "string"
                     },
                     "collection": {
-                      "name": "foo",
-                      "slug": "foo",
-                      "externalUrl": "foo",
-                      "bannerImageUrl": "foo"
+                      "name": "string",
+                      "slug": "string",
+                      "externalUrl": "string",
+                      "bannerImageUrl": "string"
                     },
-                    "tokenUri": "foo",
-                    "timeLastUpdated": "foo",
+                    "tokenUri": "string",
+                    "timeLastUpdated": "string",
                     "acquiredAt": {
-                      "blockTimestamp": "foo",
-                      "blockNumber": "foo"
+                      "blockTimestamp": "string",
+                      "blockNumber": "string"
                     }
                   }
                 ],
-                "pageKey": "foo"
+                "pageKey": "string"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -20309,71 +20309,71 @@
                   "nfts": [
                     {
                       "contract": {
-                        "address": "foo",
-                        "name": "foo",
-                        "symbol": "foo",
-                        "totalSupply": "foo",
+                        "address": "string",
+                        "name": "string",
+                        "symbol": "string",
+                        "totalSupply": "string",
                         "tokenType": "ERC721",
-                        "contractDeployer": "foo",
-                        "deployedBlockNumber": 42,
+                        "contractDeployer": "string",
+                        "deployedBlockNumber": 1.1,
                         "openseaMetadata": {
-                          "floorPrice": 42,
-                          "collectionName": "foo",
-                          "safelistRequestStatus": "foo",
-                          "imageUrl": "foo",
-                          "description": "foo",
-                          "externalUrl": "foo",
-                          "twitterUsername": "foo",
-                          "discordUrl": "foo",
-                          "lastIngestedAt": "foo"
+                          "floorPrice": 1.1,
+                          "collectionName": "string",
+                          "safelistRequestStatus": "string",
+                          "imageUrl": "string",
+                          "description": "string",
+                          "externalUrl": "string",
+                          "twitterUsername": "string",
+                          "discordUrl": "string",
+                          "lastIngestedAt": "string"
                         },
-                        "isSpam": "foo",
+                        "isSpam": "string",
                         "spamClassifications": [
-                          "foo"
+                          "string"
                         ]
                       },
                       "tokenId": "44",
-                      "tokenType": "foo",
-                      "name": "foo",
-                      "description": "foo",
+                      "tokenType": "string",
+                      "name": "string",
+                      "description": "string",
                       "image": {
-                        "cachedUrl": "foo",
-                        "thumbnailUrl": "foo",
-                        "pngUrl": "foo",
-                        "contentType": "foo",
-                        "size": 42,
-                        "originalUrl": "foo"
+                        "cachedUrl": "string",
+                        "thumbnailUrl": "string",
+                        "pngUrl": "string",
+                        "contentType": "string",
+                        "size": 1,
+                        "originalUrl": "string"
                       },
                       "raw": {
-                        "tokenUri": "foo",
+                        "tokenUri": "string",
                         "metadata": {
-                          "image": "foo",
-                          "name": "foo",
-                          "description": "foo",
+                          "image": "string",
+                          "name": "string",
+                          "description": "string",
                           "attributes": [
                             {
-                              "value": "foo",
-                              "trait_type": "foo"
+                              "value": "string",
+                              "trait_type": "string"
                             }
                           ]
                         },
-                        "error": "foo"
+                        "error": "string"
                       },
                       "collection": {
-                        "name": "foo",
-                        "slug": "foo",
-                        "externalUrl": "foo",
-                        "bannerImageUrl": "foo"
+                        "name": "string",
+                        "slug": "string",
+                        "externalUrl": "string",
+                        "bannerImageUrl": "string"
                       },
-                      "tokenUri": "foo",
-                      "timeLastUpdated": "foo",
+                      "tokenUri": "string",
+                      "timeLastUpdated": "string",
                       "acquiredAt": {
-                        "blockTimestamp": "foo",
-                        "blockNumber": "foo"
+                        "blockTimestamp": "string",
+                        "blockNumber": "string"
                       }
                     }
                   ],
-                  "pageKey": "foo"
+                  "pageKey": "string"
                 }
               }
             }
@@ -20676,54 +20676,54 @@
                       }
                     },
                     "tokenUri": {
-                      "raw": "foo",
-                      "gateway": "foo"
+                      "raw": "string",
+                      "gateway": "string"
                     },
                     "metadata": {
-                      "image": "foo",
-                      "external_url": "foo",
-                      "background_color": "foo",
-                      "name": "foo",
-                      "description": "foo",
+                      "image": "string",
+                      "external_url": "string",
+                      "background_color": "string",
+                      "name": "string",
+                      "description": "string",
                       "attributes": [
                         {
-                          "value": "foo",
-                          "trait_type": "foo"
+                          "value": "string",
+                          "trait_type": "string"
                         }
                       ],
                       "media": [
                         {
-                          "raw": "foo",
-                          "gateway": "foo",
-                          "thumbnail": "foo",
-                          "format": "foo",
-                          "bytes": 42
+                          "raw": "string",
+                          "gateway": "string",
+                          "thumbnail": "string",
+                          "format": "string",
+                          "bytes": 1
                         }
                       ]
                     },
-                    "timeLastUpdated": "foo",
+                    "timeLastUpdated": "string",
                     "contractMetadata": {
-                      "name": "foo",
-                      "symbol": "foo",
-                      "totalSupply": "foo",
+                      "name": "string",
+                      "symbol": "string",
+                      "totalSupply": "string",
                       "tokenType": "ERC721",
-                      "contractDeployer": "foo",
-                      "deployedBlockNumber": 42,
+                      "contractDeployer": "string",
+                      "deployedBlockNumber": 1.1,
                       "opensea": {
-                        "floorPrice": 42,
-                        "collectionName": "foo",
-                        "safelistRequestStatus": "foo",
-                        "imageUrl": "foo",
-                        "description": "foo",
-                        "externalUrl": "foo",
-                        "twitterUsername": "foo",
-                        "discordUrl": "foo",
-                        "lastIngestedAt": "foo"
+                        "floorPrice": 1.1,
+                        "collectionName": "string",
+                        "safelistRequestStatus": "string",
+                        "imageUrl": "string",
+                        "description": "string",
+                        "externalUrl": "string",
+                        "twitterUsername": "string",
+                        "discordUrl": "string",
+                        "lastIngestedAt": "string"
                       }
                     }
                   }
                 ],
-                "nextToken": "foo"
+                "nextToken": "string"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -20737,54 +20737,54 @@
                         }
                       },
                       "tokenUri": {
-                        "raw": "foo",
-                        "gateway": "foo"
+                        "raw": "string",
+                        "gateway": "string"
                       },
                       "metadata": {
-                        "image": "foo",
-                        "external_url": "foo",
-                        "background_color": "foo",
-                        "name": "foo",
-                        "description": "foo",
+                        "image": "string",
+                        "external_url": "string",
+                        "background_color": "string",
+                        "name": "string",
+                        "description": "string",
                         "attributes": [
                           {
-                            "value": "foo",
-                            "trait_type": "foo"
+                            "value": "string",
+                            "trait_type": "string"
                           }
                         ],
                         "media": [
                           {
-                            "raw": "foo",
-                            "gateway": "foo",
-                            "thumbnail": "foo",
-                            "format": "foo",
-                            "bytes": 42
+                            "raw": "string",
+                            "gateway": "string",
+                            "thumbnail": "string",
+                            "format": "string",
+                            "bytes": 1
                           }
                         ]
                       },
-                      "timeLastUpdated": "foo",
+                      "timeLastUpdated": "string",
                       "contractMetadata": {
-                        "name": "foo",
-                        "symbol": "foo",
-                        "totalSupply": "foo",
+                        "name": "string",
+                        "symbol": "string",
+                        "totalSupply": "string",
                         "tokenType": "ERC721",
-                        "contractDeployer": "foo",
-                        "deployedBlockNumber": 42,
+                        "contractDeployer": "string",
+                        "deployedBlockNumber": 1.1,
                         "opensea": {
-                          "floorPrice": 42,
-                          "collectionName": "foo",
-                          "safelistRequestStatus": "foo",
-                          "imageUrl": "foo",
-                          "description": "foo",
-                          "externalUrl": "foo",
-                          "twitterUsername": "foo",
-                          "discordUrl": "foo",
-                          "lastIngestedAt": "foo"
+                          "floorPrice": 1.1,
+                          "collectionName": "string",
+                          "safelistRequestStatus": "string",
+                          "imageUrl": "string",
+                          "description": "string",
+                          "externalUrl": "string",
+                          "twitterUsername": "string",
+                          "discordUrl": "string",
+                          "lastIngestedAt": "string"
                         }
                       }
                     }
                   ],
-                  "nextToken": "foo"
+                  "nextToken": "string"
                 }
               }
             }
@@ -21063,134 +21063,134 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "contract": {
-                  "address": "foo",
-                  "name": "foo",
-                  "symbol": "foo",
-                  "totalSupply": "foo",
+                  "address": "string",
+                  "name": "string",
+                  "symbol": "string",
+                  "totalSupply": "string",
                   "tokenType": "ERC721",
-                  "contractDeployer": "foo",
-                  "deployedBlockNumber": 42,
+                  "contractDeployer": "string",
+                  "deployedBlockNumber": 1.1,
                   "openseaMetadata": {
-                    "floorPrice": 42,
-                    "collectionName": "foo",
-                    "safelistRequestStatus": "foo",
-                    "imageUrl": "foo",
-                    "description": "foo",
-                    "externalUrl": "foo",
-                    "twitterUsername": "foo",
-                    "discordUrl": "foo",
-                    "lastIngestedAt": "foo"
+                    "floorPrice": 1.1,
+                    "collectionName": "string",
+                    "safelistRequestStatus": "string",
+                    "imageUrl": "string",
+                    "description": "string",
+                    "externalUrl": "string",
+                    "twitterUsername": "string",
+                    "discordUrl": "string",
+                    "lastIngestedAt": "string"
                   },
-                  "isSpam": "foo",
+                  "isSpam": "string",
                   "spamClassifications": [
-                    "foo"
+                    "string"
                   ]
                 },
                 "tokenId": "44",
-                "tokenType": "foo",
-                "name": "foo",
-                "description": "foo",
+                "tokenType": "string",
+                "name": "string",
+                "description": "string",
                 "image": {
-                  "cachedUrl": "foo",
-                  "thumbnailUrl": "foo",
-                  "pngUrl": "foo",
-                  "contentType": "foo",
-                  "size": 42,
-                  "originalUrl": "foo"
+                  "cachedUrl": "string",
+                  "thumbnailUrl": "string",
+                  "pngUrl": "string",
+                  "contentType": "string",
+                  "size": 1,
+                  "originalUrl": "string"
                 },
                 "raw": {
-                  "tokenUri": "foo",
+                  "tokenUri": "string",
                   "metadata": {
-                    "image": "foo",
-                    "name": "foo",
-                    "description": "foo",
+                    "image": "string",
+                    "name": "string",
+                    "description": "string",
                     "attributes": [
                       {
-                        "value": "foo",
-                        "trait_type": "foo"
+                        "value": "string",
+                        "trait_type": "string"
                       }
                     ]
                   },
-                  "error": "foo"
+                  "error": "string"
                 },
                 "collection": {
-                  "name": "foo",
-                  "slug": "foo",
-                  "externalUrl": "foo",
-                  "bannerImageUrl": "foo"
+                  "name": "string",
+                  "slug": "string",
+                  "externalUrl": "string",
+                  "bannerImageUrl": "string"
                 },
-                "tokenUri": "foo",
-                "timeLastUpdated": "foo",
+                "tokenUri": "string",
+                "timeLastUpdated": "string",
                 "acquiredAt": {
-                  "blockTimestamp": "foo",
-                  "blockNumber": "foo"
+                  "blockTimestamp": "string",
+                  "blockNumber": "string"
                 }
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
                   "contract": {
-                    "address": "foo",
-                    "name": "foo",
-                    "symbol": "foo",
-                    "totalSupply": "foo",
+                    "address": "string",
+                    "name": "string",
+                    "symbol": "string",
+                    "totalSupply": "string",
                     "tokenType": "ERC721",
-                    "contractDeployer": "foo",
-                    "deployedBlockNumber": 42,
+                    "contractDeployer": "string",
+                    "deployedBlockNumber": 1.1,
                     "openseaMetadata": {
-                      "floorPrice": 42,
-                      "collectionName": "foo",
-                      "safelistRequestStatus": "foo",
-                      "imageUrl": "foo",
-                      "description": "foo",
-                      "externalUrl": "foo",
-                      "twitterUsername": "foo",
-                      "discordUrl": "foo",
-                      "lastIngestedAt": "foo"
+                      "floorPrice": 1.1,
+                      "collectionName": "string",
+                      "safelistRequestStatus": "string",
+                      "imageUrl": "string",
+                      "description": "string",
+                      "externalUrl": "string",
+                      "twitterUsername": "string",
+                      "discordUrl": "string",
+                      "lastIngestedAt": "string"
                     },
-                    "isSpam": "foo",
+                    "isSpam": "string",
                     "spamClassifications": [
-                      "foo"
+                      "string"
                     ]
                   },
                   "tokenId": "44",
-                  "tokenType": "foo",
-                  "name": "foo",
-                  "description": "foo",
+                  "tokenType": "string",
+                  "name": "string",
+                  "description": "string",
                   "image": {
-                    "cachedUrl": "foo",
-                    "thumbnailUrl": "foo",
-                    "pngUrl": "foo",
-                    "contentType": "foo",
-                    "size": 42,
-                    "originalUrl": "foo"
+                    "cachedUrl": "string",
+                    "thumbnailUrl": "string",
+                    "pngUrl": "string",
+                    "contentType": "string",
+                    "size": 1,
+                    "originalUrl": "string"
                   },
                   "raw": {
-                    "tokenUri": "foo",
+                    "tokenUri": "string",
                     "metadata": {
-                      "image": "foo",
-                      "name": "foo",
-                      "description": "foo",
+                      "image": "string",
+                      "name": "string",
+                      "description": "string",
                       "attributes": [
                         {
-                          "value": "foo",
-                          "trait_type": "foo"
+                          "value": "string",
+                          "trait_type": "string"
                         }
                       ]
                     },
-                    "error": "foo"
+                    "error": "string"
                   },
                   "collection": {
-                    "name": "foo",
-                    "slug": "foo",
-                    "externalUrl": "foo",
-                    "bannerImageUrl": "foo"
+                    "name": "string",
+                    "slug": "string",
+                    "externalUrl": "string",
+                    "bannerImageUrl": "string"
                   },
-                  "tokenUri": "foo",
-                  "timeLastUpdated": "foo",
+                  "tokenUri": "string",
+                  "timeLastUpdated": "string",
                   "acquiredAt": {
-                    "blockTimestamp": "foo",
-                    "blockNumber": "foo"
+                    "blockTimestamp": "string",
+                    "blockNumber": "string"
                   }
                 }
               }
@@ -21464,67 +21464,67 @@
               "responseBody": [
                 {
                   "contract": {
-                    "address": "foo",
-                    "name": "foo",
-                    "symbol": "foo",
-                    "totalSupply": "foo",
+                    "address": "string",
+                    "name": "string",
+                    "symbol": "string",
+                    "totalSupply": "string",
                     "tokenType": "ERC721",
-                    "contractDeployer": "foo",
-                    "deployedBlockNumber": 42,
+                    "contractDeployer": "string",
+                    "deployedBlockNumber": 1.1,
                     "openseaMetadata": {
-                      "floorPrice": 42,
-                      "collectionName": "foo",
-                      "safelistRequestStatus": "foo",
-                      "imageUrl": "foo",
-                      "description": "foo",
-                      "externalUrl": "foo",
-                      "twitterUsername": "foo",
-                      "discordUrl": "foo",
-                      "lastIngestedAt": "foo"
+                      "floorPrice": 1.1,
+                      "collectionName": "string",
+                      "safelistRequestStatus": "string",
+                      "imageUrl": "string",
+                      "description": "string",
+                      "externalUrl": "string",
+                      "twitterUsername": "string",
+                      "discordUrl": "string",
+                      "lastIngestedAt": "string"
                     },
-                    "isSpam": "foo",
+                    "isSpam": "string",
                     "spamClassifications": [
-                      "foo"
+                      "string"
                     ]
                   },
                   "tokenId": "44",
-                  "tokenType": "foo",
-                  "name": "foo",
-                  "description": "foo",
+                  "tokenType": "string",
+                  "name": "string",
+                  "description": "string",
                   "image": {
-                    "cachedUrl": "foo",
-                    "thumbnailUrl": "foo",
-                    "pngUrl": "foo",
-                    "contentType": "foo",
-                    "size": 42,
-                    "originalUrl": "foo"
+                    "cachedUrl": "string",
+                    "thumbnailUrl": "string",
+                    "pngUrl": "string",
+                    "contentType": "string",
+                    "size": 1,
+                    "originalUrl": "string"
                   },
                   "raw": {
-                    "tokenUri": "foo",
+                    "tokenUri": "string",
                     "metadata": {
-                      "image": "foo",
-                      "name": "foo",
-                      "description": "foo",
+                      "image": "string",
+                      "name": "string",
+                      "description": "string",
                       "attributes": [
                         {
-                          "value": "foo",
-                          "trait_type": "foo"
+                          "value": "string",
+                          "trait_type": "string"
                         }
                       ]
                     },
-                    "error": "foo"
+                    "error": "string"
                   },
                   "collection": {
-                    "name": "foo",
-                    "slug": "foo",
-                    "externalUrl": "foo",
-                    "bannerImageUrl": "foo"
+                    "name": "string",
+                    "slug": "string",
+                    "externalUrl": "string",
+                    "bannerImageUrl": "string"
                   },
-                  "tokenUri": "foo",
-                  "timeLastUpdated": "foo",
+                  "tokenUri": "string",
+                  "timeLastUpdated": "string",
                   "acquiredAt": {
-                    "blockTimestamp": "foo",
-                    "blockNumber": "foo"
+                    "blockTimestamp": "string",
+                    "blockNumber": "string"
                   }
                 }
               ],
@@ -21533,67 +21533,67 @@
                 "value": [
                   {
                     "contract": {
-                      "address": "foo",
-                      "name": "foo",
-                      "symbol": "foo",
-                      "totalSupply": "foo",
+                      "address": "string",
+                      "name": "string",
+                      "symbol": "string",
+                      "totalSupply": "string",
                       "tokenType": "ERC721",
-                      "contractDeployer": "foo",
-                      "deployedBlockNumber": 42,
+                      "contractDeployer": "string",
+                      "deployedBlockNumber": 1.1,
                       "openseaMetadata": {
-                        "floorPrice": 42,
-                        "collectionName": "foo",
-                        "safelistRequestStatus": "foo",
-                        "imageUrl": "foo",
-                        "description": "foo",
-                        "externalUrl": "foo",
-                        "twitterUsername": "foo",
-                        "discordUrl": "foo",
-                        "lastIngestedAt": "foo"
+                        "floorPrice": 1.1,
+                        "collectionName": "string",
+                        "safelistRequestStatus": "string",
+                        "imageUrl": "string",
+                        "description": "string",
+                        "externalUrl": "string",
+                        "twitterUsername": "string",
+                        "discordUrl": "string",
+                        "lastIngestedAt": "string"
                       },
-                      "isSpam": "foo",
+                      "isSpam": "string",
                       "spamClassifications": [
-                        "foo"
+                        "string"
                       ]
                     },
                     "tokenId": "44",
-                    "tokenType": "foo",
-                    "name": "foo",
-                    "description": "foo",
+                    "tokenType": "string",
+                    "name": "string",
+                    "description": "string",
                     "image": {
-                      "cachedUrl": "foo",
-                      "thumbnailUrl": "foo",
-                      "pngUrl": "foo",
-                      "contentType": "foo",
-                      "size": 42,
-                      "originalUrl": "foo"
+                      "cachedUrl": "string",
+                      "thumbnailUrl": "string",
+                      "pngUrl": "string",
+                      "contentType": "string",
+                      "size": 1,
+                      "originalUrl": "string"
                     },
                     "raw": {
-                      "tokenUri": "foo",
+                      "tokenUri": "string",
                       "metadata": {
-                        "image": "foo",
-                        "name": "foo",
-                        "description": "foo",
+                        "image": "string",
+                        "name": "string",
+                        "description": "string",
                         "attributes": [
                           {
-                            "value": "foo",
-                            "trait_type": "foo"
+                            "value": "string",
+                            "trait_type": "string"
                           }
                         ]
                       },
-                      "error": "foo"
+                      "error": "string"
                     },
                     "collection": {
-                      "name": "foo",
-                      "slug": "foo",
-                      "externalUrl": "foo",
-                      "bannerImageUrl": "foo"
+                      "name": "string",
+                      "slug": "string",
+                      "externalUrl": "string",
+                      "bannerImageUrl": "string"
                     },
-                    "tokenUri": "foo",
-                    "timeLastUpdated": "foo",
+                    "tokenUri": "string",
+                    "timeLastUpdated": "string",
                     "acquiredAt": {
-                      "blockTimestamp": "foo",
-                      "blockNumber": "foo"
+                      "blockTimestamp": "string",
+                      "blockNumber": "string"
                     }
                   }
                 ]
@@ -21821,45 +21821,45 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "address": "foo",
-                "name": "foo",
-                "symbol": "foo",
-                "totalSupply": "foo",
+                "address": "string",
+                "name": "string",
+                "symbol": "string",
+                "totalSupply": "string",
                 "tokenType": "ERC721",
-                "contractDeployer": "foo",
-                "deployedBlockNumber": 42,
+                "contractDeployer": "string",
+                "deployedBlockNumber": 1.1,
                 "openseaMetadata": {
-                  "floorPrice": 42,
-                  "collectionName": "foo",
-                  "safelistRequestStatus": "foo",
-                  "imageUrl": "foo",
-                  "description": "foo",
-                  "externalUrl": "foo",
-                  "twitterUsername": "foo",
-                  "discordUrl": "foo",
-                  "lastIngestedAt": "foo"
+                  "floorPrice": 1.1,
+                  "collectionName": "string",
+                  "safelistRequestStatus": "string",
+                  "imageUrl": "string",
+                  "description": "string",
+                  "externalUrl": "string",
+                  "twitterUsername": "string",
+                  "discordUrl": "string",
+                  "lastIngestedAt": "string"
                 }
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "address": "foo",
-                  "name": "foo",
-                  "symbol": "foo",
-                  "totalSupply": "foo",
+                  "address": "string",
+                  "name": "string",
+                  "symbol": "string",
+                  "totalSupply": "string",
                   "tokenType": "ERC721",
-                  "contractDeployer": "foo",
-                  "deployedBlockNumber": 42,
+                  "contractDeployer": "string",
+                  "deployedBlockNumber": 1.1,
                   "openseaMetadata": {
-                    "floorPrice": 42,
-                    "collectionName": "foo",
-                    "safelistRequestStatus": "foo",
-                    "imageUrl": "foo",
-                    "description": "foo",
-                    "externalUrl": "foo",
-                    "twitterUsername": "foo",
-                    "discordUrl": "foo",
-                    "lastIngestedAt": "foo"
+                    "floorPrice": 1.1,
+                    "collectionName": "string",
+                    "safelistRequestStatus": "string",
+                    "imageUrl": "string",
+                    "description": "string",
+                    "externalUrl": "string",
+                    "twitterUsername": "string",
+                    "discordUrl": "string",
+                    "lastIngestedAt": "string"
                   }
                 }
               }
@@ -22086,32 +22086,32 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "name": "foo",
-                "slug": "foo",
+                "name": "string",
+                "slug": "string",
                 "floorPrice": {
-                  "marketplace": "foo",
-                  "floorPrice": 42,
-                  "priceCurrency": "foo"
+                  "marketplace": "string",
+                  "floorPrice": 1.1,
+                  "priceCurrency": "string"
                 },
-                "description": "foo",
-                "externalUrl": "foo",
-                "twitterUsername": "foo",
-                "discordUrl": "foo"
+                "description": "string",
+                "externalUrl": "string",
+                "twitterUsername": "string",
+                "discordUrl": "string"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "name": "foo",
-                  "slug": "foo",
+                  "name": "string",
+                  "slug": "string",
                   "floorPrice": {
-                    "marketplace": "foo",
-                    "floorPrice": 42,
-                    "priceCurrency": "foo"
+                    "marketplace": "string",
+                    "floorPrice": 1.1,
+                    "priceCurrency": "string"
                   },
-                  "description": "foo",
-                  "externalUrl": "foo",
-                  "twitterUsername": "foo",
-                  "discordUrl": "foo"
+                  "description": "string",
+                  "externalUrl": "string",
+                  "twitterUsername": "string",
+                  "discordUrl": "string"
                 }
               }
             }
@@ -22337,14 +22337,14 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "success": "foo",
-                "numTokensInvalidated": 42
+                "success": "string",
+                "numTokensInvalidated": 1.1
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "success": "foo",
-                  "numTokensInvalidated": 42
+                  "success": "string",
+                  "numTokensInvalidated": 1.1
                 }
               }
             }
@@ -22594,23 +22594,23 @@
               "responseStatusCode": 200,
               "responseBody": [
                 {
-                  "address": "foo",
-                  "name": "foo",
-                  "symbol": "foo",
-                  "totalSupply": "foo",
+                  "address": "string",
+                  "name": "string",
+                  "symbol": "string",
+                  "totalSupply": "string",
                   "tokenType": "ERC721",
-                  "contractDeployer": "foo",
-                  "deployedBlockNumber": 42,
+                  "contractDeployer": "string",
+                  "deployedBlockNumber": 1.1,
                   "openseaMetadata": {
-                    "floorPrice": 42,
-                    "collectionName": "foo",
-                    "safelistRequestStatus": "foo",
-                    "imageUrl": "foo",
-                    "description": "foo",
-                    "externalUrl": "foo",
-                    "twitterUsername": "foo",
-                    "discordUrl": "foo",
-                    "lastIngestedAt": "foo"
+                    "floorPrice": 1.1,
+                    "collectionName": "string",
+                    "safelistRequestStatus": "string",
+                    "imageUrl": "string",
+                    "description": "string",
+                    "externalUrl": "string",
+                    "twitterUsername": "string",
+                    "discordUrl": "string",
+                    "lastIngestedAt": "string"
                   }
                 }
               ],
@@ -22618,23 +22618,23 @@
                 "type": "json",
                 "value": [
                   {
-                    "address": "foo",
-                    "name": "foo",
-                    "symbol": "foo",
-                    "totalSupply": "foo",
+                    "address": "string",
+                    "name": "string",
+                    "symbol": "string",
+                    "totalSupply": "string",
                     "tokenType": "ERC721",
-                    "contractDeployer": "foo",
-                    "deployedBlockNumber": 42,
+                    "contractDeployer": "string",
+                    "deployedBlockNumber": 1.1,
                     "openseaMetadata": {
-                      "floorPrice": 42,
-                      "collectionName": "foo",
-                      "safelistRequestStatus": "foo",
-                      "imageUrl": "foo",
-                      "description": "foo",
-                      "externalUrl": "foo",
-                      "twitterUsername": "foo",
-                      "discordUrl": "foo",
-                      "lastIngestedAt": "foo"
+                      "floorPrice": 1.1,
+                      "collectionName": "string",
+                      "safelistRequestStatus": "string",
+                      "imageUrl": "string",
+                      "description": "string",
+                      "externalUrl": "string",
+                      "twitterUsername": "string",
+                      "discordUrl": "string",
+                      "lastIngestedAt": "string"
                     }
                   }
                 ]
@@ -23525,23 +23525,23 @@
               "responseStatusCode": 200,
               "responseBody": [
                 {
-                  "address": "foo",
-                  "name": "foo",
-                  "symbol": "foo",
-                  "totalSupply": "foo",
+                  "address": "string",
+                  "name": "string",
+                  "symbol": "string",
+                  "totalSupply": "string",
                   "tokenType": "ERC721",
-                  "contractDeployer": "foo",
-                  "deployedBlockNumber": 42,
+                  "contractDeployer": "string",
+                  "deployedBlockNumber": 1.1,
                   "openseaMetadata": {
-                    "floorPrice": 42,
-                    "collectionName": "foo",
-                    "safelistRequestStatus": "foo",
-                    "imageUrl": "foo",
-                    "description": "foo",
-                    "externalUrl": "foo",
-                    "twitterUsername": "foo",
-                    "discordUrl": "foo",
-                    "lastIngestedAt": "foo"
+                    "floorPrice": 1.1,
+                    "collectionName": "string",
+                    "safelistRequestStatus": "string",
+                    "imageUrl": "string",
+                    "description": "string",
+                    "externalUrl": "string",
+                    "twitterUsername": "string",
+                    "discordUrl": "string",
+                    "lastIngestedAt": "string"
                   }
                 }
               ],
@@ -23549,23 +23549,23 @@
                 "type": "json",
                 "value": [
                   {
-                    "address": "foo",
-                    "name": "foo",
-                    "symbol": "foo",
-                    "totalSupply": "foo",
+                    "address": "string",
+                    "name": "string",
+                    "symbol": "string",
+                    "totalSupply": "string",
                     "tokenType": "ERC721",
-                    "contractDeployer": "foo",
-                    "deployedBlockNumber": 42,
+                    "contractDeployer": "string",
+                    "deployedBlockNumber": 1.1,
                     "openseaMetadata": {
-                      "floorPrice": 42,
-                      "collectionName": "foo",
-                      "safelistRequestStatus": "foo",
-                      "imageUrl": "foo",
-                      "description": "foo",
-                      "externalUrl": "foo",
-                      "twitterUsername": "foo",
-                      "discordUrl": "foo",
-                      "lastIngestedAt": "foo"
+                      "floorPrice": 1.1,
+                      "collectionName": "string",
+                      "safelistRequestStatus": "string",
+                      "imageUrl": "string",
+                      "description": "string",
+                      "externalUrl": "string",
+                      "twitterUsername": "string",
+                      "discordUrl": "string",
+                      "lastIngestedAt": "string"
                     }
                   }
                 ]
@@ -23807,9 +23807,9 @@
               "responseBody": {
                 "rarities": [
                   {
-                    "trait_type": "foo",
-                    "value": "foo",
-                    "prevalence": 42
+                    "trait_type": "string",
+                    "value": "string",
+                    "prevalence": 1.1
                   }
                 ]
               },
@@ -23818,9 +23818,9 @@
                 "value": {
                   "rarities": [
                     {
-                      "trait_type": "foo",
-                      "value": "foo",
-                      "prevalence": 42
+                      "trait_type": "string",
+                      "value": "string",
+                      "prevalence": 1.1
                     }
                   ]
                 }
@@ -24309,14 +24309,14 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "contractAddresses": [
-                  "foo"
+                  "string"
                 ]
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
                   "contractAddresses": [
-                    "foo"
+                    "string"
                   ]
                 }
               }
@@ -25018,10 +25018,10 @@
               },
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": "foo",
+              "responseBody": "string",
               "responseBodyV3": {
                 "type": "json",
-                "value": "foo"
+                "value": "string"
               }
             }
           ],
@@ -25272,22 +25272,22 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "nftMarketplaceName": {
-                  "floorPrice": 42,
+                  "floorPrice": 1.1,
                   "priceCurrency": "ETH",
-                  "collectionUrl": "foo",
-                  "retrievedAt": "foo",
-                  "error": "foo"
+                  "collectionUrl": "string",
+                  "retrievedAt": "string",
+                  "error": "string"
                 }
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
                   "nftMarketplaceName": {
-                    "floorPrice": 42,
+                    "floorPrice": 1.1,
                     "priceCurrency": "ETH",
-                    "collectionUrl": "foo",
-                    "retrievedAt": "foo",
-                    "error": "foo"
+                    "collectionUrl": "string",
+                    "retrievedAt": "string",
+                    "error": "string"
                   }
                 }
               }
@@ -26932,7 +26932,7 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "contract": {
-                  "address": "foo"
+                  "address": "string"
                 },
                 "id": {
                   "tokenId": "44",
@@ -26940,79 +26940,79 @@
                     "tokenType": "ERC721"
                   }
                 },
-                "balance": "foo",
-                "title": "foo",
-                "description": "foo",
+                "balance": "string",
+                "title": "string",
+                "description": "string",
                 "tokenUri": {
-                  "raw": "foo",
-                  "gateway": "foo"
+                  "raw": "string",
+                  "gateway": "string"
                 },
                 "media": {
-                  "raw": "foo",
-                  "gateway": "foo",
-                  "thumbnail": "foo",
-                  "format": "foo",
-                  "bytes": 42
+                  "raw": "string",
+                  "gateway": "string",
+                  "thumbnail": "string",
+                  "format": "string",
+                  "bytes": 1
                 },
                 "metadata": {
-                  "image": "foo",
-                  "external_url": "foo",
-                  "background_color": "foo",
-                  "name": "foo",
-                  "description": "foo",
+                  "image": "string",
+                  "external_url": "string",
+                  "background_color": "string",
+                  "name": "string",
+                  "description": "string",
                   "attributes": [
                     {
-                      "value": "foo",
-                      "trait_type": "foo"
+                      "value": "string",
+                      "trait_type": "string"
                     }
                   ],
                   "media": [
                     {
-                      "raw": "foo",
-                      "gateway": "foo",
-                      "thumbnail": "foo",
-                      "format": "foo",
-                      "bytes": 42
+                      "raw": "string",
+                      "gateway": "string",
+                      "thumbnail": "string",
+                      "format": "string",
+                      "bytes": 1
                     }
                   ]
                 },
-                "timeLastUpdated": "foo",
-                "error": "foo",
+                "timeLastUpdated": "string",
+                "error": "string",
                 "contractMetadata": {
-                  "name": "foo",
-                  "symbol": "foo",
-                  "totalSupply": "foo",
+                  "name": "string",
+                  "symbol": "string",
+                  "totalSupply": "string",
                   "tokenType": "ERC721",
-                  "contractDeployer": "foo",
-                  "deployedBlockNumber": 42,
+                  "contractDeployer": "string",
+                  "deployedBlockNumber": 1.1,
                   "opensea": {
-                    "floorPrice": 42,
-                    "collectionName": "foo",
-                    "safelistRequestStatus": "foo",
-                    "imageUrl": "foo",
-                    "description": "foo",
-                    "externalUrl": "foo",
-                    "twitterUsername": "foo",
-                    "discordUrl": "foo",
-                    "lastIngestedAt": "foo"
+                    "floorPrice": 1.1,
+                    "collectionName": "string",
+                    "safelistRequestStatus": "string",
+                    "imageUrl": "string",
+                    "description": "string",
+                    "externalUrl": "string",
+                    "twitterUsername": "string",
+                    "discordUrl": "string",
+                    "lastIngestedAt": "string"
                   }
                 },
                 "spamInfo": {
-                  "isSpam": "foo",
+                  "isSpam": "string",
                   "spamClassifications": [
-                    "foo"
+                    "string"
                   ]
                 },
                 "acquiredAt": {
-                  "blockTimestamp": "foo",
-                  "blockNumber": "foo"
+                  "blockTimestamp": "string",
+                  "blockNumber": "string"
                 }
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
                   "contract": {
-                    "address": "foo"
+                    "address": "string"
                   },
                   "id": {
                     "tokenId": "44",
@@ -27020,72 +27020,72 @@
                       "tokenType": "ERC721"
                     }
                   },
-                  "balance": "foo",
-                  "title": "foo",
-                  "description": "foo",
+                  "balance": "string",
+                  "title": "string",
+                  "description": "string",
                   "tokenUri": {
-                    "raw": "foo",
-                    "gateway": "foo"
+                    "raw": "string",
+                    "gateway": "string"
                   },
                   "media": {
-                    "raw": "foo",
-                    "gateway": "foo",
-                    "thumbnail": "foo",
-                    "format": "foo",
-                    "bytes": 42
+                    "raw": "string",
+                    "gateway": "string",
+                    "thumbnail": "string",
+                    "format": "string",
+                    "bytes": 1
                   },
                   "metadata": {
-                    "image": "foo",
-                    "external_url": "foo",
-                    "background_color": "foo",
-                    "name": "foo",
-                    "description": "foo",
+                    "image": "string",
+                    "external_url": "string",
+                    "background_color": "string",
+                    "name": "string",
+                    "description": "string",
                     "attributes": [
                       {
-                        "value": "foo",
-                        "trait_type": "foo"
+                        "value": "string",
+                        "trait_type": "string"
                       }
                     ],
                     "media": [
                       {
-                        "raw": "foo",
-                        "gateway": "foo",
-                        "thumbnail": "foo",
-                        "format": "foo",
-                        "bytes": 42
+                        "raw": "string",
+                        "gateway": "string",
+                        "thumbnail": "string",
+                        "format": "string",
+                        "bytes": 1
                       }
                     ]
                   },
-                  "timeLastUpdated": "foo",
-                  "error": "foo",
+                  "timeLastUpdated": "string",
+                  "error": "string",
                   "contractMetadata": {
-                    "name": "foo",
-                    "symbol": "foo",
-                    "totalSupply": "foo",
+                    "name": "string",
+                    "symbol": "string",
+                    "totalSupply": "string",
                     "tokenType": "ERC721",
-                    "contractDeployer": "foo",
-                    "deployedBlockNumber": 42,
+                    "contractDeployer": "string",
+                    "deployedBlockNumber": 1.1,
                     "opensea": {
-                      "floorPrice": 42,
-                      "collectionName": "foo",
-                      "safelistRequestStatus": "foo",
-                      "imageUrl": "foo",
-                      "description": "foo",
-                      "externalUrl": "foo",
-                      "twitterUsername": "foo",
-                      "discordUrl": "foo",
-                      "lastIngestedAt": "foo"
+                      "floorPrice": 1.1,
+                      "collectionName": "string",
+                      "safelistRequestStatus": "string",
+                      "imageUrl": "string",
+                      "description": "string",
+                      "externalUrl": "string",
+                      "twitterUsername": "string",
+                      "discordUrl": "string",
+                      "lastIngestedAt": "string"
                     }
                   },
                   "spamInfo": {
-                    "isSpam": "foo",
+                    "isSpam": "string",
                     "spamClassifications": [
-                      "foo"
+                      "string"
                     ]
                   },
                   "acquiredAt": {
-                    "blockTimestamp": "foo",
-                    "blockNumber": "foo"
+                    "blockTimestamp": "string",
+                    "blockNumber": "string"
                   }
                 }
               }
@@ -27359,7 +27359,7 @@
               "responseBody": [
                 {
                   "contract": {
-                    "address": "foo"
+                    "address": "string"
                   },
                   "id": {
                     "tokenId": "44",
@@ -27367,72 +27367,72 @@
                       "tokenType": "ERC721"
                     }
                   },
-                  "balance": "foo",
-                  "title": "foo",
-                  "description": "foo",
+                  "balance": "string",
+                  "title": "string",
+                  "description": "string",
                   "tokenUri": {
-                    "raw": "foo",
-                    "gateway": "foo"
+                    "raw": "string",
+                    "gateway": "string"
                   },
                   "media": {
-                    "raw": "foo",
-                    "gateway": "foo",
-                    "thumbnail": "foo",
-                    "format": "foo",
-                    "bytes": 42
+                    "raw": "string",
+                    "gateway": "string",
+                    "thumbnail": "string",
+                    "format": "string",
+                    "bytes": 1
                   },
                   "metadata": {
-                    "image": "foo",
-                    "external_url": "foo",
-                    "background_color": "foo",
-                    "name": "foo",
-                    "description": "foo",
+                    "image": "string",
+                    "external_url": "string",
+                    "background_color": "string",
+                    "name": "string",
+                    "description": "string",
                     "attributes": [
                       {
-                        "value": "foo",
-                        "trait_type": "foo"
+                        "value": "string",
+                        "trait_type": "string"
                       }
                     ],
                     "media": [
                       {
-                        "raw": "foo",
-                        "gateway": "foo",
-                        "thumbnail": "foo",
-                        "format": "foo",
-                        "bytes": 42
+                        "raw": "string",
+                        "gateway": "string",
+                        "thumbnail": "string",
+                        "format": "string",
+                        "bytes": 1
                       }
                     ]
                   },
-                  "timeLastUpdated": "foo",
-                  "error": "foo",
+                  "timeLastUpdated": "string",
+                  "error": "string",
                   "contractMetadata": {
-                    "name": "foo",
-                    "symbol": "foo",
-                    "totalSupply": "foo",
+                    "name": "string",
+                    "symbol": "string",
+                    "totalSupply": "string",
                     "tokenType": "ERC721",
-                    "contractDeployer": "foo",
-                    "deployedBlockNumber": 42,
+                    "contractDeployer": "string",
+                    "deployedBlockNumber": 1.1,
                     "opensea": {
-                      "floorPrice": 42,
-                      "collectionName": "foo",
-                      "safelistRequestStatus": "foo",
-                      "imageUrl": "foo",
-                      "description": "foo",
-                      "externalUrl": "foo",
-                      "twitterUsername": "foo",
-                      "discordUrl": "foo",
-                      "lastIngestedAt": "foo"
+                      "floorPrice": 1.1,
+                      "collectionName": "string",
+                      "safelistRequestStatus": "string",
+                      "imageUrl": "string",
+                      "description": "string",
+                      "externalUrl": "string",
+                      "twitterUsername": "string",
+                      "discordUrl": "string",
+                      "lastIngestedAt": "string"
                     }
                   },
                   "spamInfo": {
-                    "isSpam": "foo",
+                    "isSpam": "string",
                     "spamClassifications": [
-                      "foo"
+                      "string"
                     ]
                   },
                   "acquiredAt": {
-                    "blockTimestamp": "foo",
-                    "blockNumber": "foo"
+                    "blockTimestamp": "string",
+                    "blockNumber": "string"
                   }
                 }
               ],
@@ -27441,7 +27441,7 @@
                 "value": [
                   {
                     "contract": {
-                      "address": "foo"
+                      "address": "string"
                     },
                     "id": {
                       "tokenId": "44",
@@ -27449,72 +27449,72 @@
                         "tokenType": "ERC721"
                       }
                     },
-                    "balance": "foo",
-                    "title": "foo",
-                    "description": "foo",
+                    "balance": "string",
+                    "title": "string",
+                    "description": "string",
                     "tokenUri": {
-                      "raw": "foo",
-                      "gateway": "foo"
+                      "raw": "string",
+                      "gateway": "string"
                     },
                     "media": {
-                      "raw": "foo",
-                      "gateway": "foo",
-                      "thumbnail": "foo",
-                      "format": "foo",
-                      "bytes": 42
+                      "raw": "string",
+                      "gateway": "string",
+                      "thumbnail": "string",
+                      "format": "string",
+                      "bytes": 1
                     },
                     "metadata": {
-                      "image": "foo",
-                      "external_url": "foo",
-                      "background_color": "foo",
-                      "name": "foo",
-                      "description": "foo",
+                      "image": "string",
+                      "external_url": "string",
+                      "background_color": "string",
+                      "name": "string",
+                      "description": "string",
                       "attributes": [
                         {
-                          "value": "foo",
-                          "trait_type": "foo"
+                          "value": "string",
+                          "trait_type": "string"
                         }
                       ],
                       "media": [
                         {
-                          "raw": "foo",
-                          "gateway": "foo",
-                          "thumbnail": "foo",
-                          "format": "foo",
-                          "bytes": 42
+                          "raw": "string",
+                          "gateway": "string",
+                          "thumbnail": "string",
+                          "format": "string",
+                          "bytes": 1
                         }
                       ]
                     },
-                    "timeLastUpdated": "foo",
-                    "error": "foo",
+                    "timeLastUpdated": "string",
+                    "error": "string",
                     "contractMetadata": {
-                      "name": "foo",
-                      "symbol": "foo",
-                      "totalSupply": "foo",
+                      "name": "string",
+                      "symbol": "string",
+                      "totalSupply": "string",
                       "tokenType": "ERC721",
-                      "contractDeployer": "foo",
-                      "deployedBlockNumber": 42,
+                      "contractDeployer": "string",
+                      "deployedBlockNumber": 1.1,
                       "opensea": {
-                        "floorPrice": 42,
-                        "collectionName": "foo",
-                        "safelistRequestStatus": "foo",
-                        "imageUrl": "foo",
-                        "description": "foo",
-                        "externalUrl": "foo",
-                        "twitterUsername": "foo",
-                        "discordUrl": "foo",
-                        "lastIngestedAt": "foo"
+                        "floorPrice": 1.1,
+                        "collectionName": "string",
+                        "safelistRequestStatus": "string",
+                        "imageUrl": "string",
+                        "description": "string",
+                        "externalUrl": "string",
+                        "twitterUsername": "string",
+                        "discordUrl": "string",
+                        "lastIngestedAt": "string"
                       }
                     },
                     "spamInfo": {
-                      "isSpam": "foo",
+                      "isSpam": "string",
                       "spamClassifications": [
-                        "foo"
+                        "string"
                       ]
                     },
                     "acquiredAt": {
-                      "blockTimestamp": "foo",
-                      "blockNumber": "foo"
+                      "blockTimestamp": "string",
+                      "blockNumber": "string"
                     }
                   }
                 ]
@@ -27742,48 +27742,48 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "address": "foo",
+                "address": "string",
                 "contractMetadata": {
-                  "name": "foo",
-                  "symbol": "foo",
-                  "totalSupply": "foo",
+                  "name": "string",
+                  "symbol": "string",
+                  "totalSupply": "string",
                   "tokenType": "ERC721",
-                  "contractDeployer": "foo",
-                  "deployedBlockNumber": 42,
+                  "contractDeployer": "string",
+                  "deployedBlockNumber": 1.1,
                   "opensea": {
-                    "floorPrice": 42,
-                    "collectionName": "foo",
-                    "safelistRequestStatus": "foo",
-                    "imageUrl": "foo",
-                    "description": "foo",
-                    "externalUrl": "foo",
-                    "twitterUsername": "foo",
-                    "discordUrl": "foo",
-                    "lastIngestedAt": "foo"
+                    "floorPrice": 1.1,
+                    "collectionName": "string",
+                    "safelistRequestStatus": "string",
+                    "imageUrl": "string",
+                    "description": "string",
+                    "externalUrl": "string",
+                    "twitterUsername": "string",
+                    "discordUrl": "string",
+                    "lastIngestedAt": "string"
                   }
                 }
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "address": "foo",
+                  "address": "string",
                   "contractMetadata": {
-                    "name": "foo",
-                    "symbol": "foo",
-                    "totalSupply": "foo",
+                    "name": "string",
+                    "symbol": "string",
+                    "totalSupply": "string",
                     "tokenType": "ERC721",
-                    "contractDeployer": "foo",
-                    "deployedBlockNumber": 42,
+                    "contractDeployer": "string",
+                    "deployedBlockNumber": 1.1,
                     "opensea": {
-                      "floorPrice": 42,
-                      "collectionName": "foo",
-                      "safelistRequestStatus": "foo",
-                      "imageUrl": "foo",
-                      "description": "foo",
-                      "externalUrl": "foo",
-                      "twitterUsername": "foo",
-                      "discordUrl": "foo",
-                      "lastIngestedAt": "foo"
+                      "floorPrice": 1.1,
+                      "collectionName": "string",
+                      "safelistRequestStatus": "string",
+                      "imageUrl": "string",
+                      "description": "string",
+                      "externalUrl": "string",
+                      "twitterUsername": "string",
+                      "discordUrl": "string",
+                      "lastIngestedAt": "string"
                     }
                   }
                 }
@@ -28037,36 +28037,36 @@
                 {
                   "address": "0xe785E82358879F061BC3dcAC6f0444462D4b5330",
                   "contractMetadata": {
-                    "address": "foo",
-                    "totalBalance": 42,
-                    "numDistinctTokensOwned": 42,
+                    "address": "string",
+                    "totalBalance": 1.1,
+                    "numDistinctTokensOwned": 1.1,
                     "isSpam": true,
-                    "tokenId": "foo",
-                    "name": "foo",
-                    "title": "foo",
-                    "symbol": "foo",
-                    "tokenType": "foo",
-                    "contractDeployer": "foo",
-                    "deployedBlockNumber": 42,
+                    "tokenId": "string",
+                    "name": "string",
+                    "title": "string",
+                    "symbol": "string",
+                    "tokenType": "string",
+                    "contractDeployer": "string",
+                    "deployedBlockNumber": 1.1,
                     "media": [
                       {
-                        "raw": "foo",
-                        "gateway": "foo",
-                        "thumbnail": "foo",
-                        "format": "foo",
-                        "bytes": 42
+                        "raw": "string",
+                        "gateway": "string",
+                        "thumbnail": "string",
+                        "format": "string",
+                        "bytes": 1
                       }
                     ],
                     "opensea": {
-                      "floorPrice": 42,
-                      "collectionName": "foo",
-                      "safelistRequestStatus": "foo",
-                      "imageUrl": "foo",
-                      "description": "foo",
-                      "externalUrl": "foo",
-                      "twitterUsername": "foo",
-                      "discordUrl": "foo",
-                      "lastIngestedAt": "foo"
+                      "floorPrice": 1.1,
+                      "collectionName": "string",
+                      "safelistRequestStatus": "string",
+                      "imageUrl": "string",
+                      "description": "string",
+                      "externalUrl": "string",
+                      "twitterUsername": "string",
+                      "discordUrl": "string",
+                      "lastIngestedAt": "string"
                     }
                   }
                 }
@@ -28077,36 +28077,36 @@
                   {
                     "address": "0xe785E82358879F061BC3dcAC6f0444462D4b5330",
                     "contractMetadata": {
-                      "address": "foo",
-                      "totalBalance": 42,
-                      "numDistinctTokensOwned": 42,
+                      "address": "string",
+                      "totalBalance": 1.1,
+                      "numDistinctTokensOwned": 1.1,
                       "isSpam": true,
-                      "tokenId": "foo",
-                      "name": "foo",
-                      "title": "foo",
-                      "symbol": "foo",
-                      "tokenType": "foo",
-                      "contractDeployer": "foo",
-                      "deployedBlockNumber": 42,
+                      "tokenId": "string",
+                      "name": "string",
+                      "title": "string",
+                      "symbol": "string",
+                      "tokenType": "string",
+                      "contractDeployer": "string",
+                      "deployedBlockNumber": 1.1,
                       "media": [
                         {
-                          "raw": "foo",
-                          "gateway": "foo",
-                          "thumbnail": "foo",
-                          "format": "foo",
-                          "bytes": 42
+                          "raw": "string",
+                          "gateway": "string",
+                          "thumbnail": "string",
+                          "format": "string",
+                          "bytes": 1
                         }
                       ],
                       "opensea": {
-                        "floorPrice": 42,
-                        "collectionName": "foo",
-                        "safelistRequestStatus": "foo",
-                        "imageUrl": "foo",
-                        "description": "foo",
-                        "externalUrl": "foo",
-                        "twitterUsername": "foo",
-                        "discordUrl": "foo",
-                        "lastIngestedAt": "foo"
+                        "floorPrice": 1.1,
+                        "collectionName": "string",
+                        "safelistRequestStatus": "string",
+                        "imageUrl": "string",
+                        "description": "string",
+                        "externalUrl": "string",
+                        "twitterUsername": "string",
+                        "discordUrl": "string",
+                        "lastIngestedAt": "string"
                       }
                     }
                   }
@@ -28412,54 +28412,54 @@
                       }
                     },
                     "tokenUri": {
-                      "raw": "foo",
-                      "gateway": "foo"
+                      "raw": "string",
+                      "gateway": "string"
                     },
                     "metadata": {
-                      "image": "foo",
-                      "external_url": "foo",
-                      "background_color": "foo",
-                      "name": "foo",
-                      "description": "foo",
+                      "image": "string",
+                      "external_url": "string",
+                      "background_color": "string",
+                      "name": "string",
+                      "description": "string",
                       "attributes": [
                         {
-                          "value": "foo",
-                          "trait_type": "foo"
+                          "value": "string",
+                          "trait_type": "string"
                         }
                       ],
                       "media": [
                         {
-                          "raw": "foo",
-                          "gateway": "foo",
-                          "thumbnail": "foo",
-                          "format": "foo",
-                          "bytes": 42
+                          "raw": "string",
+                          "gateway": "string",
+                          "thumbnail": "string",
+                          "format": "string",
+                          "bytes": 1
                         }
                       ]
                     },
-                    "timeLastUpdated": "foo",
+                    "timeLastUpdated": "string",
                     "contractMetadata": {
-                      "name": "foo",
-                      "symbol": "foo",
-                      "totalSupply": "foo",
+                      "name": "string",
+                      "symbol": "string",
+                      "totalSupply": "string",
                       "tokenType": "ERC721",
-                      "contractDeployer": "foo",
-                      "deployedBlockNumber": 42,
+                      "contractDeployer": "string",
+                      "deployedBlockNumber": 1.1,
                       "opensea": {
-                        "floorPrice": 42,
-                        "collectionName": "foo",
-                        "safelistRequestStatus": "foo",
-                        "imageUrl": "foo",
-                        "description": "foo",
-                        "externalUrl": "foo",
-                        "twitterUsername": "foo",
-                        "discordUrl": "foo",
-                        "lastIngestedAt": "foo"
+                        "floorPrice": 1.1,
+                        "collectionName": "string",
+                        "safelistRequestStatus": "string",
+                        "imageUrl": "string",
+                        "description": "string",
+                        "externalUrl": "string",
+                        "twitterUsername": "string",
+                        "discordUrl": "string",
+                        "lastIngestedAt": "string"
                       }
                     }
                   }
                 ],
-                "nextToken": "foo"
+                "nextToken": "string"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -28473,54 +28473,54 @@
                         }
                       },
                       "tokenUri": {
-                        "raw": "foo",
-                        "gateway": "foo"
+                        "raw": "string",
+                        "gateway": "string"
                       },
                       "metadata": {
-                        "image": "foo",
-                        "external_url": "foo",
-                        "background_color": "foo",
-                        "name": "foo",
-                        "description": "foo",
+                        "image": "string",
+                        "external_url": "string",
+                        "background_color": "string",
+                        "name": "string",
+                        "description": "string",
                         "attributes": [
                           {
-                            "value": "foo",
-                            "trait_type": "foo"
+                            "value": "string",
+                            "trait_type": "string"
                           }
                         ],
                         "media": [
                           {
-                            "raw": "foo",
-                            "gateway": "foo",
-                            "thumbnail": "foo",
-                            "format": "foo",
-                            "bytes": 42
+                            "raw": "string",
+                            "gateway": "string",
+                            "thumbnail": "string",
+                            "format": "string",
+                            "bytes": 1
                           }
                         ]
                       },
-                      "timeLastUpdated": "foo",
+                      "timeLastUpdated": "string",
                       "contractMetadata": {
-                        "name": "foo",
-                        "symbol": "foo",
-                        "totalSupply": "foo",
+                        "name": "string",
+                        "symbol": "string",
+                        "totalSupply": "string",
                         "tokenType": "ERC721",
-                        "contractDeployer": "foo",
-                        "deployedBlockNumber": 42,
+                        "contractDeployer": "string",
+                        "deployedBlockNumber": 1.1,
                         "opensea": {
-                          "floorPrice": 42,
-                          "collectionName": "foo",
-                          "safelistRequestStatus": "foo",
-                          "imageUrl": "foo",
-                          "description": "foo",
-                          "externalUrl": "foo",
-                          "twitterUsername": "foo",
-                          "discordUrl": "foo",
-                          "lastIngestedAt": "foo"
+                          "floorPrice": 1.1,
+                          "collectionName": "string",
+                          "safelistRequestStatus": "string",
+                          "imageUrl": "string",
+                          "description": "string",
+                          "externalUrl": "string",
+                          "twitterUsername": "string",
+                          "discordUrl": "string",
+                          "lastIngestedAt": "string"
                         }
                       }
                     }
                   ],
-                  "nextToken": "foo"
+                  "nextToken": "string"
                 }
               }
             }
@@ -28785,14 +28785,14 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "owners": [
-                  "foo"
+                  "string"
                 ]
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
                   "owners": [
-                    "foo"
+                    "string"
                   ]
                 }
               }
@@ -29051,12 +29051,12 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": [
-                "foo"
+                "string"
               ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
-                  "foo"
+                  "string"
                 ]
               }
             }
@@ -29269,14 +29269,14 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "contractAddresses": [
-                  "foo"
+                  "string"
                 ]
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
                   "contractAddresses": [
-                    "foo"
+                    "string"
                   ]
                 }
               }
@@ -29973,14 +29973,14 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "success": "foo",
-                "numTokensInvalidated": 42
+                "success": "string",
+                "numTokensInvalidated": 1.1
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "success": "foo",
-                  "numTokensInvalidated": 42
+                  "success": "string",
+                  "numTokensInvalidated": 1.1
                 }
               }
             }
@@ -30207,22 +30207,22 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "nftMarketplace": {
-                  "floorPrice": 42,
+                  "floorPrice": 1.1,
                   "priceCurrency": "ETH",
-                  "collectionUrl": "foo",
-                  "retrievedAt": "foo",
-                  "error": "foo"
+                  "collectionUrl": "string",
+                  "retrievedAt": "string",
+                  "error": "string"
                 }
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
                   "nftMarketplace": {
-                    "floorPrice": 42,
+                    "floorPrice": 1.1,
                     "priceCurrency": "ETH",
-                    "collectionUrl": "foo",
-                    "retrievedAt": "foo",
-                    "error": "foo"
+                    "collectionUrl": "string",
+                    "retrievedAt": "string",
+                    "error": "string"
                   }
                 }
               }
@@ -30463,9 +30463,9 @@
               "responseBody": {
                 "rarities": [
                   {
-                    "trait_type": "foo",
-                    "value": "foo",
-                    "prevalence": 42
+                    "trait_type": "string",
+                    "value": "string",
+                    "prevalence": 1.1
                   }
                 ]
               },
@@ -30474,9 +30474,9 @@
                 "value": {
                   "rarities": [
                     {
-                      "trait_type": "foo",
-                      "value": "foo",
-                      "prevalence": 42
+                      "trait_type": "string",
+                      "value": "string",
+                      "prevalence": 1.1
                     }
                   ]
                 }
@@ -30710,22 +30710,22 @@
                 {
                   "address": "0xe785E82358879F061BC3dcAC6f0444462D4b5330",
                   "contractMetadata": {
-                    "name": "foo",
-                    "symbol": "foo",
-                    "totalSupply": "foo",
+                    "name": "string",
+                    "symbol": "string",
+                    "totalSupply": "string",
                     "tokenType": "ERC721",
-                    "contractDeployer": "foo",
-                    "deployedBlockNumber": 42,
+                    "contractDeployer": "string",
+                    "deployedBlockNumber": 1.1,
                     "opensea": {
-                      "floorPrice": 42,
-                      "collectionName": "foo",
-                      "safelistRequestStatus": "foo",
-                      "imageUrl": "foo",
-                      "description": "foo",
-                      "externalUrl": "foo",
-                      "twitterUsername": "foo",
-                      "discordUrl": "foo",
-                      "lastIngestedAt": "foo"
+                      "floorPrice": 1.1,
+                      "collectionName": "string",
+                      "safelistRequestStatus": "string",
+                      "imageUrl": "string",
+                      "description": "string",
+                      "externalUrl": "string",
+                      "twitterUsername": "string",
+                      "discordUrl": "string",
+                      "lastIngestedAt": "string"
                     }
                   }
                 }
@@ -30736,22 +30736,22 @@
                   {
                     "address": "0xe785E82358879F061BC3dcAC6f0444462D4b5330",
                     "contractMetadata": {
-                      "name": "foo",
-                      "symbol": "foo",
-                      "totalSupply": "foo",
+                      "name": "string",
+                      "symbol": "string",
+                      "totalSupply": "string",
                       "tokenType": "ERC721",
-                      "contractDeployer": "foo",
-                      "deployedBlockNumber": 42,
+                      "contractDeployer": "string",
+                      "deployedBlockNumber": 1.1,
                       "opensea": {
-                        "floorPrice": 42,
-                        "collectionName": "foo",
-                        "safelistRequestStatus": "foo",
-                        "imageUrl": "foo",
-                        "description": "foo",
-                        "externalUrl": "foo",
-                        "twitterUsername": "foo",
-                        "discordUrl": "foo",
-                        "lastIngestedAt": "foo"
+                        "floorPrice": 1.1,
+                        "collectionName": "string",
+                        "safelistRequestStatus": "string",
+                        "imageUrl": "string",
+                        "description": "string",
+                        "externalUrl": "string",
+                        "twitterUsername": "string",
+                        "discordUrl": "string",
+                        "lastIngestedAt": "string"
                       }
                     }
                   }
@@ -30980,14 +30980,14 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "totalSupply": "foo",
+                "totalSupply": "string",
                 "summary": {},
                 "contractAddress": "0xe785E82358879F061BC3dcAC6f0444462D4b5330"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "totalSupply": "foo",
+                  "totalSupply": "string",
                   "summary": {},
                   "contractAddress": "0xe785E82358879F061BC3dcAC6f0444462D4b5330"
                 }
@@ -32413,10 +32413,10 @@
               },
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": "foo",
+              "responseBody": "string",
               "responseBodyV3": {
                 "type": "json",
-                "value": "foo"
+                "value": "string"
               }
             }
           ],

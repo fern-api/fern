@@ -7,7 +7,7 @@ client = SeedAuthEnvironmentVariables(
     base_url="https://yourhost.com/path/to/api",
 )        
 client.service.get_with_api_key(
-	
+    
 )
 
 ```
@@ -22,7 +22,7 @@ client = SeedAuthEnvironmentVariables(
     base_url="https://yourhost.com/path/to/api",
 )        
 client.service.get_with_header(
-	x_endpoint_header="X-Endpoint-Header"
+    x_endpoint_header="X-Endpoint-Header"
 )
 
 ```

@@ -31,7 +31,7 @@ for await (const item of response) {
 }
 
 // Or you can manually iterate page-by-page
-const page = await client.complex.search("index", {
+let page = await client.complex.search("index", {
     pagination: {
         per_page: 1,
         starting_after: "starting_after",
@@ -113,7 +113,7 @@ for await (const item of response) {
 }
 
 // Or you can manually iterate page-by-page
-const page = await client.users.listWithCursorPagination({
+let page = await client.users.listWithCursorPagination({
     page: 1,
     per_page: 1,
     order: "asc",
@@ -177,7 +177,7 @@ for await (const item of response) {
 }
 
 // Or you can manually iterate page-by-page
-const page = await client.users.listWithMixedTypeCursorPagination({
+let page = await client.users.listWithMixedTypeCursorPagination({
     cursor: "cursor",
 });
 while (page.hasNextPage()) {
@@ -240,7 +240,7 @@ for await (const item of response) {
 }
 
 // Or you can manually iterate page-by-page
-const page = await client.users.listWithBodyCursorPagination({
+let page = await client.users.listWithBodyCursorPagination({
     pagination: {
         cursor: "cursor",
     },
@@ -306,7 +306,7 @@ for await (const item of response) {
 }
 
 // Or you can manually iterate page-by-page
-const page = await client.users.listWithOffsetPagination({
+let page = await client.users.listWithOffsetPagination({
     page: 1,
     per_page: 1,
     order: "asc",
@@ -373,7 +373,7 @@ for await (const item of response) {
 }
 
 // Or you can manually iterate page-by-page
-const page = await client.users.listWithDoubleOffsetPagination({
+let page = await client.users.listWithDoubleOffsetPagination({
     page: 1.1,
     per_page: 1.1,
     order: "asc",
@@ -439,7 +439,7 @@ for await (const item of response) {
 }
 
 // Or you can manually iterate page-by-page
-const page = await client.users.listWithBodyOffsetPagination({
+let page = await client.users.listWithBodyOffsetPagination({
     pagination: {
         page: 1,
     },
@@ -504,7 +504,7 @@ for await (const item of response) {
 }
 
 // Or you can manually iterate page-by-page
-const page = await client.users.listWithOffsetStepPagination({
+let page = await client.users.listWithOffsetStepPagination({
     page: 1,
     limit: 1,
     order: "asc",
@@ -569,7 +569,7 @@ for await (const item of response) {
 }
 
 // Or you can manually iterate page-by-page
-const page = await client.users.listWithOffsetPaginationHasNextPage({
+let page = await client.users.listWithOffsetPaginationHasNextPage({
     page: 1,
     limit: 1,
     order: "asc",
@@ -632,7 +632,7 @@ for await (const item of response) {
 }
 
 // Or you can manually iterate page-by-page
-const page = await client.users.listWithExtendedResults({
+let page = await client.users.listWithExtendedResults({
     cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
 });
 while (page.hasNextPage()) {
@@ -693,7 +693,7 @@ for await (const item of response) {
 }
 
 // Or you can manually iterate page-by-page
-const page = await client.users.listWithExtendedResultsAndOptionalData({
+let page = await client.users.listWithExtendedResultsAndOptionalData({
     cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
 });
 while (page.hasNextPage()) {
@@ -754,7 +754,7 @@ for await (const item of response) {
 }
 
 // Or you can manually iterate page-by-page
-const page = await client.users.listUsernames({
+let page = await client.users.listUsernames({
     starting_after: "starting_after",
 });
 while (page.hasNextPage()) {
@@ -815,7 +815,7 @@ for await (const item of response) {
 }
 
 // Or you can manually iterate page-by-page
-const page = await client.users.listWithGlobalConfig({
+let page = await client.users.listWithGlobalConfig({
     offset: 1,
 });
 while (page.hasNextPage()) {

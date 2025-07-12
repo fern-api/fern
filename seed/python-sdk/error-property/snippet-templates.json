@@ -24,7 +24,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.property_based_error.throw_error(\n\t$FERN_INPUT\n)",
+                "templateString": "client.property_based_error.throw_error(\n    $FERN_INPUT\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",\n\t",
                 "type": "generic"
@@ -46,7 +46,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.property_based_error.throw_error(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.property_based_error.throw_error(\n    $FERN_INPUT\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",\n\t",
                     "type": "generic"

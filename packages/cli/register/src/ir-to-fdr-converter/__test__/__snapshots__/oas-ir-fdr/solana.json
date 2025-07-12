@@ -7790,14 +7790,14 @@
             "responseBody": {
               "id": 1,
               "jsonrpc": "2.0",
-              "result": 42
+              "result": 1
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
                 "id": 1,
                 "jsonrpc": "2.0",
-                "result": 42
+                "result": 1
               }
             }
           }
@@ -8059,14 +8059,14 @@
             "responseBody": {
               "id": 1,
               "jsonrpc": "2.0",
-              "result": 42
+              "result": 1
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
                 "id": 1,
                 "jsonrpc": "2.0",
-                "result": 42
+                "result": 1
               }
             }
           }
@@ -8260,7 +8260,7 @@
               "id": 1,
               "jsonrpc": "2.0",
               "result": [
-                42
+                1
               ]
             },
             "responseBodyV3": {
@@ -8269,7 +8269,7 @@
                 "id": 1,
                 "jsonrpc": "2.0",
                 "result": [
-                  42
+                  1
                 ]
               }
             }
@@ -8375,7 +8375,7 @@
               "id": 1,
               "jsonrpc": "2.0",
               "result": [
-                42
+                1
               ]
             },
             "responseBodyV3": {
@@ -8384,7 +8384,7 @@
                 "id": 1,
                 "jsonrpc": "2.0",
                 "result": [
-                  42
+                  1
                 ]
               }
             }
@@ -8463,14 +8463,14 @@
             "responseBody": {
               "id": 1,
               "jsonrpc": "2.0",
-              "result": 42
+              "result": 1
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
                 "id": 1,
                 "jsonrpc": "2.0",
-                "result": 42
+                "result": 1
               }
             }
           }
@@ -8772,14 +8772,14 @@
             "responseBody": {
               "id": 1,
               "jsonrpc": "2.0",
-              "result": 42
+              "result": 1
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
                 "id": 1,
                 "jsonrpc": "2.0",
-                "result": 42
+                "result": 1
               }
             }
           }
@@ -8834,14 +8834,14 @@
             "responseBody": {
               "id": 1,
               "jsonrpc": "2.0",
-              "result": 42
+              "result": 1
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
                 "id": 1,
                 "jsonrpc": "2.0",
-                "result": 42
+                "result": 1
               }
             }
           }
@@ -8896,14 +8896,14 @@
             "responseBody": {
               "id": 1,
               "jsonrpc": "2.0",
-              "result": "foo"
+              "result": "string"
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
                 "id": 1,
                 "jsonrpc": "2.0",
-                "result": "foo"
+                "result": "string"
               }
             }
           }
@@ -9553,14 +9553,14 @@
             "responseBody": {
               "id": 1,
               "jsonrpc": "2.0",
-              "result": 42
+              "result": 1
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
                 "id": 1,
                 "jsonrpc": "2.0",
-                "result": 42
+                "result": 1
               }
             }
           }
@@ -9615,14 +9615,14 @@
             "responseBody": {
               "id": 1,
               "jsonrpc": "2.0",
-              "result": 42
+              "result": 1
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
                 "id": 1,
                 "jsonrpc": "2.0",
-                "result": 42
+                "result": 1
               }
             }
           }
@@ -9711,14 +9711,14 @@
             "responseBody": {
               "id": 1,
               "jsonrpc": "2.0",
-              "result": 42
+              "result": 1
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
                 "id": 1,
                 "jsonrpc": "2.0",
-                "result": 42
+                "result": 1
               }
             }
           }
@@ -10410,14 +10410,14 @@
             "responseBody": {
               "id": 1,
               "jsonrpc": "2.0",
-              "result": 42
+              "result": 1
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
                 "id": 1,
                 "jsonrpc": "2.0",
-                "result": 42
+                "result": 1
               }
             }
           }
@@ -10498,14 +10498,14 @@
             "responseBody": {
               "id": 1,
               "jsonrpc": "2.0",
-              "result": "foo"
+              "result": "string"
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
                 "id": 1,
                 "jsonrpc": "2.0",
-                "result": "foo"
+                "result": "string"
               }
             }
           }
@@ -10599,7 +10599,7 @@
               "id": 1,
               "jsonrpc": "2.0",
               "result": [
-                "foo"
+                "string"
               ]
             },
             "responseBodyV3": {
@@ -10608,7 +10608,7 @@
                 "id": 1,
                 "jsonrpc": "2.0",
                 "result": [
-                  "foo"
+                  "string"
                 ]
               }
             }
@@ -11396,14 +11396,14 @@
             "responseBody": {
               "id": 1,
               "jsonrpc": "2.0",
-              "result": 42
+              "result": 1
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
                 "id": 1,
                 "jsonrpc": "2.0",
-                "result": 42
+                "result": 1
               }
             }
           }
@@ -11504,14 +11504,14 @@
             "responseBody": {
               "id": 1,
               "jsonrpc": "2.0",
-              "result": "foo"
+              "result": "string"
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
                 "id": 1,
                 "jsonrpc": "2.0",
-                "result": "foo"
+                "result": "string"
               }
             }
           }
@@ -11602,14 +11602,14 @@
             "responseBody": {
               "id": 1,
               "jsonrpc": "2.0",
-              "result": "foo"
+              "result": "string"
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
                 "id": 1,
                 "jsonrpc": "2.0",
-                "result": "foo"
+                "result": "string"
               }
             }
           }

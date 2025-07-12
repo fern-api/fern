@@ -79,14 +79,14 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "foo": "foo",
-              "bar": "foo"
+              "foo": "string",
+              "bar": "string"
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
-                "foo": "foo",
-                "bar": "foo"
+                "foo": "string",
+                "bar": "string"
               }
             }
           }
@@ -137,14 +137,14 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "foo": "foo",
-              "bar": "foo"
+              "foo": "string",
+              "bar": "string"
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
-                "foo": "foo",
-                "bar": "foo"
+                "foo": "string",
+                "bar": "string"
               }
             }
           }

@@ -41,7 +41,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.complex_.search(\n\t$FERN_INPUT\n)",
+                "templateString": "client.complex_.search(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -884,7 +884,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.complex_.search(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.complex_.search(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -1739,7 +1739,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.users.list_with_cursor_pagination(\n\t$FERN_INPUT\n)",
+                "templateString": "client.users.list_with_cursor_pagination(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -1844,7 +1844,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.users.list_with_cursor_pagination(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.users.list_with_cursor_pagination(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -1961,7 +1961,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.users.list_with_mixed_type_cursor_pagination(\n\t$FERN_INPUT\n)",
+                "templateString": "client.users.list_with_mixed_type_cursor_pagination(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -2017,7 +2017,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.users.list_with_mixed_type_cursor_pagination(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.users.list_with_mixed_type_cursor_pagination(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -2085,7 +2085,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.users.list_with_body_cursor_pagination(\n\t$FERN_INPUT\n)",
+                "templateString": "client.users.list_with_body_cursor_pagination(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -2155,7 +2155,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.users.list_with_body_cursor_pagination(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.users.list_with_body_cursor_pagination(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -2237,7 +2237,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.users.list_with_offset_pagination(\n\t$FERN_INPUT\n)",
+                "templateString": "client.users.list_with_offset_pagination(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -2342,7 +2342,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.users.list_with_offset_pagination(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.users.list_with_offset_pagination(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -2459,7 +2459,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.users.list_with_double_offset_pagination(\n\t$FERN_INPUT\n)",
+                "templateString": "client.users.list_with_double_offset_pagination(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -2564,7 +2564,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.users.list_with_double_offset_pagination(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.users.list_with_double_offset_pagination(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -2681,7 +2681,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.users.list_with_body_offset_pagination(\n\t$FERN_INPUT\n)",
+                "templateString": "client.users.list_with_body_offset_pagination(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -2751,7 +2751,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.users.list_with_body_offset_pagination(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.users.list_with_body_offset_pagination(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -2833,7 +2833,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.users.list_with_offset_step_pagination(\n\t$FERN_INPUT\n)",
+                "templateString": "client.users.list_with_offset_step_pagination(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -2922,7 +2922,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.users.list_with_offset_step_pagination(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.users.list_with_offset_step_pagination(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -3023,7 +3023,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.users.list_with_offset_pagination_has_next_page(\n\t$FERN_INPUT\n)",
+                "templateString": "client.users.list_with_offset_pagination_has_next_page(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -3112,7 +3112,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.users.list_with_offset_pagination_has_next_page(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.users.list_with_offset_pagination_has_next_page(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -3213,7 +3213,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.users.list_with_extended_results(\n\t$FERN_INPUT\n)",
+                "templateString": "client.users.list_with_extended_results(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -3269,7 +3269,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.users.list_with_extended_results(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.users.list_with_extended_results(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -3337,7 +3337,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.users.list_with_extended_results_and_optional_data(\n\t$FERN_INPUT\n)",
+                "templateString": "client.users.list_with_extended_results_and_optional_data(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -3393,7 +3393,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.users.list_with_extended_results_and_optional_data(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.users.list_with_extended_results_and_optional_data(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -3461,7 +3461,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.users.list_usernames(\n\t$FERN_INPUT\n)",
+                "templateString": "client.users.list_usernames(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -3517,7 +3517,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.users.list_usernames(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.users.list_usernames(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -3585,7 +3585,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.users.list_with_global_config(\n\t$FERN_INPUT\n)",
+                "templateString": "client.users.list_with_global_config(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -3641,7 +3641,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.users.list_with_global_config(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.users.list_with_global_config(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",

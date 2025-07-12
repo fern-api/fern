@@ -24,6 +24,9 @@
         "./package.json": "./package.json"
     },
     "types": "./types/index.d.ts",
+    "dependencies": {
+        "lodash-es": "^4.17.21"
+    },
     "devDependencies": {
         "webpack": "^5.97.1",
         "ts-loader": "^9.5.1",

@@ -95,14 +95,14 @@
             "queryParameters": {},
             "headers": {},
             "requestBody": {
-              "file": "foo"
+              "file": "string"
             },
             "requestBodyV3": {
               "type": "form",
               "value": {
                 "file": {
                   "type": "filename",
-                  "value": "foo"
+                  "value": "string"
                 },
                 "maybe_file": {
                   "type": "filename",
@@ -177,7 +177,7 @@
             "headers": {},
             "requestBody": {
               "list_file": [
-                "foo"
+                "string"
               ]
             },
             "requestBodyV3": {
@@ -186,7 +186,7 @@
                 "list_file": {
                   "type": "filenames",
                   "value": [
-                    "foo"
+                    "string"
                   ]
                 },
                 "maybe_list_file": {
@@ -274,7 +274,7 @@
                     }
                   },
                   "contentType": "multipart/form-data",
-                  "exploded": false
+                  "exploded": true
                 }
               ]
             },
@@ -290,14 +290,14 @@
             "queryParameters": {},
             "headers": {},
             "requestBody": {
-              "file": "foo"
+              "file": "string"
             },
             "requestBodyV3": {
               "type": "form",
               "value": {
                 "file": {
                   "type": "filename",
-                  "value": "foo"
+                  "value": "string"
                 },
                 "maybe_file": {
                   "type": "filename",
@@ -307,7 +307,10 @@
                   "type": "json"
                 },
                 "data": {
-                  "type": "json"
+                  "type": "exploded",
+                  "value": [
+                    null
+                  ]
                 }
               }
             },

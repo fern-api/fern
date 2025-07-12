@@ -41,7 +41,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.payment.create(\n\t$FERN_INPUT\n)",
+                "templateString": "client.payment.create(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -114,7 +114,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.payment.create(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.payment.create(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -199,7 +199,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.payment.delete(\n\t$FERN_INPUT\n)",
+                "templateString": "client.payment.delete(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -255,7 +255,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.payment.delete(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.payment.delete(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",

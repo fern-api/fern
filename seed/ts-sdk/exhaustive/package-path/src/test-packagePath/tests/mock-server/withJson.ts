@@ -75,8 +75,14 @@ function findMismatches(actual: any, expected: any): Record<string, { actual: an
 
     for (const key of allKeys) {
         if (!expectedKeys.includes(key)) {
+            if (actual[key] === undefined) {
+                continue; // Skip undefined values in actual
+            }
             mismatches[key] = { actual: actual[key], expected: undefined };
         } else if (!actualKeys.includes(key)) {
+            if (expected[key] === undefined) {
+                continue; // Skip undefined values in expected
+            }
             mismatches[key] = { actual: undefined, expected: expected[key] };
         } else if (
             typeof actual[key] === "object" &&

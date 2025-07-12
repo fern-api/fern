@@ -5,7 +5,7 @@ client = SeedPackageYml(
     base_url="https://yourhost.com/path/to/api",
 )        
 client.echo(
-	name="Hello world!",
+    name="Hello world!",
 	size=20
 )
 
@@ -19,7 +19,7 @@ client = SeedPackageYml(
     base_url="https://yourhost.com/path/to/api",
 )        
 client.echo(
-	name="name",
+    name="name",
 	size=1
 )
 
@@ -33,7 +33,7 @@ client = SeedPackageYml(
     base_url="https://yourhost.com/path/to/api",
 )        
 client.service.nop(
-	nested_id="id-219xca8"
+    nested_id="id-219xca8"
 )
 
 ```
@@ -46,7 +46,7 @@ client = SeedPackageYml(
     base_url="https://yourhost.com/path/to/api",
 )        
 client.service.nop(
-	nested_id="nestedId"
+    nested_id="nestedId"
 )
 
 ```

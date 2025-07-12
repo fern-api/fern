@@ -15,6 +15,7 @@ const json_js_1 = require("../json.js");
 const RawResponse_js_1 = require("./RawResponse.js");
 const Supplier_js_1 = require("./Supplier.js");
 const createRequestUrl_js_1 = require("./createRequestUrl.js");
+const getErrorResponseBody_js_1 = require("./getErrorResponseBody.js");
 const getFetchFn_js_1 = require("./getFetchFn.js");
 const getRequestBody_js_1 = require("./getRequestBody.js");
 const getResponseBody_js_1 = require("./getResponseBody.js");
@@ -55,11 +56,10 @@ function fetcherImpl(args) {
             const response = yield (0, requestWithRetries_js_1.requestWithRetries)(() => __awaiter(this, void 0, void 0, function* () {
                 return (0, makeRequest_js_1.makeRequest)(fetchFn, url, args.method, yield getHeaders(args), requestBody, args.timeoutMs, args.abortSignal, args.withCredentials, args.duplex);
             }), args.maxRetries);
-            const responseBody = yield (0, getResponseBody_js_1.getResponseBody)(response, args.responseType);
             if (response.status >= 200 && response.status < 400) {
                 return {
                     ok: true,
-                    body: responseBody,
+                    body: (yield (0, getResponseBody_js_1.getResponseBody)(response, args.responseType)),
                     headers: response.headers,
                     rawResponse: (0, RawResponse_js_1.toRawResponse)(response),
                 };
@@ -70,7 +70,7 @@ function fetcherImpl(args) {
                     error: {
                         reason: "status-code",
                         statusCode: response.status,
-                        body: responseBody,
+                        body: yield (0, getErrorResponseBody_js_1.getErrorResponseBody)(response),
                     },
                     rawResponse: (0, RawResponse_js_1.toRawResponse)(response),
                 };

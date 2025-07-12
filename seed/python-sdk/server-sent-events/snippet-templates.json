@@ -24,7 +24,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.completions.stream(\n\t$FERN_INPUT\n)",
+                "templateString": "client.completions.stream(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -63,7 +63,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.completions.stream(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.completions.stream(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",

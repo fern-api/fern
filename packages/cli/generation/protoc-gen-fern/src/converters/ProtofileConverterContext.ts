@@ -1,4 +1,4 @@
-import { FileDescriptorProto } from "@bufbuild/protobuf/wkt";
+import { CodeGeneratorRequest, DescriptorProto, FileDescriptorProto } from "@bufbuild/protobuf/wkt";
 import { OpenAPIV3_1 } from "openapi-types";
 
 import { TypeReference } from "@fern-api/ir-sdk";
@@ -11,6 +11,7 @@ import { SOURCE_CODE_INFO_PATH_STARTERS } from "./utils/PathFieldNumbers";
 export declare namespace ProtofileConverterContext {
     export interface Args extends Spec.Args<FileDescriptorProto> {
         comments: Record<PathStarterValues, CommentNode>;
+        codeGeneratorRequest: CodeGeneratorRequest;
     }
 }
 
@@ -19,10 +20,41 @@ export declare namespace ProtofileConverterContext {
  */
 export class ProtofileConverterContext extends AbstractConverterContext<FileDescriptorProto> {
     private readonly comments: Record<PathStarterValues, CommentNode>;
+    private readonly codeGeneratorRequest: CodeGeneratorRequest;
 
-    constructor({ comments, ...rest }: ProtofileConverterContext.Args) {
+    constructor({ comments, codeGeneratorRequest, ...rest }: ProtofileConverterContext.Args) {
         super(rest);
         this.comments = comments;
+        this.codeGeneratorRequest = codeGeneratorRequest;
+    }
+
+    public resolveTypeIdToProtoFile(
+        typeId: string
+    ): { ok: true; message: DescriptorProto; protoFileName: string } | { ok: false } {
+        // Check the current spec
+        if (typeId.startsWith(this.spec.package)) {
+            for (const message of this.spec.messageType) {
+                if (`${this.spec.package}.${message.name}` === this.maybeRemoveLeadingPeriod(typeId)) {
+                    return { ok: true, message, protoFileName: this.spec.name };
+                }
+            }
+        }
+
+        // Check all specs in the code generator request
+        for (const protoFile of this.codeGeneratorRequest.protoFile.filter((file) => file.name !== this.spec.name)) {
+            if (typeId.startsWith(protoFile.package)) {
+                for (const message of protoFile.messageType) {
+                    if (`${protoFile.package}.${message.name}` === this.maybeRemoveLeadingPeriod(typeId)) {
+                        return { ok: true, message, protoFileName: protoFile.name };
+                    }
+                }
+            }
+        }
+        return { ok: false };
+    }
+
+    public getCodeGeneratorRequest(): CodeGeneratorRequest {
+        return this.codeGeneratorRequest;
     }
 
     public maybePrependPackageName(name: string): string {

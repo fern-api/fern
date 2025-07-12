@@ -15,7 +15,6 @@ import {
 import { SdkCustomConfigSchema } from "../../SdkCustomConfig";
 import { MOCK_SERVER_TEST_FOLDER, SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { HttpEndpointGenerator } from "../../endpoint/http/HttpEndpointGenerator";
-import { getContentTypeFromRequestBody } from "../../endpoint/utils/getContentTypeFromRequestBody";
 import { MockEndpointGenerator } from "./MockEndpointGenerator";
 
 export declare namespace TestClass {
@@ -37,10 +36,12 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
         private readonly serviceId: ServiceId
     ) {
         super(context);
+
         this.classReference = csharp.classReference({
-            name: this.endpoint.name.pascalCase.safeName,
-            namespace: this.context.getMockServerTestNamespace()
+            name: this.endpoint.name.pascalCase.safeName + "Test",
+            namespace: this.getTestNamespace()
         });
+
         this.endpointGenerator = new HttpEndpointGenerator({ context });
         this.mockEndpointGenerator = new MockEndpointGenerator(context);
     }
@@ -52,10 +53,22 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
         return true;
     }
 
+    private getTestNamespace(): string {
+        const subpackage = this.context.getSubpackageForServiceId(this.serviceId);
+        if (!subpackage) {
+            return this.context.getMockServerTestNamespace();
+        }
+
+        return [
+            this.context.getMockServerTestNamespace(),
+            ...this.context.getChildNamespaceSegments(subpackage.fernFilepath)
+        ].join(".");
+    }
+
     protected doGenerate(): CSharpFile {
         const testClass = csharp.testClass({
             name: this.getTestClassName(),
-            namespace: this.context.getMockServerTestNamespace(),
+            namespace: this.getTestNamespace(),
             parentClassReference: this.context.getBaseMockServerTestClassReference()
         });
         this.exampleEndpointCalls.forEach((example, index) => {
@@ -187,7 +200,7 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
         });
         return new CSharpFile({
             clazz: testClass.getClass(),
-            directory: MOCK_SERVER_TEST_FOLDER,
+            directory: this.getDirectory(),
             allNamespaceSegments: this.context.getAllNamespaceSegments(),
             allTypeClassReferences: this.context.getAllTypeClassReferences(),
             namespace: this.context.getNamespace(),
@@ -195,10 +208,21 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
         });
     }
 
+    private getDirectory(): RelativeFilePath {
+        const subpackage = this.context.getSubpackageForServiceId(this.serviceId);
+        if (!subpackage) {
+            return MOCK_SERVER_TEST_FOLDER;
+        }
+        return join(
+            MOCK_SERVER_TEST_FOLDER,
+            ...this.context.getChildNamespaceSegments(subpackage.fernFilepath).map(RelativeFilePath.of)
+        );
+    }
+
     protected getFilepath(): RelativeFilePath {
         return join(
             this.context.project.filepaths.getTestFilesDirectory(),
-            MOCK_SERVER_TEST_FOLDER,
+            this.getDirectory(),
             RelativeFilePath.of(`${this.getTestClassName()}.cs`)
         );
     }
@@ -219,7 +243,7 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
     }
 
     private getTestClassName(): string {
-        return `${this.classReference.name}Test`;
+        return this.classReference.name;
     }
 
     private getDateTime(exampleTypeReference: ExampleTypeReference): Date | undefined {
