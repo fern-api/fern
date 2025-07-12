@@ -1,3 +1,4 @@
+import { escapeSwiftStringLiteral } from "../utils/escapeSwiftStringLiteral";
 import { AccessLevel } from "./AccessLevel";
 import { AstNode, Writer } from "./core";
 import { isReservedKeyword } from "./syntax";
@@ -56,7 +57,7 @@ export class EnumWithRawValues extends AstNode {
             }
             if (case_.rawValue !== case_.unsafeName) {
                 writer.write(" = ");
-                writer.write(`"${case_.rawValue}"`);
+                writer.write(`"${escapeSwiftStringLiteral(case_.rawValue)}"`);
             }
             writer.newLine();
         });

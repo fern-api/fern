@@ -307,6 +307,10 @@ export class ApiDefinitionHolder {
         return this.#subpackagesByLocator;
     }
 
+    get subpackageLocators(): ReadonlySet<string> {
+        return new Set(this.#subpackagesByLocator.keys());
+    }
+
     public getEndpointId(endpoint: APIV1Read.EndpointDefinition): FernNavigation.EndpointId | undefined {
         return this.#endpointsInverted.get(endpoint);
     }

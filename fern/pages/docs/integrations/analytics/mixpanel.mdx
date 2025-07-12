@@ -1,0 +1,109 @@
+---
+title: Mixpanel
+description: Learn how to integrate Fern Docs with Mixpanel to track user behavior and analytics.
+---
+
+## Add Mixpanel to your Docs
+
+To add Mixpanel to your Docs, you need to create a custom JavaScript file and configure it in your `docs.yml` file using your Mixpanel project token.
+
+### Get your Mixpanel Project Token
+
+1. Log in to your Mixpanel account.
+2. Navigate to the project you want to track.
+3. Go to **Settings** > **Project Settings**.
+4. Copy your **Project Token** from the project details.
+
+### Integration Steps
+
+1. **Create a scripts folder**: Under your `fern` directory, create a `scripts` folder if it doesn't already exist.
+
+2. **Create the Mixpanel script**: In the `scripts` folder, create a file named `mixpanel.js`.
+
+3. **Add the Mixpanel tracking code**: In your `mixpanel.js` file, add the following script (replace `YOUR_PROJECT_TOKEN` with your actual project token):
+
+<CodeBlock title="fern/scripts/mixpanel.js">
+```js
+// Add the JS snippet to load the script
+(function (f, b) {
+  if (!b.__SV) {
+    var e, g, i, h;
+    window.mixpanel = b;
+    b._i = [];
+    b.init = function (e, f, c) {
+      function g(a, d) {
+        var b = d.split(".");
+        if (b.length === 2) {
+          a = a[b[0]];
+          d = b[1];
+        }
+        a[d] = function () {
+          a.push([d].concat(Array.prototype.slice.call(arguments, 0)));
+        };
+      }
+
+      var a = b;
+      if (typeof c !== "undefined") {
+        a = b[c] = [];
+      } else {
+        c = "mixpanel";
+      }
+
+      a.people = a.people || [];
+      a.toString = function (a) {
+        var d = "mixpanel";
+        if (c !== "mixpanel") d += "." + c;
+        if (!a) d += " (stub)";
+        return d;
+      };
+      a.people.toString = function () {
+        return a.toString(1) + ".people (stub)";
+      };
+
+      i = "disable time_event track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config reset people.set people.set_once people.unset people.increment people.append people.union people.track_charge people.clear_charges people.delete_user".split(" ");
+      for (h = 0; h < i.length; h++) g(a, i[h]);
+
+      b._i.push([e, f, c]);
+    };
+    b.__SV = 1.2;
+    e = f.createElement("script");
+    e.type = "text/javascript";
+    e.async = true;
+    e.src = "https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js";
+    g = f.getElementsByTagName("script")[0];
+    g.parentNode.insertBefore(e, g);
+  }
+})(document, window.mixpanel || []);
+
+// Create an instance of the Mixpanel object
+mixpanel.init('YOUR_PROJECT_TOKEN', { autocapture: true });
+```
+</CodeBlock>
+
+4. **Configure your docs.yml**: In your `docs.yml` file, add the JavaScript file configuration:
+
+<CodeBlock title="docs.yml">
+```yaml
+js:
+  - path: ./scripts/mixpanel.js
+    strategy: beforeInteractive
+```
+</CodeBlock>
+
+### Security Considerations
+
+Since Mixpanel tracking is implemented using client-side JavaScript, your project token will be visible in the browser's source code. This is normal and expected behavior for client-side analytics implementations. Mixpanel project tokens are designed to be publicly visible and are safe to expose on the client side.
+
+### Testing Your Integration
+
+1. **Start your development server**: Run `fern docs dev` to build and start your Fern docs locally (typically on `http://localhost:3000`).
+
+2. **Verify script loading**: Open your browser's developer tools and check the Console and Network tabs to confirm the Mixpanel script is loading correctly.
+
+3. **Test event tracking**: Navigate through your docs site and verify that events are being tracked.
+
+4. **Check Mixpanel dashboard**: Go to your Mixpanel project dashboard to verify that events are being received correctly.
+
+### Additional Resources
+
+For more information on Mixpanel's JavaScript SDK and advanced configuration options, visit the [Mixpanel JavaScript SDK documentation](https://docs.mixpanel.com/docs/tracking-methods/sdks/javascript).
