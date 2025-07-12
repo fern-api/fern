@@ -10,6 +10,7 @@ import { DynamicSnippetsCsharpTestGenerator } from "./csharp/DynamicSnippetsCsha
 import { DynamicSnippetsGoTestGenerator } from "./go/DynamicSnippetsGoTestGenerator";
 import { DynamicSnippetsJavaTestGenerator } from "./java/DynamicSnippetsJavaTestGenerator";
 import { DynamicSnippetsPhpTestGenerator } from "./php/DynamicSnippetsPhpTestGenerator";
+import { DynamicSnippetsRustTestGenerator } from "./rust/DynamicSnippetsRustTestGenerator";
 import { DynamicSnippetsPythonTestGenerator } from "./python/DynamicSnippetsPythonTestGenerator";
 import { DynamicSnippetsTypeScriptTestGenerator } from "./typescript/DynamicSnippetsTypeScriptTestGenerator";
 
@@ -41,6 +42,7 @@ export class DynamicSnippetsTestGenerator {
         go: { generator: DynamicSnippetsGoTestGenerator },
         java: { generator: DynamicSnippetsJavaTestGenerator },
         php: { generator: DynamicSnippetsPhpTestGenerator },
+        rust: { generator: DynamicSnippetsRustTestGenerator },
 
         // TODO: Re-enable dynamic snippet tests when example generation is resolved.
         typescript: { generator: DynamicSnippetsTypeScriptTestGenerator, unstable: true },

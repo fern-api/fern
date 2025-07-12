@@ -463,5 +463,6 @@ export const RESERVED_KEYWORDS: Record<generatorsYml.GenerationLanguage, Set<str
         "yield"
     ]),
     // TODO(mikemilla): add reserved keywords for Swift
-    [generatorsYml.GenerationLanguage.SWIFT]: new Set([])
+    [generatorsYml.GenerationLanguage.SWIFT]: new Set([]),
+    [generatorsYml.GenerationLanguage.RUST]: new Set([])
 };

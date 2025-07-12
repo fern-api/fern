@@ -1,0 +1,579 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`snippets (default) > examples > 'GET /metadata (allow-multiple)' 1`] = `
+"<?php
+
+namespace Example;
+
+use Acme\\AcmeClient;
+use Acme\\Service\\Requests\\GetMetadataRequest;
+
+$client = new AcmeClient(
+    token: '<YOUR_API_KEY>',
+);
+$client->service->getMetadata(
+    new GetMetadataRequest([
+        'shallow' => false,
+        'tag' => [
+            'development',
+            'public',
+        ],
+        'xAPIVersion' => '0.0.1',
+    ]),
+);
+"
+`;
+
+exports[`snippets (default) > examples > 'GET /metadata (simple)' 1`] = `
+"<?php
+
+namespace Example;
+
+use Acme\\AcmeClient;
+use Acme\\Service\\Requests\\GetMetadataRequest;
+
+$client = new AcmeClient(
+    token: '<YOUR_API_KEY>',
+);
+$client->service->getMetadata(
+    new GetMetadataRequest([
+        'shallow' => false,
+        'tag' => [
+            'development',
+        ],
+        'xAPIVersion' => '0.0.1',
+    ]),
+);
+"
+`;
+
+exports[`snippets (default) > examples > 'POST /big-entity (simple)' 1`] = `
+"<?php
+
+namespace Example;
+
+use Acme\\AcmeClient;
+use Acme\\Types\\Types\\BigEntity;
+use Acme\\Types\\Types\\Actor;
+use Acme\\Types\\Types\\ExtendedMovie;
+
+$client = new AcmeClient(
+    token: '<YOUR_API_KEY>',
+);
+$client->service->createBigEntity(
+    new BigEntity([
+        'castMember' => new Actor([
+            'id' => 'john.doe',
+            'name' => 'John Doe',
+        ]),
+        'extendedMovie' => new ExtendedMovie([
+            'cast' => [
+                'John Travolta',
+                'Samuel L. Jackson',
+                'Uma Thurman',
+                'Bruce Willis',
+            ],
+            'id' => 'movie-sda231x',
+            'title' => 'Pulp Fiction',
+            'from' => 'Quentin Tarantino',
+            'rating' => 8.5,
+            'type' => 'movie',
+            'tag' => 'tag-12efs9dv',
+            'metadata' => [
+                'academyAward' => true,
+                'releaseDate' => "2023-12-08",
+                'ratings' => [
+                    'rottenTomatoes' => 97,
+                    'imdb' => 7.6,
+                ],
+            ],
+            'revenue' => 1000000,
+        ]),
+    ]),
+);
+"
+`;
+
+exports[`snippets (default) > examples > 'POST /movie (invalid request body)' 1`] = `
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "title"
+    ],
+    "message": "Expected string, got number"
+  }
+]"
+`;
+
+exports[`snippets (default) > examples > 'POST /movie (simple)' 1`] = `
+"<?php
+
+namespace Example;
+
+use Acme\\AcmeClient;
+use Acme\\Types\\Types\\Movie;
+
+$client = new AcmeClient(
+    token: '<YOUR_API_KEY>',
+);
+$client->service->createMovie(
+    new Movie([
+        'id' => 'movie-c06a4ad7',
+        'prequel' => 'movie-cv9b914f',
+        'title' => 'The Boy and the Heron',
+        'from' => 'Hayao Miyazaki',
+        'rating' => 8,
+        'type' => 'movie',
+        'tag' => 'development',
+        'metadata' => [
+            'actors' => [
+                "Christian Bale",
+                "Florence Pugh",
+                "Willem Dafoe",
+            ],
+            'releaseDate' => "2023-12-08",
+            'ratings' => [
+                'rottenTomatoes' => 97,
+                'imdb' => 7.6,
+            ],
+        ],
+        'revenue' => 1000000,
+    ]),
+);
+"
+`;
+
+exports[`snippets (default) > exhaustive > 'GET /object/get-and-return-with-optio…' 1`] = `
+"<?php
+
+namespace Example;
+
+use Acme\\AcmeClient;
+use Acme\\Types\\Object\\Types\\ObjectWithOptionalField;
+use DateTime;
+
+$client = new AcmeClient(
+    token: '<YOUR_API_KEY>',
+);
+$client->endpoints->object->getAndReturnWithOptionalField(
+    new ObjectWithOptionalField([
+        'string' => 'string',
+        'integer' => 1,
+        'long' => 1000000,
+        'double' => 1.1,
+        'bool' => true,
+        'datetime' => new DateTime('2024-01-15T09:30:00Z'),
+        'date' => new DateTime('2023-01-15'),
+        'uuid' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+        'base64' => 'SGVsbG8gd29ybGQh',
+        'list' => [
+            'list',
+            'list',
+        ],
+        'set' => [
+            'set',
+        ],
+        'map' => [
+            1 => 'map',
+        ],
+        'bigint' => '1000000',
+    ]),
+);
+"
+`;
+
+exports[`snippets (default) > exhaustive > 'POST /container/list-of-objects (inva…' 1`] = `
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody[0]",
+      "string"
+    ],
+    "message": "Expected string, got boolean"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody[1]",
+      "invalid"
+    ],
+    "message": "\\"invalid\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody[2]",
+      "string"
+    ],
+    "message": "Expected string, got number"
+  }
+]"
+`;
+
+exports[`snippets (default) > exhaustive > 'POST /container/list-of-objects (simp…' 1`] = `
+"<?php
+
+namespace Example;
+
+use Acme\\AcmeClient;
+use Acme\\Types\\Object\\Types\\ObjectWithRequiredField;
+
+$client = new AcmeClient(
+    token: '<YOUR_API_KEY>',
+);
+$client->endpoints->container->getAndReturnListOfObjects(
+    [
+        new ObjectWithRequiredField([
+            'string' => 'one',
+        ]),
+        new ObjectWithRequiredField([
+            'string' => 'two',
+        ]),
+        new ObjectWithRequiredField([
+            'string' => 'three',
+        ]),
+    ],
+);
+"
+`;
+
+exports[`snippets (default) > exhaustive > 'POST /container/list-of-primitives (s…' 1`] = `
+"<?php
+
+namespace Example;
+
+use Acme\\AcmeClient;
+
+$client = new AcmeClient(
+    token: '<YOUR_API_KEY>',
+);
+$client->endpoints->container->getAndReturnListOfPrimitives(
+    [
+        'one',
+        'two',
+        'three',
+    ],
+);
+"
+`;
+
+exports[`snippets (default) > file-upload > 'POST /' 1`] = `
+"<?php
+
+namespace Example;
+
+use Acme\\AcmeClient;
+use Acme\\Service\\Requests\\MyRequest;
+use Example\\Utils\\File;
+
+$client = new AcmeClient();
+$client->service->post(
+    new MyRequest([
+        'file' => File->createFromString("Hello, world!"),
+        'fileList' => [
+            File->createFromString("First"),
+            File->createFromString("Second"),
+        ],
+    ]),
+);
+"
+`;
+
+exports[`snippets (default) > file-upload > 'POST /just-file' 1`] = `
+"<?php
+
+namespace Example;
+
+use Acme\\AcmeClient;
+use Acme\\Service\\Requests\\JustFileRequest;
+use Example\\Utils\\File;
+
+$client = new AcmeClient();
+$client->service->justFile(
+    new JustFileRequest([
+        'file' => File->createFromString("Hello, world!"),
+    ]),
+);
+"
+`;
+
+exports[`snippets (default) > file-upload > 'POST /just-file-with-query-params' 1`] = `
+"<?php
+
+namespace Example;
+
+use Acme\\AcmeClient;
+use Acme\\Service\\Requests\\JustFileWithQueryParamsRequest;
+use Example\\Utils\\File;
+
+$client = new AcmeClient();
+$client->service->justFileWithQueryParams(
+    new JustFileWithQueryParamsRequest([
+        'integer' => 42,
+        'maybeString' => 'exists',
+        'file' => File->createFromString("Hello, world!"),
+    ]),
+);
+"
+`;
+
+exports[`snippets (default) > imdb > 'GET /movies/{movieId} (simple)' 1`] = `
+"<?php
+
+namespace Example;
+
+use Acme\\AcmeClient;
+
+$client = new AcmeClient(
+    token: '<YOUR_API_KEY>',
+);
+$client->imdb->getMovie(
+    'movie_xyz',
+);
+"
+`;
+
+exports[`snippets (default) > imdb > 'POST /movies/create-movie (simple)' 1`] = `
+"<?php
+
+namespace Example;
+
+use Acme\\AcmeClient;
+use Acme\\Imdb\\Types\\CreateMovieRequest;
+
+$client = new AcmeClient(
+    token: '<YOUR_API_KEY>',
+);
+$client->imdb->createMovie(
+    new CreateMovieRequest([
+        'title' => 'The Matrix',
+        'rating' => 8.2,
+    ]),
+);
+"
+`;
+
+exports[`snippets (default) > multi-url-environment > 'Custom environment' 1`] = `
+"[
+  {
+    "severity": "WARNING",
+    "path": [],
+    "message": "The PHP SDK doesn't support a multi-environment client option yet; use the baseUrl option instead"
+  }
+]"
+`;
+
+exports[`snippets (default) > multi-url-environment > 'Invalid multi url environment' 1`] = `
+"[
+  {
+    "severity": "WARNING",
+    "path": [],
+    "message": "The PHP SDK doesn't support a multi-environment client option yet; use the baseUrl option instead"
+  }
+]"
+`;
+
+exports[`snippets (default) > multi-url-environment > 'Production environment' 1`] = `
+"<?php
+
+namespace Example;
+
+use Acme\\AcmeClient;
+use Acme\\Environments;
+use Acme\\S3\\Requests\\GetPresignedURLRequest;
+
+$client = new AcmeClient(
+    token: '<YOUR_API_KEY>',
+    options: [
+        'baseUrl' => Environments::Production->value,
+    ],
+);
+$client->s3->getPresignedURL(
+    new GetPresignedURLRequest([
+        's3Key' => 'xyz',
+    ]),
+);
+"
+`;
+
+exports[`snippets (default) > multi-url-environment > 'Staging environment' 1`] = `
+"<?php
+
+namespace Example;
+
+use Acme\\AcmeClient;
+use Acme\\Environments;
+use Acme\\S3\\Requests\\GetPresignedURLRequest;
+
+$client = new AcmeClient(
+    token: '<YOUR_API_KEY>',
+    options: [
+        'baseUrl' => Environments::Staging->value,
+    ],
+);
+$client->s3->getPresignedURL(
+    new GetPresignedURLRequest([
+        's3Key' => 'xyz',
+    ]),
+);
+"
+`;
+
+exports[`snippets (default) > multi-url-environment > 'Unrecognized environment' 1`] = `
+"[
+  {
+    "severity": "WARNING",
+    "path": [],
+    "message": "Environment \\"Unrecognized\\" was not found"
+  }
+]"
+`;
+
+exports[`snippets (default) > nullable > 'Body properties' 1`] = `
+"<?php
+
+namespace Example;
+
+use Acme\\AcmeClient;
+use Acme\\Nullable\\Requests\\CreateUserRequest;
+use Acme\\Nullable\\Types\\Metadata;
+use DateTime;
+
+$client = new AcmeClient(
+    options: [
+        'baseUrl' => 'https://api.example.com',
+    ],
+);
+$client->nullable->createUser(
+    new CreateUserRequest([
+        'username' => 'john.doe',
+        'tags' => [
+            'admin',
+        ],
+        'metadata' => new Metadata([
+            'createdAt' => new DateTime('1980-01-01T00:00:00Z'),
+            'updatedAt' => new DateTime('1980-01-01T00:00:00Z'),
+            'avatar' => null,
+            'activated' => null,
+        ]),
+        'avatar' => null,
+    ]),
+);
+"
+`;
+
+exports[`snippets (default) > nullable > 'Invalid null value' 1`] = `
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody"
+    ],
+    "message": "Expected non-null value, but got null"
+  }
+]"
+`;
+
+exports[`snippets (default) > nullable > 'Query parameters' 1`] = `
+"<?php
+
+namespace Example;
+
+use Acme\\AcmeClient;
+use Acme\\Nullable\\Requests\\GetUsersRequest;
+
+$client = new AcmeClient(
+    options: [
+        'baseUrl' => 'https://api.example.com',
+    ],
+);
+$client->nullable->getUsers(
+    new GetUsersRequest([
+        'usernames' => [
+            'john.doe',
+            'jane.doe',
+        ],
+        'tags' => [
+            null,
+        ],
+        'extra' => null,
+    ]),
+);
+"
+`;
+
+exports[`snippets (default) > single-url-environment-default > 'Production environment' 1`] = `
+"<?php
+
+namespace Example;
+
+use Acme\\AcmeClient;
+use Acme\\Environments;
+
+$client = new AcmeClient(
+    token: '<YOUR_API_KEY>',
+    options: [
+        'baseUrl' => Environments::Production->value,
+    ],
+);
+$client->dummy->getDummy();
+"
+`;
+
+exports[`snippets (default) > single-url-environment-default > 'Staging environment' 1`] = `
+"<?php
+
+namespace Example;
+
+use Acme\\AcmeClient;
+use Acme\\Environments;
+
+$client = new AcmeClient(
+    token: '<YOUR_API_KEY>',
+    options: [
+        'baseUrl' => Environments::Staging->value,
+    ],
+);
+$client->dummy->getDummy();
+"
+`;
+
+exports[`snippets (default) > single-url-environment-default > 'custom baseURL' 1`] = `
+"<?php
+
+namespace Example;
+
+use Acme\\AcmeClient;
+
+$client = new AcmeClient(
+    token: '<YOUR_API_KEY>',
+    options: [
+        'baseUrl' => 'http://localhost:8080',
+    ],
+);
+$client->dummy->getDummy();
+"
+`;
+
+exports[`snippets (default) > single-url-environment-default > 'invalid baseURL and environment' 1`] = `
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [],
+    "message": "Cannot specify both baseUrl and environment options"
+  }
+]"
+`;
+
+exports[`snippets (default) > single-url-environment-default > 'invalid environment' 1`] = `
+"[
+  {
+    "severity": "WARNING",
+    "path": [],
+    "message": "Environment \\"Unrecognized\\" was not found"
+  }
+]"
+`;

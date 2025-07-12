@@ -136,6 +136,7 @@ function getGithubPublishInfo({
         case "swift":
             return undefined;
         case "php":
+        case "rust":
             return undefined;
         default:
             assertNever(language);
@@ -180,6 +181,8 @@ function getPublishInfo({
             throw new Error("Seed doesn't support publish mode in Swift");
         case "php":
             throw new Error("Seed doesn't support publish mode in Swift");
+        case "rust":
+            throw new Error("Seed doesn't support publish mode in Rust");
         default:
             assertNever(language);
     }
