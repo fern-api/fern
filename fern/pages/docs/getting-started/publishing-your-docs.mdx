@@ -23,6 +23,7 @@ fern generate --docs
 ```
 
 ### Usage in GitHub Actions
+
 To automate the publishing process, you can use a GitHub Action workflow to publish your docs when a push is made to the `main` branch. [Be sure to add the `FERN_TOKEN` for your organization to the repository](/learn/cli-api/cli-reference/commands#fern-token). 
 
 ```yaml .github/workflows/publish-docs.yml
@@ -49,6 +50,29 @@ jobs:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
         run: fern generate --docs
 ```
+
+## Unpublishing your docs
+
+If you need to take down your docs site or remove confidential information, you cannot unpublish the site itself. Instead, you should publish new content to replace the existing documentation.
+
+### Using the docs starter template
+
+The easiest approach is to use the [docs starter template](https://github.com/fern-api/docs-starter) to replace your existing docs with generic starter content:
+
+1. **Fork or download** the [docs starter template](https://github.com/fern-api/docs-starter)
+2. **Update the organization name** in `fern.config.json` to match your existing configuration
+3. **Update the URL** in `docs.yml` to match your existing docs site instance
+4. **Publish the starter content** by running `fern generate --docs`
+
+This approach will:
+- Replace your existing docs with generic starter content
+- Remove any confidential or sensitive information
+- Keep your docs URL active (avoiding broken links)
+- Provide a clean slate if you want to rebuild your documentation later
+
+### Getting help
+
+If you need assistance with this process, join our [community Slack](https://buildwithfern.com/slack) and ask in the #help channel
 
 ## Hosting 
 
