@@ -241,6 +241,12 @@ types:
         name: example2
         age: 5
 
+  UnionWithOddKeys:
+    docs: This is a union with keys that don't match their type names.
+    union:
+      abbott: Foo
+      CostEllo: Bar
+
   Foo:
     properties:
       name: string

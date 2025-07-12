@@ -20,6 +20,24 @@ features:
     description: |
       When the API returns a non-success status code (4xx or 5xx response), an API exception will be thrown.
 
+
+  - id: DISCRIMINATED_UNION_TYPES
+    description: |
+      Discriminated union types (often referred to simply as Union Types) are represent values that can be one of several possible types.
+      They are called "discriminated" because they have a discriminant field that is used to determine the type of the underlying value.
+      - To create instances of a discriminated union type, use static factory methods like `UnionType.subtype1Key(Subtype1 value)`.
+      - To consume an instance of a discriminated union type, you have two options:
+        - Use the visitor pattern with the generated visit method to handle different underlying type variants.
+        - Check the underlying type of your union type using generated methods like `unionTypeInstance.isSubtype1Key()`.
+        - Use generated methods like `unionType.getSubtype1Key()` which returns an `Optional<Subtype1>` which is empty if the underlying value is not a Subtype1.
+
+  - id: UNDISCRIMINATED_UNION_TYPES
+    description: |
+      Uniscriminated union types are represent values that can be one of several possible types.
+      They are called "undiscriminated" because they do *not* have a discriminant field that can be used to determine the type of the underlying value.
+      - To create instances of a discriminated union type, use the static factory method .of() like `UnionType.of(Subtype1 value)`.
+      - To consume an instance of a discriminated union type, use the visitor pattern to handle different underlying type variants.
+
   - id: CUSTOM_CLIENT
     advanced: true
     description: |
@@ -45,11 +63,3 @@ features:
     advanced: true
     description: |
       The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
-
-  - id: UNION_TYPES
-    advanced: true
-    description: |
-      Union types represent values that can be one of several possible types.
-      - To consume an instance of a union type, use the `yourUnionTypeInstance.visit()` method with a visitor pattern to
-        handle different union variants type-safely.
-      - To create instances of a union type, use static factory methods like `YourUnionType.of(value)`.
