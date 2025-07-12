@@ -938,7 +938,7 @@ function addUpgradeCommand({
 }) {
     cli.command(
         "upgrade",
-        `Upgrades version in ${PROJECT_CONFIG_FILENAME}`,
+        `Upgrades Fern CLi version in ${PROJECT_CONFIG_FILENAME}`,
         (yargs) =>
             yargs
                 .option("rc", {
