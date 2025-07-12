@@ -1,0 +1,14 @@
+types:
+  User:
+    properties:
+      id: string
+      name: string
+
+service:
+  auth: true
+  base-path: ""
+  endpoints:
+    get:
+      path: /users
+      method: POST
+      response: list<User>

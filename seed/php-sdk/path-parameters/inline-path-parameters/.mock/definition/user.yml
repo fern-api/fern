@@ -1,0 +1,47 @@
+types:
+  User:
+    properties:
+      name: string
+      tags: list<string>
+
+service:
+  base-path: /user
+  auth: false
+  endpoints:
+    getUser:
+      path: "/{user_id}"
+      method: GET
+      request:
+        name: GetUsersRequest
+        path-parameters:
+          user_id: string
+      response: User
+
+    createUser:
+      path: "/"
+      method: POST
+      request:
+        name: CreateUserRequest
+        body: User
+      response: User
+
+    updateUser:
+      path: "/{user_id}"
+      method: PATCH
+      request:
+        name: UpdateUserRequest
+        body: User
+        path-parameters:
+          user_id: string
+      response: User
+
+    searchUsers:
+      path: "/{user_id}/search"
+      method: GET
+      request:
+        name: SearchUsersRequest
+        path-parameters:
+          user_id: string
+        query-parameters:
+          limit: optional<integer>
+      response: list<User>

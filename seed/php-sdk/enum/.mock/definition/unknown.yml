@@ -1,0 +1,6 @@
+types:
+  Status:
+    enum:
+      - Known
+      - Unknown
+
