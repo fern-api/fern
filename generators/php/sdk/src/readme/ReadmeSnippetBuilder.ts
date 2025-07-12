@@ -300,8 +300,7 @@ ${this.context.getClientVariableName()} = new ${this.context.getRootClientClassN
      */
     private findEnumExample(): { typeName: string; value: string } | null {
         try {
-            const enumTypes = Object.entries(this.context.ir.types)
-                .filter(([_, type]) => type.shape.type === "enum");
+            const enumTypes = Object.entries(this.context.ir.types).filter(([_, type]) => type.shape.type === "enum");
 
             if (enumTypes.length === 0) {
                 return null;
@@ -340,10 +339,12 @@ ${this.context.getClientVariableName()} = new ${this.context.getRootClientClassN
             return [];
         }
 
-        return [this.writeCode(`
+        return [
+            this.writeCode(`
 /** @param ?value-of<${enumExample.typeName}> $type */
 $type = ${this.context.getRootNamespace()}\\Types\\${enumExample.typeName}::${enumExample.value}->value;
-`)];
+`)
+        ];
     }
 
     private getEndpointWithPagination(): EndpointWithFilepath | undefined {
