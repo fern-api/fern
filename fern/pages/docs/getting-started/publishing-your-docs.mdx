@@ -53,21 +53,21 @@ jobs:
 
 ## Unpublishing your docs
 
-If you need to take down your docs site or remove confidential information, you cannot unpublish the site itself. Instead, you should publish new content to replace the existing documentation.
+If you need to take down your docs site or remove confidential information, you cannot unpublish the site itself. Instead, you should replace the `navigation` object with an empty list. Once published, this will remove all content and lead the user to a `404 error` page.
 
-### Using the docs starter template
+1. **Update the navigation** in `docs.yml` by changing the file content to:
 
-The easiest approach is to use the [docs starter template](https://github.com/fern-api/docs-starter) to replace your existing docs with generic starter content:
+```yml
+instances:
+  - <organization>.docs.buildwithfern.com
+navigation: []
+```
 
-1. **Fork or download** the [docs starter template](https://github.com/fern-api/docs-starter)
-2. **Update the organization name** in `fern.config.json` to match your existing configuration
-3. **Update the URL** in `docs.yml` to match your existing docs site instance
-4. **Publish the starter content** by running `fern generate --docs`
+2. **Publish the site** by running `fern generate --docs`.
 
 This approach will:
-- Replace your existing docs with generic starter content
-- Remove any confidential or sensitive information
-- Keep your docs URL active (avoiding broken links)
+- Replace your existing docs with an empty site
+- Remove any of your information
 - Provide a clean slate if you want to rebuild your documentation later
 
 ### Getting help
