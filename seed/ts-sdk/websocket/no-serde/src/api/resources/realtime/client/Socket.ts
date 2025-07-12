@@ -85,6 +85,16 @@ export class RealtimeSocket {
         this.sendJson(message);
     }
 
+    public sendPerson(message: SeedWebsocket.Person): void {
+        this.assertSocketIsOpen();
+        this.sendJson(message);
+    }
+
+    public sendAnimal(message: SeedWebsocket.Animal): void {
+        this.assertSocketIsOpen();
+        this.sendJson(message);
+    }
+
     /** Connect to the websocket and register event handlers. */
     public connect(): RealtimeSocket {
         this.socket.reconnect();
@@ -144,7 +154,12 @@ export class RealtimeSocket {
 
     /** Send a JSON payload to the websocket. */
     protected sendJson(
-        payload: SeedWebsocket.SendEvent | SeedWebsocket.SendSnakeCase | SeedWebsocket.SendEvent2,
+        payload:
+            | SeedWebsocket.SendEvent
+            | SeedWebsocket.SendSnakeCase
+            | SeedWebsocket.SendEvent2
+            | SeedWebsocket.Person
+            | SeedWebsocket.Animal,
     ): void {
         const jsonPayload = toJson(payload);
         this.socket.send(jsonPayload);

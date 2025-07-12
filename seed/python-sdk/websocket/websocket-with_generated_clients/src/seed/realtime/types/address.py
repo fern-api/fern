@@ -8,10 +8,10 @@ from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ...core.serialization import FieldMetadata
 
 
-class SendEvent(UniversalBaseModel):
-    send_text: typing_extensions.Annotated[str, FieldMetadata(alias="sendText")]
-    send_param: typing_extensions.Annotated[int, FieldMetadata(alias="sendParam")]
-    send_version: typing_extensions.Annotated[typing.Literal["v1"], FieldMetadata(alias="sendVersion")] = "v1"
+class Address(UniversalBaseModel):
+    line_1: typing_extensions.Annotated[str, FieldMetadata(alias="line1")]
+    city: str
+    zip: str
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

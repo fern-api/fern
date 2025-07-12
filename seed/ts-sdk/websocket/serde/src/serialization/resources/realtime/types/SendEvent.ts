@@ -10,11 +10,13 @@ export const SendEvent: core.serialization.ObjectSchema<serializers.SendEvent.Ra
     core.serialization.object({
         sendText: core.serialization.string(),
         sendParam: core.serialization.number(),
+        sendVersion: core.serialization.stringLiteral("v1"),
     });
 
 export declare namespace SendEvent {
     export interface Raw {
         sendText: string;
         sendParam: number;
+        sendVersion: "v1";
     }
 }

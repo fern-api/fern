@@ -2,9 +2,31 @@
 
 # isort: skip_file
 
-from .types import ReceiveEvent, ReceiveEvent2, ReceiveEvent3, ReceiveSnakeCase, SendEvent, SendEvent2, SendSnakeCase
+from .types import (
+    Address,
+    Animal,
+    Animal_Cat,
+    Animal_Dog,
+    Cat,
+    Dog,
+    Person,
+    ReceiveEvent,
+    ReceiveEvent2,
+    ReceiveEvent3,
+    ReceiveSnakeCase,
+    SendEvent,
+    SendEvent2,
+    SendSnakeCase,
+)
 
 __all__ = [
+    "Address",
+    "Animal",
+    "Animal_Cat",
+    "Animal_Dog",
+    "Cat",
+    "Dog",
+    "Person",
     "ReceiveEvent",
     "ReceiveEvent2",
     "ReceiveEvent3",

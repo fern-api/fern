@@ -1,0 +1,38 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "address": {
+      "$ref": "#/definitions/realtime.Address"
+    }
+  },
+  "required": [
+    "name",
+    "address"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "realtime.Address": {
+      "type": "object",
+      "properties": {
+        "line1": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "zip": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "line1",
+        "city",
+        "zip"
+      ],
+      "additionalProperties": false
+    }
+  }
+}
