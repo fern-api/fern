@@ -1,7 +1,7 @@
 import { AbstractWriter } from "@fern-api/browser-compatible-base-generator";
 
 import { BaseRustCustomConfigSchema } from "../../custom-config/BaseRustCustomConfigSchema";
-import { ClassReference } from "../ClassReference";
+import { StructReference } from "../StructReference";
 import { GLOBAL_NAMESPACE } from "./Constant";
 
 /* A fully qualified type name _without_ the initial backslash */
@@ -30,7 +30,6 @@ export declare namespace Writer {
     }
 }
 
-
 export class Writer extends AbstractWriter {
     /* The namespace that is being written to */
     public namespace: string;
@@ -40,7 +39,7 @@ export class Writer extends AbstractWriter {
     public customConfig: BaseRustCustomConfigSchema;
 
     /* Import statements */
-    private references: Record<FullyQualifiedName, ClassReference[]> = {};
+    private references: Record<FullyQualifiedName, StructReference[]> = {};
 
     constructor({ namespace, rootNamespace, customConfig }: Writer.Args) {
         super();
@@ -49,7 +48,7 @@ export class Writer extends AbstractWriter {
         this.customConfig = customConfig;
     }
 
-    public addReference(reference: ClassReference): void {
+    public addReference(reference: StructReference): void {
         if (reference.namespace == null) {
             return;
         }

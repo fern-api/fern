@@ -2,7 +2,7 @@ import { Type } from "./Type";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 
-export declare namespace ClassReference {
+export declare namespace StructReference {
     interface Args {
         /* The name of the PHP class */
         name: string;
@@ -12,13 +12,13 @@ export declare namespace ClassReference {
     }
 }
 
-export class ClassReference extends AstNode {
+export class StructReference extends AstNode {
     public readonly name: string;
     public readonly namespace: string;
     public readonly generics?: Type[];
     private fullyQualified: boolean;
 
-    constructor({ name, namespace, generics }: ClassReference.Args) {
+    constructor({ name, namespace, generics }: StructReference.Args) {
         super();
         this.name = name;
         this.namespace = namespace;

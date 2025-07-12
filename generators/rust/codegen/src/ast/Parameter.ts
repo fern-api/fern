@@ -27,7 +27,7 @@ export class Parameter extends AstNode {
     public readonly name: string;
     public readonly type: Type;
     public readonly docs: string | undefined;
-    public readonly initializer: CodeBlock | undefined;
+    public readonly initializer?: CodeBlock;
     public readonly access: Access | undefined;
     public readonly readonly_: boolean;
 
@@ -51,19 +51,25 @@ export class Parameter extends AstNode {
     }
 
     public write(writer: Writer): void {
-        if (this.access != null) {
-            writer.write(`${this.access} `);
-        }
-        if (this.readonly_) {
-            writer.write("readonly ");
-        }
+        // if (this.initializer) {
+        //     if (this.access === "public") {
+        //         writer.write("pub ");
+        //     }
+        //     // if (this.readonly_) {
+        //     //     writer.write("readonly ");
+        //     // }
+        //     this.type.write(writer);
+        //     writer.write(this.name);
+        //     writer.write(": ");
+        //     this.initializer.write(writer);
+        // }
+
+        // if (this.readonly_) {
+        //     writer.write("readonly ");
+        // }
         this.type.write(writer);
-        writer.write(` ${this.name}`);
-        if (this.initializer != null) {
-            writer.write(" = ");
-            this.initializer.write(writer);
-        } else if (this.type.isOptional()) {
-            writer.write(" = null");
-        }
+        writer.write(this.name);
+        writer.write(": ");
+        this.type.write(writer);
     }
 }

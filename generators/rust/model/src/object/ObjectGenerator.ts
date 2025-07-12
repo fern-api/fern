@@ -9,7 +9,7 @@ import { ModelGeneratorContext } from "../ModelGeneratorContext";
 
 export class ObjectGenerator extends FileGenerator<RustFile, ModelCustomConfigSchema, ModelGeneratorContext> {
     private readonly typeDeclaration: TypeDeclaration;
-    private readonly classReference: rust.ClassReference;
+    private readonly classReference: rust.StructReference;
     constructor(
         context: ModelGeneratorContext,
         typeDeclaration: TypeDeclaration,
@@ -48,7 +48,7 @@ export class ObjectGenerator extends FileGenerator<RustFile, ModelCustomConfigSc
         }
         clazz.addMethod(this.context.getToStringMethod());
         return new RustFile({
-            clazz,
+            struct: clazz,
             rootNamespace: this.context.getRootNamespace(),
             directory: this.context.getLocationForTypeId(this.typeDeclaration.name.typeId).directory,
             customConfig: this.context.customConfig

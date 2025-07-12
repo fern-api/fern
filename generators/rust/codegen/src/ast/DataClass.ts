@@ -1,10 +1,10 @@
 import { rust } from "..";
-import { Access, ClassReference } from "../rust";
-import { Class } from "./Class";
+import { Access, StructReference } from "../rust";
 import { CodeBlock } from "./CodeBlock";
 import { Field } from "./Field";
 import { Method } from "./Method";
 import { Parameter } from "./Parameter";
+import { Struct } from "./Struct";
 import { Type } from "./Type";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
@@ -14,7 +14,7 @@ import { orderByAccess } from "./utils/orderByAccess";
 const CONSTRUCTOR_PARAMETER_NAME = "values";
 
 export declare namespace DataClass {
-    interface Args extends Class.Args {
+    interface Args extends Struct.Args {
         constructorAccess?: Access;
     }
 }
@@ -23,14 +23,14 @@ export class DataClass extends AstNode {
     public readonly name: string;
     public readonly namespace: string;
     private readonly constructorAccess: Access;
-    private class_: Class;
+    private class_: Struct;
 
-    constructor({ name, namespace, abstract, docs, parentClassReference, traits, constructorAccess }: DataClass.Args) {
+    constructor({ name, namespace, docs, parentClassReference, traits, constructorAccess }: DataClass.Args) {
         super();
         this.name = name;
         this.namespace = namespace;
         this.constructorAccess = constructorAccess ?? "public";
-        this.class_ = new Class({ name, namespace, abstract, docs, parentClassReference, traits });
+        this.class_ = new Struct({ name, namespace, docs, parentClassReference, traits });
     }
 
     public addField(field: Field): void {
@@ -40,7 +40,7 @@ export class DataClass extends AstNode {
     public addMethod(method: Method): void {
         this.class_.addMethod(method);
     }
-    public addTrait(traitClassReference: ClassReference): void {
+    public addTrait(traitClassReference: StructReference): void {
         this.class_.addTrait(traitClassReference);
     }
 

@@ -83,8 +83,8 @@ export class SdkGeneratorContext extends AbstractRustGeneratorContext<SdkCustomC
         return error;
     }
 
-    public getSubpackageClassReference(subpackage: Subpackage): rust.ClassReference {
-        return rust.classReference({
+    public getSubpackageStructReference(subpackage: Subpackage): rust.StructReference {
+        return rust.structReference({
             name: `${subpackage.name.pascalCase.unsafeName}Client`,
             namespace: this.getFileLocation(subpackage.fernFilepath).namespace
         });
@@ -111,108 +111,108 @@ export class SdkGeneratorContext extends AbstractRustGeneratorContext<SdkCustomC
         return rust.field({
             name: `$${subpackage.name.camelCase.safeName}`,
             access: "public",
-            type: rust.Type.reference(this.getSubpackageClassReference(subpackage))
+            type: rust.Type.reference(this.getSubpackageStructReference(subpackage))
         });
     }
 
-    public getEnvironmentsClassReference(): rust.ClassReference {
-        return rust.classReference({
+    public getEnvironmentsStructReference(): rust.StructReference {
+        return rust.structReference({
             name: "Environments",
             namespace: this.getRootNamespace()
         });
     }
 
-    public getExceptionClassReference(): rust.ClassReference {
-        return rust.classReference({
+    public getExceptionClassReference(): rust.StructReference {
+        return rust.structReference({
             name: "Exception",
             namespace: this.getGlobalNamespace()
         });
     }
 
-    public getBaseExceptionClassReference(): rust.ClassReference {
-        return rust.classReference({
+    public getBaseExceptionStructReference(): rust.StructReference {
+        return rust.structReference({
             name: this.getOrganizationPascalCase() + "Exception",
             namespace: this.getLocationForBaseException().namespace
         });
     }
 
-    public getBaseApiExceptionClassReference(): rust.ClassReference {
-        return rust.classReference({
+    public getBaseApiExceptionStructReference(): rust.StructReference {
+        return rust.structReference({
             name: this.getOrganizationPascalCase() + "ApiException",
             namespace: this.getLocationForBaseException().namespace
         });
     }
 
-    public getJsonExceptionClassReference(): rust.ClassReference {
-        return rust.classReference({
+    public getJsonExceptionClassReference(): rust.StructReference {
+        return rust.structReference({
             name: "JsonException",
             namespace: this.getGlobalNamespace()
         });
     }
 
-    public getClientExceptionInterfaceClassReference(): rust.ClassReference {
-        return rust.classReference({
+    public getClientExceptionInterfaceClassReference(): rust.StructReference {
+        return rust.structReference({
             name: "ClientExceptionInterface",
             namespace: "Psr\\Http\\Client"
         });
     }
 
-    public getJsonApiRequestClassReference(): rust.ClassReference {
+    public getJsonApiRequestClassReference(): rust.StructReference {
         return this.getCoreJsonClassReference("JsonApiRequest");
     }
 
-    public getJsonDecoderClassReference(): rust.ClassReference {
+    public getJsonDecoderClassReference(): rust.StructReference {
         return this.getCoreJsonClassReference("JsonDecoder");
     }
 
-    public getJsonEncoderClassReference(): rust.ClassReference {
+    public getJsonEncoderClassReference(): rust.StructReference {
         return this.getCoreJsonClassReference("JsonEncoder");
     }
 
-    public getJsonSerializerClassReference(): rust.ClassReference {
+    public getJsonSerializerClassReference(): rust.StructReference {
         return this.getCoreJsonClassReference("JsonSerializer");
     }
 
-    public getMultipartApiRequestClassReference(): rust.ClassReference {
+    public getMultipartApiRequestClassReference(): rust.StructReference {
         return this.getCoreMultipartClassReference("MultipartApiRequest");
     }
 
-    public getMultipartFormDataClassReference(): rust.ClassReference {
+    public getMultipartFormDataClassReference(): rust.StructReference {
         return this.getCoreMultipartClassReference("MultipartFormData");
     }
 
-    public getFileClassReference(): rust.ClassReference {
+    public getFileClassReference(): rust.StructReference {
         return this.getUtilsClassReference("File");
     }
 
-    public getRequestWrapperReference(serviceId: ServiceId, requestName: Name): rust.ClassReference {
-        return rust.classReference({
+    public getRequestWrapperReference(serviceId: ServiceId, requestName: Name): rust.StructReference {
+        return rust.structReference({
             name: requestName.pascalCase.safeName,
             namespace: this.getLocationForWrappedRequest(serviceId).namespace
         });
     }
 
-    public getHttpMethodClassReference(): rust.ClassReference {
+    public getHttpMethodClassReference(): rust.StructReference {
         return this.getCoreClientClassReference("HttpMethod");
     }
 
-    public getPagerClassReference(itemType: rust.Type): rust.ClassReference {
-        return rust.classReference({
+    public getPagerClassReference(itemType: rust.Type): rust.StructReference {
+        return rust.structReference({
             name: "Pager",
             namespace: this.getCorePaginationNamespace(),
             generics: [itemType]
         });
     }
 
-    public getOffsetPagerClassReference(): rust.ClassReference {
-        return rust.classReference({
+    public getOffsetPagerClassReference(): rust.StructReference {
+        return rust.structReference({
             name: "OffsetPager",
             namespace: this.getCorePaginationNamespace()
         });
     }
 
-    public getCursorPagerClassReference(): rust.ClassReference {
-        return rust.classReference({
+    public getCursorPagerClassReference(): rust.StructReference {
+        return rust.structReference({
             name: "CursorPager",
             namespace: this.getCorePaginationNamespace()
         });
@@ -283,38 +283,45 @@ export class SdkGeneratorContext extends AbstractRustGeneratorContext<SdkCustomC
     }
 
     public getClientOptionsType(): rust.Type {
-        return rust.Type.typeDict(
-            [
-                {
-                    key: this.getBaseUrlOptionName(),
-                    valueType: rust.Type.string(),
-                    optional: true
-                },
-                {
-                    key: this.getGuzzleClientOptionName(),
-                    valueType: rust.Type.reference(this.guzzleClient.getClientInterfaceClassReference()),
-                    optional: true
-                },
-                {
-                    key: this.getMaxRetriesOptionName(),
-                    valueType: rust.Type.int(),
-                    optional: true
-                },
-                {
-                    key: this.getTimeoutOptionName(),
-                    valueType: rust.Type.float(),
-                    optional: true
-                },
-                {
-                    key: this.getHeadersOptionName(),
-                    valueType: rust.Type.map(rust.Type.string(), rust.Type.string()),
-                    optional: true
-                }
-            ],
-            {
-                multiline: true
-            }
+        return rust.Type.reference(
+            rust.structReference({
+                name: "ClientOptions",
+                namespace: ""
+            })
         );
+
+        // return rust.Type.typeDict(
+        //     [
+        //         {
+        //             key: this.getBaseUrlOptionName(),
+        //             valueType: rust.Type.string(),
+        //             optional: true
+        //         },
+        //         {
+        //             key: this.getGuzzleClientOptionName(),
+        //             valueType: rust.Type.reference(this.guzzleClient.getClientInterfaceClassReference()),
+        //             optional: true
+        //         },
+        //         {
+        //             key: this.getMaxRetriesOptionName(),
+        //             valueType: rust.Type.int(),
+        //             optional: true
+        //         },
+        //         {
+        //             key: this.getTimeoutOptionName(),
+        //             valueType: rust.Type.float(),
+        //             optional: true
+        //         },
+        //         {
+        //             key: this.getHeadersOptionName(),
+        //             valueType: rust.Type.map(rust.Type.string(), rust.Type.string()),
+        //             optional: true
+        //         }
+        //     ],
+        //     {
+        //         multiline: true
+        //     }
+        // );
     }
 
     public getRequestOptionsType({ endpoint }: { endpoint: HttpEndpoint }): rust.Type {
@@ -359,21 +366,21 @@ export class SdkGeneratorContext extends AbstractRustGeneratorContext<SdkCustomC
 
     public getEnvironmentAccess(name: Name): rust.CodeBlock {
         return rust.codeblock((writer) => {
-            writer.writeNode(this.getEnvironmentsClassReference());
+            writer.writeNode(this.getEnvironmentsStructReference());
             writer.write(`::${this.getEnvironmentName(name)}->value`);
         });
     }
 
-    public createRequestWithDefaults(reference: rust.ClassReference | rust.CodeBlock): rust.AstNode {
+    public createRequestWithDefaults(reference: rust.StructReference | rust.CodeBlock): rust.AstNode {
         return rust.invokeMethod({
-            on: rust.classReference({
+            on: rust.structReference({
                 name: "PaginationHelper",
                 namespace: this.getCorePaginationNamespace()
             }),
             method: "createRequestWithDefaults",
             arguments_: [
                 rust.codeblock((writer) => {
-                    if (reference instanceof rust.ClassReference) {
+                    if (reference instanceof rust.StructReference) {
                         writer.writeNode(reference);
                         writer.write("::class");
                         return;
@@ -401,7 +408,7 @@ export class SdkGeneratorContext extends AbstractRustGeneratorContext<SdkCustomC
             });
         }
         return rust.invokeMethod({
-            on: rust.classReference({
+            on: rust.structReference({
                 name: "PaginationHelper",
                 namespace: this.getCorePaginationNamespace()
             }),

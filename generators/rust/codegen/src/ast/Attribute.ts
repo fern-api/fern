@@ -1,18 +1,18 @@
-import { ClassReference } from "./ClassReference";
+import { StructReference } from "./StructReference";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 
 export declare namespace Attribute {
     interface Args {
         /* Reference to the attribute class reference */
-        reference: ClassReference;
+        reference: StructReference;
         /* Arguments included in the attribute, if any */
         arguments?: (string | AstNode)[];
     }
 }
 
 export class Attribute extends AstNode {
-    private reference: ClassReference;
+    private reference: StructReference;
     private arguments: (string | AstNode)[];
 
     constructor(args: Attribute.Args) {

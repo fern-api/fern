@@ -17,37 +17,37 @@ export declare namespace SubClientGenerator {
 }
 
 export class SubPackageClientGenerator extends FileGenerator<RustFile, SdkCustomConfigSchema, SdkGeneratorContext> {
-    private classReference: rust.ClassReference;
+    private structReference: rust.StructReference;
     private subpackage: Subpackage;
     private serviceId: ServiceId | undefined;
     private service: HttpService | undefined;
 
     constructor({ subpackage, context, serviceId, service }: SubClientGenerator.Args) {
         super(context);
-        this.classReference = this.context.getSubpackageClassReference(subpackage);
+        this.structReference = this.context.getSubpackageStructReference(subpackage);
         this.subpackage = subpackage;
         this.serviceId = serviceId;
         this.service = service;
     }
 
     public doGenerate(): RustFile {
-        const class_ = rust.struct({
-            ...this.classReference
+        const struct = rust.struct({
+            ...this.structReference
         });
 
-        class_.addField(
+        struct.addField(
             rust.field({
                 name: `$${this.context.getClientOptionsName()}`,
                 access: "private",
                 type: this.context.getClientOptionsType()
             })
         );
-        class_.addField(this.context.rawClient.getField());
+        struct.addField(this.context.rawClient.getField());
 
         const subpackages = this.getSubpackages();
-        class_.addConstructor(this.getConstructorMethod({ subpackages }));
+        struct.addConstructor(this.getConstructorMethod({ subpackages }));
         for (const subpackage of subpackages) {
-            class_.addField(this.context.getSubpackageField(subpackage));
+            struct.addField(this.context.getSubpackageField(subpackage));
         }
 
         if (this.service != null && this.serviceId != null) {
@@ -57,24 +57,24 @@ export class SubPackageClientGenerator extends FileGenerator<RustFile, SdkCustom
                     service: this.service,
                     endpoint
                 });
-                class_.addMethods(methods);
+                struct.addMethods(methods);
             }
         }
 
         return new RustFile({
-            clazz: class_,
+            struct,
             directory: this.context.getLocationForSubpackage(this.subpackage).directory,
             rootNamespace: this.context.getRootNamespace(),
             customConfig: this.context.customConfig
         });
     }
 
-    private getConstructorMethod({ subpackages }: { subpackages: Subpackage[] }): rust.Class.Constructor {
+    private getConstructorMethod({ subpackages }: { subpackages: Subpackage[] }): rust.Struct.Constructor {
         return {
             parameters: [
                 rust.parameter({
                     name: "$client",
-                    type: rust.Type.reference(this.context.rawClient.getClassReference())
+                    type: rust.Type.reference(this.context.rawClient.getStructReference())
                 }),
                 rust.parameter({
                     name: this.context.getClientOptionsName(),
@@ -95,8 +95,8 @@ export class SubPackageClientGenerator extends FileGenerator<RustFile, SdkCustom
                 for (const subpackage of subpackages) {
                     writer.write(`$this->${subpackage.name.camelCase.safeName} = `);
                     writer.writeNodeStatement(
-                        rust.instantiateClass({
-                            classReference: this.context.getSubpackageClassReference(subpackage),
+                        rust.instantiateStruct({
+                            structReference: this.context.getSubpackageStructReference(subpackage),
                             arguments_: [
                                 rust.codeblock(`$this->${this.context.rawClient.getFieldName()}`),
                                 rust.codeblock(`$this->${this.context.getClientOptionsName()}`)
@@ -119,7 +119,7 @@ export class SubPackageClientGenerator extends FileGenerator<RustFile, SdkCustom
     protected getFilepath(): RelativeFilePath {
         return join(
             this.context.getLocationForSubpackage(this.subpackage).directory,
-            RelativeFilePath.of(this.classReference.name + ".php")
+            RelativeFilePath.of(this.structReference.name + ".rs")
         );
     }
 }

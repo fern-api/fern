@@ -361,8 +361,8 @@ export class WrappedEndpointRequest extends EndpointRequest {
         return rust.codeblock((writer) => {
             writer.write(`$${this.context.getPropertyName(this.wrapper.bodyKey)} = `);
             writer.writeNodeStatement(
-                rust.instantiateClass({
-                    classReference: this.context.getMultipartFormDataClassReference(),
+                rust.instantiateStruct({
+                    structReference: this.context.getMultipartFormDataClassReference(),
                     arguments_: []
                 })
             );

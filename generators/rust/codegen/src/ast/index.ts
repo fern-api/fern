@@ -1,10 +1,10 @@
 export { Access } from "./Access";
 export { Array_ as Array } from "./Array";
 export { Attribute } from "./Attribute";
-export { Class } from "./Class";
+export { Struct } from "./Struct";
 export { Trait } from "./Trait";
-export { ClassInstantiation } from "./ClassInstantiation";
-export { ClassReference } from "./ClassReference";
+export { StructInstantiation } from "./StructInstantiation";
+export { StructReference } from "./StructReference";
 export { CodeBlock } from "./CodeBlock";
 export { DataClass } from "./DataClass";
 export { Enum } from "./Enum";

@@ -1,7 +1,7 @@
-import { ClassReference } from "./ClassReference";
 import { CodeBlock } from "./CodeBlock";
 import { Comment } from "./Comment";
 import { Method } from "./Method";
+import { StructReference } from "./StructReference";
 import { Type } from "./Type";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
@@ -58,7 +58,7 @@ export class Enum extends AstNode {
         }
         if (this.serializable) {
             writer.addReference(
-                new ClassReference({
+                new StructReference({
                     name: "JsonSerializable",
                     namespace: ""
                 })

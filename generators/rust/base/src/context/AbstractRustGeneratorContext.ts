@@ -198,86 +198,86 @@ export abstract class AbstractRustGeneratorContext<
         return literal.type === "string" ? `'${literal.string}'` : literal.boolean ? "'true'" : "'false'";
     }
 
-    public getThrowableClassReference(): rust.ClassReference {
-        return rust.classReference({
+    public getThrowableClassReference(): rust.StructReference {
+        return rust.structReference({
             namespace: GLOBAL_NAMESPACE,
             name: "Throwable"
         });
     }
 
-    public getExceptionClassReference(): rust.ClassReference {
-        return rust.classReference({
+    public getExceptionClassReference(): rust.StructReference {
+        return rust.structReference({
             namespace: GLOBAL_NAMESPACE,
             name: "Exception"
         });
     }
 
-    public getDateAttributeClassReference(): rust.ClassReference {
+    public getDateAttributeClassReference(): rust.StructReference {
         return this.getCoreTypesClassReference("Date");
     }
 
-    public getConstantClassReference(): rust.ClassReference {
+    public getConstantClassReference(): rust.StructReference {
         return this.getCoreTypesClassReference("Constant");
     }
 
-    public getJsonDecoderClassReference(): rust.ClassReference {
+    public getJsonDecoderClassReference(): rust.StructReference {
         return this.getCoreJsonClassReference("JsonDecoder");
     }
 
-    public getJsonDeserializerClassReference(): rust.ClassReference {
+    public getJsonDeserializerClassReference(): rust.StructReference {
         return this.getCoreJsonClassReference("JsonDeserializer");
     }
 
-    public getJsonPropertyAttributeClassReference(): rust.ClassReference {
+    public getJsonPropertyAttributeClassReference(): rust.StructReference {
         return this.getCoreJsonClassReference("JsonProperty");
     }
 
-    public getJsonSerializableTypeClassReference(): rust.ClassReference {
+    public getJsonSerializableTypeClassReference(): rust.StructReference {
         return this.getCoreJsonClassReference("JsonSerializableType");
     }
 
-    public getJsonSerializerClassReference(): rust.ClassReference {
+    public getJsonSerializerClassReference(): rust.StructReference {
         return this.getCoreJsonClassReference("JsonSerializer");
     }
 
-    public getUnionClassReference(): rust.ClassReference {
+    public getUnionClassReference(): rust.StructReference {
         return this.getCoreTypesClassReference("Union");
     }
 
-    public getArrayTypeClassReference(): rust.ClassReference {
+    public getArrayTypeClassReference(): rust.StructReference {
         return this.getCoreTypesClassReference("ArrayType");
     }
 
-    public getCoreClientClassReference(name: string): rust.ClassReference {
-        return rust.classReference({
+    public getCoreClientClassReference(name: string): rust.StructReference {
+        return rust.structReference({
             name,
             namespace: this.getCoreClientNamespace()
         });
     }
 
-    public getCoreJsonClassReference(name: string): rust.ClassReference {
-        return rust.classReference({
+    public getCoreJsonClassReference(name: string): rust.StructReference {
+        return rust.structReference({
             name,
             namespace: this.getCoreJsonNamespace()
         });
     }
 
-    public getCoreMultipartClassReference(name: string): rust.ClassReference {
-        return rust.classReference({
+    public getCoreMultipartClassReference(name: string): rust.StructReference {
+        return rust.structReference({
             name,
             namespace: this.getCoreMultipartNamespace()
         });
     }
 
-    public getUtilsClassReference(name: string): rust.ClassReference {
-        return rust.classReference({
+    public getUtilsClassReference(name: string): rust.StructReference {
+        return rust.structReference({
             name,
             namespace: this.getUtilsTypesNamespace()
         });
     }
 
-    public getCoreTypesClassReference(name: string): rust.ClassReference {
-        return rust.classReference({
+    public getCoreTypesClassReference(name: string): rust.StructReference {
+        return rust.structReference({
             name,
             namespace: this.getCoreTypesNamespace()
         });
@@ -573,12 +573,12 @@ export abstract class AbstractRustGeneratorContext<
 
     public shouldGenerateGetterMethods(): boolean {
         const propertyAccess = this.getPropertyAccess();
-        return propertyAccess === rust.Access.Protected || propertyAccess === rust.Access.Private;
+        return false;
     }
 
     public shouldGenerateSetterMethods(): boolean {
         const propertyAccess = this.getPropertyAccess();
-        return propertyAccess === rust.Access.Protected || propertyAccess === rust.Access.Private;
+        return false;
     }
 
     public getGetterMethod({ name, field }: { name: Name; field: rust.Field }): rust.Method {

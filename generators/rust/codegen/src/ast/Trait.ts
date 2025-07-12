@@ -1,7 +1,7 @@
-import { ClassReference } from "./ClassReference";
 import { Comment } from "./Comment";
 import { Field } from "./Field";
 import { Method } from "./Method";
+import { StructReference } from "./StructReference";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 import { orderByAccess } from "./utils/orderByAccess";
@@ -15,7 +15,7 @@ export declare namespace Trait {
         /* Docs associated with the trait */
         docs?: string;
         /* The traits that this trait uses, if any */
-        traits?: ClassReference[];
+        traits?: StructReference[];
     }
 }
 
@@ -23,7 +23,7 @@ export class Trait extends AstNode {
     public readonly name: string;
     public readonly namespace: string;
     public readonly docs: string | undefined;
-    public readonly traits: ClassReference[];
+    public readonly traits: StructReference[];
 
     public readonly fields: Field[] = [];
     public readonly methods: Method[] = [];

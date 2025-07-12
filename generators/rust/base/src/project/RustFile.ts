@@ -11,7 +11,7 @@ export type Namespace = string;
 export declare namespace RustFile {
     interface Args {
         /* The class to be written to the Rust File */
-        clazz: rust.Class | rust.DataClass | rust.Trait | rust.Enum;
+        struct: rust.Struct | rust.DataClass | rust.Trait | rust.Enum;
         /* Directory of the filepath */
         directory: RelativeFilePath;
         /* The root namespace of the project. Can be pulled directly from context. */
@@ -22,12 +22,12 @@ export declare namespace RustFile {
 }
 
 export class RustFile extends File {
-    constructor({ clazz, directory, rootNamespace, customConfig }: RustFile.Args) {
+    constructor({ struct, directory, rootNamespace, customConfig }: RustFile.Args) {
         super(
-            `${clazz.name}.php`,
+            `${struct.name}.rs`,
             directory,
             rustFileContent({
-                clazz,
+                struct,
                 rootNamespace,
                 customConfig
             })
@@ -44,20 +44,17 @@ export class RustFile extends File {
 }
 
 function rustFileContent({
-    clazz,
+    struct,
     rootNamespace,
     customConfig
 }: {
-    clazz: rust.Class | rust.DataClass | rust.Trait | rust.Enum;
+    struct: rust.Struct | rust.DataClass | rust.Trait | rust.Enum;
     rootNamespace: string;
     customConfig: BaseRustCustomConfigSchema;
 }): string {
-    return (
-        "<?php\n\n" +
-        clazz.toString({
-            namespace: clazz.namespace,
-            rootNamespace,
-            customConfig
-        })
-    );
+    return struct.toString({
+        namespace: struct.namespace,
+        rootNamespace,
+        customConfig
+    });
 }

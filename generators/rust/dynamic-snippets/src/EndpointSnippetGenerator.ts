@@ -75,7 +75,7 @@ export class EndpointSnippetGenerator {
     }): rust.CodeBlock {
         return rust.codeblock((writer) => {
             writer.write(`${CLIENT_VAR_NAME} = `);
-            writer.writeNode(this.getRootClientClassInstantiation(this.getConstructorArgs({ endpoint, snippet })));
+            writer.writeNode(this.getRootClientStructInstantiation(this.getConstructorArgs({ endpoint, snippet })));
         });
     }
 
@@ -538,7 +538,7 @@ export class EndpointSnippetGenerator {
         this.context.errors.unscope();
 
         return rust.TypeLiteral.class_({
-            reference: rust.classReference({
+            reference: rust.structReference({
                 name: this.context.getClassName(request.declaration.name),
                 namespace: this.context.getRequestNamespace(request.declaration.fernFilepath)
             }),
@@ -660,9 +660,9 @@ export class EndpointSnippetGenerator {
         return this.context.getMethodName(endpoint.declaration.name);
     }
 
-    private getRootClientClassInstantiation(arguments_: NamedArgument[]): rust.ClassInstantiation {
-        return rust.instantiateClass({
-            classReference: rust.classReference({
+    private getRootClientStructInstantiation(arguments_: NamedArgument[]): rust.StructInstantiation {
+        return rust.instantiateStruct({
+            structReference: rust.structReference({
                 name: this.context.getRootClientClassName(),
                 namespace: this.context.rootNamespace
             }),

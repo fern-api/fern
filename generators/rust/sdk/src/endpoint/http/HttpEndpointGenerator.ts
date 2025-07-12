@@ -88,7 +88,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             parameters,
             docs: endpoint.docs,
             return_,
-            throws: [this.context.getBaseExceptionClassReference(), this.context.getBaseApiExceptionClassReference()],
+            throws: [this.context.getBaseExceptionStructReference(), this.context.getBaseApiExceptionStructReference()],
             body: rust.codeblock((writer) => {
                 writer.writeNodeStatement(
                     rust.assignVariable(
@@ -148,7 +148,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 writer.controlFlow("if", rust.codeblock("$response === null"));
                 writer.writeNodeStatement(
                     rust.throwException({
-                        classReference: this.context.getBaseExceptionClassReference(),
+                        structReference: this.context.getBaseExceptionStructReference(),
                         arguments_: [
                             {
                                 name: "message",
@@ -164,7 +164,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 writer.endControlFlow();
                 writer.writeNodeStatement(
                     rust.throwException({
-                        classReference: this.context.getBaseApiExceptionClassReference(),
+                        structReference: this.context.getBaseApiExceptionStructReference(),
                         arguments_: [
                             {
                                 name: "message",
@@ -308,8 +308,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         const cursorType = this.context.rustTypeMapper.convert({ reference: pagination.next.property.valueType });
         writer.write("return ");
         writer.writeNodeStatement(
-            rust.instantiateClass({
-                classReference: cursorPagerClassReference,
+            rust.instantiateStruct({
+                structReference: cursorPagerClassReference,
                 arguments_: [
                     {
                         name: "request",
@@ -398,8 +398,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         const offsetPagerClassReference = this.context.getOffsetPagerClassReference();
         writer.write("return ");
         writer.writeNodeStatement(
-            rust.instantiateClass({
-                classReference: offsetPagerClassReference,
+            rust.instantiateStruct({
+                structReference: offsetPagerClassReference,
                 arguments_: [
                     {
                         name: "request",
@@ -574,7 +574,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         throw new Error(`Endpoint ${endpoint.name.originalName} is not a paginated endpoint`);
     }
 
-    private getRequestTypeClassReference(requestBody: HttpRequestBody): rust.ClassReference {
+    private getRequestTypeClassReference(requestBody: HttpRequestBody): rust.StructReference {
         return requestBody._visit({
             inlinedRequestBody: () => this.context.getJsonApiRequestClassReference(),
             reference: () => this.context.getJsonApiRequestClassReference(),
@@ -732,7 +732,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         classReference
     }: {
         arguments_: Arguments;
-        classReference: rust.ClassReference;
+        classReference: rust.StructReference;
     }): rust.CodeBlock {
         return rust.codeblock((writer) => {
             writer.writeNodeStatement(
@@ -828,8 +828,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         return rust.codeblock((writer) => {
             writer.write("throw ");
             writer.writeNode(
-                rust.instantiateClass({
-                    classReference: this.context.getBaseExceptionClassReference(),
+                rust.instantiateStruct({
+                    structReference: this.context.getBaseExceptionStructReference(),
                     arguments_: [
                         {
                             name: "message",
@@ -855,8 +855,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         return rust.codeblock((writer) => {
             writer.write("throw ");
             writer.writeNode(
-                rust.instantiateClass({
-                    classReference: this.context.getBaseApiExceptionClassReference(),
+                rust.instantiateStruct({
+                    structReference: this.context.getBaseApiExceptionStructReference(),
                     arguments_: [
                         {
                             name: "message",

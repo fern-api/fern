@@ -8,7 +8,7 @@ import { ModelCustomConfigSchema } from "../ModelCustomConfig";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 
 export class EnumGenerator extends FileGenerator<RustFile, ModelCustomConfigSchema, ModelGeneratorContext> {
-    private readonly classReference: rust.ClassReference;
+    private readonly classReference: rust.StructReference;
 
     constructor(
         context: ModelGeneratorContext,
@@ -28,7 +28,7 @@ export class EnumGenerator extends FileGenerator<RustFile, ModelCustomConfigSche
             enum_.addMember({ name: member.name.name.pascalCase.safeName, value: member.name.wireValue })
         );
         return new RustFile({
-            clazz: enum_,
+            struct: enum_,
             rootNamespace: this.context.getRootNamespace(),
             directory: this.context.getLocationForTypeId(this.typeDeclaration.name.typeId).directory,
             customConfig: this.context.customConfig

@@ -9,7 +9,7 @@ import { ModelGeneratorContext } from "../ModelGeneratorContext";
 
 export class TraitGenerator extends FileGenerator<RustFile, ModelCustomConfigSchema, ModelGeneratorContext> {
     private readonly typeDeclaration: TypeDeclaration;
-    private readonly classReference: rust.ClassReference;
+    private readonly classReference: rust.StructReference;
     constructor(
         context: ModelGeneratorContext,
         typeDeclaration: TypeDeclaration,
@@ -53,7 +53,7 @@ export class TraitGenerator extends FileGenerator<RustFile, ModelCustomConfigSch
             clazz.addField(field);
         }
         return new RustFile({
-            clazz,
+            struct: clazz,
             rootNamespace: this.context.getRootNamespace(),
             directory: this.context.getTraitLocationForTypeId(this.typeDeclaration.name.typeId).directory,
             customConfig: this.context.customConfig

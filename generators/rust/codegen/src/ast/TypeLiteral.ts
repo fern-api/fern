@@ -1,9 +1,9 @@
 import { assertNever } from "@fern-api/core-utils";
 
-import { ClassInstantiation } from "./ClassInstantiation";
-import { ClassReference } from "./ClassReference";
 import { CodeBlock } from "./CodeBlock";
 import { MethodInvocation } from "./MethodInvocation";
+import { StructInstantiation } from "./StructInstantiation";
+import { StructReference } from "./StructReference";
 import { AstNode, Writer } from "./core";
 
 type InternalTypeLiteral =
@@ -28,7 +28,7 @@ interface Boolean_ {
 
 interface Class_ {
     type: "class";
-    reference: ClassReference;
+    reference: StructReference;
     fields: ConstructorField[];
 }
 
@@ -185,8 +185,8 @@ export class TypeLiteral extends AstNode {
 
     private writeClass({ writer, class_: class_ }: { writer: Writer; class_: Class_ }): void {
         writer.writeNode(
-            new ClassInstantiation({
-                classReference: class_.reference,
+            new StructInstantiation({
+                structReference: class_.reference,
                 arguments_: [
                     TypeLiteral.map({
                         entries: class_.fields.map((field) => ({
@@ -251,7 +251,7 @@ export class TypeLiteral extends AstNode {
         reference,
         fields
     }: {
-        reference: ClassReference;
+        reference: StructReference;
         fields: ConstructorField[];
     }): TypeLiteral {
         return new this({ type: "class", reference, fields });
@@ -376,9 +376,9 @@ export class TypeLiteral extends AstNode {
     }
 }
 
-function buildDateTimeFromString({ writer, value }: { writer: Writer; value: string }): ClassInstantiation {
-    return new ClassInstantiation({
-        classReference: new ClassReference({
+function buildDateTimeFromString({ writer, value }: { writer: Writer; value: string }): StructInstantiation {
+    return new StructInstantiation({
+        structReference: new StructReference({
             name: "DateTime",
             namespace: ""
         }),
@@ -387,7 +387,7 @@ function buildDateTimeFromString({ writer, value }: { writer: Writer; value: str
 }
 function buildFileFromString({ writer, value }: { writer: Writer; value: string }): MethodInvocation {
     return new MethodInvocation({
-        on: new ClassReference({
+        on: new StructReference({
             name: "File",
             namespace: `${writer.rootNamespace}\\Utils`
         }),

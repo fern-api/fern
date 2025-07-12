@@ -192,7 +192,7 @@ export class DynamicTypeLiteralMapper {
             rust.codeblock((writer) => {
                 writer.writeNode(
                     rust.invokeMethod({
-                        on: rust.classReference({
+                        on: rust.structReference({
                             name: this.context.getClassName(discriminatedUnion.declaration.name),
                             namespace: this.context.getTypesNamespace(discriminatedUnion.declaration.fernFilepath)
                         }),
@@ -306,7 +306,7 @@ export class DynamicTypeLiteralMapper {
             return [
                 ...baseFields,
                 rust.TypeLiteral.class_({
-                    reference: rust.classReference({
+                    reference: rust.structReference({
                         name: this.context.getClassName(named.declaration.name),
                         namespace: this.context.getTypesNamespace(named.declaration.fernFilepath)
                     }),
@@ -354,7 +354,7 @@ export class DynamicTypeLiteralMapper {
             values: this.context.getRecord(value) ?? {}
         });
         return rust.TypeLiteral.class_({
-            reference: rust.classReference({
+            reference: rust.structReference({
                 name: this.context.getClassName(object_.declaration.name),
                 namespace: this.context.getTypesNamespace(object_.declaration.fernFilepath)
             }),
@@ -380,7 +380,7 @@ export class DynamicTypeLiteralMapper {
         return rust.TypeLiteral.reference(
             rust.codeblock((writer) => {
                 writer.writeNode(
-                    rust.classReference({
+                    rust.structReference({
                         name: this.context.getClassName(enum_.declaration.name),
                         namespace: this.context.getTypesNamespace(enum_.declaration.fernFilepath)
                     })

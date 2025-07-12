@@ -1,7 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 
 import { BaseRustCustomConfigSchema } from "../custom-config/BaseRustCustomConfigSchema";
-import { ClassReference } from "./ClassReference";
+import { StructReference } from "./StructReference";
 import { TypeLiteral } from "./TypeLiteral";
 import { AstNode } from "./core/AstNode";
 import { GLOBAL_NAMESPACE } from "./core/Constant";
@@ -25,7 +25,6 @@ type InternalType =
     | TypeDict
     | Union
     | Literal;
-
 
 interface Int {
     type: "int";
@@ -98,12 +97,12 @@ interface Optional {
 
 interface Reference {
     type: "reference";
-    value: ClassReference;
+    value: StructReference;
 }
 
 interface EnumString {
     type: "enumString";
-    value: ClassReference;
+    value: StructReference;
 }
 
 type LiteralString = TypeLiteral & {
@@ -136,16 +135,16 @@ export class Type extends AstNode {
     public write(writer: Writer, { comment }: { comment?: boolean } = {}): void {
         switch (this.internalType.type) {
             case "int":
-                writer.write("int");
+                writer.write("int32");
                 break;
             case "string":
-                writer.write("string");
+                writer.write("String");
                 break;
             case "bool":
                 writer.write("bool");
                 break;
             case "float":
-                writer.write("float");
+                writer.write("f32");
                 break;
             case "date":
                 writer.addReference(DateTimeClassReference);
@@ -307,11 +306,11 @@ export class Type extends AstNode {
         return this.internalType.type === "optional";
     }
 
-    public getClassReference(): ClassReference {
+    public getClassReference(): StructReference {
         switch (this.internalType.type) {
             case "date":
             case "dateTime":
-                return new ClassReference({
+                return new StructReference({
                     name: "DateTime",
                     namespace: GLOBAL_NAMESPACE
                 });
@@ -435,14 +434,14 @@ export class Type extends AstNode {
         });
     }
 
-    public static reference(value: ClassReference): Type {
+    public static reference(value: StructReference): Type {
         return new this({
             type: "reference",
             value
         });
     }
 
-    public static enumString(value: ClassReference): Type {
+    public static enumString(value: StructReference): Type {
         return new this({
             type: "enumString",
             value
@@ -608,7 +607,7 @@ export class Type extends AstNode {
     }
 }
 
-export const DateTimeClassReference = new ClassReference({
+export const DateTimeClassReference = new StructReference({
     namespace: GLOBAL_NAMESPACE,
     name: "DateTime"
 });

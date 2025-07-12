@@ -1,8 +1,8 @@
 import { Access } from "./Access";
-import { ClassReference } from "./ClassReference";
 import { CodeBlock } from "./CodeBlock";
 import { Comment } from "./Comment";
 import { Parameter } from "./Parameter";
+import { StructReference } from "./StructReference";
 import { Type } from "./Type";
 import { AstNode } from "./core/AstNode";
 import { SELF, STATIC } from "./core/Constant";
@@ -17,7 +17,7 @@ export declare namespace Method {
         /* The parameters of the method */
         parameters: Parameter[];
         /* The exceptions that can be thrown, if any */
-        throws?: ClassReference[];
+        throws?: StructReference[];
         /* The return type of the method */
         return_?: Type | typeof STATIC | typeof SELF;
         /* The body of the method */
@@ -25,7 +25,7 @@ export declare namespace Method {
         /* Documentation for the method */
         docs?: string;
         /* The class this method belongs to, if any */
-        classReference?: ClassReference;
+        classReference?: StructReference;
         /* Whether this method is static */
         static_?: boolean;
     }
@@ -35,11 +35,11 @@ export class Method extends AstNode {
     public readonly name: string;
     public readonly access: Access;
     public readonly parameters: Parameter[];
-    public readonly throws: ClassReference[];
+    public readonly throws: StructReference[];
     public readonly return_: Type | typeof STATIC | typeof SELF | undefined;
     public readonly body: CodeBlock | undefined;
     public readonly docs: string | undefined;
-    public readonly classReference: ClassReference | undefined;
+    public readonly classReference: StructReference | undefined;
     public readonly static_: boolean;
 
     constructor({ name, access, parameters, throws, return_, body, docs, classReference, static_ }: Method.Args) {
@@ -56,8 +56,8 @@ export class Method extends AstNode {
     }
 
     public write(writer: Writer): void {
-        this.writeComment(writer);
-        writer.write(`${this.access}${this.static_ ? " static" : ""} function ${this.name}(`);
+        // this.writeComment(writer);
+        writer.write(`${this.access === "public" ? "pub" : ""} fn ${this.name}(&self,`);
 
         // NOTE: Put all required parameters before all optional parameters
         // since this is required by PHPStan
@@ -72,11 +72,12 @@ export class Method extends AstNode {
             }
             parameter.write(writer);
         });
-        writer.write("): ");
+        writer.write(")");
         if (this.return_ != null) {
+            writer.write(" -> ");
             writer.writeNodeOrString(this.return_);
         } else {
-            writer.write("void");
+            writer.write(" ");
         }
         writer.writeLine(" {");
 

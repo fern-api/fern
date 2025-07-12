@@ -55,38 +55,42 @@ export class Field extends AstNode {
     }
 
     public write(writer: Writer): void {
-        this.writeComment(writer);
+        // this.writeComment(writer);
         this.writeAttributesIfPresent(writer);
 
-        writer.write(`${this.access} `);
-        if (this.readonly_) {
-            writer.write("readonly ");
+        if (this.access === "public") {
+            writer.write("pub ");
         }
+        // if (this.readonly_) {
+        //     writer.write("readonly ");
+        // }
 
+        writer.write(`${this.name}: `);
         this.type.write(writer);
-        writer.write(` ${this.name}`);
+        // writer.write(` ${this.type}`);
 
-        if (this.initializer != null) {
-            writer.write(" = ");
-            this.initializer.write(writer);
-        }
-        writer.write(";");
+        // if (this.initializer != null) {
+        //     writer.write(" = ");
+        //     this.initializer.write(writer);
+        // }
+
+        writer.write(",");
 
         if (this.inlineDocs != null) {
             writer.write(` // ${this.inlineDocs}`);
         }
-        writer.newLine();
+        // writer.newLine();
     }
 
     private writeComment(writer: Writer): void {
-        const comment = new Comment();
-        comment.addTag({
-            tagType: "var",
-            type: this.type,
-            name: this.name,
-            docs: this.docs
-        });
-        comment.write(writer);
+        // const comment = new Comment();
+        // comment.addTag({
+        //     tagType: "var",
+        //     type: this.type,
+        //     name: this.name,
+        //     docs: this.docs
+        // });
+        // comment.write(writer);
     }
 
     private writeAttributesIfPresent(writer: Writer): void {

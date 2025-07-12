@@ -77,8 +77,8 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         return this.getComputedClientName();
     }
 
-    public getEnvironmentsClassReference(): rust.ClassReference {
-        return rust.classReference({
+    public getEnvironmentsClassReference(): rust.StructReference {
+        return rust.structReference({
             name: "Environments",
             namespace: this.rootNamespace
         });
@@ -110,8 +110,8 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         });
     }
 
-    public getEnvironmentClassReference(name: FernIr.Name): rust.ClassReference {
-        return rust.classReference({
+    public getEnvironmentClassReference(name: FernIr.Name): rust.StructReference {
+        return rust.structReference({
             name: "Environments",
             namespace: this.rootNamespace
         });

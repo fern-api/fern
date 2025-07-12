@@ -8,8 +8,8 @@ import { SdkGeneratorContext } from "../SdkGeneratorContext";
 export class BaseApiExceptionGenerator extends FileGenerator<RustFile, SdkCustomConfigSchema, SdkGeneratorContext> {
     public doGenerate(): RustFile {
         const class_ = rust.struct({
-            ...this.context.getBaseApiExceptionClassReference(),
-            parentClassReference: this.context.getBaseExceptionClassReference(),
+            ...this.context.getBaseApiExceptionStructReference(),
+            parentClassReference: this.context.getBaseExceptionStructReference(),
             docs: "This exception type will be thrown for any non-2XX API responses."
         });
 
@@ -26,14 +26,14 @@ export class BaseApiExceptionGenerator extends FileGenerator<RustFile, SdkCustom
         class_.addMethod(this.getToStringMethod());
 
         return new RustFile({
-            clazz: class_,
+            struct: class_,
             directory: this.context.getLocationForBaseException().directory,
             rootNamespace: this.context.getRootNamespace(),
             customConfig: this.context.customConfig
         });
     }
 
-    private getConstructorMethod(): rust.Class.Constructor {
+    private getConstructorMethod(): rust.Struct.Constructor {
         const parameters: rust.Parameter[] = [
             rust.parameter({
                 name: "message",
@@ -94,6 +94,6 @@ export class BaseApiExceptionGenerator extends FileGenerator<RustFile, SdkCustom
     }
 
     protected getFilepath(): RelativeFilePath {
-        return join(RelativeFilePath.of(`${this.context.getBaseApiExceptionClassReference().name}.php`));
+        return join(RelativeFilePath.of(`${this.context.getBaseApiExceptionStructReference().name}.rs`));
     }
 }

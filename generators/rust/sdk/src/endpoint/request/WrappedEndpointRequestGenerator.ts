@@ -33,7 +33,7 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
     private wrapper: SdkRequestWrapper;
     private serviceId: ServiceId;
     private endpoint: HttpEndpoint;
-    private classReference: rust.ClassReference;
+    private structReference: rust.StructReference;
     private location: FileLocation;
 
     public constructor({ wrapper, context, serviceId, endpoint }: WrappedEndpointRequestGenerator.Args) {
@@ -41,13 +41,13 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
         this.wrapper = wrapper;
         this.serviceId = serviceId;
         this.endpoint = endpoint;
-        this.classReference = this.context.getRequestWrapperReference(this.serviceId, this.wrapper.wrapperName);
+        this.structReference = this.context.getRequestWrapperReference(this.serviceId, this.wrapper.wrapperName);
         this.location = this.context.getLocationForWrappedRequest(this.serviceId);
     }
 
     protected doGenerate(): RustFile {
-        const clazz = rust.dataClass({
-            ...this.classReference,
+        const struct = rust.dataClass({
+            ...this.structReference,
             parentClassReference: this.context.getJsonSerializableTypeClassReference()
         });
 
@@ -64,7 +64,7 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
         if (includePathParameters) {
             for (const pathParameter of this.endpoint.allPathParameters) {
                 this.addFieldWithMethods({
-                    clazz,
+                    struct,
                     name: pathParameter.name,
                     field: rust.field({
                         name: this.context.getPropertyName(pathParameter.name),
@@ -80,7 +80,7 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
 
         for (const query of this.endpoint.queryParameters) {
             this.addFieldWithMethods({
-                clazz,
+                struct: struct,
                 name: query.name.name,
                 field: rust.field({
                     name: this.context.getPropertyName(query.name.name),
@@ -95,7 +95,7 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
 
         for (const header of [...service.headers, ...this.endpoint.headers]) {
             this.addFieldWithMethods({
-                clazz,
+                struct: struct,
                 name: header.name.name,
                 field: rust.field({
                     name: this.context.getPropertyName(header.name.name),
@@ -111,7 +111,7 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
         this.endpoint.requestBody?._visit({
             reference: (reference) => {
                 this.addFieldWithMethods({
-                    clazz,
+                    struct: struct,
                     name: this.wrapper.bodyKey,
                     field: rust.field({
                         name: this.context.getPropertyName(this.wrapper.bodyKey),
@@ -126,7 +126,7 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
             inlinedRequestBody: (request) => {
                 for (const property of request.properties) {
                     this.addFieldWithMethods({
-                        clazz,
+                        struct: struct,
                         name: property.name.name,
                         field: this.inlinePropertyToField({ property }),
                         includeGetters,
@@ -134,10 +134,10 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
                     });
                 }
                 for (const property of request.extendedProperties ?? []) {
-                    clazz.addField(this.inlinePropertyToField({ property, inherited: true }));
+                    struct.addField(this.inlinePropertyToField({ property, inherited: true }));
                 }
                 for (const declaredTypeName of request.extends) {
-                    clazz.addTrait(this.context.rustTypeMapper.convertToTraitClassReference(declaredTypeName));
+                    struct.addTrait(this.context.rustTypeMapper.convertToTraitClassReference(declaredTypeName));
                 }
             },
             fileUpload: (fileUpload) => {
@@ -145,7 +145,7 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
                     switch (property.type) {
                         case "file": {
                             this.addFieldWithMethods({
-                                clazz,
+                                struct: struct,
                                 name: property.value.key.name,
                                 field: this.filePropertyToField(property.value),
                                 includeGetters,
@@ -155,7 +155,7 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
                         }
                         case "bodyProperty": {
                             this.addFieldWithMethods({
-                                clazz,
+                                struct: struct,
                                 name: property.name.name,
                                 field: this.inlinePropertyToField({ property }),
                                 includeGetters,
@@ -174,7 +174,7 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
         });
 
         return new RustFile({
-            clazz,
+            struct: struct,
             directory: this.location.directory,
             rootNamespace: this.context.getRootNamespace(),
             customConfig: this.context.customConfig
@@ -245,32 +245,32 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
     }
 
     private addFieldWithMethods({
-        clazz,
+        struct,
         name,
         field,
         includeGetters,
         includeSetters
     }: {
-        clazz: rust.DataClass;
+        struct: rust.DataClass;
         name: Name;
         field: rust.Field;
         includeGetters: boolean;
         includeSetters: boolean;
     }): void {
         if (includeGetters) {
-            clazz.addMethod(this.context.getGetterMethod({ name, field }));
+            struct.addMethod(this.context.getGetterMethod({ name, field }));
         }
         if (includeSetters) {
-            clazz.addMethod(this.context.getSetterMethod({ name, field }));
+            struct.addMethod(this.context.getSetterMethod({ name, field }));
         }
-        clazz.addField(field);
+        struct.addField(field);
     }
 
     protected getFilepath(): RelativeFilePath {
         return join(
             this.context.project.filepaths.getSourceDirectory(),
             this.location.directory,
-            RelativeFilePath.of(this.classReference.name + ".php")
+            RelativeFilePath.of(this.structReference.name + ".rs")
         );
     }
 }

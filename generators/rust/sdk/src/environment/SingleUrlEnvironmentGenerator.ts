@@ -24,7 +24,7 @@ export class SingleUrlEnvironmentGenerator extends FileGenerator<RustFile, SdkCu
 
     public doGenerate(): RustFile {
         const enum_ = rust.enum_({
-            ...this.context.getEnvironmentsClassReference(),
+            ...this.context.getEnvironmentsStructReference(),
             backing: "string"
         });
 
@@ -36,7 +36,7 @@ export class SingleUrlEnvironmentGenerator extends FileGenerator<RustFile, SdkCu
         }
 
         return new RustFile({
-            clazz: enum_,
+            struct: enum_,
             directory: RelativeFilePath.of(""),
             rootNamespace: this.context.getRootNamespace(),
             customConfig: this.context.customConfig
@@ -46,7 +46,7 @@ export class SingleUrlEnvironmentGenerator extends FileGenerator<RustFile, SdkCu
     protected getFilepath(): RelativeFilePath {
         return join(
             this.context.project.filepaths.getSourceDirectory(),
-            RelativeFilePath.of(`${this.context.getEnvironmentsClassReference().name}.php`)
+            RelativeFilePath.of(`${this.context.getEnvironmentsStructReference().name}.rs`)
         );
     }
 }

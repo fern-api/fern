@@ -22,7 +22,7 @@ export declare namespace RawClient {
         /** The reference to the request body */
         bodyReference?: rust.CodeBlock;
         /** The reference to the request body class */
-        requestTypeClassReference: rust.ClassReference;
+        requestTypeClassReference: rust.StructReference;
         /** The reference to the options argument */
         optionsArgument?: rust.AstNode;
     }
@@ -32,7 +32,7 @@ export declare namespace RawClient {
  * Utility class that helps make calls to the RawClient.
  */
 export class RawClient {
-    public static CLASS_NAME = "RawClient";
+    public static STRUCT_NAME = "RawClient";
     public static FIELD_NAME = "client";
     public static SEND_REQUEST_METHOD_NAME = "sendRequest";
 
@@ -42,9 +42,9 @@ export class RawClient {
         this.context = context;
     }
 
-    public getClassReference(): rust.ClassReference {
-        return rust.classReference({
-            name: RawClient.CLASS_NAME,
+    public getStructReference(): rust.StructReference {
+        return rust.structReference({
+            name: RawClient.STRUCT_NAME,
             namespace: this.context.getCoreClientNamespace()
         });
     }
@@ -56,14 +56,14 @@ export class RawClient {
     public getField(): rust.Field {
         return rust.field({
             access: "private",
-            name: `$${this.getFieldName()}`,
-            type: rust.Type.reference(this.context.rawClient.getClassReference())
+            name: this.getFieldName(),
+            type: rust.Type.reference(this.context.rawClient.getStructReference())
         });
     }
 
-    public instantiate({ arguments_ }: { arguments_: Arguments }): rust.ClassInstantiation {
-        return rust.instantiateClass({
-            classReference: this.getClassReference(),
+    public instantiate({ arguments_ }: { arguments_: Arguments }): rust.StructInstantiation {
+        return rust.instantiateStruct({
+            structReference: this.getStructReference(),
             arguments_,
             multiline: true
         });
@@ -113,8 +113,8 @@ export class RawClient {
                     on: rust.codeblock(args.clientReference),
                     method: RawClient.SEND_REQUEST_METHOD_NAME,
                     arguments_: [
-                        rust.instantiateClass({
-                            classReference: args.requestTypeClassReference,
+                        rust.instantiateStruct({
+                            structReference: args.requestTypeClassReference,
                             arguments_,
                             multiline: true
                         }),

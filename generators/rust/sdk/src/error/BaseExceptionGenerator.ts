@@ -8,12 +8,12 @@ import { SdkGeneratorContext } from "../SdkGeneratorContext";
 export class BaseExceptionGenerator extends FileGenerator<RustFile, SdkCustomConfigSchema, SdkGeneratorContext> {
     public doGenerate(): RustFile {
         const class_ = rust.struct({
-            ...this.context.getBaseExceptionClassReference(),
+            ...this.context.getBaseExceptionStructReference(),
             parentClassReference: this.context.getExceptionClassReference(),
             docs: "Base exception class for all exceptions thrown by the SDK."
         });
         return new RustFile({
-            clazz: class_,
+            struct: class_,
             directory: this.context.getLocationForBaseException().directory,
             rootNamespace: this.context.getRootNamespace(),
             customConfig: this.context.customConfig
@@ -21,6 +21,6 @@ export class BaseExceptionGenerator extends FileGenerator<RustFile, SdkCustomCon
     }
 
     protected getFilepath(): RelativeFilePath {
-        return join(RelativeFilePath.of(`${this.context.getBaseExceptionClassReference().name}.php`));
+        return join(RelativeFilePath.of(`${this.context.getBaseExceptionStructReference().name}.rs`));
     }
 }

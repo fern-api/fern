@@ -66,9 +66,9 @@ export class RustAttributeMapper {
         return attributes;
     }
 
-    public getUnionTypeClassRepresentation(arguments_: rust.AstNode[]): rust.ClassInstantiation {
-        return rust.instantiateClass({
-            classReference: this.context.getUnionClassReference(),
+    public getUnionTypeClassRepresentation(arguments_: rust.AstNode[]): rust.StructInstantiation {
+        return rust.instantiateStruct({
+            structReference: this.context.getUnionClassReference(),
             arguments_
         });
     }
@@ -133,8 +133,8 @@ export class RustAttributeMapper {
                 return this.getUnionTypeClassRepresentation(unionTypeParameters);
             }
             case "optional":
-                return rust.instantiateClass({
-                    classReference: this.context.getUnionClassReference(),
+                return rust.instantiateStruct({
+                    structReference: this.context.getUnionClassReference(),
                     arguments_: [this.getTypeAttributeArgument(type.internalType.value), rust.codeblock("'null'")]
                 });
             case "null":

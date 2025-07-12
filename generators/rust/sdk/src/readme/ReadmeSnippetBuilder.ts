@@ -79,12 +79,12 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         );
         return exceptionHandlingEndpoints.map((exceptionHandlingEndpoint) =>
             this.writeCode(`
-use ${this.context.getRootNamespace()}\\Exceptions\\${this.context.getBaseApiExceptionClassReference().name};
-use ${this.context.getRootNamespace()}\\Exceptions\\${this.context.getBaseExceptionClassReference().name};
+use ${this.context.getRootNamespace()}\\Exceptions\\${this.context.getBaseApiExceptionStructReference().name};
+use ${this.context.getRootNamespace()}\\Exceptions\\${this.context.getBaseExceptionStructReference().name};
 
 try {
     $response = ${this.getMethodCall(exceptionHandlingEndpoint)}(...);
-} catch (${this.context.getBaseApiExceptionClassReference().name} $e) {
+} catch (${this.context.getBaseApiExceptionStructReference().name} $e) {
     echo 'API Exception occurred: ' . $e->getMessage() . "\\n";
     echo 'Status Code: ' . $e->getCode() . "\\n";
     echo 'Response Body: ' . $e->getBody() . "\\n";
@@ -172,13 +172,13 @@ ${this.context.getClientVariableName()} = new ${this.context.getRootClientStruct
                 entries: [rust.codeblock((w) => w.write("'baseUrl' => 'https://api.example.com'"))]
             });
 
-            const clientClassReference = rust.classReference({
+            const clientClassReference = rust.structReference({
                 name: this.context.getRootClientStructName(),
                 namespace: this.context.getRootNamespace()
             });
 
-            const clientInstantiation = rust.instantiateClass({
-                classReference: clientClassReference,
+            const clientInstantiation = rust.instantiateStruct({
+                structReference: clientClassReference,
                 arguments_: [rust.codeblock((w) => w.write("'<token>'")), optionsArray],
                 multiline: true
             });

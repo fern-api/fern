@@ -18,30 +18,30 @@ export class GuzzleClient {
         this.context = context;
     }
 
-    public getClientClassReference(): rust.ClassReference {
-        return rust.classReference({
+    public getClientClassReference(): rust.StructReference {
+        return rust.structReference({
             name: GuzzleClient.CLIENT_CLASS_NAME,
             namespace: GuzzleClient.NAMESPACE
         });
     }
 
-    public getClientInterfaceClassReference(): rust.ClassReference {
-        return rust.classReference({
+    public getClientInterfaceClassReference(): rust.StructReference {
+        return rust.structReference({
             name: GuzzleClient.CLIENT_INTERFACE_CLASS_NAME,
             namespace: GuzzleClient.NAMESPACE
         });
     }
 
-    public getRequestExceptionClassReference(): rust.ClassReference {
-        return rust.classReference({
+    public getRequestExceptionClassReference(): rust.StructReference {
+        return rust.structReference({
             name: GuzzleClient.REQUEST_EXCEPTION_CLASS_NAME,
             namespace: GuzzleClient.EXCEPTION_NAMESPACE
         });
     }
 
-    public instantiate(): rust.ClassInstantiation {
-        return rust.instantiateClass({
-            classReference: this.getClientClassReference(),
+    public instantiate(): rust.StructInstantiation {
+        return rust.instantiateStruct({
+            structReference: this.getClientClassReference(),
             arguments_: []
         });
     }

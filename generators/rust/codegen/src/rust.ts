@@ -3,9 +3,6 @@ import { Ternary } from "@fern-api/browser-compatible-base-generator";
 import {
     Array as Array_,
     Attribute,
-    Class,
-    ClassInstantiation,
-    ClassReference,
     CodeBlock,
     Enum,
     Field,
@@ -13,6 +10,9 @@ import {
     Method,
     MethodInvocation,
     Parameter,
+    Struct,
+    StructInstantiation,
+    StructReference,
     Trait
 } from "./ast";
 import { DataClass } from "./ast/DataClass";
@@ -28,16 +28,16 @@ export function attribute(args: Attribute.Args): Attribute {
     return new Attribute(args);
 }
 
-export function struct(args: Class.Args): Class {
-    return new Class(args);
+export function struct(args: Struct.Args): Struct {
+    return new Struct(args);
 }
 
 export function trait(args: Trait.Args): Trait {
     return new Trait(args);
 }
 
-export function classReference(args: ClassReference.Args): ClassReference {
-    return new ClassReference(args);
+export function structReference(args: StructReference.Args): StructReference {
+    return new StructReference(args);
 }
 
 export function codeblock(arg: CodeBlock.Arg): CodeBlock {
@@ -56,18 +56,18 @@ export function field(args: Field.Args): Field {
     return new Field(args);
 }
 
-export function instantiateClass(args: ClassInstantiation.Args): ClassInstantiation {
-    return new ClassInstantiation(args);
+export function instantiateStruct(args: StructInstantiation.Args): StructInstantiation {
+    return new StructInstantiation(args);
 }
 
 export function invokeMethod(args: MethodInvocation.Args): MethodInvocation {
     return new MethodInvocation(args);
 }
 
-export function throwException(args: ClassInstantiation.Args): AstNode {
+export function throwException(args: StructInstantiation.Args): AstNode {
     return codeblock((writer) => {
         writer.write("throw ");
-        writer.writeNode(instantiateClass(args));
+        writer.writeNode(instantiateStruct(args));
     });
 }
 
@@ -118,11 +118,11 @@ export {
     Access,
     Array,
     Attribute,
-    Class,
+    Struct,
     type ConstructorField,
     Trait,
-    ClassInstantiation,
-    ClassReference,
+    StructInstantiation,
+    StructReference,
     CodeBlock,
     DataClass,
     Enum,

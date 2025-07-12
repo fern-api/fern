@@ -17,7 +17,7 @@ import { ModelGeneratorContext } from "../ModelGeneratorContext";
 
 export class UnionGenerator extends FileGenerator<RustFile, ModelCustomConfigSchema, ModelGeneratorContext> {
     private readonly typeDeclaration: TypeDeclaration;
-    private readonly classReference: rust.ClassReference;
+    private readonly classReference: rust.StructReference;
     constructor(
         context: ModelGeneratorContext,
         typeDeclaration: TypeDeclaration,
@@ -95,7 +95,7 @@ export class UnionGenerator extends FileGenerator<RustFile, ModelCustomConfigSch
         clazz.addMethod(this.jsonDeserializeMethod());
 
         return new RustFile({
-            clazz,
+            struct: clazz,
             rootNamespace: this.context.getRootNamespace(),
             directory: this.context.getLocationForTypeId(this.typeDeclaration.name.typeId).directory,
             customConfig: this.context.customConfig
@@ -248,8 +248,8 @@ export class UnionGenerator extends FileGenerator<RustFile, ModelCustomConfigSch
                     assertNever(variant.shape);
             }
 
-            const constructorCall = rust.instantiateClass({
-                classReference: this.classReference,
+            const constructorCall = rust.instantiateStruct({
+                structReference: this.classReference,
                 arguments_: [rust.map({ entries: constructorArgs, multiline: true })]
             });
 
@@ -350,7 +350,7 @@ export class UnionGenerator extends FileGenerator<RustFile, ModelCustomConfigSch
         return rust.codeblock((writer) => {
             writer.writeNode(
                 rust.throwException({
-                    classReference: this.context.getExceptionClassReference(),
+                    structReference: this.context.getExceptionClassReference(),
                     arguments_: [
                         rust.codeblock((writer) => {
                             writer.writeNode(errorMessage);
@@ -896,7 +896,7 @@ export class UnionGenerator extends FileGenerator<RustFile, ModelCustomConfigSch
                 rust.codeblock((_writer) => {
                     _writer.writeNode(this.valueGetter());
                     _writer.write(" instanceof ");
-                    _writer.writeNode(rust.classReference(this.context.getJsonSerializableTypeClassReference()));
+                    _writer.writeNode(rust.structReference(this.context.getJsonSerializableTypeClassReference()));
                 })
             );
             writer.write("$value = ");
@@ -981,7 +981,7 @@ export class UnionGenerator extends FileGenerator<RustFile, ModelCustomConfigSch
                 writer.controlFlow("if", negation);
                 writer.writeNodeStatement(
                     rust.throwException({
-                        classReference: this.context.getExceptionClassReference(),
+                        structReference: this.context.getExceptionClassReference(),
                         arguments_: [rust.codeblock('"Unexpected non-array decoded type: " . gettype($decodedJson)')]
                     })
                 );

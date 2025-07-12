@@ -120,7 +120,7 @@ export class RootClientGenerator extends FileGenerator<RustFile, SdkCustomConfig
     }: {
         constructorParameters: ConstructorParameters;
         subpackages: Subpackage[];
-    }): rust.Class.Constructor {
+    }): rust.Struct.Constructor {
         const parameters: rust.Parameter[] = [];
         for (const param of [...constructorParameters.required, ...constructorParameters.optional]) {
             parameters.push(
@@ -145,7 +145,7 @@ export class RootClientGenerator extends FileGenerator<RustFile, SdkCustomConfig
             rust.parameter({
                 name: this.context.getClientOptionsName(),
                 type: rust.Type.optional(this.context.getClientOptionsType()),
-                initializer: rust.codeblock("null")
+                initializer: rust.codeblock("")
             })
         );
 
@@ -294,8 +294,8 @@ export class RootClientGenerator extends FileGenerator<RustFile, SdkCustomConfig
                 for (const subpackage of subpackages) {
                     writer.write(`$this->${subpackage.name.camelCase.safeName} = `);
                     writer.writeNodeStatement(
-                        rust.instantiateClass({
-                            classReference: this.context.getSubpackageClassReference(subpackage),
+                        rust.instantiateStruct({
+                            structReference: this.context.getSubpackageStructReference(subpackage),
                             arguments_: [
                                 rust.codeblock(`$this->${this.context.rawClient.getFieldName()}`),
                                 rust.codeblock(`$this->${this.context.getClientOptionsName()}`)
@@ -522,9 +522,9 @@ export class RootClientGenerator extends FileGenerator<RustFile, SdkCustomConfig
             .filter((subpackage) => this.context.shouldGenerateSubpackageClient(subpackage));
     }
 
-    private newRootClientFile(class_: rust.Class): RustFile {
+    private newRootClientFile(struct: rust.Struct): RustFile {
         return new RustFile({
-            clazz: class_,
+            struct,
             directory: RelativeFilePath.of(""),
             rootNamespace: this.context.getRootNamespace(),
             customConfig: this.context.customConfig

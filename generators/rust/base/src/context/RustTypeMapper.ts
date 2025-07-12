@@ -62,15 +62,15 @@ export class RustTypeMapper {
         }
     }
 
-    public convertToClassReference(declaredTypeName: { typeId: TypeId; name: Name }): rust.ClassReference {
-        return new rust.ClassReference({
+    public convertToClassReference(declaredTypeName: { typeId: TypeId; name: Name }): rust.StructReference {
+        return new rust.StructReference({
             name: this.context.getClassName(declaredTypeName.name),
             namespace: this.context.getLocationForTypeId(declaredTypeName.typeId).namespace
         });
     }
 
-    public convertToTraitClassReference(declaredTypeName: { typeId: TypeId; name: Name }): rust.ClassReference {
-        return new rust.ClassReference({
+    public convertToTraitClassReference(declaredTypeName: { typeId: TypeId; name: Name }): rust.StructReference {
+        return new rust.StructReference({
             name: this.context.getClassName(declaredTypeName.name),
             namespace: this.context.getTraitLocationForTypeId(declaredTypeName.typeId).namespace
         });
