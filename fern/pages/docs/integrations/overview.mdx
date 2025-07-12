@@ -1,9 +1,35 @@
 ---
-title: "Integrations"
-description: "Integrate with third party platforms for analytics, support, etc."
+title: Integrations
+description: Integrate with third party platforms for analytics, support, and more.
 ---
 
-<CardGroup cols={2}>
+## Analytics
+
+<CardGroup cols={3}>
+
+<Card
+  title="FullStory"
+  href="/learn/docs/integrations/analytics/fullstory"
+  horizontal
+  icon={<img src="https://cdn.brandfetch.io/idRtIBDum6/w/400/h/400/theme/dark/icon.jpeg" />}
+  iconSize={12}
+/>
+
+<Card
+  title="Google Analytics"
+  href="/learn/docs/integrations/analytics/google"
+  horizontal
+  icon={<img src="https://cdn.brandfetch.io/idM4MWIxcq/w/400/h/400/theme/dark/icon.jpeg" />}
+  iconSize={12}
+/>
+
+<Card
+  title="Mixpanel"
+  href="/learn/docs/integrations/analytics/mixpanel"
+  horizontal
+  icon={<img src="https://cdn.brandfetch.io/idJq4ELq1J/w/400/h/400/theme/dark/icon.jpeg" />}
+  iconSize={12}
+/>
 
 <Card
   title="PostHog"
@@ -23,19 +49,31 @@ description: "Integrate with third party platforms for analytics, support, etc."
   iconSize={12}
 />
 
-<Card
-  title="FullStory"
-  href="/learn/docs/integrations/analytics/fullstory"
-  horizontal
-  icon={<img src="https://cdn.brandfetch.io/idRtIBDum6/w/400/h/400/theme/dark/icon.jpeg" />}
-  iconSize={12}
-/>
+</CardGroup>
+
+## Support
+
+<CardGroup cols={3}>
 
 <Card
   title="Intercom"
   href="/learn/docs/integrations/support/intercom"
   horizontal
   icon={<img src="https://cdn.brandfetch.io/idYJNDWF1m/theme/dark/symbol.svg" />}
+  iconSize={12}
+/>
+
+</CardGroup>
+
+## Other
+
+<CardGroup cols={3}>
+
+<Card
+  title="Feature Flags"
+  href="/learn/docs/integrations/launchdarkly"
+  horizontal
+  icon={<img src="https://cdn.brandfetch.io/idGnY8X6g7/w/400/h/400/theme/dark/icon.jpeg" />}
   iconSize={12}
 />
 
@@ -51,10 +89,12 @@ description: "Integrate with third party platforms for analytics, support, etc."
 
 ## Enabling Analytics
 
-You can define your analytics configuration in `docs.yml`. You only need to include entries for the platforms you want to connect.
+Most analytics integrations can be configured directly in `docs.yml`. You only need to include entries for the platforms you want to connect.
 
 ```yaml docs.yml
 analytics:
+  ga4:
+    measurement-id: ${GA4_MEASUREMENT_ID}
   posthog:
     api-key: ${POSTHOG_API_KEY}
     endpoint: https://self.hosted.posthog.com/
@@ -73,13 +113,13 @@ If your docs configuration is public, then we do not advise adding secret values
 Instead, you can reference an environment variable by using the syntax `${VARIABLE_NAME}`.
 
 <Note>
-If you are using GitHub Workflows to trigger docs generation, you must make sure that the environment variables
-are available during the workflow run.
+If you are using GitHub Workflows to trigger docs generation, you must make sure that the environment variables are available during the workflow run.
 
-```yaml {4}
+```yaml {4,5}
 - name: Publish Docs
   env:
     FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+    GA4_MEASUREMENT_ID: ${{ secrets.GA4_MEASUREMENT_ID }}
     POSTHOG_API_KEY: ${{ secrets.POSTHOG_PROJECT_API_KEY }}
   run: |
     npm install -g fern-api
@@ -91,6 +131,6 @@ are available during the workflow run.
 ## Postman
 
 <Info>
-  The Postman integration is not configured in `docs.yml`. Check out this [page](/learn/docs/integrations/postman) to
+  The Postman integration is not configured in `docs.yml` and is instead configured in `generators.yml`. Check out this [page](/learn/docs/integrations/postman) to
   learn more.
 </Info>
