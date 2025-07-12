@@ -7,7 +7,7 @@ import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { EndpointId, FeatureId, FernFilepath, HttpEndpoint, Name } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { IntermediateRepresentation, TypeDeclaration, Type, TypeId, SingleUnionType, SingleUnionTypeProperties } from "@fern-fern/ir-sdk/api";
+import { IntermediateRepresentation, TypeDeclaration, Type, TypeId, TypeReference, SingleUnionType, SingleUnionTypeProperties } from "@fern-fern/ir-sdk/api";
 import { union } from "@fern-fern/generator-cli-sdk/core/schemas";
 
 interface EndpointWithFilepath {
@@ -17,16 +17,18 @@ interface EndpointWithFilepath {
 
 type DiscriminatedUnionTypeSnippetInfo = {
     unionType: java.ClassReference;
-    subtype1Key: string;
-    subType1: java.ClassReference;
-    subtype2Key: string;
-    subType2: java.ClassReference;
+    subType1KeyCamelCase: string;
+    subType1KeyPascalCase: string;
+    subType1: java.ClassReference | string;
+    subType2KeyCamelCase: string;
+    subType2KeyPascalCase: string;
+    subType2: java.ClassReference | string;
 }
 
 type UndiscriminatedUnionTypeSnippetInfo = {
     unionType: java.ClassReference;
-    subType1: java.ClassReference;
-    subType2: java.ClassReference;
+    subType1: java.ClassReference | string;
+    subType2: java.ClassReference | string;
 }
 
 export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
@@ -733,7 +735,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     // private static foo(classReference: java.ClassReference, typeDeclaration: TypeDeclaration): void {
     //     const bar = typeDeclaration.shape._visit(typeDeclaration.shape, {
     //         union: () => {
-    //             return typeDeclaration.shape.union.subtypes[0].name;
+    //             return typeDeclaration.shape.union.subTypes[0].name;
     //         },
     //         _other: () => {
     //             return undefined;
@@ -742,68 +744,65 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
     // }
 
-    private typeIdFromSingleUnionType(singleUnionType: SingleUnionType): TypeId | undefined {
+    private typeFromTypeReference(typeReference: TypeReference): java.ClassReference | string | undefined {
+        return TypeReference._visit(typeReference, {
+            container: (value) => undefined,
+            named: (value) => undefined,
+            primitive: (value) => undefined,
+            unknown: () => undefined,
+            _other: () => undefined,
+        })
+    }
+
+    private typeFromSingleUnionType(singleUnionType: SingleUnionType | undefined): java.ClassReference | string | undefined {
+        if (singleUnionType == null) {
+            return undefined;
+        }
         const typeId = SingleUnionTypeProperties._visit(singleUnionType.shape, {
-            singleProperty: (singleProperty) => {
-                return singleProperty.name.wireValue;
-            },
-            samePropertiesAsObject: (val) => val.typeId,
+            singleProperty: (singleProperty) => undefined,
+            samePropertiesAsObject: (val) => val.name.pascalCase.safeName,
             noProperties: () => undefined,
-            _other: () => {
-                throw new Error("TODO: handle other single union type properties");
-            }
+            _other: () => undefined,
         })
         return typeId;
     }
 
     private findDiscriminatedUnionTypeSnippetInfo(): DiscriminatedUnionTypeSnippetInfo | undefined {
         for (const typeDeclaration of Object.values(this.context.ir.types)) {
-            const isUnionType = Type._visit(typeDeclaration.shape, {
-                object: () => false,
-                enum: () => false,
+            const unionTypeInfo = Type._visit(typeDeclaration.shape, {
+                object: () => undefined,
+                enum: () => undefined,
                 union: (unionTypeDeclaration) => {
-                    if (unionTypeDeclaration.types.length < 2 || unionTypeDeclaration.types[0] === undefined || unionTypeDeclaration.types[1] === undefined) {
-                        return false;
+                    if (unionTypeDeclaration.types.length >= 2 || unionTypeDeclaration.types[0] === undefined || unionTypeDeclaration.types[1] === undefined) {
+                        return undefined;
                     }
-                    const subType2Key = unionTypeDeclaration.types[1].discriminantValue.name.camelCase.safeName;
-                    return {
-                        unionType: this.context.getJavaClassReferenceFromDeclaration({ typeDeclaration }),
-                        subtype1KeyCamelCase: unionTypeDeclaration.types[0].discriminantValue.name.camelCase.safeName,
-                        subtype1KeyPascalCase: unionTypeDeclaration.types[0].discriminantValue.name.pascalCase.safeName,
-                        subtype1: this.context.getJavaClassReferenceFromDeclaration({ typeDeclaration }),
-                        subtype2KeyCamelCase: unionTypeDeclaration.types[1].discriminantValue.name.camelCase.safeName,
-                        subtype2KeyPascalCase: unionTypeDeclaration.types[1].discriminantValue.name.pascalCase.safeName,
-                        subtype2: this.context.getJavaClassReferenceFromDeclaration({ typeDeclaration })
-                    }
-                },
-                alias: () => false,
-                undiscriminatedUnion: ({ members }) => {
-                    if (members.length < 2 || members[0] === undefined || members[1] === undefined) {
-                        return false;
+                    const subType1 = this.typeFromSingleUnionType(unionTypeDeclaration.types[0]);
+                    const subType2 = this.typeFromSingleUnionType(unionTypeDeclaration.types[1]);
+                    if (subType1 === undefined || subType2 === undefined) {
+                        return undefined;
                     }
                     return {
                         unionType: this.context.getJavaClassReferenceFromDeclaration({ typeDeclaration }),
-                        subtype1Key: members[0]
-                        subType1: this.context.getJavaClassReferenceFromDeclaration({ typeDeclaration }),
-                        subtype2Key: typeDeclaration.members[1].name,
-                        subType2: this.context.getJavaClassReferenceFromDeclaration({ typeDeclaration })
+                        subType1,
+                        subType1KeyCamelCase: unionTypeDeclaration.types[0].discriminantValue.name.camelCase.safeName,
+                        subType1KeyPascalCase: unionTypeDeclaration.types[0].discriminantValue.name.pascalCase.safeName,
+                        subType2,
+                        subType2KeyCamelCase: unionTypeDeclaration.types[1].discriminantValue.name.camelCase.safeName,
+                        subType2KeyPascalCase: unionTypeDeclaration.types[1].discriminantValue.name.pascalCase.safeName,
                     }
                 },
-                _other: () => false
+                alias: () => undefined,
+                undiscriminatedUnion: () => undefined,
+                _other: () => undefined
 
             });
-            if (isUnionType) {
-                return {
-                    unionType: this.context.getJavaClassReferenceFromDeclaration({ typeDeclaration }),
-                    subtype1Key: typeDeclaration.shape.
-                    subType1: this.context.getJavaClassReferenceFromDeclaration({ typeDeclaration }),
-                    subtype2Key: "bar",
-                    subType2: this.context.getJavaClassReferenceFromDeclaration({ typeDeclaration })
-                }
+            if (unionTypeInfo !== undefined) {
+                return unionTypeInfo;
             }
         }
         return undefined;
     }
+
 
     private findUndiscriminatedUnionTypeSnippetInfo(): UndiscriminatedUnionTypeSnippetInfo | undefined {
         for (const typeDeclaration of Object.values(this.context.ir.types)) {
@@ -816,20 +815,24 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                     if (members.length < 2 || members[0] === undefined || members[1] === undefined) {
                         return undefined;
                     }
-                    const foo = members[0].type.type
+                    const subType1 = this.typeFromTypeReference(members[0].type);
+                    const subType2 = this.typeFromTypeReference(members[1].type);
+                    if (subType1 === undefined || subType2 === undefined) {
+                        return undefined;
+                    }
                     return {
                         unionType: this.context.getJavaClassReferenceFromDeclaration({ typeDeclaration }),
-                        subType1: this.context.getJavaClassReferenceFromDeclaration({ typeDeclaration }),
-                        subType2: this.context.getJavaClassReferenceFromDeclaration({ typeDeclaration })
+                        subType1,
+                        subType2,
                     }
                 },
                 _other: () => undefined
             });
-            if (unionTypeInfo) {
-                // const subType1Name = typeDeclaration.shape.union.subtypes[0].name;
+            if (unionTypeInfo !== undefined) {
                 return unionTypeInfo;
             }
         }
         return undefined;
     }
+
 }
