@@ -44,6 +44,29 @@ export interface UnionServiceMethods {
         },
         next: express.NextFunction,
     ): void | Promise<void>;
+    duplicateTypesUnion(
+        req: express.Request<
+            never,
+            SeedUndiscriminatedUnions.UnionWithDuplicateTypes,
+            SeedUndiscriminatedUnions.UnionWithDuplicateTypes,
+            never
+        >,
+        res: {
+            send: (responseBody: SeedUndiscriminatedUnions.UnionWithDuplicateTypes) => Promise<void>;
+            cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+            locals: any;
+        },
+        next: express.NextFunction,
+    ): void | Promise<void>;
+    nestedUnions(
+        req: express.Request<never, string, SeedUndiscriminatedUnions.NestedUnionRoot, never>,
+        res: {
+            send: (responseBody: string) => Promise<void>;
+            cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+            locals: any;
+        },
+        next: express.NextFunction,
+    ): void | Promise<void>;
 }
 
 export class UnionService {
@@ -214,6 +237,96 @@ export class UnionService {
                     if (error instanceof errors.SeedUndiscriminatedUnionsError) {
                         console.warn(
                             `Endpoint 'call' unexpectedly threw ${error.constructor.name}.` +
+                                ` If this was intentional, please add ${error.constructor.name} to` +
+                                " the endpoint's errors list in your Fern Definition.",
+                        );
+                        await error.send(res);
+                    } else {
+                        res.status(500).json("Internal Server Error");
+                    }
+                    next(error);
+                }
+            } else {
+                res.status(422).json({
+                    errors: request.errors.map(
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message,
+                    ),
+                });
+                next(request.errors);
+            }
+        });
+        this.router.post("/duplicate", async (req, res, next) => {
+            const request = serializers.UnionWithDuplicateTypes.parse(req.body);
+            if (request.ok) {
+                req.body = request.value;
+                try {
+                    await this.methods.duplicateTypesUnion(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    serializers.UnionWithDuplicateTypes.jsonOrThrow(responseBody, {
+                                        unrecognizedObjectKeys: "strip",
+                                    }),
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
+                        },
+                        next,
+                    );
+                    if (!res.writableEnded) {
+                        next();
+                    }
+                } catch (error) {
+                    if (error instanceof errors.SeedUndiscriminatedUnionsError) {
+                        console.warn(
+                            `Endpoint 'duplicateTypesUnion' unexpectedly threw ${error.constructor.name}.` +
+                                ` If this was intentional, please add ${error.constructor.name} to` +
+                                " the endpoint's errors list in your Fern Definition.",
+                        );
+                        await error.send(res);
+                    } else {
+                        res.status(500).json("Internal Server Error");
+                    }
+                    next(error);
+                }
+            } else {
+                res.status(422).json({
+                    errors: request.errors.map(
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message,
+                    ),
+                });
+                next(request.errors);
+            }
+        });
+        this.router.post("/nested", async (req, res, next) => {
+            const request = serializers.NestedUnionRoot.parse(req.body);
+            if (request.ok) {
+                req.body = request.value;
+                try {
+                    await this.methods.nestedUnions(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    serializers.union.nestedUnions.Response.jsonOrThrow(responseBody, {
+                                        unrecognizedObjectKeys: "strip",
+                                    }),
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
+                        },
+                        next,
+                    );
+                    if (!res.writableEnded) {
+                        next();
+                    }
+                } catch (error) {
+                    if (error instanceof errors.SeedUndiscriminatedUnionsError) {
+                        console.warn(
+                            `Endpoint 'nestedUnions' unexpectedly threw ${error.constructor.name}.` +
                                 ` If this was intentional, please add ${error.constructor.name} to` +
                                 " the endpoint's errors list in your Fern Definition.",
                         );
