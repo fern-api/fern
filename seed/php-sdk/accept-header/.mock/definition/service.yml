@@ -1,0 +1,16 @@
+errors:
+  NotFoundError:
+    docs: Admin not found
+    status-code: 404
+    type: unknown
+
+service:
+  auth: true
+  base-path: /container
+  endpoints:
+    endpoint:
+      errors:
+        - NotFoundError
+      method: DELETE
+      path: /
+

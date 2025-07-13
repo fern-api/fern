@@ -1,0 +1,91 @@
+types:
+  Email: nullable<string>
+  UserId: string
+
+  WeirdNumber:
+    discriminated: false
+    union:
+      - integer
+      - nullable<float>
+      - optional<nullable<string>>
+      - double
+
+  User:
+    properties:
+      name: string
+      id: UserId
+      tags: nullable<list<string>>
+      metadata: optional<nullable<Metadata>>
+      email: Email
+      favorite-number: WeirdNumber
+      numbers: optional<nullable<list<integer>>>
+      strings: optional<nullable<map<string, unknown>>>
+
+  Status:
+    union:
+      active: {}
+      archived: nullable<datetime>
+      soft-deleted: optional<datetime>
+
+  Metadata:
+    properties:
+      createdAt: datetime
+      updatedAt: datetime
+      avatar: nullable<string>
+      activated: optional<nullable<boolean>>
+      status: Status
+      values: optional<map<string, optional<nullable<string>>>>
+
+service:
+  base-path: /users
+  auth: false
+  endpoints:
+    getUsers:
+      path: ""
+      method: GET
+      request:
+        name: GetUsersRequest
+        query-parameters:
+          usernames:
+            type: optional<string>
+            allow-multiple: true
+          avatar: optional<string>
+          activated:
+            type: optional<boolean>
+            allow-multiple: true
+          tags:
+            type: optional<nullable<string>>
+            allow-multiple: true
+          extra: optional<nullable<boolean>>
+      response: list<User>
+
+    createUser:
+      path: ""
+      method: POST
+      request:
+        name: CreateUserRequest
+        body:
+          properties:
+            username: string
+            tags: optional<list<string>>
+            metadata: optional<Metadata>
+            avatar:
+              type: optional<nullable<string>>
+      response: User
+
+    deleteUser:
+      method: DELETE
+      path: ""
+      request:
+        name: DeleteUserRequest
+        body:
+          properties:
+            username:
+              docs: >-
+                The user to delete.
+              type: optional<nullable<string>>
+              validation:
+                minLength: 2
+                maxLength: 1024
+      response:
+        type: boolean
