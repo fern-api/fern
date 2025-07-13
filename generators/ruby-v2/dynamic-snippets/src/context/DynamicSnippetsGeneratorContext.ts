@@ -29,7 +29,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         });
     }
 
-    public getRootClientClassReference(): any {
+    public getRootClientClassReference(): ruby.ClassReference {
         return ruby.classReference({
             name: this.getRootClientClassName(),
             modules: [this.getRootModuleName()]

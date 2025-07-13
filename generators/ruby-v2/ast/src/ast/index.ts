@@ -14,4 +14,6 @@ export { PositionalSplatParameter } from "./PositionalSplatParameter";
 export { Type } from "./Type";
 export { YieldParameter } from "./YieldParameter";
 export { TypeLiteral } from "./TypeLiteral";
-
+export { TypeParameter } from "./TypeParameter";
+export { ClassInstantiation } from "./ClassInstantiation";
+export { ClassReference } from "./ClassReference";

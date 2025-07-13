@@ -45,7 +45,7 @@ export class EndpointSnippetGenerator {
 
     private buildCodeBlock({
         endpoint,
-        snippet,
+        snippet
     }: {
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
@@ -69,12 +69,14 @@ export class EndpointSnippetGenerator {
 
             const clientClassRef = this.context.getRootClientClassReference();
             const builderArgs = this.getRootClientBuilderArgs({ endpoint, snippet });
-    
+
             writer.write(`${CLIENT_VAR_NAME} = `);
-            writer.writeNode(ruby.instantiateClass({
-                classReference: clientClassRef,
-                arguments_: builderArgs,
-            }));
+            writer.writeNode(
+                ruby.instantiateClass({
+                    classReference: clientClassRef,
+                    arguments_: builderArgs
+                })
+            );
         });
     }
 
@@ -85,7 +87,7 @@ export class EndpointSnippetGenerator {
     }: {
         baseUrl: string | undefined;
         environment: FernIr.dynamic.EnvironmentValues | undefined;
-    }): ruby.KeywordArgument[] {            
+    }): ruby.KeywordArgument[] {
         if (baseUrl != null && environment != null) {
             this.context.errors.add({
                 severity: "CRITICAL",

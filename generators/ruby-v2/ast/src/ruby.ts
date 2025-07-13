@@ -1,4 +1,6 @@
 import {
+    ClassInstantiation,
+    ClassReference,
     Class_,
     CodeBlock,
     Comment,
@@ -9,13 +11,20 @@ import {
     Module,
     PositionalParameter,
     PositionalSplatParameter,
+    TypeParameter,
     YieldParameter
 } from "./ast";
-import { ClassInstantiation } from "./ast/ClassInstantiation";
-import { ClassReference } from "./ast/ClassReference";
-import { TypeParameter } from "./ast/TypeParameter";
 
-export { CodeBlock, KeywordArgument, Method, Parameter, TypeLiteral } from "./ast";
+export {
+    ClassInstantiation,
+    ClassReference,
+    CodeBlock,
+    KeywordArgument,
+    Method,
+    Parameter,
+    TypeLiteral,
+    TypeParameter
+} from "./ast";
 export { AstNode } from "./ast/core/AstNode";
 
 export function codeblock(arg: CodeBlock.Arg): CodeBlock {
@@ -75,4 +84,3 @@ export function instantiateClass(args: ClassInstantiation.Args): ClassInstantiat
 export function keywordArgument(args: KeywordArgument.Args): KeywordArgument {
     return new KeywordArgument(args);
 }
-
