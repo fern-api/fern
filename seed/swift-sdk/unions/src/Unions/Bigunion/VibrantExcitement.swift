@@ -1,3 +1,3 @@
-public struct VibrantExcitement {
+public struct VibrantExcitement: Codable, Hashable {
     public let value: String
 }

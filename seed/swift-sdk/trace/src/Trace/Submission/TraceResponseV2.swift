@@ -1,4 +1,4 @@
-public struct TraceResponseV2 {
+public struct TraceResponseV2: Codable, Hashable {
     public let submissionId: SubmissionId
     public let lineNumber: Int
     public let file: TracedFile

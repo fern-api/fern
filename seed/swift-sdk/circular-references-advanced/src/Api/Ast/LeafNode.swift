@@ -1,2 +1,2 @@
-public struct LeafNode {
+public struct LeafNode: Codable, Hashable {
 }

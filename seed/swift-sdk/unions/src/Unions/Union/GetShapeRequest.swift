@@ -1,3 +1,3 @@
-public struct GetShapeRequest {
+public struct GetShapeRequest: Codable, Hashable {
     public let id: String
 }

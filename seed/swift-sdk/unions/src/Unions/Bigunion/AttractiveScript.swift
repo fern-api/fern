@@ -1,3 +1,3 @@
-public struct AttractiveScript {
+public struct AttractiveScript: Codable, Hashable {
     public let value: String
 }

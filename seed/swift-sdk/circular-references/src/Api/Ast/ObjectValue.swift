@@ -1,2 +1,2 @@
-public struct ObjectValue {
+public struct ObjectValue: Codable, Hashable {
 }

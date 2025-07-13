@@ -1,3 +1,3 @@
-public struct WorkspaceSubmissionStatusV2 {
+public struct WorkspaceSubmissionStatusV2: Codable, Hashable {
     public let updates: [WorkspaceSubmissionUpdate]
 }

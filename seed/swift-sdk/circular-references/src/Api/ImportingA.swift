@@ -1,3 +1,3 @@
-public struct ImportingA {
+public struct ImportingA: Codable, Hashable {
     public let a: A?
 }

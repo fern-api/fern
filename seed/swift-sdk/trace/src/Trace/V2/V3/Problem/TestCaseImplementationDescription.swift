@@ -1,3 +1,3 @@
-public struct TestCaseImplementationDescription {
+public struct TestCaseImplementationDescription: Codable, Hashable {
     public let boards: [TestCaseImplementationDescriptionBoard]
 }

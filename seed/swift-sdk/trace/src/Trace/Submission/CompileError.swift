@@ -1,3 +1,3 @@
-public struct CompileError {
+public struct CompileError: Codable, Hashable {
     public let message: String
 }

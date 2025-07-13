@@ -1,3 +1,3 @@
-public struct NodesWrapper {
+public struct NodesWrapper: Codable, Hashable {
     public let nodes: [[Node]]
 }

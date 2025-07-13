@@ -1,4 +1,4 @@
-public struct BigEntity {
+public struct BigEntity: Codable, Hashable {
     public let castMember: CastMember?
     public let extendedMovie: ExtendedMovie?
     public let entity: Entity?

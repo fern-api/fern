@@ -1,3 +1,3 @@
-public struct RotatingRatio {
+public struct RotatingRatio: Codable, Hashable {
     public let value: String
 }

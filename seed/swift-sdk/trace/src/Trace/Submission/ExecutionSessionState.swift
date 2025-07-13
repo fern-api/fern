@@ -1,4 +1,4 @@
-public struct ExecutionSessionState {
+public struct ExecutionSessionState: Codable, Hashable {
     public let lastTimeContacted: String?
     public let sessionId: String
     public let isWarmInstance: Bool

@@ -1,4 +1,4 @@
-public struct Metadata {
+public struct Metadata: Codable, Hashable {
     public let createdAt: Date
     public let updatedAt: Date
     public let avatar: Any

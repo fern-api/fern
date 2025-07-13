@@ -1,3 +1,3 @@
-public struct FrozenSleep {
+public struct FrozenSleep: Codable, Hashable {
     public let value: String
 }

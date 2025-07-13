@@ -1,3 +1,3 @@
-public struct FunctionImplementationForMultipleLanguages {
+public struct FunctionImplementationForMultipleLanguages: Codable, Hashable {
     public let codeByLanguage: Any
 }

@@ -1,3 +1,3 @@
-public struct UsernameContainer {
+public struct UsernameContainer: Codable, Hashable {
     public let results: [String]
 }

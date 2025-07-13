@@ -1,3 +1,3 @@
-public struct Cat {
+public struct Cat: Codable, Hashable {
     public let fruit: Fruit
 }

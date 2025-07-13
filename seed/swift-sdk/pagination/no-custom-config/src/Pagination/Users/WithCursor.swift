@@ -1,3 +1,3 @@
-public struct WithCursor {
+public struct WithCursor: Codable, Hashable {
     public let cursor: String?
 }

@@ -1,3 +1,3 @@
-public struct PracticalPrinciple {
+public struct PracticalPrinciple: Codable, Hashable {
     public let value: String
 }

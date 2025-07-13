@@ -1,3 +1,3 @@
-public struct UsernameCursor {
+public struct UsernameCursor: Codable, Hashable {
     public let cursor: UsernamePage
 }

@@ -1,3 +1,3 @@
-public struct PutResponse {
+public struct PutResponse: Codable, Hashable {
     public let errors: [Error]?
 }

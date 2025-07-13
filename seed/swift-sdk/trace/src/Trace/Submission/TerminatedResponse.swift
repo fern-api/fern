@@ -1,2 +1,2 @@
-public struct TerminatedResponse {
+public struct TerminatedResponse: Codable, Hashable {
 }

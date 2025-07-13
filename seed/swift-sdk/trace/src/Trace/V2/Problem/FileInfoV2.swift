@@ -1,4 +1,4 @@
-public struct FileInfoV2 {
+public struct FileInfoV2: Codable, Hashable {
     public let filename: String
     public let directory: String
     public let contents: String
