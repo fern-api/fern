@@ -46,6 +46,28 @@
         },
         {
             "id": {
+                "path": "/duplicate",
+                "method": "POST",
+                "identifierOverride": "endpoint_union.duplicateTypesUnion"
+            },
+            "snippet": {
+                "client": "require \"fern_undiscriminated_unions\"\n\nundiscriminated_unions = SeedUndiscriminatedUnionsClient::Client.new(base_url: \"https://api.example.com\")\nundiscriminated_unions.union.duplicate_types_union(request: \"string\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/nested",
+                "method": "POST",
+                "identifierOverride": "endpoint_union.nestedUnions"
+            },
+            "snippet": {
+                "client": "require \"fern_undiscriminated_unions\"\n\nundiscriminated_unions = SeedUndiscriminatedUnionsClient::Client.new(base_url: \"https://api.example.com\")\nundiscriminated_unions.union.nested_unions(request: \"string\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
                 "path": "/",
                 "method": "POST",
                 "identifierOverride": "endpoint_union.get"
@@ -85,6 +107,28 @@
             },
             "snippet": {
                 "client": "require \"fern_undiscriminated_unions\"\n\nundiscriminated_unions = SeedUndiscriminatedUnionsClient::Client.new(base_url: \"https://api.example.com\")\nundiscriminated_unions.union.call(request: { union: { \"union\": {\"key\":\"value\"} } })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/duplicate",
+                "method": "POST",
+                "identifierOverride": "endpoint_union.duplicateTypesUnion"
+            },
+            "snippet": {
+                "client": "require \"fern_undiscriminated_unions\"\n\nundiscriminated_unions = SeedUndiscriminatedUnionsClient::Client.new(base_url: \"https://api.example.com\")\nundiscriminated_unions.union.duplicate_types_union(request: \"string\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/nested",
+                "method": "POST",
+                "identifierOverride": "endpoint_union.nestedUnions"
+            },
+            "snippet": {
+                "client": "require \"fern_undiscriminated_unions\"\n\nundiscriminated_unions = SeedUndiscriminatedUnionsClient::Client.new(base_url: \"https://api.example.com\")\nundiscriminated_unions.union.nested_unions(request: \"string\")",
                 "type": "ruby"
             }
         }
