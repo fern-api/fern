@@ -8,7 +8,9 @@ import com.seed.undiscriminatedUnions.core.RequestOptions;
 import com.seed.undiscriminatedUnions.resources.union.types.Key;
 import com.seed.undiscriminatedUnions.resources.union.types.MetadataUnion;
 import com.seed.undiscriminatedUnions.resources.union.types.MyUnion;
+import com.seed.undiscriminatedUnions.resources.union.types.NestedUnionRoot;
 import com.seed.undiscriminatedUnions.resources.union.types.Request;
+import com.seed.undiscriminatedUnions.resources.union.types.UnionWithDuplicateTypes;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
@@ -63,5 +65,22 @@ public class AsyncUnionClient {
 
     public CompletableFuture<Boolean> call(Request request, RequestOptions requestOptions) {
         return this.rawClient.call(request, requestOptions).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<UnionWithDuplicateTypes> duplicateTypesUnion(UnionWithDuplicateTypes request) {
+        return this.rawClient.duplicateTypesUnion(request).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<UnionWithDuplicateTypes> duplicateTypesUnion(
+            UnionWithDuplicateTypes request, RequestOptions requestOptions) {
+        return this.rawClient.duplicateTypesUnion(request, requestOptions).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<String> nestedUnions(NestedUnionRoot request) {
+        return this.rawClient.nestedUnions(request).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<String> nestedUnions(NestedUnionRoot request, RequestOptions requestOptions) {
+        return this.rawClient.nestedUnions(request, requestOptions).thenApply(response -> response.body());
     }
 }
