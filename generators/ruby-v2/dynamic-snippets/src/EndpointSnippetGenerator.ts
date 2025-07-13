@@ -97,7 +97,7 @@ export class EndpointSnippetGenerator {
             return [
                 ruby.keywordArgument({
                     name: "base_url",
-                    value: ruby.codeblock(baseUrl)
+                    value: ruby.TypeLiteral.string(baseUrl)
                 })
             ];
         }
@@ -190,12 +190,12 @@ export class EndpointSnippetGenerator {
     }): ruby.KeywordArgument[] {
         return [
             ruby.keywordArgument({
-                name: "username",
-                value: ruby.codeblock(values.username)
+                name: auth.username.snakeCase.safeName,
+                value: ruby.TypeLiteral.string(values.username)
             }),
             ruby.keywordArgument({
-                name: "password",
-                value: ruby.codeblock(values.password)
+                name: auth.password.snakeCase.safeName,
+                value: ruby.TypeLiteral.string(values.password)
             })
         ];
     }
@@ -209,8 +209,8 @@ export class EndpointSnippetGenerator {
     }): ruby.KeywordArgument[] {
         return [
             ruby.keywordArgument({
-                name: "access_token",
-                value: ruby.codeblock(values.token)
+                name: auth.token.snakeCase.safeName,
+                value: ruby.TypeLiteral.string(values.token)
             })
         ];
     }
@@ -225,7 +225,7 @@ export class EndpointSnippetGenerator {
         return [
             ruby.keywordArgument({
                 name: auth.header.name.name.snakeCase.safeName,
-                value: ruby.codeblock(values.value as string)
+                value: ruby.TypeLiteral.string(values.value as string)
             })
         ];
     }
@@ -240,12 +240,12 @@ export class EndpointSnippetGenerator {
         // OAuth client credentials
         return [
             ruby.keywordArgument({
-                name: "client_id",
-                value: ruby.codeblock(values.clientId)
+                name: auth.clientId.snakeCase.safeName,
+                value: ruby.TypeLiteral.string(values.clientId)
             }),
             ruby.keywordArgument({
-                name: "client_secret",
-                value: ruby.codeblock(values.clientSecret)
+                name: auth.clientSecret.snakeCase.safeName,
+                value: ruby.TypeLiteral.string(values.clientSecret)
             })
         ];
     }
@@ -265,7 +265,7 @@ export class EndpointSnippetGenerator {
                 args.push(
                     ruby.keywordArgument({
                         name: header.name.name.snakeCase.safeName,
-                        value: ruby.codeblock(value)
+                        value: ruby.TypeLiteral.string(value)
                     })
                 );
             }

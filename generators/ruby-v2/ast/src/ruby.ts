@@ -15,7 +15,7 @@ import { ClassInstantiation } from "./ast/ClassInstantiation";
 import { ClassReference } from "./ast/ClassReference";
 import { TypeParameter } from "./ast/TypeParameter";
 
-export { CodeBlock, KeywordArgument, Method, Parameter } from "./ast";
+export { CodeBlock, KeywordArgument, Method, Parameter, TypeLiteral } from "./ast";
 export { AstNode } from "./ast/core/AstNode";
 
 export function codeblock(arg: CodeBlock.Arg): CodeBlock {
