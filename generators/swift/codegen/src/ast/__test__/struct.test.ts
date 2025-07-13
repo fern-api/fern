@@ -191,7 +191,7 @@ describe("Struct", () => {
             `);
         });
 
-        it("should write struct with 1 nested enum", () => {
+        it("should write struct with 1 nested enum", async () => {
             const struct = swift.struct({
                 name: "Order",
                 properties: [
@@ -218,10 +218,10 @@ describe("Struct", () => {
                 ]
             });
 
-            expect(struct.toString()).toMatchFileSnapshot("snapshots/struct_with_1_nested_enum.swift");
+            await expect(struct.toString()).toMatchFileSnapshot("snapshots/struct_with_1_nested_enum.swift");
         });
 
-        it("should write struct with 2 nested enums", () => {
+        it("should write struct with 2 nested enums", async () => {
             const struct = swift.struct({
                 name: "Pet",
                 properties: [
@@ -256,7 +256,7 @@ describe("Struct", () => {
                 ]
             });
 
-            expect(struct.toString()).toMatchFileSnapshot("snapshots/struct_with_2_nested_enums.swift");
+            await expect(struct.toString()).toMatchFileSnapshot("snapshots/struct_with_2_nested_enums.swift");
         });
     });
 });
