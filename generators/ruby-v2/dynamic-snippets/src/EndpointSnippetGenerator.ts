@@ -260,8 +260,8 @@ export class EndpointSnippetGenerator {
     }): ruby.KeywordArgument[] {
         const args: ruby.KeywordArgument[] = [];
         for (const header of headers) {
-            const value = (values as any)[header.name.name.originalName];
-            if (value != null) {
+            const value = values[header.name.name.originalName];
+            if (value != null && typeof value === "string") {
                 args.push(
                     ruby.keywordArgument({
                         name: header.name.name.snakeCase.safeName,
