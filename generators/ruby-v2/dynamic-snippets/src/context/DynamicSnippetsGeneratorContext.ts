@@ -3,7 +3,7 @@ import {
     FernGeneratorExec
 } from "@fern-api/browser-compatible-base-generator";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
-import { BaseRubyCustomConfigSchema } from "@fern-api/ruby-ast";
+import { BaseRubyCustomConfigSchema, ruby } from "@fern-api/ruby-ast";
 
 export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGeneratorContext {
     public ir: FernIr.dynamic.DynamicIntermediateRepresentation;
@@ -28,4 +28,20 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
             config: this.config
         });
     }
+
+    public getRootClientClassReference(): any {
+        return ruby.classReference({
+            name: this.getRootClientClassName(),
+            modules: [this.getRootModuleName()]
+        });
+    }
+
+    public getRootClientClassName(): string {
+        return "Client";
+    }
+
+    public getRootModuleName(): string {
+        return this.customConfig?.clientModuleName ?? this.config.organization;
+    }
+
 }

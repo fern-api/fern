@@ -10,10 +10,12 @@ import {
     PositionalSplatParameter,
     YieldParameter
 } from "./ast";
+import { ClassInstantiation } from "./ast/ClassInstantiation";
+import { ClassReference } from "./ast/ClassReference";
 import { TypeParameter } from "./ast/TypeParameter";
 
+export { CodeBlock, Method, Parameter } from "./ast";
 export { AstNode } from "./ast/core/AstNode";
-export { CodeBlock, Parameter, Method } from "./ast";
 
 export function codeblock(arg: CodeBlock.Arg): CodeBlock {
     return new CodeBlock(arg);
@@ -59,4 +61,12 @@ export function comment(args: Comment.Args): Comment {
 
 export function typeParameter(args: TypeParameter.Args): TypeParameter {
     return new TypeParameter(args);
+}
+
+export function classReference(args: ClassReference.Args): ClassReference {
+    return new ClassReference(args);
+}
+
+export function instantiateClass(args: ClassInstantiation.Args): ClassInstantiation {
+    return new ClassInstantiation(args);
 }
