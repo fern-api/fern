@@ -1,55 +1,242 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`snippets (default) > examples > 'GET /metadata (allow-multiple)' 1`] = `"TODO: Implement me!"`;
+exports[`snippets (default) > examples > 'GET /metadata (allow-multiple)' 1`] = `
+"require "acme"
 
-exports[`snippets (default) > examples > 'GET /metadata (simple)' 1`] = `"TODO: Implement me!"`;
+client = acme::Client.new(token: '<YOUR_API_KEY>');
 
-exports[`snippets (default) > examples > 'POST /big-entity (simple)' 1`] = `"TODO: Implement me!"`;
+"
+`;
 
-exports[`snippets (default) > examples > 'POST /movie (invalid request body)' 1`] = `"TODO: Implement me!"`;
+exports[`snippets (default) > examples > 'GET /metadata (simple)' 1`] = `
+"require "acme"
 
-exports[`snippets (default) > examples > 'POST /movie (simple)' 1`] = `"TODO: Implement me!"`;
+client = acme::Client.new(token: '<YOUR_API_KEY>');
 
-exports[`snippets (default) > exhaustive > 'GET /object/get-and-return-with-optio…' 1`] = `"TODO: Implement me!"`;
+"
+`;
 
-exports[`snippets (default) > exhaustive > 'POST /container/list-of-objects (inva…' 1`] = `"TODO: Implement me!"`;
+exports[`snippets (default) > examples > 'POST /big-entity (simple)' 1`] = `
+"require "acme"
 
-exports[`snippets (default) > exhaustive > 'POST /container/list-of-objects (simp…' 1`] = `"TODO: Implement me!"`;
+client = acme::Client.new(token: '<YOUR_API_KEY>');
 
-exports[`snippets (default) > exhaustive > 'POST /container/list-of-primitives (s…' 1`] = `"TODO: Implement me!"`;
+"
+`;
 
-exports[`snippets (default) > file-upload > 'POST /' 1`] = `"TODO: Implement me!"`;
+exports[`snippets (default) > examples > 'POST /movie (invalid request body)' 1`] = `
+"require "acme"
 
-exports[`snippets (default) > file-upload > 'POST /just-file' 1`] = `"TODO: Implement me!"`;
+client = acme::Client.new(token: '<YOUR_API_KEY>');
 
-exports[`snippets (default) > file-upload > 'POST /just-file-with-query-params' 1`] = `"TODO: Implement me!"`;
+"
+`;
 
-exports[`snippets (default) > imdb > 'GET /movies/{movieId} (simple)' 1`] = `"TODO: Implement me!"`;
+exports[`snippets (default) > examples > 'POST /movie (simple)' 1`] = `
+"require "acme"
 
-exports[`snippets (default) > imdb > 'POST /movies/create-movie (simple)' 1`] = `"TODO: Implement me!"`;
+client = acme::Client.new(token: '<YOUR_API_KEY>');
 
-exports[`snippets (default) > multi-url-environment > 'Custom environment' 1`] = `"TODO: Implement me!"`;
+"
+`;
 
-exports[`snippets (default) > multi-url-environment > 'Invalid multi url environment' 1`] = `"TODO: Implement me!"`;
+exports[`snippets (default) > exhaustive > 'GET /object/get-and-return-with-optio…' 1`] = `
+"require "acme"
 
-exports[`snippets (default) > multi-url-environment > 'Production environment' 1`] = `"TODO: Implement me!"`;
+client = acme::Client.new(token: '<YOUR_API_KEY>');
 
-exports[`snippets (default) > multi-url-environment > 'Staging environment' 1`] = `"TODO: Implement me!"`;
+"
+`;
 
-exports[`snippets (default) > multi-url-environment > 'Unrecognized environment' 1`] = `"TODO: Implement me!"`;
+exports[`snippets (default) > exhaustive > 'POST /container/list-of-objects (inva…' 1`] = `
+"require "acme"
 
-exports[`snippets (default) > nullable > 'Body properties' 1`] = `"TODO: Implement me!"`;
+client = acme::Client.new(token: '<YOUR_API_KEY>');
 
-exports[`snippets (default) > nullable > 'Invalid null value' 1`] = `"TODO: Implement me!"`;
+"
+`;
 
-exports[`snippets (default) > nullable > 'Query parameters' 1`] = `"TODO: Implement me!"`;
+exports[`snippets (default) > exhaustive > 'POST /container/list-of-objects (simp…' 1`] = `
+"require "acme"
 
-exports[`snippets (default) > single-url-environment-default > 'Production environment' 1`] = `"TODO: Implement me!"`;
+client = acme::Client.new(token: '<YOUR_API_KEY>');
 
-exports[`snippets (default) > single-url-environment-default > 'Staging environment' 1`] = `"TODO: Implement me!"`;
+"
+`;
 
-exports[`snippets (default) > single-url-environment-default > 'custom baseURL' 1`] = `"TODO: Implement me!"`;
+exports[`snippets (default) > exhaustive > 'POST /container/list-of-primitives (s…' 1`] = `
+"require "acme"
 
-exports[`snippets (default) > single-url-environment-default > 'invalid baseURL and environment' 1`] = `"TODO: Implement me!"`;
+client = acme::Client.new(token: '<YOUR_API_KEY>');
 
-exports[`snippets (default) > single-url-environment-default > 'invalid environment' 1`] = `"TODO: Implement me!"`;
+"
+`;
+
+exports[`snippets (default) > file-upload > 'POST /' 1`] = `
+"require "acme"
+
+client = acme::Client.new();
+
+"
+`;
+
+exports[`snippets (default) > file-upload > 'POST /just-file' 1`] = `
+"require "acme"
+
+client = acme::Client.new();
+
+"
+`;
+
+exports[`snippets (default) > file-upload > 'POST /just-file-with-query-params' 1`] = `
+"require "acme"
+
+client = acme::Client.new();
+
+"
+`;
+
+exports[`snippets (default) > imdb > 'GET /movies/{movieId} (simple)' 1`] = `
+"require "acme"
+
+client = acme::Client.new(token: '<YOUR_API_KEY>');
+
+"
+`;
+
+exports[`snippets (default) > imdb > 'POST /movies/create-movie (simple)' 1`] = `
+"require "acme"
+
+client = acme::Client.new(token: '<YOUR_API_KEY>');
+
+"
+`;
+
+exports[`snippets (default) > multi-url-environment > 'Custom environment' 1`] = `
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [],
+    "message": "Multi-environment values are not supported in Ruby snippets yet"
+  }
+]"
+`;
+
+exports[`snippets (default) > multi-url-environment > 'Invalid multi url environment' 1`] = `
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [],
+    "message": "Multi-environment values are not supported in Ruby snippets yet"
+  }
+]"
+`;
+
+exports[`snippets (default) > multi-url-environment > 'Production environment' 1`] = `
+"require "acme"
+
+client = acme::Client.new(
+    token: '<YOUR_API_KEY>',
+    environment: acme::Environment::PRODUCTION
+);
+
+"
+`;
+
+exports[`snippets (default) > multi-url-environment > 'Staging environment' 1`] = `
+"require "acme"
+
+client = acme::Client.new(
+    token: '<YOUR_API_KEY>',
+    environment: acme::Environment::STAGING
+);
+
+"
+`;
+
+exports[`snippets (default) > multi-url-environment > 'Unrecognized environment' 1`] = `
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [],
+    "message": "Environment ID Unrecognized not found"
+  }
+]"
+`;
+
+exports[`snippets (default) > nullable > 'Body properties' 1`] = `
+"require "acme"
+
+client = acme::Client.new(base_url: 'https://api.example.com');
+
+"
+`;
+
+exports[`snippets (default) > nullable > 'Invalid null value' 1`] = `
+"require "acme"
+
+client = acme::Client.new(base_url: 'https://api.example.com');
+
+"
+`;
+
+exports[`snippets (default) > nullable > 'Query parameters' 1`] = `
+"require "acme"
+
+client = acme::Client.new(base_url: 'https://api.example.com');
+
+"
+`;
+
+exports[`snippets (default) > single-url-environment-default > 'Production environment' 1`] = `
+"require "acme"
+
+client = acme::Client.new(
+    token: '<YOUR_API_KEY>',
+    environment: acme::Environment::PRODUCTION
+);
+
+"
+`;
+
+exports[`snippets (default) > single-url-environment-default > 'Staging environment' 1`] = `
+"require "acme"
+
+client = acme::Client.new(
+    token: '<YOUR_API_KEY>',
+    environment: acme::Environment::STAGING
+);
+
+"
+`;
+
+exports[`snippets (default) > single-url-environment-default > 'custom baseURL' 1`] = `
+"require "acme"
+
+client = acme::Client.new(
+    token: '<YOUR_API_KEY>',
+    base_url: 'http://localhost:8080'
+);
+
+"
+`;
+
+exports[`snippets (default) > single-url-environment-default > 'invalid baseURL and environment' 1`] = `
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [],
+    "message": "Cannot specify both baseUrl and environment options"
+  }
+]"
+`;
+
+exports[`snippets (default) > single-url-environment-default > 'invalid environment' 1`] = `
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [],
+    "message": "Environment ID Unrecognized not found"
+  }
+]"
+`;
