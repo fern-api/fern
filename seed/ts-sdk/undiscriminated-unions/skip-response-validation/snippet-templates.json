@@ -731,5 +731,545 @@
             },
             "type": "v1"
         }
+    },
+    {
+        "sdk": {
+            "package": "@fern/undiscriminated-unions",
+            "version": "0.0.1",
+            "type": "typescript"
+        },
+        "endpointId": {
+            "path": "/duplicate",
+            "method": "POST",
+            "identifierOverride": "endpoint_union.duplicateTypesUnion"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedUndiscriminatedUnionsClient } from \"@fern/undiscriminated-unions\";"
+                ],
+                "templateString": "const client = new SeedUndiscriminatedUnionsClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "functionInvocation": {
+                "imports": [],
+                "templateString": "await client.union.duplicateTypesUnion(\n\t$FERN_INPUT\n)",
+                "isOptional": false,
+                "inputDelimiter": ",\n\t",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{\n\t\t$FERN_INPUT\n\t}",
+                            "isOptional": true,
+                            "inputDelimiter": ",\n\t\t",
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "$FERN_INPUT",
+                                        "members": [
+                                            {
+                                                "template": {
+                                                    "imports": [],
+                                                    "templateString": "$FERN_INPUT",
+                                                    "isOptional": true,
+                                                    "templateInputs": [
+                                                        {
+                                                            "location": "RELATIVE",
+                                                            "type": "payload"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                },
+                                                "type": {
+                                                    "value": {
+                                                        "type": "string"
+                                                    },
+                                                    "type": "primitive"
+                                                }
+                                            },
+                                            {
+                                                "template": {
+                                                    "imports": [],
+                                                    "isOptional": true,
+                                                    "containerTemplateString": "[\n\t\t\t\t$FERN_INPUT\n\t\t\t]",
+                                                    "delimiter": ",\n\t\t\t\t",
+                                                    "innerTemplate": {
+                                                        "imports": [],
+                                                        "templateString": "$FERN_INPUT",
+                                                        "isOptional": true,
+                                                        "templateInputs": [
+                                                            {
+                                                                "location": "RELATIVE",
+                                                                "type": "payload"
+                                                            }
+                                                        ],
+                                                        "type": "generic"
+                                                    },
+                                                    "templateInput": {
+                                                        "location": "RELATIVE",
+                                                        "type": "payload"
+                                                    },
+                                                    "type": "iterable"
+                                                },
+                                                "type": {
+                                                    "itemType": {
+                                                        "value": {
+                                                            "type": "string"
+                                                        },
+                                                        "type": "primitive"
+                                                    },
+                                                    "type": "list"
+                                                }
+                                            },
+                                            {
+                                                "template": {
+                                                    "imports": [],
+                                                    "templateString": "$FERN_INPUT",
+                                                    "isOptional": true,
+                                                    "templateInputs": [
+                                                        {
+                                                            "location": "RELATIVE",
+                                                            "type": "payload"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                },
+                                                "type": {
+                                                    "value": {
+                                                        "type": "integer"
+                                                    },
+                                                    "type": "primitive"
+                                                }
+                                            },
+                                            {
+                                                "template": {
+                                                    "imports": [],
+                                                    "isOptional": true,
+                                                    "containerTemplateString": "[\n\t\t\t\t$FERN_INPUT\n\t\t\t]",
+                                                    "delimiter": ",\n\t\t\t\t",
+                                                    "innerTemplate": {
+                                                        "imports": [],
+                                                        "templateString": "$FERN_INPUT",
+                                                        "isOptional": true,
+                                                        "templateInputs": [
+                                                            {
+                                                                "location": "RELATIVE",
+                                                                "type": "payload"
+                                                            }
+                                                        ],
+                                                        "type": "generic"
+                                                    },
+                                                    "templateInput": {
+                                                        "location": "RELATIVE",
+                                                        "type": "payload"
+                                                    },
+                                                    "type": "iterable"
+                                                },
+                                                "type": {
+                                                    "itemType": {
+                                                        "value": {
+                                                            "type": "string"
+                                                        },
+                                                        "type": "primitive"
+                                                    },
+                                                    "type": "set"
+                                                }
+                                            }
+                                        ],
+                                        "templateInput": {
+                                            "location": "BODY",
+                                            "type": "payload"
+                                        },
+                                        "type": "union_v2"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "@fern/undiscriminated-unions",
+            "version": "0.0.1",
+            "type": "typescript"
+        },
+        "endpointId": {
+            "path": "/nested",
+            "method": "POST",
+            "identifierOverride": "endpoint_union.nestedUnions"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedUndiscriminatedUnionsClient } from \"@fern/undiscriminated-unions\";"
+                ],
+                "templateString": "const client = new SeedUndiscriminatedUnionsClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "functionInvocation": {
+                "imports": [],
+                "templateString": "await client.union.nestedUnions(\n\t$FERN_INPUT\n)",
+                "isOptional": false,
+                "inputDelimiter": ",\n\t",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{\n\t\t$FERN_INPUT\n\t}",
+                            "isOptional": true,
+                            "inputDelimiter": ",\n\t\t",
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "$FERN_INPUT",
+                                        "members": [
+                                            {
+                                                "template": {
+                                                    "imports": [],
+                                                    "templateString": "$FERN_INPUT",
+                                                    "isOptional": true,
+                                                    "templateInputs": [
+                                                        {
+                                                            "location": "RELATIVE",
+                                                            "type": "payload"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                },
+                                                "type": {
+                                                    "value": {
+                                                        "type": "string"
+                                                    },
+                                                    "type": "primitive"
+                                                }
+                                            },
+                                            {
+                                                "template": {
+                                                    "imports": [],
+                                                    "isOptional": true,
+                                                    "containerTemplateString": "[\n\t\t\t\t$FERN_INPUT\n\t\t\t]",
+                                                    "delimiter": ",\n\t\t\t\t",
+                                                    "innerTemplate": {
+                                                        "imports": [],
+                                                        "templateString": "$FERN_INPUT",
+                                                        "isOptional": true,
+                                                        "templateInputs": [
+                                                            {
+                                                                "location": "RELATIVE",
+                                                                "type": "payload"
+                                                            }
+                                                        ],
+                                                        "type": "generic"
+                                                    },
+                                                    "templateInput": {
+                                                        "location": "RELATIVE",
+                                                        "type": "payload"
+                                                    },
+                                                    "type": "iterable"
+                                                },
+                                                "type": {
+                                                    "itemType": {
+                                                        "value": {
+                                                            "type": "string"
+                                                        },
+                                                        "type": "primitive"
+                                                    },
+                                                    "type": "list"
+                                                }
+                                            },
+                                            {
+                                                "template": {
+                                                    "imports": [],
+                                                    "isOptional": true,
+                                                    "templateString": "$FERN_INPUT",
+                                                    "members": [
+                                                        {
+                                                            "template": {
+                                                                "imports": [],
+                                                                "templateString": "$FERN_INPUT",
+                                                                "isOptional": true,
+                                                                "templateInputs": [
+                                                                    {
+                                                                        "location": "RELATIVE",
+                                                                        "type": "payload"
+                                                                    }
+                                                                ],
+                                                                "type": "generic"
+                                                            },
+                                                            "type": {
+                                                                "value": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "type": "primitive"
+                                                            }
+                                                        },
+                                                        {
+                                                            "template": {
+                                                                "imports": [],
+                                                                "isOptional": true,
+                                                                "containerTemplateString": "[\n\t\t\t\t\t$FERN_INPUT\n\t\t\t\t]",
+                                                                "delimiter": ",\n\t\t\t\t\t",
+                                                                "innerTemplate": {
+                                                                    "imports": [],
+                                                                    "templateString": "$FERN_INPUT",
+                                                                    "isOptional": true,
+                                                                    "templateInputs": [
+                                                                        {
+                                                                            "location": "RELATIVE",
+                                                                            "type": "payload"
+                                                                        }
+                                                                    ],
+                                                                    "type": "generic"
+                                                                },
+                                                                "templateInput": {
+                                                                    "location": "RELATIVE",
+                                                                    "type": "payload"
+                                                                },
+                                                                "type": "iterable"
+                                                            },
+                                                            "type": {
+                                                                "itemType": {
+                                                                    "value": {
+                                                                        "type": "string"
+                                                                    },
+                                                                    "type": "primitive"
+                                                                },
+                                                                "type": "set"
+                                                            }
+                                                        },
+                                                        {
+                                                            "template": {
+                                                                "imports": [],
+                                                                "isOptional": true,
+                                                                "containerTemplateString": "[\n\t\t\t\t\t$FERN_INPUT\n\t\t\t\t]",
+                                                                "delimiter": ",\n\t\t\t\t\t",
+                                                                "innerTemplate": {
+                                                                    "imports": [],
+                                                                    "templateString": "$FERN_INPUT",
+                                                                    "isOptional": true,
+                                                                    "templateInputs": [
+                                                                        {
+                                                                            "location": "RELATIVE",
+                                                                            "type": "payload"
+                                                                        }
+                                                                    ],
+                                                                    "type": "generic"
+                                                                },
+                                                                "templateInput": {
+                                                                    "location": "RELATIVE",
+                                                                    "type": "payload"
+                                                                },
+                                                                "type": "iterable"
+                                                            },
+                                                            "type": {
+                                                                "itemType": {
+                                                                    "value": {
+                                                                        "type": "string"
+                                                                    },
+                                                                    "type": "primitive"
+                                                                },
+                                                                "type": "list"
+                                                            }
+                                                        },
+                                                        {
+                                                            "template": {
+                                                                "imports": [],
+                                                                "isOptional": true,
+                                                                "templateString": "$FERN_INPUT",
+                                                                "members": [
+                                                                    {
+                                                                        "template": {
+                                                                            "imports": [],
+                                                                            "templateString": "$FERN_INPUT",
+                                                                            "isOptional": true,
+                                                                            "templateInputs": [
+                                                                                {
+                                                                                    "location": "RELATIVE",
+                                                                                    "type": "payload"
+                                                                                }
+                                                                            ],
+                                                                            "type": "generic"
+                                                                        },
+                                                                        "type": {
+                                                                            "value": {
+                                                                                "type": "boolean"
+                                                                            },
+                                                                            "type": "primitive"
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        "template": {
+                                                                            "imports": [],
+                                                                            "isOptional": true,
+                                                                            "containerTemplateString": "[\n\t\t\t\t\t\t$FERN_INPUT\n\t\t\t\t\t]",
+                                                                            "delimiter": ",\n\t\t\t\t\t\t",
+                                                                            "innerTemplate": {
+                                                                                "imports": [],
+                                                                                "templateString": "$FERN_INPUT",
+                                                                                "isOptional": true,
+                                                                                "templateInputs": [
+                                                                                    {
+                                                                                        "location": "RELATIVE",
+                                                                                        "type": "payload"
+                                                                                    }
+                                                                                ],
+                                                                                "type": "generic"
+                                                                            },
+                                                                            "templateInput": {
+                                                                                "location": "RELATIVE",
+                                                                                "type": "payload"
+                                                                            },
+                                                                            "type": "iterable"
+                                                                        },
+                                                                        "type": {
+                                                                            "itemType": {
+                                                                                "value": {
+                                                                                    "type": "string"
+                                                                                },
+                                                                                "type": "primitive"
+                                                                            },
+                                                                            "type": "set"
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        "template": {
+                                                                            "imports": [],
+                                                                            "isOptional": true,
+                                                                            "containerTemplateString": "[\n\t\t\t\t\t\t$FERN_INPUT\n\t\t\t\t\t]",
+                                                                            "delimiter": ",\n\t\t\t\t\t\t",
+                                                                            "innerTemplate": {
+                                                                                "imports": [],
+                                                                                "templateString": "$FERN_INPUT",
+                                                                                "isOptional": true,
+                                                                                "templateInputs": [
+                                                                                    {
+                                                                                        "location": "RELATIVE",
+                                                                                        "type": "payload"
+                                                                                    }
+                                                                                ],
+                                                                                "type": "generic"
+                                                                            },
+                                                                            "templateInput": {
+                                                                                "location": "RELATIVE",
+                                                                                "type": "payload"
+                                                                            },
+                                                                            "type": "iterable"
+                                                                        },
+                                                                        "type": {
+                                                                            "itemType": {
+                                                                                "value": {
+                                                                                    "type": "string"
+                                                                                },
+                                                                                "type": "primitive"
+                                                                            },
+                                                                            "type": "list"
+                                                                        }
+                                                                    }
+                                                                ],
+                                                                "templateInput": {
+                                                                    "location": "RELATIVE",
+                                                                    "type": "payload"
+                                                                },
+                                                                "type": "union_v2"
+                                                            },
+                                                            "type": {
+                                                                "value": "type_union:NestedUnionL2",
+                                                                "type": "id"
+                                                            }
+                                                        }
+                                                    ],
+                                                    "templateInput": {
+                                                        "location": "RELATIVE",
+                                                        "type": "payload"
+                                                    },
+                                                    "type": "union_v2"
+                                                },
+                                                "type": {
+                                                    "value": "type_union:NestedUnionL1",
+                                                    "type": "id"
+                                                }
+                                            }
+                                        ],
+                                        "templateInput": {
+                                            "location": "BODY",
+                                            "type": "payload"
+                                        },
+                                        "type": "union_v2"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "type": "v1"
+        }
     }
 ]
