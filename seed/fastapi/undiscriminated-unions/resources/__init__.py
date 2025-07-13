@@ -10,9 +10,13 @@ from .union import (
     MetadataUnion,
     MyUnion,
     NamedMetadata,
+    NestedUnionL1,
+    NestedUnionL2,
+    NestedUnionRoot,
     OptionalMetadata,
     Request,
     TypeWithOptionalUnion,
+    UnionWithDuplicateTypes,
 )
 
 __all__ = [
@@ -22,8 +26,12 @@ __all__ = [
     "MetadataUnion",
     "MyUnion",
     "NamedMetadata",
+    "NestedUnionL1",
+    "NestedUnionL2",
+    "NestedUnionRoot",
     "OptionalMetadata",
     "Request",
     "TypeWithOptionalUnion",
+    "UnionWithDuplicateTypes",
     "union",
 ]
