@@ -2,6 +2,7 @@ import {
     Class_,
     CodeBlock,
     Comment,
+    KeywordArgument,
     KeywordParameter,
     KeywordSplatParameter,
     Method,
@@ -14,7 +15,7 @@ import { ClassInstantiation } from "./ast/ClassInstantiation";
 import { ClassReference } from "./ast/ClassReference";
 import { TypeParameter } from "./ast/TypeParameter";
 
-export { CodeBlock, Method, Parameter } from "./ast";
+export { CodeBlock, KeywordArgument, Method, Parameter } from "./ast";
 export { AstNode } from "./ast/core/AstNode";
 
 export function codeblock(arg: CodeBlock.Arg): CodeBlock {
@@ -70,3 +71,8 @@ export function classReference(args: ClassReference.Args): ClassReference {
 export function instantiateClass(args: ClassInstantiation.Args): ClassInstantiation {
     return new ClassInstantiation(args);
 }
+
+export function keywordArgument(args: KeywordArgument.Args): KeywordArgument {
+    return new KeywordArgument(args);
+}
+

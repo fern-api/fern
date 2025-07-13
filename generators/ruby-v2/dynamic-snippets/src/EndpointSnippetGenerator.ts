@@ -73,7 +73,7 @@ export class EndpointSnippetGenerator {
             writer.write(`${CLIENT_VAR_NAME} = `);
             writer.writeNode(ruby.instantiateClass({
                 classReference: clientClassRef,
-                arguments_: [],
+                arguments_: builderArgs,
             }));
         });
     }
@@ -85,37 +85,49 @@ export class EndpointSnippetGenerator {
     }: {
         baseUrl: string | undefined;
         environment: FernIr.dynamic.EnvironmentValues | undefined;
-    }): { name: string; value: string } | undefined {
+    }): ruby.KeywordArgument[] {            
         if (baseUrl != null && environment != null) {
             this.context.errors.add({
                 severity: "CRITICAL",
                 message: "Cannot specify both baseUrl and environment options"
             });
-            return undefined;
+            return [];
         }
         if (baseUrl != null) {
-            // Most Ruby SDKs accept a base_url or similar param
-            return {
-                name: "base_url",
-                value: baseUrl
-            };
+            return [
+                ruby.keywordArgument({
+                    name: "base_url",
+                    value: ruby.codeblock(baseUrl)
+                })
+            ];
         }
         if (environment != null) {
-            // If environment is a single string, use it directly
-            if (typeof environment === "string") {
-                return {
-                    name: "environment",
-                    value: environment
-                };
+            if (this.context.isSingleEnvironmentID(environment)) {
+                const environmentTypeReference = this.context.getEnvironmentTypeReferenceFromID(environment);
+                if (environmentTypeReference == null) {
+                    this.context.errors.add({
+                        severity: "CRITICAL",
+                        message: `Environment ID ${environment} not found`
+                    });
+                    return [];
+                }
+
+                return [
+                    ruby.keywordArgument({
+                        name: "environment",
+                        value: environmentTypeReference
+                    })
+                ];
             }
-            // If environment is an object, try to serialize as needed
-            // (This is a placeholder; real logic may depend on SDK)
-            return {
-                name: "environment",
-                value: JSON.stringify(environment)
-            };
+            if (this.context.isMultiEnvironmentValues(environment)) {
+                this.context.errors.add({
+                    severity: "CRITICAL",
+                    message: "Multi-environment values are not supported in Ruby snippets yet"
+                });
+                return [];
+            }
         }
-        return undefined;
+        return [];
     }
 
     // Helper for auth arguments
@@ -125,7 +137,7 @@ export class EndpointSnippetGenerator {
     }: {
         auth: FernIr.dynamic.Auth;
         values: FernIr.dynamic.AuthValues;
-    }): { name: string; value: string }[] {
+    }): ruby.KeywordArgument[] {
         switch (auth.type) {
             case "basic":
                 if (values.type !== "basic") {
@@ -175,11 +187,16 @@ export class EndpointSnippetGenerator {
     }: {
         auth: FernIr.dynamic.BasicAuth;
         values: FernIr.dynamic.BasicAuthValues;
-    }): { name: string; value: string }[] {
-        // Ruby SDKs rarely use basic auth at client construction, but if so:
+    }): ruby.KeywordArgument[] {
         return [
-            { name: "username", value: values.username },
-            { name: "password", value: values.password }
+            ruby.keywordArgument({
+                name: "username",
+                value: ruby.codeblock(values.username)
+            }),
+            ruby.keywordArgument({
+                name: "password",
+                value: ruby.codeblock(values.password)
+            })
         ];
     }
 
@@ -189,10 +206,12 @@ export class EndpointSnippetGenerator {
     }: {
         auth: FernIr.dynamic.BearerAuth;
         values: FernIr.dynamic.BearerAuthValues;
-    }): { name: string; value: string }[] {
-        // Most Ruby SDKs use "access_token" or "token"
+    }): ruby.KeywordArgument[] {
         return [
-            { name: "access_token", value: values.token }
+            ruby.keywordArgument({
+                name: "access_token",
+                value: ruby.codeblock(values.token)
+            })
         ];
     }
 
@@ -202,10 +221,12 @@ export class EndpointSnippetGenerator {
     }: {
         auth: FernIr.dynamic.HeaderAuth;
         values: FernIr.dynamic.HeaderAuthValues;
-    }): { name: string; value: string }[] {
-        // Custom header auth, e.g. X-API-KEY
+    }): ruby.KeywordArgument[] {
         return [
-            { name: auth.header.name.name.snakeCase.safeName, value: values.value as any }
+            ruby.keywordArgument({
+                name: auth.header.name.name.snakeCase.safeName,
+                value: ruby.codeblock(values.value as string)
+            })
         ];
     }
 
@@ -215,11 +236,17 @@ export class EndpointSnippetGenerator {
     }: {
         auth: FernIr.dynamic.OAuth;
         values: FernIr.dynamic.OAuthValues;
-    }): { name: string; value: string }[] {
+    }): ruby.KeywordArgument[] {
         // OAuth client credentials
         return [
-            { name: "client_id", value: values.clientId },
-            { name: "client_secret", value: values.clientSecret }
+            ruby.keywordArgument({
+                name: "client_id",
+                value: ruby.codeblock(values.clientId)
+            }),
+            ruby.keywordArgument({
+                name: "client_secret",
+                value: ruby.codeblock(values.clientSecret)
+            })
         ];
     }
 
@@ -230,15 +257,17 @@ export class EndpointSnippetGenerator {
     }: {
         headers: FernIr.dynamic.NamedParameter[];
         values: FernIr.dynamic.Values;
-    }): { name: string; value: string }[] {
-        const args: { name: string; value: string }[] = [];
+    }): ruby.KeywordArgument[] {
+        const args: ruby.KeywordArgument[] = [];
         for (const header of headers) {
             const value = (values as any)[header.name.name.originalName];
             if (value != null) {
-                args.push({
-                    name: header.name.name.snakeCase.safeName,
-                    value: value
-                });
+                args.push(
+                    ruby.keywordArgument({
+                        name: header.name.name.snakeCase.safeName,
+                        value: ruby.codeblock(value)
+                    })
+                );
             }
         }
         return args;
@@ -251,8 +280,8 @@ export class EndpointSnippetGenerator {
     }: {
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
-    }): { name: string; value: string }[] {
-        const builderArgs: { name: string; value: string }[] = [];
+    }): ruby.KeywordArgument[] {
+        const builderArgs: ruby.KeywordArgument[] = [];
 
         // Auth
         if (endpoint.auth != null) {
@@ -267,12 +296,12 @@ export class EndpointSnippetGenerator {
         }
 
         // Base URL / Environment
-        const baseUrlArg = this.getRootClientBaseUrlArg({
+        const baseUrlArgs = this.getRootClientBaseUrlArg({
             baseUrl: snippet.baseURL,
             environment: snippet.environment
         });
-        if (baseUrlArg != null) {
-            builderArgs.push(baseUrlArg);
+        if (baseUrlArgs.length > 0) {
+            builderArgs.push(...baseUrlArgs);
         }
 
         // Headers

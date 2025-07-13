@@ -44,4 +44,40 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         return this.customConfig?.clientModuleName ?? this.config.organization;
     }
 
+    public isSingleEnvironmentID(environment: FernIr.dynamic.EnvironmentValues): environment is FernIr.EnvironmentId {
+        return typeof environment === "string";
+    }
+
+    public isMultiEnvironmentValues(
+        environment: FernIr.dynamic.EnvironmentValues
+    ): environment is FernIr.dynamic.MultipleEnvironmentUrlValues {
+        return typeof environment === "object";
+    }
+
+    public getEnvironmentTypeReferenceFromID(environmentID: string): ruby.AstNode | undefined {
+        const environmentName = this.resolveEnvironmentName(environmentID);
+        if (environmentName == null) {
+            return undefined;
+        }
+        return ruby.codeblock((writer) => {
+            writer.writeNode(this.getEnvironmentClassReference());
+            writer.write("::");
+            writer.write(this.getEnumName(environmentName));
+        });
+    }
+
+    public getEnvironmentClassReference(): ruby.AstNode {
+        return ruby.classReference({
+            name: "Environment",
+            modules: [this.getRootModuleName()]
+        });
+    }
+
+    public getEnumName(name: FernIr.Name): string {
+        return this.getName(name.screamingSnakeCase.safeName);
+    }
+
+    private getName(name: string): string {
+        return name;
+    }
 }
