@@ -360,6 +360,279 @@ func (n *NamedMetadata) String() string {
 	return fmt.Sprintf("%#v", n)
 }
 
+// Nested layer 1.
+type NestedUnionL1 struct {
+	Integer       int
+	StringSet     []string
+	StringList    []string
+	NestedUnionL2 *NestedUnionL2
+
+	typ string
+}
+
+func (n *NestedUnionL1) GetInteger() int {
+	if n == nil {
+		return 0
+	}
+	return n.Integer
+}
+
+func (n *NestedUnionL1) GetStringSet() []string {
+	if n == nil {
+		return nil
+	}
+	return n.StringSet
+}
+
+func (n *NestedUnionL1) GetStringList() []string {
+	if n == nil {
+		return nil
+	}
+	return n.StringList
+}
+
+func (n *NestedUnionL1) GetNestedUnionL2() *NestedUnionL2 {
+	if n == nil {
+		return nil
+	}
+	return n.NestedUnionL2
+}
+
+func (n *NestedUnionL1) UnmarshalJSON(data []byte) error {
+	var valueInteger int
+	if err := json.Unmarshal(data, &valueInteger); err == nil {
+		n.typ = "Integer"
+		n.Integer = valueInteger
+		return nil
+	}
+	var valueStringSet []string
+	if err := json.Unmarshal(data, &valueStringSet); err == nil {
+		n.typ = "StringSet"
+		n.StringSet = valueStringSet
+		return nil
+	}
+	var valueStringList []string
+	if err := json.Unmarshal(data, &valueStringList); err == nil {
+		n.typ = "StringList"
+		n.StringList = valueStringList
+		return nil
+	}
+	valueNestedUnionL2 := new(NestedUnionL2)
+	if err := json.Unmarshal(data, &valueNestedUnionL2); err == nil {
+		n.typ = "NestedUnionL2"
+		n.NestedUnionL2 = valueNestedUnionL2
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, n)
+}
+
+func (n NestedUnionL1) MarshalJSON() ([]byte, error) {
+	if n.typ == "Integer" || n.Integer != 0 {
+		return json.Marshal(n.Integer)
+	}
+	if n.typ == "StringSet" || n.StringSet != nil {
+		return json.Marshal(n.StringSet)
+	}
+	if n.typ == "StringList" || n.StringList != nil {
+		return json.Marshal(n.StringList)
+	}
+	if n.typ == "NestedUnionL2" || n.NestedUnionL2 != nil {
+		return json.Marshal(n.NestedUnionL2)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", n)
+}
+
+type NestedUnionL1Visitor interface {
+	VisitInteger(int) error
+	VisitStringSet([]string) error
+	VisitStringList([]string) error
+	VisitNestedUnionL2(*NestedUnionL2) error
+}
+
+func (n *NestedUnionL1) Accept(visitor NestedUnionL1Visitor) error {
+	if n.typ == "Integer" || n.Integer != 0 {
+		return visitor.VisitInteger(n.Integer)
+	}
+	if n.typ == "StringSet" || n.StringSet != nil {
+		return visitor.VisitStringSet(n.StringSet)
+	}
+	if n.typ == "StringList" || n.StringList != nil {
+		return visitor.VisitStringList(n.StringList)
+	}
+	if n.typ == "NestedUnionL2" || n.NestedUnionL2 != nil {
+		return visitor.VisitNestedUnionL2(n.NestedUnionL2)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", n)
+}
+
+// Nested layer 2.
+type NestedUnionL2 struct {
+	Boolean    bool
+	StringSet  []string
+	StringList []string
+
+	typ string
+}
+
+func (n *NestedUnionL2) GetBoolean() bool {
+	if n == nil {
+		return false
+	}
+	return n.Boolean
+}
+
+func (n *NestedUnionL2) GetStringSet() []string {
+	if n == nil {
+		return nil
+	}
+	return n.StringSet
+}
+
+func (n *NestedUnionL2) GetStringList() []string {
+	if n == nil {
+		return nil
+	}
+	return n.StringList
+}
+
+func (n *NestedUnionL2) UnmarshalJSON(data []byte) error {
+	var valueBoolean bool
+	if err := json.Unmarshal(data, &valueBoolean); err == nil {
+		n.typ = "Boolean"
+		n.Boolean = valueBoolean
+		return nil
+	}
+	var valueStringSet []string
+	if err := json.Unmarshal(data, &valueStringSet); err == nil {
+		n.typ = "StringSet"
+		n.StringSet = valueStringSet
+		return nil
+	}
+	var valueStringList []string
+	if err := json.Unmarshal(data, &valueStringList); err == nil {
+		n.typ = "StringList"
+		n.StringList = valueStringList
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, n)
+}
+
+func (n NestedUnionL2) MarshalJSON() ([]byte, error) {
+	if n.typ == "Boolean" || n.Boolean != false {
+		return json.Marshal(n.Boolean)
+	}
+	if n.typ == "StringSet" || n.StringSet != nil {
+		return json.Marshal(n.StringSet)
+	}
+	if n.typ == "StringList" || n.StringList != nil {
+		return json.Marshal(n.StringList)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", n)
+}
+
+type NestedUnionL2Visitor interface {
+	VisitBoolean(bool) error
+	VisitStringSet([]string) error
+	VisitStringList([]string) error
+}
+
+func (n *NestedUnionL2) Accept(visitor NestedUnionL2Visitor) error {
+	if n.typ == "Boolean" || n.Boolean != false {
+		return visitor.VisitBoolean(n.Boolean)
+	}
+	if n.typ == "StringSet" || n.StringSet != nil {
+		return visitor.VisitStringSet(n.StringSet)
+	}
+	if n.typ == "StringList" || n.StringList != nil {
+		return visitor.VisitStringList(n.StringList)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", n)
+}
+
+// Nested union root.
+type NestedUnionRoot struct {
+	String        string
+	StringList    []string
+	NestedUnionL1 *NestedUnionL1
+
+	typ string
+}
+
+func (n *NestedUnionRoot) GetString() string {
+	if n == nil {
+		return ""
+	}
+	return n.String
+}
+
+func (n *NestedUnionRoot) GetStringList() []string {
+	if n == nil {
+		return nil
+	}
+	return n.StringList
+}
+
+func (n *NestedUnionRoot) GetNestedUnionL1() *NestedUnionL1 {
+	if n == nil {
+		return nil
+	}
+	return n.NestedUnionL1
+}
+
+func (n *NestedUnionRoot) UnmarshalJSON(data []byte) error {
+	var valueString string
+	if err := json.Unmarshal(data, &valueString); err == nil {
+		n.typ = "String"
+		n.String = valueString
+		return nil
+	}
+	var valueStringList []string
+	if err := json.Unmarshal(data, &valueStringList); err == nil {
+		n.typ = "StringList"
+		n.StringList = valueStringList
+		return nil
+	}
+	valueNestedUnionL1 := new(NestedUnionL1)
+	if err := json.Unmarshal(data, &valueNestedUnionL1); err == nil {
+		n.typ = "NestedUnionL1"
+		n.NestedUnionL1 = valueNestedUnionL1
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, n)
+}
+
+func (n NestedUnionRoot) MarshalJSON() ([]byte, error) {
+	if n.typ == "String" || n.String != "" {
+		return json.Marshal(n.String)
+	}
+	if n.typ == "StringList" || n.StringList != nil {
+		return json.Marshal(n.StringList)
+	}
+	if n.typ == "NestedUnionL1" || n.NestedUnionL1 != nil {
+		return json.Marshal(n.NestedUnionL1)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", n)
+}
+
+type NestedUnionRootVisitor interface {
+	VisitString(string) error
+	VisitStringList([]string) error
+	VisitNestedUnionL1(*NestedUnionL1) error
+}
+
+func (n *NestedUnionRoot) Accept(visitor NestedUnionRootVisitor) error {
+	if n.typ == "String" || n.String != "" {
+		return visitor.VisitString(n.String)
+	}
+	if n.typ == "StringList" || n.StringList != nil {
+		return visitor.VisitStringList(n.StringList)
+	}
+	if n.typ == "NestedUnionL1" || n.NestedUnionL1 != nil {
+		return visitor.VisitNestedUnionL1(n.NestedUnionL1)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", n)
+}
+
 type OptionalMetadata = map[string]interface{}
 
 type Request struct {
@@ -452,4 +725,109 @@ func (t *TypeWithOptionalUnion) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", t)
+}
+
+// Duplicate types.
+type UnionWithDuplicateTypes struct {
+	String     string
+	StringList []string
+	Integer    int
+	StringSet  []string
+
+	typ string
+}
+
+func (u *UnionWithDuplicateTypes) GetString() string {
+	if u == nil {
+		return ""
+	}
+	return u.String
+}
+
+func (u *UnionWithDuplicateTypes) GetStringList() []string {
+	if u == nil {
+		return nil
+	}
+	return u.StringList
+}
+
+func (u *UnionWithDuplicateTypes) GetInteger() int {
+	if u == nil {
+		return 0
+	}
+	return u.Integer
+}
+
+func (u *UnionWithDuplicateTypes) GetStringSet() []string {
+	if u == nil {
+		return nil
+	}
+	return u.StringSet
+}
+
+func (u *UnionWithDuplicateTypes) UnmarshalJSON(data []byte) error {
+	var valueString string
+	if err := json.Unmarshal(data, &valueString); err == nil {
+		u.typ = "String"
+		u.String = valueString
+		return nil
+	}
+	var valueStringList []string
+	if err := json.Unmarshal(data, &valueStringList); err == nil {
+		u.typ = "StringList"
+		u.StringList = valueStringList
+		return nil
+	}
+	var valueInteger int
+	if err := json.Unmarshal(data, &valueInteger); err == nil {
+		u.typ = "Integer"
+		u.Integer = valueInteger
+		return nil
+	}
+	var valueStringSet []string
+	if err := json.Unmarshal(data, &valueStringSet); err == nil {
+		u.typ = "StringSet"
+		u.StringSet = valueStringSet
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, u)
+}
+
+func (u UnionWithDuplicateTypes) MarshalJSON() ([]byte, error) {
+	if u.typ == "String" || u.String != "" {
+		return json.Marshal(u.String)
+	}
+	if u.typ == "StringList" || u.StringList != nil {
+		return json.Marshal(u.StringList)
+	}
+	if u.typ == "Integer" || u.Integer != 0 {
+		return json.Marshal(u.Integer)
+	}
+	if u.typ == "StringSet" || u.StringSet != nil {
+		return json.Marshal(u.StringSet)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", u)
+}
+
+type UnionWithDuplicateTypesVisitor interface {
+	VisitString(string) error
+	VisitStringList([]string) error
+	VisitInteger(int) error
+	VisitStringSet([]string) error
+}
+
+func (u *UnionWithDuplicateTypes) Accept(visitor UnionWithDuplicateTypesVisitor) error {
+	if u.typ == "String" || u.String != "" {
+		return visitor.VisitString(u.String)
+	}
+	if u.typ == "StringList" || u.StringList != nil {
+		return visitor.VisitStringList(u.StringList)
+	}
+	if u.typ == "Integer" || u.Integer != 0 {
+		return visitor.VisitInteger(u.Integer)
+	}
+	if u.typ == "StringSet" || u.StringSet != nil {
+		return visitor.VisitStringSet(u.StringSet)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", u)
 }
