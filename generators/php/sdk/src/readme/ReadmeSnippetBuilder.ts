@@ -3,7 +3,7 @@ import { php } from "@fern-api/php-codegen";
 
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { EndpointId, FeatureId, FernFilepath, HttpEndpoint } from "@fern-fern/ir-sdk/api";
+import { EndpointId, FeatureId, FernFilepath, HttpEndpoint, EnumTypeDeclaration } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
@@ -315,13 +315,13 @@ ${this.context.getClientVariableName()} = new ${this.context.getRootClientClassN
 
             const enumTypeName = enumType.name.name.pascalCase.safeName;
 
-            const enumValues = (enumType.shape as any).values;
+            const enumValues = (enumType.shape as EnumTypeDeclaration).values;
 
-            if (!enumValues || enumValues.length === 0 || !enumValues[0].name?.name?.pascalCase?.safeName) {
+            if (!enumValues || enumValues.length === 0 || !enumValues[0]?.name?.name?.pascalCase?.safeName) {
                 return null;
             }
 
-            const enumValue = enumValues[0].name.name.pascalCase.safeName;
+            const enumValue = enumValues[0]?.name?.name?.pascalCase?.safeName as string;
 
             return {
                 typeName: enumTypeName,
