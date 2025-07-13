@@ -5,15 +5,24 @@ exports[`snippets (default) > examples > 'GET /metadata (allow-multiple)' 1`] = 
 
 client = acme::Client.new(token: '<YOUR_API_KEY>');
 
+client.service.get_metadata(
+    shallow: false,
+    tag: ['development', 'public'],
+    xAPIVersion: '0.0.1'
+);
 "
 `;
 
 exports[`snippets (default) > examples > 'GET /metadata (simple)' 1`] = `
-"require "acme"
-
-client = acme::Client.new(token: '<YOUR_API_KEY>');
-
-"
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "QueryParameters"
+    ],
+    "message": "Expected array but got: string"
+  }
+]"
 `;
 
 exports[`snippets (default) > examples > 'POST /big-entity (simple)' 1`] = `
@@ -21,6 +30,7 @@ exports[`snippets (default) > examples > 'POST /big-entity (simple)' 1`] = `
 
 client = acme::Client.new(token: '<YOUR_API_KEY>');
 
+client.service.create_big_entity();
 "
 `;
 
@@ -29,6 +39,7 @@ exports[`snippets (default) > examples > 'POST /movie (invalid request body)' 1`
 
 client = acme::Client.new(token: '<YOUR_API_KEY>');
 
+client.service.create_movie();
 "
 `;
 
@@ -37,6 +48,7 @@ exports[`snippets (default) > examples > 'POST /movie (simple)' 1`] = `
 
 client = acme::Client.new(token: '<YOUR_API_KEY>');
 
+client.service.create_movie();
 "
 `;
 
@@ -45,6 +57,7 @@ exports[`snippets (default) > exhaustive > 'GET /object/get-and-return-with-opti
 
 client = acme::Client.new(token: '<YOUR_API_KEY>');
 
+client.endpoints.object.get_and_return_with_optional_field();
 "
 `;
 
@@ -53,6 +66,7 @@ exports[`snippets (default) > exhaustive > 'POST /container/list-of-objects (inv
 
 client = acme::Client.new(token: '<YOUR_API_KEY>');
 
+client.endpoints.container.get_and_return_list_of_objects();
 "
 `;
 
@@ -61,6 +75,7 @@ exports[`snippets (default) > exhaustive > 'POST /container/list-of-objects (sim
 
 client = acme::Client.new(token: '<YOUR_API_KEY>');
 
+client.endpoints.container.get_and_return_list_of_objects();
 "
 `;
 
@@ -69,6 +84,7 @@ exports[`snippets (default) > exhaustive > 'POST /container/list-of-primitives (
 
 client = acme::Client.new(token: '<YOUR_API_KEY>');
 
+client.endpoints.container.get_and_return_list_of_primitives();
 "
 `;
 
@@ -77,6 +93,7 @@ exports[`snippets (default) > file-upload > 'POST /' 1`] = `
 
 client = acme::Client.new();
 
+client.service.post();
 "
 `;
 
@@ -85,6 +102,7 @@ exports[`snippets (default) > file-upload > 'POST /just-file' 1`] = `
 
 client = acme::Client.new();
 
+client.service.just_file();
 "
 `;
 
@@ -93,6 +111,10 @@ exports[`snippets (default) > file-upload > 'POST /just-file-with-query-params' 
 
 client = acme::Client.new();
 
+client.service.just_file_with_query_params(
+    integer: 42,
+    maybeString: 'exists'
+);
 "
 `;
 
@@ -101,6 +123,7 @@ exports[`snippets (default) > imdb > 'GET /movies/{movieId} (simple)' 1`] = `
 
 client = acme::Client.new(token: '<YOUR_API_KEY>');
 
+client.imdb.get_movie();
 "
 `;
 
@@ -109,6 +132,7 @@ exports[`snippets (default) > imdb > 'POST /movies/create-movie (simple)' 1`] = 
 
 client = acme::Client.new(token: '<YOUR_API_KEY>');
 
+client.imdb.create_movie();
 "
 `;
 
@@ -140,6 +164,7 @@ client = acme::Client.new(
     environment: acme::Environment::PRODUCTION
 );
 
+client.s3.get_presigned_url(s3Key: 'xyz');
 "
 `;
 
@@ -151,6 +176,7 @@ client = acme::Client.new(
     environment: acme::Environment::STAGING
 );
 
+client.s3.get_presigned_url(s3Key: 'xyz');
 "
 `;
 
@@ -169,15 +195,23 @@ exports[`snippets (default) > nullable > 'Body properties' 1`] = `
 
 client = acme::Client.new(base_url: 'https://api.example.com');
 
+client.nullable.create_user(
+    username: 'john.doe',
+    tags: ['admin'],
+    metadata: ,
+    avatar: nil
+);
 "
 `;
 
 exports[`snippets (default) > nullable > 'Invalid null value' 1`] = `
-"require "acme"
-
-client = acme::Client.new(base_url: 'https://api.example.com');
-
-"
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [],
+    "message": "Expected non-null value, but got null"
+  }
+]"
 `;
 
 exports[`snippets (default) > nullable > 'Query parameters' 1`] = `
@@ -185,6 +219,11 @@ exports[`snippets (default) > nullable > 'Query parameters' 1`] = `
 
 client = acme::Client.new(base_url: 'https://api.example.com');
 
+client.nullable.get_users(
+    usernames: ['john.doe', 'jane.doe'],
+    tags: [nil],
+    extra: nil
+);
 "
 `;
 
@@ -196,6 +235,7 @@ client = acme::Client.new(
     environment: acme::Environment::PRODUCTION
 );
 
+client.dummy.get_dummy();
 "
 `;
 
@@ -207,6 +247,7 @@ client = acme::Client.new(
     environment: acme::Environment::STAGING
 );
 
+client.dummy.get_dummy();
 "
 `;
 
@@ -218,6 +259,7 @@ client = acme::Client.new(
     base_url: 'http://localhost:8080'
 );
 
+client.dummy.get_dummy();
 "
 `;
 

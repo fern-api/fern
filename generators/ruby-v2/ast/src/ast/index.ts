@@ -17,3 +17,4 @@ export { TypeLiteral } from "./TypeLiteral";
 export { TypeParameter } from "./TypeParameter";
 export { ClassInstantiation } from "./ClassInstantiation";
 export { ClassReference } from "./ClassReference";
+export { MethodInvocation } from "./MethodInvocation";

@@ -12,7 +12,8 @@ import {
     PositionalParameter,
     PositionalSplatParameter,
     TypeParameter,
-    YieldParameter
+    YieldParameter,
+    MethodInvocation
 } from "./ast";
 
 export {
@@ -23,7 +24,8 @@ export {
     Method,
     Parameter,
     TypeLiteral,
-    TypeParameter
+    TypeParameter,
+    MethodInvocation
 } from "./ast";
 export { AstNode } from "./ast/core/AstNode";
 
@@ -83,4 +85,8 @@ export function instantiateClass(args: ClassInstantiation.Args): ClassInstantiat
 
 export function keywordArgument(args: KeywordArgument.Args): KeywordArgument {
     return new KeywordArgument(args);
+}
+
+export function invokeMethod(args: MethodInvocation.Args): MethodInvocation {
+    return new MethodInvocation(args);
 }
