@@ -3,7 +3,7 @@ import { php } from "@fern-api/php-codegen";
 
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { EndpointId, FeatureId, FernFilepath, HttpEndpoint, EnumTypeDeclaration } from "@fern-fern/ir-sdk/api";
+import { EndpointId, EnumTypeDeclaration, FeatureId, FernFilepath, HttpEndpoint } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
