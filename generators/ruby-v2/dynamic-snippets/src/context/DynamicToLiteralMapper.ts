@@ -186,10 +186,10 @@ export class DynamicTypeLiteralMapper {
             case "discriminatedUnion":
                 // Not implemented
                 return ruby.TypeLiteral.nop();
-            case "enum":
-                // Not implemented
-                return ruby.TypeLiteral.nop();
             case "object":
+                // Not implemented
+                return this.convertObject({ object: named, value });                
+            case "enum":
                 // Not implemented
                 return ruby.TypeLiteral.nop();
             case "undiscriminatedUnion":
@@ -268,6 +268,36 @@ export class DynamicTypeLiteralMapper {
             default:
                 assertNever(primitive);
         }
+    }
+
+    private convertObject({
+        object,
+        value
+    }: {
+        object: FernIr.dynamic.ObjectType;
+        value: unknown;
+    }): ruby.AstNode {  
+        if (typeof value !== "object" || value == null) {
+            this.context.errors.add({
+                severity: Severity.Critical,
+                message: `Expected object but got: ${value == null ? "null" : typeof value}`
+            });
+            return ruby.TypeLiteral.nop();
+        }
+        
+        return ruby.TypeLiteral.hash(
+            Object.entries(value as Record<string, unknown>).map(([key, val]) => {
+                this.context.errors.scope(key);
+                const property = object.properties.find(p => p.name.wireValue === key);
+                const typeReference = property?.typeReference ?? { type: "unknown" };
+                const astNode = {
+                    key: ruby.TypeLiteral.string(key),
+                    value: this.convert({ typeReference, value: val })
+                };
+                this.context.errors.unscope();
+                return astNode;
+            })
+        );
     }
 
     private getValueAsNumber({

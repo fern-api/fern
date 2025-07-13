@@ -462,7 +462,31 @@ export class EndpointSnippetGenerator {
         request: FernIr.dynamic.BodyRequest;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): ruby.AstNode[] {
-        return [];
+        if (request.body == null) {
+            return [];
+        }
+
+        switch (request.body.type) {
+            case "bytes":
+                // Not supported in Ruby snippets yet
+                this.context.errors.add({
+                    severity: "CRITICAL",
+                    message: "Multi-environment values are not supported in Ruby snippets yet"
+                });
+                return [];
+            case "typeReference":
+                return [
+                    ruby.keywordArgument({
+                        name: "request",
+                        value: this.context.dynamicTypeLiteralMapper.convert({
+                            typeReference: request.body.value,
+                            value: this.context.getRecord(snippet.requestBody)
+                        })
+                    })
+                ];
+            default:
+                assertNever(request.body);
+        }
     }
 
     private getMethod({ endpoint }: { endpoint: FernIr.dynamic.Endpoint }): string {

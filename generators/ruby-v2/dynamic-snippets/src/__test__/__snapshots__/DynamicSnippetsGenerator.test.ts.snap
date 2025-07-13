@@ -30,17 +30,34 @@ exports[`snippets (default) > examples > 'POST /big-entity (simple)' 1`] = `
 
 client = acme::Client.new(token: '<YOUR_API_KEY>');
 
-client.service.create_big_entity();
+client.service.create_big_entity(request: {
+extendedMovie:
+    {
+    cast:['John Travolta', 'Samuel L. Jackson', 'Uma Thurman', 'Bruce Willis'],
+    id:'movie-sda231x',
+    title:'Pulp Fiction',
+    from:'Quentin Tarantino',
+    rating:8.5,
+    type:'movie',
+    tag:'tag-12efs9dv',
+    metadata:
+        {},
+    revenue:1000000
+    }
+});
 "
 `;
 
 exports[`snippets (default) > examples > 'POST /movie (invalid request body)' 1`] = `
-"require "acme"
-
-client = acme::Client.new(token: '<YOUR_API_KEY>');
-
-client.service.create_movie();
-"
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "title"
+    ],
+    "message": "Expected string, got number"
+  }
+]"
 `;
 
 exports[`snippets (default) > examples > 'POST /movie (simple)' 1`] = `
@@ -48,7 +65,18 @@ exports[`snippets (default) > examples > 'POST /movie (simple)' 1`] = `
 
 client = acme::Client.new(token: '<YOUR_API_KEY>');
 
-client.service.create_movie();
+client.service.create_movie(request: {
+id:'movie-c06a4ad7',
+prequel:'movie-cv9b914f',
+title:'The Boy and the Heron',
+from:'Hayao Miyazaki',
+rating:8,
+type:'movie',
+tag:'development',
+metadata:
+    {},
+revenue:1000000
+});
 "
 `;
 
@@ -57,35 +85,55 @@ exports[`snippets (default) > exhaustive > 'GET /object/get-and-return-with-opti
 
 client = acme::Client.new(token: '<YOUR_API_KEY>');
 
-client.endpoints.object.get_and_return_with_optional_field();
+client.endpoints.object.get_and_return_with_optional_field(request: {
+string:'string',
+integer:1,
+long:1000000,
+double:1.1,
+bool:true,
+datetime:'2024-01-15T09:30:00Z',
+date:'2023-01-15',
+uuid:'d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+base64:'SGVsbG8gd29ybGQh',
+list:['list', 'list'],
+set:Set.new(['set']),
+map:
+    {
+    1:'map'
+    },
+bigint:'1000000'
+});
 "
 `;
 
 exports[`snippets (default) > exhaustive > 'POST /container/list-of-objects (inva…' 1`] = `
-"require "acme"
-
-client = acme::Client.new(token: '<YOUR_API_KEY>');
-
-client.endpoints.container.get_and_return_list_of_objects();
-"
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [],
+    "message": "Expected object with key, value pairs but got: array"
+  }
+]"
 `;
 
 exports[`snippets (default) > exhaustive > 'POST /container/list-of-objects (simp…' 1`] = `
-"require "acme"
-
-client = acme::Client.new(token: '<YOUR_API_KEY>');
-
-client.endpoints.container.get_and_return_list_of_objects();
-"
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [],
+    "message": "Expected object with key, value pairs but got: array"
+  }
+]"
 `;
 
 exports[`snippets (default) > exhaustive > 'POST /container/list-of-primitives (s…' 1`] = `
-"require "acme"
-
-client = acme::Client.new(token: '<YOUR_API_KEY>');
-
-client.endpoints.container.get_and_return_list_of_primitives();
-"
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [],
+    "message": "Expected object with key, value pairs but got: array"
+  }
+]"
 `;
 
 exports[`snippets (default) > file-upload > 'POST /' 1`] = `
@@ -132,7 +180,10 @@ exports[`snippets (default) > imdb > 'POST /movies/create-movie (simple)' 1`] = 
 
 client = acme::Client.new(token: '<YOUR_API_KEY>');
 
-client.imdb.create_movie();
+client.imdb.create_movie(request: {
+title:'The Matrix',
+rating:8.2
+});
 "
 `;
 
@@ -198,7 +249,12 @@ client = acme::Client.new(base_url: 'https://api.example.com');
 client.nullable.create_user(
     username: 'john.doe',
     tags: ['admin'],
-    metadata: ,
+    metadata: {
+    createdAt:'1980-01-01T00:00:00Z',
+    updatedAt:'1980-01-01T00:00:00Z',
+    avatar:nil,
+    activated:nil
+    },
     avatar: nil
 );
 "

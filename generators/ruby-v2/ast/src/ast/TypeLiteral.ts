@@ -151,16 +151,43 @@ export class TypeLiteral extends AstNode {
                     writer.write("{}");
                     break;
                 }
-                writer.write("{");
+                writer.write("{\n");
                 entries.forEach((entry, index) => {
                     if (index > 0) {
-                        writer.write(", ");
+                        writer.write(",\n");
                     }
-                    entry.key.write(writer);
-                    writer.write(" => ");
-                    entry.value.write(writer);
+                    // Always try to write as Ruby symbol if possible
+                    let wroteSymbol = false;
+                    if (
+                        entry.key instanceof TypeLiteral &&
+                        entry.key.internalType.type === "str"
+                    ) {
+                        const keyStr = entry.key.internalType.value;
+                        // Ruby symbol rules: must be a valid identifier
+                        if (/^[a-zA-Z_][a-zA-Z0-9_]*$/.test(keyStr)) {
+                            writer.write(`${keyStr}:`);
+                            wroteSymbol = true;
+                        }
+                    }
+                    if (!wroteSymbol) {
+                        entry.key.write(writer);
+                        writer.write(":");
+                    }
+                    // Indent nested hashes for pretty output
+                    const shouldIndent =
+                        entry.value instanceof TypeLiteral &&
+                        entry.value.internalType.type === "hash" &&
+                        entry.value.internalType.entries.length > 0;
+                    if (shouldIndent) {
+                        writer.write("\n");
+                        writer.indent();
+                        entry.value.write(writer);
+                        writer.dedent();
+                    } else {
+                        entry.value.write(writer);
+                    }
                 });
-                writer.write("}");
+                writer.write("\n}");
                 break;
             }
             case "set": {
