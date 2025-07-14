@@ -44,7 +44,7 @@ ${this.buffer}`
 
     private stringifyRequires(): string {
         return Array.from(this.requires)
-            .map((requirePath) => `require '${requirePath}'`)
+            .map((requirePath) => `require "${requirePath}"`)
             .join("\n");
     }
 }

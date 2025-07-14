@@ -103,7 +103,7 @@ export class JestTestGenerator {
                         {
                             displayName: "browser",
                             preset: "ts-jest",
-                            testEnvironment: "<rootDir>/tests/BrowserTestEnvironment.ts",
+                            testEnvironment: "<rootDir>/${this.relativeTestPath}/BrowserTestEnvironment.ts",
                             moduleNameMapper: {
                                 "^(\\.{1,2}/.*)\\.js$": "$1",
                             },
@@ -123,7 +123,7 @@ export class JestTestGenerator {
                                 "^(\\.{1,2}/.*)\\.js$": "$1",
                             },
                             roots: ["<rootDir>/${this.relativeTestPath}/wire"],
-                            setupFilesAfterEnv: ${arrayOf(...setupFilesAfterEnv, "<rootDir>/tests/mock-server/setup.ts")},
+                            setupFilesAfterEnv: ${arrayOf(...setupFilesAfterEnv, `<rootDir>/${this.relativeTestPath}/mock-server/setup.ts`)},
                         }`
                                 : ""
                         }

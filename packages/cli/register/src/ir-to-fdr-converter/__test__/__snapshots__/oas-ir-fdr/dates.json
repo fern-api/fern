@@ -182,14 +182,14 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "date_only": "foo",
-              "date_time": "foo"
+              "date_only": "2023-01-15",
+              "date_time": "2024-01-15T09:30:00Z"
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
-                "date_only": "foo",
-                "date_time": "foo"
+                "date_only": "2023-01-15",
+                "date_time": "2024-01-15T09:30:00Z"
               }
             }
           }

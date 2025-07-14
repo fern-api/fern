@@ -1,0 +1,18 @@
+## 2.4.6
+**`(fix):`** Parse HTTP error bodies as JSON if the response content-type header is JSON, otherwise fallback to text.
+
+
+**`(fix):`** Fix `bytes` fetcher test.
+
+
+**`(fix):`** Fix Jest configuration when a `packagePath` is specified in _generators.yml_ config.
+
+
+## 2.4.5
+**`(fix):`** Make sure `extraDependencies`, `extraPeerDependencies`, `extraPeerDependenciesMeta`, and `extraDevDependencies` are always merged into _package.json_.
+
+
+## 2.4.4
+**`(fix):`** Make the `BinaryResponse.bytes` function optional because some versions of runtimes do not support the function on fetch `Response`.
+
+

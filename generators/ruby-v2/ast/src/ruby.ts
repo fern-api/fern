@@ -1,19 +1,31 @@
 import {
+    ClassInstantiation,
+    ClassReference,
     Class_,
     CodeBlock,
     Comment,
+    KeywordArgument,
     KeywordParameter,
     KeywordSplatParameter,
     Method,
     Module,
     PositionalParameter,
     PositionalSplatParameter,
+    TypeParameter,
     YieldParameter
 } from "./ast";
-import { TypeParameter } from "./ast/TypeParameter";
 
+export {
+    ClassInstantiation,
+    ClassReference,
+    CodeBlock,
+    KeywordArgument,
+    Method,
+    Parameter,
+    TypeLiteral,
+    TypeParameter
+} from "./ast";
 export { AstNode } from "./ast/core/AstNode";
-export { CodeBlock, Parameter, Method } from "./ast";
 
 export function codeblock(arg: CodeBlock.Arg): CodeBlock {
     return new CodeBlock(arg);
@@ -59,4 +71,16 @@ export function comment(args: Comment.Args): Comment {
 
 export function typeParameter(args: TypeParameter.Args): TypeParameter {
     return new TypeParameter(args);
+}
+
+export function classReference(args: ClassReference.Args): ClassReference {
+    return new ClassReference(args);
+}
+
+export function instantiateClass(args: ClassInstantiation.Args): ClassInstantiation {
+    return new ClassInstantiation(args);
+}
+
+export function keywordArgument(args: KeywordArgument.Args): KeywordArgument {
+    return new KeywordArgument(args);
 }

@@ -5,7 +5,7 @@ client = SeedUnions(
     base_url="https://yourhost.com/path/to/api",
 )        
 client.bigunion.get(
-	id="id"
+    id="id"
 )
 
 ```
@@ -18,7 +18,7 @@ client = SeedUnions(
     base_url="https://yourhost.com/path/to/api",
 )        
 client.bigunion.update(
-	request=request=NormalSweetBigUnion(value="value", )
+    request=request=NormalSweetBigUnion(value="value", )
 )
 
 ```
@@ -31,7 +31,7 @@ client = SeedUnions(
     base_url="https://yourhost.com/path/to/api",
 )        
 client.bigunion.update_many(
-	request=[
+    request=[
 		NormalSweetBigUnion(value="value", ),
 		NormalSweetBigUnion(value="value", )
 	]
@@ -47,7 +47,7 @@ client = SeedUnions(
     base_url="https://yourhost.com/path/to/api",
 )        
 client.union.get(
-	id="id"
+    id="id"
 )
 
 ```
@@ -60,7 +60,7 @@ client = SeedUnions(
     base_url="https://yourhost.com/path/to/api",
 )        
 client.union.update(
-	request=request=CircleShape(radius=1.1, )
+    request=request=CircleShape(radius=1.1, )
 )
 
 ```

@@ -3,7 +3,7 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { SwiftFile } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
 
-import { ObjectProperty } from "@fern-fern/ir-sdk/api";
+import { ObjectProperty, Type } from "@fern-fern/ir-sdk/api";
 import { PrimitiveTypeV1, TypeDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
 
 export class ObjectGenerator {
@@ -36,12 +36,16 @@ export class ObjectGenerator {
 
     private generateAstNodeForTypeDeclaration(): swift.Struct | null {
         switch (this.typeDeclaration.shape.type) {
-            case "object":
+            case "object": {
+                const codingKeysEnum = this.generateCodingKeysEnum(this.typeDeclaration.shape);
                 return swift.struct({
                     name: this.typeDeclaration.name.name.pascalCase.safeName,
+                    accessLevel: swift.AccessLevel.Public,
+                    conformances: ["Codable", "Hashable"],
                     properties: this.typeDeclaration.shape.properties.map((p) => this.generateAstNodeForProperty(p)),
-                    accessLevel: swift.AccessLevel.Public
+                    nestedTypes: codingKeysEnum ? [codingKeysEnum] : undefined
                 });
+            }
             case "alias":
             case "enum":
             case "undiscriminatedUnion":
@@ -50,6 +54,25 @@ export class ObjectGenerator {
             default:
                 assertNever(this.typeDeclaration.shape);
         }
+    }
+
+    private generateCodingKeysEnum(type: Type.Object_): swift.EnumWithRawValues | null {
+        const hasNonCamelcaseProperties = type.properties.some(
+            (p) => p.name.name.camelCase.unsafeName !== p.name.name.originalName
+        );
+        if (!hasNonCamelcaseProperties) {
+            return null;
+        }
+        return swift.enumWithRawValues({
+            name: "CodingKeys",
+            conformances: ["String", "CodingKey"],
+            cases: type.properties.map((property) => {
+                return {
+                    unsafeName: property.name.name.camelCase.unsafeName,
+                    rawValue: property.name.name.originalName
+                };
+            })
+        });
     }
 
     private generateAstNodeForProperty(property: ObjectProperty): swift.Property {

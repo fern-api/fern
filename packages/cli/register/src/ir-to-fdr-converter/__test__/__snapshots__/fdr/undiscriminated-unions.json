@@ -110,6 +110,175 @@
         ]
       }
     },
+    "type_union:NestedUnionL2": {
+      "description": "Nested layer 2.",
+      "name": "NestedUnionL2",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "type": {
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
+            }
+          },
+          {
+            "type": {
+              "type": "set",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "type": {
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_union:NestedUnionL1": {
+      "description": "Nested layer 1.",
+      "name": "NestedUnionL1",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "type": {
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
+            }
+          },
+          {
+            "type": {
+              "type": "set",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "type": {
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "typeName": "NestedUnionL2",
+            "type": {
+              "type": "id",
+              "value": "type_union:NestedUnionL2"
+            },
+            "displayName": "Nested Union L2"
+          }
+        ]
+      }
+    },
+    "type_union:NestedUnionRoot": {
+      "description": "Nested union root.",
+      "name": "NestedUnionRoot",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "type": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "type": {
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "typeName": "NestedUnionL1",
+            "type": {
+              "type": "id",
+              "value": "type_union:NestedUnionL1"
+            },
+            "displayName": "Nested Union L1"
+          }
+        ]
+      }
+    },
+    "type_union:UnionWithDuplicateTypes": {
+      "description": "Duplicate types.",
+      "name": "UnionWithDuplicateTypes",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "type": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "type": {
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "type": {
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
+            }
+          },
+          {
+            "type": {
+              "type": "set",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
     "type_union:MetadataUnion": {
       "name": "MetadataUnion",
       "shape": {
@@ -503,6 +672,138 @@
               "codeSamples": []
             }
           ]
+        },
+        {
+          "auth": false,
+          "method": "POST",
+          "id": "duplicateTypesUnion",
+          "originalEndpointId": "endpoint_union.duplicateTypesUnion",
+          "name": "Duplicate Types Union",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/"
+              },
+              {
+                "type": "literal",
+                "value": "/duplicate"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "type": "json",
+              "contentType": "application/json",
+              "shape": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "type_union:UnionWithDuplicateTypes"
+                }
+              }
+            }
+          },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_union:UnionWithDuplicateTypes"
+              }
+            }
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/duplicate",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": "string",
+              "requestBodyV3": {
+                "type": "json",
+                "value": "string"
+              },
+              "responseStatusCode": 200,
+              "responseBody": "string",
+              "responseBodyV3": {
+                "type": "json",
+                "value": "string"
+              },
+              "codeSamples": []
+            }
+          ]
+        },
+        {
+          "auth": false,
+          "method": "POST",
+          "id": "nestedUnions",
+          "originalEndpointId": "endpoint_union.nestedUnions",
+          "name": "Nested Unions",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/"
+              },
+              {
+                "type": "literal",
+                "value": "/nested"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "type": "json",
+              "contentType": "application/json",
+              "shape": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "type_union:NestedUnionRoot"
+                }
+              }
+            }
+          },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/nested",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": "string",
+              "requestBodyV3": {
+                "type": "json",
+                "value": "string"
+              },
+              "responseStatusCode": 200,
+              "responseBody": "string",
+              "responseBodyV3": {
+                "type": "json",
+                "value": "string"
+              },
+              "codeSamples": []
+            }
+          ]
         }
       ],
       "webhooks": [],
@@ -511,6 +812,10 @@
         "type_union:Request",
         "type_union:TypeWithOptionalUnion",
         "type_union:MyUnion",
+        "type_union:NestedUnionL2",
+        "type_union:NestedUnionL1",
+        "type_union:NestedUnionRoot",
+        "type_union:UnionWithDuplicateTypes",
         "type_union:MetadataUnion",
         "type_union:NamedMetadata",
         "type_union:OptionalMetadata",

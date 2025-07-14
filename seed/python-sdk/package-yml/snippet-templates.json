@@ -24,7 +24,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.echo(\n\t$FERN_INPUT\n)",
+                "templateString": "client.echo(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -79,7 +79,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.echo(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.echo(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -146,7 +146,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.service.nop(\n\t$FERN_INPUT\n)",
+                "templateString": "client.service.nop(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -185,7 +185,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.service.nop(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.service.nop(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",

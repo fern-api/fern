@@ -84,4 +84,40 @@ describe("Union", () => {
         });
         expect(response).toEqual(true);
     });
+
+    test("duplicateTypesUnion", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedUndiscriminatedUnionsClient({ environment: server.baseUrl });
+        const rawRequestBody = "string";
+        const rawResponseBody = "string";
+        server
+            .mockEndpoint()
+            .post("/duplicate")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.union.duplicateTypesUnion("string");
+        expect(response).toEqual("string");
+    });
+
+    test("nestedUnions", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedUndiscriminatedUnionsClient({ environment: server.baseUrl });
+        const rawRequestBody = "string";
+        const rawResponseBody = "string";
+        server
+            .mockEndpoint()
+            .post("/nested")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.union.nestedUnions("string");
+        expect(response).toEqual("string");
+    });
 });

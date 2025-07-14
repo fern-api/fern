@@ -11,6 +11,7 @@ import { toJson } from "../json.mjs";
 import { abortRawResponse, toRawResponse, unknownRawResponse } from "./RawResponse.mjs";
 import { Supplier } from "./Supplier.mjs";
 import { createRequestUrl } from "./createRequestUrl.mjs";
+import { getErrorResponseBody } from "./getErrorResponseBody.mjs";
 import { getFetchFn } from "./getFetchFn.mjs";
 import { getRequestBody } from "./getRequestBody.mjs";
 import { getResponseBody } from "./getResponseBody.mjs";
@@ -51,11 +52,10 @@ export function fetcherImpl(args) {
             const response = yield requestWithRetries(() => __awaiter(this, void 0, void 0, function* () {
                 return makeRequest(fetchFn, url, args.method, yield getHeaders(args), requestBody, args.timeoutMs, args.abortSignal, args.withCredentials, args.duplex);
             }), args.maxRetries);
-            const responseBody = yield getResponseBody(response, args.responseType);
             if (response.status >= 200 && response.status < 400) {
                 return {
                     ok: true,
-                    body: responseBody,
+                    body: (yield getResponseBody(response, args.responseType)),
                     headers: response.headers,
                     rawResponse: toRawResponse(response),
                 };
@@ -66,7 +66,7 @@ export function fetcherImpl(args) {
                     error: {
                         reason: "status-code",
                         statusCode: response.status,
-                        body: responseBody,
+                        body: yield getErrorResponseBody(response),
                     },
                     rawResponse: toRawResponse(response),
                 };

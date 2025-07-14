@@ -1,0 +1,7 @@
+## 1.16.5
+**`(fix):`** Fix duplicate array types in undiscriminated union properties. Previously, nested unions 
+containing different array types (e.g., array<string, mixed> and array<Recipient>) would 
+generate duplicate array annotations in PHP union types (array|array|null). The fix implements 
+recursive union flattening with proper deduplication during type generation.
+
+

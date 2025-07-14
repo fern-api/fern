@@ -254,7 +254,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                             invocation
                         )
                     ],
-                    ts.NodeFlags.Const
+                    ts.NodeFlags.Let
                 )
             ),
             ts.factory.createWhileStatement(

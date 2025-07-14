@@ -2637,7 +2637,7 @@
                 "UPLOADCARE_PUB_KEY": "YOUR_PUBLIC_KEY",
                 "UPLOADCARE_STORE": "auto",
                 "{filename}": [
-                  "foo"
+                  "string"
                 ],
                 "my_file.jpg": "@my_file.jpg",
                 "metadata[subsystem]": "uploader",
@@ -2657,7 +2657,7 @@
                   "{filename}": {
                     "type": "filenames",
                     "value": [
-                      "foo"
+                      "string"
                     ]
                   },
                   "metadata[{key}]": {
@@ -2693,7 +2693,7 @@
                 "UPLOADCARE_PUB_KEY": "YOUR_PUBLIC_KEY",
                 "UPLOADCARE_STORE": "auto",
                 "{filename}": [
-                  "foo"
+                  "string"
                 ],
                 "my_file.jpg": "@my_file.jpg",
                 "another_file.jpg": "@another_file.jpg",
@@ -2713,7 +2713,7 @@
                   "{filename}": {
                     "type": "filenames",
                     "value": [
-                      "foo"
+                      "string"
                     ]
                   },
                   "metadata[{key}]": {
@@ -3170,7 +3170,7 @@
                     "latitude": 55.62013611111111,
                     "longitude": 37.66299166666666
                   },
-                  "datetime_original": "foo",
+                  "datetime_original": "2024-01-15T09:30:00Z",
                   "dpi": [
                     72,
                     72
@@ -3194,7 +3194,7 @@
                       "latitude": 55.62013611111111,
                       "longitude": 37.66299166666666
                     },
-                    "datetime_original": "foo",
+                    "datetime_original": "2024-01-15T09:30:00Z",
                     "dpi": [
                       72,
                       72
@@ -3231,7 +3231,7 @@
                       "latitude": 55.62013611111111,
                       "longitude": 37.66299166666666
                     },
-                    "datetime_original": "foo",
+                    "datetime_original": "2024-01-15T09:30:00Z",
                     "dpi": [
                       72,
                       72
@@ -3255,7 +3255,7 @@
                         "latitude": 55.62013611111111,
                         "longitude": 37.66299166666666
                       },
-                      "datetime_original": "foo",
+                      "datetime_original": "2024-01-15T09:30:00Z",
                       "dpi": [
                         72,
                         72
@@ -4028,7 +4028,7 @@
                     "latitude": 55.62013611111111,
                     "longitude": 37.66299166666666
                   },
-                  "datetime_original": "foo",
+                  "datetime_original": "2024-01-15T09:30:00Z",
                   "dpi": [
                     72,
                     72
@@ -4052,7 +4052,7 @@
                       "latitude": 55.62013611111111,
                       "longitude": 37.66299166666666
                     },
-                    "datetime_original": "foo",
+                    "datetime_original": "2024-01-15T09:30:00Z",
                     "dpi": [
                       72,
                       72
@@ -4089,7 +4089,7 @@
                       "latitude": 55.62013611111111,
                       "longitude": 37.66299166666666
                     },
-                    "datetime_original": "foo",
+                    "datetime_original": "2024-01-15T09:30:00Z",
                     "dpi": [
                       72,
                       72
@@ -4113,7 +4113,7 @@
                         "latitude": 55.62013611111111,
                         "longitude": 37.66299166666666
                       },
-                      "datetime_original": "foo",
+                      "datetime_original": "2024-01-15T09:30:00Z",
                       "dpi": [
                         72,
                         72
@@ -4294,7 +4294,7 @@
                 "cdn_url": "https://ucarecdn.com/0d712319-b970-4602-850c-bae1ced521a6~1/",
                 "url": "https://api.uploadcare.com/groups/0d712319-b970-4602-850c-bae1ced521a6~1/",
                 "files": [
-                  "foo"
+                  "string"
                 ]
               },
               "responseBodyV3": {
@@ -4307,7 +4307,7 @@
                   "cdn_url": "https://ucarecdn.com/0d712319-b970-4602-850c-bae1ced521a6~1/",
                   "url": "https://api.uploadcare.com/groups/0d712319-b970-4602-850c-bae1ced521a6~1/",
                   "files": [
-                    "foo"
+                    "string"
                   ]
                 }
               }
@@ -4395,7 +4395,7 @@
                 "cdn_url": "https://ucarecdn.com/0d712319-b970-4602-850c-bae1ced521a6~1/",
                 "url": "https://api.uploadcare.com/groups/0d712319-b970-4602-850c-bae1ced521a6~1/",
                 "files": [
-                  "foo"
+                  "string"
                 ]
               },
               "responseBodyV3": {
@@ -4408,7 +4408,7 @@
                   "cdn_url": "https://ucarecdn.com/0d712319-b970-4602-850c-bae1ced521a6~1/",
                   "url": "https://api.uploadcare.com/groups/0d712319-b970-4602-850c-bae1ced521a6~1/",
                   "files": [
-                    "foo"
+                    "string"
                   ]
                 }
               }

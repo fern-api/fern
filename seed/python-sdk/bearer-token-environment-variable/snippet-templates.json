@@ -41,7 +41,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.service.get_with_bearer_token(\n\t$FERN_INPUT\n)",
+                "templateString": "client.service.get_with_bearer_token(\n    $FERN_INPUT\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",\n\t",
                 "type": "generic"
@@ -80,7 +80,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.service.get_with_bearer_token(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.service.get_with_bearer_token(\n    $FERN_INPUT\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",\n\t",
                     "type": "generic"
