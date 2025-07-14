@@ -8,7 +8,9 @@ import {
     KeywordParameter,
     KeywordSplatParameter,
     Method,
+    MethodInvocation,
     Module,
+    PositionalArgument,
     PositionalParameter,
     PositionalSplatParameter,
     TypeParameter,
@@ -21,6 +23,7 @@ export {
     CodeBlock,
     KeywordArgument,
     Method,
+    MethodInvocation,
     Parameter,
     TypeLiteral,
     TypeParameter
@@ -83,4 +86,12 @@ export function instantiateClass(args: ClassInstantiation.Args): ClassInstantiat
 
 export function keywordArgument(args: KeywordArgument.Args): KeywordArgument {
     return new KeywordArgument(args);
+}
+
+export function invokeMethod(args: MethodInvocation.Args): MethodInvocation {
+    return new MethodInvocation(args);
+}
+
+export function positionalArgument(args: PositionalArgument.Args): PositionalArgument {
+    return new PositionalArgument(args);
 }
