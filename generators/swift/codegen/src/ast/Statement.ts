@@ -2,6 +2,7 @@ import { assertNever } from "@fern-api/core-utils";
 
 import { Expression } from "./Expression";
 import { AstNode, Writer } from "./core";
+import { escapeReservedKeyword } from "./syntax/reserved-keywords";
 
 type ConstantAssignment = {
     type: "constant-assignment";
@@ -28,7 +29,7 @@ export class Statement extends AstNode {
         switch (this.internalStatement.type) {
             case "constant-assignment":
                 writer.write("let ");
-                writer.write(this.internalStatement.constantName);
+                writer.write(escapeReservedKeyword(this.internalStatement.constantName));
                 writer.write(" = ");
                 this.internalStatement.value.write(writer);
                 writer.newLine();
