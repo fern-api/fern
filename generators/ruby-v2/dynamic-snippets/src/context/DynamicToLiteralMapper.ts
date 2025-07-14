@@ -300,8 +300,7 @@ export class DynamicTypeLiteralMapper {
         value: unknown;
         as?: DynamicTypeLiteralMapper.ConvertedAs;
     }): boolean | undefined {
-        const bool =
-            as === "key" ? (typeof value === "string" ? value === "true" : Boolean(value)) : value;
+        const bool = as === "key" ? (typeof value === "string" ? value === "true" : Boolean(value)) : value;
         return this.context.getValueAsBoolean({ value: bool });
     }
 }

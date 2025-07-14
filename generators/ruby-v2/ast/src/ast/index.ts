@@ -19,4 +19,3 @@ export { Type } from "./Type";
 export { TypeLiteral } from "./TypeLiteral";
 export { TypeParameter } from "./TypeParameter";
 export { YieldParameter } from "./YieldParameter";
-

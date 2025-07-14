@@ -9,16 +9,7 @@ export interface NamedValue {
     value: AstNode;
 }
 
-type InternalTypeLiteral =
-    | Str
-    | Int
-    | Float
-    | Bool
-    | Hash
-    | Set_
-    | List_
-    | Nop
-    | Nil;
+type InternalTypeLiteral = Str | Int | Float | Bool | Hash | Set_ | List_ | Nop | Nil;
 
 interface Str {
     type: "str";
@@ -159,10 +150,7 @@ export class TypeLiteral extends AstNode {
                     writer.indent();
                     // Always try to write as Ruby symbol if possible
                     let wroteSymbol = false;
-                    if (
-                        entry.key instanceof TypeLiteral &&
-                        entry.key.internalType.type === "str"
-                    ) {
+                    if (entry.key instanceof TypeLiteral && entry.key.internalType.type === "str") {
                         const keyStr = entry.key.internalType.value;
                         // Ruby symbol rules: must be a valid identifier
                         if (/^[a-zA-Z_][a-zA-Z0-9_]*$/.test(keyStr)) {

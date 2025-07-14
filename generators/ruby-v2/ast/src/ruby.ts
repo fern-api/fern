@@ -22,7 +22,9 @@ export {
     ClassReference,
     CodeBlock,
     KeywordArgument,
-    Method, MethodInvocation, Parameter,
+    Method,
+    MethodInvocation,
+    Parameter,
     TypeLiteral,
     TypeParameter
 } from "./ast";
