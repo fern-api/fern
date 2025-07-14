@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |  
+        Use service display name for grpc services.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-14"
+  version: 0.65.12
+
+- changelogEntry:
+    - summary: |  
         The extension `x-fern-global-headers` now supports a type field that can point to 
         arbitrary schemas. For example you can do the following to describe a header 
         that is an enum.

@@ -90,7 +90,8 @@ export class ProtofileConverter extends AbstractSpecConverter<ProtofileConverter
                         endpointGroup: endpoint.group,
                         endpoint: endpoint.endpoint,
                         audiences: [],
-                        serviceName: convertedService.serviceName
+                        serviceName: convertedService.serviceName,
+                        endpointGroupDisplayName: convertedService.serviceDisplayName
                     });
                 }
             }

@@ -15,6 +15,7 @@ export declare namespace ServiceConverter {
     export interface Output {
         endpoints: MethodConverter.Output[];
         serviceName: string;
+        serviceDisplayName: string;
         inlinedTypes: Record<string, Converters.SchemaConverters.SchemaConverter.ConvertedSchema>;
     }
 }
@@ -46,6 +47,7 @@ export class ServiceConverter extends AbstractConverter<ProtofileConverterContex
         return {
             endpoints: rpcServiceMethods,
             serviceName: this.context.maybePrependPackageName(this.service.name),
+            serviceDisplayName: this.service.name,
             inlinedTypes: {}
         };
     }
