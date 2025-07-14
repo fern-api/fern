@@ -8,12 +8,13 @@ import {
     KeywordParameter,
     KeywordSplatParameter,
     Method,
+    MethodInvocation,
     Module,
+    PositionalArgument,
     PositionalParameter,
     PositionalSplatParameter,
     TypeParameter,
-    YieldParameter,
-    MethodInvocation
+    YieldParameter
 } from "./ast";
 
 export {
@@ -21,11 +22,9 @@ export {
     ClassReference,
     CodeBlock,
     KeywordArgument,
-    Method,
-    Parameter,
+    Method, MethodInvocation, Parameter,
     TypeLiteral,
-    TypeParameter,
-    MethodInvocation
+    TypeParameter
 } from "./ast";
 export { AstNode } from "./ast/core/AstNode";
 
@@ -89,4 +88,8 @@ export function keywordArgument(args: KeywordArgument.Args): KeywordArgument {
 
 export function invokeMethod(args: MethodInvocation.Args): MethodInvocation {
     return new MethodInvocation(args);
+}
+
+export function positionalArgument(args: PositionalArgument.Args): PositionalArgument {
+    return new PositionalArgument(args);
 }

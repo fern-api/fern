@@ -344,7 +344,7 @@ export class EndpointSnippetGenerator {
     }): ruby.AstNode[] {
         switch (endpoint.request.type) {
             case "inlined":
-                return this.getMethodArgsForInlinedRequest({ request: endpoint.request, snippet });
+                return [this.getMethodArgsForInlinedRequest({ request: endpoint.request, snippet })];
             case "body":
                 return this.getMethodArgsForBodyRequest({ request: endpoint.request, snippet });
             default:
@@ -358,8 +358,8 @@ export class EndpointSnippetGenerator {
     }: {
         request: FernIr.dynamic.InlinedRequest;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
-    }): ruby.AstNode[] {
-        const args: ruby.AstNode[] = [];
+    }): ruby.AstNode {
+        const args: ruby.KeywordArgument[] = [];
 
         args.push(
             ...this.getNamedParameterArgs({
@@ -398,7 +398,12 @@ export class EndpointSnippetGenerator {
             }
         }
 
-        return args;
+        return ruby.TypeLiteral.hash(
+            args.map(arg => ({
+                key: ruby.TypeLiteral.string(arg.name),
+                value: arg.value
+            }))
+        );
     }
 
     private getNamedParameterArgs({
@@ -409,8 +414,8 @@ export class EndpointSnippetGenerator {
         kind: "PathParameters" | "QueryParameters" | "Headers";
         namedParameters: FernIr.dynamic.NamedParameter[] | undefined;
         values: Record<string, unknown> | undefined;
-    }): ruby.AstNode[] {
-        const args: ruby.AstNode[] = [];
+    }): ruby.KeywordArgument[] {
+        const args: ruby.KeywordArgument[] = [];
         this.context.errors.scope(kind);
         if (namedParameters != null) {
             const associated = this.context.associateByWireValue({
@@ -437,8 +442,8 @@ export class EndpointSnippetGenerator {
     }: {
         request: FernIr.dynamic.InlinedRequestBody.Properties;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
-    }): ruby.AstNode[] {
-        const args: ruby.AstNode[] = [];
+    }): ruby.KeywordArgument[] {
+        const args: ruby.KeywordArgument[] = [];
 
         const bodyProperties = this.context.associateByWireValue({
             parameters: request.value,
@@ -476,8 +481,7 @@ export class EndpointSnippetGenerator {
                 return [];
             case "typeReference":
                 return [
-                    ruby.keywordArgument({
-                        name: "request",
+                    ruby.positionalArgument({
                         value: this.context.dynamicTypeLiteralMapper.convert({
                             typeReference: request.body.value,
                             value: this.context.getRecord(snippet.requestBody)

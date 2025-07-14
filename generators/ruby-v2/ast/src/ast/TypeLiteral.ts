@@ -154,8 +154,9 @@ export class TypeLiteral extends AstNode {
                 writer.write("{\n");
                 entries.forEach((entry, index) => {
                     if (index > 0) {
-                        writer.write(",\n");
+                        writer.writeLine(",");
                     }
+                    writer.indent();
                     // Always try to write as Ruby symbol if possible
                     let wroteSymbol = false;
                     if (
@@ -173,19 +174,8 @@ export class TypeLiteral extends AstNode {
                         entry.key.write(writer);
                         writer.write(":");
                     }
-                    // Indent nested hashes for pretty output
-                    const shouldIndent =
-                        entry.value instanceof TypeLiteral &&
-                        entry.value.internalType.type === "hash" &&
-                        entry.value.internalType.entries.length > 0;
-                    if (shouldIndent) {
-                        writer.write("\n");
-                        writer.indent();
-                        entry.value.write(writer);
-                        writer.dedent();
-                    } else {
-                        entry.value.write(writer);
-                    }
+                    entry.value.write(writer);
+                    writer.dedent();
                 });
                 writer.write("\n}");
                 break;

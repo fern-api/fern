@@ -1,4 +1,6 @@
 export { Class_ } from "./Class";
+export { ClassInstantiation } from "./ClassInstantiation";
+export { ClassReference } from "./ClassReference";
 export { CodeBlock } from "./CodeBlock";
 export { Comment } from "./Comment";
 export { AstNode } from "./core/AstNode";
@@ -7,14 +9,14 @@ export { KeywordArgument } from "./KeywordArgument";
 export { KeywordParameter } from "./KeywordParameter";
 export { KeywordSplatParameter } from "./KeywordSplatParameter";
 export { Method } from "./Method";
+export { MethodInvocation } from "./MethodInvocation";
 export { Module } from "./Module";
 export { Parameter } from "./Parameter";
+export { PositionalArgument } from "./PositionalArgument";
 export { PositionalParameter } from "./PositionalParameter";
 export { PositionalSplatParameter } from "./PositionalSplatParameter";
 export { Type } from "./Type";
-export { YieldParameter } from "./YieldParameter";
 export { TypeLiteral } from "./TypeLiteral";
 export { TypeParameter } from "./TypeParameter";
-export { ClassInstantiation } from "./ClassInstantiation";
-export { ClassReference } from "./ClassReference";
-export { MethodInvocation } from "./MethodInvocation";
+export { YieldParameter } from "./YieldParameter";
+
