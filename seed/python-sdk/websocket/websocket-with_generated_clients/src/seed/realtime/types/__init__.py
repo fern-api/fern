@@ -2,6 +2,11 @@
 
 # isort: skip_file
 
+from .address import Address
+from .animal import Animal, Animal_Cat, Animal_Dog
+from .cat import Cat
+from .dog import Dog
+from .person import Person
 from .receive_event import ReceiveEvent
 from .receive_event_2 import ReceiveEvent2
 from .receive_event_3 import ReceiveEvent3
@@ -11,6 +16,13 @@ from .send_event_2 import SendEvent2
 from .send_snake_case import SendSnakeCase
 
 __all__ = [
+    "Address",
+    "Animal",
+    "Animal_Cat",
+    "Animal_Dog",
+    "Cat",
+    "Dog",
+    "Person",
     "ReceiveEvent",
     "ReceiveEvent2",
     "ReceiveEvent3",

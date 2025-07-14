@@ -1,6 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
 
+- version: 4.26.0
+  changelogEntry:
+    - summary: |
+        Inline request parameters in websockets/streaming client send message methods.
+        Rename non-inlined send message parameters to the name of the message type.
+      type: feat
+  createdAt: '2025-07-14'
+  irVersion: 58
+
 - version: 4.25.2
   changelogEntry:
     - summary: |
