@@ -1,4 +1,3 @@
-
 import { AbstractFormatter } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
@@ -399,7 +398,7 @@ export class EndpointSnippetGenerator {
         }
 
         return ruby.TypeLiteral.hash(
-            args.map(arg => ({
+            args.map((arg) => ({
                 key: ruby.TypeLiteral.string(arg.name),
                 value: arg.value
             }))

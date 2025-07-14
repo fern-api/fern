@@ -95,13 +95,7 @@ export class DynamicTypeLiteralMapper {
         }
     }
 
-    private convertList({
-        list,
-        value
-    }: {
-        list: FernIr.dynamic.TypeReference;
-        value: unknown;
-    }): ruby.AstNode {
+    private convertList({ list, value }: { list: FernIr.dynamic.TypeReference; value: unknown }): ruby.AstNode {
         if (!Array.isArray(value)) {
             this.context.errors.add({
                 severity: Severity.Critical,
@@ -121,13 +115,7 @@ export class DynamicTypeLiteralMapper {
         );
     }
 
-    private convertSet({
-        set,
-        value
-    }: {
-        set: FernIr.dynamic.TypeReference;
-        value: unknown;
-    }): ruby.AstNode {
+    private convertSet({ set, value }: { set: FernIr.dynamic.TypeReference; value: unknown }): ruby.AstNode {
         if (!Array.isArray(value)) {
             this.context.errors.add({
                 severity: Severity.Critical,
@@ -188,7 +176,7 @@ export class DynamicTypeLiteralMapper {
                 return ruby.TypeLiteral.nop();
             case "object":
                 // Not implemented
-                return this.convertObject({ object: named, value });                
+                return this.convertObject({ object: named, value });
             case "enum":
                 // Not implemented
                 return ruby.TypeLiteral.nop();
@@ -270,13 +258,7 @@ export class DynamicTypeLiteralMapper {
         }
     }
 
-    private convertObject({
-        object,
-        value
-    }: {
-        object: FernIr.dynamic.ObjectType;
-        value: unknown;
-    }): ruby.AstNode {  
+    private convertObject({ object, value }: { object: FernIr.dynamic.ObjectType; value: unknown }): ruby.AstNode {
         if (typeof value !== "object" || value == null) {
             this.context.errors.add({
                 severity: Severity.Critical,
@@ -284,11 +266,11 @@ export class DynamicTypeLiteralMapper {
             });
             return ruby.TypeLiteral.nop();
         }
-        
+
         return ruby.TypeLiteral.hash(
             Object.entries(value as Record<string, unknown>).map(([key, val]) => {
                 this.context.errors.scope(key);
-                const property = object.properties.find(p => p.name.wireValue === key);
+                const property = object.properties.find((p) => p.name.wireValue === key);
                 const typeReference = property?.typeReference ?? { type: "unknown" };
                 const astNode = {
                     key: ruby.TypeLiteral.string(key),
