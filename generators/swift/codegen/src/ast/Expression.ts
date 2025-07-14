@@ -49,4 +49,12 @@ export class Expression extends AstNode {
     public static functionCall(unsafeName: string, arguments_?: FunctionArgument[]): Expression {
         return new this({ type: "function-call", unsafeName, arguments_ });
     }
+
+    public static rawStringValue(value: string): Expression {
+        return new this({ type: "raw-value", value: `"${value}"` });
+    }
+
+    public static rawValue(value: string): Expression {
+        return new this({ type: "raw-value", value });
+    }
 }

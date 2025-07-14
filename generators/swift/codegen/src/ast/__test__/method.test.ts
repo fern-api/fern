@@ -319,5 +319,23 @@ describe("Method", () => {
             `
             );
         });
+
+        it("should write method with body", () => {
+            const method = swift.method({
+                unsafeName: "getUserName",
+                returnType: Type.string(),
+                body: swift.CodeBlock.withStatements([
+                    swift.Statement.constantAssignment("name", swift.Expression.rawStringValue("John Appleseed")),
+                    swift.Statement.return(swift.Expression.rawValue("name"))
+                ])
+            });
+
+            expect(method.toString()).toMatchInlineSnapshot(`
+              "func getUserName() -> String {
+                  let name = "John Appleseed"
+                  return name
+              }"
+            `);
+        });
     });
 });

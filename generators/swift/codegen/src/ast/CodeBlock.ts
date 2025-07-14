@@ -1,5 +1,6 @@
 import { CodeBlock as CommonCodeBlock } from "@fern-api/browser-compatible-base-generator";
 
+import { Statement } from "./Statement";
 import { AstNode, Writer } from "./core";
 
 export declare namespace CodeBlock {
@@ -27,5 +28,13 @@ export class CodeBlock extends AstNode {
 
     public static empty(): CodeBlock {
         return new CodeBlock(() => {});
+    }
+
+    public static withStatements(statements: Statement[]): CodeBlock {
+        return new CodeBlock((writer) => {
+            statements.forEach((statement) => {
+                statement.write(writer);
+            });
+        });
     }
 }

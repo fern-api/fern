@@ -3,10 +3,10 @@ import { assertNever } from "@fern-api/core-utils";
 import { Expression } from "./Expression";
 import { AstNode, Writer } from "./core";
 
-type Assignment = {
-    type: "assignment";
-    lhs: string;
-    rhs: Expression;
+type ConstantAssignment = {
+    type: "constant-assignment";
+    constantName: string;
+    value: Expression;
 };
 
 type Return = {
@@ -14,7 +14,7 @@ type Return = {
     expression: Expression;
 };
 
-type InternalStatement = Assignment | Return;
+type InternalStatement = ConstantAssignment | Return;
 
 export class Statement extends AstNode {
     private internalStatement: InternalStatement;
@@ -26,22 +26,25 @@ export class Statement extends AstNode {
 
     public write(writer: Writer): void {
         switch (this.internalStatement.type) {
-            case "assignment":
-                writer.write(this.internalStatement.lhs);
+            case "constant-assignment":
+                writer.write("let ");
+                writer.write(this.internalStatement.constantName);
                 writer.write(" = ");
-                this.internalStatement.rhs.write(writer);
+                this.internalStatement.value.write(writer);
+                writer.newLine();
                 break;
             case "return":
                 writer.write("return ");
                 this.internalStatement.expression.write(writer);
+                writer.newLine();
                 break;
             default:
                 assertNever(this.internalStatement);
         }
     }
 
-    public static assignment(lhs: string, rhs: Expression): Statement {
-        return new this({ type: "assignment", lhs, rhs });
+    public static constantAssignment(constantName: string, value: Expression): Statement {
+        return new this({ type: "constant-assignment", constantName, value });
     }
 
     public static return(expression: Expression): Statement {
