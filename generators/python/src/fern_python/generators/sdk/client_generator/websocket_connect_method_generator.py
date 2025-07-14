@@ -261,7 +261,7 @@ class WebsocketConnectMethodGenerator:
         parameters: List[AST.NamedFunctionParameter],
     ) -> AST.CodeWriter:
         def write(writer: AST.NodeWriter) -> None:
-            environment_url = self._get_environment_as_str(websocket=websocket)
+            environment_url = self._get_multiple_base_url_environment_as_string(websocket=websocket)
             url_prefix = (
                 environment_url
                 if environment_url
@@ -619,7 +619,7 @@ class WebsocketConnectMethodGenerator:
             context=self._context, object_=reference, type_reference=query_parameter.value_type
         )
 
-    def _get_environment_as_str(self, *, websocket: ir_types.WebSocketChannel) -> Optional[str]:
+    def _get_multiple_base_url_environment_as_string(self, *, websocket: ir_types.WebSocketChannel) -> Optional[str]:
         if self._context.ir.environments is not None:
             environments_as_union = self._context.ir.environments.environments.get_as_union()
             if environments_as_union.type == "multipleBaseUrls":
