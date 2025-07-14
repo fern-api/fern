@@ -258,5 +258,67 @@ describe("Struct", () => {
 
             await expect(struct.toString()).toMatchFileSnapshot("snapshots/struct_with_2_nested_enums.swift");
         });
+
+        it("should write struct with methods", () => {
+            const struct = swift.struct({
+                name: "User",
+                accessLevel: AccessLevel.Public,
+                conformances: ["Codable"],
+                properties: [
+                    swift.property({
+                        unsafeName: "id",
+                        declarationType: DeclarationType.Let,
+                        type: Type.int()
+                    }),
+                    swift.property({
+                        unsafeName: "name",
+                        accessLevel: AccessLevel.Private,
+                        declarationType: DeclarationType.Var,
+                        type: Type.string()
+                    })
+                ],
+                methods: [
+                    swift.method({
+                        unsafeName: "getId",
+                        accessLevel: AccessLevel.Public,
+                        returnType: Type.int(),
+                        body: swift.codeBlock((writer) => {
+                            writer.writeLine("return self.id");
+                        })
+                    }),
+                    swift.method({
+                        unsafeName: "getName",
+                        accessLevel: AccessLevel.Public,
+                        returnType: Type.string(),
+                        body: swift.codeBlock((writer) => {
+                            writer.writeLine("return self.name");
+                        })
+                    }),
+                    swift.method({
+                        unsafeName: "create",
+                        accessLevel: AccessLevel.Public,
+                        static_: true,
+                        parameters: [
+                            {
+                                argumentLabel: "with",
+                                unsafeName: "id",
+                                type: Type.int()
+                            },
+                            {
+                                argumentLabel: "name",
+                                unsafeName: "name",
+                                type: Type.string()
+                            }
+                        ],
+                        returnType: Type.custom("User"),
+                        body: swift.codeBlock((writer) => {
+                            writer.writeLine("return User(id: id, name: name)");
+                        })
+                    })
+                ]
+            });
+
+            expect(struct.toString()).toMatchFileSnapshot("snapshots/struct_with_3_methods.swift");
+        });
     });
 });

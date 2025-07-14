@@ -66,7 +66,10 @@ export class Struct extends AstNode {
         }
         if (this.methods) {
             writer.newLine();
-            this.methods.forEach((method) => {
+            this.methods.forEach((method, methodIdx) => {
+                if (methodIdx > 0) {
+                    writer.newLine();
+                }
                 method.write(writer);
                 writer.newLine();
             });
