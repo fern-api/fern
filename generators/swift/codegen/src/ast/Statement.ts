@@ -1,5 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 
+import { DeclarationType } from "./DeclarationType";
 import { Expression } from "./Expression";
 import { AstNode, Writer } from "./core";
 import { escapeReservedKeyword } from "./syntax/reserved-keywords";
@@ -10,12 +11,18 @@ type ConstantAssignment = {
     value: Expression;
 };
 
+type VariableAssignment = {
+    type: "variable-assignment";
+    variableName: string;
+    value: Expression;
+};
+
 type Return = {
     type: "return";
     expression: Expression;
 };
 
-type InternalStatement = ConstantAssignment | Return;
+type InternalStatement = ConstantAssignment | VariableAssignment | Return;
 
 export class Statement extends AstNode {
     private internalStatement: InternalStatement;
@@ -28,8 +35,17 @@ export class Statement extends AstNode {
     public write(writer: Writer): void {
         switch (this.internalStatement.type) {
             case "constant-assignment":
-                writer.write("let ");
+                writer.write(DeclarationType.Let);
+                writer.write(" ");
                 writer.write(escapeReservedKeyword(this.internalStatement.constantName));
+                writer.write(" = ");
+                this.internalStatement.value.write(writer);
+                writer.newLine();
+                break;
+            case "variable-assignment":
+                writer.write(DeclarationType.Var);
+                writer.write(" ");
+                writer.write(escapeReservedKeyword(this.internalStatement.variableName));
                 writer.write(" = ");
                 this.internalStatement.value.write(writer);
                 writer.newLine();
