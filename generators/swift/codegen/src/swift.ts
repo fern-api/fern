@@ -1,4 +1,4 @@
-import { EnumWithAssociatedValues, EnumWithRawValues, Property, Struct } from "./ast";
+import { EnumWithAssociatedValues, EnumWithRawValues, Method, Property, Struct } from "./ast";
 
 export function enumWithAssociatedValues(args: EnumWithAssociatedValues.Args): EnumWithAssociatedValues {
     return new EnumWithAssociatedValues(args);
@@ -14,6 +14,10 @@ export function struct(args: Struct.Args): Struct {
 
 export function property(args: Property.Args): Property {
     return new Property(args);
+}
+
+export function method(args: Method.Args): Method {
+    return new Method(args);
 }
 
 export * from "./ast";
