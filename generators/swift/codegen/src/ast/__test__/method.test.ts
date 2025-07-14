@@ -12,7 +12,10 @@ describe("Method", () => {
                 returnType: Type.string()
             });
 
-            expect(method.toString()).toMatchInlineSnapshot(`"func getName() -> String"`);
+            expect(method.toString()).toMatchInlineSnapshot(`
+              "func getName() -> String {
+              }"
+            `);
         });
 
         it("should write method with access level", () => {
@@ -22,7 +25,10 @@ describe("Method", () => {
                 returnType: Type.int()
             });
 
-            expect(method.toString()).toMatchInlineSnapshot(`"public func getValue() -> Int"`);
+            expect(method.toString()).toMatchInlineSnapshot(`
+              "public func getValue() -> Int {
+              }"
+            `);
         });
 
         it("should write static method", () => {
@@ -32,7 +38,10 @@ describe("Method", () => {
                 returnType: Type.custom("User")
             });
 
-            expect(method.toString()).toMatchInlineSnapshot(`"static func create() -> User"`);
+            expect(method.toString()).toMatchInlineSnapshot(`
+              "static func create() -> User {
+              }"
+            `);
         });
 
         it("should write method with all modifiers", () => {
@@ -43,7 +52,10 @@ describe("Method", () => {
                 returnType: Type.bool()
             });
 
-            expect(method.toString()).toMatchInlineSnapshot(`"private static func process() -> Bool"`);
+            expect(method.toString()).toMatchInlineSnapshot(`
+              "private static func process() -> Bool {
+              }"
+            `);
         });
 
         it("should write method with single unlabeled parameter", () => {
@@ -58,7 +70,10 @@ describe("Method", () => {
                 returnType: Type.custom("Void")
             });
 
-            expect(method.toString()).toMatchInlineSnapshot(`"func setValue(_ value: String) -> Void"`);
+            expect(method.toString()).toMatchInlineSnapshot(`
+              "func setValue(_ value: String) -> Void {
+              }"
+            `);
         });
 
         it("should write method with multiple unlabeled parameters", () => {
@@ -82,7 +97,10 @@ describe("Method", () => {
             });
 
             expect(method.toString()).toMatchInlineSnapshot(
-                `"func updateUser(_ id: Int, _ name: String, _ email: String) -> Bool"`
+                `
+              "func updateUser(_ id: Int, _ name: String, _ email: String) -> Bool {
+              }"
+            `
             );
         });
 
@@ -105,7 +123,10 @@ describe("Method", () => {
             });
 
             expect(method.toString()).toMatchInlineSnapshot(
-                `"func createUser(with name: String, email emailAddress: String) -> User"`
+                `
+              "func createUser(with name: String, email emailAddress: String) -> User {
+              }"
+            `
             );
         });
 
@@ -128,7 +149,10 @@ describe("Method", () => {
             });
 
             expect(method.toString()).toMatchInlineSnapshot(
-                `"func findUser(_ id: Int, includingDeleted deleted: Bool?) -> User?"`
+                `
+              "func findUser(_ id: Int, includingDeleted deleted: Bool?) -> User? {
+              }"
+            `
             );
         });
 
@@ -157,7 +181,10 @@ describe("Method", () => {
             });
 
             expect(method.toString()).toMatchInlineSnapshot(
-                `"public func complexMethod(_ value: String, with options: [String], timeout timeoutValue: Double?) -> [String: Any]"`
+                `
+              "public func complexMethod(_ value: String, with options: [String], timeout timeoutValue: Double?) -> [String: Any] {
+              }"
+            `
             );
         });
 
@@ -167,7 +194,10 @@ describe("Method", () => {
                 returnType: Type.string()
             });
 
-            expect(method.toString()).toMatchInlineSnapshot(`"func \`class\`() -> String"`);
+            expect(method.toString()).toMatchInlineSnapshot(`
+              "func \`class\`() -> String {
+              }"
+            `);
         });
 
         it("should write method with reserved keyword parameters", () => {
@@ -188,7 +218,10 @@ describe("Method", () => {
             });
 
             expect(method.toString()).toMatchInlineSnapshot(
-                `"func configure(_ enum: String, for struct: Config) -> String"`
+                `
+              "func configure(_ enum: String, for struct: Config) -> String {
+              }"
+            `
             );
         });
 
@@ -198,7 +231,10 @@ describe("Method", () => {
                 returnType: Type.array(Type.dictionary(Type.string(), Type.tuple([Type.int(), Type.bool()])))
             });
 
-            expect(method.toString()).toMatchInlineSnapshot(`"func getComplexData() -> [[String: (Int, Bool)]]"`);
+            expect(method.toString()).toMatchInlineSnapshot(`
+              "func getComplexData() -> [[String: (Int, Bool)]] {
+              }"
+            `);
         });
 
         it("should combine argument label and parameter name if they are the same", () => {
@@ -214,7 +250,10 @@ describe("Method", () => {
                 returnType: Type.any()
             });
 
-            expect(method.toString()).toMatchInlineSnapshot(`"func setName(name: String) -> Any"`);
+            expect(method.toString()).toMatchInlineSnapshot(`
+              "func setName(name: String) -> Any {
+              }"
+            `);
         });
 
         it("should write complex static method with all features", () => {
@@ -239,7 +278,10 @@ describe("Method", () => {
             });
 
             expect(method.toString()).toMatchInlineSnapshot(
-                `"public static func createInstance(from data: Data, with options: [String]?) -> String"`
+                `
+              "public static func createInstance(from data: Data, with options: [String]?) -> String {
+              }"
+            `
             );
         });
     });

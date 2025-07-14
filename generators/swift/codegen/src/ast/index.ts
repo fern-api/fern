@@ -1,4 +1,5 @@
 export { AccessLevel } from "./AccessLevel";
+export { CodeBlock } from "./CodeBlock";
 export { DeclarationType } from "./DeclarationType";
 export { EnumWithAssociatedValues } from "./EnumWithAssociatedValues";
 export { EnumWithRawValues } from "./EnumWithRawValues";

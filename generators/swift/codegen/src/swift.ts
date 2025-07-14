@@ -1,4 +1,8 @@
-import { EnumWithAssociatedValues, EnumWithRawValues, Method, Property, Struct } from "./ast";
+import { CodeBlock, EnumWithAssociatedValues, EnumWithRawValues, Method, Property, Struct } from "./ast";
+
+export function codeBlock(args: CodeBlock.Args): CodeBlock {
+    return new CodeBlock(args);
+}
 
 export function enumWithAssociatedValues(args: EnumWithAssociatedValues.Args): EnumWithAssociatedValues {
     return new EnumWithAssociatedValues(args);

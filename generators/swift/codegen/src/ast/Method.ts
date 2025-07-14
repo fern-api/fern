@@ -1,4 +1,5 @@
 import { AccessLevel } from "./AccessLevel";
+import { CodeBlock } from "./CodeBlock";
 import { Type } from "./Type";
 import { AstNode, Writer } from "./core";
 import { escapeReservedKeyword } from "./syntax/reserved-keywords";
@@ -19,6 +20,7 @@ export declare namespace Method {
         static_?: boolean;
         parameters?: Parameter[];
         returnType: Type;
+        body?: CodeBlock;
     }
 }
 
@@ -28,14 +30,16 @@ export class Method extends AstNode {
     public readonly static_?: boolean;
     public readonly parameters?: Method.Parameter[];
     public readonly returnType: Type;
+    public readonly body: CodeBlock;
 
-    constructor({ unsafeName, accessLevel, static_, parameters, returnType }: Method.Args) {
+    constructor({ unsafeName, accessLevel, static_, parameters, returnType, body }: Method.Args) {
         super();
         this.unsafeName = unsafeName;
         this.accessLevel = accessLevel;
         this.static_ = static_;
         this.parameters = parameters;
         this.returnType = returnType;
+        this.body = body ?? CodeBlock.empty();
     }
 
     public write(writer: Writer): void {
@@ -68,5 +72,7 @@ export class Method extends AstNode {
         });
         writer.write(") -> ");
         this.returnType.write(writer);
+        writer.write(" ");
+        this.body.write(writer);
     }
 }
