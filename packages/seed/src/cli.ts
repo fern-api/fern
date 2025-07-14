@@ -228,7 +228,7 @@ function addRunCommand(cli: Argv) {
                 logLevel: argv["log-level"],
                 audience: argv.audience,
                 skipScripts: argv.skipScripts,
-                outputPath: argv["output-path"] 
+                outputPath: argv["output-path"]
                     ? argv["output-path"].startsWith("/")
                         ? AbsoluteFilePath.of(argv["output-path"])
                         : join(AbsoluteFilePath.of(process.cwd()), RelativeFilePath.of(argv["output-path"]))
