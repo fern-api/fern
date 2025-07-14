@@ -18,7 +18,8 @@ Here's an example of how you can preview your SDK:
 ### Generator configuration
 ```yaml generators.yml
 api: 
-  path: ./path/to/openapi.yml
+  specs:
+    - openapi: ./path/to/openapi.yml
 groups:
   python-sdk:
     generators:
