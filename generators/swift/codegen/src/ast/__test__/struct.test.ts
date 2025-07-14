@@ -259,7 +259,7 @@ describe("Struct", () => {
             await expect(struct.toString()).toMatchFileSnapshot("snapshots/struct_with_2_nested_enums.swift");
         });
 
-        it("should write struct with methods", () => {
+        it("should write struct with methods", async () => {
             const struct = swift.struct({
                 name: "User",
                 accessLevel: AccessLevel.Public,
@@ -318,7 +318,7 @@ describe("Struct", () => {
                 ]
             });
 
-            expect(struct.toString()).toMatchFileSnapshot("snapshots/struct_with_3_methods.swift");
+            await expect(struct.toString()).toMatchFileSnapshot("snapshots/struct_with_3_methods.swift");
         });
     });
 });

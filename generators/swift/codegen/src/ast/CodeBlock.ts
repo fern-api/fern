@@ -1,4 +1,5 @@
 import { CodeBlock as CommonCodeBlock } from "@fern-api/browser-compatible-base-generator";
+import { noop } from "@fern-api/core-utils";
 
 import { Statement } from "./Statement";
 import { AstNode, Writer } from "./core";
@@ -27,7 +28,7 @@ export class CodeBlock extends AstNode {
     }
 
     public static empty(): CodeBlock {
-        return new CodeBlock(() => {});
+        return new CodeBlock(noop);
     }
 
     public static withStatements(statements: Statement[]): CodeBlock {
