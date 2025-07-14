@@ -3,4 +3,5 @@
 # isort: skip_file
 
 from .operand import Operand
+
 __all__ = ["Operand"]
