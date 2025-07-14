@@ -1,3 +1,3 @@
-public struct Request {
+public struct Request: Codable, Hashable {
     public let union: MetadataUnion?
 }

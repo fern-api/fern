@@ -1,3 +1,3 @@
-public struct MistySnow {
+public struct MistySnow: Codable, Hashable {
     public let value: String
 }

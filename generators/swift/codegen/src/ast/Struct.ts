@@ -1,4 +1,5 @@
 import { AccessLevel } from "./AccessLevel";
+import type { EnumWithRawValues } from "./EnumWithRawValues";
 import { Property } from "./Property";
 import { AstNode, Writer } from "./core";
 
@@ -8,6 +9,7 @@ export declare namespace Struct {
         accessLevel?: AccessLevel;
         conformances?: string[];
         properties: Property[];
+        nestedTypes?: (Struct | EnumWithRawValues)[];
     }
 }
 
@@ -16,13 +18,15 @@ export class Struct extends AstNode {
     public readonly accessLevel?: AccessLevel;
     public readonly conformances?: string[];
     public readonly properties: Property[];
+    public readonly nestedTypes?: (Struct | EnumWithRawValues)[];
 
-    public constructor({ accessLevel, name, conformances, properties }: Struct.Args) {
+    public constructor({ accessLevel, name, conformances, properties, nestedTypes }: Struct.Args) {
         super();
         this.name = name;
         this.accessLevel = accessLevel;
         this.conformances = conformances;
         this.properties = properties;
+        this.nestedTypes = nestedTypes;
     }
 
     public write(writer: Writer): void {
@@ -46,6 +50,16 @@ export class Struct extends AstNode {
             property.write(writer);
             writer.newLine();
         });
+        if (this.nestedTypes) {
+            writer.newLine();
+            this.nestedTypes.forEach((nestedType, nestedTypeIdx) => {
+                if (nestedTypeIdx > 0) {
+                    writer.newLine();
+                }
+                nestedType.write(writer);
+                writer.newLine();
+            });
+        }
         writer.dedent();
         writer.write("}");
     }

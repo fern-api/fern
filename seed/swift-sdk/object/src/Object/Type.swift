@@ -1,4 +1,4 @@
-public struct Type {
+public struct Type: Codable, Hashable {
     public let one: Int
     public let two: Double
     public let three: String

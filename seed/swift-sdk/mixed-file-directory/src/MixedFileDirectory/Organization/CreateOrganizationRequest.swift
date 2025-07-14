@@ -1,3 +1,3 @@
-public struct CreateOrganizationRequest {
+public struct CreateOrganizationRequest: Codable, Hashable {
     public let name: String
 }

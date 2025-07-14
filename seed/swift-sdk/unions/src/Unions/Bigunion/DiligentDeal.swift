@@ -1,3 +1,3 @@
-public struct DiligentDeal {
+public struct DiligentDeal: Codable, Hashable {
     public let value: String
 }

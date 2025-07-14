@@ -1,3 +1,3 @@
-public struct ProblemDescription {
+public struct ProblemDescription: Codable, Hashable {
     public let boards: [ProblemDescriptionBoard]
 }

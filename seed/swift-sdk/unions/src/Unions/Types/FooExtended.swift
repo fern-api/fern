@@ -1,3 +1,3 @@
-public struct FooExtended {
+public struct FooExtended: Codable, Hashable {
     public let age: Int
 }

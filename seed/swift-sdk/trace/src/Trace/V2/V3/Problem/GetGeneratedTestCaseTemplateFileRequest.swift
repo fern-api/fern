@@ -1,3 +1,3 @@
-public struct GetGeneratedTestCaseTemplateFileRequest {
+public struct GetGeneratedTestCaseTemplateFileRequest: Codable, Hashable {
     public let template: TestCaseTemplate
 }

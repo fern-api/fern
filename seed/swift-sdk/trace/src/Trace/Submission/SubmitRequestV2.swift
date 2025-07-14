@@ -1,4 +1,4 @@
-public struct SubmitRequestV2 {
+public struct SubmitRequestV2: Codable, Hashable {
     public let submissionId: SubmissionId
     public let language: Language
     public let submissionFiles: [SubmissionFileInfo]

@@ -1,3 +1,3 @@
-public struct GetDefaultStarterFilesResponse {
+public struct GetDefaultStarterFilesResponse: Codable, Hashable {
     public let files: Any
 }

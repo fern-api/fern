@@ -1,3 +1,3 @@
-public struct WorkspaceStarterFilesResponseV2 {
+public struct WorkspaceStarterFilesResponseV2: Codable, Hashable {
     public let filesByLanguage: Any
 }

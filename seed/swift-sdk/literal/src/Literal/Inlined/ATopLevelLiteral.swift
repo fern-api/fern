@@ -1,3 +1,3 @@
-public struct ATopLevelLiteral {
+public struct ATopLevelLiteral: Codable, Hashable {
     public let nestedLiteral: ANestedLiteral
 }

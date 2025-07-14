@@ -1,3 +1,3 @@
-public struct PopularLimit {
+public struct PopularLimit: Codable, Hashable {
     public let value: String
 }

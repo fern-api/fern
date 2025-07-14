@@ -1,4 +1,4 @@
-public struct BinaryTreeNodeValue {
+public struct BinaryTreeNodeValue: Codable, Hashable {
     public let nodeId: NodeId
     public let val: Double
     public let right: NodeId?

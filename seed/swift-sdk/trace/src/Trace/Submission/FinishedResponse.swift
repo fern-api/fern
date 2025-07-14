@@ -1,3 +1,3 @@
-public struct FinishedResponse {
+public struct FinishedResponse: Codable, Hashable {
     public let submissionId: SubmissionId
 }

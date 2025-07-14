@@ -1,2 +1,2 @@
-public struct Acai {
+public struct Acai: Codable, Hashable {
 }

@@ -1,2 +1,2 @@
-public struct A {
+public struct A: Codable, Hashable {
 }

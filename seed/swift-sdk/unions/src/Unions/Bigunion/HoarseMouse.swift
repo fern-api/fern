@@ -1,3 +1,3 @@
-public struct HoarseMouse {
+public struct HoarseMouse: Codable, Hashable {
     public let value: String
 }

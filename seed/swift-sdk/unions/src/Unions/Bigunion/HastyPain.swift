@@ -1,3 +1,3 @@
-public struct HastyPain {
+public struct HastyPain: Codable, Hashable {
     public let value: String
 }

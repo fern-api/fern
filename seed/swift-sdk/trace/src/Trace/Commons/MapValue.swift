@@ -1,3 +1,3 @@
-public struct MapValue {
+public struct MapValue: Codable, Hashable {
     public let keyValuePairs: [KeyValuePair]
 }

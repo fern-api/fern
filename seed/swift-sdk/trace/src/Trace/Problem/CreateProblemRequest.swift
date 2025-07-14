@@ -1,4 +1,4 @@
-public struct CreateProblemRequest {
+public struct CreateProblemRequest: Codable, Hashable {
     public let problemName: String
     public let problemDescription: ProblemDescription
     public let files: Any

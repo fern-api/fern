@@ -1,3 +1,3 @@
-public struct DistinctFailure {
+public struct DistinctFailure: Codable, Hashable {
     public let value: String
 }

@@ -1,3 +1,3 @@
-public struct HarmoniousPlay {
+public struct HarmoniousPlay: Codable, Hashable {
     public let value: String
 }

@@ -1,3 +1,3 @@
-public struct ObjectWithRequiredField {
+public struct ObjectWithRequiredField: Codable, Hashable {
     public let string: String
 }

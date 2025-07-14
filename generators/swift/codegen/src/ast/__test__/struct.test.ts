@@ -190,5 +190,73 @@ describe("Struct", () => {
               }"
             `);
         });
+
+        it("should write struct with 1 nested enum", async () => {
+            const struct = swift.struct({
+                name: "Order",
+                properties: [
+                    swift.property({
+                        unsafeName: "id",
+                        type: Type.int64(),
+                        declarationType: DeclarationType.Let
+                    }),
+                    swift.property({
+                        unsafeName: "petId",
+                        type: Type.string(),
+                        declarationType: DeclarationType.Let
+                    })
+                ],
+                nestedTypes: [
+                    swift.enumWithRawValues({
+                        name: "Status",
+                        conformances: ["String", "Codable", "CaseIterable"],
+                        cases: [
+                            { unsafeName: "available", rawValue: "available" },
+                            { unsafeName: "pending", rawValue: "pending" }
+                        ]
+                    })
+                ]
+            });
+
+            await expect(struct.toString()).toMatchFileSnapshot("snapshots/struct_with_1_nested_enum.swift");
+        });
+
+        it("should write struct with 2 nested enums", async () => {
+            const struct = swift.struct({
+                name: "Pet",
+                properties: [
+                    swift.property({
+                        unsafeName: "id",
+                        type: Type.int(),
+                        declarationType: DeclarationType.Let
+                    }),
+                    swift.property({
+                        unsafeName: "name",
+                        type: Type.string(),
+                        declarationType: DeclarationType.Let
+                    })
+                ],
+                nestedTypes: [
+                    swift.enumWithRawValues({
+                        name: "Status",
+                        conformances: ["String", "Codable", "CaseIterable"],
+                        cases: [
+                            { unsafeName: "available", rawValue: "available" },
+                            { unsafeName: "pending", rawValue: "pending" }
+                        ]
+                    }),
+                    swift.enumWithRawValues({
+                        name: "CodingKeys",
+                        conformances: ["String", "CodingKey"],
+                        cases: [
+                            { unsafeName: "id", rawValue: "id" },
+                            { unsafeName: "name", rawValue: "name" }
+                        ]
+                    })
+                ]
+            });
+
+            await expect(struct.toString()).toMatchFileSnapshot("snapshots/struct_with_2_nested_enums.swift");
+        });
     });
 });

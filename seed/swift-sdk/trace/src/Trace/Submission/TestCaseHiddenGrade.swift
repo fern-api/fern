@@ -1,3 +1,3 @@
-public struct TestCaseHiddenGrade {
+public struct TestCaseHiddenGrade: Codable, Hashable {
     public let passed: Bool
 }

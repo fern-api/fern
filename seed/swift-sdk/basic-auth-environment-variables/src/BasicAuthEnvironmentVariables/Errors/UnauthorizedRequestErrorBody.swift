@@ -1,3 +1,3 @@
-public struct UnauthorizedRequestErrorBody {
+public struct UnauthorizedRequestErrorBody: Codable, Hashable {
     public let message: String
 }

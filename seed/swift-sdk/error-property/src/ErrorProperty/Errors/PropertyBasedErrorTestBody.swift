@@ -1,3 +1,3 @@
-public struct PropertyBasedErrorTestBody {
+public struct PropertyBasedErrorTestBody: Codable, Hashable {
     public let message: String
 }

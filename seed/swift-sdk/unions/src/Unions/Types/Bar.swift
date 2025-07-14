@@ -1,3 +1,3 @@
-public struct Bar {
+public struct Bar: Codable, Hashable {
     public let name: String
 }

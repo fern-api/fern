@@ -1,3 +1,3 @@
-public struct StringResponse {
+public struct StringResponse: Codable, Hashable {
     public let data: String
 }
