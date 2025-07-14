@@ -49,6 +49,6 @@ If you host your OpenAPI Specification at a publicly available URL, you can have
     Navigate to your repository's `Settings > Secrets and variables > Actions`. Select **New repository secret**, name it `OPENAPI_SYNC_TOKEN`, add your token, and click **Add secret**.
   </Step>
 </Steps>
-By default, this will be done every day and open a new PR on the GitHub repo that contains your Fern Folder. If you would like to adjust the frequency, learn more about GitHub's [schedule event](https://docs.github.com/en/actions/reference/events-that-trigger-workflows#schedule).
+By default, this will create a PR with your updated API specs everyday. If you would like to adjust the frequency, learn more about GitHub's [schedule event](https://docs.github.com/en/actions/reference/events-that-trigger-workflows#schedule).
 
 <Info> For detailed configuration options and other use cases, see the [sync-openapi GitHub Action README](https://github.com/fern-api/sync-openapi). </Info>
