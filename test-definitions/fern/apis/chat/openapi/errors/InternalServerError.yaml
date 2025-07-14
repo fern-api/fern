@@ -1,0 +1,9 @@
+description: |
+  This error is returned when an uncategorized internal server error occurs.
+content:
+  application/json:
+    schema:
+      type: object
+      properties:
+        data:
+          type: string

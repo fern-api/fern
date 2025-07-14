@@ -1,0 +1,18 @@
+api:
+  specs:
+    - openapi: ./openapi/cohere.yaml
+      namespace: v1
+    - openapi: ./openapi/cohere-v2.yaml
+      namespace: v2
+groups:
+  python-sdk:
+    audiences:
+      - public
+      - v2-beta
+    generators:
+      - name: fernapi/fern-python-sdk
+        version: 3.11.0-rc0
+        smart-casing: true
+        api:
+          settings:
+            unions: v1

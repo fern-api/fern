@@ -1,0 +1,26 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/v1/chat",
+                "method": "POST",
+                "identifier_override": "endpoint_v1.chat"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/chat/fern/client\"\n\toption \"github.com/chat/fern/option\"\n\tv1 \"github.com/chat/fern/v1\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.V1.Chat(\n\tcontext.TODO(),\n\t\u0026v1.ChatRequest{\n\t\tMessage: \"message\",\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/v2/chat",
+                "method": "POST",
+                "identifier_override": "endpoint_v2/v2.chat"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/chat/fern/client\"\n\toption \"github.com/chat/fern/option\"\n\tv2 \"github.com/chat/fern/v2\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.V2.V2.Chat(\n\tcontext.TODO(),\n\t\u0026v2.V2ChatRequest{\n\t\tModel: \"model\",\n\t},\n)\n"
+            }
+        }
+    ]
+}

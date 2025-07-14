@@ -28,6 +28,9 @@ language: go
 generatorType: SDK
 defaultOutputMode: github
 fixtures:
+  chat:
+    - outputFolder: no-custom-config
+      customConfig: null 
   examples:
     - outputFolder: no-custom-config
       customConfig: null

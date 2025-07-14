@@ -1,0 +1,141 @@
+imports:
+  v2Root: __package__.yml
+types:
+  V2ChatRequestSafetyMode:
+    docs: >
+      Used to select the [safety instruction](/docs/safety-modes) inserted into
+      the prompt. Defaults to `CONTEXTUAL`.
+
+      When `NONE` is specified, the safety instruction will be omitted.
+
+
+      Safety modes are not yet configurable in combination with `tools`,
+      `tool_results` and `documents` parameters.
+
+
+      **Note**: This parameter is only compatible with models [Command R
+      08-2024](/docs/command-r#august-2024-release), [Command R+
+      08-2024](/docs/command-r-plus#august-2024-release) and newer.
+
+
+      Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock,
+      Private Deployments
+    enum:
+      - CONTEXTUAL
+      - STRICT
+      - NONE
+    inline: true
+    source:
+      openapi: openapi/cohere-v2.yaml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    chat:
+      audiences:
+        - v2-beta
+      auth: true
+      display-name: Chat with the model
+      docs: >
+        Generates a message from the model in response to a provided
+        conversation. To learn how to use the Chat API with Streaming and RAG
+        follow our Text Generation guides.
+      errors:
+        - v2Root.BadRequestError
+        - v2Root.UnauthorizedError
+        - v2Root.ForbiddenError
+        - v2Root.NotFoundError
+        - v2Root.UnprocessableEntityError
+        - v2Root.TooManyRequestsError
+        - v2Root.InvalidTokenError
+        - v2Root.ClientClosedRequestError
+        - v2Root.InternalServerError
+        - v2Root.NotImplementedError
+        - v2Root.ServiceUnavailableError
+        - v2Root.GatewayTimeoutError
+      examples:
+        - request:
+            model: model
+          response:
+            body:
+              - string
+      method: POST
+      path: /v2/chat
+      request:
+        body:
+          properties:
+            documents:
+              docs: >
+                A list of relevant documents that the model can cite to generate
+                a more accurate reply. Each document is either a string or
+                document object with content and metadata.
+              type: optional<list<string>>
+            max_tokens:
+              docs: >
+                The maximum number of tokens the model will generate as part of
+                the response. Note: Setting a low value may result in incomplete
+                generations.
+              type: optional<integer>
+            model:
+              docs: >-
+                The name of a compatible [Cohere
+                model](https://docs.cohere.com/docs/models) (such as command-r
+                or command-r-plus) or the ID of a
+                [fine-tuned](https://docs.cohere.com/docs/chat-fine-tuning)
+                model.
+              type: string
+            return_prompt:
+              docs: Whether to return the prompt in the response.
+              type: optional<boolean>
+            safety_mode:
+              docs: >
+                Used to select the [safety instruction](/docs/safety-modes)
+                inserted into the prompt. Defaults to `CONTEXTUAL`.
+
+                When `NONE` is specified, the safety instruction will be
+                omitted.
+
+
+                Safety modes are not yet configurable in combination with
+                `tools`, `tool_results` and `documents` parameters.
+
+
+                **Note**: This parameter is only compatible with models [Command
+                R 08-2024](/docs/command-r#august-2024-release), [Command R+
+                08-2024](/docs/command-r-plus#august-2024-release) and newer.
+
+
+                Compatible Deployments: Cohere Platform, Azure, AWS
+                Sagemaker/Bedrock, Private Deployments
+              type: optional<V2ChatRequestSafetyMode>
+            stop_sequences:
+              docs: >
+                A list of up to 5 strings that the model will use to stop
+                generation. If the model generates a string that matches any of
+                the strings in the list, it will stop generating tokens and
+                return the generated text up to that point not including the
+                stop sequence.
+              type: optional<list<string>>
+            temperature:
+              docs: >
+                Defaults to `0.3`.
+
+
+                A non-negative float that tunes the degree of randomness in
+                generation. Lower temperatures mean less random generations, and
+                higher temperatures mean more random generations.
+
+
+                Randomness can be further maximized by increasing the  value of
+                the `p` parameter.
+              type: optional<float>
+        content-type: application/json
+        name: V2ChatRequest
+      response:
+        docs: OK
+        status-code: 200
+        type: list<string>
+      source:
+        openapi: openapi/cohere-v2.yaml
+  source:
+    openapi: openapi/cohere-v2.yaml

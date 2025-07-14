@@ -1,0 +1,20 @@
+openapi: 3.1.0
+info:
+  title: API Reference
+  version: '1.0'
+servers:
+  - url: 'https://api.cohere.com'
+    description: production
+paths:
+  /v2/chat:
+    $ref: ./chatv2.yaml
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      x-fern-audiences: ['public']
+      scheme: bearer
+      x-fern-bearer:
+        env: CO_API_KEY
+security:
+  - bearerAuth: []
