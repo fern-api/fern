@@ -1,4 +1,5 @@
 import { AbstractFormatter } from "@fern-api/browser-compatible-base-generator";
+import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { ruby } from "@fern-api/ruby-ast";
 
@@ -54,6 +55,7 @@ export class EndpointSnippetGenerator {
         return ruby.codeblock((writer) => {
             writer.writeNodeStatement(this.constructClient({ endpoint, snippet }));
             writer.newLine();
+            writer.writeNodeStatement(this.callMethod({ endpoint, snippet }));
         });
     }
 
@@ -316,5 +318,186 @@ export class EndpointSnippetGenerator {
         this.context.errors.unscope();
 
         return builderArgs;
+    }
+
+    private callMethod({
+        endpoint,
+        snippet
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): ruby.MethodInvocation {
+        return ruby.invokeMethod({
+            on: ruby.codeblock(CLIENT_VAR_NAME),
+            method: this.getMethod({ endpoint }),
+            arguments_: this.getMethodArgs({ endpoint, snippet })
+        });
+    }
+
+    private getMethodArgs({
+        endpoint,
+        snippet
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): ruby.AstNode[] {
+        switch (endpoint.request.type) {
+            case "inlined":
+                return [this.getMethodArgsForInlinedRequest({ request: endpoint.request, snippet })];
+            case "body":
+                return this.getMethodArgsForBodyRequest({ request: endpoint.request, snippet });
+            default:
+                assertNever(endpoint.request);
+        }
+    }
+
+    private getMethodArgsForInlinedRequest({
+        request,
+        snippet
+    }: {
+        request: FernIr.dynamic.InlinedRequest;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): ruby.AstNode {
+        const args: ruby.KeywordArgument[] = [];
+
+        args.push(
+            ...this.getNamedParameterArgs({
+                kind: "PathParameters",
+                namedParameters: request.pathParameters,
+                values: snippet.pathParameters
+            })
+        );
+        args.push(
+            ...this.getNamedParameterArgs({
+                kind: "QueryParameters",
+                namedParameters: request.queryParameters,
+                values: snippet.queryParameters
+            })
+        );
+        args.push(
+            ...this.getNamedParameterArgs({
+                kind: "Headers",
+                namedParameters: request.headers,
+                values: snippet.headers
+            })
+        );
+
+        // Handle request.body if present
+        if (request.body != null) {
+            switch (request.body.type) {
+                case "properties":
+                    args.push(...this.getMethodArgsForPropertiesRequest({ request: request.body, snippet }));
+                    break;
+                case "referenced":
+                case "fileUpload":
+                    // Not implemented for Ruby snippets yet
+                    break;
+                default:
+                    assertNever(request.body);
+            }
+        }
+
+        return ruby.TypeLiteral.hash(
+            args.map((arg) => ({
+                key: ruby.TypeLiteral.string(arg.name),
+                value: arg.value
+            }))
+        );
+    }
+
+    private getNamedParameterArgs({
+        kind,
+        namedParameters,
+        values
+    }: {
+        kind: "PathParameters" | "QueryParameters" | "Headers";
+        namedParameters: FernIr.dynamic.NamedParameter[] | undefined;
+        values: Record<string, unknown> | undefined;
+    }): ruby.KeywordArgument[] {
+        const args: ruby.KeywordArgument[] = [];
+        this.context.errors.scope(kind);
+        if (namedParameters != null) {
+            const associated = this.context.associateByWireValue({
+                parameters: namedParameters,
+                values: values ?? {},
+                ignoreMissingParameters: true
+            });
+            for (const parameter of associated) {
+                args.push(
+                    ruby.keywordArgument({
+                        name: this.context.getPropertyName(parameter.name.name),
+                        value: this.context.dynamicTypeLiteralMapper.convert(parameter)
+                    })
+                );
+            }
+        }
+        this.context.errors.unscope();
+        return args;
+    }
+
+    private getMethodArgsForPropertiesRequest({
+        request,
+        snippet
+    }: {
+        request: FernIr.dynamic.InlinedRequestBody.Properties;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): ruby.KeywordArgument[] {
+        const args: ruby.KeywordArgument[] = [];
+
+        const bodyProperties = this.context.associateByWireValue({
+            parameters: request.value,
+            values: this.context.getRecord(snippet.requestBody) ?? {}
+        });
+        for (const parameter of bodyProperties) {
+            args.push(
+                ruby.keywordArgument({
+                    name: this.context.getPropertyName(parameter.name.name),
+                    value: this.context.dynamicTypeLiteralMapper.convert(parameter)
+                })
+            );
+        }
+        return args;
+    }
+
+    private getMethodArgsForBodyRequest({
+        request,
+        snippet
+    }: {
+        request: FernIr.dynamic.BodyRequest;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): ruby.AstNode[] {
+        if (request.body == null) {
+            return [];
+        }
+
+        switch (request.body.type) {
+            case "bytes":
+                // Not supported in Ruby snippets yet
+                this.context.errors.add({
+                    severity: "CRITICAL",
+                    message: "Multi-environment values are not supported in Ruby snippets yet"
+                });
+                return [];
+            case "typeReference":
+                return [
+                    ruby.positionalArgument({
+                        value: this.context.dynamicTypeLiteralMapper.convert({
+                            typeReference: request.body.value,
+                            value: this.context.getRecord(snippet.requestBody)
+                        })
+                    })
+                ];
+            default:
+                assertNever(request.body);
+        }
+    }
+
+    private getMethod({ endpoint }: { endpoint: FernIr.dynamic.Endpoint }): string {
+        if (endpoint.declaration.fernFilepath.allParts.length > 0) {
+            return `${endpoint.declaration.fernFilepath.allParts
+                .map((val) => `${this.context.getMethodName(val)}`)
+                .join(".")}.${this.context.getMethodName(endpoint.declaration.name)}`;
+        }
+        return this.context.getMethodName(endpoint.declaration.name);
     }
 }
