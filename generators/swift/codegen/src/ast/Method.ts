@@ -12,6 +12,7 @@ export declare namespace Method {
         unsafeName: string;
         type: Type;
         optional?: boolean;
+        defaultRawValue?: string;
     }
 
     interface Args {
@@ -68,6 +69,10 @@ export class Method extends AstNode {
             parameter.type.write(writer);
             if (parameter.optional) {
                 writer.write("?");
+            }
+            if (parameter.defaultRawValue != null) {
+                writer.write(" = ");
+                writer.write(parameter.defaultRawValue);
             }
         });
         writer.write(") -> ");

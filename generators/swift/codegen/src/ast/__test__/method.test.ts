@@ -284,5 +284,40 @@ describe("Method", () => {
             `
             );
         });
+
+        it("should write method with default parameter values", () => {
+            const method = swift.method({
+                unsafeName: "createUser",
+                accessLevel: AccessLevel.Public,
+                parameters: [
+                    {
+                        argumentLabel: "with",
+                        unsafeName: "name",
+                        type: Type.string()
+                    },
+                    {
+                        argumentLabel: "email",
+                        unsafeName: "emailAddress",
+                        type: Type.string(),
+                        optional: true,
+                        defaultRawValue: "nil"
+                    },
+                    {
+                        argumentLabel: "isActive",
+                        unsafeName: "active",
+                        type: Type.bool(),
+                        defaultRawValue: "true"
+                    }
+                ],
+                returnType: Type.custom("User")
+            });
+
+            expect(method.toString()).toMatchInlineSnapshot(
+                `
+              "public func createUser(with name: String, email emailAddress: String? = nil, isActive active: Bool = true) -> User {
+              }"
+            `
+            );
+        });
     });
 });
