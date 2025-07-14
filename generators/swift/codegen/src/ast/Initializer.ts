@@ -1,24 +1,14 @@
 import { AccessLevel } from "./AccessLevel";
 import { CodeBlock } from "./CodeBlock";
-import { Type } from "./Type";
+import { FunctionParameter } from "./FunctionParameter";
 import { AstNode, Writer } from "./core";
 
 export declare namespace Initializer {
-    interface Parameter {
-        /** Used when calling the function. */
-        argumentLabel?: string;
-        /** Used within the function’s body. */
-        unsafeName: string;
-        type: Type;
-        optional?: boolean;
-        defaultRawValue?: string;
-    }
-
     interface Args {
         unsafeName: string;
         accessLevel?: AccessLevel;
         failable?: boolean;
-        parameters?: Parameter[];
+        parameters?: FunctionParameter[];
         body?: CodeBlock;
     }
 }
@@ -27,7 +17,7 @@ export class Initializer extends AstNode {
     public readonly unsafeName: string;
     public readonly accessLevel?: AccessLevel;
     public readonly failable?: boolean;
-    public readonly parameters?: Initializer.Parameter[];
+    public readonly parameters?: FunctionParameter[];
     public readonly body: CodeBlock;
 
     constructor({ unsafeName, accessLevel, failable, parameters, body }: Initializer.Args) {
@@ -49,26 +39,11 @@ export class Initializer extends AstNode {
             writer.write("?");
         }
         writer.write("(");
-        this.parameters?.forEach((parameter, index) => {
-            if (index > 0) {
+        this.parameters?.forEach((parameter, parameterIdx) => {
+            if (parameterIdx > 0) {
                 writer.write(", ");
             }
-            if (parameter.argumentLabel == null) {
-                writer.write("_ ");
-            } else if (parameter.argumentLabel !== parameter.unsafeName) {
-                writer.write(parameter.argumentLabel);
-                writer.write(" ");
-            }
-            writer.write(parameter.unsafeName);
-            writer.write(": ");
-            parameter.type.write(writer);
-            if (parameter.optional) {
-                writer.write("?");
-            }
-            if (parameter.defaultRawValue != null) {
-                writer.write(" = ");
-                writer.write(parameter.defaultRawValue);
-            }
+            parameter.write(writer);
         });
         writer.write(") ");
         this.body.write(writer);

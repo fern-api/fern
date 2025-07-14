@@ -1,25 +1,16 @@
 import { AccessLevel } from "./AccessLevel";
 import { CodeBlock } from "./CodeBlock";
+import { FunctionParameter } from "./FunctionParameter";
 import { Type } from "./Type";
 import { AstNode, Writer } from "./core";
 import { escapeReservedKeyword } from "./syntax/reserved-keywords";
 
 export declare namespace Method {
-    interface Parameter {
-        /** Used when calling the function. */
-        argumentLabel?: string;
-        /** Used within the function’s body. */
-        unsafeName: string;
-        type: Type;
-        optional?: boolean;
-        defaultRawValue?: string;
-    }
-
     interface Args {
         unsafeName: string;
         accessLevel?: AccessLevel;
         static_?: boolean;
-        parameters?: Parameter[];
+        parameters?: FunctionParameter[];
         returnType: Type;
         body?: CodeBlock;
     }
@@ -29,7 +20,7 @@ export class Method extends AstNode {
     public readonly unsafeName: string;
     public readonly accessLevel?: AccessLevel;
     public readonly static_?: boolean;
-    public readonly parameters?: Method.Parameter[];
+    public readonly parameters?: FunctionParameter[];
     public readonly returnType: Type;
     public readonly body: CodeBlock;
 
@@ -54,26 +45,11 @@ export class Method extends AstNode {
         writer.write("func ");
         writer.write(escapeReservedKeyword(this.unsafeName));
         writer.write("(");
-        this.parameters?.forEach((parameter, index) => {
-            if (index > 0) {
+        this.parameters?.forEach((parameter, parameterIdx) => {
+            if (parameterIdx > 0) {
                 writer.write(", ");
             }
-            if (parameter.argumentLabel == null) {
-                writer.write("_ ");
-            } else if (parameter.argumentLabel !== parameter.unsafeName) {
-                writer.write(parameter.argumentLabel);
-                writer.write(" ");
-            }
-            writer.write(parameter.unsafeName);
-            writer.write(": ");
-            parameter.type.write(writer);
-            if (parameter.optional) {
-                writer.write("?");
-            }
-            if (parameter.defaultRawValue != null) {
-                writer.write(" = ");
-                writer.write(parameter.defaultRawValue);
-            }
+            parameter.write(writer);
         });
         writer.write(") -> ");
         this.returnType.write(writer);

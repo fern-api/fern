@@ -299,16 +299,16 @@ describe("Struct", () => {
                         accessLevel: AccessLevel.Public,
                         static_: true,
                         parameters: [
-                            {
+                            swift.functionParameter({
                                 argumentLabel: "with",
                                 unsafeName: "id",
                                 type: Type.int()
-                            },
-                            {
+                            }),
+                            swift.functionParameter({
                                 argumentLabel: "name",
                                 unsafeName: "name",
                                 type: Type.string()
-                            }
+                            })
                         ],
                         returnType: Type.custom("User"),
                         body: swift.codeBlock((writer) => {

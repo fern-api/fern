@@ -3,6 +3,8 @@ export { CodeBlock } from "./CodeBlock";
 export { DeclarationType } from "./DeclarationType";
 export { EnumWithAssociatedValues } from "./EnumWithAssociatedValues";
 export { EnumWithRawValues } from "./EnumWithRawValues";
+export { FunctionParameter } from "./FunctionParameter";
+export { Initializer } from "./Initializer";
 export { Method } from "./Method";
 export { Property } from "./Property";
 export { Struct } from "./Struct";

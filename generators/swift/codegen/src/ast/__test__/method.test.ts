@@ -62,10 +62,10 @@ describe("Method", () => {
             const method = swift.method({
                 unsafeName: "setValue",
                 parameters: [
-                    {
+                    swift.functionParameter({
                         unsafeName: "value",
                         type: Type.string()
-                    }
+                    })
                 ],
                 returnType: Type.custom("Void")
             });
@@ -80,18 +80,18 @@ describe("Method", () => {
             const method = swift.method({
                 unsafeName: "updateUser",
                 parameters: [
-                    {
+                    swift.functionParameter({
                         unsafeName: "id",
                         type: Type.int()
-                    },
-                    {
+                    }),
+                    swift.functionParameter({
                         unsafeName: "name",
                         type: Type.string()
-                    },
-                    {
+                    }),
+                    swift.functionParameter({
                         unsafeName: "email",
                         type: Type.string()
-                    }
+                    })
                 ],
                 returnType: Type.bool()
             });
@@ -108,16 +108,16 @@ describe("Method", () => {
             const method = swift.method({
                 unsafeName: "createUser",
                 parameters: [
-                    {
+                    swift.functionParameter({
                         argumentLabel: "with",
                         unsafeName: "name",
                         type: Type.string()
-                    },
-                    {
+                    }),
+                    swift.functionParameter({
                         argumentLabel: "email",
                         unsafeName: "emailAddress",
                         type: Type.string()
-                    }
+                    })
                 ],
                 returnType: Type.custom("User")
             });
@@ -134,16 +134,16 @@ describe("Method", () => {
             const method = swift.method({
                 unsafeName: "findUser",
                 parameters: [
-                    {
+                    swift.functionParameter({
                         unsafeName: "id",
                         type: Type.int()
-                    },
-                    {
+                    }),
+                    swift.functionParameter({
                         argumentLabel: "includingDeleted",
                         unsafeName: "deleted",
                         type: Type.bool(),
                         optional: true
-                    }
+                    })
                 ],
                 returnType: Type.custom("User?")
             });
@@ -161,21 +161,21 @@ describe("Method", () => {
                 unsafeName: "complexMethod",
                 accessLevel: AccessLevel.Public,
                 parameters: [
-                    {
+                    swift.functionParameter({
                         unsafeName: "value",
                         type: Type.string()
-                    },
-                    {
+                    }),
+                    swift.functionParameter({
                         argumentLabel: "with",
                         unsafeName: "options",
                         type: Type.array(Type.string())
-                    },
-                    {
+                    }),
+                    swift.functionParameter({
                         argumentLabel: "timeout",
                         unsafeName: "timeoutValue",
                         type: Type.double(),
                         optional: true
-                    }
+                    })
                 ],
                 returnType: Type.dictionary(Type.string(), Type.any())
             });
@@ -204,15 +204,15 @@ describe("Method", () => {
             const method = swift.method({
                 unsafeName: "configure",
                 parameters: [
-                    {
+                    swift.functionParameter({
                         unsafeName: "enum",
                         type: Type.string()
-                    },
-                    {
+                    }),
+                    swift.functionParameter({
                         argumentLabel: "for",
                         unsafeName: "struct",
                         type: Type.custom("Config")
-                    }
+                    })
                 ],
                 returnType: Type.string()
             });
@@ -241,11 +241,11 @@ describe("Method", () => {
             const method = swift.method({
                 unsafeName: "setName",
                 parameters: [
-                    {
+                    swift.functionParameter({
                         argumentLabel: "name",
                         unsafeName: "name",
                         type: Type.string()
-                    }
+                    })
                 ],
                 returnType: Type.any()
             });
@@ -262,17 +262,17 @@ describe("Method", () => {
                 accessLevel: AccessLevel.Public,
                 static_: true,
                 parameters: [
-                    {
+                    swift.functionParameter({
                         argumentLabel: "from",
                         unsafeName: "data",
                         type: Type.custom("Data")
-                    },
-                    {
+                    }),
+                    swift.functionParameter({
                         argumentLabel: "with",
                         unsafeName: "options",
                         type: Type.array(Type.string()),
                         optional: true
-                    }
+                    })
                 ],
                 returnType: Type.string()
             });
@@ -290,24 +290,24 @@ describe("Method", () => {
                 unsafeName: "createUser",
                 accessLevel: AccessLevel.Public,
                 parameters: [
-                    {
+                    swift.functionParameter({
                         argumentLabel: "with",
                         unsafeName: "name",
                         type: Type.string()
-                    },
-                    {
+                    }),
+                    swift.functionParameter({
                         argumentLabel: "email",
                         unsafeName: "emailAddress",
                         type: Type.string(),
                         optional: true,
                         defaultRawValue: "nil"
-                    },
-                    {
+                    }),
+                    swift.functionParameter({
                         argumentLabel: "isActive",
                         unsafeName: "active",
                         type: Type.bool(),
                         defaultRawValue: "true"
-                    }
+                    })
                 ],
                 returnType: Type.custom("User")
             });
