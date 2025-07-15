@@ -128,6 +128,15 @@ def _convert_undiscriminated_union_type(union_type: typing.Type[typing.Any], obj
         return object_
 
     for inner_type in inner_types:
+        # Handle lists of objects that need parsing
+        if get_origin(inner_type) == list and isinstance(object_, list):
+            list_inner_type = get_args(inner_type)[0]
+            try:
+                if inspect.isclass(list_inner_type) and issubclass(list_inner_type, pydantic.BaseModel):
+                    parsed_list = [parse_obj_as(list_inner_type, item) for item in object_]
+                    return parsed_list
+            except Exception:
+                pass
         try:
             if inspect.isclass(inner_type) and issubclass(inner_type, pydantic.BaseModel):
                 # Attempt a validated parse until one works
