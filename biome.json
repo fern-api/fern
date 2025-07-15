@@ -147,7 +147,8 @@
 			"!generators/typescript-mcp/base/src/asIs/**",
 			"!seed/**",
 			"!docker/seed/**",
-			"!generators/typescript/utils/**"
+			"!generators/typescript/utils/**",
+			"!**/example-definition-1.ir.json"
 		]
 	},
 	"javascript": {
