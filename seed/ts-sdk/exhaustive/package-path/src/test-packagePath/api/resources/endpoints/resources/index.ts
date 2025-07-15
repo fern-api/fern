@@ -8,5 +8,6 @@ export * as object from "./object/index.js";
 export * as params from "./params/index.js";
 export * as primitive from "./primitive/index.js";
 export * as union from "./union/index.js";
+export * as urls from "./urls/index.js";
 export * from "./params/client/requests/index.js";
 export * from "./put/client/requests/index.js";

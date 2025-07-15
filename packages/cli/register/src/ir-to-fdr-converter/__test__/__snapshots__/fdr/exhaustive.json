@@ -589,7 +589,8 @@
         "subpackage_endpoints/params",
         "subpackage_endpoints/primitive",
         "subpackage_endpoints/put",
-        "subpackage_endpoints/union"
+        "subpackage_endpoints/union",
+        "subpackage_endpoints/urls"
       ]
     },
     "subpackage_endpoints/container": {
@@ -3992,6 +3993,212 @@
                   "name": "name",
                   "likesToWoof": true
                 }
+              },
+              "codeSamples": []
+            }
+          ]
+        }
+      ],
+      "webhooks": [],
+      "websockets": [],
+      "types": [],
+      "subpackages": []
+    },
+    "subpackage_endpoints/urls": {
+      "subpackageId": "subpackage_endpoints/urls",
+      "name": "urls",
+      "endpoints": [
+        {
+          "auth": true,
+          "method": "GET",
+          "id": "withMixedCase",
+          "originalEndpointId": "endpoint_endpoints/urls.withMixedCase",
+          "name": "With Mixed Case",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/urls"
+              },
+              {
+                "type": "literal",
+                "value": "/MixedCase"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/urls/MixedCase",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": "string",
+              "responseBodyV3": {
+                "type": "json",
+                "value": "string"
+              },
+              "codeSamples": []
+            }
+          ]
+        },
+        {
+          "auth": true,
+          "method": "GET",
+          "id": "noEndingSlash",
+          "originalEndpointId": "endpoint_endpoints/urls.noEndingSlash",
+          "name": "No Ending Slash",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/urls"
+              },
+              {
+                "type": "literal",
+                "value": "/no-ending-slash"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/urls/no-ending-slash",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": "string",
+              "responseBodyV3": {
+                "type": "json",
+                "value": "string"
+              },
+              "codeSamples": []
+            }
+          ]
+        },
+        {
+          "auth": true,
+          "method": "GET",
+          "id": "withEndingSlash",
+          "originalEndpointId": "endpoint_endpoints/urls.withEndingSlash",
+          "name": "With Ending Slash",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/urls"
+              },
+              {
+                "type": "literal",
+                "value": "/with-ending-slash/"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/urls/with-ending-slash/",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": "string",
+              "responseBodyV3": {
+                "type": "json",
+                "value": "string"
+              },
+              "codeSamples": []
+            }
+          ]
+        },
+        {
+          "auth": true,
+          "method": "GET",
+          "id": "withUnderscores",
+          "originalEndpointId": "endpoint_endpoints/urls.withUnderscores",
+          "name": "With Underscores",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/urls"
+              },
+              {
+                "type": "literal",
+                "value": "/with_underscores"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/urls/with_underscores",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": "string",
+              "responseBodyV3": {
+                "type": "json",
+                "value": "string"
               },
               "codeSamples": []
             }

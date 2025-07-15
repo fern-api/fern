@@ -10237,6 +10237,566 @@
             },
             "examples": null
         },
+        "endpoint_endpoints/urls.withMixedCase": {
+            "auth": {
+                "type": "bearer",
+                "token": {
+                    "originalName": "token",
+                    "camelCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TOKEN",
+                        "safeName": "TOKEN"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Token",
+                        "safeName": "Token"
+                    }
+                }
+            },
+            "declaration": {
+                "name": {
+                    "originalName": "withMixedCase",
+                    "camelCase": {
+                        "unsafeName": "withMixedCase",
+                        "safeName": "withMixedCase"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "with_mixed_case",
+                        "safeName": "with_mixed_case"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "WITH_MIXED_CASE",
+                        "safeName": "WITH_MIXED_CASE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "WithMixedCase",
+                        "safeName": "WithMixedCase"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "endpoints",
+                            "camelCase": {
+                                "unsafeName": "endpoints",
+                                "safeName": "endpoints"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "endpoints",
+                                "safeName": "endpoints"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ENDPOINTS",
+                                "safeName": "ENDPOINTS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Endpoints",
+                                "safeName": "Endpoints"
+                            }
+                        },
+                        {
+                            "originalName": "urls",
+                            "camelCase": {
+                                "unsafeName": "urls",
+                                "safeName": "urls"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "urls",
+                                "safeName": "urls"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "URLS",
+                                "safeName": "URLS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "URLs",
+                                "safeName": "URLs"
+                            }
+                        }
+                    ],
+                    "packagePath": [
+                        {
+                            "originalName": "endpoints",
+                            "camelCase": {
+                                "unsafeName": "endpoints",
+                                "safeName": "endpoints"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "endpoints",
+                                "safeName": "endpoints"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ENDPOINTS",
+                                "safeName": "ENDPOINTS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Endpoints",
+                                "safeName": "Endpoints"
+                            }
+                        }
+                    ],
+                    "file": {
+                        "originalName": "urls",
+                        "camelCase": {
+                            "unsafeName": "urls",
+                            "safeName": "urls"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "urls",
+                            "safeName": "urls"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "URLS",
+                            "safeName": "URLS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "URLs",
+                            "safeName": "URLs"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "GET",
+                "path": "/urls/MixedCase"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": null
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_endpoints/urls.noEndingSlash": {
+            "auth": {
+                "type": "bearer",
+                "token": {
+                    "originalName": "token",
+                    "camelCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TOKEN",
+                        "safeName": "TOKEN"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Token",
+                        "safeName": "Token"
+                    }
+                }
+            },
+            "declaration": {
+                "name": {
+                    "originalName": "noEndingSlash",
+                    "camelCase": {
+                        "unsafeName": "noEndingSlash",
+                        "safeName": "noEndingSlash"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "no_ending_slash",
+                        "safeName": "no_ending_slash"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "NO_ENDING_SLASH",
+                        "safeName": "NO_ENDING_SLASH"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "NoEndingSlash",
+                        "safeName": "NoEndingSlash"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "endpoints",
+                            "camelCase": {
+                                "unsafeName": "endpoints",
+                                "safeName": "endpoints"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "endpoints",
+                                "safeName": "endpoints"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ENDPOINTS",
+                                "safeName": "ENDPOINTS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Endpoints",
+                                "safeName": "Endpoints"
+                            }
+                        },
+                        {
+                            "originalName": "urls",
+                            "camelCase": {
+                                "unsafeName": "urls",
+                                "safeName": "urls"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "urls",
+                                "safeName": "urls"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "URLS",
+                                "safeName": "URLS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "URLs",
+                                "safeName": "URLs"
+                            }
+                        }
+                    ],
+                    "packagePath": [
+                        {
+                            "originalName": "endpoints",
+                            "camelCase": {
+                                "unsafeName": "endpoints",
+                                "safeName": "endpoints"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "endpoints",
+                                "safeName": "endpoints"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ENDPOINTS",
+                                "safeName": "ENDPOINTS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Endpoints",
+                                "safeName": "Endpoints"
+                            }
+                        }
+                    ],
+                    "file": {
+                        "originalName": "urls",
+                        "camelCase": {
+                            "unsafeName": "urls",
+                            "safeName": "urls"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "urls",
+                            "safeName": "urls"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "URLS",
+                            "safeName": "URLS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "URLs",
+                            "safeName": "URLs"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "GET",
+                "path": "/urls/no-ending-slash"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": null
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_endpoints/urls.withEndingSlash": {
+            "auth": {
+                "type": "bearer",
+                "token": {
+                    "originalName": "token",
+                    "camelCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TOKEN",
+                        "safeName": "TOKEN"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Token",
+                        "safeName": "Token"
+                    }
+                }
+            },
+            "declaration": {
+                "name": {
+                    "originalName": "withEndingSlash",
+                    "camelCase": {
+                        "unsafeName": "withEndingSlash",
+                        "safeName": "withEndingSlash"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "with_ending_slash",
+                        "safeName": "with_ending_slash"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "WITH_ENDING_SLASH",
+                        "safeName": "WITH_ENDING_SLASH"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "WithEndingSlash",
+                        "safeName": "WithEndingSlash"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "endpoints",
+                            "camelCase": {
+                                "unsafeName": "endpoints",
+                                "safeName": "endpoints"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "endpoints",
+                                "safeName": "endpoints"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ENDPOINTS",
+                                "safeName": "ENDPOINTS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Endpoints",
+                                "safeName": "Endpoints"
+                            }
+                        },
+                        {
+                            "originalName": "urls",
+                            "camelCase": {
+                                "unsafeName": "urls",
+                                "safeName": "urls"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "urls",
+                                "safeName": "urls"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "URLS",
+                                "safeName": "URLS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "URLs",
+                                "safeName": "URLs"
+                            }
+                        }
+                    ],
+                    "packagePath": [
+                        {
+                            "originalName": "endpoints",
+                            "camelCase": {
+                                "unsafeName": "endpoints",
+                                "safeName": "endpoints"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "endpoints",
+                                "safeName": "endpoints"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ENDPOINTS",
+                                "safeName": "ENDPOINTS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Endpoints",
+                                "safeName": "Endpoints"
+                            }
+                        }
+                    ],
+                    "file": {
+                        "originalName": "urls",
+                        "camelCase": {
+                            "unsafeName": "urls",
+                            "safeName": "urls"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "urls",
+                            "safeName": "urls"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "URLS",
+                            "safeName": "URLS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "URLs",
+                            "safeName": "URLs"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "GET",
+                "path": "/urls/with-ending-slash/"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": null
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_endpoints/urls.withUnderscores": {
+            "auth": {
+                "type": "bearer",
+                "token": {
+                    "originalName": "token",
+                    "camelCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TOKEN",
+                        "safeName": "TOKEN"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Token",
+                        "safeName": "Token"
+                    }
+                }
+            },
+            "declaration": {
+                "name": {
+                    "originalName": "withUnderscores",
+                    "camelCase": {
+                        "unsafeName": "withUnderscores",
+                        "safeName": "withUnderscores"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "with_underscores",
+                        "safeName": "with_underscores"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "WITH_UNDERSCORES",
+                        "safeName": "WITH_UNDERSCORES"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "WithUnderscores",
+                        "safeName": "WithUnderscores"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "endpoints",
+                            "camelCase": {
+                                "unsafeName": "endpoints",
+                                "safeName": "endpoints"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "endpoints",
+                                "safeName": "endpoints"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ENDPOINTS",
+                                "safeName": "ENDPOINTS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Endpoints",
+                                "safeName": "Endpoints"
+                            }
+                        },
+                        {
+                            "originalName": "urls",
+                            "camelCase": {
+                                "unsafeName": "urls",
+                                "safeName": "urls"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "urls",
+                                "safeName": "urls"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "URLS",
+                                "safeName": "URLS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "URLs",
+                                "safeName": "URLs"
+                            }
+                        }
+                    ],
+                    "packagePath": [
+                        {
+                            "originalName": "endpoints",
+                            "camelCase": {
+                                "unsafeName": "endpoints",
+                                "safeName": "endpoints"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "endpoints",
+                                "safeName": "endpoints"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ENDPOINTS",
+                                "safeName": "ENDPOINTS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Endpoints",
+                                "safeName": "Endpoints"
+                            }
+                        }
+                    ],
+                    "file": {
+                        "originalName": "urls",
+                        "camelCase": {
+                            "unsafeName": "urls",
+                            "safeName": "urls"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "urls",
+                            "safeName": "urls"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "URLS",
+                            "safeName": "URLS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "URLs",
+                            "safeName": "URLs"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "GET",
+                "path": "/urls/with_underscores"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": null
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
         "endpoint_inlined-requests.postWithObjectBodyandResponse": {
             "auth": {
                 "type": "bearer",
