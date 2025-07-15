@@ -149,7 +149,6 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
             );
         }
     } catch (e) {
-        // biome-ignore lint/suspicious/noConsole: allow console
         await generatorLoggingClient.sendUpdate(
             GeneratorUpdate.exitStatusUpdate(
                 ExitStatusUpdate.error({

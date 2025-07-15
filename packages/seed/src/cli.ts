@@ -288,9 +288,9 @@ function addPublishCommands(cli: Argv) {
                             : {
                                   // These assertions should be safe given the check with `yargs` above
                                   //
-                                  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                                  // biome-ignore lint/style/noNonNullAssertion: allow
                                   latestChangelogPath: argv.changelog!,
-                                  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                                  // biome-ignore lint/style/noNonNullAssertion: allow
                                   previousChangelogPath: argv.previousChangelog!
                               },
                         context,
@@ -357,9 +357,9 @@ function addPublishCommands(cli: Argv) {
                             : {
                                   // These assertions should be safe given the check with `yargs` above
                                   //
-                                  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                                  // biome-ignore lint/style/noNonNullAssertion: allow
                                   latestChangelogPath: argv.changelog!,
-                                  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                                  // biome-ignore lint/style/noNonNullAssertion: allow
                                   previousChangelogPath: argv.previousChangelog!
                               },
                         context

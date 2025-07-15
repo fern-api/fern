@@ -319,7 +319,6 @@ function deepSetProperty(
     value: unknown
 ): boolean {
     // Start with the provided object
-    // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
     let current: Record<string, unknown> | unknown = obj;
     if (!path) {
         path = [];

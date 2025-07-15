@@ -1,7 +1,7 @@
 {
 	"$schema": "https://biomejs.dev/schemas/2.1.1/schema.json",
 	"vcs": { "enabled": false, "clientKind": "git", "useIgnoreFile": false },
-	"files": { "ignoreUnknown": false },
+	"files": { "ignoreUnknown": false, "maxSize": 7000000 },
 	"formatter": {
 		"enabled": true,
 		"formatWithErrors": false,
@@ -152,7 +152,7 @@
 		]
 	},
 	"javascript": {
-		"globals": ["expect", "describe", "it"],
+		"globals": ["expect", "describe", "it", "beforeEach", "test"],
 		"formatter": {
 			"jsxQuoteStyle": "double",
 			"quoteProperties": "asNeeded",
@@ -168,8 +168,12 @@
 	"html": { "formatter": { "selfCloseVoidElements": "always" } },
 	"overrides": [
 		{
-			"includes": ["**/*.test.ts", "**/*.spec.ts"],
+			"includes": ["**/*.test.ts", "**/*.spec.ts", "**/example-code.js","generators/base/src/AbstractGeneratorCli.ts", "love_fern.js"],
 			"linter": { "rules": { "suspicious": { "noConsole": "off" } } }
+		},
+		{
+			"includes": ["packages/cli/init/src/__test__/initializeWithMintlify.test.ts"],
+			"linter": { "rules": { "suspicious": { "noExplicitAny": "off" } } }
 		},
 		{
 			"includes": ["*.ts", "*.tsx", "*.mts", "*.cts"],
