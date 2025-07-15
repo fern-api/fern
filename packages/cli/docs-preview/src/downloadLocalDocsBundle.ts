@@ -170,9 +170,11 @@ export async function downloadBundle({
                     const targetPath = path.resolve(path.dirname(symlinkPath), target);
                     if (!fs.existsSync(targetPath)) {
                       // Dangling symlink, skip it
-                      logger.debug(`Dangling symlink: ${symlinkPath} -> ${targetPath}`);
+                    //   logger.debug(`Dangling symlink: ${symlinkPath} -> ${targetPath}`);
                       if (platform() === 'win32') {
-                        logger.debug("Skipping symlink on Windows");
+                        if (targetPath.includes("node_modules/next") || targetPath.includes("node_modules\\next")) {
+                            logger.debug(`Skipping symlink: \n\t${symlinkPath} -> \n\t${targetPath}`);
+                        }
                         return false;
                       }
                       return true;
