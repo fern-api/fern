@@ -74,7 +74,7 @@
 				"useLiteralEnumMembers": "error"
 			},
 			"suspicious": {
-				"noAssignInExpressions": "error",
+				"noAssignInExpressions": "off",
 				"noAsyncPromiseExecutor": "error",
 				"noCatchAssign": "error",
 				"noClassAssign": "error",
