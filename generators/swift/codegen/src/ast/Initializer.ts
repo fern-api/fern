@@ -5,7 +5,6 @@ import { AstNode, Writer } from "./core";
 
 export declare namespace Initializer {
     interface Args {
-        unsafeName: string;
         accessLevel?: AccessLevel;
         failable?: boolean;
         parameters?: FunctionParameter[];
@@ -14,15 +13,13 @@ export declare namespace Initializer {
 }
 
 export class Initializer extends AstNode {
-    public readonly unsafeName: string;
     public readonly accessLevel?: AccessLevel;
     public readonly failable?: boolean;
     public readonly parameters?: FunctionParameter[];
     public readonly body: CodeBlock;
 
-    constructor({ unsafeName, accessLevel, failable, parameters, body }: Initializer.Args) {
+    constructor({ accessLevel, failable, parameters, body }: Initializer.Args) {
         super();
-        this.unsafeName = unsafeName;
         this.accessLevel = accessLevel;
         this.failable = failable;
         this.parameters = parameters;

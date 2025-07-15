@@ -2,6 +2,7 @@ import {
     CodeBlock,
     EnumWithAssociatedValues,
     EnumWithRawValues,
+    FunctionArgument,
     FunctionParameter,
     Initializer,
     Method,
@@ -19,6 +20,10 @@ export function enumWithAssociatedValues(args: EnumWithAssociatedValues.Args): E
 
 export function enumWithRawValues(args: EnumWithRawValues.Args): EnumWithRawValues {
     return new EnumWithRawValues(args);
+}
+
+export function functionArgument(args: FunctionArgument.Args): FunctionArgument {
+    return new FunctionArgument(args);
 }
 
 export function functionParameter(args: FunctionParameter.Args): FunctionParameter {

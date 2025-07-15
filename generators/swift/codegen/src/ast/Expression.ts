@@ -4,6 +4,14 @@ import { FunctionArgument } from "./FunctionArgument";
 import { AstNode, Writer } from "./core";
 import { escapeReservedKeyword } from "./syntax/reserved-keywords";
 
+/**
+ * A reference to a variable or constant.
+ */
+type Reference = {
+    type: "reference";
+    unsafeName: string;
+};
+
 type FunctionCall = {
     type: "function-call";
     unsafeName: string;
@@ -15,7 +23,7 @@ type RawValue = {
     value: string;
 };
 
-type InternalExpression = FunctionCall | RawValue;
+type InternalExpression = Reference | FunctionCall | RawValue;
 
 export class Expression extends AstNode {
     private internalExpression: InternalExpression;
@@ -27,6 +35,9 @@ export class Expression extends AstNode {
 
     public write(writer: Writer): void {
         switch (this.internalExpression.type) {
+            case "reference":
+                writer.write(escapeReservedKeyword(this.internalExpression.unsafeName));
+                break;
             case "function-call":
                 writer.write(escapeReservedKeyword(this.internalExpression.unsafeName));
                 writer.write("(");
@@ -44,6 +55,10 @@ export class Expression extends AstNode {
             default:
                 assertNever(this.internalExpression);
         }
+    }
+
+    public static reference(unsafeName: string): Expression {
+        return new this({ type: "reference", unsafeName });
     }
 
     public static functionCall(unsafeName: string, arguments_?: FunctionArgument[]): Expression {

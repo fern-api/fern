@@ -5,15 +5,27 @@ import { Expression } from "./Expression";
 import { AstNode, Writer } from "./core";
 import { escapeReservedKeyword } from "./syntax/reserved-keywords";
 
-type ConstantAssignment = {
-    type: "constant-assignment";
-    constantName: string;
+type ConstantDeclaration = {
+    type: "constant-declaration";
+    unsafeName: string;
+    value: Expression;
+};
+
+type VariableDeclaration = {
+    type: "variable-declaration";
+    unsafeName: string;
     value: Expression;
 };
 
 type VariableAssignment = {
     type: "variable-assignment";
-    variableName: string;
+    unsafeName: string;
+    value: Expression;
+};
+
+type PropertyAssignment = {
+    type: "property-assignment";
+    unsafeName: string;
     value: Expression;
 };
 
@@ -22,7 +34,7 @@ type Return = {
     expression: Expression;
 };
 
-type InternalStatement = ConstantAssignment | VariableAssignment | Return;
+type InternalStatement = ConstantDeclaration | VariableDeclaration | VariableAssignment | PropertyAssignment | Return;
 
 export class Statement extends AstNode {
     private internalStatement: InternalStatement;
@@ -34,18 +46,31 @@ export class Statement extends AstNode {
 
     public write(writer: Writer): void {
         switch (this.internalStatement.type) {
-            case "constant-assignment":
+            case "constant-declaration":
                 writer.write(DeclarationType.Let);
                 writer.write(" ");
-                writer.write(escapeReservedKeyword(this.internalStatement.constantName));
+                writer.write(escapeReservedKeyword(this.internalStatement.unsafeName));
+                writer.write(" = ");
+                this.internalStatement.value.write(writer);
+                writer.newLine();
+                break;
+            case "variable-declaration":
+                writer.write(DeclarationType.Var);
+                writer.write(" ");
+                writer.write(escapeReservedKeyword(this.internalStatement.unsafeName));
                 writer.write(" = ");
                 this.internalStatement.value.write(writer);
                 writer.newLine();
                 break;
             case "variable-assignment":
-                writer.write(DeclarationType.Var);
-                writer.write(" ");
-                writer.write(escapeReservedKeyword(this.internalStatement.variableName));
+                writer.write(escapeReservedKeyword(this.internalStatement.unsafeName));
+                writer.write(" = ");
+                this.internalStatement.value.write(writer);
+                writer.newLine();
+                break;
+            case "property-assignment":
+                writer.write("self.");
+                writer.write(this.internalStatement.unsafeName);
                 writer.write(" = ");
                 this.internalStatement.value.write(writer);
                 writer.newLine();
@@ -60,8 +85,20 @@ export class Statement extends AstNode {
         }
     }
 
-    public static constantAssignment(constantName: string, value: Expression): Statement {
-        return new this({ type: "constant-assignment", constantName, value });
+    public static constantDeclaration(unsafeName: string, value: Expression): Statement {
+        return new this({ type: "constant-declaration", unsafeName, value });
+    }
+
+    public static variableDeclaration(unsafeName: string, value: Expression): Statement {
+        return new this({ type: "variable-declaration", unsafeName, value });
+    }
+
+    public static variableAssignment(unsafeName: string, value: Expression): Statement {
+        return new this({ type: "variable-assignment", unsafeName, value });
+    }
+
+    public static propertyAssignment(unsafeName: string, value: Expression): Statement {
+        return new this({ type: "property-assignment", unsafeName, value });
     }
 
     public static return(expression: Expression): Statement {

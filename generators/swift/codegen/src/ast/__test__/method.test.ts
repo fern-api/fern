@@ -325,7 +325,7 @@ describe("Method", () => {
                 unsafeName: "getUserName",
                 returnType: Type.string(),
                 body: swift.CodeBlock.withStatements([
-                    swift.Statement.constantAssignment("name", swift.Expression.rawStringValue("John Appleseed")),
+                    swift.Statement.constantDeclaration("name", swift.Expression.rawStringValue("John Appleseed")),
                     swift.Statement.return(swift.Expression.rawValue("name"))
                 ])
             });
