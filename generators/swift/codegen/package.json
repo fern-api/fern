@@ -29,7 +29,9 @@
   },
   "dependencies": {
     "@fern-api/base-generator": "workspace:*",
-    "@fern-api/core-utils": "workspace:*"
+    "@fern-api/browser-compatible-base-generator": "workspace:*",
+    "@fern-api/core-utils": "workspace:*",
+    "zod": "^3.25.75"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",

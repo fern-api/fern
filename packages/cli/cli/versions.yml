@@ -1,10 +1,109 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |  
+        Use service display name for grpc services.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-14"
+  version: 0.65.12
+
+- changelogEntry:
+    - summary: |  
+        The extension `x-fern-global-headers` now supports a type field that can point to 
+        arbitrary schemas. For example you can do the following to describe a header 
+        that is an enum.
+        
+        ```yml
+        x-fern-global-headers:
+          - header: X-API-Version
+            name: version
+            type: VersionEnum
+        ```
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-12"
+  version: 0.65.11
+
+- changelogEntry:
+    - summary: |  
+        Clarify `fern upgrade` command description.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-12"
+  version: 0.65.10
+
+- changelogEntry:
+    - summary: |  
+        Convert relevant endpoints to GrpcNode type in ApiReferenceNodeConverter
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-11"
+  version: 0.65.9
+
+- changelogEntry:
+    - summary: |  
+        Support date and date-time in v3 example generation. Change fallback string example to use "string" instead of "foo".
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-10"
+  version: 0.65.8
+
+- changelogEntry:
+    - summary: |  
+        Support example generation for gRPC docs.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-09"
+  version: 0.65.7
+
+- changelogEntry:
+    - summary: |  
+        Support response error examples in the v3 parser.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-09"
+  version: 0.65.6
+
+- changelogEntry:
+    - summary: |  
+        Fix how multipart encoding is handled in the v3 parser
+      type: fix
+  irVersion: 58
+  createdAt: "2025-07-09"
+  version: 0.65.5
+
+- changelogEntry:
+    - summary: |  
+        Previously if the OpenAPI parser v3 was enabled where the CLI would skip parsing any additional Fern Definitions
+        along the OpenAPI spec. With the fix, you can use whatever combination of OpenAPI Spec(s) and Fern Definitions that 
+        you would like.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-07-08"
+  version: 0.65.4
+
+- changelogEntry:
+    - summary: |  
+        Update `fern init` for java and go SDKs.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-07-08"
+  version: 0.65.3
+
+- changelogEntry:
+    - summary: |  
+        Global header examples are only used when a corresponding endpoint header with the same name is not present.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-07-08"
+  version: 0.65.2
+
+- changelogEntry:
+    - summary: |  
         Re-release changes from 0.65.0.
       type: chore
   irVersion: 58
-  createdAt: "2025-07-07"
+  createdAt: "2025-07-03"
   version: 0.65.1
 
 - changelogEntry:

@@ -8,7 +8,9 @@ import com.seed.undiscriminatedUnions.core.RequestOptions;
 import com.seed.undiscriminatedUnions.resources.union.types.Key;
 import com.seed.undiscriminatedUnions.resources.union.types.MetadataUnion;
 import com.seed.undiscriminatedUnions.resources.union.types.MyUnion;
+import com.seed.undiscriminatedUnions.resources.union.types.NestedUnionRoot;
 import com.seed.undiscriminatedUnions.resources.union.types.Request;
+import com.seed.undiscriminatedUnions.resources.union.types.UnionWithDuplicateTypes;
 import java.util.Map;
 
 public class UnionClient {
@@ -62,5 +64,21 @@ public class UnionClient {
 
     public boolean call(Request request, RequestOptions requestOptions) {
         return this.rawClient.call(request, requestOptions).body();
+    }
+
+    public UnionWithDuplicateTypes duplicateTypesUnion(UnionWithDuplicateTypes request) {
+        return this.rawClient.duplicateTypesUnion(request).body();
+    }
+
+    public UnionWithDuplicateTypes duplicateTypesUnion(UnionWithDuplicateTypes request, RequestOptions requestOptions) {
+        return this.rawClient.duplicateTypesUnion(request, requestOptions).body();
+    }
+
+    public String nestedUnions(NestedUnionRoot request) {
+        return this.rawClient.nestedUnions(request).body();
+    }
+
+    public String nestedUnions(NestedUnionRoot request, RequestOptions requestOptions) {
+        return this.rawClient.nestedUnions(request, requestOptions).body();
     }
 }

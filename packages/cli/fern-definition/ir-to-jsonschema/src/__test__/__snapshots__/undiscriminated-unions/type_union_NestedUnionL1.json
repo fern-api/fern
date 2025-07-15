@@ -1,0 +1,45 @@
+{
+  "anyOf": [
+    {
+      "type": "integer"
+    },
+    {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    {
+      "$ref": "#/definitions/union.NestedUnionL2"
+    }
+  ],
+  "definitions": {
+    "union.NestedUnionL2": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ]
+    }
+  }
+}

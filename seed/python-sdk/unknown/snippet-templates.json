@@ -24,7 +24,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.unknown.post(\n\t$FERN_INPUT\n)",
+                "templateString": "client.unknown.post(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -63,7 +63,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.unknown.post(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.unknown.post(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -114,7 +114,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.unknown.post_object(\n\t$FERN_INPUT\n)",
+                "templateString": "client.unknown.post_object(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -153,7 +153,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.unknown.post_object(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.unknown.post_object(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",

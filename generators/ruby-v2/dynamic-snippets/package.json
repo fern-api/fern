@@ -27,6 +27,7 @@
     "dist": "pnpm compile && node build.cjs"
   },
   "devDependencies": {
+    "@fern-api/core-utils": "workspace:*",
     "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
     "@esbuild-plugins/node-modules-polyfill": "^0.2.2",
     "@fern-api/browser-compatible-base-generator": "workspace:*",

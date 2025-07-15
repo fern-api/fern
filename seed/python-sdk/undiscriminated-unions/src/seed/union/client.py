@@ -8,6 +8,8 @@ from .raw_client import AsyncRawUnionClient, RawUnionClient
 from .types.metadata import Metadata
 from .types.metadata_union import MetadataUnion
 from .types.my_union import MyUnion
+from .types.nested_union_root import NestedUnionRoot
+from .types.union_with_duplicate_types import UnionWithDuplicateTypes
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -134,6 +136,64 @@ class UnionClient:
         )
         """
         _response = self._raw_client.call(union=union, request_options=request_options)
+        return _response.data
+
+    def duplicate_types_union(
+        self, *, request: UnionWithDuplicateTypes, request_options: typing.Optional[RequestOptions] = None
+    ) -> UnionWithDuplicateTypes:
+        """
+        Parameters
+        ----------
+        request : UnionWithDuplicateTypes
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        UnionWithDuplicateTypes
+
+        Examples
+        --------
+        from seed import SeedUndiscriminatedUnions
+
+        client = SeedUndiscriminatedUnions(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.union.duplicate_types_union(
+            request="string",
+        )
+        """
+        _response = self._raw_client.duplicate_types_union(request=request, request_options=request_options)
+        return _response.data
+
+    def nested_unions(
+        self, *, request: NestedUnionRoot, request_options: typing.Optional[RequestOptions] = None
+    ) -> str:
+        """
+        Parameters
+        ----------
+        request : NestedUnionRoot
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+
+        Examples
+        --------
+        from seed import SeedUndiscriminatedUnions
+
+        client = SeedUndiscriminatedUnions(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.union.nested_unions(
+            request="string",
+        )
+        """
+        _response = self._raw_client.nested_unions(request=request, request_options=request_options)
         return _response.data
 
 
@@ -290,4 +350,78 @@ class AsyncUnionClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.call(union=union, request_options=request_options)
+        return _response.data
+
+    async def duplicate_types_union(
+        self, *, request: UnionWithDuplicateTypes, request_options: typing.Optional[RequestOptions] = None
+    ) -> UnionWithDuplicateTypes:
+        """
+        Parameters
+        ----------
+        request : UnionWithDuplicateTypes
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        UnionWithDuplicateTypes
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedUndiscriminatedUnions
+
+        client = AsyncSeedUndiscriminatedUnions(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.union.duplicate_types_union(
+                request="string",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.duplicate_types_union(request=request, request_options=request_options)
+        return _response.data
+
+    async def nested_unions(
+        self, *, request: NestedUnionRoot, request_options: typing.Optional[RequestOptions] = None
+    ) -> str:
+        """
+        Parameters
+        ----------
+        request : NestedUnionRoot
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedUndiscriminatedUnions
+
+        client = AsyncSeedUndiscriminatedUnions(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.union.nested_unions(
+                request="string",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.nested_unions(request=request, request_options=request_options)
         return _response.data

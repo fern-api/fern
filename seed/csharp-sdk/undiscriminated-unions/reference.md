@@ -163,3 +163,83 @@ await client.Union.CallAsync(
 </dd>
 </dl>
 </details>
+
+<details><summary><code>client.Union.<a href="/src/SeedUndiscriminatedUnions/Union/UnionClient.cs">DuplicateTypesUnionAsync</a>(OneOf<string, IEnumerable<string>, int, HashSet<string>> { ... }) -> OneOf<string, IEnumerable<string>, int, HashSet<string>></code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Union.DuplicateTypesUnionAsync("string");
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `OneOf<string, IEnumerable<string>, int, HashSet<string>>` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Union.<a href="/src/SeedUndiscriminatedUnions/Union/UnionClient.cs">NestedUnionsAsync</a>(OneOf<string, IEnumerable<string>, OneOf<int, HashSet<string>, IEnumerable<string>, OneOf<bool, HashSet<string>, IEnumerable<string>>>> { ... }) -> string</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Union.NestedUnionsAsync("string");
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `OneOf<string, IEnumerable<string>, OneOf<int, HashSet<string>, IEnumerable<string>, OneOf<bool, HashSet<string>, IEnumerable<string>>>>` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>

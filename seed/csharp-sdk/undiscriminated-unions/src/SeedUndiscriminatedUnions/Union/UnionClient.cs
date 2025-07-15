@@ -238,4 +238,107 @@ public partial class UnionClient
             );
         }
     }
+
+    /// <example><code>
+    /// await client.Union.DuplicateTypesUnionAsync("string");
+    /// </code></example>
+    public async Task<
+        OneOf<string, IEnumerable<string>, int, HashSet<string>>
+    > DuplicateTypesUnionAsync(
+        OneOf<string, IEnumerable<string>, int, HashSet<string>> request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = "/duplicate",
+                    Body = request,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            try
+            {
+                return JsonUtils.Deserialize<
+                    OneOf<string, IEnumerable<string>, int, HashSet<string>>
+                >(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedUndiscriminatedUnionsException("Failed to deserialize response", e);
+            }
+        }
+
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedUndiscriminatedUnionsApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    /// <example><code>
+    /// await client.Union.NestedUnionsAsync("string");
+    /// </code></example>
+    public async Task<string> NestedUnionsAsync(
+        OneOf<
+            string,
+            IEnumerable<string>,
+            OneOf<
+                int,
+                HashSet<string>,
+                IEnumerable<string>,
+                OneOf<bool, HashSet<string>, IEnumerable<string>>
+            >
+        > request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = "/nested",
+                    Body = request,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            try
+            {
+                return JsonUtils.Deserialize<string>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedUndiscriminatedUnionsException("Failed to deserialize response", e);
+            }
+        }
+
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedUndiscriminatedUnionsApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
 }

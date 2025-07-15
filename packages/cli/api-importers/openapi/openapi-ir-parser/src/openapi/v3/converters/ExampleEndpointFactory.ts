@@ -10,7 +10,6 @@ import {
     FullExample,
     GlobalHeader,
     HeaderExample,
-    HeaderWithExample,
     NamedFullExample,
     PathParameterExample,
     PrimitiveSchemaValueWithExample,

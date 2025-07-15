@@ -24,7 +24,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.organizations.get_organization(\n\t$FERN_INPUT\n)",
+                "templateString": "client.organizations.get_organization(\n    $FERN_INPUT\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",\n\t",
                 "type": "generic"
@@ -46,7 +46,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.organizations.get_organization(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.organizations.get_organization(\n    $FERN_INPUT\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",\n\t",
                     "type": "generic"
@@ -80,7 +80,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.organizations.get_organization_user(\n\t$FERN_INPUT\n)",
+                "templateString": "client.organizations.get_organization_user(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -119,7 +119,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.organizations.get_organization_user(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.organizations.get_organization_user(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -170,7 +170,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.organizations.search_organizations(\n\t$FERN_INPUT\n)",
+                "templateString": "client.organizations.search_organizations(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -209,7 +209,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.organizations.search_organizations(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.organizations.search_organizations(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -260,7 +260,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.user.get_user(\n\t$FERN_INPUT\n)",
+                "templateString": "client.user.get_user(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -299,7 +299,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.user.get_user(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.user.get_user(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -350,7 +350,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.user.create_user(\n\t$FERN_INPUT\n)",
+                "templateString": "client.user.create_user(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -416,7 +416,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.user.create_user(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.user.create_user(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -494,7 +494,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.user.update_user(\n\t$FERN_INPUT\n)",
+                "templateString": "client.user.update_user(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -576,7 +576,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.user.update_user(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.user.update_user(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -670,7 +670,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.user.search_users(\n\t$FERN_INPUT\n)",
+                "templateString": "client.user.search_users(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -725,7 +725,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.user.search_users(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.user.search_users(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",

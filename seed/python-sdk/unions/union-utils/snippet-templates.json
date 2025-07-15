@@ -24,7 +24,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.bigunion.get(\n\t$FERN_INPUT\n)",
+                "templateString": "client.bigunion.get(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -63,7 +63,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.bigunion.get(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.bigunion.get(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -114,7 +114,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.bigunion.update(\n\t$FERN_INPUT\n)",
+                "templateString": "client.bigunion.update(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -906,7 +906,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.bigunion.update(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.bigunion.update(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -1710,7 +1710,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.bigunion.update_many(\n\t$FERN_INPUT\n)",
+                "templateString": "client.bigunion.update_many(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -2513,7 +2513,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.bigunion.update_many(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.bigunion.update_many(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -3328,7 +3328,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.union.get(\n\t$FERN_INPUT\n)",
+                "templateString": "client.union.get(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -3367,7 +3367,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.union.get(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.union.get(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -3418,7 +3418,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.union.update(\n\t$FERN_INPUT\n)",
+                "templateString": "client.union.update(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -3508,7 +3508,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.union.update(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.union.update(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",

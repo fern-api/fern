@@ -190,6 +190,12 @@ function addRunCommand(cli: Argv) {
                     demandOption: true,
                     description: "Path to the fern definition"
                 })
+                .option("output-path", {
+                    type: "string",
+                    string: true,
+                    demandOption: false,
+                    description: "Path to output the generated files (defaults to tmp dir)"
+                })
                 .option("log-level", {
                     default: LogLevel.Info,
                     choices: LOG_LEVELS
@@ -221,7 +227,12 @@ function addRunCommand(cli: Argv) {
                 workspace: generator,
                 logLevel: argv["log-level"],
                 audience: argv.audience,
-                skipScripts: argv.skipScripts
+                skipScripts: argv.skipScripts,
+                outputPath: argv["output-path"]
+                    ? argv["output-path"].startsWith("/")
+                        ? AbsoluteFilePath.of(argv["output-path"])
+                        : join(AbsoluteFilePath.of(process.cwd()), RelativeFilePath.of(argv["output-path"]))
+                    : undefined
             });
         }
     );

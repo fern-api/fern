@@ -298,12 +298,12 @@
             "queryParameters": {},
             "headers": {},
             "requestBody": {
-              "name": "foo"
+              "name": "string"
             },
             "requestBodyV3": {
               "type": "json",
               "value": {
-                "name": "foo"
+                "name": "string"
               }
             },
             "responseStatusCode": 200,

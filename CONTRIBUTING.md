@@ -161,7 +161,7 @@ It may be valuable to run seed on a particular Fern definition or OpenAPI spec. 
 you can use the `seed run` command and point it at the fern folder:
 
 ```
-pnpm seed run [--generator <generator-id>] [--path /path/to/fern/folder] [--audience <audience>]
+pnpm seed run [--generator <generator-id>] [--path /path/to/fern/folder] [--output-path /path/for/sdk/output] [--audience <audience>]
 ```
 
 Below are some examples of using the command.

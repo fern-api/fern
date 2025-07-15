@@ -43,6 +43,28 @@
                 "type": "typescript",
                 "client": "import { SeedUndiscriminatedUnionsClient } from \"@fern/undiscriminated-unions\";\n\nconst client = new SeedUndiscriminatedUnionsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.union.call({\n    union: {\n        \"union\": {\n            \"key\": \"value\"\n        }\n    }\n});\n"
             }
+        },
+        {
+            "id": {
+                "path": "/duplicate",
+                "method": "POST",
+                "identifier_override": "endpoint_union.duplicateTypesUnion"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedUndiscriminatedUnionsClient } from \"@fern/undiscriminated-unions\";\n\nconst client = new SeedUndiscriminatedUnionsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.union.duplicateTypesUnion(\"string\");\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/nested",
+                "method": "POST",
+                "identifier_override": "endpoint_union.nestedUnions"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedUndiscriminatedUnionsClient } from \"@fern/undiscriminated-unions\";\n\nconst client = new SeedUndiscriminatedUnionsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.union.nestedUnions(\"string\");\n"
+            }
         }
     ],
     "types": {}

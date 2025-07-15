@@ -284,4 +284,133 @@ export class Union {
                 });
         }
     }
+
+    /**
+     * @param {SeedUndiscriminatedUnions.UnionWithDuplicateTypes} request
+     * @param {Union.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.union.duplicateTypesUnion("string")
+     */
+    public duplicateTypesUnion(
+        request: SeedUndiscriminatedUnions.UnionWithDuplicateTypes,
+        requestOptions?: Union.RequestOptions,
+    ): core.HttpResponsePromise<SeedUndiscriminatedUnions.UnionWithDuplicateTypes> {
+        return core.HttpResponsePromise.fromPromise(this.__duplicateTypesUnion(request, requestOptions));
+    }
+
+    private async __duplicateTypesUnion(
+        request: SeedUndiscriminatedUnions.UnionWithDuplicateTypes,
+        requestOptions?: Union.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedUndiscriminatedUnions.UnionWithDuplicateTypes>> {
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/duplicate",
+            ),
+            method: "POST",
+            headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
+            contentType: "application/json",
+            requestType: "json",
+            body: request,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return {
+                data: _response.body as SeedUndiscriminatedUnions.UnionWithDuplicateTypes,
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedUndiscriminatedUnionsError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedUndiscriminatedUnionsError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedUndiscriminatedUnionsTimeoutError(
+                    "Timeout exceeded when calling POST /duplicate.",
+                );
+            case "unknown":
+                throw new errors.SeedUndiscriminatedUnionsError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
+    }
+
+    /**
+     * @param {SeedUndiscriminatedUnions.NestedUnionRoot} request
+     * @param {Union.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.union.nestedUnions("string")
+     */
+    public nestedUnions(
+        request: SeedUndiscriminatedUnions.NestedUnionRoot,
+        requestOptions?: Union.RequestOptions,
+    ): core.HttpResponsePromise<string> {
+        return core.HttpResponsePromise.fromPromise(this.__nestedUnions(request, requestOptions));
+    }
+
+    private async __nestedUnions(
+        request: SeedUndiscriminatedUnions.NestedUnionRoot,
+        requestOptions?: Union.RequestOptions,
+    ): Promise<core.WithRawResponse<string>> {
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/nested",
+            ),
+            method: "POST",
+            headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
+            contentType: "application/json",
+            requestType: "json",
+            body: request,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return { data: _response.body as string, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedUndiscriminatedUnionsError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedUndiscriminatedUnionsError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedUndiscriminatedUnionsTimeoutError("Timeout exceeded when calling POST /nested.");
+            case "unknown":
+                throw new errors.SeedUndiscriminatedUnionsError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
+    }
 }

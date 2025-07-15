@@ -191,7 +191,8 @@ class SocketClientGenerator:
 
     def _get_start_listening_method_body(self, is_async: bool) -> CodeWriterFunction:
         def _get_start_listening_method_body(writer: AST.NodeWriter) -> None:
-            writer.write("self._emit(")
+            emit_call_start = "await self._emit_async(" if is_async else "self._emit("
+            writer.write(emit_call_start)
             writer.write_reference(self._context.core_utilities.get_event_type())
             writer.write(".OPEN, None)")
             writer.write_line()
@@ -206,22 +207,24 @@ class SocketClientGenerator:
                     writer.write_reference(self._context.core_utilities.get_parse_obj_as())
                     writer.write(f"({self._get_response_type_name()}, json_data)  # type: ignore")
                     writer.write_line()
-                    writer.write("self._emit(")
+                    writer.write(emit_call_start)
                     writer.write_reference(self._context.core_utilities.get_event_type())
                     writer.write(".MESSAGE, parsed)")
                     writer.write_line()
-            writer.write("except ")
+            writer.write("except (")
             writer.write_reference(Websockets.get_websocket_exception())
-            writer.write(" as exc:")
+            writer.write(", ")
+            writer.write_reference(Json.JSONDecodeError())
+            writer.write(") as exc:")
             writer.write_line()
             with writer.indent():
-                writer.write("self._emit(")
+                writer.write(emit_call_start)
                 writer.write_reference(self._context.core_utilities.get_event_type())
                 writer.write(".ERROR, exc)")
                 writer.write_line()
             writer.write_line("finally:")
             with writer.indent():
-                writer.write("self._emit(")
+                writer.write(emit_call_start)
                 writer.write_reference(self._context.core_utilities.get_event_type())
                 writer.write(".CLOSE, None)")
                 writer.write_line()
