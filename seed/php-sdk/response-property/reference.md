@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>$client-><a href="/Seed/Service/ServiceClient.php">getMovie</a>($request) -> \Seed\Service\Types\Response</code></summary>
+<details><summary><code>$client->service->getMovie(string $request, ?array $options): Response;</code></summary>
 <dl>
 <dd>
 
@@ -13,25 +13,8 @@
 <dd>
 
 ```php
-$client->service->getMovie(
-    $request,
-);
+$client->service->getMovie(string $request, ?array $options): Response;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `string` 
-    
 </dd>
 </dl>
 </dd>
@@ -42,7 +25,7 @@ $client->service->getMovie(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Service/ServiceClient.php">getMovieDocs</a>($request) -> \Seed\Service\Types\Response</code></summary>
+<details><summary><code>$client->service->getMovieDocs(string $request, ?array $options): Response;</code></summary>
 <dl>
 <dd>
 
@@ -55,25 +38,8 @@ $client->service->getMovie(
 <dd>
 
 ```php
-$client->service->getMovieDocs(
-    $request,
-);
+$client->service->getMovieDocs(string $request, ?array $options): Response;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `string` 
-    
 </dd>
 </dl>
 </dd>
@@ -84,7 +50,7 @@ $client->service->getMovieDocs(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Service/ServiceClient.php">getMovieName</a>($request) -> \Seed\Types\StringResponse</code></summary>
+<details><summary><code>$client->service->getMovieName(string $request, ?array $options): StringResponse;</code></summary>
 <dl>
 <dd>
 
@@ -97,25 +63,8 @@ $client->service->getMovieDocs(
 <dd>
 
 ```php
-$client->service->getMovieName(
-    $request,
-);
+$client->service->getMovieName(string $request, ?array $options): StringResponse;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `string` 
-    
 </dd>
 </dl>
 </dd>
@@ -126,7 +75,7 @@ $client->service->getMovieName(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Service/ServiceClient.php">getMovieMetadata</a>($request) -> \Seed\Service\Types\Response</code></summary>
+<details><summary><code>$client->service->getMovieMetadata(string $request, ?array $options): Response;</code></summary>
 <dl>
 <dd>
 
@@ -139,25 +88,8 @@ $client->service->getMovieName(
 <dd>
 
 ```php
-$client->service->getMovieMetadata(
-    $request,
-);
+$client->service->getMovieMetadata(string $request, ?array $options): Response;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `string` 
-    
 </dd>
 </dl>
 </dd>
@@ -168,7 +100,7 @@ $client->service->getMovieMetadata(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Service/ServiceClient.php">getOptionalMovie</a>($request) -> ?\Seed\Service\Types\Response</code></summary>
+<details><summary><code>$client->service->getOptionalMovie(string $request, ?array $options): ?Response;</code></summary>
 <dl>
 <dd>
 
@@ -181,25 +113,8 @@ $client->service->getMovieMetadata(
 <dd>
 
 ```php
-$client->service->getOptionalMovie(
-    $request,
-);
+$client->service->getOptionalMovie(string $request, ?array $options): ?Response;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `string` 
-    
 </dd>
 </dl>
 </dd>
@@ -210,7 +125,7 @@ $client->service->getOptionalMovie(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Service/ServiceClient.php">getOptionalMovieDocs</a>($request) -> ?\Seed\Service\Types\WithDocs</code></summary>
+<details><summary><code>$client->service->getOptionalMovieDocs(string $request, ?array $options): ?WithDocs;</code></summary>
 <dl>
 <dd>
 
@@ -223,25 +138,8 @@ $client->service->getOptionalMovie(
 <dd>
 
 ```php
-$client->service->getOptionalMovieDocs(
-    $request,
-);
+$client->service->getOptionalMovieDocs(string $request, ?array $options): ?WithDocs;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `string` 
-    
 </dd>
 </dl>
 </dd>
@@ -252,7 +150,7 @@ $client->service->getOptionalMovieDocs(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Service/ServiceClient.php">getOptionalMovieName</a>($request) -> ?\Seed\Types\StringResponse</code></summary>
+<details><summary><code>$client->service->getOptionalMovieName(string $request, ?array $options): ?StringResponse;</code></summary>
 <dl>
 <dd>
 
@@ -265,25 +163,8 @@ $client->service->getOptionalMovieDocs(
 <dd>
 
 ```php
-$client->service->getOptionalMovieName(
-    $request,
-);
+$client->service->getOptionalMovieName(string $request, ?array $options): ?StringResponse;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `string` 
-    
 </dd>
 </dl>
 </dd>

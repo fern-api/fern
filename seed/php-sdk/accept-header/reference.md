@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>$client-><a href="/Seed/Service/ServiceClient.php">endpoint</a>()</code></summary>
+<details><summary><code>$client->service->endpoint(?array $options): void;</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```php
-$client->service->endpoint();
+$client->service->endpoint(?array $options): void;
 ```
 </dd>
 </dl>

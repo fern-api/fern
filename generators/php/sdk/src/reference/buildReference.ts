@@ -1,7 +1,4 @@
-import path from "path";
-
 import { ReferenceConfigBuilder } from "@fern-api/base-generator";
-import { php } from "@fern-api/php-codegen";
 
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { HttpEndpoint, HttpService, ServiceId } from "@fern-fern/ir-sdk/api";
@@ -9,86 +6,7 @@ import { HttpEndpoint, HttpService, ServiceId } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { EndpointSignatureInfo } from "../endpoint/EndpointSignatureInfo";
 
-/**
- * Gets a safe type representation without calling toString()
- */
-// Define a type for PHP internal type objects
-interface PhpTypeObject {
-    internalType?: {
-        type: string;
-        value?: PhpReferenceValue | unknown;
-    };
-    type?: unknown;
-    constructor?: { name: string };
-}
-
-interface PhpReferenceValue {
-    name?: string;
-    namespace?: string;
-}
-
-function getSafeTypeRepresentation(type: unknown): string {
-    if (type === null || type === undefined) {
-        return "mixed";
-    }
-
-    // Handle PHP _Type objects with internalType
-    const typeObj = type as PhpTypeObject;
-    if (typeObj.internalType) {
-        if (typeObj.internalType.type === "string") {
-            return "string";
-        } else if (typeObj.internalType.type === "reference" && typeObj.internalType.value) {
-            // Handle class references
-            const ref = typeObj.internalType.value as PhpReferenceValue;
-            if (ref.name && ref.namespace) {
-                return `\\${ref.namespace}\\${ref.name}`;
-            } else if (ref.name) {
-                return ref.name;
-            }
-        } else if (typeObj.internalType.type === "map") {
-            // Handle map types - in PHP these are associative arrays
-            return "array";
-        } else if (typeObj.internalType.type === "optional") {
-            // Handle optional types - in PHP these could be nullable or a wrapper class
-            // Get the inner type if available, otherwise use mixed
-            if (typeObj.internalType.value) {
-                const innerType = getSafeTypeRepresentation(typeObj.internalType.value);
-                return `?${innerType}`; // Use nullable type syntax
-            }
-            return "mixed";
-        } else if (typeObj.internalType.type) {
-            // Return the basic type
-            return typeObj.internalType.type;
-        }
-    }
-
-    // Handle Parameter objects
-    if (typeObj.type && typeof typeObj.type === "object") {
-        return getSafeTypeRepresentation(typeObj.type);
-    }
-
-    // Handle specific type strings
-    if (typeof type === "string") {
-        // Convert known type strings to PHP equivalents
-        if (type === "map") {
-            return "array";
-        }
-        if (type === "optional") {
-            return "mixed";
-        }
-        return type;
-    }
-
-    // Fallback for other objects
-    if (typeof type === "object") {
-        if (type.constructor && type.constructor.name) {
-            return type.constructor.name;
-        }
-        return "object";
-    }
-
-    return String(type);
-}
+// No unused type definitions or functions
 
 /**
  * Gets a snippet for an endpoint from pregenerated snippets or generates a fallback
@@ -106,41 +24,168 @@ function getEndpointSnippet({
     endpoint: HttpEndpoint;
     endpointSignatureInfo: EndpointSignatureInfo;
 }): string {
-    let snippet = "";
+    try {
+        // Generate the Method AST node using the endpoint generator
+        const generatedMethods = context.endpointGenerator.generate({serviceId, service, endpoint});
 
+        if (!generatedMethods || generatedMethods.length === 0) {
+            context.logger.warn("No method AST nodes generated for endpoint", endpoint.name.camelCase.safeName);
+            return createFallbackSnippet(context, serviceId, service, endpoint, endpointSignatureInfo);
+        }
+
+        // Get the first method (most endpoints will only generate one method)
+        const methodAst = generatedMethods[0];
+        if (!methodAst) {
+            return createFallbackSnippet(context, serviceId, service, endpoint, endpointSignatureInfo);
+        }
+
+        // Get the namespace information needed for the toString method
+        const location = context.getLocationForServiceId(serviceId);
+        const rootNamespace = context.getRootNamespace();
+
+        // Convert the Method AST node to a string representation
+        const snippet = methodAst.toString({
+            namespace: location.namespace,
+            rootNamespace,
+            customConfig: context.customConfig,
+            skipImports: true // Skip imports to make the snippet cleaner
+        });
+
+        // Add a client prefix to show how to call the method
+        const servicePath = isRootServiceId({ context, serviceId })
+            ? ""
+            : service.name.fernFilepath.allParts.map((part) => part.camelCase.safeName).join("->") + "->";
+
+        const clientPrefix = `$client->${servicePath}`;
+
+        // We only want to show the method call, not the entire implementation
+        // Extract the method signature including the return type
+        const methodSignatureRegex = /(?:public|private|protected)\s+(?:static\s+)?function\s+(\w+\([^)]*\))(?:\s*:\s*([^{\s]+))?/;
+        const match = snippet.match(methodSignatureRegex);
+
+        if (match && match[1]) {
+            // Replace the method name with the client-prefixed version
+            const methodName = context.getEndpointMethodName(endpoint);
+
+            // Clean up default parameter values (e.g., "$request = new Request()" -> "$request")
+            let cleanSignature = match[1];
+
+            // Get the return type if available (match[2])
+            const returnType = match[2] ? match[2].trim() : null;
+
+            // Extract the parameter list
+            const paramListMatch = cleanSignature.match(/\w+\(([^)]*)\)/);
+            if (paramListMatch && paramListMatch[1]) {
+                const paramList = paramListMatch[1];
+
+                // Split parameters and clean each one
+                const params = paramList.split(',').map(param => {
+                    // Remove default values (anything after =)
+                    const trimmedParam = param.trim();
+                    const parts = trimmedParam.split('=');
+                    // Make sure parts[0] exists and is not undefined before calling trim()
+                    return parts.length > 0 && parts[0] !== undefined ? parts[0].trim() : '';
+                }).filter(Boolean); // Remove any empty parameters
+
+                // Reconstruct the clean signature
+                const methodNameParts = cleanSignature.split('(');
+                if (methodNameParts.length > 0 && methodNameParts[0]) {
+                    cleanSignature = `${methodNameParts[0]}(${params.join(', ')})`;
+                }
+            }
+
+            // Replace the method name with client prefix and add return type and semicolon
+            let clientSnippet = cleanSignature.replace(methodName, `${clientPrefix}${methodName}`);
+
+            // Add return type if available
+            if (returnType) {
+                clientSnippet += `: ${returnType}`;
+            }
+
+            // Add semicolon
+            clientSnippet += ";";
+
+            return clientSnippet;
+        }
+
+        // If we couldn't extract the method signature, fall back to a simple snippet
+        return createFallbackSnippet(context, serviceId, service, endpoint, endpointSignatureInfo);
+    } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : String(error);
+        return createFallbackSnippet(context, serviceId, service, endpoint, endpointSignatureInfo);
+    }
+}
+
+/**
+ * Creates a fallback snippet when AST-based generation fails
+ */
+function createFallbackSnippet(
+    context: SdkGeneratorContext,
+    serviceId: ServiceId,
+    service: HttpService,
+    endpoint: HttpEndpoint,
+    endpointSignatureInfo: EndpointSignatureInfo
+): string {
+    const methodName = context.getEndpointMethodName(endpoint);
+
+    // Add a client prefix to show how to call the method
     const servicePath = isRootServiceId({ context, serviceId })
         ? ""
         : service.name.fernFilepath.allParts.map((part) => part.camelCase.safeName).join("->") + "->";
 
-    // Start building the method call
-    snippet += `$client->${servicePath}${context.getEndpointMethodName(endpoint)}(`;
+    const clientPrefix = `$client->${servicePath}`;
 
-    // Check if we have any parameters to add
-    const hasParameters = endpointSignatureInfo.pathParameters.length > 0 || endpointSignatureInfo.requestParameter;
+    // Build a parameter list based on endpoint signature info
+    const params: string[] = [];
 
-    if (hasParameters) {
-        // Add a newline after the opening parenthesis if we have parameters
-        snippet += "\n";
-
-        // Add path parameters with proper types
-        endpointSignatureInfo.pathParameters.forEach((param) => {
-            const paramName = param.name.replace("$", "");
-            const paramType = getSafeTypeRepresentation(param.type);
-            snippet += `    ${paramName}: $${paramName},\n`;
+    // Add path parameters
+    if (endpointSignatureInfo.pathParameters) {
+        endpointSignatureInfo.pathParameters.forEach(param => {
+            if (param && param.name) {
+                const paramName = param.name.replace(/^\$/, "");
+                params.push(`$${paramName}`);
+            }
         });
-
-        if (endpointSignatureInfo.requestParameter) {
-            snippet += "    $request,\n";
-        }
-
-        // Close the method call with a newline before the closing parenthesis
-        snippet += ");\n\n";
-    } else {
-        // If no parameters, close the parentheses on the same line
-        snippet += ");\n\n";
     }
 
-    return snippet;
+    // Add request parameter if present
+    if (endpointSignatureInfo.requestParameter) {
+        const requestType = endpointSignatureInfo.requestParameter.type;
+        let requestTypeName = "";
+
+        // Try to extract the type name from the request parameter
+        if (typeof requestType === "object" && requestType !== null) {
+            const typeObj = requestType as any;
+            if (typeObj.internalType?.value?.name) {
+                requestTypeName = typeObj.internalType.value.name;
+            }
+        }
+
+        // Add the request parameter with its type if available
+        if (requestTypeName) {
+            params.push(`${requestTypeName} $request`);
+        } else {
+            params.push("$request");
+        }
+    }
+
+    // Add return type if available
+    let returnTypeStr = "";
+    if (endpointSignatureInfo.returnType) {
+        const returnType = endpointSignatureInfo.returnType;
+        // Try to extract the return type name
+        if (typeof returnType === "object" && returnType !== null) {
+            const typeObj = returnType as any;
+            if (typeObj.internalType?.value?.name) {
+                returnTypeStr = `: ${typeObj.internalType.value.name}`;
+            } else if (typeObj.primitive) {
+                returnTypeStr = `: ${typeObj.primitive}`;
+            }
+        }
+    }
+
+    const simpleSnippet = `${clientPrefix}${methodName}(${params.join(", ")})${returnTypeStr};`;
+    return simpleSnippet;
 }
 
 export function buildReference({ context }: { context: SdkGeneratorContext }): ReferenceConfigBuilder {
@@ -176,7 +221,6 @@ function getEndpointReferencesForService({
                 service,
                 endpoint
             });
-            // Get a PHP code snippet for this endpoint
             const snippet = getEndpointSnippet({
                 context,
                 serviceId,
@@ -184,123 +228,23 @@ function getEndpointReferencesForService({
                 endpoint,
                 endpointSignatureInfo
             });
-            return getEndpointReference({
-                context,
-                serviceId,
-                service,
-                endpoint,
-                endpointSignatureInfo,
-                snippet
-            });
+
+            // Create a simpler endpoint reference without the complex title parts
+            // Cast to FernGeneratorCli.EndpointReference to satisfy TypeScript
+            return {
+                title: {
+                    snippetParts: [
+                        {
+                            text: snippet
+                        }
+                    ]
+                },
+                description: endpoint.docs,
+                snippet: snippet.trim(),
+                parameters: []
+            } as FernGeneratorCli.EndpointReference;
         })
         .filter((endpoint): endpoint is FernGeneratorCli.EndpointReference => !!endpoint);
-}
-
-function getEndpointReference({
-    context,
-    serviceId,
-    service,
-    endpoint,
-    endpointSignatureInfo,
-    snippet
-}: {
-    context: SdkGeneratorContext;
-    serviceId: ServiceId;
-    service: HttpService;
-    endpoint: HttpEndpoint;
-    endpointSignatureInfo: EndpointSignatureInfo;
-    snippet: string;
-}): FernGeneratorCli.EndpointReference {
-    return {
-        title: {
-            snippetParts: [
-                {
-                    text: "$client->"
-                },
-                {
-                    text: context.getEndpointMethodName(endpoint),
-                    location: {
-                        path: getServiceFilepath({ context, serviceId, service })
-                    }
-                },
-                {
-                    text: getReferenceEndpointInvocationParameters({ context, endpointSignatureInfo })
-                }
-            ],
-            returnValue:
-                endpointSignatureInfo.returnType != null
-                    ? {
-                          text: getSafeTypeRepresentation(endpointSignatureInfo.returnType)
-                      }
-                    : undefined
-        },
-        description: endpoint.docs,
-        snippet: snippet.trim(),
-        parameters: endpointSignatureInfo.baseParameters.map((parameter) => {
-            const required = parameter.type instanceof php.Type ? !parameter.type.isOptional() : true;
-            return {
-                name: parameter.name,
-                type: getSafeTypeRepresentation(parameter.type),
-                description: parameter.docs,
-                required
-            };
-        })
-    };
-}
-
-function getReferenceEndpointInvocationParameters({
-    context,
-    endpointSignatureInfo
-}: {
-    context: SdkGeneratorContext;
-    endpointSignatureInfo: EndpointSignatureInfo;
-}): string {
-    let result = "";
-    let first = true;
-    endpointSignatureInfo.pathParameters.forEach((pathParameter, index) => {
-        if (first) {
-            first = false;
-        } else {
-            result += ", ";
-        }
-        // Ensure we have a $ prefix but avoid double $$ in the output
-        const paramName = pathParameter.name.replace(/^\$/, "");
-        result += `$${paramName}`;
-    });
-    if (endpointSignatureInfo.requestParameter != null) {
-        if (!first) {
-            result += ", ";
-        }
-        result += "$request";
-    }
-    // Return the parameters wrapped in parentheses
-    return `(${result})`;
-}
-
-export function getServiceFilepath({
-    context,
-    serviceId,
-    service
-}: {
-    context: SdkGeneratorContext;
-    serviceId: ServiceId;
-    service: HttpService;
-}): string {
-    try {
-        const location = context.getLocationForServiceId(serviceId);
-        const serviceName = service.name.fernFilepath.file?.pascalCase.safeName || "Client";
-
-        // Add null checks to prevent TypeError
-        if (!location || !location.namespace) {
-            return `/${serviceName}Client.php`;
-        }
-
-        return `/${location.namespace.replace(/\\/g, "/")}/${serviceName}Client.php`;
-    } catch (error) {
-        // Fallback to a simple path if there's an error
-        const serviceName = service.name.fernFilepath.file?.pascalCase.safeName || "Client";
-        return `/${serviceName}Client.php`;
-    }
 }
 
 export function isRootServiceId({

@@ -1,6 +1,6 @@
 # Reference
 ## Payment
-<details><summary><code>$client-><a href="/Seed/Payment/PaymentClient.php">create</a>($request) -> string</code></summary>
+<details><summary><code>$client->payment->create(CreatePaymentRequest $request, ?array $options): string;</code></summary>
 <dl>
 <dd>
 
@@ -13,25 +13,8 @@
 <dd>
 
 ```php
-$client->payment->create(
-    $request,
-);
+$client->payment->create(CreatePaymentRequest $request, ?array $options): string;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Payment\Requests\CreatePaymentRequest` 
-    
 </dd>
 </dl>
 </dd>
@@ -42,7 +25,7 @@ $client->payment->create(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Payment/PaymentClient.php">delete</a>($paymentId)</code></summary>
+<details><summary><code>$client->payment->delete(string $paymentId, ?array $options): void;</code></summary>
 <dl>
 <dd>
 
@@ -55,25 +38,8 @@ $client->payment->create(
 <dd>
 
 ```php
-$client->payment->delete(
-    paymentId: $paymentId,
-);
+$client->payment->delete(string $paymentId, ?array $options): void;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$paymentId:** `string` 
-    
 </dd>
 </dl>
 </dd>

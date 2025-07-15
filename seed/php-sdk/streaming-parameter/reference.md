@@ -1,6 +1,6 @@
 # Reference
 ## Dummy
-<details><summary><code>$client-><a href="/Seed/Dummy/DummyClient.php">generate</a>($request)</code></summary>
+<details><summary><code>$client->dummy->generate(GenerateRequest $request, ?array $options): void;</code></summary>
 <dl>
 <dd>
 
@@ -13,25 +13,8 @@
 <dd>
 
 ```php
-$client->dummy->generate(
-    $request,
-);
+$client->dummy->generate(GenerateRequest $request, ?array $options): void;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Dummy\Requests\GenerateRequest` 
-    
 </dd>
 </dl>
 </dd>

@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>$client-><a href="/Seed/Service/ServiceClient.php">post</a>($endpointParam)</code></summary>
+<details><summary><code>$client->service->post(string $endpointParam, ?array $options): void;</code></summary>
 <dl>
 <dd>
 
@@ -13,25 +13,8 @@
 <dd>
 
 ```php
-$client->service->post(
-    endpointParam: $endpointParam,
-);
+$client->service->post(string $endpointParam, ?array $options): void;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$endpointParam:** `string` 
-    
 </dd>
 </dl>
 </dd>

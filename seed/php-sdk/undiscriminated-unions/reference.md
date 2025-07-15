@@ -1,6 +1,6 @@
 # Reference
 ## Union
-<details><summary><code>$client-><a href="/Seed/Union/UnionClient.php">get</a>($request) -> union</code></summary>
+<details><summary><code>$client->union->get(string|array|int $request, ?array $options): string|array|int;</code></summary>
 <dl>
 <dd>
 
@@ -13,49 +13,7 @@
 <dd>
 
 ```php
-$client->union->get(
-    $request,
-);
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `union` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>$client-><a href="/Seed/Union/UnionClient.php">getMetadata</a>() -> array</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```php
-$client->union->getMetadata();
+$client->union->get(string|array|int $request, ?array $options): string|array|int;
 ```
 </dd>
 </dl>
@@ -67,7 +25,7 @@ $client->union->getMetadata();
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Union/UnionClient.php">updateMetadata</a>($request) -> bool</code></summary>
+<details><summary><code>$client->union->getMetadata(?array $options): array;</code></summary>
 <dl>
 <dd>
 
@@ -80,25 +38,8 @@ $client->union->getMetadata();
 <dd>
 
 ```php
-$client->union->updateMetadata(
-    $request,
-);
+$client->union->getMetadata(?array $options): array;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `union` 
-    
 </dd>
 </dl>
 </dd>
@@ -109,7 +50,7 @@ $client->union->updateMetadata(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Union/UnionClient.php">call</a>($request) -> bool</code></summary>
+<details><summary><code>$client->union->updateMetadata(array|NamedMetadata|null $request, ?array $options): bool;</code></summary>
 <dl>
 <dd>
 
@@ -122,16 +63,23 @@ $client->union->updateMetadata(
 <dd>
 
 ```php
-$client->union->call(
-    $request,
-);
+$client->union->updateMetadata(array|NamedMetadata|null $request, ?array $options): bool;
 ```
 </dd>
 </dl>
 </dd>
 </dl>
 
-#### ⚙️ Parameters
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client->union->call(Request $request, ?array $options): bool;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
 
 <dl>
 <dd>
@@ -139,8 +87,9 @@ $client->union->call(
 <dl>
 <dd>
 
-**$request:** `\Seed\Union\Types\Request` 
-    
+```php
+$client->union->call(Request $request, ?array $options): bool;
+```
 </dd>
 </dl>
 </dd>

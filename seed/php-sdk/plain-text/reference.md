@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>$client-><a href="/Seed/Service/ServiceClient.php">getText</a>() -> string</code></summary>
+<details><summary><code>$client->service->getText(?array $options): string;</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```php
-$client->service->getText();
+$client->service->getText(?array $options): string;
 ```
 </dd>
 </dl>

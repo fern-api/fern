@@ -1,6 +1,6 @@
 # Reference
 ## Organization
-<details><summary><code>$client-><a href="/Seed/Organization/OrganizationClient.php">create</a>($request) -> \Seed\Organization\Types\Organization</code></summary>
+<details><summary><code>$client->organization->create(CreateOrganizationRequest $request, ?array $options): Organization;</code></summary>
 <dl>
 <dd>
 
@@ -27,25 +27,8 @@ Create a new organization.
 <dd>
 
 ```php
-$client->organization->create(
-    $request,
-);
+$client->organization->create(CreateOrganizationRequest $request, ?array $options): Organization;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Organization\Types\CreateOrganizationRequest` 
-    
 </dd>
 </dl>
 </dd>
@@ -57,7 +40,7 @@ $client->organization->create(
 </details>
 
 ## User
-<details><summary><code>$client-><a href="/Seed/User/UserClient.php">list</a>($request) -> array</code></summary>
+<details><summary><code>$client->user->list(ListUsersRequest $request);</code></summary>
 <dl>
 <dd>
 
@@ -84,25 +67,8 @@ List all users.
 <dd>
 
 ```php
-$client->user->list(
-    $request,
-);
+$client->user->list(ListUsersRequest $request);
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\User\Requests\ListUsersRequest` 
-    
 </dd>
 </dl>
 </dd>
@@ -114,7 +80,7 @@ $client->user->list(
 </details>
 
 ## User Events
-<details><summary><code>$client-><a href="/Seed/User/Events/EventsClient.php">listEvents</a>($request) -> array</code></summary>
+<details><summary><code>$client->user->events->listEvents(ListUserEventsRequest $request);</code></summary>
 <dl>
 <dd>
 
@@ -141,25 +107,8 @@ List all user events.
 <dd>
 
 ```php
-$client->user->events->listEvents(
-    $request,
-);
+$client->user->events->listEvents(ListUserEventsRequest $request);
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\User\Events\Requests\ListUserEventsRequest` 
-    
 </dd>
 </dl>
 </dd>
@@ -171,7 +120,7 @@ $client->user->events->listEvents(
 </details>
 
 ## User Events Metadata
-<details><summary><code>$client-><a href="/Seed/User/Events/Metadata/MetadataClient.php">getMetadata</a>($request) -> \Seed\User\Events\Metadata\Types\Metadata</code></summary>
+<details><summary><code>$client->user->events->metadata->getMetadata(GetEventMetadataRequest $request, ?array $options): Metadata;</code></summary>
 <dl>
 <dd>
 
@@ -198,25 +147,8 @@ Get event metadata.
 <dd>
 
 ```php
-$client->user->events->metadata->getMetadata(
-    $request,
-);
+$client->user->events->metadata->getMetadata(GetEventMetadataRequest $request, ?array $options): Metadata;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\User\Events\Metadata\Requests\GetEventMetadataRequest` 
-    
 </dd>
 </dl>
 </dd>

@@ -1,6 +1,6 @@
 # Reference
 ## Bigunion
-<details><summary><code>$client-><a href="/Seed/Bigunion/BigunionClient.php">get</a>($id) -> \Seed\Bigunion\Types\BigUnion</code></summary>
+<details><summary><code>$client->bigunion->get(string $id, ?array $options): BigUnion;</code></summary>
 <dl>
 <dd>
 
@@ -13,25 +13,8 @@
 <dd>
 
 ```php
-$client->bigunion->get(
-    id: $id,
-);
+$client->bigunion->get(string $id, ?array $options): BigUnion;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$id:** `string` 
-    
 </dd>
 </dl>
 </dd>
@@ -42,7 +25,7 @@ $client->bigunion->get(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Bigunion/BigunionClient.php">update</a>($request) -> bool</code></summary>
+<details><summary><code>$client->bigunion->update(BigUnion $request, ?array $options): bool;</code></summary>
 <dl>
 <dd>
 
@@ -55,25 +38,8 @@ $client->bigunion->get(
 <dd>
 
 ```php
-$client->bigunion->update(
-    $request,
-);
+$client->bigunion->update(BigUnion $request, ?array $options): bool;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Bigunion\Types\BigUnion` 
-    
 </dd>
 </dl>
 </dd>
@@ -84,7 +50,7 @@ $client->bigunion->update(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Bigunion/BigunionClient.php">updateMany</a>($request) -> array</code></summary>
+<details><summary><code>$client->bigunion->updateMany(array $request, ?array $options): array;</code></summary>
 <dl>
 <dd>
 
@@ -97,25 +63,8 @@ $client->bigunion->update(
 <dd>
 
 ```php
-$client->bigunion->updateMany(
-    $request,
-);
+$client->bigunion->updateMany(array $request, ?array $options): array;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `array` 
-    
 </dd>
 </dl>
 </dd>
@@ -127,7 +76,7 @@ $client->bigunion->updateMany(
 </details>
 
 ## Union
-<details><summary><code>$client-><a href="/Seed/Union/UnionClient.php">get</a>($id) -> \Seed\Union\Types\Shape</code></summary>
+<details><summary><code>$client->union->get(string $id, ?array $options): Shape;</code></summary>
 <dl>
 <dd>
 
@@ -140,25 +89,8 @@ $client->bigunion->updateMany(
 <dd>
 
 ```php
-$client->union->get(
-    id: $id,
-);
+$client->union->get(string $id, ?array $options): Shape;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$id:** `string` 
-    
 </dd>
 </dl>
 </dd>
@@ -169,7 +101,7 @@ $client->union->get(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Union/UnionClient.php">update</a>($request) -> bool</code></summary>
+<details><summary><code>$client->union->update(Shape $request, ?array $options): bool;</code></summary>
 <dl>
 <dd>
 
@@ -182,25 +114,8 @@ $client->union->get(
 <dd>
 
 ```php
-$client->union->update(
-    $request,
-);
+$client->union->update(Shape $request, ?array $options): bool;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Union\Types\Shape` 
-    
 </dd>
 </dl>
 </dd>

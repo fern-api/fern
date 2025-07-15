@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>$client-><a href="/Seed/Auth/AuthClient.php">getToken</a>($request) -> \Seed\Auth\Types\TokenResponse</code></summary>
+<details><summary><code>$client->auth->getToken(GetTokenRequest $request, ?array $options): TokenResponse;</code></summary>
 <dl>
 <dd>
 
@@ -13,25 +13,8 @@
 <dd>
 
 ```php
-$client->auth->getToken(
-    $request,
-);
+$client->auth->getToken(GetTokenRequest $request, ?array $options): TokenResponse;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Auth\Requests\GetTokenRequest` 
-    
 </dd>
 </dl>
 </dd>

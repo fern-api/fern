@@ -1,6 +1,6 @@
 # Reference
 ## Organizations
-<details><summary><code>$client-><a href="/Seed/Organizations/OrganizationsClient.php">getOrganization</a>($tenantId, $organizationId) -> \Seed\Organizations\Types\Organization</code></summary>
+<details><summary><code>$client->organizations->getOrganization(string $tenantId, string $organizationId, ?array $options): Organization;</code></summary>
 <dl>
 <dd>
 
@@ -13,34 +13,8 @@
 <dd>
 
 ```php
-$client->organizations->getOrganization(
-    tenantId: $tenantId,
-    organizationId: $organizationId,
-);
+$client->organizations->getOrganization(string $tenantId, string $organizationId, ?array $options): Organization;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$tenantId:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**$organizationId:** `string` 
-    
 </dd>
 </dl>
 </dd>
@@ -51,7 +25,7 @@ $client->organizations->getOrganization(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Organizations/OrganizationsClient.php">getOrganizationUser</a>($request) -> \Seed\User\Types\User</code></summary>
+<details><summary><code>$client->organizations->getOrganizationUser(GetOrganizationUserRequest $request, ?array $options): User;</code></summary>
 <dl>
 <dd>
 
@@ -64,25 +38,8 @@ $client->organizations->getOrganization(
 <dd>
 
 ```php
-$client->organizations->getOrganizationUser(
-    $request,
-);
+$client->organizations->getOrganizationUser(GetOrganizationUserRequest $request, ?array $options): User;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Organizations\Requests\GetOrganizationUserRequest` 
-    
 </dd>
 </dl>
 </dd>
@@ -93,7 +50,7 @@ $client->organizations->getOrganizationUser(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Organizations/OrganizationsClient.php">searchOrganizations</a>($tenantId, $organizationId, $request) -> array</code></summary>
+<details><summary><code>$client->organizations->searchOrganizations(string $tenantId, string $organizationId, SearchOrganizationsRequest $request);</code></summary>
 <dl>
 <dd>
 
@@ -106,43 +63,8 @@ $client->organizations->getOrganizationUser(
 <dd>
 
 ```php
-$client->organizations->searchOrganizations(
-    tenantId: $tenantId,
-    organizationId: $organizationId,
-    $request,
-);
+$client->organizations->searchOrganizations(string $tenantId, string $organizationId, SearchOrganizationsRequest $request);
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$tenantId:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**$organizationId:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Organizations\Requests\SearchOrganizationsRequest` 
-    
 </dd>
 </dl>
 </dd>
@@ -154,7 +76,7 @@ $client->organizations->searchOrganizations(
 </details>
 
 ## User
-<details><summary><code>$client-><a href="/Seed/User/UserClient.php">getUser</a>($request) -> \Seed\User\Types\User</code></summary>
+<details><summary><code>$client->user->getUser(GetUsersRequest $request, ?array $options): User;</code></summary>
 <dl>
 <dd>
 
@@ -167,25 +89,8 @@ $client->organizations->searchOrganizations(
 <dd>
 
 ```php
-$client->user->getUser(
-    $request,
-);
+$client->user->getUser(GetUsersRequest $request, ?array $options): User;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\User\Requests\GetUsersRequest` 
-    
 </dd>
 </dl>
 </dd>
@@ -196,7 +101,7 @@ $client->user->getUser(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/User/UserClient.php">createUser</a>($tenantId, $request) -> \Seed\User\Types\User</code></summary>
+<details><summary><code>$client->user->createUser(string $tenantId, User $request, ?array $options): User;</code></summary>
 <dl>
 <dd>
 
@@ -209,34 +114,8 @@ $client->user->getUser(
 <dd>
 
 ```php
-$client->user->createUser(
-    tenantId: $tenantId,
-    $request,
-);
+$client->user->createUser(string $tenantId, User $request, ?array $options): User;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$tenantId:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\User\Types\User` 
-    
 </dd>
 </dl>
 </dd>
@@ -247,7 +126,7 @@ $client->user->createUser(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/User/UserClient.php">updateUser</a>($request) -> \Seed\User\Types\User</code></summary>
+<details><summary><code>$client->user->updateUser(UpdateUserRequest $request, ?array $options): User;</code></summary>
 <dl>
 <dd>
 
@@ -260,25 +139,8 @@ $client->user->createUser(
 <dd>
 
 ```php
-$client->user->updateUser(
-    $request,
-);
+$client->user->updateUser(UpdateUserRequest $request, ?array $options): User;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\User\Requests\UpdateUserRequest` 
-    
 </dd>
 </dl>
 </dd>
@@ -289,7 +151,7 @@ $client->user->updateUser(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/User/UserClient.php">searchUsers</a>($request) -> array</code></summary>
+<details><summary><code>$client->user->searchUsers(SearchUsersRequest $request, ?array $options): array;</code></summary>
 <dl>
 <dd>
 
@@ -302,25 +164,8 @@ $client->user->updateUser(
 <dd>
 
 ```php
-$client->user->searchUsers(
-    $request,
-);
+$client->user->searchUsers(SearchUsersRequest $request, ?array $options): array;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\User\Requests\SearchUsersRequest` 
-    
 </dd>
 </dl>
 </dd>

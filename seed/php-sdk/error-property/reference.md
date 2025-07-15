@@ -1,6 +1,6 @@
 # Reference
 ## PropertyBasedError
-<details><summary><code>$client-><a href="/Seed/PropertyBasedError/PropertyBasedErrorClient.php">throwError</a>() -> string</code></summary>
+<details><summary><code>$client->propertyBasedError->throwError(?array $options): string;</code></summary>
 <dl>
 <dd>
 
@@ -27,7 +27,7 @@ GET request that always throws an error
 <dd>
 
 ```php
-$client->propertyBasedError->throwError();
+$client->propertyBasedError->throwError(?array $options): string;
 ```
 </dd>
 </dl>

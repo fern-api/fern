@@ -1,6 +1,6 @@
 # Reference
 ## Unknown
-<details><summary><code>$client-><a href="/Seed/Unknown/UnknownClient.php">post</a>($request) -> array</code></summary>
+<details><summary><code>$client->unknown->post(mixed $request, ?array $options): array;</code></summary>
 <dl>
 <dd>
 
@@ -13,25 +13,8 @@
 <dd>
 
 ```php
-$client->unknown->post(
-    $request,
-);
+$client->unknown->post(mixed $request, ?array $options): array;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `mixed` 
-    
 </dd>
 </dl>
 </dd>
@@ -42,7 +25,7 @@ $client->unknown->post(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Unknown/UnknownClient.php">postObject</a>($request) -> array</code></summary>
+<details><summary><code>$client->unknown->postObject(MyObject $request, ?array $options): array;</code></summary>
 <dl>
 <dd>
 
@@ -55,25 +38,8 @@ $client->unknown->post(
 <dd>
 
 ```php
-$client->unknown->postObject(
-    $request,
-);
+$client->unknown->postObject(MyObject $request, ?array $options): array;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Unknown\Types\MyObject` 
-    
 </dd>
 </dl>
 </dd>

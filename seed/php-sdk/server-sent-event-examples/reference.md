@@ -1,6 +1,6 @@
 # Reference
 ## Completions
-<details><summary><code>$client-><a href="/Seed/Completions/CompletionsClient.php">stream</a>($request)</code></summary>
+<details><summary><code>$client->completions->stream(StreamCompletionRequest $request, ?array $options): void;</code></summary>
 <dl>
 <dd>
 
@@ -13,25 +13,8 @@
 <dd>
 
 ```php
-$client->completions->stream(
-    $request,
-);
+$client->completions->stream(StreamCompletionRequest $request, ?array $options): void;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Completions\Requests\StreamCompletionRequest` 
-    
 </dd>
 </dl>
 </dd>

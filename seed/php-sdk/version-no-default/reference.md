@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>$client-><a href="/Seed/User/UserClient.php">getUser</a>($userId) -> \Seed\User\Types\User</code></summary>
+<details><summary><code>$client->user->getUser(string $userId, ?array $options): User;</code></summary>
 <dl>
 <dd>
 
@@ -13,25 +13,8 @@
 <dd>
 
 ```php
-$client->user->getUser(
-    userId: $userId,
-);
+$client->user->getUser(string $userId, ?array $options): User;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$userId:** `string` 
-    
 </dd>
 </dl>
 </dd>

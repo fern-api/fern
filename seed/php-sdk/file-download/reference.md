@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>$client-><a href="/Seed/Service/ServiceClient.php">simple</a>()</code></summary>
+<details><summary><code>$client->service->simple(?array $options): void;</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```php
-$client->service->simple();
+$client->service->simple(?array $options): void;
 ```
 </dd>
 </dl>
@@ -25,7 +25,7 @@ $client->service->simple();
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Service/ServiceClient.php">downloadFile</a>()</code></summary>
+<details><summary><code>$client->service->downloadFile(?array $options): void;</code></summary>
 <dl>
 <dd>
 
@@ -38,7 +38,7 @@ $client->service->simple();
 <dd>
 
 ```php
-$client->service->downloadFile();
+$client->service->downloadFile(?array $options): void;
 ```
 </dd>
 </dl>

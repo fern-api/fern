@@ -1,6 +1,6 @@
 # Reference
 ## Nullable
-<details><summary><code>$client-><a href="/Seed/Nullable/NullableClient.php">getUsers</a>($request) -> array</code></summary>
+<details><summary><code>$client->nullable->getUsers(GetUsersRequest $request);</code></summary>
 <dl>
 <dd>
 
@@ -13,25 +13,8 @@
 <dd>
 
 ```php
-$client->nullable->getUsers(
-    $request,
-);
+$client->nullable->getUsers(GetUsersRequest $request);
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Nullable\Requests\GetUsersRequest` 
-    
 </dd>
 </dl>
 </dd>
@@ -42,7 +25,7 @@ $client->nullable->getUsers(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Nullable/NullableClient.php">createUser</a>($request) -> \Seed\Nullable\Types\User</code></summary>
+<details><summary><code>$client->nullable->createUser(CreateUserRequest $request, ?array $options): User;</code></summary>
 <dl>
 <dd>
 
@@ -55,25 +38,8 @@ $client->nullable->getUsers(
 <dd>
 
 ```php
-$client->nullable->createUser(
-    $request,
-);
+$client->nullable->createUser(CreateUserRequest $request, ?array $options): User;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Nullable\Requests\CreateUserRequest` 
-    
 </dd>
 </dl>
 </dd>
@@ -84,7 +50,7 @@ $client->nullable->createUser(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Nullable/NullableClient.php">deleteUser</a>($request) -> bool</code></summary>
+<details><summary><code>$client->nullable->deleteUser(DeleteUserRequest $request);</code></summary>
 <dl>
 <dd>
 
@@ -97,25 +63,8 @@ $client->nullable->createUser(
 <dd>
 
 ```php
-$client->nullable->deleteUser(
-    $request,
-);
+$client->nullable->deleteUser(DeleteUserRequest $request);
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Nullable\Requests\DeleteUserRequest` 
-    
 </dd>
 </dl>
 </dd>

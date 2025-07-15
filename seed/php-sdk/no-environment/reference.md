@@ -1,6 +1,6 @@
 # Reference
 ## Dummy
-<details><summary><code>$client-><a href="/Seed/Dummy/DummyClient.php">getDummy</a>() -> string</code></summary>
+<details><summary><code>$client->dummy->getDummy(?array $options): string;</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```php
-$client->dummy->getDummy();
+$client->dummy->getDummy(?array $options): string;
 ```
 </dd>
 </dl>

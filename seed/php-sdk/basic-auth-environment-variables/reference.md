@@ -1,6 +1,6 @@
 # Reference
 ## BasicAuth
-<details><summary><code>$client-><a href="/Seed/BasicAuth/BasicAuthClient.php">getWithBasicAuth</a>() -> bool</code></summary>
+<details><summary><code>$client->basicAuth->getWithBasicAuth(?array $options): bool;</code></summary>
 <dl>
 <dd>
 
@@ -27,7 +27,7 @@ GET request with basic auth scheme
 <dd>
 
 ```php
-$client->basicAuth->getWithBasicAuth();
+$client->basicAuth->getWithBasicAuth(?array $options): bool;
 ```
 </dd>
 </dl>
@@ -39,7 +39,7 @@ $client->basicAuth->getWithBasicAuth();
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/BasicAuth/BasicAuthClient.php">postWithBasicAuth</a>($request) -> bool</code></summary>
+<details><summary><code>$client->basicAuth->postWithBasicAuth(mixed $request, ?array $options): bool;</code></summary>
 <dl>
 <dd>
 
@@ -66,25 +66,8 @@ POST request with basic auth scheme
 <dd>
 
 ```php
-$client->basicAuth->postWithBasicAuth(
-    $request,
-);
+$client->basicAuth->postWithBasicAuth(mixed $request, ?array $options): bool;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `mixed` 
-    
 </dd>
 </dl>
 </dd>

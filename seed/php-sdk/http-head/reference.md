@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>$client-><a href="/Seed/User/UserClient.php">head</a>()</code></summary>
+<details><summary><code>$client->user->head(?array $options): void;</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```php
-$client->user->head();
+$client->user->head(?array $options): void;
 ```
 </dd>
 </dl>
@@ -25,7 +25,7 @@ $client->user->head();
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/User/UserClient.php">list</a>($request) -> array</code></summary>
+<details><summary><code>$client->user->list(ListUsersRequest $request, ?array $options): array;</code></summary>
 <dl>
 <dd>
 
@@ -38,25 +38,8 @@ $client->user->head();
 <dd>
 
 ```php
-$client->user->list(
-    $request,
-);
+$client->user->list(ListUsersRequest $request, ?array $options): array;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\User\Requests\ListUsersRequest` 
-    
 </dd>
 </dl>
 </dd>

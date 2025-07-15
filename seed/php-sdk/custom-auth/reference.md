@@ -1,6 +1,6 @@
 # Reference
 ## CustomAuth
-<details><summary><code>$client-><a href="/Seed/CustomAuth/CustomAuthClient.php">getWithCustomAuth</a>() -> bool</code></summary>
+<details><summary><code>$client->customAuth->getWithCustomAuth(?array $options): bool;</code></summary>
 <dl>
 <dd>
 
@@ -27,7 +27,7 @@ GET request with custom auth scheme
 <dd>
 
 ```php
-$client->customAuth->getWithCustomAuth();
+$client->customAuth->getWithCustomAuth(?array $options): bool;
 ```
 </dd>
 </dl>
@@ -39,7 +39,7 @@ $client->customAuth->getWithCustomAuth();
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/CustomAuth/CustomAuthClient.php">postWithCustomAuth</a>($request) -> bool</code></summary>
+<details><summary><code>$client->customAuth->postWithCustomAuth(mixed $request, ?array $options): bool;</code></summary>
 <dl>
 <dd>
 
@@ -66,25 +66,8 @@ POST request with custom auth scheme
 <dd>
 
 ```php
-$client->customAuth->postWithCustomAuth(
-    $request,
-);
+$client->customAuth->postWithCustomAuth(mixed $request, ?array $options): bool;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `mixed` 
-    
 </dd>
 </dl>
 </dd>

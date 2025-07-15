@@ -1,6 +1,6 @@
 # Reference
 ## InlinedRequest
-<details><summary><code>$client-><a href="/Seed/InlinedRequest/InlinedRequestClient.php">send</a>($request)</code></summary>
+<details><summary><code>$client->inlinedRequest->send(SendEnumInlinedRequest $request, ?array $options): void;</code></summary>
 <dl>
 <dd>
 
@@ -13,25 +13,8 @@
 <dd>
 
 ```php
-$client->inlinedRequest->send(
-    $request,
-);
+$client->inlinedRequest->send(SendEnumInlinedRequest $request, ?array $options): void;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\InlinedRequest\Requests\SendEnumInlinedRequest` 
-    
 </dd>
 </dl>
 </dd>
@@ -43,7 +26,7 @@ $client->inlinedRequest->send(
 </details>
 
 ## PathParam
-<details><summary><code>$client-><a href="/Seed/PathParam/PathParamClient.php">send</a>($operand, $operandOrColor)</code></summary>
+<details><summary><code>$client->pathParam->send(string $operand, string $operandOrColor, ?array $options): void;</code></summary>
 <dl>
 <dd>
 
@@ -56,34 +39,8 @@ $client->inlinedRequest->send(
 <dd>
 
 ```php
-$client->pathParam->send(
-    operand: $operand,
-    operandOrColor: $operandOrColor,
-);
+$client->pathParam->send(string $operand, string $operandOrColor, ?array $options): void;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$operand:** `enumString` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**$operandOrColor:** `union` 
-    
 </dd>
 </dl>
 </dd>
@@ -95,7 +52,7 @@ $client->pathParam->send(
 </details>
 
 ## QueryParam
-<details><summary><code>$client-><a href="/Seed/QueryParam/QueryParamClient.php">send</a>($request)</code></summary>
+<details><summary><code>$client->queryParam->send(SendEnumAsQueryParamRequest $request, ?array $options): void;</code></summary>
 <dl>
 <dd>
 
@@ -108,25 +65,8 @@ $client->pathParam->send(
 <dd>
 
 ```php
-$client->queryParam->send(
-    $request,
-);
+$client->queryParam->send(SendEnumAsQueryParamRequest $request, ?array $options): void;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\QueryParam\Requests\SendEnumAsQueryParamRequest` 
-    
 </dd>
 </dl>
 </dd>
@@ -137,7 +77,7 @@ $client->queryParam->send(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/QueryParam/QueryParamClient.php">sendList</a>($request)</code></summary>
+<details><summary><code>$client->queryParam->sendList(SendEnumListAsQueryParamRequest $request, ?array $options): void;</code></summary>
 <dl>
 <dd>
 
@@ -150,25 +90,8 @@ $client->queryParam->send(
 <dd>
 
 ```php
-$client->queryParam->sendList(
-    $request,
-);
+$client->queryParam->sendList(SendEnumListAsQueryParamRequest $request, ?array $options): void;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\QueryParam\Requests\SendEnumListAsQueryParamRequest` 
-    
 </dd>
 </dl>
 </dd>

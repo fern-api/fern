@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>$client-><a href="/Seed/Service/ServiceClient.php">post</a>($request)</code></summary>
+<details><summary><code>$client->service->post(MyRequest $request, ?array $options): void;</code></summary>
 <dl>
 <dd>
 
@@ -13,25 +13,8 @@
 <dd>
 
 ```php
-$client->service->post(
-    $request,
-);
+$client->service->post(MyRequest $request, ?array $options): void;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Service\Requests\MyRequest` 
-    
 </dd>
 </dl>
 </dd>
@@ -42,7 +25,7 @@ $client->service->post(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Service/ServiceClient.php">justFile</a>($request)</code></summary>
+<details><summary><code>$client->service->justFile(JustFileRequest $request, ?array $options): void;</code></summary>
 <dl>
 <dd>
 
@@ -55,25 +38,8 @@ $client->service->post(
 <dd>
 
 ```php
-$client->service->justFile(
-    $request,
-);
+$client->service->justFile(JustFileRequest $request, ?array $options): void;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Service\Requests\JustFileRequest` 
-    
 </dd>
 </dl>
 </dd>
@@ -84,7 +50,7 @@ $client->service->justFile(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Service/ServiceClient.php">justFileWithQueryParams</a>($request)</code></summary>
+<details><summary><code>$client->service->justFileWithQueryParams(JustFileWithQueryParamsRequest $request, ?array $options): void;</code></summary>
 <dl>
 <dd>
 
@@ -97,25 +63,8 @@ $client->service->justFile(
 <dd>
 
 ```php
-$client->service->justFileWithQueryParams(
-    $request,
-);
+$client->service->justFileWithQueryParams(JustFileWithQueryParamsRequest $request, ?array $options): void;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Service\Requests\JustFileWithQueryParamsRequest` 
-    
 </dd>
 </dl>
 </dd>
@@ -126,7 +75,7 @@ $client->service->justFileWithQueryParams(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Service/ServiceClient.php">withContentType</a>($request)</code></summary>
+<details><summary><code>$client->service->withContentType(WithContentTypeRequest $request, ?array $options): void;</code></summary>
 <dl>
 <dd>
 
@@ -139,25 +88,8 @@ $client->service->justFileWithQueryParams(
 <dd>
 
 ```php
-$client->service->withContentType(
-    $request,
-);
+$client->service->withContentType(WithContentTypeRequest $request, ?array $options): void;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Service\Requests\WithContentTypeRequest` 
-    
 </dd>
 </dl>
 </dd>
@@ -168,7 +100,7 @@ $client->service->withContentType(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Service/ServiceClient.php">withFormEncoding</a>($request)</code></summary>
+<details><summary><code>$client->service->withFormEncoding(WithFormEncodingRequest $request, ?array $options): void;</code></summary>
 <dl>
 <dd>
 
@@ -181,25 +113,8 @@ $client->service->withContentType(
 <dd>
 
 ```php
-$client->service->withFormEncoding(
-    $request,
-);
+$client->service->withFormEncoding(WithFormEncodingRequest $request, ?array $options): void;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Service\Requests\WithFormEncodingRequest` 
-    
 </dd>
 </dl>
 </dd>
@@ -210,7 +125,7 @@ $client->service->withFormEncoding(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Service/ServiceClient.php">withFormEncodedContainers</a>($request)</code></summary>
+<details><summary><code>$client->service->withFormEncodedContainers(MyOtherRequest $request, ?array $options): void;</code></summary>
 <dl>
 <dd>
 
@@ -223,25 +138,8 @@ $client->service->withFormEncoding(
 <dd>
 
 ```php
-$client->service->withFormEncodedContainers(
-    $request,
-);
+$client->service->withFormEncodedContainers(MyOtherRequest $request, ?array $options): void;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Service\Requests\MyOtherRequest` 
-    
 </dd>
 </dl>
 </dd>
@@ -252,7 +150,7 @@ $client->service->withFormEncodedContainers(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Service/ServiceClient.php">optionalArgs</a>($request) -> string</code></summary>
+<details><summary><code>$client->service->optionalArgs(OptionalArgsRequest $request);</code></summary>
 <dl>
 <dd>
 
@@ -265,25 +163,8 @@ $client->service->withFormEncodedContainers(
 <dd>
 
 ```php
-$client->service->optionalArgs(
-    $request,
-);
+$client->service->optionalArgs(OptionalArgsRequest $request);
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Service\Requests\OptionalArgsRequest` 
-    
 </dd>
 </dl>
 </dd>

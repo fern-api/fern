@@ -1,6 +1,6 @@
 # Reference
 ## Package
-<details><summary><code>$client-><a href="/Seed/Package/PackageClient.php">test</a>($request)</code></summary>
+<details><summary><code>$client->package->test(TestRequest $request, ?array $options): void;</code></summary>
 <dl>
 <dd>
 
@@ -13,25 +13,8 @@
 <dd>
 
 ```php
-$client->package->test(
-    $request,
-);
+$client->package->test(TestRequest $request, ?array $options): void;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Package\Requests\TestRequest` 
-    
 </dd>
 </dl>
 </dd>

@@ -1,6 +1,6 @@
 # Reference
 ## FolderA Service
-<details><summary><code>$client-><a href="/Seed/FolderA/Service/ServiceClient.php">getDirectThread</a>() -> \Seed\FolderA\Service\Types\Response</code></summary>
+<details><summary><code>$client->folderA->service->getDirectThread(?array $options): Response;</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```php
-$client->folderA->service->getDirectThread();
+$client->folderA->service->getDirectThread(?array $options): Response;
 ```
 </dd>
 </dl>
@@ -26,7 +26,7 @@ $client->folderA->service->getDirectThread();
 </details>
 
 ## FolderD Service
-<details><summary><code>$client-><a href="/Seed/FolderD/Service/ServiceClient.php">getDirectThread</a>() -> \Seed\FolderD\Service\Types\Response</code></summary>
+<details><summary><code>$client->folderD->service->getDirectThread(?array $options): Response;</code></summary>
 <dl>
 <dd>
 
@@ -39,7 +39,7 @@ $client->folderA->service->getDirectThread();
 <dd>
 
 ```php
-$client->folderD->service->getDirectThread();
+$client->folderD->service->getDirectThread(?array $options): Response;
 ```
 </dd>
 </dl>
@@ -52,7 +52,7 @@ $client->folderD->service->getDirectThread();
 </details>
 
 ## Foo
-<details><summary><code>$client-><a href="/Seed/Foo/FooClient.php">find</a>($request) -> \Seed\Foo\Types\ImportingType</code></summary>
+<details><summary><code>$client->foo->find(FindRequest $request);</code></summary>
 <dl>
 <dd>
 
@@ -65,25 +65,8 @@ $client->folderD->service->getDirectThread();
 <dd>
 
 ```php
-$client->foo->find(
-    $request,
-);
+$client->foo->find(FindRequest $request);
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Foo\Requests\FindRequest` 
-    
 </dd>
 </dl>
 </dd>

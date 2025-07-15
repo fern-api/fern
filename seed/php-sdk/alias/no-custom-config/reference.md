@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>$client-><a href="/Seed/ClientClient.php">get</a>($typeId)</code></summary>
+<details><summary><code>$client->get(string $typeId, ?array $options): void;</code></summary>
 <dl>
 <dd>
 
@@ -12,25 +12,8 @@
 <dd>
 
 ```php
-$client->get(
-    typeId: $typeId,
-);
+$client->get(string $typeId, ?array $options): void;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$typeId:** `string` 
-    
 </dd>
 </dl>
 </dd>

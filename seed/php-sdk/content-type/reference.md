@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>$client-><a href="/Seed/Service/ServiceClient.php">patch</a>($request)</code></summary>
+<details><summary><code>$client->service->patch(PatchProxyRequest $request, ?array $options): void;</code></summary>
 <dl>
 <dd>
 
@@ -13,25 +13,8 @@
 <dd>
 
 ```php
-$client->service->patch(
-    $request,
-);
+$client->service->patch(PatchProxyRequest $request, ?array $options): void;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Service\Requests\PatchProxyRequest` 
-    
 </dd>
 </dl>
 </dd>

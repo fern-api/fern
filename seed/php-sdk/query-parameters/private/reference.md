@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>$client-><a href="/Seed/User/UserClient.php">getUsername</a>($request) -> \Seed\User\Types\User</code></summary>
+<details><summary><code>$client->user->getUsername(GetUsersRequest $request, ?array $options): User;</code></summary>
 <dl>
 <dd>
 
@@ -13,25 +13,8 @@
 <dd>
 
 ```php
-$client->user->getUsername(
-    $request,
-);
+$client->user->getUsername(GetUsersRequest $request, ?array $options): User;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\User\Requests\GetUsersRequest` 
-    
 </dd>
 </dl>
 </dd>

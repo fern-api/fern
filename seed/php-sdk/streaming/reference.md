@@ -1,6 +1,6 @@
 # Reference
 ## Dummy
-<details><summary><code>$client-><a href="/Seed/Dummy/DummyClient.php">generateStream</a>($request)</code></summary>
+<details><summary><code>$client->dummy->generateStream(GenerateStreamRequest $request, ?array $options): void;</code></summary>
 <dl>
 <dd>
 
@@ -13,25 +13,8 @@
 <dd>
 
 ```php
-$client->dummy->generateStream(
-    $request,
-);
+$client->dummy->generateStream(GenerateStreamRequest $request, ?array $options): void;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Dummy\Requests\GenerateStreamRequest` 
-    
 </dd>
 </dl>
 </dd>
@@ -42,7 +25,7 @@ $client->dummy->generateStream(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Dummy/DummyClient.php">generate</a>($request) -> \Seed\Dummy\Types\StreamResponse</code></summary>
+<details><summary><code>$client->dummy->generate(Generateequest $request, ?array $options): StreamResponse;</code></summary>
 <dl>
 <dd>
 
@@ -55,25 +38,8 @@ $client->dummy->generateStream(
 <dd>
 
 ```php
-$client->dummy->generate(
-    $request,
-);
+$client->dummy->generate(Generateequest $request, ?array $options): StreamResponse;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Dummy\Requests\Generateequest` 
-    
 </dd>
 </dl>
 </dd>

@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>$client-><a href="/Seed/ClientClient.php">echo_</a>($request) -> string</code></summary>
+<details><summary><code>$client->echo_(string $request, ?array $options): string;</code></summary>
 <dl>
 <dd>
 
@@ -12,25 +12,8 @@
 <dd>
 
 ```php
-$client->echo_(
-    $request,
-);
+$client->echo_(string $request, ?array $options): string;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `string` 
-    
 </dd>
 </dl>
 </dd>
@@ -41,7 +24,7 @@ $client->echo_(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/ClientClient.php">createType</a>($request) -> \Seed\Types\Identifier</code></summary>
+<details><summary><code>$client->createType(string $request, ?array $options): Identifier;</code></summary>
 <dl>
 <dd>
 
@@ -54,25 +37,8 @@ $client->echo_(
 <dd>
 
 ```php
-$client->createType(
-    $request,
-);
+$client->createType(string $request, ?array $options): Identifier;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `union` 
-    
 </dd>
 </dl>
 </dd>
@@ -84,7 +50,7 @@ $client->createType(
 </details>
 
 ## File Notification Service
-<details><summary><code>$client-><a href="/Seed/File/Notification/Service/ServiceClient.php">getException</a>($notificationId) -> \Seed\Types\Types\Exception</code></summary>
+<details><summary><code>$client->file->notification->service->getException(string $notificationId, ?array $options): Exception;</code></summary>
 <dl>
 <dd>
 
@@ -97,25 +63,8 @@ $client->createType(
 <dd>
 
 ```php
-$client->file->notification->service->getException(
-    notificationId: $notificationId,
-);
+$client->file->notification->service->getException(string $notificationId, ?array $options): Exception;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$notificationId:** `string` 
-    
 </dd>
 </dl>
 </dd>
@@ -127,7 +76,7 @@ $client->file->notification->service->getException(
 </details>
 
 ## File Service
-<details><summary><code>$client-><a href="/Seed/File/Service/ServiceClient.php">getFile</a>($filename, $request) -> \Seed\Types\Types\File</code></summary>
+<details><summary><code>$client->file->service->getFile(string $filename, GetFileRequest $request, ?array $options): File;</code></summary>
 <dl>
 <dd>
 
@@ -154,34 +103,8 @@ This endpoint returns a file by its name.
 <dd>
 
 ```php
-$client->file->service->getFile(
-    filename: $filename,
-    $request,
-);
+$client->file->service->getFile(string $filename, GetFileRequest $request, ?array $options): File;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$filename:** `string` — This is a filename
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\File\Service\Requests\GetFileRequest` 
-    
 </dd>
 </dl>
 </dd>
@@ -193,7 +116,7 @@ $client->file->service->getFile(
 </details>
 
 ## Health Service
-<details><summary><code>$client-><a href="/Seed/Health/Service/ServiceClient.php">check</a>($id)</code></summary>
+<details><summary><code>$client->health->service->check(string $id, ?array $options): void;</code></summary>
 <dl>
 <dd>
 
@@ -220,25 +143,8 @@ This endpoint checks the health of a resource.
 <dd>
 
 ```php
-$client->health->service->check(
-    id: $id,
-);
+$client->health->service->check(string $id, ?array $options): void;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$id:** `string` — The id to check
-    
 </dd>
 </dl>
 </dd>
@@ -249,7 +155,7 @@ $client->health->service->check(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Health/Service/ServiceClient.php">ping</a>() -> bool</code></summary>
+<details><summary><code>$client->health->service->ping(?array $options): bool;</code></summary>
 <dl>
 <dd>
 
@@ -276,7 +182,7 @@ This endpoint checks the health of the service.
 <dd>
 
 ```php
-$client->health->service->ping();
+$client->health->service->ping(?array $options): bool;
 ```
 </dd>
 </dl>
@@ -289,7 +195,7 @@ $client->health->service->ping();
 </details>
 
 ## Service
-<details><summary><code>$client-><a href="/Seed/Service/ServiceClient.php">getMovie</a>($movieId) -> \Seed\Types\Types\Movie</code></summary>
+<details><summary><code>$client->service->getMovie(string $movieId, ?array $options): Movie;</code></summary>
 <dl>
 <dd>
 
@@ -302,25 +208,8 @@ $client->health->service->ping();
 <dd>
 
 ```php
-$client->service->getMovie(
-    movieId: $movieId,
-);
+$client->service->getMovie(string $movieId, ?array $options): Movie;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$movieId:** `string` 
-    
 </dd>
 </dl>
 </dd>
@@ -331,7 +220,7 @@ $client->service->getMovie(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Service/ServiceClient.php">createMovie</a>($request) -> string</code></summary>
+<details><summary><code>$client->service->createMovie(Movie $request, ?array $options): string;</code></summary>
 <dl>
 <dd>
 
@@ -344,25 +233,8 @@ $client->service->getMovie(
 <dd>
 
 ```php
-$client->service->createMovie(
-    $request,
-);
+$client->service->createMovie(Movie $request, ?array $options): string;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Types\Types\Movie` 
-    
 </dd>
 </dl>
 </dd>
@@ -373,7 +245,7 @@ $client->service->createMovie(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Service/ServiceClient.php">getMetadata</a>($request) -> \Seed\Types\Types\Metadata</code></summary>
+<details><summary><code>$client->service->getMetadata(GetMetadataRequest $request, ?array $options): Metadata;</code></summary>
 <dl>
 <dd>
 
@@ -386,25 +258,8 @@ $client->service->createMovie(
 <dd>
 
 ```php
-$client->service->getMetadata(
-    $request,
-);
+$client->service->getMetadata(GetMetadataRequest $request, ?array $options): Metadata;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Service\Requests\GetMetadataRequest` 
-    
 </dd>
 </dl>
 </dd>
@@ -415,7 +270,7 @@ $client->service->getMetadata(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Service/ServiceClient.php">createBigEntity</a>($request) -> \Seed\Types\Types\Response</code></summary>
+<details><summary><code>$client->service->createBigEntity(BigEntity $request, ?array $options): Response;</code></summary>
 <dl>
 <dd>
 
@@ -428,25 +283,8 @@ $client->service->getMetadata(
 <dd>
 
 ```php
-$client->service->createBigEntity(
-    $request,
-);
+$client->service->createBigEntity(BigEntity $request, ?array $options): Response;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Types\Types\BigEntity` 
-    
 </dd>
 </dl>
 </dd>

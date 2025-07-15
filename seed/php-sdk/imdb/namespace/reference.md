@@ -1,6 +1,6 @@
 # Reference
 ## Imdb
-<details><summary><code>$client-><a href="/Fern/Imdb/ImdbClient.php">createMovie</a>($request) -> string</code></summary>
+<details><summary><code>$client->imdb->createMovie(CreateMovieRequest $request, ?array $options): string;</code></summary>
 <dl>
 <dd>
 
@@ -27,25 +27,8 @@ Add a movie to the database using the movies/* /... path.
 <dd>
 
 ```php
-$client->imdb->createMovie(
-    $request,
-);
+$client->imdb->createMovie(CreateMovieRequest $request, ?array $options): string;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Fern\Imdb\Types\CreateMovieRequest` 
-    
 </dd>
 </dl>
 </dd>
@@ -56,7 +39,7 @@ $client->imdb->createMovie(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Fern/Imdb/ImdbClient.php">getMovie</a>($movieId) -> \Fern\Imdb\Types\Movie</code></summary>
+<details><summary><code>$client->imdb->getMovie(string $movieId, ?array $options): Movie;</code></summary>
 <dl>
 <dd>
 
@@ -69,25 +52,8 @@ $client->imdb->createMovie(
 <dd>
 
 ```php
-$client->imdb->getMovie(
-    movieId: $movieId,
-);
+$client->imdb->getMovie(string $movieId, ?array $options): Movie;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$movieId:** `string` 
-    
 </dd>
 </dl>
 </dd>

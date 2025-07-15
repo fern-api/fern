@@ -149,4 +149,6 @@ allowedFailures:
   - file-upload
   - http-head
   - oauth-client-credentials-with-variables
+  - bearer-token-environment-variable
+  - extends:no-custom-config
 

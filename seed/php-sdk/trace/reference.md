@@ -1,6 +1,6 @@
 # Reference
 ## V2
-<details><summary><code>$client-><a href="/Seed/V2/ClientClient.php">test</a>()</code></summary>
+<details><summary><code>$client->v2->test(?array $options): void;</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```php
-$client->v2->test();
+$client->v2->test(?array $options): void;
 ```
 </dd>
 </dl>
@@ -26,7 +26,7 @@ $client->v2->test();
 </details>
 
 ## Admin
-<details><summary><code>$client-><a href="/Seed/Admin/AdminClient.php">updateTestSubmissionStatus</a>($submissionId, $request)</code></summary>
+<details><summary><code>$client->admin->updateTestSubmissionStatus(string $submissionId, TestSubmissionStatus $request, ?array $options): void;</code></summary>
 <dl>
 <dd>
 
@@ -39,34 +39,8 @@ $client->v2->test();
 <dd>
 
 ```php
-$client->admin->updateTestSubmissionStatus(
-    submissionId: $submissionId,
-    $request,
-);
+$client->admin->updateTestSubmissionStatus(string $submissionId, TestSubmissionStatus $request, ?array $options): void;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$submissionId:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Submission\Types\TestSubmissionStatus` 
-    
 </dd>
 </dl>
 </dd>
@@ -77,7 +51,7 @@ $client->admin->updateTestSubmissionStatus(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Admin/AdminClient.php">sendTestSubmissionUpdate</a>($submissionId, $request)</code></summary>
+<details><summary><code>$client->admin->sendTestSubmissionUpdate(string $submissionId, TestSubmissionUpdate $request, ?array $options): void;</code></summary>
 <dl>
 <dd>
 
@@ -90,34 +64,8 @@ $client->admin->updateTestSubmissionStatus(
 <dd>
 
 ```php
-$client->admin->sendTestSubmissionUpdate(
-    submissionId: $submissionId,
-    $request,
-);
+$client->admin->sendTestSubmissionUpdate(string $submissionId, TestSubmissionUpdate $request, ?array $options): void;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$submissionId:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Submission\Types\TestSubmissionUpdate` 
-    
 </dd>
 </dl>
 </dd>
@@ -128,7 +76,7 @@ $client->admin->sendTestSubmissionUpdate(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Admin/AdminClient.php">updateWorkspaceSubmissionStatus</a>($submissionId, $request)</code></summary>
+<details><summary><code>$client->admin->updateWorkspaceSubmissionStatus(string $submissionId, WorkspaceSubmissionStatus $request, ?array $options): void;</code></summary>
 <dl>
 <dd>
 
@@ -141,34 +89,8 @@ $client->admin->sendTestSubmissionUpdate(
 <dd>
 
 ```php
-$client->admin->updateWorkspaceSubmissionStatus(
-    submissionId: $submissionId,
-    $request,
-);
+$client->admin->updateWorkspaceSubmissionStatus(string $submissionId, WorkspaceSubmissionStatus $request, ?array $options): void;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$submissionId:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Submission\Types\WorkspaceSubmissionStatus` 
-    
 </dd>
 </dl>
 </dd>
@@ -179,7 +101,7 @@ $client->admin->updateWorkspaceSubmissionStatus(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Admin/AdminClient.php">sendWorkspaceSubmissionUpdate</a>($submissionId, $request)</code></summary>
+<details><summary><code>$client->admin->sendWorkspaceSubmissionUpdate(string $submissionId, WorkspaceSubmissionUpdate $request, ?array $options): void;</code></summary>
 <dl>
 <dd>
 
@@ -192,34 +114,8 @@ $client->admin->updateWorkspaceSubmissionStatus(
 <dd>
 
 ```php
-$client->admin->sendWorkspaceSubmissionUpdate(
-    submissionId: $submissionId,
-    $request,
-);
+$client->admin->sendWorkspaceSubmissionUpdate(string $submissionId, WorkspaceSubmissionUpdate $request, ?array $options): void;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$submissionId:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Submission\Types\WorkspaceSubmissionUpdate` 
-    
 </dd>
 </dl>
 </dd>
@@ -230,7 +126,7 @@ $client->admin->sendWorkspaceSubmissionUpdate(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Admin/AdminClient.php">storeTracedTestCase</a>($submissionId, $testCaseId, $request)</code></summary>
+<details><summary><code>$client->admin->storeTracedTestCase(string $submissionId, string $testCaseId, StoreTracedTestCaseRequest $request, ?array $options): void;</code></summary>
 <dl>
 <dd>
 
@@ -243,43 +139,8 @@ $client->admin->sendWorkspaceSubmissionUpdate(
 <dd>
 
 ```php
-$client->admin->storeTracedTestCase(
-    submissionId: $submissionId,
-    testCaseId: $testCaseId,
-    $request,
-);
+$client->admin->storeTracedTestCase(string $submissionId, string $testCaseId, StoreTracedTestCaseRequest $request, ?array $options): void;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$submissionId:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**$testCaseId:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Admin\Requests\StoreTracedTestCaseRequest` 
-    
 </dd>
 </dl>
 </dd>
@@ -290,7 +151,7 @@ $client->admin->storeTracedTestCase(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Admin/AdminClient.php">storeTracedTestCaseV2</a>($submissionId, $testCaseId, $request)</code></summary>
+<details><summary><code>$client->admin->storeTracedTestCaseV2(string $submissionId, string $testCaseId, array $request, ?array $options): void;</code></summary>
 <dl>
 <dd>
 
@@ -303,43 +164,8 @@ $client->admin->storeTracedTestCase(
 <dd>
 
 ```php
-$client->admin->storeTracedTestCaseV2(
-    submissionId: $submissionId,
-    testCaseId: $testCaseId,
-    $request,
-);
+$client->admin->storeTracedTestCaseV2(string $submissionId, string $testCaseId, array $request, ?array $options): void;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$submissionId:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**$testCaseId:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**$request:** `array` 
-    
 </dd>
 </dl>
 </dd>
@@ -350,7 +176,7 @@ $client->admin->storeTracedTestCaseV2(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Admin/AdminClient.php">storeTracedWorkspace</a>($submissionId, $request)</code></summary>
+<details><summary><code>$client->admin->storeTracedWorkspace(string $submissionId, StoreTracedWorkspaceRequest $request, ?array $options): void;</code></summary>
 <dl>
 <dd>
 
@@ -363,34 +189,8 @@ $client->admin->storeTracedTestCaseV2(
 <dd>
 
 ```php
-$client->admin->storeTracedWorkspace(
-    submissionId: $submissionId,
-    $request,
-);
+$client->admin->storeTracedWorkspace(string $submissionId, StoreTracedWorkspaceRequest $request, ?array $options): void;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$submissionId:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Admin\Requests\StoreTracedWorkspaceRequest` 
-    
 </dd>
 </dl>
 </dd>
@@ -401,7 +201,7 @@ $client->admin->storeTracedWorkspace(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Admin/AdminClient.php">storeTracedWorkspaceV2</a>($submissionId, $request)</code></summary>
+<details><summary><code>$client->admin->storeTracedWorkspaceV2(string $submissionId, array $request, ?array $options): void;</code></summary>
 <dl>
 <dd>
 
@@ -414,34 +214,8 @@ $client->admin->storeTracedWorkspace(
 <dd>
 
 ```php
-$client->admin->storeTracedWorkspaceV2(
-    submissionId: $submissionId,
-    $request,
-);
+$client->admin->storeTracedWorkspaceV2(string $submissionId, array $request, ?array $options): void;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$submissionId:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**$request:** `array` 
-    
 </dd>
 </dl>
 </dd>
@@ -453,7 +227,7 @@ $client->admin->storeTracedWorkspaceV2(
 </details>
 
 ## Homepage
-<details><summary><code>$client-><a href="/Seed/Homepage/HomepageClient.php">getHomepageProblems</a>() -> array</code></summary>
+<details><summary><code>$client->homepage->getHomepageProblems(?array $options): array;</code></summary>
 <dl>
 <dd>
 
@@ -466,7 +240,7 @@ $client->admin->storeTracedWorkspaceV2(
 <dd>
 
 ```php
-$client->homepage->getHomepageProblems();
+$client->homepage->getHomepageProblems(?array $options): array;
 ```
 </dd>
 </dl>
@@ -478,7 +252,7 @@ $client->homepage->getHomepageProblems();
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Homepage/HomepageClient.php">setHomepageProblems</a>($request)</code></summary>
+<details><summary><code>$client->homepage->setHomepageProblems(array $request, ?array $options): void;</code></summary>
 <dl>
 <dd>
 
@@ -491,25 +265,8 @@ $client->homepage->getHomepageProblems();
 <dd>
 
 ```php
-$client->homepage->setHomepageProblems(
-    $request,
-);
+$client->homepage->setHomepageProblems(array $request, ?array $options): void;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `array` 
-    
 </dd>
 </dl>
 </dd>
@@ -521,7 +278,7 @@ $client->homepage->setHomepageProblems(
 </details>
 
 ## Migration
-<details><summary><code>$client-><a href="/Seed/Migration/MigrationClient.php">getAttemptedMigrations</a>($request) -> array</code></summary>
+<details><summary><code>$client->migration->getAttemptedMigrations(GetAttemptedMigrationsRequest $request, ?array $options): array;</code></summary>
 <dl>
 <dd>
 
@@ -534,25 +291,8 @@ $client->homepage->setHomepageProblems(
 <dd>
 
 ```php
-$client->migration->getAttemptedMigrations(
-    $request,
-);
+$client->migration->getAttemptedMigrations(GetAttemptedMigrationsRequest $request, ?array $options): array;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Migration\Requests\GetAttemptedMigrationsRequest` 
-    
 </dd>
 </dl>
 </dd>
@@ -564,7 +304,7 @@ $client->migration->getAttemptedMigrations(
 </details>
 
 ## Playlist
-<details><summary><code>$client-><a href="/Seed/Playlist/PlaylistClient.php">createPlaylist</a>($serviceParam, $request) -> \Seed\Playlist\Types\Playlist</code></summary>
+<details><summary><code>$client->playlist->createPlaylist(int $serviceParam, CreatePlaylistRequest $request, ?array $options): Playlist;</code></summary>
 <dl>
 <dd>
 
@@ -591,34 +331,8 @@ Create a new playlist
 <dd>
 
 ```php
-$client->playlist->createPlaylist(
-    serviceParam: $serviceParam,
-    $request,
-);
+$client->playlist->createPlaylist(int $serviceParam, CreatePlaylistRequest $request, ?array $options): Playlist;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$serviceParam:** `int` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Playlist\Requests\CreatePlaylistRequest` 
-    
 </dd>
 </dl>
 </dd>
@@ -629,7 +343,7 @@ $client->playlist->createPlaylist(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Playlist/PlaylistClient.php">getPlaylists</a>($serviceParam, $request) -> array</code></summary>
+<details><summary><code>$client->playlist->getPlaylists(int $serviceParam, GetPlaylistsRequest $request, ?array $options): array;</code></summary>
 <dl>
 <dd>
 
@@ -656,34 +370,8 @@ Returns the user's playlists
 <dd>
 
 ```php
-$client->playlist->getPlaylists(
-    serviceParam: $serviceParam,
-    $request,
-);
+$client->playlist->getPlaylists(int $serviceParam, GetPlaylistsRequest $request, ?array $options): array;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$serviceParam:** `int` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Playlist\Requests\GetPlaylistsRequest` 
-    
 </dd>
 </dl>
 </dd>
@@ -694,7 +382,7 @@ $client->playlist->getPlaylists(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Playlist/PlaylistClient.php">getPlaylist</a>($serviceParam, $playlistId) -> \Seed\Playlist\Types\Playlist</code></summary>
+<details><summary><code>$client->playlist->getPlaylist(int $serviceParam, string $playlistId, ?array $options): Playlist;</code></summary>
 <dl>
 <dd>
 
@@ -721,34 +409,8 @@ Returns a playlist
 <dd>
 
 ```php
-$client->playlist->getPlaylist(
-    serviceParam: $serviceParam,
-    playlistId: $playlistId,
-);
+$client->playlist->getPlaylist(int $serviceParam, string $playlistId, ?array $options): Playlist;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$serviceParam:** `int` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**$playlistId:** `string` 
-    
 </dd>
 </dl>
 </dd>
@@ -759,7 +421,7 @@ $client->playlist->getPlaylist(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Playlist/PlaylistClient.php">updatePlaylist</a>($serviceParam, $playlistId, $request) -> ?\Seed\Playlist\Types\Playlist</code></summary>
+<details><summary><code>$client->playlist->updatePlaylist(int $serviceParam, string $playlistId, ?UpdatePlaylistRequest $request, ?array $options): ?Playlist;</code></summary>
 <dl>
 <dd>
 
@@ -786,43 +448,8 @@ Updates a playlist
 <dd>
 
 ```php
-$client->playlist->updatePlaylist(
-    serviceParam: $serviceParam,
-    playlistId: $playlistId,
-    $request,
-);
+$client->playlist->updatePlaylist(int $serviceParam, string $playlistId, ?UpdatePlaylistRequest $request, ?array $options): ?Playlist;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$serviceParam:** `int` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**$playlistId:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**$request:** `?\Seed\Playlist\Types\UpdatePlaylistRequest` 
-    
 </dd>
 </dl>
 </dd>
@@ -833,7 +460,7 @@ $client->playlist->updatePlaylist(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Playlist/PlaylistClient.php">deletePlaylist</a>($serviceParam, $playlistId)</code></summary>
+<details><summary><code>$client->playlist->deletePlaylist(int $serviceParam, string $playlistId, ?array $options): void;</code></summary>
 <dl>
 <dd>
 
@@ -860,34 +487,8 @@ Deletes a playlist
 <dd>
 
 ```php
-$client->playlist->deletePlaylist(
-    serviceParam: $serviceParam,
-    playlistId: $playlistId,
-);
+$client->playlist->deletePlaylist(int $serviceParam, string $playlistId, ?array $options): void;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$serviceParam:** `int` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**$playlistId:** `string` 
-    
 </dd>
 </dl>
 </dd>
@@ -899,7 +500,7 @@ $client->playlist->deletePlaylist(
 </details>
 
 ## Problem
-<details><summary><code>$client-><a href="/Seed/Problem/ProblemClient.php">createProblem</a>($request) -> \Seed\Problem\Types\CreateProblemResponse</code></summary>
+<details><summary><code>$client->problem->createProblem(CreateProblemRequest $request, ?array $options): CreateProblemResponse;</code></summary>
 <dl>
 <dd>
 
@@ -926,25 +527,8 @@ Creates a problem
 <dd>
 
 ```php
-$client->problem->createProblem(
-    $request,
-);
+$client->problem->createProblem(CreateProblemRequest $request, ?array $options): CreateProblemResponse;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Problem\Types\CreateProblemRequest` 
-    
 </dd>
 </dl>
 </dd>
@@ -955,7 +539,7 @@ $client->problem->createProblem(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Problem/ProblemClient.php">updateProblem</a>($problemId, $request) -> \Seed\Problem\Types\UpdateProblemResponse</code></summary>
+<details><summary><code>$client->problem->updateProblem(string $problemId, CreateProblemRequest $request, ?array $options): UpdateProblemResponse;</code></summary>
 <dl>
 <dd>
 
@@ -982,34 +566,8 @@ Updates a problem
 <dd>
 
 ```php
-$client->problem->updateProblem(
-    problemId: $problemId,
-    $request,
-);
+$client->problem->updateProblem(string $problemId, CreateProblemRequest $request, ?array $options): UpdateProblemResponse;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$problemId:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Problem\Types\CreateProblemRequest` 
-    
 </dd>
 </dl>
 </dd>
@@ -1020,7 +578,7 @@ $client->problem->updateProblem(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Problem/ProblemClient.php">deleteProblem</a>($problemId)</code></summary>
+<details><summary><code>$client->problem->deleteProblem(string $problemId, ?array $options): void;</code></summary>
 <dl>
 <dd>
 
@@ -1047,25 +605,8 @@ Soft deletes a problem
 <dd>
 
 ```php
-$client->problem->deleteProblem(
-    problemId: $problemId,
-);
+$client->problem->deleteProblem(string $problemId, ?array $options): void;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$problemId:** `string` 
-    
 </dd>
 </dl>
 </dd>
@@ -1076,7 +617,7 @@ $client->problem->deleteProblem(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Problem/ProblemClient.php">getDefaultStarterFiles</a>($request) -> \Seed\Problem\Types\GetDefaultStarterFilesResponse</code></summary>
+<details><summary><code>$client->problem->getDefaultStarterFiles(GetDefaultStarterFilesRequest $request, ?array $options): GetDefaultStarterFilesResponse;</code></summary>
 <dl>
 <dd>
 
@@ -1103,25 +644,8 @@ Returns default starter files for problem
 <dd>
 
 ```php
-$client->problem->getDefaultStarterFiles(
-    $request,
-);
+$client->problem->getDefaultStarterFiles(GetDefaultStarterFilesRequest $request, ?array $options): GetDefaultStarterFilesResponse;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Problem\Requests\GetDefaultStarterFilesRequest` 
-    
 </dd>
 </dl>
 </dd>
@@ -1133,7 +657,7 @@ $client->problem->getDefaultStarterFiles(
 </details>
 
 ## Submission
-<details><summary><code>$client-><a href="/Seed/Submission/SubmissionClient.php">createExecutionSession</a>($language) -> \Seed\Submission\Types\ExecutionSessionResponse</code></summary>
+<details><summary><code>$client->submission->createExecutionSession(string $language, ?array $options): ExecutionSessionResponse;</code></summary>
 <dl>
 <dd>
 
@@ -1160,25 +684,8 @@ Returns sessionId and execution server URL for session. Spins up server.
 <dd>
 
 ```php
-$client->submission->createExecutionSession(
-    language: $language,
-);
+$client->submission->createExecutionSession(string $language, ?array $options): ExecutionSessionResponse;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$language:** `enumString` 
-    
 </dd>
 </dl>
 </dd>
@@ -1189,7 +696,7 @@ $client->submission->createExecutionSession(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Submission/SubmissionClient.php">getExecutionSession</a>($sessionId) -> ?\Seed\Submission\Types\ExecutionSessionResponse</code></summary>
+<details><summary><code>$client->submission->getExecutionSession(string $sessionId, ?array $options): ?ExecutionSessionResponse;</code></summary>
 <dl>
 <dd>
 
@@ -1216,25 +723,8 @@ Returns execution server URL for session. Returns empty if session isn't registe
 <dd>
 
 ```php
-$client->submission->getExecutionSession(
-    sessionId: $sessionId,
-);
+$client->submission->getExecutionSession(string $sessionId, ?array $options): ?ExecutionSessionResponse;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$sessionId:** `string` 
-    
 </dd>
 </dl>
 </dd>
@@ -1245,7 +735,7 @@ $client->submission->getExecutionSession(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Submission/SubmissionClient.php">stopExecutionSession</a>($sessionId)</code></summary>
+<details><summary><code>$client->submission->stopExecutionSession(string $sessionId, ?array $options): void;</code></summary>
 <dl>
 <dd>
 
@@ -1272,25 +762,8 @@ Stops execution session.
 <dd>
 
 ```php
-$client->submission->stopExecutionSession(
-    sessionId: $sessionId,
-);
+$client->submission->stopExecutionSession(string $sessionId, ?array $options): void;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$sessionId:** `string` 
-    
 </dd>
 </dl>
 </dd>
@@ -1301,7 +774,7 @@ $client->submission->stopExecutionSession(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Submission/SubmissionClient.php">getExecutionSessionsState</a>() -> \Seed\Submission\Types\GetExecutionSessionStateResponse</code></summary>
+<details><summary><code>$client->submission->getExecutionSessionsState(?array $options): GetExecutionSessionStateResponse;</code></summary>
 <dl>
 <dd>
 
@@ -1314,7 +787,7 @@ $client->submission->stopExecutionSession(
 <dd>
 
 ```php
-$client->submission->getExecutionSessionsState();
+$client->submission->getExecutionSessionsState(?array $options): GetExecutionSessionStateResponse;
 ```
 </dd>
 </dl>
@@ -1327,7 +800,7 @@ $client->submission->getExecutionSessionsState();
 </details>
 
 ## Sysprop
-<details><summary><code>$client-><a href="/Seed/Sysprop/SyspropClient.php">setNumWarmInstances</a>($language, $numWarmInstances)</code></summary>
+<details><summary><code>$client->sysprop->setNumWarmInstances(string $language, int $numWarmInstances, ?array $options): void;</code></summary>
 <dl>
 <dd>
 
@@ -1340,34 +813,8 @@ $client->submission->getExecutionSessionsState();
 <dd>
 
 ```php
-$client->sysprop->setNumWarmInstances(
-    language: $language,
-    numWarmInstances: $numWarmInstances,
-);
+$client->sysprop->setNumWarmInstances(string $language, int $numWarmInstances, ?array $options): void;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$language:** `enumString` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**$numWarmInstances:** `int` 
-    
 </dd>
 </dl>
 </dd>
@@ -1378,7 +825,7 @@ $client->sysprop->setNumWarmInstances(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Sysprop/SyspropClient.php">getNumWarmInstances</a>() -> array</code></summary>
+<details><summary><code>$client->sysprop->getNumWarmInstances(?array $options): array;</code></summary>
 <dl>
 <dd>
 
@@ -1391,7 +838,7 @@ $client->sysprop->setNumWarmInstances(
 <dd>
 
 ```php
-$client->sysprop->getNumWarmInstances();
+$client->sysprop->getNumWarmInstances(?array $options): array;
 ```
 </dd>
 </dl>
@@ -1404,7 +851,7 @@ $client->sysprop->getNumWarmInstances();
 </details>
 
 ## V2 Problem
-<details><summary><code>$client-><a href="/Seed/V2/Problem/ProblemClient.php">getLightweightProblems</a>() -> array</code></summary>
+<details><summary><code>$client->v2->problem->getLightweightProblems(?array $options): array;</code></summary>
 <dl>
 <dd>
 
@@ -1431,7 +878,7 @@ Returns lightweight versions of all problems
 <dd>
 
 ```php
-$client->v2->problem->getLightweightProblems();
+$client->v2->problem->getLightweightProblems(?array $options): array;
 ```
 </dd>
 </dl>
@@ -1443,7 +890,7 @@ $client->v2->problem->getLightweightProblems();
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/V2/Problem/ProblemClient.php">getProblems</a>() -> array</code></summary>
+<details><summary><code>$client->v2->problem->getProblems(?array $options): array;</code></summary>
 <dl>
 <dd>
 
@@ -1470,7 +917,7 @@ Returns latest versions of all problems
 <dd>
 
 ```php
-$client->v2->problem->getProblems();
+$client->v2->problem->getProblems(?array $options): array;
 ```
 </dd>
 </dl>
@@ -1482,7 +929,7 @@ $client->v2->problem->getProblems();
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/V2/Problem/ProblemClient.php">getLatestProblem</a>($problemId) -> \Seed\V2\Problem\Types\ProblemInfoV2</code></summary>
+<details><summary><code>$client->v2->problem->getLatestProblem(string $problemId, ?array $options): ProblemInfoV2;</code></summary>
 <dl>
 <dd>
 
@@ -1509,25 +956,8 @@ Returns latest version of a problem
 <dd>
 
 ```php
-$client->v2->problem->getLatestProblem(
-    problemId: $problemId,
-);
+$client->v2->problem->getLatestProblem(string $problemId, ?array $options): ProblemInfoV2;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$problemId:** `string` 
-    
 </dd>
 </dl>
 </dd>
@@ -1538,7 +968,7 @@ $client->v2->problem->getLatestProblem(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/V2/Problem/ProblemClient.php">getProblemVersion</a>($problemId, $problemVersion) -> \Seed\V2\Problem\Types\ProblemInfoV2</code></summary>
+<details><summary><code>$client->v2->problem->getProblemVersion(string $problemId, int $problemVersion, ?array $options): ProblemInfoV2;</code></summary>
 <dl>
 <dd>
 
@@ -1565,34 +995,8 @@ Returns requested version of a problem
 <dd>
 
 ```php
-$client->v2->problem->getProblemVersion(
-    problemId: $problemId,
-    problemVersion: $problemVersion,
-);
+$client->v2->problem->getProblemVersion(string $problemId, int $problemVersion, ?array $options): ProblemInfoV2;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$problemId:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**$problemVersion:** `int` 
-    
 </dd>
 </dl>
 </dd>
@@ -1604,7 +1008,7 @@ $client->v2->problem->getProblemVersion(
 </details>
 
 ## V2 V3 Problem
-<details><summary><code>$client-><a href="/Seed/V2/V3/Problem/ProblemClient.php">getLightweightProblems</a>() -> array</code></summary>
+<details><summary><code>$client->v2->v3->problem->getLightweightProblems(?array $options): array;</code></summary>
 <dl>
 <dd>
 
@@ -1631,7 +1035,7 @@ Returns lightweight versions of all problems
 <dd>
 
 ```php
-$client->v2->v3->problem->getLightweightProblems();
+$client->v2->v3->problem->getLightweightProblems(?array $options): array;
 ```
 </dd>
 </dl>
@@ -1643,7 +1047,7 @@ $client->v2->v3->problem->getLightweightProblems();
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/V2/V3/Problem/ProblemClient.php">getProblems</a>() -> array</code></summary>
+<details><summary><code>$client->v2->v3->problem->getProblems(?array $options): array;</code></summary>
 <dl>
 <dd>
 
@@ -1670,7 +1074,7 @@ Returns latest versions of all problems
 <dd>
 
 ```php
-$client->v2->v3->problem->getProblems();
+$client->v2->v3->problem->getProblems(?array $options): array;
 ```
 </dd>
 </dl>
@@ -1682,7 +1086,7 @@ $client->v2->v3->problem->getProblems();
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/V2/V3/Problem/ProblemClient.php">getLatestProblem</a>($problemId) -> \Seed\V2\V3\Problem\Types\ProblemInfoV2</code></summary>
+<details><summary><code>$client->v2->v3->problem->getLatestProblem(string $problemId, ?array $options): ProblemInfoV2;</code></summary>
 <dl>
 <dd>
 
@@ -1709,25 +1113,8 @@ Returns latest version of a problem
 <dd>
 
 ```php
-$client->v2->v3->problem->getLatestProblem(
-    problemId: $problemId,
-);
+$client->v2->v3->problem->getLatestProblem(string $problemId, ?array $options): ProblemInfoV2;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$problemId:** `string` 
-    
 </dd>
 </dl>
 </dd>
@@ -1738,7 +1125,7 @@ $client->v2->v3->problem->getLatestProblem(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/V2/V3/Problem/ProblemClient.php">getProblemVersion</a>($problemId, $problemVersion) -> \Seed\V2\V3\Problem\Types\ProblemInfoV2</code></summary>
+<details><summary><code>$client->v2->v3->problem->getProblemVersion(string $problemId, int $problemVersion, ?array $options): ProblemInfoV2;</code></summary>
 <dl>
 <dd>
 
@@ -1765,34 +1152,8 @@ Returns requested version of a problem
 <dd>
 
 ```php
-$client->v2->v3->problem->getProblemVersion(
-    problemId: $problemId,
-    problemVersion: $problemVersion,
-);
+$client->v2->v3->problem->getProblemVersion(string $problemId, int $problemVersion, ?array $options): ProblemInfoV2;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$problemId:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**$problemVersion:** `int` 
-    
 </dd>
 </dl>
 </dd>

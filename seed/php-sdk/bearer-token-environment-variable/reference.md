@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>$client-><a href="/Seed/Service/ServiceClient.php">getWithBearerToken</a>() -> string</code></summary>
+<details><summary><code>$client->service->getWithBearerToken(?array $options): string;</code></summary>
 <dl>
 <dd>
 
@@ -27,7 +27,7 @@ GET request with custom api key
 <dd>
 
 ```php
-$client->service->getWithBearerToken();
+$client->service->getWithBearerToken(?array $options): string;
 ```
 </dd>
 </dl>

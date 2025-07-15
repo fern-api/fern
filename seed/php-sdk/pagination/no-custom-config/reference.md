@@ -1,6 +1,6 @@
 # Reference
 ## Conversations
-<details><summary><code>$client-><a href="/Seed/Complex/ComplexClient.php">search</a>($index, $request) -> \Seed\Complex\Types\PaginatedConversationResponse</code></summary>
+<details><summary><code>$client->complex->search(string $index, SearchRequest $request, ?array $options): Pager;</code></summary>
 <dl>
 <dd>
 
@@ -13,34 +13,8 @@
 <dd>
 
 ```php
-$client->complex->search(
-    index: $index,
-    $request,
-);
+$client->complex->search(string $index, SearchRequest $request, ?array $options): Pager;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$index:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Complex\Types\SearchRequest` 
-    
 </dd>
 </dl>
 </dd>
@@ -52,7 +26,7 @@ $client->complex->search(
 </details>
 
 ## Users
-<details><summary><code>$client-><a href="/Seed/Users/UsersClient.php">listWithCursorPagination</a>($request) -> \Seed\Users\Types\ListUsersPaginationResponse</code></summary>
+<details><summary><code>$client->users->listWithCursorPagination(ListUsersCursorPaginationRequest $request);</code></summary>
 <dl>
 <dd>
 
@@ -65,25 +39,8 @@ $client->complex->search(
 <dd>
 
 ```php
-$client->users->listWithCursorPagination(
-    $request,
-);
+$client->users->listWithCursorPagination(ListUsersCursorPaginationRequest $request);
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Users\Requests\ListUsersCursorPaginationRequest` 
-    
 </dd>
 </dl>
 </dd>
@@ -94,7 +51,7 @@ $client->users->listWithCursorPagination(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Users/UsersClient.php">listWithMixedTypeCursorPagination</a>($request) -> \Seed\Users\Types\ListUsersMixedTypePaginationResponse</code></summary>
+<details><summary><code>$client->users->listWithMixedTypeCursorPagination(ListUsersMixedTypeCursorPaginationRequest $request);</code></summary>
 <dl>
 <dd>
 
@@ -107,25 +64,8 @@ $client->users->listWithCursorPagination(
 <dd>
 
 ```php
-$client->users->listWithMixedTypeCursorPagination(
-    $request,
-);
+$client->users->listWithMixedTypeCursorPagination(ListUsersMixedTypeCursorPaginationRequest $request);
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Users\Requests\ListUsersMixedTypeCursorPaginationRequest` 
-    
 </dd>
 </dl>
 </dd>
@@ -136,7 +76,7 @@ $client->users->listWithMixedTypeCursorPagination(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Users/UsersClient.php">listWithBodyCursorPagination</a>($request) -> \Seed\Users\Types\ListUsersPaginationResponse</code></summary>
+<details><summary><code>$client->users->listWithBodyCursorPagination(ListUsersBodyCursorPaginationRequest $request);</code></summary>
 <dl>
 <dd>
 
@@ -149,25 +89,8 @@ $client->users->listWithMixedTypeCursorPagination(
 <dd>
 
 ```php
-$client->users->listWithBodyCursorPagination(
-    $request,
-);
+$client->users->listWithBodyCursorPagination(ListUsersBodyCursorPaginationRequest $request);
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Users\Requests\ListUsersBodyCursorPaginationRequest` 
-    
 </dd>
 </dl>
 </dd>
@@ -178,7 +101,7 @@ $client->users->listWithBodyCursorPagination(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Users/UsersClient.php">listWithOffsetPagination</a>($request) -> \Seed\Users\Types\ListUsersPaginationResponse</code></summary>
+<details><summary><code>$client->users->listWithOffsetPagination(ListUsersOffsetPaginationRequest $request);</code></summary>
 <dl>
 <dd>
 
@@ -191,25 +114,8 @@ $client->users->listWithBodyCursorPagination(
 <dd>
 
 ```php
-$client->users->listWithOffsetPagination(
-    $request,
-);
+$client->users->listWithOffsetPagination(ListUsersOffsetPaginationRequest $request);
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Users\Requests\ListUsersOffsetPaginationRequest` 
-    
 </dd>
 </dl>
 </dd>
@@ -220,7 +126,7 @@ $client->users->listWithOffsetPagination(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Users/UsersClient.php">listWithDoubleOffsetPagination</a>($request) -> \Seed\Users\Types\ListUsersPaginationResponse</code></summary>
+<details><summary><code>$client->users->listWithDoubleOffsetPagination(ListUsersDoubleOffsetPaginationRequest $request);</code></summary>
 <dl>
 <dd>
 
@@ -233,25 +139,8 @@ $client->users->listWithOffsetPagination(
 <dd>
 
 ```php
-$client->users->listWithDoubleOffsetPagination(
-    $request,
-);
+$client->users->listWithDoubleOffsetPagination(ListUsersDoubleOffsetPaginationRequest $request);
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Users\Requests\ListUsersDoubleOffsetPaginationRequest` 
-    
 </dd>
 </dl>
 </dd>
@@ -262,7 +151,7 @@ $client->users->listWithDoubleOffsetPagination(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Users/UsersClient.php">listWithBodyOffsetPagination</a>($request) -> \Seed\Users\Types\ListUsersPaginationResponse</code></summary>
+<details><summary><code>$client->users->listWithBodyOffsetPagination(ListUsersBodyOffsetPaginationRequest $request);</code></summary>
 <dl>
 <dd>
 
@@ -275,25 +164,8 @@ $client->users->listWithDoubleOffsetPagination(
 <dd>
 
 ```php
-$client->users->listWithBodyOffsetPagination(
-    $request,
-);
+$client->users->listWithBodyOffsetPagination(ListUsersBodyOffsetPaginationRequest $request);
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Users\Requests\ListUsersBodyOffsetPaginationRequest` 
-    
 </dd>
 </dl>
 </dd>
@@ -304,7 +176,7 @@ $client->users->listWithBodyOffsetPagination(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Users/UsersClient.php">listWithOffsetStepPagination</a>($request) -> \Seed\Users\Types\ListUsersPaginationResponse</code></summary>
+<details><summary><code>$client->users->listWithOffsetStepPagination(ListUsersOffsetStepPaginationRequest $request);</code></summary>
 <dl>
 <dd>
 
@@ -317,25 +189,8 @@ $client->users->listWithBodyOffsetPagination(
 <dd>
 
 ```php
-$client->users->listWithOffsetStepPagination(
-    $request,
-);
+$client->users->listWithOffsetStepPagination(ListUsersOffsetStepPaginationRequest $request);
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Users\Requests\ListUsersOffsetStepPaginationRequest` 
-    
 </dd>
 </dl>
 </dd>
@@ -346,7 +201,7 @@ $client->users->listWithOffsetStepPagination(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Users/UsersClient.php">listWithOffsetPaginationHasNextPage</a>($request) -> \Seed\Users\Types\ListUsersPaginationResponse</code></summary>
+<details><summary><code>$client->users->listWithOffsetPaginationHasNextPage(ListWithOffsetPaginationHasNextPageRequest $request);</code></summary>
 <dl>
 <dd>
 
@@ -359,25 +214,8 @@ $client->users->listWithOffsetStepPagination(
 <dd>
 
 ```php
-$client->users->listWithOffsetPaginationHasNextPage(
-    $request,
-);
+$client->users->listWithOffsetPaginationHasNextPage(ListWithOffsetPaginationHasNextPageRequest $request);
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Users\Requests\ListWithOffsetPaginationHasNextPageRequest` 
-    
 </dd>
 </dl>
 </dd>
@@ -388,7 +226,7 @@ $client->users->listWithOffsetPaginationHasNextPage(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Users/UsersClient.php">listWithExtendedResults</a>($request) -> \Seed\Users\Types\ListUsersExtendedResponse</code></summary>
+<details><summary><code>$client->users->listWithExtendedResults(ListUsersExtendedRequest $request);</code></summary>
 <dl>
 <dd>
 
@@ -401,25 +239,8 @@ $client->users->listWithOffsetPaginationHasNextPage(
 <dd>
 
 ```php
-$client->users->listWithExtendedResults(
-    $request,
-);
+$client->users->listWithExtendedResults(ListUsersExtendedRequest $request);
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Users\Requests\ListUsersExtendedRequest` 
-    
 </dd>
 </dl>
 </dd>
@@ -430,7 +251,7 @@ $client->users->listWithExtendedResults(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Users/UsersClient.php">listWithExtendedResultsAndOptionalData</a>($request) -> \Seed\Users\Types\ListUsersExtendedOptionalListResponse</code></summary>
+<details><summary><code>$client->users->listWithExtendedResultsAndOptionalData(ListUsersExtendedRequestForOptionalData $request);</code></summary>
 <dl>
 <dd>
 
@@ -443,25 +264,8 @@ $client->users->listWithExtendedResults(
 <dd>
 
 ```php
-$client->users->listWithExtendedResultsAndOptionalData(
-    $request,
-);
+$client->users->listWithExtendedResultsAndOptionalData(ListUsersExtendedRequestForOptionalData $request);
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Users\Requests\ListUsersExtendedRequestForOptionalData` 
-    
 </dd>
 </dl>
 </dd>
@@ -472,7 +276,7 @@ $client->users->listWithExtendedResultsAndOptionalData(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Users/UsersClient.php">listUsernames</a>($request) -> \Seed\Types\UsernameCursor</code></summary>
+<details><summary><code>$client->users->listUsernames(ListUsernamesRequest $request);</code></summary>
 <dl>
 <dd>
 
@@ -485,25 +289,8 @@ $client->users->listWithExtendedResultsAndOptionalData(
 <dd>
 
 ```php
-$client->users->listUsernames(
-    $request,
-);
+$client->users->listUsernames(ListUsernamesRequest $request);
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Users\Requests\ListUsernamesRequest` 
-    
 </dd>
 </dl>
 </dd>
@@ -514,7 +301,7 @@ $client->users->listUsernames(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Users/UsersClient.php">listWithGlobalConfig</a>($request) -> \Seed\Users\Types\UsernameContainer</code></summary>
+<details><summary><code>$client->users->listWithGlobalConfig(ListWithGlobalConfigRequest $request);</code></summary>
 <dl>
 <dd>
 
@@ -527,25 +314,8 @@ $client->users->listUsernames(
 <dd>
 
 ```php
-$client->users->listWithGlobalConfig(
-    $request,
-);
+$client->users->listWithGlobalConfig(ListWithGlobalConfigRequest $request);
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Users\Requests\ListWithGlobalConfigRequest` 
-    
 </dd>
 </dl>
 </dd>

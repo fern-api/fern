@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>$client-><a href="/Seed/Service/ServiceClient.php">getWithApiKey</a>() -> string</code></summary>
+<details><summary><code>$client->service->getWithApiKey(?array $options): string;</code></summary>
 <dl>
 <dd>
 
@@ -27,7 +27,7 @@ GET request with custom api key
 <dd>
 
 ```php
-$client->service->getWithApiKey();
+$client->service->getWithApiKey(?array $options): string;
 ```
 </dd>
 </dl>
@@ -39,7 +39,7 @@ $client->service->getWithApiKey();
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Service/ServiceClient.php">getWithHeader</a>($request) -> string</code></summary>
+<details><summary><code>$client->service->getWithHeader(HeaderAuthRequest $request, ?array $options): string;</code></summary>
 <dl>
 <dd>
 
@@ -66,25 +66,8 @@ GET request with custom api key
 <dd>
 
 ```php
-$client->service->getWithHeader(
-    $request,
-);
+$client->service->getWithHeader(HeaderAuthRequest $request, ?array $options): string;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Service\Requests\HeaderAuthRequest` 
-    
 </dd>
 </dl>
 </dd>

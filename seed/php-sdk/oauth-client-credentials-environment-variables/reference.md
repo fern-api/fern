@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>$client-><a href="/Seed/Auth/AuthClient.php">getTokenWithClientCredentials</a>($request) -> \Seed\Auth\Types\TokenResponse</code></summary>
+<details><summary><code>$client->auth->getTokenWithClientCredentials(GetTokenRequest $request, ?array $options): TokenResponse;</code></summary>
 <dl>
 <dd>
 
@@ -13,25 +13,8 @@
 <dd>
 
 ```php
-$client->auth->getTokenWithClientCredentials(
-    $request,
-);
+$client->auth->getTokenWithClientCredentials(GetTokenRequest $request, ?array $options): TokenResponse;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Auth\Requests\GetTokenRequest` 
-    
 </dd>
 </dl>
 </dd>
@@ -42,7 +25,7 @@ $client->auth->getTokenWithClientCredentials(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Auth/AuthClient.php">refreshToken</a>($request) -> \Seed\Auth\Types\TokenResponse</code></summary>
+<details><summary><code>$client->auth->refreshToken(RefreshTokenRequest $request, ?array $options): TokenResponse;</code></summary>
 <dl>
 <dd>
 
@@ -55,25 +38,8 @@ $client->auth->getTokenWithClientCredentials(
 <dd>
 
 ```php
-$client->auth->refreshToken(
-    $request,
-);
+$client->auth->refreshToken(RefreshTokenRequest $request, ?array $options): TokenResponse;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Auth\Requests\RefreshTokenRequest` 
-    
 </dd>
 </dl>
 </dd>

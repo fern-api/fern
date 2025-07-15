@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>$client-><a href="/Seed/Service/ServiceClient.php">getResource</a>($resourceId) -> \Seed\Service\Types\Resource</code></summary>
+<details><summary><code>$client->service->getResource(string $resourceId, ?array $options): Resource;</code></summary>
 <dl>
 <dd>
 
@@ -13,25 +13,8 @@
 <dd>
 
 ```php
-$client->service->getResource(
-    resourceId: $resourceId,
-);
+$client->service->getResource(string $resourceId, ?array $options): Resource;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$resourceId:** `string` 
-    
 </dd>
 </dl>
 </dd>
@@ -42,7 +25,7 @@ $client->service->getResource(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Service/ServiceClient.php">listResources</a>($request) -> array</code></summary>
+<details><summary><code>$client->service->listResources(ListResourcesRequest $request, ?array $options): array;</code></summary>
 <dl>
 <dd>
 
@@ -55,25 +38,8 @@ $client->service->getResource(
 <dd>
 
 ```php
-$client->service->listResources(
-    $request,
-);
+$client->service->listResources(ListResourcesRequest $request, ?array $options): array;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Service\Requests\ListResourcesRequest` 
-    
 </dd>
 </dl>
 </dd>

@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>$client-><a href="/Seed/ClientClient.php">create</a>($request) -> \Seed\Types\Type</code></summary>
+<details><summary><code>$client->create(CreateRequest $request, ?array $options): Type;</code></summary>
 <dl>
 <dd>
 
@@ -12,25 +12,8 @@
 <dd>
 
 ```php
-$client->create(
-    $request,
-);
+$client->create(CreateRequest $request, ?array $options): Type;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Requests\CreateRequest` 
-    
 </dd>
 </dl>
 </dd>
@@ -41,7 +24,7 @@ $client->create(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/ClientClient.php">get</a>($request) -> \Seed\Types\Type</code></summary>
+<details><summary><code>$client->get(GetRequest $request, ?array $options): Type;</code></summary>
 <dl>
 <dd>
 
@@ -54,25 +37,8 @@ $client->create(
 <dd>
 
 ```php
-$client->get(
-    $request,
-);
+$client->get(GetRequest $request, ?array $options): Type;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Requests\GetRequest` 
-    
 </dd>
 </dl>
 </dd>

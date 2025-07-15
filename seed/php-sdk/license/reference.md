@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>$client-><a href="/Seed/ClientClient.php">get</a>()</code></summary>
+<details><summary><code>$client->get(?array $options): void;</code></summary>
 <dl>
 <dd>
 
@@ -12,7 +12,7 @@
 <dd>
 
 ```php
-$client->get();
+$client->get(?array $options): void;
 ```
 </dd>
 </dl>

@@ -1,6 +1,6 @@
 # Reference
 ## Optional
-<details><summary><code>$client-><a href="/Seed/Optional/OptionalClient.php">sendOptionalBody</a>($request) -> string</code></summary>
+<details><summary><code>$client->optional->sendOptionalBody(?array $request, ?array $options): string;</code></summary>
 <dl>
 <dd>
 
@@ -13,25 +13,8 @@
 <dd>
 
 ```php
-$client->optional->sendOptionalBody(
-    $request,
-);
+$client->optional->sendOptionalBody(?array $request, ?array $options): string;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `?array` 
-    
 </dd>
 </dl>
 </dd>

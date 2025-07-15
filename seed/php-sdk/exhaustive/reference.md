@@ -1,6 +1,6 @@
 # Reference
 ## Endpoints Container
-<details><summary><code>$client-><a href="/Seed/Endpoints/Container/ContainerClient.php">getAndReturnListOfPrimitives</a>($request) -> array</code></summary>
+<details><summary><code>$client->endpoints->container->getAndReturnListOfPrimitives(array $request, ?array $options): array;</code></summary>
 <dl>
 <dd>
 
@@ -13,25 +13,8 @@
 <dd>
 
 ```php
-$client->endpoints->container->getAndReturnListOfPrimitives(
-    $request,
-);
+$client->endpoints->container->getAndReturnListOfPrimitives(array $request, ?array $options): array;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `array` 
-    
 </dd>
 </dl>
 </dd>
@@ -42,7 +25,7 @@ $client->endpoints->container->getAndReturnListOfPrimitives(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Endpoints/Container/ContainerClient.php">getAndReturnListOfObjects</a>($request) -> array</code></summary>
+<details><summary><code>$client->endpoints->container->getAndReturnListOfObjects(array $request, ?array $options): array;</code></summary>
 <dl>
 <dd>
 
@@ -55,25 +38,8 @@ $client->endpoints->container->getAndReturnListOfPrimitives(
 <dd>
 
 ```php
-$client->endpoints->container->getAndReturnListOfObjects(
-    $request,
-);
+$client->endpoints->container->getAndReturnListOfObjects(array $request, ?array $options): array;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `array` 
-    
 </dd>
 </dl>
 </dd>
@@ -84,7 +50,7 @@ $client->endpoints->container->getAndReturnListOfObjects(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Endpoints/Container/ContainerClient.php">getAndReturnSetOfPrimitives</a>($request) -> array</code></summary>
+<details><summary><code>$client->endpoints->container->getAndReturnSetOfPrimitives(array $request, ?array $options): array;</code></summary>
 <dl>
 <dd>
 
@@ -97,25 +63,8 @@ $client->endpoints->container->getAndReturnListOfObjects(
 <dd>
 
 ```php
-$client->endpoints->container->getAndReturnSetOfPrimitives(
-    $request,
-);
+$client->endpoints->container->getAndReturnSetOfPrimitives(array $request, ?array $options): array;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `array` 
-    
 </dd>
 </dl>
 </dd>
@@ -126,7 +75,7 @@ $client->endpoints->container->getAndReturnSetOfPrimitives(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Endpoints/Container/ContainerClient.php">getAndReturnSetOfObjects</a>($request) -> array</code></summary>
+<details><summary><code>$client->endpoints->container->getAndReturnSetOfObjects(array $request, ?array $options): array;</code></summary>
 <dl>
 <dd>
 
@@ -139,25 +88,8 @@ $client->endpoints->container->getAndReturnSetOfPrimitives(
 <dd>
 
 ```php
-$client->endpoints->container->getAndReturnSetOfObjects(
-    $request,
-);
+$client->endpoints->container->getAndReturnSetOfObjects(array $request, ?array $options): array;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `array` 
-    
 </dd>
 </dl>
 </dd>
@@ -168,7 +100,7 @@ $client->endpoints->container->getAndReturnSetOfObjects(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Endpoints/Container/ContainerClient.php">getAndReturnMapPrimToPrim</a>($request) -> array</code></summary>
+<details><summary><code>$client->endpoints->container->getAndReturnMapPrimToPrim(array $request, ?array $options): array;</code></summary>
 <dl>
 <dd>
 
@@ -181,25 +113,8 @@ $client->endpoints->container->getAndReturnSetOfObjects(
 <dd>
 
 ```php
-$client->endpoints->container->getAndReturnMapPrimToPrim(
-    $request,
-);
+$client->endpoints->container->getAndReturnMapPrimToPrim(array $request, ?array $options): array;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `array` 
-    
 </dd>
 </dl>
 </dd>
@@ -210,7 +125,7 @@ $client->endpoints->container->getAndReturnMapPrimToPrim(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Endpoints/Container/ContainerClient.php">getAndReturnMapOfPrimToObject</a>($request) -> array</code></summary>
+<details><summary><code>$client->endpoints->container->getAndReturnMapOfPrimToObject(array $request, ?array $options): array;</code></summary>
 <dl>
 <dd>
 
@@ -223,25 +138,8 @@ $client->endpoints->container->getAndReturnMapPrimToPrim(
 <dd>
 
 ```php
-$client->endpoints->container->getAndReturnMapOfPrimToObject(
-    $request,
-);
+$client->endpoints->container->getAndReturnMapOfPrimToObject(array $request, ?array $options): array;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `array` 
-    
 </dd>
 </dl>
 </dd>
@@ -252,7 +150,7 @@ $client->endpoints->container->getAndReturnMapOfPrimToObject(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Endpoints/Container/ContainerClient.php">getAndReturnOptional</a>($request) -> ?\Seed\Types\Object\Types\ObjectWithRequiredField</code></summary>
+<details><summary><code>$client->endpoints->container->getAndReturnOptional(?ObjectWithRequiredField $request, ?array $options): ?ObjectWithRequiredField;</code></summary>
 <dl>
 <dd>
 
@@ -265,25 +163,8 @@ $client->endpoints->container->getAndReturnMapOfPrimToObject(
 <dd>
 
 ```php
-$client->endpoints->container->getAndReturnOptional(
-    $request,
-);
+$client->endpoints->container->getAndReturnOptional(?ObjectWithRequiredField $request, ?array $options): ?ObjectWithRequiredField;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `?\Seed\Types\Object\Types\ObjectWithRequiredField` 
-    
 </dd>
 </dl>
 </dd>
@@ -295,7 +176,7 @@ $client->endpoints->container->getAndReturnOptional(
 </details>
 
 ## Endpoints ContentType
-<details><summary><code>$client-><a href="/Seed/Endpoints/ContentType/ContentTypeClient.php">postJsonPatchContentType</a>($request)</code></summary>
+<details><summary><code>$client->endpoints->contentType->postJsonPatchContentType(ObjectWithOptionalField $request, ?array $options): void;</code></summary>
 <dl>
 <dd>
 
@@ -308,25 +189,8 @@ $client->endpoints->container->getAndReturnOptional(
 <dd>
 
 ```php
-$client->endpoints->contentType->postJsonPatchContentType(
-    $request,
-);
+$client->endpoints->contentType->postJsonPatchContentType(ObjectWithOptionalField $request, ?array $options): void;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Types\Object\Types\ObjectWithOptionalField` 
-    
 </dd>
 </dl>
 </dd>
@@ -337,7 +201,7 @@ $client->endpoints->contentType->postJsonPatchContentType(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Endpoints/ContentType/ContentTypeClient.php">postJsonPatchContentWithCharsetType</a>($request)</code></summary>
+<details><summary><code>$client->endpoints->contentType->postJsonPatchContentWithCharsetType(ObjectWithOptionalField $request, ?array $options): void;</code></summary>
 <dl>
 <dd>
 
@@ -350,25 +214,8 @@ $client->endpoints->contentType->postJsonPatchContentType(
 <dd>
 
 ```php
-$client->endpoints->contentType->postJsonPatchContentWithCharsetType(
-    $request,
-);
+$client->endpoints->contentType->postJsonPatchContentWithCharsetType(ObjectWithOptionalField $request, ?array $options): void;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Types\Object\Types\ObjectWithOptionalField` 
-    
 </dd>
 </dl>
 </dd>
@@ -380,7 +227,7 @@ $client->endpoints->contentType->postJsonPatchContentWithCharsetType(
 </details>
 
 ## Endpoints Enum
-<details><summary><code>$client-><a href="/Seed/Endpoints/Enum/EnumClient.php">getAndReturnEnum</a>($request) -> enumString</code></summary>
+<details><summary><code>$client->endpoints->enum->getAndReturnEnum(string $request, ?array $options): string;</code></summary>
 <dl>
 <dd>
 
@@ -393,25 +240,8 @@ $client->endpoints->contentType->postJsonPatchContentWithCharsetType(
 <dd>
 
 ```php
-$client->endpoints->enum->getAndReturnEnum(
-    $request,
-);
+$client->endpoints->enum->getAndReturnEnum(string $request, ?array $options): string;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `enumString` 
-    
 </dd>
 </dl>
 </dd>
@@ -423,7 +253,7 @@ $client->endpoints->enum->getAndReturnEnum(
 </details>
 
 ## Endpoints HttpMethods
-<details><summary><code>$client-><a href="/Seed/Endpoints/HttpMethods/HttpMethodsClient.php">testGet</a>($id) -> string</code></summary>
+<details><summary><code>$client->endpoints->httpMethods->testGet(string $id, ?array $options): string;</code></summary>
 <dl>
 <dd>
 
@@ -436,25 +266,8 @@ $client->endpoints->enum->getAndReturnEnum(
 <dd>
 
 ```php
-$client->endpoints->httpMethods->testGet(
-    id: $id,
-);
+$client->endpoints->httpMethods->testGet(string $id, ?array $options): string;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$id:** `string` 
-    
 </dd>
 </dl>
 </dd>
@@ -465,7 +278,7 @@ $client->endpoints->httpMethods->testGet(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Endpoints/HttpMethods/HttpMethodsClient.php">testPost</a>($request) -> \Seed\Types\Object\Types\ObjectWithOptionalField</code></summary>
+<details><summary><code>$client->endpoints->httpMethods->testPost(ObjectWithRequiredField $request, ?array $options): ObjectWithOptionalField;</code></summary>
 <dl>
 <dd>
 
@@ -478,25 +291,8 @@ $client->endpoints->httpMethods->testGet(
 <dd>
 
 ```php
-$client->endpoints->httpMethods->testPost(
-    $request,
-);
+$client->endpoints->httpMethods->testPost(ObjectWithRequiredField $request, ?array $options): ObjectWithOptionalField;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Types\Object\Types\ObjectWithRequiredField` 
-    
 </dd>
 </dl>
 </dd>
@@ -507,7 +303,7 @@ $client->endpoints->httpMethods->testPost(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Endpoints/HttpMethods/HttpMethodsClient.php">testPut</a>($id, $request) -> \Seed\Types\Object\Types\ObjectWithOptionalField</code></summary>
+<details><summary><code>$client->endpoints->httpMethods->testPut(string $id, ObjectWithRequiredField $request, ?array $options): ObjectWithOptionalField;</code></summary>
 <dl>
 <dd>
 
@@ -520,34 +316,8 @@ $client->endpoints->httpMethods->testPost(
 <dd>
 
 ```php
-$client->endpoints->httpMethods->testPut(
-    id: $id,
-    $request,
-);
+$client->endpoints->httpMethods->testPut(string $id, ObjectWithRequiredField $request, ?array $options): ObjectWithOptionalField;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$id:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Types\Object\Types\ObjectWithRequiredField` 
-    
 </dd>
 </dl>
 </dd>
@@ -558,7 +328,7 @@ $client->endpoints->httpMethods->testPut(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Endpoints/HttpMethods/HttpMethodsClient.php">testPatch</a>($id, $request) -> \Seed\Types\Object\Types\ObjectWithOptionalField</code></summary>
+<details><summary><code>$client->endpoints->httpMethods->testPatch(string $id, ObjectWithOptionalField $request, ?array $options): ObjectWithOptionalField;</code></summary>
 <dl>
 <dd>
 
@@ -571,34 +341,8 @@ $client->endpoints->httpMethods->testPut(
 <dd>
 
 ```php
-$client->endpoints->httpMethods->testPatch(
-    id: $id,
-    $request,
-);
+$client->endpoints->httpMethods->testPatch(string $id, ObjectWithOptionalField $request, ?array $options): ObjectWithOptionalField;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$id:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Types\Object\Types\ObjectWithOptionalField` 
-    
 </dd>
 </dl>
 </dd>
@@ -609,7 +353,7 @@ $client->endpoints->httpMethods->testPatch(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Endpoints/HttpMethods/HttpMethodsClient.php">testDelete</a>($id) -> bool</code></summary>
+<details><summary><code>$client->endpoints->httpMethods->testDelete(string $id, ?array $options): bool;</code></summary>
 <dl>
 <dd>
 
@@ -622,25 +366,8 @@ $client->endpoints->httpMethods->testPatch(
 <dd>
 
 ```php
-$client->endpoints->httpMethods->testDelete(
-    id: $id,
-);
+$client->endpoints->httpMethods->testDelete(string $id, ?array $options): bool;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$id:** `string` 
-    
 </dd>
 </dl>
 </dd>
@@ -652,7 +379,7 @@ $client->endpoints->httpMethods->testDelete(
 </details>
 
 ## Endpoints Object
-<details><summary><code>$client-><a href="/Seed/Endpoints/Object/ObjectClient.php">getAndReturnWithOptionalField</a>($request) -> \Seed\Types\Object\Types\ObjectWithOptionalField</code></summary>
+<details><summary><code>$client->endpoints->object->getAndReturnWithOptionalField(ObjectWithOptionalField $request, ?array $options): ObjectWithOptionalField;</code></summary>
 <dl>
 <dd>
 
@@ -665,25 +392,8 @@ $client->endpoints->httpMethods->testDelete(
 <dd>
 
 ```php
-$client->endpoints->object->getAndReturnWithOptionalField(
-    $request,
-);
+$client->endpoints->object->getAndReturnWithOptionalField(ObjectWithOptionalField $request, ?array $options): ObjectWithOptionalField;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Types\Object\Types\ObjectWithOptionalField` 
-    
 </dd>
 </dl>
 </dd>
@@ -694,7 +404,7 @@ $client->endpoints->object->getAndReturnWithOptionalField(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Endpoints/Object/ObjectClient.php">getAndReturnWithRequiredField</a>($request) -> \Seed\Types\Object\Types\ObjectWithRequiredField</code></summary>
+<details><summary><code>$client->endpoints->object->getAndReturnWithRequiredField(ObjectWithRequiredField $request, ?array $options): ObjectWithRequiredField;</code></summary>
 <dl>
 <dd>
 
@@ -707,25 +417,8 @@ $client->endpoints->object->getAndReturnWithOptionalField(
 <dd>
 
 ```php
-$client->endpoints->object->getAndReturnWithRequiredField(
-    $request,
-);
+$client->endpoints->object->getAndReturnWithRequiredField(ObjectWithRequiredField $request, ?array $options): ObjectWithRequiredField;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Types\Object\Types\ObjectWithRequiredField` 
-    
 </dd>
 </dl>
 </dd>
@@ -736,7 +429,7 @@ $client->endpoints->object->getAndReturnWithRequiredField(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Endpoints/Object/ObjectClient.php">getAndReturnWithMapOfMap</a>($request) -> \Seed\Types\Object\Types\ObjectWithMapOfMap</code></summary>
+<details><summary><code>$client->endpoints->object->getAndReturnWithMapOfMap(ObjectWithMapOfMap $request, ?array $options): ObjectWithMapOfMap;</code></summary>
 <dl>
 <dd>
 
@@ -749,25 +442,8 @@ $client->endpoints->object->getAndReturnWithRequiredField(
 <dd>
 
 ```php
-$client->endpoints->object->getAndReturnWithMapOfMap(
-    $request,
-);
+$client->endpoints->object->getAndReturnWithMapOfMap(ObjectWithMapOfMap $request, ?array $options): ObjectWithMapOfMap;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Types\Object\Types\ObjectWithMapOfMap` 
-    
 </dd>
 </dl>
 </dd>
@@ -778,7 +454,7 @@ $client->endpoints->object->getAndReturnWithMapOfMap(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Endpoints/Object/ObjectClient.php">getAndReturnNestedWithOptionalField</a>($request) -> \Seed\Types\Object\Types\NestedObjectWithOptionalField</code></summary>
+<details><summary><code>$client->endpoints->object->getAndReturnNestedWithOptionalField(NestedObjectWithOptionalField $request, ?array $options): NestedObjectWithOptionalField;</code></summary>
 <dl>
 <dd>
 
@@ -791,25 +467,8 @@ $client->endpoints->object->getAndReturnWithMapOfMap(
 <dd>
 
 ```php
-$client->endpoints->object->getAndReturnNestedWithOptionalField(
-    $request,
-);
+$client->endpoints->object->getAndReturnNestedWithOptionalField(NestedObjectWithOptionalField $request, ?array $options): NestedObjectWithOptionalField;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Types\Object\Types\NestedObjectWithOptionalField` 
-    
 </dd>
 </dl>
 </dd>
@@ -820,7 +479,7 @@ $client->endpoints->object->getAndReturnNestedWithOptionalField(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Endpoints/Object/ObjectClient.php">getAndReturnNestedWithRequiredField</a>($string, $request) -> \Seed\Types\Object\Types\NestedObjectWithRequiredField</code></summary>
+<details><summary><code>$client->endpoints->object->getAndReturnNestedWithRequiredField(string $string, NestedObjectWithRequiredField $request, ?array $options): NestedObjectWithRequiredField;</code></summary>
 <dl>
 <dd>
 
@@ -833,34 +492,8 @@ $client->endpoints->object->getAndReturnNestedWithOptionalField(
 <dd>
 
 ```php
-$client->endpoints->object->getAndReturnNestedWithRequiredField(
-    string: $string,
-    $request,
-);
+$client->endpoints->object->getAndReturnNestedWithRequiredField(string $string, NestedObjectWithRequiredField $request, ?array $options): NestedObjectWithRequiredField;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$string:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Types\Object\Types\NestedObjectWithRequiredField` 
-    
 </dd>
 </dl>
 </dd>
@@ -871,7 +504,7 @@ $client->endpoints->object->getAndReturnNestedWithRequiredField(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Endpoints/Object/ObjectClient.php">getAndReturnNestedWithRequiredFieldAsList</a>($request) -> \Seed\Types\Object\Types\NestedObjectWithRequiredField</code></summary>
+<details><summary><code>$client->endpoints->object->getAndReturnNestedWithRequiredFieldAsList(array $request, ?array $options): NestedObjectWithRequiredField;</code></summary>
 <dl>
 <dd>
 
@@ -884,25 +517,8 @@ $client->endpoints->object->getAndReturnNestedWithRequiredField(
 <dd>
 
 ```php
-$client->endpoints->object->getAndReturnNestedWithRequiredFieldAsList(
-    $request,
-);
+$client->endpoints->object->getAndReturnNestedWithRequiredFieldAsList(array $request, ?array $options): NestedObjectWithRequiredField;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `array` 
-    
 </dd>
 </dl>
 </dd>
@@ -914,7 +530,7 @@ $client->endpoints->object->getAndReturnNestedWithRequiredFieldAsList(
 </details>
 
 ## Endpoints Params
-<details><summary><code>$client-><a href="/Seed/Endpoints/Params/ParamsClient.php">getWithPath</a>($param) -> string</code></summary>
+<details><summary><code>$client->endpoints->params->getWithPath(string $param, ?array $options): string;</code></summary>
 <dl>
 <dd>
 
@@ -941,25 +557,8 @@ GET with path param
 <dd>
 
 ```php
-$client->endpoints->params->getWithPath(
-    param: $param,
-);
+$client->endpoints->params->getWithPath(string $param, ?array $options): string;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$param:** `string` 
-    
 </dd>
 </dl>
 </dd>
@@ -970,7 +569,7 @@ $client->endpoints->params->getWithPath(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Endpoints/Params/ParamsClient.php">getWithInlinePath</a>($param) -> string</code></summary>
+<details><summary><code>$client->endpoints->params->getWithInlinePath(string $param, ?array $options): string;</code></summary>
 <dl>
 <dd>
 
@@ -997,25 +596,8 @@ GET with path param
 <dd>
 
 ```php
-$client->endpoints->params->getWithInlinePath(
-    param: $param,
-);
+$client->endpoints->params->getWithInlinePath(string $param, ?array $options): string;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$param:** `string` 
-    
 </dd>
 </dl>
 </dd>
@@ -1026,7 +608,7 @@ $client->endpoints->params->getWithInlinePath(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Endpoints/Params/ParamsClient.php">getWithQuery</a>($request)</code></summary>
+<details><summary><code>$client->endpoints->params->getWithQuery(GetWithQuery $request, ?array $options): void;</code></summary>
 <dl>
 <dd>
 
@@ -1053,25 +635,8 @@ GET with query param
 <dd>
 
 ```php
-$client->endpoints->params->getWithQuery(
-    $request,
-);
+$client->endpoints->params->getWithQuery(GetWithQuery $request, ?array $options): void;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Endpoints\Params\Requests\GetWithQuery` 
-    
 </dd>
 </dl>
 </dd>
@@ -1082,7 +647,7 @@ $client->endpoints->params->getWithQuery(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Endpoints/Params/ParamsClient.php">getWithAllowMultipleQuery</a>($request)</code></summary>
+<details><summary><code>$client->endpoints->params->getWithAllowMultipleQuery(GetWithMultipleQuery $request, ?array $options): void;</code></summary>
 <dl>
 <dd>
 
@@ -1109,25 +674,8 @@ GET with multiple of same query param
 <dd>
 
 ```php
-$client->endpoints->params->getWithAllowMultipleQuery(
-    $request,
-);
+$client->endpoints->params->getWithAllowMultipleQuery(GetWithMultipleQuery $request, ?array $options): void;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Endpoints\Params\Requests\GetWithMultipleQuery` 
-    
 </dd>
 </dl>
 </dd>
@@ -1138,7 +686,7 @@ $client->endpoints->params->getWithAllowMultipleQuery(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Endpoints/Params/ParamsClient.php">getWithPathAndQuery</a>($param, $request)</code></summary>
+<details><summary><code>$client->endpoints->params->getWithPathAndQuery(string $param, GetWithPathAndQuery $request, ?array $options): void;</code></summary>
 <dl>
 <dd>
 
@@ -1165,34 +713,8 @@ GET with path and query params
 <dd>
 
 ```php
-$client->endpoints->params->getWithPathAndQuery(
-    param: $param,
-    $request,
-);
+$client->endpoints->params->getWithPathAndQuery(string $param, GetWithPathAndQuery $request, ?array $options): void;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$param:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Endpoints\Params\Requests\GetWithPathAndQuery` 
-    
 </dd>
 </dl>
 </dd>
@@ -1203,7 +725,7 @@ $client->endpoints->params->getWithPathAndQuery(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Endpoints/Params/ParamsClient.php">getWithInlinePathAndQuery</a>($param, $request)</code></summary>
+<details><summary><code>$client->endpoints->params->getWithInlinePathAndQuery(string $param, GetWithInlinePathAndQuery $request, ?array $options): void;</code></summary>
 <dl>
 <dd>
 
@@ -1230,34 +752,8 @@ GET with path and query params
 <dd>
 
 ```php
-$client->endpoints->params->getWithInlinePathAndQuery(
-    param: $param,
-    $request,
-);
+$client->endpoints->params->getWithInlinePathAndQuery(string $param, GetWithInlinePathAndQuery $request, ?array $options): void;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$param:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Endpoints\Params\Requests\GetWithInlinePathAndQuery` 
-    
 </dd>
 </dl>
 </dd>
@@ -1268,7 +764,7 @@ $client->endpoints->params->getWithInlinePathAndQuery(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Endpoints/Params/ParamsClient.php">modifyWithPath</a>($param, $request) -> string</code></summary>
+<details><summary><code>$client->endpoints->params->modifyWithPath(string $param, string $request, ?array $options): string;</code></summary>
 <dl>
 <dd>
 
@@ -1295,34 +791,8 @@ PUT to update with path param
 <dd>
 
 ```php
-$client->endpoints->params->modifyWithPath(
-    param: $param,
-    $request,
-);
+$client->endpoints->params->modifyWithPath(string $param, string $request, ?array $options): string;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$param:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**$request:** `string` 
-    
 </dd>
 </dl>
 </dd>
@@ -1333,7 +803,7 @@ $client->endpoints->params->modifyWithPath(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Endpoints/Params/ParamsClient.php">modifyWithInlinePath</a>($param, $request) -> string</code></summary>
+<details><summary><code>$client->endpoints->params->modifyWithInlinePath(string $param, ModifyResourceAtInlinedPath $request, ?array $options): string;</code></summary>
 <dl>
 <dd>
 
@@ -1360,34 +830,8 @@ PUT to update with path param
 <dd>
 
 ```php
-$client->endpoints->params->modifyWithInlinePath(
-    param: $param,
-    $request,
-);
+$client->endpoints->params->modifyWithInlinePath(string $param, ModifyResourceAtInlinedPath $request, ?array $options): string;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$param:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Endpoints\Params\Requests\ModifyResourceAtInlinedPath` 
-    
 </dd>
 </dl>
 </dd>
@@ -1399,7 +843,7 @@ $client->endpoints->params->modifyWithInlinePath(
 </details>
 
 ## Endpoints Primitive
-<details><summary><code>$client-><a href="/Seed/Endpoints/Primitive/PrimitiveClient.php">getAndReturnString</a>($request) -> string</code></summary>
+<details><summary><code>$client->endpoints->primitive->getAndReturnString(string $request, ?array $options): string;</code></summary>
 <dl>
 <dd>
 
@@ -1412,25 +856,8 @@ $client->endpoints->params->modifyWithInlinePath(
 <dd>
 
 ```php
-$client->endpoints->primitive->getAndReturnString(
-    $request,
-);
+$client->endpoints->primitive->getAndReturnString(string $request, ?array $options): string;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `string` 
-    
 </dd>
 </dl>
 </dd>
@@ -1441,7 +868,7 @@ $client->endpoints->primitive->getAndReturnString(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Endpoints/Primitive/PrimitiveClient.php">getAndReturnInt</a>($request) -> int</code></summary>
+<details><summary><code>$client->endpoints->primitive->getAndReturnInt(int $request, ?array $options): int;</code></summary>
 <dl>
 <dd>
 
@@ -1454,25 +881,8 @@ $client->endpoints->primitive->getAndReturnString(
 <dd>
 
 ```php
-$client->endpoints->primitive->getAndReturnInt(
-    $request,
-);
+$client->endpoints->primitive->getAndReturnInt(int $request, ?array $options): int;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `int` 
-    
 </dd>
 </dl>
 </dd>
@@ -1483,7 +893,7 @@ $client->endpoints->primitive->getAndReturnInt(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Endpoints/Primitive/PrimitiveClient.php">getAndReturnLong</a>($request) -> int</code></summary>
+<details><summary><code>$client->endpoints->primitive->getAndReturnLong(int $request, ?array $options): int;</code></summary>
 <dl>
 <dd>
 
@@ -1496,25 +906,8 @@ $client->endpoints->primitive->getAndReturnInt(
 <dd>
 
 ```php
-$client->endpoints->primitive->getAndReturnLong(
-    $request,
-);
+$client->endpoints->primitive->getAndReturnLong(int $request, ?array $options): int;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `int` 
-    
 </dd>
 </dl>
 </dd>
@@ -1525,7 +918,7 @@ $client->endpoints->primitive->getAndReturnLong(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Endpoints/Primitive/PrimitiveClient.php">getAndReturnDouble</a>($request) -> float</code></summary>
+<details><summary><code>$client->endpoints->primitive->getAndReturnDouble(float $request, ?array $options): float;</code></summary>
 <dl>
 <dd>
 
@@ -1538,25 +931,8 @@ $client->endpoints->primitive->getAndReturnLong(
 <dd>
 
 ```php
-$client->endpoints->primitive->getAndReturnDouble(
-    $request,
-);
+$client->endpoints->primitive->getAndReturnDouble(float $request, ?array $options): float;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `float` 
-    
 </dd>
 </dl>
 </dd>
@@ -1567,7 +943,7 @@ $client->endpoints->primitive->getAndReturnDouble(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Endpoints/Primitive/PrimitiveClient.php">getAndReturnBool</a>($request) -> bool</code></summary>
+<details><summary><code>$client->endpoints->primitive->getAndReturnBool(bool $request, ?array $options): bool;</code></summary>
 <dl>
 <dd>
 
@@ -1580,25 +956,8 @@ $client->endpoints->primitive->getAndReturnDouble(
 <dd>
 
 ```php
-$client->endpoints->primitive->getAndReturnBool(
-    $request,
-);
+$client->endpoints->primitive->getAndReturnBool(bool $request, ?array $options): bool;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `bool` 
-    
 </dd>
 </dl>
 </dd>
@@ -1609,7 +968,7 @@ $client->endpoints->primitive->getAndReturnBool(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Endpoints/Primitive/PrimitiveClient.php">getAndReturnDatetime</a>($request) -> dateTime</code></summary>
+<details><summary><code>$client->endpoints->primitive->getAndReturnDatetime(DateTime $request, ?array $options): DateTime;</code></summary>
 <dl>
 <dd>
 
@@ -1622,25 +981,8 @@ $client->endpoints->primitive->getAndReturnBool(
 <dd>
 
 ```php
-$client->endpoints->primitive->getAndReturnDatetime(
-    $request,
-);
+$client->endpoints->primitive->getAndReturnDatetime(DateTime $request, ?array $options): DateTime;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `dateTime` 
-    
 </dd>
 </dl>
 </dd>
@@ -1651,7 +993,7 @@ $client->endpoints->primitive->getAndReturnDatetime(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Endpoints/Primitive/PrimitiveClient.php">getAndReturnDate</a>($request) -> date</code></summary>
+<details><summary><code>$client->endpoints->primitive->getAndReturnDate(DateTime $request, ?array $options): DateTime;</code></summary>
 <dl>
 <dd>
 
@@ -1664,25 +1006,8 @@ $client->endpoints->primitive->getAndReturnDatetime(
 <dd>
 
 ```php
-$client->endpoints->primitive->getAndReturnDate(
-    $request,
-);
+$client->endpoints->primitive->getAndReturnDate(DateTime $request, ?array $options): DateTime;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `date` 
-    
 </dd>
 </dl>
 </dd>
@@ -1693,7 +1018,7 @@ $client->endpoints->primitive->getAndReturnDate(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Endpoints/Primitive/PrimitiveClient.php">getAndReturnUuid</a>($request) -> string</code></summary>
+<details><summary><code>$client->endpoints->primitive->getAndReturnUuid(string $request, ?array $options): string;</code></summary>
 <dl>
 <dd>
 
@@ -1706,25 +1031,8 @@ $client->endpoints->primitive->getAndReturnDate(
 <dd>
 
 ```php
-$client->endpoints->primitive->getAndReturnUuid(
-    $request,
-);
+$client->endpoints->primitive->getAndReturnUuid(string $request, ?array $options): string;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `string` 
-    
 </dd>
 </dl>
 </dd>
@@ -1735,7 +1043,7 @@ $client->endpoints->primitive->getAndReturnUuid(
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/Endpoints/Primitive/PrimitiveClient.php">getAndReturnBase64</a>($request) -> string</code></summary>
+<details><summary><code>$client->endpoints->primitive->getAndReturnBase64(string $request, ?array $options): string;</code></summary>
 <dl>
 <dd>
 
@@ -1748,25 +1056,8 @@ $client->endpoints->primitive->getAndReturnUuid(
 <dd>
 
 ```php
-$client->endpoints->primitive->getAndReturnBase64(
-    $request,
-);
+$client->endpoints->primitive->getAndReturnBase64(string $request, ?array $options): string;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `string` 
-    
 </dd>
 </dl>
 </dd>
@@ -1778,7 +1069,7 @@ $client->endpoints->primitive->getAndReturnBase64(
 </details>
 
 ## Endpoints Put
-<details><summary><code>$client-><a href="/Seed/Endpoints/Put/PutClient.php">add</a>($id) -> \Seed\Endpoints\Put\Types\PutResponse</code></summary>
+<details><summary><code>$client->endpoints->put->add(string $id, ?array $options): PutResponse;</code></summary>
 <dl>
 <dd>
 
@@ -1791,25 +1082,8 @@ $client->endpoints->primitive->getAndReturnBase64(
 <dd>
 
 ```php
-$client->endpoints->put->add(
-    id: $id,
-);
+$client->endpoints->put->add(string $id, ?array $options): PutResponse;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$id:** `string` 
-    
 </dd>
 </dl>
 </dd>
@@ -1821,7 +1095,7 @@ $client->endpoints->put->add(
 </details>
 
 ## Endpoints Union
-<details><summary><code>$client-><a href="/Seed/Endpoints/Union/UnionClient.php">getAndReturnUnion</a>($request) -> \Seed\Types\Union\Types\Animal</code></summary>
+<details><summary><code>$client->endpoints->union->getAndReturnUnion(Animal $request, ?array $options): Animal;</code></summary>
 <dl>
 <dd>
 
@@ -1834,25 +1108,8 @@ $client->endpoints->put->add(
 <dd>
 
 ```php
-$client->endpoints->union->getAndReturnUnion(
-    $request,
-);
+$client->endpoints->union->getAndReturnUnion(Animal $request, ?array $options): Animal;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Types\Union\Types\Animal` 
-    
 </dd>
 </dl>
 </dd>
@@ -1864,7 +1121,7 @@ $client->endpoints->union->getAndReturnUnion(
 </details>
 
 ## InlinedRequests
-<details><summary><code>$client-><a href="/Seed/InlinedRequests/InlinedRequestsClient.php">postWithObjectBodyandResponse</a>($request) -> \Seed\Types\Object\Types\ObjectWithOptionalField</code></summary>
+<details><summary><code>$client->inlinedRequests->postWithObjectBodyandResponse(PostWithObjectBody $request, ?array $options): ObjectWithOptionalField;</code></summary>
 <dl>
 <dd>
 
@@ -1891,25 +1148,8 @@ POST with custom object in request body, response is an object
 <dd>
 
 ```php
-$client->inlinedRequests->postWithObjectBodyandResponse(
-    $request,
-);
+$client->inlinedRequests->postWithObjectBodyandResponse(PostWithObjectBody $request, ?array $options): ObjectWithOptionalField;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\InlinedRequests\Requests\PostWithObjectBody` 
-    
 </dd>
 </dl>
 </dd>
@@ -1921,7 +1161,7 @@ $client->inlinedRequests->postWithObjectBodyandResponse(
 </details>
 
 ## NoAuth
-<details><summary><code>$client-><a href="/Seed/NoAuth/NoAuthClient.php">postWithNoAuth</a>($request) -> bool</code></summary>
+<details><summary><code>$client->noAuth->postWithNoAuth(mixed $request, ?array $options): bool;</code></summary>
 <dl>
 <dd>
 
@@ -1948,25 +1188,8 @@ POST request with no auth
 <dd>
 
 ```php
-$client->noAuth->postWithNoAuth(
-    $request,
-);
+$client->noAuth->postWithNoAuth(mixed $request, ?array $options): bool;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `mixed` 
-    
 </dd>
 </dl>
 </dd>
@@ -1978,7 +1201,7 @@ $client->noAuth->postWithNoAuth(
 </details>
 
 ## NoReqBody
-<details><summary><code>$client-><a href="/Seed/NoReqBody/NoReqBodyClient.php">getWithNoRequestBody</a>() -> \Seed\Types\Object\Types\ObjectWithOptionalField</code></summary>
+<details><summary><code>$client->noReqBody->getWithNoRequestBody(?array $options): ObjectWithOptionalField;</code></summary>
 <dl>
 <dd>
 
@@ -1991,7 +1214,7 @@ $client->noAuth->postWithNoAuth(
 <dd>
 
 ```php
-$client->noReqBody->getWithNoRequestBody();
+$client->noReqBody->getWithNoRequestBody(?array $options): ObjectWithOptionalField;
 ```
 </dd>
 </dl>
@@ -2003,7 +1226,7 @@ $client->noReqBody->getWithNoRequestBody();
 </dl>
 </details>
 
-<details><summary><code>$client-><a href="/Seed/NoReqBody/NoReqBodyClient.php">postWithNoRequestBody</a>() -> string</code></summary>
+<details><summary><code>$client->noReqBody->postWithNoRequestBody(?array $options): string;</code></summary>
 <dl>
 <dd>
 
@@ -2016,7 +1239,7 @@ $client->noReqBody->getWithNoRequestBody();
 <dd>
 
 ```php
-$client->noReqBody->postWithNoRequestBody();
+$client->noReqBody->postWithNoRequestBody(?array $options): string;
 ```
 </dd>
 </dl>
@@ -2029,7 +1252,7 @@ $client->noReqBody->postWithNoRequestBody();
 </details>
 
 ## ReqWithHeaders
-<details><summary><code>$client-><a href="/Seed/ReqWithHeaders/ReqWithHeadersClient.php">getWithCustomHeader</a>($request)</code></summary>
+<details><summary><code>$client->reqWithHeaders->getWithCustomHeader(ReqWithHeaders $request, ?array $options): void;</code></summary>
 <dl>
 <dd>
 
@@ -2042,25 +1265,8 @@ $client->noReqBody->postWithNoRequestBody();
 <dd>
 
 ```php
-$client->reqWithHeaders->getWithCustomHeader(
-    $request,
-);
+$client->reqWithHeaders->getWithCustomHeader(ReqWithHeaders $request, ?array $options): void;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\ReqWithHeaders\Requests\ReqWithHeaders` 
-    
 </dd>
 </dl>
 </dd>

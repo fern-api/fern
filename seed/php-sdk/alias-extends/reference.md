@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>$client-><a href="/Seed/ClientClient.php">extendedInlineRequestBody</a>($request)</code></summary>
+<details><summary><code>$client->extendedInlineRequestBody(InlinedChildRequest $request, ?array $options): void;</code></summary>
 <dl>
 <dd>
 
@@ -12,25 +12,8 @@
 <dd>
 
 ```php
-$client->extendedInlineRequestBody(
-    $request,
-);
+$client->extendedInlineRequestBody(InlinedChildRequest $request, ?array $options): void;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Requests\InlinedChildRequest` 
-    
 </dd>
 </dl>
 </dd>

@@ -1,6 +1,6 @@
 # Reference
 ## Headers
-<details><summary><code>$client-><a href="/Seed/Headers/HeadersClient.php">send</a>($request) -> \Seed\Types\SendResponse</code></summary>
+<details><summary><code>$client->headers->send(SendLiteralsInHeadersRequest $request, ?array $options): SendResponse;</code></summary>
 <dl>
 <dd>
 
@@ -13,25 +13,8 @@
 <dd>
 
 ```php
-$client->headers->send(
-    $request,
-);
+$client->headers->send(SendLiteralsInHeadersRequest $request, ?array $options): SendResponse;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Headers\Requests\SendLiteralsInHeadersRequest` 
-    
 </dd>
 </dl>
 </dd>
@@ -43,7 +26,7 @@ $client->headers->send(
 </details>
 
 ## Inlined
-<details><summary><code>$client-><a href="/Seed/Inlined/InlinedClient.php">send</a>($request) -> \Seed\Types\SendResponse</code></summary>
+<details><summary><code>$client->inlined->send(SendLiteralsInlinedRequest $request, ?array $options): SendResponse;</code></summary>
 <dl>
 <dd>
 
@@ -56,25 +39,8 @@ $client->headers->send(
 <dd>
 
 ```php
-$client->inlined->send(
-    $request,
-);
+$client->inlined->send(SendLiteralsInlinedRequest $request, ?array $options): SendResponse;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Inlined\Requests\SendLiteralsInlinedRequest` 
-    
 </dd>
 </dl>
 </dd>
@@ -86,7 +52,7 @@ $client->inlined->send(
 </details>
 
 ## Path
-<details><summary><code>$client-><a href="/Seed/Path/PathClient.php">send</a>($id) -> \Seed\Types\SendResponse</code></summary>
+<details><summary><code>$client->path->send(string $id, ?array $options): SendResponse;</code></summary>
 <dl>
 <dd>
 
@@ -99,25 +65,8 @@ $client->inlined->send(
 <dd>
 
 ```php
-$client->path->send(
-    id: $id,
-);
+$client->path->send(string $id, ?array $options): SendResponse;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$id:** `literal` 
-    
 </dd>
 </dl>
 </dd>
@@ -129,7 +78,7 @@ $client->path->send(
 </details>
 
 ## Query
-<details><summary><code>$client-><a href="/Seed/Query/QueryClient.php">send</a>($request) -> \Seed\Types\SendResponse</code></summary>
+<details><summary><code>$client->query->send(SendLiteralsInQueryRequest $request, ?array $options): SendResponse;</code></summary>
 <dl>
 <dd>
 
@@ -142,25 +91,8 @@ $client->path->send(
 <dd>
 
 ```php
-$client->query->send(
-    $request,
-);
+$client->query->send(SendLiteralsInQueryRequest $request, ?array $options): SendResponse;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Query\Requests\SendLiteralsInQueryRequest` 
-    
 </dd>
 </dl>
 </dd>
@@ -172,7 +104,7 @@ $client->query->send(
 </details>
 
 ## Reference
-<details><summary><code>$client-><a href="/Seed/Reference/ReferenceClient.php">send</a>($request) -> \Seed\Types\SendResponse</code></summary>
+<details><summary><code>$client->reference->send(SendRequest $request, ?array $options): SendResponse;</code></summary>
 <dl>
 <dd>
 
@@ -185,25 +117,8 @@ $client->query->send(
 <dd>
 
 ```php
-$client->reference->send(
-    $request,
-);
+$client->reference->send(SendRequest $request, ?array $options): SendResponse;
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `\Seed\Reference\Types\SendRequest` 
-    
 </dd>
 </dl>
 </dd>
