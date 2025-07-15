@@ -14,7 +14,8 @@ interface EndpointWithFilepath {
 
 export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static EXCEPTION_HANDLING_FEATURE_ID: FernGeneratorCli.FeatureId = "EXCEPTION_HANDLING";
-    private static ENVIRONMENTS_FEATURE_ID: FernGeneratorCli.FeatureId = "ENVIRONMENT_AND_CUSTOM_URLS";
+    private static ENVIRONMENTS_FEATURE_ID: FernGeneratorCli.FeatureId = "ENVIRONMENTS";
+    private static CUSTOM_URL_FEATURE_ID: FernGeneratorCli.FeatureId = "CUSTOM_URL";
     private static ENUMS_FEATURE_ID: FernGeneratorCli.FeatureId = "ENUMS";
     private static PAGINATION_FEATURE_ID: FernGeneratorCli.FeatureId = "PAGINATION";
 
@@ -65,6 +66,9 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         if (this.isPaginationEnabled) {
             snippets[FernGeneratorCli.StructuredFeatureId.Pagination] = this.buildPaginationSnippets();
         }
+
+        snippets[ReadmeSnippetBuilder.CUSTOM_URL_FEATURE_ID] = this.buildCustomUrlSnippets();
+
         return snippets;
     }
 
@@ -73,11 +77,6 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
         if (this.isPaginationEnabled) {
             addendums[FernGeneratorCli.StructuredFeatureId.Pagination] = this.buildPaginationAddendum();
-        }
-
-        // Only include environments addendum if environments are configured
-        if (this.hasEnvironmentsConfigured()) {
-            addendums[ReadmeSnippetBuilder.ENVIRONMENTS_FEATURE_ID] = this.buildEnvironmentsAddendum();
         }
 
         return Object.fromEntries(
@@ -328,17 +327,15 @@ foreach ($items->getPages() as $page) {
 `);
     }
 
-    private buildEnvironmentsAddendum(): string {
-        return this.writeCode(`
-#### Custom URL
-
-\`\`\`php
+    private buildCustomUrlSnippets(): string[] {
+        return [
+            this.writeCode(`
 use ${this.context.getRootNamespace()}\\${this.context.getRootClientClassName()};
 
 ${this.context.getClientVariableName()} = new ${this.context.getRootClientClassName()}(options: [
   'baseUrl' => 'https://custom-staging.com'
-]);
-\`\`\``);
+]);`)
+        ];
     }
 
     /**

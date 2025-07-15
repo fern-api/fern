@@ -56,6 +56,18 @@ try {
 }
 ```
 
+## Custom Url
+
+Optionally, this SDK allows you to configure the client using your own custom URL.
+
+```php
+use Seed\SeedClient;
+
+$client = new SeedClient(options: [
+  'baseUrl' => 'https://custom-staging.com'
+]);
+```
+
 ## Enums
 
 This SDK leverages PHP 8.1’s first-class enums to improve type safety and usability. In order to maintain forward compatibility with the API

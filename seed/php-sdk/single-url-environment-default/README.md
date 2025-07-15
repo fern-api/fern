@@ -51,9 +51,9 @@ try {
 }
 ```
 
-## Environment And Custom Urls
+## Environments
 
-This SDK allows you to configure different environments or custom URLs for API requests. You can either use the predefined environments or specify your own custom URL.
+This SDK allows you to configure different environments. You can use any of the predefined environments.
 #### Environments
 
 ```php
@@ -64,7 +64,10 @@ $client = new SeedClient(options: [
   'baseUrl' => Environments::Production->value // Used by default
 ]);
 ```
-#### Custom URL
+
+## Custom Url
+
+Optionally, this SDK allows you to configure the client using your own custom URL.
 
 ```php
 use Seed\SeedClient;
@@ -73,7 +76,6 @@ $client = new SeedClient(options: [
   'baseUrl' => 'https://custom-staging.com'
 ]);
 ```
-
 
 ## Advanced
 

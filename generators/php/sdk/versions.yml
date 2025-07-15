@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.16.6
+  changelogEntry:
+    - summary: |
+        Add documentation for using predefined environments or custom URLs when configuring the client in the README.
+        This makes it easier for our customers to visualize how they can configure the client against their different environments.
+      type: feat
+  createdAt: '2025-07-16'
+  irVersion: 58
+
 - version: 1.16.5
   changelogEntry:
     - summary: |
@@ -9,6 +18,7 @@
       type: fix
   createdAt: '2025-07-10'
   irVersion: 58
+
 - version: 1.16.4
   changelogEntry:
     - summary: |
