@@ -1,4 +1,5 @@
 import { chmod, cp, writeFile } from "fs/promises";
+import path from "path";
 import tmp from "tmp-promise";
 
 import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
@@ -145,8 +146,8 @@ export class ProtobufIRGenerator {
         await cp(absoluteFilepathToProtobufRoot, protobufGeneratorConfigPath, {
             recursive: true,
             filter: (src) => {
-              const basename = path.basename(src)
-              return basename !== "buf.yaml" && basename !== "buf.gen.yaml"
+                const basename = path.basename(src);
+                return basename !== "buf.yaml" && basename !== "buf.gen.yaml";
             }
         });
     }
