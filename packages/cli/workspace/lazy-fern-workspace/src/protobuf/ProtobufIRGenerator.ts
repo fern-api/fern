@@ -7,7 +7,8 @@ import { createLoggingExecutable, runExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
 
 import {
-    PROTOBUF_EXPORT_CONFIG,
+    PROTOBUF_EXPORT_CONFIG_V1,
+    PROTOBUF_EXPORT_CONFIG_V2,
     PROTOBUF_GENERATOR_CONFIG_FILENAME,
     PROTOBUF_GENERATOR_OUTPUT_FILEPATH,
     PROTOBUF_GEN_CONFIG,
@@ -111,28 +112,46 @@ export class ProtobufIRGenerator {
         }
 
         // Create a temporary buf config file to prevent conflicts
-        const tmpBufConfigFile = await tmp.file({ postfix: ".yaml" });
-        await writeFile(tmpBufConfigFile.path, PROTOBUF_EXPORT_CONFIG, "utf8");
+        // Try buf export with v1 first, then fall back to v2 if it fails
+        for (const version of ["v1", "v2"]) {
+            this.context.logger.info(`Using buf export with version: ${version}`);
 
-        await runExeca(
-            this.context.logger,
-            "buf",
-            [
-                "export",
-                "--path",
-                absoluteFilepathToProtobufTarget,
-                "--config",
-                AbsoluteFilePath.of(tmpBufConfigFile.path),
-                "--output",
-                protobufGeneratorConfigPath
-            ],
-            {
-                cwd: absoluteFilepathToProtobufRoot,
-                stdio: "ignore"
+            const tmpBufConfigFile = await tmp.file({ postfix: ".yaml" });
+            const configContent = version === "v1" ? PROTOBUF_EXPORT_CONFIG_V1 : PROTOBUF_EXPORT_CONFIG_V2;
+            await writeFile(tmpBufConfigFile.path, configContent, "utf8");
+
+            try {
+                const result = await runExeca(
+                    this.context.logger,
+                    "buf",
+                    [
+                        "export",
+                        "--path",
+                        absoluteFilepathToProtobufTarget,
+                        "--config",
+                        AbsoluteFilePath.of(tmpBufConfigFile.path),
+                        "--output",
+                        protobufGeneratorConfigPath
+                    ],
+                    {
+                        cwd: absoluteFilepathToProtobufRoot,
+                        stdio: "pipe"
+                    }
+                );
+
+                if (result.exitCode !== 0) {
+                    this.context.failAndThrow(result.stderr);
+                }
+
+                await tmpBufConfigFile.cleanup();
+                return;
+            } catch (error) {
+                await tmpBufConfigFile.cleanup();
+                if (version === "v2") {
+                    throw error;
+                }
             }
-        );
-
-        await tmpBufConfigFile.cleanup();
+        }
     }
 
     private async copyProtobufFilesFromRoot({
@@ -147,7 +166,11 @@ export class ProtobufIRGenerator {
             recursive: true,
             filter: (src) => {
                 const basename = path.basename(src);
-                return basename !== "buf.yaml" && basename !== "buf.gen.yaml";
+                return (
+                    basename !== "buf.lock" &&
+                    basename !== "buf.yaml" &&
+                    !(basename.startsWith("buf.gen.") && basename.endsWith(".yaml"))
+                );
             }
         });
     }
