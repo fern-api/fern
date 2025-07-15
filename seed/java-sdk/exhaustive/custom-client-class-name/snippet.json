@@ -521,6 +521,58 @@
             }
         },
         {
+            "example_identifier": "34d92e75",
+            "id": {
+                "method": "GET",
+                "path": "/urls/MixedCase",
+                "identifier_override": "endpoint_endpoints/urls.withMixedCase"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.exhaustive.Best;\n\npublic class Example {\n    public static void main(String[] args) {\n        Best client = Best\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().urls().withMixedCase();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.exhaustive.Best;\n\npublic class Example {\n    public static void main(String[] args) {\n        Best client = Best\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().urls().withMixedCase();\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "34d92e75",
+            "id": {
+                "method": "GET",
+                "path": "/urls/no-ending-slash",
+                "identifier_override": "endpoint_endpoints/urls.noEndingSlash"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.exhaustive.Best;\n\npublic class Example {\n    public static void main(String[] args) {\n        Best client = Best\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().urls().noEndingSlash();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.exhaustive.Best;\n\npublic class Example {\n    public static void main(String[] args) {\n        Best client = Best\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().urls().noEndingSlash();\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "34d92e75",
+            "id": {
+                "method": "GET",
+                "path": "/urls/with-ending-slash/",
+                "identifier_override": "endpoint_endpoints/urls.withEndingSlash"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.exhaustive.Best;\n\npublic class Example {\n    public static void main(String[] args) {\n        Best client = Best\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().urls().withEndingSlash();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.exhaustive.Best;\n\npublic class Example {\n    public static void main(String[] args) {\n        Best client = Best\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().urls().withEndingSlash();\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "34d92e75",
+            "id": {
+                "method": "GET",
+                "path": "/urls/with_underscores",
+                "identifier_override": "endpoint_endpoints/urls.withUnderscores"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.exhaustive.Best;\n\npublic class Example {\n    public static void main(String[] args) {\n        Best client = Best\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().urls().withUnderscores();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.exhaustive.Best;\n\npublic class Example {\n    public static void main(String[] args) {\n        Best client = Best\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().urls().withUnderscores();\n    }\n}\n"
+            }
+        },
+        {
             "example_identifier": "901a5cc4",
             "id": {
                 "method": "POST",
