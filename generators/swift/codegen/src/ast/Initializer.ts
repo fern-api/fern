@@ -6,7 +6,10 @@ import { AstNode, Writer } from "./core";
 export declare namespace Initializer {
     interface Args {
         accessLevel?: AccessLevel;
-        failable?: boolean;
+        /** Whether the initializer can return `nil`. Initializers that return nil are said to be failable. */
+        failable?: true;
+        /** Whether the initializer can throw an error. */
+        throws?: true;
         parameters?: FunctionParameter[];
         body?: CodeBlock;
     }
@@ -15,13 +18,15 @@ export declare namespace Initializer {
 export class Initializer extends AstNode {
     public readonly accessLevel?: AccessLevel;
     public readonly failable?: boolean;
+    public readonly throws?: boolean;
     public readonly parameters?: FunctionParameter[];
     public readonly body: CodeBlock;
 
-    constructor({ accessLevel, failable, parameters, body }: Initializer.Args) {
+    constructor({ accessLevel, failable, throws, parameters, body }: Initializer.Args) {
         super();
         this.accessLevel = accessLevel;
         this.failable = failable;
+        this.throws = throws;
         this.parameters = parameters;
         this.body = body ?? CodeBlock.empty();
     }
@@ -43,6 +48,9 @@ export class Initializer extends AstNode {
             parameter.write(writer);
         });
         writer.write(") ");
+        if (this.throws) {
+            writer.write("throws ");
+        }
         this.body.write(writer);
     }
 }
