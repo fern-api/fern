@@ -38,12 +38,12 @@ jobs:
         run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
 
       - name: 🧪 Build
-        run: bundle install && bundle exec rake build
+        run: pnpm --filter=${{ env.PACKAGE_NAME }} compile
 
       - name: 🧪 Test
-        run: bundle exec rake test
+        run: pnpm --filter=${{ env.PACKAGE_NAME }} test
 
-        - name: Publish @fern-api/ruby-dynamic-snippets
+      - name: Publish @fern-api/ruby-dynamic-snippets
         run: |
           cd generators/ruby-v2/dynamic-snippets
           pnpm --filter=${{ env.PACKAGE_NAME }} dist ${{ inputs.version }}
