@@ -3364,6 +3364,269 @@
               ]
             }
           ]
+        },
+        {
+          "_type": "container",
+          "description": null,
+          "name": "Urls",
+          "item": [
+            {
+              "_type": "endpoint",
+              "name": "With Mixed Case",
+              "request": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/urls/MixedCase",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "urls",
+                    "MixedCase"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": null,
+                    "url": {
+                      "raw": "{{baseUrl}}/urls/MixedCase",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "urls",
+                        "MixedCase"
+                      ],
+                      "query": [],
+                      "variable": []
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "GET",
+                    "auth": null,
+                    "body": null
+                  },
+                  "description": null,
+                  "body": "\"string\"",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
+            },
+            {
+              "_type": "endpoint",
+              "name": "No Ending Slash",
+              "request": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/urls/no-ending-slash",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "urls",
+                    "no-ending-slash"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": null,
+                    "url": {
+                      "raw": "{{baseUrl}}/urls/no-ending-slash",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "urls",
+                        "no-ending-slash"
+                      ],
+                      "query": [],
+                      "variable": []
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "GET",
+                    "auth": null,
+                    "body": null
+                  },
+                  "description": null,
+                  "body": "\"string\"",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
+            },
+            {
+              "_type": "endpoint",
+              "name": "With Ending Slash",
+              "request": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/urls/with-ending-slash",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "urls",
+                    "with-ending-slash"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": null,
+                    "url": {
+                      "raw": "{{baseUrl}}/urls/with-ending-slash",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "urls",
+                        "with-ending-slash"
+                      ],
+                      "query": [],
+                      "variable": []
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "GET",
+                    "auth": null,
+                    "body": null
+                  },
+                  "description": null,
+                  "body": "\"string\"",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
+            },
+            {
+              "_type": "endpoint",
+              "name": "With Underscores",
+              "request": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/urls/with_underscores",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "urls",
+                    "with_underscores"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": null,
+                    "url": {
+                      "raw": "{{baseUrl}}/urls/with_underscores",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "urls",
+                        "with_underscores"
+                      ],
+                      "query": [],
+                      "variable": []
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "GET",
+                    "auth": null,
+                    "body": null
+                  },
+                  "description": null,
+                  "body": "\"string\"",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
+            }
+          ]
         }
       ]
     },
