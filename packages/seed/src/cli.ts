@@ -35,7 +35,7 @@ export async function tryRunCli(): Promise<void> {
             // if error is null, it's a yargs validation error
             if (error == null) {
                 argv.showHelp();
-                // eslint-disable-next-line
+                // biome-ignore lint: ignore next line
                 console.error(message);
             }
         });
