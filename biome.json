@@ -152,7 +152,8 @@
 			"!packages/cli/api-importers/v2-importer-tests/src/__test__/fixtures/unions-v1/openapi.json",
 			"!packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/unions-v1/openapi.json",
 			"!**/fixtures/**/fernconfig.json",
-			"!**/fixtures/**/fern.config.json"
+			"!**/fixtures/**/fern.config.json",
+			"!.eslintrc.js"
 		]
 	},
 	"javascript": {
