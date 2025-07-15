@@ -63,3 +63,7 @@ export type ReservedKeyword = (typeof reservedKeywords)[number];
 export function isReservedKeyword(word: string): word is ReservedKeyword {
     return reservedKeywordsSet.has(word as ReservedKeyword);
 }
+
+export function escapeReservedKeyword(word: string): string {
+    return isReservedKeyword(word) ? `\`${word}\`` : word;
+}
