@@ -41,7 +41,7 @@ public class Example {
 <dl>
 <dd>
 
-**request:** `String` — Request body
+**request:** `Object` — Request body
     
 </dd>
 </dl>
@@ -69,6 +69,8 @@ public class Example {
 package com.example.usage;
 
 import com.seed.examples.SeedExamplesClient;
+import com.seed.examples.types.BasicType;
+import com.seed.examples.types.Type;
 
 public class Example {
     public static void main(String[] args) {
@@ -77,7 +79,9 @@ public class Example {
             .token("<token>")
             .build();
 
-        client.echo("primitive");
+        client.createType(
+            Type.ofBasicType(BasicType.PRIMITIVE)
+        );
     }
 }
 
@@ -107,7 +111,7 @@ public class Example {
 </dl>
 </details>
 
-## File Notification Service
+## File Notification Service Service
 <details><summary><code>client.file().notification().getException(...)</code></summary>
 <dl>
 <dd>
@@ -150,7 +154,7 @@ public class Example {
 <dl>
 <dd>
 
-**notificationId:** `String` 
+**notificationId:** `Object` 
     
 </dd>
 </dl>
@@ -162,7 +166,7 @@ public class Example {
 </dl>
 </details>
 
-## File Service
+## File Service Service
 <details><summary><code>client.file().getFile(...)</code></summary>
 <dl>
 <dd>
@@ -226,7 +230,7 @@ public class Example {
 <dl>
 <dd>
 
-**filename:** `String` — This is a filename
+**filename:** `Object` — This is a filename
     
 </dd>
 </dl>
@@ -238,7 +242,7 @@ public class Example {
 </dl>
 </details>
 
-## Health Service
+## Health Service Service
 <details><summary><code>client.health().check(...)</code></summary>
 <dl>
 <dd>
@@ -295,7 +299,7 @@ public class Example {
 <dl>
 <dd>
 
-**id:** `String` — The id to check
+**id:** `Object` — The id to check
     
 </dd>
 </dl>
@@ -360,7 +364,7 @@ public class Example {
 </dl>
 </details>
 
-## Service
+## Service Service
 <details><summary><code>client.getMovie(...)</code></summary>
 <dl>
 <dd>
@@ -548,7 +552,7 @@ public class Example {
 <dl>
 <dd>
 
-**shallow:** `Boolean` 
+**shallow:** `Object` 
     
 </dd>
 </dl>
@@ -556,7 +560,7 @@ public class Example {
 <dl>
 <dd>
 
-**tag:** `List<Optional<String>>` 
+**tag:** `Object` 
     
 </dd>
 </dl>
@@ -564,7 +568,7 @@ public class Example {
 <dl>
 <dd>
 
-**xApiVersion:** `String` 
+**xApiVersion:** `Object` 
     
 </dd>
 </dl>

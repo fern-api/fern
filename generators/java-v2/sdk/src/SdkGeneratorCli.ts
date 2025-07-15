@@ -119,7 +119,24 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
             const path = FernGeneratorExec.EndpointPath(endpoint.location.path);
 
             for (const endpointExample of endpoint.examples ?? []) {
-                const generatedSnippet = await dynamicSnippetsGenerator.generate(
+                // Create a custom dynamic snippets generator with only this specific endpoint
+                const convertedIr = convertIr(dynamicIr);
+                const specificEndpoint = convertedIr.endpoints[endpointId];
+                if (!specificEndpoint) {
+                    throw new Error(`Endpoint ${endpointId} not found in converted IR`);
+                }
+                
+                const filteredIr = {
+                    ...convertedIr,
+                    endpoints: { [endpointId]: specificEndpoint }
+                };
+                
+                const customSnippetsGenerator = new DynamicSnippetsGenerator({
+                    ir: filteredIr,
+                    config: context.config
+                });
+                
+                const generatedSnippet = await customSnippetsGenerator.generate(
                     convertDynamicEndpointSnippetRequest(endpointExample)
                 );
 
@@ -197,7 +214,6 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
         endpointSnippets: Endpoint[];
         referenceConfigBuilder: ReferenceConfigBuilder;
     }): Promise<void> {
-        // Use standard IR instead of dynamic IR (like other generators)
         const ir = context.ir;
 
         // Create a map of endpoint snippets by endpoint ID for quick lookup
@@ -208,7 +224,6 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
             }
         }
 
-        // Iterate through services using the standard IR structure
         for (const [serviceId, service] of Object.entries(ir.services)) {
             const serviceEndpoints = service.endpoints.filter((endpoint) => snippetsByEndpointId.has(endpoint.id));
 
@@ -216,7 +231,6 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
                 continue;
             }
 
-            // Determine if this is a root service
             const isRootService = ir.rootPackage.service === serviceId;
 
             // Create appropriate section
@@ -227,7 +241,6 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
                       description: service.displayName || undefined
                   });
 
-            // Add endpoints to the section
             for (const endpoint of serviceEndpoints) {
                 const snippet = snippetsByEndpointId.get(endpoint.id);
                 if (snippet && snippet.snippet.type === "java") {
@@ -252,7 +265,6 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
     }
 
     private getServiceSectionTitle(service: IntermediateRepresentation["services"][string]): string {
-        // Extract service name from fernFilepath
         if (service.name?.fernFilepath && service.name.fernFilepath.allParts.length > 0) {
             const pathParts = service.name.fernFilepath.allParts.map(
                 (part) => part.pascalCase?.safeName || part.camelCase?.safeName || part.originalName || "Unknown"
@@ -278,7 +290,6 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
         service: IntermediateRepresentation["services"][string],
         context: SdkGeneratorContext
     ): string {
-        // Build the client method call chain
         let methodCall = "client";
 
         // Add service path if not root service
@@ -325,7 +336,6 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
             }
         }
 
-        // Extract headers
         if (endpoint.headers) {
             for (const header of endpoint.headers) {
                 parameters.push({
@@ -336,7 +346,6 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
             }
         }
 
-        // Extract request body
         if (endpoint.requestBody) {
             const requestBody = endpoint.requestBody;
             let bodyType = "Object";
