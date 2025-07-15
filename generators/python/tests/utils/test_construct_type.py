@@ -395,3 +395,205 @@ def test_construct_nested_lists() -> None:
             assert sublist[0].radius == 2.0
             assert isinstance(sublist[1], Square)
             assert sublist[1].length == 5.0
+
+
+def test_undiscriminated_union_with_list_types() -> None:
+    """Test undiscriminated union containing list types as options."""
+    from .example_models.types.resources.types import Circle, Square
+
+    # Create a union type that includes list types as options
+    TestUnion = Union[str, List[Circle], List[Square], int]
+
+    # Test with list of Circle data - should match List[Circle]
+    circle_list_data = [
+        {"radius": 1.5},
+        {"radius": 2.0},
+        {"radius": 3.2}
+    ]
+
+    result = construct_type(type_=TestUnion, object_=circle_list_data)
+
+    assert isinstance(result, list)
+    assert len(result) == 3
+    for i, circle in enumerate(result):
+        assert isinstance(circle, Circle)
+        assert circle.radius == circle_list_data[i]["radius"]
+
+    # Test with list of Square data - should match List[Square]
+    square_list_data = [
+        {"length": 4.0},
+        {"length": 5.5},
+        {"length": 6.1}
+    ]
+
+    result = construct_type(type_=TestUnion, object_=square_list_data)
+
+    assert isinstance(result, list)
+    assert len(result) == 3
+    for i, square in enumerate(result):
+        assert isinstance(square, Square)
+        assert square.length == square_list_data[i]["length"]
+
+    # Test with string data - should match str
+    string_data = "hello world"
+    result = construct_type(type_=TestUnion, object_=string_data)
+    assert result == string_data
+    assert isinstance(result, str)
+
+    # Test with int data - should match int
+    int_data = 42
+    result = construct_type(type_=TestUnion, object_=int_data)
+    assert result == int_data
+    assert isinstance(result, int)
+
+
+def test_undiscriminated_union_with_mixed_list_types() -> None:
+    """Test undiscriminated union with both individual objects and lists as options."""
+    from .example_models.types.resources.types import Circle, Square
+
+    # Union that includes both individual objects and lists
+    TestUnion = Union[Circle, Square, List[Circle], List[Square], str]
+
+    # Test with single Circle object - should match Circle
+    single_circle_data = {"radius": 1.0}
+    result = construct_type(type_=TestUnion, object_=single_circle_data)
+    assert isinstance(result, Circle)
+    assert result.radius == 1.0
+
+    # Test with single Square object - should match Square
+    single_square_data = {"length": 2.0}
+    result = construct_type(type_=TestUnion, object_=single_square_data)
+    assert isinstance(result, Square)
+    assert result.length == 2.0
+
+    # Test with list of Circles - should match List[Circle]
+    circle_list_data = [{"radius": 1.0}, {"radius": 2.0}]
+    result = construct_type(type_=TestUnion, object_=circle_list_data)
+    assert isinstance(result, list)
+    assert len(result) == 2
+    for circle in result:
+        assert isinstance(circle, Circle)
+
+    # Test with list of Squares - should match List[Square]
+    square_list_data = [{"length": 3.0}, {"length": 4.0}]
+    result = construct_type(type_=TestUnion, object_=square_list_data)
+    assert isinstance(result, list)
+    assert len(result) == 2
+    for square in result:
+        assert isinstance(square, Square)
+
+
+def test_undiscriminated_union_with_primitive_lists() -> None:
+    """Test undiscriminated union with lists of primitive types."""
+    from .example_models.types.resources.types import Circle
+
+    # Union that includes lists of primitives and objects
+    TestUnion = Union[List[str], List[int], List[Circle], str]
+
+    # Test with list of strings - should match List[str]
+    string_list_data = ["hello", "world", "test"]
+    result = construct_type(type_=TestUnion, object_=string_list_data)
+    assert isinstance(result, list)
+    assert result == string_list_data
+
+    # Test with list of integers - should match List[int]
+    int_list_data = [1, 2, 3, 4, 5]
+    result = construct_type(type_=TestUnion, object_=int_list_data)
+    assert isinstance(result, list)
+    assert result == int_list_data
+
+    # Test with list of Circle objects - should match List[Circle]
+    circle_list_data = [{"radius": 1.0}, {"radius": 2.0}]
+    result = construct_type(type_=TestUnion, object_=circle_list_data)
+    assert isinstance(result, list)
+    assert len(result) == 2
+    for circle in result:
+        assert isinstance(circle, Circle)
+
+
+def test_undiscriminated_union_list_parsing_failures() -> None:
+    """Test edge cases and failure scenarios for list parsing in unions."""
+    from .example_models.types.resources.types import Circle, Square
+
+    # Union with list types
+    TestUnion = Union[List[Circle], List[Square], str]
+
+    # Test with empty list - should work with either list type
+    empty_list_data = []
+    result = construct_type(type_=TestUnion, object_=empty_list_data)
+    assert isinstance(result, list)
+    assert len(result) == 0
+
+    # Test with list containing invalid objects - should fallback gracefully
+    invalid_list_data = [
+        {"invalid_field": "value"},
+        {"another_invalid": 123}
+    ]
+    result = construct_type(type_=TestUnion, object_=invalid_list_data)
+    # The result behavior depends on implementation - it should either parse or fallback
+    assert result is not None
+
+    # Test with non-list data when union only has list types
+    string_data = "not a list"
+    result = construct_type(type_=TestUnion, object_=string_data)
+    assert result == string_data  # Should match str fallback
+
+
+def test_nested_undiscriminated_union_with_lists() -> None:
+    """Test complex nested structures with undiscriminated unions containing lists."""
+    from .example_models.types.resources.types import Circle, Square
+
+    # Complex nested union type
+    TestUnion = Union[List[List[Circle]], List[Square], str]
+
+    # Test with nested list of Circles
+    nested_circle_data = [
+        [{"radius": 1.0}, {"radius": 2.0}],
+        [{"radius": 3.0}, {"radius": 4.0}]
+    ]
+
+    result = construct_type(type_=TestUnion, object_=nested_circle_data)
+
+    assert isinstance(result, list)
+    assert len(result) == 2
+
+    for sublist in result:
+        assert isinstance(sublist, list)
+        assert len(sublist) == 2
+        for circle in sublist:
+            assert isinstance(circle, Circle)
+
+    # Verify specific values
+    assert result[0][0].radius == 1.0
+    assert result[0][1].radius == 2.0
+    assert result[1][0].radius == 3.0
+    assert result[1][1].radius == 4.0
+
+
+def test_undiscriminated_union_list_type_precedence() -> None:
+    """Test that list types are properly prioritized in undiscriminated unions."""
+    from .example_models.types.resources.types import Circle, Square
+
+    # Union where both individual objects and lists could potentially match
+    TestUnion = Union[Circle, List[Circle], Square, List[Square]]
+
+    # Test with data that could be parsed as either a single Circle or a list with one Circle
+    # The new list parsing logic should take precedence for list data
+    single_item_list_data = [{"radius": 1.0}]
+
+    result = construct_type(type_=TestUnion, object_=single_item_list_data)
+
+    # Should be parsed as List[Circle], not as a single Circle
+    assert isinstance(result, list)
+    assert len(result) == 1
+    assert isinstance(result[0], Circle)
+    assert result[0].radius == 1.0
+
+    # Test with data that should clearly be a single object
+    single_object_data = {"radius": 2.0}
+
+    result = construct_type(type_=TestUnion, object_=single_object_data)
+
+    # Should be parsed as Circle, not as a list
+    assert isinstance(result, Circle)
+    assert result.radius == 2.0
