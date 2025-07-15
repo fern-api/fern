@@ -6,6 +6,7 @@ import { createLoggingExecutable, runExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
 
 import {
+    PROTOBUF_EXPORT_CONFIG,
     PROTOBUF_GENERATOR_CONFIG_FILENAME,
     PROTOBUF_GENERATOR_OUTPUT_FILEPATH,
     PROTOBUF_GEN_CONFIG,
@@ -108,15 +109,29 @@ export class ProtobufIRGenerator {
             );
         }
 
+        // Create a temporary buf config file to prevent conflicts
+        const tmpBufConfigFile = await tmp.file({ postfix: ".yaml" });
+        await writeFile(tmpBufConfigFile.path, PROTOBUF_EXPORT_CONFIG, "utf8");
+
         await runExeca(
             this.context.logger,
             "buf",
-            ["export", "--path", absoluteFilepathToProtobufTarget, "--output", protobufGeneratorConfigPath],
+            [
+                "export",
+                "--path",
+                absoluteFilepathToProtobufTarget,
+                "--config",
+                AbsoluteFilePath.of(tmpBufConfigFile.path),
+                "--output",
+                protobufGeneratorConfigPath
+            ],
             {
                 cwd: absoluteFilepathToProtobufRoot,
                 stdio: "ignore"
             }
         );
+
+        await tmpBufConfigFile.cleanup();
     }
 
     private async copyProtobufFilesFromRoot({
@@ -126,8 +141,11 @@ export class ProtobufIRGenerator {
         protobufGeneratorConfigPath: AbsoluteFilePath;
         absoluteFilepathToProtobufRoot: AbsoluteFilePath;
     }): Promise<void> {
-        // Copy the entire protobuf root to a temp directory
-        await cp(absoluteFilepathToProtobufRoot, protobufGeneratorConfigPath, { recursive: true });
+        // Copy the entire protobuf root, excluding buf.yaml and buf.gen.yaml, to a temp directory
+        await cp(absoluteFilepathToProtobufRoot, protobufGeneratorConfigPath, {
+            recursive: true,
+            filter: (src) => !src.includes("buf.yaml") && !src.includes("buf.gen.yaml")
+        });
     }
 
     private async setupRemainingProtobufConfig({
