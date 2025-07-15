@@ -12,6 +12,7 @@ import { Params } from "../resources/params/client/Client.js";
 import { Primitive } from "../resources/primitive/client/Client.js";
 import { Put } from "../resources/put/client/Client.js";
 import { Union } from "../resources/union/client/Client.js";
+import { Urls } from "../resources/urls/client/Client.js";
 
 export declare namespace Endpoints {
     export interface Options {
@@ -35,6 +36,7 @@ export class Endpoints {
     protected _primitive: Primitive | undefined;
     protected _put: Put | undefined;
     protected _union: Union | undefined;
+    protected _urls: Urls | undefined;
 
     constructor(_options: Endpoints.Options) {
         this._options = _options;
@@ -74,5 +76,9 @@ export class Endpoints {
 
     public get union(): Union {
         return (this._union ??= new Union(this._options));
+    }
+
+    public get urls(): Urls {
+        return (this._urls ??= new Urls(this._options));
     }
 }

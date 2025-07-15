@@ -11,6 +11,7 @@ import { Params } from "../resources/params/client/Client.mjs";
 import { Primitive } from "../resources/primitive/client/Client.mjs";
 import { Put } from "../resources/put/client/Client.mjs";
 import { Union } from "../resources/union/client/Client.mjs";
+import { Urls } from "../resources/urls/client/Client.mjs";
 export declare namespace Endpoints {
     interface Options {
         environment: core.Supplier<string>;
@@ -32,6 +33,7 @@ export declare class Endpoints {
     protected _primitive: Primitive | undefined;
     protected _put: Put | undefined;
     protected _union: Union | undefined;
+    protected _urls: Urls | undefined;
     constructor(_options: Endpoints.Options);
     get container(): Container;
     get contentType(): ContentType;
@@ -42,4 +44,5 @@ export declare class Endpoints {
     get primitive(): Primitive;
     get put(): Put;
     get union(): Union;
+    get urls(): Urls;
 }
