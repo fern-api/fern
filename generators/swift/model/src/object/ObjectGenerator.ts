@@ -6,6 +6,10 @@ import { swift } from "@fern-api/swift-codegen";
 import { ObjectProperty, Type } from "@fern-fern/ir-sdk/api";
 import { PrimitiveTypeV1, TypeDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
 
+function isOptionalProperty(p: ObjectProperty) {
+    return p.valueType.type === "container" && p.valueType.container.type === "optional";
+}
+
 export class ObjectGenerator {
     private readonly typeDeclaration: TypeDeclaration;
 
@@ -43,7 +47,10 @@ export class ObjectGenerator {
                     accessLevel: swift.AccessLevel.Public,
                     conformances: ["Codable", "Hashable"],
                     properties: this.typeDeclaration.shape.properties.map((p) => this.generateAstNodeForProperty(p)),
-                    initializers: [this.generatePrimaryInitializer(this.typeDeclaration.shape)],
+                    initializers: [
+                        this.generatePrimaryInitializer(this.typeDeclaration.shape),
+                        this.generateInitializerForDecoder(this.typeDeclaration.shape)
+                    ],
                     nestedTypes: codingKeysEnum ? [codingKeysEnum] : undefined
                 });
             }
@@ -65,11 +72,8 @@ export class ObjectGenerator {
                     argumentLabel: p.name.name.camelCase.unsafeName,
                     unsafeName: p.name.name.camelCase.unsafeName,
                     type: this.generateAstNodeForTypeReference(p.valueType),
-                    optional: p.valueType.type === "container" && p.valueType.container.type === "optional",
-                    defaultValue:
-                        p.valueType.type === "container" && p.valueType.container.type === "optional"
-                            ? swift.Expression.rawValue("nil")
-                            : undefined
+                    optional: isOptionalProperty(p),
+                    defaultValue: isOptionalProperty(p) ? swift.Expression.rawValue("nil") : undefined
                 })
             ),
             body: swift.CodeBlock.withStatements(
@@ -83,13 +87,57 @@ export class ObjectGenerator {
         });
     }
 
-    private generateCodingKeysEnum(type: Type.Object_): swift.EnumWithRawValues | null {
-        const hasNonCamelcaseProperties = type.properties.some(
-            (p) => p.name.name.camelCase.unsafeName !== p.name.name.originalName
-        );
-        if (!hasNonCamelcaseProperties) {
-            return null;
-        }
+    private generateInitializerForDecoder(type: Type.Object_): swift.Initializer {
+        return swift.initializer({
+            accessLevel: swift.AccessLevel.Public,
+            throws: true,
+            parameters: [
+                swift.functionParameter({
+                    argumentLabel: "from",
+                    unsafeName: "decoder",
+                    type: swift.Type.custom("Decoder")
+                })
+            ],
+            body: swift.CodeBlock.withStatements([
+                swift.Statement.constantDeclaration(
+                    "container",
+                    swift.Expression.try(
+                        swift.Expression.methodCall(swift.Expression.reference("decoder"), "container", [
+                            swift.functionArgument({
+                                label: "keyedBy",
+                                value: swift.Expression.rawValue("CodingKeys.self")
+                            })
+                        ])
+                    )
+                ),
+                ...type.properties.map((p) =>
+                    swift.Statement.propertyAssignment(
+                        p.name.name.camelCase.unsafeName,
+                        swift.Expression.try(
+                            swift.Expression.methodCall(
+                                swift.Expression.reference("container"),
+                                isOptionalProperty(p) ? "decodeIfPresent" : "decode",
+                                [
+                                    swift.functionArgument({
+                                        value: swift.Expression.memberAccess(
+                                            this.generateAstNodeForTypeReference(p.valueType),
+                                            "self"
+                                        )
+                                    }),
+                                    swift.functionArgument({
+                                        label: "forKey",
+                                        value: swift.Expression.enumCaseShorthand(p.name.name.camelCase.unsafeName)
+                                    })
+                                ]
+                            )
+                        )
+                    )
+                )
+            ])
+        });
+    }
+
+    private generateCodingKeysEnum(type: Type.Object_): swift.EnumWithRawValues {
         return swift.enumWithRawValues({
             name: "CodingKeys",
             conformances: ["String", "CodingKey"],
@@ -108,7 +156,7 @@ export class ObjectGenerator {
             accessLevel: swift.AccessLevel.Public,
             declarationType: swift.DeclarationType.Let,
             type: this.generateAstNodeForTypeReference(property.valueType),
-            optional: property.valueType.type === "container" && property.valueType.container.type === "optional"
+            optional: isOptionalProperty(property)
         });
     }
 

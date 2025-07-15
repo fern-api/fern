@@ -10,4 +10,19 @@ public struct User: Codable, Hashable {
         self.address = address
         self.billingAddress = billingAddress
     }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.id = try container.decode(String.self, forKey: .id)
+        self.name = try container.decode(String.self, forKey: .name)
+        self.address = try container.decode(Address.self, forKey: .address)
+        self.billingAddress = try container.decodeIfPresent(Address.self, forKey: .billingAddress)
+    }
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case name
+        case address
+        case billingAddress = "billing_address"
+    }
 }

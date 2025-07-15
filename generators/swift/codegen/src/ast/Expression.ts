@@ -1,6 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 
 import { FunctionArgument } from "./FunctionArgument";
+import { Type } from "./Type";
 import { AstNode, Writer } from "./core";
 import { escapeReservedKeyword } from "./syntax/reserved-keywords";
 
@@ -14,8 +15,16 @@ type Reference = {
 
 type MemberAccess = {
     type: "member-access";
-    target: Expression;
+    target: Expression | Type;
     memberName: string;
+};
+
+/**
+ * A reference to an enum case with shorthand (dot) syntax.
+ */
+type EnumCaseShorthand = {
+    type: "enum-case-shorthand";
+    caseName: string;
 };
 
 type FunctionCall = {
@@ -41,7 +50,7 @@ type RawValue = {
     value: string;
 };
 
-type InternalExpression = Reference | MemberAccess | FunctionCall | MethodCall | Try | RawValue;
+type InternalExpression = Reference | MemberAccess | EnumCaseShorthand | FunctionCall | MethodCall | Try | RawValue;
 
 export class Expression extends AstNode {
     private internalExpression: InternalExpression;
@@ -60,6 +69,10 @@ export class Expression extends AstNode {
                 this.internalExpression.target.write(writer);
                 writer.write(".");
                 writer.write(this.internalExpression.memberName);
+                break;
+            case "enum-case-shorthand":
+                writer.write(".");
+                writer.write(this.internalExpression.caseName);
                 break;
             case "function-call":
                 writer.write(escapeReservedKeyword(this.internalExpression.unsafeName));
@@ -101,8 +114,12 @@ export class Expression extends AstNode {
         return new this({ type: "reference", unsafeName });
     }
 
-    public static memberAccess(target: Expression, memberName: string): Expression {
+    public static memberAccess(target: Expression | Type, memberName: string): Expression {
         return new this({ type: "member-access", target, memberName });
+    }
+
+    public static enumCaseShorthand(caseName: string): Expression {
+        return new this({ type: "enum-case-shorthand", caseName });
     }
 
     public static functionCall(unsafeName: string, arguments_?: FunctionArgument[]): Expression {
