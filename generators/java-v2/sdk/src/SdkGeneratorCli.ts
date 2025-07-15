@@ -7,7 +7,7 @@ import { AbstractJavaGeneratorCli } from "@fern-api/java-base";
 import { DynamicSnippetsGenerator } from "@fern-api/java-dynamic-snippets";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { Endpoint } from "@fern-fern/generator-exec-sdk/api";
+import { Endpoint, EndpointMethod } from "@fern-fern/generator-exec-sdk/api";
 import * as FernGeneratorExecSerializers from "@fern-fern/generator-exec-sdk/serialization";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
@@ -15,6 +15,47 @@ import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
 import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest";
 import { convertIr } from "./utils/convertIr";
+
+// Utility function to process items with concurrency control and timeout
+async function processWithConcurrency<T, R>(
+    items: T[],
+    processor: (item: T) => Promise<R>,
+    concurrency: number = 3,
+    timeoutMs: number = 30000
+): Promise<R[]> {
+    const results: R[] = [];
+    const errors: Error[] = [];
+    
+    for (let i = 0; i < items.length; i += concurrency) {
+        const batch = items.slice(i, i + concurrency);
+        const batchPromises = batch.map(async (item, index) => {
+            try {
+                const timeoutPromise = new Promise<never>((_, reject) => {
+                    setTimeout(() => reject(new Error(`Operation timeout after ${timeoutMs}ms`)), timeoutMs);
+                });
+                
+                const processPromise = processor(item);
+                return await Promise.race([processPromise, timeoutPromise]);
+            } catch (error) {
+                errors.push(error as Error);
+                return null;
+            }
+        });
+        
+        const batchResults = await Promise.allSettled(batchPromises);
+        for (const result of batchResults) {
+            if (result.status === 'fulfilled' && result.value !== null) {
+                results.push(result.value);
+            }
+        }
+    }
+    
+    if (errors.length > 0) {
+        console.warn(`Encountered ${errors.length} errors during processing`);
+    }
+    
+    return results;
+}
 
 export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     protected constructContext({
@@ -114,21 +155,44 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
             config: context.config
         });
 
+        // Collect all snippet generation tasks
+        const snippetTasks: Array<{
+            endpointId: string;
+            endpoint: any;
+            example: any;
+            method: string;
+            path: any;
+        }> = [];
+        
         for (const [endpointId, endpoint] of Object.entries(dynamicIr.endpoints)) {
             const method = endpoint.location.method;
             const path = FernGeneratorExec.EndpointPath(endpoint.location.path);
 
             for (const endpointExample of endpoint.examples ?? []) {
+                snippetTasks.push({
+                    endpointId,
+                    endpoint,
+                    example: endpointExample,
+                    method,
+                    path
+                });
+            }
+        }
+        
+        // Process snippets with concurrency control and timeout
+        const processedSnippets = await processWithConcurrency(
+            snippetTasks,
+            async (task) => {
                 // Create a custom dynamic snippets generator with only this specific endpoint
                 const convertedIr = convertIr(dynamicIr);
-                const specificEndpoint = convertedIr.endpoints[endpointId];
+                const specificEndpoint = convertedIr.endpoints[task.endpointId];
                 if (!specificEndpoint) {
-                    throw new Error(`Endpoint ${endpointId} not found in converted IR`);
+                    throw new Error(`Endpoint ${task.endpointId} not found in converted IR`);
                 }
                 
                 const filteredIr = {
                     ...convertedIr,
-                    endpoints: { [endpointId]: specificEndpoint }
+                    endpoints: { [task.endpointId]: specificEndpoint }
                 };
                 
                 const customSnippetsGenerator = new DynamicSnippetsGenerator({
@@ -137,25 +201,34 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
                 });
                 
                 const generatedSnippet = await customSnippetsGenerator.generate(
-                    convertDynamicEndpointSnippetRequest(endpointExample)
+                    convertDynamicEndpointSnippetRequest(task.example)
                 );
 
                 const syncClient = generatedSnippet.snippet + "\n";
                 // TODO: Properly generate async client; this is a placeholder for now.
                 const asyncClient = generatedSnippet.snippet + "\n";
 
-                endpointSnippets.push({
-                    exampleIdentifier: endpointExample.id,
+                return {
+                    exampleIdentifier: task.example.id,
                     id: {
-                        method,
-                        path,
-                        identifierOverride: endpointId
+                        method: task.method as EndpointMethod,
+                        path: task.path,
+                        identifierOverride: task.endpointId
                     },
                     snippet: FernGeneratorExec.EndpointSnippet.java({
                         syncClient,
                         asyncClient
                     })
-                });
+                };
+            },
+            3, // concurrency limit
+            30000 // 30 second timeout
+        );
+        
+        // Add successful snippets to the result
+        for (const snippet of processedSnippets) {
+            if (snippet) {
+                endpointSnippets.push(snippet);
             }
         }
 
