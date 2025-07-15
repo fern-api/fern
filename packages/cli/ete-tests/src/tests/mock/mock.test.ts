@@ -22,7 +22,7 @@ describe("fern mock", () => {
         expect(getResponse.body != null).toEqual(true);
         const getResponseBody = await getResponse.json();
         expect(typeof getResponseBody === "object").toEqual(true);
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
         expect(Object.keys(getResponseBody as any)).toEqual(["id", "title", "rating"]);
 
         const postResponse = await fetch("http://localhost:3001/test/root/movies", {

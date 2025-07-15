@@ -108,7 +108,7 @@ interface BuildableIntermediateRepresentationMigratorBuilder<LaterVersion>
 class IntermediateRepresentationMigratorBuilderImpl<LaterVersion>
     implements IntermediateRepresentationMigratorBuilder<LaterVersion>
 {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
     constructor(protected readonly migrations: IrMigration<any, any>[]) {}
 
     public withMigration<EarlierVersion>(
@@ -131,7 +131,7 @@ class BuildaleIntermediateRepresentationMigratorBuilderImpl<LaterVersion>
 }
 
 class IntermediateRepresentationMigratorImpl implements IntermediateRepresentationMigrator {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
     constructor(public readonly migrations: IrMigration<any, any>[]) {}
 
     public migrateForGenerator({
@@ -254,7 +254,7 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
         migration,
         targetGenerator
     }: {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
         migration: IrMigration<any, any>;
         targetGenerator: GeneratorNameAndVersion;
     }): boolean {

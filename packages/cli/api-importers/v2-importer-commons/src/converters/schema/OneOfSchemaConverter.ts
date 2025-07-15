@@ -372,7 +372,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
         return {
             type: Type.alias({
                 aliasOf: wrappedType,
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
                 resolvedType: wrappedType as any
             }),
             referencedTypes: convertedSchema.schema?.typeDeclaration.referencedTypes ?? new Set(),

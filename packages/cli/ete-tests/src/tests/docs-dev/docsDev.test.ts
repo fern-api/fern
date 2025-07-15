@@ -32,7 +32,7 @@ describe.sequential("fern docs dev --legacy", () => {
 
         const responseBody = JSON.parse(responseText) as FdrCjsSdk.docs.v2.read.LoadDocsForUrlResponse;
         expect(typeof responseBody === "object").toEqual(true);
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
         expect(Object.keys(responseBody as any)).toEqual(["baseUrl", "definition", "lightModeEnabled", "orgId"]);
 
         // kill the process
@@ -67,7 +67,7 @@ describe.sequential("fern docs dev --beta", () => {
 
         const responseBody = JSON.parse(responseText) as FdrCjsSdk.docs.v2.read.LoadDocsForUrlResponse;
         expect(typeof responseBody === "object").toEqual(true);
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
         expect(Object.keys(responseBody as any)).toEqual(["baseUrl", "definition", "lightModeEnabled", "orgId"]);
 
         const finishProcess = process.kill();
@@ -99,7 +99,7 @@ describe.sequential("fern docs dev", () => {
 
         const responseBody = JSON.parse(responseText) as FdrCjsSdk.docs.v2.read.LoadDocsForUrlResponse;
         expect(typeof responseBody === "object").toEqual(true);
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
         expect(Object.keys(responseBody as any)).toEqual(["baseUrl", "definition", "lightModeEnabled", "orgId"]);
     }, 50_000);
 });

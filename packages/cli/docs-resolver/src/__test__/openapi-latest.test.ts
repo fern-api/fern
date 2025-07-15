@@ -66,7 +66,7 @@ it.skip("converts to api reference latest node", async () => {
 
     const node = new ApiReferenceNodeConverterLatest(
         apiSection,
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
         api as any,
         slug,
         apiWorkspace,
