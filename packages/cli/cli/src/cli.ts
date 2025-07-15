@@ -1229,7 +1229,8 @@ function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
             if (argv.port != null) {
                 port = argv.port;
             } else {
-                port = await getPort({ port: [3000, 3001, 3002, 3003, 3004, 3005, 3006, 3007, 3008, 3009, 3010] });
+                // port = await getPort({ port: [3000, 3001, 3002, 3003, 3004, 3005, 3006, 3007, 3008, 3009, 3010] });
+                port = await getPort({ port: [3008, 3009, 3010] });
             }
 
             let backendPort: number;
@@ -1251,7 +1252,8 @@ function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
                 port,
                 bundlePath,
                 brokenLinks: argv.brokenLinks,
-                legacyPreview: argv.legacy || process.platform === "win32",
+                // legacyPreview: argv.legacy || process.platform === "win32",
+                legacyPreview: argv.legacy || false,
                 backendPort
             });
         }

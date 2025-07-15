@@ -19,6 +19,8 @@
     "pnpm-lock.yaml": true,
     "tests": true
   },
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 1000,
   "files.readonlyInclude": {
     ".husky/_": true,
     ".turbo": true,
