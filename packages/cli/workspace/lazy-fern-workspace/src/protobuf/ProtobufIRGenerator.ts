@@ -24,19 +24,16 @@ export class ProtobufIRGenerator {
 
     public async generate({
         absoluteFilepathToProtobufRoot,
-        relativeFilepathToProtobufRoot,
         absoluteFilepathToProtobufTarget,
         local
     }: {
         absoluteFilepathToProtobufRoot: AbsoluteFilePath;
-        relativeFilepathToProtobufRoot: RelativeFilePath;
         absoluteFilepathToProtobufTarget: AbsoluteFilePath | undefined;
         local: boolean;
     }): Promise<AbsoluteFilePath> {
         if (local) {
             return this.generateLocal({
                 absoluteFilepathToProtobufRoot,
-                relativeFilepathToProtobufRoot,
                 absoluteFilepathToProtobufTarget
             });
         }
@@ -45,16 +42,13 @@ export class ProtobufIRGenerator {
 
     private async generateLocal({
         absoluteFilepathToProtobufRoot,
-        relativeFilepathToProtobufRoot,
         absoluteFilepathToProtobufTarget
     }: {
         absoluteFilepathToProtobufRoot: AbsoluteFilePath;
-        relativeFilepathToProtobufRoot: RelativeFilePath;
         absoluteFilepathToProtobufTarget: AbsoluteFilePath | undefined;
     }): Promise<AbsoluteFilePath> {
         const protobufGeneratorConfigPath = await this.setupProtobufGeneratorConfig({
             absoluteFilepathToProtobufRoot,
-            relativeFilepathToProtobufRoot,
             absoluteFilepathToProtobufTarget
         });
         return this.doGenerateLocal({
@@ -64,22 +58,20 @@ export class ProtobufIRGenerator {
 
     private async setupProtobufGeneratorConfig({
         absoluteFilepathToProtobufRoot,
-        relativeFilepathToProtobufRoot,
         absoluteFilepathToProtobufTarget
     }: {
         absoluteFilepathToProtobufRoot: AbsoluteFilePath;
-        relativeFilepathToProtobufRoot: RelativeFilePath;
         absoluteFilepathToProtobufTarget: AbsoluteFilePath | undefined;
     }): Promise<AbsoluteFilePath> {
         const protobufGeneratorConfigPath = AbsoluteFilePath.of((await tmp.dir()).path);
-        
+
         if (absoluteFilepathToProtobufTarget !== undefined) {
             await this.exportProtobufFilesForTarget({
                 protobufGeneratorConfigPath,
                 absoluteFilepathToProtobufRoot,
                 absoluteFilepathToProtobufTarget
-            })
-        } else {        
+            });
+        } else {
             await this.copyProtobufFilesFromRoot({
                 protobufGeneratorConfigPath,
                 absoluteFilepathToProtobufRoot
@@ -88,14 +80,14 @@ export class ProtobufIRGenerator {
 
         await this.setupRemainingProtobufConfig({
             protobufGeneratorConfigPath
-        })
+        });
 
         return protobufGeneratorConfigPath;
     }
 
     private async exportProtobufFilesForTarget({
         protobufGeneratorConfigPath,
-        absoluteFilepathToProtobufRoot, 
+        absoluteFilepathToProtobufRoot,
         absoluteFilepathToProtobufTarget
     }: {
         protobufGeneratorConfigPath: AbsoluteFilePath;
@@ -116,10 +108,15 @@ export class ProtobufIRGenerator {
             );
         }
 
-        await runExeca(this.context.logger, "buf", ["export", "--path", absoluteFilepathToProtobufTarget, "--output", protobufGeneratorConfigPath], {
-            cwd: absoluteFilepathToProtobufRoot,
-            stdio: "ignore"
-        });
+        await runExeca(
+            this.context.logger,
+            "buf",
+            ["export", "--path", absoluteFilepathToProtobufTarget, "--output", protobufGeneratorConfigPath],
+            {
+                cwd: absoluteFilepathToProtobufRoot,
+                stdio: "ignore"
+            }
+        );
     }
 
     private async copyProtobufFilesFromRoot({
