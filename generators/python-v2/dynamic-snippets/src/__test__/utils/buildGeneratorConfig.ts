@@ -16,10 +16,12 @@ const DEFAULT_CONFIG: FernGeneratorExec.GeneratorConfig = {
         mode: FernGeneratorExec.OutputMode.publish({
             version: "1.0.0",
             publishTarget: FernGeneratorExec.GeneratorPublishTarget.pypi(PYPI),
-            registries: {} as any, // eslint-disable-line @typescript-eslint/no-explicit-any
+            // biome-ignore lint/suspicious/noExplicitAny: allow
+            registries: {} as any,
             registriesV2: {
                 pypi: PYPI
-            } as any // eslint-disable-line @typescript-eslint/no-explicit-any
+                // biome-ignore lint/suspicious/noExplicitAny: allow
+            } as any
         })
     },
     organization: "acme",
