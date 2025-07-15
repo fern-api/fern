@@ -26,10 +26,12 @@ export const NoUnusedGenericRule: Rule = {
                                 }
                             }
                         },
+                        // biome-ignore-start lint/suspicious/noEmptyBlockStatements: allow
                         enum: () => {},
                         object: () => {},
                         discriminatedUnion: () => {},
                         undiscriminatedUnion: () => {}
+                        // biome-ignore-end lint/suspicious/noEmptyBlockStatements: allow
                     });
                 }
             });

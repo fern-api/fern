@@ -26,7 +26,6 @@ describe("update-directory-structure", () => {
                 context: createMockTaskContext()
             });
 
-            // biome-ignore lint/suspicious/noConsole: allow console
             console.log(`Migrated fixture ${fixture} at path ${tmpDir.path}`);
 
             expect(await getDirectoryContentsForSnapshot(AbsoluteFilePath.of(tmpDir.path))).toMatchSnapshot();

@@ -837,7 +837,6 @@ function parseApiReferenceLayoutItem(
         return [{ type: "item", value: item }];
     }
 
-    // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
     if (isRawPageConfig(item)) {
         return [parsePageConfig(item, absolutePathToConfig)];
     } else if (isRawLinkConfig(item)) {

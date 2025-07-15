@@ -7,7 +7,7 @@ import { runFernCli } from "../../utils/runFernCli";
 const fixturesDir = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
 
 describe("fern mock", () => {
-    // eslint-disable-next-line jest/no-disabled-tests
+    // biome-ignore lint/suspicious/noSkippedTests: allow
     it.skip("mock request/response", async () => {
         void runFernCli(["mock", "--api", "simple", "--port", "3001"], {
             cwd: join(fixturesDir, RelativeFilePath.of("simple"))

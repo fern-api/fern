@@ -1,7 +1,7 @@
 {
 	"$schema": "https://biomejs.dev/schemas/2.1.1/schema.json",
 	"vcs": { "enabled": false, "clientKind": "git", "useIgnoreFile": false },
-	"files": { "ignoreUnknown": false, "maxSize": 7000000 },
+	"files": { "ignoreUnknown": false, "maxSize": 80000000 },
 	"formatter": {
 		"enabled": true,
 		"formatWithErrors": false,
@@ -148,11 +148,13 @@
 			"!seed/**",
 			"!docker/seed/**",
 			"!generators/typescript/utils/**",
-			"!**/example-definition-1.ir.json"
+			"!**/example-definition-1.ir.json",
+			"!packages/cli/api-importers/v2-importer-tests/src/__test__/fixtures/unions-v1/openapi.json",
+			"!packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/unions-v1/openapi.json"
 		]
 	},
 	"javascript": {
-		"globals": ["expect", "describe", "it", "beforeEach", "test"],
+		"globals": ["expect", "describe", "it", "beforeEach", "test", "beforeAll"],
 		"formatter": {
 			"jsxQuoteStyle": "double",
 			"quoteProperties": "asNeeded",
@@ -168,12 +170,23 @@
 	"html": { "formatter": { "selfCloseVoidElements": "always" } },
 	"overrides": [
 		{
-			"includes": ["**/*.test.ts", "**/*.spec.ts", "**/example-code.js","generators/base/src/AbstractGeneratorCli.ts", "love_fern.js"],
+			"includes": ["**/*.test.ts", "**/*.spec.ts", "**/example-code.js","generators/base/src/AbstractGeneratorCli.ts", "love_fern.js", "packages/cli/docs-resolver/src/__test__/fixtures/dry/fern/fibonacci.js"],
 			"linter": { "rules": { "suspicious": { "noConsole": "off" } } }
 		},
 		{
 			"includes": ["packages/cli/init/src/__test__/initializeWithMintlify.test.ts"],
 			"linter": { "rules": { "suspicious": { "noExplicitAny": "off" } } }
+		},
+		{
+			"includes": [
+				"packages/cli/docs-resolver/src/__test__/ApiDefinitionHolderLatest.test.ts",
+				"packages/cli/docs-resolver/src/__test__/getApiLatestToNavigationNodeUrlSlug.test.ts",
+				"packages/cli/ete-tests/src/tests/protoc-gen-fern/protoc-gen-fern.test.ts",
+				"packages/cli/ete-tests/src/tests/upgrade-generator/upgrade-generator.test.ts",
+				"packages/cli/generation/ir-generator-tests/src/ir/__test__/breakingChangeDetector.test.ts",
+				"packages/cli/generation/ir-generator-tests/src/ir/__test__/generateIntermediateRepresentation.test.ts"
+			],
+			"linter": { "rules": { "suspicious": { "noSkippedTests": "off" } } }
 		},
 		{
 			"includes": ["*.ts", "*.tsx", "*.mts", "*.cts"],
