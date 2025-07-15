@@ -5,10 +5,12 @@ from datetime import datetime, date
 from typing import cast, List, Union
 import uuid
 
+from tests.utils.example_models.types.resources.types.shape import Shape_Circle, Shape_Square
 from .example_models.types.core.unchecked_base_model import construct_type
 from tests.utils.example_models.types.resources.types.square import Square
+from tests.utils.example_models.types.resources.types.circle import Circle
 from .example_models.manual_types.defaulted_object import ObjectWithDefaultedOptionalFields
-from .example_models.types.resources.types import ObjectWithOptionalField, Circle, Shape_Square, Shape_Circle
+from .example_models.types.resources.types import ObjectWithOptionalField
 
 
 def test_construct_valid() -> None:
