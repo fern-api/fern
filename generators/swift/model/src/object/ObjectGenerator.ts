@@ -43,6 +43,7 @@ export class ObjectGenerator {
                     accessLevel: swift.AccessLevel.Public,
                     conformances: ["Codable", "Hashable"],
                     properties: this.typeDeclaration.shape.properties.map((p) => this.generateAstNodeForProperty(p)),
+                    initializers: [this.generatePrimaryInitializer(this.typeDeclaration.shape)],
                     nestedTypes: codingKeysEnum ? [codingKeysEnum] : undefined
                 });
             }
@@ -54,6 +55,31 @@ export class ObjectGenerator {
             default:
                 assertNever(this.typeDeclaration.shape);
         }
+    }
+
+    private generatePrimaryInitializer(type: Type.Object_): swift.Initializer {
+        return swift.initializer({
+            parameters: type.properties.map((p) =>
+                swift.functionParameter({
+                    argumentLabel: p.name.name.camelCase.unsafeName,
+                    unsafeName: p.name.name.camelCase.unsafeName,
+                    type: this.generateAstNodeForTypeReference(p.valueType),
+                    optional: p.valueType.type === "container" && p.valueType.container.type === "optional",
+                    defaultValue:
+                        p.valueType.type === "container" && p.valueType.container.type === "optional"
+                            ? swift.Expression.rawValue("nil")
+                            : undefined
+                })
+            ),
+            body: swift.CodeBlock.withStatements(
+                type.properties.map((p) =>
+                    swift.Statement.propertyAssignment(
+                        p.name.name.camelCase.unsafeName,
+                        swift.Expression.reference(p.name.name.camelCase.unsafeName)
+                    )
+                )
+            )
+        });
     }
 
     private generateCodingKeysEnum(type: Type.Object_): swift.EnumWithRawValues | null {
