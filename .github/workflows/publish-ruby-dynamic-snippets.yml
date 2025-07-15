@@ -1,0 +1,52 @@
+name: Publish @fern-api/ruby-dynamic-snippets
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "The version of the library to publish."
+        required: true
+        type: string
+
+env:
+  PACKAGE_NAME: "@fern-api/ruby-dynamic-snippets"
+  GITHUB_TOKEN: ${{ secrets.FERN_GITHUB_TOKEN }}
+  GEM_HOST_API_KEY: ${{ secrets.FERN_RUBYGEMS_API_KEY }}
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    if: ${{ inputs.version != null }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-tags: true
+
+      - name: 📥 Install
+        uses: ./.github/actions/install
+
+      - uses: bufbuild/buf-setup-action@v1.34.0
+        with:
+          github_token: ${{ github.token }}
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "stable"
+
+      - name: Install protoc-gen-openapi
+        run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
+
+      - name: 🧪 Build
+        run: bundle install && bundle exec rake build
+
+      - name: 🧪 Test
+        run: bundle exec rake test
+
+        - name: Publish @fern-api/typescript-dynamic-snippets
+        run: |
+          cd generators/ruby-v2/dynamic-snippets
+          pnpm --filter=${{ env.PACKAGE_NAME }} dist ${{ inputs.version }}
+          cd dist
+          echo "//registry.npmjs.org/:_authToken=${{ env.NPM_TOKEN }}" > ~/.npmrc
+          npm publish --access public
