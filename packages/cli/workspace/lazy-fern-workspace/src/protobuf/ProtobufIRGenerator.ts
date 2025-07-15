@@ -144,7 +144,10 @@ export class ProtobufIRGenerator {
         // Copy the entire protobuf root, excluding buf.yaml and buf.gen.yaml, to a temp directory
         await cp(absoluteFilepathToProtobufRoot, protobufGeneratorConfigPath, {
             recursive: true,
-            filter: (src) => !src.includes("buf.yaml") && !src.includes("buf.gen.yaml")
+            filter: (src) => {
+              const basename = path.basename(src)
+              return basename !== "buf.yaml" && basename !== "buf.gen.yaml"
+            }
         });
     }
 
