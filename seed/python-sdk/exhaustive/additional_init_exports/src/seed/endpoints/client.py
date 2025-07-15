@@ -11,6 +11,7 @@ from .primitive.client import AsyncPrimitiveClient, PrimitiveClient
 from .put.client import AsyncPutClient, PutClient
 from .raw_client import AsyncRawEndpointsClient, RawEndpointsClient
 from .union.client import AsyncUnionClient, UnionClient
+from .urls.client import AsyncUrlsClient, UrlsClient
 
 
 class EndpointsClient:
@@ -33,6 +34,8 @@ class EndpointsClient:
         self.put = PutClient(client_wrapper=client_wrapper)
 
         self.union = UnionClient(client_wrapper=client_wrapper)
+
+        self.urls = UrlsClient(client_wrapper=client_wrapper)
 
     @property
     def with_raw_response(self) -> RawEndpointsClient:
@@ -66,6 +69,8 @@ class AsyncEndpointsClient:
         self.put = AsyncPutClient(client_wrapper=client_wrapper)
 
         self.union = AsyncUnionClient(client_wrapper=client_wrapper)
+
+        self.urls = AsyncUrlsClient(client_wrapper=client_wrapper)
 
     @property
     def with_raw_response(self) -> AsyncRawEndpointsClient:
