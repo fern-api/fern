@@ -43,7 +43,7 @@ jobs:
       - name: 🧪 Test
         run: bundle exec rake test
 
-        - name: Publish @fern-api/typescript-dynamic-snippets
+        - name: Publish @fern-api/ruby-dynamic-snippets
         run: |
           cd generators/ruby-v2/dynamic-snippets
           pnpm --filter=${{ env.PACKAGE_NAME }} dist ${{ inputs.version }}
