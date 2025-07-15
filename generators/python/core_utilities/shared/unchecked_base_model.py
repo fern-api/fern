@@ -122,6 +122,32 @@ class UncheckedBaseModel(UniversalBaseModel):
         return m
 
 
+def _validate_collection_items_compatible(collection: typing.Any, target_type: typing.Type[typing.Any]) -> bool:
+    """
+    Validate that all items in a collection are compatible with the target type.
+    
+    Args:
+        collection: The collection to validate (list, set, or dict values)
+        target_type: The target type to validate against
+        
+    Returns:
+        True if all items are compatible, False otherwise
+    """
+    if inspect.isclass(target_type) and issubclass(target_type, pydantic.BaseModel):
+        for item in collection:
+            try:
+                # Try to validate the item against the target type
+                if isinstance(item, dict):
+                    parse_obj_as(target_type, item)
+                else:
+                    # If it's not a dict, it might already be the right type
+                    if not isinstance(item, target_type):
+                        return False
+            except Exception:
+                return False
+    return True
+
+
 def _convert_undiscriminated_union_type(union_type: typing.Type[typing.Any], object_: typing.Any) -> typing.Any:
     inner_types = get_args(union_type)
     if typing.Any in inner_types:
@@ -133,8 +159,10 @@ def _convert_undiscriminated_union_type(union_type: typing.Type[typing.Any], obj
             list_inner_type = get_args(inner_type)[0]
             try:
                 if inspect.isclass(list_inner_type) and issubclass(list_inner_type, pydantic.BaseModel):
-                    parsed_list = [parse_obj_as(list_inner_type, item) for item in object_]
-                    return parsed_list
+                    # Validate that all items in the list are compatible with the target type
+                    if _validate_collection_items_compatible(object_, list_inner_type):
+                        parsed_list = [construct_type(object_=item, type_=list_inner_type) for item in object_]
+                        return parsed_list
             except Exception:
                 pass
         # Handle sets of objects that need parsing
@@ -142,8 +170,10 @@ def _convert_undiscriminated_union_type(union_type: typing.Type[typing.Any], obj
             set_inner_type = get_args(inner_type)[0]
             try:
                 if inspect.isclass(set_inner_type) and issubclass(set_inner_type, pydantic.BaseModel):
-                    parsed_set = {parse_obj_as(set_inner_type, item) for item in object_}
-                    return parsed_set
+                    # Validate that all items in the set are compatible with the target type
+                    if _validate_collection_items_compatible(object_, set_inner_type):
+                        parsed_set = {construct_type(object_=item, type_=set_inner_type) for item in object_}
+                        return parsed_set
             except Exception:
                 pass
         # Handle dicts of objects that need parsing
@@ -151,8 +181,10 @@ def _convert_undiscriminated_union_type(union_type: typing.Type[typing.Any], obj
             key_type, value_type = get_args(inner_type)
             try:
                 if inspect.isclass(value_type) and issubclass(value_type, pydantic.BaseModel):
-                    parsed_dict = {parse_obj_as(key_type, k): parse_obj_as(value_type, v) for k, v in object_.items()}
-                    return parsed_dict
+                    # Validate that all values in the dict are compatible with the target type
+                    if _validate_collection_items_compatible(object_.values(), value_type):
+                        parsed_dict = {construct_type(object_=k, type_=key_type): construct_type(object_=v, type_=value_type) for k, v in object_.items()}
+                        return parsed_dict
             except Exception:
                 pass
         try:
