@@ -11,7 +11,7 @@ on:
 env:
   PACKAGE_NAME: "@fern-api/ruby-dynamic-snippets"
   GITHUB_TOKEN: ${{ secrets.FERN_GITHUB_TOKEN }}
-  GEM_HOST_API_KEY: ${{ secrets.FERN_RUBYGEMS_API_KEY }}
+  NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
 
 jobs:
   run:
