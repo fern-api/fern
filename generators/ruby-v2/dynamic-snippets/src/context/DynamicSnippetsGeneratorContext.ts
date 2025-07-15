@@ -5,9 +5,12 @@ import {
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { BaseRubyCustomConfigSchema, ruby } from "@fern-api/ruby-ast";
 
+import { DynamicTypeLiteralMapper } from "./DynamicToLiteralMapper";
+
 export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGeneratorContext {
     public ir: FernIr.dynamic.DynamicIntermediateRepresentation;
     public customConfig: BaseRubyCustomConfigSchema | undefined;
+    public dynamicTypeLiteralMapper: DynamicTypeLiteralMapper;
 
     constructor({
         ir,
@@ -20,6 +23,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         this.ir = ir;
         this.customConfig =
             config.customConfig != null ? (config.customConfig as BaseRubyCustomConfigSchema) : undefined;
+        this.dynamicTypeLiteralMapper = new DynamicTypeLiteralMapper({ context: this });
     }
 
     public clone(): DynamicSnippetsGeneratorContext {
@@ -75,6 +79,14 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
 
     public getEnumName(name: FernIr.Name): string {
         return this.getName(name.screamingSnakeCase.safeName);
+    }
+
+    public getMethodName(name: FernIr.Name): string {
+        return this.getName(name.snakeCase.safeName);
+    }
+
+    public getPropertyName(name: FernIr.Name): string {
+        return this.getName(name.camelCase.safeName);
     }
 
     private getName(name: string): string {
