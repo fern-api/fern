@@ -294,7 +294,13 @@
 			}
 		},
 		{
-			"includes": ["*.{yml,yaml,json,md,mdx}"],
+			"includes": [
+				"**/*.yml",
+				"**/*.yaml",
+				"**/*.json",
+				"**/*.md",
+				"**/*.mdx"
+			],
 			"formatter": { "indentWidth": 2 }
 		}
 	],

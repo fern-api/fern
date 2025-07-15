@@ -585,7 +585,7 @@ export class TypeInstantiation extends AstNode {
     }: {
         writer: Writer;
         // biome-ignore lint/suspicious/noExplicitAny: allow
-        value: any[]; 
+        value: any[];
     }): void {
         if (value.length === 0) {
             writer.write("[]");
