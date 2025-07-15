@@ -9,6 +9,14 @@ import pydantic
 class Square(UncheckedBaseModel):
     length: float
 
+    def __init__(self, **kwargs):
+        print(f"[DEBUG] Creating Square object with kwargs: {kwargs}")
+        super().__init__(**kwargs)
+        print(f"[DEBUG] Square object created with length: {self.length}")
+
+    def __post_init__(self):
+        print(f"[DEBUG] Square.__post_init__ called for length: {self.length}")
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
             extra="allow", frozen=True
