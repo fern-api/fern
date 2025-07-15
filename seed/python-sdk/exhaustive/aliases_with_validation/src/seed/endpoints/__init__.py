@@ -2,7 +2,7 @@
 
 # isort: skip_file
 
-from . import container, content_type, enum, http_methods, object, params, primitive, put, union
+from . import container, content_type, enum, http_methods, object, params, primitive, put, union, urls
 from .put import Error, ErrorCategory, ErrorCode, PutResponse
 
 __all__ = [
@@ -19,4 +19,5 @@ __all__ = [
     "primitive",
     "put",
     "union",
+    "urls",
 ]
