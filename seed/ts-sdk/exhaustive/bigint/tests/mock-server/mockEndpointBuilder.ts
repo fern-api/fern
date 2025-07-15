@@ -1,7 +1,7 @@
 import { DefaultBodyType, HttpHandler, HttpResponse, HttpResponseResolver, http } from "msw";
 
-import { toJson } from "../../src/core/json";
 import { url } from "../../src/core";
+import { toJson } from "../../src/core/json";
 import { withHeaders } from "./withHeaders";
 import { withJson } from "./withJson";
 
