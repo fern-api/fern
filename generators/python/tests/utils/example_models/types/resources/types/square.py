@@ -9,19 +9,12 @@ import pydantic
 class Square(UncheckedBaseModel):
     length: float
 
-    def __hash__(self) -> int:
-        return hash(self.length)
-    
-    def __eq__(self, other: object) -> bool:
-        if not isinstance(other, Square):
-            return False
-        return self.length == other.length
-
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="allow"
+            extra="allow", frozen=True
         )  # type: ignore # Pydantic v2
     else:
 
         class Config:
+            frozen = True
             extra = pydantic.Extra.allow
