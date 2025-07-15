@@ -10,4 +10,8 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->endpoints->urls->withEndingSlash();
+$client->noAuth->postWithNoAuth(
+    [
+        'key' => "value",
+    ],
+);
