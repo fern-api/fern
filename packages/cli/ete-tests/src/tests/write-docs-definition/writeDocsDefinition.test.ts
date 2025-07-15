@@ -36,6 +36,6 @@ async function testFixture(fixtureName: string) {
             return key === "apiDefinitionId" || key === "id" ? undefined : value;
         })
     );
-
+    // biome-ignore lint/suspicious/noMisplacedAssertion: allow
     expect(cleanOutput).toMatchSnapshot();
 }

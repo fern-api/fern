@@ -44,6 +44,7 @@ export function convertContainerToJsonSchema({
                 items: convertTypeReferenceToJsonSchema({ typeReference: container.set, context }),
                 uniqueItems: true
             };
+            // biome-ignore lint/suspicious/noFallthroughSwitchClause: allow
         case "literal":
             switch (container.literal.type) {
                 case "string":

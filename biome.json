@@ -150,7 +150,9 @@
 			"!generators/typescript/utils/**",
 			"!**/example-definition-1.ir.json",
 			"!packages/cli/api-importers/v2-importer-tests/src/__test__/fixtures/unions-v1/openapi.json",
-			"!packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/unions-v1/openapi.json"
+			"!packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/unions-v1/openapi.json",
+			"!**/fixtures/**/fernconfig.json",
+			"!**/fixtures/**/fern.config.json"
 		]
 	},
 	"javascript": {
@@ -184,6 +186,10 @@
 		{
 			"includes": ["packages/cli/init/src/__test__/initializeWithMintlify.test.ts"],
 			"linter": { "rules": { "suspicious": { "noExplicitAny": "off" } } }
+		},
+		{
+			"includes": ["packages/cli/docs-markdown-utils/src/__test__/parseImagePaths.test.ts", "packages/cli/fern-definition/validator/src/rules/valid-oauth/__test__/valid-oauth.test.ts"],
+			"linter": { "rules": { "suspicious": { "noMisplacedAssertion": "off" } } }
 		},
 		{
 			"includes": [
