@@ -1387,7 +1387,7 @@ function addProtocGenFernCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
     cli.command(
         "protoc-gen-fern",
         false,
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        // biome-ignore lint/suspicious/noEmptyBlockStatements: allow
         (yargs) => {},
         async () => {
             const plugin = protocGenFern;

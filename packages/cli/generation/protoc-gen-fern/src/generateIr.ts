@@ -32,7 +32,7 @@ export function generateIr({ req, options }: { req: CodeGeneratorRequest; option
                 settings: {} as any,
                 errorCollector: new ErrorCollector({
                     logger: {
-                        // eslint-disable-next-line @typescript-eslint/no-empty-function
+                        // biome-ignore lint/suspicious/noEmptyBlockStatements: allow
                         log: (level, ...args) => {}
                     },
                     relativeFilepathToSpec: undefined
