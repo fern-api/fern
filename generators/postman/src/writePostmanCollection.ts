@@ -32,7 +32,7 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
     const config = await parseGeneratorConfig(pathToConfig);
 
     const generatorLoggingClient = new GeneratorNotificationService(config.environment);
-    // eslint-disable-next-line no-console
+    // biome-ignore lint/suspicious/noConsole: allow console
     console.log("Initialized generator logging client");
 
     try {
@@ -49,7 +49,7 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
             );
 
             const ir = await loadIntermediateRepresentation(config.irFilepath);
-            // eslint-disable-next-line no-console
+            // biome-ignore lint/suspicious/noConsole: allow console
             console.log(`Loaded intermediate representation from ${config.irFilepath}`);
 
             await generatorLoggingClient.sendUpdate(
@@ -66,14 +66,14 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
                     startCase(ir.apiName.originalName)
             });
             const rawCollectionDefinition = PostmanParsing.PostmanCollectionSchema.jsonOrThrow(_collectionDefinition);
-            // eslint-disable-next-line no-console
+            // biome-ignore lint/suspicious/noConsole: allow console
             console.log("Converted ir to postman collection");
 
             await writeFile(
                 path.join(config.output.path, collectionOutputFilename),
                 JSON.stringify(rawCollectionDefinition, undefined, 2)
             );
-            // eslint-disable-next-line no-console
+            // biome-ignore lint/suspicious/noConsole: allow console
             console.log(`Wrote postman collection to ${collectionOutputFilename}`);
             await generatorLoggingClient.sendUpdate(
                 GeneratorUpdate.log({
@@ -102,7 +102,7 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
                 });
             } else if (outputMode.type === "publish" && outputMode.publishTarget != null) {
                 if (outputMode.publishTarget.type !== "postman") {
-                    // eslint-disable-next-line no-console
+                    // biome-ignore lint/suspicious/noConsole: allow console
                     console.log(`Received incorrect publish config (type is ${outputMode.type}`);
                     await generatorLoggingClient.sendUpdate(
                         GeneratorUpdate.log({
@@ -120,21 +120,21 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
                     collection: rawCollectionDefinition
                 });
             } else if (outputMode.type === "github") {
-                // eslint-disable-next-line no-console
+                // biome-ignore lint/suspicious/noConsole: allow console
                 console.log("Writing Github workflows...");
                 await writePostmanGithubWorkflows({
                     config,
                     githubOutputMode: outputMode
                 });
             } else if (postmanGeneratorConfig?.publishing != null) {
-                // eslint-disable-next-line no-console
+                // biome-ignore lint/suspicious/noConsole: allow console
                 console.log("Publishing postman collection via legacy custom config...");
                 await publishCollection({
                     publishConfig: postmanGeneratorConfig.publishing,
                     collection: rawCollectionDefinition
                 });
             } else {
-                // eslint-disable-next-line no-console
+                // biome-ignore lint/suspicious/noConsole: allow console
                 console.log("Did not publish to postman or github");
             }
 
@@ -149,7 +149,7 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
             );
         }
     } catch (e) {
-        // eslint-disable-next-line no-console
+        // biome-ignore lint/suspicious/noConsole: allow console
         await generatorLoggingClient.sendUpdate(
             GeneratorUpdate.exitStatusUpdate(
                 ExitStatusUpdate.error({
@@ -168,7 +168,7 @@ async function publishCollection({
     publishConfig: PublishConfigSchema;
     collection: PostmanParsing.PostmanCollectionSchema.Raw;
 }) {
-    // eslint-disable-next-line no-console
+    // biome-ignore lint/suspicious/noConsole: allow console
     console.log("Publishing postman collection...");
     const postman = new FernPostmanClient({
         apiKey: publishConfig.apiKey
@@ -176,7 +176,7 @@ async function publishCollection({
     const workspace = publishConfig.workspaceId != null ? publishConfig.workspaceId : undefined;
 
     if (publishConfig.collectionId == null) {
-        // eslint-disable-next-line no-console
+        // biome-ignore lint/suspicious/noConsole: allow console
         console.log(`Workspace id is ${workspace}`);
         const getCollectionMetadataResponse = await postman.collection.getAllCollectionMetadata({
             workspace
@@ -185,7 +185,7 @@ async function publishCollection({
             return collectionMetadata.name === collection.info.name;
         });
         if (collectionsToUpdate.length === 0) {
-            // eslint-disable-next-line no-console
+            // biome-ignore lint/suspicious/noConsole: allow console
             console.log("Creating new postman collection!");
             await postman.collection.createCollection({
                 workspace,
@@ -194,7 +194,7 @@ async function publishCollection({
         } else {
             await Promise.all(
                 collectionsToUpdate.map(async (collectionMetadata) => {
-                    // eslint-disable-next-line no-console
+                    // biome-ignore lint/suspicious/noConsole: allow console
                     console.log("Updating postman collection!");
                     await postman.collection.updateCollection(collectionMetadata.uid, {
                         collection
