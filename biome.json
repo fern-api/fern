@@ -170,7 +170,15 @@
 	"html": { "formatter": { "selfCloseVoidElements": "always" } },
 	"overrides": [
 		{
-			"includes": ["**/*.test.ts", "**/*.spec.ts", "**/example-code.js","generators/base/src/AbstractGeneratorCli.ts", "love_fern.js", "packages/cli/docs-resolver/src/__test__/fixtures/dry/fern/fibonacci.js"],
+			"includes": [
+				"**/*.test.ts", 
+				"**/*.spec.ts", 
+				"**/example-code.js",
+				"generators/base/src/AbstractGeneratorCli.ts", 
+				"love_fern.js", 
+				"packages/cli/docs-resolver/src/__test__/fixtures/dry/fern/fibonacci.js",
+				"packages/cli/ete-tests/src/tests/generate/fixtures/docs/fern/js/custom.js"
+			],
 			"linter": { "rules": { "suspicious": { "noConsole": "off" } } }
 		},
 		{

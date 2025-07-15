@@ -44,7 +44,6 @@ describe("openapi-v2-sdks", async () => {
                         enableUniqueErrorsPerEndpoint: false,
                         generateV1Examples: true
                     });
-                    // eslint-disable-next-line jest/no-standalone-expect
                     await expect(JSON.stringify(intermediateRepresentation, undefined, 2)).toMatchFileSnapshot(
                         `./__snapshots__/v3-sdks/${fixture.name}.json`
                     );

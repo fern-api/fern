@@ -35,7 +35,6 @@ describe("openapi-ir-to-fern", async () => {
                     absoluteFilePath: AbsoluteFilePath.of("/DUMMY_PATH")
                 });
 
-                // eslint-disable-next-line jest/no-standalone-expect
                 await expect(definition).toMatchFileSnapshot(`./__snapshots__/openapi/${fixture.name}.json`);
             },
             90_000

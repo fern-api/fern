@@ -51,7 +51,6 @@ describe("openapi-v2-baseline-sdks", async () => {
                             context,
                             sourceResolver: new SourceResolverImpl(context, fernWorkspace)
                         });
-                        // eslint-disable-next-line jest/no-standalone-expect
                         await expect(JSON.stringify(intermediateRepresentation, undefined, 2)).toMatchFileSnapshot(
                             `./__snapshots__/baseline-sdks/${fixture.name}.json`
                         );

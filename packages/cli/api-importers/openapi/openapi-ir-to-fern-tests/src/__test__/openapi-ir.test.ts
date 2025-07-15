@@ -37,7 +37,6 @@ describe("openapi-ir", async () => {
 
                 if (workspace.workspace instanceof OSSWorkspace) {
                     const openApiIr = await (workspace.workspace as OSSWorkspace).getOpenAPIIr({ context });
-                    // eslint-disable-next-line jest/no-standalone-expect
                     await expect(JSON.stringify(openApiIr, undefined, 2)).toMatchFileSnapshot(
                         `./__snapshots__/openapi-ir/${fixture.name}.json`
                     );
