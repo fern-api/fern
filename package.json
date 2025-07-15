@@ -34,6 +34,7 @@
     "fern": "cross-env FERN_NO_VERSION_REDIRECTION=true node ./packages/cli/cli/dist/prod/cli.cjs",
     "fern:local": "cross-env FERN_NO_VERSION_REDIRECTION=true node ./packages/cli/cli/dist/prod/cli.cjs",
     "fern-dev:local": "cross-env FERN_NO_VERSION_REDIRECTION=true node ./packages/cli/cli/dist/dev/cli.cjs",
+    "fern:build:cli": "pnpm --filter @fern-api/cli compile && cross-env POSTHOG_API_KEY=\"\" pnpm --filter @fern-api/cli dist:cli:prod && echo 'Run node packages/cli/cli/dist/prod/cli.cjs'",
     "fern:build": "cross-env POSTHOG_API_KEY=\"\" pnpm --filter @fern-api/cli dist:cli:prod && echo 'Run node packages/cli/cli/dist/prod/cli.cjs'",
     "fern-dev:build": "pnpm --filter @fern-api/cli dist:cli:dev && echo 'Run node packages/cli/cli/dist/dev/cli.cjs'",
     "fern-local:build": "pnpm --filter @fern-api/cli dist:cli:local && echo 'Run node packages/cli/cli/dist/local/cli.cjs'",

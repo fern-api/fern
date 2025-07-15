@@ -1,6 +1,8 @@
 import decompress from "decompress";
 import { mkdir, readFile, rm, writeFile } from "fs/promises";
-import { homedir } from "os";
+import { homedir, platform } from "os";
+import path from "path";
+import fs from "fs";
 import tmp from "tmp-promise";
 import xml2js from "xml2js";
 
@@ -116,6 +118,7 @@ export async function downloadBundle({
     logger.debug(`Downloading docs preview bundle from ${docsBundleUrl}`);
     // download docs bundle
     try {
+        logger.debug("Fetching docs bundle zip response");
         const docsBundleZipResponse = await fetch(docsBundleUrl);
         if (!docsBundleZipResponse.ok) {
             logger.error(`Failed to download docs preview bundle. Status code: ${docsBundleZipResponse.status}`);
@@ -123,33 +126,64 @@ export async function downloadBundle({
                 type: "failure"
             };
         }
+        logger.debug("Joining output zip path");
         const outputZipPath = join(
             absoluteDirectoryToTmpDir,
             RelativeFilePath.of(tryTar ? "output.tar.gz" : "output.zip")
         );
 
         if (docsBundleZipResponse.body == null) {
+            logger.debug("Docs bundle zip response body is null");
             return {
                 type: "failure"
             };
         }
 
+        logger.debug("Converting docs bundle zip response to buffer");
         const nodeBuffer = Buffer.from(await docsBundleZipResponse.arrayBuffer());
+        logger.debug("Writing docs bundle zip to file");
         await writeFile(outputZipPath, new Uint8Array(nodeBuffer));
         logger.debug(`Wrote ${tryTar ? "output.tar.gz" : "output.zip"} to ${outputZipPath}`);
 
+        logger.debug("Getting path to preview folder");
         const absolutePathToPreviewFolder = getPathToPreviewFolder({ app });
+        logger.debug("Checking if preview folder exists");
         if (await doesPathExist(absolutePathToPreviewFolder)) {
+            logger.debug("Preview folder exists, removing");
             await rm(absolutePathToPreviewFolder, { recursive: true });
         }
+        logger.debug("Creating preview folder");
         await mkdir(absolutePathToPreviewFolder, { recursive: true });
-        logger.debug(`rm -rf ${absolutePathToPreviewFolder}`);
+        logger.debug(`jsklan-foobar: rm -rf ${absolutePathToPreviewFolder}`);
 
+        logger.debug("Getting path to bundle folder");
         const absolutePathToBundleFolder = getPathToBundleFolder({ app });
+        logger.debug("Creating bundle folder");
         await mkdir(absolutePathToBundleFolder, { recursive: true });
-        await decompress(outputZipPath, absolutePathToBundleFolder);
+        logger.debug(`Calling decompress with outputZipPath: ${outputZipPath}, absolutePathToBundleFolder: ${absolutePathToBundleFolder}`);
+        await decompress(outputZipPath, absolutePathToBundleFolder, {
+            filter: file => {
+                if (file.type === 'symlink') {
+                    // file.data contains the symlink target as a Buffer
+                    const target = file.data.toString();
+                    const symlinkPath = path.resolve('output-directory', file.path);
+                    const targetPath = path.resolve(path.dirname(symlinkPath), target);
+                    if (!fs.existsSync(targetPath)) {
+                      // Dangling symlink, skip it
+                      logger.debug(`Dangling symlink: ${symlinkPath} -> ${targetPath}`);
+                      if (platform() === 'win32') {
+                        logger.debug("Skipping symlink on Windows");
+                        return false;
+                      }
+                      return true;
+                    }
+                  }
+              return true;
+            }
+          });
 
         // write etag
+        logger.debug("Writing etag file");
         await writeFile(eTagFilepath, eTag);
         logger.debug(`Downloaded bundle to ${absolutePathToBundleFolder}`);
 
@@ -169,6 +203,7 @@ export async function downloadBundle({
             }
 
             // if pnpm still hasn't been installed, user should install themselves
+            logger.debug("Verifying pnpm installation");
             try {
                 await loggingExeca(logger, process.platform === "win32" ? "where" : "which", ["pnpm"], {
                     cwd: absolutePathToBundleFolder,
@@ -180,7 +215,9 @@ export async function downloadBundle({
                 );
 
                 // remove incomplete bundle
+                logger.debug("Checking if incomplete preview folder exists for removal");
                 if (await doesPathExist(absolutePathToPreviewFolder)) {
+                    logger.debug("Removing incomplete preview folder");
                     await rm(absolutePathToPreviewFolder, { recursive: true });
                 }
                 logger.debug(`rm -rf ${absolutePathToPreviewFolder}`);
@@ -200,7 +237,9 @@ export async function downloadBundle({
                 logger.error("Failed to install required package. Please reach out to support@buildwithfern.com.");
 
                 // remove incomplete bundle
+                logger.debug("Checking if incomplete preview folder exists for removal");
                 if (await doesPathExist(absolutePathToPreviewFolder)) {
+                    logger.debug("Removing incomplete preview folder");
                     await rm(absolutePathToPreviewFolder, { recursive: true });
                 }
                 logger.debug(`rm -rf ${absolutePathToPreviewFolder}`);
@@ -220,7 +259,9 @@ export async function downloadBundle({
                 logger.error("Failed to resolve imports. Please reach out to support@buildwithfern.com.");
 
                 // remove incomplete bundle
+                logger.debug("Checking if incomplete preview folder exists for removal");
                 if (await doesPathExist(absolutePathToPreviewFolder)) {
+                    logger.debug("Removing incomplete preview folder");
                     await rm(absolutePathToPreviewFolder, { recursive: true });
                 }
                 logger.debug(`rm -rf ${absolutePathToPreviewFolder}`);
@@ -234,7 +275,7 @@ export async function downloadBundle({
             type: "success"
         };
     } catch (error) {
-        logger.error(`Failed to download docs preview bundle. Error: ${error}`);
+        logger.error(`jsklan-foobar: Failed to download docs preview bundle. Error: ${error}`);
         return {
             type: "failure"
         };
