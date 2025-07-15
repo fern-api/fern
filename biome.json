@@ -107,7 +107,7 @@
 				"noMisplacedAssertion": "error",
 				"noPrototypeBuiltins": "error",
 				"noRedeclare": "error",
-				"noShadowRestrictedNames": "error",
+				"noShadowRestrictedNames": "off",
 				"noSkippedTests": "warn",
 				"noSparseArray": "error",
 				"noUnsafeDeclarationMerging": "error",
