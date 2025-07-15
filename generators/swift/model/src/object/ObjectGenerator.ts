@@ -59,6 +59,7 @@ export class ObjectGenerator {
 
     private generatePrimaryInitializer(type: Type.Object_): swift.Initializer {
         return swift.initializer({
+            accessLevel: swift.AccessLevel.Public,
             parameters: type.properties.map((p) =>
                 swift.functionParameter({
                     argumentLabel: p.name.name.camelCase.unsafeName,
