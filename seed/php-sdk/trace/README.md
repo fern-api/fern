@@ -65,7 +65,7 @@ use Seed\SeedClient;
 use Seed\Environments;
 
 $client = new SeedClient(options: [
-  'baseUrl' => Environments::Production->value // Used by default
+  'baseUrl' => Environments::Prod->value // Used by default
 ]);
 ```
 #### Custom URL

@@ -48,8 +48,19 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         snippets[FernGeneratorCli.StructuredFeatureId.Retries] = this.buildRetrySnippets();
         snippets[FernGeneratorCli.StructuredFeatureId.Timeouts] = this.buildTimeoutSnippets();
         snippets[FernGeneratorCli.StructuredFeatureId.CustomClient] = this.buildCustomClientSnippets();
-        snippets[ReadmeSnippetBuilder.ENVIRONMENTS_FEATURE_ID] = this.buildEnvironmentsSnippets();
-        snippets[ReadmeSnippetBuilder.ENUMS_FEATURE_ID] = this.buildEnumsSnippets();
+
+        // Only include environments snippets if they exist
+        const environmentsSnippets = this.buildEnvironmentsSnippets();
+        if (environmentsSnippets.length > 0) {
+            snippets[ReadmeSnippetBuilder.ENVIRONMENTS_FEATURE_ID] = environmentsSnippets;
+        }
+
+        // Only include enums snippets if they exist
+        const enumsSnippets = this.buildEnumsSnippets();
+        if (enumsSnippets.length > 0) {
+            snippets[ReadmeSnippetBuilder.ENUMS_FEATURE_ID] = enumsSnippets;
+        }
+
         snippets[ReadmeSnippetBuilder.EXCEPTION_HANDLING_FEATURE_ID] = this.buildExceptionHandlingSnippets();
         if (this.isPaginationEnabled) {
             snippets[FernGeneratorCli.StructuredFeatureId.Pagination] = this.buildPaginationSnippets();
@@ -64,7 +75,10 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             addendums[FernGeneratorCli.StructuredFeatureId.Pagination] = this.buildPaginationAddendum();
         }
 
-        addendums[ReadmeSnippetBuilder.ENVIRONMENTS_FEATURE_ID] = this.buildEnvironmentsAddendum();
+        // Only include environments addendum if environments are configured
+        if (this.hasEnvironmentsConfigured()) {
+            addendums[ReadmeSnippetBuilder.ENVIRONMENTS_FEATURE_ID] = this.buildEnvironmentsAddendum();
+        }
 
         return Object.fromEntries(
             Object.entries(addendums).filter(([_, value]) => value != null) as [FernGeneratorCli.FeatureId, string][]
@@ -156,15 +170,48 @@ ${this.context.getClientVariableName()} = new ${this.context.getRootClientClassN
     }
 
     private buildEnvironmentsSnippets(): string[] {
+        // Check if environments are defined in the context
+        // If there's no environments configuration, return an empty array
+        if (!this.hasEnvironmentsConfigured()) {
+            return [];
+        }
+
+        // Get an environment example from the IR
+        const defaultEnvironment = this.defaultEnvironment();
+        if (!defaultEnvironment) {
+            return [];
+        }
+
         const snippet = this.writeCode(`
 use ${this.context.getRootNamespace()}\\${this.context.getRootClientClassName()};
 use ${this.context.getRootNamespace()}\\Environments;
 
 ${this.context.getClientVariableName()} = new ${this.context.getRootClientClassName()}(options: [
-  'baseUrl' => Environments::Production->value // Used by default
+  'baseUrl' => Environments::${defaultEnvironment}->value // Used by default
 ]);
 `);
         return [snippet];
+    }
+
+    /**
+     * Find a the default environment from the IR
+     * @returns Name of the default environment if found.
+     */
+    private defaultEnvironment(): string | undefined {
+        if (!this.context.ir.environments) {
+            return;
+        }
+
+        return this.context.ir.environments.defaultEnvironment;
+    }
+
+    /**
+     * Check if environments are configured in the API
+     * @returns boolean indicating if environments are available
+     */
+    private hasEnvironmentsConfigured(): boolean {
+        // Check if there are any environments defined in the IR
+        return this.context.ir.environments !== undefined && Object.keys(this.context.ir.environments).length > 0;
     }
 
     private buildPaginationSnippets(): string[] {
