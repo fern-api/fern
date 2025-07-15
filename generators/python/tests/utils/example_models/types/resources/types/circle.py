@@ -9,6 +9,14 @@ import pydantic
 class Circle(UncheckedBaseModel):
     radius: float
 
+    def __hash__(self) -> int:
+        return hash(self.radius)
+    
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, Circle):
+            return False
+        return self.radius == other.radius
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
             extra="allow"
