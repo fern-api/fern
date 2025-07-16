@@ -442,6 +442,50 @@
         },
         {
             "id": {
+                "path": "/urls/MixedCase",
+                "method": "GET",
+                "identifier_override": "endpoint_endpoints/urls.withMixedCase"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { FiddleClient } from \"@fern/exhaustive\";\n\nconst client = new FiddleClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.urls.withMixedCase();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/urls/no-ending-slash",
+                "method": "GET",
+                "identifier_override": "endpoint_endpoints/urls.noEndingSlash"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { FiddleClient } from \"@fern/exhaustive\";\n\nconst client = new FiddleClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.urls.noEndingSlash();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/urls/with-ending-slash/",
+                "method": "GET",
+                "identifier_override": "endpoint_endpoints/urls.withEndingSlash"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { FiddleClient } from \"@fern/exhaustive\";\n\nconst client = new FiddleClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.urls.withEndingSlash();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/urls/with_underscores",
+                "method": "GET",
+                "identifier_override": "endpoint_endpoints/urls.withUnderscores"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { FiddleClient } from \"@fern/exhaustive\";\n\nconst client = new FiddleClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.urls.withUnderscores();\n"
+            }
+        },
+        {
+            "id": {
                 "path": "/req-bodies/object",
                 "method": "POST",
                 "identifier_override": "endpoint_inlined-requests.postWithObjectBodyandResponse"

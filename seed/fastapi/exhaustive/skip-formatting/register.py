@@ -20,6 +20,7 @@ from .resources.endpoints.resources.params.service.service import AbstractEndpoi
 from .resources.endpoints.resources.primitive.service.service import AbstractEndpointsPrimitiveService
 from .resources.endpoints.resources.put.service.service import AbstractEndpointsPutService
 from .resources.endpoints.resources.union.service.service import AbstractEndpointsUnionService
+from .resources.endpoints.resources.urls.service.service import AbstractEndpointsUrlsService
 from .resources.inlined_requests.service.service import AbstractInlinedRequestsService
 from .resources.no_auth.service.service import AbstractNoAuthService
 from .resources.no_req_body.service.service import AbstractNoReqBodyService
@@ -27,7 +28,7 @@ from .resources.req_with_headers.service.service import AbstractReqWithHeadersSe
 from fastapi import params
 
 
-def register(_app: fastapi.FastAPI, *, endpoints_container: AbstractEndpointsContainerService, endpoints_content_type: AbstractEndpointsContentTypeService, endpoints_enum: AbstractEndpointsEnumService, endpoints_http_methods: AbstractEndpointsHttpMethodsService, endpoints_object: AbstractEndpointsObjectService, endpoints_params: AbstractEndpointsParamsService, endpoints_primitive: AbstractEndpointsPrimitiveService, endpoints_put: AbstractEndpointsPutService, endpoints_union: AbstractEndpointsUnionService, inlined_requests: AbstractInlinedRequestsService, no_auth: AbstractNoAuthService, no_req_body: AbstractNoReqBodyService, req_with_headers: AbstractReqWithHeadersService, dependencies: typing.Optional[typing.Sequence[params.Depends]] = None) -> None:
+def register(_app: fastapi.FastAPI, *, endpoints_container: AbstractEndpointsContainerService, endpoints_content_type: AbstractEndpointsContentTypeService, endpoints_enum: AbstractEndpointsEnumService, endpoints_http_methods: AbstractEndpointsHttpMethodsService, endpoints_object: AbstractEndpointsObjectService, endpoints_params: AbstractEndpointsParamsService, endpoints_primitive: AbstractEndpointsPrimitiveService, endpoints_put: AbstractEndpointsPutService, endpoints_union: AbstractEndpointsUnionService, endpoints_urls: AbstractEndpointsUrlsService, inlined_requests: AbstractInlinedRequestsService, no_auth: AbstractNoAuthService, no_req_body: AbstractNoReqBodyService, req_with_headers: AbstractReqWithHeadersService, dependencies: typing.Optional[typing.Sequence[params.Depends]] = None) -> None:
     _app.include_router(__register_service(endpoints_container), dependencies=dependencies)
     _app.include_router(__register_service(endpoints_content_type), dependencies=dependencies)
     _app.include_router(__register_service(endpoints_enum), dependencies=dependencies)
@@ -37,6 +38,7 @@ def register(_app: fastapi.FastAPI, *, endpoints_container: AbstractEndpointsCon
     _app.include_router(__register_service(endpoints_primitive), dependencies=dependencies)
     _app.include_router(__register_service(endpoints_put), dependencies=dependencies)
     _app.include_router(__register_service(endpoints_union), dependencies=dependencies)
+    _app.include_router(__register_service(endpoints_urls), dependencies=dependencies)
     _app.include_router(__register_service(inlined_requests), dependencies=dependencies)
     _app.include_router(__register_service(no_auth), dependencies=dependencies)
     _app.include_router(__register_service(no_req_body), dependencies=dependencies)

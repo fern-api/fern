@@ -1,6 +1,46 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |  
+        Use the nested "value" field for OpenAPI examples if it exists.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-07-15"
+  version: 0.65.17
+
+- changelogEntry:
+    - summary: |  
+        Add a fallback version for buf export config.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-07-15"
+  version: 0.65.16
+
+- changelogEntry:
+    - summary: |  
+        Fix enum type reference conversions for protobuf docs generation.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-07-15"
+  version: 0.65.15
+
+- changelogEntry:
+    - summary: |  
+        Ignore buf.yaml and buf.gen.yaml when copying/exporting protobuf files.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-07-15"
+  version: 0.65.14
+
+- changelogEntry:
+    - summary: |  
+        Add support for specifying target protobuf files for gRPC docs generation.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-15"
+  version: 0.65.13
+
+- changelogEntry:
+    - summary: |  
         Use service display name for grpc services.
       type: feat
   irVersion: 58

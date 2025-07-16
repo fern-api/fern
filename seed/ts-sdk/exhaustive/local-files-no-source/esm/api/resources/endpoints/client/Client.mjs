@@ -10,6 +10,7 @@ import { Params } from "../resources/params/client/Client.mjs";
 import { Primitive } from "../resources/primitive/client/Client.mjs";
 import { Put } from "../resources/put/client/Client.mjs";
 import { Union } from "../resources/union/client/Client.mjs";
+import { Urls } from "../resources/urls/client/Client.mjs";
 export class Endpoints {
     constructor(_options) {
         this._options = _options;
@@ -49,5 +50,9 @@ export class Endpoints {
     get union() {
         var _a;
         return ((_a = this._union) !== null && _a !== void 0 ? _a : (this._union = new Union(this._options)));
+    }
+    get urls() {
+        var _a;
+        return ((_a = this._urls) !== null && _a !== void 0 ? _a : (this._urls = new Urls(this._options)));
     }
 }

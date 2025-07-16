@@ -8,6 +8,7 @@ using SeedExhaustive.Endpoints.Params;
 using SeedExhaustive.Endpoints.Primitive;
 using SeedExhaustive.Endpoints.Put;
 using SeedExhaustive.Endpoints.Union;
+using SeedExhaustive.Endpoints.Urls;
 
 namespace SeedExhaustive.Endpoints;
 
@@ -27,6 +28,7 @@ public partial class EndpointsClient
         Primitive = new PrimitiveClient(_client);
         Put = new PutClient(_client);
         Union = new UnionClient(_client);
+        Urls = new UrlsClient(_client);
     }
 
     public ContainerClient Container { get; }
@@ -46,4 +48,6 @@ public partial class EndpointsClient
     public PutClient Put { get; }
 
     public UnionClient Union { get; }
+
+    public UrlsClient Urls { get; }
 }
