@@ -50,10 +50,5 @@
   ],
   "[yaml]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "python.testing.pytestArgs": [
-    "fern"
-  ],
-  "python.testing.unittestEnabled": false,
-  "python.testing.pytestEnabled": true
+  }
 }

@@ -165,28 +165,7 @@ def _convert_undiscriminated_union_type(union_type: typing.Type[typing.Any], obj
                         return parsed_list
             except Exception:
                 pass
-        # Handle sets of objects that need parsing
-        if get_origin(inner_type) is set and (isinstance(object_, set) or isinstance(object_, list)):
-            set_inner_type = get_args(inner_type)[0]
-            try:
-                if inspect.isclass(set_inner_type) and issubclass(set_inner_type, pydantic.BaseModel):
-                    # Validate that all items in the set are compatible with the target type
-                    if _validate_collection_items_compatible(object_, set_inner_type):
-                        parsed_set = {construct_type(object_=item, type_=set_inner_type) for item in object_}
-                        return parsed_set
-            except Exception:
-                pass
-        # Handle dicts of objects that need parsing
-        if get_origin(inner_type) is dict and isinstance(object_, typing.Mapping):
-            key_type, value_type = get_args(inner_type)
-            try:
-                if inspect.isclass(value_type) and issubclass(value_type, pydantic.BaseModel):
-                    # Validate that all values in the dict are compatible with the target type
-                    if _validate_collection_items_compatible(object_.values(), value_type):
-                        parsed_dict = {construct_type(object_=k, type_=key_type): construct_type(object_=v, type_=value_type) for k, v in object_.items()}
-                        return parsed_dict
-            except Exception:
-                pass
+
         try:
             if inspect.isclass(inner_type) and issubclass(inner_type, pydantic.BaseModel):
                 # Attempt a validated parse until one works

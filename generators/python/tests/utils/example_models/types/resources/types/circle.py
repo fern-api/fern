@@ -9,21 +9,11 @@ import pydantic
 class Circle(UncheckedBaseModel):
     radius: float
 
-    def __init__(self, **kwargs):
-        print(f"[DEBUG] Creating Circle object with kwargs: {kwargs}")
-        super().__init__(**kwargs)
-        print(f"[DEBUG] Circle object created with radius: {self.radius}")
-
-    def __post_init__(self):
-        print(f"[DEBUG] Circle.__post_init__ called for radius: {self.radius}")
-
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="allow", frozen=True
+            extra="allow"
         )  # type: ignore # Pydantic v2
     else:
 
         class Config:
-            frozen = True
             extra = pydantic.Extra.allow
-
