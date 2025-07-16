@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |  
+        Add reference.md generation for Java SDKs.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-16"
+  version: 0.65.18
+
+- changelogEntry:
+    - summary: |  
         Use the nested "value" field for OpenAPI examples if it exists.
       type: fix
   irVersion: 58
